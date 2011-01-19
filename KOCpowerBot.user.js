@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110110a';
+var Version = '20110119a';
 var DEBUG_BUTTON = true;
 
 // These switches are for testing, all should be set to false for released version:
@@ -4028,12 +4028,14 @@ WinLog.enabled = ENABLE_GM_AJAX_TRACE;
           notify ({ajaxErr:'PARSE Error (ver:2, giftinviteid not found) - page 3'});
         gift.dat.giftId = m[1];
         gift.dat.ver = 2;
+/** for KofC change 20110119
         m = /wcfbuid=([0-9]*)/im.exec(page);
         if (m == null){
           notify ({ajaxErr:'PARSE Error (ver:2, wcfbuid not found) - page 3'});
           return;
         }
         gift.dat.wcfbuid = m[1];
+**/        
       } else {
         m = /name='giftId' value='(.*?)'/im.exec(page);
         if (m == null){
