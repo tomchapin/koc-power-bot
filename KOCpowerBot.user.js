@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110120b';
+var Version = '20110120e';
 var DEBUG_BUTTON = true;
 
 // These switches are for testing, all should be set to false for released version:
@@ -285,7 +285,7 @@ Tabs.build = {
             running: false,
         };
         t.readBuildStates();
-        //
+        
         for (var i = 0; i < Cities.cities.length; i++) {
             t["bQ_" + Cities.cities[i].id] = JSON2.parse(GM_getValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, '[]'));
 			if (typeof t["bQ_" + Cities.cities[i].id] == 'undefined' || (t["bQ_" + Cities.cities[i].id]) == "") {
@@ -588,12 +588,22 @@ Tabs.build = {
 		if (buildingMode == 'destruct') {
 			var buildingMult = Math.pow(2, buildingLevel - 2);
 		}
-        var polKniId = parseInt(Seed.leaders['city' + cityId].politicsKnightId);
-        var polValue = parseInt(Seed.knights['city' + cityId]['knt' + polKniId].politics);
-        var polBoost = parseInt(Seed.knights['city' + cityId]['knt' + polKniId].politicsBoostExpireUnixtime);
-        if ((polBoost - now) > 0) {
-            polValue = parseInt(polValue * 1.25);
-        }
+				
+		var knights = Seed.knights["city" + currentcityid];
+		if (knights) {
+			var polKniId = parseInt(Seed.leaders['city' + cityId].politicsKnightId);
+			if (polKniId) {
+				var polValue = parseInt(Seed.knights['city' + cityId]['knt' + polKniId].politics);
+				var polBoost = parseInt(Seed.knights['city' + cityId]['knt' + polKniId].politicsBoostExpireUnixtime);
+				if ((polBoost - now) > 0) {
+					polValue = parseInt(polValue * 1.25);
+				}
+			} else {
+				polValue = 0;
+			}
+		} else {
+			polValue = 0;
+		}
         
         var buildingTime = unsafeWindow.buildingcost["bdg" + buildingType][7] * buildingMult;
         if (parseInt(buildingType) < 6 && parseInt(buildingType) > 0 && buildingMult == 1) {
