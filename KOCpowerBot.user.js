@@ -92,7 +92,6 @@ function facebookInstance (){
     }
     try{    
       document.getElementById('sidebar_ads').parentNode.removeChild(document.getElementById('sidebar_ads'));
-      document.getElementById('progressBar').parentNode.removeChild(document.getElementById('progressBar'));
       document.getElementById('canvas_nav_content').parentNode.removeChild(document.getElementById('canvas_nav_content'));
     } catch (e){
       // toolkit may have removed them already!
@@ -2073,6 +2072,10 @@ var WideScreen = {
   init : function (){
     if (GlobalOptions.pbWideScreen){
       GM_addStyle ('.modalCurtain {width:760px !important} .mod_comm_mmb{z-index:0 !important}');  
+      try {
+        document.getElementById('progressBar').parentNode.removeChild(document.getElementById('progressBar'));
+      } catch (e) {
+      }
     }
   },
         
