@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110119a';
+var Version = '20110120a';
 var DEBUG_BUTTON = true;
 
 // These switches are for testing, all should be set to false for released version:
@@ -276,10 +276,6 @@ Tabs.build = {
 
     init: function(div){
         var t = Tabs.build;
-
-		//TODO SHOULD BE MOVED TO STANDARD AS OPTION
-		document.getElementById('progressBar').parentNode.removeChild(document.getElementById('progressBar'));
-        
         t.myDiv = div;
         t.koc_buildslot = unsafeWindow.buildslot; //save original koc function
         t.currentBuildMode = "build";
