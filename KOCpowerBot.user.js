@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110120a';
+var Version = '20110120b';
 var DEBUG_BUTTON = true;
 
 // These switches are for testing, all should be set to false for released version:
@@ -92,8 +92,8 @@ function facebookInstance (){
     }
     try{    
       document.getElementById('sidebar_ads').parentNode.removeChild(document.getElementById('sidebar_ads'));
-      document.getElementById('canvas_nav_content').parentNode.removeChild(document.getElementById('canvas_nav_content'));
       document.getElementById('progressBar').parentNode.removeChild(document.getElementById('progressBar'));
+      document.getElementById('canvas_nav_content').parentNode.removeChild(document.getElementById('canvas_nav_content'));
     } catch (e){
       // toolkit may have removed them already!
     }
