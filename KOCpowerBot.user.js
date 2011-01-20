@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110120e';
+var Version = '20110120f';
 var DEBUG_BUTTON = true;
 
 // These switches are for testing, all should be set to false for released version:
@@ -87,7 +87,7 @@ function facebookInstance (){
       }
     }
     if (!iFrame){
-      setTimeout (setWide, 2000);
+      setTimeout (setWide, 1000);
       return;
     }
     try{    
@@ -741,6 +741,7 @@ Tabs.build = {
         return unsafeWindow.currentcityid;
     },
     saveBuildStates: function(){
+		t = Tabs.build;
         var serverID = getServerId();
         GM_setValue('buildStates_' + serverID, JSON2.stringify(t.buildStates));
     },
@@ -755,6 +756,7 @@ Tabs.build = {
         }
     },
     toggleStateRunning: function(obj){
+		t = Tabs.build;
         if (t.buildStates.running == true) {
             t.buildStates.running = false;
             t.saveBuildStates();
