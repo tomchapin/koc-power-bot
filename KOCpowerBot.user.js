@@ -87,7 +87,7 @@ function facebookInstance (){
       }
     }
     if (!iFrame){
-      setTimeout (setWide, 1000);
+      setTimeout (setWide, 2000);
       return;
     }
     try{    
@@ -589,7 +589,7 @@ Tabs.build = {
 			var buildingMult = Math.pow(2, buildingLevel - 2);
 		}
 				
-		var knights = Seed.knights["city" + currentcityid];
+		var knights = Seed.knights["city" + cityId];
 		if (knights) {
 			var polKniId = parseInt(Seed.leaders['city' + cityId].politicsKnightId);
 			if (polKniId) {
