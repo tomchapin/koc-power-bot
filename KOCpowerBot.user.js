@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110121a';
+var Version = '20110121b';
 var DEBUG_BUTTON = true;
 
 // These switches are for testing, all should be set to false for released version:
@@ -4168,7 +4168,7 @@ WinLog.enabled = ENABLE_GM_AJAX_TRACE;
     function parseGiftsPage  (p){
       if (p == null)
         notify ({errrMsg:'Ajax Comm Error'});
-        
+      p = p.replace ('\\u003c', '<', 'g');    
       var t = Tabs.Gifts;
       var gifts = [];
       try {    
@@ -4199,6 +4199,7 @@ WinLog.enabled = ENABLE_GM_AJAX_TRACE;
             mm = /type=\\\"(.*?)\\\"/im.exec(ins[ii]);  
             it.type = mm[1];
             if (it.type=='submit' && it.name!='actions[reject]'){
+              it.name = eval ('"'+ it.name +'"');          
               mm = /actions\[(.*?)\]/im.exec(it.name);
               inpsub = mm[1].replace('\\/', '/', 'g');
               inpsub = inpsub.replace('&amp;', '&', 'g');
@@ -4222,7 +4223,7 @@ WinLog.enabled = ENABLE_GM_AJAX_TRACE;
           }
           if (args.da)
             gifts.push ({giver:giver, gift:gift, args:args, submit:inpsub, inputs:inps});
-        }  
+        } 
         notify (gifts);
       } catch (e) {
         notify ({errMsg:"Error parsing Facebook gift page"+ e});
