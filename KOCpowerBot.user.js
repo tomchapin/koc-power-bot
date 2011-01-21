@@ -423,13 +423,11 @@ Tabs.build = {
 						if (mode == 'build') {
 							var invalid = false;
 							var chk = unsafeWindow.checkreq("bdg", bdgid, curlvl); //check if all requirements are met
-							for (var i = 0; i < chk.length; i++) {
-								if (chk[i][2] == 0) {
+							for (var c = 0; c < chk[3].length; c++) {
+								if (chk[3][c] == 0) {
 									invalid = true;
-									break
 								}
 							}
-
 							if (invalid == false) {							
 								var params = Object.clone(unsafeWindow.g_ajaxparams);
 								params.cid = currentcityid;
