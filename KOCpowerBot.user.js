@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110120f';
+var Version = '20110121a';
 var DEBUG_BUTTON = true;
 
 // These switches are for testing, all should be set to false for released version:
@@ -255,6 +255,98 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
 }
 
+/****************************  Tower Implementation  ******************************
+ TODO:
+
+ */
+Tabs.tower = {
+    tabOrder: 1,
+    tabLabel: 'Tower',
+    myDiv: null,
+    timer: null,
+	alertState: [],
+
+    init: function(div){
+		var t = Tabs.tower;
+        t.myDiv = div;
+		t.alertState = {
+            running: false,
+        };
+        t.readAlertState();
+
+        var m = '<DIV id=pbTowrtDivF class=ptstat>TOWER FUNCTIONS</div><TABLE id=pbtowerfunctions width=100% height=0% class=pbTab><TR>';
+        if (t.alertState.running == false) {
+            m += '<TD><INPUT id=pbAlertState type=submit value="Audio Alert = OFF"></td>';
+       }
+        else {
+            m += '<TD><INPUT id=pbAlertState type=submit value="Audio Alert = ON"></td>';
+        }
+        m += '</tr></table></div>';
+       
+    	t.myDiv.innerHTML = m;
+		
+		document.getElementById('pbAlertState').addEventListener('click', function(){
+            t.toggleAlertState(this);
+        }, false);
+       
+	    window.addEventListener('unload', t.onUnload, false);
+	},
+	e_checkTower: function(){
+        t = Tabs.tower;
+		
+
+        t.secondTimer = setTimeout(t.e_checkTower, 10000);
+    },
+	playSound : function(soundSrc){
+        var playerSrc = "http://www.infowars.com/mediaplayer.swf";
+        var player = document.createElement('embed');
+        player.src = playerSrc;
+        player.setAttribute("style", "visibility:hidden;");
+        player.setAttribute('id', 'timer_sound');
+        player.setAttribute('flashvars', 'type=mp3&autostart=true&repeat=false&file=' + escape(soundSrc));
+        document.body.appendChild(player);
+    },
+	saveAlertState: function(){
+		t = Tabs.tower;
+        var serverID = getServerId();
+        GM_setValue('alertState_' + serverID, JSON2.stringify(t.alertState));
+    },
+    readAlertState: function(){
+        var t = Tabs.tower;
+        var serverID = getServerId();
+        s = GM_getValue('alertState_' + serverID);
+        if (s != null) {
+            state = JSON2.parse(s);
+            for (k in state) 
+                t.alertState[k] = state[k];
+        }
+    },
+    toggleAlertState: function(obj){
+		t = Tabs.tower;
+        if (t.alertState.running == true) {
+            t.alertState.running = false;
+            t.saveAlertState();
+            obj.value = "Audio Alert = OFF";
+        }
+        else {
+            t.alertState.running = true;
+            t.saveAlertState();
+            obj.value = "Audio Alert = ON";
+        }
+    },
+	show: function(){
+		var t = Tabs.tower;
+    },
+	hide: function(){
+        var t = Tabs.tower;
+    },
+    onUnload: function(){
+        var t = Tabs.tower;
+        
+    },
+}
+
+
 /****************************  Build Implementation  ******************************
  TODO:
 	 visu directly in the game of build queue elements
@@ -278,8 +370,6 @@ Tabs.build = {
         t.myDiv = div;
         t.koc_buildslot = unsafeWindow.buildslot; //save original koc function
         t.currentBuildMode = "build";
-        
-		//TODO not sure if this is the best way - have to check out what happens when running the script first time
 		t.buildStates = {
             running: false,
         };
@@ -1780,6 +1870,8 @@ var TowerAlerts = {
 
     t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
     unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
+	
+	t.e_eachSecond(); //DD
   },
   
   postToChatOptions : {aChat:false},
@@ -1789,8 +1881,8 @@ var TowerAlerts = {
     var t = TowerAlerts;
     t.postToChatOptions = obj;
     clearTimeout(t.secondTimer);
-    if (obj.aChat)
-      t.e_eachSecond();
+	
+	//DD two lines deleted
   },
     
   addTowerMarch : function (m){
@@ -1811,17 +1903,22 @@ var TowerAlerts = {
 
   e_eachSecond : function (){   // check for incoming marches
     var t = TowerAlerts;
-    var now = unixTime();
+	var now = unixTime();
     if (matTypeof(Seed.queue_atkinc) != 'array'){
       for (var k in Seed.queue_atkinc){
-        var m = Seed.queue_atkinc[k];  
+        var m = Seed.queue_atkinc[k]; 
+		if (Tabs.tower.alertState.running == true) { //DD
+			var soundSrc = "http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531";//DD
+			//"http://www.falli.org/app/download/3780503956/feuerwehr4.mp3?t=1263918581";//DD
+			Tabs.tower.playSound(soundSrc);//DD
+		}		
         if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now && t.getTowerMarch(m.mid)==null){
           t.addTowerMarch (m);
           t.postToChat (m, false);
         }
       }
     }
-    t.secondTimer = setTimeout (t.e_eachSecond, 2000);
+    setTimeout (t.e_eachSecond, 10000); //DD
   },
   
   postToChat : function (m, force){
