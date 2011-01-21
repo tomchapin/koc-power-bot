@@ -256,7 +256,7 @@ function pbStartup (){
 }
 
 /****************************  Tower Implementation  ******************************
- TODO:
+ TODO: a lot ;-)
 
  */
 Tabs.tower = {
@@ -290,11 +290,21 @@ Tabs.tower = {
         }, false);
        
 	    window.addEventListener('unload', t.onUnload, false);
+		
+		t.e_checkTower();
 	},
 	e_checkTower: function(){
         t = Tabs.tower;
-		
-
+		if (matTypeof(Seed.queue_atkinc) != 'array'){
+			for (var k in Seed.queue_atkinc){
+				var m = Seed.queue_atkinc[k];
+				if (t.alertState.running == true) {
+					var soundSrc = "http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531";
+					//"http://www.falli.org/app/download/3780503956/feuerwehr4.mp3?t=1263918581";//DD
+					t.playSound(soundSrc);//DD
+				}
+			}
+		}
         t.secondTimer = setTimeout(t.e_checkTower, 10000);
     },
 	playSound : function(soundSrc){
@@ -458,8 +468,7 @@ Tabs.build = {
                     //TODO add info of remaining build time and queue infos
                 } else {
                     if (t["bQ_" + cityId].length > 0) { // something to do?
-                        //TODO getHelpimplementation
-						var bQi = t["bQ_" + cityId][0]; //take first queue item to build
+                       	var bQi = t["bQ_" + cityId][0]; //take first queue item to build
 						var currentcityid = bQi.cityId;
 						var cityName = t.getCityNameById(currentcityid);
 						var citpos = parseInt(bQi.buildingPos);
@@ -487,9 +496,9 @@ Tabs.build = {
 									if (rslt.ok) {
 										actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
 										Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
-										unsafeWindow.Modal.hideModalAll();        // jetson says: this shouldn't be done :)
-										unsafeWindow.update_bdg();                // jetson says: this shouldn't be done :)
-										unsafeWindow.queue_changetab_building();  // jetson says: this shouldn't be done :)
+										unsafeWindow.Modal.hideModalAll(); 
+										unsafeWindow.update_bdg();
+										unsafeWindow.queue_changetab_building();
 										if (document.getElementById('pbHelpRequest').checked == true) {
 											unsafeWindow.build_gethelp(params.bid, currentcityid);
 										}
@@ -542,9 +551,9 @@ Tabs.build = {
 											Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
 											Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(),  unsafeWindow.unixtime() + time, 0, time, citpos]);
 
-											unsafeWindow.Modal.hideModalAll();          // jetson says: this shouldn't be done :)
-											unsafeWindow.update_bdg();                  // jetson says: this shouldn't be done :)
-											unsafeWindow.queue_changetab_building();    // jetson says: this shouldn't be done :)
+											unsafeWindow.Modal.hideModalAll();          
+											unsafeWindow.update_bdg();                  
+											unsafeWindow.queue_changetab_building();    
 											if (document.getElementById('pbHelpRequest').checked == true) {
 												unsafeWindow.build_gethelp(params.bid, currentcityid);
 											}
@@ -1870,8 +1879,6 @@ var TowerAlerts = {
 
     t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
     unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
-	
-	t.e_eachSecond(); //DD
   },
   
   postToChatOptions : {aChat:false},
@@ -1881,7 +1888,8 @@ var TowerAlerts = {
     var t = TowerAlerts;
     t.postToChatOptions = obj;
     clearTimeout(t.secondTimer);
-	
+	 if (obj.aChat)
+		t.e_eachSecond();
 	//DD two lines deleted
   },
     
@@ -1907,18 +1915,13 @@ var TowerAlerts = {
     if (matTypeof(Seed.queue_atkinc) != 'array'){
       for (var k in Seed.queue_atkinc){
         var m = Seed.queue_atkinc[k]; 
-		if (Tabs.tower.alertState.running == true) { //DD
-			var soundSrc = "http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531";//DD
-			//"http://www.falli.org/app/download/3780503956/feuerwehr4.mp3?t=1263918581";//DD
-			Tabs.tower.playSound(soundSrc);//DD
-		}		
         if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now && t.getTowerMarch(m.mid)==null){
           t.addTowerMarch (m);
           t.postToChat (m, false);
         }
       }
     }
-    setTimeout (t.e_eachSecond, 10000); //DD
+    t.secondTimer = setTimeout (t.e_eachSecond, 2000);
   },
   
   postToChat : function (m, force){
