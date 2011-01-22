@@ -138,7 +138,7 @@ var Options = {
   pbEveryEnable: false,
   pbEveryMins  : 30,
   pbChatOnRight: false,
-  pbWideScreen : false,
+  pbWideMap    : false,
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, minTroops:10000, spamLimit:10 },
   giftDomains  : {valid:false, list:{}},
   giftDelete   : 'e',
