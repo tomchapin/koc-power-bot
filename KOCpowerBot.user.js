@@ -138,6 +138,7 @@ var Options = {
   pbEveryEnable: false,
   pbEveryMins  : 30,
   pbChatOnRight: false,
+  pbWideScreen : false,
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, minTroops:10000, spamLimit:10 },
   giftDomains  : {valid:false, list:{}},
   giftDelete   : 'e',
@@ -253,6 +254,7 @@ function pbStartup (){
   kocWatchdog ();
   WideScreen.init ();
   WideScreen.setChatOnRight (Options.pbChatOnRight);
+  WideScreen.useWideMap (Options.pbWideMap);
 }
 
 /****************************  Tower Implementation  ******************************
@@ -1770,6 +1772,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>Refresh if KOC not loaded within 1 minute (all domains)</td></tr>\
         <TR><TD><INPUT id=pbEveryEnable type=checkbox /></td><TD>Refresh KOC every <INPUT id=pbeverymins type=text size=2 maxlength=3 \> minutes</td></tr>\
         <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>Put chat on right (requires wide screen)</td></tr>\
+		<TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>Use WideMap (requires wide screen)</td></tr>\
         <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>Auto collect gold when happiness reaches <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
         <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>Automatically post incoming attacks to alliance chat.</td></tr>\
         <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
@@ -1796,6 +1799,7 @@ Tabs.Options = {
       t.changeOpt ('pbeverymins', 'pbEveryMins');
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
       t.togOpt ('pbChatREnable', 'pbChatOnRight', WideScreen.setChatOnRight);
+	  t.togOpt ('pbWMapEnable', 'pbWideMap', WideScreen.useWideMap);
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
 
     } catch (e) {
@@ -2166,6 +2170,7 @@ function KOCnotFound(secs){
 
 var WideScreen = {
   chatIsRight : false,
+  useWideMap : false,
 
   init : function (){
     if (GlobalOptions.pbWideScreen){
@@ -2201,6 +2206,20 @@ var WideScreen = {
       document.getElementById('mod_comm_list2').style.height = '287px';
     }
     t.chatIsRight = tf;
+  },
+    useWideMap : function (tf) {
+	t = WideScreen;
+	if (tf == t.useWideMap || !GlobalOptions.pbWideScreen)
+		return;
+	if (tf){
+		document.getElementById('mapwindow').style.height = "485px";
+		document.getElementById('mapwindow').style.width = "1220px";
+		document.getElementById('mapwindow').style.zIndex = "50";
+	} else {
+		document.getElementById('mapwindow').style.height = "439px";
+		document.getElementById('mapwindow').style.width = "760px";
+		document.getElementById('mapwindow').style.zIndex = "10";
+	}
   },
 }
 
