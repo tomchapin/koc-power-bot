@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110121b';
+var Version = '20110122a';
 var DEBUG_BUTTON = true;
 
 // These switches are for testing, all should be set to false for released version:
