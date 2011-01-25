@@ -934,7 +934,7 @@ Tabs.Search = {
     m = '<DIV class=ptstat><TABLE width=100% cellspacing=0><TR><TD class=xtab width=125><DIV id=pastatSearched></div></td>\
         <TD class=xtab align=center><SPAN style="white-space:normal" id=pastatStatus></span></td>\
         <TD class=xtab align=right width=125><DIV id=pastatFound></div></td></tr></table></div>\
-      <TABLE width=100%><TR valign=top><TD><DIV id=padivOutTab style="width:310px; height:420px; max-height:420px; overflow-y:auto;"></div></td>\
+      <TABLE width=100%><TR valign=top><TD><DIV id=padivOutTab style="width:310px; height:380px; max-height:380px; overflow-y:auto;"></div></td>\
       <TD width=100% height=100% style="background:#e0e0f0; height:100%; padding:5px"><DIV id=padivOutOpts></div></td></table>';
     document.getElementById('pasrcResults').innerHTML = m;
     if (t.opt.searchType == 0)
