@@ -473,7 +473,7 @@ Tabs.build = {
       if (t.buildStates.running == true) {
           for (var i = 0; i < Cities.cities.length; i++) {
               var cityId = Cities.cities[i].id;
-              if (Seed.queue_con["city" + cityId] != "") {
+              if (matTypeof(Seed.queue_con["city" + cityId])=='array' && Seed.queue_con["city" + cityId].length>0) {
                   //TODO add info of remaining build time and queue infos
               } else {
                  if (t["bQ_" + cityId].length > 0) { // something to do?
