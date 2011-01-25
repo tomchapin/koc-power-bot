@@ -417,7 +417,7 @@ Tabs.build = {
 		t.currentBuildMode = type;
 	},	
     e_autoBuild: function(){
-      t = Tabs.build;
+      var t = Tabs.build;
 	    document.getElementById('pbbuildError').innerHTML = '';
       if (t.buildStates.running == true) {
           for (var i = 0; i < Cities.cities.length; i++) {
@@ -437,7 +437,7 @@ Tabs.build = {
 		setTimeout(t.e_autoBuild, 10000); //should be at least 10
     },   
     doOne : function (bQi){ 
-		t = Tabs.build;
+		var t = Tabs.build;
 		var currentcityid = bQi.cityId;
 		var cityName = t.getCityNameById(currentcityid);
 		var citpos = parseInt(bQi.buildingPos);
@@ -551,7 +551,6 @@ Tabs.build = {
 				});
 			} else {
 				t.requeueQueueElement(bQi); // requeue item if check is invalid
-
 			}
 		}
 	},
@@ -809,7 +808,7 @@ Tabs.build = {
         return unsafeWindow.currentcityid;
     },
     saveBuildStates: function(){
-		t = Tabs.build;
+		var t = Tabs.build;
         var serverID = getServerId();
         GM_setValue('buildStates_' + serverID, JSON2.stringify(t.buildStates));
     },
@@ -824,7 +823,7 @@ Tabs.build = {
         }
     },
     toggleStateRunning: function(obj){
-		t = Tabs.build;
+		var t = Tabs.build;
         if (t.buildStates.running == true) {
             t.buildStates.running = false;
             t.saveBuildStates();
