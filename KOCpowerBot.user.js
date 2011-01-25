@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110124a';
+var Version = '20110125a';
 var DEBUG_BUTTON = true;
 
 // These switches are for testing, all should be set to false for released version:
@@ -34,36 +34,8 @@ TODO (Jetson): Add city search
 TODO: Option to auto recall troops on conquering a wild ??
 **********************/
 
-if(!this.JSON2){JSON2={};}
-(function(){function f(n){return n<10?'0'+n:n;}
-if(typeof Date.prototype.toJSON!=='function'){Date.prototype.toJSON=function(key){return this.getUTCFullYear()+'-'+
-f(this.getUTCMonth()+1)+'-'+
-f(this.getUTCDate())+'T'+
-f(this.getUTCHours())+':'+
-f(this.getUTCMinutes())+':'+
-f(this.getUTCSeconds())+'Z';};String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(key){return this.valueOf();};}
-var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={'\b':'\\b','\t':'\\t','\n':'\\n','\f':'\\f','\r':'\\r','"':'\\"','\\':'\\\\'},rep;function quote(string){escapable.lastIndex=0;return escapable.test(string)?'"'+string.replace(escapable,function(a){var c=meta[a];return typeof c==='string'?c:'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);})+'"':'"'+string+'"';}
-function str(key,holder){var i,k,v,length,mind=gap,partial,value=holder[key];if(value&&typeof value==='object'&&typeof value.toJSON==='function'){value=value.toJSON(key);}
-if(typeof rep==='function'){value=rep.call(holder,key,value);}
-switch(typeof value){case'string':return quote(value);case'number':return isFinite(value)?String(value):'null';case'boolean':case'null':return String(value);case'object':if(!value){return'null';}
-gap+=indent;partial=[];if(Object.prototype.toString.apply(value)==='[object Array]'){length=value.length;for(i=0;i<length;i+=1){partial[i]=str(i,value)||'null';}
-v=partial.length===0?'[]':gap?'[\n'+gap+
-partial.join(',\n'+gap)+'\n'+
-mind+']':'['+partial.join(',')+']';gap=mind;return v;}
-if(rep&&typeof rep==='object'){length=rep.length;for(i=0;i<length;i+=1){k=rep[i];if(typeof k==='string'){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}else{for(k in value){if(Object.hasOwnProperty.call(value,k)){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}
-v=partial.length===0?'{}':gap?'{\n'+gap+partial.join(',\n'+gap)+'\n'+
-mind+'}':'{'+partial.join(',')+'}';gap=mind;return v;}}
-if(typeof JSON2.stringify!=='function'){JSON2.stringify=function(value,replacer,space){var i;gap='';indent='';if(typeof space==='number'){for(i=0;i<space;i+=1){indent+=' ';}}else if(typeof space==='string'){indent=space;}
-rep=replacer;if(replacer&&typeof replacer!=='function'&&(typeof replacer!=='object'||typeof replacer.length!=='number')){throw new Error('JSON.stringify');}
-return str('',{'':value});};}
-if(typeof JSON2.parse!=='function'){JSON2.parse=function(text,reviver){var j;function walk(holder,key){var k,v,value=holder[key];if(value&&typeof value==='object'){for(k in value){if(Object.hasOwnProperty.call(value,k)){v=walk(value,k);if(v!==undefined){value[k]=v;}else{delete value[k];}}}}
-return reviver.call(holder,key,value);}
-cx.lastIndex=0;if(cx.test(text)){text=text.replace(cx,function(a){return'\\u'+
-('0000'+a.charCodeAt(0).toString(16)).slice(-4);});}
-if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,'@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,']').replace(/(?:^|:|,)(?:\s*\[)+/g,''))){j=eval('('+text+')');return typeof reviver==='function'?walk({'':j},''):j;}
-throw new SyntaxError('JSON.parse');};}})();
-
-
+var JSON;if(!JSON){JSON={};}(function(){"use strict";function f(n){return n<10?'0'+n:n;}if(typeof Date.prototype.toJSON!=='function'){Date.prototype.toJSON=function(key){return isFinite(this.valueOf())?this.getUTCFullYear()+'-'+f(this.getUTCMonth()+1)+'-'+f(this.getUTCDate())+'T'+f(this.getUTCHours())+':'+f(this.getUTCMinutes())+':'+f(this.getUTCSeconds())+'Z':null;};String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(key){return this.valueOf();};}var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={'\b':'\\b','\t':'\\t','\n':'\\n','\f':'\\f','\r':'\\r','"':'\\"','\\':'\\\\'},rep;function quote(string){escapable.lastIndex=0;return escapable.test(string)?'"'+string.replace(escapable,function(a){var c=meta[a];return typeof c==='string'?c:'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);})+'"':'"'+string+'"';}function str(key,holder){var i,k,v,length,mind=gap,partial,value=holder[key];if(value&&typeof value==='object'&&typeof value.toJSON==='function'){value=value.toJSON(key);}if(typeof rep==='function'){value=rep.call(holder,key,value);}switch(typeof value){case'string':return quote(value);case'number':return isFinite(value)?String(value):'null';case'boolean':case'null':return String(value);case'object':if(!value){return'null';}gap+=indent;partial=[];if(Object.prototype.toString.apply(value)==='[object Array]'){length=value.length;for(i=0;i<length;i+=1){partial[i]=str(i,value)||'null';}v=partial.length===0?'[]':gap?'[\n'+gap+partial.join(',\n'+gap)+'\n'+mind+']':'['+partial.join(',')+']';gap=mind;return v;}if(rep&&typeof rep==='object'){length=rep.length;for(i=0;i<length;i+=1){k=rep[i];if(typeof k==='string'){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}else{for(k in value){if(Object.hasOwnProperty.call(value,k)){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}v=partial.length===0?'{}':gap?'{\n'+gap+partial.join(',\n'+gap)+'\n'+mind+'}':'{'+partial.join(',')+'}';gap=mind;return v;}}if(typeof JSON.stringify!=='function'){JSON.stringify=function(value,replacer,space){var i;gap='';indent='';if(typeof space==='number'){for(i=0;i<space;i+=1){indent+=' ';}}else if(typeof space==='string'){indent=space;}rep=replacer;if(replacer&&typeof replacer!=='function'&&(typeof replacer!=='object'||typeof replacer.length!=='number')){throw new Error('JSON.stringify');}return str('',{'':value});};}if(typeof JSON.parse!=='function'){JSON.parse=function(text,reviver){var j;function walk(holder,key){var k,v,value=holder[key];if(value&&typeof value==='object'){for(k in value){if(Object.hasOwnProperty.call(value,k)){v=walk(value,k);if(v!==undefined){value[k]=v;}else{delete value[k];}}}}return reviver.call(holder,key,value);}text=String(text);cx.lastIndex=0;if(cx.test(text)){text=text.replace(cx,function(a){return'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);});}if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,'@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,']').replace(/(?:^|:|,)(?:\s*\[)+/g,''))){j=eval('('+text+')');return typeof reviver==='function'?walk({'':j},''):j;}throw new SyntaxError('JSON.parse');};}}());
+var JSON2 = JSON; 
 
 //logit ("+++ STARTUP: "+ document.URL);
 
@@ -108,19 +80,6 @@ function facebookInstance (){
 }
 
 
-
-// 'include' prototype.js ...
-try {
-  eval (GM_getResourceText('PROTOTYPEJS'));
-}catch (dontcare){
-}
-
-if (Prototype) {  // remove Prototype.js bugs!
-    delete Object.prototype.toJSON;
-    delete Array.prototype.toJSON;
-    delete Hash.prototype.toJSON;
-    delete String.prototype.toJSON;
-}
 
 var Options = {
   srcSortBy    : 'level',
@@ -203,16 +162,6 @@ function pbStartup (){
     .CPopup  {border:3px ridge #666}\
     div.indent25 {padding-left:25px}';
     
-  // check for prototype.js ...      
-  try {
-    var a = Object.clone ({}); 
-  } catch (e){
-    var pop = new CPopup ('pbnoproto', 150,200,460,150, false, function (){pop.destroy()});
-    pop.getTopDiv().innerHTML = '<CENTER>Power Bot ERROR!</center>';
-    pop.getMainDiv().innerHTML = '<DIV style="font-size:18px; font-weight:bold;"><CENTER><p>The dependency "prototype.js" was not found.<BR> Please reinstall Power Tools <A HREF="http://userscripts.org/scripts/show/89356">here.</a></div>';
-    pop.setLayer(99);
-    pop.show(true);
-  }
     
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
@@ -500,7 +449,7 @@ Tabs.build = {
 		var attempt = parseInt(bQi.buildingAttempt);
 		var mode = bQi.buildingMode;
 		if (mode == 'destruct') {
-			var params = Object.clone(unsafeWindow.g_ajaxparams);
+			var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 			params.cid = currentcityid;
 			params.bid = "";
 			params.pos = citpos;
@@ -548,7 +497,7 @@ Tabs.build = {
 				}
 			}
 			if (invalid == false) {							
-				var params = Object.clone(unsafeWindow.g_ajaxparams);
+				var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 				params.cid = currentcityid;
 				params.bid = "";
 				params.pos = citpos;
@@ -1670,7 +1619,7 @@ Tabs.Test = {
 
     march.toCityId = Cities.cities[cityNum].id;
     if (isWild) {
-      keys = Object.keys(Seed.wilderness['city'+Cities.cities[cityNum].id]);
+      keys = unsafeWindow.Object.keys(Seed.wilderness['city'+Cities.cities[cityNum].id]);
       march.toTileId = Seed.wilderness['city'+Cities.cities[cityNum].id][keys[0]].tileId;
     } else {
       march.toTileId = Cities.cities[cityNum].tileId;
@@ -2628,10 +2577,85 @@ function dialogRetry (errMsg, seconds, onRetry, onCancel){
   }
 }
 
+function implodeUrlArgs (obj){
+  var a = [];
+  for (var k in obj)
+    a.push (k +'='+ encodeURI(obj[k]) );
+  return a.join ('&');    
+}
+
+// NOTE: args can be either a string which will be appended as is to url or an object of name->values
+function addUrlArgs (url, args){
+  if (!args)
+    return url;
+  if (url.indexOf('?') < 0)
+    url += '?';
+  else if (url.substr(url.length-1) != '&')
+    url += '&';    
+  if (matTypeof(args == 'object'))
+    return url + implodeUrlArgs (args);    
+  return url + args;
+}
+
+// emulate protoype's Ajax.Request ...
+function AjaxRequest (url, opts){
+  var headers = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-Prototype-Version': '1.6.1',
+    'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
+  };
+  var ajax = null;
+  
+  if (window.XMLHttpRequest)
+    ajax=new XMLHttpRequest();
+  else
+    ajax=new ActiveXObject("Microsoft.XMLHTTP");
+  
+  if (opts.method==null || opts.method=='')
+    method = 'GET';
+  else
+    method = opts.method.toUpperCase();  
+    
+  if (method == 'POST'){
+    headers['Content-type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+  } else if (method == 'GET'){
+    addUrlArgs (url, opts.parameters);
+  }
+
+  ajax.onreadystatechange = function(){
+//  ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete']; states 0-4
+    if (ajax.readyState==4) {
+      if (ajax.status >= 200 && ajax.status < 305)
+        if (opts.onSuccess) opts.onSuccess(ajax);
+      else
+        if (opts.onFailure) opts.onFailure(ajax);
+    } else {
+      if (opts.onChange) opts.onChange (ajax);
+    }
+  }  
+    
+  ajax.open(method, url, true);   // always async!
+
+  for (var k in headers)
+    ajax.setRequestHeader (k, headers[k]);
+  if (matTypeof(opts.requestHeaders)=='object')
+    for (var k in opts.requestHeaders)
+      ajax.setRequestHeader (k, opts.requestHeaders[k]);
+      
+  if (method == 'POST'){
+    var a = [];
+    for (k in opts.parameters)
+      a.push (k +'='+ opts.parameters[k] );
+    ajax.send (a.join ('&'));
+  } else               {
+    ajax.send();
+  }
+}   
+
 
 function MyAjaxRequest (url, o, noRetryX){
 if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
-  var opts = Object.clone(o);
+  var opts = unsafeWindow.Object.clone(o);
   var wasSuccess = o.onSuccess;
   var wasFailure = o.onFailure;
   var retry = 0;
@@ -2640,12 +2664,12 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
   opts.onSuccess = mySuccess;
   opts.onFailure = myFailure;
 
-  new Ajax.Request(url, opts);
+  new AjaxRequest(url, opts);
   return;
 
   function myRetry(){
     ++retry;
-    new Ajax.Request(url, opts);
+    new AjaxRequest(url, opts);
     delay = delay * 1.25;
   }
   function myFailure(){
@@ -2826,10 +2850,9 @@ var debugWin = {
   },
 }
 
-
 function saveOptions (){
   var serverID = getServerId();
-  GM_setValue ('Options_'+serverID, JSON2.stringify(Options));
+  setTimeout (function (){GM_setValue ('Options_'+serverID, JSON2.stringify(Options));}, 0);
 }
 
 function readOptions (){
@@ -3090,7 +3113,7 @@ function clickWin (win,obj,evtName) {
 }
     
 function debugElement  (e){
-  var x = Object.clone (e.wrappedJSObject);
+  var x = unsafeWindow.Object.clone (e.wrappedJSObject);
   x.innerHTML = '';
   x.innerText = '';
   x.textContent = '';
@@ -3512,7 +3535,7 @@ function matTypeof (v){
   if (typeof (v) == 'object'){
     if (!v)
       return 'null';
-    else if (Object.prototype.toString.apply(v) === '[object Array]')
+    else if (unsafeWindow.Object.prototype.toString.apply(v) === '[object Array]')
       return 'array';
     else return 'object';
   }
@@ -3768,27 +3791,6 @@ function explodeUrlArgs (url){
     args[s[0]] = s[1];
   }
   return args;
-}
-
-function implodeUrlArgs (obj){
-  a = [];
-  for (var k in obj)
-    a.push (k +'='+ escape(obj[k]) );
-  return a.join ('&');    
-}
-
-// NOTE: args can be either a string which will be appended as is to url or an object of name->values
-
-function addUrlArgs (url, args){
-  if (!args)
-    return url;
-  if (url.indexOf('?') < 0)
-    url += '?';
-  else if (url.substr(url.length-1) != '&')
-    url += '&';    
-  if (matTypeof(args == 'object'))
-    return url + implodeUrlArgs (args);    
-  return url + args;
 }
 
 
@@ -4058,7 +4060,7 @@ WinLog.enabled = ENABLE_GM_AJAX_TRACE;
     } else {
       var i = gift.dat.url.indexOf('src/');
       url = gift.dat.url.substr(0,i) +'src/ajax/claimgift.php?wcfbuid='+ gift.dat.wcfbuid;        
-      pargs = Object.clone(unsafeWindow.g_ajaxparams);
+      pargs = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
       pargs.fb_sig_ext_perms = unescape(pargs.fb_sig_ext_perms);
       pargs.ver = '2';
       pargs.selectedS = serverId;
