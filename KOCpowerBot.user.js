@@ -3,7 +3,7 @@
 // @namespace      mat
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
 // @include        http://apps.facebook.com/kingdomsofcamelot/*
-// @resource       PROTOTYPEJS http://cdn1.kingdomsofcamelot.com/fb/e2/src/js/prototype-28.js
+// @description    Automated features for Kingsdoms of Camelot
 // ==/UserScript==
 
 
@@ -241,7 +241,7 @@ Tabs.tower = {
         m += '</tr><TR>';
 		for (var i = 0; i < Cities.cities.length; i++) {
 		    if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 0) {
-				 m += '<TD><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Defend = OFF" style="border:1px solid black; background-color:green;"></td>';
+				 m += '<TD><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Defend = OFF" style="border:1px solid black; background-color:#0a0;"></td>';
 			}
 			if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 1) {
 				 m += '<TD><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Defend = ON" style="border:1px solid black; background-color:red;"></td>';
@@ -1249,9 +1249,10 @@ var exportToKOCattack = {
     var curLevel = 0;
     var city = city;
     var troopDef = [
-      ['SupTroop', 1],
+      ['STroop', 1],
       ['Wagon', 9],
       ['Archers', 6],
+      ['Cavalry', 7],
       ['Heavies', 8],
       ['Ballista', 10],
     ];
@@ -1261,14 +1262,14 @@ var exportToKOCattack = {
       popExp.centerMe (mainPop.getMainDiv());  
     }
     var m = '<DIV class=ptstat>Export data to KOC Attack</div><BR><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW>\
-      <TR style="font-weight:bold; background-color:white"><TD>Target Type</td><TD align=center>#<BR>targets</td><TD width=15></td>';
+      <TR style="font-weight:bold; background-color:white"><TD>Target Type</td><TD style="padding:1px" align=center>#<BR>targets</td><TD width=15></td>';
     for (var i=0; i<troopDef.length; i++)
       m += '<TD>'+ troopDef[i][0] +'</td>';
     m += '</tr>';
     for (var b=1; b<11; b++){
       m += '<TR><TD>Barb level '+ b +'</td><TD align=right>'+ coordList['lvl'+b].length  +'&nbsp; &nbsp;</td><TD></td>'; 
       for (var td=0; td<troopDef.length; td++)
-        m += '<TD><INPUT id=ptET_'+ b +'_'+ troopDef[td][1] +' type=text size=4 value="'+ t.troops['b'+ b][troopDef[td][1]-1] +'"></td>';
+        m += '<TD><INPUT id=ptET_'+ b +'_'+ troopDef[td][1] +' type=text size=3 value="'+ t.troops['b'+ b][troopDef[td][1]-1] +'"></td>';
       m += '<TD width=90%><SPAN class=boldRed id=ptETerr_'+ b +'></span></tr>';
     } 
     m += '</table>';
@@ -1325,7 +1326,7 @@ var exportToKOCattack = {
       if (tot<1 && cList['lvl'+ b].length>0 )
         document.getElementById('ptETerr_'+ b).innerHTML = 'No troops defined';
       if (tot>100000)
-        document.getElementById('ptETerr_'+ b).innerHTML = 'Too many troops defined';
+        document.getElementById('ptETerr_'+ b).innerHTML = 'Too many troops';
     }
       
     function doBulkAdd (){
@@ -1339,7 +1340,7 @@ var exportToKOCattack = {
           document.getElementById('ptETerr_'+ b).innerHTML = 'No troops defined';
           return; 
         } else if (tot>100000) {
-          document.getElementById('ptETerr_'+ b).innerHTML = 'Too many troops defined';
+          document.getElementById('ptETerr_'+ b).innerHTML = 'Too many troops';
           return; 
         }
       }    
@@ -2968,11 +2969,21 @@ function AddMainTabLink(text, eventListener, mouseListener) {
 
 unsafeWindow.pbGotoMap = function (x, y){
   hideMe ();
-  document.getElementById('mapXCoor').value = x;
-  document.getElementById('mapYCoor').value = y;
-  unsafeWindow.reCenterMapWithCoor();
-  unsafeWindow.changeview_map(document.getElementById('mod_views_map'));
-}
+  setTimeout (function (){ 
+    document.getElementById('mapXCoor').value = x;
+    document.getElementById('mapYCoor').value = y;
+    unsafeWindow.reCenterMapWithCoor();
+    var a = document.getElementById("mod_views").getElementsByTagName("a");
+    for (var b = 0; b < a.length; b++) {
+        a[b].className = ""
+    }
+    document.getElementById('mod_views_map').className = "sel";
+    document.getElementById("maparea_city").style.display = 'none';
+    document.getElementById("maparea_fields").style.display = 'none';
+    document.getElementById("maparea_map").style.display = 'block';
+    unsafeWindow.tutorialClear()
+  }, 0);
+};
 
 /**********************************************************************************/
 var CalterUwFunc = function (funcName, findReplace) {
@@ -3593,7 +3604,8 @@ function matTypeof (v){
   if (typeof (v) == 'object'){
     if (!v)
       return 'null';
-    else if (unsafeWindow.Object.prototype.toString.apply(v) === '[object Array]')
+//    else if (unsafeWindow.Object.prototype.toString.apply(v) === '[object Array]')
+    else if (v.constructor==(new Array).constructor && typeof(v.splice)=='function')
       return 'array';
     else return 'object';
   }
