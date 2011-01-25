@@ -591,13 +591,13 @@ Tabs.build = {
 				buildingLevel += 1;
 			}
 		} else {
+			if (current_construction_pos != "" && current_construction_pos == buildingId) {
+				buildingLevel += 1;
+			}
 			for (var i = 0; i < loaded_bQ.length; i++) { // check if there are already queue items for this building or the building is currently building
 				var loadedCity = loaded_bQ[i].cityId;
 				var loadedSlot = loaded_bQ[i].buildingPos;
 				if (loadedSlot == buildingPos && loadedCity == cityId) {
-					buildingLevel += 1;
-				}
-				if (current_construction_pos != "" && current_construction_pos == buildingId) {
 					buildingLevel += 1;
 				}
 				if (loaded_bQ[i].buildingMode == 'destruct' && loadedSlot == buildingPos && loadedCity == cityId) { // check if destrcution is already in queue
