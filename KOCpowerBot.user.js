@@ -218,6 +218,7 @@ Tabs.tower = {
 	alertState: [],
 
     init: function(div){
+	logit(div);
 		var t = Tabs.tower;
         t.myDiv = div;
 		t.alertState = {
@@ -233,8 +234,34 @@ Tabs.tower = {
             m += '<TD><INPUT id=pbAlertState type=submit value="Audio Alert = ON"></td>';
         }
         m += '</tr></table></div>';
+        m += '<DIV id=pbAlertDivD class=ptstat>SANCTUARY</div><TABLE id=pbalertdetails width=100% height=0% class=ptentry><TR>';
+		for (var i = 0; i < Cities.cities.length; i++) {
+           m += '<TD><center>' + Cities.cities[i].name + '</center></td>';
+        }
+        m += '</tr><TR>';
+		for (var i = 0; i < Cities.cities.length; i++) {
+		    if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 0) {
+				 m += '<TD><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Defend = OFF" style="border:1px solid black; background-color:green;"></td>';
+			}
+			if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 1) {
+				 m += '<TD><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Defend = ON" style="border:1px solid black; background-color:red;"></td>';
+			}
+        }
+        m += '</tr><TR>';
+        m += '</tr></table></div>';
        
     	t.myDiv.innerHTML = m;
+		
+		for (var i = 0; i < Cities.cities.length; i++) {
+            var cityId = Cities.cities[i].id;
+            var btnName = 'pbsanctuary_' + cityId;
+			if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 0) {
+				addQueueEventListener(cityId, btnName, 1);
+			}
+			if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 1) {
+			    addQueueEventListener(cityId, btnName, 0);
+			}
+        }
 		
 		document.getElementById('pbAlertState').addEventListener('click', function(){
             t.toggleAlertState(this);
@@ -243,9 +270,15 @@ Tabs.tower = {
 	    window.addEventListener('unload', t.onUnload, false);
 		
 		t.e_checkTower();
+		
+		function addQueueEventListener(cityId, name, state){
+            document.getElementById(name).addEventListener('click', function(){
+                t.toggleDefendMode(cityId, state);
+            }, false);
+        }
 	},
 	e_checkTower: function(){
-        t = Tabs.tower;
+        var t = Tabs.tower;
 		if (matTypeof(Seed.queue_atkinc) != 'array'){
 			for (var k in Seed.queue_atkinc){
 				var m = Seed.queue_atkinc[k];
@@ -260,6 +293,33 @@ Tabs.tower = {
 		}
         t.secondTimer = setTimeout(t.e_checkTower, 10000);
     },
+	toggleDefendMode: function (cityId, state) {
+		var t = Tabs.tower;
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.cid = cityId;
+		params.state = state;
+		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/gate.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			onSuccess: function (rslt) {
+				if (rslt.ok) {
+					Seed.citystats["city" + cityId].gate = state;
+					if (rslt.updateSeed) {
+						unsafeWindow.update_seed(rslt.updateSeed)
+					}
+					t.init(t.myDiv);
+					unsafeWindow.Modal.hideModal();
+				} else {
+					var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
+					document.getElementById('pbTowerError').innerHTML = errmsg;
+					logit(errmsg);
+				}
+			},
+			onFailure: function () {
+				document.getElementById('pbTowerError').innerHTML = "Connection Error! Please try later again";
+			}
+		})
+	},
 	playSound : function(soundSrc){
         var playerSrc = "http://www.infowars.com/mediaplayer.swf";
         var player = document.createElement('embed');
@@ -270,7 +330,7 @@ Tabs.tower = {
         document.body.appendChild(player);
     },
 	saveAlertState: function(){
-		t = Tabs.tower;
+		var t = Tabs.tower;
         var serverID = getServerId();
         GM_setValue('alertState_' + serverID, JSON2.stringify(t.alertState));
     },
@@ -285,7 +345,7 @@ Tabs.tower = {
         }
     },
     toggleAlertState: function(obj){
-		t = Tabs.tower;
+		var t = Tabs.tower;
         if (t.alertState.running == true) {
             t.alertState.running = false;
             t.saveAlertState();
@@ -483,10 +543,9 @@ Tabs.build = {
 					}
 				},
 				onFailure: function(){
-					alert("Connection Error! Please try later again");
+					document.getElementById('pbbuildError').innerHTML = "Connection Error while destructing! Please try later again";
 				}
 			})
-		
 		}
 		if (mode == 'build') {
 			var invalid = false;
@@ -546,7 +605,7 @@ Tabs.build = {
 						}
 				},
 					onFailure: function(){
-						alert("Connection Error! Please try later again");
+						document.getElementById('pbbuildError').innerHTML = "Connection Error while building! Please try later again";
 					}
 				});
 			} else {
