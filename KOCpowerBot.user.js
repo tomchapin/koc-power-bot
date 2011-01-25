@@ -279,6 +279,7 @@ Tabs.tower = {
 	},
 	e_checkTower: function(){
         var t = Tabs.tower;
+        var now = unixTime();
 		if (matTypeof(Seed.queue_atkinc) != 'array'){
 			for (var k in Seed.queue_atkinc){
 				var m = Seed.queue_atkinc[k];
