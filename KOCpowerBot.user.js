@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110126a';
+var Version = '20110127a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -479,9 +479,20 @@ Tabs.build = {
       var t = Tabs.build;
 	    document.getElementById('pbbuildError').innerHTML = '';
       if (t.buildStates.running == true) {
+          var now = unixTime();
+logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
           for (var i = 0; i < Cities.cities.length; i++) {
               var cityId = Cities.cities[i].id;
-              if (Seed.queue_con["city" + cityId]!=null && Seed.queue_con["city" + cityId][0]!=null) {
+              var isBusy = false;
+              var qcon = Seed.queue_con["city" + cityId];
+              if (matTypeof(qcon)=='array' && qcon.length>0) {
+                if (parseInt(qcon[0][4]) > now)
+                  isBusy = true;
+                else
+                  qcon.shift();   // remove expired build from queue        
+              }              
+logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
+              if (isBusy) {
                   //TODO add info of remaining build time and queue infos
               } else {
                  if (t["bQ_" + cityId].length > 0) { // something to do?
