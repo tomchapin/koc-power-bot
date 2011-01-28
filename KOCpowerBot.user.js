@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110127a';
+var Version = '20110128a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -216,7 +216,7 @@ Tabs.tower = {
 	alertState: [],
 
     init: function(div){
-	logit(div);
+//	logit(div);
 		var t = Tabs.tower;
         t.myDiv = div;
 		t.alertState = {
@@ -480,7 +480,7 @@ Tabs.build = {
 	    document.getElementById('pbbuildError').innerHTML = '';
       if (t.buildStates.running == true) {
           var now = unixTime();
-logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
+//logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
           for (var i = 0; i < Cities.cities.length; i++) {
               var cityId = Cities.cities[i].id;
               var isBusy = false;
@@ -491,7 +491,7 @@ logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
                 else
                   qcon.shift();   // remove expired build from queue        
               }              
-logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
+//logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
               if (isBusy) {
                   //TODO add info of remaining build time and queue infos
               } else {
