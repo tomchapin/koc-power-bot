@@ -3923,7 +3923,7 @@ Tabs.Gifts = {
 WinLog.enabled = ENABLE_GM_AJAX_TRACE;    
     t.myDiv = div;    
     div.innerHTML = '<TABLE cellpadding=0 cellspacing=0 class=pbTab width=100%><TR><TD width=200></td><TD align=center><INPUT id="pasubGifts" type=submit value="Check for Gifts" \></td><TD width=200 align=right><INPUT id=paGiftHelp type=submit value=HELP></td></tr></table><HR>\
-        <DIV id=giftDiv style="width:100%; min-height:300px; height:100%"';
+        <DIV id=giftDiv style="width:100%; min-height:300px; height:100%">';
     document.getElementById('pasubGifts').addEventListener ('click', t.e_clickedGifts, false);
     document.getElementById('paGiftHelp').addEventListener ('click', t.helpPop, false);
     if (!Options.giftDomains.valid)
