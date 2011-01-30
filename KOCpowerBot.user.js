@@ -3,11 +3,11 @@
 // @namespace      mat
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
 // @include        http://apps.facebook.com/kingdomsofcamelot/*
-// @description    Automated features for Kingsdoms of Camelot
+// @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
 
 
-var Version = '20110128a';
+var Version = '20110129a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -571,9 +571,9 @@ Tabs.build = {
 				params.bid = "";
 				params.pos = citpos;
 				params.lv = curlvl + 1;
-				if (params.lv == 10){ //make sure that no level 10 is build
+				if (params.lv > 9){ //make sure that no level 10+ is built
 					t.cancelQueueElement(0, currentcityid, time, false);
-					actionLog("Queue item deleted: Tryed to build level 10 building! Please report if this happens!!!");
+					actionLog("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!");
 					return;
 				}
 				if (params.lv > 1) {
