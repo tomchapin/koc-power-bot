@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110129a';
+var Version = '20110130a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -512,12 +512,22 @@ Tabs.build = {
 		var cityName = t.getCityNameById(currentcityid);
 		var citpos = parseInt(bQi.buildingPos);
 		var bid = parseInt(bQi.buildingId);
-		var curlvl = parseInt(bQi.buildingLevel);
+		//var curlvl = parseInt(bQi.buildingLevel); NOT USED ANYMORE NEVER USE IT AGAIN :-)
 		var bdgid = parseInt(bQi.buildingType);
 		var time = parseInt(bQi.buildingTime);
 		var mult = parseInt(bQi.buildingMult);
 		var attempt = parseInt(bQi.buildingAttempt);
 		var mode = bQi.buildingMode;
+		var curlvl = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
+		if (curlvl > 8) { 
+			t.cancelQueueElement(0, currentcityid, time, false);
+			actionLog("Queue item deleted: Building Level equals 9 or higher!!!");
+			return;
+		};
+		if (isNaN(curlvl)) {
+			actionLog("Found no correct value for current building!!!!");
+			return;
+		}	
 		if (mode == 'destruct') {
 			var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 			params.cid = currentcityid;
