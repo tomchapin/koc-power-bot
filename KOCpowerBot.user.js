@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110201a';
+var Version = '20110201b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3083,7 +3083,7 @@ function strButton20 (label, tags){
 
 function reloadKOC (){
   var goto = 'http://apps.facebook.com/kingdomsofcamelot/?s='+getServerId();
-  var t = '<FORM target="_top" action="'+ goto +'" method=get><INPUT id=xxButReload type=submit value=RELOAD></form>';
+  var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ getServerId() +'"</form>';
   var e = document.createElement ('div');
   e.innerHTML = t;
   document.body.appendChild (e);
