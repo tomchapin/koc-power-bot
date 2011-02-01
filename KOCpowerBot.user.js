@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110131a';
+var Version = '20110201a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1690,14 +1690,12 @@ Tabs.Test = {
 
   writeDiv : function (msg){
     var t = Tabs.Test;
-    if (t.state != null)
-      document.getElementById('pbtestDiv').innerHTML = msg;
+    document.getElementById('pbtestDiv').innerHTML = msg;
   },
 
   addDiv : function (msg){
     var t = Tabs.Test;
-    if (t.state != null)
-      document.getElementById('pbtestDiv').innerHTML += msg;
+    document.getElementById('pbtestDiv').innerHTML += msg;
   },
   
   createFakeAttack : function (cityNum, isScout, isWild, isFalse, secs, numMilitia){
