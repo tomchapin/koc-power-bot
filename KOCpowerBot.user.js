@@ -57,6 +57,15 @@ function facebookInstance (){
       }
     }
     if (!iFrame){
+      var iframes = document.getElementsByTagName('iframe');
+      for (var i=0; i<iframes.length; i++){
+        if (iframes[i].className=='canvas_iframe_util'){
+          iFrame = iframes[i];
+          break; 
+        }
+      }
+    }
+    if (!iFrame){
       setTimeout (setWide, 1000);
       return;
     }
