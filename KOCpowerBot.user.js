@@ -883,6 +883,7 @@ Tabs.build = {
 		if (optimize == true) {
 			lbQ.sort(function(a,b){return a.buildingTime - b.buildingTime});
 		}
+		t["bQ_" + cityId] = lbQ;
 		for (var i = 0; i < lbQ.length; i++) {
 			var queueId = i;
 			t._addTab(queueId, lbQ[i].cityId, lbQ[i].buildingType, lbQ[i].buildingTime, lbQ[i].buildingLevel, lbQ[i].buildingAttempts, lbQ[i].buildingMode);
