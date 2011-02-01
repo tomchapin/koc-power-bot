@@ -865,6 +865,7 @@ Tabs.build = {
     },
     showBuildQueue: function(cityId){
 	    var t = Tabs.build;
+	    clearTimeout (t.timer);
         var popBuildQueue = null;
         var cityName = t.getCityNameById(cityId);
         if (t.popBuildQueue == null) {
