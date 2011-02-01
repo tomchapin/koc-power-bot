@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110201a';
+var Version = '20110131a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -868,7 +868,7 @@ Tabs.build = {
         var popBuildQueue = null;
         var cityName = t.getCityNameById(cityId);
         if (t.popBuildQueue == null) {
-            t.popBuildQueue = new CPopup('pbbuild_' + cityId, 0, 0, 350, 500, true);
+            t.popBuildQueue = new CPopup('pbbuild_' + cityId, 0, 0, 350, 500, true, function() {clearTimeout (t.timer);});
         }
         var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityQueueContent">';       
         t.popBuildQueue.getMainDiv().innerHTML = '</table></div>' + m;
@@ -876,6 +876,7 @@ Tabs.build = {
         t.paintBuildQueue(cityId);
         t.popBuildQueue.show(true);
 		document.getElementById('pbOptimizeByTime').addEventListener('click', function(){t.clearBuildQueue();t.paintBuildQueue(cityId, true);}, false);
+		t.timer = setTimeout (function() {t.showBuildQueue(cityId)}, 5000);  
 	},
     paintBuildQueue: function(cityId, optimize){
         var t = Tabs.build;
@@ -883,7 +884,6 @@ Tabs.build = {
 		if (optimize == true) {
 			lbQ.sort(function(a,b){return a.buildingTime - b.buildingTime});
 		}
-		t["bQ_" + cityId] = lbQ;
 		for (var i = 0; i < lbQ.length; i++) {
 			var queueId = i;
 			t._addTab(queueId, lbQ[i].cityId, lbQ[i].buildingType, lbQ[i].buildingTime, lbQ[i].buildingLevel, lbQ[i].buildingAttempts, lbQ[i].buildingMode);
