@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110130a';
+var Version = '20110131a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -49,6 +49,7 @@ if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
 function facebookInstance (){
   function setWide (){
     var iFrame = null;
+    
     var e = document.getElementById('app_content_130402594779').firstChild.firstChild;
     for (var c=0; c<e.childNodes.length; c++){
       if (e.childNodes[c].tagName=='SPAN' && e.childNodes[c].firstChild.className == 'canvas_iframe_util'){
@@ -3075,9 +3076,14 @@ function strButton20 (label, tags){
   return ('<TABLE class=ptNoPad><TR><TD><A class="button20 ptButton20" '+ tags +'><SPAN>'+ label +'</span></a></td></tr></table>' );
 }
 
-function reloadKOC  (){
-  window.location.href = '';
-  setTimeout (function (){window.location.href = window.location.href;}, 0);
+function reloadKOC (){
+  var goto = 'http://apps.facebook.com/kingdomsofcamelot/?s='+getServerId();
+  var t = '<FORM target="_top" action="'+ goto +'" method=get><INPUT id=xxButReload type=submit value=RELOAD></form>';
+  var e = document.createElement ('div');
+  e.innerHTML = t;
+  document.body.appendChild (e);
+  setTimeout (function (){document.getElementById('xxButReload').click();}, 0);
+  return;
 }
   
 function htmlSelector (valNameObj, curVal, tags){
