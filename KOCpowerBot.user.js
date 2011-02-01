@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110131a';
+var Version = '20110201a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -431,8 +431,12 @@ Tabs.build = {
 		m += '<TD><INPUT id=pbHelpRequest type=checkbox '+ (t.buildStates.help?' CHECKED':'') +'\></td><TD>Ask for help?</td>';
 		m += '</tr></table></div>';
         m += '<DIV id=pbBuildDivQ class=ptstat>BUILD QUEUES</div><TABLE id=pbbuildqueues width=100% height=0% class=ptentry><TR>';
+		for (var i = 0; i < Cities.cities.length; i++) {
+            m += '<TD colspan=2><CENTER><B>' + Cities.cities[i].name + '</b></center></td>';
+        }
+		m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
-            m += '<TD colspan=2><INPUT id=pbbuild_' + Cities.cities[i].id + ' type=submit value="' + Cities.cities[i].name + '"></td>';
+            m += '<TD colspan=2><CENTER><INPUT id=pbbuild_' + Cities.cities[i].id + ' type=submit value="Show"></center></td>';
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
