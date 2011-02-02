@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110201b';
+var Version = '20110202a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -481,7 +481,7 @@ Tabs.build = {
         
         function addQueueEventListener(cityId, name){
             document.getElementById(name).addEventListener('click', function(){
-                t.showBuildQueue(cityId);
+                t.showBuildQueue(cityId, true);
             }, false);
         }
     },
@@ -860,10 +860,10 @@ Tabs.build = {
         t.modifyTotalTime(cityId, 'decrease', buildingTime); //adjust total Time	
         
         if (showQueue == true) {
-            t.showBuildQueue(cityId);
+            t.showBuildQueue(cityId, false);
         }
     },
-    showBuildQueue: function(cityId){
+    showBuildQueue: function(cityId, focus){
 	    var t = Tabs.build;
 	    clearTimeout (t.timer);
         var popBuildQueue = null;
@@ -875,9 +875,10 @@ Tabs.build = {
         t.popBuildQueue.getMainDiv().innerHTML = '</table></div>' + m;
         t.popBuildQueue.getTopDiv().innerHTML = '<TD width="200px"><B>Build Queue of ' + cityName + '</b></td><TD><INPUT id=pbOptimizeByTime type=submit value="Optimize by Time"></td>';
         t.paintBuildQueue(cityId);
-        t.popBuildQueue.show(true);
+        if (focus)
+          t.popBuildQueue.show(true);
 		document.getElementById('pbOptimizeByTime').addEventListener('click', function(){t.clearBuildQueue();t.paintBuildQueue(cityId, true);}, false);
-		t.timer = setTimeout (function() {t.showBuildQueue(cityId)}, 5000);  
+		t.timer = setTimeout (function() {t.showBuildQueue(cityId, false)}, 5000);  
 	},
     paintBuildQueue: function(cityId, optimize){
         var t = Tabs.build;
