@@ -4,6 +4,7 @@
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
 // @include        http://apps.facebook.com/kingdomsofcamelot/*
 // @description    Automated features for Kingdoms of Camelot
+// @require        http://sizzlemctwizzle.com/updater.php?id=95542
 // ==/UserScript==
 
 
