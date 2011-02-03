@@ -249,10 +249,10 @@ Tabs.tower = {
         m += '</tr><TR>';
 		for (var i = 0; i < Cities.cities.length; i++) {
 		    if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 0) {
-				 m += '<TD><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Defend = OFF" style="border:1px solid black; background-color:#0a0;"></td>';
+				 m += '<TD><CENTER><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Def = OFF" style="border:1px solid black; background-color:#0a0;"></center></td>';
 			}
 			if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 1) {
-				 m += '<TD><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Defend = ON" style="border:1px solid black; background-color:red;"></td>';
+				 m += '<TD><CENTER><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Def = ON" style="border:1px solid black; background-color:red;"></center></td>';
 			}
         }
         m += '</tr><TR>';
