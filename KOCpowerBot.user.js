@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110202b';
+var Version = '20110203a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4294,7 +4294,7 @@ WinLog.enabled = ENABLE_GM_AJAX_TRACE;
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 2'});
       progress ('2');
-      var m = page.match (/<iframe.*?src=\"(.*?)\"/im);
+      var m = page.match (/<form action=\"(.*?)\"/im);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 2'});
       var url = m[1].replace ('&amp;', '&', 'g');
