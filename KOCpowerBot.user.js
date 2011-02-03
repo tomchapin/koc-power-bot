@@ -1414,22 +1414,15 @@ var exportToKOCattack = {
         endBulkAdd ('<SPAN class=boldRed>ERROR: Unable to open attack dialog</span>');
         return;  
       } 
-      var div = document.getElementById('BulkAddAttackDiv').firstChild;
-      if (div==null || div.style.display!='none'){
-        endBulkAdd ('<SPAN class=boldRed>ERROR: Unexpected attack dialog format.</span>');
+      var div = searchDOM (document.getElementById('BulkAddAttackDiv'), 'node.tagName=="DIV" && node.style.display=="none"', 10);
+      if (div==null){
+        endBulkAdd ('<SPAN class=boldRed>ERROR: Unexpected attack dialog format (1).</span>');
         return;  
       }
-      // find div and textarea and button ...
-      var ta = null;
-      var but = null;
-      for (var i=0; i<div.childNodes.length; i++){
-        if (div.childNodes[i].tagName=='TEXTAREA')
-          ta = div.childNodes[i];
-        else if (div.childNodes[i].tagName=='A')
-          but = div.childNodes[i];
-      }
+      var ta = searchDOM (div, 'node.tagName=="TEXTAREA"', 10);
+      var but = searchDOM (div, 'node.tagName=="A"', 10);
       if (ta==null || but==null){
-        endBulkAdd ('<SPAN class=boldRed>ERROR: Unexpected attack dialog format.</span>');
+        endBulkAdd ('<SPAN class=boldRed>ERROR: Unexpected attack dialog format (2).</span>');
         return;  
       } 
       for (var trp=1; trp<13; trp++){
@@ -1458,7 +1451,32 @@ var exportToKOCattack = {
   },
 }
 
-  
+
+  function searchDOM (node, condition, maxLevel, doMult){
+    var found = [];
+    eval ('var compFunc = function (node) { return ('+ condition +') }');
+    doOne(node, 1);
+    if(!doMult){
+      if (found.length==0)
+        return null;
+      return found[0];
+    }
+    return found;
+    function doOne (node, curLevel){
+      try {
+        if (compFunc(node))
+          found.push(node);
+      } catch (e){
+      }      
+      if (!doMult && found.length>0)
+        return; 
+      if (++curLevel<maxLevel && node.childNodes!=undefined)
+        for (var c=0; c<node.childNodes.length; c++)
+          doOne (node.childNodes[c], curLevel);
+    }
+  }
+
+
 
 /****************************  Sample Tab Implementation  ******************************/
 Tabs.sample = {
