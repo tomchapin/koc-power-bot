@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110202a';
+var Version = '20110202b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -37,13 +37,12 @@ var JSON2 = JSON;
 
 //logit ("+++ STARTUP: "+ document.URL);
 
-GlobalOptions = JSON2.parse (GM_getValue ('Options_??', '{}'));
+var GlobalOptions = JSON2.parse (GM_getValue ('Options_??', '{}'));
 
 if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
   return;
 }
-
 
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
@@ -110,7 +109,7 @@ var Options = {
   giftDomains  : {valid:false, list:{}},
   giftDelete   : 'e',
 };
-unsafeWindow.pt_Options=Options;
+//unsafeWindow.pt_Options=Options;
 
 var GlobalOptions = {
   pbWatchdog   : false,
@@ -125,18 +124,18 @@ var pbStartupTimer = null;
 var CPopUpTopClass = 'pbPopTop';
 
 
-pbStartup ();
-
 function pbStartup (){
-  window.clearTimeout (pbStartupTimer);
-  if (document.getElementById('pbOfficial') != null)
+  clearTimeout (pbStartupTimer);
+  if (unsafeWindow.pbLoaded)
     return;
   var metc = getClientCoords(document.getElementById('main_engagement_tabs'));
   if (metc.width==null || metc.width==0){
-    pbStartupTimer = window.setTimeout (pbStartup, 1000);
+    pbStartupTimer = setTimeout (pbStartup, 1000);
     return;
   }
-
+  unsafeWindow.pbLoaded = true;
+  logit ("KofC client version: "+ anticd.getKOCversion());
+  
   Seed = unsafeWindow.seed;
   var styles = '.xtab {padding-right: 5px; border:none; background:none; white-space:nowrap;}\
     .xtabBR {padding-right: 5px; border:none; background:none;}\
@@ -2359,6 +2358,35 @@ function CMapAjax (){
   }
 }
 
+var anticd = {
+  isInited : false,
+  KOCversion : '?',
+  
+  init: function (){
+    if (this.isInited)
+      return this.KOCversion;
+    unsafeWindow.cm.cheatDetector.detect = eval ('function (){}');
+    var scripts = document.getElementsByTagName('script');
+    for (var i=0; i<scripts.length; i++){
+      if (scripts[i].src.indexOf('camelotmain') >=0){
+        break; 
+      }
+    }
+    if (i<scripts.length){
+      var m = scripts[i].src.match (/camelotmain-(.*).js/);  
+      if (m)
+        this.KOCversion = m[1];
+    }
+    this.isInited = true;
+    // more coming soon :) 
+  },
+  
+  getKOCversion : function (){
+    return this.KOCversion;
+  },
+}
+anticd.init ();
+
 
 var tabManager = {
   tabList : {},           // {name, obj, div}
@@ -2443,7 +2471,6 @@ var tabManager = {
     newTab.obj.show();
   },
 }
-
 
 function onUnload (){
   Options.pbWinPos = mainPop.getLocation();
@@ -2992,26 +3019,32 @@ function createButton (label){
 function AddMainTabLink(text, eventListener, mouseListener) {
   var a = createButton (text);
   a.className='tab';
-  a.id = 'pbOfficial';
   var tabs=document.getElementById('main_engagement_tabs');
   if(!tabs) {
     tabs=document.getElementById('topnav_msg');
     if (tabs)
       tabs=tabs.parentNode;
   }
-// TODO: Fit 'POW' button in main div if there's room (make room by shortening 'Invite Friends' to 'Invite' ?)
-  if(tabs) {
-    var eNew = document.getElementById('gmTabs');
-    if (eNew == null){
-      eNew = document.createElement('div');
-      eNew.className='tabs_engagement';
-      eNew.style.background='#ca5';
-      tabs.parentNode.insertBefore (eNew, tabs);
-      eNew.id = 'gmTabs';
-      eNew.style.whiteSpace='nowrap';
-      eNew.style.width='735px';
+  if (tabs) {
+    var e = tabs.parentNode;
+    var gmTabs = null;
+    for (var i=0; i<e.childNodes.length; i++){
+      var ee = e.childNodes[i];
+      if (ee.tagName && ee.tagName=='DIV' && ee.className=='tabs_engagement' && ee.id && ee.id!='main_engagement_tabs'){
+        gmTabs = ee;
+        break;
+      }
     }
-    eNew.appendChild(a);
+    if (gmTabs == null){
+      gmTabs = document.createElement('div');
+      gmTabs.className='tabs_engagement';
+      gmTabs.style.background='#ca5';
+      tabs.parentNode.insertBefore (gmTabs, tabs);
+      gmTabs.style.whiteSpace='nowrap';
+      gmTabs.style.width='735px';
+      gmTabs.lang = 'en_PB';
+    }
+    gmTabs.appendChild(a);
     a.addEventListener('click',eventListener, false);
     if (mouseListener != null)
       a.addEventListener('mousedown',mouseListener, true);
@@ -4407,3 +4440,4 @@ WinLog.enabled = ENABLE_GM_AJAX_TRACE;
 
 }
   
+pbStartup ();
