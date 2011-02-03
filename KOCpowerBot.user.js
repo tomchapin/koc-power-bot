@@ -3030,7 +3030,7 @@ function AddMainTabLink(text, eventListener, mouseListener) {
     var gmTabs = null;
     for (var i=0; i<e.childNodes.length; i++){
       var ee = e.childNodes[i];
-      if (ee.tagName && ee.tagName=='DIV' && ee.className=='tabs_engagement' && ee.id && ee.id!='main_engagement_tabs'){
+      if (ee.tagName && ee.tagName=='DIV' && ee.className=='tabs_engagement' && ee.id!='main_engagement_tabs'){
         gmTabs = ee;
         break;
       }
@@ -3140,7 +3140,6 @@ function reloadKOC (){
   e.innerHTML = t;
   document.body.appendChild (e);
   setTimeout (function (){document.getElementById('xxButReload').click();}, 0);
-  return;
 }
   
 function htmlSelector (valNameObj, curVal, tags){
