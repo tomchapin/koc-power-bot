@@ -460,6 +460,7 @@ Tabs.build = {
             var cityId = Cities.cities[i].id;
             var btnName = 'pbbuild_' + cityId;
             addQueueEventListener(cityId, btnName);
+			t.showBuildQueue(cityId, false);
         }
 
         t.e_autoBuild(); //start checking if we can build someting
