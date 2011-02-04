@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110203a';
+var Version = '20110204a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3979,10 +3979,13 @@ function GM_AjaxPost (url, args, notify, label){
 // returns: page text or null on comm error
 function GM_AjaxGet (url, args, notify, label){
   if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ('GM_AjaxGet ('+ label +'): ' + url);
-  GM_xmlhttpRequest({
+  new GM_xmlhttpRequest({
     method: "get",
     url: addUrlArgs(url, args),
     onload: function (rslt) {
+      if (rslt.status != 200){
+        logit ("GM_AjaxGet status ('+ label +'): "+ rslt.status);
+      }
       if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ( 'GM_AjaxGet.onLoad ('+ label +')  len='+ rslt.responseText.length +':\n '  + inspect (rslt, 6, 1));   
       notify (rslt.responseText);
     },
@@ -4375,7 +4378,7 @@ WinLog.enabled = ENABLE_GM_AJAX_TRACE;
     // <input value=\"Accept\" type=\"submit\" name=\"actions[http:\/\/apps.facebook.com\/kingdomsofcamelot\/convert.php?pl=1&in=4411654&ty=1&si=9&wccc=fcf-inv-9&ln=11&da=20101229&ex=gid%3A361%7Csid%3A4411654%7Cs%3A88]\" \/><\/label>
     function parseGiftsPage  (p){
       if (p == null)
-        notify ({errrMsg:'Ajax Comm Error'});
+        notify ({errMsg:'Ajax Comm Error'});
       p = p.replace ('\\u003c', '<', 'g');    
       var t = Tabs.Gifts;
       var gifts = [];
