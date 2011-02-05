@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110204a';
+var Version = '20110204b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2195,7 +2195,6 @@ function facebookWatchdog (){
   
 // TODO: actionLog ?  
   function watchdog (){
-logit ("--- Facebook WATCHDOG");    
     try {
 //      if (document.getElementById('app_content_130402594779').firstChild.firstChild.childNodes[1].firstChild.tagName!='IFRAME'){
       if (document.getElementById('app_content_130402594779') == null){
@@ -2216,7 +2215,6 @@ function kocWatchdog (){
     return;
   setTimeout (watchdog, INTERVAL);
   function watchdog (){
-logit ("--- KOC WATCHDOG");    
     if (document.getElementById('mod_maparea')==null){
       actionLog ("KOC not loaded");
       KOCnotFound(3*60);
