@@ -123,6 +123,7 @@ var Tabs = {};
 var mainPop;
 var pbStartupTimer = null;
 var CPopUpTopClass = 'pbPopTop';
+var firefoxVersion = getFirefoxVersion();
 
 
 function pbStartup (){
@@ -2175,12 +2176,14 @@ var RefreshEvery  = {
 var FairieKiller  = {
   saveFunc : null,
   init : function (tf){
+    if (firefoxVersion.substring(0,4) == '4.0b')  // bug in firefox 4.0b10 causes syntax error with: "var func = eval ('function (){}');"
+      return;
     FairieKiller.saveFunc = unsafeWindow.Modal.showModalUEP;
     FairieKiller.setEnable (tf);
   },
   setEnable : function (tf){
     if (tf)
-      unsafeWindow.Modal.showModalUEP = eval ('function (a,b,c) {actionLog ("Blocked Faire popup")}');
+      unsafeWindow.Modal.showModalUEP = eval ('function (a,b,c) {actionLog ("Blocked Faire popup");}');
     else
       unsafeWindow.Modal.showModalUEP = FairieKiller.saveFunc;
   },
@@ -3346,7 +3349,13 @@ function parseIntZero (n){
 }
 
 
-
+function getFirefoxVersion (){
+  var ver='', i;
+  var ua = navigator.userAgent;  
+  if (ua==null || (i = ua.indexOf('Firefox/'))<0)
+    return;
+  return ua.substr(i+8);
+}
 
 var WinManager = {
   wins : {},    // prefix : CPopup obj
