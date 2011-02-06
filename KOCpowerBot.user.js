@@ -526,18 +526,34 @@ Tabs.build = {
     },   
     doOne : function (bQi){ 
 		var t = Tabs.build;
-		var currentcityid = bQi.cityId;
+		var currentcityid = parseInt(bQi.cityId);
 		var cityName = t.getCityNameById(currentcityid);
-		var citpos = parseInt(bQi.buildingPos);
-		var bid = parseInt(bQi.buildingId);
-		//var curlvl = parseInt(bQi.buildingLevel); NOT USED ANYMORE NEVER USE IT AGAIN :-)
-		var bdgid = parseInt(bQi.buildingType);
 		var time = parseInt(bQi.buildingTime);
 		var mult = parseInt(bQi.buildingMult);
 		var attempt = parseInt(bQi.buildingAttempt);
+
+		
+		//mat/KOC Power Bot: 49 @ 19:41:45.274: Pos: 6 Type: 13 Level: 8 Id: 1523749
+		
 		var mode = bQi.buildingMode;
+		//  var mode = "build"; //FOR DEBUG
+		
+		var citpos = parseInt(bQi.buildingPos);
+		//  var citpos = 6; //FOR DEBUG
+			
+		var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
+		var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
+		//  var bdgid = 13; //FOR DEBUG
+		
+		var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
 		var curlvl = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
-		if (curlvl > 8) { 
+		//  var curlvl = 8; //FOR DEBUG
+
+		var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
+		var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
+		//  var bid = 1523749; //FOR DEBUG
+								
+		if (curlvl > 8 && mode == 'build') { 
 			t.cancelQueueElement(0, currentcityid, time, false);
 			actionLog("Queue item deleted: Building Level equals 9 or higher!!!");
 			return;
@@ -545,7 +561,26 @@ Tabs.build = {
 		if (isNaN(curlvl)) {
 			actionLog("Found no correct value for current building!!!!");
 			return;
-		}	
+		}
+		if (l_bdgid != bdgid) {
+			actionLog("Building Type does not match!!!!");
+			return;
+		}
+		if (l_bid != bid) {
+			actionLog("Building ID does not match!!!!");
+			return;
+		}
+		if (l_curlvl < curlvl) {
+				t.cancelQueueElement(0, currentcityid, time, false);
+				actionLog("Queue item deleted: Buildinglevel is equal or higher!!!");
+				return;
+		}
+		if (l_curlvl > curlvl && mode == 'build') {
+				t.requeueQueueElement(bQi);
+				actionLog("Queue item requeued!!!");
+				return;
+		}
+
 		if (mode == 'destruct') {
 			var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 			params.cid = currentcityid;
@@ -563,15 +598,10 @@ Tabs.build = {
 					if (rslt.ok) {
 						actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
 						Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
-						unsafeWindow.Modal.hideModalAll(); 
-						unsafeWindow.update_bdg();
-						unsafeWindow.queue_changetab_building();
-						if (document.getElementById('pbHelpRequest').checked == true) {
-							unsafeWindow.build_gethelp(params.bid, currentcityid);
-						}
-						if (rslt.updateSeed) {
-							unsafeWindow.update_seed(rslt.updateSeed);
-						}
+						if (params.cid == unsafeWindow.currentcityid) 
+							unsafeWindow.update_bdg();
+                        if (document.getElementById('pbHelpRequest').checked == true)
+							t.bot_gethelp(params.bid, currentcityid);
 						t.cancelQueueElement(0, currentcityid, time, false);
 					} else {
 						var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
@@ -608,7 +638,7 @@ Tabs.build = {
 					params.bid = bid;
 				}
 				params.type = bdgid;
-
+				
 				new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
 					method: "post",
 					parameters: params,
@@ -620,15 +650,11 @@ Tabs.build = {
 							Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
 							Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
 							Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
-							Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(),  unsafeWindow.unixtime() + time, 0, time, citpos]);
-							unsafeWindow.update_bdg();                  
-							unsafeWindow.queue_changetab_building();  
-							if (document.getElementById('pbHelpRequest').checked == true) {
-								unsafeWindow.build_gethelp(params.bid, currentcityid);
-							}
-							if (rslt.updateSeed) {     
-								unsafeWindow.update_seed(rslt.updateSeed)
-							}
+							Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(),  unsafeWindow.unixtime() + time, 0, time, citpos]);						
+							if (params.cid == unsafeWindow.currentcityid) 
+								unsafeWindow.update_bdg();
+							if (document.getElementById('pbHelpRequest').checked == true)
+								t.bot_gethelp(params.bid, currentcityid);
 							t.cancelQueueElement(0, currentcityid, time, false);
 						} else {
 							var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
@@ -676,6 +702,7 @@ Tabs.build = {
         var buildingType  = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][0]);
         var buildingLevel = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
 		var buildingId    = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][3]);
+		if (DEBUG_TRACE) logit("Pos: " + buildingPos + " Type: " + buildingType + " Level: " + buildingLevel + " Id: " + buildingId);
   		var buildingAttempts = 0;
 		var loaded_bQ = t["bQ_" + cityId];
 		if (typeof Seed.queue_con['city' + cityId][0] != 'undefined') {
@@ -781,6 +808,31 @@ Tabs.build = {
 		
 		var result = new Array(buildingMult, buildingTime);
 		return result;
+	},
+	bot_gethelp: function (f, currentcityid) {
+	  var a = qlist = Seed.queue_con["city" + currentcityid];
+	  var e = 0;
+	  var d = 0;
+	  for (var c = 0; c < a.length; c++) {
+		if (parseInt(a[c][2]) == parseInt(f)) {
+		  e = parseInt(a[c][0]);
+		  d = parseInt(a[c][1]);
+		  break
+		}
+	  }
+	  var b = new Array();
+	  b.push(["REPLACE_LeVeLbUiLdInG", d]);
+	  b.push(["REPLACE_BuIlDiNgNaMe", unsafeWindow.buildingcost["bdg" + e][0]]);
+	  b.push(["REPLACE_LeVeLiD", d]);
+	  b.push(["REPLACE_AsSeTiD", f]);
+	  var g = function(h, i) {
+		unsafeWindow.continuation_95(h, i);
+		if (!h) {
+		  var j = d > 1 ? unsafeWindow.cm.SpeedUpType.upgrade : unsafeWindow.cm.SpeedUpType.build;
+		  unsafeWindow.cm.ClientSideCookieManager.setCookie(j, false)
+		}
+	  };
+	  unsafeWindow.common_postToProfile("95", unsafeWindow.Object.cloneFeed(unsafeWindow.template_data_95), unsafeWindow.Object.cloneFeed(unsafeWindow.actionlink_data_95), g, b)
 	},
 	addQueueItem: function (cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode) {
 	var t = Tabs.build;
