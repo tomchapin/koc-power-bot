@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110204b';
+var Version = '20110205a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -109,6 +109,7 @@ var Options = {
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, minTroops:10000, spamLimit:10 },
   giftDomains  : {valid:false, list:{}},
   giftDelete   : 'e',
+  hideOnGoto   : true,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -145,6 +146,7 @@ function pbStartup (){
     table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
     table.pbTabBR tr td {border:none; background:none;}\
     table.pbTabLined tr td {border:1px none none solid none; padding: 2px 5px; white-space:nowrap;}\
+    table.pbOptions tr td {border:1px none none solid none; padding: 1px 3px; white-space:nowrap;}\
     table.pbTabPad tr td.ptentry {background-color:#ffeecc; padding-left: 8px;}\
     table.ptNoPad tr td {border:none; background:none; white-space:nowrap; padding:0px}\
     .ptstat {border:1px solid; border-color:#ffffff; font-weight:bold; padding-top:2px; padding-bottom:2px; text-align:center; color:#ffffff; background-color:#357}\
@@ -1847,10 +1849,11 @@ Tabs.Options = {
     var t = Tabs.Options;
     t.myDiv = div;
     try {      
-      m = '<DIV style="height:500px; max-height:500px; overflow-y:auto"><TABLE width=100% class=pbTabLined cellspacing=0 cellpadding=0>\
+      m = '<DIV style="height:500px; max-height:500px; overflow-y:auto"><TABLE width=100% class=pbOptions cellspacing=0 cellpadding=0>\
         <TR><TD colspan=2><B>Power Bot Config:</b></td></tr>\
         <TR><TD><INPUT id=pballowWinMove type=checkbox /></td><TD>Enable window drag (move window by dragging top bar with mouse)</td></tr>\
         <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>Remember window open state on refresh</td></tr>\
+        <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>Hide window when clicking on map coordinates</td></tr>\
         <TR><TD colspan=2><BR><B>KofC Features:</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>Disable all Fairie popup windows</td></tr>\
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>Wide screen (all domains, requires refresh)</td></tr>\
@@ -1878,13 +1881,14 @@ Tabs.Options = {
       document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
       t.togOpt ('pballowWinMove', 'pbWinDrag', mainPop.setEnableDrag);
       t.togOpt ('pbTrackWinOpen', 'pbTrackOpen');
+      t.togOpt ('pbHideOnGoto', 'hideOnGoto');
       t.togOpt ('pbFairie', 'pbKillFairie', FairieKiller.setEnable);
       t.togOpt ('pbGoldEnable', 'pbGoldEnable', CollectGold.setEnable);
       t.changeOpt ('pbgoldLimit', 'pbGoldHappy');
       t.changeOpt ('pbeverymins', 'pbEveryMins');
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
       t.togOpt ('pbChatREnable', 'pbChatOnRight', WideScreen.setChatOnRight);
-	  t.togOpt ('pbWMapEnable', 'pbWideMap', WideScreen.useWideMap);
+      t.togOpt ('pbWMapEnable', 'pbWideMap', WideScreen.useWideMap);
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
 
     } catch (e) {
@@ -3058,7 +3062,8 @@ function AddMainTabLink(text, eventListener, mouseListener) {
 
 
 unsafeWindow.pbGotoMap = function (x, y){
-  hideMe ();
+  if (Options.hideOnGoto)
+    hideMe ();
   setTimeout (function (){ 
     document.getElementById('mapXCoor').value = x;
     document.getElementById('mapYCoor').value = y;
