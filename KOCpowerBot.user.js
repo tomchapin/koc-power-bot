@@ -498,7 +498,7 @@ Tabs.build = {
 	    document.getElementById('pbbuildError').innerHTML = '';
       if (t.buildStates.running == true) {
           var now = unixTime();
-//logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
+		  //logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
           for (var i = 0; i < Cities.cities.length; i++) {
               var cityId = Cities.cities[i].id;
               var isBusy = false;
@@ -509,21 +509,21 @@ Tabs.build = {
                 else
                   qcon.shift();   // remove expired build from queue        
               }              
-//logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
+			  //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
               if (isBusy) {
                   //TODO add info of remaining build time and queue infos
               } else {
                  if (t["bQ_" + cityId].length > 0) { // something to do?
                  	 var bQi = t["bQ_" + cityId][0];   //take first queue item to build
-                 	 t.doOne (bQi);
-					 setTimeout(t.e_autoBuild, 10000); //should be at least 10
-					 return; // we need to make sure that there is enough time for each ajax request to not overwrite the vaule that are needed by the next run
+					 t.doOne(bQi);;
+					 //setTimeout(t.e_autoBuild, 10000); //should be at least 10
+					 //return; // we need to make sure that there is enough time for each ajax request to not overwrite the vaule that are needed by the next run
                  }
               }       	
             }
           }
 		setTimeout(t.e_autoBuild, 10000); //should be at least 10
-    },   
+    },  
     doOne : function (bQi){ 
 		var t = Tabs.build;
 		var currentcityid = parseInt(bQi.cityId);
