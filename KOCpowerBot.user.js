@@ -4290,7 +4290,8 @@ Tabs.Gifts = {
       var m = page.match (/<form action=\"(.*?)\"/im);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 2'});
-      var url = m[1].replace ('&amp;', '&', 'g');
+      var url = m[1].htmlSpecialCharsDecode();
+      url = url.replace (/lang=.*?&/, 'lang=en&');      
       gift.dat.url = url;
       GM_AjaxGet (url, '', got3, 'Page 3');        
     }
