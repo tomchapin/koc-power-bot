@@ -3668,6 +3668,13 @@ Array.prototype.compare = function(testArr) {
     }
     return true;
 }
+String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;' };
+String.prototype.htmlEntities = function() {
+  var ret = this.toString();
+  for (k in this.entityTrans)
+     ret  = ret.split(k).join(this.entityTrans[k]);
+  return ret;
+}
 
 function objectName (o){
   var s = o.toString();
@@ -3879,7 +3886,7 @@ t.state = null;
     var t = WinLog;
     if (!t.enabled || t.isOpening)
       return;
-    t.write (t.gtlt(msg));
+    t.write (msg.htmlEntities());
   },
   
   write : function (msg){
@@ -3915,11 +3922,6 @@ t.state = null;
       t.eOut.appendChild(te);
       t.eOut.appendChild(document.createElement('hr'));
     }
-  },
-  
-  gtlt : function (s){
-    s = s.toString().replace ('<', '&lt;', 'g');
-    return s.replace ('>', '&gt;', 'g');
   },
 
 };
@@ -3987,7 +3989,6 @@ Tabs.Gifts = {
     
   init : function (div){
     var t = Tabs.Gifts;
-WinLog.enabled = ENABLE_GM_AJAX_TRACE;    
     t.myDiv = div;    
     div.innerHTML = '<TABLE cellpadding=0 cellspacing=0 class=pbTab width=100%><TR><TD width=200></td><TD align=center><INPUT id="pasubGifts" type=submit value="Check for Gifts" \></td><TD width=200 align=right><INPUT id=paGiftHelp type=submit value=HELP></td></tr></table><HR>\
         <DIV id=giftDiv style="width:100%; min-height:300px; height:100%">';
