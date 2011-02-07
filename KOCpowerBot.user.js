@@ -3112,11 +3112,11 @@ function strButton20 (label, tags){
 
 function reloadKOC (){
   var goto = 'http://apps.facebook.com/kingdomsofcamelot/?s='+getServerId();
-  var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ getServerId() +'"</form>';
+  var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ getServerId() +'"</form>';
   var e = document.createElement ('div');
   e.innerHTML = t;
   document.body.appendChild (e);
-  setTimeout (function (){document.getElementById('xxButReload').click();}, 0);
+  setTimeout (function (){document.getElementById('xxpbButReload').click();}, 0);
 }
   
 function htmlSelector (valNameObj, curVal, tags){
