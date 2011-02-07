@@ -109,6 +109,7 @@ var Options = {
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, minTroops:10000, spamLimit:10 },
   giftDomains  : {valid:false, list:{}},
   giftDelete   : 'e',
+  currentTab   : null,
   hideOnGoto   : true,
 };
 //unsafeWindow.pt_Options=Options;
@@ -2479,8 +2480,8 @@ var tabManager = {
     mainPop.getTopDiv().innerHTML = m;
     
     for (k in t.tabList) {
-      if (t.currentTab == null)
-        t.currentTab = t.tabList[k];
+      if (t.tabList[k].name == Options.currentTab)
+        t.currentTab =t.tabList[k] ;
       document.getElementById('pbtc'+ k).addEventListener('click', this.e_clickedTab, false);
       var div = t.tabList[k].div; 
       div.style.display = 'none';
@@ -2493,6 +2494,8 @@ var tabManager = {
       }
     }
     
+    if (t.currentTab == null)
+      t.currentTab = sorter[0][1];    
     t.setTabStyle (document.getElementById ('pbtc'+ t.currentTab.name), true);
     t.currentTab.div.style.display = 'block';
   },
@@ -2523,9 +2526,9 @@ var tabManager = {
       t.setTabStyle (document.getElementById ('pbtc'+ newTab.name), true);
       t.currentTab.obj.hide ();
       t.currentTab.div.style.display = 'none';
-      
       t.currentTab = newTab;
       newTab.div.style.display = 'block';
+      Options.currentTab = newTab.name;      
     }
     newTab.obj.show();
   },
