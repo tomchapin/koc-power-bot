@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110205a';
+var Version = '20110206a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3668,11 +3668,17 @@ Array.prototype.compare = function(testArr) {
     }
     return true;
 }
-String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;' };
-String.prototype.htmlEntities = function() {
+String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;', '\'':'&#039' };
+String.prototype.htmlSpecialChars = function() {
   var ret = this.toString();
   for (k in this.entityTrans)
      ret  = ret.split(k).join(this.entityTrans[k]);
+  return ret;
+}
+String.prototype.htmlSpecialCharsDecode = function() {
+  var ret = this.toString();
+  for (k in this.entityTrans)
+     ret = ret.split(this.entityTrans[k]).join(k);
   return ret;
 }
 
@@ -3886,7 +3892,7 @@ t.state = null;
     var t = WinLog;
     if (!t.enabled || t.isOpening)
       return;
-    t.write (msg.htmlEntities());
+    t.write (msg.htmlSpecialChars());
   },
   
   write : function (msg){
@@ -4423,7 +4429,48 @@ Tabs.Gifts = {
       }
     }
   },
+}
 
+function encode_utf8( s ){
+  return unescape( encodeURIComponent( s ) );
+}
+
+function decode_utf8( s ){
+  return decodeURIComponent( escape( s ) );
+}
+
+function hexDump (dat){
+  var i = 0;
+  var s = [];
+  while (i < dat.length) {
+    asc = [];
+    s.push (hex4(i));
+    s.push (': ');
+    for (var ii=0; ii<16; ii++) {
+      c = dat.charCodeAt(i+ii);
+      s.push (hex2(c));
+      s.push (' ');
+      if (c>31 && c<128)
+        asc.push (dat.charAt(i+ii));
+      else
+        asc.push ('.');
+    } 
+    s.push ('  ');
+    s.push (asc.join(''))
+    s.push ('\n'); 
+    i += 16;
+  }
+  return s.join ('');
+  function hex4(d){
+    return hexDig(d>>12) + hexDig(d>>8) + hexDig(d>>4) + hexDig(d&15);
+  }
+  function hex2(d){
+    return hexDig(d>>4) + hexDig(d&15);
+  }
+  function hexDig (d){
+    hexdigs = '0123456789ABCDEF';
+    return hexdigs.charAt(d&15);      
+  }
 }
   
 pbStartup ();
