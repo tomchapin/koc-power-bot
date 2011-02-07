@@ -77,11 +77,11 @@ function facebookInstance (){
       // toolkit may have removed them already!
     }
     var e = document.getElementById('content').firstChild;
+    document.getElementById('content').style.width = '1220px';
     e.style.width = '100%';
     e.firstChild.style.width = '100%';
     iFrame.style.width = '100%';
   }
-    
   facebookWatchdog();
   if (GlobalOptions.pbWideScreen)
     setWide();
@@ -2349,19 +2349,20 @@ var WideScreen = {
     }
     t.chatIsRight = tf;
   },
-    useWideMap : function (tf) {
-	t = WideScreen;
-	if (tf == t.useWideMap || !GlobalOptions.pbWideScreen)
-		return;
-	if (tf){
-		document.getElementById('mapwindow').style.height = "436px";
-		document.getElementById('mapwindow').style.width = "1220px";
-		document.getElementById('mapwindow').style.zIndex = "50";
-	} else {
-		document.getElementById('mapwindow').style.height = "439px";
-		document.getElementById('mapwindow').style.width = "760px";
-		document.getElementById('mapwindow').style.zIndex = "";
-	}
+  
+  useWideMap : function (tf) {
+  	t = WideScreen;
+  	if (tf == t.useWideMap || !GlobalOptions.pbWideScreen)
+  		return;
+  	if (tf){
+  		document.getElementById('mapwindow').style.height = "436px";
+  		document.getElementById('mapwindow').style.width = "1220px";
+  		document.getElementById('mapwindow').style.zIndex = "50";
+  	} else {
+  		document.getElementById('mapwindow').style.height = "439px";
+  		document.getElementById('mapwindow').style.width = "760px";
+  		document.getElementById('mapwindow').style.zIndex = "";
+  	}
   },
 }
 
