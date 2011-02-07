@@ -3967,7 +3967,7 @@ function GM_AjaxGet (url, args, notify, label){
     url: addUrlArgs(url, args),
     onload: function (rslt) {
       if (rslt.status != 200){
-        logit ("GM_AjaxGet status ('+ label +'): "+ rslt.status);
+        logit ('GM_AjaxGet status ('+ label +'): '+ rslt.status);
       }
       if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ( 'GM_AjaxGet.onLoad ('+ label +')  len='+ rslt.responseText.length +':\n '  + inspect (rslt, 6, 1));   
       notify (rslt.responseText);
