@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110208a';
+var Version = '20110208b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1481,13 +1481,14 @@ var exportToKOCattack = {
       if (ta==null || but==null){
         endBulkAdd ('<SPAN class=boldRed>ERROR: Unexpected attack dialog format (2).</span>');
         return;  
-      } 
+      }
       for (var trp=1; trp<13; trp++){
-        if (t.troops['b'+curLevel][trp-1] > 0){
-          var inp = document.getElementById('modal_attack_unit_ipt' +trp);
-          inp.value = t.troops['b'+curLevel][trp-1];
+        var inp = document.getElementById('modal_attack_unit_ipt' +trp);
+        inp.value = t.troops['b'+curLevel][trp-1];
+        if (t.troops['b'+curLevel][trp-1] > 0)
           inp.style.backgroundColor = 'yellow';
-        }
+        else
+          inp.style.backgroundColor = 'white';
       }
       div.style.display = 'block';
       document.getElementById('KOCAttackBulkAddForce').checked = true;
@@ -3987,7 +3988,8 @@ function GM_AjaxGet (url, args, notify, label){
       if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ( 'GM_AjaxGet.onLoad ('+ label +')  len='+ rslt.responseText.length +':\n '  + inspect (rslt, 6, 1));   
       notify (rslt.responseText);
     },
-    onerror: function () {
+    onerror: function (rslt) {
+//logit (inspect (rslt, 3, 1));      
       notify (null);
     },
   });  

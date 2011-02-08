@@ -2,7 +2,7 @@ REVISION HISTORY:
 ----------------
 
 (SVN):
-  *
+  * fixed issue #183 (Export to KOC Attack: Incorrect troops if KOCA already had stored troops for location 0,0)
 
 20110208a:
   * NEW: Remember last tab used on refresh
