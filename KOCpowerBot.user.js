@@ -198,7 +198,7 @@ function pbStartup (){
 
   mainPop.getMainDiv().innerHTML = '<STYLE>'+ styles +'</style>';
   tabManager.init (mainPop.getMainDiv());
-  actionLog ("KOC Power Bot v"+ Version +" Loaded");
+  actionLog ("KOC Power Bot v"+ Version +" Loaded  (KofC version: "+ anticd.getKOCversion() +")");
   
   FairieKiller.init (Options.pbKillFairie);
   RefreshEvery.init ();
