@@ -2,7 +2,11 @@ REVISION HISTORY:
 ----------------
 
 (SVN):
-  * Enhancement #167 (Option to hide main window when user clicks on map coordinates.)
+  *
+
+20110208a:
+  * NEW: Remember last tab used on refresh
+  * NEW: Option to hide main window when user clicks on map coordinates. (issue #167)
   * fixed issue #52  (Widemap: Vertical line)
   * fixed issue #174 (Widemap: right side chopped off when zooming in and scrolling)  
   * fixed issue #74  (Bot button disappears in FF 4)  
