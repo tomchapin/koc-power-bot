@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110206a';
+var Version = '20110208a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -77,7 +77,7 @@ function facebookInstance (){
       // toolkit may have removed them already!
     }
     var e = document.getElementById('content').firstChild;
-    document.getElementById('content').style.width = '1220px';
+    document.getElementById('content').style.minWidth = '1220px';
     e.style.width = '100%';
     e.firstChild.style.width = '100%';
     iFrame.style.width = '100%';
