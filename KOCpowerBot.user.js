@@ -2313,9 +2313,12 @@ function KOCnotFound(secs){
 var WideScreen = {
   chatIsRight : false,
   useWideMap : false,
-
+  rail : null,
+  
   init : function (){
+    t = WideScreen;
     if (GlobalOptions.pbWideScreen){
+      t.rail = searchDOM (document.getElementById('mod_maparea'), 'node.className=="maparea_rrail"', 10);
       GM_addStyle ('.modalCurtain {width:760px !important} .mod_comm_mmb{z-index:0 !important}');  
       try {
         document.getElementById('progressBar').parentNode.removeChild(document.getElementById('progressBar'));
@@ -2355,13 +2358,15 @@ var WideScreen = {
   	if (tf == t.useWideMap || !GlobalOptions.pbWideScreen)
   		return;
   	if (tf){
-  		document.getElementById('mapwindow').style.height = "436px";
-  		document.getElementById('mapwindow').style.width = "1220px";
-  		document.getElementById('mapwindow').style.zIndex = "50";
+      t.rail.style.display = 'none';
+      document.getElementById('mapwindow').style.height = "436px";
+      document.getElementById('mapwindow').style.width = "1220px";
+      document.getElementById('mapwindow').style.zIndex = "50";
   	} else {
-  		document.getElementById('mapwindow').style.height = "439px";
-  		document.getElementById('mapwindow').style.width = "760px";
-  		document.getElementById('mapwindow').style.zIndex = "";
+      t.rail.style.display = 'block';
+      document.getElementById('mapwindow').style.height = "439px";
+      document.getElementById('mapwindow').style.width = "760px";
+      document.getElementById('mapwindow').style.zIndex = "";
   	}
   },
 }
