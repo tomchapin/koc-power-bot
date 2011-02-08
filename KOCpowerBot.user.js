@@ -223,11 +223,11 @@ function pbStartup (){
 
  */
 Tabs.tower = {
-    tabOrder: 1,
-    tabLabel: 'Tower',
-    myDiv: null,
-    timer: null,
-	alertState: [],
+  tabOrder: 1,
+  tabLabel: 'Tower',
+  myDiv: null,
+  timer: null,
+  alertState: [],
 
     init: function(div){
 //	logit(div);
@@ -289,6 +289,7 @@ Tabs.tower = {
             }, false);
         }
 	},
+	
 	e_checkTower: function(){
         var t = Tabs.tower;
         var now = unixTime();
@@ -306,6 +307,7 @@ Tabs.tower = {
 		}
         t.secondTimer = setTimeout(t.e_checkTower, 10000);
     },
+    
 	toggleDefendMode: function (cityId, state) {
 		var t = Tabs.tower;
 		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -317,22 +319,23 @@ Tabs.tower = {
 			onSuccess: function (rslt) {
 				if (rslt.ok) {
 					Seed.citystats["city" + cityId].gate = state;
-					if (rslt.updateSeed) {
-						unsafeWindow.update_seed(rslt.updateSeed)
-					}
+//					if (rslt.updateSeed) {
+//						unsafeWindow.update_seed(rslt.updateSeed)
+//					}
 					t.init(t.myDiv);
-					unsafeWindow.Modal.hideModal();
+//					unsafeWindow.Modal.hideModal();
 				} else {
 					var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-					document.getElementById('pbTowerError').innerHTML = errmsg;
+// element doesn't exist!					document.getElementById('pbTowerError').innerHTML = errmsg;
 					logit(errmsg);
 				}
 			},
 			onFailure: function () {
-				document.getElementById('pbTowerError').innerHTML = "Connection Error! Please try later again";
+// element doesn't exist!					document.getElementById('pbTowerError').innerHTML = "Connection Error! Please try later again";
 			}
 		})
 	},
+	
 	playSound : function(soundSrc){
         var playerSrc = "http://www.infowars.com/mediaplayer.swf";
         var player = document.createElement('embed');
@@ -341,7 +344,10 @@ Tabs.tower = {
         player.setAttribute('id', 'timer_sound');
         player.setAttribute('flashvars', 'type=mp3&autostart=true&repeat=false&file=' + escape(soundSrc));
         document.body.appendChild(player);
+// yikes, an embed DOM element is added every 10 seconds and never removed or re-used?  
+// George will fix this when tower tab is refactored for Power Tools update      
     },
+    
 	saveAlertState: function(){
 		var t = Tabs.tower;
         var serverID = getServerId();
