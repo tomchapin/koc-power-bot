@@ -2129,7 +2129,7 @@ var TowerAlerts = {
       if (emb.count > 0){
         var availSlots = emb.maxLevel;
         for (k in Seed.queue_atkinc){
-          if (Seed.queue_atkinc[k].marchType==2 && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){
+          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){ 
             --availSlots;
           }
         }
