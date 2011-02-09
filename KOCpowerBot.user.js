@@ -584,7 +584,6 @@ Tabs.build = {
 		}
 		if (l_curlvl > curlvl && mode == 'build') {
 				t.requeueQueueElement(bQi);
-				actionLog("Queue item requeued!!!");
 				return;
 		}
 
