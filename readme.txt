@@ -1,7 +1,11 @@
 REVISION HISTORY:
 ----------------
-
 (SVN):
+
+20110216a:
+  * NEW: modded SearchTab by masterjdu (deathbynumbers) e.g. citysearch implemented
+  * fixed issue #187 (Seed.buildings["city" + currentcityid]["pos" + citpos])
+  * fixed issue #185 (Queue item requeued)
   * fixed issue #183 (Export to KOC Attack: Incorrect troops if KOCA already had stored troops for location 0,0)
 
 20110208a:
