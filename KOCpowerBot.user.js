@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110208b';
+var Version = '20110216a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -95,6 +95,9 @@ var Options = {
   srcMaxLevel  : 7,
   wildType     : 1,
   unownedOnly  : true,
+  mistedOnly   : true,
+  hostileOnly  : false,  
+  pbWinIsOpen  : false,
   pbWinIsOpen  : false,
   pbWinDrag    : true,
   pbWinPos     : {},
@@ -144,7 +147,8 @@ function pbStartup (){
   var styles = '.xtab {padding-right: 5px; border:none; background:none; white-space:nowrap;}\
     .xtabBR {padding-right: 5px; border:none; background:none;}\
     table.pbTab tr td {border:none; background:none; white-space:nowrap; padding:0px}\
-    table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
+    .hostile td { background:red; }.friendly td{background:lightgreen; }.ally td{background:lightblue; }\
+	table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
     table.pbTabBR tr td {border:none; background:none;}\
     table.pbTabLined tr td {border:1px none none solid none; padding: 2px 5px; white-space:nowrap;}\
     table.pbOptions tr td {border:1px none none solid none; padding: 1px 3px; white-space:nowrap;}\
@@ -1021,9 +1025,38 @@ Tabs.Search = {
   tabOrder : 2,
   myDiv : null,
   MapAjax : new CMapAjax(),
-
+  
   init : function (div){
     var t = Tabs.Search;
+	var Provinces = {1:{'name':"Tinagel",'x':75,'y':75},
+				2:{'name':"Cornwall",'x':225,'y':75},
+				3:{'name':"Astolat",'x':375,'y':75},
+				4:{'name':"Lyonesse",'x':525,'y':75},
+				5:{'name':"Corbnic",'x':625,'y':75},
+
+				6:{'name':"Paimpont",'x':75,'y':225},
+				7:{'name':"Cameliard",'x':225,'y':225},
+				8:{'name':"Sarras",'x':375,'y':225},
+				9:{'name':"Canoel",'x':525,'y':225},
+				10:{'name':"Avalon",'x':625,'y':225},
+
+				11:{'name':"Carmathen",'x':75,'y':375},
+				12:{'name':"Shallot",'x':225,'y':375},
+				13:{'name':"-------",'x':375,'y':375},
+				14:{'name':"Cadbury",'x':525,'y':375},
+				15:{'name':"Glaston Bury",'x':625,'y':375},
+
+				16:{'name':"Camlan",'x':75,'y':525},
+				17:{'name':"Orkney",'x':225,'y':525},
+				18:{'name':"Dore",'x':375,'y':525},
+				19:{'name':"Logres",'x':525,'y':525},
+				20:{'name':"Caerleon",'x':625,'y':525},
+
+				21:{'name':"Parmenie",'x':75,'y':675},
+				22:{'name':"Bodmin Moor",'x':225,'y':675},
+				23:{'name':"Cellwig",'x':375,'y':675},
+				24:{'name':"Listeneise",'x':525,'y':675},
+				25:{'name':"Albion",'x':625,'y':675}};
     t.selectedCity = Cities.cities[0];
     t.myDiv = div;
     div.innerHTML = '\
@@ -1031,18 +1064,38 @@ Tabs.Search = {
         <SELECT id="pasrcType">\
           <OPTION value=0>Barb Camp</option>\
           <OPTION value=1>Wilderness</option>\
+          <OPTION value=2>Cities</option>\
         </select></td></tr>\
         </table>\
         <DIV id="pasrcOpts" style="height:80px"></div></div>\
         <DIV id="pasrcResults" style="height:400px; max-height:400px;"></div>';
       var psearch = document.getElementById ("pasrcType");
       m = '<TABLE><TR valign=middle><TD class=xtab width=100 align=right>Center: &nbsp; X: </td><TD class=xtab>\
-        <INPUT id=pasrchX type=text\> &nbsp; Y: <INPUT id=pasrchY type=text\> &nbsp; <SPAN id=paspInXY></span>\
-        </td></tr><TR><TD class=xtab align=right>Max. Distance: </td><TD class=xtab><INPUT id=pasrcDist size=4 value=10 /></td></tr>';
+        <INPUT id=pasrchX type=text\> &nbsp; Y: <INPUT id=pasrchY type=text\> ';
+		 m += '&nbsp;<span><select id="provinceXY"><option>--provinces--</option>';
+	  
+for (var i in Provinces) {
+	m += '<option value="'+i+'">'+Provinces[i].name+'</option>';
+}
+	  m += '</select></span> &nbsp; <SPAN id=paspInXY></span>';
+		
+      m += '</td></tr><TR><TD class=xtab align=right>Max. Distance: </td><TD class=xtab><INPUT id=pasrcDist size=4 value=10 /></td></tr>';
+	 
       m += '<TR><TD class=xtab></td><TD class=xtab><INPUT id=pasrcStart type=submit value="Start Search"/></td></tr>';
       m += '</table>';
       document.getElementById ('pasrcOpts').innerHTML = m;
       new CdispCityPicker ('pasrchdcp', document.getElementById ('paspInXY'), true, t.citySelNotify).bindToXYboxes(document.getElementById ('pasrchX'), document.getElementById ('pasrchY'));
+	 
+	  
+      document.getElementById ('provinceXY').addEventListener ('click', function() {
+	  if (this.value >= 1) {
+	  
+		  document.getElementById ('pasrchX').value = Provinces[this.value].x;
+		  document.getElementById ('pasrchY').value = Provinces[this.value].y;
+		  document.getElementById ('pasrcDist').value = 75;
+	  }
+	  }, false); 
+	  
       document.getElementById ('pasrcStart').addEventListener ('click', t.clickedSearch, false);
   },
 
@@ -1101,29 +1154,45 @@ Tabs.Search = {
       <TABLE width=100%><TR valign=top><TD><DIV id=padivOutTab style="width:310px; height:380px; max-height:380px; overflow-y:auto;"></div></td>\
       <TD width=100% height=100% style="background:#e0e0f0; height:100%; padding:5px"><DIV id=padivOutOpts></div></td></table>';
     document.getElementById('pasrcResults').innerHTML = m;
-    if (t.opt.searchType == 0)
+     if (t.opt.searchType == 0)
       typeName = 'Barbarians';
-    else
+    else if (t.opt.searchType == 1)
       typeName = 'Wildernesses';
+	else 
+	  typeName = 'Cities';
 
     m = '<CENTER><B>Search for '+ typeName +'<BR>\
         Center: '+ t.opt.startX +','+ t.opt.startY +'  &nbsp; Distance: '+ t.opt.maxDistance +'<BR></center>\
-        <DIV class=ptentry><TABLE cellspacing=0 width=100%><TR align=center><TD class=xtab colspan=10><B>LIST OPTIONS:</b><BR></td></tr>\
-        <TR><TD class=xtab align=right>Min. level to show:</td><TD class=xtab> <INPUT id=pafilMinLvl size=2 value='+ Options.srcMinLevel +' /></td></tr>\
+        <DIV class=ptentry><TABLE cellspacing=0 width=100%><TR align=center><TD class=xtab colspan=10><B>LIST OPTIONS:</b><BR></td></tr>';
+	if (t.opt.searchType == 1 || t.opt.searchType == 0) {
+      m += '<TR><TD class=xtab align=right>Min. level to show:</td><TD class=xtab> <INPUT id=pafilMinLvl size=2 value='+ Options.srcMinLevel +' /></td></tr>\
         <TR><TD class=xtab align=right>Max. level to show:</td><TD class=xtab> <INPUT id=pafilMaxLvl size=2 value='+ Options.srcMaxLevel +' /></td></tr>';
+		}
     if (t.opt.searchType == 1){
       m += '<TR><TD class=xtab align=right>Wilderness Type:</td><TD class=xtab><SELECT id=pafilWildType>';
       m += htmlOptions ( {1:'Glassland/Lake', 3:'Woodlands', 4:'Hills', 5:'Mountain', 6:'Plain', 0:'ALL'}, Options.wildType );
       m += '</select></td></tr><TR><TD class=xtab align=right>Unowned Only:</td><TD class=xtab><INPUT id=pafilUnowned type=CHECKBOX '+ (Options.unownedOnly?' CHECKED':'') +'\><td></tr>';
     }
-    m+= '<TR><TD class=xtab align=right>Sort By:</td><TD class=xtab><SELECT id=pafilSortBy>\
+   if (t.opt.searchType == 1 || t.opt.searchType == 0) {
+        m+= '<TR><TD class=xtab align=right>Sort By:</td><TD class=xtab><SELECT id=pafilSortBy>\
           <OPTION value="level" '+ (Options.srcSortBy=='level'?'SELECTED':'')  +'>Level</option>\
           <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
+			</select></td></tr>\
+			<TR><TD class=xtab align=right>Show coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
+			</table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
+    } else {
+		m+= '</select></td></tr><TR><TD class=xtab align=right>Misted Only:</td><TD class=xtab><INPUT id=pafilMisted type=CHECKBOX '+ (Options.mistedOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>Hostile Only:</td><TD class=xtab><INPUT id=pafilHostile type=CHECKBOX '+ (Options.hostileOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>Sort By:</td><TD class=xtab><SELECT id=pafilSortBy>\
+          <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>Might</option>\
+             <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
         </select></td></tr>\
-        <TR><TD class=xtab align=right>Show coords only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
+        <TR><TD class=xtab align=right>Show coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
-
+	
+	}
     document.getElementById('padivOutOpts').innerHTML = m;
+	 if (t.opt.searchType == 1 || t.opt.searchType == 0) {
     document.getElementById('pafilMinLvl').addEventListener ('change', function (){
       Options.srcMinLevel = document.getElementById('pafilMinLvl').value;
       saveOptions();
@@ -1134,6 +1203,7 @@ Tabs.Search = {
       saveOptions();
       t.dispMapTable ();
       }, false);
+	  }
     document.getElementById('pafilSortBy').addEventListener ('change', function (){
       Options.srcSortBy = document.getElementById('pafilSortBy').value;
       saveOptions();
@@ -1152,7 +1222,19 @@ Tabs.Search = {
         t.dispMapTable ();
         }, false);
     }
-
+	if (t.opt.searchType == 2){
+		document.getElementById('pafilMisted').addEventListener ('change', function (){
+        Options.mistedOnly = (document.getElementById('pafilMisted').checked);
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+		document.getElementById('pafilHostile').addEventListener ('change', function (){
+        Options.hostileOnly = (document.getElementById('pafilHostile').checked);
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+	
+	}
     t.mapDat = [];
     t.firstX =  t.opt.startX - t.opt.maxDistance;
     t.lastX = t.opt.startX + t.opt.maxDistance;
@@ -1173,25 +1255,37 @@ Tabs.Search = {
     var t = Tabs.Search;
     var coordsOnly = document.getElementById('pacoordsOnly').checked;
 if (DEBUG_TRACE) DebugTimer.start();
-    function mySort(a, b){
+     function mySort(a, b){
       if (Options.srcSortBy == 'level'){
         if ((x = a[4] - b[4]) != 0)
           return x;
       }
+	  if (Options.srcSortBy == 'might'){
+        if ((x = b[10] - a[10]) != 0)
+          return x;
+      }
       return a[2] - b[2];
     }
+
     dat = [];
-    for (i=0; i<t.mapDat.length; i++){
+     for (i=0; i<t.mapDat.length; i++){
       lvl = parseInt (t.mapDat[i][4]);
       type = t.mapDat[i][3];
-      if (lvl>=Options.srcMinLevel && lvl<=Options.srcMaxLevel){
+	  if (t.opt.searchType == 2 && type == 7 ) {
+	   if (!Options.hostileOnly || t.mapDat[i][12] == 'hostile') {
+		if (!Options.mistedOnly || t.mapDat[i][5]===true)
+			dat.push(t.mapDat[i]);
+	   }
+	  } else {
+       if (lvl>=Options.srcMinLevel && lvl<=Options.srcMaxLevel){
         if (t.opt.searchType==0 || Options.wildType==0
         ||  (Options.wildType==1 && (type==1 || type==2))
         ||  (Options.wildType == type)){
           if (!Options.unownedOnly || t.mapDat[i][5]===false)
             dat.push (t.mapDat[i]);
         }
-      }
+       }
+	  }
     }
 if (DEBUG_TRACE) DebugTimer.display('SEACHdraw: FILTER');
 
@@ -1203,8 +1297,13 @@ if (DEBUG_TRACE) DebugTimer.display('SEACHdraw: FILTER');
 if (DEBUG_TRACE) DebugTimer.display('SEACHdraw: SORT');
       if (coordsOnly)
         m = '<TABLE align=center id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td></tr>';
-      else
-        m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td><TD style="padding-left: 10px">Distance</td><TD style="padding-left: 10px;">Lvl</td><TD width=80%> &nbsp; Type</td><TD style="padding-left: 10px;"></td></tr>';
+      else {
+      if (t.opt.searchType == 2) {
+			 m = '<TABLE id=pasrcOutTab cellpadding=2 cellspacing=2><TR style="font-weight: bold"><TD>Loc</td><TD >Dist</td><TD>City</td><TD>More</td></tr>';
+		} else { 
+			m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td><TD style="padding-left: 10px">Distance</td><TD style="padding-left: 10px;">Lvl</td><TD width=80%> &nbsp; Type</td><TD style=""></td></tr>';
+		}
+	}
       var numRows = dat.length;
       if (numRows > 500 && t.searchRunning){
         numRows = 500;
@@ -1214,9 +1313,20 @@ if (DEBUG_TRACE) DebugTimer.display('SEACHdraw: SORT');
         m += '<TR><TD><DIV onclick="pbGotoMap('+ dat[i][0] +','+ dat[i][1] +')"><A>'+ dat[i][0] +','+ dat[i][1] +'</a></div></td>';
         if (coordsOnly)
           m += '</tr>';
-        else
-          m += '<TD align=right>'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
-            +'</td><TD>'+ (dat[i][5]?' OWNED':'') +'</td></tr>';
+        else {
+			if (t.opt.searchType == 2) { 
+				 m += '<TD align="right" >'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][8] +'<br/><small>'+dat[i][9]+'<br/>'+dat[i][10]+'<br/>'+dat[i][11]+'</small></td><td>';
+				 if (dat[i][5]) {
+					m += '<DIV onclick="ptScout('+ dat[i][0] +','+ dat[i][1] +');return false;"><A style="font-size:9px;" >Scout</a></div>';
+				} else 
+					m += '<DIV onclick="PTpd(this, '+ dat[i][7] +')"><A style="font-size:9px;" >Details</a></div> <DIV style="" onclick="PTpd2(this, '+ dat[i][7] +')"><A style="font-size:9px;">Leaderboard</a></div>';
+            m+= (dat[i][5]?' Misted':'') +'</td></tr>';
+			} else { 
+          m += '<TD align=right  valign="top">'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
+            +'</td><TD  valign="top">'+ (dat[i][5]?' OWNED':'') +'</td></tr>';
+			}
+		}
+			
        }
       m += '</table>';
     }
@@ -1275,6 +1385,10 @@ if (DEBUG_TRACE) DebugTimer.display('SEACHdraw: DRAW');
     }
 
     map = rslt.data;
+	var Dip = Seed.allianceDiplomacies;	
+	var userInfo = rslt.userInfo;
+    var alliance = rslt.allianceNames;
+	
     for (k in map){
       if (t.opt.searchType==0 && map[k].tileType==51 && !map[k].tileCityId ) {  // if barb
         type = 0;
@@ -1285,12 +1399,38 @@ if (DEBUG_TRACE) DebugTimer.display('SEACHdraw: DRAW');
           type = 2;
         else
           type = (map[k].tileType/10) + 1;
-      } else
+      } else if (t.opt.searchType==2 && map[k].tileCityId >= 0 && map[k].tileType > 50 && map[k].cityName) {
+		  type = 7;
+	  } else
         continue;
       dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
       if (dist <= t.opt.maxDistance){
+	  	  if (t.opt.searchType==2) {
+			var isMisted = map[k].tileUserId == 0 || false;		
+			var uu = 'u'+map[k].tileUserId;
+			var aD = '';
+			if (isMisted) {
+				var nameU = '';
+				var mightU = ''; 
+				var aU = '';
+			} else {
+				var nameU = userInfo[uu].n;
+				var mightU = userInfo[uu].m;
+				if (alliance['a'+userInfo[uu].a])
+					var aU = alliance['a'+userInfo[uu].a];
+				else var aU = '----';
+				if (Dip.friendly['a'+userInfo[uu].a]) var aD = 'friendly';
+				if (Dip.hostile['a'+userInfo[uu].a]) var aD = 'hostile';
+				if (Dip.allianceId == userInfo[uu].a) var aD = 'all';
+				
+				//unsafeWindow.console.log(Deplomacy);
+			}
+				t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName,nameU,mightU, aU,aD ]);
+			
+			} else {
         isOwned = map[k].tileUserId>0 || map[k].misted;
         t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned]);
+		}
         ++t.tilesFound;
       }
     }
