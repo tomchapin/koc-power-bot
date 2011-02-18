@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110216a';
+var Version = '20110218a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1419,8 +1419,8 @@ if (DEBUG_TRACE) DebugTimer.display('SEACHdraw: DRAW');
 				if (alliance['a'+userInfo[uu].a])
 					var aU = alliance['a'+userInfo[uu].a];
 				else var aU = '----';
-				if (Dip.friendly['a'+userInfo[uu].a]) var aD = 'friendly';
-				if (Dip.hostile['a'+userInfo[uu].a]) var aD = 'hostile';
+				if (Dip.friendly && Dip.friendly['a'+userInfo[uu].a]) var aD = 'friendly';
+				if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) var aD = 'hostile';
 				if (Dip.allianceId == userInfo[uu].a) var aD = 'all';
 				
 				//unsafeWindow.console.log(Deplomacy);
