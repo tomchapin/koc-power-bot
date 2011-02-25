@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110218a';
+var Version = '20110225a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -27,6 +27,8 @@ var URL_CASTLE_BUT = 'http://i.imgur.com/MPlZr.png';
 var URL_CASTLE_BUT_SEL = 'http://i.imgur.com/XWR4B.png';
 //var CHAT_BG_IMAGE = 'http://i.imgur.com/VjNst.jpg';   // 600
 var CHAT_BG_IMAGE = 'http://i.imgur.com/0ws3E.jpg';   // 720
+var DEFAULT_ALERT_SOUND_URL = 'http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531';
+var SWF_PLAYER_URL = 'http://www.fileden.com/files/2011/2/25/3086757/matSimpleSound01aXD.swf';
 
 /***********************
 TODO (Jetson): enhance winManager (setlayer, focusme, remember coords on reopen, etc)
@@ -110,6 +112,7 @@ var Options = {
   pbChatOnRight: false,
   pbWideMap    : false,
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, minTroops:10000, spamLimit:10 },
+  alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:5, repeatDelay:1, volume:100},
   giftDomains  : {valid:false, list:{}},
   giftDelete   : 'e',
   currentTab   : null,
@@ -148,7 +151,7 @@ function pbStartup (){
     .xtabBR {padding-right: 5px; border:none; background:none;}\
     table.pbTab tr td {border:none; background:none; white-space:nowrap; padding:0px}\
     .hostile td { background:red; }.friendly td{background:lightgreen; }.ally td{background:lightblue; }\
-	table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
+	  table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
     table.pbTabBR tr td {border:none; background:none;}\
     table.pbTabLined tr td {border:1px none none solid none; padding: 2px 5px; white-space:nowrap;}\
     table.pbOptions tr td {border:1px none none solid none; padding: 1px 3px; white-space:nowrap;}\
@@ -165,6 +168,8 @@ function pbStartup (){
     span.boldRed {color:#800; font-weight:bold}\
     .castleButNon {background-image:url("'+ URL_CASTLE_BUT +'")}\
     .castleButSel {background-image:url("'+ URL_CASTLE_BUT_SEL +'")}\
+    input.pbDefButOn {cursor:pointer; border:1px solid black; background-color:red;}\
+    input.pbDefButOff {cursor:pointer; border:1px solid black; background-color:#0a0;}\
     a.ptButton20 {color:#ffff80}\
     table.pbMainTab {empty-cells:show; margin-top:5px }\
     table.pbMainTab tr td a {color:inherit }\
@@ -212,8 +217,6 @@ function pbStartup (){
     tabManager.showTab();
   }
   window.addEventListener('unload', onUnload, false);
-  TowerAlerts.init();
-  TowerAlerts.setPostToChatOptions(Options.alertConfig);
   exportToKOCattack.init();
   AddMainTabLink('BOT', eventHideShow, mouseMainTab);
   kocWatchdog ();
@@ -222,98 +225,236 @@ function pbStartup (){
   WideScreen.useWideMap (Options.pbWideMap);
 }
 
-/****************************  Tower Implementation  ******************************
- TODO: a lot ;-)
+/****************************  Tower Tab  ******************************/
+// TODO: continue sound alert on refresh!
 
- */
 Tabs.tower = {
   tabOrder: 1,
   tabLabel: 'Tower',
   myDiv: null,
+  generateIncomingFunc : null,
+  fixTargetEnabled : false,
+  towerMarches : {},    // track all marches that have been posted to alliance chat
+  secondTimer : null,
+  defMode : {},  
   timer: null,
-  alertState: [],
 
-    init: function(div){
-//	logit(div);
-		var t = Tabs.tower;
-        t.myDiv = div;
-		t.alertState = {
-            running: false,
-        };
-        t.readAlertState();
-
-        var m = '<DIV id=pbTowrtDivF class=ptstat>TOWER FUNCTIONS</div><TABLE id=pbtowerfunctions width=100% height=0% class=pbTab><TR>';
-        if (t.alertState.running == false) {
-            m += '<TD><INPUT id=pbAlertState type=submit value="Audio Alert = OFF"></td>';
-       }
-        else {
-            m += '<TD><INPUT id=pbAlertState type=submit value="Audio Alert = ON"></td>';
-        }
-        m += '</tr></table></div>';
-        m += '<DIV id=pbAlertDivD class=ptstat>SANCTUARY</div><TABLE id=pbalertdetails width=100% height=0% class=ptentry><TR>';
-		for (var i = 0; i < Cities.cities.length; i++) {
-           m += '<TD><center>' + Cities.cities[i].name + '</center></td>';
-        }
-        m += '</tr><TR>';
-		for (var i = 0; i < Cities.cities.length; i++) {
-		    if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 0) {
-				 m += '<TD><CENTER><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Def = OFF" style="border:1px solid black; background-color:#0a0;"></center></td>';
-			}
-			if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 1) {
-				 m += '<TD><CENTER><INPUT id=pbsanctuary_' + Cities.cities[i].id + ' type=submit value="Def = ON" style="border:1px solid black; background-color:red;"></center></td>';
-			}
-        }
-        m += '</tr><TR>';
-        m += '</tr></table></div>';
-       
-    	t.myDiv.innerHTML = m;
-		
-		for (var i = 0; i < Cities.cities.length; i++) {
-            var cityId = Cities.cities[i].id;
-            var btnName = 'pbsanctuary_' + cityId;
-			if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 0) {
-				addQueueEventListener(cityId, btnName, 1);
-			}
-			if (parseInt(Seed.citystats["city" + Cities.cities[i].id].gate) == 1) {
-			    addQueueEventListener(cityId, btnName, 0);
-			}
-        }
-		
-		document.getElementById('pbAlertState').addEventListener('click', function(){
-            t.toggleAlertState(this);
-        }, false);
-       
-	    window.addEventListener('unload', t.onUnload, false);
-		
-		t.e_checkTower();
-		
-		function addQueueEventListener(cityId, name, state){
-            document.getElementById(name).addEventListener('click', function(){
-                t.toggleDefendMode(cityId, state);
-            }, false);
-        }
-	},
-	
-	e_checkTower: function(){
-        var t = Tabs.tower;
-        var now = unixTime();
-		if (matTypeof(Seed.queue_atkinc) != 'array'){
-			for (var k in Seed.queue_atkinc){
-				var m = Seed.queue_atkinc[k];
-				if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
-					if (t.alertState.running == true) {
-						var soundSrc = "http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531";
-						//"http://www.falli.org/app/download/3780503956/feuerwehr4.mp3?t=1263918581";
-						t.playSound(soundSrc);
-					}
-				}
-			}
-		}
-        t.secondTimer = setTimeout(t.e_checkTower, 10000);
-    },
+  init: function(div){
+	  var t = Tabs.tower;
+    t.myDiv = div;
     
-	toggleDefendMode: function (cityId, state) {
-		var t = Tabs.tower;
+    var s = GM_getValue ('towerMarches_'+getServerId());
+    if (s != null)
+      t.towerMarches = JSON2.parse (s);
+    t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
+    unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
+ 
+    var m = '<DIV class=ptstat>TOWER ALERTS</div><TABLE class=pbTab><TR align=center>';
+	  for (var i=0; i<Cities.cities.length; i++)
+      m += '<TD width=95><SPAN id=pbtacity_'+ i +'>' + Cities.cities[i].name + '</span></td>';
+    m += '</tr><TR align=center>';
+	  for (var cityId in Cities.byID)
+      m += '<TD><INPUT type=submit id=pbtabut_'+ cityId +' value=""></td>';
+    m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="Stop Sound Alert"></center></div><DIV id=pbSwfPlayer></div>';
+    m += '<BR><DIV class=ptstat>CONFIGURATION</div><TABLE class=pbTab>\
+        <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>Automatically post incoming attacks to alliance chat.</td></tr>\
+        <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
+            <TR><TD align=right>Message Prefix: &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
+            <TR><TD align=right>Alert on scouting: &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
+            <TR><TD align=right>Alert on wild attack: &nbsp; </td><TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td></tr>\
+            <TR><TD align=right>Minimum # of troops: &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
+            </table></td></tr>\
+        <TR><TD><BR></td></tr>\
+        <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>Play sound on incoming attack/scout</td></tr>\
+        <TR><TD></td><TD><DIV id=pbLoadingSwf>Loading SWF player</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
+            <TR><TD align=right>Sound file: &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=60 maxlength=160 value="'+ Options.alertSound.soundUrl +'" \>\
+             &nbsp; <INPUT id=pbSoundDefault type=submit value=Default></td></tr>\
+            <TR><TD align=right>Volume: &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td></tr>\
+            <TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> Repeat every <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> minutes</td></tr>\
+            <TR><TD></td><TD>Play for <INPUT id=pbSoundLength type=text size=3 maxlength=5 value="'+ Options.alertSound.playLength +'"> seconds</td></tr>\
+            <TR><TD></td><TD><INPUT type=submit value="Play Now" id=pbPlayNow></td></tr></table></div></td></tr>\
+        </table><BR>';
+  	t.myDiv.innerHTML = m;
+
+
+//    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y'); 
+    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n'); 
+    t.mss.swfDebug = function (m){ logit ('SWF: '+ m)};
+    unsafeWindow.matSimpleSound01 = t.mss;   // let swf find it
+
+    t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
+    t.volSlider.setChangeListener(t.e_volChanged);
+    document.getElementById('pbPlayNow').addEventListener ('click', t.playSound, false);
+    document.getElementById('pbSoundStop').addEventListener ('click', t.butStopAlert, false);
+    document.getElementById('pbSoundRepeat').addEventListener ('change', function (e){Options.alertSound.repeat = e.target.checked}, false);
+    document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
+    document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
+    document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
+    document.getElementById('pbSoundStop').disabled = true;
+    
+    document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertScout').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbsoundFile').addEventListener ('change', function (){
+        Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
+        t.loadUrl (Options.alertSound.soundUrl);
+      }, false);
+    document.getElementById('pbSoundDefault').addEventListener ('click', function (){
+        document.getElementById('pbsoundFile').value = DEFAULT_ALERT_SOUND_URL;
+        Options.alertSound.soundUrl = DEFAULT_ALERT_SOUND_URL;
+        t.loadUrl (DEFAULT_ALERT_SOUND_URL);
+      }, false);
+
+    for (var cityId in Cities.byID){
+  	  var but = document.getElementById ('pbtabut_'+ cityId);
+  	  addListener (but, cityId);
+  	  t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
+  	  t.displayDefMode (cityId); 
+	  }
+    
+    if (Options.alertConfig.aChat || Options.alertSound.enabled)
+      t.timer = setInterval (t.eachSecond, 2000);                               /// !*!*!*!*!*!*
+    window.addEventListener('unload', t.onUnload, false);
+            
+    function addListener (but, i){
+      but.addEventListener ('click', function (){t.butToggleDefMode(i)}, false);
+    }  
+  },      
+
+  loadUrl : function (url){
+    var t = Tabs.tower;
+    t.mss.load (1, url, true);
+// loading / loaded / error !    
+  },
+  
+    
+  e_swfLoaded : function (){
+    var t = Tabs.tower;
+    document.getElementById('pbLoadingSwf').style.display = 'none';
+    document.getElementById('pbSoundOpts').style.display = 'inline';
+    t.mss.setVolume (1, Options.alertSound.volume);
+    t.volSlider.setValue (Options.alertSound.volume/100);
+    t.loadUrl (Options.alertSound.soundUrl);
+  },
+  
+  e_alertOptChanged : function (){
+    var t = Tabs.tower;
+    Options.alertConfig.aChat = document.getElementById('pbalertEnable').checked;
+    Options.alertConfig.aPrefix=document.getElementById('pbalertPrefix').value;      
+    Options.alertConfig.scouting=document.getElementById('pbalertScout').checked;      
+    Options.alertConfig.wilds=document.getElementById('pbalertWild').checked;
+    var mt = parseInt(document.getElementById('pbalertTroops').value);
+    if (mt<1 || mt>120000){
+      document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
+      document.getElementById('pbalerterr').innerHTML = '<font color=#600000><B>INVALID</b></font>';
+      setTimeout (function (){document.getElementById('pbalerterr').innerHTML =''}, 2000);
+      return;
+    } 
+    Options.alertConfig.minTroops = mt;
+  },
+  
+  e_volChanged : function (val){
+    var t = Tabs.tower;
+    document.getElementById('pbVolOut').innerHTML = parseInt(val*100);
+    Options.alertSound.volume = parseInt(val*100);
+    t.mss.setVolume (1, Options.alertSound.volume);
+  },
+  
+  butToggleDefMode : function (cityId){
+    var t = Tabs.tower;
+    var mode = 1;
+    if (Seed.citystats["city" + cityId].gate != 0)
+      mode = 0;
+    t.ajaxSetDefMode (cityId, mode, function (newMode){
+        t.defMode[cityId] = newMode;
+        t.displayDefMode (cityId);
+      });
+  },
+      
+  displayDefMode : function (cityId){
+    var t = Tabs.tower;
+    var but = document.getElementById('pbtabut_'+ cityId);
+    if (t.defMode[cityId]){
+      but.className = 'pbDefButOn';
+      but.value = 'Def = ON';  
+    } else {
+      but.className = 'pbDefButOff';
+      but.value = 'Def = OFF';  
+    }  
+  },
+    
+  show : function (){
+  },
+  
+  hide : function (){
+  },
+  
+  eachSecond : function (){
+    var t = Tabs.tower;
+	  for (var cityId in Cities.byID){
+      if (Seed.citystats["city" + cityId].gate != t.defMode[cityId]){     // user changed def mode
+        t.defMode[cityId] = Seed.citystats["city"+ cityId].gate;
+        t.displayDefMode (cityId);
+      }
+    }
+  	var now = unixTime();
+    if (matTypeof(Seed.queue_atkinc) != 'array'){
+      for (var k in Seed.queue_atkinc){
+        var m = Seed.queue_atkinc[k]; 
+        if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now && t.towerMarches['m'+m.mid]==null){
+          t.newIncoming (m); 
+        }
+      }
+    }
+  },   
+ 
+
+  soundIntervalTimer : null,
+  soundStopTimer : null,
+  
+  playSound : function (){
+    var t = Tabs.tower;
+    document.getElementById('pbSoundStop').disabled = false;
+    clearTimeout (t.soundStopTimer);
+    t.mss.play (1, 0);
+    t.soundStopTimer = setTimeout (function(){t.mss.stop(1)}, Options.alertSound.playLength*1000);
+  },
+      
+  soundTheAlert : function (){
+    var t = Tabs.tower;
+    clearInterval (t.soundIntervalTimer); 
+    t.playSound();
+    if (Options.alertSound.repeat)
+      t.soundIntervalTimer = setInterval (t.playSound, Options.alertSound.repeatDelay*60000);
+  },
+   
+     
+  butStopAlert : function (){
+    var t = Tabs.tower;
+    t.mss.stop (1);
+    clearTimeout (t.soundStopTimer);
+    clearInterval (t.soundIntervalTimer); 
+    document.getElementById('pbSoundStop').disabled = true;
+  },
+  
+
+  newIncoming : function (m){
+    var t = Tabs.tower;
+    var now = unixTime();
+    for (k in t.towerMarches){    // cleanup old marches
+      if (t.towerMarches[k].arrival < now)
+        delete t.towerMarches[k];
+    }
+    t.towerMarches['m'+m.mid] = {added:now, arrival:parseIntNan(m.arrivalTime) };
+    t.postToChat (m, false);
+    if (Options.alertSound.enabled)
+      t.soundTheAlert();
+  },
+  
+
+  ajaxSetDefMode : function (cityId, state, notify){
 		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.cid = cityId;
 		params.state = state;
@@ -323,73 +464,91 @@ Tabs.tower = {
 			onSuccess: function (rslt) {
 				if (rslt.ok) {
 					Seed.citystats["city" + cityId].gate = state;
-//					if (rslt.updateSeed) {
-//						unsafeWindow.update_seed(rslt.updateSeed)
-//					}
-					t.init(t.myDiv);
-//					unsafeWindow.Modal.hideModal();
-				} else {
-					var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-// element doesn't exist!					document.getElementById('pbTowerError').innerHTML = errmsg;
-					logit(errmsg);
-				}
+					notify (state);
+				} 
 			},
 			onFailure: function () {
-// element doesn't exist!					document.getElementById('pbTowerError').innerHTML = "Connection Error! Please try later again";
 			}
 		})
-	},
-	
-	playSound : function(soundSrc){
-        var playerSrc = "http://www.infowars.com/mediaplayer.swf";
-        var player = document.createElement('embed');
-        player.src = playerSrc;
-        player.setAttribute("style", "visibility:hidden;");
-        player.setAttribute('id', 'timer_sound');
-        player.setAttribute('flashvars', 'type=mp3&autostart=true&repeat=false&file=' + escape(soundSrc));
-        document.body.appendChild(player);
-// yikes, an embed DOM element is added every 10 seconds and never removed or re-used?  
-// George will fix this when tower tab is refactored for Power Tools update      
-    },
+  },
+
+  
+  onUnload : function (){
+    var t = Tabs.tower;
+    GM_setValue ('towerMarches_'+getServerId(), JSON2.stringify(t.towerMarches)); 
+  },
+
     
-	saveAlertState: function(){
-		var t = Tabs.tower;
-        var serverID = getServerId();
-        GM_setValue('alertState_' + serverID, JSON2.stringify(t.alertState));
-    },
-    readAlertState: function(){
-        var t = Tabs.tower;
-        var serverID = getServerId();
-        s = GM_getValue('alertState_' + serverID);
-        if (s != null) {
-            state = JSON2.parse(s);
-            for (k in state) 
-                t.alertState[k] = state[k];
+  postToChat : function (m){
+    var t = Tabs.tower;
+    if (DEBUG_TRACE) logit ("checkTower(): INCOMING at "+ unixTime()  +": \n"+ inspect (m, 8, 1));
+    if (m.marchType == null)      // bogus march (returning scouts)
+      return;
+    if (ENABLE_TEST_TAB) Tabs.Test.addDiv ("Incoming!<BR><PRE style='margin:0px;'>" + inspect (m, 8, 1) +'</pre>');
+    if (m.marchType == 3){
+      if (!Options.alertConfig.scouting)
+        return;
+      atkType = 'scouted';
+    } else if (m.marchType == 4){
+      atkType = 'attacked';
+    } else {
+      return;
+    }
+    var target, atkType, who;
+    var city = Cities.byID[m.toCityId];
+    if ( city.tileId == m.toTileId )
+      target = 'city at '+ city.x +','+ city.y;
+    else {
+      if (!Options.alertConfig.wilds)
+        return;
+      target = 'wilderness';
+      for (k in Seed.wilderness['city'+m.toCityId]){
+        if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
+          target += ' at '+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord;
+          break;
         }
-    },
-    toggleAlertState: function(obj){
-		var t = Tabs.tower;
-        if (t.alertState.running == true) {
-            t.alertState.running = false;
-            t.saveAlertState();
-            obj.value = "Audio Alert = OFF";
+      }
+    }
+    if (Seed.players['u'+m.pid])
+      who = Seed.players['u'+m.pid].n;
+    else if (m.players && m.players['u'+m.pid])
+      who = m.players['u'+m.pid].n;
+    else
+      who = 'Unknown';
+  
+    if (m.fromXCoord)
+      who += ' at '+ m.fromXCoord +','+ m.fromYCoord;
+    var msg = Options.alertConfig.aPrefix +' ';
+    msg += 'My '+ target +' is being '+ atkType  +' by '+ who +'. Incoming Troops (arriving in '+
+        unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
+    var totTroops = 0;
+    for (k in m.unts){
+      var uid = parseInt(k.substr (1));
+      msg += m.unts[k] +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
+      totTroops += m.unts[k];
+    }
+    if (totTroops < Options.alertConfig.minTroops)
+      return;
+    msg = msg.slice (0, -2);
+    msg += '.';
+    if ( city.tileId == m.toTileId ){
+      var emb = getCityBuilding(m.toCityId, 8);
+      if (emb.count > 0){
+        var availSlots = emb.maxLevel;
+        for (k in Seed.queue_atkinc){
+          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){ 
+            --availSlots;
+          }
         }
-        else {
-            t.alertState.running = true;
-            t.saveAlertState();
-            obj.value = "Audio Alert = ON";
-        }
-    },
-	show: function(){
-		var t = Tabs.tower;
-    },
-	hide: function(){
-        var t = Tabs.tower;
-    },
-    onUnload: function(){
-        var t = Tabs.tower;
-        
-    },
+        msg += ' My embassy has '+ availSlots +' of '+ emb.maxLevel +' slots available.';
+      }
+    }
+    if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
+    if (SEND_ALERT_AS_WHISPER)
+      sendChat ("/"+ Seed.player.name +' '+ msg);    // Whisper to myself
+    else
+      sendChat ("/a "+  msg);                        // Alliance chat
+  },
 }
 
 
@@ -2066,23 +2225,11 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>Put chat on right (requires wide screen)</td></tr>\
 		<TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>Use WideMap (requires wide screen)</td></tr>\
         <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>Auto collect gold when happiness reaches <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
-        <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>Automatically post incoming attacks to alliance chat.</td></tr>\
-        <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
-            <TR><TD align=right>Message Prefix: &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
-            <TR><TD align=right>Alert on scouting: &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>Alert on wild attack: &nbsp; </td><TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>Minimum # of troops: &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
-            </table></td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
       div.innerHTML = m;
 
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
       document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
-      document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
-      document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
-      document.getElementById('pbalertScout').addEventListener ('change', t.e_alertOptChanged, false);
-      document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
-      document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
       t.togOpt ('pballowWinMove', 'pbWinDrag', mainPop.setEnableDrag);
       t.togOpt ('pbTrackWinOpen', 'pbTrackOpen');
       t.togOpt ('pbHideOnGoto', 'hideOnGoto');
@@ -2143,157 +2290,9 @@ Tabs.Options = {
     GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));  
   },
   
-  e_alertOptChanged : function (){
-    Options.alertConfig.aChat = document.getElementById('pbalertEnable').checked;
-    Options.alertConfig.aPrefix=document.getElementById('pbalertPrefix').value;      
-    Options.alertConfig.scouting=document.getElementById('pbalertScout').checked;      
-    Options.alertConfig.wilds=document.getElementById('pbalertWild').checked;
-    var mt = parseInt(document.getElementById('pbalertTroops').value);
-    if (mt<1 || mt>120000){
-      document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
-      document.getElementById('pbalerterr').innerHTML = '<font color=#600000><B>INVALID</b></font>';
-      setTimeout (function (){document.getElementById('pbalerterr').innerHTML =''}, 2000);
-      return;
-    } 
-    Options.alertConfig.minTroops = mt;
-    saveOptions();
-    TowerAlerts.setPostToChatOptions (Options.alertConfig);
-  },
 }
 
 
-/************************ Tower Alerts ************************/
-var TowerAlerts = {
-  generateIncomingFunc : null,
-  fixTargetEnabled : false,
-  towerMarches : {},    // track all marches that have been posted to alliance chat
-  
-  init : function (){
-    var t = TowerAlerts; 
-    var s = GM_getValue ('towerMarches_'+getServerId());
-    if (s != null)
-      t.towerMarches = JSON2.parse (s);
-
-    t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
-    unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
-  },
-  
-  postToChatOptions : {aChat:false},
-  secondTimer : null,
-
-  setPostToChatOptions : function (obj){
-    var t = TowerAlerts;
-    t.postToChatOptions = obj;
-    clearTimeout(t.secondTimer);
-	 if (obj.aChat)
-		t.e_eachSecond();
-	//DD two lines deleted
-  },
-    
-  addTowerMarch : function (m){
-    var t = TowerAlerts;
-    var now = unixTime();
-    for (k in t.towerMarches){
-      if (t.towerMarches[k].arrival < now)
-        delete t.towerMarches[k];
-    }
-    t.towerMarches['m'+m.mid] = {added:now, arrival:parseIntNan(m.arrivalTime) };
-    GM_setValue ('towerMarches_'+getServerId(), JSON2.stringify(t.towerMarches) );
-  },
-  
-  getTowerMarch : function (mid){ // ID only (no 'm')
-    var t = TowerAlerts;
-    return t.towerMarches['m'+mid];
-  },
-
-  e_eachSecond : function (){   // check for incoming marches
-    var t = TowerAlerts;
-	var now = unixTime();
-    if (matTypeof(Seed.queue_atkinc) != 'array'){
-      for (var k in Seed.queue_atkinc){
-        var m = Seed.queue_atkinc[k]; 
-        if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now && t.getTowerMarch(m.mid)==null){
-          t.addTowerMarch (m);
-          t.postToChat (m, false);
-        }
-      }
-    }
-    t.secondTimer = setTimeout (t.e_eachSecond, 2000);
-  },
-  
-  postToChat : function (m, force){
-    var t = TowerAlerts;
-    if (DEBUG_TRACE) logit ("checkTower(): INCOMING at "+ unixTime()  +": \n"+ inspect (m, 8, 1));
-    if (m.marchType == null)      // bogus march (returning scouts)
-      return;
-    if (ENABLE_TEST_TAB) Tabs.Test.addDiv ("Incoming!<BR><PRE style='margin:0px;'>" + inspect (m, 8, 1) +'</pre>');
-    if (m.marchType == 3){
-      if (!t.postToChatOptions.scouting && !force)
-        return;
-      atkType = 'scouted';
-    } else if (m.marchType == 4){
-      atkType = 'attacked';
-    } else {
-      return;
-    }
-    var target, atkType, who;
-    var city = Cities.byID[m.toCityId];
-    if ( city.tileId == m.toTileId )
-      target = 'city at '+ city.x +','+ city.y;
-    else {
-      if (!t.postToChatOptions.wilds && !force)
-        return;
-      target = 'wilderness';
-      for (k in Seed.wilderness['city'+m.toCityId]){
-        if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
-          target += ' at '+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord;
-          break;
-        }
-      }
-    }
-    if (Seed.players['u'+m.pid])
-      who = Seed.players['u'+m.pid].n;
-    else if (m.players && m.players['u'+m.pid])
-      who = m.players['u'+m.pid].n;
-    else
-      who = 'Unknown';
-  
-    if (m.fromXCoord)
-      who += ' at '+ m.fromXCoord +','+ m.fromYCoord;
-    var msg = '';
-    if (!force)
-      msg = t.postToChatOptions.aPrefix +' ';
-    msg += 'My '+ target +' is being '+ atkType  +' by '+ who +'. Incoming Troops (arriving in '+
-        unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
-    var totTroops = 0;
-    for (k in m.unts){
-      var uid = parseInt(k.substr (1));
-      msg += m.unts[k] +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
-      totTroops += m.unts[k];
-    }
-    if ((totTroops < t.postToChatOptions.minTroops) && !force)
-      return;
-    msg = msg.slice (0, -2);
-    msg += '.';
-    if ( city.tileId == m.toTileId ){
-      var emb = getCityBuilding(m.toCityId, 8);
-      if (emb.count > 0){
-        var availSlots = emb.maxLevel;
-        for (k in Seed.queue_atkinc){
-          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){ 
-            --availSlots;
-          }
-        }
-        msg += ' My embassy has '+ availSlots +' of '+ emb.maxLevel +' slots available.';
-      }
-    }
-    if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
-    if (SEND_ALERT_AS_WHISPER)
-      sendChat ("/"+ Seed.player.name +' '+ msg);    // Whisper to myself
-    else
-      sendChat ("/a "+  msg);                        // Alliance chat
-  },
-}
 
 /************************ Gold Collector ************************/
 var CollectGold = {
@@ -4634,5 +4633,178 @@ function hexDump (dat){
     return hexdigs.charAt(d&15);      
   }
 }
+ 
+// value is 0 to 1.0
+function SliderBar (container, width, height, value, classPrefix, margin){
+  var self = this;
+  this.listener = null;
+  if (value==null)
+    value = 0; 
+  if (!margin)
+    margin = parseInt(width*.05);
+  this.value = value;
+  if (width<20) width=20;
+  if (height<5) height=5; 
+  if (classPrefix == null){
+    classPrefix = 'slider';
+    var noClass = true;
+  }      
+  var sliderHeight = parseInt(height/2);  
+  var sliderTop = parseInt(height/4);
+  this.sliderWidth = width - (margin*2);
+    
+  this.div = document.createElement ('div');  
+  this.div.style.height = height +'px';
+  this.div.style.width = width +'px';
+  this.div.className = classPrefix +'Cont';
+  if (noClass)
+    this.div.style.backgroundColor='#ddd';
   
+  this.slider = document.createElement ('div');
+  this.slider.setAttribute ('style', 'position:relative;');
+  this.slider.style.height = sliderHeight + 'px'
+  this.slider.style.top = sliderTop + 'px';
+  this.slider.style.width = this.sliderWidth +'px';
+  this.slider.style.left = margin +'px';   /////
+  this.slider.className = classPrefix +'Bar';
+  this.slider.draggable = true;
+  if (noClass)
+    this.slider.style.backgroundColor='#fff';
+  
+  this.sliderL = document.createElement ('div');
+  this.sliderL.setAttribute ('style', 'width:100px; height:100%; position:relative; ');
+  this.sliderL.className = classPrefix +'Part';
+  this.sliderL.draggable = true;
+  if (noClass)
+    this.sliderL.style.backgroundColor='#0c0';
+  
+  this.knob = document.createElement ('div');
+  this.knob.setAttribute ('style', 'width:3px; position:relative; left:0px; background-color:#222');
+  this.knob.style.height = height +'px';
+  this.knob.style.top = (0-sliderTop) +'px';
+  this.knob.className = classPrefix +'Knob';
+  this.knob.draggable = true;
+  this.slider.appendChild(this.sliderL);
+  this.sliderL.appendChild (this.knob);
+  this.div.appendChild (this.slider);
+  container.appendChild (this.div);
+  this.div.addEventListener('mousedown',  mouseDown, false);
+
+  this.getValue = function (){
+    return self.value;
+  }
+
+  this.setValue = function (val){   // todo: range check
+    var relX = (val * self.sliderWidth);
+    self.sliderL.style.width = relX + 'px';
+    self.knob.style.left =  relX + 'px';
+    self.value = val;
+    if (self.listener)
+      self.listener(self.value); 
+  }
+  
+  this.setChangeListener = function (listener){
+    self.listener = listener;
+  }
+
+  function moveKnob (me){
+    var relX = me.clientX - self.divLeft;
+    if (relX < 0)
+      relX = 0;
+    if (relX > self.sliderWidth)
+      relX = self.sliderWidth;
+    self.knob.style.left = (relX - (self.knob.clientWidth/2) ) +'px';   // - half knob width !?!?
+    self.sliderL.style.width = relX + 'px';
+    self.value =  relX / self.sliderWidth;   
+    if (self.listener)
+      self.listener(self.value); 
+  }
+  function doneMoving (){
+    self.div.removeEventListener('mousemove', mouseMove, true);
+    document.removeEventListener('mouseup', mouseUp, true);
+  }  
+  function mouseUp (me){
+    moveKnob (me);
+    doneMoving();
+  }
+  
+  function mouseDown(me){
+    var e = self.slider;
+    self.divLeft = 0;
+    while (e.offsetParent){   // determine actual clientX
+      self.divLeft += e.offsetLeft;
+      e = e.offsetParent;
+    }
+    moveKnob (me);
+    document.addEventListener('mouseup',  mouseUp, true);
+    self.div.addEventListener('mousemove',  mouseMove, true);
+  }
+  function mouseMove(me){
+    moveKnob (me); 
+  }
+}
+
+
+function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
+  var self = this;
+  this.player = null;
+  this.volume = 100;
+  this.isLoaded = false;
+  this.onSwfLoaded = null;
+  
+  var div = document.createElement ('div');
+  this.onSwfLoaded = onLoad;
+  if (navigator.appName.toLowerCase().indexOf('microsoft')+1) {
+    div.innerHTML = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"><param name="movie" value="'+playerUrl+'"><param name="quality" value="high"></object>';
+    this.player = div.getElementsByTagName('object')[0];
+  } else {
+    div.innerHTML = '<embed src="'+playerUrl+'"  bgcolor="#eeeeee" allowfullscreen=false FlashVars="'+ flashVars +'" quality="high" allowscriptaccess="always" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" ></embed>';
+    this.player = div.getElementsByTagName('embed')[0].wrappedJSObject;
+  }
+  if (container)
+    container.appendChild (div);
+  else 
+    document.body.appendChild (div);
+  for (k in attrs)
+    this.player.setAttribute(k, attrs[k]); 
+       
+  this.setVolume = function (chanNum, vol){
+    if (!self.isLoaded)
+      return;
+    var ret =  self.player.jsSetVolume (chanNum, vol);
+    volume = vol; 
+  }
+  
+  this.load = function (chanNum, url, bStream, bAutoplay, bUsePolicyFile){   // loop ?
+    self.player.jsLoad (chanNum, url, bStream, bAutoplay, bUsePolicyFile);
+  }
+  
+  this.play = function (chanNum, position){
+    self.player.jsPlay (chanNum, position);
+  }
+    
+  this.stop = function (chanNum){
+    self.player.jsStop (chanNum);
+  }
+    
+  this.getStatus = function (chanNum){           // returns null if sound channel is 'empty'
+    return self.player.jsGetStatus (chanNum);
+  }
+  
+  this.debugFunc = function (msg){  // overload to use
+  }
+      
+  this.swfDebug = function (msg){    // called by plugin
+    self.debugFunc('SWF: '+ msg);
+  }
+  this.swfLoaded = function (){    // called by plugin when ready to go!
+    self.isLoaded = true;
+    self.debugFunc ('playerIsReady'); 
+    if (self.onSwfLoaded)
+      self.onSwfLoaded();
+  }
+}
+
+
+
 pbStartup ();
