@@ -12,10 +12,10 @@ var Version = '20110228a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
-var ENABLE_TEST_TAB = true;
+var ENABLE_TEST_TAB = false;
 var ENABLE_ATTACK_TAB = false;
 var ENABLE_SAMPLE_TAB = false;
-var SEND_ALERT_AS_WHISPER = true;
+var SEND_ALERT_AS_WHISPER = false;
 var DISABLE_BULKADD_LIST = false;
 var ENABLE_GM_AJAX_TRACE = false;
 // end test switches
