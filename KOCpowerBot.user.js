@@ -8,31 +8,28 @@
 // ==/UserScript==
 
 
-var Version = '20110225a';
+var Version = '20110228a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
-var ENABLE_TEST_TAB = false;
+var ENABLE_TEST_TAB = true;
 var ENABLE_ATTACK_TAB = false;
 var ENABLE_SAMPLE_TAB = false;
-var SEND_ALERT_AS_WHISPER = false;
+var SEND_ALERT_AS_WHISPER = true;
 var DISABLE_BULKADD_LIST = false;
 var ENABLE_GM_AJAX_TRACE = false;
-
 // end test switches
 
 var MAP_DELAY = 1200;
 
 var URL_CASTLE_BUT = 'http://i.imgur.com/MPlZr.png';
 var URL_CASTLE_BUT_SEL = 'http://i.imgur.com/XWR4B.png';
-//var CHAT_BG_IMAGE = 'http://i.imgur.com/VjNst.jpg';   // 600
 var CHAT_BG_IMAGE = 'http://i.imgur.com/0ws3E.jpg';   // 720
 var DEFAULT_ALERT_SOUND_URL = 'http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531';
 var SWF_PLAYER_URL = 'http://www.fileden.com/files/2011/2/25/3086757/matSimpleSound01aXD.swf';
 
 /***********************
 TODO (Jetson): enhance winManager (setlayer, focusme, remember coords on reopen, etc)
-TODO (Jetson): Add city search
 **********************/
 
 var JSON;if(!JSON){JSON={};}(function(){"use strict";function f(n){return n<10?'0'+n:n;}if(typeof Date.prototype.toJSON!=='function'){Date.prototype.toJSON=function(key){return isFinite(this.valueOf())?this.getUTCFullYear()+'-'+f(this.getUTCMonth()+1)+'-'+f(this.getUTCDate())+'T'+f(this.getUTCHours())+':'+f(this.getUTCMinutes())+':'+f(this.getUTCSeconds())+'Z':null;};String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(key){return this.valueOf();};}var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={'\b':'\\b','\t':'\\t','\n':'\\n','\f':'\\f','\r':'\\r','"':'\\"','\\':'\\\\'},rep;function quote(string){escapable.lastIndex=0;return escapable.test(string)?'"'+string.replace(escapable,function(a){var c=meta[a];return typeof c==='string'?c:'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);})+'"':'"'+string+'"';}function str(key,holder){var i,k,v,length,mind=gap,partial,value=holder[key];if(value&&typeof value==='object'&&typeof value.toJSON==='function'){value=value.toJSON(key);}if(typeof rep==='function'){value=rep.call(holder,key,value);}switch(typeof value){case'string':return quote(value);case'number':return isFinite(value)?String(value):'null';case'boolean':case'null':return String(value);case'object':if(!value){return'null';}gap+=indent;partial=[];if(Object.prototype.toString.apply(value)==='[object Array]'){length=value.length;for(i=0;i<length;i+=1){partial[i]=str(i,value)||'null';}v=partial.length===0?'[]':gap?'[\n'+gap+partial.join(',\n'+gap)+'\n'+mind+']':'['+partial.join(',')+']';gap=mind;return v;}if(rep&&typeof rep==='object'){length=rep.length;for(i=0;i<length;i+=1){k=rep[i];if(typeof k==='string'){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}else{for(k in value){if(Object.hasOwnProperty.call(value,k)){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}v=partial.length===0?'{}':gap?'{\n'+gap+partial.join(',\n'+gap)+'\n'+mind+'}':'{'+partial.join(',')+'}';gap=mind;return v;}}if(typeof JSON.stringify!=='function'){JSON.stringify=function(value,replacer,space){var i;gap='';indent='';if(typeof space==='number'){for(i=0;i<space;i+=1){indent+=' ';}}else if(typeof space==='string'){indent=space;}rep=replacer;if(replacer&&typeof replacer!=='function'&&(typeof replacer!=='object'||typeof replacer.length!=='number')){throw new Error('JSON.stringify');}return str('',{'':value});};}if(typeof JSON.parse!=='function'){JSON.parse=function(text,reviver){var j;function walk(holder,key){var k,v,value=holder[key];if(value&&typeof value==='object'){for(k in value){if(Object.hasOwnProperty.call(value,k)){v=walk(value,k);if(v!==undefined){value[k]=v;}else{delete value[k];}}}}return reviver.call(holder,key,value);}text=String(text);cx.lastIndex=0;if(cx.test(text)){text=text.replace(cx,function(a){return'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);});}if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,'@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,']').replace(/(?:^|:|,)(?:\s*\[)+/g,''))){j=eval('('+text+')');return typeof reviver==='function'?walk({'':j},''):j;}throw new SyntaxError('JSON.parse');};}}());
@@ -111,8 +108,8 @@ var Options = {
   pbEveryMins  : 30,
   pbChatOnRight: false,
   pbWideMap    : false,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, minTroops:10000, spamLimit:10 },
-  alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:5, repeatDelay:1, volume:100},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, minTroops:10000, spamLimit:10, lastAttack:0 },
+  alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   giftDomains  : {valid:false, list:{}},
   giftDelete   : 'e',
   currentTab   : null,
@@ -183,7 +180,6 @@ function pbStartup (){
     .CPopup  {border:3px ridge #666}\
     div.indent25 {padding-left:25px}';
     
-    
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readOptions();
@@ -226,26 +222,24 @@ function pbStartup (){
 }
 
 /****************************  Tower Tab  ******************************/
-// TODO: continue sound alert on refresh!
-
 Tabs.tower = {
   tabOrder: 1,
   tabLabel: 'Tower',
   myDiv: null,
   generateIncomingFunc : null,
   fixTargetEnabled : false,
-  towerMarches : {},    // track all marches that have been posted to alliance chat
   secondTimer : null,
+  soundPlaying : false,
   defMode : {},  
-  timer: null,
+  soundIntervalTimer : null,
+  soundStopTimer : null,
 
   init: function(div){
 	  var t = Tabs.tower;
     t.myDiv = div;
     
-    var s = GM_getValue ('towerMarches_'+getServerId());
-    if (s != null)
-      t.towerMarches = JSON2.parse (s);
+    if (GM_getValue ('towerMarches_'+getServerId()) != null)
+      GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
     t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
     unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
  
@@ -267,31 +261,31 @@ Tabs.tower = {
         <TR><TD><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>Play sound on incoming attack/scout</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>Loading SWF player</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
-            <TR><TD align=right>Sound file: &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=60 maxlength=160 value="'+ Options.alertSound.soundUrl +'" \>\
-             &nbsp; <INPUT id=pbSoundDefault type=submit value=Default></td></tr>\
-            <TR><TD align=right>Volume: &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td></tr>\
+            <TR><TD align=right>Sound file: &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=55 maxlength=160 value="'+ Options.alertSound.soundUrl +'" \>\
+             &nbsp; </td><TD><INPUT id=pbSoundLoad type=submit value=Load><INPUT id=pbSoundDefault type=submit value=Default></td></tr>\
+            <TR><TD align=right>Volume: &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td><TD align=center><SPAN id=pbLoadStat>xx</span></td></tr>\
             <TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> Repeat every <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> minutes</td></tr>\
             <TR><TD></td><TD>Play for <INPUT id=pbSoundLength type=text size=3 maxlength=5 value="'+ Options.alertSound.playLength +'"> seconds</td></tr>\
             <TR><TD></td><TD><INPUT type=submit value="Play Now" id=pbPlayNow></td></tr></table></div></td></tr>\
         </table><BR>';
   	t.myDiv.innerHTML = m;
 
-
 //    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y'); 
     t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n'); 
     t.mss.swfDebug = function (m){ logit ('SWF: '+ m)};
+    t.mss.swfPlayComplete = t.e_soundFinished;
+    t.mss.swfLoadComplete = t.e_soundFileLoaded;
     unsafeWindow.matSimpleSound01 = t.mss;   // let swf find it
 
     t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
     t.volSlider.setChangeListener(t.e_volChanged);
     document.getElementById('pbPlayNow').addEventListener ('click', t.playSound, false);
-    document.getElementById('pbSoundStop').addEventListener ('click', t.butStopAlert, false);
+    document.getElementById('pbSoundStop').addEventListener ('click', t.stopSoundAlerts, false);
     document.getElementById('pbSoundRepeat').addEventListener ('change', function (e){Options.alertSound.repeat = e.target.checked}, false);
     document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
     document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
     document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
     document.getElementById('pbSoundStop').disabled = true;
-    
     document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertScout').addEventListener ('change', t.e_alertOptChanged, false);
@@ -313,23 +307,24 @@ Tabs.tower = {
   	  t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
   	  t.displayDefMode (cityId); 
 	  }
-    
-    if (Options.alertConfig.aChat || Options.alertSound.enabled)
-      t.timer = setInterval (t.eachSecond, 2000);                               /// !*!*!*!*!*!*
-    window.addEventListener('unload', t.onUnload, false);
-            
     function addListener (but, i){
       but.addEventListener ('click', function (){t.butToggleDefMode(i)}, false);
     }  
+    setInterval (t.eachSecond, 2000); 
   },      
 
+  show : function (){
+  },
+  
+  hide : function (){
+  },
+ 
   loadUrl : function (url){
     var t = Tabs.tower;
     t.mss.load (1, url, true);
-// loading / loaded / error !    
+    document.getElementById('pbLoadStat').innerHTML = 'Loading';
   },
-  
-    
+      
   e_swfLoaded : function (){
     var t = Tabs.tower;
     document.getElementById('pbLoadingSwf').style.display = 'none';
@@ -337,6 +332,8 @@ Tabs.tower = {
     t.mss.setVolume (1, Options.alertSound.volume);
     t.volSlider.setValue (Options.alertSound.volume/100);
     t.loadUrl (Options.alertSound.soundUrl);
+    if (Options.alertSound.alarmActive && Options.alertSound.expireTime>unixTime())   
+      t.soundTheAlert();
   },
   
   e_alertOptChanged : function (){
@@ -385,12 +382,6 @@ Tabs.tower = {
     }  
   },
     
-  show : function (){
-  },
-  
-  hide : function (){
-  },
-  
   eachSecond : function (){
     var t = Tabs.tower;
 	  for (var cityId in Cities.byID){
@@ -401,58 +392,76 @@ Tabs.tower = {
     }
   	var now = unixTime();
     if (matTypeof(Seed.queue_atkinc) != 'array'){
-      for (var k in Seed.queue_atkinc){
+      for (var k in Seed.queue_atkinc){   // check each incoming march
         var m = Seed.queue_atkinc[k]; 
-        if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now && t.towerMarches['m'+m.mid]==null){
-          t.newIncoming (m); 
+        if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
+          if (m.departureTime > Options.alertConfig.lastAttack){
+            Options.alertConfig.lastAttack = m.departureTime;  
+            t.newIncoming (m); 
+          }          
         }
       }
     }
+//logit ("NOW="+ now + ' alarmActive='+ Options.alertSound.alarmActive + ' expireTime='+ Options.alertSound.expireTime);
+    if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime))
+      t.stopSoundAlerts();   
   },   
- 
+  
+  e_soundFinished : function (chan){ // called by SWF when sound finishes playing
+    var t = Tabs.tower;
+    if (chan != 1)
+      return;
+    if (t.soundIntervalTimer == null){
+      document.getElementById('pbSoundStop').disabled = true;
+    }
+  },
 
-  soundIntervalTimer : null,
-  soundStopTimer : null,
+  e_soundFileLoaded : function (chan, isError){ // called by SWF when sound file finishes loading
+    if (chan != 1)
+      return;
+    if (isError)  
+      document.getElementById('pbLoadStat').innerHTML = 'Error!';
+    else
+      document.getElementById('pbLoadStat').innerHTML = 'Loaded';
+  },  
   
   playSound : function (){
     var t = Tabs.tower;
     document.getElementById('pbSoundStop').disabled = false;
     clearTimeout (t.soundStopTimer);
     t.mss.play (1, 0);
-    t.soundStopTimer = setTimeout (function(){t.mss.stop(1)}, Options.alertSound.playLength*1000);
+    t.soundStopTimer = setTimeout (function(){t.mss.stop(1); t.e_soundFinished(1)}, Options.alertSound.playLength*1000);
   },
-      
+        
   soundTheAlert : function (){
     var t = Tabs.tower;
     clearInterval (t.soundIntervalTimer); 
     t.playSound();
     if (Options.alertSound.repeat)
       t.soundIntervalTimer = setInterval (t.playSound, Options.alertSound.repeatDelay*60000);
+    Options.alertSound.alarmActive = true;
   },
-   
      
-  butStopAlert : function (){
+  stopSoundAlerts : function (){
     var t = Tabs.tower;
     t.mss.stop (1);
     clearTimeout (t.soundStopTimer);
     clearInterval (t.soundIntervalTimer); 
     document.getElementById('pbSoundStop').disabled = true;
+    Options.alertSound.alarmActive = false;
+    Options.alertSound.expireTime = 0;
   },
-  
 
   newIncoming : function (m){
     var t = Tabs.tower;
     var now = unixTime();
-    for (k in t.towerMarches){    // cleanup old marches
-      if (t.towerMarches[k].arrival < now)
-        delete t.towerMarches[k];
+    t.postToChat (m);
+    if (Options.alertSound.enabled){
+      t.soundTheAlert(m);
+      if (m.arrivalTime > Options.alertSound.expireTime)
+        Options.alertSound.expireTime = m.arrivalTime;
     }
-    t.towerMarches['m'+m.mid] = {added:now, arrival:parseIntNan(m.arrivalTime) };
-    t.postToChat (m, false);
-    if (Options.alertSound.enabled)
-      t.soundTheAlert();
   },
-  
 
   ajaxSetDefMode : function (cityId, state, notify){
 		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -471,13 +480,9 @@ Tabs.tower = {
 			}
 		})
   },
-
   
   onUnload : function (){
-    var t = Tabs.tower;
-    GM_setValue ('towerMarches_'+getServerId(), JSON2.stringify(t.towerMarches)); 
   },
-
     
   postToChat : function (m){
     var t = Tabs.tower;
@@ -3135,8 +3140,13 @@ function readOptions (){
   s = GM_getValue ('Options_'+serverID);
   if (s != null){
     opts = JSON2.parse (s);
-    for (k in opts)
-      Options[k] = opts[k];
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          Options[k][kk] = opts[k][kk];
+      else
+        Options[k] = opts[k];
+    }
   }
 }
 
@@ -4802,6 +4812,10 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
     self.debugFunc ('playerIsReady'); 
     if (self.onSwfLoaded)
       self.onSwfLoaded();
+  }
+  this.swfPlayComplete = function (chanNum){    // called by plugin when a sound finishes playing (overload to be notified)
+  }
+  this.swfLoadComplete = function (chanNum, isError){    // called by plugin when a sound finishes loading  (overload to be notified)
   }
 }
 
