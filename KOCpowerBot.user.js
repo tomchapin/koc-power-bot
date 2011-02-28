@@ -1342,7 +1342,7 @@ for (var i in Provinces) {
           <OPTION value="level" '+ (Options.srcSortBy=='level'?'SELECTED':'')  +'>Level</option>\
           <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
 			</select></td></tr>\
-			<TR><TD class=xtab align=right>Show coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
+			<TR><TD class=xtab align=right>Coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
 			</table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
     } else {
 		m+= '</select></td></tr><TR><TD class=xtab align=right>Misted Only:</td><TD class=xtab><INPUT id=pafilMisted type=CHECKBOX '+ (Options.mistedOnly?' CHECKED':'') +'\><td></tr>';
@@ -1351,7 +1351,7 @@ for (var i in Provinces) {
           <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>Might</option>\
              <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
         </select></td></tr>\
-        <TR><TD class=xtab align=right>Show coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
+        <TR><TD class=xtab align=right>Coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
 	
 	}
