@@ -5,7 +5,7 @@ REVISION HISTORY:
   * Fixed issue #239 (lots of incoming attacks crashes/holds up internet connection). 
   * Fixed showing defend mode if user changes it from KofC's interface.
   * Fixed window width overflow in search tab
-  * City search re-written
+  * City search re-written (fixed issues #219, #261 and unreported issues)
   
 20110216a:
   * NEW: modded SearchTab by masterjdu (deathbynumbers) e.g. citysearch implemented

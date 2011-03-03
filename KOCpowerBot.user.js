@@ -1192,12 +1192,10 @@ Tabs.build = {
 /********************************* Search Tab *************************************/
 
 /***
-TODO: alliance dimplomacies (colors)
-      scout link
-      width overflow if city name too long (right of city selector)
-      popup location (center on first invocation)
-      Province search will not search corners of province (issue 261) distance 75
-
+TODO:
+ width overflow if city name too long (right of city selector)
+ popup window location (center on first invocation)
+ Province search doesn't not show corners of province (issue 261)
 **/
 
 
@@ -1267,6 +1265,7 @@ Tabs.Search = {
 	  }, false); 
     document.getElementById ('pasrcStart').addEventListener ('click', t.clickedSearch, false);
     unsafeWindow.pbSearchLookup = t.clickedLookup;  
+    unsafeWindow.pbSearchScout = t.clickedScout;  
   },
 
   hide : function (){
@@ -1506,7 +1505,7 @@ Tabs.Search = {
           if (t.opt.searchType == 2) { // city search
             m += '<TD align="right" >'+ dat[i][2].toFixed(2) +'</td>';
             if (dat[i][5])
-              m += '<TD colspan=4>* MISTED * &nbsp; &nbsp; <SPAN onclick="ptScout('+ dat[i][0] +','+ dat[i][1] +');return false;"><A>Scout</a></span></td></tr>';
+              m += '<TD colspan=4>* MISTED * &nbsp; &nbsp; <SPAN onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;"><A>Scout</a></span></td></tr>';
             else{
               var allStyle = '';
               if (dat[i][12]=='f')
@@ -1643,7 +1642,12 @@ Tabs.Search = {
     document.getElementById ('pastatStatus').innerHTML = 'Searching at '+ x +','+ y;
     setTimeout (function(){t.MapAjax.request (x, y, 15, t.mapCallback)}, MAP_DELAY);
   },
-  
+
+  clickedScout : function (x, y){
+    unsafeWindow.modal_attack (3, x, y);
+    CwaitForElement ('modal_attack', 5000, function (){document.getElementById('modalBox1').style.zIndex='112000'});
+  },
+    
   clickedLookup : function (pid){
     var t = Tabs.Search;
     var pop = new CPopup ('pbsrclookup', 0,0, 500,500, true);
@@ -3647,7 +3651,9 @@ function getFirefoxVersion (){
 
 var WinManager = {
   wins : {},    // prefix : CPopup obj
-
+  didHide : [],
+  
+  
   get : function (prefix){
     var t = WinManager;
     return t.wins[prefix];
@@ -3659,6 +3665,22 @@ var WinManager = {
     if (unsafeWindow.cpopupWins == null)
       unsafeWindow.cpopupWins = {};
     unsafeWindow.cpopupWins[prefix] = pop;
+  },
+  
+  hideAll : function (){
+    var t = WinManager;
+    t.didHide = [];
+    for (k in t.wins){
+      if (t.wins[k].isShown()){
+        t.didHide.push (t.wins[k]);
+        t.wins[k].show (false);
+      } 
+    }
+  },
+  restoreAll : function (){
+    var t = WinManager;
+    for (var i=0; i<t.didHide.length; i++)
+      t.didHide[i].show (true);
   },
   
   delete : function (prefix){
@@ -3690,6 +3712,7 @@ function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
   this.getLocation = getLocation;
   this.setLocation = setLocation;
   this.focusMe = focusMe;
+  this.isShown = isShown;
   this.unfocusMe = unfocusMe;
   this.centerMe = centerMe;
   this.destroy = destroy;
@@ -3789,6 +3812,9 @@ function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
   }
   function getMainDiv(){
     return document.getElementById(this.prefix+'_main');
+  }
+  function isShown (){
+    return t.div.style.display == 'block';
   }
   function show(tf){
     if (tf){
