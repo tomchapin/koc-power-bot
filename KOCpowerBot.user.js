@@ -334,9 +334,9 @@ Tabs.tower = {
     var t = Tabs.tower;
     document.getElementById('pbLoadingSwf').style.display = 'none';
     document.getElementById('pbSoundOpts').style.display = 'inline';
-    t.mss.setVolume (1, Options.alertSound.volume);
     t.volSlider.setValue (Options.alertSound.volume/100);
     t.loadUrl (Options.alertSound.soundUrl);
+    setTimeout (function (){t.mss.setVolume (1, Options.alertSound.volume);}, 500);
     if (Options.alertSound.alarmActive && Options.alertSound.expireTime>unixTime())   
       t.soundTheAlert();
   },
@@ -4986,7 +4986,7 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   this.setVolume = function (chanNum, vol){
     if (!self.isLoaded)
       return;
-    var ret =  self.player.jsSetVolume (chanNum, vol);
+    self.player.jsSetVolume (chanNum, vol);
     volume = vol; 
   }
   
