@@ -16,9 +16,9 @@ var DEBUG_SEARCH = false;
 var ENABLE_TEST_TAB = false;
 var ENABLE_ATTACK_TAB = false;
 var ENABLE_SAMPLE_TAB = false;
-var SEND_ALERT_AS_WHISPER = false;
 var DISABLE_BULKADD_LIST = false;
 var ENABLE_GM_AJAX_TRACE = false;
+var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
 var MAP_DELAY = 1200;
@@ -236,7 +236,7 @@ Tabs.tower = {
   secondTimer : null,
   soundPlaying : false,
   defMode : {},  
-  soundIntervalTimer : null,
+  soundRepeatTimer : null,
   soundStopTimer : null,
 
   init: function(div){
@@ -284,7 +284,7 @@ Tabs.tower = {
 
     t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
     t.volSlider.setChangeListener(t.e_volChanged);
-    document.getElementById('pbPlayNow').addEventListener ('click', t.playSound, false);
+    document.getElementById('pbPlayNow').addEventListener ('click', function (){t.playSound(false)}, false);
     document.getElementById('pbSoundStop').addEventListener ('click', t.stopSoundAlerts, false);
     document.getElementById('pbSoundRepeat').addEventListener ('change', function (e){Options.alertSound.repeat = e.target.checked}, false);
     document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
@@ -416,7 +416,7 @@ Tabs.tower = {
     var t = Tabs.tower;
     if (chan != 1)
       return;
-    if (t.soundIntervalTimer == null){
+    if (!Options.alertSound.alarmActive){
       document.getElementById('pbSoundStop').disabled = true;
     }
   },
@@ -430,28 +430,30 @@ Tabs.tower = {
       document.getElementById('pbLoadStat').innerHTML = 'Loaded';
   },  
   
-  playSound : function (){
+  playSound : function (doRepeats){
     var t = Tabs.tower;
     document.getElementById('pbSoundStop').disabled = false;
     clearTimeout (t.soundStopTimer);
+    clearTimeout (t.soundRepeatTimer);
     t.mss.play (1, 0);
     t.soundStopTimer = setTimeout (function(){t.mss.stop(1); t.e_soundFinished(1)}, Options.alertSound.playLength*1000);
+    if (doRepeats && Options.alertSound.repeat)
+      t.soundRepeatTimer = setTimeout (function (){t.playSound(true)}, Options.alertSound.repeatDelay*60000);
+    else
+      Options.alertSound.alarmActive = false;
   },
         
   soundTheAlert : function (){
     var t = Tabs.tower;
-    clearInterval (t.soundIntervalTimer); 
-    t.playSound();
-    if (Options.alertSound.repeat)
-      t.soundIntervalTimer = setInterval (t.playSound, Options.alertSound.repeatDelay*60000);
     Options.alertSound.alarmActive = true;
+    t.playSound(true);
   },
      
   stopSoundAlerts : function (){
     var t = Tabs.tower;
     t.mss.stop (1);
     clearTimeout (t.soundStopTimer);
-    clearInterval (t.soundIntervalTimer); 
+    clearTimeout (t.soundRepeatTimer); 
     document.getElementById('pbSoundStop').disabled = true;
     Options.alertSound.alarmActive = false;
     Options.alertSound.expireTime = 0;
@@ -2214,11 +2216,14 @@ Tabs.Test = {
         <TR><TD colspan=2 align=center><INPUT id=pbtestSendMarch type=submit value="Fake Attack" \></td></tr></table>\
         <INPUT id=pbReloadKOC type=submit value="Reload KOC" \>\
         <BR>Force ajax errors : <INPUT type=checkbox id=pbajaxErr>\
+        <BR>Send alliance chat alert as whisper : <INPUT type=checkbox id=pbalertWhisper CHECKED>\
         <BR><DIV id=pbtestDiv style="background-color:#ffffff; maxwidth:675; maxheight:350px; height:350px; overflow-y:auto;"></div>';
     div.innerHTML = m;
     document.getElementById('pbtestSendMarch').addEventListener ('click', t.clickFakeAttack, false);
     document.getElementById('pbReloadKOC').addEventListener ('click', reloadKOC, false);
     document.getElementById('pbajaxErr').addEventListener ('click', function (){window.EmulateAjaxError=this.checked}, false);
+    document.getElementById('pbalertWhisper').addEventListener ('click', function (){SEND_ALERT_AS_WHISPER=this.checked}, false);
+    SEND_ALERT_AS_WHISPER = true;
   },
 
   hide : function (){
