@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110302a';
+var Version = '20110303a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -157,7 +157,7 @@ function pbStartup (){
     table.pbTabSome tr td {border:none; background:none; padding: 1px 3px; white-space:nowrap;}\
     table.pbTabPad tr td.ptentry {background-color:#ffeecc; padding-left: 8px;}\
     table.ptNoPad tr td {border:none; background:none; white-space:nowrap; padding:0px}\
-    .pbDetLeft {padding:0 0 0 5px !important; font-weight:bold; text-align:right}\
+    .pbDetLeft {padding:0 5px 0 0 !important; font-weight:bold; text-align:right}\
     .pbStat {border:1px solid; border-color:#ffffff; font-weight:bold; padding-top:2px; padding-bottom:2px; text-align:center; color:#ffffff; background-color:#357}\
     .ptentry {padding: 7px; border:1px solid; border-color:#000000; background-color:#ffeecc; white-space:nowrap;}\
     .ptErrText {font-weight:bold; color:#600000}\
@@ -1192,17 +1192,16 @@ Tabs.build = {
 /********************************* Search Tab *************************************/
 
 /***
-TODO:
- width overflow if city name too long (right of city selector)
- popup window location (center on first invocation)
- Province search doesn't not show corners of province (issue 261)
+TODO: Better search algorithm (circular OR square, always start at center, working outwards) 
+        Should be separate class (producer/consumer) so auto attack can use it too
 **/
-
 
 Tabs.Search = {
   tabOrder : 2,
   myDiv : null,
   MapAjax : new CMapAjax(),
+  MAX_SHOW_WHILE_RUNNING : 250,
+  popFirst : true,
   
   init : function (div){
     var t = Tabs.Search;
@@ -1233,41 +1232,43 @@ Tabs.Search = {
 				25:{'name':"Albion",'x':625,'y':675}};
     t.selectedCity = Cities.cities[0];
     t.myDiv = div;
-    div.innerHTML = '\
-        <DIV class=ptentry><TABLE><TR valign=bottom><TD class=xtab width=100 align=right>Search for: </td><TD>\
-        <SELECT id="pasrcType">\
-          <OPTION value=0>Barb Camp</option>\
-          <OPTION value=1>Wilderness</option>\
-          <OPTION value=2>Cities</option>\
-        </select></td></tr>\
-        </table>\
-        <DIV id="pasrcOpts" style="height:80px"></div></div>\
-        <DIV id="pasrcResults" style="height:400px; max-height:400px;"></div>';
-        
-    var psearch = document.getElementById ("pasrcType");
-    m = '<TABLE><TR valign=middle><TD class=xtab width=100 align=right>Center: &nbsp; X: </td><TD class=xtab>\
-      <INPUT id=pasrchX type=text\> &nbsp; Y: <INPUT id=pasrchY type=text\> ';
-	  m += '&nbsp;<span><select id="provinceXY"><option>--provinces--</option>';
+    
+    m = '<DIV class=ptentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>Search for: </td><TD width=99%>';
+    m += htmlSelector ({0:"Barb Camp", 1:"Wilderness", 2:"Cities"}, null, 'id=pasrcType'); 
+    m += '</td></tr><TR><TD class=pbDetLeft>At: </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
+      &nbsp; Radius: <INPUT id=pasrcDist size=3 value=10 /> &nbsp; <SPAN id=paspInXY></span>\
+      <TR><TD class=pbDetLeft>Or:</td><TD>Search entire province: <select id="provinceXY"><option>--provinces--</option>';
     for (var i in Provinces)
     	m += '<option value="'+i+'">'+Provinces[i].name+'</option>';
-	  m += '</select></span> &nbsp; <SPAN id=paspInXY></span>';
-    m += '</td></tr><TR><TD class=xtab align=right>Max. Distance: </td><TD class=xtab><INPUT id=pasrcDist size=4 value=10 /></td></tr>';
-    m += '<TR><TD class=xtab></td><TD class=xtab><INPUT id=pasrcStart type=submit value="Start Search"/></td></tr>';
-    m += '</table>';
-    document.getElementById ('pasrcOpts').innerHTML = m;
+    m += '</select></td></tr>';
+    m += '<TR><TD colspan=2 align=center><INPUT id=pasrcStart type=submit value="Start Search"/></td></tr>';
+    m += '</table></div>\
+        <DIV id="pasrcResults" style="height:400px; max-height:400px;"></div>';
+    
+    t.myDiv.innerHTML = m;
+    var psearch = document.getElementById ("pasrcType");
     new CdispCityPicker ('pasrchdcp', document.getElementById ('paspInXY'), true, t.citySelNotify).bindToXYboxes(document.getElementById ('pasrchX'), document.getElementById ('pasrchY'));
     document.getElementById ('provinceXY').addEventListener ('click', function() {
-  	  if (this.value >= 1) {
-  		  document.getElementById ('pasrchX').value = Provinces[this.value].x;
-  		  document.getElementById ('pasrchY').value = Provinces[this.value].y;
-  		  document.getElementById ('pasrcDist').value = 75;
-  	  }
-	  }, false); 
+    	  if (this.value >= 1) {
+    		  document.getElementById ('pasrchX').value = Provinces[this.value].x;
+    		  document.getElementById ('pasrchY').value = Provinces[this.value].y;
+    		  document.getElementById ('pasrcDist').value = '75';
+    	  }
+	    }, false); 
     document.getElementById ('pasrcStart').addEventListener ('click', t.clickedSearch, false);
+    document.getElementById ('pasrchX').addEventListener ('keydown', t.e_coordChange, false);
+    document.getElementById ('pasrchY').addEventListener ('keydown', t.e_coordChange, false);
+    document.getElementById ('pasrcDist').addEventListener ('keydown', t.e_coordChange, false);
+    document.getElementById ('pasrchY').addEventListener ('change', t.e_coordChange, false);
+    document.getElementById ('pasrchY').addEventListener ('change', t.e_coordChange, false);
     unsafeWindow.pbSearchLookup = t.clickedLookup;  
     unsafeWindow.pbSearchScout = t.clickedScout;  
   },
 
+  e_coordChange : function(){
+    document.getElementById ('provinceXY').selectedIndex = 0;
+  },
+  
   hide : function (){
   },
 
@@ -1302,6 +1303,10 @@ Tabs.Search = {
     t.opt.startX = parseInt(document.getElementById ('pasrchX').value);
     t.opt.startY = parseInt(document.getElementById ('pasrchY').value);
     t.opt.maxDistance = parseInt(document.getElementById ('pasrcDist').value);
+    if (document.getElementById ('provinceXY').value > 0)
+      t.opt.searchShape = 'square';
+    else
+      t.opt.searchShape = 'circle'; 
     errMsg = '';
 
     if (isNaN (t.opt.startX) ||t.opt.startX<0 || t.opt.startX>749)
@@ -1309,7 +1314,7 @@ Tabs.Search = {
     if (isNaN (t.opt.startY) ||t.opt.startY<0 || t.opt.startY>749)
       errMsg += "Y must be between 0 and 749<BR>";
     if (isNaN (t.opt.maxDistance) ||t.opt.maxDistance<1 || t.opt.maxDistance>75)
-      errMsg += "Max Distance must be between 1 and 75<BR>";
+      errMsg += "Radius (distance) must be between 1 and 75<BR>";
     if (errMsg != ''){
       document.getElementById('pasrcResults').innerHTML = '<FONT COLOR=#660000>ERROR:</font><BR><BR>'+ errMsg;
       return;
@@ -1322,23 +1327,26 @@ Tabs.Search = {
         <TD class=xtab align=right width=125><DIV id=pastatFound></div></td></tr></table></div>\
           <TABLE width=100%><TR valign=top>\
             <TD width=99% style="max-width:50px"><DIV id=padivOutTab style="height:380px; max-height:380px; overflow-y:auto;"></div></td>\
-            <TD align=center valign=middle><A id=pbAhideShow style="text-decoration:none; cursor:pointer;"><DIV style="width:1em; border:1px solid red"><SPAN id=spanHideShow> H I D E</span><BR><BR> L<BR>I<BR>S<BR>T<BR><BR> O<BR>P<BR>T<BR>I<BR>O<BR>N<BR>S </div></a></td>\
+            <TD align=center valign=middle><A id=pbAhideShow style="text-decoration:none; cursor:pointer;"><DIV style="width:1em; border:1px solid red; padding:10px 2px; background-color:#fee"><SPAN id=spanHideShow> H I D E</span><BR><BR> L<BR>I<BR>S<BR>T<BR><BR> O<BR>P<BR>T<BR>I<BR>O<BR>N<BR>S </div></a></td>\
             <TD width=100% height=100% style="background:#e0e0f0; height:100%; padding:5px"><DIV id=padivOutOpts></div></td>\
           </table>';
       
     document.getElementById('pasrcResults').innerHTML = m;
     if (t.opt.searchType == 0)
-      typeName = 'Barbarians';
+      var typeName = 'Barbarians';
     else if (t.opt.searchType == 1)
-      typeName = 'Wildernesses';
+      var typeName = 'Wildernesses';
     else 
-      typeName = 'Cities';
-
+      var typeName = 'Cities';
+    if (t.opt.searchShape == 'square')
+      var distName = 'Distance';
+    else
+      var distName = 'Radius';
     m = '<CENTER><B>Search for '+ typeName +'<BR>\
-        Center: '+ t.opt.startX +','+ t.opt.startY +'  &nbsp; Distance: '+ t.opt.maxDistance +'<BR></center>\
+        Center: '+ t.opt.startX +','+ t.opt.startY +'  &nbsp; '+ distName +': '+ t.opt.maxDistance +'<BR></center>\
         <DIV class=ptentry><TABLE cellspacing=0 width=100%><TR align=center><TD class=xtab colspan=10><B>LIST OPTIONS:</b><BR></td></tr>';
         
-	if (t.opt.searchType == 1 || t.opt.searchType == 0) {
+    if (t.opt.searchType == 1 || t.opt.searchType == 0) {
       m += '<TR><TD class=xtab align=right>Min. level to show:</td><TD class=xtab> <INPUT id=pafilMinLvl size=2 value='+ Options.srcMinLevel +' /></td></tr>\
         <TR><TD class=xtab align=right>Max. level to show:</td><TD class=xtab> <INPUT id=pafilMaxLvl size=2 value='+ Options.srcMaxLevel +' /></td></tr>';
 		}
@@ -1493,9 +1501,9 @@ Tabs.Search = {
 		}
 	}
       var numRows = dat.length;
-      if (numRows > 500 && t.searchRunning){
-        numRows = 500;
-        document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>NOTE: Table only shows 500 of '+ dat.length +' results until search is complete.</font>';
+      if (numRows > t.MAX_SHOW_WHILE_RUNNING && t.searchRunning){
+        numRows = t.MAX_SHOW_WHILE_RUNNING;
+        document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>NOTE: Table only shows '+ t.MAX_SHOW_WHILE_RUNNING +' of '+ dat.length +' results until search is complete.</font>';
       }
       for (i=0; i<numRows; i++){
         m += '<TR><TD><DIV onclick="pbGotoMap('+ dat[i][0] +','+ dat[i][1] +')"><A>'+ dat[i][0] +','+ dat[i][1] +'</a></div></td>';
@@ -1540,6 +1548,7 @@ Tabs.Search = {
       document.getElementById ('pbSrcDoExp').addEventListener ('click', t.exportKOCattack, false);
     }
     t.searchRunning = false;
+    t.dispMapTable();
   },
 
   exportKOCattack : function (){
@@ -1590,13 +1599,15 @@ Tabs.Search = {
           type = 2;
         else
           type = (map[k].tileType/10) + 1;
-      } else if (t.opt.searchType==2 && map[k].tileCityId >= 0 && map[k].tileType > 50 && map[k].cityName) {
+      } else if (t.opt.searchType==2 && map[k].tileCityId>=0 && map[k].tileType>50 && map[k].cityName) {
 		    type = 7;
       } else
         continue;
-      dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
-      if (dist <= t.opt.maxDistance){
-	  	  if (t.opt.searchType==2 && type==7) {    // if city search
+        
+      var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
+      if ((t.opt.searchShape=='circle' && dist <= t.opt.maxDistance)
+      ||  (t.opt.searchShape=='square' && map[k].xCoord>=t.firstX && map[k].xCoord<=t.lastX && map[k].yCoord>=t.firstY && map[k].yCoord<=t.lastY)){
+	  	  if (t.opt.searchType==2) {    // if city search
     			var isMisted = map[k].tileUserId == 0 || false;		
     			var uu = 'u'+map[k].tileUserId;
     			var aD = '';
@@ -1614,15 +1625,16 @@ Tabs.Search = {
     				if (Dip.friendly && Dip.friendly['a'+userInfo[uu].a]) var aD = 'f';
     				if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) var aD = 'h';
     			}
-// TODO: remove city name / type ?   			
-        t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD]);
-			} else {
-        isOwned = map[k].tileUserId>0 || map[k].misted;
-        t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned]);
-		}
+// TODO: save memory, remove city name ?   			
+          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD]);
+        } else {
+          isOwned = map[k].tileUserId>0 || map[k].misted;
+          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned]);
+        }
         ++t.tilesFound;
       }
     }
+    
     t.tilesSearched += (15*15);
     document.getElementById('pastatSearched').innerHTML = 'Searched: '+ t.tilesSearched;
     t.dispMapTable();
@@ -1636,7 +1648,6 @@ Tabs.Search = {
         return;
       }
     }
-
     var x = t.MapAjax.normalize(t.curX);
     var y = t.MapAjax.normalize(t.curY);
     document.getElementById ('pastatStatus').innerHTML = 'Searching at '+ x +','+ y;
@@ -1651,7 +1662,10 @@ Tabs.Search = {
   clickedLookup : function (pid){
     var t = Tabs.Search;
     var pop = new CPopup ('pbsrclookup', 0,0, 500,500, true);
-//    pop.centerMe (mainPop.getMainDiv());  
+    if (t.popFirst){
+      pop.centerMe (mainPop.getMainDiv());  
+      t.popFirst = false;
+    }
     pop.getTopDiv().innerHTML = '<CENTER><B>Player Lookup</b></center>';
     pop.getMainDiv().innerHTML = '<DIV class=pbStat>Leaderboard information</div><SPAN id=pblupLB>Looking up leaderboard...</span>\
       <BR><DIV class=pbStat>Alliance Lookup</div><SPAN id=pblupAI>Looking up alliance info...</span>';
@@ -1670,7 +1684,6 @@ Tabs.Search = {
       span.innerHTML = '<B>Leaderboard:</b> Not found! (misted?)<BR><BR>';
       return;
     }
-//logit (inspect (rslt, 5, 1));  
     var p = rslt.results[0];
     var x;
     var name = '';
@@ -1705,7 +1718,6 @@ Tabs.Search = {
 
   gotPlayerInfo : function (rslt, span){
     var t = Tabs.Search;
-//logit (inspect (rslt, 5, 1));  
     if (!rslt.ok){
       span.innerHTML = rslt.errorMsg;
       return;
@@ -2953,6 +2965,10 @@ function CdispCityPicker (id, span, dispName, notify, selbut){
       if (that.coordBoxX){
         that.coordBoxX.value = that.city.x;
         that.coordBoxY.value = that.city.y;
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent('change', true, true ); // event type,bubbling,cancelable
+        that.coordBoxX.dispatchEvent(evt);
+        that.coordBoxY.dispatchEvent(evt);
         that.coordBoxX.style.backgroundColor = '#ffffff';
         that.coordBoxY.style.backgroundColor = '#ffffff';
       }
@@ -2989,14 +3005,15 @@ function CdispCityPicker (id, span, dispName, notify, selbut){
         if (that.notify != null)
           that.notify (null, x, y);
       }
+      return false;
     }
     this.coordBoxX = eX;
     this.coordBoxY = eY;
     var bh = new CboxHandler(this);
-    eX.size=2;
     eX.maxLength=3;
-    eY.size=2;
     eY.maxLength=3;
+    eX.style.width='2em';    
+    eY.style.width='2em';    
     eX.addEventListener('change', bh.eventChange, false);
     eY.addEventListener('change', bh.eventChange, false);
   }
