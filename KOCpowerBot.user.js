@@ -1927,7 +1927,7 @@ var exportToKOCattack = {
       popExp.show (false);
       unsafeWindow.Modal.hideModalAll(); 
       unsafeWindow.modal_attack(4,0,0);
-      new CwaitForElement ('BulkAddAttackDiv', 5000, e_attackDialog );
+      new CwaitForElement ('BulkAddAttackDiv', 10000, e_attackDialog );
     }
         
     function e_attackDialog (tf){
