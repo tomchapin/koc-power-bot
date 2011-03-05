@@ -1,6 +1,6 @@
 REVISION HISTORY:
 ----------------
-(SVN):
+20110303a:
   * Tower tab refactored.  Added options for playing sound files upon attack. 
   * Fixed issue #239 (lots of incoming attacks crashes/holds up internet connection). 
   * Fixed showing defend mode if user changes it from KofC's interface.
