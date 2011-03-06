@@ -8,7 +8,7 @@
 // ==/UserScript==
 
 
-var Version = '20110303a';
+var Version = '20110306a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -27,8 +27,8 @@ var URL_CASTLE_BUT = 'http://i.imgur.com/MPlZr.png';
 var URL_CASTLE_BUT_SEL = 'http://i.imgur.com/XWR4B.png';
 var CHAT_BG_IMAGE = 'http://i.imgur.com/0ws3E.jpg';   // 720
 var DEFAULT_ALERT_SOUND_URL = 'http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531';
-//var SWF_PLAYER_URL = 'http://www.fileden.com/files/2011/2/25/3086757/matSimpleSound01aXD.swf';
-var SWF_PLAYER_URL = 'http://georgejetson.net76.net/koc/matSimpleSound01aXD.swf';
+var SWF_PLAYER_URL = 'http://www.fileden.com/files/2011/2/25/3086757/matSimpleSound01aXD.swf';
+//var SWF_PLAYER_URL = 'http://georgejetson.net76.net/koc/matSimpleSound01aXD.swf';
 
 /***********************
 TODO (Jetson): enhance winManager (setlayer, focusme, remember coords on reopen, etc)
