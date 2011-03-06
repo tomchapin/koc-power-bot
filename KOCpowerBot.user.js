@@ -724,7 +724,7 @@ Tabs.build = {
 		var citpos = parseInt(bQi.buildingPos);
 		//  var citpos = 6; //FOR DEBUG
 		
-		if (typeof Seed.buildings['city' + currentcityid]["pos" + citpos][0] != 'undefined') {	
+		if (Seed.buildings['city' + currentcityid]["pos" + citpos] != undefined && Seed.buildings['city' + currentcityid]["pos" + citpos][0] != undefined) {	
 			var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
 			var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
 			//  var bdgid = 13; //FOR DEBUG
