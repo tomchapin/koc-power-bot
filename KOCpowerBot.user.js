@@ -743,14 +743,17 @@ Tabs.build = {
 				return;
 			};
 			if (isNaN(curlvl)) {
+				t.cancelQueueElement(0, currentcityid, time, false);
 				actionLog("Found no correct value for current building!!!!");
 				return;
 			}
 			if (l_bdgid != bdgid) {
+				t.cancelQueueElement(0, currentcityid, time, false);
 				actionLog("Building Type does not match!!!!");
 				return;
 			}
 			if (l_bid != bid) {
+				t.cancelQueueElement(0, currentcityid, time, false);
 				actionLog("Building ID does not match!!!!");
 				return;
 			}
