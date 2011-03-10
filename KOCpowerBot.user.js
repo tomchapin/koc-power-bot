@@ -79,6 +79,7 @@ function facebookInstance (){
     var e = document.getElementById('content').firstChild;
     document.getElementById('content').style.minWidth = '1220px';
     e.style.width = '100%';
+    e.style.margin = '0';
     e.firstChild.style.width = '100%';
     iFrame.style.width = '100%';
   }
