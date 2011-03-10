@@ -2763,8 +2763,11 @@ var anticd = {
     return this.KOCversion;
   },
 }
-anticd.init ();
-
+try {
+  anticd.init ();
+} catch (e){
+  logit ("ANTICD error: "+ e);
+}
 
 var tabManager = {
   tabList : {},           // {name, obj, div}
