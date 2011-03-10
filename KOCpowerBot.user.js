@@ -3820,6 +3820,10 @@ function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
       var coords = getClientCoords(parent);
     var x = ((coords.width - parseInt(t.div.style.width)) / 2) + coords.x;
     var y = ((coords.height - parseInt(t.div.style.height)) / 2) + coords.y;
+    if (x<0)
+      x = 0;
+    if (y<0)
+      y = 0;
     t.div.style.left = x +'px';
     t.div.style.top = y +'px';
   }
@@ -4045,6 +4049,9 @@ String.prototype.htmlSpecialCharsDecode = function() {
   for (k in this.entityTrans)
      ret = ret.split(this.entityTrans[k]).join(k);
   return ret;
+}
+String.prototype.trim = function () {
+    return this.replace(/^\s*/, "").replace(/\s*$/, "");
 }
 
 function officerId2String (oid){
