@@ -2,7 +2,7 @@ REVISION HISTORY:
 ----------------
 (SVN):
 
-20100313a:
+20110313a:
   * Add try/catch on anticd init, may help find 'bot not loading' problems.
   * Removed margin above 6waves ads at top of screen if widescreen mode is enabled.(Thanks to bruno.pe...@gmail.com, issue #275)
   * Added trim function for FF 3 browser (Thanks to mcd...@gmail report #276) - May fix Gift accept problems
