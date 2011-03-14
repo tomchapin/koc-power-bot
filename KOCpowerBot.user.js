@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110313a';
+var Version = '20110314a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -463,7 +463,8 @@ Tabs.tower = {
   newIncoming : function (m){
     var t = Tabs.tower;
     var now = unixTime();
-    t.postToChat (m);
+    if (Options.alertConfig.aChat)
+      t.postToChat (m);
     if (Options.alertSound.enabled){
       t.soundTheAlert(m);
       if (m.arrivalTime > Options.alertSound.expireTime)
@@ -2575,7 +2576,7 @@ function facebookWatchdog (){
       } 
     } catch (e){
       logit ("KOC NOT FOUND!"); 
-      KOCnotFound(5*60);
+      KOCnotFound(4*60);
     } 
   }
 }
@@ -2587,9 +2588,10 @@ function kocWatchdog (){
     return;
   setTimeout (watchdog, INTERVAL);
   function watchdog (){
+logit ("KOC WATCHDOG: "+ document.getElementById('mod_maparea'));    
     if (document.getElementById('mod_maparea')==null){
       actionLog ("KOC not loaded");
-      KOCnotFound(3*60);
+      KOCnotFound(2*60);
     }     
   }
 }
