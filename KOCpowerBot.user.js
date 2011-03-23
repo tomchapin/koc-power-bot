@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110314a';
+var Version = '20110323a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -98,7 +98,6 @@ var Options = {
   unownedOnly  : true,
   mistedOnly   : true,
   hostileOnly  : false,  
-  pbWinIsOpen  : false,
   pbWinIsOpen  : false,
   pbWinDrag    : true,
   pbWinPos     : {},
@@ -1618,19 +1617,19 @@ Tabs.Search = {
     			var isMisted = map[k].tileUserId == 0 || false;		
     			var uu = 'u'+map[k].tileUserId;
     			var aD = '';
-    			if (isMisted) {
-    				var nameU = '';
-    				var mightU = ''; 
-    				var aU = '';
-    			} else {
-    				var nameU = userInfo[uu].n;
-    				var mightU = userInfo[uu].m;
+  				var nameU = '';
+  				var mightU = ''; 
+  				var aU = '';
+    			if (!isMisted && userInfo[uu]) {
+    				nameU = userInfo[uu].n;   // can error, must check if (userInfo[uu])
+    				mightU = userInfo[uu].m;
     				if (alliance['a'+userInfo[uu].a])
-    					var aU = alliance['a'+userInfo[uu].a];
-    				else var aU = '----';
+    					aU = alliance['a'+userInfo[uu].a];
+    				else
+    				  aU = '----';
     				aD = '';
-    				if (Dip.friendly && Dip.friendly['a'+userInfo[uu].a]) var aD = 'f';
-    				if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) var aD = 'h';
+    				if (Dip.friendly && Dip.friendly['a'+userInfo[uu].a]) aD = 'f';
+    				if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) aD = 'h';
     			}
 // TODO: save memory, remove city name ?   			
           t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD]);
