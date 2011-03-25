@@ -4,7 +4,6 @@
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
 // @include        http://apps.facebook.com/kingdomsofcamelot/*
 // @description    Automated features for Kingdoms of Camelot
-// @resource    chatBG http://localhost/gmscript/mat/ALL-SVN/trunk/img/chrome_chatbg2.gif
 // ==/UserScript==
 
 
