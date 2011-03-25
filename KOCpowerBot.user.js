@@ -45,11 +45,11 @@ if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   return;
 }
 
+
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
   function setWide (){
     var iFrame = null;
-    
     var e = document.getElementById('app_content_130402594779').firstChild.firstChild;
     for (var c=0; c<e.childNodes.length; c++){
       if (e.childNodes[c].tagName=='SPAN' && e.childNodes[c].firstChild.className == 'canvas_iframe_util'){
@@ -82,6 +82,14 @@ function facebookInstance (){
     e.style.margin = '0';
     e.firstChild.style.width = '100%';
     iFrame.style.width = '100%';
+
+    var div = searchDOM (document.getElementById('content'), 'node.tagName=="DIV" && node.className=="UIStandardFrame_Content"', 7);
+    if (div)
+      div.style.width ='100%';
+    var div = searchDOM (document.getElementById('content'), 'node.tagName=="DIV" && node.className.indexOf("SidebarAds")>=0', 7);
+    if (div)
+      div.style.display ='none';
+    
   }
   facebookWatchdog();
   if (GlobalOptions.pbWideScreen)
