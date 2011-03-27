@@ -9,6 +9,8 @@ REVISION HISTORY:
   * Fix widescreen for facebook changes on 3/24/2011
   * Fix rare lockup in city search when userinfo not available
   * fixed issue #291 (attack posted to chat even if option turned off)
+  * fixed issue #309 (Chat Not FOrmatting correctly to right of game)
+  * fixed issue #317 (no wide-screen)
   * SWF player for sound
 
 20110313a:
