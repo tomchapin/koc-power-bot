@@ -2,6 +2,15 @@ REVISION HISTORY:
 ----------------
 (SVN):
 
+20110327a:
+  * Added smaller version (GIF) of chat background image
+  * Embedded castle button and chat background images
+  * Changed URL of SWF player
+  * Fix widescreen for facebook changes on 3/24/2011
+  * Fix rare lockup in city search when userinfo not available
+  * fixed issue #291 (attack posted to chat even if option turned off)
+  * SWF player for sound
+
 20110313a:
   * Add try/catch on anticd init, may help find 'bot not loading' problems.
   * Removed margin above 6waves ads at top of screen if widescreen mode is enabled.(Thanks to bruno.pe...@gmail.com, issue #275)

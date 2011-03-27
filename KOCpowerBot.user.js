@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110325a';
+var Version = '20110327a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
