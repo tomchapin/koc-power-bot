@@ -2,6 +2,12 @@ REVISION HISTORY:
 ----------------
 (SVN):
 
+20110408a:
+   * Added tower function (like in Toolkit) - maybe some bugs included
+   * Added trader tab - none working tab
+   * Please note: this is just to provide my latest codebase because i quite developing.
+   * Have fun people - I hope there will be someone that will go on with this work !!! :-) 
+
 20110327a:
   * Added smaller version (GIF) of chat background image
   * Embedded castle button and chat background images
