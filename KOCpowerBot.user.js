@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110327a';
+var Version = '20110408a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -243,6 +243,7 @@ Tabs.tower = {
   defMode : {},  
   soundRepeatTimer : null,
   soundStopTimer : null,
+  towerMarches: [],
 
   init: function(div){
 	  var t = Tabs.tower;
@@ -254,11 +255,15 @@ Tabs.tower = {
     unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
  
     var m = '<DIV class=pbStat>TOWER ALERTS</div><TABLE class=pbTab><TR align=center>';
+
 	  for (var i=0; i<Cities.cities.length; i++)
       m += '<TD width=95><SPAN id=pbtacity_'+ i +'>' + Cities.cities[i].name + '</span></td>';
     m += '</tr><TR align=center>';
 	  for (var cityId in Cities.byID)
-      m += '<TD><INPUT type=submit id=pbtabut_'+ cityId +' value=""></td>';
+		m += '<TD><INPUT type=submit id=pbtabut_'+ cityId +' value=""></td>';
+	m += '</tr><TR align=center>';
+	  for (var cityId in Cities.byID)
+	   m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
     m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="Stop Sound Alert"></center></div><DIV id=pbSwfPlayer></div>';
     m += '<BR><DIV class=pbStat>CONFIGURATION</div><TABLE class=pbTab>\
         <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>Automatically post incoming attacks to alliance chat.</td></tr>\
@@ -316,10 +321,17 @@ Tabs.tower = {
   	  addListener (but, cityId);
   	  t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
   	  t.displayDefMode (cityId); 
+	  var btnNameT = 'pbattackqueue_' + cityId;
+      addTowerEventListener(cityId, btnNameT);
 	  }
     function addListener (but, i){
       but.addEventListener ('click', function (){t.butToggleDefMode(i)}, false);
-    }  
+    }
+	function addTowerEventListener(cityId, name){
+        document.getElementById(name).addEventListener('click', function(){
+            t.showTowerIncoming(cityId);
+        }, false);
+    }	
     setInterval (t.eachSecond, 2000); 
   },      
 
@@ -414,7 +426,29 @@ Tabs.tower = {
     }
 //logit ("NOW="+ now + ' alarmActive='+ Options.alertSound.alarmActive + ' expireTime='+ Options.alertSound.expireTime);
     if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime))
-      t.stopSoundAlerts();   
+      t.stopSoundAlerts(); 
+
+        t.towerMarches = [];
+        for (var i = 0; i < Cities.cities.length; i++) {
+            var cId = Cities.cities[i].id;
+            t['attackCount_' + cId] = 0;
+            t['scoutCount_' + cId] = 0;
+        }
+        if (matTypeof(Seed.queue_atkinc) != 'array') {
+            for (var k in Seed.queue_atkinc) {
+                var m = Seed.queue_atkinc[k];
+                if ((m.marchType == 3 || m.marchType == 4) && parseIntNan(m.arrivalTime) > now) {
+                    t.handleTowerData(m);
+
+                }
+            }
+        }
+        for (var i = 0; i < Cities.cities.length; i++) {
+            var cId = Cities.cities[i].id;
+            document.getElementById('pbattackqueue_' + cId).value = 'A ' + t['attackCount_' + cId] + ' | S ' + t['scoutCount_' + cId];
+        }
+
+	  
   },   
   
   e_soundFinished : function (chan){ // called by SWF when sound finishes playing
@@ -567,6 +601,326 @@ Tabs.tower = {
     else
       sendChat ("/a "+  msg);                        // Alliance chat
   },
+      handleTowerData: function(m){
+        var t = Tabs.tower;
+        var now = unixTime();
+        var target, atkType, who, attackermight, allianceId, allianceName, diplomacy;
+        var city = Cities.byID[m.toCityId];
+        
+        if (DEBUG_TRACE) 
+            logit("checkTower(): INCOMING at " + unixTime() + ": \n" + inspect(m, 8, 1));
+        
+        //ATKTYPE
+        if (m.marchType == 3) {
+            atkType = 'scouted';
+            t['scoutCount_' + m.toCityId]++;
+        }
+        else 
+            if (m.marchType == 4) {
+                atkType = 'attacked';
+                t['attackCount_' + m.toCityId]++;
+            }
+            else {
+                return;
+            }
+        //TARGET
+        if (city.tileId == m.toTileId) 
+            target = 'City at ' + city.x + ',' + city.y;
+        else {
+            target = 'Wilderness';
+            for (k in Seed.wilderness['city' + m.toCityId]) {
+                if (Seed.wilderness['city' + m.toCityId][k].tileId == m.toTileId) {
+                    target += ' at ' + Seed.wilderness['city' + m.toCityId][k].xCoord + ',' + Seed.wilderness['city' + m.toCityId][k].yCoord;
+                    break;
+                }
+            }
+        }
+        //CITYNAME
+        var cityName = Cities.byID[m.toCityId].name;
+        
+        //TROOPS
+        var units = [];
+        for (i = 0; i < 13; i++) 
+            units[i] = 0;
+        for (k in m.unts) {
+            var uid = parseInt(k.substr(1));
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Supply Troop') 
+                units[1] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Militiaman') 
+                units[2] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Scout') 
+                units[3] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Pikeman') 
+                units[4] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Swordsman') 
+                units[5] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Archer') 
+                units[6] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Cavalry') 
+                units[7] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Heavy Cavalry') 
+                units[8] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Supply Wagon') 
+                units[9] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Ballista') 
+                units[10] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Battering Ram') 
+                units[11] = m.unts[k];
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Catapult') 
+                units[12] = m.unts[k];
+        }
+        //ATTACKERS INFORMATION
+        if (Seed.players['u' + m.pid]) {
+            who = Seed.players['u' + m.pid].n;
+            attackermight = Seed.players['u' + m.pid].m;
+            allianceId = Seed.players['u' + m.pid].a;
+            allianceName = Seed.allianceNames[allianceId];
+            diplomacy = getDiplomacy(allianceId);
+        }
+        else 
+            if (m.players && m.players['u' + m.pid]) {
+                who = m.players['u' + m.pid].n;
+                attackermight = parseInt(m.players['u' + m.pid].m);
+                allianceId = 'a' + m.players['u' + m.pid].a;
+                allianceName = Seed.allianceNames[allianceId];
+                diplomacy = getDiplomacy(allianceId);
+            }
+            else {
+                who = 'n.A.';
+                attackermight = 'n.A.';
+                allianceId = 'n.A.';
+                allianceName = 'n.A.';
+                diplomacy = 'n.A.';
+            }
+		//SOURCE
+        if (m.fromXCoord) 
+            var source = m.fromXCoord + ',' + m.fromYCoord;
+        else 
+            var source = 'n.A.';
+        
+        var arrivingDatetime = new Date();
+        arrivingDatetime.setTime(m.arrivalTime * 1000);
+        var count = t.towerMarches.length + 1;
+        t.towerMarches[count] = {
+            added: now,
+            cityId: m.toCityId,
+            target: target,
+            arrival: parseIntNan(m.arrivalTime),
+            atkType: atkType,
+            who: who,
+            attackermight: attackermight,
+            allianceName: allianceName,
+            diplomacy: diplomacy,
+            rtime: unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())),
+            arrivingDatetime: arrivingDatetime,
+			source:source,
+            units: units,
+        };
+    },
+    showTowerIncoming: function(cityId){
+        var t = Tabs.tower;
+        var popTowerIncoming = null;
+        var cityName = Tabs.build.getCityNameById(cityId);
+        
+        if (t.popTowerIncoming == null) {
+            t.popTowerIncoming = new CPopup('pbtower_' + cityId, 0, 0, 750, 500, true, function() {clearTimeout (t.timer);});
+        }
+        t.popTowerIncoming.show(false);
+        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityTowerContent">';
+        t.popTowerIncoming.getMainDiv().innerHTML = '</table></div>' + m;
+        t.popTowerIncoming.getTopDiv().innerHTML = '<TD width="200px"><B>Tower Report of ' + cityName + '</b></td></td>';
+        t.addCityData2Pop(cityId);
+        t.popTowerIncoming.show(true);
+		clearTimeout (t.timer);
+		t.timer = setTimeout (function() {t.showTowerIncoming(cityId)}, 5000);        
+    },
+    addCityData2Pop: function(cityId){
+        var t = Tabs.tower;
+        var rownum = 0;
+        var names = ['Supply', 'Mil', 'Scout', 'Pike', 'Sword', 'Archer', 'Cav', 'Heavy', 'Wagon', 'Balli', 'Ram', 'Cat'];
+        enc = {};
+        numSlots = 0;
+        var row = document.getElementById('pbCityTowerContent').innerHTML = "";
+        if (matTypeof(Seed.queue_atkinc) != 'array') {
+            for (k in Seed.queue_atkinc) {
+                march = Seed.queue_atkinc[k];
+                if (march.marchType == 2) {
+                    ++numSlots;
+                    city = march.toCityId;
+                    from = march.fromPlayerId;
+					if (!enc[city]) 
+                        enc[city] = {};
+                    if (!enc[city][from]) 
+                        enc[city][from] = [];
+                    k = [];
+                    k[0] = parseInt(march.knightCombat);
+                    for (i = 1; i < 13; i++) {
+                        if (Options.encRemaining) 
+                            k[i] = parseInt(march['unit' + i + 'Return']);
+                        else 
+                            k[i] = parseInt(march['unit' + i + 'Count']);
+                    }
+					k[14] = parseInt(march.marchStatus);
+					var now = unixTime();
+					k[15] = parseInt(march.destinationUnixTime) - now;
+                    enc[city][from].push(k);
+                }
+            }
+        }
+        var s1 = '';
+		var s2 = '';
+		var s3 = '';
+		var tot = [];
+        var atk = [];
+        for (i = 0; i < 13; i++) {
+            tot[i] = 0;
+            atk[i] = 0;
+        }
+
+            s1 += '<STYLE> .tot{background:#f0e0f8;} .city{background:#ffffaa;} .attack{background:#FF9999;} .own{background:#66FF66;}</style>';
+            s1 += '<TABLE cellspacing=0 width=100%><TR align=right><TD align=center width=16%></td>';
+            
+            for (k = 0; k < names.length; k++) 
+                s1 += '<TD width=7%><B>' + names[k] + '</b></td>';
+            s1 += '</tr>';
+            dest = cityId;
+            if (enc[dest]) {
+                for (p in enc[dest]) {
+                    try {
+                        player = Seed.players['u' + p].n;
+                    } 
+                    catch (err) {
+                        player = '???';
+                    }
+                    for (m = 0; m < enc[dest][p].length; m++) {
+                        /*knight = '';
+                        if (enc[dest][p][m][0] > 0) 
+                            knight = ' (' + enc[dest][p][m][0] + ')';
+						*/
+						status = '';
+                        if (enc[dest][p][m][14] == 1) {
+						    status = ' (' + timestr(enc[dest][p][m][15]) + ')';	
+							if (enc[dest][p][m][15] < 0)
+								status = ' (enc)';	
+							else
+								 status = ' (' + timestr(enc[dest][p][m][15]) + ')';	
+						}
+						if (enc[dest][p][m][14] == 2) {
+						    status = ' (enc)';	
+						}
+
+                        s1 += '<TR align=right><TD align=left class="city">' + player + status +'</td>'
+                        for (i = 1; i < 13; i++) {
+                            num = enc[dest][p][m][i];
+                            s1 += '<TD class="city">' + num + '</td>';
+                            tot[i] += num;
+                        }
+                        //s1 += '<TD><INPUT id=sendhome_' + numSlots + ' type=submit value="Home" style="border:1px solid black; background-color:red;"></td></tr>';
+                    }
+                }
+            } else {
+                s1 += '<TR align=right><TD align=left class="city"><B>Reinforcment:</b></td>'
+                for (i = 1; i < 13; i++) {
+                    s1 += '<TD class="city">0</td>';
+                }
+                
+            }
+			s1 += '<TR align=right><TD colspan=14><BR></tr>';
+            s1 += '<TR align=right><TD class="own" align=left><B>Own Troops:</b></td>';
+            //OWNTROOPS
+            var ownTroops = "";
+            for (r = 1; r < 13; r++) {
+                cityString = 'city' + cityId;
+                num = parseInt(Seed.units[cityString]['unt' + r]);
+                s1 += '<TD class="own">' + num + '</td>';
+                tot[r] += num;
+            }
+            s1 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>Defenders:</b></td>';
+            for (i = 1; i < 13; i++) 
+                s1 += '<TD class="tot">' + tot[i] + '</td>';      
+			s3 += '</tr></table>';
+        
+        s3 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>Incoming Attacks:</b></td>';
+        
+        var names = ['Supply', 'Mil', 'Scout', 'Pike', 'Sword', 'Archer', 'Cav', 'Heavy', 'Wagon', 'Balli', 'Ram', 'Cat'];
+        if (t.towerMarches.length > 0) {
+            for (k in t.towerMarches) {
+                if (typeof t.towerMarches[k].atkType != 'undefined') {
+                    if (t.towerMarches[k].cityId == cityId) {
+                        s3 += '<TABLE cellspacing=0 width=100%><TR>';
+                        
+                        if (t.towerMarches[k].atkType == 'attacked') {
+                            s3 += '<TD rowspan=2 width=5%><B><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.jpg?6545"></b></td>';
+                        }
+                        else 
+                            if (t.towerMarches[k].atkType == 'scouted') {
+                                s3 += '<TD rowspan=2 width=5%><B><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.jpg?6545"></b></td>';
+                            }
+                        s3 += '<TD width=15%  ><B>Location</b></td>';
+                        s3 += '<TD width=15%  ><B>Name</b></td>';
+						s3 += '<TD width=10%><B>Source: </b></td><TD width=10%>' + t.towerMarches[k].source + '</td>';
+                        s3 += '<TD width=10%><B>Might: </b></td><TD width=10%>' + t.towerMarches[k].attackermight + '</td>';
+                        s3 += '<TD width=10%><B>Alliance: </b></td><TD width=10%>' + t.towerMarches[k].allianceName + '</td>';
+                        s3 += '<TD width=10%><B>State: </b></td><TD width=10%>' + t.towerMarches[k].diplomacy + '</td></tr>';
+                        s3 += '<TR><TD width=10%  >' + t.towerMarches[k].target + '</td>';
+                        s3 += '<TD  >' + t.towerMarches[k].who + '</td>';
+                        s3 += '<TD><B>Remaining: </b></td><TD width=10%>' + t.towerMarches[k].rtime + '</td>';
+                        s3 += '<TD><B>Arrival: </b></td><TD  colspan=5 width=10%>' + t.towerMarches[k].arrivingDatetime + '</td></tr>';
+                        s3 += '</tr></table>';
+                        s3 += '<TABLE cellspacing=0 width=100%><TR align=right><TD align=left width=16%></td>';
+                        for (n = 0; n < names.length; n++) 
+                            s3 += '<TD width=7%><B>' + names[n] + '</b></td>';
+                        s3 += '</tr><TR align=right><TD class="attack" align=left><B>Units:</td>';
+                        for (u = 1; u < 13; u++) {
+                            num = t.towerMarches[k].units[u];
+                            s3 += '<TD class="attack">' + num + '</td>';
+                            atk[u] += parseInt(num);
+                        }
+						s3 += '</tr></table>';
+                    }
+                }
+                
+            }
+        }
+		s2 += '<TR><TD colspan=14><BR></td></tr><TR align=right><TD class="attack" align=left><B>Attackers:</b></td>';
+        for (a = 1; a < 13; a++) 
+            s2 += '<TD class="attack" width=7%>' + atk[a] + '</td>';
+		var html = s1 + s2 + s3;
+        document.getElementById('pbCityTowerContent').innerHTML = html;
+
+    },
+    sendReinforcmentHome: function(){ //FUNCTION NOT IN USE YET BUT SOON :-)
+        //mid, cid, fromUid, fromCid, upkeep
+        var params = Object.clone(g_ajaxparams);
+        params.mid = mid;
+        params.cid = cid;
+        params.fromUid = fromUid;
+        params.fromCid = fromCid;
+        new Ajax.Request(g_ajaxpath + "ajax/kickoutReinforcements.php" + g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function(transport){
+                var rslt = eval("(" + transport.responseText + ")");
+                if (rslt.ok) {
+                    Modal.showAlert(g_js_strings.kickout_allies.troopshome);
+                    seed.resources["city" + currentcityid].rec1[3] = parseInt(seed.resources["city" + currentcityid].rec1[3]) - upkeep;
+                    Modal.hideModalAll();
+                    if (parseInt(fromUid) == parseInt(tvuid)) {
+                        var curmarch = seed.queue_atkp["city" + fromCid]["m" + mid];
+                        var marchtime = Math.abs(parseInt(curmarch.destinationUnixTime) - parseInt(curmarch.eventUnixTime));
+                        curmarch.returnUnixTime = unixtime() + marchtime;
+                        curmarch.marchStatus = 8
+                    }
+                    delete seed.queue_atkinc["m" + mid]
+                }
+                else {
+                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                }
+            },
+            onFailure: function(){
+            }
+        })
+    },
 }
 
 
@@ -2459,7 +2813,161 @@ Tabs.Options = {
   
 }
 
+/****************************  Trader Implementation  ******************************
+ TODO: a lot ;-)
 
+ */
+Tabs.trader = {
+  tabOrder: 1,
+  tabLabel: 'Trader',
+  myDiv: null,
+  timer: null,
+  traderState: [],
+  lTR: [],
+  tradeRoutes: [],
+
+    init: function(div){
+		var t = Tabs.trader;
+        t.myDiv = div;
+		t.traderState = {
+            running: false,
+        };
+        t.readTraderState();
+		t.readTradeRoutes();
+
+        var m = '<DIV id=pbTowrtDivF class=ptstat>NOT WORKING FEEL FREE TO FINISH ME!!!!!!!!!!!!!!!!!!</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
+        if (t.traderState.running == false) {
+            m += '<TD><INPUT id=pbTraderState type=submit value="Trader = OFF"></td>';
+       }
+        else {
+            m += '<TD><INPUT id=pbTraderState type=submit value="Trader = ON"></td>';
+        }
+		m += '<TD><INPUT id=pbShowRoutes type=submit value="Show Routes"></td>';
+        m += '</tr></table></div>';
+		m += '<DIV id=pbTraderDivD class=ptstat>ADD TRADE ROUTE</div>';
+        m += '<DIV style="text-align:center; margin-bottom:10px;">Select City: &nbsp; <span id=ptrescity></span></div>';
+		m += '<TABLE id=pbaddtraderoute width=100% height=0% class=pbTab><TR align="center">';
+		m += '<TD>IF</td><TD><SELECT id="pbrestype">\
+		<OPTION value=wood>wood</option>\
+		<OPTION value=ore>ore</option>\
+		<OPTION value=food>food</option>\
+		<OPTION value=stone>stone</option>\
+		</select></td>';
+		m += '<TD>>=</td><TD><INPUT id=pbtargetamount type=text size=8 maxlength=8 \></td>';
+		m += '<TD>MOVE</td><TD><INPUT id=pbtradeamount type=text size=8 maxlength=8 \></td>';
+		m += '<TD>TO =></td><TD>X</td><TD><INPUT id=pbtargetx type=text size=3 maxlength=3 \></td>';
+		m += '<TD>Y</td><TD><INPUT id=pbtargety type=text size=3 maxlength=3 \></td>';
+		m += '<TD><INPUT id=pbSaveRoute type=submit value="Add Route"></td></table>';
+       
+    	t.myDiv.innerHTML = m;
+		
+		t.tcp = new CdispCityPicker ('pttrader', document.getElementById('ptrescity'), true, t.clickCitySelect, 0);
+
+		document.getElementById('pbTraderState').addEventListener('click', function(){
+            t.toggleTraderState(this);
+        }, false);
+		document.getElementById('pbSaveRoute').addEventListener('click', function(){
+            t.addTradeRoute();
+        }, false);
+		document.getElementById('pbShowRoutes').addEventListener('click', function(){
+            t.showTradeRoutes();
+        }, false);
+       
+	    window.addEventListener('unload', t.onUnload, false);
+		//t.e_tradeRoutes();
+
+	},
+	e_tradeRoutes: function(){
+        var t = Tabs.trader;
+      
+        t.secondTimer = setTimeout(t.e_tradeRoutes, 10000);
+    },
+	addTradeRoute: function () {
+		var valid = true;
+		var t = Tabs.trader;
+		var source_x = t.tcp.city.x;
+		var source_y = t.tcp.city.y;
+		var res_type = document.getElementById('pbrestype').value;
+		var target_amount = document.getElementById('pbtargetamount').value;
+		var trade_amount = document.getElementById('pbtradeamount').value;
+		var target_x = document.getElementById('pbtargetx').value;
+		var target_y = document.getElementById('pbtargety').value;
+		var route_state = true;
+		
+		//TODO enter validation here
+		
+		if (valid == true) {
+			var lTR = t.tradeRoutes;
+			lTR.push({
+				source_x:			source_x,
+				source_y:			source_y,
+				res_type: 			res_type,
+				target_amount: 		target_amount,
+				trade_amount: 		trade_amount,
+				target_x: 			target_x,
+				target_y: 			target_y,
+				route_state: 		"true"
+			});
+		}
+	},
+	showTradeRoutes: function () {
+		var t = Tabs.trader;
+		alert(t.tradeRoutes.toSource());
+	},
+	saveTradeRoutes: function(){
+		var t = Tabs.trader;
+        var serverID = getServerId();
+        GM_setValue('tradeRoutes_' + serverID, JSON2.stringify(t.tradeRoutes));
+    },
+    readTradeRoutes: function(){
+        var t = Tabs.trader;
+        var serverID = getServerId();
+        s = GM_getValue('tradeRoutes_' + serverID);
+        if (s != null) {
+            route = JSON2.parse(s);
+            for (k in state) 
+                t.tradeRoutes[k] = route[k];
+        }
+    },
+	saveTraderState: function(){
+		var t = Tabs.trader;
+        var serverID = getServerId();
+        GM_setValue('traderState_' + serverID, JSON2.stringify(t.traderState));
+    },
+    readTraderState: function(){
+        var t = Tabs.trader;
+        var serverID = getServerId();
+        s = GM_getValue('traderState_' + serverID);
+        if (s != null) {
+            state = JSON2.parse(s);
+            for (k in state) 
+                t.traderState[k] = state[k];
+        }
+    },
+    toggleTraderState: function(obj){
+		var t = Tabs.trader;
+        if (t.traderState.running == true) {
+            t.traderState.running = false;
+            obj.value = "Trader = OFF";
+        }
+        else {
+            t.traderState.running = true;
+            obj.value = "Trader = ON";
+        }
+    },
+	show: function(){
+		var t = Tabs.trader;
+    },
+	hide: function(){
+        var t = Tabs.trader;
+    },
+    onUnload: function(){
+        var t = Tabs.trader;
+		t.saveTradeRoutes();
+		t.saveTraderState();
+        
+    },
+}
 
 /************************ Gold Collector ************************/
 var CollectGold = {
