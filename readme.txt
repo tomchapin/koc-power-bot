@@ -1,6 +1,9 @@
 REVISION HISTORY:
 ----------------
 (SVN):
+20110412a:
+   * Fixed widescreen not working after addition of guardians
+   * Removed the new header from kabam
 
 20110408a:
    * Added tower function (like in Toolkit) - maybe some bugs included
