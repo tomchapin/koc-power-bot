@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110408a';
+var Version = '20110412a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -73,12 +73,17 @@ function facebookInstance (){
     } catch (e){
       // toolkit may have removed them already!
     }
-    var e = document.getElementById('content').firstChild;
+    var e = document.getElementById('content');
     document.getElementById('content').style.minWidth = '1220px';
-    e.style.width = '100%';
-    e.style.margin = '0';
-    e.firstChild.style.width = '100%';
-    iFrame.style.width = '100%';
+	for(i=0; i<e.childNodes.length; i++){
+		if(e.childNodes[i].firstChild){
+			e.childNodes[i].style.width = '100%';
+			e.childNodes[i].style.margin = '0';
+			e.childNodes[i].firstChild.style.width = '100%';
+			break;
+		}
+	}
+	iFrame.style.width = '100%';
 
     var div = searchDOM (document.getElementById('content'), 'node.tagName=="DIV" && node.className=="UIStandardFrame_Content"', 7);
     if (div)
@@ -3148,6 +3153,7 @@ var WideScreen = {
       GM_addStyle ('.modalCurtain {width:760px !important} .mod_comm_mmb{z-index:0 !important}');  
       try {
         document.getElementById('progressBar').parentNode.removeChild(document.getElementById('progressBar'));
+        document.getElementById('crossPromoBarContainer').parentNode.removeChild(document.getElementById('crossPromoBarContainer'));
       } catch (e) {
       }
     }
