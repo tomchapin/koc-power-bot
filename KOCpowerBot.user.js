@@ -604,6 +604,14 @@ Tabs.tower = {
           }
         }
         msg += ' My embassy has '+ availSlots +' of '+ emb.maxLevel +' slots available.';
+        if (t.defMode[m.toCityId] == 0)
+        {
+            msg+= ' My troops are HIDING!';
+        }
+        if (t.defMode[m.toCityId] == 1)
+        {
+            msg+= ' My troops are DEFENDING!';
+        }
       }
     }
     if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
