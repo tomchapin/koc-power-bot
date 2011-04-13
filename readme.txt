@@ -1,6 +1,9 @@
 REVISION HISTORY:
 ----------------
 (SVN):
+20110412c:
+   *Added auto updater include and more detailed meta info
+
 20110412b:
    *Bug fixes for widescreen
 
