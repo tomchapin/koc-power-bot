@@ -1,9 +1,12 @@
 // ==UserScript==
 // @name           KOC Power Bot
+// @version        20110412b
 // @namespace      mat
+// @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
 // @include        http://apps.facebook.com/kingdomsofcamelot/*
 // @description    Automated features for Kingdoms of Camelot
+// @require        http://tomchapin.me/auto-updater.php?id=101052
 // ==/UserScript==
 
 
