@@ -1,6 +1,9 @@
 REVISION HISTORY:
 ----------------
 (SVN):
+20110412b:
+   *Bug fixes for widescreen
+
 20110412a:
    * Fixed widescreen not working after addition of guardians
    * Removed the new header from kabam

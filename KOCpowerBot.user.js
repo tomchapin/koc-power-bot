@@ -7,7 +7,7 @@
 // ==/UserScript==
 
 
-var Version = '20110412a';
+var Version = '20110412b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -47,13 +47,16 @@ if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
 function facebookInstance (){
   function setWide (){
     var iFrame = null;
-    var e = document.getElementById('app_content_130402594779').firstChild.firstChild;
-    for (var c=0; c<e.childNodes.length; c++){
-      if (e.childNodes[c].tagName=='SPAN' && e.childNodes[c].firstChild.className == 'canvas_iframe_util'){
-        iFrame = e.childNodes[c].firstChild; 
-        break;
-      }
-    }
+    var e = document.getElementById('app_content_130402594779');
+	if(e){
+		e = e.firstChild.firstChild;
+		for (var c=0; c<e.childNodes.length; c++){
+		  if (e.childNodes[c].tagName=='SPAN' && e.childNodes[c].firstChild.className == 'canvas_iframe_util'){
+			iFrame = e.childNodes[c].firstChild; 
+			break;
+		  }
+		}
+	}
     if (!iFrame){
       var iframes = document.getElementsByTagName('iframe');
       for (var i=0; i<iframes.length; i++){
