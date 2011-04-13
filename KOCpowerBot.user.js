@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110412b
+// @version        20110412c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110412b';
+var Version = '20110412c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
