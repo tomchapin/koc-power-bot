@@ -4850,7 +4850,7 @@ t.state = null;
 /*********************************** Gifts TAB ***********************************/
 function explodeUrlArgs (url){
   var i = url.indexOf ('?');
-  var a = url.substr(i+1).split ('&'); 
+  var a = url.substr(i+1).split ('&');
   var args = {};
   for (i=0; i<a.length; i++){
     var s = a[i].split ('=');
@@ -4870,35 +4870,30 @@ function GM_AjaxPost (url, args, notify, label){
     headers: { "Content-Type": "application/x-www-form-urlencoded", 'X-Requested-With': 'XMLHttpRequest', 'X-Prototype-Version': '1.6.1',
                'Accept': 'text/javascript, text/html, application/xml, text/xml, */*' },
     onload: function (rslt) {
-      if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ( 'GM_AjaxPost.onLoad ('+ label +'):\n '  + inspect (rslt, 6, 1));   
+      if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ( 'GM_AjaxPost.onLoad ('+ label +'):\n '  + inspect (rslt, 6, 1));  
       notify (rslt.responseText);
     },
     onerror: function () {
       notify (null);
     },
-  });  
+  }); 
 }
 
 // returns: page text or null on comm error
 function GM_AjaxGet (url, args, notify, label){
   if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ('GM_AjaxGet ('+ label +'): ' + url);
-  new GM_xmlhttpRequest({
+  GM_xmlhttpRequest({
     method: "get",
     url: addUrlArgs(url, args),
     onload: function (rslt) {
-      if (rslt.status != 200){
-        logit ('GM_AjaxGet status ('+ label +'): '+ rslt.status);
-      }
-      if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ( 'GM_AjaxGet.onLoad ('+ label +')  len='+ rslt.responseText.length +':\n '  + inspect (rslt, 6, 1));   
+      if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ( 'GM_AjaxGet.onLoad ('+ label +')  len='+ rslt.responseText.length +':\n '  + inspect (rslt, 6, 1));  
       notify (rslt.responseText);
     },
-    onerror: function (rslt) {
-//logit (inspect (rslt, 3, 1));      
+    onerror: function () {
       notify (null);
     },
-  });  
-}    
-      
+  }); 
+}         
   
 Tabs.Gifts = {
   tabOrder : 3,
