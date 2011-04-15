@@ -127,6 +127,7 @@ var Options = {
   pbWideMap    : false,
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, minTroops:10000, spamLimit:10, lastAttack:0 },
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
+  spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 },
   giftDomains  : {valid:false, list:{}},
   giftDelete   : 'e',
   currentTab   : null,
@@ -228,6 +229,7 @@ function pbStartup (){
   
   FairieKiller.init (Options.pbKillFairie);
   RefreshEvery.init ();
+  SpamEvery.init ();
   CollectGold.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
@@ -3929,6 +3931,80 @@ unsafeWindow.pbGotoMap = function (x, y){
     unsafeWindow.tutorialClear()
   }, 0);
 };
+
+/****************************  Spam Tab  ******************************/
+Tabs.Spam = {
+  tabOrder : 30,                    // order to place tab in top bar
+  tabLabel : 'Spam',            // label to show in main window tabs
+  myDiv : null,
+  timer : null,  
+  
+  init : function (div){    // called once, upon script startup
+    var t = Tabs.Spam;
+    t.myDiv = div;
+
+
+    var m = '<DIV class=pbStat>Advertise to global</div><TABLE class=pbTab><TR align=center>';
+        m += '<BR><TR><TD><INPUT id=pbSpamEnable type=checkbox '+ (Options.spamconfig.aspam?'CHECKED ':'') +'/></td><TD>Automatically post advertisment every <INPUT id=pbSpamMin type=text size=2 maxlength=3 value="'+ Options.spamconfig.spammins +'"  \> minutes</td></tr>\
+              <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
+              <TR><TD align=right>Your spam: &nbsp; </td><TD><INPUT id=pbSpamAd type=text size=60 maxlength=120 value="'+ Options.spamconfig.spamvert +'" \></td></tr>\
+              </table><BR>';
+    
+    t.myDiv.innerHTML = m;
+
+    document.getElementById('pbSpamEnable').addEventListener ('change', t.e_spamOptChanged, false);
+    document.getElementById('pbSpamAd').addEventListener ('change', t.e_spamOptChanged, false);
+    document.getElementById('pbSpamMin').addEventListener ('change', t.e_spamOptChanged, false);
+
+},
+  
+  hide : function (){         // called whenever the main window is hidden, or another tab is selected
+    var t = Tabs.Spam;
+  },
+  
+  show : function (){         // called whenever this tab is shown
+    var t = Tabs.Spam;
+
+  },
+  e_spamOptChanged : function (){
+    var t = Tabs.Spam;
+    Options.spamconfig.aspam = document.getElementById('pbSpamEnable').checked;
+    Options.spamconfig.spamvert = document.getElementById('pbSpamAd').value;
+    Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
+  },
+
+};  
+
+var SpamEvery  = {
+  timer : null,
+  init : function (){
+
+    if (Options.spamconfig.spammins < 1)
+      Options.spamconfig.spammins = 1;
+    SpamEvery.setEnable (Options.spamconfig.aspam);
+  },
+  setEnable : function (tf){
+    var t = SpamEvery;
+    clearTimeout (t.timer);
+    if (tf)
+      t.timer = setTimeout (t.count, '60000');
+  },
+  count : function (){
+   var t = SpamEvery;
+   if (Options.spamconfig.atime > Options.spamconfig.spammins) {
+    Options.spamconfig.atime = 2;
+    t.doit ();
+   } else {
+    Options.spamconfig.atime = (Options.spamconfig.atime + 1);
+    SpamEvery.init ();
+   }
+  },
+  doit : function (){
+    actionLog ('Spamming ('+ Options.spamconfig.spammins +' minutes expired)');
+    sendChat ("/g "+  Options.spamconfig.spamvert);
+    SpamEvery.init ();
+  }
+}
 
 /**********************************************************************************/
 var CalterUwFunc = function (funcName, findReplace) {
