@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110419a
+// @version        20110420a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110419a';
+var Version = '20110420a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2311,13 +2311,16 @@ var exportToKOCattack = {
       popExp.show (false);
       unsafeWindow.Modal.hideModalAll(); 
       unsafeWindow.modal_attack(4,0,0);
-      new CwaitForElement ('BulkAddAttackDiv', 10000, e_attackDialog );
+      new CwaitForElement ('BulkAddAttackDiv', 100, e_attackDialog );
     }
         
     function e_attackDialog (tf){
       if (!tf){
-        endBulkAdd ('<SPAN class=boldRed>ERROR: Unable to open attack dialog</span>');
-        return;  
+        hideMe();
+      popExp.show (false);
+      unsafeWindow.Modal.hideModalAll(); 
+      unsafeWindow.modal_attack(4,0,0);
+      new CwaitForElement ('BulkAddAttackDiv', 100, e_attackDialog );
       } 
       var div = searchDOM (document.getElementById('BulkAddAttackDiv'), 'node.tagName=="DIV" && node.style.display=="none"', 10);
       if (div==null){
