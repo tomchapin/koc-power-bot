@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110412c
+// @version        20110419a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110412c';
+var Version = '20110419a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -127,7 +127,7 @@ var Options = {
   pbWideMap    : false,
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, minTroops:10000, spamLimit:10, lastAttack:0 },
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
-  spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 },
+  spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
   giftDelete   : 'e',
   currentTab   : null,
@@ -3942,22 +3942,36 @@ Tabs.Spam = {
   init : function (div){    // called once, upon script startup
     var t = Tabs.Spam;
     t.myDiv = div;
+    var m = '<DIV class=pbStat>Advertise</div><TABLE class=pbTab width=100% height=0% ><TR align="center">';
 
+       if (Options.spamconfig.aspam == true) {
+        m += '<TD><INPUT id=pbSpamEnable type=submit value="Spam On"></td>';
+       }
+       else {
+        m += '<TD><INPUT id=pbSpamEnable type=submit value="Spam Off"></td>';
+       }
 
-    var m = '<DIV class=pbStat>Advertise to global</div><TABLE class=pbTab><TR align=center>';
-        m += '<BR><TR><TD><INPUT id=pbSpamEnable type=checkbox '+ (Options.spamconfig.aspam?'CHECKED ':'') +'/></td><TD>Automatically post advertisment every <INPUT id=pbSpamMin type=text size=2 maxlength=3 value="'+ Options.spamconfig.spammins +'"  \> minutes</td></tr>\
-              <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
-              <TR><TD align=right>Your spam: &nbsp; </td><TD><INPUT id=pbSpamAd type=text size=60 maxlength=120 value="'+ Options.spamconfig.spamvert +'" \></td></tr>\
+       if (Options.spamconfig.spamstate == 'a') {
+        m += '<TD><INPUT id=pbSpamState type=submit value="Send To Alliance"></td>';
+       }
+       else {
+        m += '<TD><INPUT id=pbSpamState type=submit value="Send To  Global "></td>';
+       }
+        m += '</tr></table></div>';
+       m += '<DIV class=pbStat>Settings</div><TABLE class=pbTab><TR align="left">';
+        m += '<tr><td>Automatically post every <INPUT id=pbSpamMin type=text size=2 maxlength=3 value="'+ Options.spamconfig.spammins +'"  \> minutes</td></tr><BR>\
+              <tr><TD><TABLE cellpadding=0 cellspacing=0>\
+              <TD align=left>Your spam: &nbsp; </td><TD><INPUT id=pbSpamAd type=text size=60 maxlength=500 value="'+ Options.spamconfig.spamvert +'" \></td></tr>\
               </table><BR>';
     
     t.myDiv.innerHTML = m;
 
-    document.getElementById('pbSpamEnable').addEventListener ('change', t.e_spamOptChanged, false);
+    document.getElementById('pbSpamEnable').addEventListener ('click', function(){t.toggleon(this);}, false);
     document.getElementById('pbSpamAd').addEventListener ('change', t.e_spamOptChanged, false);
     document.getElementById('pbSpamMin').addEventListener ('change', t.e_spamOptChanged, false);
+    document.getElementById('pbSpamState').addEventListener ('click', function(){t.togglespam(this);}, false);
+ },
 
-},
-  
   hide : function (){         // called whenever the main window is hidden, or another tab is selected
     var t = Tabs.Spam;
   },
@@ -3966,13 +3980,39 @@ Tabs.Spam = {
     var t = Tabs.Spam;
 
   },
-  e_spamOptChanged : function (){
-    var t = Tabs.Spam;
-    Options.spamconfig.aspam = document.getElementById('pbSpamEnable').checked;
-    Options.spamconfig.spamvert = document.getElementById('pbSpamAd').value;
-    Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
-  },
 
+ e_spamOptChanged : function (){
+  var t = Tabs.Spam;
+  Options.spamconfig.spamvert = document.getElementById('pbSpamAd').value;
+  Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
+
+ },
+
+ togglespam: function(obj){
+  var t = Tabs.Spam;
+  if (Options.spamconfig.spamstate == 'a') {
+   Options.spamconfig.spamstate = 'g';
+   obj.value = "Send To  Global ";
+  }
+  else {
+   Options.spamconfig.spamstate = 'a';
+   obj.value = "Send To Alliance";
+  };
+
+ },
+
+ toggleon: function(obj){
+  var t = Tabs.Spam;
+  if (Options.spamconfig.aspam == true) {
+   Options.spamconfig.aspam = false;
+   obj.value = "Spam Off";
+  }
+  else {
+   Options.spamconfig.aspam = true;
+   obj.value = "Spam On";
+  };
+
+ },
 };  
 
 var SpamEvery  = {
@@ -4001,7 +4041,7 @@ var SpamEvery  = {
   },
   doit : function (){
     actionLog ('Spamming ('+ Options.spamconfig.spammins +' minutes expired)');
-    sendChat ("/g "+  Options.spamconfig.spamvert);
+    sendChat ("/" + Options.spamconfig.spamstate + " " +  Options.spamconfig.spamvert);
     SpamEvery.init ();
   }
 }
