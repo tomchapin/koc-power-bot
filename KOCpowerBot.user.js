@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110420a
+// @version        20110421a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110420a';
+var Version = '20110421a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -132,6 +132,8 @@ var Options = {
   giftDelete   : 'e',
   currentTab   : null,
   hideOnGoto   : true,
+  transportinterval : 60,
+  minwagons		:100,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -2837,129 +2839,348 @@ Tabs.Options = {
   
 }
 
-/****************************  Trader Implementation  ******************************
- TODO: a lot ;-)
-
- */
-Tabs.trader = {
+/****************************  Transport Implementation  *******************************/
+Tabs.transport = {
   tabOrder: 1,
-  tabLabel: 'Trader',
+  tabLabel: 'Transport',
   myDiv: null,
   timer: null,
   traderState: [],
   lTR: [],
-  tradeRoutes: [],
+  tradeRoutes: [], 
+  checkdotradetimeout: null,
+  count:0,
+  rallypointlevel:null,
 
     init: function(div){
-		var t = Tabs.trader;
+		var t = Tabs.transport;
         t.myDiv = div;
 		t.traderState = {
             running: false,
         };
         t.readTraderState();
-		t.readTradeRoutes();
+	t.readTradeRoutes();
+	t.e_tradeRoutes();
 
-        var m = '<DIV id=pbTowrtDivF class=ptstat>NOT WORKING FEEL FREE TO FINISH ME!!!!!!!!!!!!!!!!!!</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
-        if (t.traderState.running == false) {
-            m += '<TD><INPUT id=pbTraderState type=submit value="Trader = OFF"></td>';
-       }
-        else {
-            m += '<TD><INPUT id=pbTraderState type=submit value="Trader = ON"></td>';
-        }
-		m += '<TD><INPUT id=pbShowRoutes type=submit value="Show Routes"></td>';
-        m += '</tr></table></div>';
-		m += '<DIV id=pbTraderDivD class=ptstat>ADD TRADE ROUTE</div>';
-        m += '<DIV style="text-align:center; margin-bottom:10px;">Select City: &nbsp; <span id=ptrescity></span></div>';
-		m += '<TABLE id=pbaddtraderoute width=100% height=0% class=pbTab><TR align="center">';
-		m += '<TD>IF</td><TD><SELECT id="pbrestype">\
-		<OPTION value=wood>wood</option>\
-		<OPTION value=ore>ore</option>\
-		<OPTION value=food>food</option>\
-		<OPTION value=stone>stone</option>\
-		</select></td>';
-		m += '<TD>>=</td><TD><INPUT id=pbtargetamount type=text size=8 maxlength=8 \></td>';
-		m += '<TD>MOVE</td><TD><INPUT id=pbtradeamount type=text size=8 maxlength=8 \></td>';
-		m += '<TD>TO =></td><TD>X</td><TD><INPUT id=pbtargetx type=text size=3 maxlength=3 \></td>';
-		m += '<TD>Y</td><TD><INPUT id=pbtargety type=text size=3 maxlength=3 \></td>';
-		m += '<TD><INPUT id=pbSaveRoute type=submit value="Add Route"></td></table>';
-       
-    	t.myDiv.innerHTML = m;
-		
-		t.tcp = new CdispCityPicker ('pttrader', document.getElementById('ptrescity'), true, t.clickCitySelect, 0);
+      var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED TRANSPORT FUNCTION</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
+      if (t.traderState.running == false) {
+          m += '<TD><INPUT id=pbTraderState type=submit value="Trader = OFF"></td>';
+      } else {
+          m += '<TD><INPUT id=pbTraderState type=submit value="Trader = ON"></td>';
+      }
+      m += '<TD><INPUT id=pbShowRoutes type=submit value="Show Routes"></td>';
+      m += '</tr></table></div>';
+      m += '<DIV id=pbTraderDivD class=pbStat>ADD TRADE ROUTE</div>';
 
-		document.getElementById('pbTraderState').addEventListener('click', function(){
-            t.toggleTraderState(this);
-        }, false);
-		document.getElementById('pbSaveRoute').addEventListener('click', function(){
-            t.addTradeRoute();
-        }, false);
-		document.getElementById('pbShowRoutes').addEventListener('click', function(){
-            t.showTradeRoutes();
-        }, false);
-       
-	    window.addEventListener('unload', t.onUnload, false);
-		//t.e_tradeRoutes();
+      m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
+      //m += '<DIV style="text-align:left; align=baseline; margin-bottom:10px;">From City: &nbsp; <span id=ptrescity></span></div>';
+      m += '<TD>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
 
-	},
-	e_tradeRoutes: function(){
-        var t = Tabs.trader;
+      m += '<TR align="left">';
+      m += '<TD>To City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptcityTo></span></div></td>';
+      m += '<TD>OR</td>';
+      m += '<TD>X:<INPUT id=ptcityX type=text size=3\></td>';
+      m += '<TD>Y:<INPUT id=ptcityY type=text size=3\></td></tr>';
+	  
+	  m += '<TR align="left">';
+	  m += '<TD colspan=4>Time inbetween to check transport: <INPUT id=pbtransportinterval type=text size=2 value="'+Options.transportinterval+'"\> minutes</td></tr></table>';
+      m += '<TD colspan=4>Dont send transport out if less then <INPUT id=pbminwagons type=text size=2 value="'+Options.minwagons+'"\> are needed. (Needless transports are skipped this way)</td></tr></table>';
       
-        t.secondTimer = setTimeout(t.e_tradeRoutes, 10000);
+      m += '<DIV style="margin-top:10px;margin-bottom:5px;">If the "trade" amount is 0 then it will transport the max amount above "keep". Gold only if there is space left...</div>';
+      m += '<TABLE id=pbaddtraderoute width=55% height=0% class=pbTab><TR align="center">';
+      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
+      m += '<TD><INPUT id=pbshipFood type=checkbox checked=true\></td>';
+      m += '<TD>Keep: <INPUT id=pbtargetamountFood type=text size=10 maxlength=10 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountFood type=text size=10 maxlength=10 value="0"\></td></tr>';
+      m += '<TR align="center">';
+      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
+      m += '<TD><INPUT id=pbshipWood type=checkbox checked=true\></td>';
+      m += '<TD>Keep: <INPUT id=pbtargetamountWood type=text size=10 maxlength=10 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountWood type=text size=10 maxlength=10 value="0"\></td></tr>';
+      m += '<TR align="center">';
+      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
+      m += '<TD><INPUT id=pbshipStone type=checkbox checked=true\></td>';
+      m += '<TD>Keep: <INPUT id=pbtargetamountStone type=text size=10 maxlength=10 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountStone type=text size=10 maxlength=10 value="0"\></td></tr>';
+      m += '<TR align="center">';
+      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
+      m += '<TD><INPUT id=pbshipOre type=checkbox checked=true\></td>';
+      m += '<TD>Keep: <INPUT id=pbtargetamountOre type=text size=10 maxlength=10 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountOre type=text size=10 maxlength=10 value="0"\></td></tr>';
+      m += '<TR align="center">';
+      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td>';
+      m += '<TD><INPUT id=pbshipGold type=checkbox checked=true\></td>';
+      m += '<TD>Keep: <INPUT id=pbtargetamountGold type=text size=10 maxlength =10 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountGold type=text size=10 maxlength=10 value="0"\></td></tr>'
+      m += '</table>';
+
+      m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRoute type=submit value="Add Route"></div>';
+      
+      t.myDiv.innerHTML = m;
+      
+      t.tcp = new CdispCityPicker ('pttrader', document.getElementById('ptrescity'), true, t.clickCitySelect, 0);
+      t.tcpto = new CdispCityPicker ('pttraderTo', document.getElementById('ptcityTo'), true, t.clickCitySelect).bindToXYboxes(document.getElementById ('ptcityX'), document.getElementById ('ptcityY'));
+      
+      document.getElementById('pbTraderState').addEventListener('click', function(){
+      t.toggleTraderState(this);
+      }, false);
+      document.getElementById('pbSaveRoute').addEventListener('click', function(){
+      t.addTradeRoute();
+      }, false);
+      document.getElementById('pbShowRoutes').addEventListener('click', function(){
+      t.showTradeRoutes();
+      }, false);
+      
+      document.getElementById('pbtransportinterval').addEventListener('keyup', function(){
+		if (isNaN(document.getElementById('pbtransportinterval').value)){ document.getElementById('pbtransportinterval').value=60 ;}
+		Options.transportinterval = document.getElementById('pbtransportinterval').value;
+		saveOptions();
+      }, false);
+      
+      document.getElementById('pbtargetamountFood').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtargetamountFood').value)) document.getElementById('pbtargetamountFood').value=0 ;
+      }, false);
+      document.getElementById('pbtargetamountWood').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtargetamountWood').value)) document.getElementById('pbtargetamountWood').value=0 ;
+      }, false);
+      document.getElementById('pbtargetamountStone').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtargetamountStone').value)) document.getElementById('pbtargetamountStone').value=0 ;
+      }, false);
+      document.getElementById('pbtargetamountOre').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtargetamountOre').value)) document.getElementById('pbtargetamountOre').value=0 ;
+      }, false);
+      document.getElementById('pbtargetamountGold').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtargetamountGold').value)) document.getElementById('pbtargetamountGold').value=0 ;
+      }, false);
+      document.getElementById('pbtradeamountFood').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtradeamountFood').value)) document.getElementById('pbtradeamountFood').value=0 ;
+      }, false);
+      document.getElementById('pbtradeamountWood').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtradeamountWood').value)) document.getElementById('pbtradeamountWood').value=0 ;
+      }, false);
+      document.getElementById('pbtradeamountStone').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtradeamountStone').value)) document.getElementById('pbtradeamountStone').value=0 ;
+      }, false);
+      document.getElementById('pbtradeamountOre').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtradeamountOre').value)) document.getElementById('pbtradeamountOre').value=0 ;
+      }, false);
+      document.getElementById('pbtradeamountGold').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtradeamountGold').value)) document.getElementById('pbtradeamountGold').value=0 ;
+      }, false);
+     document.getElementById('pbminwagons').addEventListener('keyup', function(){
+         if (isNaN(document.getElementById('pbminwagons').value)) document.getElementById('pbminwagons').value=100 ;
+         Options.minwagons = document.getElementById('pbminwagons').value;
+         saveOptions();
+     }, false)
+      
+      document.getElementById('pbshipFood').addEventListener('click', function(){
+          if (document.getElementById('pbshipFood').checked==false) {
+              document.getElementById('pbtargetamountFood').disabled = true;
+              document.getElementById('pbtradeamountFood').disabled = true;
+          }
+          else {
+            document.getElementById('pbtargetamountFood').disabled = false;
+            document.getElementById('pbtradeamountFood').disabled = false;
+          }
+      },false);
+      document.getElementById('pbshipWood').addEventListener('click', function(){
+          if (document.getElementById('pbshipWood').checked==false) {
+              document.getElementById('pbtargetamountWood').disabled = true;
+              document.getElementById('pbtradeamountWood').disabled = true;
+          }
+          else {
+            document.getElementById('pbtargetamountWood').disabled = false;
+            document.getElementById('pbtradeamountWood').disabled = false;
+          }
+      },false);
+      document.getElementById('pbshipStone').addEventListener('click', function(){
+          if (document.getElementById('pbshipStone').checked==false) {
+              document.getElementById('pbtargetamountStone').disabled = true;
+              document.getElementById('pbtradeamountStone').disabled = true;
+          }
+          else {
+            document.getElementById('pbtargetamountStone').disabled = false;
+            document.getElementById('pbtradeamountStone').disabled = false;
+          }
+      },false);
+      document.getElementById('pbshipOre').addEventListener('click', function(){
+          if (document.getElementById('pbshipOre').checked==false) {
+              document.getElementById('pbtargetamountOre').disabled = true;
+              document.getElementById('pbtradeamountOre').disabled = true;
+          }
+          else {
+            document.getElementById('pbtargetamountOre').disabled = false;
+            document.getElementById('pbtradeamountOre').disabled = false;
+          }
+      },false);
+      document.getElementById('pbshipGold').addEventListener('click', function(){
+          if (document.getElementById('pbshipGold').checked==false) {
+              document.getElementById('pbtargetamountGold').disabled = true;
+              document.getElementById('pbtradeamountGold').disabled = true;
+          }
+          else {
+            document.getElementById('pbtargetamountGold').disabled = false;
+            document.getElementById('pbtradeamountGold').disabled = false;
+          }
+      },false);
+      window.addEventListener('unload', t.onUnload, false);
+    }, 
+    
+    getRallypoint: function(cityId){
+      var t = Tabs.transport;
+      for (var k in Seed.buildings[cityId]){
+           var buildingType  = parseInt(Seed.buildings[cityId][k][0]);
+           var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
+    	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
+    	     //logit(buildingName + ' => Level: ' + buildingLevel);
+    	     if (buildingName == "Rally Point") rallypointlevel=buildingLevel;
+    	  }	  
+ },
+      	  
+    e_tradeRoutes: function(){
+      var t = Tabs.transport;
+      if (t.traderState.running == true)    {
+		  t.checkdoTrades();
+      } 
+	  setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*60*1000);
     },
+    	
+	delTradeRoutes: function() {
+    	
+		var t = Tabs.transport;
+    	
+		t.tradeRoutes= [];
+    
+	},
 	addTradeRoute: function () {
 		var valid = true;
-		var t = Tabs.trader;
-		var source_x = t.tcp.city.x;
-		var source_y = t.tcp.city.y;
-		var res_type = document.getElementById('pbrestype').value;
-		var target_amount = document.getElementById('pbtargetamount').value;
-		var trade_amount = document.getElementById('pbtradeamount').value;
-		var target_x = document.getElementById('pbtargetx').value;
-		var target_y = document.getElementById('pbtargety').value;
+		var t = Tabs.transport;
+		var city = t.tcp.city.id;
+		var ship_Food = document.getElementById('pbshipFood').checked;
+		var ship_Wood = document.getElementById('pbshipWood').checked;
+		var ship_Stone = document.getElementById('pbshipStone').checked;
+		var ship_Ore = document.getElementById('pbshipOre').checked;
+		var ship_Gold = document.getElementById('pbshipGold').checked;
+		var target_Food = document.getElementById('pbtargetamountFood').value;
+		var target_Wood = document.getElementById('pbtargetamountWood').value;
+		var target_Stone = document.getElementById('pbtargetamountStone').value;
+		var target_Ore = document.getElementById('pbtargetamountOre').value;
+		var target_Gold = document.getElementById('pbtargetamountGold').value;
+		var trade_Food = document.getElementById('pbtradeamountFood').value;
+		var trade_Wood = document.getElementById('pbtradeamountWood').value;
+		var trade_Stone = document.getElementById('pbtradeamountStone').value;
+		var trade_Ore = document.getElementById('pbtradeamountOre').value;
+		var trade_Gold = document.getElementById('pbtradeamountGold').value;
+		var target_x = document.getElementById('ptcityX').value;
+		var target_y = document.getElementById('ptcityY').value;
 		var route_state = true;
-		
-		//TODO enter validation here
-		
+				
 		if (valid == true) {
 			var lTR = t.tradeRoutes;
 			lTR.push({
-				source_x:			source_x,
-				source_y:			source_y,
-				res_type: 			res_type,
-				target_amount: 		target_amount,
-				trade_amount: 		trade_amount,
+				city:				city,
+				ship_Food:			ship_Food,
+				target_Food:		target_Food,
+				trade_Food: 		trade_Food,
+				ship_Wood:			ship_Wood,
+				target_Wood:		target_Wood,
+				trade_Wood: 		trade_Wood,
+				ship_Stone:			ship_Stone,
+				target_Stone:		target_Stone,
+				trade_Stone: 		trade_Stone,
+				ship_Ore:			ship_Ore,
+				target_Ore:			target_Ore,
+				trade_Ore:	 		trade_Ore,
+				ship_Gold:			ship_Gold,
+				target_Gold:		target_Gold,
+				trade_Gold: 		trade_Gold,
 				target_x: 			target_x,
 				target_y: 			target_y,
 				route_state: 		"true"
 			});
 		}
+		document.getElementById('pbTraderDivD').style.background ='#99FF99';
+		setTimeout(function(){ (document.getElementById('pbTraderDivD').style.background =''); }, 1000);
 	},
 	showTradeRoutes: function () {
-		var t = Tabs.trader;
-		alert(t.tradeRoutes.toSource());
+		var t = Tabs.transport;
+		var popTradeRoutes = null;
+		t.popTradeRoutes = new CPopup('pbShowTrade', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowTradeRoutes" id="pbRoutesQueue">';       
+		t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
+		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>Transport routes:</td><BR><TD>ID</td><TD>From</td><TD>Enabled</td><TD>Target Food</td><TD>Trade Food</td></b>';
+		t.paintTradeRoutes();
+		t.popTradeRoutes.show(true)	;
 	},
+	paintTradeRoutes: function(){
+	        var t = Tabs.transport;
+	        var r = t.tradeRoutes;
+	        var cityname;
+			for (var i = (r.length-1); i>=0; i--) {
+				for (var y=0; y< Seed.cities.length;y++) {
+					if ( parseInt(Seed.cities[y][0]) == r[i].city) var cityname = Seed.cities[y][1];
+				}    
+				var queueId = i;
+				t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].ship_Food, r[i].target_Food, r[i].trade_Food,r[i].ship_Wood, r[i].target_Wood, r[i].trade_Wood,r[i].ship_Stone, r[i].target_Stone, r[i].trade_Stone,r[i].ship_Ore, r[i].target_Ore, r[i].trade_Ore,r[i].ship_Gold, r[i].target_Gold, r[i].trade_Gold);
+	        }
+	    },
+	  
+	 _addTab: function(queueId,cityname, cityX,cityY,ship_Food, target_Food, trade_Food,ship_Wood, target_Wood, trade_Wood,ship_Stone, target_Stone, trade_Stone,ship_Ore, target_Ore, trade_Ore,ship_Gold, target_Gold, trade_Gold){
+	 	var t = Tabs.transport;
+	     var row = document.getElementById('pbRoutesQueue').insertRow(0);
+	     row.vAlign = 'top';
+	     row.insertCell(0).innerHTML = queueId;
+	     row.insertCell(1).innerHTML = cityname;
+	     row.insertCell(2).innerHTML = cityX + ',' + cityY;
+	     row.insertCell(3).innerHTML = ship_Food;
+	 	 row.insertCell(4).innerHTML = target_Food;
+	 	 row.insertCell(5).innerHTML = trade_Food;
+	 	 row.insertCell(6).innerHTML = ship_Wood;
+	 	 row.insertCell(7).innerHTML = target_Wood;
+	 	 row.insertCell(8).innerHTML = trade_Wood;
+	 	 row.insertCell(9).innerHTML = ship_Stone;
+	 	 row.insertCell(10).innerHTML = target_Stone;
+	 	 row.insertCell(11).innerHTML = trade_Stone;
+	 	 row.insertCell(12).innerHTML = ship_Ore;
+	 	 row.insertCell(13).innerHTML = target_Ore;
+	 	 row.insertCell(14).innerHTML = trade_Ore;
+	 	 row.insertCell(15).innerHTML = ship_Gold;
+	 	 row.insertCell(16).innerHTML = target_Gold;
+	 	 row.insertCell(17).innerHTML = trade_Gold;
+	     row.insertCell(18).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>Delete</span></a>';
+	     document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
+	        t.cancelQueueElement(queueId);
+	     }, false);
+	 },
+	 cancelQueueElement: function(queueId){
+	     var t = Tabs.transport;
+	     var queueId = parseInt(queueId);
+	     t.tradeRoutes.splice(queueId, 1);
+	     t.showTradeRoutes();
+	 },
+	   
 	saveTradeRoutes: function(){
-		var t = Tabs.trader;
+		var t = Tabs.transport;
         var serverID = getServerId();
         GM_setValue('tradeRoutes_' + serverID, JSON2.stringify(t.tradeRoutes));
     },
     readTradeRoutes: function(){
-        var t = Tabs.trader;
+        var t = Tabs.transport;
         var serverID = getServerId();
         s = GM_getValue('tradeRoutes_' + serverID);
         if (s != null) {
             route = JSON2.parse(s);
-            for (k in state) 
+            for (k in route) 
                 t.tradeRoutes[k] = route[k];
         }
     },
 	saveTraderState: function(){
-		var t = Tabs.trader;
+		var t = Tabs.transport;
         var serverID = getServerId();
         GM_setValue('traderState_' + serverID, JSON2.stringify(t.traderState));
     },
     readTraderState: function(){
-        var t = Tabs.trader;
+        var t = Tabs.transport;
         var serverID = getServerId();
         s = GM_getValue('traderState_' + serverID);
         if (s != null) {
@@ -2969,25 +3190,241 @@ Tabs.trader = {
         }
     },
     toggleTraderState: function(obj){
-		var t = Tabs.trader;
+		var t = Tabs.transport;
         if (t.traderState.running == true) {
             t.traderState.running = false;
             obj.value = "Trader = OFF";
+			clearTimeout(t.checkdotradetimeout);
+			t.count = 0;
         }
         else {
             t.traderState.running = true;
             obj.value = "Trader = ON";
+            // for (var i=0; i<t.tradeRoutes.length ;i++) {
+            	 // t.count=i;
+            	 // var interval = t.count * 5000;
+            	 // //setTimeout(t.doTrades(),interval);
+	             // setTimeout(function(){ t.doTrades(i); }, interval);
+            // } 
+			t.e_tradeRoutes();
         }
     },
+	
+	checkdoTrades: function(){
+	var t = Tabs.transport;
+	t.doTrades(t.count);
+	t.count++;
+		if(t.count < t.tradeRoutes.length){
+		  t.checkdotradetimeout = setTimeout(function() { t.checkdoTrades();}, 5000);
+		} else {
+		  t.count = 0;
+		}
+	},
+    
+    doTrades: function(count){
+    var t = Tabs.transport;
+   		  	
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.gold =0;
+		params.r1 =0;
+		params.r2 =0;
+		params.r3 =0;
+		params.r4 =0 ;
+		params.kid = 0;
+		
+		var carry_amount= 0;
+		var wagons_needed=0;
+		var citymax = 0;
+		var city = t.tradeRoutes[count]["city"]; 
+		var cityID = 'city' + city;
+		
+		
+   	 	var xcoord = t.tradeRoutes[count]["target_x"];
+    	var ycoord = t.tradeRoutes[count]["target_y"];
+    	var trade_Food = t.tradeRoutes[count]["trade_Food"];
+    	var trade_Wood = t.tradeRoutes[count]["trade_Wood"];
+    	var trade_Stone = t.tradeRoutes[count]["trade_Stone"];
+    	var trade_Ore = t.tradeRoutes[count]["trade_Ore"];
+    	var trade_Gold = t.tradeRoutes[count]["trade_Gold"];
+    	var target_Food = t.tradeRoutes[count]["target_Food"]; 
+    	var target_Wood = t.tradeRoutes[count]["target_Wood"]; 
+    	var target_Stone = t.tradeRoutes[count]["target_Stone"]; 
+    	var target_Ore = t.tradeRoutes[count]["target_Ore"]; 
+    	var target_Gold = t.tradeRoutes[count]["target_Gold"]; 
+    	var ship_Food = t.tradeRoutes[count]["ship_Food"];
+    	var ship_Wood = t.tradeRoutes[count]["ship_Wood"];
+    	var ship_Stone = t.tradeRoutes[count]["ship_Stone"];
+    	var ship_Ore = t.tradeRoutes[count]["ship_Ore"];
+    	var ship_Gold = t.tradeRoutes[count]["ship_Gold"]; 
+    	var citymax_Food = parseInt(Seed.resources[cityID]['rec1'][0] / 3600);
+    	var citymax_Wood = parseInt(Seed.resources[cityID]['rec2'][0] / 3600);
+    	var citymax_Stone = parseInt(Seed.resources[cityID]['rec3'][0] / 3600);
+    	var citymax_Ore = parseInt(Seed.resources[cityID]['rec4'][0] / 3600);
+    	var citymax_Gold = parseInt(Seed.citystats[cityID]['gold']);
+    	var carry_Food = (citymax_Food - target_Food);
+    	var carry_Wood = (citymax_Wood - target_Wood);
+    	var carry_Stone = (citymax_Stone - target_Stone);
+    	var carry_Ore = (citymax_Ore - target_Ore);
+    	var carry_Gold = 0;
+    	if (carry_Food < 0 || ship_Food==false) carry_Food = 0;
+    	if (carry_Wood < 0 || ship_Wood==false) carry_Wood = 0;
+    	if (carry_Stone < 0 || ship_Stone==false) carry_Stone = 0;
+    	if (carry_Ore < 0 || ship_Ore==false) carry_Ore = 0;
+    	if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseInt(trade_Food);
+    	if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseInt(trade_Wood);
+    	if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseInt(trade_Stone);
+    	if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseInt(trade_Ore);
+    	var wagons =  parseInt(Seed.units[cityID]['unt'+9]);
+    	t.getRallypoint(cityID);	
+    	if (wagons > (rallypointlevel*10000)) wagons = (rallypointlevel*10000);
+    	var featherweight = parseInt(Seed.tech.tch10);
+    	var maxloadperwagon = ((featherweight *500) + 5000);
+		var maxload = (maxloadperwagon* wagons);
+		
+		if(wagons <= 0) {logit('No wagons'); return; }
+
+		for (var t=0; t< Seed.cities.length;t++) {
+			if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
+		}                     
+		
+		var shift_Food = (maxload / 4);
+		var shift_Wood = (maxload / 4);
+		var shift_Stone = (maxload / 4);
+		var shift_Ore = (maxload / 4);
+					
+		if ((maxload - carry_Food - carry_Wood - carry_Stone - carry_Ore) < 0){
+			var shift_num=0;
+			var shift_spare=0;
+			
+			// Check: See if load/4 is to big for some resources...
+			if (carry_Food < shift_Food) {
+				shift_spare += (shift_Food - carry_Food);
+				shift_Food = carry_Food;
+			}
+			if (carry_Wood < shift_Wood) {
+				shift_spare += (shift_Wood - carry_Wood);
+				shift_Wood = carry_Wood;	
+			}
+			if (carry_Stone < shift_Stone) {
+				shift_spare += (shift_Stone - carry_Stone);
+				shift_Stone = carry_Stone;
+			}
+			if (carry_Ore < shift_Ore) {
+				shift_spare += (shift_Ore - carry_Ore);
+				shift_Ore = carry_Ore;
+			}			
+			 
+		  while (shift_spare >1) {
+				 if (carry_Food < (shift_Food + shift_spare)){
+				    shift_spare = shift_spare - carry_Food;; 
+				    shift_Food = carry_Food;
+				 }
+				 else{
+				  shift_Food = (shift_Food + shift_spare);
+				  shift_spare = shift_spare- shift_spare;
+				}
+				 if (carry_Wood < (shift_Wood + shift_spare)){
+				    shift_spare = shift_spare - carry_Wood;; 
+				    shift_Wood = carry_Wood;
+				 }
+				 else{
+				  shift_Wood = shift_Wood + shift_spare;
+				  shift_spare = shift_spare- shift_spare;
+				} 
+        		if (carry_Stone < (shift_Stone + shift_spare)){
+				    shift_spare = shift_spare - carry_Stone;; 
+				    shift_Stone = carry_Stone;
+				 }
+				 else{
+				  shift_Stone = shift_Stone + shift_spare;
+				  shift_spare = shift_spare- shift_spare;
+				}
+				 if (carry_Ore < (shift_Ore + shift_spare)){
+				    shift_spare = shift_spare - carry_Ore;; 
+				    shift_Ore = carry_Ore;
+				 }
+				 else{
+				  shift_Ore = shift_Ore + shift_spare;
+				  shift_spare = shift_spare- shift_spare;
+				}
+			 }
+
+		carry_Food = shift_Food;
+		carry_Wood = shift_Wood;
+		carry_Stone = shift_Stone;
+		carry_Ore = shift_Ore;
+		}
+		
+		if (maxload > (carry_Food + carry_Wood + carry_Stone + carry_Ore) && ship_Gold==true) {
+		    if ((maxload-(carry_Food + carry_Wood + carry_Stone + carry_Ore)) > (citymax_Gold - target_Gold)){
+		    	  carry_Gold = (citymax_Gold - target_Gold);
+		    	  if (carry_Gold < 0 ) carry_Gold = 0;
+		   	}
+		    else carry_Gold = (maxload-(carry_Food + carry_Wood + carry_Stone + carry_Ore));
+		    if (trade_Gold > 0 && (carry_Gold > trade_Gold)) carry_Gold = trade_Gold;
+		}
+		
+		wagons_needed = ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) / maxloadperwagon);
+		wagons_needed = wagons_needed.toFixed(0);	
+		if (wagons_needed < ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) / maxloadperwagon)) wagons_needed++;	
+		if ( wagons_needed < Options.minwagons ) { actionLog('Small transport skipped'); return; }
+        
+		params.cid= city;
+		params.type = "1";
+		params.xcoord = xcoord;
+		params.ycoord = ycoord;
+		params.r1 = carry_Food;
+		params.r2 = carry_Wood;
+		params.r3 = carry_Stone;
+		params.r4 = carry_Ore;
+		params.gold = carry_Gold;
+		params.u9 = wagons_needed;	
+		
+   		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
+          actionLog('Trade  -  From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
+      		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+                  method: "post",
+                  parameters: params,
+                  loading: true,
+                  onSuccess: function (transport) {
+                  var rslt = eval("(" + transport.responseText + ")");
+                  if (rslt.ok) {
+                  unsafeWindow.Modal.hideModalAll();
+                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+                  var ut = unsafeWindow.unixtime();
+                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                  for(i = 0; i <= unitsarr.length; i++){
+                  						if(params["u"+i]){
+                  								unitsarr[i] = params["u"+i];
+                  						}
+                  					}
+                                    var resources=new Array();
+                  					resources[0] = params.gold;
+                  					for(i=1; i<=4; i++){
+                  							resources[i] = params["r"+i];
+                  					}
+                                    var currentcityid = city;
+                  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+                  } else {
+                  actionLog('FAIL: ' + cityname + ' -> ' + rslt.msg);
+                  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                  }
+                  },
+                  onFailure: function () {}
+          });
+        } 
+	},
+	
 	show: function(){
-		var t = Tabs.trader;
+		var t = Tabs.transport;
     },
 	hide: function(){
-        var t = Tabs.trader;
+        var t = Tabs.transport;
     },
     onUnload: function(){
-        var t = Tabs.trader;
-		t.saveTradeRoutes();
+        var t = Tabs.transport;
+        t.saveTradeRoutes();
 		t.saveTraderState();
         
     },
