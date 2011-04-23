@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110421a
+// @version        20110423d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110421a';
+var Version = '20110423d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -217,7 +217,7 @@ function pbStartup (){
     Options.pbWinPos.y = c.y+c.height;
     saveOptions ();
   }
-  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 600,600, Options.pbWinDrag, 
+  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,600, Options.pbWinDrag, 
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false; 
@@ -2850,7 +2850,6 @@ Tabs.transport = {
   tradeRoutes: [], 
   checkdotradetimeout: null,
   count:0,
-  rallypointlevel:null,
 
     init: function(div){
 		var t = Tabs.transport;
@@ -2873,7 +2872,6 @@ Tabs.transport = {
       m += '<DIV id=pbTraderDivD class=pbStat>ADD TRADE ROUTE</div>';
 
       m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
-      //m += '<DIV style="text-align:left; align=baseline; margin-bottom:10px;">From City: &nbsp; <span id=ptrescity></span></div>';
       m += '<TD>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
 
       m += '<TR align="left">';
@@ -2969,7 +2967,7 @@ Tabs.transport = {
       }, false);
      document.getElementById('pbminwagons').addEventListener('keyup', function(){
          if (isNaN(document.getElementById('pbminwagons').value)) document.getElementById('pbminwagons').value=100 ;
-         Options.minwagons = document.getElementById('pbminwagons').value;
+         Options.minwagons = parseInt(document.getElementById('pbminwagons').value);
          saveOptions();
      }, false)
       
@@ -3032,10 +3030,14 @@ Tabs.transport = {
            var buildingType  = parseInt(Seed.buildings[cityId][k][0]);
            var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
     	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
-    	     //logit(buildingName + ' => Level: ' + buildingLevel);
-    	     if (buildingName == "Rally Point") rallypointlevel=buildingLevel;
-    	  }	  
- },
+    	     if(DEBUG_TRACE) logit(buildingName + ' => Level: ' + buildingLevel);
+    	     if (buildingName == "Rally Point"){
+				return buildingLevel;
+				break;
+			 }
+      }
+	  return 0;
+    },
       	  
     e_tradeRoutes: function(){
       var t = Tabs.transport;
@@ -3046,12 +3048,10 @@ Tabs.transport = {
     },
     	
 	delTradeRoutes: function() {
-    	
-		var t = Tabs.transport;
-    	
+		var t = Tabs.transport;	
 		t.tradeRoutes= [];
-    
 	},
+	
 	addTradeRoute: function () {
 		var valid = true;
 		var t = Tabs.transport;
@@ -3200,12 +3200,6 @@ Tabs.transport = {
         else {
             t.traderState.running = true;
             obj.value = "Trader = ON";
-            // for (var i=0; i<t.tradeRoutes.length ;i++) {
-            	 // t.count=i;
-            	 // var interval = t.count * 5000;
-            	 // //setTimeout(t.doTrades(),interval);
-	             // setTimeout(function(){ t.doTrades(i); }, interval);
-            // } 
 			t.e_tradeRoutes();
         }
     },
@@ -3275,8 +3269,9 @@ Tabs.transport = {
     	if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseInt(trade_Stone);
     	if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseInt(trade_Ore);
     	var wagons =  parseInt(Seed.units[cityID]['unt'+9]);
-    	t.getRallypoint(cityID);	
-    	if (wagons > (rallypointlevel*10000)) wagons = (rallypointlevel*10000);
+    	var rallypointlevel = t.getRallypoint(cityID);	
+		if (rallypointlevel == 11) { rallypointlevel = 15; }
+    	if (wagons > (rallypointlevel*10000)){ wagons = (rallypointlevel*10000); }
     	var featherweight = parseInt(Seed.tech.tch10);
     	var maxloadperwagon = ((featherweight *500) + 5000);
 		var maxload = (maxloadperwagon* wagons);
@@ -3367,7 +3362,7 @@ Tabs.transport = {
 		wagons_needed = ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) / maxloadperwagon);
 		wagons_needed = wagons_needed.toFixed(0);	
 		if (wagons_needed < ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) / maxloadperwagon)) wagons_needed++;	
-		if ( wagons_needed < Options.minwagons ) { actionLog('Small transport skipped'); return; }
+		if ( wagons_needed < Options.minwagons ) { if(DEBUG_TRACE) logit('Small transport skipped'); return; }
         
 		params.cid= city;
 		params.type = "1";
@@ -3381,38 +3376,38 @@ Tabs.transport = {
 		params.u9 = wagons_needed;	
 		
    		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
-          actionLog('Trade  -  From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
-      		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-                  method: "post",
-                  parameters: params,
-                  loading: true,
-                  onSuccess: function (transport) {
-                  var rslt = eval("(" + transport.responseText + ")");
-                  if (rslt.ok) {
-                  unsafeWindow.Modal.hideModalAll();
-                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                  var ut = unsafeWindow.unixtime();
-                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                  for(i = 0; i <= unitsarr.length; i++){
-                  						if(params["u"+i]){
-                  								unitsarr[i] = params["u"+i];
-                  						}
-                  					}
-                                    var resources=new Array();
-                  					resources[0] = params.gold;
-                  					for(i=1; i<=4; i++){
-                  							resources[i] = params["r"+i];
-                  					}
-                                    var currentcityid = city;
+          actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
+      		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+					method: "post",
+					parameters: params,
+					loading: true,
+					onSuccess: function (transport) {
+					var rslt = eval("(" + transport.responseText + ")");
+					if (rslt.ok) {
+					var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+					var ut = unsafeWindow.unixtime();
+					var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                    for(i = 0; i <= unitsarr.length; i++){
+						if(params["u"+i]){
+								unitsarr[i] = params["u"+i];
+						}
+					}
+					var resources=new Array();
+					resources[0] = params.gold;
+					for(i=1; i<=4; i++){
+							resources[i] = params["r"+i];
+					}
+					var currentcityid = city;
                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-                  } else {
-                  actionLog('FAIL: ' + cityname + ' -> ' + rslt.msg);
-                  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
-                  }
-                  },
-                  onFailure: function () {}
-          });
+						} else {
+							var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
+							document.getElementById('pbbuildError').innerHTML = errmsg;
+						}
+					},
+					onFailure: function(){
+						document.getElementById('pbbuildError').innerHTML = "Connection Error while destructing! Please try later again";
+					},
+				})
         } 
 	},
 	
@@ -3978,6 +3973,12 @@ function CdispCityPicker (id, span, dispName, notify, selbut){
         eY.value = that.city.y;
       }
       function eventChange (){
+		var xValue=that.coordBoxX.value.trim();
+			var xI=/^\s*([0-9]+)[\s|,|-|.]+([0-9]+)/.exec(xValue); 				
+			if(xI) {
+				that.coordBoxX.value=xI[1]
+				that.coordBoxY.value=xI[2]
+			}
         var x = parseInt(that.coordBoxX.value, 10);
         var y = parseInt(that.coordBoxY.value, 10);
         if (isNaN(x) || x<0 || x>750){
@@ -3998,7 +3999,7 @@ function CdispCityPicker (id, span, dispName, notify, selbut){
     this.coordBoxX = eX;
     this.coordBoxY = eY;
     var bh = new CboxHandler(this);
-    eX.maxLength=3;
+    eX.maxLength=8;
     eY.maxLength=3;
     eX.style.width='2em';    
     eY.style.width='2em';    
@@ -6126,3 +6127,4 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
 //
 
 pbStartup ();
+

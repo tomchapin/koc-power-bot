@@ -1,6 +1,13 @@
 REVISION HISTORY:
 ----------------
 (SVN):
+20110423d:
+   *Completed transport tab
+   *Added spam tab
+   *Added copy paste coords into coord box
+   *Enlarged powerbot box to fit more tabs
+   *Fixed issue with bulk adding troops to auto attack
+
 20110412c:
    *Added auto updater include and more detailed meta info
 
