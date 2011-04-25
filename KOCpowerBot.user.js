@@ -3377,38 +3377,72 @@ Tabs.transport = {
 		params.u9 = wagons_needed;	
 		
    		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
+
           actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
-      		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-					method: "post",
-					parameters: params,
-					loading: true,
-					onSuccess: function (transport) {
-					var rslt = eval("(" + transport.responseText + ")");
-					if (rslt.ok) {
-					var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-					var ut = unsafeWindow.unixtime();
-					var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                    for(i = 0; i <= unitsarr.length; i++){
-						if(params["u"+i]){
-								unitsarr[i] = params["u"+i];
-						}
-					}
-					var resources=new Array();
-					resources[0] = params.gold;
-					for(i=1; i<=4; i++){
-							resources[i] = params["r"+i];
-					}
-					var currentcityid = city;
+
+      		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+
+                  method: "post",
+
+                  parameters: params,
+
+                  loading: true,
+
+                  onSuccess: function (transport) {
+
+                  var rslt = eval("(" + transport.responseText + ")");
+
+                  if (rslt.ok) {
+
+                  unsafeWindow.Modal.hideModalAll();
+
+                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+
+                  var ut = unsafeWindow.unixtime();
+
+                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+                  for(i = 0; i <= unitsarr.length; i++){
+
+                  	if(params["u"+i]){
+
+                  	unitsarr[i] = params["u"+i];
+
+                  	}
+
+                  }
+
+                  var resources=new Array();
+
+                  resources[0] = params.gold;
+
+                  for(i=1; i<=4; i++){
+
+                  	resources[i] = params["r"+i];
+
+                  }
+
+                  var currentcityid = city;
                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-						} else {
-							var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-							document.getElementById('pbbuildError').innerHTML = errmsg;
-						}
-					},
-					onFailure: function(){
-						document.getElementById('pbbuildError').innerHTML = "Connection Error while destructing! Please try later again";
-					},
-				})
+
+                  unsafeWindow.update_seed(rslt.updateSeed)
+
+                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+
+                  } else {
+
+                  actionLog('FAIL: ' + cityname + ' -> ' + rslt.msg);
+
+                  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+
+                  }
+
+                  },
+
+                  onFailure: function () {}
+
+          });
+
         } 
 	},
 	
