@@ -3056,7 +3056,7 @@ Tabs.transport = {
       	now = now.toFixed(0);
       	var last = Options.lasttransport;
       		//alert(last);    
-        	 logit(now + ' / ' + (parseInt(last) + (Options.transportinterval*60)) );
+        	// logit(now + ' / ' + (parseInt(last) + (Options.transportinterval*60)) );
       
       		if ( now > (parseInt(last) + (Options.transportinterval*60))){
 				  t.checkdoTrades();
