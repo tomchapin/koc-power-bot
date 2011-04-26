@@ -2871,9 +2871,9 @@ Tabs.transport = {
 
       var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED TRANSPORT FUNCTION</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
       if (t.traderState.running == false) {
-          m += '<TD><INPUT id=pbTraderState type=submit value="Trader = OFF"></td>';
+          m += '<TD><INPUT id=pbTraderState type=submit value="Transport = OFF"></td>';
       } else {
-          m += '<TD><INPUT id=pbTraderState type=submit value="Trader = ON"></td>';
+          m += '<TD><INPUT id=pbTraderState type=submit value="Transport = ON"></td>';
       }
       m += '<TD><INPUT id=pbShowRoutes type=submit value="Show Routes"></td>';
       m += '</tr></table></div>';
@@ -3049,10 +3049,21 @@ Tabs.transport = {
       	  
     e_tradeRoutes: function(){
       var t = Tabs.transport;
+      var now = new Date();
       if (t.traderState.running == true)    {
-		  t.checkdoTrades();
-      } 
-	  setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*60*1000);
+      	var now = new Date().getTime()/1000.0;
+      	now = now.toFixed(0);
+      	var last = Options.lasttransport;
+      		//alert(last);    
+        	 logit(now + ' / ' + (parseInt(last) + (Options.transportinterval*60)) );
+      
+      		if ( now > (parseInt(last) + (Options.transportinterval*60))){
+				  t.checkdoTrades();
+      		}
+      }
+	  //setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*60*1000);
+	  setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*1000);
+	  
     },
     	
 	delTradeRoutes: function() {
@@ -3201,13 +3212,13 @@ Tabs.transport = {
 		var t = Tabs.transport;
         if (t.traderState.running == true) {
             t.traderState.running = false;
-            obj.value = "Trader = OFF";
+            obj.value = "Transport = OFF";
 			clearTimeout(t.checkdotradetimeout);
 			t.count = 0;
         }
         else {
             t.traderState.running = true;
-            obj.value = "Trader = ON";
+            obj.value = "Transport = ON";
 			t.e_tradeRoutes();
         }
     },
@@ -3217,17 +3228,20 @@ Tabs.transport = {
 	if(t.tradeRoutes.length==0) return;
 	t.doTrades(t.count);
 	t.count++;
-		if(t.count < t.tradeRoutes.length){
-		  t.checkdotradetimeout = setTimeout(function() { t.checkdoTrades();}, 5000);
-		} else {
-		  t.count = 0;
-		}
+	if(t.count < t.tradeRoutes.length){
+			  t.checkdotradetimeout = setTimeout(function() { t.checkdoTrades();}, 5000);
+			} else {
+			  var now = new Date().getTime()/1000.0;
+			  now = now.toFixed(0);
+			  Options.lasttransport = now;
+			  saveOptions();	
+			  t.count = 0;
+			}
 	},
     
     doTrades: function(count){
-    var t = Tabs.transport;
-   		  	
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    	var t = Tabs.transport;
+   		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.gold =0;
 		params.r1 =0;
 		params.r2 =0;
@@ -3385,40 +3399,41 @@ Tabs.transport = {
 		params.u9 = wagons_needed;	
 		
    		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
-          actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
-      		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-			  method: "post",
-			  parameters: params,
-			  loading: true,
-			  onSuccess: function (transport) {
-				  var rslt = eval("(" + transport.responseText + ")");
-				  if (rslt.ok) {
-				  unsafeWindow.Modal.hideModalAll();
-				  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-				  var ut = unsafeWindow.unixtime();
-				  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-				  for(i = 0; i <= unitsarr.length; i++){
-					if(params["u"+i]){
-					unitsarr[i] = params["u"+i];
-					}
-				  }
-				  var resources=new Array();
-				  resources[0] = params.gold;
-				  for(i=1; i<=4; i++){
-					resources[i] = params["r"+i];
-				  }
-				  var currentcityid = city;
-				  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-				  unsafeWindow.update_seed(rslt.updateSeed)
-				  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-				  } else {
-				  actionLog('FAIL: ' + cityname + ' -> ' + rslt.msg);
-				  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
-				  }
-			  },
-			  onFailure: function () {}
+         actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
+         
+         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+                  method: "post",
+                  parameters: params,
+                  loading: true,
+                  onSuccess: function (transport) {
+                  var rslt = eval("(" + transport.responseText + ")");
+                  if (rslt.ok) {
+                  unsafeWindow.Modal.hideModalAll();
+                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+                  var ut = unsafeWindow.unixtime();
+                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                  for(i = 0; i <= unitsarr.length; i++){
+                  	if(params["u"+i]){
+                  	unitsarr[i] = params["u"+i];
+                  	}
+                  }
+                  var resources=new Array();
+                  resources[0] = params.gold;
+                  for(i=1; i<=4; i++){
+                  	resources[i] = params["r"+i];
+                  }
+                  var currentcityid = city;
+                  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+                  unsafeWindow.update_seed(rslt.updateSeed)
+                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+                  } else {
+                  actionLog('FAIL: ' + cityname + ' -> ' + rslt.msg);
+                  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                  }
+                  },
+                  onFailure: function () {}
           });
-        } 
+        }
 	},
 	
 	show: function(){
