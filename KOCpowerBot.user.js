@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110423e
+// @version        20110425a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110423e';
+var Version = '20110425a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -114,6 +114,7 @@ var Options = {
   unownedOnly  : true,
   mistedOnly   : true,
   hostileOnly  : false,  
+  minmight     : 1,
   pbWinIsOpen  : false,
   pbWinDrag    : true,
   pbWinPos     : {},
@@ -1757,6 +1758,7 @@ Tabs.Search = {
           <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>Might</option>\
              <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
         </select></td></tr>\
+		<TR><TD class=xtab align=right>Min might:</td><TD class=xtab><INPUT type=text id=paminmight value='+ Options.minmight +'>\
         <TR><TD class=xtab align=right>Coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
 	
@@ -1800,6 +1802,11 @@ Tabs.Search = {
         }, false);
 		document.getElementById('pafilHostile').addEventListener ('change', function (){
         Options.hostileOnly = (document.getElementById('pafilHostile').checked);
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+		document.getElementById('paminmight').addEventListener ('change', function (){
+        Options.minmight = parseIntNan(document.getElementById('paminmight').value);
         saveOptions();
         t.dispMapTable ();
         }, false);
@@ -1858,7 +1865,8 @@ Tabs.Search = {
       if (t.opt.searchType==2 && type==7 ) {
         if (!Options.hostileOnly || t.mapDat[i][12] == 'h') {
           if (!Options.mistedOnly || t.mapDat[i][5]===true)
-            dat.push(t.mapDat[i]);
+		    if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5])
+              dat.push(t.mapDat[i]);
         }
       } else {
        if (lvl>=Options.srcMinLevel && lvl<=Options.srcMaxLevel){
@@ -1912,7 +1920,7 @@ Tabs.Search = {
             }
 			} else { 
           m += '<TD align=right  valign="top">'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
-            +'</td><TD  valign="top">'+ (dat[i][5]?' OWNED':'') +'</td></tr>';
+            +'</td><TD  valign="top">'+ (dat[i][5]?(dat[i][6]!=0?' <A onclick="pbSearchLookup('+dat[i][6]+')">OWNED</a>':'<A onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;">MISTED</a>'):'') +'</td></tr>';
 			}
 		}
 			
@@ -2017,7 +2025,7 @@ Tabs.Search = {
           t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD]);
         } else {
           isOwned = map[k].tileUserId>0 || map[k].misted;
-          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned]);
+          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned, (map[k].tileUserId>0? map[k].tileUserId : 0)]);
         }
         ++t.tilesFound;
       }
@@ -2089,7 +2097,7 @@ Tabs.Search = {
     var m = '<CENTER><SPAN class=boldRed>NOTE: Leaderboard information is delayed up to 24 hours</span></center><TABLE class=pbTabSome>';
     m += '<TR><TD class=pbDetLeft>Player Name:</td><TD>'+ name +'</td></tr>\
       <TR><TD class=pbDetLeft>Might:</td><TD>'+ p.might +' (rank #'+ p.rank +')</td></tr>\
-      <TR><TD class=pbDetLeft>Alliance:</td><TD>'+ aName +'</td></tr>\
+      <TR><TD class=pbDetLeft>Alliance:</td><TD>'+ aName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
       <TR valign=top><TD class=pbDetLeft>Cities:</td><TD><TABLE class=pbTabSome><TR style="font-weight:bold"><TD>City Name</td><TD>Coords</td><TD>Level</td><TD>Status</td><TD>Created</td></tr>';
       
     for (var i=0; i<p.cities.length; i++){
@@ -2119,7 +2127,7 @@ Tabs.Search = {
     m += '<TR><TD class=pbDetLeft>Player Name:</td><TD>'+ p.genderAndName +'</td></tr>\
       <TR><TD class=pbDetLeft>Might:</td><TD>'+ p.might +'</td></tr>\
       <TR><TD class=pbDetLeft>Facebook profile:</td><TD><A target="_tab" href="http://www.facebook.com/profile.php?id='+ p.fbuid +'">Click to open in new tab</a></td></tr>\
-      <TR><TD class=pbDetLeft>Alliance:</td><TD>'+ p.allianceName +'</td></tr>\
+      <TR><TD class=pbDetLeft>Alliance:</td><TD>'+ p.allianceName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
       <TR valign=top><TD class=pbDetLeft>Provinces:</td><TD style="white-space:normal">'+ prov.join(', ') +'</td></tr>';
     span.innerHTML = m + '</table>';
   },
@@ -2256,7 +2264,7 @@ var exportToKOCattack = {
       var trp = x[1];
       document.getElementById('ptETerr_'+ b).innerHTML = '';
       var x = parseIntZero (e.target.value);
-      if (isNaN(x) || x<0 || x>100000){
+      if (isNaN(x) || x<0 || x>150000){
         e.target.style.backgroundColor = 'red';
         document.getElementById('ptETerr_'+ b).innerHTML = 'Invalid Entry';
         return;
@@ -2270,7 +2278,7 @@ var exportToKOCattack = {
         tot += parseIntZero(document.getElementById('ptET_'+ b +'_'+ [troopDef[td][1]]).value);
       if (tot<1 && cList['lvl'+ b].length>0 )
         document.getElementById('ptETerr_'+ b).innerHTML = 'No troops defined';
-      if (tot>100000)
+      if (tot>150000)
         document.getElementById('ptETerr_'+ b).innerHTML = 'Too many troops';
     }
       
@@ -2284,7 +2292,7 @@ var exportToKOCattack = {
         if (tot<1 && cList['lvl'+ b].length>0){
           document.getElementById('ptETerr_'+ b).innerHTML = 'No troops defined';
           return; 
-        } else if (tot>100000) {
+        } else if (tot>150000) {
           document.getElementById('ptETerr_'+ b).innerHTML = 'Too many troops';
           return; 
         }
@@ -3377,72 +3385,39 @@ Tabs.transport = {
 		params.u9 = wagons_needed;	
 		
    		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
-
           actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
-
       		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-
-                  method: "post",
-
-                  parameters: params,
-
-                  loading: true,
-
-                  onSuccess: function (transport) {
-
-                  var rslt = eval("(" + transport.responseText + ")");
-
-                  if (rslt.ok) {
-
-                  unsafeWindow.Modal.hideModalAll();
-
-                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-
-                  var ut = unsafeWindow.unixtime();
-
-                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-
-                  for(i = 0; i <= unitsarr.length; i++){
-
-                  	if(params["u"+i]){
-
-                  	unitsarr[i] = params["u"+i];
-
-                  	}
-
-                  }
-
-                  var resources=new Array();
-
-                  resources[0] = params.gold;
-
-                  for(i=1; i<=4; i++){
-
-                  	resources[i] = params["r"+i];
-
-                  }
-
-                  var currentcityid = city;
-                  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-
-                  unsafeWindow.update_seed(rslt.updateSeed)
-
-                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-
-                  } else {
-
-                  actionLog('FAIL: ' + cityname + ' -> ' + rslt.msg);
-
-                  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
-
-                  }
-
-                  },
-
-                  onFailure: function () {}
-
+			  method: "post",
+			  parameters: params,
+			  loading: true,
+			  onSuccess: function (transport) {
+				  var rslt = eval("(" + transport.responseText + ")");
+				  if (rslt.ok) {
+				  unsafeWindow.Modal.hideModalAll();
+				  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+				  var ut = unsafeWindow.unixtime();
+				  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+				  for(i = 0; i <= unitsarr.length; i++){
+					if(params["u"+i]){
+					unitsarr[i] = params["u"+i];
+					}
+				  }
+				  var resources=new Array();
+				  resources[0] = params.gold;
+				  for(i=1; i<=4; i++){
+					resources[i] = params["r"+i];
+				  }
+				  var currentcityid = city;
+				  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+				  unsafeWindow.update_seed(rslt.updateSeed)
+				  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+				  } else {
+				  actionLog('FAIL: ' + cityname + ' -> ' + rslt.msg);
+				  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+				  }
+			  },
+			  onFailure: function () {}
           });
-
         } 
 	},
 	
@@ -3459,7 +3434,7 @@ Tabs.transport = {
         
     },
 }
-
+ 
 /************************ Gold Collector ************************/
 var CollectGold = {
   timer : null,
