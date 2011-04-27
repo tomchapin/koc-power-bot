@@ -2317,21 +2317,17 @@ var exportToKOCattack = {
         endBulkAdd ('Done!<BR>'); 
         return;
       }
-// WinManager.hideall();      <=== TODO!  
-      hideMe();
-      popExp.show (false);
-      unsafeWindow.Modal.hideModalAll(); 
-      unsafeWindow.modal_attack(4,0,0);
-      new CwaitForElement ('BulkAddAttackDiv', 100, e_attackDialog );
+     e_attackDialog();
     }
         
     function e_attackDialog (tf){
       if (!tf){
-        hideMe();
-      popExp.show (false);
-      unsafeWindow.Modal.hideModalAll(); 
-      unsafeWindow.modal_attack(4,0,0);
-      new CwaitForElement ('BulkAddAttackDiv', 100, e_attackDialog );
+       hideMe();
+       popExp.show (false);
+       unsafeWindow.Modal.hideModalAll(); 
+       pause(500);
+       unsafeWindow.modal_attack(4,0,0);
+       new CwaitForElement ('BulkAddAttackDiv', 400, e_attackDialog );
       } 
       var div = searchDOM (document.getElementById('BulkAddAttackDiv'), 'node.tagName=="DIV" && node.style.display=="none"', 10);
       if (div==null){
@@ -6085,6 +6081,10 @@ function SliderBar (container, width, height, value, classPrefix, margin){
   }
 }
 
+function pause(milliseconds) {
+	var dt = new Date();
+	while ((new Date()) - dt <= milliseconds) { /* Do nothing */ }
+}
 
 function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   var self = this;
