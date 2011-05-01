@@ -1,6 +1,15 @@
 REVISION HISTORY:
 ----------------
 (SVN):
+
+20110501a:
+   *Fixes on transport
+   *Added reassign tab
+   *Added Food alert
+   *Added toggle for defend status on tower alert
+   *Used unixTime to handle transport and reassign interval
+   *Added check on empty 'to' city on transport and reassign
+
 20110423d:
    *Completed transport tab
    *Added spam tab
