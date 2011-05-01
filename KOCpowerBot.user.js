@@ -275,12 +275,11 @@ var FoodAlerts = {
           var timeLeft = parseInt(Seed.resources["city" + Cities.cities[i].id]['rec1'][0]) / 3600 / (0-usage) * 3600;
           var msg = '';
         if (usage < 0) { 
-    if (Options.FoodAlert && timeLeft<(6*3600)) {
-    	alert('FOOD');
-                //msg += 'My city ' + Cities.cities[i].name.substring(0,10) + ' (' +
-               //        Cities.cities[i].x +','+ Cities.cities[i].y + ')';
-                //msg += ' is low on food. Remaining: '+addCommasWhole(foodleft)+' ('+timestrShort(timeLeft)+') Upkeep: '+addCommas(usage);
-               // sendChat ("/a " + msg);
+    if (Options.pbFoodAlert && timeLeft<(6*3600)) {
+                msg += 'My city ' + Cities.cities[i].name.substring(0,10) + ' (' +
+                      Cities.cities[i].x +','+ Cities.cities[i].y + ')';
+                msg += ' is low on food. Remaining: '+addCommasWhole(foodleft)+' ('+timestrShort(timeLeft)+') Upkeep: '+addCommas(usage);
+                sendChat ("/a " + msg);
           }
     }
       } 
@@ -3174,8 +3173,9 @@ Tabs.transport = {
 		t.popTradeRoutes = new CPopup('pbShowTrade', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowTradeRoutes" id="pbRoutesQueue">';       
 		t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>Transport routes:</td><BR><TD>ID</td><TD>From</td><TD>Enabled</td><TD>Target Food</td><TD>Trade Food</td></b>';
+		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>Transport routes:</td>';
 		t.paintTradeRoutes();
+		t._addTabHeader();
 		t.popTradeRoutes.show(true)	;
 	},
 	paintTradeRoutes: function(){
@@ -3199,25 +3199,51 @@ Tabs.transport = {
 	     row.insertCell(1).innerHTML = cityname;
 	     row.insertCell(2).innerHTML = cityX + ',' + cityY;
 	     row.insertCell(3).innerHTML = ship_Food;
-	 	 row.insertCell(4).innerHTML = target_Food;
-	 	 row.insertCell(5).innerHTML = trade_Food;
+	 	 row.insertCell(4).innerHTML = addCommas(target_Food);
+	 	 row.insertCell(5).innerHTML = addCommas(trade_Food);
 	 	 row.insertCell(6).innerHTML = ship_Wood;
-	 	 row.insertCell(7).innerHTML = target_Wood;
-	 	 row.insertCell(8).innerHTML = trade_Wood;
+	 	 row.insertCell(7).innerHTML = addCommas(target_Wood);
+	 	 row.insertCell(8).innerHTML = addCommas(trade_Wood);
 	 	 row.insertCell(9).innerHTML = ship_Stone;
-	 	 row.insertCell(10).innerHTML = target_Stone;
-	 	 row.insertCell(11).innerHTML = trade_Stone;
+	 	 row.insertCell(10).innerHTML = addCommas(target_Stone);
+	 	 row.insertCell(11).innerHTML = addCommas(trade_Stone);
 	 	 row.insertCell(12).innerHTML = ship_Ore;
-	 	 row.insertCell(13).innerHTML = target_Ore;
-	 	 row.insertCell(14).innerHTML = trade_Ore;
+	 	 row.insertCell(13).innerHTML = addCommas(target_Ore);
+	 	 row.insertCell(14).innerHTML = addCommas(trade_Ore);
 	 	 row.insertCell(15).innerHTML = ship_Gold;
-	 	 row.insertCell(16).innerHTML = target_Gold;
-	 	 row.insertCell(17).innerHTML = trade_Gold;
+	 	 row.insertCell(16).innerHTML = addCommas(target_Gold);
+	 	 row.insertCell(17).innerHTML = addCommas(trade_Gold);
 	     row.insertCell(18).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>Delete</span></a>';
 	     document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
 	        t.cancelQueueElement(queueId);
 	     }, false);
 	 },
+	 
+	 _addTabHeader: function() {
+	 var t = Tabs.transport;
+	     var row = document.getElementById('pbRoutesQueue').insertRow(0);
+	     row.vAlign = 'top';
+	     row.insertCell(0).innerHTML = "ID";
+	     row.insertCell(1).innerHTML = "From";
+	     row.insertCell(2).innerHTML = "To";
+	     row.insertCell(3).innerHTML = "Food";
+	     row.insertCell(4).innerHTML = "";
+	     row.insertCell(5).innerHTML = "";
+	     row.insertCell(6).innerHTML = "Wood";
+		 row.insertCell(7).innerHTML = "";
+	     row.insertCell(8).innerHTML = "";
+	     row.insertCell(9).innerHTML = "Stone";
+	     row.insertCell(10).innerHTML = "";
+	     row.insertCell(11).innerHTML = "";
+	     row.insertCell(12).innerHTML = "Ore";
+	     row.insertCell(13).innerHTML = "";
+	     row.insertCell(14).innerHTML = "";
+	     row.insertCell(15).innerHTML = "Gold";
+	     row.insertCell(16).innerHTML = "";
+	     row.insertCell(17).innerHTML = "";
+	     row.insertCell(18).innerHTML = "Delete";
+	   },   
+	  
 	 cancelQueueElement: function(queueId){
 	     var t = Tabs.transport;
 	     var queueId = parseInt(queueId);
@@ -3444,8 +3470,8 @@ Tabs.transport = {
 		params.r3 = carry_Stone;
 		params.r4 = carry_Ore;
 		params.gold = carry_Gold;
-		//params.u9 = wagons_needed;	
-		params.u7= 5000;
+		params.u9 = wagons_needed;	
+		//params.u7= 5000;
 		
    		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
          actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
@@ -3896,8 +3922,9 @@ Tabs.Reassign = {
 		t.popReassignRoutes = new CPopup('pbShowTrade', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
 		t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><B>Reassign routes:</td><BR><TD>ID</td><TD>From</td><TD>Enabled</td><TD>Target Food</td><TD>Trade Food</td></b>';
+		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><B>Reassign routes:</td>';
 		t.paintReassignRoutes();
+		t._addTabHeader();
 		t.popReassignRoutes.show(true)	;
 	},
 	paintReassignRoutes: function(){
@@ -3921,34 +3948,69 @@ Tabs.Reassign = {
 	     row.insertCell(1).innerHTML = cityname;
 	     row.insertCell(2).innerHTML = target_x + ',' + target_y;
 	     row.insertCell(3).innerHTML = SendSupplyTroop;
-	     row.insertCell(4).innerHTML = SupplyTroop;
+	     row.insertCell(4).innerHTML = addCommas(SupplyTroop);
 	     row.insertCell(5).innerHTML = SendMilitiaman;
-	     row.insertCell(6).innerHTML = Militiaman;
+	     row.insertCell(6).innerHTML = addCommas(Militiaman);
 	 	 row.insertCell(7).innerHTML = SendScout;
-	 	 row.insertCell(8).innerHTML = Scout;
+	 	 row.insertCell(8).innerHTML = addCommas(Scout);
 	 	 row.insertCell(9).innerHTML = SendPikeman;
-	 	 row.insertCell(10).innerHTML = Pikeman;
+	 	 row.insertCell(10).innerHTML = addCommas(Pikeman);
 	 	 row.insertCell(11).innerHTML = SendSwordsman;
-	 	 row.insertCell(12).innerHTML = Swordsman;
+	 	 row.insertCell(12).innerHTML = addCommas(Swordsman);
 	 	 row.insertCell(13).innerHTML = SendArchers;
-	 	 row.insertCell(14).innerHTML = Archers;
+	 	 row.insertCell(14).innerHTML = addCommas(Archers);
 	 	 row.insertCell(15).innerHTML = SendCavalry;
-	 	 row.insertCell(16).innerHTML = Cavalry;
+	 	 row.insertCell(16).innerHTML = addCommas(Cavalry);
 	 	 row.insertCell(17).innerHTML = SendHeavyCavalry;
-	 	 row.insertCell(18).innerHTML = HeavyCavalry;
+	 	 row.insertCell(18).innerHTML = addCommas(HeavyCavalry);
 	 	 row.insertCell(19).innerHTML = SendSupplyWagons;
-	 	 row.insertCell(20).innerHTML = SupplyWagons;
+	 	 row.insertCell(20).innerHTML = addCommas(SupplyWagons);
 	 	 row.insertCell(21).innerHTML = SendBallista;
-	 	 row.insertCell(22).innerHTML = Ballista;
+	 	 row.insertCell(22).innerHTML = addCommas(Ballista);
 	 	 row.insertCell(23).innerHTML = SendBatteringRam;
-	 	 row.insertCell(24).innerHTML = BatteringRam;
+	 	 row.insertCell(24).innerHTML = addCommas(BatteringRam);
 	 	 row.insertCell(25).innerHTML = SendCatapult;
-	 	 row.insertCell(26).innerHTML = Catapult;
+	 	 row.insertCell(26).innerHTML = addCommas(Catapult);
 	     row.insertCell(27).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>Delete</span></a>';
 	     document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
 	        t.cancelQueueElement(queueId);
 	     }, false);
 	 },
+	 
+	 _addTabHeader: function() {
+	 var t = Tabs.transport;
+	     var row = document.getElementById('pbRoutesQueue').insertRow(0);
+	     row.vAlign = 'top';
+	     row.insertCell(0).innerHTML = "ID";
+	     row.insertCell(1).innerHTML = "From";
+	     row.insertCell(2).innerHTML = "To";
+	     row.insertCell(3).innerHTML = "Sup. Tr.";
+	     row.insertCell(4).innerHTML = "";
+	     row.insertCell(5).innerHTML = "MM";
+	     row.insertCell(6).innerHTML = "";
+	 	 row.insertCell(7).innerHTML = "Scouts";
+	     row.insertCell(8).innerHTML = "";
+	     row.insertCell(9).innerHTML = "Pike";
+	     row.insertCell(10).innerHTML = "";
+	     row.insertCell(11).innerHTML = "Swords";
+	     row.insertCell(12).innerHTML = "";
+	     row.insertCell(13).innerHTML = "Archers";
+	     row.insertCell(14).innerHTML = "";
+	     row.insertCell(15).innerHTML = "Cav.";
+	     row.insertCell(16).innerHTML = "";
+	     row.insertCell(17).innerHTML = "HC";
+	     row.insertCell(18).innerHTML = "";
+	     row.insertCell(19).innerHTML = "Wagons";
+	     row.insertCell(20).innerHTML = "";
+	     row.insertCell(21).innerHTML = "Ballista";
+	     row.insertCell(22).innerHTML = "";
+	     row.insertCell(23).innerHTML = "Rams";
+	     row.insertCell(24).innerHTML = "";
+	     row.insertCell(25).innerHTML = "Catapults";
+	     row.insertCell(26).innerHTML = "";
+	     row.insertCell(27).innerHTML = "Delete";
+	   },   
+	   
 	 cancelQueueElement: function(queueId){
 	     var t = Tabs.Reassign;
 	     var queueId = parseInt(queueId);
@@ -5864,6 +5926,48 @@ function officerId2String (oid){
   return '';
 }
 
+function getResourceProduction (cityId){
+  var ret = [0,0,0,0,0];
+  var now = unixTime ();
+  
+  var wilds = [0, 0, 0, 0, 0];
+  var w = Seed.wilderness["city" + cityId];
+  for (var k in w){
+    var type = parseInt(w[k].tileType);
+    if (type==10 || type==11)
+      wilds[1] += parseInt(w[k].tileLevel);
+    else 
+      wilds[type/10] += parseInt(w[k].tileLevel);
+  }  
+  
+  knight = 0;       
+  var s = Seed.knights["city" + cityId];
+  if (s) {
+    s = s["knt" + Seed.leaders["city" + cityId].resourcefulnessKnightId];
+    if (s){
+      var knight = parseInt(s.resourcefulness);
+      if (s.resourcefulnessBoostExpireUnixtime > now)
+        knight *= 1.25;
+    }
+  }
+  var workerFactor = 1;
+  var c = parseInt(Seed.citystats["city" + cityId]["pop"][0]);  // Current  population
+  var w = parseInt(Seed.citystats["city" + cityId]["pop"][3]);  // Labor force
+  if (w > c)
+    workerFactor = c / w;
+  
+  for (var i=1; i<5; i++){
+    var usage = Seed.resources["city" + cityId]["rec" + i];
+    var items = 0;
+    if (parseInt(Seed.playerEffects["r" + i + "BstExp"]) > now) {
+      items = 0.25;
+    }
+    var tech = Seed.tech["tch" + i];
+    ret[i] = parseInt((usage[2] * (1 + tech/10 + knight/100 + items + 0.05 * wilds[i]) * workerFactor + 100));
+  }
+  return ret;  
+}
+
 function objectName (o){
   var s = o.toString();
   return s.substr(7,s.length-8);
@@ -6610,12 +6714,37 @@ Tabs.Gifts = {
   },
 }
 
+function addCommasWhole(nStr){
+  nStr += '';
+  x = nStr.split('.');
+  x1 = x[0];
+  x2 = x.length > 1 ? '.' + x[1] : '';
+  var rgx = /(\d+)(\d{3})/;
+  while (rgx.test(x1)) {
+    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+  }
+  return x1;
+}
+
 function encode_utf8( s ){
   return unescape( encodeURIComponent( s ) );
 }
 
 function decode_utf8( s ){
   return decodeURIComponent( escape( s ) );
+}
+
+function CdialogCancelContinue (msg, canNotify, contNotify, centerElement){
+  var pop = new CPopup ('ptcancont', 10, 10, 400,200, true, canNotify);
+  if (centerElement)
+    pop.centerMe(centerElement);
+  else
+    pop.centerMe(document.body);
+  pop.getTopDiv().innerHTML = '<CENTER>KOC Power Bot</center>';
+  pop.getMainDiv().innerHTML = '<TABLE class=ptTab align=center style="height: 100%"><TR align=center height=90%><TD>'+ msg +'</td></tr>\
+      <TR align=center><TD><INPUT id=ptok type=submit value="OK" \> &nbsp; &nbsp; </td></tr></table>';
+  document.getElementById('ptok').addEventListener ('click', function (){pop.show(false); if (canNotify) canNotify();}, false);
+  pop.show(true);
 }
 
 function hexDump (dat){
@@ -6746,6 +6875,7 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     doneMoving();
   }
   
+  
   function mouseDown(me){
     var e = self.slider;
     self.divLeft = 0;
@@ -6834,4 +6964,3 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
 //
 
 pbStartup ();
-
