@@ -3239,6 +3239,7 @@ Tabs.transport = {
     doTrades: function(count){
     	var t = Tabs.transport;
    		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+   		if(t.tradeRoutes.length==0) return;
 		params.gold =0;
 		params.r1 =0;
 		params.r2 =0;
