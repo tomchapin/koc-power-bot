@@ -2891,6 +2891,7 @@ Tabs.Options = {
   },
   
 }
+
 /****************************  Transport Implementation  *******************************/
 Tabs.transport = {
   tabOrder: 1,
@@ -3091,21 +3092,22 @@ Tabs.transport = {
 	  return 0;
     },
       	  
-    e_tradeRoutes: function(){
-	  var t = Tabs.transport;
-	  var now = new Date().getTime()/1000.0;
-      now = now.toFixed(0);
-      	var last = parseInt(Options.lasttransport+ (Options.transportinterval*60));
-       		if (now > last){
-				if (t.traderState.running == true){
-    			  t.checkdoReassign();
-				}
-				setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*60*1000);
-			} else {
-				setTimeout(function(){ t.e_tradeRoutes();}, parseInt(last-now)*1000);
-			}
+
+ e_tradeRoutes: function(){
+      var t = Tabs.transport;
+      var now = new Date();
+      if (t.traderState.running == true)    {
+      	var now = new Date().getTime()/1000.0;
+      	now = now.toFixed(0);
+      	var last = Options.lasttransport;
+       		if ( now > (parseInt(last) + (Options.transportinterval*60))){
+				  t.checkdoTrades();
+      		}
+      }
+	  setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*1000);
+	  
     },
-    	
+     	
 	delTradeRoutes: function() {
 		var t = Tabs.transport;	
 		t.tradeRoutes= [];
@@ -3501,7 +3503,7 @@ Tabs.transport = {
                   unsafeWindow.update_seed(rslt.updateSeed)
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
-                  actionLog('FAIL: ' + cityname + ' -> ' + rslt.msg);
+                  actionLog('TRANSPORT FAIL: ' + cityname + ' -> ' + rslt.msg);
                   //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
                   }
                   },
@@ -3815,24 +3817,22 @@ Tabs.Reassign = {
  },
       	  
     
-    
-    e_reassignRoutes: function(){
+
+ e_reassignRoutes: function(){
       var t = Tabs.Reassign;
       var now = new Date();
-	  var now = new Date().getTime()/1000.0;
-	  now = now.toFixed(0);
-	  var last = parseInt(Options.lastreassign+ (Options.reassigninterval*60));
-		if (now > last){
-			if (t.reassignState.running == true){
-			  t.checkdoReassign();
-			}
-			setTimeout(function(){ t.e_reassignRoutes();}, Options.reassigninterval*60*1000);
-		} else {
-			setTimeout(function(){ t.e_reassignRoutes();}, parseInt(last-now)*1000);
-		}
+      if (t.reassignState.running == true)    {
+      	var now = new Date().getTime()/1000.0;
+      	now = now.toFixed(0);
+      	var last = Options.lastreassign;
+       		if ( now > (parseInt(last) + (Options.reassigninterval*60))){
+    			  t.checkdoReassign();
+      		}
+      }
+      setTimeout(function(){ t.e_reassignRoutes();}, Options.reassigninterval*1000);
+      
     },
-    	
-    	
+        	
 	delReassignRoutes: function() {
     	
 		var t = Tabs.Reassign;
@@ -4166,7 +4166,7 @@ Tabs.Reassign = {
                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
-                  actionLog('FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
+                  actionLog('REASSIGN FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
                   //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
                   }
                   },
@@ -4188,7 +4188,6 @@ Tabs.Reassign = {
         
     },
 }
-
 
 
 /************************ Gold Collector ************************/
