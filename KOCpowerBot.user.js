@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110502a
+// @version        20110504a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110502a';
+var Version = '20110504a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3084,7 +3084,7 @@ Tabs.transport = {
            var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
     	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
     	     if(DEBUG_TRACE) logit(buildingName + ' => Level: ' + buildingLevel);
-    	     if (buildingName == "Rally Point"){
+    	     if (buildingName == "Rally Point" || buildingName == "Punto de reunión" || buildingName == "Versammlungspunkt" || buildingName == "Point de Ralliement" || buildingName == "Luogo di riunione" || buildingName == "Uppsamlingsplats" || buildingName == "Mødested" || buildingName == "Verzamelpunt"){
 				return buildingLevel;
 				break;
 			 }
@@ -3812,7 +3812,7 @@ Tabs.Reassign = {
            var buildingType  = parseInt(Seed.buildings[cityId][k][0]);
            var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
     	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
-    	     if (buildingName == "Rally Point") t.rallypointlevel=parseInt(buildingLevel);
+    	     if (buildingName == "Rally Point" || buildingName == "Punto de reunión" || buildingName == "Versammlungspunkt" || buildingName == "Point de Ralliement" || buildingName == "Luogo di riunione" || buildingName == "Uppsamlingsplats" || buildingName == "Mødested" || buildingName == "Verzamelpunt") t.rallypointlevel=parseInt(buildingLevel);
     	  }	  
  },
       	  
