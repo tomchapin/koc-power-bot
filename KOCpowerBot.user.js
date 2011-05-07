@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110504a
+// @version        20110507a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110504a';
+var Version = '20110507a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1637,6 +1637,7 @@ Tabs.Search = {
   MapAjax : new CMapAjax(),
   MAX_SHOW_WHILE_RUNNING : 250,
   popFirst : true,
+  SearchList : [],
   
   init : function (div){
     var t = Tabs.Search;
@@ -1804,7 +1805,7 @@ Tabs.Search = {
           <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>Might</option>\
              <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
         </select></td></tr>\
-		<TR><TD class=xtab align=right>Min might:</td><TD class=xtab><INPUT type=text id=paminmight value='+ Options.minmight +'>\
+		<TR><TD class=xtab align=right>Min might:</td><TD class=xtab><INPUT type=text id=paminmight size=6 value='+ Options.minmight +'>\
         <TR><TD class=xtab align=right>Coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
 	
@@ -1873,7 +1874,7 @@ Tabs.Search = {
     var xxx = t.MapAjax.normalize(t.curX);
     var yyy = t.MapAjax.normalize(t.curY);
     document.getElementById ('pastatStatus').innerHTML = 'Searching at '+ xxx +','+ yyy;
-    setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.eventgetplayeronline)}, MAP_DELAY);
   },
 
   hideShowClicked : function (){
@@ -1937,7 +1938,7 @@ Tabs.Search = {
         m = '<TABLE align=center id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td></tr>';
       else {
       if (t.opt.searchType == 2) {
-			 m = '<TABLE id=pasrcOutTab class=pbSrchResults cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Loc</td><TD align=right>Dist</td><TD>Player</td><TD align=right>Might</td><TD>Alliance</td><TD></td></tr>';
+			 m = '<TABLE id=pasrcOutTab class=pbSrchResults cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Loc</td><TD align=right>Dist</td><TD>Player</td><TD align=right>Might</td><TD>Alliance</td><TD>Online</td><TD></td></tr>';
 		} else { 
 			m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td><TD style="padding-left: 10px">Distance</td><TD style="padding-left: 10px;">Lvl</td><TD width=80%> &nbsp; Type</td><TD style=""></td></tr>';
 		}
@@ -1962,7 +1963,7 @@ Tabs.Search = {
                 allStyle = 'class=pbTextFriendly';
               else if (dat[i][12]=='h')
                 allStyle = 'class=pbTextHostile';
-              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">Lookup</a></td></tr>';
+              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">Lookup</a></td></tr>';
             }
 			} else { 
           m += '<TD align=right  valign="top">'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
@@ -2017,16 +2018,11 @@ Tabs.Search = {
     (string) a = 0              (alliance)
     (string) i = 1              (avatar code)
 *****/
-  mapCallback : function (left, top, width, rslt){
+  mapCallback : function (uList){
     var t = Tabs.Search;
-    if (!t.searchRunning)
-      return;
-    if (!rslt.ok){
-      t.stopSearch ('ERROR: '+ rslt.errorMsg);
-      return;
-    }
 
-    map = rslt.data;
+    var rslt = t.SearchList;
+	map = rslt.data;
     var Dip = Seed.allianceDiplomacies;	
     var userInfo = rslt.userInfo;
     var alliance = rslt.allianceNames;
@@ -2068,10 +2064,10 @@ Tabs.Search = {
     				if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) aD = 'h';
     			}
 // TODO: save memory, remove city name ?   			
-          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD]);
+          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD, uList.data[map[k].tileUserId]?1:0]);
         } else {
           isOwned = map[k].tileUserId>0 || map[k].misted;
-          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned, (map[k].tileUserId>0? map[k].tileUserId : 0)]);
+          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned, (map[k].tileUserId>0? map[k].tileUserId : 0), uList.data[map[k].tileUserId]?1:0]);
         }
         ++t.tilesFound;
       }
@@ -2093,7 +2089,26 @@ Tabs.Search = {
     var x = t.MapAjax.normalize(t.curX);
     var y = t.MapAjax.normalize(t.curY);
     document.getElementById ('pastatStatus').innerHTML = 'Searching at '+ x +','+ y;
-    setTimeout (function(){t.MapAjax.request (x, y, 15, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (x, y, 15, t.eventgetplayeronline)}, MAP_DELAY);
+  },
+  
+  eventgetplayeronline : function (left, top, width, rslt){
+	var t = Tabs.Search;
+    if (!t.searchRunning)
+      return;
+    if (!rslt.ok){
+      t.stopSearch ('ERROR: '+ rslt.errorMsg);
+      return;
+    }
+	
+	map = rslt.data;
+	t.SearchList = rslt;
+	var uList = [];
+	for(k in map){
+		if(map[k].tileUserId != null)
+			uList.push(map[k].tileUserId);
+	}
+	t.fetchPlayerStatus (uList, function(r){ t.mapCallback(r)});
   },
 
   clickedScout : function (x, y){
@@ -2203,6 +2218,20 @@ Tabs.Search = {
       },
       onFailure: function (rslt) {
         notify (rslt);
+      },
+    });
+  },
+  fetchPlayerStatus : function (uidArray, notify){
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.checkArr = uidArray.join(',');
+    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getOnline.php" + unsafeWindow.g_ajaxsuffix, {
+      method: "post",
+      parameters: params,
+      onSuccess: function (rslt) {
+        notify (rslt);
+      },
+      onFailure: function (rslt) {
+        notify ({errorMsg:'AJAX error'});
       },
     });
   },
@@ -2474,7 +2503,7 @@ Tabs.sample = {
 function setMaxHeightScrollable (e){
   e.style.height = '100%';
   e.style.height = e.clientHeight + 'px';
-  e.style.maxHeight = e.clientHeight + 'px';
+  //e.style.maxHeight = e.clientHeight + 'px';
   e.style.overflowY = 'auto';
 }
 
@@ -2828,7 +2857,6 @@ Tabs.Options = {
 
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
       document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
-     
       t.togOpt ('pballowWinMove', 'pbWinDrag', mainPop.setEnableDrag);
       t.togOpt ('pbTrackWinOpen', 'pbTrackOpen');
       t.togOpt ('pbHideOnGoto', 'hideOnGoto');
@@ -6571,11 +6599,12 @@ Tabs.Gifts = {
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 2'});
       progress ('2');
-      var m = page.match (/<form action=\"(.*?)\"/im);
+	  var m = page.match (/form action=\\"(.*?)\\"/im);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 2'});
       var url = m[1].htmlSpecialCharsDecode();
-      url = url.replace (/lang=.*?&/, 'lang=en&');      
+      url = url.replace (/lang=.*?&/, 'lang=en&');  
+	  url = url.replace ('\\/', '/', 'g');	  
       gift.dat.url = url;
       GM_AjaxGet (url, '', got3, 'Page 3');        
     }
@@ -6660,7 +6689,9 @@ Tabs.Gifts = {
         for (var i=0; i<m.length; i++){
           if ( m[i].indexOf('kingdomsofcamelot')<0)
             continue;
-          var mm = m[i].match( /facebook.com\\\/.*\">(.*?)<\\\/a><\\\/strong>.*?(?:give you a (?:gift of|)(.*?) in |here is a(.*?)you can use)/im );
+		  var mm = m[i].match( /facebook.com\\\/.*\">(.*?)<\\\/a><\\\/span>.*?(?:give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
+		  if (mm==null)
+            mm = m[i].match( /facebook.com\\\/.*\">(.*?)<\\\/span><\\\/span><\\\/a>.*?(?:give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
           if (mm==null)
             continue;
           var giver = mm[1];
