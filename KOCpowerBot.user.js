@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
 // @version        20110507a
 // @namespace      mat
@@ -131,6 +131,7 @@ var Options = {
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
+  celltext     : {atext:false, provider:0, num1:"000", num2:"000", num3:"0000"},
   giftDelete   : 'e',
   currentTab   : null,
   hideOnGoto   : true,
@@ -307,7 +308,117 @@ Tabs.tower = {
   init: function(div){
 	  var t = Tabs.tower;
     t.myDiv = div;
-    
+    Providers = {
+        0: { 'country': "", 'provider': "" },
+        1: { 'country': "AUSTRALIA", 'provider': "T-Mobile" },
+        2: { 'country': "AUSTRALIA", 'provider': "Optus Zoo" },
+        3: { 'country': "AUSTRIA", 'provider': "T-Mobile" },
+        4: { 'country': "BULGARIA", 'provider': "Mtel" },
+        5: { 'country': "BULGARIA", 'provider': "Globul" },
+        6: { 'country': "CANADA", 'provider': "Aliant" },
+        7: { 'country': "CANADA", 'provider': "Bell Mobility" },
+        8: { 'country': "CANADA", 'provider': "Fido" },
+        9: { 'country': "CANADA", 'provider': "MTS Mobility" },
+        10: { 'country': "CANADA", 'provider': "Rogers Wireless" },
+        11: { 'country': "CANADA", 'provider': "Sasktel Mobility" },
+        12: { 'country': "CANADA", 'provider': "Telus" },
+        13: { 'country': "CANADA", 'provider': "Virgin Mobile" },
+        14: { 'country': "CANADA", 'provider': "Presidents Choice" },
+        15: { 'country': "GERMANY", 'provider': "T-Mobile" },
+        16: { 'country': "GERMANY", 'provider': "Vodafone" },
+        17: { 'country': "GERMANY", 'provider': "O2" },
+        18: { 'country': "GERMANY", 'provider': "E-Plus" },
+        19: { 'country': "ICELAND", 'provider': "OgVodafone" },
+        20: { 'country': "ICELAND", 'provider': "Siminn" },
+        21: { 'country': "INDIA", 'provider': "Andhra Pradesh AirTel" },
+        22: { 'country': "INDIA", 'provider': "Andhra Pradesh Idea Cellular" },
+        23: { 'country': "INDIA", 'provider': "Chennal Skycell Airtel" },
+        24: { 'country': "INDIA", 'provider': "Chennel RPG Cellular" },
+        25: { 'country': "INDIA", 'provider': "Delhi Airtel" },
+        26: { 'country': "INDIA", 'provider': "Delhi Hutch" },
+        27: { 'country': "INDIA", 'provider': "Gujarat Idea Cellular" },
+        28: { 'country': "INDIA", 'provider': "Gujaret Airtel" },
+        29: { 'country': "INDIA", 'provider': "Gujaret Celforce" },
+        30: { 'country': "INDIA", 'provider': "Goa Airtel" },
+        31: { 'country': "INDIA", 'provider': "Goa BPL Mobile" },
+        32: { 'country': "INDIA", 'provider': "Goa Idea Cellular" },
+        33: { 'country': "INDIA", 'provider': "Haryana Airtel" },
+        34: { 'country': "INDIA", 'provider': "Haryana Escotel" },
+        35: { 'country': "INDIA", 'provider': "Himachal Pradesh Airtel" },
+        36: { 'country': "INDIA", 'provider': "Karnataka Airtel" },
+        37: { 'country': "INDIA", 'provider': "Kerala Airtel" },
+        38: { 'country': "INDIA", 'provider': "Kerala Escotel" },
+        39: { 'country': "INDIA", 'provider': "Kerala BPL Mobile" },
+        40: { 'country': "INDIA", 'provider': "Kolkata Airtel" },
+        41: { 'country': "INDIA", 'provider': "Madhya Pradesh Airtel" },
+        42: { 'country': "INDIA", 'provider': "Maharashtra Airtel" },
+        43: { 'country': "INDIA", 'provider': "Maharashtra BPL Mobile" },
+        44: { 'country': "INDIA", 'provider': "Maharashtra Idea Cellular" },
+        45: { 'country': "INDIA", 'provider': "Mumbai Airtel" },
+        46: { 'country': "INDIA", 'provider': "Mumbai BPL Mobile" },
+        47: { 'country': "INDIA", 'provider': "Punjab Airtel" },
+        48: { 'country': "INDIA", 'provider': "Pondicherry BPL Mobile" },
+        49: { 'country': "INDIA", 'provider': "Tamil Nadu Airtel" },
+        50: { 'country': "INDIA", 'provider': "Tamil Nadu BPL Mobile" },
+        51: { 'country': "INDIA", 'provider': "Tamil Nadu Aircel" },
+        52: { 'country': "INDIA", 'provider': "Uttar Pradesh West Escotel" },
+        53: { 'country': "IRELAND", 'provider': "Meteor" },
+        54: { 'country': "IRELAND", 'provider': "Meteor MMS" },
+        55: { 'country': "ITALY", 'provider': "TIM" },
+        56: { 'country': "ITALY", 'provider': "Vodafone" },
+        57: { 'country': "JAPAN", 'provider': "AU by KDDI" },
+        58: { 'country': "JAPAN", 'provider': "NTT DoCoMo" },
+        59: { 'country': "JAPAN", 'provider': "Vodafone Chuugoku/Western" },
+        60: { 'country': "JAPAN", 'provider': "Vodafone Hokkaido" },
+        61: { 'country': "JAPAN", 'provider': "Vodafone Hokuriko/Central North" },
+        62: { 'country': "JAPAN", 'provider': "Vodafone Kansai/West, including Osaka" },
+        63: { 'country': "JAPAN", 'provider': "Vodafone Kanto/Koushin/East including Tokyo" },
+        64: { 'country': "JAPAN", 'provider': "Vodafone Kyuushu/Okinawa" },
+        65: { 'country': "JAPAN", 'provider': "Vodafone Shikoku" },
+        66: { 'country': "JAPAN", 'provider': "Vodafone Touhoku/Niigata/North" },
+        67: { 'country': "JAPAN", 'provider': "Vodafone Toukai/Central" },
+        68: { 'country': "JAPAN", 'provider': "Willcom" },
+        69: { 'country': "JAPAN", 'provider': "Willcom di" },
+        70: { 'country': "JAPAN", 'provider': "Willcom dj" },
+        71: { 'country': "JAPAN", 'provider': "Willcom dk" },
+        72: { 'country': "NETHERLANDS", 'provider': "T-Mobile" },
+        73: { 'country': "NETHERLANDS", 'provider': "Orange" },
+        74: { 'country': "SINGAPORE", 'provider': "M1" },
+        75: { 'country': "SOUTH AFRICA", 'provider': "Vodacom" },
+        76: { 'country': "SPAIN", 'provider': "Telefonica Movistar" },
+        77: { 'country': "SPAIN", 'provider': "Vodafone" },
+        78: { 'country': "SWEDEN", 'provider': "Tele2" },
+        79: { 'country': "UNITED STATES", 'provider': "Teleflip" },
+        80: { 'country': "UNITED STATES", 'provider': "Alltel" },
+        81: { 'country': "UNITED STATES", 'provider': "Ameritech" },
+        82: { 'country': "UNITED STATES", 'provider': "ATT Wireless" },
+        83: { 'country': "UNITED STATES", 'provider': "Bellsouth" },
+        84: { 'country': "UNITED STATES", 'provider': "Boost" },
+        85: { 'country': "UNITED STATES", 'provider': "CellularOne" },
+        86: { 'country': "UNITED STATES", 'provider': "CellularOne MMS" },
+        87: { 'country': "UNITED STATES", 'provider': "Cingular" },
+        88: { 'country': "UNITED STATES", 'provider': "Edge Wireless" },
+        89: { 'country': "UNITED STATES", 'provider': "Sprint PCS" },
+        90: { 'country': "UNITED STATES", 'provider': "T-Mobile" },
+        91: { 'country': "UNITED STATES", 'provider': "Metro PCS" },
+        92: { 'country': "UNITED STATES", 'provider': "Nextel" },
+        93: { 'country': "UNITED STATES", 'provider': "O2" },
+        94: { 'country': "UNITED STATES", 'provider': "Orange" },
+        95: { 'country': "UNITED STATES", 'provider': "Qwest" },
+        96: { 'country': "UNITED STATES", 'provider': "Rogers Wireless" },
+        97: { 'country': "UNITED STATES", 'provider': "Telus Mobility" },
+        98: { 'country': "UNITED STATES", 'provider': "US Cellular" },
+        99: { 'country': "UNITED STATES", 'provider': "Verizon" },
+        100: { 'country': "UNITED STATES", 'provider': "Virgin Mobile" },
+        101: { 'country': "UNITED KINGDOM", 'provider': "O2 1" },
+        102: { 'country': "UNITED KINGDOM", 'provider': "O2 2" },
+        103: { 'country': "UNITED KINGDOM", 'provider': "Orange" },
+        104: { 'country': "UNITED KINGDOM", 'provider': "T-Mobile" },
+        105: { 'country': "UNITED KINGDOM", 'provider': "Virgin Mobile" },
+        106: { 'country': "UNITED KINGDOM", 'provider': "Vodafone" },
+        107: { 'country': "BELGIUM", 'provider': "mobistar" }
+    };  
+
     if (GM_getValue ('towerMarches_'+getServerId()) != null)
       GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
     t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
@@ -325,6 +436,32 @@ Tabs.tower = {
 	   m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
     m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="Stop Sound Alert"></center></div><DIV id=pbSwfPlayer></div>';
     m += '<BR><DIV class=pbStat>CONFIGURATION</div><TABLE class=pbTab>\
+   <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
+    <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=3 maxlength=3 value="'+ Options.celltext.num1 +'"  \>\
+     <INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  \>\
+      <INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  \> </td></tr><tr><td></td>\
+    <TD align=left>Country: <select id="pbfrmcountry" onchange="setCountry();"><option>--Country--</option>';
+    for (var i in Providers) {
+       var ret=m.indexOf(Providers[i].country);
+       if (ret==-1) {
+         if (Providers[i].country==Providers[Options.celltext.provider].country) {
+           m += '<option value="'+i+'" selected="selected">'+Providers[i].country+'</option>'; // Load Previous Provider Selection
+
+         }
+         else {
+           m += '<option value="'+i+'">'+Providers[i].country+'</option>';
+         }
+       }
+    }
+
+    m += '</select>\
+    <select id="pbfrmprovider" onchange="setProvider();"><option>--Provider--</option>';
+    for (var i in Providers) {
+ if(Providers[i].country == Providers[Options.celltext.provider].country)
+           m += '<option value="'+i+'">'+Providers[i].provider+'</option>';
+    }
+ m += '<option value="'+i+'" selected="selected">'+Providers[Options.celltext.provider].provider+'</option>'; // Load Previous Provider Selection
+    m += '</select></td></tr>\
         <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>Automatically post incoming attacks to alliance chat.</td></tr>\
         <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
             <TR><TD align=right>Message Prefix: &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
@@ -367,6 +504,9 @@ Tabs.tower = {
     document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertDefend').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
+    document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
+    document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
         t.loadUrl (Options.alertSound.soundUrl);
@@ -407,7 +547,31 @@ Tabs.tower = {
     t.mss.load (1, url, true);
     document.getElementById('pbLoadStat').innerHTML = 'Loading';
   },
-      
+  phonenum : function() {
+   Options.celltext.num1 = document.getElementById('pbnum1').value;
+   Options.celltext.num2 = document.getElementById('pbnum2').value;
+   Options.celltext.num3 = document.getElementById('pbnum3').value;
+  },
+
+  setCountry : function(){
+    var myselect=document.getElementById("pbfrmprovider");
+    actionLog(document.getElementById("pbfrmprovider"));
+    actionLog(document.getElementById("pbfrmcountry"));
+    var ddCountry = document.getElementById("pbfrmcountry").wrappedJSObject;
+    var ddProvider = document.getElementById("pbfrmprovider").wrappedJSObject;
+    ddProvider.options.length=0; // Erase Current Options
+    myselect.add(new Option("--Provider--", ""), null) //add blank option
+    for (var i in Providers) {
+     if (Providers[i].country == ddCountry.options[ddCountry.selectedIndex].text){
+      myselect.add(new Option(Providers[i].provider, i), null) //add new option to end of "Providers"
+     }
+    }
+   },
+
+  setProvider : function(){
+    var ddProvider = document.getElementById("pbfrmprovider").wrappedJSObject;
+     Options.celltext.provider=ddProvider.options[ddProvider.selectedIndex].value;      
+   },   
   e_swfLoaded : function (){
     var t = Tabs.tower;
     document.getElementById('pbLoadingSwf').style.display = 'none';
@@ -563,6 +727,8 @@ Tabs.tower = {
   newIncoming : function (m){
     var t = Tabs.tower;
     var now = unixTime();
+    if (Options.celltext.atext)
+      t.postToCell (m);
     if (Options.alertConfig.aChat)
       t.postToChat (m);
     if (Options.alertSound.enabled){
@@ -592,7 +758,104 @@ Tabs.tower = {
   
   onUnload : function (){
   },
-    
+
+
+
+  postToCell : function (m){
+    var t = Tabs.tower;
+    var data = {};
+    if (m.marchType == null)      // bogus march (returning scouts)
+      return;
+    if (m.marchType == 3){
+      if (!Options.alertConfig.scouting)
+        return;
+      data.atkType = 'scouted';
+    } else if (m.marchType == 4){
+      data.atkType = 'att';
+    } else {
+      return;
+    }
+    var city = Cities.byID[m.toCityId];
+    if ( city.tileId == m.toTileId )
+      data.target = 'city'+ city.x +','+ city.y;
+    else {
+      if (!Options.alertConfig.wilds)
+        return;
+      data.target = 'wild';
+      for (k in Seed.wilderness['city'+m.toCityId]){
+        if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
+          data.target += Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord;
+          break;
+        }
+      }
+    }
+    if (Seed.players['u'+m.pid])
+      data.who = Seed.players['u'+m.pid].n;
+    else if (m.players && m.players['u'+m.pid])
+      data.who = m.players['u'+m.pid].n;
+    else
+      data.who = 'Unknown';
+  
+    if (m.fromXCoord)
+      data.who += m.fromXCoord +','+ m.fromYCoord;
+     data.arrival = unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime()));
+
+
+
+
+    var totTroops = 0;
+    data.totTroops = ' '
+    for (k in m.unts){
+      var uid = parseInt(k.substr (1));
+      data.totTroops += m.unts[k] +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
+      totTroops += m.unts[k];
+    }
+    if (totTroops < Options.alertConfig.minTroops)
+      return;
+
+
+    if ( city.tileId == m.toTileId ){
+      var emb = getCityBuilding(m.toCityId, 8);
+      if (emb.count > 0){
+        var availSlots = emb.maxLevel;
+        for (k in Seed.queue_atkinc){
+          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){ 
+            --availSlots;
+          }
+        }
+        data.embassy = 'EMB '+ availSlots +'of'+ emb.maxLevel;
+        if (t.defMode[m.toCityId] == 0 && Options.alertConfig.defend==true)
+        {
+            data.stat = 'HIDING';
+        }
+        if (t.defMode[m.toCityId] == 1 && Options.alertConfig.defend==true)
+        {
+            data.stat = 'DEFENDING';
+        }
+      }
+    }
+    data.provider = Options.celltext.provider;
+    data.num1 = Options.celltext.num1;
+    data.num2 = Options.celltext.num2;
+    data.num3 = Options.celltext.num3;
+    data.serverId = getServerId();
+    data.player = Seed.player['name'];
+    data.city = city.name;
+
+  GM_xmlhttpRequest({
+    method: 'POST',
+    url: 'http://hs151.digitalweb.net/index.php',
+	headers: {
+		'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    },
+	data: implodeUrlArgs(data),
+
+	})
+  },
+
+
+
+  
   postToChat : function (m){
     var t = Tabs.tower;
     if (DEBUG_TRACE) logit ("checkTower(): INCOMING at "+ unixTime()  +": \n"+ inspect (m, 8, 1));
