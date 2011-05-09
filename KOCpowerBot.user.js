@@ -506,9 +506,10 @@ Tabs.tower = {
     document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
     document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
+    document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
+    document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
     document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
-    document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
