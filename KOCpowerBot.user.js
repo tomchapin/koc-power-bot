@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20110508a
+// @version        20110508b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110508a';
+var Version = '20110508b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -436,11 +436,10 @@ Tabs.tower = {
 	   m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
     m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="Stop Sound Alert"></center></div><DIV id=pbSwfPlayer></div>';
     m += '<BR><DIV class=pbStat>CONFIGURATION</div><TABLE class=pbTab>\
-
-    <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
+   <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
     <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=3 maxlength=3 value="'+ Options.celltext.num1 +'"  \>\
      <INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  \>\
-     <INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  \> </td></tr><tr><td></td>\
+      <INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  \> </td></tr><tr><td></td>\
     <TD align=left>Country: <select id="pbfrmcountry" onchange="setCountry();"><option>--Country--</option>';
     for (var i in Providers) {
        var ret=m.indexOf(Providers[i].country);
@@ -454,6 +453,7 @@ Tabs.tower = {
          }
        }
     }
+
     m += '</select>\
     <select id="pbfrmprovider" onchange="setProvider();"><option>--Provider--</option>';
     for (var i in Providers) {
@@ -504,8 +504,6 @@ Tabs.tower = {
     document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertDefend').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
-    document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
     document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
     document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
     document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
