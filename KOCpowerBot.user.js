@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20110511a
+// @version        20110511b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110511a';
+var Version = '20110511b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -82,41 +82,51 @@ function facebookInstance (){
       // toolkit may have removed them already!
     }
     var e = document.getElementById('mainContainer');
-    //document.getElementById('content').style.minWidth = '1220px';
-	for(i=0; i<e.childNodes.length; i++){
-		if(e.childNodes[i].id == 'contentCol'){
-			e.childNodes[i].style.width = '100%';
-			e.childNodes[i].style.margin = '0 10px';
-			e.childNodes[i].childNodes[1].style.width = '100%';
-			break;
+	if(e){
+		document.getElementById('content').style.minWidth = '1220px';
+		for(i=0; i<e.childNodes.length; i++){
+			if(e.childNodes[i].id == 'contentCol'){
+				e.childNodes[i].style.width = '100%';
+				e.childNodes[i].style.margin = '0px';
+				e.childNodes[i].style.paddingTop = '5px';
+				e.childNodes[i].childNodes[1].style.width = '99%';
+				break;
+			}
 		}
 	}
 	var e = document.getElementById('globalContainer');
 	if(e){
 		e.style.width = '100%';
-		e.style.overflow = 'hidden';
 		if(e.firstChild){
 			e.firstChild.style.width = '80%';
 			e.firstChild.style.margin = '0 10%';
 		}
 	}
+	var e = document.getElementById('bottomContent');
+	if(e){
+		e.style.padding = "0px 0px 12px 0px";
+	}
 	var e = document.getElementById('contentArea');
-	document.getElementById('contentArea').style.width = '100%';
-	for(i=0; i<e.childNodes.length; i++){
-		if(e.childNodes[i].tagName == 'div'){
-			e.childNodes[i].style.width = '100%';
-			e.childNodes[i].firstChild.style.width = '100%';
-			break;
+	if(e){
+		e.style.width = '100%';
+		for(i=0; i<e.childNodes.length; i++){
+			if(e.childNodes[i].tagName == 'div'){
+				e.childNodes[i].style.width = '100%';
+				e.childNodes[i].firstChild.style.width = '100%';
+				break;
+			}
 		}
 	}
 	iFrame.style.width = '100%';
 
     var div = searchDOM (document.getElementById('content'), 'node.tagName=="DIV" && node.className=="UIStandardFrame_Content"', 7);
-    if (div)
-      div.style.width ='100%';
+    if (div){
+		div.style.width ='100%';
+	}
     var div = searchDOM (document.getElementById('content'), 'node.tagName=="DIV" && node.className.indexOf("SidebarAds")>=0', 7);
-    if (div)
-      div.style.display ='none';
+    if (div){
+		div.style.display ='none';
+	}
     
   }
   facebookWatchdog();

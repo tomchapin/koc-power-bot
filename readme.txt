@@ -1,7 +1,12 @@
 REVISION HISTORY:
 ----------------
 
-20110510b
+20110511b
+   *Fixed problem with rally point level not always being properly detected
+   *Added more cell phone carriers (mobistar and 1und1)
+   *Fixed even more widescreen issues
+
+20110511b
    *Fixed remaining widescreen issues (tomchapin)
    
 20110510a
