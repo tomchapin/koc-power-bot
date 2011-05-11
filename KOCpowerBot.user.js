@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20110510b
+// @version        20110511a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110510b';
+var Version = '20110511a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -86,7 +86,7 @@ function facebookInstance (){
 	for(i=0; i<e.childNodes.length; i++){
 		if(e.childNodes[i].id == 'contentCol'){
 			e.childNodes[i].style.width = '100%';
-			e.childNodes[i].style.margin = '0';
+			e.childNodes[i].style.margin = '0 10px';
 			e.childNodes[i].childNodes[1].style.width = '100%';
 			break;
 		}
@@ -95,6 +95,10 @@ function facebookInstance (){
 	if(e){
 		e.style.width = '100%';
 		e.style.overflow = 'hidden';
+		if(e.firstChild){
+			e.firstChild.style.width = '80%';
+			e.firstChild.style.margin = '0 10%';
+		}
 	}
 	var e = document.getElementById('contentArea');
 	document.getElementById('contentArea').style.width = '100%';
@@ -3405,16 +3409,14 @@ Tabs.transport = {
     
     getRallypoint: function(cityId){
       var t = Tabs.transport;
-      for (var k in Seed.buildings[cityId]){
-           var buildingType  = parseInt(Seed.buildings[cityId][k][0]);
-           var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
-    	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
-    	     if(DEBUG_TRACE) logit(buildingName + ' => Level: ' + buildingLevel);
-    	     if (buildingName == "Rally Point" || buildingName == "Punto de reuniÃ³n" || buildingName == "Versammlungspunkt" || buildingName == "Point de Ralliement" || buildingName == "Luogo di riunione" || buildingName == "Uppsamlingsplats" || buildingName == "MÃ¸dested" || buildingName == "Verzamelpunt"){
-				return buildingLevel;
-				break;
-			 }
-      }
+      for (var o in Seed.buildings[cityId]){
+		var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+		var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+		if (buildingType == 12){
+			return parseInt(buildingLevel);
+			break;
+		}
+	   }
 	  return 0;
     },
       	  
@@ -4134,12 +4136,11 @@ Tabs.Reassign = {
     
     getRallypoint: function(cityId){
       var t = Tabs.Reassign;
-      for (var k in Seed.buildings[cityId]){
-           var buildingType  = parseInt(Seed.buildings[cityId][k][0]);
-           var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
-    	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
-    	     if (buildingName == "Rally Point" || buildingName == "Punto de reuniÃ³n" || buildingName == "Versammlungspunkt" || buildingName == "Point de Ralliement" || buildingName == "Luogo di riunione" || buildingName == "Uppsamlingsplats" || buildingName == "MÃ¸dested" || buildingName == "Verzamelpunt") t.rallypointlevel=parseInt(buildingLevel);
-    	  }	  
+      for (var o in Seed.buildings[cityId]){
+		var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+		var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+		if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
+	   }  
  },
       	  
     
