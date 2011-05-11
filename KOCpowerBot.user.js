@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20110508b
+// @version        20110510a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -74,15 +74,27 @@ function facebookInstance (){
       return;
     }
     try{    
+      document.getElementById('rightCol').parentNode.removeChild(document.getElementById('rightCol'));
+      document.getElementById('leftColContainer').parentNode.removeChild(document.getElementById('leftColContainer'));
       document.getElementById('sidebar_ads').parentNode.removeChild(document.getElementById('sidebar_ads'));
       document.getElementById('canvas_nav_content').parentNode.removeChild(document.getElementById('canvas_nav_content'));
     } catch (e){
       // toolkit may have removed them already!
     }
-    var e = document.getElementById('content');
+    var e = document.getElementById('mainContainer');
     document.getElementById('content').style.minWidth = '1220px';
 	for(i=0; i<e.childNodes.length; i++){
-		if(e.childNodes[i].firstChild){
+		if(e.childNodes[i].id == 'contentCol'){
+			e.childNodes[i].style.width = '100%';
+			e.childNodes[i].style.margin = '0';
+			e.childNodes[i].childNodes[1].style.width = '100%';
+			break;
+		}
+	}
+	var e = document.getElementById('contentArea');
+	document.getElementById('contentArea').style.width = '100%';
+	for(i=0; i<e.childNodes.length; i++){
+		if(e.childNodes[i].tagName == 'div'){
 			e.childNodes[i].style.width = '100%';
 			e.childNodes[i].style.margin = '0';
 			e.childNodes[i].firstChild.style.width = '100%';
@@ -304,12 +316,8 @@ Tabs.tower = {
   soundRepeatTimer : null,
   soundStopTimer : null,
   towerMarches: [],
-
-  init: function(div){
-	  var t = Tabs.tower;
-    t.myDiv = div;
-    Providers = {
-        0: { 'country': "", 'provider': "" },
+  Providers : {
+		0: { 'country': "--Country--", 'provider': "--Provider--" },
         1: { 'country': "AUSTRALIA", 'provider': "T-Mobile" },
         2: { 'country': "AUSTRALIA", 'provider': "Optus Zoo" },
         3: { 'country': "AUSTRIA", 'provider': "T-Mobile" },
@@ -417,8 +425,13 @@ Tabs.tower = {
         105: { 'country': "UNITED KINGDOM", 'provider': "Virgin Mobile" },
         106: { 'country': "UNITED KINGDOM", 'provider': "Vodafone" },
         107: { 'country': "BELGIUM", 'provider': "mobistar" }
-    };  
+    },
 
+  init: function(div){
+	  var t = Tabs.tower;
+    t.myDiv = div;
+        var Providers_len = 105;
+    
     if (GM_getValue ('towerMarches_'+getServerId()) != null)
       GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
     t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
@@ -436,31 +449,32 @@ Tabs.tower = {
 	   m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
     m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="Stop Sound Alert"></center></div><DIV id=pbSwfPlayer></div>';
     m += '<BR><DIV class=pbStat>CONFIGURATION</div><TABLE class=pbTab>\
-   <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
-    <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=3 maxlength=3 value="'+ Options.celltext.num1 +'"  \>\
-     <INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  \>\
-      <INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  \> </td></tr><tr><td></td>\
-    <TD align=left>Country: <select id="pbfrmcountry" onchange="setCountry();"><option>--Country--</option>';
-    for (var i in Providers) {
-       var ret=m.indexOf(Providers[i].country);
+    <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
+    <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=3 maxlength=3 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
+&nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
+&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold">(Please note that standard text messaging charges may apply)</span></td></tr><tr><td></td>\
+    <TD align=left>Country: <select id="pbfrmcountry">';
+    for (var i in t.Providers) {
+       var ret=m.indexOf(t.Providers[i].country);
        if (ret==-1) {
-         if (Providers[i].country==Providers[Options.celltext.provider].country) {
-           m += '<option value="'+i+'" selected="selected">'+Providers[i].country+'</option>'; // Load Previous Provider Selection
-
+         if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
+           m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
          }
          else {
-           m += '<option value="'+i+'">'+Providers[i].country+'</option>';
+           m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
          }
        }
     }
 
     m += '</select>\
-    <select id="pbfrmprovider" onchange="setProvider();"><option>--Provider--</option>';
-    for (var i in Providers) {
- if(Providers[i].country == Providers[Options.celltext.provider].country)
-           m += '<option value="'+i+'">'+Providers[i].provider+'</option>';
+    <select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--Provider--</option>';
+    for (var i in t.Providers) {
+ if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
+		if(Options.celltext.provider == i)
+			m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
+		else
+           m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
     }
- m += '<option value="'+i+'" selected="selected">'+Providers[Options.celltext.provider].provider+'</option>'; // Load Previous Provider Selection
     m += '</select></td></tr>\
         <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>Automatically post incoming attacks to alliance chat.</td></tr>\
         <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
@@ -497,6 +511,7 @@ Tabs.tower = {
     document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
     document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
     document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
+    document.getElementById('pbcellenable').addEventListener ('change', function (e){Options.celltext.atext = e.target.checked;}, false);
     document.getElementById('pbSoundStop').disabled = true;
     document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
@@ -556,24 +571,38 @@ Tabs.tower = {
   },
 
   setCountry : function(){
+    var t = Tabs.tower;
     var myselect=document.getElementById("pbfrmprovider");
-    actionLog(document.getElementById("pbfrmprovider"));
-    actionLog(document.getElementById("pbfrmcountry"));
-    var ddCountry = document.getElementById("pbfrmcountry").wrappedJSObject;
-    var ddProvider = document.getElementById("pbfrmprovider").wrappedJSObject;
-    ddProvider.options.length=0; // Erase Current Options
-    myselect.add(new Option("--Provider--", ""), null) //add blank option
-    for (var i in Providers) {
-     if (Providers[i].country == ddCountry.options[ddCountry.selectedIndex].text){
-      myselect.add(new Option(Providers[i].provider, i), null) //add new option to end of "Providers"
+// GM_log(document.getElementById("pbfrmprovider").value);
+// GM_log(document.getElementById("pbfrmcountry").value);
+	myselect.innerHTML = '<option value=0 >--Provider--</option>';
+	myselect.disabled = true;
+    for (var i in t.Providers) {
+     if (t.Providers[i].country == document.getElementById("pbfrmcountry").value){
+		var addoption = document.createElement('option');
+		addoption.value = i;
+		addoption.text = t.Providers[i].provider;
+      myselect.add(addoption, null) //add new option to end of "Providers"
      }
     }
+	myselect.disabled = false;
    },
 
   setProvider : function(){
     var ddProvider = document.getElementById("pbfrmprovider").wrappedJSObject;
-     Options.celltext.provider=ddProvider.options[ddProvider.selectedIndex].value;      
-   },   
+     Options.celltext.provider=ddProvider.options[ddProvider.selectedIndex].value;
+	if(ddProvider.selectedIndex > 0){
+		document.getElementById("pbnum1").disabled = false;
+		document.getElementById("pbnum2").disabled = false;
+		document.getElementById("pbnum3").disabled = false;
+	} else {
+		document.getElementById("pbnum1").disabled = true;
+		document.getElementById("pbnum2").disabled = true;
+		document.getElementById("pbnum3").disabled = true;
+	}
+    //alert(Options.celltext.provider);
+   },
+
   e_swfLoaded : function (){
     var t = Tabs.tower;
     document.getElementById('pbLoadingSwf').style.display = 'none';
@@ -771,15 +800,15 @@ Tabs.tower = {
     if (m.marchType == 3){
       if (!Options.alertConfig.scouting)
         return;
-      data.atkType = 'scouted';
+      data.atkType = 'scout';
     } else if (m.marchType == 4){
-      data.atkType = 'att';
+      data.atkType = 'atk';
     } else {
       return;
     }
     var city = Cities.byID[m.toCityId];
     if ( city.tileId == m.toTileId )
-      data.target = 'city'+ city.x +','+ city.y;
+      data.target = 'city ('+ city.x +','+ city.y+')';
     else {
       if (!Options.alertConfig.wilds)
         return;
@@ -801,10 +830,6 @@ Tabs.tower = {
     if (m.fromXCoord)
       data.who += m.fromXCoord +','+ m.fromYCoord;
      data.arrival = unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime()));
-
-
-
-
     var totTroops = 0;
     data.totTroops = ' '
     for (k in m.unts){
@@ -854,9 +879,6 @@ Tabs.tower = {
 
 	})
   },
-
-
-
   
   postToChat : function (m){
     var t = Tabs.tower;
@@ -2949,14 +2971,13 @@ Tabs.Test = {
         <TR><TD colspan=2 align=center><INPUT id=pbtestSendMarch type=submit value="Fake Attack" \></td></tr></table>\
         <INPUT id=pbReloadKOC type=submit value="Reload KOC" \>\
         <BR>Force ajax errors : <INPUT type=checkbox id=pbajaxErr>\
-        <BR>Send alliance chat alert as whisper : <INPUT type=checkbox id=pbalertWhisper CHECKED>\
+        <BR>Send alliance chat alert as whisper : <INPUT type=checkbox id=pbalertWhisper>\
         <BR><DIV id=pbtestDiv style="background-color:#ffffff; maxwidth:675; maxheight:350px; height:350px; overflow-y:auto;"></div>';
     div.innerHTML = m;
     document.getElementById('pbtestSendMarch').addEventListener ('click', t.clickFakeAttack, false);
     document.getElementById('pbReloadKOC').addEventListener ('click', reloadKOC, false);
     document.getElementById('pbajaxErr').addEventListener ('click', function (){window.EmulateAjaxError=this.checked}, false);
     document.getElementById('pbalertWhisper').addEventListener ('click', function (){SEND_ALERT_AS_WHISPER=this.checked}, false);
-    SEND_ALERT_AS_WHISPER = true;
   },
 
   hide : function (){
