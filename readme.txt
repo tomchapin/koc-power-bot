@@ -1,5 +1,12 @@
 REVISION HISTORY:
 ----------------
+
+20110510b
+   *Fixed remaining widescreen issues (tomchapin)
+   
+20110510a
+   *Worked on fixing widescreen issues (jontey)
+
 20110507a
    *Finally fixed gifts acceptor(Credits to TexasT)
    *Added online status for city search

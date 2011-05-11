@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20110510a
+// @version        20110510b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110508b';
+var Version = '20110510b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -82,7 +82,7 @@ function facebookInstance (){
       // toolkit may have removed them already!
     }
     var e = document.getElementById('mainContainer');
-    document.getElementById('content').style.minWidth = '1220px';
+    //document.getElementById('content').style.minWidth = '1220px';
 	for(i=0; i<e.childNodes.length; i++){
 		if(e.childNodes[i].id == 'contentCol'){
 			e.childNodes[i].style.width = '100%';
@@ -90,6 +90,11 @@ function facebookInstance (){
 			e.childNodes[i].childNodes[1].style.width = '100%';
 			break;
 		}
+	}
+	var e = document.getElementById('globalContainer');
+	if(e){
+		e.style.width = '100%';
+		e.style.overflow = 'hidden';
 	}
 	var e = document.getElementById('contentArea');
 	document.getElementById('contentArea').style.width = '100%';
@@ -234,6 +239,14 @@ function pbStartup (){
     Options.pbWinPos.y = c.y+c.height;
     saveOptions ();
   }
+  
+  // Reset window xPos if the widescreen option is disabled
+  if(!GlobalOptions.pbWideScreen && Options.pbWinPos.x > 700){
+    var c = getClientCoords (document.getElementById('main_engagement_tabs'));
+    Options.pbWinPos.x = c.x+4;
+    saveOptions ();
+  }
+  
   mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 820,600, Options.pbWinDrag, 
       function (){
         tabManager.hideTab();
@@ -3397,7 +3410,7 @@ Tabs.transport = {
            var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
     	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
     	     if(DEBUG_TRACE) logit(buildingName + ' => Level: ' + buildingLevel);
-    	     if (buildingName == "Rally Point" || buildingName == "Punto de reunión" || buildingName == "Versammlungspunkt" || buildingName == "Point de Ralliement" || buildingName == "Luogo di riunione" || buildingName == "Uppsamlingsplats" || buildingName == "Mødested" || buildingName == "Verzamelpunt"){
+    	     if (buildingName == "Rally Point" || buildingName == "Punto de reuniÃ³n" || buildingName == "Versammlungspunkt" || buildingName == "Point de Ralliement" || buildingName == "Luogo di riunione" || buildingName == "Uppsamlingsplats" || buildingName == "MÃ¸dested" || buildingName == "Verzamelpunt"){
 				return buildingLevel;
 				break;
 			 }
@@ -4125,7 +4138,7 @@ Tabs.Reassign = {
            var buildingType  = parseInt(Seed.buildings[cityId][k][0]);
            var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
     	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
-    	     if (buildingName == "Rally Point" || buildingName == "Punto de reunión" || buildingName == "Versammlungspunkt" || buildingName == "Point de Ralliement" || buildingName == "Luogo di riunione" || buildingName == "Uppsamlingsplats" || buildingName == "Mødested" || buildingName == "Verzamelpunt") t.rallypointlevel=parseInt(buildingLevel);
+    	     if (buildingName == "Rally Point" || buildingName == "Punto de reuniÃ³n" || buildingName == "Versammlungspunkt" || buildingName == "Point de Ralliement" || buildingName == "Luogo di riunione" || buildingName == "Uppsamlingsplats" || buildingName == "MÃ¸dested" || buildingName == "Verzamelpunt") t.rallypointlevel=parseInt(buildingLevel);
     	  }	  
  },
       	  
