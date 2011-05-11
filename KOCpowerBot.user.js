@@ -440,7 +440,7 @@ Tabs.tower = {
         104: { 'country': "UNITED KINGDOM", 'provider': "T-Mobile" },
         105: { 'country': "UNITED KINGDOM", 'provider': "Virgin Mobile" },
         106: { 'country': "UNITED KINGDOM", 'provider': "Vodafone" },
-        107: { 'country': "BELGIUM", 'provider': "mobistar" }
+        107: { 'country': "BELGIUM", 'provider': "mobistar" },
          108: { 'country': "GERMANY", 'provider': "1und1" }
     },
 
