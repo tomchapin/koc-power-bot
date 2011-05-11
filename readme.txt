@@ -6,7 +6,7 @@ REVISION HISTORY:
    *Added more cell phone carriers (mobistar and 1und1)
    *Fixed even more widescreen issues
 
-20110511b
+20110510b
    *Fixed remaining widescreen issues (tomchapin)
    
 20110510a
