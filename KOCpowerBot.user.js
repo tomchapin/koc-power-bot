@@ -86,7 +86,7 @@ function facebookInstance (){
 	for(i=0; i<e.childNodes.length; i++){
 		if(e.childNodes[i].id == 'contentCol'){
 			e.childNodes[i].style.width = '100%';
-			e.childNodes[i].style.margin = '0px 0px 0px -120px';
+			e.childNodes[i].style.margin = '0';
 			e.childNodes[i].childNodes[1].style.width = '100%';
 			break;
 		}
