@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20110511c
+// @version        20110512a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110511c';
+var Version = '20110512a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4601,6 +4601,745 @@ Tabs.Reassign = {
     },
 }
 
+/************************  Reinforce Tab ************************/
+Tabs.Reinforce = {
+  tabOrder: 1,
+  tabLabel: 'Reinforce',
+  myDiv: null,
+  cityID: null,
+  rallypointlevel:null,
+  maxsend:0,
+  dist:0,
+  ETAstr:null,
+  ETAType:null,
+  checkETA:null,
+
+    init: function(div){
+		var t = Tabs.Reinforce;
+        t.myDiv = div;
+		
+
+      var m = '<DIV id=pbReinfMain class=pbStat>REINFORCE</div><TABLE id=pireinforce width=100% height=0% class=pbTab><TR align="center">';
+      
+      m += '<TABLE id=pbReinf width=95% height=0% class=pbTab><TR align="left">';
+      m += '<TD width=20px>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptRfcityFrom></span></div></td></tr>';
+
+      m += '<TR align="left">';
+      m += '<TD>To City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptRfcityTo></span></div></td>';
+      m += '<TD>OR</td>';
+      m += '<TD>X:<INPUT id=pfToX type=text size=3\></td>';
+      m += '<TD>Y:<INPUT id=pfToY type=text size=3\></td></tr></table>';
+      
+      m += '<TABLE id=pbReinfETA width=95% height=0% class=pbTab><TR align="left">';
+      m += '<TD><DIV id=pbdistance>Distance N/A</div></td></tr>';
+      m += '<TR><TD><DIV id=pbETA>ETA N/A</div></td></tr></table>';
+            
+      m += '<TABLE id=pbaddreinfroute width=100% height=0% class=pbTab><TR align="center">';
+      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+      m += '<TD>Supply Troop</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+      m += '<TD>Militiaman</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+      m += '<TD>Scout</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+      m += '<TD>Pikeman</td></tr>'
+      m += '<TR><TD><INPUT id=pitargetSupplyTroops type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyTroops type=submit value="Max"></td>';
+      m += '<TD><INPUT id=pitargetMilitiaman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxMilitiaman type=submit value="Max"></td>';
+      m += '<TD><INPUT id=pitargetScout type=text size=6 maxlength=6 value="0"\><INPUT id=MaxScout type=submit value="Max"></td>';
+      m += '<TD><INPUT id=pitargetPikeman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxPikeman type=submit value="Max"></td></tr>';
+      
+      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+      m += '<TD>Swordsman</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+      m += '<TD>Archer</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+      m += '<TD>Cavalry</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+      m += '<TD>Heavy Cavalry</td></tr>'
+      m += '<TR><TD><INPUT id=pitargetSwordsman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSwordsman type=submit value="Max"></td>';
+      m += '<TD><INPUT id=pitargetArcher type=text size=6 maxlength=6 value="0"\><INPUT id=MaxArcher type=submit value="Max"></td>';
+      m += '<TD><INPUT id=pitargetCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCavalry type=submit value="Max"></td>';
+      m += '<TD><INPUT id=pitargetHeavyCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxHeavyCavalry type=submit value="Max"></td></tr>';
+      
+      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+      m += '<TD>Supply Wagon</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+      m += '<TD>Ballista</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+      m += '<TD>Battering Ram</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+      m += '<TD>Catapult</td></tr>'
+      m += '<TR><TD><INPUT id=pitargetSupplyWagon type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyWagon type=submit value="Max"></td>';
+      m += '<TD><INPUT id=pitargetBallista type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBallista type=submit value="Max"></td>';
+      m += '<TD><INPUT id=pitargetBatteringRam type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBatteringRam type=submit value="Max"></td>';
+      m += '<TD><INPUT id=pitargetCatapult type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCatapult type=submit value="Max"></td></tr></table>';
+      
+      m += '<TABLE id=pbReinfETA width=95% height=0% margin-top=10px class=pbTab ><TR align="center">';
+      m += '<TD><SELECT id=piKnight type=list></td>';
+      m += '<TD><INPUT id=piDoreinforce type=submit value="Reinforce"></td>';
+      
+      t.myDiv.innerHTML = m;
+      
+      
+      t.from = new CdispCityPicker ('prfrom', document.getElementById('ptRfcityFrom'), true, t.clickCitySelect, 0);
+      t.to = new CdispCityPicker ('ptto', document.getElementById('ptRfcityTo'), true, t.clickCitySelect,0);
+      
+	  t.getKnights();
+	  
+      document.getElementById('pfToX').value = t.to.city.x;
+      document.getElementById('pfToY').value = t.to.city.y;
+      
+	 document.getElementById('ptRfcityTo').addEventListener('click', function(){
+  	 document.getElementById('pfToX').value = t.to.city.x;
+     document.getElementById('pfToY').value = t.to.city.y;
+ 	 }, false);
+          
+     document.getElementById('ptRfcityFrom').addEventListener('click', function(){
+     	t.getKnights();	 
+        t.clearbox();
+        t.dist = distance (t.from.city.x, t.from.city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
+	    document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
+	    t.SetETAType();
+	    t.ETA(t.dist);
+	    document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      
+      document.getElementById('ptRfcityTo').addEventListener('click', function(){
+       t.dist = distance (t.from.city.x, t.from.city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
+          	document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
+          	t.ETA(t.dist);
+          	document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      
+      
+      document.getElementById('pfToX').addEventListener('keyup', function(){
+       t.dist = distance (t.from.city.x, t.from.city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
+       		document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
+       		t.ETA(t.dist);
+       		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      
+      document.getElementById('pfToY').addEventListener('keyup', function(){
+       t.dist = distance (t.from.city.x, t.from.city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
+       		document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
+       		t.ETA(t.dist);
+       		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      
+      document.getElementById('piDoreinforce').addEventListener('click', function(){
+      		t.doReinforce();
+      }, false);
+         
+      document.getElementById('MaxSupplyTroops').addEventListener('click', function(){
+      		t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetSupplyTroops').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+1]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+1]); 
+      		document.getElementById('pitargetSupplyTroops').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      
+      document.getElementById('MaxMilitiaman').addEventListener('click', function(){
+      		t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetMilitiaman').value == 0) t.maxsend = t.maxsend - othertroops;
+          
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+2]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+2]); 
+      		document.getElementById('pitargetMilitiaman').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      
+      document.getElementById('MaxScout').addEventListener('click', function(){
+      	t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetScout').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+3]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+3]); 
+      		document.getElementById('pitargetScout').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+ 
+ 	  document.getElementById('MaxPikeman').addEventListener('click', function(){
+ 	  	t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetPikeman').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+4]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+4]); 
+      		document.getElementById('pitargetPikeman').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+ 	  }, false);
+ 	  
+ 	  document.getElementById('MaxSwordsman').addEventListener('click', function(){
+ 	  		t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetSwordsman').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+5]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+5]); 
+      		document.getElementById('pitargetSwordsman').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+ 	  }, false);
+ 	  
+ 	  document.getElementById('MaxArcher').addEventListener('click', function(){
+ 	  	t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetArcher').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+6]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+6]); 
+      		document.getElementById('pitargetArcher').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+ 	  }, false);
+ 	  
+ 	  document.getElementById('MaxCavalry').addEventListener('click', function(){
+ 	  	t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetCavalry').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+7]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+7]); 
+      		document.getElementById('pitargetCavalry').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+ 	  }, false);
+ 	  
+ 	  document.getElementById('MaxHeavyCavalry').addEventListener('click', function(){
+ 	  		t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetHeavyCavalry').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+8]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+8]); 
+      		document.getElementById('pitargetHeavyCavalry').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+ 	  }, false);
+ 	  
+ 	  document.getElementById('MaxSupplyWagon').addEventListener('click', function(){
+ 	  		t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetSupplyWagon').value == 0) t.maxsend = t.maxsend - othertroops;
+           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+9]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+9]); 
+      		document.getElementById('pitargetSupplyWagon').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+ 	  }, false);
+ 	  
+ 	  document.getElementById('MaxBallista').addEventListener('click', function(){
+ 	  	t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetBallista').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+10]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+10]); 
+      		document.getElementById('pitargetBallista').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+ 	  }, false);
+ 	  
+ 	  document.getElementById('MaxBatteringRam').addEventListener('click', function(){
+ 	  		t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetBatteringRam').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+11]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+11]); 
+      		document.getElementById('pitargetBatteringRam').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+ 	  }, false);
+ 	  
+ 	  document.getElementById('MaxCatapult').addEventListener('click', function(){
+ 	  		t.maxsend = (t.rallypointlevel * 10000);
+      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
+          if ( othertroops >= (t.rallypointlevel * 10000) ) {
+             document.getElementById('pitargetSupplyTroops').value =0;
+             document.getElementById('pitargetMilitiaman').value =0; 
+             document.getElementById('pitargetScout').value =0; 
+             document.getElementById('pitargetPikeman').value =0; 
+             document.getElementById('pitargetSwordsman').value =0; 
+             document.getElementById('pitargetArcher').value =0; 
+             document.getElementById('pitargetCavalry').value =0; 
+             document.getElementById('pitargetHeavyCavalry').value =0; 
+             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetBallista').value =0;
+             document.getElementById('pitargetBatteringRam').value =0;
+             document.getElementById('pitargetCatapult').value =0;
+          }
+          if (document.getElementById('pitargetCatapult').value == 0) t.maxsend = t.maxsend - othertroops;
+          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+12]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+12]); 
+      		document.getElementById('pitargetCatapult').value = t.maxsend;
+      		t.SetETAType();
+      		t.ETA(t.dist);
+      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+ 	  }, false);
+ 	  
+      document.getElementById('pitargetSupplyTroops').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetSupplyTroops').value)) document.getElementById('pitargetSupplyTroops').value=0 ;
+          t.SetETAType();
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      document.getElementById('pitargetMilitiaman').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetMilitiaman').value)) document.getElementById('pitargetMilitiaman').value=0 ;
+          t.SetETAType();
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      document.getElementById('pitargetScout').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetScout').value)) document.getElementById('pitargetScout').value=0 ;
+          t.SetETAType();
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      document.getElementById('pitargetPikeman').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetPikeman').value)) document.getElementById('pitargetPikeman').value=0 ;
+          t.SetETAType();
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      document.getElementById('pitargetSwordsman').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetSwordsman').value)) document.getElementById('pitargetSwordsman').value=0 ;
+         t.SetETAType();
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      document.getElementById('pitargetArcher').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetArcher').value)) document.getElementById('pitargetArcher').value=0 ;
+         t.SetETAType();
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      document.getElementById('pitargetCavalry').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetCavalry').value)) document.getElementById('pitargetCavalry').value=0 ;
+         t.SetETAType();
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      document.getElementById('pitargetHeavyCavalry').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetHeavyCavalry').value)) document.getElementById('pitargetHeavyCavalry').value=0 ;
+         t.SetETAType();
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      document.getElementById('pitargetSupplyWagon').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetSupplyWagon').value)) document.getElementById('pitargetSupplyWagon').value=0 ;
+         t.SetETAType();
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+      document.getElementById('pitargetBallista').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pitargetBallista').value)) document.getElementById('pitargetBallista').value=0 ;
+         t.SetETAType(); 
+          document.getElementById('pbETA').innerHTML = (t.ETAstr);
+      }, false);
+     document.getElementById('pitargetBatteringRam').addEventListener('keyup', function(){
+         if (isNaN(document.getElementById('pitargetBatteringRam').value)) document.getElementById('pitargetBatteringRam').value=0 ;
+        t.SetETAType();
+         document.getElementById('pbETA').innerHTML = (t.ETAstr);
+     }, false);
+     document.getElementById('pitargetCatapult').addEventListener('keyup', function(){
+         if (isNaN(document.getElementById('pitargetCatapult').value)) document.getElementById('pitargetCatapult').value=0 ;
+        	t.SetETAType();
+         document.getElementById('pbETA').innerHTML = (t.ETAstr);
+     }, false);
+
+        
+      window.addEventListener('unload', t.onUnload, false);
+    }, 
+    
+    getKnights : function(){
+       var t = Tabs.Reinforce;
+       var knt = new Array();
+       t.getRallypoint('city' +t.from.city.id);
+       for (k in Seed.knights['city' + t.from.city.id]){
+       		if (Seed.knights['city' + t.from.city.id][k]["knightStatus"] == 1 && Seed.leaders['city' + t.from.city.id]["resourcefulnessKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"] && Seed.leaders['city' + t.from.city.id]["politicsKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"] && Seed.leaders['city' + t.from.city.id]["combatKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"] && Seed.leaders['city' + t.from.city.id]["intelligenceKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"]){
+       			knt.push ({
+       				Name:   Seed.knights['city' + t.from.city.id][k]["knightName"],
+       				Combat:	Seed.knights['city' + t.from.city.id][k]["combat"],
+       				ID:		Seed.knights['city' + t.from.city.id][k]["knightId"],
+       			});
+       		}
+       }
+       knt = knt.sort(function sort(a,b) {a = a['knightId'];b = b['knightId'];return a == b ? 0 : (a < b ? -1 : 1);}); 
+       document.getElementById('piKnight').options.length=0;
+       for (k in knt){
+    			if (knt[k]["Name"] !=undefined){
+	    			var o = document.createElement("option");
+	    			o.text = (knt[k]["Name"] + ' (' + knt[k]["Combat"] +')')
+	    			o.value = knt[k]["ID"];
+	    			document.getElementById("piKnight").options.add(o);
+    			}
+    	}
+    },
+    
+    
+    SetETAType :function(){
+    	var t = Tabs.Reinforce;
+    	if (document.getElementById('pitargetSupplyTroops').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetMilitiaman').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetScout').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetPikeman').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetSwordsman').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetArcher').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetCavalry').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetHeavyCavalry').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetSupplyWagon').value == 0 )t.checkETA=null;
+    	if (document.getElementById('pitargetBallista').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetBatteringRam').value == 0 ) t.checkETA=null;
+    	if (document.getElementById('pitargetCatapult').value == 0 ) t.checkETA=null;
+    	if (t.checkETA==null) t.ETAType=null;
+    	t.ETA(t.dist);
+    	if (document.getElementById('pitargetSupplyTroops').value >0 ) {t.ETAType="0,180";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetMilitiaman').value >0 ) {t.ETAType="0,200";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetScout').value >0 ) {t.ETAType="0,3000";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetPikeman').value >0 ) {t.ETAType="0,300";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetSwordsman').value >0 ) {t.ETAType="0,275";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetArcher').value >0 ) {t.ETAType="0,250";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetCavalry').value >0 ) {t.ETAType="1,1000";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetHeavyCavalry').value >0 ) {t.ETAType="1,750";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetSupplyWagon').value >0 ) {t.ETAType="1,150";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetBallista').value >0 ) {t.ETAType="1,100";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetBatteringRam').value >0 ) {t.ETAType="1,120";t.ETA(t.dist);}
+    	if (document.getElementById('pitargetCatapult').value >0 ) {t.ETAType="1,80";t.ETA(t.dist);}
+    },
+    
+    
+    getRallypoint: function(cityId){
+      var t = Tabs.Reinforce;
+      for (var k in Seed.buildings[cityId]){
+           var buildingType  = parseInt(Seed.buildings[cityId][k][0]);
+           var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
+    	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
+    	     if (buildingName == "Rally Point") t.rallypointlevel=buildingLevel;
+    	  }
+     if(t.rallypointlevel == 11) t.rallypointlevel = 15;
+     t.maxsend = (t.rallypointlevel * 10000); 	  
+ },
+ 
+ clearbox: function(){
+      var t = Tabs.Reinforce;
+      document.getElementById('pitargetSupplyTroops').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+1]) == 0) document.getElementById('pitargetSupplyTroops').disabled = true;
+      else document.getElementById('pitargetSupplyTroops').disabled = false;  
+      document.getElementById('pitargetMilitiaman').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+2]) == 0) document.getElementById('pitargetMilitiaman').disabled = true;
+      else document.getElementById('pitargetMilitiaman').disabled = false;     
+      document.getElementById('pitargetScout').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+3]) == 0) document.getElementById('pitargetScout').disabled = true;
+      else document.getElementById('pitargetScout').disabled = false;
+      document.getElementById('pitargetPikeman').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+4]) == 0) document.getElementById('pitargetPikeman').disabled = true;
+      else document.getElementById('pitargetPikeman').disabled = false;
+      document.getElementById('pitargetSwordsman').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+5]) == 0) document.getElementById('pitargetSwordsman').disabled = true;
+      else document.getElementById('pitargetSwordsman').disabled = false;
+      document.getElementById('pitargetArcher').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+6]) == 0) document.getElementById('pitargetArcher').disabled = true;
+      else document.getElementById('pitargetArcher').disabled = false;
+      document.getElementById('pitargetCavalry').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+7]) == 0) document.getElementById('pitargetCavalry').disabled = true;
+      else document.getElementById('pitargetCavalry').disabled = false;
+      document.getElementById('pitargetHeavyCavalry').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+8]) == 0) document.getElementById('pitargetHeavyCavalry').disabled = true;
+      else document.getElementById('pitargetHeavyCavalry').disabled = false;
+      document.getElementById('pitargetSupplyWagon').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+9]) == 0) document.getElementById('pitargetSupplyWagon').disabled = true;
+      else document.getElementById('pitargetSupplyWagon').disabled = false;
+      document.getElementById('pitargetBallista').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+10]) == 0) document.getElementById('pitargetBallista').disabled = true;
+      else document.getElementById('pitargetBallista').disabled = false;
+      document.getElementById('pitargetBatteringRam').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+11]) == 0) document.getElementById('pitargetBatteringRam').disabled = true;
+      else document.getElementById('pitargetBatteringRam').disabled = false;
+      document.getElementById('pitargetCatapult').value = 0;
+      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+12]) == 0) document.getElementById('pitargetCatapult').disabled = true;
+      else document.getElementById('pitargetCatapult').disabled = false;
+          
+ },
+ 
+  ETA : function(dist) { // Need Relief Station Levels to estimate transport, reinf, or reassign times. 
+   var t = Tabs.Reinforce;
+   t.cityID = t.from.city.id;
+   if (dist == 0) {t.ETAstr = "Reinforce ETA: Distance is 0";return;}
+   if (t.ETAType == null) {t.ETAstr = "Reinforce ETA: No troops selected";return;}
+   var baseSpeedSel = t.ETAType;
+   var m = baseSpeedSel.split(',');
+   var horse = parseInt(m[0]);
+   var baseSpeed = parseInt(m[1]);
+   if (baseSpeed == 0) {t.ETAstr = "ETA: unknown";return;}
+   var mmLvl = parseInt(Seed.tech.tch11);//Magical Mapping
+   var Speed = 0;
+   if (horse){
+   //HorsesSiegeSpeed = Base * (1 + MM/10) * (1 + AH/20) 
+     var hsLvl = parseInt(Seed.tech.tch12);//Alloy Horse Shoes
+     Speed = baseSpeed * (1 + mmLvl/10) * (1 + hsLvl/20);
+   }
+   else {
+   //FootSpeed = Base * (1 + MM/10)
+     Speed = baseSpeed * (1 + mmLvl/10);
+   }
+   //Grid Speed (tiles/second) = Speed (100ths/min) / 6000 
+   var gSpeed = 0;
+   var estSec = 0;
+   if (Speed>0) {
+     gSpeed = Speed/6000;
+     estSec = (dist/gSpeed).toFixed(0);
+   }
+   //RS - Cities Relief Station Level
+   //Friendly Speed = Speed * (1 + RS/2)
+    var building = getCityBuilding (t.cityID, 18);
+    fSpeed = Speed * (1 + parseInt(building.maxLevel)/2);
+       gSpeed = fSpeed/6000;
+       estSec = (dist/gSpeed).toFixed(0);
+       if (t.checkETA == null || t.checkETA < (parseInt((estSec+''))+30)){
+       		 t.ETAstr = 'Reinforce ETA: ' + timestr ((parseInt((estSec+''))+30));
+       		 t.checkETA = (parseInt((estSec+''))+30);
+       }
+ },
+ 
+  
+    doReinforce: function(){
+    	var t = Tabs.Reinforce;
+   		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.u1 = 0;
+		params.u2 = 0;
+		params.u3 = 0;
+		params.u4 = 0;
+		params.u5 = 0;
+		params.u6 = 0;
+		params.u7 = 0;
+		params.u8 = 0;
+		params.u9 = 0;
+		params.u10 = 0;
+		params.u11 = 0;
+		params.u12 = 0;	
+    	
+  		params.cid= t.from.city.id;
+		params.type = "2";
+		params.kid= document.getElementById("piKnight").value;
+		params.xcoord = document.getElementById('pfToX').value;
+		params.ycoord = document.getElementById('pfToY').value;
+		params.u1 = document.getElementById('pitargetSupplyTroops').value;
+		params.u2 = document.getElementById('pitargetMilitiaman').value;
+		params.u3 = document.getElementById('pitargetScout').value;
+		params.u4 = document.getElementById('pitargetPikeman').value;
+		params.u5 = document.getElementById('pitargetSwordsman').value;
+		params.u6 = document.getElementById('pitargetArcher').value;
+		params.u7 = document.getElementById('pitargetCavalry').value;
+		params.u8 = document.getElementById('pitargetHeavyCavalry').value;
+		params.u9 = document.getElementById('pitargetSupplyWagon').value;
+		params.u10 = document.getElementById('pitargetBallista').value;
+		params.u11 = document.getElementById('pitargetBatteringRam').value;
+		params.u12 = document.getElementById('pitargetCatapult').value;	
+		
+      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+                  method: "post",
+                  parameters: params,
+                  loading: true,
+                  onSuccess: function (transport) {
+                  var rslt = eval("(" + transport.responseText + ")");
+                  if (rslt.ok) {
+                  unsafeWindow.Modal.hideModalAll();
+                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+                  var ut = unsafeWindow.unixtime();
+                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                  for(i = 0; i <= unitsarr.length; i++){
+                  	if(params["u"+i]){
+                  	unitsarr[i] = params["u"+i];
+                  	}
+                  }
+                  var resources=new Array();
+                  resources[0] = params.gold;
+                  for(i=1; i<=4; i++){
+                  	resources[i] = params["r"+i];
+                  }
+                  var currentcityid = params.cid;
+                  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+                  t.getKnights(); 
+                  t.clearbox();
+                  document.getElementById('pbReinfMain').style.background ='#99FF99';
+		              setTimeout(function(){ (document.getElementById('pbReinfMain').style.background =''); }, 1000);
+                  } else {
+                  //actionLog('FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
+                  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                  }
+                  },
+                  onFailure: function () {}
+          });
+   	        
+	},
+	
+	
+	show: function(){
+		var t = Tabs.Reinforce;
+    },
+	hide: function(){
+        var t = Tabs.Reinforce;
+    },
+    onUnload: function(){
+    },
+}
 
 /************************ Gold Collector ************************/
 var CollectGold = {
