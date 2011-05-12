@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20110511b
+// @version        20110511c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110511b';
+var Version = '20110511c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -144,7 +144,13 @@ var Options = {
   unownedOnly  : true,
   mistedOnly   : true,
   hostileOnly  : false,  
+  friendlyOnly  : false,  
+  alliedOnly  : false,  
+  unalliedOnly  : false,  
+  neutralOnly  : false,  
+  srcAll  : true,  
   minmight     : 1,
+  srcdisttype  : 'square',
   pbWinIsOpen  : false,
   pbWinDrag    : true,
   pbWinPos     : {},
@@ -1985,8 +1991,10 @@ Tabs.Search = {
     
     m = '<DIV class=ptentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>Search for: </td><TD width=99%>';
     m += htmlSelector ({0:"Barb Camp", 1:"Wilderness", 2:"Cities"}, null, 'id=pasrcType'); 
-    m += '</td></tr><TR><TD class=pbDetLeft>At: </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
-      &nbsp; Radius: <INPUT id=pasrcDist size=3 value=10 /> &nbsp; <SPAN id=paspInXY></span>\
+	m += '&nbsp; &nbsp; &nbsp; <span class=pbDetLeft>Search style: &nbsp;';
+	m += htmlSelector({square:"Square", circle:"Circle"}, Options.srcdisttype, 'id=pbsrcdist');
+    m += '</span></td></tr><TR><TD class=pbDetLeft>At: </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
+      &nbsp; Radius: <INPUT id=pasrcDist size=3 value=10 /> &nbsp; <SPAN id=paspInXY></span></tr>\
       <TR><TD class=pbDetLeft>Or:</td><TD>Search entire province: <select id="provinceXY"><option>--provinces--</option>';
     for (var i in Provinces)
     	m += '<option value="'+i+'">'+Provinces[i].name+'</option>';
@@ -2005,6 +2013,10 @@ Tabs.Search = {
     		  document.getElementById ('pasrcDist').value = '75';
     	  }
 	    }, false); 
+	document.getElementById('pbsrcdist').addEventListener ('change', function (){
+      Options.srcdisttype = document.getElementById('pbsrcdist').value;
+      saveOptions();
+      }, false);
     document.getElementById ('pasrcStart').addEventListener ('click', t.clickedSearch, false);
     document.getElementById ('pasrchX').addEventListener ('keydown', t.e_coordChange, false);
     document.getElementById ('pasrchY').addEventListener ('keydown', t.e_coordChange, false);
@@ -2053,10 +2065,7 @@ Tabs.Search = {
     t.opt.startX = parseInt(document.getElementById ('pasrchX').value);
     t.opt.startY = parseInt(document.getElementById ('pasrchY').value);
     t.opt.maxDistance = parseInt(document.getElementById ('pasrcDist').value);
-    if (document.getElementById ('provinceXY').value > 0)
-      t.opt.searchShape = 'square';
-    else
-      t.opt.searchShape = 'circle'; 
+    t.opt.searchShape = Options.srcdisttype;
     errMsg = '';
 
     if (isNaN (t.opt.startX) ||t.opt.startX<0 || t.opt.startX>749)
@@ -2113,8 +2122,13 @@ Tabs.Search = {
 			<TR><TD class=xtab align=right>Coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
 			</table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
     } else {
-		m+= '</select></td></tr><TR><TD class=xtab align=right>Misted Only:</td><TD class=xtab><INPUT id=pafilMisted type=CHECKBOX '+ (Options.mistedOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Hostile Only:</td><TD class=xtab><INPUT id=pafilHostile type=CHECKBOX '+ (Options.hostileOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '</select></td></tr><TR><TD class=xtab align=right>Misted:</td><TD class=xtab><INPUT name=pbfil id=pafilMisted type=CHECKBOX '+ (Options.mistedOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>Hostile:</td><TD class=xtab><INPUT name=pbfil id=pafilHostile type=CHECKBOX '+ (Options.hostileOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>Friendly:</td><TD class=xtab><INPUT name=pbfil id=pafilFriendly type=CHECKBOX '+ (Options.friendlyOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>Allied:</td><TD class=xtab><INPUT name=pbfil id=pafilAllied type=CHECKBOX '+ (Options.alliedOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>Neutral:</td><TD class=xtab><INPUT name=pbfil id=pafilNeutral type=CHECKBOX '+ (Options.neutralOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>Unallianced:</td><TD class=xtab><INPUT name=pbfil id=pafilunAllied type=CHECKBOX '+ (Options.unalliedOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>All:</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
 		m+= '<TR><TD class=xtab align=right>Sort By:</td><TD class=xtab><SELECT id=pafilSortBy>\
           <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>Might</option>\
              <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
@@ -2158,11 +2172,63 @@ Tabs.Search = {
 	if (t.opt.searchType == 2){
 		document.getElementById('pafilMisted').addEventListener ('change', function (){
         Options.mistedOnly = (document.getElementById('pafilMisted').checked);
+		if(!Options.mistedOnly){
+			document.getElementById('pafilAll').checked = false;
+			Options.srcAll = Options.mistedOnly;
+		}
         saveOptions();
         t.dispMapTable ();
         }, false);
 		document.getElementById('pafilHostile').addEventListener ('change', function (){
         Options.hostileOnly = (document.getElementById('pafilHostile').checked);
+		if(!Options.hostileOnly){
+			document.getElementById('pafilAll').checked = false;
+			Options.srcAll = Options.hostileOnly;
+		}
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+		document.getElementById('pafilFriendly').addEventListener ('change', function (){
+        Options.friendlyOnly = (document.getElementById('pafilFriendly').checked);
+		if(!Options.friendlyOnly){
+			document.getElementById('pafilAll').checked = false;
+			Options.srcAll = Options.friendlyOnly;
+		}
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+		document.getElementById('pafilAllied').addEventListener ('change', function (){
+        Options.alliedOnly = (document.getElementById('pafilAllied').checked);
+		if(!Options.alliedOnly){
+			document.getElementById('pafilAll').checked = false;
+			Options.srcAll = Options.alliedOnly;
+		}
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+		document.getElementById('pafilNeutral').addEventListener ('change', function (){
+        Options.neutralOnly = (document.getElementById('pafilNeutral').checked);
+		if(!Options.neutralOnly){
+			document.getElementById('pafilAll').checked = false;
+			Options.srcAll = Options.neutralOnly;
+		}
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+		document.getElementById('pafilunAllied').addEventListener ('change', function (){
+        Options.unalliedOnly = (document.getElementById('pafilunAllied').checked);
+		if(!Options.unalliedOnly){
+			document.getElementById('pafilAll').checked = false;
+			Options.srcAll = Options.unalliedOnly;
+		}
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+		document.getElementById('pafilAll').addEventListener ('change', function (){
+        Options.srcAll = (document.getElementById('pafilAll').checked);
+		for(i in document.getElementsByName('pbfil'))
+			document.getElementsByName('pbfil')[i].checked = Options.srcAll;
+		Options.mistedOnly=Options.hostileOnly=Options.friendlyOnly=Options.alliedOnly=Options.neutralOnly=Options.unalliedOnly=Options.srcAll;
         saveOptions();
         t.dispMapTable ();
         }, false);
@@ -2224,11 +2290,15 @@ Tabs.Search = {
       lvl = parseInt (t.mapDat[i][4]);
       type = t.mapDat[i][3];
       if (t.opt.searchType==2 && type==7 ) {
-        if (!Options.hostileOnly || t.mapDat[i][12] == 'h') {
-          if (!Options.mistedOnly || t.mapDat[i][5]===true)
-		    if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5])
-              dat.push(t.mapDat[i]);
-        }
+		if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5])
+		if((Options.hostileOnly && t.mapDat[i][12] == 'h') || 
+		   (Options.mistedOnly && t.mapDat[i][5]===true) || 
+		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') || 
+		   (Options.alliedOnly && t.mapDat[i][12] == 'a') ||
+		   (Options.neutralOnly && t.mapDat[i][12] == 'n') ||
+		   (Options.unalliedOnly && t.mapDat[i][12] == 'u') ||
+		   (Options.srcAll))
+				dat.push(t.mapDat[i]);
       } else {
        if (lvl>=Options.srcMinLevel && lvl<=Options.srcMaxLevel){
         if (t.opt.searchType==0 || Options.wildType==0
@@ -2376,6 +2446,10 @@ Tabs.Search = {
     				aD = '';
     				if (Dip.friendly && Dip.friendly['a'+userInfo[uu].a]) aD = 'f';
     				if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) aD = 'h';
+					if (Dip.allianceId && Dip.allianceId==userInfo[uu].a) aD = 'a';
+					if (getDiplomacy(userInfo[uu].a) == 'neutral') aD = 'a';
+					if (!userInfo[uu].a || userInfo[uu].a==0) aD = 'u';
+					
     			}
 // TODO: save memory, remove city name ?   			
           t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD, uList.data[map[k].tileUserId]?1:0]);
