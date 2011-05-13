@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110512a
+// @version        20110513a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110512a';
+var Version = '20110513a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -149,6 +149,7 @@ var Options = {
   unalliedOnly  : false,  
   neutralOnly  : false,  
   srcAll  : true,  
+  srcScoutAmt  : 1,
   minmight     : 1,
   srcdisttype  : 'square',
   pbWinIsOpen  : false,
@@ -2374,6 +2375,10 @@ Tabs.Search = {
       document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Export Results', 'id=pbSrcDoExp') +'</center>'; 
       document.getElementById ('pbSrcDoExp').addEventListener ('click', t.exportKOCattack, false);
     }
+	if (t.opt.searchType==2){
+	  document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Generate Scout List', 'id=pbSrcDoScout') +'</center>'; 
+      document.getElementById ('pbSrcDoScout').addEventListener ('click', t.generateScoutList, false);
+	}
     t.searchRunning = false;
     t.dispMapTable();
   },
@@ -2390,6 +2395,126 @@ Tabs.Search = {
     }
     exportToKOCattack.doExport (bulkAdds, t.selectedCity);
   },
+  
+  generateScoutList : function (){
+    var t = Tabs.Search;
+    var bulkScout = [];
+    for (i=0; i<t.mapDat.length; i++){
+      if (t.mapDat[i][5] && t.mapDat[i][3] == 7)
+        bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
+    }
+    t.ShowScoutList (bulkScout, t.selectedCity);
+  },
+  ShowScoutList : function (coordlist, city){
+	var t = Tabs.Search;
+	var popScout = null;
+	
+	if(popScout==null){
+	  popScout = new CPopup ('pbsrcscout', 0,0, 350,500, true, function (){popScout.destroy(); popScout=null;});
+      popScout.centerMe (mainPop.getMainDiv());  
+    }
+	var m = '<DIV class=pbStat>Auto Scout Options</div>';
+		m += '<DIV>Amount of Scouts to send: <input id=pbsrcScoutAmt value="'+Options.srcScoutAmt+'" /></div><BR>';
+		m += '<DIV class=pbStat>Attack from '+ city.name +' <BR> Total targets '+coordlist.length+'</div>';
+		m += '<TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW>\
+      <TR style="font-weight:bold; background-color:white"><TD width=15><input type=checkbox id=pbsrcScout_All /></td><TD>Target Coords</td><TD style="padding:1px" align=center>Distance</td></tr>';
+	  for(i=0; i<coordlist.length; i++){
+			m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck value="'+coordlist[i].x+'_'+coordlist[i].y+'" /></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td><TD>'+coordlist[i].dist+'</td></tr>';
+	  }
+	    m += '</table>';
+		m += '<BR><CENTER>'+ strButton20('Start Scout', 'id=pbSrcStartScout') +'</center>';
+		m += '<CENTER><DIV style="width:70%" id=pbSrcScoutResult></DIV></center>'; 
+	popScout.getMainDiv().innerHTML = m;
+	
+	popScout.getTopDiv().innerHTML = '<CENTER><B>Power Bot Scout List</b></center>';
+	popScout.show(true);
+	
+	document.getElementById('pbsrcScoutAmt').addEventListener('change', function(){
+		Options.srcScoutAmt = parseInt(document.getElementById('pbsrcScoutAmt').value);
+		saveOptions();
+	}, false);
+	document.getElementById('pbsrcScout_All').addEventListener('change', function(){
+		for(k in document.getElementsByName('pbsrcScoutCheck'))
+			document.getElementsByName('pbsrcScoutCheck')[k].checked = document.getElementById('pbsrcScout_All').checked;
+	}, false);
+	document.getElementById('pbSrcStartScout').addEventListener('click', function(){
+		var ScoutList = [];
+		for(k in document.getElementsByName('pbsrcScoutCheck')){
+			if(document.getElementsByName('pbsrcScoutCheck')[k].checked){
+				ScoutList.push(document.getElementsByName('pbsrcScoutCheck')[k].value);
+			}
+		}
+		t.doScout(ScoutList, city);
+	}, false);
+  },
+  doScout : function(list, city){
+	var t = Tabs.Search;
+	document.getElementById('pbSrcScoutResult').innerHTML = '';
+	if(list.length < 1){
+		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>ERROR: No coords selected</span>';
+		return;
+	}
+	if(parseInt(Seed.units[cityID]['unt'+3]) < Options.srcScoutAmt){
+		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>ERROR: No scouts available</span>';
+		return;
+	}
+	t.doScoutCount(list, city, list.length, 0);
+	
+  },
+  doScoutCount : function(list, city, total, count){
+	var t = Tabs.Search;
+	if(count >= total){
+		document.getElementById('pbSrcScoutResult').innerHTML += 'Done!<BR>';
+		return;
+	}
+	var rallypointlevel = t.getRallypoint(city.id);
+	var slots = 0;
+	if(Seed.queue_atkp['city'+city.id].length != 'undefined')
+		slots = Seed.queue_atkp['city'+city.id].length;
+	if(slots >= rallypointlevel){
+		setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
+		return;
+	}
+	var coords = list[count].split("_");
+	if(coords[0] == 'undefined' || coords[1] == 'undefined'){
+		document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>ERROR: Invalid coords</span>';
+		return;
+	}
+	document.getElementById('pbSrcScoutResult').innerHTML += 'Sending scouts to '+coords[0]+','+coords[1]+'...';
+	t.sendScout(coords[0], coords[1], city, count, function(c){t.doScoutCount(list, city, total, c)});
+  },
+  sendScout : function(x, y, city, count, notify){
+	var t = Tabs.Search;
+	count = parseInt(count);
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.cid = city.id;
+	params.type = 3;
+	params.xcoord = x;
+	params.ycoord = y;
+	params.u3 = Options.srcScoutAmt;
+	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+      method: "post",
+      parameters: params,
+      onSuccess: function (rslt) {
+		document.getElementById('pbSrcScoutResult').innerHTML += 'Sent!<BR>';
+        if (notify)
+          setTimeout(function(){ notify(count+1); }, 1000);
+      },
+    });
+  },
+  getRallypoint: function(cityId){
+      var t = Tabs.Search;
+	  cityId = 'city'+cityId;
+      for (o in Seed.buildings[cityId]){
+		var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+		var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+		if (buildingType == 12){
+			return parseInt(buildingLevel);
+			break;
+		}
+	   }
+	  return 0;
+    },
     
   
 /** mapdata.userInfo:
@@ -3356,28 +3481,28 @@ Tabs.transport = {
       m += '<TABLE id=pbaddtraderoute width=55% height=0% class=pbTab><TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
       m += '<TD><INPUT id=pbshipFood type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountFood type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountFood type=text size=10 maxlength=10 value="0"\></td></tr>';
+      m += '<TD>Keep: <INPUT id=pbtargetamountFood type=text size=11 maxlength=11 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountFood type=text size=11 maxlength=11 value="0"\></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
       m += '<TD><INPUT id=pbshipWood type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountWood type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountWood type=text size=10 maxlength=10 value="0"\></td></tr>';
+      m += '<TD>Keep: <INPUT id=pbtargetamountWood type=text size=11 maxlength=11 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountWood type=text size=11 maxlength=11 value="0"\></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
       m += '<TD><INPUT id=pbshipStone type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountStone type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountStone type=text size=10 maxlength=10 value="0"\></td></tr>';
+      m += '<TD>Keep: <INPUT id=pbtargetamountStone type=text size=11 maxlength=11 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountStone type=text size=11 maxlength=11 value="0"\></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
       m += '<TD><INPUT id=pbshipOre type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountOre type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountOre type=text size=10 maxlength=10 value="0"\></td></tr>';
+      m += '<TD>Keep: <INPUT id=pbtargetamountOre type=text size=11 maxlength=11 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountOre type=text size=11 maxlength=11 value="0"\></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td>';
       m += '<TD><INPUT id=pbshipGold type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountGold type=text size=10 maxlength =10 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountGold type=text size=10 maxlength=10 value="0"\></td></tr>'
+      m += '<TD>Keep: <INPUT id=pbtargetamountGold type=text size=11 maxlength =11 value="0"\></td>';
+      m += '<TD>Trade: <INPUT id=pbtradeamountGold type=text size=11 maxlength=11 value="0"\></td></tr>'
       m += '</table>';
 
       m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRoute type=submit value="Add Route"></div>';
@@ -5166,12 +5291,11 @@ Tabs.Reinforce = {
     
     getRallypoint: function(cityId){
       var t = Tabs.Reinforce;
-      for (var k in Seed.buildings[cityId]){
-           var buildingType  = parseInt(Seed.buildings[cityId][k][0]);
-           var buildingLevel = parseInt(Seed.buildings[cityId][k][1]);
-    	     var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
-    	     if (buildingName == "Rally Point") t.rallypointlevel=buildingLevel;
-    	  }
+      for (var o in Seed.buildings[cityId]){
+		var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+		var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+		if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
+	   }
      if(t.rallypointlevel == 11) t.rallypointlevel = 15;
      t.maxsend = (t.rallypointlevel * 10000); 	  
  },
