@@ -1,6 +1,12 @@
 REVISION HISTORY:
 ----------------
 
+20110513b
+   *Added options for city search to display friendly, ally, unallianced, and neutral
+   *Added search method square and radius
+   *Added auto scout method for misted cities
+   *Added reinforce tab
+
 20110511b
    *Fixed problem with rally point level not always being properly detected
    *Added more cell phone carriers (mobistar and 1und1)
