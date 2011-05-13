@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110513a
+// @version        20110513b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110513a';
+var Version = '20110513b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -245,6 +245,7 @@ function pbStartup (){
     .CPopup  {border:3px ridge #666}\
     span.pbTextFriendly {color: #080}\
     span.pbTextHostile {color: #800}\
+	.pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
     div.indent25 {padding-left:25px}';
     
   window.name = 'PT';
@@ -2285,7 +2286,7 @@ Tabs.Search = {
       }
       return a[2] - b[2];
     }
-    
+	
     dat = [];
     for (i=0; i<t.mapDat.length; i++){
       lvl = parseInt (t.mapDat[i][4]);
@@ -2403,11 +2404,14 @@ Tabs.Search = {
       if (t.mapDat[i][5] && t.mapDat[i][3] == 7)
         bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
     }
+	if(t.selectedCity == null)
+		t.selectedCity = Cities.cities[0];
     t.ShowScoutList (bulkScout, t.selectedCity);
   },
   ShowScoutList : function (coordlist, city){
 	var t = Tabs.Search;
 	var popScout = null;
+	t.scoutcity = city;
 	
 	if(popScout==null){
 	  popScout = new CPopup ('pbsrcscout', 0,0, 350,500, true, function (){popScout.destroy(); popScout=null;});
@@ -2415,17 +2419,17 @@ Tabs.Search = {
     }
 	var m = '<DIV class=pbStat>Auto Scout Options</div>';
 		m += '<DIV>Amount of Scouts to send: <input id=pbsrcScoutAmt value="'+Options.srcScoutAmt+'" /></div><BR>';
-		m += '<DIV class=pbStat>Attack from '+ city.name +' <BR> Total targets '+coordlist.length+'</div>';
-		m += '<TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW>\
-      <TR style="font-weight:bold; background-color:white"><TD width=15><input type=checkbox id=pbsrcScout_All /></td><TD>Target Coords</td><TD style="padding:1px" align=center>Distance</td></tr>';
+		m += '<DIV>Select City: <span id=pbsrcScoutcitypick> </span></div><BR>';
+		m += '<DIV class=pbStat>Scout from <span id=pbsrcScoutcity>'+city.name+'</span> <BR> Total targets '+coordlist.length+'</div>';
+		m += '<DIV style="max-height:220px; overflow-y:auto;"><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW><TR style="font-weight:bold; background-color:white"><TD width=15><input type=checkbox id=pbsrcScout_All /></td><TD>Target Coords</td></tr>';
 	  for(i=0; i<coordlist.length; i++){
-			m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck value="'+coordlist[i].x+'_'+coordlist[i].y+'" /></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td><TD>'+coordlist[i].dist+'</td></tr>';
+			m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck id="pbsrcScoutCheck_'+coordlist[i].x+'_'+coordlist[i].y+'" value="'+coordlist[i].x+'_'+coordlist[i].y+'" /></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td></tr>';
 	  }
-	    m += '</table>';
+	    m += '</table></div>';
 		m += '<BR><CENTER>'+ strButton20('Start Scout', 'id=pbSrcStartScout') +'</center>';
-		m += '<CENTER><DIV style="width:70%" id=pbSrcScoutResult></DIV></center>'; 
+		m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>'; 
 	popScout.getMainDiv().innerHTML = m;
-	
+	new CdispCityPicker ('pbScoutPick', document.getElementById('pbsrcScoutcitypick'), false, function(c,x,y){t.ShowScoutList(coordlist, c);});
 	popScout.getTopDiv().innerHTML = '<CENTER><B>Power Bot Scout List</b></center>';
 	popScout.show(true);
 	
@@ -2437,25 +2441,21 @@ Tabs.Search = {
 		for(k in document.getElementsByName('pbsrcScoutCheck'))
 			document.getElementsByName('pbsrcScoutCheck')[k].checked = document.getElementById('pbsrcScout_All').checked;
 	}, false);
-	document.getElementById('pbSrcStartScout').addEventListener('click', function(){
-		var ScoutList = [];
-		for(k in document.getElementsByName('pbsrcScoutCheck')){
-			if(document.getElementsByName('pbsrcScoutCheck')[k].checked){
-				ScoutList.push(document.getElementsByName('pbsrcScoutCheck')[k].value);
-			}
-		}
-		t.doScout(ScoutList, city);
-	}, false);
+	document.getElementById('pbSrcStartScout').addEventListener('click', t.clickedStartScout, false);
   },
+  scouting : false,
+  scoutcity : null,
   doScout : function(list, city){
 	var t = Tabs.Search;
 	document.getElementById('pbSrcScoutResult').innerHTML = '';
 	if(list.length < 1){
 		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>ERROR: No coords selected</span>';
+		t.clickedStartScout();
 		return;
 	}
-	if(parseInt(Seed.units[cityID]['unt'+3]) < Options.srcScoutAmt){
+	if(parseInt(Seed.units['city'+city.id]['unt'+3]) < Options.srcScoutAmt){
 		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>ERROR: No scouts available</span>';
+		t.clickedStartScout();
 		return;
 	}
 	t.doScoutCount(list, city, list.length, 0);
@@ -2463,8 +2463,15 @@ Tabs.Search = {
   },
   doScoutCount : function(list, city, total, count){
 	var t = Tabs.Search;
-	if(count >= total){
+	if(!t.scouting){
+		document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>Scouting stopped by user</span><BR>';
+		document.getElementById('pbSrcStartScout').className = 'button20 ptButton20';
+		document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>Start Scout</span>';
+		return;
+	}
+	if(total <= (count)){
 		document.getElementById('pbSrcScoutResult').innerHTML += 'Done!<BR>';
+		t.clickedStartScout();
 		return;
 	}
 	var rallypointlevel = t.getRallypoint(city.id);
@@ -2478,9 +2485,11 @@ Tabs.Search = {
 	var coords = list[count].split("_");
 	if(coords[0] == 'undefined' || coords[1] == 'undefined'){
 		document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>ERROR: Invalid coords</span>';
+		t.clickedStartScout();
 		return;
 	}
 	document.getElementById('pbSrcScoutResult').innerHTML += 'Sending scouts to '+coords[0]+','+coords[1]+'...';
+	document.getElementById('pbsrcScoutCheck_'+coords[0]+'_'+coords[1]).checked = false;
 	t.sendScout(coords[0], coords[1], city, count, function(c){t.doScoutCount(list, city, total, c)});
   },
   sendScout : function(x, y, city, count, notify){
@@ -2488,19 +2497,41 @@ Tabs.Search = {
 	count = parseInt(count);
 	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     params.cid = city.id;
+	params.kid = 0;
 	params.type = 3;
 	params.xcoord = x;
 	params.ycoord = y;
 	params.u3 = Options.srcScoutAmt;
-	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-      method: "post",
-      parameters: params,
-      onSuccess: function (rslt) {
-		document.getElementById('pbSrcScoutResult').innerHTML += 'Sent!<BR>';
-        if (notify)
-          setTimeout(function(){ notify(count+1); }, 1000);
-      },
-    });
+	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+		 method: "post",
+		 parameters: params,
+		 loading: true,
+		 onSuccess: function (rslt) {
+		 rslt = eval("(" + rslt.responseText + ")");
+		 if (rslt.ok) {
+			 var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+			 var ut = unixTime();
+			 var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+			 var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+			 for(i = 0; i <= unitsarr.length; i++){
+				if(params["u"+i]){
+				unitsarr[i] = params["u"+i];
+				}
+			 }
+			 var currentcityid = params.cid;
+			 unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+			 if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+			 document.getElementById('pbSrcScoutResult').innerHTML += 'Sent!<BR>';
+			 if (notify)
+			  setTimeout(function(){ notify(count+1); }, 1000);
+		 } else {
+			 document.getElementById('pbSrcScoutResult').innerHTML += 'Failed! Retrying....<BR>';
+			 if (notify)
+			  setTimeout(function(){ notify(count); }, 1000);
+		  }
+		},
+		onFailure: function () {}
+  		});
   },
   getRallypoint: function(cityId){
       var t = Tabs.Search;
@@ -2515,6 +2546,25 @@ Tabs.Search = {
 	   }
 	  return 0;
     },
+	clickedStartScout : function(){
+	var t = Tabs.Search;
+		if(t.scouting == false){
+			t.scouting = true;
+			var ScoutList = [];
+			for(k=0; k<document.getElementsByName('pbsrcScoutCheck').length; k++){
+				if(document.getElementsByName('pbsrcScoutCheck')[k].checked){
+					ScoutList.push(document.getElementsByName('pbsrcScoutCheck')[k].value);
+				}
+			}
+			t.doScout(ScoutList, t.scoutcity);
+			document.getElementById('pbSrcStartScout').className = 'button20 pbButCancel';
+			document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>Stop</span>';
+		} else {
+			t.scouting = false;
+			document.getElementById('pbSrcStartScout').className = 'button20 ptButton20';
+			document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>Start Scout</span>';
+		}
+	},
     
   
 /** mapdata.userInfo:
@@ -3645,7 +3695,7 @@ Tabs.transport = {
 	  setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*1000);
 	  
     },
-     	
+    	
 	delTradeRoutes: function() {
 		var t = Tabs.transport;	
 		t.tradeRoutes= [];
@@ -4010,7 +4060,6 @@ Tabs.transport = {
 		params.r4 = carry_Ore;
 		params.gold = carry_Gold;
 		params.u9 = wagons_needed;	
-		//params.u7= 5000;
 		
    		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
          actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
@@ -4063,8 +4112,8 @@ Tabs.transport = {
         
     },
 }
- 
- 
+
+
 /****************************  Reassign Implementation  *******************************/
 var troops = {1:'SupplyTroops',
 			  2:'Militiaman',
@@ -4189,7 +4238,6 @@ Tabs.Reassign = {
       }, false);
       
       document.getElementById('pbReassignState').addEventListener('click', function(){
-      	//t.doReassign(0);
       	t.toggleReassignState(this);
       }, false);
       document.getElementById('pbSaveRouteReassign').addEventListener('click', function(){
@@ -4369,7 +4417,7 @@ Tabs.Reassign = {
       setTimeout(function(){ t.e_reassignRoutes();}, Options.reassigninterval*1000);
       
     },
-        	
+    	
 	delReassignRoutes: function() {
     	
 		var t = Tabs.Reassign;
@@ -4726,6 +4774,7 @@ Tabs.Reassign = {
     },
 }
 
+
 /************************  Reinforce Tab ************************/
 Tabs.Reinforce = {
   tabOrder: 1,
@@ -4854,7 +4903,7 @@ Tabs.Reinforce = {
       document.getElementById('piDoreinforce').addEventListener('click', function(){
       		t.doReinforce();
       }, false);
-         
+      
       document.getElementById('MaxSupplyTroops').addEventListener('click', function(){
       		t.maxsend = (t.rallypointlevel * 10000);
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
@@ -7508,7 +7557,6 @@ function explodeUrlArgs (url){
   return args;
 }
 
-
 // returns: page text or null on comm error
 function GM_AjaxPost (url, args, notify, label){
   if (ENABLE_GM_AJAX_TRACE) WinLog.writeText ('GM_AjaxPost ('+ label +'): ' + url +'\n'+ inspect (args, 5, 1));
@@ -8154,7 +8202,6 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     moveKnob (me);
     doneMoving();
   }
-  
   
   function mouseDown(me){
     var e = self.slider;
