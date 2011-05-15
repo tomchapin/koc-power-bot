@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110513b
+// @version        20110515a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110513b';
+var Version = '20110515a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2622,7 +2622,7 @@ Tabs.Search = {
     				if (Dip.friendly && Dip.friendly['a'+userInfo[uu].a]) aD = 'f';
     				if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) aD = 'h';
 					if (Dip.allianceId && Dip.allianceId==userInfo[uu].a) aD = 'a';
-					if (getDiplomacy(userInfo[uu].a) == 'neutral') aD = 'a';
+					if (getDiplomacy(userInfo[uu].a) == 'neutral') aD = 'n';
 					if (!userInfo[uu].a || userInfo[uu].a==0) aD = 'u';
 					
     			}
@@ -7883,9 +7883,12 @@ Tabs.Gifts = {
         notify ({ajaxErr:'COMM Error - page 1'});
       progress ('1');
       var m = /window.location.replace\(\"(.*?)\"/im.exec (page);
+	  if (m == null)
+		m = /ngoURI\(\'(.*?)\'/im.exec (page);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 1'});
       var url = m[1].replace ('\\/', '/', 'g');
+		url = url.replace ('\\\\x26', '&', 'g');
       GM_AjaxGet (url, '', got2, 'Page 2');        
     }
     
