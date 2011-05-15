@@ -1,6 +1,10 @@
 REVISION HISTORY:
 ----------------
 
+20110515a
+   *Fix for gifts tab
+   *Fix for city search not displaying neutral
+
 20110513b
    *Added options for city search to display friendly, ally, unallianced, and neutral
    *Added search method square and radius
