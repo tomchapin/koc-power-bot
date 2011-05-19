@@ -1,6 +1,16 @@
 REVISION HISTORY:
 ----------------
 
+20110519c
+   *Added the word "wagons" to transport text to clarify things
+   
+20110519b
+   *Fixed Delete Messages toggle + function
+   *Fixed sending of barb report
+   *Fixed issues for non English players
+   *Added max distance (NEEDS TO BE TESTED!)
+   *Added method : Lowest level first
+
 20110518b
    *Merged auto-barb codebase with the alternate version in the trunk so now it contains the new features from both
 
