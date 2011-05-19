@@ -1,6 +1,12 @@
 REVISION HISTORY:
 ----------------
 
+20110518b
+   *Merged auto-barb codebase with the alternate version in the trunk so now it contains the new features from both
+
+20110518a
+   *Released new barb tab as well as other new tabs
+
 20110515a
    *Fix for gifts tab
    *Fix for city search not displaying neutral
