@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110519a
+// @version        20110519b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110519a';
+var Version = '20110519b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -206,6 +206,7 @@ var AttackOptions = {
   BarbNumber    		  : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   Levels    			    : {1:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
   Troops    			    : {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0}},
+  Distance : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750}	
 };
 
 
@@ -3466,15 +3467,16 @@ Tabs.Barb = {
   troopOptions: function(){
   	 var t = Tabs.Barb;
   	 t.troopselect = null;	
-  	 t.troopselect = new CPopup ('pbtroopselect', 0,0, 580,350, true, function(){t.saveTroops();});
+  	 t.troopselect = new CPopup ('pbtroopselect', 0,0, 620,350, true, function(){t.saveTroops();});
   	 t.troopselect.centerMe (mainPop.getMainDiv());  
   	 var z= '<DIV id=pbTraderDivD class=pbStat>TROOP SELECTION</div><TABLE width=100%>';
-  	 z+='<TD></td><TD>Sup.Troops</td><TD>Wagons</td><TD>Archers</td><TD>Cavalry</td><TD>HC</td><TD>Ballista</td><TD>Catapults</td>'
+  	 z+='<TD></td><TD>Sup.Troops</td><TD>Wagons</td><TD>Archers</td><TD>Cavalry</td><TD>HC</td><TD>Ballista</td><TD>Catapults</td><TD>MAX distance</td>'
 	 for(i=0;i<10;i++){
 	 	z += '<TR><TD>Level ' +(i+1)+ ': '+'<DIV><span id=pbStat></span></div></td>';
 	 	for (w=0;w<7;w++){
 	 		z += '<TD><INPUT id=level'+i+'troop'+w+' type=text size=6 maxlength=6 value="'+AttackOptions.Troops[i+1][w+1]+'"</td>';
 	 	}
+	 	z+='<TD align=right><INPUT id=dist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[i+1]+'"</td>';
 	 	z+='</tr>';		 		
 	 }
 	 z+='</table>';
@@ -3490,10 +3492,10 @@ Tabs.Barb = {
   	 var y= '<DIV id=pbTraderDivD class=pbStat>BARBING OPTIONS</div>';
   	 y += '<DIV align="center" style="margin-top:5px"><INPUT id=resetbarbs type=submit value="Reset barbs"></td></div>';
      y +='<DIV style="margin-top:12px">Send interval:<INPUT id=pbsendint type=text size=4 maxlength=4 \>seconds (Refresh needed after change)</div>';
-     y +='<DIV style="margin-top:12px">Keep:<INPUT id=rallyclip type=text size=1 maxlength=1 \>rallypoint slots free (for transport,reassign,reinforce,...)</div>';
+     y +='<DIV style="margin-top:12px">Keep:<INPUT id=rallyclip type=text size=1 maxlength=1 \>rallypoint slot(s) free (for transport,reassign,reinforce,...)</div>';
      y +='<DIV style="margin-top:12px"><INPUT id=pbreport type=checkbox checked=true\></td><TD>Send barb report msg every<INPUT id=pbmsgint type=text size=2 maxlength=2 \>hour(s)</div>';
-     y += '<DIV style="margin-top:12px">Method :<SELECT id="pbmethod"><OPTION value=distance>Closest first</option><OPTION value=level>Highest level first</option></select></div>';
-     y += '<DIV style="margin-top:15px"><INPUT id=deletetoggle type=checkbox checked=true></td><TD>Delete barbeports</div>';
+     y += '<DIV style="margin-top:12px">Method :<SELECT id="pbmethod"><OPTION value=distance>Closest first</option><OPTION value=level>Highest level first</option><OPTION value=lowlevel>Lowest level first</option></select></div>';
+     y += '<DIV style="margin-top:15px"><INPUT id=deletetoggle type=checkbox checked=true></td><TD>Delete barbreports</div>';
      y+= '<DIV style="margin-top:5px">Select barbreport levels to delete:</div><TABLE>'
      for (w=1;w<=10;w++){
      y += '<DIV style="margin-top:5px"><TD class=msglvl><INPUT id=pbmsglvl'+w+' type=checkbox>Lvl:'+w+'</td></div>';
@@ -3506,6 +3508,7 @@ Tabs.Barb = {
      document.getElementById('pbsendint').value = AttackOptions.SendInterval;
 	   document.getElementById('pbmethod').value = AttackOptions.Method; 
 	   document.getElementById('rallyclip').value = AttackOptions.RallyClip; 
+	   document.getElementById('deletetoggle').checked=AttackOptions.DeleteMsg;
 	   for (w=1;w<=10;w++){
      	  document.getElementById('pbmsglvl'+w).checked = AttackOptions.MsgLevel[w];
      }
@@ -3514,7 +3517,7 @@ Tabs.Barb = {
 	   document.getElementById('pbreport').addEventListener('change', function(){AttackOptions.MsgEnabled=document.getElementById('pbreport').checked; saveAttackOptions();} , false);
 	   document.getElementById('pbmsgint').addEventListener('change', function(){AttackOptions.MsgInterval=document.getElementById('pbmsgint').value; saveAttackOptions();} , 		false);
     document.getElementById('pbsendint').addEventListener('change', function(){AttackOptions.SendInterval=document.getElementById('pbsendint').value; saveAttackOptions();} , false);
-    document.getElementById('deletetoggle').addEventListener('change', function(){AttackOptions.DeleteMsg=document.getElementById('deletetoggle').value; saveAttackOptions();} , false);
+    document.getElementById('deletetoggle').addEventListener('change', function(){AttackOptions.DeleteMsg=document.getElementById('deletetoggle').checked; saveAttackOptions();} , false);
     document.getElementById('rallyclip').addEventListener('change', function(){AttackOptions.RallyClip=document.getElementById('rallyclip').value; saveAttackOptions();} , false);
     var class = document.getElementsByClassName('msglvl')
     for (k=0;k<class.length;k++){
@@ -3527,7 +3530,8 @@ Tabs.Barb = {
     for(i=0;i<10;i++){
   	 	for (w=0;w<7;w++){
   	 		AttackOptions.Troops[i+1][w+1] = document.getElementById('level'+i+'troop'+w).value;
-  	 	}	 		
+  	 	}
+  	 	AttackOptions.Distance[i+1] = document.getElementById('dist'+i).value;	 		
 	 }
 	 saveAttackOptions();
   },
@@ -3595,6 +3599,7 @@ Tabs.Barb = {
            myarray = JSON2.parse(GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
 	  		   if (AttackOptions.Method == 'distance') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
 	  		   if (AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a > b ? -1 : 1);});
+	  		   if (AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
 	  		   GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(), JSON2.stringify(t.barbArray[i]));
 	  		}
 	  	}
@@ -3637,7 +3642,7 @@ Tabs.Barb = {
 
        var now = new Date().getTime()/1000.0;
        now = now.toFixed(0);
-       if ( now > (parseInt(AttackOptions.LastReport)+(3600*AttackOptions.SendInterval))) {
+       if ( now > (parseInt(AttackOptions.LastReport)+(3600*AttackOptions.MsgInterval))) {
        	  if (AttackOptions.MsgEnabled==true) t.sendreport();
           for (z=1;z<=Seed.cities.length;z++){
        			AttackOptions.BarbsDone[z]=0;
@@ -3670,7 +3675,6 @@ Tabs.Barb = {
             if ( AttackOptions.Levels[city][h] == true && (parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['level'])) == h ) check=1; 
          }
          if (now < (parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['time']) + 3600) && (t.barbArray[city][AttackOptions.BarbNumber[city]]['time']) != 3600) check=0;
-        
          var barblevel = parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['level']);
          var u1 = AttackOptions.Troops[barblevel][1];
          var u9 = AttackOptions.Troops[barblevel][2];
@@ -3679,6 +3683,8 @@ Tabs.Barb = {
          var u8 = AttackOptions.Troops[barblevel][5];
          var u10 = AttackOptions.Troops[barblevel][6];
          var u12 = AttackOptions.Troops[barblevel][7];
+         //alert(t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] +'/'+ AttackOptions.Distance[barblevel]);
+         if (t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] > AttackOptions.Distance[barblevel]) check=0;
                            
          if (u1 > parseInt(Seed.units[cityID]['unt1']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u12 > parseInt(Seed.units[cityID]['unt12'])) check=0;
          // alert(u1 + '/'+u9+'/'+u6+'/'+u7+'/'+u8+'/'+u10+'/'+u12);
@@ -3721,16 +3727,14 @@ Tabs.Barb = {
        }
   },
   
-  
   getRallypointLevel: function(cityId){
-       var t = Tabs.Barb;
-       for (var o in Seed.buildings[cityId]){
-            var buildingType  = parseInt(Seed.buildings[cityId][o][0]);
-            var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-     	      var buildingName = unsafeWindow.buildingcost['bdg' + buildingType][0];
-     	      if (buildingName == "Rally Point") t.rallypointlevel=parseInt(buildingLevel);
-     	  }
-  },
+    var t = Tabs.Barb;
+    for (var o in Seed.buildings[cityId]){
+  	var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+  	var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+  	if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
+     }
+  }, 
   
   getAtkKnight : function(cityID){
      var t = Tabs.Barb;
