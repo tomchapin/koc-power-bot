@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110518b
+// @version        20110519a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110518b';
+var Version = '20110519a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3792,7 +3792,7 @@ Tabs.Barb = {
   		         var now = new Date().getTime()/1000.0;
   		         now = now.toFixed(0);
   		         t.barbArray[counter][number]['time'] = now;
-  		         GM_setValue('Barbscity' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
+  		         GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
   		         saveAttackOptions();
                } else {
   		         if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
@@ -4680,8 +4680,8 @@ Tabs.transport = {
 		params.r3 = carry_Stone;
 		params.r4 = carry_Ore;
 		params.gold = carry_Gold;
-		params.u9 = wagons_needed;	
-		//params.u7= 5000;
+		//params.u9 = wagons_needed;	
+		params.u7= 5000;
 		
    		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
          actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
