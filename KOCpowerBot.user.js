@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110519c
+// @version        20110520a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110519c';
+var Version = '20110520a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -24,8 +24,8 @@ var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
 var MAP_DELAY = 1200;
-
-var DEFAULT_ALERT_SOUND_URL = 'http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531';
+                               
+var DEFAULT_ALERT_SOUND_URL = 'http://media.freesound.org/data/25/previews/25032__sirplus__extreme_alarm_preview.mp3';
 //var SWF_PLAYER_URL = 'http://www.fileden.com/files/2011/2/25/3086757/matSimpleSound01aXD.swf';
 var SWF_PLAYER_URL = 'http://www.saylortribe.com/KOC/matSimpleSound01aXD.swf';
 
@@ -3467,7 +3467,7 @@ Tabs.Barb = {
   troopOptions: function(){
   	 var t = Tabs.Barb;
   	 t.troopselect = null;	
-  	 t.troopselect = new CPopup ('pbtroopselect', 0,0, 620,350, true, function(){t.saveTroops();});
+  	 t.troopselect = new CPopup ('pbtroopselect', 0,0, 700,380, true, function(){t.saveTroops();});
   	 t.troopselect.centerMe (mainPop.getMainDiv());  
   	 var z= '<DIV id=pbTraderDivD class=pbStat>TROOP SELECTION</div><TABLE width=100%>';
   	 z+='<TD></td><TD>Sup.Troops</td><TD>Wagons</td><TD>Archers</td><TD>Cavalry</td><TD>HC</td><TD>Ballista</td><TD>Catapults</td><TD>MAX distance</td>'
@@ -3683,13 +3683,10 @@ Tabs.Barb = {
          var u8 = AttackOptions.Troops[barblevel][5];
          var u10 = AttackOptions.Troops[barblevel][6];
          var u12 = AttackOptions.Troops[barblevel][7];
-         //alert(t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] +'/'+ AttackOptions.Distance[barblevel]);
          if (t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] > AttackOptions.Distance[barblevel]) check=0;
                            
          if (u1 > parseInt(Seed.units[cityID]['unt1']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u12 > parseInt(Seed.units[cityID]['unt12'])) check=0;
-         // alert(u1 + '/'+u9+'/'+u6+'/'+u7+'/'+u8+'/'+u10+'/'+u12);
           
-	     // alert ( Seed.units[cityID]['unt1'] +'/'+ Seed.units[cityID]['unt9'] +'/'+ Seed.units[cityID]['unt6'] +'/'+ Seed.units[cityID]['unt7'] +'/'+ Seed.units[cityID]['unt8'] +'/'+ Seed.units[cityID]['unt10'] +'/'+ Seed.units[cityID]['unt12']);
          if (AttackOptions.Troops[barblevel][1] == 0 && AttackOptions.Troops[barblevel][2] == 0 && AttackOptions.Troops[barblevel][3] == 0 && AttackOptions.Troops[barblevel][4] == 0 && AttackOptions.Troops[barblevel][5] == 0 && AttackOptions.Troops[barblevel][6] == 0 && AttackOptions.Troops[barblevel][7] == 0) check=0;
          if (check ==0) AttackOptions.BarbNumber[city]++;
          if (AttackOptions.BarbNumber[city]>=t.barbArray[city].length) {
@@ -3709,7 +3706,7 @@ Tabs.Barb = {
        }
        if  (Seed.queue_atkp[cityID].toSource() == "[]") slots=0;
        t.getRallypointLevel(cityID);
-       if ((t.rallypointlevel-1) <= slots){city++; return;}  
+       if ((t.rallypointlevel-AttackOptions.RallyClip) <= slots){city++; return;}  
        
        if ((t.rallypointlevel - AttackOptions.RallyClip) > slots) t.doBarb(citynumber,city,AttackOptions.BarbNumber[city],xcoord,ycoord,kid,u1,u9,u6,u7,u8,u10,u12);
        var element1 = 'pddatacity'+(city-1);
@@ -4137,7 +4134,7 @@ Tabs.transport = {
       }
       m += '<TD><INPUT id=pbShowRoutes type=submit value="Show Routes"></td>';
       m += '</tr></table></div>';
-      m += '<DIV id=pbTraderDivD class=pbStat>ADD TRADE ROUTE</div>';
+      m += '<DIV id=pbTraderDivDRoute class=pbStat>ADD TRADE ROUTE</div>';
 
       m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
       m += '<TD>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
@@ -4378,8 +4375,8 @@ Tabs.transport = {
 				route_state: 		"true"
 			});
 		}
-		document.getElementById('pbTraderDivD').style.background ='#99FF99';
-		setTimeout(function(){ (document.getElementById('pbTraderDivD').style.background =''); }, 1000);
+		document.getElementById('pbTraderDivDRoute').style.background ='#99FF99';
+		setTimeout(function(){ (document.getElementById('pbTraderDivDRoute').style.background =''); }, 1000);
 	},
 	showTradeRoutes: function () {
 		var t = Tabs.transport;
@@ -4684,12 +4681,11 @@ Tabs.transport = {
 		params.r3 = carry_Stone;
 		params.r4 = carry_Ore;
 		params.gold = carry_Gold;
-		//params.u9 = wagons_needed;	
-		params.u7= 5000;
+		params.u9 = wagons_needed;	
+		//params.u7= 5000;
 		
    		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
-         actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
-         
+                 
          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
                   method: "post",
                   parameters: params,
@@ -4697,7 +4693,8 @@ Tabs.transport = {
                   onSuccess: function (transport) {
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
-                  unsafeWindow.Modal.hideModalAll();
+                  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
+                  //unsafeWindow.Modal.hideModalAll();
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unsafeWindow.unixtime();
                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -5356,7 +5353,7 @@ Tabs.Reassign = {
 		params.u12 = send[12];	
 		
    		if (totalsend >0) {
-            actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
+           
       		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
                   method: "post",
                   parameters: params,
@@ -5364,7 +5361,8 @@ Tabs.Reassign = {
                   onSuccess: function (transport) {
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
-                  unsafeWindow.Modal.hideModalAll();
+                  actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
+                  //unsafeWindow.Modal.hideModalAll();
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unsafeWindow.unixtime();
                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -6140,9 +6138,11 @@ Tabs.Reinforce = {
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   t.getKnights(); 
                   t.clearbox();
-                  //document.getElementById('pbReinfMain').style.background ='#99FF99';
-		          //setTimeout(function(){ (document.getElementById('pbReinfMain').style.background =''); }, 1000);
+                  document.getElementById('pbReinfMain').style.background ='#99FF99';
+		              setTimeout(function(){ (document.getElementById('pbReinfMain').style.background =''); }, 1000);
                   } else {
+                  document.getElementById('pbReinfMain').style.background ='#FF0000';
+		              setTimeout(function(){ (document.getElementById('pbReinfMain').style.background =''); }, 1000);
                   //actionLog('FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
                   //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
                   }
@@ -7033,6 +7033,7 @@ function readOptions (){
         Options[k] = opts[k];
     }
   }
+  if (Options.alertSound.soundUrl == 'http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531') {Options.alertSound.soundUrl = DEFAULT_ALERT_SOUND_URL; saveOptions () } 
 }
 
 function readGlobalOptions (){
