@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110521b
+// @version        20110521c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110521b';
+var Version = '20110521c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -198,7 +198,8 @@ var AttackOptions = {
   BarbsFailedTraffic   	: 0,
   BarbsFailedVaria		: 0,
   BarbsTried    		: 0,
-  DeleteMsg             :true,
+  DeleteMsg             : true,
+  DeleteMsgs0			: false,
   Foodstatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   MsgLevel			    : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
   BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
@@ -3494,7 +3495,7 @@ Tabs.Barb = {
   barbOptions: function(){
   	 var t = Tabs.Barb;
   	 if(t.barboptions == null)	
-		t.barboptions = new CPopup ('pbbarboptions', 0,0, 375,320, true);
+		t.barboptions = new CPopup ('pbbarboptions', 0,0, 375,350, true);
   	 t.barboptions.centerMe (mainPop.getMainDiv());  
 	 t.barboptions.getTopDiv().innerHTML = '<CENTER><b> Barbing Options for server '+getServerId()+'</b></CENTER>';
   	var y = '<DIV style="max-height:400px; overflow-y:auto;"><DIV class=pbStat>RESET BARBS</div><TABLE width=100%>';
@@ -3505,7 +3506,8 @@ Tabs.Barb = {
      y +='<TR><TD>Keep <INPUT id=rallyclip type=text size=1 maxlength=2 value="'+AttackOptions.RallyClip+'" \> rallypoint slot(s) free</td></tr>';
      y +='<TR><TD><INPUT id=pbreport type=checkbox '+(AttackOptions.MsgEnabled?'CHECKED':'')+'\> Send barb report msg every<INPUT id=pbmsgint type=text size=2 maxlength=2 value='+AttackOptions.MsgInterval+' \>hour(s)</td></tr>';
      y +='<TR><TD>Method : '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
-     y +='<TR><TD><INPUT id=deletetoggle type=checkbox '+(AttackOptions.DeleteMsg?'CHECKED':'')+' /> Auto delete barb and transport reports</td></tr>';
+     y +='<TR><TD><INPUT id=deletetoggle type=checkbox '+(AttackOptions.DeleteMsg?'CHECKED':'')+' /> Auto delete barb/transport reports from you</td></tr>';
+     y +='<TR><TD><INPUT id=deletes0toggle type=checkbox '+(AttackOptions.DeleteMsgs0?'CHECKED':'')+' /> Auto delete transport reports to you</td></tr>';
      y +='<TR><TD>Select barbreport levels to delete: <BR>';
 	 y +='<TABLE><TR>';
      for (w=1;w<=10;w++){
@@ -3543,8 +3545,12 @@ Tabs.Barb = {
 		AttackOptions.DeleteMsg=document.getElementById('deletetoggle').checked;
 		saveAttackOptions();
 	},false);
+    document.getElementById('deletes0toggle').addEventListener('change', function(){
+		AttackOptions.DeleteMsgs0=document.getElementById('deletes0toggle').checked;
+		saveAttackOptions();
+	},false);
     document.getElementById('rallyclip').addEventListener('change', function(){
-		AttackOptions.RallyClip=document.getElementById('rallyclip').value;
+		AttackOptions.RallyClip=parseInt(document.getElementById('rallyclip').value);
 		saveAttackOptions();
 	},false);
     var lvl = document.getElementsByClassName('msglvl')
@@ -3610,32 +3616,37 @@ Tabs.Barb = {
 	}
 	var reports = rslt.arReports;
 	var totalPages = rslt.totalPages;
-		var deletes = new Array();
+		var deletes1 = new Array();
+		var deletes0 = new Array();
 		for(k in reports){
-			if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && AttackOptions.MsgLevel[reports[k].side0TileLevel])
-				deletes.push(k.substr(2));
-			else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
-				deletes.push(k.substr(2));
+			if(AttackOptions.DeleteMsg){
+				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && AttackOptions.MsgLevel[reports[k].side0TileLevel])
+					deletes1.push(k.substr(2));
+				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
+					deletes1.push(k.substr(2));
+			} else if (AttackOptions.DeleteMsgs0){
+				if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
+					deletes0.push(k.substr(2));
+			}
 		}
-		if(deletes.length > 0){
-			t.deletereports(deletes);
+		if(deletes1.length > 0 || deletes0.length > 0){
+			t.deletereports(deletes1, deletes0);
 		} else {
 			t.deleting = false;
 			return;
 		}
   },
-  deletereports : function (deletes){
+  deletereports : function (deletes1, deletes0){
 	var t = Tabs.Barb;
-	var msgs = deletes.join(",");
 	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-	params.s1rids = msgs;
-	params.s0rids = '';
+	params.s1rids = deletes1.join(",");
+	params.s0rids = deletes0.join(",");
 	params.cityrids = '';
 	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
 		method: "post",
 		parameters: params,
 		onSuccess: function (rslt) {
-			Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes.length);
+			Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
 			t.fetchbarbreports(0, t.checkbarbreports);
 		},
 		onFailure: function () {
@@ -3753,8 +3764,8 @@ Tabs.Barb = {
        var ycoord = t.barbArray[city][AttackOptions.BarbNumber[city]]['y'];
        
        var slots=0;
-	   if(Seed.queue_atkp[cityID].length > 0)
-		slots = Seed.queue_atkp[cityID].length;
+	   for(var k in Seed.queue_atkp[cityID])
+		slots++;
        t.getRallypointLevel(cityID);
        if ((t.rallypointlevel-AttackOptions.RallyClip) <= slots){t.getnextCity(); return;}  
        
@@ -3777,7 +3788,8 @@ Tabs.Barb = {
 	var city = t.city+1;
 	if (city>Seed.cities.length){
 		city=1;
-		t.startdeletereports();
+		if(AttackOptions.DeleteMsg || AttackOptions.DeleteMsgs0)
+			t.startdeletereports();
 	}
 	var found = false;
 	for(var i=1; i<=10; i++){
