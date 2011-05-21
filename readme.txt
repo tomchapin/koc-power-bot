@@ -1,6 +1,14 @@
 REVISION HISTORY:
 ----------------
 
+20110521b
+   *Added option for users to set max search distance for barbs (capped at 75 spaces)
+   *Fixed issue where auto barb gets stuck after a while
+   *Fixed barb reports doesn't get deleted when not barbing from last city
+   *Fixed auto delete reports deleting transports (now only delete transports that you sent)
+   *Fixed issue where auto delete reports messes up kabam's servers
+   *Fixed issue of audio alert not loading.(Click on default if sound file is not loading)
+
 20110519c
    *Added the word "wagons" to transport text to clarify things
    
