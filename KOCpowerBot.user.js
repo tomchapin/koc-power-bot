@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110520b
+// @version        20110521b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110520b';
+var Version = '20110521b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3350,8 +3350,6 @@ Tabs.Test = {
 
 
 /*********************************  Barbing Tab ***********************************/
-
-
 Tabs.Barb = {
   tabOrder : 1,
   myDiv : null,
@@ -3399,7 +3397,7 @@ Tabs.Barb = {
 	
 	  m += '<TABLE id=pbbarbstats width=95% height=0% class=pbTab><TR align="left"><TR>';
 	  for(i=0;i<Seed.cities.length;i++){
-	  		m += '<TD>' + Seed.cities[i][1] +'<DIV><span id=ptcity></span></div></td>';
+	  		m += '<TD>' + Seed.cities[i][1] +'</td>';
 	  }
 	  m+='</tr><TR>';
 	  for(i=0;i<Seed.cities.length;i++){
@@ -3417,7 +3415,7 @@ Tabs.Barb = {
      m += '<DIV id=pbTraderDivD class=pbStat>BARBING OPTIONS</div>';
      m += '<TABLE width=95% height=0% class=ptTab><TR align="left">';
      for(i=0;i<Seed.cities.length;i++){
-		m += '<TR><TD>' + Seed.cities[i][1] +'<DIV><span id=ptcity></span></div></td>';
+		m += '<TR><TD>' + Seed.cities[i][1] +'</td>';
 		for (w=1;w<=10;w++){
 			m += '<TD class=pblevelopt><INPUT id=pbcity'+i+'level'+w+' type=checkbox unchecked=true>Lvl:'+w+'</td>';
 		}		
@@ -3656,21 +3654,22 @@ Tabs.Barb = {
 
   checkBarbData: function(){
   	var t = Tabs.Barb;
-	  for (i=1;i<=Seed.cities.length;i++){	
-	  		t.barbArray[i] = [];
-	  		var myarray = (GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
-            //t.barbArray[i] = (GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));	  		
-	  		if (myarray == undefined && t.searchRunning==false) {
-	  			t.lookup=i;
-	  			t.opt.startX=parseInt(Seed.cities[(i-1)][2]);
-	  			t.opt.startY=parseInt(Seed.cities[(i-1)][3]);  
-	  			t.clickedSearch();
-	  		}
-	  		if (myarray != undefined){
-           myarray = JSON2.parse(GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
-	  		   if (AttackOptions.Method == 'distance') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
-	  		   if (AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a > b ? -1 : 1);});
-	  		   if (AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
+	if (!AttackOptions.Running) return;
+	  for (i=1;i<=Seed.cities.length;i++){
+		t.barbArray[i] = [];
+	  	var myarray = (GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
+		
+		if (myarray == undefined && t.searchRunning==false) {
+	  		t.lookup=i;
+	  		t.opt.startX=parseInt(Seed.cities[(i-1)][2]);
+	  		t.opt.startY=parseInt(Seed.cities[(i-1)][3]);  
+	  		t.clickedSearch();
+	  	}
+		if (myarray != undefined){
+			myarray = JSON2.parse(myarray);
+			if(AttackOptions.Method == 'distance') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
+			if(AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a > b ? -1 : 1);});
+			if(AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
 	  		   GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(), JSON2.stringify(t.barbArray[i]));
 	  		}
 	  	}
@@ -3683,11 +3682,14 @@ Tabs.Barb = {
 		obj.value = "Barb = OFF";
 		updatebotbutton("BOT");
 		saveAttackOptions();
+		t.nextattack = null;
+		t.init(t.myDiv);
 	} else {
 		AttackOptions.Running = true;
 		obj.value = "Barb = ON";
 		updatebotbutton("BOT");
 		saveAttackOptions();
+		t.checkBarbData();
 		t.getnextCity();
 	}
   },
@@ -4002,6 +4004,13 @@ Tabs.Barb = {
     var element = 'pddatacity'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
     setTimeout (function(){t.MapAjax.request (x, y, 15, t.mapCallback)}, MAP_DELAY);
+  },
+  
+  stopSearch : function (msg){
+    var t = Tabs.Barb;
+	var element = 'pddatacity'+(t.lookup-1);
+        document.getElementById(element).innerHTML = msg;
+    t.searchRunning = false;
   },
   
   hide : function (){
