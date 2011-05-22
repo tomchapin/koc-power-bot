@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110522a
+// @version        20110522b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110522a';
+var Version = '20110522b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -24,10 +24,9 @@ var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
 var MAP_DELAY = 1200;
-                               
-var DEFAULT_ALERT_SOUND_URL = 'http://media.freesound.org/data/25/previews/25032__sirplus__extreme_alarm_preview.mp3';
-//var SWF_PLAYER_URL = 'http://www.fileden.com/files/2011/2/25/3086757/matSimpleSound01aXD.swf';
-var SWF_PLAYER_URL = 'http://www.saylortribe.com/KOC/matSimpleSound01aXD.swf';
+
+var DEFAULT_ALERT_SOUND_URL = 'http://koc.god-like.info/alarm.mp3';
+var SWF_PLAYER_URL = 'http://koc.god-like.info/alarmplayer.swf';
 
 var URL_CASTLE_BUT = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAXCAMAAAGkBsQ5AAABa1BMVEX%2F%2F8X%2F98X%2F973%2F97X%2F77X%2F7633773%2F76X377X3763%2F5q3%2F5qX%2F5pz35q335qX%2F3pz%2F3pT33pz%2F1pT%2F1oz%2F1oT31pT31oz%2FzoT%2Fznv3zoT%2FxXv%2FxXP%2FxWv3xXv3xXP%2FvWv%2FvWP3vWv3vWP%2FtWP%2FtVr%2FtVLmvWv3tWP3tVr3tVL%2FrVL%2FrUrmtWP3rVL3rUrvrVL%2FpUrvrUr%2FpULmrVrmrVL3pUr3pULmpUL3nDrepULWpVLWpUrmnDrFpUK1pVrOnDqcnFKcnEqMnEp7lHN7lGtzlGNrlGtjjEpajFpShFJSe2NChEJKe1o6hDohjDFCc1oZjDEhhDEQjDEAlDEpezoZhDEhezoQhDEAjDEpczoZezoIhDEhc0IhczoAhDEZczoIezEhazoAezEhY0IAczEAcykIazEhWkIAazEAaykIYzEhUkIAYzEAWjEAUjEAUikASjEASikAQjEAQikAOjEAOikAMTEAMSkAKSlOGAcLAAAACXBIWXMAAAsSAAALEgHS3X78AAABVklEQVQYGQXBPW4TYRiF0ee%2B3x2DRSxRIFJTGIkVUFDQIbEDlkE5%2B8kWWEKKIBSB5AohXBGUSAaCIdgz3x%2FnaARztjS3RSPodPkmfuzReLbOh1fm72a4h3kxyWgE8NXPz8%2F%2FhC%2FzRXLM3cmeqvGDl7Mfa9ztT9pvp3%2FDOpjOr7Yft9PXjPHxE%2Bl6p4SJqSq5RsL4EAtZaUAjAABoBADAt%2Fty8ovVnhQ%2Bfx%2BbDTfXQ9Bz5H7IdWGV9k588NJWrQiXjMkdly6Fo9beRap29F4QJBxTE%2Bo9bF7XuUpJsp8BAGjcATSgADOQWRsfLu8WT0%2B33wcePknfJj%2B6j3Hb17m5HQsr1%2Fm4aGBEbtp8uXPWzcSBlhYYXKunObLoOyU1jFH02oVRZNFJQ2CCko26MIrC3MAEpRdcSVkYFYzBuaAuQFFAgzFBK0GVZhYoaUYYVm8b0IAGNDr8B8ZXpEbZNGQ6AAAAAElFTkSuQmCC";
 var URL_CASTLE_BUT_SEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAXAgMAAAHuttyYAAAACVBMVEX%2F%2F%2F8AOjEAKSnbo5E5AAAACXBIWXMAAAsSAAALEgHS3X78AAAAW0lEQVQI12NYwdAAhCsYOICwQQGEpiYwrGpgCHRgcIChUAeGqaERDBMZJRgmMCDwqlUrgHgBQ2hoAIMjiwAYOzBgxyA1ILVTQ4GggWEKK4MIK4JiYGAgiYKYAgBFlyWR9CCfyAAAAABJRU5ErkJggg%3D%3D";
@@ -185,33 +184,30 @@ var GlobalOptions = {
   pbWideScreen : true,
 };
 
-
 var AttackOptions = {
-  LastReport    		  : 0,
-  MsgEnabled          : false,
-  MsgInterval	      	    : 1,
-  Method			      :"distance",
-  SendInterval			  : 30,
+  LastReport    		: 0,
+  MsgEnabled          	: false,
+  MsgInterval	      	: 1,
+  Method			    : "distance",
+  SendInterval			: 30,
   MaxDistance           : 40,
-  RallyClip				  :1,
-  Running       		  : false,
-  BarbsFailedKnight		  : 0,
-  BarbsFailedRP 		  : 0,
-  BarbsFailedTraffic   	  : 0,
-  BarbsFailedVaria		  :0,
-  BarbsTried    		  : 0,
-  DeleteMsg           :true,
+  RallyClip				: 0,
+  Running       		: false,
+  BarbsFailedKnight		: 0,
+  BarbsFailedRP 		: 0,
+  BarbsFailedTraffic   	: 0,
+  BarbsFailedVaria		: 0,
+  BarbsTried    		: 0,
+  DeleteMsg             : true,
   DeleteMsgs0			: false,
-  Foodstatus			  : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  MsgLevel			  : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
-  BarbsDone     		  : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  BarbNumber    		  : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Levels    			    : {1:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
-  Troops    			    : {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0}},
-  MinDistance : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
-  Distance : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750}	
+  Foodstatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  MsgLevel			    : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
+  BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  BarbNumber    		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  Levels    			: {1:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
+  Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0}},
+  Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750}	
 };
-
 
 var Cities = {};
 var Seed = unsafeWindow.seed;
@@ -3356,14 +3352,13 @@ Tabs.Test = {
 
 
 /*********************************  Barbing Tab ***********************************/
-
-
 Tabs.Barb = {
   tabOrder : 1,
   myDiv : null,
   MapAjax : new CMapAjax(),
   popFirst : true,
-  opt : {},	
+  opt : {},
+  nextattack : null,
   searchRunning : false,
   tilesSearched : 0,
   tilesFound : 0,
@@ -3377,17 +3372,19 @@ Tabs.Barb = {
   knt:{},
   barbArray:{},
   lookup:1,
-  init:0,
-  foodstart:{},
+  city:0,
+  deleting:false,
   
     
   init : function (div){
     var t = Tabs.Barb;
     t.myDiv = div;
     saveAttackOptions();
-    setInterval(t.barbing,(1500));
+	t.checkBarbData();
+	if(t.nextattack == null)
+		t.nextattack = setInterval(t.getnextCity,(AttackOptions.SendInterval*1000));
     setInterval(t.startdeletereports,(120000));
-    
+
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED BARBING FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
 	 if (AttackOptions.Running == false) {
 	       m += '<TD><INPUT id=AttSearch type=submit value="Barb = OFF"></td>';
@@ -3396,7 +3393,6 @@ Tabs.Barb = {
 	       m += '<TD><INPUT id=AttSearch type=submit value="Barb = ON"></td>';
 	       updatebotbutton("BOT (AA)");
 	   }
-	   
 	  m += '<TD><INPUT id=troopselect type=submit value="Select troops"></td>';
 	  m += '<TD><INPUT id=Options type=submit value="Options"></td>';
 	  m += '</tr></table></div>';
@@ -3405,7 +3401,11 @@ Tabs.Barb = {
 	
 	  m += '<TABLE id=pbbarbstats width=95% height=0% class=pbTab><TR align="left"><TR>';
 	  for(i=0;i<Seed.cities.length;i++){
-	  		m += '<TD>' + Seed.cities[i][1] +'<DIV><span id=ptcity></span></div></td>';
+	  		m += '<TD>' + Seed.cities[i][1] +'</td>';
+	  }
+	  m+='</tr><TR>';
+	  for(i=0;i<Seed.cities.length;i++){
+	  		m += '<TD><DIV><span id='+ 'pdtotalcity' + i +'></span></div></td>';
 	  }
 	  m+='</tr><TR>';
 	  for(i=0;i<Seed.cities.length;i++){
@@ -3423,7 +3423,7 @@ Tabs.Barb = {
      m += '<DIV id=pbTraderDivD class=pbStat>BARBING OPTIONS</div>';
      m += '<TABLE width=95% height=0% class=ptTab><TR align="left">';
      for(i=0;i<Seed.cities.length;i++){
-		m += '<TR><TD>' + Seed.cities[i][1] +'<DIV><span id=ptcity></span></div></td>';
+		m += '<TR><TD>' + Seed.cities[i][1] +'</td>';
 		for (w=1;w<=10;w++){
 			m += '<TD class=pblevelopt><INPUT id=pbcity'+i+'level'+w+' type=checkbox unchecked=true>Lvl:'+w+'</td>';
 		}		
@@ -3432,14 +3432,10 @@ Tabs.Barb = {
     
      t.myDiv.innerHTML = m;
      t.checkBarbData();
-     t.init=0;
      for(i=0;i<Seed.cities.length;i++){
-    		var element = 'pddatacity'+i;
+    		var element = 'pdtotalcity'+i;
     		if (t.barbArray[i+1] == undefined) document.getElementById(element).innerHTML = 'No Data';
     		else document.getElementById(element).innerHTML =  'Barbs :' + t.barbArray[i+1].length;
-    		AttackOptions.BarbsDone[i+1]=0;
-    		cityID = 'city' + Seed.cities[i][0];
-    		t.foodstart[i+1] = parseInt(Seed.resources[cityID]['rec1'][0] / 3600);
     }
     
     for(i=0;i<Seed.cities.length;i++){
@@ -3470,18 +3466,29 @@ Tabs.Barb = {
    
   troopOptions: function(){
   	 var t = Tabs.Barb;
-  	 t.troopselect = null;	
-  	 t.troopselect = new CPopup ('pbtroopselect', 0,0, 700,380, true, function(){t.saveTroops();});
+	 var troopDef = [
+      ['STroop', 1],
+      ['Wagon', 9],
+      ['Archers', 6],
+      ['Cavalry', 7],
+      ['Heavies', 8],
+      ['Ballista', 10],
+	  ['Cats', 12],
+     ];
+  	 if(t.troopselect == null)	
+		t.troopselect = new CPopup ('pbtroopselect', 0, 0, 600, 345, true, function(){t.saveTroops();});
   	 t.troopselect.centerMe (mainPop.getMainDiv());  
-  	 var z= '<DIV id=pbTraderDivD class=pbStat>TROOP SELECTION</div><TABLE width=100%>';
-  	 z+='<TD></td><TD>Sup.Troops</td><TD>Wagons</td><TD>Archers</td><TD>Cavalry</td><TD>HC</td><TD>Ballista</td><TD>Catapults</td><TD>Distance</td>'
+  	 var z= '<DIV id=pbTraderDivD class=pbStat>TROOP SELECTION</div><TABLE width=100%><TR>';
+	 z+='<TD></td>';
+	 for(var i=0; i<troopDef.length; i++)
+		z+='<TD>'+troopDef[i][0]+'</td>';
+	 z+='<TD>MAX dist</td>';
 	 for(i=0;i<10;i++){
-	 	z += '<TR><TD>Level ' +(i+1)+ ': '+'<DIV><span id=pbStat></span></div></td>';
-	 	for (w=0;w<7;w++){
-	 		z += '<TD><INPUT id=level'+i+'troop'+w+' type=text size=6 maxlength=6 value="'+AttackOptions.Troops[i+1][w+1]+'"</td>';
+	 	z += '<TR><TD>Level '+(i+1)+': </td>';
+	 	for(var j=0; j<troopDef.length; j++){
+	 		z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=4 maxlength=6 value="'+AttackOptions.Troops[i+1][j+1]+'" /></td>';
 	 	}
-	 	z+='<TD align=left><INPUT id=Mindist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.MinDistance[i+1]+'"</td>';
-	 	z+='<TD align=right><INPUT id=Maxdist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[i+1]+'"</td>';
+	 	z+='<TD align=right><INPUT id=dist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[i+1]+'"</td>';
 	 	z+='</tr>';		 		
 	 }
 	 z+='</table>';
@@ -3490,235 +3497,221 @@ Tabs.Barb = {
   },
   
   barbOptions: function(){
-    	 var t = Tabs.Barb;
-    	 if(t.barboptions == null)	
-  		t.barboptions = new CPopup ('pbbarboptions', 0,0, 375,350, true);
-    	 t.barboptions.centerMe (mainPop.getMainDiv());  
-  	 t.barboptions.getTopDiv().innerHTML = '<CENTER><b> Barbing Options for server '+getServerId()+'</b></CENTER>';
-    	var y = '<DIV style="max-height:400px; overflow-y:auto;"><DIV class=pbStat>RESET BARBS</div><TABLE width=100%>';
-  	 y +='<TR><TD style="margin-top:5px; text-align:center;"><INPUT id=pbresetbarbs type=submit value="Reset barbs"></td></tr></table>';
-  	 y +='<DIV class=pbStat> OPTIONS </div><TABLE>';
-       //y +='<TR><TD>Attack interval: <INPUT id=pbsendint type=text size=4 maxlength=4 value='+ AttackOptions.SendInterval +' \> seconds</td></tr>';
-       y +='<TR><TD>Max search distance: <INPUT id=pbmaxdist type=text size=4 maxlength=4 value='+ AttackOptions.MaxDistance +' \></td></tr>';
-       y +='<TR><TD>Keep <INPUT id=rallyclip type=text size=1 maxlength=2 value="'+AttackOptions.RallyClip+'" \> rallypoint slot(s) free</td></tr>';
-       y +='<TR><TD><INPUT id=pbreport type=checkbox '+(AttackOptions.MsgEnabled?'CHECKED':'')+'\> Send barb report msg every<INPUT id=pbmsgint type=text size=2 maxlength=2 value='+AttackOptions.MsgInterval+' \>hour(s)</td></tr>';
-       y +='<TR><TD>Method : '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
-       y +='<TR><TD><INPUT id=deletetoggle type=checkbox '+(AttackOptions.DeleteMsg?'CHECKED':'')+' /> Auto delete barb/transport reports from you</td></tr>';
-       y +='<TR><TD><INPUT id=deletes0toggle type=checkbox '+(AttackOptions.DeleteMsgs0?'CHECKED':'')+' /> Auto delete transport reports to you</td></tr>';
-       y +='<TR><TD>Select barbreport levels to delete: <BR>';
-  	 y +='<TABLE><TR>';
-       for (w=1;w<=10;w++){
-       y += '<TD><INPUT id=pbmsglvl'+w+' class=msglvl type=checkbox '+(AttackOptions.MsgLevel[w]?'CHECKED':'') +'>Lvl:'+w+'</td>';
-       }	
-       y+='</tr></table></td></tr></table>';
-  	   t.barboptions.getMainDiv().innerHTML = y;
-  	   t.barboptions.show(true);
-  	   
-  	document.getElementById('pbresetbarbs').addEventListener('click', t.deletebarbs,false);
-  	document.getElementById('pbmethod').addEventListener('change', function(){
-  		AttackOptions.Method=document.getElementById('pbmethod').value;
-  		saveAttackOptions();
-  		t.checkBarbData();
-  	},false);
-  	document.getElementById('pbreport').addEventListener('change', function(){
-  		AttackOptions.MsgEnabled=document.getElementById('pbreport').checked;
-  		saveAttackOptions();
-  	},false);
-  	document.getElementById('pbmsgint').addEventListener('change', function(){
-  		AttackOptions.MsgInterval=parseInt(document.getElementById('pbmsgint').value);
-  	saveAttackOptions();
-  	},false);
-  //    document.getElementById('pbsendint').addEventListener('change', function(){
-  //		AttackOptions.SendInterval=parseInt(document.getElementById('pbsendint').value);
-  //		saveAttackOptions();
-  //	},false);
-      document.getElementById('pbmaxdist').addEventListener('change', function(){
-  		if(parseInt(document.getElementById('pbmaxdist').value) > 75)
-  			document.getElementById('pbmaxdist').value = 75;
-  		AttackOptions.MaxDistance=parseInt(document.getElementById('pbmaxdist').value);
-  		saveAttackOptions();
-  	},false);
-      document.getElementById('deletetoggle').addEventListener('change', function(){
-  		AttackOptions.DeleteMsg=document.getElementById('deletetoggle').checked;
-  		saveAttackOptions();
-  	},false);
-      document.getElementById('deletes0toggle').addEventListener('change', function(){
-  		AttackOptions.DeleteMsgs0=document.getElementById('deletes0toggle').checked;
-  		saveAttackOptions();
-  	},false);
-      document.getElementById('rallyclip').addEventListener('change', function(){
-  		AttackOptions.RallyClip=parseInt(document.getElementById('rallyclip').value);
-  		saveAttackOptions();
-  	},false);
-      var lvl = document.getElementsByClassName('msglvl')
-      for (k=0; k<lvl.length; k++){
-  		lvl[k].addEventListener('click', function(){
-  			for (w=1;w<=10;w++){
-  				AttackOptions.MsgLevel[w] = document.getElementById('pbmsglvl'+w).checked;
-  				saveAttackOptions();
-  			}
-  		},false);
-      }
-      
-    },
+  	 var t = Tabs.Barb;
+  	 if(t.barboptions == null)	
+		t.barboptions = new CPopup ('pbbarboptions', 0,0, 375,350, true);
+  	 t.barboptions.centerMe (mainPop.getMainDiv());  
+	 t.barboptions.getTopDiv().innerHTML = '<CENTER><b> Barbing Options for server '+getServerId()+'</b></CENTER>';
+  	var y = '<DIV style="max-height:400px; overflow-y:auto;"><DIV class=pbStat>RESET BARBS</div><TABLE width=100%>';
+	 y +='<TR><TD style="margin-top:5px; text-align:center;"><INPUT id=pbresetbarbs type=submit value="Reset barbs"></td></tr></table>';
+	 y +='<DIV class=pbStat> OPTIONS </div><TABLE>';
+     y +='<TR><TD>Attack interval: <INPUT id=pbsendint type=text size=4 maxlength=4 value='+ AttackOptions.SendInterval +' \> seconds</td></tr>';
+     y +='<TR><TD>Max search distance: <INPUT id=pbmaxdist type=text size=4 maxlength=4 value='+ AttackOptions.MaxDistance +' \></td></tr>';
+     y +='<TR><TD>Keep <INPUT id=rallyclip type=text size=1 maxlength=2 value="'+AttackOptions.RallyClip+'" \> rallypoint slot(s) free</td></tr>';
+     y +='<TR><TD><INPUT id=pbreport type=checkbox '+(AttackOptions.MsgEnabled?'CHECKED':'')+'\> Send barb report msg every<INPUT id=pbmsgint type=text size=2 maxlength=2 value='+AttackOptions.MsgInterval+' \>hour(s)</td></tr>';
+     y +='<TR><TD>Method : '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
+     y +='<TR><TD><INPUT id=deletetoggle type=checkbox '+(AttackOptions.DeleteMsg?'CHECKED':'')+' /> Auto delete barb/transport reports from you</td></tr>';
+     y +='<TR><TD><INPUT id=deletes0toggle type=checkbox '+(AttackOptions.DeleteMsgs0?'CHECKED':'')+' /> Auto delete transport reports to you</td></tr>';
+     y +='<TR><TD>Select barbreport levels to delete: <BR>';
+	 y +='<TABLE><TR>';
+     for (w=1;w<=10;w++){
+     y += '<TD><INPUT id=pbmsglvl'+w+' class=msglvl type=checkbox '+(AttackOptions.MsgLevel[w]?'CHECKED':'') +'>Lvl:'+w+'</td>';
+     }	
+     y+='</tr></table></td></tr></table>';
+	   t.barboptions.getMainDiv().innerHTML = y;
+	   t.barboptions.show(true);
+	   
+	document.getElementById('pbresetbarbs').addEventListener('click', t.deletebarbs,false);
+	document.getElementById('pbmethod').addEventListener('change', function(){
+		AttackOptions.Method=document.getElementById('pbmethod').value;
+		saveAttackOptions();
+		t.checkBarbData();
+	},false);
+	document.getElementById('pbreport').addEventListener('change', function(){
+		AttackOptions.MsgEnabled=document.getElementById('pbreport').checked;
+		saveAttackOptions();
+	},false);
+	document.getElementById('pbmsgint').addEventListener('change', function(){
+		AttackOptions.MsgInterval=parseInt(document.getElementById('pbmsgint').value);
+		saveAttackOptions();
+	},false);
+    document.getElementById('pbsendint').addEventListener('change', function(){
+		AttackOptions.SendInterval=parseInt(document.getElementById('pbsendint').value);
+		saveAttackOptions();
+	},false);
+    document.getElementById('pbmaxdist').addEventListener('change', function(){
+		if(parseInt(document.getElementById('pbmaxdist').value) > 75)
+			document.getElementById('pbmaxdist').value = 75;
+		AttackOptions.MaxDistance=parseInt(document.getElementById('pbmaxdist').value);
+		saveAttackOptions();
+	},false);
+    document.getElementById('deletetoggle').addEventListener('change', function(){
+		AttackOptions.DeleteMsg=document.getElementById('deletetoggle').checked;
+		saveAttackOptions();
+	},false);
+    document.getElementById('deletes0toggle').addEventListener('change', function(){
+		AttackOptions.DeleteMsgs0=document.getElementById('deletes0toggle').checked;
+		saveAttackOptions();
+	},false);
+    document.getElementById('rallyclip').addEventListener('change', function(){
+		AttackOptions.RallyClip=parseInt(document.getElementById('rallyclip').value);
+		saveAttackOptions();
+	},false);
+    var lvl = document.getElementsByClassName('msglvl')
+    for (k=0; k<lvl.length; k++){
+		lvl[k].addEventListener('click', function(){
+			for (w=1;w<=10;w++){
+				AttackOptions.MsgLevel[w] = document.getElementById('pbmsglvl'+w).checked;
+				saveAttackOptions();
+			}
+		},false);
+    }
     
+  },
+  
   saveTroops: function(){
     for(i=0;i<10;i++){
   	 	for (w=0;w<7;w++){
-  	 		AttackOptions.Troops[i+1][w+1] = document.getElementById('level'+i+'troop'+w).value;
+  	 		AttackOptions.Troops[i+1][w+1] = parseIntNan(document.getElementById('level'+i+'troop'+w).value);
   	 	}
-  	 	AttackOptions.MinDistance[i+1] = document.getElementById('Mindist'+i).value;
-  	 	AttackOptions.Distance[i+1] = document.getElementById('Maxdist'+i).value;	 		
+		if(parseIntNan(document.getElementById('dist'+i).value) > AttackOptions.MaxDistance)
+			document.getElementById('dist'+i).value = AttackOptions.MaxDistance;
+  	 	AttackOptions.Distance[i+1] = parseIntNan(document.getElementById('dist'+i).value);	 		
 	 }
 	 saveAttackOptions();
   },
   
-   deletebarbs: function(){
+  deletebarbs: function(){
     for (i=1;i<=Seed.cities.length;i++){
           GM_deleteValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId())
     } 
     reloadKOC();
   },
   
- startdeletereports : function (){
- 	var t = Tabs.Barb;
- 	if (!AttackOptions.DeleteMsg && !AttackOptions.DeleteMsgs0) return;
- 	if(!t.deleting){
- 		t.deleting = true;
- 		t.fetchbarbreports(0, t.checkbarbreports);
- 	}
-   },
-   fetchbarbreports : function (pageNo, callback){
- 	var t = Tabs.Barb;
-     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
- 	if(pageNo > 1)
- 		params.pageNo = pageNo;
- 	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
-         method: "post",
-         parameters: params,
-         onSuccess: function (rslt) {
- 			callback(rslt);
-         },
-         onFailure: function () {
-         },
-     });
-   },
-   checkbarbreports : function (rslt){
- 	var t = Tabs.Barb;
- 	if(!rslt.ok){
- 		return;
- 	}
- 	if(rslt.arReports.length < 1){
- 		return;
- 	}
- 	var reports = rslt.arReports;
- 	var totalPages = rslt.totalPages;
- 		var deletes1 = new Array();
- 		var deletes0 = new Array();
- 		for(k in reports){
- 			if(AttackOptions.DeleteMsg){
- 				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && AttackOptions.MsgLevel[reports[k].side0TileLevel])
- 					deletes1.push(k.substr(2));
- 				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
- 					deletes1.push(k.substr(2));
- 			} else if (AttackOptions.DeleteMsgs0){
- 				if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
- 					deletes0.push(k.substr(2));
- 			}
- 		}
- 		if(deletes1.length > 0 || deletes0.length > 0){
- 			t.deletereports(deletes1, deletes0);
- 		} else {
- 			t.deleting = false;
- 			return;
- 		}
-   },
-   
-   deletereports : function (deletes1, deletes0){
- 	var t = Tabs.Barb;
- 	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
- 	params.s1rids = deletes1.join(",");
- 	params.s0rids = deletes0.join(",");
- 	params.cityrids = '';
- 	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
- 		method: "post",
- 		parameters: params,
- 		onSuccess: function (rslt) {
- 			Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
- 			t.fetchbarbreports(0, t.checkbarbreports);
- 		},
- 		onFailure: function () {
- 		},
- 	});
-   },
-   isMyself: function(userID){
-   	if(!Seed.players["u"+userID])
-   		return false;
-   	if(Seed.players["u"+userID].n == Seed.player.name)
-   		return true;
-   	else
-   		return false;
-   	return false;
-     },
-     
-      
+  startdeletereports : function (){
+	var t = Tabs.Barb;
+	if (!AttackOptions.DeleteMsg && !AttackOptions.DeleteMsgs0) return;
+	if(!t.deleting){
+		t.deleting = true;
+		t.fetchbarbreports(0, t.checkbarbreports);
+	}
+  },
+  fetchbarbreports : function (pageNo, callback){
+	var t = Tabs.Barb;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	if(pageNo > 1)
+		params.pageNo = pageNo;
+	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
+        method: "post",
+        parameters: params,
+        onSuccess: function (rslt) {
+			callback(rslt);
+        },
+        onFailure: function () {
+        },
+    });
+  },
+  checkbarbreports : function (rslt){
+	var t = Tabs.Barb;
+	if(!rslt.ok){
+		return;
+	}
+	if(rslt.arReports.length < 1){
+		return;
+	}
+	var reports = rslt.arReports;
+	var totalPages = rslt.totalPages;
+		var deletes1 = new Array();
+		var deletes0 = new Array();
+		for(k in reports){
+			if(AttackOptions.DeleteMsg){
+				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && AttackOptions.MsgLevel[reports[k].side0TileLevel])
+					deletes1.push(k.substr(2));
+				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
+					deletes1.push(k.substr(2));
+			} else if (AttackOptions.DeleteMsgs0){
+				if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
+					deletes0.push(k.substr(2));
+			}
+		}
+		if(deletes1.length > 0 || deletes0.length > 0){
+			t.deletereports(deletes1, deletes0);
+		} else {
+			t.deleting = false;
+			return;
+		}
+  },
+  deletereports : function (deletes1, deletes0){
+	var t = Tabs.Barb;
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	params.s1rids = deletes1.join(",");
+	params.s0rids = deletes0.join(",");
+	params.cityrids = '';
+	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
+		method: "post",
+		parameters: params,
+		onSuccess: function (rslt) {
+			Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
+			t.fetchbarbreports(0, t.checkbarbreports);
+		},
+		onFailure: function () {
+		},
+	});
+  },
+  isMyself: function(userID){
+	if(!Seed.players["u"+userID])
+		return false;
+	if(Seed.players["u"+userID].n == Seed.player.name)
+		return true;
+	else
+		return false;
+	return false;
+  },
+
   checkBarbData: function(){
   	var t = Tabs.Barb;
-	  for (i=1;i<=Seed.cities.length;i++){	
-	  		t.barbArray[i] = 0;
-	  		var myarray = (GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
-            t.barbArray[i] = (GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));	  		
-	  		if (myarray == undefined && t.searchRunning==false) {
-	  			t.lookup=i;
-	  			t.opt.startX=parseInt(Seed.cities[(i-1)][2]);
-	  			t.opt.startY=parseInt(Seed.cities[(i-1)][3]);  
-	  			t.clickedSearch();
-	  		}
-	  		if (myarray != undefined){
-           myarray = JSON2.parse(GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
-	  		   if (AttackOptions.Method == 'distance') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
-	  		   if (AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a > b ? -1 : 1);});
-	  		   if (AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
+	  for (i=1;i<=Seed.cities.length;i++){
+		t.barbArray[i] = [];
+	  	var myarray = (GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
+		
+		if (myarray == undefined && t.searchRunning==false) {
+			t.searchRunning = true;
+	  		t.lookup=i;
+	  		t.opt.startX=parseInt(Seed.cities[(i-1)][2]);
+	  		t.opt.startY=parseInt(Seed.cities[(i-1)][3]);  
+	  		t.clickedSearch();
+	  	}
+		if (myarray != undefined){
+			myarray = JSON2.parse(myarray);
+			if(AttackOptions.Method == 'distance') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
+			if(AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a > b ? -1 : 1);});
+			if(AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
 	  		   GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(), JSON2.stringify(t.barbArray[i]));
 	  		}
 	  	}
   },
-   
   
-
   toggleBarbState: function(obj){
-		var t = Tabs.Barb;
-        if (AttackOptions.Running == true) {
-            AttackOptions.Running = false;
-            obj.value = "Barb = OFF";
-            
-             updatebotbutton("BOT");
-            saveAttackOptions();
-        }
-        else {
-            AttackOptions.Running = true;
-            obj.value = "Barb = ON";
-             updatebotbutton("BOT");
-            saveAttackOptions();
-        }
-    },
+	var t = Tabs.Barb;
+	if (AttackOptions.Running == true) {
+		AttackOptions.Running = false;
+		obj.value = "Barb = OFF";
+		updatebotbutton("BOT");
+		saveAttackOptions();
+		t.nextattack = null;
+	} else {
+		AttackOptions.Running = true;
+		obj.value = "Barb = ON";
+		updatebotbutton("BOT (AA)");
+		saveAttackOptions();
+		t.checkBarbData();
+		t.nextattack = setInterval(t.getnextCity,(AttackOptions.SendInterval*1000));
+	}
+  },
   
   barbing : function(){
   	   var t = Tabs.Barb;
-       if (AttackOptions.Running == false) return;
-       if (t.searchRunning == true) return;
-       if (t.init ==0) city=1;
-       if (city>Seed.cities.length)  city=1;	   
-	   
-       if (AttackOptions.Levels[city][1] == false && AttackOptions.Levels[city][2] == false && AttackOptions.Levels[city][3] == false && AttackOptions.Levels[city][4] == false && AttackOptions.Levels[city][5] == false && AttackOptions.Levels[city][6] == false && AttackOptions.Levels[city][7] == false && AttackOptions.Levels[city][8] == false && AttackOptions.Levels[city][9] == false && AttackOptions.Levels[city][10] == false ){
-          if (city<=Seed.cities.length) {
-         		city++;
-         		t.init=1;
-          }
-          if (city>Seed.cities.length) city=1;
-          return;
-       }
-
+	   var city = t.city;
        var now = new Date().getTime()/1000.0;
        now = now.toFixed(0);
        if ( now > (parseInt(AttackOptions.LastReport)+(3600*AttackOptions.MsgInterval))) {
@@ -3736,19 +3729,27 @@ Tabs.Barb = {
        }
        citynumber = Seed.cities[city-1][0];
        cityID = 'city' + citynumber; 
-       
+	   
        t.getAtkKnight(cityID);
-       if  (t.knt.toSource() == "[]") {city++; return;}  
-       var kid = t.knt[0].ID;
+       t.getRallypointLevel(cityID);
+	   var slots=0;
+	   for(var k in Seed.queue_atkp[cityID])
+		slots++;
+	   if(Seed.queue_atkp[cityID].toSource() == "[]")
+		slots = 0;
        
+	   var element1 = 'pddatacity'+(city-1);
+       document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city]; 
+       var element2 = 'pddataarray'+(city-1); 
+       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
+	   
+	   if ((t.rallypointlevel-AttackOptions.RallyClip) <= slots) return;
+	   if (t.knt.toSource() == "[]") return; 
+	   var kid = t.knt[0].ID;
+	   
        AttackOptions.BarbNumber[city]=0;
        var check=0;
-       
        while (check == 0){
-        if (city>Seed.cities.length) {
-        		city=1;
-        }
-        
          for (h=1;h<=10;h++){
             if ( AttackOptions.Levels[city][h] == true && (parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['level'])) == h ) check=1; 
          }
@@ -3761,44 +3762,46 @@ Tabs.Barb = {
          var u8 = AttackOptions.Troops[barblevel][5];
          var u10 = AttackOptions.Troops[barblevel][6];
          var u12 = AttackOptions.Troops[barblevel][7];
-         if (t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] < AttackOptions.MinDistance[barblevel] || t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] > AttackOptions.Distance[barblevel]) check=0;
+         if (t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] > AttackOptions.Distance[barblevel]) check=0;
                            
          if (u1 > parseInt(Seed.units[cityID]['unt1']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u12 > parseInt(Seed.units[cityID]['unt12'])) check=0;
           
          if (AttackOptions.Troops[barblevel][1] == 0 && AttackOptions.Troops[barblevel][2] == 0 && AttackOptions.Troops[barblevel][3] == 0 && AttackOptions.Troops[barblevel][4] == 0 && AttackOptions.Troops[barblevel][5] == 0 && AttackOptions.Troops[barblevel][6] == 0 && AttackOptions.Troops[barblevel][7] == 0) check=0;
          if (check ==0) AttackOptions.BarbNumber[city]++;
          if (AttackOptions.BarbNumber[city]>=t.barbArray[city].length) {
-         		city++; 
-         		if (city > Seed.cities.length) city=1;
-         		return;
+         		break;
          }
-        
        }
-       	
-       var xcoord = t.barbArray[city][AttackOptions.BarbNumber[city]]['x'];
+       if (check == 0) return;
+	   
+	   var xcoord = t.barbArray[city][AttackOptions.BarbNumber[city]]['x'];
        var ycoord = t.barbArray[city][AttackOptions.BarbNumber[city]]['y'];
-       
-       slots=0;
-       for (z in Seed.queue_atkp[cityID]){
-             slots++;
-       }
-       if  (Seed.queue_atkp[cityID].toSource() == "[]") slots=0;
-       t.getRallypointLevel(cityID);
-       if ((t.rallypointlevel-AttackOptions.RallyClip) <= slots){city++; return;}  
-       
+	   
        if ((t.rallypointlevel - AttackOptions.RallyClip) > slots) t.doBarb(citynumber,city,AttackOptions.BarbNumber[city],xcoord,ycoord,kid,u1,u9,u6,u7,u8,u10,u12);
-       var element1 = 'pddatacity'+(city-1);
-       document.getElementById(element1).innerHTML = 'Barbs: ' + AttackOptions.BarbsDone[city]; 
-       var element2 = 'pddataarray'+(city-1); 
-       document.getElementById(element2).innerHTML =  '(' + AttackOptions.BarbNumber[city] + '/' + t.barbArray[city].length +')';
        saveAttackOptions();
-       if (city<=Seed.cities.length) {
-       		city++;
-       		t.init=1;
-       }
-       if (city>Seed.cities.length) {
-       		city=1;
-       }
+  },
+  
+  getnextCity: function(){
+	var t = Tabs.Barb;
+    if (!AttackOptions.Running) return;
+	if(t.searchRunning) return;
+	
+	var city = t.city+1;
+	if (city>Seed.cities.length){
+		city=1;
+		if(AttackOptions.DeleteMsg || AttackOptions.DeleteMsgs0)
+			t.startdeletereports();
+	}
+	var found = false;
+	for(var i=1; i<=10; i++){
+		if(AttackOptions.Levels[city][i]){
+			found = true;
+			break;
+		}
+	}
+	t.city = city;
+	if(!found)	return;
+	setTimeout(t.barbing, 0);
   },
   
   getRallypointLevel: function(cityId){
@@ -3831,7 +3834,7 @@ Tabs.Barb = {
   		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
   		params.cid=cityID;
   		params.type=4;
-  	  params.kid=kid;
+  	    params.kid=kid;
   		params.xcoord = xcoord;
   		params.ycoord = ycoord;
   		params.u1=u1;
@@ -3851,7 +3854,6 @@ Tabs.Barb = {
   		         onSuccess: function (transport) {
   		         var rslt = eval("(" + transport.responseText + ")");
   		         if (rslt.ok) {
-  		         //unsafeWindow.Modal.hideModalAll();
   		         var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
   		         var ut = unsafeWindow.unixtime();
   		         var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -3865,15 +3867,23 @@ Tabs.Barb = {
   		         unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
   		         unsafeWindow.update_seed(rslt.updateSeed)
   		         if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+				 var slots=0;
+			     for(var k in Seed.queue_atkp['city'+cityID])
+				  slots++;
+			     if(Seed.queue_atkp['city'+cityID].toSource() == "[]")
+				  slots = 0;
   		         AttackOptions.BarbsDone[counter]++;
-  		         document.getElementById(element1).innerHTML = 'Barbs: ' + AttackOptions.BarbsDone[counter]; 
+  		         var element1 = 'pddatacity'+(counter-1);
+				 document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[counter]; 
+				 var element2 = 'pddataarray'+(counter-1); 
+				 document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
   		         var now = new Date().getTime()/1000.0;
   		         now = now.toFixed(0);
   		         t.barbArray[counter][number]['time'] = now;
   		         GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
   		         saveAttackOptions();
                } else {
-  		         if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code != 210) AttackOptions.BarbsFailedVaria++;
+  		         if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
   		         if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
   		         if (rslt.error_code == 210) AttackOptions.BarbsFailedRP++;
   		         if (rslt.error_code == 8) AttackOptions.BarbsFailedTraffic++;
@@ -3887,36 +3897,32 @@ Tabs.Barb = {
   		         onFailure: function () {}
   		 });
   	 saveAttackOptions();
-  	 var element1 = 'pddatacity'+(counter-1);
-  	 document.getElementById(element1).innerHTML = 'Barbs: ' + AttackOptions.BarbsDone[counter]; 
-  	 var element2 = 'pddataarray'+(counter-1);
-  	 document.getElementById(element2).innerHTML = '(' + AttackOptions.BarbNumber[counter] + '/' + t.barbArray[counter].length +')';
   },
   
   sendreport: function(){
 	  var t = Tabs.Barb;
-	  var number = 0;
+	  var total = 0;
     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     params.emailTo = Seed.player['name'];
     params.subject = "Barb Overview";
-    var message = 'Barbing Stats:' + '%0A';
+    var message = 'Barbing Stats: (Sent/Total)' + '%0A';
     for (x=1;x<=Seed.cities.length;x++){	 
-    	message+= Seed.cities[x-1][1] + ': ' + AttackOptions.BarbsDone[x] + ' (' + AttackOptions.BarbNumber[x] + '/' + t.barbArray[x].length +')' + '%0A';
-    	number += AttackOptions.BarbsDone[x];
+    	message+= Seed.cities[x-1][1] + ': (' + AttackOptions.BarbsDone[x] + '/' + t.barbArray[x].length +')' + '%0A';
     }
     message += '%0A'+ 'Excess traffic errors: ' + AttackOptions.BarbsFailedTraffic +'%0A';
     message += 'Rallypoint errors: ' + AttackOptions.BarbsFailedRP +'%0A';
     message += 'Knight errors: ' + AttackOptions.BarbsFailedKnight +'%0A';
     message += 'Other errors: ' + AttackOptions.BarbsFailedVaria +'%0A';
-    message += 'Extra check: ' + (AttackOptions.BarbsTried - number - AttackOptions.BarbsFailedTraffic - AttackOptions.BarbsFailedRP - AttackOptions.BarbsFailedKnight -  AttackOptions.BarbsFailedVaria) +'%0A';
-    message += '%0A'+'%0A' + 'Food Gain (for '+AttackOptions.MsgInterval+' hour(s) of baring)' +'%0A';
+    message += 'Actual sent attacks: ' + (AttackOptions.BarbsTried - AttackOptions.BarbsFailedTraffic - AttackOptions.BarbsFailedRP - AttackOptions.BarbsFailedKnight -  AttackOptions.BarbsFailedVaria) +'%0A';
+    message += '%0A'+'%0A' + 'Food Gain (for '+AttackOptions.MsgInterval+' hour of baring)' +'%0A';
     for (q=1;q<=Seed.cities.length;q++){
     	var cityID = 'city' + Seed.cities[q-1][0];
     	var gain = parseInt(Seed.resources[cityID]['rec1'][0] / 3600) - AttackOptions.Foodstatus[q];
     	message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.Foodstatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec1'][0] / 3600)) + ' Gain: ';
-    	if (gain <= 0) message += '0' + '%0A';
-    	else message += addCommas(gain)  + '%0A';
+    	message += addCommas(gain)  + '%0A';
+		total += gain;
     }
+	message += '%0A Total food gain : '+addCommas(total)+'%0A';
     params.message = message;
     params.requestType = "COMPOSED_MAIL";
     new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
@@ -3940,7 +3946,6 @@ Tabs.Barb = {
     t.opt.searchType = 0; 
     t.opt.maxDistance = AttackOptions.MaxDistance; 
     t.opt.searchShape = 'circle'; 
-    t.searchRunning = true;
     t.mapDat = [];
     t.firstX =  t.opt.startX - t.opt.maxDistance;
     t.lastX = t.opt.startX + t.opt.maxDistance;
@@ -3957,9 +3962,7 @@ Tabs.Barb = {
    
     setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.mapCallback)}, MAP_DELAY);
   },
-    
   
-
   mapCallback : function (left, top, width, rslt){
     var t = Tabs.Barb;
     if (!t.searchRunning)
@@ -3999,7 +4002,7 @@ Tabs.Barb = {
       t.curX = t.firstX;
       t.curY += 15;
       if (t.curY > t.lastY){
-        var element = 'pddatacity'+(t.lookup-1);
+        var element = 'pdtotalcity'+(t.lookup-1);
         document.getElementById(element).innerHTML = 'Found: ' + t.mapDat.length;
         GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + t.lookup + '_' + getServerId(), JSON2.stringify(t.mapDat));
         t.searchRunning = false;
@@ -4014,12 +4017,20 @@ Tabs.Barb = {
     setTimeout (function(){t.MapAjax.request (x, y, 15, t.mapCallback)}, MAP_DELAY);
   },
   
-    hide : function (){
+  stopSearch : function (msg){
+    var t = Tabs.Barb;
+	var element = 'pddatacity'+(t.lookup-1);
+        document.getElementById(element).innerHTML = msg;
+    t.searchRunning = false;
+  },
+  
+  hide : function (){
+  
   },
 
   show : function (){
+  
   },
-
 
 }; 
 
@@ -4759,7 +4770,6 @@ Tabs.transport = {
 		params.r4 = carry_Ore;
 		params.gold = carry_Gold;
 		params.u9 = wagons_needed;	
-		//params.u7= 5000;
 		
    		if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Gold) > 0) {
                  
@@ -4771,7 +4781,6 @@ Tabs.transport = {
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
                   actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
-                  //unsafeWindow.Modal.hideModalAll();
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unsafeWindow.unixtime();
                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -4812,8 +4821,8 @@ Tabs.transport = {
         
     },
 }
- 
- 
+
+
 /****************************  Reassign Implementation  *******************************/
 var troops = {1:'SupplyTroops',
 			  2:'Militiaman',
@@ -4938,7 +4947,6 @@ Tabs.Reassign = {
       }, false);
       
       document.getElementById('pbReassignState').addEventListener('click', function(){
-      	//t.doReassign(0);
       	t.toggleReassignState(this);
       }, false);
       document.getElementById('pbSaveRouteReassign').addEventListener('click', function(){
@@ -5439,7 +5447,6 @@ Tabs.Reassign = {
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
                   actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
-                  //unsafeWindow.Modal.hideModalAll();
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unsafeWindow.unixtime();
                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -6196,7 +6203,6 @@ Tabs.Reinforce = {
                   onSuccess: function (transport) {
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
-                  unsafeWindow.Modal.hideModalAll();
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unsafeWindow.unixtime();
                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -7110,7 +7116,6 @@ function readOptions (){
         Options[k] = opts[k];
     }
   }
-  if (Options.alertSound.soundUrl == 'http://www.falli.org/app/download/3780510256/fliegeralarmsire.mp3?t=1263916531') {Options.alertSound.soundUrl = DEFAULT_ALERT_SOUND_URL; saveOptions () } 
 }
 
 function readGlobalOptions (){
@@ -7132,10 +7137,8 @@ function readAttackOptions (){
   }
 }
 
-
 function createButton (label,id){
   var a=document.createElement('a');
-  
   a.className='button20';
   a.id = id;
   a.innerHTML='<span style="color: #ff6">'+ label +'</span>';
@@ -8639,11 +8642,13 @@ Tabs.Gifts = {
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 1'});
       progress ('1');
-      var m = /ngoURI\(\'(.*?)\'/im.exec (page);
+      var m = /window.location.replace\(\"(.*?)\"/im.exec (page);
+	  if (m == null)
+		m = /ngoURI\(\'(.*?)\'/im.exec (page);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 1'});
       var url = m[1].replace ('\\/', '/', 'g');
-      var url = url.replace ('\\\\x26', '&', 'g');
+		url = url.replace ('\\\\x26', '&', 'g');
       GM_AjaxGet (url, '', got2, 'Page 2');        
     }
     
@@ -8960,7 +8965,6 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     moveKnob (me);
     doneMoving();
   }
-  
   
   function mouseDown(me){
     var e = self.slider;
