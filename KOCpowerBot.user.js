@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110522c
+// @version        20110522d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110522c';
+var Version = '20110522d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -206,6 +206,7 @@ var AttackOptions = {
   BarbNumber    		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   Levels    			: {1:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
   Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0}},
+  MinDistance			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
   Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750}	
 };
 
@@ -3429,7 +3430,7 @@ Tabs.Barb = {
      saveAttackOptions();
 	 t.checkBarbData();
 	 if(t.nextattack == null)
-		t.nextattack = setInterval(t.getnextCity,(AttackOptions.SendInterval*1000));
+		t.nextattack = setInterval(t.getnextCity, 1500);
      setInterval(t.startdeletereports,(120000));
      for(i=0;i<Seed.cities.length;i++){
     		var element = 'pdtotalcity'+i;
@@ -3481,12 +3482,13 @@ Tabs.Barb = {
 	 z+='<TD></td>';
 	 for(var i=0; i<troopDef.length; i++)
 		z+='<TD>'+troopDef[i][0]+'</td>';
-	 z+='<TD>MAX dist</td>';
+	 z+='<TD>MIN dist</td><TD>MAX dist</td>';
 	 for(i=0;i<10;i++){
 	 	z += '<TR><TD>Level '+(i+1)+': </td>';
 	 	for(var j=0; j<troopDef.length; j++){
 	 		z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=4 maxlength=6 value="'+AttackOptions.Troops[i+1][j+1]+'" /></td>';
 	 	}
+		z+='<TD align=left><INPUT id=Mindist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.MinDistance[i+1]+'"</td>';
 	 	z+='<TD align=right><INPUT id=dist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[i+1]+'"</td>';
 	 	z+='</tr>';		 		
 	 }
@@ -3575,6 +3577,7 @@ Tabs.Barb = {
   	 	}
 		if(parseIntNan(document.getElementById('dist'+i).value) > AttackOptions.MaxDistance)
 			document.getElementById('dist'+i).value = AttackOptions.MaxDistance;
+		AttackOptions.MinDistance[i+1] = parseIntNan(document.getElementById('Mindist'+i).value);
   	 	AttackOptions.Distance[i+1] = parseIntNan(document.getElementById('dist'+i).value);	 		
 	 }
 	 saveAttackOptions();
@@ -3761,7 +3764,7 @@ Tabs.Barb = {
          var u8 = AttackOptions.Troops[barblevel][5];
          var u10 = AttackOptions.Troops[barblevel][6];
          var u12 = AttackOptions.Troops[barblevel][7];
-         if (t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] > AttackOptions.Distance[barblevel]) check=0;
+         if (t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] < AttackOptions.MinDistance[barblevel] || t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] > AttackOptions.Distance[barblevel]) check=0;
                            
          if (u1 > parseInt(Seed.units[cityID]['unt1']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u12 > parseInt(Seed.units[cityID]['unt12'])) check=0;
           
