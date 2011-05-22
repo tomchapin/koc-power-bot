@@ -167,7 +167,7 @@ var Options = {
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
-  celltext     : {atext:false, provider:0, num1:"0000", num2:"000", num3:"0000"},
+  celltext     : {atext:false, provider:0, num1:"000", num2:"000", num3:"0000"},
   giftDelete   : 'e',
   currentTab   : null,
   hideOnGoto   : true,
