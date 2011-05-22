@@ -167,7 +167,7 @@ var Options = {
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
-  celltext     : {atext:false, provider:0, num1:"000", num2:"000", num3:"0000"},
+  celltext     : {atext:false, provider:0, num1:"0000", num2:"000", num3:"0000"},
   giftDelete   : 'e',
   currentTab   : null,
   hideOnGoto   : true,
@@ -511,7 +511,7 @@ Tabs.tower = {
     m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="Stop Sound Alert"></center></div><DIV id=pbSwfPlayer></div>';
     m += '<BR><DIV class=pbStat>CONFIGURATION</div><TABLE class=pbTab>\
     <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
-    <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=3 maxlength=3 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
+    <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
 &nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
 &nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold">(Please note that standard text messaging charges may apply)</span></td></tr><tr><td></td>\
     <TD align=left>Country: <select id="pbfrmcountry">';
