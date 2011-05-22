@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110522b
+// @version        20110522c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110522b';
+var Version = '20110522c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3379,11 +3379,6 @@ Tabs.Barb = {
   init : function (div){
     var t = Tabs.Barb;
     t.myDiv = div;
-    saveAttackOptions();
-	t.checkBarbData();
-	if(t.nextattack == null)
-		t.nextattack = setInterval(t.getnextCity,(AttackOptions.SendInterval*1000));
-    setInterval(t.startdeletereports,(120000));
 
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED BARBING FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
 	 if (AttackOptions.Running == false) {
@@ -3431,7 +3426,11 @@ Tabs.Barb = {
      }
     
      t.myDiv.innerHTML = m;
-     t.checkBarbData();
+     saveAttackOptions();
+	 t.checkBarbData();
+	 if(t.nextattack == null)
+		t.nextattack = setInterval(t.getnextCity,(AttackOptions.SendInterval*1000));
+     setInterval(t.startdeletereports,(120000));
      for(i=0;i<Seed.cities.length;i++){
     		var element = 'pdtotalcity'+i;
     		if (t.barbArray[i+1] == undefined) document.getElementById(element).innerHTML = 'No Data';
