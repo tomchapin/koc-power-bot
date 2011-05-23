@@ -1,6 +1,16 @@
 REVISION HISTORY:
 ----------------
 
+20110522d
+   *Released updated version of 20110521b
+   *Fixed bug with marches not sending out if rally point has no current marches
+   *Revamped the timer mechanism
+   *Added a min distance option
+   *Changed auto delete timer to only delete every 2 minutes to reduce server load.
+   *Added rallypoint info on barb tab
+   *More clarification on the changing numbers in barb tab
+   *Changed barb overview message to include number of hours barbed, negative food gain and total food gain.
+
 20110521b
    *Added option for users to set max search distance for barbs (capped at 75 spaces)
    *Fixed issue where auto barb gets stuck after a while
