@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110522d
+// @version        20110524a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110522d';
+var Version = '20110524a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3592,7 +3592,7 @@ Tabs.Barb = {
   
   startdeletereports : function (){
 	var t = Tabs.Barb;
-	if (!AttackOptions.DeleteMsg && !AttackOptions.DeleteMsgs0) return;
+	if (!AttackOptions.DeleteMsg || !AttackOptions.DeleteMsgs0) return;
 	if(!t.deleting){
 		t.deleting = true;
 		t.fetchbarbreports(0, t.checkbarbreports);
@@ -3726,6 +3726,7 @@ Tabs.Barb = {
        		AttackOptions.BarbsFailedKnight=0;
        		AttackOptions.BarbsFailedRP=0;
        		AttackOptions.BarbsFailedTraffic=0;
+       		AttackOptions.BarbsFailedVaria=0;
        		AttackOptions.BarbsTried=0;
        		saveAttackOptions();
        }
@@ -3791,8 +3792,6 @@ Tabs.Barb = {
 	var city = t.city+1;
 	if (city>Seed.cities.length){
 		city=1;
-		if(AttackOptions.DeleteMsg || AttackOptions.DeleteMsgs0)
-			t.startdeletereports();
 	}
 	var found = false;
 	for(var i=1; i<=10; i++){
@@ -3916,7 +3915,7 @@ Tabs.Barb = {
     message += 'Knight errors: ' + AttackOptions.BarbsFailedKnight +'%0A';
     message += 'Other errors: ' + AttackOptions.BarbsFailedVaria +'%0A';
     message += 'Actual sent attacks: ' + (AttackOptions.BarbsTried - AttackOptions.BarbsFailedTraffic - AttackOptions.BarbsFailedRP - AttackOptions.BarbsFailedKnight -  AttackOptions.BarbsFailedVaria) +'%0A';
-    message += '%0A'+'%0A' + 'Food Gain (for '+AttackOptions.MsgInterval+' hour of baring)' +'%0A';
+    message += '%0A'+'%0A' + 'Food Gain (for '+AttackOptions.MsgInterval+' hour of barbing)' +'%0A';
     for (q=1;q<=Seed.cities.length;q++){
     	var cityID = 'city' + Seed.cities[q-1][0];
     	var gain = parseInt(Seed.resources[cityID]['rec1'][0] / 3600) - AttackOptions.Foodstatus[q];
