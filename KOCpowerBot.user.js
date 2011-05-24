@@ -3592,7 +3592,7 @@ Tabs.Barb = {
   
   startdeletereports : function (){
 	var t = Tabs.Barb;
-	if (!AttackOptions.DeleteMsg || !AttackOptions.DeleteMsgs0) return;
+	if (!AttackOptions.DeleteMsg && !AttackOptions.DeleteMsgs0) return;
 	if(!t.deleting){
 		t.deleting = true;
 		t.fetchbarbreports(0, t.checkbarbreports);
