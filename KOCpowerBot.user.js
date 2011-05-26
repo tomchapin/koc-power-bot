@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110526b
+// @version        20110526c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110526b';
+var Version = '20110526c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2502,8 +2502,11 @@ Tabs.Search = {
 	}
 	var rallypointlevel = t.getRallypoint(city.id);
 	var slots = 0;
+	
+	if (Seed.queue_atkp != []){
 	if(Seed.queue_atkp['city'+city.id].length != 'undefined')
 		slots = Seed.queue_atkp['city'+city.id].length;
+	}
 	if(slots >= rallypointlevel){
 		setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
 		return;
@@ -3815,10 +3818,13 @@ Tabs.Barb = {
        t.getAtkKnight(cityID);
        t.getRallypointLevel(cityID);
 	   var slots=0;
-	   for(var k in Seed.queue_atkp[cityID])
-		slots++;
-	   if(Seed.queue_atkp[cityID].toSource() == "[]")
-		slots = 0;
+	   if (Seed.queue_atkp[cityID] != undefined){
+	       for(var k in Seed.queue_atkp[cityID])
+		      slots++;
+		      if(Seed.queue_atkp[cityID].toSource() == "[]")
+		  slots = 0;
+		}
+	  else slots=0; 
        
 	   var element1 = 'pddatacity'+(city-1);
        document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city]; 
