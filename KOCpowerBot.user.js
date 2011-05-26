@@ -3746,7 +3746,7 @@ Tabs.Barb = {
      			});
      		}
      }
-     t.knt = t.knt.sort(function sort(a,b) {a = a['knightId'];b = b['knightId'];return a == b ? 0 : (a < b ? -1 : 1);});
+     t.knt = t.knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
   },
   
   doBarb: function(cityID,counter,number,xcoord,ycoord,kid,u1,u9,u6,u7,u8,u10,u12){
@@ -5939,7 +5939,7 @@ Tabs.Reinforce = {
        			});
        		}
        }
-       knt = knt.sort(function sort(a,b) {a = a['knightId'];b = b['knightId'];return a == b ? 0 : (a < b ? -1 : 1);}); 
+       knt = knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);}); 
        document.getElementById('piKnight').options.length=0;
        for (k in knt){
     			if (knt[k]["Name"] !=undefined){
