@@ -1,6 +1,6 @@
 General Development Guidelines:
 
-1. If you are a developer, please make sure to work inside of your /workspace/{author} folder.
+1. If you are a developer, please make sure to work inside of your /workspaces/{author} folder.
 
 2. When publishing a new version to the /trunk/, be sure to place a previous version of the
    script into the /tags/ folder.
