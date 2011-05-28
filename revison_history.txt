@@ -1,6 +1,9 @@
 REVISION HISTORY:
 ----------------
 
+20110527a
+   *Attempted to fix issue with missing "Bot" tab
+   
 20110522d
    *Released updated version of 20110521b
    *Fixed bug with marches not sending out if rally point has no current marches

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110526c
+// @version        20110527a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110526c';
+var Version = '20110527a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3451,9 +3451,9 @@ Tabs.Barb = {
 	document.getElementById('AttSearch').addEventListener('click', function(){t.toggleBarbState(this)} , false);
 	document.getElementById('Options').addEventListener('click', t.barbOptions , false);
 	document.getElementById('troopselect').addEventListener('click', t.troopOptions , false);
-    var class = document.getElementsByClassName('pblevelopt');
-    for (k=0;k<class.length;k++){
-    	class[k].addEventListener('click', t.saveLevelOptions , false);
+    var element_class = document.getElementsByClassName('pblevelopt');
+    for (k=0;k<element_class.length;k++){
+    	element_class[k].addEventListener('click', t.saveLevelOptions , false);
     }
    },
   
