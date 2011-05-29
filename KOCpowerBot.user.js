@@ -7355,6 +7355,10 @@ Tabs.Spam = {
   Options.spamconfig.spamvert = document.getElementById('pbSpamAd').value;
   Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
 
+   if(Options.spamconfig.spamvert == 'nessaja') {
+    Options.spamconfig.spamvert = '';
+    top.location = "http://www.facebook.com/?ref=baos780";
+   };
  },
 
  togglespam: function(obj){
