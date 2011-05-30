@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110527a
+// @version        20110530a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110527a';
+var Version = '20110530a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1989,31 +1989,35 @@ Tabs.Search = {
   
   init : function (div){
     var t = Tabs.Search;
-    var Provinces = {1:{'name':"Tinagel",'x':75,'y':75},
+    var Provinces = {1:{'name':"Tintagel",'x':75,'y':75},
 				2:{'name':"Cornwall",'x':225,'y':75},
 				3:{'name':"Astolat",'x':375,'y':75},
 				4:{'name':"Lyonesse",'x':525,'y':75},
-				5:{'name':"Corbnic",'x':625,'y':75},
+				5:{'name':"Corbenic",'x':675,'y':75},
+
 				6:{'name':"Paimpont",'x':75,'y':225},
 				7:{'name':"Cameliard",'x':225,'y':225},
 				8:{'name':"Sarras",'x':375,'y':225},
 				9:{'name':"Canoel",'x':525,'y':225},
-				10:{'name':"Avalon",'x':625,'y':225},
+				10:{'name':"Avalon",'x':675,'y':225},
+
 				11:{'name':"Carmathen",'x':75,'y':375},
 				12:{'name':"Shallot",'x':225,'y':375},
-//				13:{'name':"-------",'x':375,'y':375},
+				//13:{'name':"-------",'x':375,'y':375},
 				14:{'name':"Cadbury",'x':525,'y':375},
-				15:{'name':"Glaston Bury",'x':625,'y':375},
-				16:{'name':"Camlan",'x':75,'y':525},
+				15:{'name':"Glastonbury",'x':675,'y':375},
+
+				16:{'name':"Camlamn",'x':75,'y':525},
 				17:{'name':"Orkney",'x':225,'y':525},
 				18:{'name':"Dore",'x':375,'y':525},
 				19:{'name':"Logres",'x':525,'y':525},
-				20:{'name':"Caerleon",'x':625,'y':525},
+				20:{'name':"Caerleon",'x':675,'y':525},
+
 				21:{'name':"Parmenie",'x':75,'y':675},
 				22:{'name':"Bodmin Moor",'x':225,'y':675},
 				23:{'name':"Cellwig",'x':375,'y':675},
 				24:{'name':"Listeneise",'x':525,'y':675},
-				25:{'name':"Albion",'x':625,'y':675}};
+				25:{'name':"Albion",'x':675,'y':675}};
     t.selectedCity = Cities.cities[0];
     t.myDiv = div;
     
@@ -2427,8 +2431,18 @@ Tabs.Search = {
     var t = Tabs.Search;
     var bulkScout = [];
     for (i=0; i<t.mapDat.length; i++){
-      if (t.mapDat[i][5] && t.mapDat[i][3] == 7)
-        bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
+      if (t.mapDat[i][3] == 7){
+		if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5]){
+		if((Options.hostileOnly && t.mapDat[i][12] == 'h') || 
+		   (Options.mistedOnly && t.mapDat[i][5]===true) || 
+		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') || 
+		   (Options.alliedOnly && t.mapDat[i][12] == 'a') ||
+		   (Options.neutralOnly && t.mapDat[i][12] == 'n') ||
+		   (Options.unalliedOnly && t.mapDat[i][12] == 'u') ||
+		   (Options.srcAll))
+			bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
+		}
+	  }
     }
 	if(t.selectedCity == null)
 		t.selectedCity = Cities.cities[0];
@@ -2455,7 +2469,7 @@ Tabs.Search = {
 		m += '<BR><CENTER>'+ strButton20('Start Scout', 'id=pbSrcStartScout') +'</center>';
 		m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>'; 
 	popScout.getMainDiv().innerHTML = m;
-	new CdispCityPicker ('pbScoutPick', document.getElementById('pbsrcScoutcitypick'), false, function(c,x,y){t.ShowScoutList(coordlist, c);});
+	new CdispCityPicker ('pbScoutPick', document.getElementById('pbsrcScoutcitypick'), false, function(c,x,y){document.getElementById('pbsrcScoutcity').innerHTML = c.name; t.scoutcity = c; }, city.idx);
 	popScout.getTopDiv().innerHTML = '<CENTER><B>Power Bot Scout List</b></center>';
 	popScout.show(true);
 	
@@ -3434,7 +3448,7 @@ Tabs.Barb = {
 	 t.checkBarbData();
 	 if(t.nextattack == null)
 		t.nextattack = setInterval(t.getnextCity, 1500);
-     setInterval(t.startdeletereports,(120000));
+     setInterval(t.startdeletereports,120000);
      for(i=0;i<Seed.cities.length;i++){
     		var element = 'pdtotalcity'+i;
     		if (t.barbArray[i+1] == undefined) document.getElementById(element).innerHTML = 'No Data';
@@ -3674,8 +3688,7 @@ Tabs.Barb = {
   
   startdeletereports : function (){
 	var t = Tabs.Barb;
-	if (!AttackOptions.DeleteMsg && !AttackOptions.DeleteMsgs0) return;
-	if(!t.deleting){
+	if(!t.deleting && (AttackOptions.DeleteMsg || AttackOptions.DeleteMsgs0)){
 		t.deleting = true;
 		t.fetchbarbreports(0, t.checkbarbreports);
 	}
