@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110530a
+// @version        20110531a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110530a';
+var Version = '20110531a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3446,7 +3446,7 @@ Tabs.Barb = {
      t.myDiv.innerHTML = m;
      saveAttackOptions();
 	 t.checkBarbData();
-	 if(t.nextattack == null)
+	 if(t.nextattack == null && AttackOptions.Running)
 		t.nextattack = setInterval(t.getnextCity, 1500);
      setInterval(t.startdeletereports,120000);
      for(i=0;i<Seed.cities.length;i++){
@@ -5490,6 +5490,7 @@ Tabs.Reassign = {
    	 	var ycoord = t.reassignRoutes[count]["target_y"];
     	
     	var cityID = 'city' + city;
+		var marching = getMarchInfo();
     	t.getRallypoint(cityID);
 		if(t.rallypointlevel == 11) t.rallypointlevel = 15;
     	var maxsend = (t.rallypointlevel * 10000);
@@ -5497,7 +5498,7 @@ Tabs.Reassign = {
     	
     	var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult"];
     	for (k in troopsselect) {
-    			citytotal = parseInt(Seed.units[cityID]['unt'+(parseInt(k)+1)]);
+    			citytotal = parseInt(Seed.units[cityID]['unt'+(parseInt(k)+1)]) + parseInt(marching[cityID].marchUnits);
     			//alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
 				if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
     			if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
@@ -7403,6 +7404,7 @@ Tabs.Spam = {
 
 var SpamEvery  = {
   timer : null,
+  spamtimer : 0,
   init : function (){
 
     if (Options.spamconfig.spammins < 1)
@@ -7413,11 +7415,13 @@ var SpamEvery  = {
     var t = SpamEvery;
     clearTimeout (t.timer);
     if (tf)
-      t.timer = setTimeout (t.count, '60000');
+      t.timer = setTimeout (t.count, 60*1000);
   },
   count : function (){
    var t = SpamEvery;
-   if (Options.spamconfig.atime > Options.spamconfig.spammins) {
+   t.spamtimer = Options.spamconfig.spammins;
+   if(t.spamtimer < 60) t.spamtimer = 60;
+   if (Options.spamconfig.atime > t.spamtimer) {
     Options.spamconfig.atime = 2;
     t.doit ();
    } else {
@@ -7477,6 +7481,44 @@ var CalterUwFunc = function (funcName, findReplace) {
   }
 };
 
+function getMarchInfo (){
+  var ret = {};
+
+  for(i=0; i<Cities.numCities; i++) {   // each city
+	cityID = 'city'+ Cities.cities[i].id;
+	
+  ret[cityID].marchUnits = [];
+  ret[cityID].returnUnits = [];
+  ret[cityID].resources = [];
+  for (i=0; i<13; i++){
+    ret[cityID].marchUnits[i] = 0;
+    ret[cityID].returnUnits[i] = 0;
+  }
+  for (i=0; i<5; i++){
+    ret[cityID].resources[i] = 0;
+  }
+
+  var now = unixTime();
+
+    for (k in Seed.queue_atkp[cityID]){
+       // each march
+      march = Seed.queue_atkp[cityID][k];
+      if (typeof (march) == 'object'){
+        for (ii=0; ii<13; ii++){
+          ret[cityID].marchUnits[ii] += parseInt (march['unit'+ ii +'Count']);
+          ret[cityID].returnUnits[ii] += parseInt (march['unit'+ ii +'Return']);
+        }
+        for (ii=1; ii<5; ii++){
+          ret[cityID].resources[ii] += parseInt (march['resource'+ ii]);
+        }
+          ret[cityID].resources[0] += parseInt (march['gold']);
+      }
+// TODO: fixup completed marches
+// TODO: Assume transport is complete ?
+    }
+  }
+  return ret;
+}
 
 function makeButton20 (label){
   var a = document.createElement('a');
