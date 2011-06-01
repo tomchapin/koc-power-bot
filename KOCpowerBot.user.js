@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110601a
+// @version        20110601b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110601a';
+var Version = '20110601b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -5448,7 +5448,7 @@ Tabs.Reassign = {
         if (t.reassignState.running == true) {
             t.reassignState.running = false;
             obj.value = "Reassign = OFF";
-			clearTimeout(t.checkdoreassigntimeout);
+			t.checkdoreassigntimeout = null;
 			t.count = 0;
         }
         else {
@@ -5462,7 +5462,7 @@ Tabs.Reassign = {
 	var t = Tabs.Reassign;
 	t.doReassign(t.count);
 	t.count++;
-		if(t.count < t.reassignRoutes.length){
+		if(t.count < t.reassignRoutes.length && t.reassignState.running){
 		  t.checkdoreassigntimeout = setTimeout(function() { t.checkdoReassign();}, 5000);
 		} else {
 		  var now = new Date().getTime()/1000.0;
@@ -5498,7 +5498,7 @@ Tabs.Reassign = {
    	 	var ycoord = t.reassignRoutes[count]["target_y"];
     	
     	var cityID = 'city' + city;
-		var marching = getMarchInfo();
+		var marching = getMarchInfo(cityID);
     	t.getRallypoint(cityID);
 		if(t.rallypointlevel == 11) t.rallypointlevel = 15;
     	var maxsend = (t.rallypointlevel * 10000);
@@ -5506,21 +5506,23 @@ Tabs.Reassign = {
     	
     	var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult"];
     	for (k in troopsselect) {
-    			citytotal = parseInt(Seed.units[cityID]['unt'+(parseInt(k)+1)]) + parseInt(marching[cityID].marchUnits);
-    			//alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
-				if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
-    			if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
-    				send[(parseInt(k)+1)]= citytotal - t.reassignRoutes[count][troopsselect[k]];
-    				totalsend += send[(parseInt(k)+1)];
-    				//alert(parseInt(k)+1 + ' - ' + citytotal+ ' : ' + troopsselect[k] + ' / ' + t.reassignRoutes[0][troopsselect[k]]);    			
-    				
-    			}
-				if(totalsend > maxsend){
-					totalsend -= send[(parseInt(k)+1)];
-					send[(parseInt(k)+1)] = parseInt(maxsend-totalsend);
-					totalsend += send[(parseInt(k)+1)];
-					break;
-				}
+			var citytroops = Seed.units[cityID]['unt'+(parseInt(k)+1)];
+			var marchtroops = marching.marchUnits[parseInt(k)+1];
+			citytotal = parseInt(citytroops) + parseInt(marchtroops);
+			//alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
+			if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
+			if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
+				send[(parseInt(k)+1)]= parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]) - parseInt(marchtroops);
+				totalsend += send[(parseInt(k)+1)];
+				//alert(parseInt(k)+1 + ' - ' + citytotal+ ' : ' + troopsselect[k] + ' / ' + t.reassignRoutes[0][troopsselect[k]]);    			
+				
+			}
+			if(totalsend > maxsend){
+				totalsend -= send[(parseInt(k)+1)];
+				send[(parseInt(k)+1)] = parseInt(maxsend-totalsend);
+				totalsend += send[(parseInt(k)+1)];
+				break;
+			}
        	}
     	
     	for (var t=0; t< Seed.cities.length;t++) {
@@ -7527,42 +7529,33 @@ var CalterUwFunc = function (funcName, findReplace) {
   }
 };
 
-function getMarchInfo (){
+function getMarchInfo (cityID){
   var ret = {};
 
-  for(i=0; i<Cities.numCities; i++) {   // each city
-	cityID = 'city'+ Cities.cities[i].id;
-	
-  ret[cityID].marchUnits = [];
-  ret[cityID].returnUnits = [];
-  ret[cityID].resources = [];
+  ret.marchUnits = [];
+  ret.returnUnits = [];
+  ret.resources = [];
   for (i=0; i<13; i++){
-    ret[cityID].marchUnits[i] = 0;
-    ret[cityID].returnUnits[i] = 0;
+    ret.marchUnits[i] = 0;
+    ret.returnUnits[i] = 0;
   }
   for (i=0; i<5; i++){
-    ret[cityID].resources[i] = 0;
+    ret.resources[i] = 0;
   }
-
-  var now = unixTime();
-
-    for (k in Seed.queue_atkp[cityID]){
-       // each march
+  
+  for (k in Seed.queue_atkp[cityID]){   // each march
       march = Seed.queue_atkp[cityID][k];
       if (typeof (march) == 'object'){
         for (ii=0; ii<13; ii++){
-          ret[cityID].marchUnits[ii] += parseInt (march['unit'+ ii +'Count']);
-          ret[cityID].returnUnits[ii] += parseInt (march['unit'+ ii +'Return']);
+          ret.marchUnits[ii] += parseInt (march['unit'+ ii +'Count']);
+          ret.returnUnits[ii] += parseInt (march['unit'+ ii +'Return']);
         }
         for (ii=1; ii<5; ii++){
-          ret[cityID].resources[ii] += parseInt (march['resource'+ ii]);
+          ret.resources[ii] += parseInt (march['resource'+ ii]);
         }
-          ret[cityID].resources[0] += parseInt (march['gold']);
+          ret.resources[0] += parseInt (march['gold']);
       }
-// TODO: fixup completed marches
-// TODO: Assume transport is complete ?
     }
-  }
   return ret;
 }
 
