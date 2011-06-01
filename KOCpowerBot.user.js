@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110531a
+// @version        20110601a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110531a';
+var Version = '20110601a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -304,6 +304,7 @@ function pbStartup (){
   mainPop.autoHeight (true);  
 
   mainPop.getMainDiv().innerHTML = '<STYLE>'+ styles +'</style>';
+  AddMainTabLink('BOT', eventHideShow, mouseMainTab);
   tabManager.init (mainPop.getMainDiv());
   actionLog ("KOC Power Bot v"+ Version +" Loaded  (KofC version: "+ anticd.getKOCversion() +")");
   
@@ -318,7 +319,6 @@ function pbStartup (){
   }
   window.addEventListener('unload', onUnload, false);
   exportToKOCattack.init();
-  AddMainTabLink('BOT', eventHideShow, mouseMainTab);
   kocWatchdog ();
   WideScreen.init ();
   WideScreen.setChatOnRight (Options.pbChatOnRight);
@@ -546,6 +546,7 @@ Tabs.tower = {
             <TR><TD align=right>Display defend status: &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
             <TR><TD align=right>Minimum # of troops: &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
             </table></td></tr>\
+        <TR><TD align=right><INPUT id=pbalertbarb type=checkbox '+ (Options.alertConfig.barb?'CHECKED':'') +'/></td><TD>Stop barbing on impending attack.</td></tr>\
         <TR><TD><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>Play sound on incoming attack/scout</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>Loading SWF player</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
@@ -586,6 +587,7 @@ Tabs.tower = {
     document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
+    document.getElementById('pbalertbarb').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
         t.loadUrl (Options.alertSound.soundUrl);
@@ -683,13 +685,14 @@ Tabs.tower = {
     Options.alertConfig.scouting=document.getElementById('pbalertScout').checked;      
     Options.alertConfig.wilds=document.getElementById('pbalertWild').checked;
     Options.alertConfig.defend=document.getElementById('pbalertDefend').checked;
+    Options.alertConfig.barb=document.getElementById('pbalertbarb').checked;
     var mt = parseInt(document.getElementById('pbalertTroops').value);
     if (mt<1 || mt>120000){
       document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
       document.getElementById('pbalerterr').innerHTML = '<font color=#600000><B>INVALID</b></font>';
       setTimeout (function (){document.getElementById('pbalerterr').innerHTML =''}, 2000);
       return;
-    } 
+    }
     Options.alertConfig.minTroops = mt;
   },
   
@@ -829,6 +832,8 @@ Tabs.tower = {
       if (m.arrivalTime > Options.alertSound.expireTime)
         Options.alertSound.expireTime = m.arrivalTime;
     }
+	if (Options.alertConfig.barb)
+		Tabs.Barb.toggleBarbState();
   },
 
   ajaxSetDefMode : function (cityId, state, notify){
@@ -3398,13 +3403,15 @@ Tabs.Barb = {
     var t = Tabs.Barb;
     t.myDiv = div;
 
+	AddSubTabLink('Barb', t.toggleBarbState, 'pbbarbtab');
+	
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED BARBING FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
 	 if (AttackOptions.Running == false) {
 	       m += '<TD><INPUT id=AttSearch type=submit value="Barb = OFF"></td>';
-	       updatebotbutton("BOT");
+	       updatebotbutton('Barb - OFF', 'pbbarbtab');
 	   } else {
 	       m += '<TD><INPUT id=AttSearch type=submit value="Barb = ON"></td>';
-	       updatebotbutton("BOT (AA)");
+	      updatebotbutton('Barb - ON', 'pbbarbtab');
 	   }
 	  m += '<TD><INPUT id=troopselect type=submit value="Select troops"></td>';
 	  m += '<TD><INPUT id=Options type=submit value="Options"></td>';
@@ -3448,7 +3455,7 @@ Tabs.Barb = {
 	 t.checkBarbData();
 	 if(t.nextattack == null && AttackOptions.Running)
 		t.nextattack = setInterval(t.getnextCity, 1500);
-     setInterval(t.startdeletereports,120000);
+     setInterval(t.startdeletereports,2*60*1000);
      for(i=0;i<Seed.cities.length;i++){
     		var element = 'pdtotalcity'+i;
     		if (t.barbArray[i+1] == undefined) document.getElementById(element).innerHTML = 'No Data';
@@ -3462,7 +3469,7 @@ Tabs.Barb = {
         		
     }
     
-	document.getElementById('AttSearch').addEventListener('click', function(){t.toggleBarbState(this)} , false);
+	document.getElementById('AttSearch').addEventListener('click', t.toggleBarbState, false);
 	document.getElementById('Options').addEventListener('click', t.barbOptions , false);
 	document.getElementById('troopselect').addEventListener('click', t.troopOptions , false);
     var element_class = document.getElementsByClassName('pblevelopt');
@@ -3788,18 +3795,19 @@ Tabs.Barb = {
 	  	}
   },
   
-  toggleBarbState: function(obj){
+  toggleBarbState: function() {
 	var t = Tabs.Barb;
+	obj = document.getElementById('AttSearch');
 	if (AttackOptions.Running == true) {
 		AttackOptions.Running = false;
 		obj.value = "Barb = OFF";
-		updatebotbutton("BOT");
+		updatebotbutton('Barb - OFF', 'pbbarbtab');
 		saveAttackOptions();
 		t.nextattack = null;
 	} else {
 		AttackOptions.Running = true;
 		obj.value = "Barb = ON";
-		updatebotbutton("BOT (AA)");
+		updatebotbutton('Barb - ON', 'pbbarbtab');
 		saveAttackOptions();
 		t.checkBarbData();
 		t.nextattack = setInterval(t.getnextCity,(AttackOptions.SendInterval*1000));
@@ -7281,6 +7289,44 @@ function AddMainTabLink(text, eventListener, mouseListener) {
   }
   return null;
 }
+
+function AddSubTabLink(text, eventListener, id) {
+  var a = createButton (text,'botbutton');
+  a.className='tab';
+  var tabs=document.getElementById('main_engagement_tabs');
+  if(!tabs) {
+    tabs=document.getElementById('topnav_msg');
+    if (tabs)
+      tabs=tabs.parentNode;
+  }
+  if (tabs) {
+    var e = tabs.parentNode;
+    var gmTabs = null;
+    for (var i=0; i<e.childNodes.length; i++){
+      var ee = e.childNodes[i];
+      if (ee.tagName && ee.tagName=='DIV' && ee.className=='tabs_engagement' && ee.id!='main_engagement_tabs'){
+        gmTabs = ee;
+        break;
+      }
+    }
+    if (gmTabs == null){
+      gmTabs = document.createElement('div');
+      gmTabs.className='tabs_engagement';
+      gmTabs.style.background='#ca5';
+      tabs.parentNode.insertBefore (gmTabs, tabs);
+      gmTabs.style.whiteSpace='nowrap';
+      gmTabs.style.width='735px';
+      gmTabs.lang = 'en_PB';
+    }
+    gmTabs.appendChild(a);
+    a.addEventListener('click',eventListener, false);
+    if (id != null)
+      a.id = id;
+    return a;
+  }
+  return null;
+}
+
 function coordLink (x, y){
   var m = [];
   m.push ('(<a onclick="pbGotoMap (');
@@ -8209,10 +8255,10 @@ function matTypeof (v){
   return typeof (v);
 }
 
-function updatebotbutton(text)
+function updatebotbutton(text, id)
 {
- //var but=document.getElementById('botbutton');
- //but.innerHTML='<span style="color: #ff6">'+ text +'</span>';
+	var but=document.getElementById(id);
+	but.innerHTML = '<span style="color: #ff6">'+text+'</span>';
 }
     
 
