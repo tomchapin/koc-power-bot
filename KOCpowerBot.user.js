@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110601b
+// @version        20110603a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110601b';
+var Version = '20110603a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -5513,6 +5513,7 @@ Tabs.Reassign = {
 			if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
 			if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
 				send[(parseInt(k)+1)]= parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]) - parseInt(marchtroops);
+				if(send[(parseInt(k)+1)] < 0) send[(parseInt(k)+1)] = 0;
 				totalsend += send[(parseInt(k)+1)];
 				//alert(parseInt(k)+1 + ' - ' + citytotal+ ' : ' + troopsselect[k] + ' / ' + t.reassignRoutes[0][troopsselect[k]]);    			
 				
@@ -7080,8 +7081,13 @@ function AjaxRequest (url, opts){
       
   if (method == 'POST'){
     var a = [];
-    for (k in opts.parameters)
-      a.push (k +'='+ opts.parameters[k] );
+    for (k in opts.parameters){
+	  if(matTypeof(opts.parameters[k]) == 'object')
+		for(var h in opts.parameters[k])
+			a.push (k+'['+h+'] ='+ opts.parameters[k][h] );
+	  else
+        a.push (k +'='+ opts.parameters[k] );
+	}
     ajax.send (a.join ('&'));
   } else               {
     ajax.send();
