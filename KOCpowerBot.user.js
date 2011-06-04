@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110603a
+// @version        20110603b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110603a';
+var Version = '20110603b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -5042,10 +5042,10 @@ Tabs.Reassign = {
       t.myDiv.innerHTML = m;
       
       t.tcp = new CdispCityPicker ('ptreassign', document.getElementById('ptassigncity'), true, t.clickCitySelect, 0);
+	  t.tcpto = new CdispCityPicker ('ptreassignTo', document.getElementById('ptassigncityTo'), true, t.clickCitySelect);
 	  for(var k in troops){
       document.getElementById('pbtarget'+troops[k]).value = parseInt(Seed.units['city' + t.tcp.city.id]['unt'+k]);
 	  }
-      t.tcpto = new CdispCityPicker ('ptreassignTo', document.getElementById('ptassigncityTo'), true, t.clickCitySelect).bindToXYboxes(document.getElementById ('ptcityX'), document.getElementById ('ptcityY'));
 
       document.getElementById('ptassigncity').addEventListener('click', function(){
 	    for(var k in troops){
