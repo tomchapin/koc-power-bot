@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110603b
+// @version        20110605a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110603b';
+var Version = '20110605a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -5512,8 +5512,10 @@ Tabs.Reassign = {
 			//alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
 			if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
 			if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
-				send[(parseInt(k)+1)]= parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]) - parseInt(marchtroops);
-				if(send[(parseInt(k)+1)] < 0) send[(parseInt(k)+1)] = 0;
+				var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]); 
+				if (sendtroops > citytroops) sendtroops = citytroops; 
+				if (sendtroops < 0) sendtroops = 0; 
+				send[(parseInt(k)+1)] = sendtroops;
 				totalsend += send[(parseInt(k)+1)];
 				//alert(parseInt(k)+1 + ' - ' + citytotal+ ' : ' + troopsselect[k] + ' / ' + t.reassignRoutes[0][troopsselect[k]]);    			
 				
