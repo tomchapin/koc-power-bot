@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110605c
+// @version        20110606a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110605d';
+var Version = '20110606a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4930,13 +4930,21 @@ Tabs.transport = {
 		t.tradeRoutes= [];
 	},
 	
+	checkcoords : function (obj){
+		var t = Tabs.transport;
+		if(obj.id == 'pbok'){
+			t.check = true;
+			t.addTradeRoute();
+		}
+		return;			
+	},
 	addTradeRoute: function () {
 		var valid = true;
 		var t = Tabs.transport;
 		var city = t.tcp.city.id;
-		if (document.getElementById('ptcityX').value==0 && document.getElementById('ptcityY').value ==0)
+		if (document.getElementById('ptcityX').value==0 && document.getElementById('ptcityY').value ==0 && !t.check)
 		{
-			new CdialogCancelContinue ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', null, unsafeWindow.modal_attack_check, document.getElementById('pbReMainDivF'));
+			new CdialogConfirm ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv); 
 			return;
 		}
 		var ship_Food = document.getElementById('pbshipFood').checked;
@@ -5453,8 +5461,8 @@ Tabs.Reassign = {
       
       t.myDiv.innerHTML = m;
       
-      t.tcp = new CdispCityPicker ('ptreassign', document.getElementById('ptassigncity'), true, t.clickCitySelect, 0);
-	  t.tcpto = new CdispCityPicker ('ptreassignTo', document.getElementById('ptassigncityTo'), true, t.clickCitySelect);
+      t.tcp = new CdispCityPicker ('ptreassign', document.getElementById('ptassigncity'), true, null, 0);
+	  t.tcpto = new CdispCityPicker ('ptreassignTo', document.getElementById('ptassigncityTo'), true);
 	  for(var k in troops){
       document.getElementById('pbtarget'+troops[k]).value = parseInt(Seed.units['city' + t.tcp.city.id]['unt'+k]);
 	  }
@@ -5653,15 +5661,31 @@ Tabs.Reassign = {
 		t.reassignRoutes= [];
     
 	},
+	checkcoords : function (obj){
+		var t = Tabs.Reassign;
+		if(obj.id == 'pbok'){
+			t.check = true;
+			t.addReassignRoute();
+		}
+		return;			
+	},
 	addReassignRoute: function () {
 		var t = Tabs.Reassign;
 		var city = t.tcp.city.id;
-		
-		if (document.getElementById('ptcityX').value==0 && document.getElementById('ptcityY').value ==0)
-		{
-			new CdialogCancelContinue ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', null, unsafeWindow.modal_attack_check, document.getElementById('pbReMainDivF'));
+		if(t.tcpto.city == null){
+			new CdialogCancelContinue('<SPAN class=boldRed>No destination selected!</span>', null, null, mainPop.getMainDiv);
 			return;
 		}
+		if(t.tcp.city.id == t.tcpto.city.id){
+			new CdialogCancelContinue('<SPAN class=boldRed>Can\'t reassign to same city!</span>', null, null, mainPop.getMainDiv);
+			return;
+		}
+		if ((t.tcpto.city.x == 0 && t.tcpto.city.y == 0)&& !t.check)
+		{
+			new CdialogConfirm ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv); 
+			return;
+		}
+		t.check = false;
 		
 		var SendSupplyTroop = document.getElementById('pbSupplyTroops').checked;
 		var SendMilitiaman = document.getElementById('pbMilitiaman').checked;
@@ -5687,8 +5711,8 @@ Tabs.Reassign = {
 		var Ballista = document.getElementById('pbtargetBallista').value;
 		var BatteringRam = document.getElementById('pbtargetBatteringRam').value;
 		var Catapult = document.getElementById('pbtargetCatapult').value;
-		var target_x = document.getElementById('ptcityX').value;
-		var target_y = document.getElementById('ptcityY').value;
+		var target_x = t.tcpto.city.x;
+		var target_y = t.tcpto.city.y;
 				
 		var lRE = t.reassignRoutes;
 			lRE.push({
@@ -9482,7 +9506,21 @@ function CdialogCancelContinue (msg, canNotify, contNotify, centerElement){
   pop.getTopDiv().innerHTML = '<CENTER>KOC Power Bot</center>';
   pop.getMainDiv().innerHTML = '<TABLE class=ptTab align=center style="height: 100%"><TR align=center height=90%><TD>'+ msg +'</td></tr>\
       <TR align=center><TD><INPUT id=ptok type=submit value="OK" \> &nbsp; &nbsp; </td></tr></table>';
-  document.getElementById('ptok').addEventListener ('click', function (){pop.show(false); if (canNotify) canNotify();}, false);
+  document.getElementById('ptok').addEventListener ('click', function (){pop.destroy(false); if (canNotify) canNotify();}, false);
+  pop.show(true);
+}
+
+function CdialogConfirm (msg, canNotify, contNotify, centerElement){
+  var pop = new CPopup ('ptcancont', 10, 10, 400,200, true, canNotify);
+  if (centerElement)
+    pop.centerMe(centerElement);
+  else
+    pop.centerMe(document.body);
+  pop.getTopDiv().innerHTML = '<CENTER>KOC Power Bot</center>';
+  pop.getMainDiv().innerHTML = '<TABLE class=ptTab align=center style="height: 100%"><TR align=center height=90%><TD colspan=2>'+ msg +'</td></tr>\
+      <TR align=center><TD><INPUT id=pbok type=submit value="OK" \> &nbsp; &nbsp; </td><TD><INPUT id=pbcancel type=submit value="CANCEL" \> &nbsp; &nbsp; </td></tr></table>';
+  document.getElementById('pbok').addEventListener ('click', function (){pop.destroy(false); if (canNotify) canNotify(this);}, false);
+  document.getElementById('pbcancel').addEventListener ('click', function (){pop.destroy(false); if (canNotify) canNotify(this);}, false);
   pop.show(true);
 }
 
