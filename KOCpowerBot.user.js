@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110605c';
+var Version = '20110605d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -33,7 +33,7 @@ var URL_CASTLE_BUT_SEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAX
 var CHAT_BG_IMAGE = "data:image/gif;base64,R0lGODlhagHQAvcAAP%2F%2F5v%2F%2F1v%2F33v%2F31vf35v%2F3zvf33v%2F3xff31vf3zv%2Fv3u%2F33v%2Fv1v%2Fvzvfv1vfvzvfvxffvvffmzu%2Fmvebmvffere%2Feve%2Fete%2Fere%2Fepebevebeteberd7evd7ete%2FWpebWtd7Wtd7Wrd7WpdbWrd7Ord7OpdbOrdbOpdbFpc7FtdbFnM7FnMXFrc7FlM69rc69nM69lM69jMW9nMW9lMW9jL29nL29lM61jMW1nMW1lMW1jL21nMW1hL21lL21jMWtlLW1lL2tnL2tlL2thL2te7WthL2le72lc7WlhL2la7Wle7Wlc7Wla62le62lc7Wce7Wcc62chLWca6WcjK2cc6WchK2ca62cY6Wcc6Wca6WUhK2Ua6WUa6WUY5yUY5yMa5yMY5yMWpSMa5SMY5SMWoyMY5SEa5SEY4SEe4yEY4yEWoyEUpx7Uox7Wox7UoR7WoR7UoRzUntzY4RzSntzUntzSnNzSntrSmtrY3NrSmtjOhlrzmNaSjpjhBljxRljvRljtRlarRlapRlSnBlSlBlKjBlKhBlKexlCexlCcxlCa0o6CCE6Uhk6Yxk6WkopAEIpADopABAxQjEpEDEpCCEpMRkpMTohADEhACkhCDEZACkZACEZCCEZACEQABkQABkIABAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAagHQAgAI%2FgB1NGgAB02XJUaWKFziZEmShRAVOplIcSIUKA4fLsG4EUqVj1kqNpQosmJEJ1VGSvx4saXLlwxLTvxYReFHmSgnkqRJkabPn0CrvGypE2fFlEZLCl3I8SJEKCirZJmKNGlJIxRJjoza0CREq0eVBq0KNqdIpFo7ehQ61OVYLTSnZoGbUUoSJ0yeNJlR4EGdOGsCC37jRvAaN4gDI37DuDHjOI3dOHYcR46cyZgzI94cmfMby6BBZ34Tp7Tp0ocZFx79GPNp03LsjLZcGjRk1ZJZE278%2Bvbj3qZVH0482rQdO8DjbEZ8OnHwNaU9q9ZNOvnpzryTvzEcuLRr4MWt%2Fgev%2FpoOHdPm0zOWszkOm%2Fc3HjxY42QGChQmRNw%2FQaL%2FiRP7%2FYeCCAT%2BR6B%2B9yUYoIAKmuCgCSVEWMKDD5aAH4UOXkghCvz15yEJCoYoIgoT3gehCSRieKKEEkIogoQj3pcChx7%2Bx99%2FH%2F7H4o4RoohCCjNyaOOCAIb4YX8xJriCggDqGGGRIloo4oYaVgjjiBnGmGWSCdqIoopbhljhg1yWaeYKQJZwwoEjjHBDAgmoYcQGfRVg550DFJCnnQP0ead88tkJ56AJCEoonAUMpOiddiraAKOQRsrooZQOmqiji17qqKaLYurpp54WUGilk3IKaqiMNuAnpIiuKiqi%2F68W2uhAktYKKa13nqorpolemmukj9p6a6278kqqsH8%2B8CcEyhZwwAGMPgCBnQI1sIYRIDQAQbGbcmqqow%2BAGm64npKL6bjncituA%2BiiO1C77MYL77i5BtuXueqCqum37ALq77%2F%2B5vvuv%2F0GPLDBBhfbLr6KAkxwwacCKnC6706M67f1OhtBBBAcwOwADjgwA7tygJGEDjrkoPLKKvuwsg8w5wCzD0MMMXMOKKO8MhApsywzD0AHLfTQQc88NMxBDwHE0kwD4fPLM0dtdNRAU0200DPXXDPNWnettNc8s8yz1DPPYHYOVZNt9NE%2B6KB0z27rvDLKRa9dddBo86C21f5D5%2B3D1XjnMMPKgO8NeN12H6643joA0TXPTXstueQ%2FDPFDD5gXofkPlQuRgwQSwOGGGmecAcbpqIOxhRVWSCEF663DLrsVW9Re%2B%2By45667FVTsrvvrwPsu%2FPC2F7867Lfvfjztt9vOfPLD0%2F588dFXb73yy%2Bee%2FfXcd8%2B98eCHD%2F4ZcMxRRx1zwHHGEkQwQQcj8O%2FRRx8vMOBAHX2Iov%2F%2B%2FPfv%2F%2F8ADKAAB0jAAhrwgAhMoAIXyMAGOvCBEIygAxmhhyUUgQ3wy%2BALDKCAOeRPgiAMoQhHSMISmvCEKEzh%2Fxixhh6IIYOMaIEBDOBBFdrwhjjMoQ53yEMJsrAK7%2F6DXwsIQIAa9vCISEyiEpfIRAMyogtV2AP8XkBEIzbxiljMoha3%2BMA9ZGENU1RABz%2FIxTKa8YxoZCIZjBDGMYLijXCMoxznSMc62vGOeMyjHvfIxz768Y%2BADKQgB0nIQhrykG%2FcQxQZ8QIxehCRkIykJCdJyUpa8pKYzCQoGMGFNjByho%2FUpChHScpSmvKUqBRkF7gQQ0f2IZWwjKUsZ0nLWuIxCzuIIQdDacte%2BvKXwAwmIHGpSzcK85jITKYyY0nMFrhymdCMpjSnWchmPpOa2MymNrNpTWNu85vgDGcvs9CDVnpTnOhMpzozmQUimNODnYinPOdJz3ra8574zP%2BnPvfJz376858ADahAB0rQghr0oAhNqDzJ%2Bc4%2BKPShEI2oRCdK0Ypa9KIYjWc34ZnRjnr0oyANqUhHStCNOpSkKE2pSlfK0pbmk6HOHKNLZ0rTmtr0piUtZyNlitOe%2BvSnQE0pQ3fK0aAa9ahITWpBh%2BpKpTr1qVCFKlN5GtWqWvWqM4UpKE%2BK1a569asZbacuachVsJr1rGgtqTtlSFZNuPWtcI2rXOdK17ra9a54zate98rXvvr1r4ANrGAHS9jCGvatYmWrBw%2FL2MY69rGQjaxkJ0vZyro1C0Uo5mIty9nOevazoA2taAOLWc32YbSoTa1qV8va1t61CkdoqGv%2BZ0vb2tr2toGFrWxxy9ve%2Bva3qdUtUU8L3OIa97jIHaxwXZnc5jr3uc9d7hihS93qWre20t3sdbfL3e5aVrcx9SAlxkve8pr3vOhNr3rXy972uve98I2vfOdL3%2Fra9774za9%2B90veKhQBEuHVA38HTOACG%2FjACE6wghfM4PFC4QgAdqSAG0zhClv4whjOsIbt%2B%2BAIj3HDIA6xiEdM4hKztwpIgIQKXNmISbj4xTCOsYxnTOMa2%2FjGOM6xjnfM4x77%2BMdADrKQh0zkIhf5EpagxBVSTNQ88OHJUI6ylKdM5Spb%2BcpYzrKWt8zlLnv5y2AOs5jHTOYym%2FnMUH5Cilv%2BsIAF5CEPf4iznOdM5zrb%2Bc54zrOe98znPvv5z4AOtKAHTehCG%2FrQiE60nO0CCRsgwM1%2BAISkJ03pSlv60pjOtKY3zelOe%2FrToA61qEdN6lKb%2BtSoTrWqJ22FJEBiBgPoYKRXTeta2%2FrWuM61rnfN614DwgpLgAQMBCDrQBj72MhOtrKXzexmO%2FvZ0I62tKdN7Wpb%2B9rYzra2t83tbnv72A2BxE7T4AdBmPvc6E63utfN7na7%2B93wjre8503vetv73vjOt773ze9%2B%2B%2FvcRoiCh8n974Ib%2FOAIT7jCF87whjvc3EaA8LjzMIiKW%2FziGM%2B4xjfO8Y57%2FOMgD7nIR07%2F8pKb%2FOQoT7nKV87ylls8CRIXYxryQIia2%2FzmOM%2B5znfO8577%2FOdAD7rQh070ohv96EhPutKXzvSm2zzi4pY5zZ1O9apb%2FepYz7rWt871rhPCCEyWeiHGTvaym%2F3saE%2B72tfO9ra7%2Fe1wj7vc5073utv97njPu973TnawR10BMzeE4AdP%2BMIb%2FvCIT7ziF8%2F4xjv%2B8ZCPvOQnT%2FnKW%2F7ymM%2B85gcP9Q12MA%2BbD73oR0%2F60pv%2B9KhPveoFnxAAgzIPh4i97GdP%2B9rb%2Fva4z73ud8%2F73vv%2B98APvvCHT%2FziG%2F%2F4yE%2B%2B7I3ABNfTMA%2BIiL70p0%2F96lv%2F%2BtjPvva3z%2F3u%2Fnv%2F%2B%2BAPv%2FjHT%2F7ym%2F%2F86E%2B%2F9Jn%2F9znkIRHwj7%2F850%2F%2F%2Btv%2F%2FvjPv%2F73z%2F%2F%2B%2B%2F%2F%2FABiAAjiABFiABniACBh%2FftdICOB%2BivCAEBiBEjiBFFiBFniBGJiBGriBHNiBHviBIBiCIjiCJFiCJniCEAhzABYy7rcILviCMBiDMjiDNFiDNniDOJiDOriDPNiDPviDQBiEQjiERFiERviCKtgCDtCAeXCETviEUBiFUjiFVFiFVniFLpgEUKBibeZ%2BjvCFYBiGYjiGZFiGZniGaJiGariGbNiGbviGcBiHcjiHdFiHdniHYPgDUBAJKvB6j%2FCHgBiIgjiIhFiIhniIiJiI%2F4q4iIzYiI74iJAYiZI4iZRYiZZ4iYAoBcHGAyEDB1SgAgAQiqI4iqRYiqZ4iqiYiqq4iqzYiq74irAYi7I4i7RYi7Z4i7iIix1gA1kQASk2AwLQAHjQBSeQi8Z4jMiYjMq4jMzYjM74jKi4i13wASmWAwMgjGggAtC4jdzYjd74jeAYjrlIAjfgBRmgBJDgA9qCB2WgjeL4jvAYj%2FI4j%2FTIiiJQA1iQAVMACT8gLXZABu5YjwI5kARZkAZJixsQA1dQAQLnAwnwAHZQBiNwkBRZkRZ5kfOYkAspcDdQABAQkROJkSI5kiRZkre4ATRwBR8gcDXgkSBpkjAZkzI5k%2F%2F3yAUfsI80wAASgAfZOJM%2B%2BZNAWZAj0ANecJOvNgA72ZNBuZRM2ZTcOJRFuY868AAMwJMo4JRYmZVaeYscIAMqmWJTWZVkcJVbWZZmeZameAEKuZKQMJXCOJZoGZdyqZVqqZINuS14AJdzuZd86ZMXgAM2KXA7gJdlQJZ9eZiIiZEbsAM2mWKD%2BZaGmZiSOZkCuZhXgAGOuS3%2FGJmU2ZmeCY4b4JUVkJkNsJmfeZqouY0XIJoC9wN98Y8BmZqyOZu5CAIxEJjp%2BJpKSZu82ZuxaJt2mZsPgAdrEJu%2BeZzIaYq2iZs%2B0BfEaZzJGZ3IqZFs2ZzDWZzSmZ3JqZEY0JD%2Fzomd2hmevAmc3RkJ1mkHagCd4rmenUmeU2Ce8mEHu8me9EmZ7mme7FIHYxAC9dmfk8kBMeAF5amOfrGf%2Fnmgh9mVRRkF%2BFmg%2FImgECqXobmgkfAD%2BUkGDxqhGlqWCrqSFXqhGbqhIuqUAEqhBKqfITqiKgqUtimgDHqiBrqiMvqTLZoBL5qfMTqjOgqTCUmhNCAfepCjOzqkIjmhHvqjDxCkKUqkTHqQG1ADPgqkQtqkVEqQTxqlSTqlVbqlGQmlRxoueKClXDqm4nil1BgJPyqMYkqmbNqNZsoEaAqma9qmdOqMZsqgaaqkdbqn3Gik7%2BkD8lEHGMqnhGqnNaCS%2F3AKqH7RjoXaqMr4pJeZqIHKqI5aqbm4mpEKn4uqnpbaqa%2BIqQM6qZzqqaSqiqD6oqJaqqrqihdwqB6qqHVAqas6q6jYqpkKq7JKq7o6ipCKmXGapAC5q8IqipD6AXCKpHoQrMMqrMV6rECqrMuqq72KBL%2Bal6MarZ36pFXgq0iKB19wrdhaqdNard8arrRqmRjgrMJYrua6qugKpyOzruDaroTKATuAqJFQLYLqAfSqqnV5k%2Fk6ELHKr%2F1KqnWZrgHbAPtasAarkAirr2RAsAxrqdwJpxArsRPrqKGZqRebsZYKqhYrsBHrsZW6mlpgrAm7sCTbqKtZlCFbmuy6sv%2BEOgEKmQEvawcxK7N7SrOXSa3Vogc5q7N0agEOC5bycQfQKrRDW7Rt%2BazzqrRMSrQ927TASgJQW6dS66tTWbVXS6c8251Um6xP27U6%2BrUNKaVWS7ZkSp4phqxzqrZDSp4Cl6ZhuqRwy6Ry%2B6t6erdbmrdua7d8u6PciafSsreB26SDG6cQYLiHS6TcSa0zIKWA27gr%2Brjm6ZxqMLmUO6IJ2ZiXO5yZu7mOe5u%2Bap14ELqiK7gxoAUIa7qom7ozapusm6jscrqaC7sQ2qKtW7uvi7sq2qMoS6C267syCry0C7q3S7z9abyaKqjJq7z0Camj2ZYgCr2ce6ijGbB%2BMaj%2F1ruh4yoQftG73Yug38su6Pm846ud5QuR4pu%2B%2FWmrZwq%2BddC%2B7kuftqq11Vu%2FB2oBh4qZ1Mu%2B6Ku%2F0xkDWOC%2F4Hu%2BAuyfPWrA5ku%2FCay%2BAUqN%2F4vADxy9AcrAAFzBFlzAYLmODqzB26mQ0ysQEDC8ICyeGjnC67gGAXzCqZmQHBy23OvC2QnD3PqsLUzDn2nDbRsujKvDAxzDefq2QCybC9zDDfDDRdybwEutQ5zDSyyZTay3MxzFTHzBPQysUGzFh5nCEAarVczFsjkB9zi1YLzFYjyXE8AB%2FUutZ5zGvLmxpRuoYQzHp3mwbkzHaGzHaInHzVvHfNyZfvzGgYya%2F3Kcx9u7x4W8lZYbuUmKBsW4yJ%2FJtvkqpSUgyZNctNVKxJg8l8CZAZAruZ3cnjUbylmqyKPMlJ%2FsxOFiB5ycyme5ynFammCAyrDMogQMyrPsyrZ8yz5pm%2FnIysJYy76MmBqZAU0QCY6sxMUcl5%2BczMsMyM0cy7mczG47ttPclC36AdYspdiczUsJAl4KzU4Lzp4cwaycpd9szjQawd08zL3MziIpuyi7tc4rz2gpzldgs9p7z%2Fhslvp8pCIbz%2F9ckeIcmGiavwWtlQHtxAq90FhJyfJrBgQN0QWZuDSQnxRt0VkJAl5ZnjTQF3Ww0RztlPpcno7MyyVt0hHMoCn9yv8rTZK669LxCdMxPc%2BkS9MQadM3fZHLidI1XdE9HY%2FbbMrMPNQmOcXLzNNI7aTorMyi3NQzCcM2qrdMLdVWGsHOOpxXjdUCuc3kPJzE7NUwCdZQLdZCTdbdaNaRC89qbZJmTbdj%2FdYjuc3vKddpTdfPaNezXLd6XdcBqo%2Bfi6J%2FjdPm%2BKci3dWFHY4g4AKHPdiKvdjfuAErkI%2BI7aCSbZGUbdmf%2B495ndnISNn7fNevKc2gTY%2BiLdjN%2BZGmfdrymNqJWtqf7dq4uAEscKv%2B%2BMG0DY8aoMnn2dq7LY4akJKlm9izHdy0ONw9C9nHjdyyqAH9G9uJ7Nz1CN24Pd3UPY%2F%2Fyl3cmJ3d8tjby92cDSAHY6AB3i2PX%2BvGieLX5w2PNLut6p3Ekd3eufjecyzfzU3fqmjfeYzf%2Bi2O%2FA2f%2Fv3f4Njb8C3gR03gzjjc2xrbA67g3bjdDs7eEM6Nyo2yIY3dFb6Ntm2OxyrSwL3hx6gBLCCg8GrcIr6NJG7iaAri%2BZ3iALDiCJvh%2FgzjzagBMODhv1rjNr6MOK7jNB7iPV6LP87PND7fQ66KRe7EiY2xST7iKWnkKP7kyajcUr7TL57iF%2F7hrJ3lIq4BOoCvId3lVF7lYQ6wGa7SZQ7lKkna3b3muWjl76kDTQ7nxsjgGDDnIrvOdo6KFZuwsNnntU0D%2F6yLqhCZq4I%2Bi4m7tYGe6LXYqwyaA%2BYr5I7u5%2FeKsCMDkSNb6Yp%2B6ccqsk7O6ax6qPwMsXwu6gBgAV7pofK76aj%2BqQ4rcK0e6q9uqrFOvQrr6rXOinLMoLO%2B6664sVWNpCoL7KuolgiNpDh76qJOtDa51XcQtMZ%2BijyL4a0s7dNeiuldyVqc7aqYtT7LLneA5IkO7pEg6afs7alo7pK%2BuJQO7H%2Fe7smatupuitQZsu5O7%2FVOiouuLfO%2B7%2FYe69r77wDP7wIv6Q0w7vpe8ACQtyRM8Awfig5fuO%2B%2B6xPv7l6%2B4f2O8RFPrJpMwp7d8aFouSCv296et6ttByws8g2%2Flv%2Fqjbwsn7ium%2FEVLvOYS%2FMQ3rkDevMxf5uvqps4r%2BBG%2BqKyHfMyIKAvz%2BMMH5oczNws35ULmWKE3PHTmo7%2BiAZBT%2BBPGsxWX8Imn%2B1bD8q5%2BZFYH%2FP4qMvnWfYiP67WqfQFb7m%2FnfX%2F%2FbhdL59yr98JybpSLx88eff0fcRW%2F8h%2B396Ar6h6oPZUj8WBf%2FiDf94pvPeC3%2FNRv%2FiIH%2FE6n8WM3%2FNcANJ9kflrT7pSbycJru6Xn5sFMPreXviJgvpg%2F9TWmayN792de6YZ7vkdj8eQMOZ9L%2FkYAGFjHvIdv8arHvrbuwEiL%2FxmHNRP75W6TOzkLugc4AL7jMhqTvXSP8f%2BWB7z18%2Fk2f%2F5y92tz9%2FncF%2B4lb%2F0mvyji4sGl%2Bz92M%2F60265f8v7Rh3%2Bdg7%2Fchr72Q2ctN%2FKcx3x%2Bg8QTCL5eNDADpgQABQuZNjQ4UOIESVOpFjR4kWMGTVu5NjR40eQIUNuiHEFg0AaDx7gGZNQ5EuYMWXOpFnT5k2cEEmaRBJphko9LXMOJVrU6FGkSUXuPOnzAQQ9alwqpVrV6lWsWSmCiKHlg0CCD4JO1VrW7Fm0aTly9fI1UsqVZMiqpVvX7l2qIGi0FTijgFi5eAUPJlw4pN62Pf0CnmvY8WPIhdl%2B6AnXjtDImTVvPssVS4YpA1VebszZ9GnUNtmCFv3%2BgHRq2LFlg0ScAWXBOphn7%2Bbd2yGIHV5sv8Wt2%2Fdx5KmBf65cvHRy6NEly2BOvEHu59K1b08LgjqG5g%2BwcydfHq33z02Iizdu3v17pOhZ%2F2SfHf59%2FDHlh6Y%2FPv9%2FAGGSTz368EAoQAQTXCuGz%2FhTyUD7FJRwQgBWc3Cl9ijUcMLJLmQpwg1DvK9Dp8TKUEQU8SNJuAvHSvHF%2F0j6TIn1giIBRhzhm4xGuGzM8cfydizRRSCLlM7CEj80csnkJiPwwROZlFK5GNpSz7Iop9RyMxLDem1LME9DMiz%2FwjQzszH%2FKvNMNg1Ls74245SsStbIzFJOPM0CYYUGW1szT0D%2Fz9qAzzoTgDNQRM3SYIUrWLvB0D8TlZSqRRsNzQdI75x005yYAms0TTkVlSamesIUAjvQAHFUVl%2FSoCTwInkU1cBatdWmV0361LVQb%2FV1Iw1oaDS8L381NqRgG72N11WPdVaiYLUYzsten7XWoWinBbXZa7sFIFtTcTvQW3KhFTaDygq4btxy222IAliXLdZdeieId7156W3XXl1by1ffcoVtilpuAb412YG3NdjdZIfDsuCFWW2YCUkIjrjcbCl%2B%2BGJyX5UWJXUj5fhYj9H1KeQxQBi5Ww1g%2BPgtNatdmdOWX4ZL5JkPdtlhlXDOuVWPP7gyZoh%2FDjRat2gg2miS%2FmnwCuRDmfZ1YpijltpWhJeto9arbd2ghn5TorXortvcYIewn7KD67JH%2FdqkKNbbmuy2zXwbg7hvlrlus2moAu%2BKC5Jjb77PJOnvuAm6ju3CJT0cbz%2FVEKFxTrmCeyAIXCNjcson1QvuwHnlvPNEP4c8pesIJ31K0%2FN2bvXSBXadWdgRvXv2f2s3G%2BzTQd1Ad0DP7jcsPBgHnk3hYw1Lj82Px3MDGrhQ%2FsHmnY8z1%2Bmttt5M7MOrowsPtm%2Bz%2B6q%2FD1%2F8M8lXWnv0tWyZp6qLH739Ld9vav2o5qd%2FSg1Y0LViNanhfPtzHwu0cL%2B%2F4EEqBKyfAREoljXQjYET6t8B%2FqGWvwnyz4HLwmAGmUQSCxKHAfLz4AerdL8HjHAM%2BithjjyGQhWysIUw6t%2F%2FlNaAoMhwhimqIQZCc0Mi7dCFLmuKXxqgJCEOUTi3OaLqkvifV7Xlh0Bx4hPxE8UPTNFEErTie7CoRQh18UVR9OF6wihGFLXMC2WkQQNoh0YRRZE1bXwjHDf0RXxV0Y7kwaMOFLZHDckxNH7EEBcBKZ0X%2FtCNxTPkIaFjvx%2F%2BRQ%2BqciQFiRhJsVCykgoq2RQksT47LHCTCULS%2BuogylEGqJRqMl4qR9SVpPWsla58DwhjyT5aerEkPHsAHPSYS97k6pa%2BbCQwY2OBXS6LmMbEDzLT%2FsYAXw6Qme5xZqxSAs0x%2FG6a76lmeJa5TWrCypu%2FBCdq1KeSb5aTj%2BJcDxzYpc7tvLA5DXBnMeGJpr1YswENcEMXtHlP7dSmJzpwYz0Bup3JoKQBEIgDOQ8amRVl0ScLbeiNHhqdFc3HjRW9KEbpNEh1NdSeHSUMkgjaSzBIk6S9QVIOGPCAhqp0pbvJaGhcisuZxqamJfJZTlGzAf8NZwb77KlPTQNUZUkiB0R1qFHvUsGvKJWpI3WqWqCq0NRRtapoqZlbTlqHd27VnC6L6lfBJ9bYXFUSOghZFjSAVtj0MFwFgIMRKADX1MhTVgkogBuMgNe8wpJifinAGn4A%2F1hzClYShDUsYk8TNI09oABqOKxjOWO%2FKGBCaZOtrGU1g1lMDJWznt0MZhfbgNGSNjP2G%2BwABkBZ1a42Bn9DwmJdC9vYQuZVfzvCWhvAANzm1jHY6y1BgNtZ4RaGuIFrQHCTW1JYFbcgavDBc90UXeZS17pzOqB0m1vd7Q4mBF0BzyehpNXw3oRqFkvvU88VLoM0tb05oRpckDhfujQsPPfFb1r06y%2F59rcmyaKMaNaFXgHDJFcmA2WAEyyTc9bxwWaJAROyl7sJW4VfCZNwhrGy4XB12MNWIR97R4wV7MnLwSf%2BCPa0iGEWH8XFeURwjDWy4L4szcZVqZnJZjAA9v6obMeU2hnUijpk9cJAWXJbMZIxAlm5zdLJOIGyKaU8ZVw5LWk6xnJR%2FmvKJnd5IvVFWY3FDJGsle%2FKZ46JBnSwZKWNjc1DcTOc1bbmOYvkcxm4Us%2FCnOeG7NmTYDYzoBXiYgA2YHCFNrTlMKAeH6hLDng2tEcc3WfxVK%2FSM5mxlzS9af0IzJMmBrWARG2dI5f6xueKZFZVrZ8385nGr1Ywq2dNa5EgbIrxZTSg68xhRuJazzTAQvaCLWzaCCxctNIhsp98Lzv1Os8pto4cwursG%2B9SMWXGtkcWvG0Rd%2Fsi9lMM9aQ9Z9ZGggdADuW52VzBk0hi3eJBpbgzAm%2BK6f%2BA3fW297g3ONGV8LvfFcH3kCQ38Hv%2Fmz5RKQHCn71GJvLX4WOmU2QLAOOJN0QDLrCgeZvo7jMXHHUSzzia%2F31DkpccW0TMMQ7%2FvOmaFVFdQVQ5mqt0S5rXHFs312LOdc4QPNIgc3q49s8PfcIpourllQ76QjFec0G%2BxelLN3TQ1UZ1X%2FM8En5UOsjF3MenpNzondy6G5nn9S73WJGMMfpDYo5JBaIdy1w54KD%2F0u62%2F6Yrc7y7wNtOd4laWe5TrjIrB%2B9kYS5r0XnXeEluKVLGAz2Z64F85I%2B%2B5KHScwxvtfy32DnUXo5Bpm0nH%2Bhj2nnPw48%2Blbd8hFkf%2BQhHE%2FX%2Bem0jPVM6e%2FJWZp%2FuHL3REaPPB%2FTz8EgOwV4cVtAuDH%2FIiEkaRVeI%2Boj2xfkWtfxOTT8G6kd%2BRWzcaNF9%2F9Gyw9T7P1%2BNQmGK9TwjqT%2Fon7Mty%2B3qzu%2FENh5PdcaROn9C1n%2FiSC3wV9nPZv7TPfEYP52zpXxzI7BSvh3bACUrKwQkQKjzn%2F5DwCzovZ8jt7KjpyS4q87DQIIqLOSCvQYcLNRqLNy7gqiCgX0ywQ4cwdNKrRZEwSnAhA90LtiDlRkULRtkvBSzrdcaAtRLPcoIrdsCwhMsrx8DLiPsQHGyLSUMwuXKAQf4riB0tN7igekCr86zwuzSQsvjQsXRLtT%2FA0OVEMMtzD0DM8MvJKKB2ic1FEGesC1%2BCkEeVDIkBDI4oMO8AwE7rK0f6yU9%2FLsm%2FMM8DMLxOqDaWh83CMTvsyE3ekPG24kPyCw6gsS8sxfE0ay%2FsMS2u4DZwoAl%2BKRH9MLIE4EeaItQrERSZDxTbIvMqsEgCMLbwQQfQC01iEXU44DgmERatEVG%2FLkNkAG40SzJKkTUu4AaWKMoMK8BMMb4%2B7yCcMbqc7wlcAp6wsVnRMFQpA84wMbqkwGvWMafuEZZrIEDyqyfaEZv1D5zvAB0fAB1lEVYoUR43MG8E4EY4AJeTInX%2BkWdczTXGQC%2FksfLQZ2BHMN8xBtiFMi%2F%2F0JIfQxINWjIM3zIhbTHtsNHiuRHizQ6jNxHN%2FTHmsNIDDgCqXuAjfw5DkjIuCGkk9S5lJSeVyxDkFS5l1RIlpzJkqvJmDTJdWQ8naTBMuzJvHtJXjwpTuTIZNzHv3CDJfzCpJxBRWzKyAOBp%2FykpZRKxvMOKbLK4MNJ%2B%2BM5rlxEedxKRfTK%2FeM5TezKscyitBRL6EPLG3LLM4Q4WlQJufxCGeCLulRL1BOBpGQCWlxKs3Q4fEwMTZzDKrw5wIxLrNzDE1pMdWHKxFwjJDhMyXxL4UjEqwxCXRSDD1iCwETMXNwBzwTNSJtDzrM8ESDNzwzNuyxF1jyCwOTLzltNz%2F%2FsrbIMQlO8zbYcTIQzgR64TasUzc4zgSJggw%2FAzcj0zYEzzjf4ACJgrtdkvBVggufsgdCZzrxjFDr4ABwYTu00ugngTu%2B0yr5iTnsbzyugAxP4zs0Kz58bTyxgz%2B9UHPjUOXvxAjxoz7okzsizlzDYA%2F6sRRA8xhUQAwHFgUw4qfusOQuQgTIQ0BhY0BVET3GzANLczxjoTxb8T9IUUBnoxeay0G6zFwRtTwqFwcjzxBPFARr0ReiTgRMlgkwgrKP8x%2BBkzyjYBBV8ADQgUWy7ACJgAzEwATTgBKF7AMNKzT1EgSVggyX4ADz4BKGjwi80gTBYgxUoAUag0gIoADT%2F8AEmFU8Q0IEw%2BIEUAANK%2BIQfgAAIIIMf4EDfmAA6nYCFkFOlsFOQwFOLqFM0G1OGoAAK8NNA1QA%2BfQhBTVRFTdQJGFRH1QANaFRJHdQ6pVMLoABIrdRK1QALsFM6hVRQBdVP5VRStQBOtQBUTVUL2IANUFVVnYBVvQBX7dRU%2FR0LAIENAAEQmAANKNMu0IESAIMuDYU4WwMjQIEQCIENSNZk1VVdDQERiFYRSFZpZdZoBQForVYR8ABu9QBWZVVmZVUPCIFxZVZzzVVsNVdqldZrRddv3QB2lVYTmFcUMAER4AARGIFoJddu7dZ1jdYSiFd2RQGCZdcSKIETSNgT%2FwhYaT1YEyBYFDhYhEXYhD3YhIVYjI3YEkCBFOhYjyXYj%2BXYFMDYjgVZjz3ZkBXZEzDZjIXYlDVZFkBZj2UBmk0BmqVZkGWBnG1ZnkWBFViBjP1ZoR3ZkSXYFWCBo%2F3ZjhVapm1ap3Xam41apG3am12BGNiBGtiBHTjaGXCCJAABH2CEURgFYj2AwjICGmCBGVBbGqCBGYABuIWBGJjbuW1bu73ZGUhbFoABqbVbv50BwM1btw1cwSXcuIUBv01cxU3cGsharM3aHugBIpjcHtDayn1cv%2FUBzfWBHfgBzyUCz%2FVcrd2BySUCIzAC0C3d0j1dI%2FjcH1DdJYhd1k0C1P9VXda9XdpFXSOIXd693SXI3dPlXd6lXeEt3iW4Xd8V3t29XSdoXuSd3SQwXuXd3eMN3ue93uuN3SLY3uKNXtml3iUogvAN3u%2BV3uIVX%2FE93iIwgvU13fXdXvgVXid4Ai3ogi8Igy5Ygh8Agx9omT4IhU8YBVEQugDwq%2BbNAgRO4CyogirIAi3QAgZ%2B4C54YC1QYASm4ApG4Al%2BYAvuYA%2F%2BYAZWYAzuAhIm4REmYS%2FQAi8IAzEQgzB4YS%2BI4RKeYfv9Ahv%2BAjLIYR0mgxfu4TAggzIoAx8eYiJ%2B4RwO4iDeYSLO4R5mYiPeYR5u4ij%2B4SLugiLGXxrO4hKuXy3eYAxTzuAvpuAJXmAHDmEEroLmfYInaF42doIqUOM1ZmM4nmMGZmMGvuM7hmM3ZmA1xmM%2F5uM5juM1ll8n4F04jmArLoM1YIMyWGMYGIAf6NKxFQVRCAgAOw%3D%3D";
 
 var JSON;if(!JSON){JSON={};}(function(){"use strict";function f(n){return n<10?'0'+n:n;}if(typeof Date.prototype.toJSON!=='function'){Date.prototype.toJSON=function(key){return isFinite(this.valueOf())?this.getUTCFullYear()+'-'+f(this.getUTCMonth()+1)+'-'+f(this.getUTCDate())+'T'+f(this.getUTCHours())+':'+f(this.getUTCMinutes())+':'+f(this.getUTCSeconds())+'Z':null;};String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(key){return this.valueOf();};}var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={'\b':'\\b','\t':'\\t','\n':'\\n','\f':'\\f','\r':'\\r','"':'\\"','\\':'\\\\'},rep;function quote(string){escapable.lastIndex=0;return escapable.test(string)?'"'+string.replace(escapable,function(a){var c=meta[a];return typeof c==='string'?c:'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);})+'"':'"'+string+'"';}function str(key,holder){var i,k,v,length,mind=gap,partial,value=holder[key];if(value&&typeof value==='object'&&typeof value.toJSON==='function'){value=value.toJSON(key);}if(typeof rep==='function'){value=rep.call(holder,key,value);}switch(typeof value){case'string':return quote(value);case'number':return isFinite(value)?String(value):'null';case'boolean':case'null':return String(value);case'object':if(!value){return'null';}gap+=indent;partial=[];if(Object.prototype.toString.apply(value)==='[object Array]'){length=value.length;for(i=0;i<length;i+=1){partial[i]=str(i,value)||'null';}v=partial.length===0?'[]':gap?'[\n'+gap+partial.join(',\n'+gap)+'\n'+mind+']':'['+partial.join(',')+']';gap=mind;return v;}if(rep&&typeof rep==='object'){length=rep.length;for(i=0;i<length;i+=1){k=rep[i];if(typeof k==='string'){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}else{for(k in value){if(Object.hasOwnProperty.call(value,k)){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}v=partial.length===0?'{}':gap?'{\n'+gap+partial.join(',\n'+gap)+'\n'+mind+'}':'{'+partial.join(',')+'}';gap=mind;return v;}}if(typeof JSON.stringify!=='function'){JSON.stringify=function(value,replacer,space){var i;gap='';indent='';if(typeof space==='number'){for(i=0;i<space;i+=1){indent+=' ';}}else if(typeof space==='string'){indent=space;}rep=replacer;if(replacer&&typeof replacer!=='function'&&(typeof replacer!=='object'||typeof replacer.length!=='number')){throw new Error('JSON.stringify');}return str('',{'':value});};}if(typeof JSON.parse!=='function'){JSON.parse=function(text,reviver){var j;function walk(holder,key){var k,v,value=holder[key];if(value&&typeof value==='object'){for(k in value){if(Object.hasOwnProperty.call(value,k)){v=walk(value,k);if(v!==undefined){value[k]=v;}else{delete value[k];}}}}return reviver.call(holder,key,value);}text=String(text);cx.lastIndex=0;if(cx.test(text)){text=text.replace(cx,function(a){return'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);});}if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,'@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,']').replace(/(?:^|:|,)(?:\s*\[)+/g,''))){j=eval('('+text+')');return typeof reviver==='function'?walk({'':j},''):j;}throw new SyntaxError('JSON.parse');};}}());
-var JSON2 = JSON; 
+var JSON2 = JSON;
 
 //logit ("+++ STARTUP: "+ document.URL);
 
@@ -54,7 +54,7 @@ function facebookInstance (){
 		e = e.firstChild.firstChild;
 		for (var c=0; c<e.childNodes.length; c++){
 		  if (e.childNodes[c].tagName=='SPAN' && e.childNodes[c].firstChild.className == 'canvas_iframe_util'){
-			iFrame = e.childNodes[c].firstChild; 
+			iFrame = e.childNodes[c].firstChild;
 			break;
 		  }
 		}
@@ -64,7 +64,7 @@ function facebookInstance (){
       for (var i=0; i<iframes.length; i++){
         if (iframes[i].className=='canvas_iframe_util'){
           iFrame = iframes[i];
-          break; 
+          break;
         }
       }
     }
@@ -162,6 +162,7 @@ var Options = {
   pbEveryMins  : 30,
   pbChatOnRight: false,
   pbWideMap    : false,
+
   pbFoodAlert  : false,
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0 },
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
@@ -301,6 +302,7 @@ function pbStartup (){
   readOptions();
   readGlobalOptions ();
   readAttackOptions();
+  readCrestOptions();
   setCities();
 
 // TODO: Make sure WinPos is visible on-screen ?
@@ -318,10 +320,10 @@ function pbStartup (){
     saveOptions ();
   }
   
-  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 820,600, Options.pbWinDrag, 
+  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 820,600, Options.pbWinDrag,
       function (){
         tabManager.hideTab();
-        Options.pbWinIsOpen=false; 
+        Options.pbWinIsOpen=false;
         saveOptions()
       });
   mainPop.autoHeight (true);  
@@ -370,7 +372,7 @@ var FoodAlerts = {
         row[i] = rp[1] - usage;
           var timeLeft = parseInt(Seed.resources["city" + Cities.cities[i].id]['rec1'][0]) / 3600 / (0-usage) * 3600;
           var msg = '';
-        if (usage < 0) { 
+        if (usage < 0) {
     if (Options.pbFoodAlert && timeLeft<(6*3600)) {
                 msg += 'My city ' + Cities.cities[i].name.substring(0,10) + ' (' +
                       Cities.cities[i].x +','+ Cities.cities[i].y + ')';
@@ -378,9 +380,9 @@ var FoodAlerts = {
                 sendChat ("/a " + msg);
           }
     }
-      } 
+      }
   f.minuteTimer = setTimeout (f.e_eachMinute, 1800000);
-  }, 
+  },
 }
 
 
@@ -582,8 +584,8 @@ Tabs.tower = {
         </table><BR>';
   	t.myDiv.innerHTML = m;
 
-//    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y'); 
-    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n'); 
+//    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y');
+    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n');
     t.mss.swfDebug = function (m){ logit ('SWF: '+ m)};
     t.mss.swfPlayComplete = t.e_soundFinished;
     t.mss.swfLoadComplete = t.e_soundFileLoaded;
@@ -625,7 +627,7 @@ Tabs.tower = {
   	  var but = document.getElementById ('pbtabut_'+ cityId);
   	  addListener (but, cityId);
   	  t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
-  	  t.displayDefMode (cityId); 
+  	  t.displayDefMode (cityId);
 	  var btnNameT = 'pbattackqueue_' + cityId;
       addTowerEventListener(cityId, btnNameT);
 	  }
@@ -637,7 +639,7 @@ Tabs.tower = {
             t.showTowerIncoming(cityId);
         }, false);
     }	
-    setInterval (t.eachSecond, 2000); 
+    setInterval (t.eachSecond, 2000);
   },      
 
   show : function (){
@@ -760,18 +762,18 @@ Tabs.tower = {
   	var now = unixTime();
     if (matTypeof(Seed.queue_atkinc) != 'array'){
       for (var k in Seed.queue_atkinc){   // check each incoming march
-        var m = Seed.queue_atkinc[k]; 
+        var m = Seed.queue_atkinc[k];
         if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
           if (m.departureTime > Options.alertConfig.lastAttack){
             Options.alertConfig.lastAttack = m.departureTime;  
-            t.newIncoming (m); 
+            t.newIncoming (m);
           }          
         }
       }
     }
 //logit ("NOW="+ now + ' alarmActive='+ Options.alertSound.alarmActive + ' expireTime='+ Options.alertSound.expireTime);
     if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime))
-      t.stopSoundAlerts(); 
+      t.stopSoundAlerts();
 
         t.towerMarches = [];
         for (var i = 0; i < Cities.cities.length; i++) {
@@ -837,7 +839,7 @@ Tabs.tower = {
     var t = Tabs.tower;
     t.mss.stop (1);
     clearTimeout (t.soundStopTimer);
-    clearTimeout (t.soundRepeatTimer); 
+    clearTimeout (t.soundRepeatTimer);
     document.getElementById('pbSoundStop').disabled = true;
     Options.alertSound.alarmActive = false;
     Options.alertSound.expireTime = 0;
@@ -878,7 +880,7 @@ Tabs.tower = {
 				if (rslt.ok) {
 					Seed.citystats["city" + cityId].gate = state;
 					notify (state);
-				} 
+				}
 			},
 			onFailure: function () {
 			}
@@ -944,7 +946,7 @@ Tabs.tower = {
       if (emb.count > 0){
         var availSlots = emb.maxLevel;
         for (k in Seed.queue_atkinc){
-          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){ 
+          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){
             --availSlots;
           }
         }
@@ -1035,7 +1037,7 @@ Tabs.tower = {
       if (emb.count > 0){
         var availSlots = emb.maxLevel;
         for (k in Seed.queue_atkinc){
-          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){ 
+          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){
             --availSlots;
           }
         }
@@ -1062,7 +1064,7 @@ Tabs.tower = {
         var target, atkType, who, attackermight, allianceId, allianceName, diplomacy;
         var city = Cities.byID[m.toCityId];
         
-        if (DEBUG_TRACE) 
+        if (DEBUG_TRACE)
             logit("checkTower(): INCOMING at " + unixTime() + ": \n" + inspect(m, 8, 1));
         
         //ATKTYPE
@@ -1070,7 +1072,7 @@ Tabs.tower = {
             atkType = 'scouted';
             t['scoutCount_' + m.toCityId]++;
         }
-        else 
+        else
             if (m.marchType == 4) {
                 atkType = 'attacked';
                 t['attackCount_' + m.toCityId]++;
@@ -1079,7 +1081,7 @@ Tabs.tower = {
                 return;
             }
         //TARGET
-        if (city.tileId == m.toTileId) 
+        if (city.tileId == m.toTileId)
             target = 'City at ' + city.x + ',' + city.y;
         else {
             target = 'Wilderness';
@@ -1095,33 +1097,33 @@ Tabs.tower = {
         
         //TROOPS
         var units = [];
-        for (i = 0; i < 13; i++) 
+        for (i = 0; i < 13; i++)
             units[i] = 0;
         for (k in m.unts) {
             var uid = parseInt(k.substr(1));
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Supply Troop') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Supply Troop')
                 units[1] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Militiaman') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Militiaman')
                 units[2] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Scout') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Scout')
                 units[3] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Pikeman') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Pikeman')
                 units[4] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Swordsman') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Swordsman')
                 units[5] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Archer') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Archer')
                 units[6] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Cavalry') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Cavalry')
                 units[7] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Heavy Cavalry') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Heavy Cavalry')
                 units[8] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Supply Wagon') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Supply Wagon')
                 units[9] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Ballista') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Ballista')
                 units[10] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Battering Ram') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Battering Ram')
                 units[11] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Catapult') 
+            if (unsafeWindow.unitcost['unt' + uid][0] == 'Catapult')
                 units[12] = m.unts[k];
         }
         //ATTACKERS INFORMATION
@@ -1132,7 +1134,7 @@ Tabs.tower = {
             allianceName = Seed.allianceNames[allianceId];
             diplomacy = getDiplomacy(allianceId);
         }
-        else 
+        else
             if (m.players && m.players['u' + m.pid]) {
                 who = m.players['u' + m.pid].n;
                 attackermight = parseInt(m.players['u' + m.pid].m);
@@ -1148,9 +1150,9 @@ Tabs.tower = {
                 diplomacy = 'n.A.';
             }
 		//SOURCE
-        if (m.fromXCoord) 
+        if (m.fromXCoord)
             var source = m.fromXCoord + ',' + m.fromYCoord;
-        else 
+        else
             var source = 'n.A.';
         
         var arrivingDatetime = new Date();
@@ -1203,16 +1205,16 @@ Tabs.tower = {
                     ++numSlots;
                     city = march.toCityId;
                     from = march.fromPlayerId;
-					if (!enc[city]) 
+					if (!enc[city])
                         enc[city] = {};
-                    if (!enc[city][from]) 
+                    if (!enc[city][from])
                         enc[city][from] = [];
                     k = [];
                     k[0] = parseInt(march.knightCombat);
                     for (i = 1; i < 13; i++) {
-                        if (Options.encRemaining) 
+                        if (Options.encRemaining)
                             k[i] = parseInt(march['unit' + i + 'Return']);
-                        else 
+                        else
                             k[i] = parseInt(march['unit' + i + 'Count']);
                     }
 					k[14] = parseInt(march.marchStatus);
@@ -1235,7 +1237,7 @@ Tabs.tower = {
             s1 += '<STYLE> .tot{background:#f0e0f8;} .city{background:#ffffaa;} .attack{background:#FF9999;} .own{background:#66FF66;}</style>';
             s1 += '<TABLE cellspacing=0 width=100%><TR align=right><TD align=center width=16%></td>';
             
-            for (k = 0; k < names.length; k++) 
+            for (k = 0; k < names.length; k++)
                 s1 += '<TD width=7%><B>' + names[k] + '</b></td>';
             s1 += '</tr>';
             dest = cityId;
@@ -1243,13 +1245,13 @@ Tabs.tower = {
                 for (p in enc[dest]) {
                     try {
                         player = Seed.players['u' + p].n;
-                    } 
+                    }
                     catch (err) {
                         player = '???';
                     }
                     for (m = 0; m < enc[dest][p].length; m++) {
                         /*knight = '';
-                        if (enc[dest][p][m][0] > 0) 
+                        if (enc[dest][p][m][0] > 0)
                             knight = ' (' + enc[dest][p][m][0] + ')';
 						*/
 						status = '';
@@ -1291,7 +1293,7 @@ Tabs.tower = {
                 tot[r] += num;
             }
             s1 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>Defenders:</b></td>';
-            for (i = 1; i < 13; i++) 
+            for (i = 1; i < 13; i++)
                 s1 += '<TD class="tot">' + tot[i] + '</td>';      
 			s3 += '</tr></table>';
         
@@ -1307,7 +1309,7 @@ Tabs.tower = {
                         if (t.towerMarches[k].atkType == 'attacked') {
                             s3 += '<TD rowspan=2 width=5%><B><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.jpg?6545"></b></td>';
                         }
-                        else 
+                        else
                             if (t.towerMarches[k].atkType == 'scouted') {
                                 s3 += '<TD rowspan=2 width=5%><B><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.jpg?6545"></b></td>';
                             }
@@ -1323,7 +1325,7 @@ Tabs.tower = {
                         s3 += '<TD><B>Arrival: </b></td><TD  colspan=5 width=10%>' + t.towerMarches[k].arrivingDatetime + '</td></tr>';
                         s3 += '</tr></table>';
                         s3 += '<TABLE cellspacing=0 width=100%><TR align=right><TD align=left width=16%></td>';
-                        for (n = 0; n < names.length; n++) 
+                        for (n = 0; n < names.length; n++)
                             s3 += '<TD width=7%><B>' + names[n] + '</b></td>';
                         s3 += '</tr><TR align=right><TD class="attack" align=left><B>Units:</td>';
                         for (u = 1; u < 13; u++) {
@@ -1338,7 +1340,7 @@ Tabs.tower = {
             }
         }
 		s2 += '<TR><TD colspan=14><BR></td></tr><TR align=right><TD class="attack" align=left><B>Attackers:</b></td>';
-        for (a = 1; a < 13; a++) 
+        for (a = 1; a < 13; a++)
             s2 += '<TD class="attack" width=7%>' + atk[a] + '</td>';
 		var html = s1 + s2 + s3;
         document.getElementById('pbCityTowerContent').innerHTML = html;
@@ -1520,7 +1522,7 @@ Tabs.build = {
           }
 		setTimeout(t.e_autoBuild, 10000); //should be at least 10
     },  
-    doOne : function (bQi){ 
+    doOne : function (bQi){
 		var t = Tabs.build;
 		var currentcityid = parseInt(bQi.cityId);
 		var cityName = t.getCityNameById(currentcityid);
@@ -1550,7 +1552,7 @@ Tabs.build = {
 			var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
 			//  var bid = 1523749; //FOR DEBUG
 									
-			if (curlvl > 8 && mode == 'build') { 
+			if (curlvl > 8 && mode == 'build') {
 				t.cancelQueueElement(0, currentcityid, time, false);
 				actionLog("Queue item deleted: Building Level equals 9 or higher!!!");
 				return;
@@ -1597,7 +1599,7 @@ Tabs.build = {
 						if (rslt.ok) {
 							actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
 							Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
-							if (params.cid == unsafeWindow.currentcityid) 
+							if (params.cid == unsafeWindow.currentcityid)
 								unsafeWindow.update_bdg();
 							if (document.getElementById('pbHelpRequest').checked == true)
 								t.bot_gethelp(params.bid, currentcityid);
@@ -1650,7 +1652,7 @@ Tabs.build = {
 								Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
 								Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
 								Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(),  unsafeWindow.unixtime() + time, 0, time, citpos]);						
-								if (params.cid == unsafeWindow.currentcityid) 
+								if (params.cid == unsafeWindow.currentcityid)
 									unsafeWindow.update_bdg();
 								if (document.getElementById('pbHelpRequest').checked == true)
 									t.bot_gethelp(params.bid, currentcityid);
@@ -1774,7 +1776,7 @@ Tabs.build = {
 		var now = unixTime();
 		if (buildingMode == 'build') {
 			var buildingMult = Math.pow(2, buildingLevel);
-        } 
+        }
 		if (buildingMode == 'destruct') {
 			var buildingMult = Math.pow(2, buildingLevel - 2);
 		}
@@ -1801,7 +1803,7 @@ Tabs.build = {
         }
 		if (buildingMode == 'build') {
 			buildingTime = parseInt(buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16)));
-        } 
+        }
 		if (buildingMode == 'destruct') {
 			buildingTime = buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16));
 			if (buildingTime % 1 > 0) {
@@ -1955,11 +1957,11 @@ Tabs.build = {
 	    var t = Tabs.build;
 		var table = document.getElementById('pbCityQueueContent');
 		var rows = table.rows;
-		while(rows.length) 
+		while(rows.length)
 			table.deleteRow(rows.length-1);
 	},
     getCurrentCityId: function(){ // TODO maybe move as global function to the core application
-        if (!unsafeWindow.currentcityid) 
+        if (!unsafeWindow.currentcityid)
             return null;
         return unsafeWindow.currentcityid;
     },
@@ -1974,7 +1976,7 @@ Tabs.build = {
         s = GM_getValue('buildStates_' + serverID);
         if (s != null) {
             states = JSON2.parse(s);
-            for (k in states) 
+            for (k in states)
                 t.buildStates[k] = states[k];
         }
     },
@@ -2011,7 +2013,7 @@ Tabs.build = {
 /********************************* Search Tab *************************************/
 
 /***
-TODO: Better search algorithm (circular OR square, always start at center, working outwards) 
+TODO: Better search algorithm (circular OR square, always start at center, working outwards)
         Should be separate class (producer/consumer) so auto attack can use it too
 **/
 
@@ -2058,7 +2060,7 @@ Tabs.Search = {
     t.myDiv = div;
     
     m = '<DIV class=ptentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>Search for: </td><TD width=99%>';
-    m += htmlSelector ({0:"Barb Camp", 1:"Wilderness", 2:"Cities"}, null, 'id=pasrcType'); 
+    m += htmlSelector ({0:"Barb Camp", 1:"Wilderness", 2:"Cities"}, null, 'id=pasrcType');
 	m += '&nbsp; &nbsp; &nbsp; <span class=pbDetLeft>Search style: &nbsp;';
 	m += htmlSelector({square:"Square", circle:"Circle"}, Options.srcdisttype, 'id=pbsrcdist');
     m += '</span></td></tr><TR><TD class=pbDetLeft>At: </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
@@ -2080,7 +2082,7 @@ Tabs.Search = {
     		  document.getElementById ('pasrchY').value = Provinces[this.value].y;
     		  document.getElementById ('pasrcDist').value = '75';
     	  }
-	    }, false); 
+	    }, false);
 	document.getElementById('pbsrcdist').addEventListener ('change', function (){
       Options.srcdisttype = document.getElementById('pbsrcdist').value;
       saveOptions();
@@ -2163,7 +2165,7 @@ Tabs.Search = {
       var typeName = 'Barbarians';
     else if (t.opt.searchType == 1)
       var typeName = 'Wildernesses';
-    else 
+    else
       var typeName = 'Cities';
     if (t.opt.searchShape == 'square')
       var distName = 'Distance';
@@ -2359,9 +2361,9 @@ Tabs.Search = {
       type = t.mapDat[i][3];
       if (t.opt.searchType==2 && type==7 ) {
 		if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5])
-		if((Options.hostileOnly && t.mapDat[i][12] == 'h') || 
-		   (Options.mistedOnly && t.mapDat[i][5]===true) || 
-		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') || 
+		if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
+		   (Options.mistedOnly && t.mapDat[i][5]===true) ||
+		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
 		   (Options.alliedOnly && t.mapDat[i][12] == 'a') ||
 		   (Options.neutralOnly && t.mapDat[i][12] == 'n') ||
 		   (Options.unalliedOnly && t.mapDat[i][12] == 'u') ||
@@ -2391,7 +2393,7 @@ Tabs.Search = {
       else {
       if (t.opt.searchType == 2) {
 			 m = '<TABLE id=pasrcOutTab class=pbSrchResults cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Loc</td><TD align=right>Dist</td><TD>Player</td><TD align=right>Might</td><TD>Alliance</td><TD>Online</td><TD></td></tr>';
-		} else { 
+		} else {
 			m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td><TD style="padding-left: 10px">Distance</td><TD style="padding-left: 10px;">Lvl</td><TD width=80%> &nbsp; Type</td><TD style=""></td></tr>';
 		}
 	}
@@ -2417,7 +2419,7 @@ Tabs.Search = {
                 allStyle = 'class=pbTextHostile';
               m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">Lookup</a></td></tr>';
             }
-			} else { 
+			} else {
           m += '<TD align=right  valign="top">'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
             +'</td><TD  valign="top">'+ (dat[i][5]?(dat[i][6]!=0?' <A onclick="pbSearchLookup('+dat[i][6]+')">OWNED</a>':'<A onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;">MISTED</a>'):'') +'</td></tr>';
 			}
@@ -2439,11 +2441,11 @@ Tabs.Search = {
     document.getElementById ('pasrcStart').value = 'Start Search';
     document.getElementById ('pasrchSizeWarn').innerHTML = '';
     if (t.opt.searchType==0 && document.getElementById('KOCAttackToggle')!=null){    
-      document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Export Results', 'id=pbSrcDoExp') +'</center>'; 
+      document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Export Results', 'id=pbSrcDoExp') +'</center>';
       document.getElementById ('pbSrcDoExp').addEventListener ('click', t.exportKOCattack, false);
     }
 	if (t.opt.searchType==2){
-	  document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Generate Scout List', 'id=pbSrcDoScout') +'</center>'; 
+	  document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Generate Scout List', 'id=pbSrcDoScout') +'</center>';
       document.getElementById ('pbSrcDoScout').addEventListener ('click', t.generateScoutList, false);
 	}
     t.searchRunning = false;
@@ -2469,9 +2471,9 @@ Tabs.Search = {
     for (i=0; i<t.mapDat.length; i++){
       if (t.mapDat[i][3] == 7){
 		if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5]){
-		if((Options.hostileOnly && t.mapDat[i][12] == 'h') || 
-		   (Options.mistedOnly && t.mapDat[i][5]===true) || 
-		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') || 
+		if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
+		   (Options.mistedOnly && t.mapDat[i][5]===true) ||
+		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
 		   (Options.alliedOnly && t.mapDat[i][12] == 'a') ||
 		   (Options.neutralOnly && t.mapDat[i][12] == 'n') ||
 		   (Options.unalliedOnly && t.mapDat[i][12] == 'u') ||
@@ -2503,7 +2505,7 @@ Tabs.Search = {
 	  }
 	    m += '</table></div>';
 		m += '<BR><CENTER>'+ strButton20('Start Scout', 'id=pbSrcStartScout') +'</center>';
-		m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>'; 
+		m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
 	popScout.getMainDiv().innerHTML = m;
 	new CdispCityPicker ('pbScoutPick', document.getElementById('pbsrcScoutcitypick'), false, function(c,x,y){document.getElementById('pbsrcScoutcity').innerHTML = c.name; t.scoutcity = c; }, city.idx);
 	popScout.getTopDiv().innerHTML = '<CENTER><B>Power Bot Scout List</b></center>';
@@ -2688,7 +2690,7 @@ Tabs.Search = {
     			var uu = 'u'+map[k].tileUserId;
     			var aD = '';
   				var nameU = '';
-  				var mightU = ''; 
+  				var mightU = '';
   				var aU = '';
     			if (!isMisted && userInfo[uu]) {
     				nameU = userInfo[uu].n;   // can error, must check if (userInfo[uu])
@@ -2937,11 +2939,11 @@ var exportToKOCattack = {
       m += '<TD>'+ troopDef[i][0] +'</td>';
     m += '</tr>';
     for (var b=1; b<11; b++){
-      m += '<TR><TD>Barb level '+ b +'</td><TD align=right>'+ coordList['lvl'+b].length  +'&nbsp; &nbsp;</td><TD></td>'; 
+      m += '<TR><TD>Barb level '+ b +'</td><TD align=right>'+ coordList['lvl'+b].length  +'&nbsp; &nbsp;</td><TD></td>';
       for (var td=0; td<troopDef.length; td++)
         m += '<TD><INPUT id=ptET_'+ b +'_'+ troopDef[td][1] +' type=text size=3 value="'+ t.troops['b'+ b][troopDef[td][1]-1] +'"></td>';
       m += '<TD width=90%><SPAN class=boldRed id=ptETerr_'+ b +'></span></tr>';
-    } 
+    }
     m += '</table>';
     var isKOCattack = !(document.getElementById('KOCAttackToggle') == null);
     
@@ -2951,8 +2953,8 @@ var exportToKOCattack = {
       m += '<BR><CENTER>'+ strButton20('Bulk Add to KOC Attack', 'id=pbSrcDoBA') +'</center>';
     } else {
       m += 'KOC Attack not running, unable to export';
-    } 
-    m += '<CENTER><DIV style="width:70%" id=pbSrcExpResult></DIV></center>'; 
+    }
+    m += '<CENTER><DIV style="width:70%" id=pbSrcExpResult></DIV></center>';
     popExp.getMainDiv().innerHTML =  m;
     for (var b=1; b<11; b++)
       for (var td=0; td<troopDef.length; td++)
@@ -3008,10 +3010,10 @@ var exportToKOCattack = {
           tot += t.troops['b'+b][troopDef[td][1]-1];
         if (tot<1 && cList['lvl'+ b].length>0){
           document.getElementById('ptETerr_'+ b).innerHTML = 'No troops defined';
-          return; 
+          return;
         } else if (tot>150000) {
           document.getElementById('ptETerr_'+ b).innerHTML = 'Too many troops';
-          return; 
+          return;
         }
       }    
       document.getElementById('pbSrcExpResult').innerHTML = '';
@@ -3019,7 +3021,7 @@ var exportToKOCattack = {
     }
     
     function endBulkAdd (msg){
-      unsafeWindow.Modal.hideModalAll(); 
+      unsafeWindow.Modal.hideModalAll();
       curLevel = 0;
       showMe ();
       popExp.show(true);
@@ -3027,10 +3029,11 @@ var exportToKOCattack = {
     }
     
     function doNextLevel (){
+
       while ( curLevel<10 && cList['lvl'+ ++curLevel].length==0)
         ;
       if (curLevel>=10){
-        endBulkAdd ('Done!<BR>'); 
+        endBulkAdd ('Done!<BR>');
         return;
       }
      e_attackDialog();
@@ -3040,11 +3043,11 @@ var exportToKOCattack = {
       if (!tf){
        hideMe();
        popExp.show (false);
-       unsafeWindow.Modal.hideModalAll(); 
+       unsafeWindow.Modal.hideModalAll();
        pause(500);
        unsafeWindow.modal_attack(4,0,0);
        new CwaitForElement ('BulkAddAttackDiv', 400, e_attackDialog );
-      } 
+      }
       var div = searchDOM (document.getElementById('BulkAddAttackDiv'), 'node.tagName=="DIV" && node.style.display=="none"', 10);
       if (div==null){
         endBulkAdd ('<SPAN class=boldRed>ERROR: Unexpected attack dialog format (1).</span>');
@@ -3101,7 +3104,7 @@ var exportToKOCattack = {
       } catch (e){
       }      
       if (!doMult && found.length>0)
-        return; 
+        return;
       if (++curLevel<maxLevel && node.childNodes!=undefined)
         for (var c=0; c<node.childNodes.length; c++)
           doOne (node.childNodes[c], curLevel);
@@ -3190,7 +3193,7 @@ Tabs.Attack = {
   
   loadTargets : function (){
     var t = Tabs.Attack;
-DebugTimer.start(); 
+DebugTimer.start();
     var totTargets = 0;   
     for (var c=0; c<Cities.numCities; c++){
       var s = GM_getValue ('atk_'+ getServerId() +'_'+ Cities.cities[c].id, null);
@@ -3209,7 +3212,7 @@ DebugTimer.display ('Time to GM_getValue() '+ totTargets +' targets for all citi
     var dist = parseInt(document.getElementById('pbBarbDist').value);
     if (isNaN(dist) || dist<1 || dist>35){
       t.writeDiv ("<SPAN class=boldRed>Nuh-uh, try again</span><BR>");
-      return; 
+      return;
     }
     t.writeDiv ('Scanning map for city: '+ t.scanCity.name +'<BR>');
     t.scanBarbs (t.scanCity.id, dist);
@@ -3253,8 +3256,8 @@ DebugTimer.display ('Time to GM_getValue() '+ totTargets +' targets for all citi
     var t = Tabs.Attack;
     var city = Cities.byID[cityID];
 // TODO: remember state - in case of refresh
-    var x = t.MapAjax.normalize(city.x-distance); 
-    var y = t.MapAjax.normalize(city.y-distance); 
+    var x = t.MapAjax.normalize(city.x-distance);
+    var y = t.MapAjax.normalize(city.y-distance);
     t.oScan = { city:city, centerX:city.x, centerY:city.y, maxDist:distance,
         minX:x, maxX:city.x+distance, minY:y, maxY:city.y+distance, curX:x, curY:y, data:[] };
     setTimeout (function(){t.MapAjax.request (t.oScan.curX, t.oScan.curY, 15, t.e_mapCallback)}, MAP_DELAY);
@@ -3289,7 +3292,7 @@ DebugTimer.display ('Time to GM_getValue() '+ totTargets +' targets for all citi
         if (dist <= t.oScan.maxDist){
           t.oScan.data.push ([parseInt(map[k].xCoord), parseInt(map[k].yCoord), dist, lvl]);
         }
-      } 
+      }
     }
     t.oScan.curX += 15;
     if (t.oScan.curX > t.oScan.maxX){
@@ -3468,7 +3471,7 @@ Tabs.Test = {
     helpText += 'Just fill in the coordinates, troops and hit "ON".<BR><BR>';
     helpText += 'Troop numers (from KOC WIKI):<BR>';
     helpText += '<A target="_tab" href="http://koc.wikia.com/wiki/Wilderness">More can be found on Koc Wikia</a>';
-    helpText += '<TABLE width=100%><TR><TD>Level</td><TD>Wave 1</td><TD>Wave 2</td><TD>Troop loses</td><TD>Min. Fletching</td></tr>'; 
+    helpText += '<TABLE width=100%><TR><TD>Level</td><TD>Wave 1</td><TD>Wave 2</td><TD>Troop loses</td><TD>Min. Fletching</td></tr>';
     helpText += '<TR><TD>1</td><TD>n/a</td><TD>160 MM</td><TD>12 MM</td><TD>0</td></tr>';
     helpText += '<TR><TD>1</td><TD>n/a</td><TD>80 archers</td><TD>None</td><TD>1+</td></tr>';
     helpText += '<TR><TD>2</td><TD>5 MM</td><TD>130 archers</td><TD>1st Wave</td><TD>2+</td></tr>';
@@ -3525,7 +3528,7 @@ Tabs.Test = {
   	var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
   	if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
      }
-  }, 
+  },
   
   
   FirstRound: function(){
@@ -3689,7 +3692,7 @@ Tabs.Test = {
   		         method: "post",
   		         parameters: params,
   		         loading: true,
-  		         onSuccess: function (transport) { 
+  		         onSuccess: function (transport) {
   		         var rslt=eval("("+transport.responseText+")");
   		         
   		         
@@ -3741,7 +3744,7 @@ Tabs.Test = {
 
   show : function (){
   },
- }; 
+ };
 
 
 /*********************************  Barbing Tab ***********************************/
@@ -3835,7 +3838,7 @@ Tabs.Barb = {
     
     for(i=0;i<Seed.cities.length;i++){
     		for (w=1;w<=10;w++){
-    			document.getElementById('pbcity'+i+'level'+w).checked = AttackOptions.Levels[i+1][w]; 
+    			document.getElementById('pbcity'+i+'level'+w).checked = AttackOptions.Levels[i+1][w];
     		}		
         		
     }
@@ -3858,7 +3861,7 @@ Tabs.Barb = {
 
      helpText += 'Troop numbers (from KOC WIKI):<BR>';
      helpText += '<A target="_tab" href="http://koc.wikia.com/wiki/Barbarian_Camps">A lot more can be found on Koc Wikia</a>';
-     helpText += '<TABLE><TR><TD>Lvl</td><TD>Troops</td></tr>'; 
+     helpText += '<TABLE><TR><TD>Lvl</td><TD>Troops</td></tr>';
      helpText += '<TR><TD>1</td><TD>500 Supply Troops + 500 Archers</td></tr>';
      helpText += '<TR><TD>2</td><TD>500 Supply Troops + 2500 Archers</td></tr>';
      helpText += '<TR><TD>3</td><TD>500 Supply Troops + 5000 Archers</td></tr>';
@@ -3884,7 +3887,7 @@ Tabs.Barb = {
   saveLevelOptions : function(){
 		for(i=0;i<Seed.cities.length;i++){
 	    		for (w=1;w<=10;w++){
-	    			if (document.getElementById('pbcity'+i+'level'+w).checked ==true) AttackOptions.Levels[i+1][w]=true; 
+	    			if (document.getElementById('pbcity'+i+'level'+w).checked ==true) AttackOptions.Levels[i+1][w]=true;
 	    			else AttackOptions.Levels[i+1][w]=false;
 	    		}		
 		}
@@ -4092,7 +4095,7 @@ Tabs.Barb = {
   deletebarbs: function(){
     for (i=1;i<=Seed.cities.length;i++){
           GM_deleteValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId())
-    } 
+    }
     reloadKOC();
   },
   
@@ -4243,7 +4246,7 @@ Tabs.Barb = {
        		saveAttackOptions();
        }
        citynumber = Seed.cities[city-1][0];
-       cityID = 'city' + citynumber; 
+       cityID = 'city' + citynumber;
 	   
        t.getAtkKnight(cityID);
        t.getRallypointLevel(cityID);
@@ -4254,22 +4257,22 @@ Tabs.Barb = {
 		      if(Seed.queue_atkp[cityID].toSource() == "[]")
 		  slots = 0;
 		}
-	  else slots=0; 
+	  else slots=0;
        
 	   var element1 = 'pddatacity'+(city-1);
-       document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city]; 
-       var element2 = 'pddataarray'+(city-1); 
+       document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
+       var element2 = 'pddataarray'+(city-1);
        document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
 	   
 	   if ((t.rallypointlevel-AttackOptions.RallyClip) <= slots) return;
-	   if (t.knt.toSource() == "[]") return; 
+	   if (t.knt.toSource() == "[]") return;
 	   var kid = t.knt[0].ID;
 	   
        AttackOptions.BarbNumber[city]=0;
        var check=0;
        while (check == 0){
          for (h=1;h<=10;h++){
-            if ( AttackOptions.Levels[city][h] == true && (parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['level'])) == h ) check=1; 
+            if ( AttackOptions.Levels[city][h] == true && (parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['level'])) == h ) check=1;
          }
          if (now < (parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['time']) + 3600) && (t.barbArray[city][AttackOptions.BarbNumber[city]]['time']) != 3600) check=0;
          var barblevel = parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['level']);
@@ -4327,7 +4330,7 @@ Tabs.Barb = {
   	var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
   	if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
      }
-  }, 
+  },
   
   getAtkKnight : function(cityID){
      var t = Tabs.Barb;
@@ -4362,7 +4365,7 @@ Tabs.Barb = {
   		params.u12=u12;
   		
   		AttackOptions.BarbsTried++;
-  		document.getElementById('pberror1').innerHTML = 'Tries:'+ AttackOptions.BarbsTried; 
+  		document.getElementById('pberror1').innerHTML = 'Tries:'+ AttackOptions.BarbsTried;
   		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
   		         method: "post",
   		         parameters: params,
@@ -4390,8 +4393,8 @@ Tabs.Barb = {
 				  slots = 0;
   		         AttackOptions.BarbsDone[counter]++;
   		         var element1 = 'pddatacity'+(counter-1);
-				 document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[counter]; 
-				 var element2 = 'pddataarray'+(counter-1); 
+				 document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[counter];
+				 var element2 = 'pddataarray'+(counter-1);
 				 document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
   		         var now = new Date().getTime()/1000.0;
   		         now = now.toFixed(0);
@@ -4403,7 +4406,7 @@ Tabs.Barb = {
   		         if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
   		         if (rslt.error_code == 210) AttackOptions.BarbsFailedRP++;
   		         if (rslt.error_code == 8) AttackOptions.BarbsFailedTraffic++;
-  		         document.getElementById('pberror2').innerHTML = 'Excess Traffic errors:' + AttackOptions.BarbsFailedTraffic; 
+  		         document.getElementById('pberror2').innerHTML = 'Excess Traffic errors:' + AttackOptions.BarbsFailedTraffic;
   		         document.getElementById('pberror3').innerHTML = 'Rally Point errors: '+ AttackOptions.BarbsFailedRP;
   		         document.getElementById('pberror4').innerHTML = 'Knight errors:' + AttackOptions.BarbsFailedKnight;
   		         document.getElementById('pberror5').innerHTML = 'Other errors:' + AttackOptions.BarbsFailedVaria;
@@ -4459,9 +4462,9 @@ Tabs.Barb = {
   clickedSearch : function (){
     var t = Tabs.Barb;
     
-    t.opt.searchType = 0; 
-    t.opt.maxDistance = AttackOptions.MaxDistance; 
-    t.opt.searchShape = 'circle'; 
+    t.opt.searchType = 0;
+    t.opt.maxDistance = AttackOptions.MaxDistance;
+    t.opt.searchShape = 'circle';
     t.mapDat = [];
     t.firstX =  t.opt.startX - t.opt.maxDistance;
     t.lastX = t.opt.startX + t.opt.maxDistance;
@@ -4548,7 +4551,7 @@ Tabs.Barb = {
   
   },
 
-}; 
+};
 
 
 /*********************************** Log Tab ***********************************/
@@ -4598,7 +4601,7 @@ Tabs.ActionLog = {
     row.vAlign = 'top';
     row.insertCell(0).innerHTML = ts;
     row.insertCell(1).innerHTML = msg;
-  }, 
+  },
   
   log : function (msg){
     var t = Tabs.ActionLog;
@@ -4716,7 +4719,7 @@ Tabs.transport = {
   timer: null,
   traderState: [],
   lTR: [],
-  tradeRoutes: [], 
+  tradeRoutes: [],
   checkdotradetimeout: null,
   count:0,
 
@@ -4891,7 +4894,7 @@ Tabs.transport = {
           }
       },false);
       window.addEventListener('unload', t.onUnload, false);
-    }, 
+    },
     
     getRallypoint: function(cityId){
       var t = Tabs.transport;
@@ -4933,7 +4936,7 @@ Tabs.transport = {
 		var city = t.tcp.city.id;
 		if (document.getElementById('ptcityX').value==0 && document.getElementById('ptcityY').value ==0)
 		{
-			new CdialogCancelContinue ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', null, unsafeWindow.modal_attack_check, document.getElementById('pbReMainDivF')); 
+			new CdialogCancelContinue ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', null, unsafeWindow.modal_attack_check, document.getElementById('pbReMainDivF'));
 			return;
 		}
 		var ship_Food = document.getElementById('pbshipFood').checked;
@@ -5077,7 +5080,7 @@ Tabs.transport = {
         s = GM_getValue('tradeRoutes_' + serverID);
         if (s != null) {
             route = JSON2.parse(s);
-            for (k in route) 
+            for (k in route)
                 t.tradeRoutes[k] = route[k];
         }
     },
@@ -5092,7 +5095,7 @@ Tabs.transport = {
         s = GM_getValue('traderState_' + serverID);
         if (s != null) {
             state = JSON2.parse(s);
-            for (k in state) 
+            for (k in state)
                 t.traderState[k] = state[k];
         }
     },
@@ -5141,7 +5144,7 @@ Tabs.transport = {
 		var carry_amount= 0;
 		var wagons_needed=0;
 		var citymax = 0;
-		var city = t.tradeRoutes[count]["city"]; 
+		var city = t.tradeRoutes[count]["city"];
 		var cityID = 'city' + city;
 		
 		
@@ -5152,16 +5155,16 @@ Tabs.transport = {
     	var trade_Stone = t.tradeRoutes[count]["trade_Stone"];
     	var trade_Ore = t.tradeRoutes[count]["trade_Ore"];
     	var trade_Gold = t.tradeRoutes[count]["trade_Gold"];
-    	var target_Food = t.tradeRoutes[count]["target_Food"]; 
-    	var target_Wood = t.tradeRoutes[count]["target_Wood"]; 
-    	var target_Stone = t.tradeRoutes[count]["target_Stone"]; 
-    	var target_Ore = t.tradeRoutes[count]["target_Ore"]; 
-    	var target_Gold = t.tradeRoutes[count]["target_Gold"]; 
+    	var target_Food = t.tradeRoutes[count]["target_Food"];
+    	var target_Wood = t.tradeRoutes[count]["target_Wood"];
+    	var target_Stone = t.tradeRoutes[count]["target_Stone"];
+    	var target_Ore = t.tradeRoutes[count]["target_Ore"];
+    	var target_Gold = t.tradeRoutes[count]["target_Gold"];
     	var ship_Food = t.tradeRoutes[count]["ship_Food"];
     	var ship_Wood = t.tradeRoutes[count]["ship_Wood"];
     	var ship_Stone = t.tradeRoutes[count]["ship_Stone"];
     	var ship_Ore = t.tradeRoutes[count]["ship_Ore"];
-    	var ship_Gold = t.tradeRoutes[count]["ship_Gold"]; 
+    	var ship_Gold = t.tradeRoutes[count]["ship_Gold"];
     	var citymax_Food = parseInt(Seed.resources[cityID]['rec1'][0] / 3600);
     	var citymax_Wood = parseInt(Seed.resources[cityID]['rec2'][0] / 3600);
     	var citymax_Stone = parseInt(Seed.resources[cityID]['rec3'][0] / 3600);
@@ -5223,7 +5226,7 @@ Tabs.transport = {
 			 
 		  while (shift_spare >1) {
 				 if (carry_Food < (shift_Food + shift_spare)){
-				    shift_spare = shift_spare - carry_Food;; 
+				    shift_spare = shift_spare - carry_Food;;
 				    shift_Food = carry_Food;
 				 }
 				 else{
@@ -5231,15 +5234,15 @@ Tabs.transport = {
 				  shift_spare = shift_spare- shift_spare;
 				}
 				 if (carry_Wood < (shift_Wood + shift_spare)){
-				    shift_spare = shift_spare - carry_Wood;; 
+				    shift_spare = shift_spare - carry_Wood;;
 				    shift_Wood = carry_Wood;
 				 }
 				 else{
 				  shift_Wood = shift_Wood + shift_spare;
 				  shift_spare = shift_spare- shift_spare;
-				} 
+				}
         		if (carry_Stone < (shift_Stone + shift_spare)){
-				    shift_spare = shift_spare - carry_Stone;; 
+				    shift_spare = shift_spare - carry_Stone;;
 				    shift_Stone = carry_Stone;
 				 }
 				 else{
@@ -5247,7 +5250,7 @@ Tabs.transport = {
 				  shift_spare = shift_spare- shift_spare;
 				}
 				 if (carry_Ore < (shift_Ore + shift_spare)){
-				    shift_spare = shift_spare - carry_Ore;; 
+				    shift_spare = shift_spare - carry_Ore;;
 				    shift_Ore = carry_Ore;
 				 }
 				 else{
@@ -5359,7 +5362,7 @@ Tabs.Reassign = {
   timer: null,
   reassignState: [],
   lRE: [],
-  reassignRoutes: [], 
+  reassignRoutes: [],
   rallypointlevel:null,
   count:0,
 
@@ -5615,7 +5618,7 @@ Tabs.Reassign = {
       
       
       window.addEventListener('unload', t.onUnload, false);
-    }, 
+    },
     
     getRallypoint: function(cityId){
       var t = Tabs.Reassign;
@@ -5656,7 +5659,7 @@ Tabs.Reassign = {
 		
 		if (document.getElementById('ptcityX').value==0 && document.getElementById('ptcityY').value ==0)
 		{
-			new CdialogCancelContinue ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', null, unsafeWindow.modal_attack_check, document.getElementById('pbReMainDivF')); 
+			new CdialogCancelContinue ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', null, unsafeWindow.modal_attack_check, document.getElementById('pbReMainDivF'));
 			return;
 		}
 		
@@ -5833,7 +5836,7 @@ Tabs.Reassign = {
         s = GM_getValue('reassignRoutes_' + serverID);
         if (s != null) {
             route = JSON2.parse(s);
-            for (k in route) 
+            for (k in route)
                 t.reassignRoutes[k] = route[k];
         }
     },
@@ -5848,7 +5851,7 @@ Tabs.Reassign = {
         s = GM_getValue('reassignState_' + serverID);
         if (s != null) {
             state = JSON2.parse(s);
-            for (k in state) 
+            for (k in state)
                 t.reassignState[k] = state[k];
         }
     },
@@ -5921,9 +5924,9 @@ Tabs.Reassign = {
 			//alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
 			if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
 			if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
-				var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]); 
-				if (sendtroops > citytroops) sendtroops = citytroops; 
-				if (sendtroops < 0) sendtroops = 0; 
+				var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]);
+				if (sendtroops > citytroops) sendtroops = citytroops;
+				if (sendtroops < 0) sendtroops = 0;
 				send[(parseInt(k)+1)] = sendtroops;
 				totalsend += send[(parseInt(k)+1)];
 				//alert(parseInt(k)+1 + ' - ' + citytotal+ ' : ' + troopsselect[k] + ' / ' + t.reassignRoutes[0][troopsselect[k]]);    			
@@ -5939,7 +5942,7 @@ Tabs.Reassign = {
     	
     	for (var t=0; t< Seed.cities.length;t++) {
     		if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
-    	} 
+    	}
     	
   		params.cid= city;
 		params.type = "5";
@@ -6141,14 +6144,14 @@ Tabs.Reinforce = {
      		var maxfood =0;
      		var featherweight = parseInt(Seed.tech.tch10);
      		maxfood += ( (200 + (200/10*featherweight)) * parseInt(document.getElementById('pitargetSupplyTroops').value));
-     		maxfood += ( (20 + (20/10*featherweight)) *parseInt(document.getElementById('pitargetMilitiaman').value)); 
-     		maxfood += ( (5 + (5/10*featherweight)) *parseInt(document.getElementById('pitargetScout').value)); 
-     		maxfood += ((40 + (40/10*featherweight))*parseInt(document.getElementById('pitargetPikeman').value)); 
-     		maxfood += ( (30 + (30/10*featherweight))*parseInt(document.getElementById('pitargetSwordsman').value)); 
-     		maxfood += ((25 + (25/10*featherweight))*parseInt(document.getElementById('pitargetArcher').value)); 
-     		maxfood += ((100 + (100/10*featherweight))*parseInt(document.getElementById('pitargetCavalry').value)); 
-     		maxfood += (80*parseInt(document.getElementById('pitargetHeavyCavalry').value)); 
-     		maxfood += ((5000 + (5000/10*featherweight))*parseInt(document.getElementById('pitargetSupplyWagon').value)); 
+     		maxfood += ( (20 + (20/10*featherweight)) *parseInt(document.getElementById('pitargetMilitiaman').value));
+     		maxfood += ( (5 + (5/10*featherweight)) *parseInt(document.getElementById('pitargetScout').value));
+     		maxfood += ((40 + (40/10*featherweight))*parseInt(document.getElementById('pitargetPikeman').value));
+     		maxfood += ( (30 + (30/10*featherweight))*parseInt(document.getElementById('pitargetSwordsman').value));
+     		maxfood += ((25 + (25/10*featherweight))*parseInt(document.getElementById('pitargetArcher').value));
+     		maxfood += ((100 + (100/10*featherweight))*parseInt(document.getElementById('pitargetCavalry').value));
+     		maxfood += (80*parseInt(document.getElementById('pitargetHeavyCavalry').value));
+     		maxfood += ((5000 + (5000/10*featherweight))*parseInt(document.getElementById('pitargetSupplyWagon').value));
      		maxfood += ((35 + (35/10*featherweight))*parseInt(document.getElementById('pitargetBallista').value));
      		maxfood += ((45 + (45/10*featherweight))*parseInt(document.getElementById('pitargetBatteringRam').value));
      		maxfood += ((75 + (75/10*featherweight))*parseInt(document.getElementById('pitargetCatapult').value));
@@ -6160,21 +6163,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetSupplyTroops').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+1]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+1]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+1]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+1]);
       		document.getElementById('pitargetSupplyTroops').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6186,21 +6189,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetMilitiaman').value == 0) t.maxsend = t.maxsend - othertroops;
           
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+2]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+2]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+2]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+2]);
       		document.getElementById('pitargetMilitiaman').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6212,21 +6215,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetScout').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+3]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+3]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+3]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+3]);
       		document.getElementById('pitargetScout').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6238,21 +6241,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetPikeman').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+4]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+4]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+4]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+4]);
       		document.getElementById('pitargetPikeman').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6264,21 +6267,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetSwordsman').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+5]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+5]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+5]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+5]);
       		document.getElementById('pitargetSwordsman').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6290,21 +6293,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetArcher').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+6]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+6]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+6]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+6]);
       		document.getElementById('pitargetArcher').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6316,21 +6319,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetCavalry').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+7]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+7]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+7]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+7]);
       		document.getElementById('pitargetCavalry').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6342,21 +6345,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetHeavyCavalry').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+8]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+8]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+8]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+8]);
       		document.getElementById('pitargetHeavyCavalry').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6368,21 +6371,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetSupplyWagon').value == 0) t.maxsend = t.maxsend - othertroops;
            if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+9]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+9]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+9]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+9]);
       		document.getElementById('pitargetSupplyWagon').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6394,21 +6397,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetBallista').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+10]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+10]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+10]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+10]);
       		document.getElementById('pitargetBallista').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6420,21 +6423,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetBatteringRam').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+11]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+11]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+11]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+11]);
       		document.getElementById('pitargetBatteringRam').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6446,21 +6449,21 @@ Tabs.Reinforce = {
       		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
           if ( othertroops >= (t.rallypointlevel * 10000) ) {
              document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0; 
-             document.getElementById('pitargetScout').value =0; 
-             document.getElementById('pitargetPikeman').value =0; 
-             document.getElementById('pitargetSwordsman').value =0; 
-             document.getElementById('pitargetArcher').value =0; 
-             document.getElementById('pitargetCavalry').value =0; 
-             document.getElementById('pitargetHeavyCavalry').value =0; 
-             document.getElementById('pitargetSupplyWagon').value =0; 
+             document.getElementById('pitargetMilitiaman').value =0;
+             document.getElementById('pitargetScout').value =0;
+             document.getElementById('pitargetPikeman').value =0;
+             document.getElementById('pitargetSwordsman').value =0;
+             document.getElementById('pitargetArcher').value =0;
+             document.getElementById('pitargetCavalry').value =0;
+             document.getElementById('pitargetHeavyCavalry').value =0;
+             document.getElementById('pitargetSupplyWagon').value =0;
              document.getElementById('pitargetBallista').value =0;
              document.getElementById('pitargetBatteringRam').value =0;
              document.getElementById('pitargetCatapult').value =0;
           }
           if (document.getElementById('pitargetCatapult').value == 0) t.maxsend = t.maxsend - othertroops;
           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+12]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+12]); 
+          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+12]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+12]);
       		document.getElementById('pitargetCatapult').value = t.maxsend;
       		t.SetETAType();
       		t.ETA(t.dist);
@@ -6514,7 +6517,7 @@ Tabs.Reinforce = {
       }, false);
       document.getElementById('pitargetBallista').addEventListener('keyup', function(){
           if (isNaN(document.getElementById('pitargetBallista').value)) document.getElementById('pitargetBallista').value=0 ;
-         t.SetETAType(); 
+         t.SetETAType();
           document.getElementById('pbETA').innerHTML = (t.ETAstr);
       }, false);
      document.getElementById('pitargetBatteringRam').addEventListener('keyup', function(){
@@ -6530,7 +6533,7 @@ Tabs.Reinforce = {
 
         
       window.addEventListener('unload', t.onUnload, false);
-    }, 
+    },
     
     getKnights : function(){
        var t = Tabs.Reinforce;
@@ -6545,7 +6548,7 @@ Tabs.Reinforce = {
        			});
        		}
        }
-       knt = knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);}); 
+       knt = knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
        document.getElementById('piKnight').options.length=0;
        for (k in knt){
     			if (knt[k]["Name"] !=undefined){
@@ -6641,7 +6644,7 @@ Tabs.Reinforce = {
           
  },
  
-  ETA : function(dist) { // Need Relief Station Levels to estimate transport, reinf, or reassign times. 
+  ETA : function(dist) { // Need Relief Station Levels to estimate transport, reinf, or reassign times.
    var t = Tabs.Reinforce;
    t.cityID = t.from.city.id;
    if (dist == 0) {t.ETAstr = "Reinforce ETA: Distance is 0";return;}
@@ -6654,7 +6657,7 @@ Tabs.Reinforce = {
    var mmLvl = parseInt(Seed.tech.tch11);//Magical Mapping
    var Speed = 0;
    if (horse){
-   //HorsesSiegeSpeed = Base * (1 + MM/10) * (1 + AH/20) 
+   //HorsesSiegeSpeed = Base * (1 + MM/10) * (1 + AH/20)
      var hsLvl = parseInt(Seed.tech.tch12);//Alloy Horse Shoes
      Speed = baseSpeed * (1 + mmLvl/10) * (1 + hsLvl/20);
    }
@@ -6662,7 +6665,7 @@ Tabs.Reinforce = {
    //FootSpeed = Base * (1 + MM/10)
      Speed = baseSpeed * (1 + mmLvl/10);
    }
-   //Grid Speed (tiles/second) = Speed (100ths/min) / 6000 
+   //Grid Speed (tiles/second) = Speed (100ths/min) / 6000
    var gSpeed = 0;
    var estSec = 0;
    if (Speed>0) {
@@ -6741,7 +6744,7 @@ Tabs.Reinforce = {
                   var currentcityid = params.cid;
                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-                  t.getKnights(); 
+                  t.getKnights();
                   t.clearbox();
                   document.getElementById('pbReinfMain').style.background ='#99FF99';
 		              setTimeout(function(){ (document.getElementById('pbReinfMain').style.background =''); }, 1000);
@@ -6800,7 +6803,7 @@ var CollectGold = {
         t.lastCollect['c'+city.id] = unixTime();
         t.colCityName = city.name;
         t.colHappy = happy;
-        t.ajaxCollectGold (city, t.e_ajaxDone); 
+        t.ajaxCollectGold (city, t.e_ajaxDone);
         break;
       }
     }
@@ -6810,9 +6813,9 @@ var CollectGold = {
   e_ajaxDone : function (rslt){
     var t = CollectGold;
     if (rslt.ok)
-      actionLog ('Collected '+ rslt.goldGained +' gold for '+ t.colCityName +' (happiness was '+ t.colHappy +')'); 
-    else 
-      actionLog ('Error collecting gold for '+ t.colCityName +': <SPAN class=boldRed>'+ rslt.errorMsg +'</span>'); 
+      actionLog ('Collected '+ rslt.goldGained +' gold for '+ t.colCityName +' (happiness was '+ t.colHappy +')');
+    else
+      actionLog ('Error collecting gold for '+ t.colCityName +': <SPAN class=boldRed>'+ rslt.errorMsg +'</span>');
   },
   
   ajaxCollectGold : function (city, notify){
@@ -6882,13 +6885,13 @@ function facebookWatchdog (){
     try {
 //      if (document.getElementById('app_content_130402594779').firstChild.firstChild.childNodes[1].firstChild.tagName!='IFRAME'){
       if (document.getElementById('app_content_130402594779') == null){
-        logit ("KOC NOT FOUND!"); 
+        logit ("KOC NOT FOUND!");
         KOCnotFound(5*60);
-      } 
+      }
     } catch (e){
-      logit ("KOC NOT FOUND!"); 
+      logit ("KOC NOT FOUND!");
       KOCnotFound(4*60);
-    } 
+    }
   }
 }
 
@@ -6960,7 +6963,7 @@ var WideScreen = {
     if (tf){
       var chat = document.getElementById('kocmain_bottom').childNodes[1];
       if (!chat || chat.className!='mod_comm')
-        setTimeout (function (){t.setChatOnRight(tf)}, 1000); 
+        setTimeout (function (){t.setChatOnRight(tf)}, 1000);
       chat.style.top = '-624px';
       chat.style.left = '760px';
       chat.style.height = '720px';
@@ -7061,7 +7064,7 @@ var anticd = {
     var scripts = document.getElementsByTagName('script');
     for (var i=0; i<scripts.length; i++){
       if (scripts[i].src.indexOf('camelotmain') >=0){
-        break; 
+        break;
       }
     }
     if (i<scripts.length){
@@ -7070,7 +7073,7 @@ var anticd = {
         this.KOCversion = m[1];
     }
     this.isInited = true;
-    // more coming soon :) 
+    // more coming soon :)
   },
   
   getKOCversion : function (){
@@ -7118,7 +7121,7 @@ var tabManager = {
       if (t.tabList[k].name == Options.currentTab)
         t.currentTab =t.tabList[k] ;
       document.getElementById('pbtc'+ k).addEventListener('click', this.e_clickedTab, false);
-      var div = t.tabList[k].div; 
+      var div = t.tabList[k].div;
       div.style.display = 'none';
       div.style.height = '100%';
       mainDiv.appendChild(div);
@@ -7804,7 +7807,7 @@ function coordLink (x, y){
 unsafeWindow.pbGotoMap = function (x, y){
   if (Options.hideOnGoto)
     hideMe ();
-  setTimeout (function (){ 
+  setTimeout (function (){
     document.getElementById('mapXCoor').value = x;
     document.getElementById('mapYCoor').value = y;
     unsafeWindow.reCenterMapWithCoor();
@@ -8240,7 +8243,7 @@ function parseIntNan (n){
   x = parseInt(n, 10);
   if (isNaN(x))
     return 0;
-  return x; 
+  return x;
 }
 function parseIntZero (n){
   n = n.trim();
@@ -8283,7 +8286,7 @@ var WinManager = {
       if (t.wins[k].isShown()){
         t.didHide.push (t.wins[k]);
         t.wins[k].show (false);
-      } 
+      }
     }
   },
   restoreAll : function (){
@@ -8380,7 +8383,7 @@ function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
     t.setLayer(5);
     for (k in unsafeWindow.cpopupWins){
       if (k != t.prefix)
-        unsafeWindow.cpopupWins[k].unfocusMe(); 
+        unsafeWindow.cpopupWins[k].unfocusMe();
     }
   }
   function unfocusMe (){
@@ -8614,7 +8617,7 @@ function inspect(obj, maxLevels, level, doFunctions){
 Array.prototype.compare = function(testArr) {
     if (this.length != testArr.length) return false;
     for (var i = 0; i < testArr.length; i++) {
-        if (this[i].compare) { 
+        if (this[i].compare) {
             if (!this[i].compare(testArr[i])) return false;
         }
         if (this[i] !== testArr[i]) return false;
@@ -8660,7 +8663,7 @@ function getResourceProduction (cityId){
     var type = parseInt(w[k].tileType);
     if (type==10 || type==11)
       wilds[1] += parseInt(w[k].tileLevel);
-    else 
+    else
       wilds[type/10] += parseInt(w[k].tileLevel);
   }  
   
@@ -8799,9 +8802,9 @@ function timestrShort(time) {
   if (time > 86400){
     var m = [];
     time /= 3600;
-    m.push (parseInt(time/24)); 
+    m.push (parseInt(time/24));
     m.push ('d ');
-    m.push (parseInt(time%24)); 
+    m.push (parseInt(time%24));
     m.push ('h ');
     return m.join ('');    
   } else
@@ -8822,16 +8825,16 @@ function timestr(time, full) {
   if (t < 61)
     return  t + 's';
   if (t > 86400){
-    m.push (parseInt(t/86400)); 
+    m.push (parseInt(t/86400));
     m.push ('d ');
     t %= 86400;
   }  
   if (t>3600 || time>3600){
-    m.push (parseInt(t/3600)); 
+    m.push (parseInt(t/3600));
     m.push ('h ');
     t %= 3600;
   }  
-  m.push (parseInt(t/60)); 
+  m.push (parseInt(t/60));
   m.push ('m');
   if (full || time<=3600 ){
     m.push (' ');
@@ -8887,8 +8890,8 @@ isOpening : false,
 t.isOpening = true;  
 // Firefox bug??? It appears as if a new thread is started on open, withOUT reusing same window? huh?
       t.win = window.open('', 'uwtrace', 'top=30,left=0,width=900,height=700,scrollbars=no,location=no,menubar=no,directories=no,status=no');
-t.isOpening = false; 
-t.state = null; 
+t.isOpening = false;
+t.state = null;
     }
     
     if (t.state == null){
@@ -8978,7 +8981,7 @@ function GM_AjaxPost (url, args, notify, label){
     onerror: function () {
       notify (null);
     },
-  }); 
+  });
 }
 
 // returns: page text or null on comm error
@@ -8994,14 +8997,14 @@ function GM_AjaxGet (url, args, notify, label){
     onerror: function () {
       notify (null);
     },
-  }); 
+  });
 }         
   
 Tabs.Gifts = {
   tabOrder : 3,
   gifts : null,
   myDiv : null,
-  doList : [], // list of gifts to accept 
+  doList : [], // list of gifts to accept
   doServer : 0,
   accepting : false,
     
@@ -9046,7 +9049,7 @@ Tabs.Gifts = {
       document.getElementById('pasubGifts').value = 'Check for Gifts';
       document.getElementById('giftDiv').innerHTML+= '<BR><SPAN class=boldRed>Cancelled.</span>';
       t.accepting = false;
-      return; 
+      return;
     }
     document.getElementById('giftDiv').innerHTML = 'Fetching Facebook gifts page ...';
     
@@ -9055,7 +9058,7 @@ Tabs.Gifts = {
       if (rslt.errMsg){
         document.getElementById('giftDiv').innerHTML += rslt.errMsg;
         return;
-      } 
+      }
       t.gifts = rslt;
       if (!Options.giftDomains.valid && t.gifts.length>0){
         t.ajaxGetGiftData (t.gifts[0], listGifts, function (){});    // try to get domain list ... don't delete gift!
@@ -9065,7 +9068,7 @@ Tabs.Gifts = {
     }
     
     function listGifts (){
-//logit ("LIST GIFTS"); 
+//logit ("LIST GIFTS");
 //logit (inspect (t.gifts, 8, 1));     
       var m = '<DIV class=pbStat><CENTER>KofC gifts &nbsp; &nbsp; &nbsp; ('+ t.gifts.length +' found)</center></div>';
       if (t.gifts.length<1){
@@ -9117,14 +9120,14 @@ Tabs.Gifts = {
       document.getElementById('pbgchk_'+i).checked = false;
   },
   
-  getErDone : function (){ 
+  getErDone : function (){
     var t = Tabs.Gifts;
     t.doList = [];
     document.getElementById('pbGiftNone').innerHTML = '';
     Options.giftDelete = document.getElementById('pbGiftDel').value;
     for (var i=0; i<t.gifts.length; i++){
       if (document.getElementById('pbgchk_'+i).checked)
-        t.doList.push (t.gifts[i]); 
+        t.doList.push (t.gifts[i]);
     }
     if (t.doList.length==0){
       document.getElementById('pbGiftNone').innerHTML = 'None Selected!';
@@ -9132,7 +9135,7 @@ Tabs.Gifts = {
     }
     t.doServer = document.getElementById('pbGiftServers').value;
     t.accepting = true;
-    document.getElementById('pasubGifts').value = 'Stop Accepting'; 
+    document.getElementById('pasubGifts').value = 'Stop Accepting';
     document.getElementById('giftDiv').innerHTML = '<DIV id=acpDiv style="height:400px; max-height:400px; overflow-y:auto"><B>Accepting '+ t.doList.length +' gifts:</b><BR></div>';    
     t.acceptNext ();
   },
@@ -9150,7 +9153,7 @@ Tabs.Gifts = {
     var t = Tabs.Gifts;
     var gift = t.doList.shift();
     if (gift == null){
-      t.allDone ('Done accepting gifts.'); 
+      t.allDone ('Done accepting gifts.');
       return;
     }
     var acpDiv = document.getElementById('acpDiv');
@@ -9168,7 +9171,7 @@ Tabs.Gifts = {
     }
         
     function gotGiftData (rslt){
-//logit ("getErDone.gotGiftData ... \n"+ inspect (gift, 8, 1)); 
+//logit ("getErDone.gotGiftData ... \n"+ inspect (gift, 8, 1));
       if (!t.accepting)
         return;
       if (rslt.ok){
@@ -9179,7 +9182,7 @@ Tabs.Gifts = {
         
       if (rslt.feedback)
         msg = '<B>'+ rslt.feedback + '</b>';
-      else 
+      else
         msg = '<SPAN class=boldRed>ERROR: '+ rslt.ajaxErr +'</span>';
       if (rslt.del && Options.giftDelete!='n'){
         t.deleteGift (gift);  
@@ -9222,7 +9225,7 @@ Tabs.Gifts = {
       pargs.hasExistingServer = 1;
       pargs.serverid = serverId;
       pargs.go = 'Next';
-      GM_AjaxPost (url, pargs, ver1GotPost, 'Accept'); 
+      GM_AjaxPost (url, pargs, ver1GotPost, 'Accept');
     } else {
       var i = gift.dat.url.indexOf('src/');
       url = gift.dat.url.substr(0,i) +'src/ajax/claimgift.php?wcfbuid='+ gift.dat.wcfbuid;        
@@ -9231,26 +9234,26 @@ Tabs.Gifts = {
       pargs.ver = '2';
       pargs.selectedS = serverId;
       pargs.giftinviteid = gift.dat.giftId;
-      GM_AjaxPost (url, pargs, ver2GotPost, 'Accept'); 
+      GM_AjaxPost (url, pargs, ver2GotPost, 'Accept');
      }
      
 //  parse multiple reply formats .....         
     function ver1GotPost (rslt){
       if (rslt == null){
-        notify ({ok:false, msg:"AJAX Error"}); 
+        notify ({ok:false, msg:"AJAX Error"});
         return;
       }
       var m = /<div class=\'nm\'>(.*?)<\/div/im.exec(rslt);
       if (m)
-        notify ({ok:false, msg: 'Got '+ m[1]}); 
+        notify ({ok:false, msg: 'Got '+ m[1]});
       else
         notify ({ok:true, msg:'OK'});
     }
     function ver2GotPost (rslt){
       if (rslt == null){
-        notify ({ok:false, msg:"AJAX Error"}); 
+        notify ({ok:false, msg:"AJAX Error"});
         return;
-      } 
+      }
       rslt = eval ('('+ rslt +')');
       if (rslt.ok)
         rslt.msg = 'OK';
@@ -9318,22 +9321,22 @@ Tabs.Gifts = {
       progress ('3');
       var m = /<div class=\'giftreturned\'>(.*?)<\/div/im.exec(page);
       if (m != null){
-        notify ({feedback:m[1], del:true}); 
+        notify ({feedback:m[1], del:true});
         return;
       }
       var m = /(We were unable to find your gift.*?)</im.exec(page);
       if (m != null){
-        notify ({feedback:m[1], del:true}); 
+        notify ({feedback:m[1], del:true});
         return;
       }
       var m = /(Unable to get the list of your friends.*?)</im.exec(page);
       if (m != null){
-        notify ({feedback:m[1]}); 
+        notify ({feedback:m[1]});
         return;
       }
       var m = /(Facebook says you are not friends.*?)</im.exec(page);
       if (m != null){
-        notify ({feedback:m[1], del:true}); 
+        notify ({feedback:m[1], del:true});
         return;
       }
             
@@ -9377,7 +9380,7 @@ Tabs.Gifts = {
     GM_AjaxGet ('http://www.facebook.com/games?ap=1', '', parseGiftsPage, 'FB Gifts Page');
     
     // ...profile.php?id=100000710937192">Anestis Mallos</
-    // Here is a GIFTNAME you can use 
+    // Here is a GIFTNAME you can use
     // OR:  ... would like to give you a gift of GIFTNAME in Kingdoms of Camelot
     // OR:  ... would like to give you a GIFTNAME in Kingdoms of Camelot
     // <input value=\"Accept\" type=\"submit\" name=\"actions[http:\/\/apps.facebook.com\/kingdomsofcamelot\/convert.php?pl=1&in=4411654&ty=1&si=9&wccc=fcf-inv-9&ln=11&da=20101229&ex=gid%3A361%7Csid%3A4411654%7Cs%3A88]\" \/><\/label>
@@ -9433,15 +9436,15 @@ Tabs.Gifts = {
                     if (ss[0] == 's')
                       args.exs = ss[1];
                   }
-                } 
+                }
               }
             } else {
-              inps.push (it); 
+              inps.push (it);
             }
           }
           if (args.da)
             gifts.push ({giver:giver, gift:gift, args:args, submit:inpsub, inputs:inps});
-        } 
+        }
         notify (gifts);
       } catch (e) {
         notify ({errMsg:"Error parsing Facebook gift page"+ e});
@@ -9498,10 +9501,10 @@ function hexDump (dat){
         asc.push (dat.charAt(i+ii));
       else
         asc.push ('.');
-    } 
+    }
     s.push ('  ');
     s.push (asc.join(''))
-    s.push ('\n'); 
+    s.push ('\n');
     i += 16;
   }
   return s.join ('');
@@ -9522,12 +9525,12 @@ function SliderBar (container, width, height, value, classPrefix, margin){
   var self = this;
   this.listener = null;
   if (value==null)
-    value = 0; 
+    value = 0;
   if (!margin)
     margin = parseInt(width*.05);
   this.value = value;
   if (width<20) width=20;
-  if (height<5) height=5; 
+  if (height<5) height=5;
   if (classPrefix == null){
     classPrefix = 'slider';
     var noClass = true;
@@ -9583,7 +9586,7 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     self.knob.style.left =  relX + 'px';
     self.value = val;
     if (self.listener)
-      self.listener(self.value); 
+      self.listener(self.value);
   }
   
   this.setChangeListener = function (listener){
@@ -9600,7 +9603,7 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     self.sliderL.style.width = relX + 'px';
     self.value =  relX / self.sliderWidth;   
     if (self.listener)
-      self.listener(self.value); 
+      self.listener(self.value);
   }
   function doneMoving (){
     self.div.removeEventListener('mousemove', mouseMove, true);
@@ -9623,7 +9626,7 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     self.div.addEventListener('mousemove',  mouseMove, true);
   }
   function mouseMove(me){
-    moveKnob (me); 
+    moveKnob (me);
   }
 }
 
@@ -9650,16 +9653,16 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   }
   if (container)
     container.appendChild (div);
-  else 
+  else
     document.body.appendChild (div);
   for (k in attrs)
-    this.player.setAttribute(k, attrs[k]); 
+    this.player.setAttribute(k, attrs[k]);
        
   this.setVolume = function (chanNum, vol){
     if (!self.isLoaded)
       return;
     self.player.jsSetVolume (chanNum, vol);
-    volume = vol; 
+    volume = vol;
   }
   
   this.load = function (chanNum, url, bStream, bAutoplay, bUsePolicyFile){   // loop ?
@@ -9686,7 +9689,7 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   }
   this.swfLoaded = function (){    // called by plugin when ready to go!
     self.isLoaded = true;
-    self.debugFunc ('playerIsReady'); 
+    self.debugFunc ('playerIsReady');
     if (self.onSwfLoaded)
       self.onSwfLoaded();
   }
