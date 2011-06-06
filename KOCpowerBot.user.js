@@ -7900,6 +7900,8 @@ Tabs.Spam = {
   var t = Tabs.Spam;
   Options.spamconfig.spamvert = document.getElementById('pbSpamAd').value;
   Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
+  if(Options.spamconfig.spammins < 30)
+   Options.spamconfig.spammins = 30;
   saveOptions ();
 
    if(Options.spamconfig.spamvert == 'nessaja') {
