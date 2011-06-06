@@ -1,6 +1,10 @@
 REVISION HISTORY:
 ----------------
 
+20110605c
+   *Fix for autobarb killswitch
+   *Fix for autospam having difficulty remembering settings
+
 20110605b
    *Decreased spacing between tabs so as to fit into the screen
    *Added toggle button for barbs beside bot tab

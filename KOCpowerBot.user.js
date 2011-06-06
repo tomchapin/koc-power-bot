@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110605b
+// @version        20110605c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110605b';
+var Version = '20110605c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -834,8 +834,16 @@ Tabs.tower = {
       if (m.arrivalTime > Options.alertSound.expireTime)
         Options.alertSound.expireTime = m.arrivalTime;
     }
-	if (Options.alertConfig.barb)
-		Tabs.Barb.toggleBarbState();
+	if (Options.alertConfig.barb){
+		obj = document.getElementById('AttSearch');
+		if (AttackOptions.Running == true) {
+			AttackOptions.Running = false;
+			obj.value = "Barb = OFF";
+			updatebotbutton('Barb - OFF', 'pbbarbtab');
+			saveAttackOptions();
+			t.nextattack = null;
+		}
+	}
   },
 
   ajaxSetDefMode : function (cityId, state, notify){
@@ -7465,6 +7473,7 @@ Tabs.Spam = {
   var t = Tabs.Spam;
   Options.spamconfig.spamvert = document.getElementById('pbSpamAd').value;
   Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
+  saveOptions ();
 
    if(Options.spamconfig.spamvert == 'nessaja') {
     Options.spamconfig.spamvert = '';
@@ -7481,7 +7490,8 @@ Tabs.Spam = {
   else {
    Options.spamconfig.spamstate = 'a';
    obj.value = "Send To Alliance";
-  };
+  }
+  saveOptions ();
 
  },
 
@@ -7494,7 +7504,8 @@ Tabs.Spam = {
   else {
    Options.spamconfig.aspam = true;
    obj.value = "Spam On";
-  };
+  }
+  saveOptions ();
 
  },
 };  
@@ -7525,6 +7536,7 @@ var SpamEvery  = {
     Options.spamconfig.atime = (Options.spamconfig.atime + 1);
     SpamEvery.init ();
    }
+   saveOptions ();
   },
   doit : function (){
     actionLog ('Spamming ('+ Options.spamconfig.spammins +' minutes expired)');
