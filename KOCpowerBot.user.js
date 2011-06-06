@@ -210,6 +210,27 @@ var AttackOptions = {
   Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750}	
 };
 
+var CrestOptions = {
+  Running   : false,
+  CrestCity : 0,
+  RoundOne  : true,
+  RoundTwo  : true,
+  lastRoundTwo : 0,
+  X:0,
+  Y:0,
+  R1MM:0,
+  R1Ball:0,
+  R1Cat:0,
+  R2MM:0,
+  R2Arch:0,
+  R2Ball:0,
+  R2Cat:0,
+};
+
+var TrainOptions = {
+  Running   : false,
+};
+
 var Cities = {};
 var Seed = unsafeWindow.seed;
 var Tabs = {};
@@ -3382,6 +3403,345 @@ Tabs.Test = {
     t.createFakeAttack (0, isScout, isWild, isFalse, secs, mil);
   },
 }
+
+/*********************************  Cresting Tab ***********************************/
+ Tabs.Crest = {
+  tabOrder : 1,
+  myDiv : null,
+  rallypointlevel:null,
+  knt:{},
+     
+  init : function (div){
+    var t = Tabs.Crest;
+    setInterval(t.FirstRound,5000);
+    t.myDiv = div;
+    var selbut=0;
+    var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
+     if (CrestOptions.Running == false) {
+	       m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = OFF"></td>';
+	   } else {
+	       m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = ON"></td>';
+	   }
+    m += '<TD><INPUT id=CrestHelp type=submit value="HELP"></td></table>';
+    
+    m += '<DIV id=pbOpt class=pbStat>CRESTING OPTIONS</div><TABLE id=pbcrestopt	 width=100% height=0% class=pbTab><TR align="center"></table>';
+    m += '<DIV style="margin-bottom:10px;">Crest from city: <span id=crestcity></span></div>';
+    
+    m += '<TABLE class=ptTab><TR><TD>Wild coords: X:<INPUT id=pbcrestx type=text size=3 maxlength=3 value="'+CrestOptions.X+'"</td>';
+    m += '<TD>Y:<INPUT id=pbcresty type=text size=3 maxlength=3 value="'+CrestOptions.Y+'"</td></tr></table>';
+   
+    m += '<TABLE class=ptTab><TR><TD>Wave one -> </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R1MM type=text size=5 maxlength=5 value="'+CrestOptions.R1MM+'" (When left 0 it will not send out a first wave, for whatever reason you want to do that...)</td>';
+    m += '</td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=5 value="'+CrestOptions.R1Ball+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=5 value="'+CrestOptions.R1Cat+'"</td></tr>';
+    
+    m += '<TR><TD>Wave two -> </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R2MM type=text size=5 maxlength=5 value="'+CrestOptions.R2MM+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_30.png></td><TD><INPUT id=R2Arch type=text size=5 maxlength=5 value="'+CrestOptions.R2Arch+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R2Ball type=text size=5 maxlength=5 value="'+CrestOptions.R2Ball+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R2Cat type=text size=5 maxlength=5 value="'+CrestOptions.R2Cat+'"</td></tr></table>';
+    
+    t.myDiv.innerHTML = m;
+    
+    for (var i=0;i<Seed.cities.length;i++) if (CrestOptions.CrestCity == Seed.cities[i][0]) selbut=i;
+    
+    t.tcp = new CdispCityPicker ('crestcityselect', document.getElementById('crestcity'), true, t.clickCitySelect, selbut);
+    
+    //document.getElementById('crestcityselect').value = CrestOptions.CrestCity;
+    
+    document.getElementById('crestcity').addEventListener('click', function(){CrestOptions.CrestCity = t.tcp.city.id;saveCrestOptions();} , false);
+    document.getElementById('Cresttoggle').addEventListener('click', function(){t.toggleCrestState(this)} , false);
+    document.getElementById('CrestHelp').addEventListener('click', function(){t.helpPop();} , false);
+    document.getElementById('pbcrestx').addEventListener('change', function(){CrestOptions.X= document.getElementById('pbcrestx').value; saveCrestOptions();} , false);
+    document.getElementById('pbcresty').addEventListener('change', function(){CrestOptions.Y= document.getElementById('pbcresty').value; saveCrestOptions()} , false);
+    document.getElementById('R1MM').addEventListener('change', function(){CrestOptions.R1MM= document.getElementById('R1MM').value; saveCrestOptions()} , false);
+    document.getElementById('R1Ball').addEventListener('change', function(){CrestOptions.R1Ball= document.getElementById('R1Ball').value; saveCrestOptions()} , false);
+    document.getElementById('R1Cat').addEventListener('change', function(){CrestOptions.R1Cat= document.getElementById('R1Cat').value; saveCrestOptions()} , false);
+    document.getElementById('R2MM').addEventListener('change', function(){CrestOptions.R2MM= document.getElementById('R2MM').value; saveCrestOptions()} , false);
+    document.getElementById('R2Arch').addEventListener('change', function(){CrestOptions.R2Arch= document.getElementById('R2Arch').value; saveCrestOptions()} , false);
+    document.getElementById('R2Ball').addEventListener('change', function(){CrestOptions.R2Ball= document.getElementById('R2Ball').value; saveCrestOptions()} , false);
+    document.getElementById('R2Cat').addEventListener('change', function(){CrestOptions.R2Cat= document.getElementById('RCat').value; saveCrestOptions()} , false);
+  },
+  
+  helpPop : function (){
+    var helpText = '<BR>The crest tab is designed to attack one wild over and over again.<BR>';
+    helpText += 'It will attack a wild in 2 waves, abandon it and start over.<BR>';
+    helpText += 'So make sure u have 1 FREE SLOT in your castle for a wild!<BR>';
+    helpText += 'Just fill in the coordinates, troops and hit "ON".<BR><BR>';
+    helpText += 'Troop numers (from KOC WIKI):<BR>';
+    helpText += '<A target="_tab" href="http://koc.wikia.com/wiki/Wilderness">More can be found on Koc Wikia</a>';
+    helpText += '<TABLE width=100%><TR><TD>Level</td><TD>Wave 1</td><TD>Wave 2</td><TD>Troop loses</td><TD>Min. Fletching</td></tr>'; 
+    helpText += '<TR><TD>1</td><TD>n/a</td><TD>160 MM</td><TD>12 MM</td><TD>0</td></tr>';
+    helpText += '<TR><TD>1</td><TD>n/a</td><TD>80 archers</td><TD>None</td><TD>1+</td></tr>';
+    helpText += '<TR><TD>2</td><TD>5 MM</td><TD>130 archers</td><TD>1st Wave</td><TD>2+</td></tr>';
+    helpText += '<TR><TD>3</td><TD>10 MM</td><TD>520 archers</td><TD>1st Wave</td><TD>3+</td></tr>';
+    helpText += '<TR><TD>4</td><TD>20 MM</td><TD>1600 archers</td><TD>1st Wave</td><TD>4+</td></tr>';
+    helpText += '<TR><TD>5</td><TD>50 MM</td><TD>2200 archers</td><TD>1st Wave</td><TD>6+</td></tr>';
+    helpText += '<TR><TD>6</td><TD>100 MM</td><TD>3000 archers</td><TD>1st Wave</td><TD>7+</td></tr>';
+    helpText += '<TR><TD>7</td><TD>150 MM</td><TD>6000 archers</td><TD>1st Wave</td><TD>8+</td></tr>';
+    helpText += '<TR><TD>8</td><TD>299 MM + 1Bal</td><TD>9000 archers + 900 Bal</td><TD>1st Wave + 1 Archer</td><TD>9+</td></tr>';
+    helpText += '<TR><TD>9</td><TD>599 MM + 1Bal</td><TD>13000 archers + 900 Bal</td><TD>1st Wave + 2 Archer</td><TD>10</td></tr>';
+    helpText += '<TR><TD>10</td><TD>1199 MM + 1Cat</td><TD>35000 archers + 2500 Cat</td><TD>1st Wave + 6 Archer + 50 Cat</td><TD>10</td></tr></table>';
+    
+    var pop = new CPopup ('giftHelp', 0, 0, 585, 400, true);
+    pop.centerMe (mainPop.getMainDiv());  
+    pop.getMainDiv().innerHTML = helpText;
+    pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help: Cresting</b></center>';
+    pop.show (true);
+  },
+  
+  toggleCrestState: function(obj){
+		var t = Tabs.Crest;
+        if (CrestOptions.Running == true) {
+            CrestOptions.Running = false;
+            obj.value = "Crest = OFF";
+            saveCrestOptions();
+        }
+        else {
+            CrestOptions.Running = true;
+            obj.value = "Crest = ON";
+            saveCrestOptions();
+        }
+    },
+    
+    
+    getAtkKnight : function(cityID){
+     var t = Tabs.Crest;
+     t.knt = new Array();
+     for (k in Seed.knights[cityID]){
+     		if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
+     			t.knt.push ({
+     				Name:   Seed.knights[cityID][k]["knightName"],
+     				Combat:	parseInt(Seed.knights[cityID][k]["combat"]),
+     				ID:		Seed.knights[cityID][k]["knightId"],
+     			});
+     		}
+     }
+     t.knt = t.knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
+  },
+  
+  getRallypointLevel: function(cityId){
+    var t = Tabs.Crest;
+    for (var o in Seed.buildings[cityId]){
+  	var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+  	var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+  	if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
+     }
+  }, 
+  
+  
+  FirstRound: function(){
+      var t = Tabs.Crest;
+      var buzy = false;
+      if (!CrestOptions.Running) return;
+      cityID = 'city' + CrestOptions.CrestCity;
+      
+      var abandon=0;
+      
+      for (var k in Seed.wilderness[cityID] ){
+           if (Seed.wilderness[cityID][k]['xCoord']==CrestOptions.X && Seed.wilderness[cityID][k]['yCoord']==CrestOptions.Y) {
+             t.abandonWilderness(Seed.wilderness[cityID][k]['tileId'],Seed.wilderness[cityID][k]['xCoord'],Seed.wilderness[cityID][k]['yCoord'],CrestOptions.CrestCity);
+           }
+      }
+      
+      for (var k in Seed.queue_atkp[cityID]){
+        if (Seed.queue_atkp[cityID][k]['toXCoord']==CrestOptions.X && Seed.queue_atkp[cityID][k]['toYCoord']==CrestOptions.Y)  buzy=true;
+      }
+      if (!buzy)  {
+        CrestOptions.RoundOne=true;
+        CrestOptions.RoundTwo=true;
+        saveCrestOptions();
+      }
+      if(!CrestOptions.RoundOne) return;
+      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+      
+      t.getAtkKnight(cityID);
+      slots=0;
+       for (z in Seed.queue_atkp[cityID]){
+             slots++;
+       }
+       if  (Seed.queue_atkp[cityID].toSource() == "[]") slots=0;
+       t.getRallypointLevel(cityID);     
+       if ((t.rallypointlevel) <= slots)return;
+       
+       if  (t.knt.toSource() == "[]") {return;}  
+       var kid = t.knt[0].ID;
+       
+       var now = new Date().getTime()/1000.0;
+       now = now.toFixed(0)
+
+  		params.cid=CrestOptions.CrestCity;
+  		params.type=4;
+  	  params.kid=kid;
+  		params.xcoord = CrestOptions.X;
+  		params.ycoord = CrestOptions.Y;
+      if (now < (parseInt(CrestOptions.lastRoundTwo) + 300))  params.u2= (CrestOptions.R1MM / 10);
+  		else params.u2= CrestOptions.R1MM;
+  		params.u10=CrestOptions.R1Ball;
+  		params.u12=CrestOptions.R1Cat;
+  
+  		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+  		         method: "post",
+  		         parameters: params,
+  		         loading: true,
+  		         onSuccess: function (transport) {
+  		         var rslt = eval("(" + transport.responseText + ")");
+  		         if (rslt.ok) {
+  		         var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+  		         var ut = unsafeWindow.unixtime();
+  		         var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+  		         var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+  		         for(i = 0; i <= unitsarr.length; i++){
+  		         	if(params["u"+i]){
+  		         	unitsarr[i] = params["u"+i];
+  		         	}
+  		         }
+  		         var currentcityid = params.cid;
+  		         unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+  		         unsafeWindow.update_seed(rslt.updateSeed)
+  		         if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+  		         CrestOptions.RoundOne = false;
+  		         saveCrestOptions();
+  		         setTimeout (function(){t.SecondRound();}, 10000);
+               } else {
+               		//setTimeout (function(){t.FirstRound();}, 5000);
+  		         //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+  		         }
+  		         },
+  		         onFailure: function () {}
+  		 });
+  		 
+  	 },
+     
+     	 
+    SecondRound: function(){
+      var t = Tabs.Crest;
+      if (!CrestOptions.Running || !CrestOptions.RoundTwo) return;
+      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+      cityID = 'city' + CrestOptions.CrestCity;
+      t.getAtkKnight(cityID);
+      slots=0;
+       for (z in Seed.queue_atkp[cityID]){
+             slots++;
+       }
+       if  (Seed.queue_atkp[cityID].toSource() == "[]") slots=0;
+       t.getRallypointLevel(cityID);
+       if ((t.rallypointlevel) <= slots)return;
+          
+       if  (t.knt.toSource() == "[]") {return;}  
+       var kid = t.knt[0].ID;
+
+  		params.cid=CrestOptions.CrestCity;
+  		params.type=4;
+  	  params.kid=kid;
+  		params.xcoord = CrestOptions.X;
+  		params.ycoord = CrestOptions.Y;
+  		params.u2=CrestOptions.R2MM;
+  		params.u6=CrestOptions.R2Arch;
+  		params.u10=CrestOptions.R2Ball;
+  		params.u12=CrestOptions.R2Cat;
+  		
+  		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+  		         method: "post",
+  		         parameters: params,
+  		         loading: true,
+  		         onSuccess: function (transport) {
+  		         var rslt = eval("(" + transport.responseText + ")");
+  		         if (rslt.ok) {
+  		         var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+  		         var ut = unsafeWindow.unixtime();
+  		         var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+  		         var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+  		         for(i = 0; i <= unitsarr.length; i++){
+  		         	if(params["u"+i]){
+  		         	unitsarr[i] = params["u"+i];
+  		         	}
+  		         }
+  		         var currentcityid = params.cid;
+  		         unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+  		         unsafeWindow.update_seed(rslt.updateSeed);
+  		         if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+  		         CrestOptions.RoundTwo = false;
+               var now = new Date().getTime()/1000.0;
+               now = now.toFixed(0);
+               CrestOptions.lastRoundTwo = now;
+  		         saveCrestOptions();
+               } else {
+               setTimeout (function(){t.SecondRound();}, 5000);
+  		         //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+  		         }
+  		         },
+  		         onFailure: function () {}
+  		 });
+  		 },
+  		 
+  		 
+  	abandonWilderness: function(tid,x,y,cid){
+      var t = Tabs.Crest;
+      if (!CrestOptions.Running) return;
+      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+      var cityID = cid;
+	  var tileid = tid;
+      params.tid=tid;
+  		params.cid=cid;
+  	  params.x=x;
+  		params.y=y;
+  		  		
+  		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/abandonWilderness.php" + unsafeWindow.g_ajaxsuffix, {
+  		         method: "post",
+  		         parameters: params,
+  		         loading: true,
+  		         onSuccess: function (transport) { 
+  		         var rslt=eval("("+transport.responseText+")");
+  		         
+  		         
+				  if (rslt.ok) {
+				     // Modal.hideModal();
+				     logit('abandon OK');
+				     CrestOptions.RoundOne = true;
+				     CrestOptions.RoundTwo = true;
+				     saveCrestOptions();
+				      if (rslt.returningMarches) {
+				          var cities = Object.keys(rslt.returningMarches);
+				          for (var i = 0; i < cities.length; i++) {
+				              for (var j = 0; j < rslt.returningMarches[cities[i]].length; j++) {
+				                  var cid = cities[i].split("c")[1];
+				                  var mid = rslt.returningMarches[cities[i]][j];
+				                  var march = Seed.queue_atkp["city" + cid]["m" + mid];
+				                  if (march) {
+				                      var marchtime = Math.abs(parseInt(march.destinationUnixTime) - parseInt(march.marchUnixTime));
+				                      var ut = unsafeWindow.unixtime();
+				                      Seed.queue_atkp["city" + cid]["m" + mid].destinationUnixTime = ut;
+				                      Seed.queue_atkp["city" + cid]["m" + mid].marchUnixTime = ut - marchtime;
+				                      Seed.queue_atkp["city" + cid]["m" + mid].returnUnixTime = ut + marchtime;
+				                      Seed.queue_atkp["city" + cid]["m" + mid].marchStatus = 8
+				                  }
+				              }
+				          }
+				      }
+				      if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+				      
+				      if (Object.keys(Seed.wilderness["city" + cityID]).length == 1) {
+				          Seed.wilderness["city" + cityID] = []
+  		         	  } else{
+  		         	  	delete Seed.wilderness["city"+cityID]["t"+tileid];
+  		         	  }
+               } else {
+               setTimeout (function(){t.abandonWilderness(tid,x,y,cid);}, 5000);
+  		         //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+  		         }
+  		         },
+  		         onFailure: function () {}
+  		 });
+
+
+    },
+    
+  hide : function (){
+    var t = Tabs.Crest;
+  },
+
+  show : function (){
+  },
+ }; 
 
 
 /*********************************  Barbing Tab ***********************************/
@@ -7270,6 +7630,14 @@ function saveAttackOptions (){
   setTimeout (function (){GM_setValue ('AttackOptions_'+serverID, JSON2.stringify(AttackOptions));}, 0);
 }
 
+function saveCrestOptions (){
+  var serverID = getServerId();
+  setTimeout (function (){GM_setValue ('CrestOptions_'+serverID, JSON2.stringify(CrestOptions));}, 0);
+}
+
+
+
+
 function readOptions (){
   var serverID = getServerId();
   s = GM_getValue ('Options_'+serverID);
@@ -7300,6 +7668,38 @@ function readAttackOptions (){
           AttackOptions[k][kk] = opts[k][kk];
       else
         AttackOptions[k] = opts[k];
+    }
+  }
+}
+
+function readCrestOptions (){
+  var serverID = getServerId();
+  var serverID = getServerId();
+  s = GM_getValue ('CrestOptions_'+serverID);
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          CrestOptions[k][kk] = opts[k][kk];
+      else
+        CrestOptions[k] = opts[k];
+    }
+  }
+}
+
+function readTrainingOptions (){
+  var serverID = getServerId();
+  var serverID = getServerId();
+  s = GM_getValue ('TrainingOptions_'+serverID);
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          CrestOptions[k][kk] = opts[k][kk];
+      else
+        CrestOptions[k] = opts[k];
     }
   }
 }
