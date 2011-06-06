@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110605a
+// @version        20110605b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110605a';
+var Version = '20110605b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -260,12 +260,14 @@ function pbStartup (){
     a.ptButton20 {color:#ffff80}\
     table.pbMainTab {empty-cells:show; margin-top:5px }\
     table.pbMainTab tr td a {color:inherit }\
-    table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 5px 0px 5px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; }\
-    table.pbMainTab tr td.spacer {padding: 0px 4px;}\
+    table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 4px 0px 4px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; }\
+    table.pbMainTab tr td.spacer {padding: 0px 3px;}\
     table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid none solid; background-color:#eed;}\
     table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid none solid; background-color:#00a044; color:white; border-color:black;}\
     tr.pbPopTop td { background-color:#ded; border:none; height: 21px;  padding:0px; }\
     tr.pbretry_pbPopTop td { background-color:#a00; color:#fff; border:none; height: 21px;  padding:0px; }\
+    tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px;  padding:0px; }\
+    tr.pbretry_pbMainPopTop td { background-color:#a00; color:#fff; border:none; height: 42px;  padding:0px; }\
     .CPopup .CPopMain { background-color:#f8f8f8; padding:6px;}\
     .CPopup  {border:3px ridge #666}\
     span.pbTextFriendly {color: #080}\
@@ -3415,6 +3417,7 @@ Tabs.Barb = {
 	   }
 	  m += '<TD><INPUT id=troopselect type=submit value="Select troops"></td>';
 	  m += '<TD><INPUT id=Options type=submit value="Options"></td>';
+	   m += '<TD><INPUT id=barbHelp type=submit value="HELP"></td>';
 	  m += '</tr></table></div>';
 	  
 	  m += '<DIV id=pbTraderDivD class=pbStat>BARBING STATS</div>';
@@ -3472,10 +3475,42 @@ Tabs.Barb = {
 	document.getElementById('AttSearch').addEventListener('click', t.toggleBarbState, false);
 	document.getElementById('Options').addEventListener('click', t.barbOptions , false);
 	document.getElementById('troopselect').addEventListener('click', t.troopOptions , false);
+	document.getElementById('barbHelp').addEventListener('click', t.helpPop , false);
     var element_class = document.getElementsByClassName('pblevelopt');
     for (k=0;k<element_class.length;k++){
     	element_class[k].addEventListener('click', t.saveLevelOptions , false);
     }
+   },
+   
+   helpPop : function (){
+     var helpText = '<BR>The bot barber is made for speed and simplicity.<BR>';
+     helpText += 'On first run it wil search for barb camps (this may take a while...).<BR>';
+     helpText += 'Select the levels you want to attack per city and fill in troops (Select troops button).<BR>';
+     helpText += 'Go thru the options and hit \"ON"\'.<BR><BR>';
+
+     helpText += 'Troop numbers (from KOC WIKI):<BR>';
+     helpText += '<A target="_tab" href="http://koc.wikia.com/wiki/Barbarian_Camps">A lot more can be found on Koc Wikia</a>';
+     helpText += '<TABLE><TR><TD>Lvl</td><TD>Troops</td></tr>'; 
+     helpText += '<TR><TD>1</td><TD>500 Supply Troops + 500 Archers</td></tr>';
+     helpText += '<TR><TD>2</td><TD>500 Supply Troops + 2500 Archers</td></tr>';
+     helpText += '<TR><TD>3</td><TD>500 Supply Troops + 5000 Archers</td></tr>';
+     helpText += '<TR><TD>4</td><TD>500 Supply Troops + 7500 Archers</td></tr>';
+     helpText += '<TR><TD>5</td><TD>15000 Archers</td></tr>';
+     helpText += '<TR><TD>5</td><TD>12000 Archers IF Level 10 fletching and Level 9 Featherweight</td></tr>';
+     helpText += '<TR><TD>6</td><TD>25000 Archers IF Level 9 fletching</td></tr>';
+     helpText += '<TR><TD>6</td><TD>22000 Archers IF Level 10 fletching</td></tr>';
+     helpText += '<TR><TD>7</td><TD>45000 Archers IF Level 10 fletching</td></tr>';
+     helpText += '<TR><TD>7</td><TD>44000 Archers IF Level 10 fletching and knight 69+</td></tr>';
+     helpText += '<TR><TD>7</td><TD>40000 Archers IF Level 10 fletching and knight 94+</td></tr>';
+     helpText += '<TR><TD>8</td><TD>28000 Ballista WITH Level 10 fletching and Knight 91+</td></tr>';
+     helpText += '<TR><TD>9</td><TD>56000 Ballista WITH Level 10 fletching and Knight 98+</td></tr>';
+     helpText += '<TR><TD>10</td><TD>125000 Catapults (500 Catapults loss!)</td></tr></tr></table>';
+
+     var pop = new CPopup ('giftHelp', 0, 0, 500, 475, true);
+     pop.centerMe (mainPop.getMainDiv());  
+     pop.getMainDiv().innerHTML = helpText;
+     pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help: Barbing</b></center>';
+     pop.show (true);
    },
   
   saveLevelOptions : function(){
@@ -3788,14 +3823,20 @@ Tabs.Barb = {
 		if (myarray != undefined){
 			myarray = JSON2.parse(myarray);
 			if(AttackOptions.Method == 'distance') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
-			if(AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a > b ? -1 : 1);});
-			if(AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
+			if(AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function function (a,b) {a = parseInt(a['level']);b = parseInt(b['level']);return (a > b )? -1 : ((a < b ? 1 : t.SortDist(a,b)));});
+			if(AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function function (a,b) {a = parseInt(a['level']);b = parseInt(b['level']);return (a < b )? -1 : ((a > b ? 1 : t.SortDist(a,b)));});
 	  		   GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(), JSON2.stringify(t.barbArray[i]));
 	  		}
 	  	}
   },
   
-  toggleBarbState: function() {
+  SortDist: function(a,b) {
+  	a = parseFloat(a['dist']);
+  	b = parseFloat(b['dist']);
+  	return (a < b )? -1 : ((a > b ? 1 : 0));
+  },
+  
+  toggleBarbState: function(obj){
 	var t = Tabs.Barb;
 	obj = document.getElementById('AttSearch');
 	if (AttackOptions.Running == true) {
@@ -3928,7 +3969,7 @@ Tabs.Barb = {
      		if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
      			t.knt.push ({
      				Name:   Seed.knights[cityID][k]["knightName"],
-     				Combat:	Seed.knights[cityID][k]["combat"],
+     				Combat:	parseInt(Seed.knights[cityID][k]["combat"]),
      				ID:		Seed.knights[cityID][k]["knightId"],
      			});
      		}
@@ -3990,7 +4031,7 @@ Tabs.Barb = {
   		         GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
   		         saveAttackOptions();
                } else {
-  		         if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
+  		         if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code != 210) AttackOptions.BarbsFailedVaria++;
   		         if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
   		         if (rslt.error_code == 210) AttackOptions.BarbsFailedRP++;
   		         if (rslt.error_code == 8) AttackOptions.BarbsFailedTraffic++;
@@ -6131,7 +6172,7 @@ Tabs.Reinforce = {
        		if (Seed.knights['city' + t.from.city.id][k]["knightStatus"] == 1 && Seed.leaders['city' + t.from.city.id]["resourcefulnessKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"] && Seed.leaders['city' + t.from.city.id]["politicsKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"] && Seed.leaders['city' + t.from.city.id]["combatKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"] && Seed.leaders['city' + t.from.city.id]["intelligenceKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"]){
        			knt.push ({
        				Name:   Seed.knights['city' + t.from.city.id][k]["knightName"],
-       				Combat:	Seed.knights['city' + t.from.city.id][k]["combat"],
+       				Combat:	parseInt(Seed.knights['city' + t.from.city.id][k]["combat"]),
        				ID:		Seed.knights['city' + t.from.city.id][k]["knightId"],
        			});
        		}
@@ -6698,7 +6739,7 @@ var tabManager = {
       }
     }
 
-    sorter.sort (function (a,b){return a[0]-b[0]});
+	sorter.sort (function (a,b){return a[0]-b[0]});
     var m = '<TABLE cellspacing=0 class=pbMainTab><TR>';
     for (var i=0; i<sorter.length; i++)
       m += '<TD class=spacer></td><TD class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
