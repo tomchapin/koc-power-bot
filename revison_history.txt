@@ -1,6 +1,21 @@
 REVISION HISTORY:
 ----------------
 
+20110605b
+   *Decreased spacing between tabs so as to fit into the screen
+   *Added toggle button for barbs beside bot tab
+   *Added killswitch for barb when under attacked
+   *Fixed coords and names for provinces
+   *Fixed create scout list to show all types selected and not misted only
+   *Added help for barb tab
+   *Fix for reports getting deleted even if disabled
+   *Sorting for highest/lowest level for barbs
+   *Fixed sort of knight to use highest combat skill first
+   *Fixed reassign city display button messing with reinforce tab's coord box
+   *Fix for reassign function to calculate marching troops
+   *Preparation of ajaxrequest for barb raids feature
+   *Updated spam tab to make it less annoying
+
 20110527a
    *Attempted to fix issue with missing "Bot" tab
    
