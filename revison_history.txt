@@ -1,6 +1,12 @@
 REVISION HISTORY:
 ----------------
 
+20110607a
+   *Added option to specify interval of attacking the same barb
+   *Fixed auto barb delete from deleting wild attack reports
+   *Fixed reassign tab getting stuck at coords 0,0
+   *Added a confirm box to recover from adding coords 0,0 instead of erroring out.
+
 20110605c
    *Fix for autobarb killswitch
    *Fix for autospam having difficulty remembering settings
