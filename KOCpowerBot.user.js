@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110606a
+// @version        20110607a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110606a';
+var Version = '20110607a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -162,7 +162,6 @@ var Options = {
   pbEveryMins  : 30,
   pbChatOnRight: false,
   pbWideMap    : false,
-
   pbFoodAlert  : false,
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0 },
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
@@ -191,6 +190,7 @@ var AttackOptions = {
   MsgInterval	      	: 1,
   Method			    : "distance",
   SendInterval			: 30,
+  MarchInt				: 1,
   MaxDistance           : 40,
   RallyClip				: 0,
   Running       		: false,
@@ -3029,7 +3029,6 @@ var exportToKOCattack = {
     }
     
     function doNextLevel (){
-
       while ( curLevel<10 && cList['lvl'+ ++curLevel].length==0)
         ;
       if (curLevel>=10){
@@ -3410,6 +3409,7 @@ Tabs.Test = {
 /*********************************  Cresting Tab ***********************************/
  Tabs.Crest = {
   tabOrder : 1,
+  tabDisabled : true, //Not ready for public release yet
   myDiv : null,
   rallypointlevel:null,
   knt:{},
@@ -3828,7 +3828,7 @@ Tabs.Barb = {
      saveAttackOptions();
 	 t.checkBarbData();
 	 if(t.nextattack == null && AttackOptions.Running)
-		t.nextattack = setInterval(t.getnextCity, 1500);
+		t.nextattack = setInterval(t.getnextCity, 2000);
      setInterval(t.startdeletereports,2*60*1000);
      for(i=0;i<Seed.cities.length;i++){
     		var element = 'pdtotalcity'+i;
@@ -3930,7 +3930,7 @@ Tabs.Barb = {
   barbOptions: function(){
   	 var t = Tabs.Barb;
   	 if(t.barboptions == null)	
-		t.barboptions = new CPopup ('pbbarboptions', 0,0, 375,350, true);
+		t.barboptions = new CPopup ('pbbarboptions', 0,0, 375,370, true);
   	 t.barboptions.centerMe (mainPop.getMainDiv());  
 	 t.barboptions.getTopDiv().innerHTML = '<CENTER><b> Barbing Options for server '+getServerId()+'</b></CENTER>';
   	var y = '<DIV style="max-height:400px; overflow-y:auto;"><DIV class=pbStat>RESET BARBS</div><TABLE width=100%>';
@@ -3938,7 +3938,8 @@ Tabs.Barb = {
 	   y +='<TD style="margin-top:5px; text-align:center;"><INPUT id=pbpaintbarbs type=submit value="Show barbs"></td>';
 	   y += '<TD><SELECT id=pbcity type=list></td></tr></table>';
 	   y +='<TD style="margin-top:5px; text-align:center;"><DIV class=pbStat> OPTIONS </div></td><TABLE>';
-     y +='<TR><TD>Attack interval: <INPUT id=pbsendint type=text size=4 maxlength=4 value='+ AttackOptions.SendInterval +' \> seconds</td></tr>';
+     y +='<TR><TD>Attack interval: <INPUT id=pbsendint type=text size=4 maxlength=4 value='+ AttackOptions.SendInterval +' \> second(s)</td></tr>';
+     y +='<TR><TD>Attack barb every: <INPUT id=pbmarchint type=text size=4 maxlength=4 value='+ AttackOptions.MarchInt +' \> hour(s)</td></tr>';
      y +='<TR><TD>Max search distance: <INPUT id=pbmaxdist type=text size=4 maxlength=4 value='+ AttackOptions.MaxDistance +' \></td></tr>';
      y +='<TR><TD>Keep <INPUT id=rallyclip type=text size=1 maxlength=2 value="'+AttackOptions.RallyClip+'" \> rallypoint slot(s) free</td></tr>';
      y +='<TR><TD><INPUT id=pbreport type=checkbox '+(AttackOptions.MsgEnabled?'CHECKED':'')+'\> Send barb report msg every<INPUT id=pbmsgint type=text size=2 maxlength=2 value='+AttackOptions.MsgInterval+' \>hour(s)</td></tr>';
@@ -3982,6 +3983,10 @@ Tabs.Barb = {
 	},false);
     document.getElementById('pbsendint').addEventListener('change', function(){
 		AttackOptions.SendInterval=parseInt(document.getElementById('pbsendint').value);
+		saveAttackOptions();
+	},false);
+    document.getElementById('pbmarchint').addEventListener('change', function(){
+		AttackOptions.MarchInt=parseFloat(document.getElementById('pbmarchint').value);
 		saveAttackOptions();
 	},false);
     document.getElementById('pbmaxdist').addEventListener('change', function(){
@@ -4135,7 +4140,7 @@ Tabs.Barb = {
 		var deletes0 = new Array();
 		for(k in reports){
 			if(AttackOptions.DeleteMsg){
-				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && AttackOptions.MsgLevel[reports[k].side0TileLevel])
+				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && reports[k].side0TileType > 50 && AttackOptions.MsgLevel[reports[k].side0TileLevel])
 					deletes1.push(k.substr(2));
 				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
 					deletes1.push(k.substr(2));
@@ -4222,7 +4227,7 @@ Tabs.Barb = {
 		updatebotbutton('Barb - ON', 'pbbarbtab');
 		saveAttackOptions();
 		t.checkBarbData();
-		t.nextattack = setInterval(t.getnextCity,(AttackOptions.SendInterval*1000));
+		t.nextattack = setInterval(t.getnextCity, 2000);
 	}
   },
   
@@ -4274,7 +4279,7 @@ Tabs.Barb = {
          for (h=1;h<=10;h++){
             if ( AttackOptions.Levels[city][h] == true && (parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['level'])) == h ) check=1;
          }
-         if (now < (parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['time']) + 3600) && (t.barbArray[city][AttackOptions.BarbNumber[city]]['time']) != 3600) check=0;
+         if (now < (parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['time']) + parseInt(AttackOptions.MarchInt*(60*60))) && (t.barbArray[city][AttackOptions.BarbNumber[city]]['time']) != 3600) check=0;
          var barblevel = parseInt(t.barbArray[city][AttackOptions.BarbNumber[city]]['level']);
          var u1 = AttackOptions.Troops[barblevel][1];
          var u9 = AttackOptions.Troops[barblevel][2];
@@ -4722,6 +4727,7 @@ Tabs.transport = {
   tradeRoutes: [],
   checkdotradetimeout: null,
   count:0,
+  check:false,
 
     init: function(div){
 		var t = Tabs.transport;
@@ -4938,6 +4944,7 @@ Tabs.transport = {
 		}
 		return;			
 	},
+	
 	addTradeRoute: function () {
 		var valid = true;
 		var t = Tabs.transport;
@@ -5250,7 +5257,7 @@ Tabs.transport = {
 				  shift_spare = shift_spare- shift_spare;
 				}
         		if (carry_Stone < (shift_Stone + shift_spare)){
-				    shift_spare = shift_spare - carry_Stone;;
+				    shift_spare = shift_spare - carry_Stone;
 				    shift_Stone = carry_Stone;
 				 }
 				 else{
@@ -5258,7 +5265,7 @@ Tabs.transport = {
 				  shift_spare = shift_spare- shift_spare;
 				}
 				 if (carry_Ore < (shift_Ore + shift_spare)){
-				    shift_spare = shift_spare - carry_Ore;;
+				    shift_spare = shift_spare - carry_Ore;
 				    shift_Ore = carry_Ore;
 				 }
 				 else{
@@ -5373,6 +5380,7 @@ Tabs.Reassign = {
   reassignRoutes: [],
   rallypointlevel:null,
   count:0,
+  check:false,
 
     init: function(div){
 		var t = Tabs.Reassign;
@@ -5635,11 +5643,11 @@ Tabs.Reassign = {
 		var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
 		if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
 	   }  
- },
+	},
       	  
     
 
- e_reassignRoutes: function(){
+	e_reassignRoutes: function(){
       var t = Tabs.Reassign;
       var now = new Date();
       if (t.reassignState.running == true)    {
