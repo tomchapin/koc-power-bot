@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110607a
+// @version        20110607b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110607a';
+var Version = '20110607b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -283,9 +283,9 @@ function pbStartup (){
     table.pbMainTab {empty-cells:show; margin-top:5px }\
     table.pbMainTab tr td a {color:inherit }\
     table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 4px 0px 4px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; }\
-    table.pbMainTab tr td.spacer {padding: 0px 3px;}\
-    table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid none solid; background-color:#eed;}\
-    table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid none solid; background-color:#00a044; color:white; border-color:black;}\
+    table.pbMainTab tr td.spacer {padding: 0px 0px;}\
+    table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid solid solid; background-color:#eed;}\
+    table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid solid solid; background-color:#00a044; color:white; border-color:black;}\
     tr.pbPopTop td { background-color:#ded; border:none; height: 21px;  padding:0px; }\
     tr.pbretry_pbPopTop td { background-color:#a00; color:#fff; border:none; height: 21px;  padding:0px; }\
     tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px;  padding:0px; }\
@@ -320,7 +320,7 @@ function pbStartup (){
     saveOptions ();
   }
   
-  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 820,600, Options.pbWinDrag,
+  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,600, Options.pbWinDrag,
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false;
@@ -3409,7 +3409,7 @@ Tabs.Test = {
 /*********************************  Cresting Tab ***********************************/
  Tabs.Crest = {
   tabOrder : 1,
-  tabDisabled : true, //Not ready for public release yet
+  tabDisabled : false, //Not ready for public release yet
   myDiv : null,
   rallypointlevel:null,
   knt:{},
@@ -3448,8 +3448,11 @@ Tabs.Test = {
     
     t.tcp = new CdispCityPicker ('crestcityselect', document.getElementById('crestcity'), true, t.clickCitySelect, selbut);
     
-    //document.getElementById('crestcityselect').value = CrestOptions.CrestCity;
-    
+    if (CrestOptions.CrestCity == 0) {
+    	CrestOptions.CrestCity = t.tcp.city.id
+    	saveCrestOptions();
+    }
+         
     document.getElementById('crestcity').addEventListener('click', function(){CrestOptions.CrestCity = t.tcp.city.id;saveCrestOptions();} , false);
     document.getElementById('Cresttoggle').addEventListener('click', function(){t.toggleCrestState(this)} , false);
     document.getElementById('CrestHelp').addEventListener('click', function(){t.helpPop();} , false);
@@ -3461,7 +3464,7 @@ Tabs.Test = {
     document.getElementById('R2MM').addEventListener('change', function(){CrestOptions.R2MM= document.getElementById('R2MM').value; saveCrestOptions()} , false);
     document.getElementById('R2Arch').addEventListener('change', function(){CrestOptions.R2Arch= document.getElementById('R2Arch').value; saveCrestOptions()} , false);
     document.getElementById('R2Ball').addEventListener('change', function(){CrestOptions.R2Ball= document.getElementById('R2Ball').value; saveCrestOptions()} , false);
-    document.getElementById('R2Cat').addEventListener('change', function(){CrestOptions.R2Cat= document.getElementById('RCat').value; saveCrestOptions()} , false);
+    document.getElementById('R2Cat').addEventListener('change', function(){CrestOptions.R2Cat= document.getElementById('R2Cat').value; saveCrestOptions()} , false);
   },
   
   helpPop : function (){
@@ -3573,10 +3576,14 @@ Tabs.Test = {
 
   		params.cid=CrestOptions.CrestCity;
   		params.type=4;
-  	  params.kid=kid;
+  	    params.kid=kid;
   		params.xcoord = CrestOptions.X;
   		params.ycoord = CrestOptions.Y;
-      if (now < (parseInt(CrestOptions.lastRoundTwo) + 300))  params.u2= (CrestOptions.R1MM / 10);
+        if (now < (parseInt(CrestOptions.lastRoundTwo) + 300)) { 
+        	params.u2= (CrestOptions.R1MM / 10);
+        	params.u2 = params.u2(0);	
+        	if (params.u2 < (CrestOptions.R1MM / 10)) params.u2++;
+        }	
   		else params.u2= CrestOptions.R1MM;
   		params.u10=CrestOptions.R1Ball;
   		params.u12=CrestOptions.R1Cat;
@@ -7143,11 +7150,14 @@ var tabManager = {
     }
 
 	sorter.sort (function (a,b){return a[0]-b[0]});
-    var m = '<TABLE cellspacing=0 class=pbMainTab><TR>';
-    for (var i=0; i<sorter.length; i++)
-      m += '<TD class=spacer></td><TD class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
+    var m = '<TABLE cellspacing=5 class=pbMainTab><TR>';
+    for (var i=0; i<sorter.length; i++) {
+      m += '<TD class=spacer></td><TD align=center class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
+      if (i==8) m+='</tr><TR>';
+    }
+    m+='</tr></table>';  
     //m += '<TD class=spacer width=90% align=right>'+ Version +'&nbsp;</td></tr></table>';
-    mainPop.getTopDiv().innerHTML = m;
+    mainPop.getMainTopDiv().innerHTML = m;
     
     for (k in t.tabList) {
       if (t.tabList[k].name == Options.currentTab)
@@ -7667,7 +7677,7 @@ function saveAttackOptions (){
 
 function saveCrestOptions (){
   var serverID = getServerId();
-  setTimeout (function (){GM_setValue ('CrestOptions_'+serverID, JSON2.stringify(CrestOptions));}, 0);
+  setTimeout (function (){GM_setValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CrestOptions));}, 0);
 }
 
 
@@ -7710,7 +7720,7 @@ function readAttackOptions (){
 function readCrestOptions (){
   var serverID = getServerId();
   var serverID = getServerId();
-  s = GM_getValue ('CrestOptions_'+serverID);
+  s = GM_getValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID);
   if (s != null){
     opts = JSON2.parse (s);
     for (k in opts){
@@ -8351,6 +8361,7 @@ function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
   this.show = show;
   this.toggleHide = toggleHide;
   this.getTopDiv = getTopDiv;
+  this.getMainTopDiv = getMainTopDiv;
   this.getMainDiv = getMainDiv;
   this.getLayer = getLayer;
   this.setLayer = setLayer;
@@ -8462,6 +8473,9 @@ function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
   }
   function getMainDiv(){
     return document.getElementById(this.prefix+'_main');
+  }
+  function getMainTopDiv(){
+  	return document.getElementById(this.prefix+'_top');
   }
   function isShown (){
     return t.div.style.display == 'block';
