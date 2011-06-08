@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110607b
+// @version        20110607c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110607b';
+var Version = '20110607c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -284,8 +284,8 @@ function pbStartup (){
     table.pbMainTab tr td a {color:inherit }\
     table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 4px 0px 4px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; }\
     table.pbMainTab tr td.spacer {padding: 0px 0px;}\
-    table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid solid solid; background-color:#eed;}\
-    table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid solid solid; background-color:#00a044; color:white; border-color:black;}\
+    table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid none solid; background-color:#eed;}\
+    table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid none solid; background-color:#00a044; color:white; border-color:black;}\
     tr.pbPopTop td { background-color:#ded; border:none; height: 21px;  padding:0px; }\
     tr.pbretry_pbPopTop td { background-color:#a00; color:#fff; border:none; height: 21px;  padding:0px; }\
     tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px;  padding:0px; }\
@@ -5956,16 +5956,17 @@ Tabs.Reassign = {
     	totalsend=0;
     	
     	var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult"];
-    	for (k in troopsselect) {
+    	for (k=0; k<troopsselect.length; k++) {
 			var citytroops = Seed.units[cityID]['unt'+(parseInt(k)+1)];
 			var marchtroops = marching.marchUnits[parseInt(k)+1];
 			citytotal = parseInt(citytroops) + parseInt(marchtroops);
 			//alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
+			//if(k== 5) GM_log(citytotal +'  ' + t.reassignRoutes[count][troopsselect[k]]);
 			if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
 			if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
 				var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]);
-				if (sendtroops > citytroops) sendtroops = citytroops;
-				if (sendtroops < 0) sendtroops = 0;
+				if (parseInt(sendtroops) > parseInt(citytroops)) sendtroops = citytroops;
+				if (parseInt(sendtroops) < 0) sendtroops = 0;
 				send[(parseInt(k)+1)] = sendtroops;
 				totalsend += send[(parseInt(k)+1)];
 				//alert(parseInt(k)+1 + ' - ' + citytotal+ ' : ' + troopsselect[k] + ' / ' + t.reassignRoutes[0][troopsselect[k]]);    			
@@ -8053,16 +8054,18 @@ function getMarchInfo (cityID){
   
   for (k in Seed.queue_atkp[cityID]){   // each march
       march = Seed.queue_atkp[cityID][k];
-      if (typeof (march) == 'object'){
-        for (ii=0; ii<13; ii++){
-          ret.marchUnits[ii] += parseInt (march['unit'+ ii +'Count']);
-          ret.returnUnits[ii] += parseInt (march['unit'+ ii +'Return']);
-        }
-        for (ii=1; ii<5; ii++){
-          ret.resources[ii] += parseInt (march['resource'+ ii]);
-        }
-          ret.resources[0] += parseInt (march['gold']);
-      }
+	  if(march.marchType != 5){
+		  if (typeof (march) == 'object'){
+			for (ii=0; ii<13; ii++){
+			  ret.marchUnits[ii] += parseInt (march['unit'+ ii +'Count']);
+			  ret.returnUnits[ii] += parseInt (march['unit'+ ii +'Return']);
+			}
+			for (ii=1; ii<5; ii++){
+			  ret.resources[ii] += parseInt (march['resource'+ ii]);
+			}
+			  ret.resources[0] += parseInt (march['gold']);
+		  }
+	  }
     }
   return ret;
 }
