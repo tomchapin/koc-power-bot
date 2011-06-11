@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110607c
+// @version        20110610a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110607c';
+var Version = '20110610a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -515,9 +515,8 @@ Tabs.tower = {
     },
 
   init: function(div){
-	  var t = Tabs.tower;
+	var t = Tabs.tower;
     t.myDiv = div;
-        var Providers_len = 105;
     
     if (GM_getValue ('towerMarches_'+getServerId()) != null)
       GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
@@ -539,7 +538,7 @@ Tabs.tower = {
     <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
     <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
 &nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold">(Please note that standard text messaging charges may apply)</span></td></tr><tr><td></td>\
+&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold">(Standard text messaging rates apply)</span></td></tr><tr><td></td>\
     <TD align=left>Country: <select id="pbfrmcountry">';
     for (var i in t.Providers) {
        var ret=m.indexOf(t.Providers[i].country);
@@ -1364,7 +1363,7 @@ Tabs.tower = {
                     if (parseInt(fromUid) == parseInt(tvuid)) {
                         var curmarch = seed.queue_atkp["city" + fromCid]["m" + mid];
                         var marchtime = Math.abs(parseInt(curmarch.destinationUnixTime) - parseInt(curmarch.eventUnixTime));
-                        curmarch.returnUnixTime = unixtime() + marchtime;
+                        curmarch.returnUnixTime = unixTime() + marchtime;
                         curmarch.marchStatus = 8
                     }
                     delete seed.queue_atkinc["m" + mid]
@@ -3035,7 +3034,7 @@ var exportToKOCattack = {
         endBulkAdd ('Done!<BR>');
         return;
       }
-     e_attackDialog();
+     e_attackDialog(false);
     }
         
     function e_attackDialog (tf){
@@ -3043,9 +3042,8 @@ var exportToKOCattack = {
        hideMe();
        popExp.show (false);
        unsafeWindow.Modal.hideModalAll();
-       pause(500);
        unsafeWindow.modal_attack(4,0,0);
-       new CwaitForElement ('BulkAddAttackDiv', 400, e_attackDialog );
+       new CwaitForElement ('BulkAddAttackDiv', 1000, e_attackDialog );
       }
       var div = searchDOM (document.getElementById('BulkAddAttackDiv'), 'node.tagName=="DIV" && node.style.display=="none"', 10);
       if (div==null){
@@ -3080,7 +3078,7 @@ var exportToKOCattack = {
       clickWin (unsafeWindow, but, 'click');   
       unsafeWindow.Modal.hideModal();
       document.getElementById('pbSrcExpResult').innerHTML += 'Added '+ list.length +' targets for '+ city.name +'<BR>';
-      setTimeout (doNextLevel, 10);
+      setTimeout (doNextLevel, 500);
     }    
   },
 }
@@ -3409,10 +3407,10 @@ Tabs.Test = {
 /*********************************  Cresting Tab ***********************************/
  Tabs.Crest = {
   tabOrder : 1,
-  tabDisabled : false, //Not ready for public release yet
   myDiv : null,
   rallypointlevel:null,
   knt:{},
+  tabDisabled :true,
      
   init : function (div){
     var t = Tabs.Crest;
@@ -3835,7 +3833,7 @@ Tabs.Barb = {
      saveAttackOptions();
 	 t.checkBarbData();
 	 if(t.nextattack == null && AttackOptions.Running)
-		t.nextattack = setInterval(t.getnextCity, 2000);
+		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*10000)+5000));
      setInterval(t.startdeletereports,2*60*1000);
      for(i=0;i<Seed.cities.length;i++){
     		var element = 'pdtotalcity'+i;
@@ -4234,7 +4232,7 @@ Tabs.Barb = {
 		updatebotbutton('Barb - ON', 'pbbarbtab');
 		saveAttackOptions();
 		t.checkBarbData();
-		t.nextattack = setInterval(t.getnextCity, 2000);
+		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*10000)+5000));
 	}
   },
   
@@ -4316,8 +4314,11 @@ Tabs.Barb = {
   
   getnextCity: function(){
 	var t = Tabs.Barb;
-    if (!AttackOptions.Running) return;
-	if(t.searchRunning) return;
+	t.nextattack = null;
+	if(t.searchRunning || !AttackOptions.Running){
+		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*10000)+5000));
+		return;
+	}
 	
 	var city = t.city+1;
 	if (city>Seed.cities.length){
@@ -4331,8 +4332,10 @@ Tabs.Barb = {
 		}
 	}
 	t.city = city;
-	if(!found)	return;
-	setTimeout(t.barbing, 0);
+	if(found){
+	t.barbing();
+	}
+	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*10000)+5000));
   },
   
   getRallypointLevel: function(cityId){
@@ -7151,10 +7154,11 @@ var tabManager = {
     }
 
 	sorter.sort (function (a,b){return a[0]-b[0]});
-    var m = '<TABLE cellspacing=5 class=pbMainTab><TR>';
+    var m = '<TABLE cellspacing=3 class=pbMainTab><TR>';
     for (var i=0; i<sorter.length; i++) {
-      m += '<TD class=spacer></td><TD align=center class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
-      if (i==8) m+='</tr><TR>';
+      //m += '<TD class=spacer></td><TD align=center class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
+      m += '<TD align=center class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
+      //if (i==8) m+='</tr><TR>';
     }
     m+='</tr></table>';  
     //m += '<TD class=spacer width=90% align=right>'+ Version +'&nbsp;</td></tr></table>';
@@ -7892,7 +7896,7 @@ Tabs.Spam = {
         m += '<TD><INPUT id=pbSpamState type=submit value="Send To  Global "></td>';
        }
         m += '</tr></table></div>';
-       m += '<DIV class=pbStat>Settings</div><TABLE class=pbTab><TR align="left">';
+       m += '<DIV class=pbStat>Settings</div><TABLE class=pbTab>';
         m += '<tr><td>Automatically post every <INPUT id=pbSpamMin type=text size=2 maxlength=3 value="'+ Options.spamconfig.spammins +'"  \> minutes</td></tr><BR>\
               <tr><TD><TABLE cellpadding=0 cellspacing=0>\
               <TD align=left>Your spam: &nbsp; </td><TD><INPUT id=pbSpamAd type=text size=60 maxlength=500 value="'+ Options.spamconfig.spamvert +'" \></td></tr>\
@@ -7919,14 +7923,16 @@ Tabs.Spam = {
   var t = Tabs.Spam;
   Options.spamconfig.spamvert = document.getElementById('pbSpamAd').value;
   Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
-  if(Options.spamconfig.spammins < 30)
+  if(parseInt(Options.spamconfig.spammins) < 30){
    Options.spamconfig.spammins = 30;
+   document.getElementById('pbSpamMin').value = 30;
+  }
   saveOptions ();
 
-   if(Options.spamconfig.spamvert == 'nessaja') {
-    Options.spamconfig.spamvert = '';
-    top.location = "http://www.facebook.com/?ref=baos780";
-   };
+   // if(Options.spamconfig.spamvert == 'nessaja') {
+    // Options.spamconfig.spamvert = '';
+    // top.location = "http://www.facebook.com/?ref=baos780";
+   // };
  },
 
  togglespam: function(obj){
@@ -7952,6 +7958,7 @@ Tabs.Spam = {
   else {
    Options.spamconfig.aspam = true;
    obj.value = "Spam On";
+   SpamEvery.init();
   }
   saveOptions ();
 
@@ -7962,7 +7969,7 @@ var SpamEvery  = {
   timer : null,
   spamtimer : 0,
   init : function (){
-
+	if (!Options.spamconfig.aspam) return;
     if (Options.spamconfig.spammins < 1)
       Options.spamconfig.spammins = 1;
     SpamEvery.setEnable (Options.spamconfig.aspam);
@@ -7976,7 +7983,7 @@ var SpamEvery  = {
   count : function (){
    var t = SpamEvery;
    t.spamtimer = Options.spamconfig.spammins;
-   if(t.spamtimer < 60) t.spamtimer = 60;
+   if(parseInt(t.spamtimer) < 60) t.spamtimer = 60;
    if (Options.spamconfig.atime > t.spamtimer) {
     Options.spamconfig.atime = 2;
     t.doit ();
@@ -8216,7 +8223,7 @@ function CwaitForElement (id, timeout, notify){
     else if (new Date().getTime() > t.end)
       notify (false);
     else
-      setTimeout (t.check, 250);
+      setTimeout (t.check, 500);
   }
 }
 
