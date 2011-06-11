@@ -571,7 +571,6 @@ Tabs.tower = {
             <TR><TD align=right>Minimum # of troops: &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
             </table></td></tr>\
         <TR><TD align=right><INPUT id=pbalertbarb type=checkbox '+ (Options.alertConfig.barb?'CHECKED':'') +'/></td><TD>Stop barbing on impending.</td></tr>\
-        <TR><TD align=right><INPUT id=pbalertbarbres type=checkbox '+ (Options.alertConfig.barbresume?'CHECKED':'') +'/></td><TD>Resume barbing after impending clears.</td></tr>\
         <TR><TD><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>Play sound on incoming attack/scout</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>Loading SWF player</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
@@ -613,7 +612,6 @@ Tabs.tower = {
     document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbalertbarb').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertbarbres').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
         t.loadUrl (Options.alertSound.soundUrl);
@@ -712,7 +710,6 @@ Tabs.tower = {
     Options.alertConfig.wilds=document.getElementById('pbalertWild').checked;
     Options.alertConfig.defend=document.getElementById('pbalertDefend').checked;
     Options.alertConfig.barb=document.getElementById('pbalertbarb').checked;
-    Options.alertConfig.barbresume=document.getElementById('pbalertbarbres').checked;
     var mt = parseInt(document.getElementById('pbalertTroops').value);
     if (mt<1 || mt>120000){
       document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
@@ -770,18 +767,19 @@ Tabs.tower = {
             Options.alertConfig.lastAttack = m.departureTime;  
             t.newIncoming (m);
           }          
-        } else {
-			if (Options.alertConfig.barbresume){
-				obj = document.getElementById('AttSearch');
-				if (AttackOptions.Running == false) {
-					AttackOptions.Running = true;
-					obj.value = "Barb = ON";
-					updatebotbutton('Barb - ON', 'pbbarbtab');
-					saveAttackOptions();
-					t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*10000)+5000));
-				}
-			}
-		}
+        }
+		// else if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)<now){
+			// if (Options.alertConfig.barbresume){
+				// obj = document.getElementById('AttSearch');
+				// if (AttackOptions.Running == false) {
+					// AttackOptions.Running = true;
+					// obj.value = "Barb = ON";
+					// updatebotbutton('Barb - ON', 'pbbarbtab');
+					// saveAttackOptions();
+					// Tabs.Barb.nextattack = setTimeout(Tabs.Barb.getnextCity, parseInt((Math.random()*10000)+5000));
+				// }
+			// }
+		// }
       }
     }
 //logit ("NOW="+ now + ' alarmActive='+ Options.alertSound.alarmActive + ' expireTime='+ Options.alertSound.expireTime);
@@ -877,7 +875,7 @@ Tabs.tower = {
 			obj.value = "Barb = OFF";
 			updatebotbutton('Barb - OFF', 'pbbarbtab');
 			saveAttackOptions();
-			t.nextattack = null;
+			Tabs.Barb.nextattack = null;
 		}
 	}
   },
