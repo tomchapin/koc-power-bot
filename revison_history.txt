@@ -1,6 +1,13 @@
 REVISION HISTORY:
 ----------------
 
+20110610a
+   *Changed spacing between tabs to fit powerbot into koc game screen
+   *Fixed issue with bulk add barb coords to kocattack
+   *Changed timer mechanism for auto barb
+   *Fixed reassign tab to disregard marching troops in reassign mode
+   *Changed minimum spam timer to once every 30 minutes
+
 20110607a
    *Added option to specify interval of attacking the same barb
    *Fixed auto barb delete from deleting wild attack reports
