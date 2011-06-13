@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110610a
+// @version        20110612a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110610a';
+var Version = '20110612a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -163,7 +163,7 @@ var Options = {
   pbChatOnRight: false,
   pbWideMap    : false,
   pbFoodAlert  : false,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0 },
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false },
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -206,7 +206,7 @@ var AttackOptions = {
   BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   BarbNumber    		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   Levels    			: {1:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
-  Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0}},
+  Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0}},
   MinDistance			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
   Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750}	
 };
@@ -223,8 +223,11 @@ var CrestOptions = {
   R1Ball:0,
   R1Cat:0,
   R2MM:0,
+  R2Pike:0,
+  R2Sword:0,
   R2Arch:0,
   R2Ball:0,
+  R2Ram:0,
   R2Cat:0,
 };
 
@@ -571,6 +574,7 @@ Tabs.tower = {
             <TR><TD align=right>Minimum # of troops: &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
             </table></td></tr>\
         <TR><TD align=right><INPUT id=pbalertbarb type=checkbox '+ (Options.alertConfig.barb?'CHECKED':'') +'/></td><TD>Stop barbing on impending.</td></tr>\
+        <TR><TD align=right><INPUT id=pbalertbarbres type=checkbox '+ (Options.alertConfig.barbresume?'CHECKED':'') +'/></td><TD>Resume barbing after impending.</td></tr>\
         <TR><TD><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>Play sound on incoming attack/scout</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>Loading SWF player</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
@@ -612,6 +616,7 @@ Tabs.tower = {
     document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbalertbarb').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertbarbres').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
         t.loadUrl (Options.alertSound.soundUrl);
@@ -656,6 +661,7 @@ Tabs.tower = {
    Options.celltext.num1 = document.getElementById('pbnum1').value;
    Options.celltext.num2 = document.getElementById('pbnum2').value;
    Options.celltext.num3 = document.getElementById('pbnum3').value;
+   saveOptions();
   },
 
   setCountry : function(){
@@ -710,6 +716,7 @@ Tabs.tower = {
     Options.alertConfig.wilds=document.getElementById('pbalertWild').checked;
     Options.alertConfig.defend=document.getElementById('pbalertDefend').checked;
     Options.alertConfig.barb=document.getElementById('pbalertbarb').checked;
+    Options.alertConfig.barbresume=document.getElementById('pbalertbarbres').checked;
     var mt = parseInt(document.getElementById('pbalertTroops').value);
     if (mt<1 || mt>120000){
       document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
@@ -718,6 +725,7 @@ Tabs.tower = {
       return;
     }
     Options.alertConfig.minTroops = mt;
+	saveOptions();
   },
   
   e_volChanged : function (val){
@@ -759,6 +767,7 @@ Tabs.tower = {
       }
     }
   	var now = unixTime();
+	var incomming = false;
     if (matTypeof(Seed.queue_atkinc) != 'array'){
       for (var k in Seed.queue_atkinc){   // check each incoming march
         var m = Seed.queue_atkinc[k];
@@ -766,22 +775,26 @@ Tabs.tower = {
           if (m.departureTime > Options.alertConfig.lastAttack){
             Options.alertConfig.lastAttack = m.departureTime;  
             t.newIncoming (m);
-          }          
+          }
+		  incomming = true;
         }
-		// else if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)<now){
-			// if (Options.alertConfig.barbresume){
-				// obj = document.getElementById('AttSearch');
-				// if (AttackOptions.Running == false) {
-					// AttackOptions.Running = true;
-					// obj.value = "Barb = ON";
-					// updatebotbutton('Barb - ON', 'pbbarbtab');
-					// saveAttackOptions();
-					// Tabs.Barb.nextattack = setTimeout(Tabs.Barb.getnextCity, parseInt((Math.random()*10000)+5000));
-				// }
-			// }
-		// }
       }
     }
+	
+	if (Options.alertConfig.barbresume && Options.alertConfig.barbautoswitch && !incomming){
+		obj = document.getElementById('AttSearch');
+		if (!AttackOptions.Running) {
+			AttackOptions.Running = true;
+			obj.value = "Barb = ON";
+			updatebotbutton('Barb - ON', 'pbbarbtab');
+			saveAttackOptions();
+			Tabs.Barb.getnextCity();
+			Options.alertConfig.barbautoswitch = false;
+			saveOptions();
+		}
+	}
+	
+	
 //logit ("NOW="+ now + ' alarmActive='+ Options.alertSound.alarmActive + ' expireTime='+ Options.alertSound.expireTime);
     if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime))
       t.stopSoundAlerts();
@@ -871,6 +884,8 @@ Tabs.tower = {
 	if (Options.alertConfig.barb){
 		obj = document.getElementById('AttSearch');
 		if (AttackOptions.Running == true) {
+			Options.alertConfig.barbautoswitch = true;
+			saveOptions();
 			AttackOptions.Running = false;
 			obj.value = "Barb = OFF";
 			updatebotbutton('Barb - OFF', 'pbbarbtab');
@@ -3422,7 +3437,6 @@ Tabs.Test = {
   myDiv : null,
   rallypointlevel:null,
   knt:{},
-  tabDisabled :true,
      
   init : function (div){
     var t = Tabs.Crest;
@@ -3443,19 +3457,27 @@ Tabs.Test = {
     m += '<TABLE class=ptTab><TR><TD>Wild coords: X:<INPUT id=pbcrestx type=text size=3 maxlength=3 value="'+CrestOptions.X+'"</td>';
     m += '<TD>Y:<INPUT id=pbcresty type=text size=3 maxlength=3 value="'+CrestOptions.Y+'"</td></tr></table>';
    
-    m += '<TABLE class=ptTab><TR><TD>Wave one -> </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R1MM type=text size=5 maxlength=5 value="'+CrestOptions.R1MM+'" (When left 0 it will not send out a first wave, for whatever reason you want to do that...)</td>';
+    m += '<TABLE class=ptTab><TR><TD>Wave one : </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R1MM type=text size=5 maxlength=5 value="'+CrestOptions.R1MM+'" (When left 0 it will not send out a first wave, for whatever reason you want to do that...)</td>';
     m += '</td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=5 value="'+CrestOptions.R1Ball+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=5 value="'+CrestOptions.R1Cat+'"</td></tr>';
     
-    m += '<TR><TD>Wave two -> </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R2MM type=text size=5 maxlength=5 value="'+CrestOptions.R2MM+'"</td>';
+    m += '<TR><TD>Wave two : </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R2MM type=text size=5 maxlength=5 value="'+CrestOptions.R2MM+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.png></td><TD><INPUT id=R2Pike type=text size=5 maxlength=5 value="'+CrestOptions.R2Pike+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_30.png></td><TD><INPUT id=R2Sword type=text size=5 maxlength=5 value="'+CrestOptions.R2Sword+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_30.png></td><TD><INPUT id=R2Arch type=text size=5 maxlength=5 value="'+CrestOptions.R2Arch+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R2Ball type=text size=5 maxlength=5 value="'+CrestOptions.R2Ball+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_30.png></td><TD><INPUT id=R2Ram type=text size=5 maxlength=5 value="'+CrestOptions.R2Ram+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R2Cat type=text size=5 maxlength=5 value="'+CrestOptions.R2Cat+'"</td></tr></table>';
     
     t.myDiv.innerHTML = m;
     
-    for (var i=0;i<Seed.cities.length;i++) if (CrestOptions.CrestCity == Seed.cities[i][0]) selbut=i;
-    
+    for (var i=0;i<Seed.cities.length;i++){
+		if (CrestOptions.CrestCity == Seed.cities[i][0]){
+			selbut=i;
+			break;
+		}
+	}
+		
     t.tcp = new CdispCityPicker ('crestcityselect', document.getElementById('crestcity'), true, t.clickCitySelect, selbut);
     
     if (CrestOptions.CrestCity == 0) {
@@ -3466,15 +3488,18 @@ Tabs.Test = {
     document.getElementById('crestcity').addEventListener('click', function(){CrestOptions.CrestCity = t.tcp.city.id;saveCrestOptions();} , false);
     document.getElementById('Cresttoggle').addEventListener('click', function(){t.toggleCrestState(this)} , false);
     document.getElementById('CrestHelp').addEventListener('click', function(){t.helpPop();} , false);
-    document.getElementById('pbcrestx').addEventListener('change', function(){CrestOptions.X= document.getElementById('pbcrestx').value; saveCrestOptions();} , false);
-    document.getElementById('pbcresty').addEventListener('change', function(){CrestOptions.Y= document.getElementById('pbcresty').value; saveCrestOptions()} , false);
-    document.getElementById('R1MM').addEventListener('change', function(){CrestOptions.R1MM= document.getElementById('R1MM').value; saveCrestOptions()} , false);
-    document.getElementById('R1Ball').addEventListener('change', function(){CrestOptions.R1Ball= document.getElementById('R1Ball').value; saveCrestOptions()} , false);
-    document.getElementById('R1Cat').addEventListener('change', function(){CrestOptions.R1Cat= document.getElementById('R1Cat').value; saveCrestOptions()} , false);
-    document.getElementById('R2MM').addEventListener('change', function(){CrestOptions.R2MM= document.getElementById('R2MM').value; saveCrestOptions()} , false);
-    document.getElementById('R2Arch').addEventListener('change', function(){CrestOptions.R2Arch= document.getElementById('R2Arch').value; saveCrestOptions()} , false);
-    document.getElementById('R2Ball').addEventListener('change', function(){CrestOptions.R2Ball= document.getElementById('R2Ball').value; saveCrestOptions()} , false);
-    document.getElementById('R2Cat').addEventListener('change', function(){CrestOptions.R2Cat= document.getElementById('R2Cat').value; saveCrestOptions()} , false);
+    document.getElementById('pbcrestx').addEventListener('change', function(){CrestOptions.X = document.getElementById('pbcrestx').value; saveCrestOptions();} , false);
+    document.getElementById('pbcresty').addEventListener('change', function(){CrestOptions.Y = document.getElementById('pbcresty').value; saveCrestOptions()} , false);
+    document.getElementById('R1MM').addEventListener('change', function(){CrestOptions.R1MM = document.getElementById('R1MM').value; saveCrestOptions()} , false);
+    document.getElementById('R1Ball').addEventListener('change', function(){CrestOptions.R1Ball = document.getElementById('R1Ball').value; saveCrestOptions()} , false);
+    document.getElementById('R1Cat').addEventListener('change', function(){CrestOptions.R1Cat = document.getElementById('R1Cat').value; saveCrestOptions()} , false);
+    document.getElementById('R2MM').addEventListener('change', function(){CrestOptions.R2MM = document.getElementById('R2MM').value; saveCrestOptions()} , false);
+    document.getElementById('R2Pike').addEventListener('change', function(){CrestOptions.R2Pike = document.getElementById('R2Pike').value; saveCrestOptions()} , false);
+    document.getElementById('R2Sword').addEventListener('change', function(){CrestOptions.R2Sword = document.getElementById('R2Sword').value; saveCrestOptions()} , false);
+    document.getElementById('R2Arch').addEventListener('change', function(){CrestOptions.R2Arch = document.getElementById('R2Arch').value; saveCrestOptions()} , false);
+    document.getElementById('R2Ball').addEventListener('change', function(){CrestOptions.R2Ball = document.getElementById('R2Ball').value; saveCrestOptions()} , false);
+    document.getElementById('R2Ram').addEventListener('change', function(){CrestOptions.R2Ram = document.getElementById('R2Ram').value; saveCrestOptions()} , false);
+    document.getElementById('R2Cat').addEventListener('change', function(){CrestOptions.R2Cat = document.getElementById('R2Cat').value; saveCrestOptions()} , false);
   },
   
   helpPop : function (){
@@ -3567,7 +3592,6 @@ Tabs.Test = {
         saveCrestOptions();
       }
       if(!CrestOptions.RoundOne) return;
-      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
       
       t.getAtkKnight(cityID);
       slots=0;
@@ -3584,6 +3608,9 @@ Tabs.Test = {
        var now = new Date().getTime()/1000.0;
        now = now.toFixed(0)
 
+	   if (CrestOptions.R1MM > parseInt(Seed.units[cityID]['unt2']) || CrestOptions.R1Ball > parseInt(Seed.units[cityID]['unt10']) || CrestOptions.R1Cat > parseInt(Seed.units[cityID]['unt12'])){return;}
+          
+	    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
   		params.cid=CrestOptions.CrestCity;
   		params.type=4;
   	    params.kid=kid;
@@ -3591,7 +3618,7 @@ Tabs.Test = {
   		params.ycoord = CrestOptions.Y;
         if (now < (parseInt(CrestOptions.lastRoundTwo) + 300)) { 
         	params.u2= (CrestOptions.R1MM / 10);
-        	params.u2 = params.u2(0);	
+        	params.u2 = params.u2.toFixed(0);	
         	if (params.u2 < (CrestOptions.R1MM / 10)) params.u2++;
         }	
   		else params.u2= CrestOptions.R1MM;
@@ -3655,8 +3682,11 @@ Tabs.Test = {
   		params.xcoord = CrestOptions.X;
   		params.ycoord = CrestOptions.Y;
   		params.u2=CrestOptions.R2MM;
+  		params.u4=CrestOptions.R2Pike;
+  		params.u5=CrestOptions.R2Sword;
   		params.u6=CrestOptions.R2Arch;
   		params.u10=CrestOptions.R2Ball;
+  		params.u11=CrestOptions.R2Ram;
   		params.u12=CrestOptions.R2Cat;
   		
   		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
@@ -3763,7 +3793,247 @@ Tabs.Test = {
   },
  };
 
+/*********************************  Raid Tab ***********************************/
+/************** Bot active
+(object) queue_atkp = [object Object]
+    (object) city73930 = [object Object]
+      (object) m6093 = [object Object]
+        (number) marchType = 9
+        (number) marchStatus = 1
+        (string) playerId = 1550996
+        (string) cityId = 73930
+        (string) botSettingsId = 1479
+        (string) botMarchStatus = 1
+        (string) botState = 1
+        (string) modalState = 0
+        (string) restPeriod = 3472
+        (string) fromPlayerId = 1550996
+        (string) fromCityId = 73930
+        (string) fromAllianceId = 2199
+        (string) fromXCoord = 159
+        (string) fromYCoord = 638
+        (undefined) toPlayerId: null = null
+        (undefined) toCityId: null = null
+        (undefined) toAllianceId: null = null
+********/
+/************* Bot returning
+(object) queue_atkp = [object Object]
+    (object) city73930 = [object Object]
+      (object) m6093 = [object Object]
+        (number) marchType = 9
+        (number) marchStatus = 8
+        (string) playerId = 1550996
+        (string) cityId = 73930
+        (string) botSettingsId = 1479
+        (string) botMarchStatus = 1
+        (string) botState = 1
+        (string) modalState = 0
+        (string) restPeriod = 3472
+        (string) fromPlayerId = 1550996
+        (string) fromCityId = 73930
+        (string) fromAllianceId = 2199
+        (string) fromXCoord = 159
+        (string) fromYCoord = 638
+        (undefined) toPlayerId: null = null
+        (undefined) toCityId: null = null
+        (undefined) toAllianceId: null = null
+*****/
+/******** Bot resting
+(object) queue_atkp = [object Object]
+    (object) city73930 = [object Object]
+      (object) m6093 = [object Object]
+        (string) marchType = 9
+        (string) marchStatus = 4
+        (string) playerId = 1550996
+        (string) cityId = 73930
+        (string) botSettingsId = 1479
+        (string) botMarchStatus = 7
+        (string) botState = 1
+        (string) modalState = 0
+        (string) restPeriod = 3472
+        (string) fromPlayerId = 1550996
+        (string) fromCityId = 73930
+        (string) fromAllianceId = 2199
+        (string) fromXCoord = 159
+        (string) fromYCoord = 638
+        (undefined) toPlayerId: null = null
+        (undefined) toCityId: null = null
+        (string) toTileId = 451239
+        (undefined) toAllianceId: null = null
+**********/
+/************* March type cheat sheet
+cm.BOT_STATUS = {
+    BOT_MARCH_UNDEFINED: 0,
+    BOT_MARCH_MARCHING: 1,
+    BOT_MARCH_RETURNING: 2,
+    BOT_MARCH_STOPPED: 3,
+    BOT_MARCH_INSUFFICIENT_TROOPS: 4,
+    BOT_MARCH_MAX_RAIDS_EXCEEDED: 5,
+    BOT_MARCH_TIMED_OUT: 6,
+    BOT_MARCH_RESTING: 7
+};
+cm.MARCH_STATUS = {
+    MARCH_STATUS_INACTIVE: 0,
+    MARCH_STATUS_OUTBOUND: 1,
+    MARCH_STATUS_DEFENDING: 2,
+    MARCH_STATUS_STOPPED: 3,
+    MARCH_STATUS_RESTING: 4,
+    MARCH_STATUS_UNKNOWN: 5,
+    MARCH_STATUS_SITUATIONCHANGED: 7,
+    MARCH_STATUS_RETURNING: 8,
+    MARCH_STATUS_ABORTING: 9
+};
+cm.MARCH_TYPES = {
+    MARCH_TYPE_NONE: 0,
+    MARCH_TYPE_TRANSPORT: 1,
+    MARCH_TYPE_REINFORCE: 2,
+    MARCH_TYPE_SCOUT: 3,
+    MARCH_TYPE_ATTACK: 4,
+    MARCH_TYPE_REASSIGN: 5,
+    MARCH_TYPE_BARBARIAN: 6,
+    MARCH_TYPE_MERCENARY: 7,
+    MARCH_TYPE_BARBARIAN_REINFORCE: 8,
+    MARCH_TYPE_BOT_BARBARIAN: 9
+};
+************/
 
+ Tabs.Raid = {
+  tabDisabled : false,
+  tabOrder : 1,
+  myDiv : null,
+  rallypointlevel:null,
+  knt:{},
+  Troops:{},
+  city:0,
+  raidtimer:null,
+     
+  init : function (div){
+    var t = Tabs.Raid;
+    t.myDiv = div;
+	t.raidtimer = setTimeout(t.checkRaids, 5000);
+	var m = '<DIV class=pbStat>AUTO RAID FUNCTION</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
+	    m += '<TD><INPUT id=pbRaidStart type=submit value="Raid = '+ (Options.RaidRunning?'ON':'OFF') +'" ></td>';
+	    m += '</tr></table></div>';
+	t.myDiv.innerHTML = m;
+	
+	document.getElementById('pbRaidStart').addEventListener('click', t.toggleRaidState, false);
+  },
+  
+  toggleRaidState : function (){
+	var t = Tabs.Raid;
+	if(Options.RaidRunning){
+		Options.RaidRunning = false;
+		t.raidtimer = null;
+		document.getElementById('pbRaidStart').value = 'Raid = OFF';
+	} else {
+		Options.RaidRunning = true;
+		t.raidtimer = setTimeout(t.checkRaids, 5000);
+		document.getElementById('pbRaidStart').value = 'Raid = ON';
+	}
+  },
+  
+  checkRaids : function (){
+	var t = Tabs.Raid;
+	t.raidtimer = null;
+	if(!Options.RaidRunning) return;
+	
+	// var now = new Date().getTime()/1000.0;
+       // now = now.toFixed(0);
+	// if ( now > (parseInt(AttackOptions.LastReport)+(3600*AttackOptions.MsgInterval))) {
+	  // t.sendreport();
+	  // for (z=1;z<=Seed.cities.length;z++){
+			// AttackOptions.Foodstatus[z] = parseInt(Seed.resources['city'+Seed.cities[z-1][0]]['rec1'][0] / 3600);
+		// }	
+		// AttackOptions.LastReport=now;
+		// saveAttackOptions();
+    // }
+	
+	if(t.city >= Cities.numCities) t.city = 0;
+	var cityId = Cities.cities[t.city].id;
+	var city = 'city'+cityId;
+	//GM_log(t.city+' '+cityId+' '+t.checkRaidresting(city));
+	if(t.checkRaidresting(city))
+		t.resetRaids(cityId);
+	t.city++;
+	t.raidtimer = setTimeout(t.checkRaids, 5000);
+  },
+  
+  checkRaidresting : function (city){
+	for(i in Seed.queue_atkp[city]){
+		//Check if march is a barb raid if not disregard
+		if(Seed.queue_atkp[city][i].marchType == 9)
+			//Sometimes it only updates the marchstatus and not the botmarchstatus
+			if(Seed.queue_atkp[city][i].botMarchStatus == 7 || Seed.queue_atkp[city][i].marchStatus == 4) 
+				return true;
+	}
+	return false;
+  },
+
+  resetRaids : function(cityId){
+  		var t = Tabs.Raid;
+  		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+  		  		
+  		params.pf = 0;
+  		params.ctrl = 'BotManager';
+  		params.action = 'resumeAll';
+		params.settings = {};
+  		params.settings.cityId = cityId;
+  		
+  		
+   		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
+  		         method: "post",
+  		         parameters: params,
+				 loading: true,
+				 onSuccess: function(transport){
+					var rslt = eval("(" + transport.responseText + ")");
+                        if (rslt.ok) {
+							unsafeWindow.cityinfo_army();
+                            setTimeout(unsafeWindow.update_seed_ajax, 250);
+						}
+				 },
+  		 });
+  },
+  
+   sendreport: function(){
+	  var t = Tabs.Raid;
+	  var total = 0;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.emailTo = Seed.player['name'];
+    params.subject = "Barb Overview";
+    var message = 'Barbing Stats: (Sent/Total)' + '%0A';
+    message += '%0A'+'%0A' + 'Food Gain (for '+AttackOptions.MsgInterval+' hour of barbing)' +'%0A';
+    for (q=1;q<=Seed.cities.length;q++){
+    	var cityID = 'city' + Seed.cities[q-1][0];
+    	var gain = parseInt(Seed.resources[cityID]['rec1'][0] / 3600) - AttackOptions.Foodstatus[q];
+    	message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.Foodstatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec1'][0] / 3600)) + ' Gain: ';
+    	message += addCommas(gain)  + '%0A';
+		total += gain;
+    }
+	message += '%0A Total food gain : '+addCommas(total)+'%0A';
+    params.message = message;
+    params.requestType = "COMPOSED_MAIL";
+    new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+        method: "post",
+        parameters: params,
+        onSuccess: function (message) {
+            var rslt = eval("(" + message.responseText + ")");
+            if (rslt.ok) {
+            } else {
+            }
+        },
+        onFailure: function () {
+        },
+    });
+  
+  },
+    
+  hide : function (){
+  },
+
+  show : function (){
+  },
+ }; 
+ 
 /*********************************  Barbing Tab ***********************************/
 Tabs.Barb = {
   tabOrder : 1,
@@ -3845,7 +4115,7 @@ Tabs.Barb = {
      saveAttackOptions();
 	 t.checkBarbData();
 	 if(t.nextattack == null && AttackOptions.Running)
-		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*10000)+5000));
+		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+5000));
      setInterval(t.startdeletereports,2*60*1000);
      for(i=0;i<Seed.cities.length;i++){
     		var element = 'pdtotalcity'+i;
@@ -3921,9 +4191,10 @@ Tabs.Barb = {
       ['Heavies', 8],
       ['Ballista', 10],
 	  ['Cats', 12],
+	  ['Rams',11],
      ];
   	 if(t.troopselect == null)	
-		t.troopselect = new CPopup ('pbtroopselect', 0, 0, 600, 345, true, function(){t.saveTroops();});
+		t.troopselect = new CPopup ('pbtroopselect', 0, 0, 610, 435, true, function(){t.saveTroops();});
   	 t.troopselect.centerMe (mainPop.getMainDiv());  
   	 var z= '<DIV id=pbTraderDivD class=pbStat>TROOP SELECTION</div><TABLE width=100%><TR>';
 	 z+='<TD></td>';
@@ -4103,7 +4374,7 @@ Tabs.Barb = {
   
   saveTroops: function(){
     for(i=0;i<10;i++){
-  	 	for (w=0;w<7;w++){
+  	 	for (w=0;w<8;w++){
   	 		AttackOptions.Troops[i+1][w+1] = parseIntNan(document.getElementById('level'+i+'troop'+w).value);
   	 	}
 		if(parseIntNan(document.getElementById('dist'+i).value) > AttackOptions.MaxDistance)
@@ -4244,7 +4515,7 @@ Tabs.Barb = {
 		updatebotbutton('Barb - ON', 'pbbarbtab');
 		saveAttackOptions();
 		t.checkBarbData();
-		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*10000)+5000));
+		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+5000));
 	}
   },
   
@@ -4305,11 +4576,12 @@ Tabs.Barb = {
          var u8 = AttackOptions.Troops[barblevel][5];
          var u10 = AttackOptions.Troops[barblevel][6];
          var u12 = AttackOptions.Troops[barblevel][7];
+         var u11 = AttackOptions.Troops[barblevel][8];
          if (t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] < AttackOptions.MinDistance[barblevel] || t.barbArray[city][AttackOptions.BarbNumber[city]]['dist'] > AttackOptions.Distance[barblevel]) check=0;
                            
-         if (u1 > parseInt(Seed.units[cityID]['unt1']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u12 > parseInt(Seed.units[cityID]['unt12'])) check=0;
+         if (u1 > parseInt(Seed.units[cityID]['unt1']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u12 > parseInt(Seed.units[cityID]['unt12']) || u11 > parseInt(Seed.units[cityID]['unt11'])) check=0;
           
-         if (AttackOptions.Troops[barblevel][1] == 0 && AttackOptions.Troops[barblevel][2] == 0 && AttackOptions.Troops[barblevel][3] == 0 && AttackOptions.Troops[barblevel][4] == 0 && AttackOptions.Troops[barblevel][5] == 0 && AttackOptions.Troops[barblevel][6] == 0 && AttackOptions.Troops[barblevel][7] == 0) check=0;
+         if (AttackOptions.Troops[barblevel][1] == 0 && AttackOptions.Troops[barblevel][2] == 0 && AttackOptions.Troops[barblevel][3] == 0 && AttackOptions.Troops[barblevel][4] == 0 && AttackOptions.Troops[barblevel][5] == 0 && AttackOptions.Troops[barblevel][6] == 0 && AttackOptions.Troops[barblevel][7] == 0 && AttackOptions.Troops[barblevel][8] == 0) check=0;
          if (check ==0) AttackOptions.BarbNumber[city]++;
          if (AttackOptions.BarbNumber[city]>=t.barbArray[city].length) {
          		break;
@@ -4320,7 +4592,7 @@ Tabs.Barb = {
 	   var xcoord = t.barbArray[city][AttackOptions.BarbNumber[city]]['x'];
        var ycoord = t.barbArray[city][AttackOptions.BarbNumber[city]]['y'];
 	   
-       if ((t.rallypointlevel - AttackOptions.RallyClip) > slots) t.doBarb(citynumber,city,AttackOptions.BarbNumber[city],xcoord,ycoord,kid,u1,u9,u6,u7,u8,u10,u12);
+       if ((t.rallypointlevel - AttackOptions.RallyClip) > slots) t.doBarb(citynumber,city,AttackOptions.BarbNumber[city],xcoord,ycoord,kid,u1,u9,u6,u7,u8,u10,u12,u11);
        saveAttackOptions();
   },
   
@@ -4328,7 +4600,7 @@ Tabs.Barb = {
 	var t = Tabs.Barb;
 	t.nextattack = null;
 	if(t.searchRunning || !AttackOptions.Running){
-		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*10000)+5000));
+		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+5000));
 		return;
 	}
 	
@@ -4347,7 +4619,7 @@ Tabs.Barb = {
 	if(found){
 	t.barbing();
 	}
-	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*10000)+5000));
+	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+5000));
   },
   
   getRallypointLevel: function(cityId){
@@ -4375,7 +4647,7 @@ Tabs.Barb = {
      t.knt = t.knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
   },
   
-  doBarb: function(cityID,counter,number,xcoord,ycoord,kid,u1,u9,u6,u7,u8,u10,u12){
+  doBarb: function(cityID,counter,number,xcoord,ycoord,kid,u1,u9,u6,u7,u8,u10,u12,u11){
   		var t = Tabs.Barb;
   		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
   		params.cid=cityID;
@@ -4389,6 +4661,7 @@ Tabs.Barb = {
   		params.u8=u8;
   		params.u9=u9;
   		params.u10=u10;
+  		params.u11=u11;
   		params.u12=u12;
   		
   		AttackOptions.BarbsTried++;
@@ -6140,7 +6413,7 @@ Tabs.Reinforce = {
       m += '<TD><INPUT id=pitargetCatapult type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCatapult type=submit value="Max"></td></tr></table>';
       
       m += '<TABLE id=pbReinfETA width=95% height=0% class=pbTab><TR align="center">';
-      m += '<TD><SELECT id=piKnight type=list></td>';
+      m += '<TD><SELECT id=piKnight type=list></select></td>';
       m += '<TD><INPUT id=piDoreinforce type=submit value="Reinforce"></td>';
       
       t.myDiv.innerHTML = m;
@@ -6605,6 +6878,10 @@ Tabs.Reinforce = {
        }
        knt = knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
        document.getElementById('piKnight').options.length=0;
+		var o = document.createElement("option");
+		o.text = '--Choose a Knight--';
+		o.value = 0;
+		document.getElementById("piKnight").options.add(o);
        for (k in knt){
     			if (knt[k]["Name"] !=undefined){
 	    			var o = document.createElement("option");

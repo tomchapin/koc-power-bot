@@ -1,6 +1,13 @@
 REVISION HISTORY:
 ----------------
 
+20110612a
+   *Reverted barb timer
+   *Public release for cresting tab
+   *Added option to resume barbs after impending attack
+   *Raid tab released
+   *Added option to not select a knight for reinforcements
+
 20110610a
    *Changed spacing between tabs to fit powerbot into koc game screen
    *Fixed issue with bulk add barb coords to kocattack
