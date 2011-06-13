@@ -1,6 +1,10 @@
 REVISION HISTORY:
 ----------------
 
+20110613a
+   *Widescreen fix
+   *Changed barb interval to 4 seconds cap from previous 10 seconds
+
 20110612a
    *Reverted barb timer
    *Public release for cresting tab

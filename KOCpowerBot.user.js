@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110612a
+// @version        20110613a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110612a';
+var Version = '20110613a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -43,40 +43,37 @@ if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
   return;
 }
+if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
+  kocWideScreen ();
+}
 
+function kocWideScreen(){
+	var kocFrame = parent.document.getElementsByName('kofc_main_canvas');
+	for(i=0; i<kocFrame.length; i++){
+		if(kocFrame[i].tagName == 'IFRAME'){
+			kocFrame[i].style.width = '1220px';
+			break;
+		}
+	}
+}
 
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
   function setWide (){
-    var iFrame = null;
-    var e = document.getElementById('app_content_130402594779');
-	if(e){
-		e = e.firstChild.firstChild;
-		for (var c=0; c<e.childNodes.length; c++){
-		  if (e.childNodes[c].tagName=='SPAN' && e.childNodes[c].firstChild.className == 'canvas_iframe_util'){
-			iFrame = e.childNodes[c].firstChild;
-			break;
-		  }
-		}
+	var iFrame = document.getElementById('iframe_canvas');
+	if (!iFrame){
+	  setTimeout (setWide, 1000);
+	  return;
 	}
-    if (!iFrame){
-      var iframes = document.getElementsByTagName('iframe');
-      for (var i=0; i<iframes.length; i++){
-        if (iframes[i].className=='canvas_iframe_util'){
-          iFrame = iframes[i];
-          break;
-        }
-      }
-    }
-    if (!iFrame){
-      setTimeout (setWide, 1000);
-      return;
-    }
+	iFrame.style.width = '100%';
+
+	while ( (iFrame=iFrame.parentNode) != null)
+	  if (iFrame.tagName=='DIV')
+		iFrame.style.width = '100%';
+	
     try{    
       document.getElementById('rightCol').parentNode.removeChild(document.getElementById('rightCol'));
       document.getElementById('leftColContainer').parentNode.removeChild(document.getElementById('leftColContainer'));
-      document.getElementById('sidebar_ads').parentNode.removeChild(document.getElementById('sidebar_ads'));
-      document.getElementById('canvas_nav_content').parentNode.removeChild(document.getElementById('canvas_nav_content'));
     } catch (e){
       // toolkit may have removed them already!
     }
@@ -88,7 +85,6 @@ function facebookInstance (){
 				e.childNodes[i].style.width = '100%';
 				e.childNodes[i].style.margin = '0px';
 				e.childNodes[i].style.paddingTop = '5px';
-				e.childNodes[i].childNodes[1].style.width = '99%';
 				break;
 			}
 		}
@@ -105,18 +101,6 @@ function facebookInstance (){
 	if(e){
 		e.style.padding = "0px 0px 12px 0px";
 	}
-	var e = document.getElementById('contentArea');
-	if(e){
-		e.style.width = '100%';
-		for(i=0; i<e.childNodes.length; i++){
-			if(e.childNodes[i].tagName == 'div'){
-				e.childNodes[i].style.width = '100%';
-				e.childNodes[i].firstChild.style.width = '100%';
-				break;
-			}
-		}
-	}
-	iFrame.style.width = '100%';
 
     var div = searchDOM (document.getElementById('content'), 'node.tagName=="DIV" && node.className=="UIStandardFrame_Content"', 7);
     if (div){
@@ -4115,7 +4099,7 @@ Tabs.Barb = {
      saveAttackOptions();
 	 t.checkBarbData();
 	 if(t.nextattack == null && AttackOptions.Running)
-		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+5000));
+		t.nextattack = setTimeout(t.getnextCity, 0);
      setInterval(t.startdeletereports,2*60*1000);
      for(i=0;i<Seed.cities.length;i++){
     		var element = 'pdtotalcity'+i;
@@ -4515,7 +4499,7 @@ Tabs.Barb = {
 		updatebotbutton('Barb - ON', 'pbbarbtab');
 		saveAttackOptions();
 		t.checkBarbData();
-		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+5000));
+		t.nextattack = setTimeout(t.getnextCity, 0);
 	}
   },
   
@@ -4598,11 +4582,8 @@ Tabs.Barb = {
   
   getnextCity: function(){
 	var t = Tabs.Barb;
-	t.nextattack = null;
-	if(t.searchRunning || !AttackOptions.Running){
-		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+5000));
-		return;
-	}
+	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+2000));
+	if(t.searchRunning || !AttackOptions.Running) return;
 	
 	var city = t.city+1;
 	if (city>Seed.cities.length){
@@ -4616,10 +4597,8 @@ Tabs.Barb = {
 		}
 	}
 	t.city = city;
-	if(found){
-	t.barbing();
-	}
-	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+5000));
+	if(found)
+		t.barbing();
   },
   
   getRallypointLevel: function(cityId){
