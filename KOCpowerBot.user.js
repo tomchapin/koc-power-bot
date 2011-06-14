@@ -51,7 +51,7 @@ function kocWideScreen(){
 	var kocFrame = parent.document.getElementsByName('kofc_main_canvas');
 	for(i=0; i<kocFrame.length; i++){
 		if(kocFrame[i].tagName == 'IFRAME'){
-			kocFrame[i].style.width = '1220px';
+			kocFrame[i].style.width = '1525px';
 			break;
 		}
 	}
