@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110613a
+// @version        20110614a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110613a';
+var Version = '20110614a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3947,7 +3947,8 @@ cm.MARCH_TYPES = {
 		//Check if march is a barb raid if not disregard
 		if(Seed.queue_atkp[city][i].marchType == 9)
 			//Sometimes it only updates the marchstatus and not the botmarchstatus
-			if(Seed.queue_atkp[city][i].botMarchStatus == 7 || Seed.queue_atkp[city][i].marchStatus == 4) 
+			if(Seed.queue_atkp[city][i].botMarchStatus == 7 || Seed.queue_atkp[city][i].marchStatus == 4 ||
+				(unixTime() > Seed.queue_atkp[city][i].returnUnixTime && Seed.queue_atkp[city][i].marchStatus == 8)) 
 				return true;
 	}
 	return false;
