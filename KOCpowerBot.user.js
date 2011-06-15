@@ -498,7 +498,8 @@ Tabs.tower = {
         106: { 'country': "UNITED KINGDOM", 'provider': "Vodafone" },
         107: { 'country': "BELGIUM", 'provider': "mobistar" },
         108: { 'country': "GERMANY", 'provider': "1und1" },
-        109: { 'country': "UNITED STATES", 'provider': "MyCricket" }
+        109: { 'country': "UNITED STATES", 'provider': "MyCricket" },
+        110: { 'country': "Philippines", 'provider': "Smart" }
     },
 
   init: function(div){
@@ -2427,7 +2428,7 @@ Tabs.Search = {
                 allStyle = 'class=pbTextFriendly';
               else if (dat[i][12]=='h')
                 allStyle = 'class=pbTextHostile';
-              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">Lookup</a></td></tr>';
+              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">Lookup</a></td></tr>';
             }
 			} else {
           m += '<TD align=right  valign="top">'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
