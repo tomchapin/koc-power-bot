@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110614a
+// @version        20110618a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110614a';
+var Version = '20110618a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3948,8 +3948,10 @@ cm.MARCH_TYPES = {
 		//Check if march is a barb raid if not disregard
 		if(Seed.queue_atkp[city][i].marchType == 9)
 			//Sometimes it only updates the marchstatus and not the botmarchstatus
-			if(Seed.queue_atkp[city][i].botMarchStatus == 7 || Seed.queue_atkp[city][i].marchStatus == 4 ||
-				(unixTime() > Seed.queue_atkp[city][i].returnUnixTime && Seed.queue_atkp[city][i].marchStatus == 8)) 
+			if(Seed.queue_atkp[city][i].botMarchStatus == 7 ||
+				Seed.queue_atkp[city][i].marchStatus == 4 ||
+				(unixTime() > Seed.queue_atkp[city][i].returnUnixTime && Seed.queue_atkp[city][i].marchStatus == 8) ||
+				(Seed.queue_atkp[city][i].marchStatus == 3 && Seed.queue_atkp[city][i].botMarchStatus != 4)) 
 				return true;
 	}
 	return false;
@@ -9609,7 +9611,7 @@ Tabs.Gifts = {
   ajaxGetGiftData : function (gift, notify, progress, DELETE){
     var t = Tabs.Gifts;
     gift.dat = {};
-
+	GM_log(gift.submit);
     GM_AjaxGet (gift.submit, null, got1, 'Page 1');        
         
     function got1 (page){
@@ -9617,12 +9619,29 @@ Tabs.Gifts = {
 // sample result: .... window.location.replace("http:\/\/apps.facebook.com\/kingdomsofcamelot\/?page=claimgift&gid=1045&sid=1432568&s=250&in=1432568&si=5"); ...
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 1'});
+	//GM_log(page);
       progress ('1');
-      var m = /window.location.replace\(\"(.*?)\"/im.exec (page);
-	  if (m == null)
-		m = /ngoURI\(\'(.*?)\'/im.exec (page);
+	  //GM_log(page);
+      var m = page.match (/form action=\\"(.*?)\\"/im);
+		GM_log(m);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 1'});
+	  var url = m[1].htmlSpecialCharsDecode(); 
+	    url = url.replace ('\\/', '/', 'g');
+		url = url.replace ('&amp;', '&', 'g');
+      GM_AjaxPost (url, '', got1_5, 'Page 2');        
+    }
+	
+	function got1_5 (page){
+      if (page == null)
+        notify ({ajaxErr:'COMM Error - page 1.5'});
+	//GM_log(page);
+      progress ('1.5');
+	  //GM_log(page);
+      var m = /top.location.href\(\"(.*?)\"/im.exec (page);
+		GM_log(m);
+      if (m == null)
+        notify ({ajaxErr:'PARSE Error - page 1.5'});
       var url = m[1].replace ('\\/', '/', 'g');
 		url = url.replace ('\\\\x26', '&', 'g');
       GM_AjaxGet (url, '', got2, 'Page 2');        
@@ -9633,7 +9652,9 @@ Tabs.Gifts = {
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 2'});
       progress ('2');
+	  
 	  var m = page.match (/form action=\\"(.*?)\\"/im);
+	  GM_log(m);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 2'});
       var url = m[1].htmlSpecialCharsDecode();
