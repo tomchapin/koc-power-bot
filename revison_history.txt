@@ -1,6 +1,15 @@
 REVISION HISTORY:
 ----------------
 
+20110619a
+   *Changed wide screen width to 1520px from the previous 1220px
+   *Added Phillipines cell provider Smart
+   *Fixed scout list to wait 5 seconds for rally point to clear
+   *Fixed raid tab to resend march when stopped
+   *Fixed raid tab to calculate return time when march gets stuck at waiting for report
+   *Two rows for tabs
+   *Fixed gifts tab =D
+
 20110613a
    *Widescreen fix
    *Changed barb interval to 4 seconds cap from previous 10 seconds
