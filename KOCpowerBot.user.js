@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110618a
+// @version        20110619a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110618a';
+var Version = '20110619a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2428,7 +2428,7 @@ Tabs.Search = {
                 allStyle = 'class=pbTextFriendly';
               else if (dat[i][12]=='h')
                 allStyle = 'class=pbTextHostile';
-              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">Lookup</a></td></tr>';
+              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">Lookup</a></td></tr>';
             }
 			} else {
           m += '<TD align=right  valign="top">'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
@@ -2565,13 +2565,14 @@ Tabs.Search = {
 	}
 	var rallypointlevel = t.getRallypoint(city.id);
 	var slots = 0;
-	
-	if (Seed.queue_atkp != []){
-	if(Seed.queue_atkp['city'+city.id].length != 'undefined')
-		slots = Seed.queue_atkp['city'+city.id].length;
-	}
+       for (z in Seed.queue_atkp['city'+city.id]){
+             slots++;
+       }
+    if  (Seed.queue_atkp['city'+city.id].toSource() == "[]") slots=0;
+
 	if(slots >= rallypointlevel){
 		setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
+		document.getElementById('pbSrcScoutResult').innerHTML += 'Waiting for rally point to clear...';
 		return;
 	}
 	var coords = list[count].split("_");
@@ -5484,7 +5485,7 @@ Tabs.transport = {
     	var maxloadperwagon = ((featherweight *500) + 5000);
 		var maxload = (maxloadperwagon* wagons);
 		
-		if(wagons <= 0) {logit('No wagons'); return; }
+		if(wagons <= 0) {return; }
 
 		for (var t=0; t< Seed.cities.length;t++) {
 			if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
@@ -7428,9 +7429,9 @@ var tabManager = {
 	sorter.sort (function (a,b){return a[0]-b[0]});
     var m = '<TABLE cellspacing=3 class=pbMainTab><TR>';
     for (var i=0; i<sorter.length; i++) {
-      //m += '<TD class=spacer></td><TD align=center class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
-      m += '<TD align=center class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
-      //if (i==8) m+='</tr><TR>';
+      m += '<TD class=spacer></td><TD align=center class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
+      //m += '<TD align=center class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
+      if (i==10) m+='</tr><TR>';
     }
     m+='</tr></table>';  
     //m += '<TD class=spacer width=90% align=right>'+ Version +'&nbsp;</td></tr></table>';
@@ -9611,7 +9612,6 @@ Tabs.Gifts = {
   ajaxGetGiftData : function (gift, notify, progress, DELETE){
     var t = Tabs.Gifts;
     gift.dat = {};
-	GM_log(gift.submit);
     GM_AjaxGet (gift.submit, null, got1, 'Page 1');        
         
     function got1 (page){
@@ -9619,55 +9619,70 @@ Tabs.Gifts = {
 // sample result: .... window.location.replace("http:\/\/apps.facebook.com\/kingdomsofcamelot\/?page=claimgift&gid=1045&sid=1432568&s=250&in=1432568&si=5"); ...
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 1'});
-	//GM_log(page);
       progress ('1');
-	  //GM_log(page);
       var m = page.match (/form action=\\"(.*?)\\"/im);
-		GM_log(m);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 1'});
 	  var url = m[1].htmlSpecialCharsDecode(); 
-	    url = url.replace ('\\/', '/', 'g');
-		url = url.replace ('&amp;', '&', 'g');
-      GM_AjaxPost (url, '', got1_5, 'Page 2');        
+	    url = unescape(url);
+        url = url.replace ('\\/', '/', 'g');
+		url = url.replace (/\\u00253A/g, ':');
+		url = url.replace (/\\u00257C/g, '|');
+	  var signed_request = /signed_request\\" value=\\"(.*?)\\"/im.exec (page);
+	  var opts = [];
+	  opts.signed_request = signed_request[1];
+      GM_AjaxPost (url, opts, got2, 'Page 2');        
     }
 	
-	function got1_5 (page){
-      if (page == null)
-        notify ({ajaxErr:'COMM Error - page 1.5'});
-	//GM_log(page);
-      progress ('1.5');
-	  //GM_log(page);
-      var m = /top.location.href\(\"(.*?)\"/im.exec (page);
-		GM_log(m);
-      if (m == null)
-        notify ({ajaxErr:'PARSE Error - page 1.5'});
-      var url = m[1].replace ('\\/', '/', 'g');
-		url = url.replace ('\\\\x26', '&', 'g');
-      GM_AjaxGet (url, '', got2, 'Page 2');        
-    }
-    
-// sample URL: http://www88.kingdomsofcamelot.com/fb/e2/src/claimDailyGift_src.php?sid=4411654&gid=361&standalone=0&res=1&iframe=1&wcfbuid=1400526627&fbml_sessionkey=2.wdwjP4blBLkO2wXAFqDglg__.3600.1293681600-1400526627&lang=en&in=4411654&si=9&ts=1293677199.881&page=claimdailygift&gid=361&sid=4411654&s=88&in=4411654&si=9&appBar=&kabamuid=114014&tpuid=alYJXw-Us9z9qjRn3DHChEtsFvo&fb_sig_in_iframe=1&fb_sig_base_domain=kingdomsofcamelot.com&fb_sig_locale=en_GB&fb_sig_in_new_facebook=1&fb_sig_time=1293677199.924&fb_sig_added=1&fb_sig_profile_update_time=1267240352&fb_sig_expires=1293681600&fb_sig_user=1400526627&fb_sig_session_key=2.wdwjP4blBLkO2wXAFqDglg__.3600.1293681600-1400526627&fb_sig_ss=7wEsU_e0FLqhrGxE1LAZDg__&fb_sig_cookie_sig=514b59deb303becb5c5c654c9d457732&fb_sig_ext_perms=email%2Cuser_birthday%2Cuser_religion_politics%2Cuser_relationships%2Cuser_relationship_details%2Cuser_hometown%2Cuser_location%2Cuser_likes%2Cuser_activities%2Cuser_interests%2Cuser_education_history%2Cuser_work_history%2Cuser_online_presence%2Cuser_website%2Cuser_groups%2Cuser_events%2Cuser_photos%2Cuser_videos%2Cuser_photo_video_tags%2Cuser_notes%2Cuser_about_me%2Cuser_status%2Cfriends_birthday%2Cfriends_religion_politics%2Cfriends_relationships%2Cfriends_relationship_details%2Cfriends_hometown%2Cfriends_location%2Cfriends_likes%2Cfriends_activities%2Cfriends_interests%2Cfriends_education_history%2Cfriends_work_history%2Cfriends_online_presence%2Cfriends_website%2Cfriends_groups%2Cfriends_events%2Cfriends_photos%2Cfriends_videos%2Cfriends_photo_video_tags%2Cfriends_notes%2Cfriends_about_me%2Cfriends_status&fb_sig_country=us&fb_sig_api_key=0ab5e11ff842ddbdbf51ed7938650b3f&fb_sig_app_id=130402594779&fb_sig=fca33813d9e1c9d411f0ddd04cf5d014
-    function got2 (page){
+	function got2 (page){
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 2'});
       progress ('2');
-	  
-	  var m = page.match (/form action=\\"(.*?)\\"/im);
-	  GM_log(m);
+      var m = /top.location.href = \"(.*?)\"/im.exec (page);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 2'});
-      var url = m[1].htmlSpecialCharsDecode();
-      url = url.replace (/lang=.*?&/, 'lang=en&');  
-	  url = url.replace ('\\/', '/', 'g');	  
-      gift.dat.url = url;
+	  var url = m[1].htmlSpecialCharsDecode(); 
       GM_AjaxGet (url, '', got3, 'Page 3');        
     }
     
+// sample URL: http://www88.kingdomsofcamelot.com/fb/e2/src/claimDailyGift_src.php?sid=4411654&gid=361&standalone=0&res=1&iframe=1&wcfbuid=1400526627&fbml_sessionkey=2.wdwjP4blBLkO2wXAFqDglg__.3600.1293681600-1400526627&lang=en&in=4411654&si=9&ts=1293677199.881&page=claimdailygift&gid=361&sid=4411654&s=88&in=4411654&si=9&appBar=&kabamuid=114014&tpuid=alYJXw-Us9z9qjRn3DHChEtsFvo&fb_sig_in_iframe=1&fb_sig_base_domain=kingdomsofcamelot.com&fb_sig_locale=en_GB&fb_sig_in_new_facebook=1&fb_sig_time=1293677199.924&fb_sig_added=1&fb_sig_profile_update_time=1267240352&fb_sig_expires=1293681600&fb_sig_user=1400526627&fb_sig_session_key=2.wdwjP4blBLkO2wXAFqDglg__.3600.1293681600-1400526627&fb_sig_ss=7wEsU_e0FLqhrGxE1LAZDg__&fb_sig_cookie_sig=514b59deb303becb5c5c654c9d457732&fb_sig_ext_perms=email%2Cuser_birthday%2Cuser_religion_politics%2Cuser_relationships%2Cuser_relationship_details%2Cuser_hometown%2Cuser_location%2Cuser_likes%2Cuser_activities%2Cuser_interests%2Cuser_education_history%2Cuser_work_history%2Cuser_online_presence%2Cuser_website%2Cuser_groups%2Cuser_events%2Cuser_photos%2Cuser_videos%2Cuser_photo_video_tags%2Cuser_notes%2Cuser_about_me%2Cuser_status%2Cfriends_birthday%2Cfriends_religion_politics%2Cfriends_relationships%2Cfriends_relationship_details%2Cfriends_hometown%2Cfriends_location%2Cfriends_likes%2Cfriends_activities%2Cfriends_interests%2Cfriends_education_history%2Cfriends_work_history%2Cfriends_online_presence%2Cfriends_website%2Cfriends_groups%2Cfriends_events%2Cfriends_photos%2Cfriends_videos%2Cfriends_photo_video_tags%2Cfriends_notes%2Cfriends_about_me%2Cfriends_status&fb_sig_country=us&fb_sig_api_key=0ab5e11ff842ddbdbf51ed7938650b3f&fb_sig_app_id=130402594779&fb_sig=fca33813d9e1c9d411f0ddd04cf5d014
     function got3 (page){
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 3'});
       progress ('3');
+	  var m = page.match (/form action=\\"(.*?)\\"/im);
+      if (m == null)
+        notify ({ajaxErr:'PARSE Error - page 3'});
+      var url = m[1].htmlSpecialCharsDecode();
+	  url = unescape(url);
+	  url = url.replace ('\\/', '/', 'g');
+	  var signed_request = /signed_request\\" value=\\"(.*?)\\"/im.exec (page);
+	  var opts = [];
+	  opts.signed_request = signed_request[1];
+      GM_AjaxPost (url, opts, got4, 'Page 4');        
+    }
+	
+	function got4 (page){
+      if (page == null)
+        notify ({ajaxErr:'COMM Error - page 4'});
+      progress ('4');
+	  
+	  var m = page.match (/src='(.*?)'/im);
+      if (m == null)
+        notify ({ajaxErr:'PARSE Error - page 4'});
+      var url = m[1].htmlSpecialCharsDecode();
+      url = url.replace (/lang=.*?&/, 'lang=en&');  
+	  url = url.replace ('\\/', '/', 'g');	
+	  url = url.replace ('&amp;', '&', 'g');
+	  url = url.replace ('" + (new Date()).getTime() + "', (new Date()).getTime());
+      gift.dat.url = url;
+      GM_AjaxGet (url, opts, got5, 'Page 5');        
+    }
+    
+    function got5 (page){
+      if (page == null)
+        notify ({ajaxErr:'COMM Error - page 5'});
+      progress ('5');
       var m = /<div class=\'giftreturned\'>(.*?)<\/div/im.exec(page);
       if (m != null){
         notify ({feedback:m[1], del:true});
@@ -9699,13 +9714,13 @@ Tabs.Gifts = {
       if (page.indexOf('ver:2') >= 0){
         m = /giftinviteid:(.*?),/im.exec(page);
         if (m == null)
-          notify ({ajaxErr:'PARSE Error (ver:2, giftinviteid not found) - page 3'});
+          notify ({ajaxErr:'PARSE Error (ver:2, giftinviteid not found) - page 5'});
         gift.dat.giftId = m[1];
         gift.dat.ver = 2;
 /** for KofC change 20110119
         m = /wcfbuid=([0-9]*)/im.exec(page);
         if (m == null){
-          notify ({ajaxErr:'PARSE Error (ver:2, wcfbuid not found) - page 3'});
+          notify ({ajaxErr:'PARSE Error (ver:2, wcfbuid not found) - page 5'});
           return;
         }
         gift.dat.wcfbuid = m[1];
@@ -9713,7 +9728,7 @@ Tabs.Gifts = {
       } else {
         m = /name='giftId' value='(.*?)'/im.exec(page);
         if (m == null){
-          notify ({ajaxErr:'PARSE Error (ver:1, giftId not found) - page 3'});
+          notify ({ajaxErr:'PARSE Error (ver:1, giftId not found) - page 5'});
           return;
         }
         gift.dat.giftId = m[1];
