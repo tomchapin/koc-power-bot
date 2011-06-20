@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110619c
+// @version        20110620a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110619c';
+var Version = '20110620a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -52,10 +52,8 @@ function kocWideScreen(){
 	var kocFrame = parent.document.getElementsByName('kofc_main_canvas');
 	for(i=0; i<kocFrame.length; i++){
 		if(kocFrame[i].tagName == 'IFRAME'){
-			kocFrame[i].width = '100%';
-			var style = document.createElement('style')
-			style.innerHTML = 'body {margin:0; width:100%; !important;}';
-			kocFrame[i].parentNode.appendChild(style);
+			if (GlobalOptions.pbWideScreen=="wide" || GlobalOptions.pbWideScreen) kocFrame[i].style.width = '1520px';
+			if (GlobalOptions.pbWideScreen=="ultra") kocFrame[i].style.width = '1900px';
 			break;
 		}
 	}
@@ -164,6 +162,7 @@ var Options = {
   lasttransport:0,
   reassigninterval: 60,
   lastreassign:0,
+  MapShowExtra: false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -339,6 +338,8 @@ function pbStartup (){
   WideScreen.init ();
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
+  setInterval (HandleChatPane,2500);
+  setInterval (DrawLevelIcons,1250);
 }
 
 /************************ Food Alerts *************************/
@@ -4925,17 +4926,35 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert (On less then 6 Hours of food checked every hour)</td></tr>\
         <TR><TD colspan=2><BR><B>KofC Features:</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>Disable all Fairie popup windows</td></tr>\
-        <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>Wide screen (all domains, requires refresh)</td></tr>\
         <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>Refresh if KOC not loaded within 1 minute (all domains)</td></tr>\
         <TR><TD><INPUT id=pbEveryEnable type=checkbox /></td><TD>Refresh KOC every <INPUT id=pbeverymins type=text size=2 maxlength=3 \> minutes</td></tr>\
         <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>Put chat on right (requires wide screen)</td></tr>\
 		<TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>Use WideMap (requires wide screen)</td></tr>\
         <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>Auto collect gold when happiness reaches <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
+        <TR><TD></td><TD>Select screen-mode: <select id="selectScreenMode"><option value="normal">Normal</options>\
+        <option value="wide">Widescreen</options>\
+        <option value="ultra">Ultra-widescreen</option></select>(all domains, requires refresh)</td>\
+        <TR><TD colspan=2><BR><B>Extra Features:</b></td></tr>\
+        <TR><TD><INPUT id=DelReq type=checkbox '+ (Options.DeleteRequest?'CHECKED':'')+'/></td><TD>Delete alliance requests in chat (click is enabled by default)</td></tr>\
+        <TR><TD><INPUT id=MapExtra type=checkbox '+ (Options.MapShowExtra?'CHECKED':'')+'/></td><TD>Show Player & Might in map.</td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
       div.innerHTML = m;
 
+	  document.getElementById('selectScreenMode').value = GlobalOptions.pbWideScreen;
+      document.getElementById('selectScreenMode').addEventListener ('change', function(){
+      		GlobalOptions.pbWideScreen = document.getElementById('selectScreenMode').value;
+      		GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);	
+      document.getElementById('DelReq').addEventListener ('change', function(){
+      		Options.DeleteRequest = document.getElementById('DelReq').checked;
+      		saveOptions();
+      },false);	
+      document.getElementById('MapExtra').addEventListener ('change', function(){
+      		Options.MapShowExtra = document.getElementById('MapExtra').checked;
+      		saveOptions();
+      },false);	
+      
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
-      document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
       t.togOpt ('pballowWinMove', 'pbWinDrag', mainPop.setEnableDrag);
       t.togOpt ('pbTrackWinOpen', 'pbTrackOpen');
       t.togOpt ('pbHideOnGoto', 'hideOnGoto');
@@ -10081,6 +10100,199 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   }
 }
 
+function HandleChatPane() {
+	var DisplayName = GetDisplayName();
+	var AllianceChatBox=document.getElementById('mod_comm_list2');
+	
+	if(AllianceChatBox){
+		var chatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", AllianceChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+		if(chatPosts){
+
+			for (var i = 0; i < chatPosts.snapshotLength; i++) {
+				
+				thisPost = chatPosts.snapshotItem(i);
+				if(true){
+				//if(this.options.autoHelpAlliance){
+					var postAuthor = document.evaluate('.//*[@class="nm"]', thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+					if(postAuthor.snapshotItem(0)){
+						var postAuthorName = postAuthor.snapshotItem(0).innerHTML;
+						if(postAuthorName != DisplayName){
+							var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );  
+							if(helpAllianceLinks){
+								for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+									thisLink = helpAllianceLinks.snapshotItem(j);
+									var alreadyClicked = thisLink.getAttribute("clicked");
+									if(!alreadyClicked){
+										thisLink.setAttribute('clicked', 'true');
+										var myregexp = /(claimAllianceChatHelp\(.*\);)/;
+										var match = myregexp.exec(thisLink.getAttribute("onclick"));
+										
+										if (match != null) {
+											onclickCode = match[0];
+											if(true){
+											//if(!FindInCommandHistory(onclickCode, 'alliance_help')){
+												DoUnsafeWindow(onclickCode);
+												AddToCommandHistory(onclickCode, 'alliance_help');
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				// Hide alliance requests in chat
+				if(Options.DeleteRequest){
+					var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+					if(helpAllianceLinks){
+						for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+							thisLink = helpAllianceLinks.snapshotItem(j);
+							thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
+						}
+					}
+				}
+				// Hide alliance reports in chat
+				if(Options.DeleteRequest){
+					var myregexp1 = /You are # [1-5] of 5 to help/i;
+					var myregexp2 = /\'s Kingdom does not need help\./i;
+					var myregexp3 = /\'s project has already been completed\./i;
+					var myregexp4 = /\'s project has received the maximum amount of help\./i;
+					if (thisPost.innerHTML.match(myregexp1) || thisPost.innerHTML.match(myregexp2) || thisPost.innerHTML.match(myregexp3) || thisPost.innerHTML.match(myregexp4)) {
+						thisPost.parentNode.removeChild(thisPost);
+					}
+				}
+			}	
+		}	
+	}
+}	
+
+
+function GetCommandHistory(history_log_name) {
+	if(!history_log_name){
+		var history_log_name = "default";
+	}
+	var json= "";
+	if(json=='') json='{}';
+	var json_object=JSON2.parse(json);
+	if(!json_object['items']){
+		json_object['items'] = Array();
+	}
+	return json_object;
+}
+
+function AddToCommandHistory(command_string, history_log_name, log_length_limit) {
+	if(!command_string){ return false; }
+	if(!history_log_name){ var history_log_name = "default"; }
+	// Default to a history length of 20 commands
+	if(!log_length_limit){ var log_length_limit = 20; }
+	// Get the previous history of commands
+	var previous_commands = GetCommandHistory(history_log_name);
+	var items = previous_commands['items'];
+	// Add the new command
+	items.push(command_string);
+	// Limit the history length
+	if(items.length>log_length_limit){
+		items = items.slice(items.length-log_length_limit);
+	}
+	previous_commands['items'] = items;
+	//alert(history_log_name +' - '+JSON2.stringify(previous_commands));
+	//History.push = {log_name_history_log_name,JSON2.stringify(previous_commands)};
+	//alert(History.toSource());
+}		
+
+function FindInCommandHistory(command_string, history_log_name) {
+	if(!command_string){ return false; }
+	if(!history_log_name){ var history_log_name = "default"; }
+	// Get the previous history of commands
+	var previous_commands = GetCommandHistory(history_log_name);
+	var items = previous_commands['items'];
+	for(var i=0; i<items.length; i++){
+		if(items[i] == command_string){
+			return true;
+		}
+	}
+	return false;
+}
+		
+		
+function DoUnsafeWindow(func, execute_by_embed) {
+	if(this.isChrome || execute_by_embed) {
+		var scr=document.createElement('script');
+		scr.innerHTML=func;
+		document.body.appendChild(scr);
+	} else {
+		try {  
+			eval("unsafeWindow."+func);
+		} catch (error) {
+			this.Log("A javascript error has occurred when executing a function via DoUnsafeWindow. Error description: "+error.description);
+		}
+	}
+}	
+
+
+function GetDisplayName(){
+	var DisplayName = document.getElementById('topnavDisplayName');
+	if(DisplayName){
+		DisplayName = DisplayName.innerHTML;
+	}else{
+		DisplayName = null;
+	}
+	return DisplayName
+}
+
+function DrawLevelIcons() {
+	var maptileRe = /modal_maptile.([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)/;
+	var mapwindow=document.getElementById('mapwindow');
+	if(!mapwindow) return;
+	var levelIcons=document.getElementById('LevelIcons');
+	if(levelIcons) return;
+
+	var ss=document.evaluate(".//a[contains(@class,'slot')]",mapwindow,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
+	var lvRe=/_([0-9]+)/;
+	var idDone=false;
+	for(var s=0; s<ss.snapshotLength; s++) {
+		var a=ss.snapshotItem(s);
+		var onclick=a.getAttribute('onclick');
+		//alert(onclick);
+		var owner='';
+		if(onclick) {
+			var onclickM=maptileRe.exec(onclick);
+			if(onclickM && onclickM[6]!='"null"') {
+				var might=onclickM[7].StripQuotes();
+				var alliance=onclickM[9].StripQuotes();
+				
+				owner=" "+onclickM[6].StripQuotes();
+			}
+		}
+		var m=lvRe.exec(a.className);
+		if(!m) continue;
+		var sp=a.getElementsByTagName('span');
+		if(sp.length==0) continue;
+
+		if(!idDone) { a.id='levelIcons'; idDone=true; }
+		sp[0].style.color='#cc0';
+		
+		if (alliance == 'null' && onclickM[12]=='"city"') sp[0].style.color='#33CCFF';
+		if (onclickM[12]!='"city"' &&  onclickM[6]!='"null"') sp[0].style.color='#FF9900';
+		if (onclickM[12]!='"city"' &&  onclickM[5]=='"null"' && onclickM[6]=='"null"' && onclickM[7]=='"null"' && onclickM[8]=='"null"' && onclickM[9]=='"null"' && onclickM[10]=='"null"') sp[0].style.color='#CC0033';
+		if (Options.MapShowExtra) {
+			if (onclickM && onclickM[6]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1]+owner+'<br />Might:'+addCommas(might);
+			else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
+		}
+		else {  
+			if (onclickM && onclickM[6]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1];
+			else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
+		}
+		
+	}
+
+}
+	
+String.prototype.StripQuotes = function() {
+	return this.replace(/"/g,'');
+};
+	
+	
 //
 
 pbStartup ();
