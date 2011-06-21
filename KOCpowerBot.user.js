@@ -1,16 +1,17 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110621a
+// @version        20110621b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
 // @include        http://apps.facebook.com/kingdomsofcamelot/*
+// @include        *facebook.com/connect/uiserver.php*
 // @description    Automated features for Kingdoms of Camelot
 // @require        http://tomchapin.me/auto-updater.php?id=101052
 // ==/UserScript==
 
 
-var Version = '20110621a';
+var Version = '20110621b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -88,6 +89,8 @@ var GlobalOptions = {
   pbWatchdog   : false,
   pbWideScreen : true,
   pbWideScreenStyle : 'normal',
+  autoPublishGamePopups : false,
+  autoPublishPrivacySetting : 80,
 };
 
 var AttackOptions = {
@@ -141,11 +144,60 @@ var TrainOptions = {
   Running   : false,
 };
 
+var nHtml={
+  FindByXPath:function(obj,xpath,nodetype) {
+	if(!nodetype){
+		nodetype = XPathResult.FIRST_ORDERED_NODE_TYPE;
+	}
+	try {
+		var q=document.evaluate(xpath,obj,null,nodetype,null);
+	} catch(e) {
+		GM_log('bad xpath:'+xpath);
+	}
+	if(nodetype == XPathResult.FIRST_ORDERED_NODE_TYPE){
+		if(q && q.singleNodeValue) { return q.singleNodeValue; }
+	}else{
+		if(q){
+			return q;
+		}
+	}
+	return null;
+  },
+  
+  ClickWin:function(win,obj,evtName) {
+	var evt = win.document.createEvent("MouseEvents");
+	evt.initMouseEvent(evtName, true, true, win,
+		0, 0, 0, 0, 0, false, false, false, false, 0, null);
+	return !obj.dispatchEvent(evt);
+  },
+
+  Click:function(obj) {
+	return this.ClickWin(window,obj,'click');
+  },
+  
+  ClickTimeout:function(obj,millisec) {
+	window.setTimeout(function() {
+		return nHtml.ClickWin(window,obj,'click');
+	},millisec+Math.floor(Math.random()*500));
+  },
+
+  SetSelect:function(obj,v) {
+	for(var o=0; o<obj.options.length; o++) {
+		if(v==obj.options[o].value) { obj.options[o].selected=true; return true; }
+	}
+	return false;
+  },
+
+}
 
 readGlobalOptions ();
 
 if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
+  return;
+}
+if (document.URL.search(/facebook.com\/connect\/uiserver.php/i) >= 0){
+  HandlePublishPopup ();
   return;
 }
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
@@ -221,6 +273,32 @@ function facebookInstance (){
   facebookWatchdog();
   if (GlobalOptions.pbWideScreen)
     setWide();
+}
+
+function HandlePublishPopup() {
+	if(GlobalOptions.autoPublishGamePopups){
+		// Check the app id (we only want to handle the popup for kingdoms of camelot)
+		var FBInputForm = document.getElementById('uiserver_form');
+		if(FBInputForm){
+			var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
+			if(channel_input){
+				var current_channel_url = channel_input.value;
+				if (current_channel_url.match(/http:\/\/.{0,100}kingdomsofcamelot\.com\/.*?\/cross_iframe\.htm/i)) {
+					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
+					var privacy_setting = nHtml.FindByXPath(FBInputForm,".//input[@type='hidden' and contains(@name, 'privacy_data') and contains(@name, 'value')]");
+					if(publish_button && privacy_setting){
+						// 80: Everyone
+						// 50: Friends of Friends
+						// 40: Friends Only
+						// 10: Only Me
+						privacy_setting.value = GlobalOptions.autoPublishPrivacySetting;
+						nHtml.Click(publish_button);
+					}
+				}
+			}		
+		}
+		setTimeout(HandlePublishPopup, 1000);
+	}
 }
 
 var Cities = {};
@@ -4934,6 +5012,7 @@ Tabs.Options = {
         <TR><TD colspan=2><BR><B>Extra Features:</b></td></tr>\
         <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>Help alliance build/research posts</td></tr>\
         <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>Hide alliance requests in chat</td></tr>\
+        <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>Auto publish Facebook posts for '+ htmlSelector({80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' (For all domains)</td>\
         <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>Show Player & Might in map.</td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
       div.innerHTML = m;
@@ -4942,7 +5021,15 @@ Tabs.Options = {
       		GlobalOptions.pbWideScreenStyle = document.getElementById('selectScreenMode').value;
       		GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);	
-      
+      document.getElementById('selectprivacymode').addEventListener ('change', function(){
+      		GlobalOptions.autoPublishPrivacySetting = document.getElementById('selectprivacymode').value;
+			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);
+	  document.getElementById('PubReq').addEventListener ('change', function(){
+      		GlobalOptions.autoPublishGamePopups = document.getElementById('PubReq').checked;
+			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);	
+
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
       document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
       t.togOpt ('pballowWinMove', 'pbWinDrag', mainPop.setEnableDrag);
