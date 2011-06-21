@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110620a
+// @version        20110621a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20110620a';
+var Version = '20110621a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -37,90 +37,6 @@ var JSON2 = JSON;
 
 //logit ("+++ STARTUP: "+ document.URL);
 
-var GlobalOptions = JSON2.parse (GM_getValue ('Options_??', '{}'));
-
-if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
-  facebookInstance ();
-  return;
-}
-if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
-  if (GlobalOptions.pbWideScreen)
-	kocWideScreen ();
-}
-
-function kocWideScreen(){
-	var kocFrame = parent.document.getElementsByName('kofc_main_canvas');
-	for(i=0; i<kocFrame.length; i++){
-		if(kocFrame[i].tagName == 'IFRAME'){
-			if (GlobalOptions.pbWideScreen=="wide" || GlobalOptions.pbWideScreen) kocFrame[i].style.width = '1520px';
-			if (GlobalOptions.pbWideScreen=="ultra") kocFrame[i].style.width = '1900px';
-			break;
-		}
-	}
-}
-
-/***  Run only in "apps.facebook.com" instance ... ***/
-function facebookInstance (){
-  function setWide (){
-	var iFrame = document.getElementById('iframe_canvas');
-	if (!iFrame){
-	  setTimeout (setWide, 1000);
-	  return;
-	}
-	iFrame.style.width = '100%';
-
-	while ( (iFrame=iFrame.parentNode) != null)
-	  if (iFrame.tagName=='DIV')
-		iFrame.style.width = '100%';
-	
-    try{    
-      document.getElementById('rightCol').parentNode.removeChild(document.getElementById('rightCol'));
-      document.getElementById('leftColContainer').parentNode.removeChild(document.getElementById('leftColContainer'));
-    } catch (e){
-      // toolkit may have removed them already!
-    }
-    var e = document.getElementById('mainContainer');
-	if(e){
-		document.getElementById('content').style.minWidth = '1220px';
-		for(i=0; i<e.childNodes.length; i++){
-			if(e.childNodes[i].id == 'contentCol'){
-				e.childNodes[i].style.width = '100%';
-				e.childNodes[i].style.margin = '0px';
-				e.childNodes[i].style.paddingTop = '5px';
-				break;
-			}
-		}
-	}
-	var e = document.getElementById('globalContainer');
-	if(e){
-		e.style.width = '100%';
-		if(e.firstChild){
-			e.firstChild.style.width = '80%';
-			e.firstChild.style.margin = '0 10%';
-		}
-	}
-	var e = document.getElementById('bottomContent');
-	if(e){
-		e.style.padding = "0px 0px 12px 0px";
-	}
-
-    var div = searchDOM (document.getElementById('content'), 'node.tagName=="DIV" && node.className=="UIStandardFrame_Content"', 7);
-    if (div){
-		div.style.width ='100%';
-	}
-    var div = searchDOM (document.getElementById('content'), 'node.tagName=="DIV" && node.className.indexOf("SidebarAds")>=0', 7);
-    if (div){
-		div.style.display ='none';
-	}
-    
-  }
-  facebookWatchdog();
-  if (GlobalOptions.pbWideScreen)
-    setWide();
-}
-
-
-
 var Options = {
   srcSortBy    : 'level',
   srcMinLevel  : 1,
@@ -129,11 +45,11 @@ var Options = {
   unownedOnly  : true,
   mistedOnly   : true,
   hostileOnly  : false,  
-  friendlyOnly  : false,  
-  alliedOnly  : false,  
-  unalliedOnly  : false,  
+  friendlyOnly : false,  
+  alliedOnly   : false,  
+  unalliedOnly : false,  
   neutralOnly  : false,  
-  srcAll  : true,  
+  srcAll       : true,  
   srcScoutAmt  : 1,
   minmight     : 1,
   srcdisttype  : 'square',
@@ -158,17 +74,20 @@ var Options = {
   currentTab   : null,
   hideOnGoto   : true,
   transportinterval : 60,
-  minwagons		:100,
-  lasttransport:0,
+  minwagons    : 100,
+  lasttransport: 0,
   reassigninterval: 60,
-  lastreassign:0,
-  MapShowExtra: false,
+  lastreassign : 0,
+  HelpRequest  : false,
+  DeleteRequest: false,
+  MapShowExtra : false,
 };
 //unsafeWindow.pt_Options=Options;
 
 var GlobalOptions = {
   pbWatchdog   : false,
   pbWideScreen : true,
+  pbWideScreenStyle : 'normal',
 };
 
 var AttackOptions = {
@@ -221,6 +140,88 @@ var CrestOptions = {
 var TrainOptions = {
   Running   : false,
 };
+
+
+readGlobalOptions ();
+
+if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
+  facebookInstance ();
+  return;
+}
+if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
+	kocWideScreen ();
+}
+
+function kocWideScreen(){
+  function setWide (){
+	var kocFrame = parent.document.getElementsByName('kofc_main_canvas');
+	if (!kocFrame){
+	  setTimeout (setWide, 1000);
+	  return;
+	}
+	for(i=0; i<kocFrame.length; i++){
+		if(kocFrame[i].tagName == 'IFRAME'){
+			kocFrame[i].style.width = '100%';
+			var style = document.createElement('style')
+			style.innerHTML = 'body {margin:0; width:100%; !important;}';
+			kocFrame[i].parentNode.appendChild(style);
+			break;
+		}
+	}
+  }
+  kocWatchdog ();
+  if (GlobalOptions.pbWideScreen)
+    setWide();
+}
+
+/***  Run only in "apps.facebook.com" instance ... ***/
+function facebookInstance (){
+  function setWide (){
+	var iFrame = document.getElementById('iframe_canvas');
+	if (!iFrame){
+	  setTimeout (setWide, 1000);
+	  return;
+	}
+	iFrame.style.width = '100%';
+
+	while ( (iFrame=iFrame.parentNode) != null)
+	  if (iFrame.tagName=='DIV')
+		iFrame.style.width = '100%';
+	
+    try{    
+      document.getElementById('rightCol').parentNode.removeChild(document.getElementById('rightCol'));
+      document.getElementById('leftColContainer').parentNode.removeChild(document.getElementById('leftColContainer'));
+    } catch (e){
+      // toolkit may have removed them already!
+    }
+    var e = document.getElementById('mainContainer');
+	if(e){
+		if (GlobalOptions.pbWideScreenStyle=="normal") e.parentNode.style.minWidth = '100%';
+		if (GlobalOptions.pbWideScreenStyle=="wide") e.parentNode.style.width = '1520px';
+		if (GlobalOptions.pbWideScreenStyle=="ultra") e.parentNode.style.width = '1900px';
+		for(i=0; i<e.childNodes.length; i++){
+			if(e.childNodes[i].id == 'contentCol'){
+				e.childNodes[i].style.margin = '0px';
+				e.childNodes[i].style.paddingTop = '5px';
+				break;
+			}
+		}
+	}
+	var e = document.getElementById('pageHead');
+	if(e){
+		e.style.width = '80%';
+		e.style.margin = '0 10%';
+	}
+	var e = document.getElementById('bottomContent');
+	if(e){
+		e.style.padding = "0px 0px 12px 0px";
+	}
+    
+  }
+  facebookWatchdog();
+  if (GlobalOptions.pbWideScreen)
+    setWide();
+}
 
 var Cities = {};
 var Seed = unsafeWindow.seed;
@@ -290,7 +291,6 @@ function pbStartup (){
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readOptions();
-  readGlobalOptions ();
   readAttackOptions();
   readCrestOptions();
   setCities();
@@ -328,17 +328,16 @@ function pbStartup (){
   SpamEvery.init ();
   CollectGold.init();
   FoodAlerts.init();
+  ChatPane.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
     tabManager.showTab();
   }
   window.addEventListener('unload', onUnload, false);
   exportToKOCattack.init();
-  kocWatchdog ();
   WideScreen.init ();
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
-  setInterval (HandleChatPane,2500);
   setInterval (DrawLevelIcons,1250);
 }
 
@@ -4923,7 +4922,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pballowWinMove type=checkbox /></td><TD>Enable window drag (move window by dragging top bar with mouse)</td></tr>\
         <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>Remember window open state on refresh</td></tr>\
         <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>Hide window when clicking on map coordinates</td></tr>\
-        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert (On less then 6 Hours of food checked every hour)</td></tr>\
+        <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>Enable widescreen style: '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' (all domains, requires refresh)</td>\
         <TR><TD colspan=2><BR><B>KofC Features:</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>Disable all Fairie popup windows</td></tr>\
         <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>Refresh if KOC not loaded within 1 minute (all domains)</td></tr>\
@@ -4931,30 +4930,21 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>Put chat on right (requires wide screen)</td></tr>\
 		<TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>Use WideMap (requires wide screen)</td></tr>\
         <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>Auto collect gold when happiness reaches <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
-        <TR><TD></td><TD>Select screen-mode: <select id="selectScreenMode"><option value="normal">Normal</options>\
-        <option value="wide">Widescreen</options>\
-        <option value="ultra">Ultra-widescreen</option></select>(all domains, requires refresh)</td>\
+        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert (On less then 6 Hours of food checked every hour)</td></tr>\
         <TR><TD colspan=2><BR><B>Extra Features:</b></td></tr>\
-        <TR><TD><INPUT id=DelReq type=checkbox '+ (Options.DeleteRequest?'CHECKED':'')+'/></td><TD>Delete alliance requests in chat (click is enabled by default)</td></tr>\
-        <TR><TD><INPUT id=MapExtra type=checkbox '+ (Options.MapShowExtra?'CHECKED':'')+'/></td><TD>Show Player & Might in map.</td></tr>\
+        <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>Help alliance build/research posts</td></tr>\
+        <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>Hide alliance requests in chat</td></tr>\
+        <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>Show Player & Might in map.</td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
       div.innerHTML = m;
 
-	  document.getElementById('selectScreenMode').value = GlobalOptions.pbWideScreen;
       document.getElementById('selectScreenMode').addEventListener ('change', function(){
-      		GlobalOptions.pbWideScreen = document.getElementById('selectScreenMode').value;
+      		GlobalOptions.pbWideScreenStyle = document.getElementById('selectScreenMode').value;
       		GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-      },false);	
-      document.getElementById('DelReq').addEventListener ('change', function(){
-      		Options.DeleteRequest = document.getElementById('DelReq').checked;
-      		saveOptions();
-      },false);	
-      document.getElementById('MapExtra').addEventListener ('change', function(){
-      		Options.MapShowExtra = document.getElementById('MapExtra').checked;
-      		saveOptions();
       },false);	
       
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
+      document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
       t.togOpt ('pballowWinMove', 'pbWinDrag', mainPop.setEnableDrag);
       t.togOpt ('pbTrackWinOpen', 'pbTrackOpen');
       t.togOpt ('pbHideOnGoto', 'hideOnGoto');
@@ -4967,6 +4957,9 @@ Tabs.Options = {
       t.togOpt ('pbChatREnable', 'pbChatOnRight', WideScreen.setChatOnRight);
       t.togOpt ('pbWMapEnable', 'pbWideMap', WideScreen.useWideMap);
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
+      t.togOpt ('HelReq', 'HelpRequest');
+      t.togOpt ('DelReq', 'DeleteRequest');
+      t.togOpt ('MapExtra', 'MapShowExtra');
 
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
@@ -7236,15 +7229,15 @@ function facebookWatchdog (){
 
 
 function kocWatchdog (){
-  var INTERVAL = 30000; // wait 30 seconds before checking DOM
+  var INTERVAL = 10000; // wait 30 seconds before checking DOM
   if (!GlobalOptions.pbWatchdog)
     return;
   setTimeout (watchdog, INTERVAL);
   function watchdog (){
 logit ("KOC WATCHDOG: "+ document.getElementById('mod_maparea'));    
     if (document.getElementById('mod_maparea')==null){
-      actionLog ("KOC not loaded");
-      KOCnotFound(2*60);
+      logit ("KOC not loaded");
+      KOCnotFound(20);
     }     
   }
 }
@@ -8296,6 +8289,74 @@ var SpamEvery  = {
   }
 }
 
+/************** ChatPane **********/
+var ChatPane = {
+  init : function(){
+    var t = ChatPane;
+	setInterval(t.HandleChatPane, 2500);
+  },
+  
+  HandleChatPane : function() {
+	var DisplayName = GetDisplayName();
+	var AllianceChatBox=document.getElementById('mod_comm_list2');
+	
+	if(AllianceChatBox){
+		var chatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", AllianceChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+		if(chatPosts){
+			for (var i = 0; i < chatPosts.snapshotLength; i++) {
+				thisPost = chatPosts.snapshotItem(i);
+				if(Options.HelpRequest){
+					var postAuthor = document.evaluate('.//*[@class="nm"]', thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+					if(postAuthor.snapshotItem(0)){
+						var postAuthorName = postAuthor.snapshotItem(0).innerHTML;
+						if(postAuthorName != DisplayName){
+							var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );  
+							if(helpAllianceLinks){
+								for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+									thisLink = helpAllianceLinks.snapshotItem(j);
+									var alreadyClicked = thisLink.getAttribute("clicked");
+									if(!alreadyClicked){
+										thisLink.setAttribute('clicked', 'true');
+										var myregexp = /(claimAllianceChatHelp\(.*\);)/;
+										var match = myregexp.exec(thisLink.getAttribute("onclick"));
+										
+										if (match != null) {
+											onclickCode = match[0];
+											if(true){
+												DoUnsafeWindow(onclickCode);
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				// Hide alliance requests in chat
+				if(Options.DeleteRequest){
+					var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+					if(helpAllianceLinks){
+						for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+							thisLink = helpAllianceLinks.snapshotItem(j);
+							thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
+						}
+					}
+				// Hide alliance reports in chat
+					var myregexp1 = /You are # [1-5] of 5 to help/i;
+					var myregexp2 = /\'s Kingdom does not need help\./i;
+					var myregexp3 = /\'s project has already been completed\./i;
+					var myregexp4 = /\'s project has received the maximum amount of help\./i;
+					if (thisPost.innerHTML.match(myregexp1) || thisPost.innerHTML.match(myregexp2) || thisPost.innerHTML.match(myregexp3) || thisPost.innerHTML.match(myregexp4)) {
+						thisPost.parentNode.removeChild(thisPost);
+					}
+				}
+			}	
+		}	
+	}
+  },
+
+}
+
 /**********************************************************************************/
 var CalterUwFunc = function (funcName, findReplace) {
   var t = this;
@@ -8977,6 +9038,9 @@ Array.prototype.compare = function(testArr) {
         if (this[i] !== testArr[i]) return false;
     }
     return true;
+}
+String.prototype.StripQuotes = function() {
+	return this.replace(/"/g,'');
 }
 String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;', '\'':'&#039' };
 String.prototype.htmlSpecialChars = function() {
@@ -10099,122 +10163,7 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   this.swfLoadComplete = function (chanNum, isError){    // called by plugin when a sound finishes loading  (overload to be notified)
   }
 }
-
-function HandleChatPane() {
-	var DisplayName = GetDisplayName();
-	var AllianceChatBox=document.getElementById('mod_comm_list2');
 	
-	if(AllianceChatBox){
-		var chatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", AllianceChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-		if(chatPosts){
-
-			for (var i = 0; i < chatPosts.snapshotLength; i++) {
-				
-				thisPost = chatPosts.snapshotItem(i);
-				if(true){
-				//if(this.options.autoHelpAlliance){
-					var postAuthor = document.evaluate('.//*[@class="nm"]', thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-					if(postAuthor.snapshotItem(0)){
-						var postAuthorName = postAuthor.snapshotItem(0).innerHTML;
-						if(postAuthorName != DisplayName){
-							var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );  
-							if(helpAllianceLinks){
-								for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
-									thisLink = helpAllianceLinks.snapshotItem(j);
-									var alreadyClicked = thisLink.getAttribute("clicked");
-									if(!alreadyClicked){
-										thisLink.setAttribute('clicked', 'true');
-										var myregexp = /(claimAllianceChatHelp\(.*\);)/;
-										var match = myregexp.exec(thisLink.getAttribute("onclick"));
-										
-										if (match != null) {
-											onclickCode = match[0];
-											if(true){
-											//if(!FindInCommandHistory(onclickCode, 'alliance_help')){
-												DoUnsafeWindow(onclickCode);
-												AddToCommandHistory(onclickCode, 'alliance_help');
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				// Hide alliance requests in chat
-				if(Options.DeleteRequest){
-					var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-					if(helpAllianceLinks){
-						for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
-							thisLink = helpAllianceLinks.snapshotItem(j);
-							thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
-						}
-					}
-				}
-				// Hide alliance reports in chat
-				if(Options.DeleteRequest){
-					var myregexp1 = /You are # [1-5] of 5 to help/i;
-					var myregexp2 = /\'s Kingdom does not need help\./i;
-					var myregexp3 = /\'s project has already been completed\./i;
-					var myregexp4 = /\'s project has received the maximum amount of help\./i;
-					if (thisPost.innerHTML.match(myregexp1) || thisPost.innerHTML.match(myregexp2) || thisPost.innerHTML.match(myregexp3) || thisPost.innerHTML.match(myregexp4)) {
-						thisPost.parentNode.removeChild(thisPost);
-					}
-				}
-			}	
-		}	
-	}
-}	
-
-
-function GetCommandHistory(history_log_name) {
-	if(!history_log_name){
-		var history_log_name = "default";
-	}
-	var json= "";
-	if(json=='') json='{}';
-	var json_object=JSON2.parse(json);
-	if(!json_object['items']){
-		json_object['items'] = Array();
-	}
-	return json_object;
-}
-
-function AddToCommandHistory(command_string, history_log_name, log_length_limit) {
-	if(!command_string){ return false; }
-	if(!history_log_name){ var history_log_name = "default"; }
-	// Default to a history length of 20 commands
-	if(!log_length_limit){ var log_length_limit = 20; }
-	// Get the previous history of commands
-	var previous_commands = GetCommandHistory(history_log_name);
-	var items = previous_commands['items'];
-	// Add the new command
-	items.push(command_string);
-	// Limit the history length
-	if(items.length>log_length_limit){
-		items = items.slice(items.length-log_length_limit);
-	}
-	previous_commands['items'] = items;
-	//alert(history_log_name +' - '+JSON2.stringify(previous_commands));
-	//History.push = {log_name_history_log_name,JSON2.stringify(previous_commands)};
-	//alert(History.toSource());
-}		
-
-function FindInCommandHistory(command_string, history_log_name) {
-	if(!command_string){ return false; }
-	if(!history_log_name){ var history_log_name = "default"; }
-	// Get the previous history of commands
-	var previous_commands = GetCommandHistory(history_log_name);
-	var items = previous_commands['items'];
-	for(var i=0; i<items.length; i++){
-		if(items[i] == command_string){
-			return true;
-		}
-	}
-	return false;
-}
-		
-		
 function DoUnsafeWindow(func, execute_by_embed) {
 	if(this.isChrome || execute_by_embed) {
 		var scr=document.createElement('script');
@@ -10224,11 +10173,10 @@ function DoUnsafeWindow(func, execute_by_embed) {
 		try {  
 			eval("unsafeWindow."+func);
 		} catch (error) {
-			this.Log("A javascript error has occurred when executing a function via DoUnsafeWindow. Error description: "+error.description);
+			logit("A javascript error has occurred when executing a function via DoUnsafeWindow. Error description: "+error.description);
 		}
 	}
 }	
-
 
 function GetDisplayName(){
 	var DisplayName = document.getElementById('topnavDisplayName');
@@ -10287,11 +10235,6 @@ function DrawLevelIcons() {
 	}
 
 }
-	
-String.prototype.StripQuotes = function() {
-	return this.replace(/"/g,'');
-};
-	
 	
 //
 
