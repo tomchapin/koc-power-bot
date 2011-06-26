@@ -1,6 +1,17 @@
 REVISION HISTORY:
 ----------------
 
+20110626a
+   *Fixed refresh if KOC not loaded within 1 minute (changed to 30 seconds)
+   *Added auto publish facebook posts
+   *Added auto help build posts in alliance chat
+   *Added auto hide build posts
+   *Added map overlay function (KocAttack must be disabled for it to work)
+   *Fixed issue with koc loading picture and facebook pop up not showing when widescreen is disabled
+   *Added 3 options to widescreen - normal, wide, ultrawide
+   *Added auto delete cresting reports
+   *Fixed bug where reports don't get deleted
+
 20110619a
    *Changed wide screen width to 1520px from the previous 1220px
    *Added Phillipines cell provider Smart
