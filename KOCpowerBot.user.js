@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110621b
+// @version        20110626a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20110621b';
+var Version = '20110626a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -110,6 +110,7 @@ var AttackOptions = {
   BarbsTried    		: 0,
   DeleteMsg             : true,
   DeleteMsgs0			: false,
+  DeleteMsgW			: false,
   Foodstatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   MsgLevel			    : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
   BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
@@ -201,7 +202,7 @@ if (document.URL.search(/facebook.com\/connect\/uiserver.php/i) >= 0){
   return;
 }
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
-	kocWideScreen ();
+  kocWideScreen ();
 }
 
 function kocWideScreen(){
@@ -4289,7 +4290,7 @@ Tabs.Barb = {
   barbOptions: function(){
   	 var t = Tabs.Barb;
   	 if(t.barboptions == null)	
-		t.barboptions = new CPopup ('pbbarboptions', 0,0, 375,370, true);
+		t.barboptions = new CPopup ('pbbarboptions', 0,0, 375,390, true);
   	 t.barboptions.centerMe (mainPop.getMainDiv());  
 	 t.barboptions.getTopDiv().innerHTML = '<CENTER><b> Barbing Options for server '+getServerId()+'</b></CENTER>';
   	var y = '<DIV style="max-height:400px; overflow-y:auto;"><DIV class=pbStat>RESET BARBS</div><TABLE width=100%>';
@@ -4305,6 +4306,7 @@ Tabs.Barb = {
      y +='<TR><TD>Method : '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
      y +='<TR><TD><INPUT id=deletetoggle type=checkbox '+(AttackOptions.DeleteMsg?'CHECKED':'')+' /> Auto delete barb/transport reports from you</td></tr>';
      y +='<TR><TD><INPUT id=deletes0toggle type=checkbox '+(AttackOptions.DeleteMsgs0?'CHECKED':'')+' /> Auto delete transport reports to you</td></tr>';
+     y +='<TR><TD><INPUT id=deletewtoggle type=checkbox '+(AttackOptions.DeleteMsgW?'CHECKED':'')+' /> Auto delete cresting reports</td></tr>';
      y +='<TR><TD>Select barbreport levels to delete: <BR>';
 	 y +='<TABLE><TR>';
      for (w=1;w<=10;w++){
@@ -4360,6 +4362,10 @@ Tabs.Barb = {
 	},false);
     document.getElementById('deletes0toggle').addEventListener('change', function(){
 		AttackOptions.DeleteMsgs0=document.getElementById('deletes0toggle').checked;
+		saveAttackOptions();
+	},false);
+    document.getElementById('deletewtoggle').addEventListener('change', function(){
+		AttackOptions.DeleteMsgW=document.getElementById('deletewtoggle').checked;
 		saveAttackOptions();
 	},false);
     document.getElementById('rallyclip').addEventListener('change', function(){
@@ -4465,7 +4471,7 @@ Tabs.Barb = {
   
   startdeletereports : function (){
 	var t = Tabs.Barb;
-	if(!t.deleting && (AttackOptions.DeleteMsg || AttackOptions.DeleteMsgs0)){
+	if(!t.deleting && (AttackOptions.DeleteMsg || AttackOptions.DeleteMsgs0 || AttackOptions.DeleteMsgW)){
 		t.deleting = true;
 		t.fetchbarbreports(0, t.checkbarbreports);
 	}
@@ -4503,9 +4509,14 @@ Tabs.Barb = {
 					deletes1.push(k.substr(2));
 				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
 					deletes1.push(k.substr(2));
-			} else if (AttackOptions.DeleteMsgs0){
+			}
+			if (AttackOptions.DeleteMsgs0){
 				if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
 					deletes0.push(k.substr(2));
+			}
+			if (AttackOptions.DeleteMsgW){
+				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && reports[k].side0TileType < 50)
+					deletes1.push(k.substr(2));
 			}
 		}
 		if(deletes1.length > 0 || deletes0.length > 0){
@@ -7983,6 +7994,8 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
 
 // returns: 'neutral', 'friendly', or 'hostile'
 function getDiplomacy (aid) {
+  if(aid < 1 || aid == null)
+    return 'unallianced';
   if (Seed.allianceDiplomacies == null)
     return 'neutral';
   if (Seed.allianceDiplomacies.friendly && Seed.allianceDiplomacies.friendly['a'+aid] != null)
@@ -10275,6 +10288,8 @@ function GetDisplayName(){
 	return DisplayName
 }
 
+//modal_maptile((tileID),(Name),(X),(Y),(Gender+Avatar),(User),(Might),(Title),(AllianceName),(null),(tileProvinceId),(tilename),(CityState),(TileLevel),(allianceId),(tileCityId),(tileUserId),(TypeName),(misted));
+//modal_maptile(453323,"Heineken4",172,622,"m6","Heineken",3758930,"60","Darkness",null,21,"city","Normal",9,2136,67677,1589067,"City",false);
 function DrawLevelIcons() {
 	var maptileRe = /modal_maptile.([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)/;
 	var mapwindow=document.getElementById('mapwindow');
