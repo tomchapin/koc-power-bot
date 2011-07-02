@@ -2,11 +2,11 @@ if (!g_js_strings) {
     var g_js_strings = new Object()
 }
 g_js_strings.errorcode = new Object();
-g_js_strings.errorcode.err_default = 'Something has gone wrong! Please try again, or refresh if this message reappears<br><br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
-g_js_strings.errorcode.err_0 = 'An Unexpected Error has occurred. Please try again later, or refresh if this message reappears<br><br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
-g_js_strings.errorcode.err_1 = 'A Fatal Error was encountered. Please refresh the page<br><br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
+g_js_strings.errorcode.err_default = 'Something has gone wrong! Please try again, or refresh if this message reappears<br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
+g_js_strings.errorcode.err_0 = 'An Unexpected Error has occurred. Please try again later, or refresh if this message reappears<br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
+g_js_strings.errorcode.err_1 = 'A Fatal Error was encountered. Please refresh the page<br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
 g_js_strings.errorcode.err_2 = "Construction is already starting or is in progress";
-g_js_strings.errorcode.err_3 = 'Unknown issue when updating your game, please try again later<br><br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
+g_js_strings.errorcode.err_3 = 'Unknown issue when updating your game, please try again later<br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
 g_js_strings.errorcode.err_4 = "You have insufficient %1$s! You currently have %2$s %3$s";
 g_js_strings.errorcode.err_4b = "Your %1$s is not high enough level. You currently have %2$s";
 g_js_strings.errorcode.err_4c = "You do not have enough %1$s. You currently have %2$s";
@@ -14,7 +14,7 @@ g_js_strings.errorcode.err_4z = "Requirements not met";
 g_js_strings.errorcode.err_5 = 'There is a problem with the City. Please try again <br><br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
 g_js_strings.errorcode.err_6 = "Training queue of this City is full!";
 g_js_strings.errorcode.err_7 = "You cannot perform this action again until %1$s";
-g_js_strings.errorcode.err_8 = 'Kingdoms of Camelot is not able to process your request due to excess traffic. Please wait to try again. <br><br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
+g_js_strings.errorcode.err_8 = 'Kingdoms of Camelot is not able to process your request due to excess traffic. Please wait to try again. <br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
 g_js_strings.errorcode.err_50 = "Name is already taken! Please choose another";
 g_js_strings.errorcode.err_51 = "Character names must be 3~15 letters with no spaces";
 g_js_strings.errorcode.err_52 = "This name is not allowed. Please choose another";
@@ -54,7 +54,7 @@ g_js_strings.errorcode.err_212 = "Unable to use target Knight. Knight must be id
 g_js_strings.errorcode.err_213 = "Unable to use target Knight. Knight must be in the City to be used. If you receive this message in error, please refresh the game";
 g_js_strings.errorcode.err_214 = "Friend is already a Knight!";
 g_js_strings.errorcode.err_215 = "The selected person does not appear to be your friend according to Facebook. Please try again later";
-g_js_strings.errorcode.err_216 = 'The Skill point you are saving are the same or lower than current Skill points. If this disagrees with what the Knight\'s Hall shows you, please refresh the page<br><br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
+g_js_strings.errorcode.err_216 = 'The Skill point you are saving are the same or lower than current Skill points. If this disagrees with what the Knight\'s Hall shows you, please refresh the page<br><br><a onclick="HelpDesk.show(4);return false;">See this error a lot? Let us know</a>';
 g_js_strings.errorcode.err_217 = "Knight has no Unassigned Skill Points";
 g_js_strings.errorcode.err_251 = "Requested March does not exist";
 g_js_strings.errorcode.err_252 = "Match info does not match";
@@ -412,6 +412,8 @@ g_js_strings.modaltitles.deleteall = "Delete All";
 g_js_strings.modaltitles.destroybuild = "Destroy Building?";
 g_js_strings.modaltitles.discussion = "Discussion";
 g_js_strings.modaltitles.dismissknight = "Dismiss Knight";
+g_js_strings.modaltitles.error = "Error!";
+g_js_strings.modaltitles.excesstraffic = "Excess Traffic";
 g_js_strings.modaltitles.exitbeginnerprotection = "Exit Beginner Protection";
 g_js_strings.modaltitles.getmoregems = "Get More Gems";
 g_js_strings.modaltitles.giftitem = "Gift an Item";
@@ -486,9 +488,9 @@ g_js_strings.modal_attack.marchtextreassign = "This type is used when you want t
 g_js_strings.modal_attack.availabletroops = "Available Troops";
 g_js_strings.modal_attack.thisisabarbarianraid = "This is a Barbarian Raid";
 g_js_strings.modal_attack.thisisabarbarianraidtooltip = "Barbarian Raids can be unlocked at Level 20. Barbarian Raids allow you to loot Barbarian Camps automatically. Raids can be saved by clicking 'Raid and Save' below. The Knight and Troops saved to this raid will be dedicated to raiding the Barbarian Camp location. Raids can be managed from the Rally Point under the 'Barbarian Raids' tab.";
-g_js_strings.modal_attack.barbarianraidhelpp1 = "Selecting this check box will allow you to save a scheduled Raids against a Barbarian Camp of your choosing to happen every hour. Save Raids can be accessed, managed, and changed via the Rally Point.";
-g_js_strings.modal_attack.barbarianraidhelpp2 = "Note that Raids will be less effective at looting than Marches and must be reset at least once a day from the Rally Point for continuous Raiding.";
-g_js_strings.modal_attack.barbarianraidhelpp3 = "Beware when you commit your troops for battle in Raids: this strategy can only work against Barbarian Camps, and the Troops and Knights dedicated to the Raid will be locked until the Raid is deleted. In addition, you can only have as many active Raids and Marches as your Rally Point can allow.";
+g_js_strings.modal_attack.barbarianraidhelpp1 = "Selecting this check box will allow you to save scheduled Raids against a Barbarian Camp of your choosing. Saved Raids can be accessed, managed, and changed via the Rally Point.";
+g_js_strings.modal_attack.barbarianraidhelpp2 = "Raids will continuously attack Barbarian Camps, but must be reset at least once a day from the Rally Point for continuous Raiding.";
+g_js_strings.modal_attack.barbarianraidhelpp3 = "Beware when you commit your troops for battle in Raids: this strategy can only work against Barbarian Camps, the Troops and Knights dedicated to the Raid will be locked until the Raid is deleted, and all Raids will have a minimum march time of just under 3 minutes. In addition, you can only have as many active Raids and Marches as your Rally Point can allow.";
 g_js_strings.modal_attack.selecttroopstext = "Select the number of troops you&#39;d like to send";
 g_js_strings.modal_attack.displayscoutonly = "Display Scout Troops only";
 g_js_strings.modal_attack.displayingscoutonly = "Displaying Scout Troops only";
@@ -619,6 +621,7 @@ g_js_strings.cancelconstruction = new Object();
 g_js_strings.cancelconstruction.cancelconstructiontitle = "Cancel Construction?";
 g_js_strings.cancelconstruction.cancelconstruction = "Cancel Construction";
 g_js_strings.cancelconstruction.cancelconstructiontakes = "Cancelling this construction will get";
+g_js_strings.cancelconstruction.cancelconstructionloseitem = "Warning: cancelling this construction will NOT return {itemName}!";
 g_js_strings.loyalBoost_modal = new Object();
 g_js_strings.loyalBoost_modal.rewardknight = "Reward your knight to increase loyalty";
 g_js_strings.loyalBoost_modal.rewardwith = "Reward with";
@@ -1164,11 +1167,12 @@ g_js_strings.modal_myitems_confirm_potion_mist = new Object();
 g_js_strings.modal_myitems_confirm_potion_mist.mistwarning = "Please note: Using the Mists of Avalon while you are engaged in attack will still reveal your location to the person you are attacking in their Battle Report. Do you still wish to use the Mists?";
 g_js_strings.modal_myitems_confirm_potion_mist.usemists = "Use Mists";
 g_js_strings.modal_myitems_warning = "Warning!";
-g_js_strings.modal_myitems_confirm_vacation3_msg = "You will be entering vacation mode for 3 days.  You will not be able to march (attack, reinforce, scout, reassign, transport) without ending vacation mode.  Once vacation mode has ended, you will not be able to restart it without using another item.   Do you still wish to continue?";
-g_js_strings.modal_myitems_confirm_vacation7_msg = "You will be entering vacation mode for 7 days.  You will not be able to march (attack, reinforce, scout, reassign, transport) without ending vacation mode.  Once vacation mode has ended, you will not be able to restart it without using another item.   Do you still wish to continue?";
-g_js_strings.modal_myitems_confirm_vacation3 = "<span class='warning'>Warning!</span> You will be entering vacation mode for 3 days.  You will not be able to march (attack, reinforce, scout, reassign, transport) without ending vacation mode.  Once vacation mode has ended, you will not be able to restart it without using another item.   Do you still wish to continue?";
-g_js_strings.modal_myitems_confirm_vacation7 = "<span class='warning'>Warning!</span> You will be entering vacation mode for 7 days.  You will not be able to march (attack, reinforce, scout, reassign, transport) without ending vacation mode.  Once vacation mode has ended, you will not be able to restart it without using another item.   Do you still wish to continue?";
-g_js_strings.modal_attack_vacation = "<span class='warning'>Warning!</span> By  sending out a march, you will end vacation mode immediately and you will not be able to restart it without using another item.  All benefits will immediately cease. You may be attacked. You will no longer be under the Mists of Avalon. You will no longer have reduced upkeep.   Do you still wish to continue?";
+g_js_strings.vacationMode = {};
+g_js_strings.vacationMode.modal_myitems_confirm_vacation3_msg = "You will be entering vacation mode for 3 days.  You will not be able to march (attack, reinforce, scout, reassign, transport) without ending vacation mode.  Once vacation mode has ended, you will not be able to restart it without using another item.   Do you still wish to continue?";
+g_js_strings.vacationMode.modal_myitems_confirm_vacation7_msg = "You will be entering vacation mode for 7 days.  You will not be able to march (attack, reinforce, scout, reassign, transport) without ending vacation mode.  Once vacation mode has ended, you will not be able to restart it without using another item.   Do you still wish to continue?";
+g_js_strings.vacationMode.modal_myitems_confirm_vacation3 = "<span class='warning'>Warning!</span> You will be entering vacation mode for 3 days.  You will not be able to march (attack, reinforce, scout, reassign, transport) without ending vacation mode.  Once vacation mode has ended, you will not be able to restart it without using another item.   Do you still wish to continue?";
+g_js_strings.vacationMode.modal_myitems_confirm_vacation7 = "<span class='warning'>Warning!</span> You will be entering vacation mode for 7 days.  You will not be able to march (attack, reinforce, scout, reassign, transport) without ending vacation mode.  Once vacation mode has ended, you will not be able to restart it without using another item.   Do you still wish to continue?";
+g_js_strings.vacationMode.modal_attack_vacation = "<span class='warning'>Warning!</span> By  sending out a march, you will end vacation mode immediately and you will not be able to restart it without using another item.  All benefits will immediately cease. You may be attacked. You will no longer be under the Mists of Avalon. You will no longer have reduced upkeep.   Do you still wish to continue?";
 g_js_strings.modal_myitems_confirm_potion_mist.usevacation = "Enter Vacation Mode";
 g_js_strings.modal_myitems_confirm_vacation_continue_button = "Continue";
 g_js_strings.ignoreUserConfirm = new Object();
@@ -1209,6 +1213,7 @@ g_js_strings.boosts_tooltip_combat.cityinpeace = "City in peacetime. You cannot 
 g_js_strings.boosts_tooltip_combat.troopupkeepreduct = "Troop food upkeep reduced by 50%";
 g_js_strings.boosts_tooltip_combat.loadincrease = "Troop load increased by 25%";
 g_js_strings.boosts_tooltip_combat.troopreturnreduct = "Troop return time reduced by 50%";
+g_js_strings.boosts_tooltip_combat.troophealthincrease = "Troop health increased by 10%";
 g_js_strings.modal_addcityhelp = new Object();
 g_js_strings.modal_addcityhelp.secondcityneed = "To build a second city you need to";
 g_js_strings.modal_addcityhelp.secondcityitem1 = "Reach of title of Baronet (7) or higher.";
@@ -2512,6 +2517,30 @@ var itemlist = {
         category: 3,
         subCategory: 0
     },
+    i282: {
+        name: "Staunch Banner",
+        description: "Increase Health of troops by 10% for 24 hours",
+        price: 12,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i283: {
+        name: "Banner of Vigor",
+        description: "Increase Health of troops by 10% for 7 days",
+        price: 70,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i284: {
+        name: "Horn of Samhain",
+        description: "Reduce the Food Upkeep from Troops by 50% for 7 days",
+        price: 735,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
     i351: {
         name: "Fertile Winds",
         description: "Adds 20% of your Population Limit or 100 Population, whichever is higher. Does not work if the current Population reaches the Population Limit.",
@@ -2564,6 +2593,22 @@ var itemlist = {
         name: "Divine Providence",
         description: "Allows you to upgrade your Castle from level 10 to 11",
         price: 200,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i403: {
+        name: "Sacred Inspiration",
+        description: "Allows you to upgrade your buildings from level 11 to 12",
+        price: 55,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i404: {
+        name: "Sacred Providence",
+        description: "Allows you to upgrade your Castle from level 11 to 12",
+        price: 220,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -3833,7 +3878,7 @@ var itemlist = {
         subCategory: 0
     },
     i1114: {
-        name: "Lady of the Lake&amp;#39;s Seal",
+        name: "Lady of the Lake's Seal",
         description: "Lady of the Lake's Seal",
         price: null,
         tradable: null,
@@ -3841,7 +3886,7 @@ var itemlist = {
         subCategory: 0
     },
     i1115: {
-        name: "Merlin&amp;#39;s Seal",
+        name: "Merlin's Seal",
         description: "Merlin's Seal",
         price: null,
         tradable: null,
@@ -4128,6 +4173,22 @@ var itemlist = {
         category: 1,
         subCategory: 0
     },
+    i2002: {
+        name: "Obsidian Rune",
+        description: "This rune allows you to summon the Iron Indrik to your city.  The Iron Indrik boosts your Ore production, \tcapacity and increases the Attack attribute of your marching troops.",
+        price: 50,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i2003: {
+        name: "Deluge Rune",
+        description: "This rune allows you to summon the Viand Asherah to your city.  The Viand Asherah boosts your Food production and capacity.",
+        price: 200,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
     i10000: {
         name: "Beginner's Package",
         description: "contains all the items needed to get your City started",
@@ -4298,7 +4359,7 @@ var itemlist = {
     },
     i10021: {
         name: "Potion of Mist",
-        description: "Deploys the Mists of Avalon on all of your Cities for one week. Mists of Avalon will end if you attack another Player's City or a Player owned Wilderness.",
+        description: "Covers your cities in the Mists of Avalon for one week; under the cover of Mists, your cities are harder to identify, but can still be attacked. Attacking players will clear the Mists from your cities.",
         price: 10,
         tradable: null,
         category: 1,
@@ -4372,6 +4433,14 @@ var itemlist = {
         name: "Chest of Order",
         description: "Establish order in your Kingdom: x3 Portal of Order",
         price: 240,
+        tradable: null,
+        category: 5,
+        subCategory: 0
+    },
+    i10032: {
+        name: "Divine Evocation",
+        description: "Light up the Kingdom by building your cities to their maximum potential! Contains x1 Divine Providence, x2 Divine Inspirations, and x3 Divine Hourglasses.",
+        price: 600,
         tradable: null,
         category: 5,
         subCategory: 0
@@ -8742,8 +8811,8 @@ var buildingmight = {
     "5": [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5120],
     "6": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360],
     "7": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360],
-    "8": [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240],
-    "9": [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240],
+    "8": [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240, 20480],
+    "9": [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240, 20480],
     "10": [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240],
     "11": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
     "12": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
@@ -8757,29 +8826,53 @@ var buildingmight = {
     "50": [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600],
     "51": [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600]
 };
+var buildingmaxlvl = {
+    "0": 11,
+    "1": 11,
+    "2": 11,
+    "3": 11,
+    "4": 11,
+    "5": 10,
+    "6": 10,
+    "7": 10,
+    "8": 11,
+    "9": 11,
+    "10": 10,
+    "11": 11,
+    "12": 11,
+    "13": 10,
+    "14": 10,
+    "15": 10,
+    "16": 10,
+    "17": 10,
+    "18": 11,
+    "19": 11,
+    "50": 10,
+    "51": 10
+};
 var buildingupgradedesc = {
     "0": ["Control one Wilderness and build Level 2 Cottages", "Control two Wildernesses, build Level 3 Cottages, and gain 3 more Resource Fields", "Control three Wildernesses, build Level 4 Cottages, and gain 3 more Resource Fields", "Control four Wildernesses, build Level 5 Cottages, and gain 3 more Resource Fields", "Control five Wildernesses, build Level 6 Cottages, and gain 3 more Resource Fields", "Control six Wildernesses, build Level 7 Cottages, and gain 3 more Resource Fields", "Control seven Wildernesses, build Level 8 Cottages, and gain 3 more Resource Fields", "Control eight Wildernesses, build Level 9 Cottages, and gain 3 more Resource Fields", "Control nine Wildernesses, build Level 10 Cottages, and gain 3 more Resource Fields", "Control ten Wildernesses, build Level 10 Cottages, and gain 3 more Resource Fields", "Control twelve Wildernesses and build Level 11 Buildings"],
     "1": ["Uses 10 workers, produces 100 Food per hour, with a capacity of 10,000", "Uses 30 workers, and produces 300 Food per hour, with a capacity of 30,000", "Uses 60 workers, and produces 600 Food per hour, with a capacity of 60,000", "Uses 100 workers, and produces 1,000 Food per hour, with a capacity of 100,000", "Uses 150 workers, and produces 1,500 Food per hour, with a capacity of 150,000", "Uses 200 workers, and produces 2,100 Food per hour, with a capacity of 210,000", "Uses 280 workers, and produces 2,800 Food per hour, with a capacity of 280,000", "Uses 360 workers, and produces 4,000 Food per hour, with a capacity of 400,000", "Uses 450 workers, and produces 5,750 Food per hour, with a capacity of 575,000", "Uses 550 workers, and produces 7,700 Food per hour, with a capacity of 770,000", "Uses 660 workers, and produces 9,850 Food per hour, with a capacity of 985,000"],
     "2": ["Uses 10 workers, produces 100 Wood per hour, with a capacity of 10,000", "Uses 30 workers, and produces 300 Wood per hour, with a capacity of 30,000", "Uses 60 workers, and produces 600 Wood per hour, with a capacity of 60,000", "Uses 100 workers, and produces 1,000 Wood per hour, with a capacity of 100,000", "Uses 150 workers, and produces 1,500 Wood per hour, with a capacity of 150,000", "Uses 200 workers, and produces 2,100 Wood per hour, with a capacity of 210,000", "Uses 280 workers, and produces 2,800 Wood per hour, with a capacity of 280,000", "Uses 360 workers, and produces 4,000 Wood per hour, with a capacity of 400,000", "Uses 450 workers, and produces 5,750 Wood per hour, with a capacity of 575,000", "Uses 550 workers, and produces 7,700 Wood per hour, with a capacity of 770,000", "Uses 660 workers, and produces 9,850 Wood per hour, with a capacity of 985,000"],
     "3": ["Uses 10 workers, produces 100 Stone per hour, with a capacity of 10,000", "Uses 30 workers, and produces 300 Stone per hour, with a capacity of 30,000", "Uses 60 workers, and produces 600 Stone per hour, with a capacity of 60,000", "Uses 100 workers, and produces 1,000 Stone per hour, with a capacity of 100,000", "Uses 150 workers, and produces 1,500 Stone per hour, with a capacity of 150,000", "Uses 200 workers, and produces 2,100 Stone per hour, with a capacity of 210,000", "Uses 280 workers, and produces 2,800 Stone per hour, with a capacity of 280,000", "Uses 360 workers, and produces 4,000 Stone per hour, with a capacity of 400,000", "Uses 450 workers, and produces 5,750 Stone per hour, with a capacity of 575,000", "Uses 550 workers, and produces 7,700 Stone per hour, with a capacity of 770,000", "Uses 660 workers, and produces 9,850 Stone per hour, with a capacity of 985,000"],
     "4": ["Uses 10 workers, produces 100 Ore per hour, with a capacity of 10,000", "Uses 30 workers, and produces 300 Ore per hour, with a capacity of 30,000", "Uses 60 workers, and produces 600 Ore per hour, with a capacity of 60,000", "Uses 100 workers, and produces 1,000 Ore per hour, with a capacity of 100,000", "Uses 150 workers, and produces 1,500 Ore per hour, with a capacity of 150,000", "Uses 200 workers, and produces 2,100 Ore per hour, with a capacity of 210,000", "Uses 280 workers, and produces 2,800 Ore per hour, with a capacity of 280,000", "Uses 360 workers, and produces 4,000 Ore per hour, with a capacity of 400,000", "Uses 450 workers, and produces 5,750 Ore per hour, with a capacity of 575,000", "Uses 550 workers, and produces 7,700 Ore per hour, with a capacity of 770,000", "Uses 660 workers, and produces 9,850 Ore per hour, with a capacity of 985,000"],
-    "5": ["Raises your Population Limit by 100", "Raises your Population Limit by 300", "Raises your Population Limit by 600", "Raises your Population Limit by 1,000", "Raises your Population Limit by 1,500", "Raises your Population Limit by 2.100", "Raises your Population Limit by 2,800", "Raises your Population Limit by 3,600", "Raises your Population Limit by 4,500", "Raises your Population Limit by 5,500", ""],
-    "6": ["Negates the penalty on Happiness caused by your Tax Rate by 1 point", "Negates the penalty on Happiness caused by your Tax Rate by 2 points", "Negates the penalty on Happiness caused by your Tax Rate by 3 points", "Negates the penalty on Happiness caused by your Tax Rate by 4 points", "Negates the penalty on Happiness caused by your Tax Rate by 5 points", "Negates the penalty on Happiness caused by your Tax Rate by 6 points", "Negates the penalty on Happiness caused by your Tax Rate by 7 points", "Negates the penalty on Happiness caused by your Tax Rate by 8 points", "Negates the penalty on Happiness caused by your Tax Rate by 9 points", "Negates the penalty on Happiness caused by your Tax Rate by 10 points", ""],
-    "7": ["Increase your Knights&#39; experience by 10 per hour", "Increase your Knights&#39; experience by 20 per hour", "Increase your Knights&#39; experience by 30 per hour", "Increase your Knights&#39; experience by 40 per hour", "Increase your Knights&#39; experience by 50 per hour", "Increase your Knights&#39; experience by 60 per hour", "Increase your Knights&#39; experience by 70 per hour", "Increase your Knights&#39; experience by 80 per hour", "Increase your Knights&#39; experience by 90 per hour", "Increase your Knights&#39; experience by 100 per hour", ""],
-    "8": ["Join an Alliance, and house one ally&#39;s troops", "Create an Alliance, and house two allies&#39; troops", "House three allies&#39; troops", "House four allies&#39; troops", "House five allies&#39; troops", "House six allies&#39; troops", "House seven allies&#39; troops", "House eight allies&#39; troops", "House nine allies&#39; troops", "House ten allies&#39; troops", ""],
-    "9": ["Allows you to protect up to 100,000 of each resource", "Allows you to protect up to 200,000 of each resource", "Allows you to protect up to 300,000 of each resource", "Allows you to protect up to 400,000 of each resource", "Allows you to protect up to 500,000 of each resource", "Allows you to protect up to 600,000 of each resource", "Allows you to protect up to 700,000 of each resource", "Allows you to protect up to 800,000 of each resource", "Allows you to protect up to 900,000 of each resource", "Allows you to protect up to 1,000,000 of each resource", ""],
-    "10": ["Engage in one transaction at a time", "Engage in two transaction at a time", "Engage in three transaction at a time", "Engage in four transaction at a time", "Engage in five transaction at a time", "Engage in six transaction at a time", "Engage in seven transaction at a time", "Engage in eight transaction at a time", "Engage in nine transaction at a time", "Engage in ten transaction at a time", ""],
+    "5": ["Raises your Population Limit by 100", "Raises your Population Limit by 300", "Raises your Population Limit by 600", "Raises your Population Limit by 1,000", "Raises your Population Limit by 1,500", "Raises your Population Limit by 2.100", "Raises your Population Limit by 2,800", "Raises your Population Limit by 3,600", "Raises your Population Limit by 4,500", "Raises your Population Limit by 5,500"],
+    "6": ["Negates the penalty on Happiness caused by your Tax Rate by 1 point", "Negates the penalty on Happiness caused by your Tax Rate by 2 points", "Negates the penalty on Happiness caused by your Tax Rate by 3 points", "Negates the penalty on Happiness caused by your Tax Rate by 4 points", "Negates the penalty on Happiness caused by your Tax Rate by 5 points", "Negates the penalty on Happiness caused by your Tax Rate by 6 points", "Negates the penalty on Happiness caused by your Tax Rate by 7 points", "Negates the penalty on Happiness caused by your Tax Rate by 8 points", "Negates the penalty on Happiness caused by your Tax Rate by 9 points", "Negates the penalty on Happiness caused by your Tax Rate by 10 points"],
+    "7": ["Increase your Knights&#39; experience by 10 per hour", "Increase your Knights&#39; experience by 20 per hour", "Increase your Knights&#39; experience by 30 per hour", "Increase your Knights&#39; experience by 40 per hour", "Increase your Knights&#39; experience by 50 per hour", "Increase your Knights&#39; experience by 60 per hour", "Increase your Knights&#39; experience by 70 per hour", "Increase your Knights&#39; experience by 80 per hour", "Increase your Knights&#39; experience by 90 per hour", "Increase your Knights&#39; experience by 100 per hour"],
+    "8": ["Join an Alliance, and house one ally&#39;s troops", "Create an Alliance, and house two allies&#39; troops", "House three allies&#39; troops", "House four allies&#39; troops", "House five allies&#39; troops", "House six allies&#39; troops", "House seven allies&#39; troops", "House eight allies&#39; troops", "House nine allies&#39; troops", "House ten allies&#39; troops", "House eleven allies&#39; troops"],
+    "9": ["Allows you to protect up to 100,000 of each resource", "Allows you to protect up to 200,000 of each resource", "Allows you to protect up to 300,000 of each resource", "Allows you to protect up to 400,000 of each resource", "Allows you to protect up to 500,000 of each resource", "Allows you to protect up to 600,000 of each resource", "Allows you to protect up to 700,000 of each resource", "Allows you to protect up to 800,000 of each resource", "Allows you to protect up to 900,000 of each resource", "Allows you to protect up to 1,000,000 of each resource", "Allows you to protect up to 5,000,000 of each resource"],
+    "10": ["Engage in one transaction at a time", "Engage in two transaction at a time", "Engage in three transaction at a time", "Engage in four transaction at a time", "Engage in five transaction at a time", "Engage in six transaction at a time", "Engage in seven transaction at a time", "Engage in eight transaction at a time", "Engage in nine transaction at a time", "Engage in ten transaction at a time"],
     "11": ["Research Fertilizer, Logging, Stoneworking, and Mining, and raise your research cap to Level 1", "Research Poisoned Edged, and raise your research cap to Level 2", "Research Geometry, Eagle Eyes, and Metal Alloys, and raise your research cap to Level 3", "Research Featherweight Powder, Magical Mapping, and Fletching, and raise your research cap to Level 4", "Research Alloy Horseshoes and Giant&#39;s Strength, and raise your research cap to Level 5", "Research Shrinking Powder and Healing Potions, and raise your research cap to Level 6", "Raise your research cap to Level 7", "Raise your research cap to Level 8", "Raise your research cap to Level 9", "Raise your research cap to Level 10", "Raise your research cap to Level 11"],
-    "12": ["Send one army at a time, with up to 10,000 troops", "Send two armies at a time, with up to 20,000 troops each", "Send three armies at a time, with up to 30,000 troops each", "Send four armies at a time, with up to 40,000 troops each", "Send five armies at a time, with up to 50,000 troops each", "Send six armies at a time, with up to 60,000 troops each", "Send seven armies at a time, with up to 70,000 troops each", "Send eight armies at a time, with up to 80,000 troops each", "Send nine armies at a time, with up to 90,000 troops each", "Send ten armies at a time, with up to 100,000 troops each", "Send eleven armies at a time, with up to 150,000 troops each, enables the use of Aura of Conquest"],
-    "13": ["Train Supply Troopers and Militiamen", "Train Scouts and Pikemen, and increase your training speed", "Train Swordsmen, and increase your training speed", "Train Archers, and increase your training speed", "Train Cavalry, and increase your training speed", "Train Supply Wagons, and increase your training speed", "Train Heavy Cavalry, and increase your training speed", "Train Ballistae, and increase your training speed", "Train Battering Rams, and increase your training speed", "Train Catapults, and increase your training speed", ""],
-    "14": ["Warns you of an impending attack", "Tells you the purpose of an impending attack (Plunder or Scout)", "Tells you the arrival time of an impending attack", "Tells you the Title and Alliance of the Player sending an impending attack", "Gives you an estimate of the total Troops in an impending attack", "Tells you the Troop types in an impending attack", "Gives you an estimate of how many of each Troop type in an impending attack", "Tells you the exact number of Troops in an impending attack", "Tells you the Combat Skill of the Knight leading an impending attack", "Tells you the Research levels of the Player sending an impending attack", ""],
-    "15": ["Allows you to research Level 1 Metal Alloys and Train Swordsmen", "Allows you to research Level 2 Metal Alloys", "Allows you to research Level 3 Metal Alloys", "Allows you to research Level 4 Metal Alloys", "Allows you to research Level 5 Metal Alloys and Train Battering Rams and Heavy Cavalry", "Allows you to research Level 6 Metal Alloys", "Allows you to research Level 7 Metal Alloys", "Allows you to research Level 8 Metal Alloys", "Allows you to research Level 9 Metal Alloys", "Allows you to research Level 10 Metal Alloys", ""],
-    "16": ["Research Level 1 Geometry and Build Level 2 Walls", "Research Level 2 Geometry and Build Level 3 Walls", "Research Level 3 Geometry and Build Level 4 Walls and Train Supply Wagons", "Research Level 4 Geometry and Build Level 5 Walls", "Research Level 5 Geometry and Build Level 6 Walls and Train Ballistae", "Research Level 6 Geometry and Build Level 7 Walls", "Research Level 7 Geometry and Build Level 8 Walls and Train Battering Rams", "Research Level 8 Geometry and Build Level 9 Walls", "Research Level 9 Geometry and Build Level 10 Walls and Train Catapults", "Research Level 10 Geometry", ""],
-    "17": ["Research Level 1 Alloy Horseshoes, and Train horsed troops faster", "Research Level 2 Alloy Horseshoes, and Train horsed troops faster", "Research Level 3 Alloy Horseshoes, and Train horsed troops faster", "Research Level 4 Alloy Horseshoes, and Train horsed troops faster", "Research Level 5 Alloy Horseshoes, and Train horsed troops faster", "Research Level 6 Alloy Horseshoes, and Train horsed troops faster", "Research Level 7 Alloy Horseshoes, and Train horsed troops faster", "Research Level 8 Alloy Horseshoes, and Train horsed troops faster", "Research Level 9 Alloy Horseshoes, and Train horsed troops faster", "Research Level 10 Alloy Horseshoes, and Train horsed troops faster", ""],
+    "12": ["Send one army at a time, with up to 10,000 troops", "Send two armies at a time, with up to 20,000 troops each", "Send three armies at a time, with up to 30,000 troops each", "Send four armies at a time, with up to 40,000 troops each", "Send five armies at a time, with up to 50,000 troops each", "Send six armies at a time, with up to 60,000 troops each", "Send seven armies at a time, with up to 70,000 troops each", "Send eight armies at a time, with up to 80,000 troops each", "Send nine armies at a time, with up to 90,000 troops each", "Send ten armies at a time, with up to 100,000 troops each", "Send eleven armies at a time, with up to 150,000 troops each"],
+    "13": ["Train Supply Troopers and Militiamen", "Train Scouts and Pikemen, and increase your training speed", "Train Swordsmen, and increase your training speed", "Train Archers, and increase your training speed", "Train Cavalry, and increase your training speed", "Train Supply Wagons, and increase your training speed", "Train Heavy Cavalry, and increase your training speed", "Train Ballistae, and increase your training speed", "Train Battering Rams, and increase your training speed", "Train Catapults, and increase your training speed"],
+    "14": ["Warns you of an impending attack", "Tells you the purpose of an impending attack (Plunder or Scout)", "Tells you the arrival time of an impending attack", "Tells you the Title and Alliance of the Player sending an impending attack", "Gives you an estimate of the total Troops in an impending attack", "Tells you the Troop types in an impending attack", "Gives you an estimate of how many of each Troop type in an impending attack", "Tells you the exact number of Troops in an impending attack", "Tells you the Combat Skill of the Knight leading an impending attack", "Tells you the Research levels of the Player sending an impending attack"],
+    "15": ["Allows you to research Level 1 Metal Alloys and Train Swordsmen", "Allows you to research Level 2 Metal Alloys", "Allows you to research Level 3 Metal Alloys", "Allows you to research Level 4 Metal Alloys", "Allows you to research Level 5 Metal Alloys and Train Battering Rams and Heavy Cavalry", "Allows you to research Level 6 Metal Alloys", "Allows you to research Level 7 Metal Alloys", "Allows you to research Level 8 Metal Alloys", "Allows you to research Level 9 Metal Alloys", "Allows you to research Level 10 Metal Alloys"],
+    "16": ["Research Level 1 Geometry and Build Level 2 Walls", "Research Level 2 Geometry and Build Level 3 Walls", "Research Level 3 Geometry and Build Level 4 Walls and Train Supply Wagons", "Research Level 4 Geometry and Build Level 5 Walls", "Research Level 5 Geometry and Build Level 6 Walls and Train Ballistae", "Research Level 6 Geometry and Build Level 7 Walls", "Research Level 7 Geometry and Build Level 8 Walls and Train Battering Rams", "Research Level 8 Geometry and Build Level 9 Walls", "Research Level 9 Geometry and Build Level 10 Walls and Train Catapults", "Research Level 10 Geometry"],
+    "17": ["Research Level 1 Alloy Horseshoes, and Train horsed troops faster", "Research Level 2 Alloy Horseshoes, and Train horsed troops faster", "Research Level 3 Alloy Horseshoes, and Train horsed troops faster", "Research Level 4 Alloy Horseshoes, and Train horsed troops faster", "Research Level 5 Alloy Horseshoes, and Train horsed troops faster", "Research Level 6 Alloy Horseshoes, and Train horsed troops faster", "Research Level 7 Alloy Horseshoes, and Train horsed troops faster", "Research Level 8 Alloy Horseshoes, and Train horsed troops faster", "Research Level 9 Alloy Horseshoes, and Train horsed troops faster", "Research Level 10 Alloy Horseshoes, and Train horsed troops faster"],
     "18": ["Causes troops to move 1.5x normal speed between your own and allied Cities", "Causes troops to move 2x normal speed between your own and allied Cities", "Causes troops to move 2.5x normal speed between your own and allied Cities", "Causes troops to move 3x normal speed between your own and allied Cities", "Causes troops to move 3.5x normal speed between your own and allied Cities", "Causes troops to move 4x normal speed between your own and allied Cities", "Causes troops to move 4.5x normal speed between your own and allied Cities", "Causes troops to move 5x normal speed between your own and allied Cities", "Causes troops to move 5.5x normal speed between your own and allied Cities", "Causes troops to move 6x normal speed between your own and allied Cities", "Causes troops to move 6.5x normal speed between your own and allied Cities"],
     "19": ["Provides 100,000 Durability and 1,000 Defensive Unit Spaces", "Provides 300,000 Durability and 3,000 Defensive Unit Spaces", "Provides 600,000 Durability and 6,000 Defensive Unit Spaces", "Provides 1,000,000 Durability and 10,000 Defensive Unit Spaces", "Provides 1,500,000 Durability and 15,000 Defensive Unit Spaces", "Provides 2,100,000 Durability and 21,000 Defensive Unit Spaces", "Provides 2,800,000 Durability and 28,000 Defensive Unit Spaces", "Provides 3,600,000 Durability and 36,000 Defensive Unit Spaces", "Provides 4,500,000 Durability and 45,000 Defensive Unit Spaces", "Provides 5,500,000 Durability and 55,000 Defensive Unit Spaces", "Provides 6,600,000 Durability and 66,000 Defensive Unit Spaces"],
-    "50": ["", "", "", "", "", "", "", "", "", "", ""],
-    "51": ["", "", "", "", "", "", "", "", "", "", ""]
+    "50": ["", "", "", "", "", "", "", "", "", ""],
+    "51": ["", "", "", "", "", "", "", "", "", ""]
 };
 var provincenames = {
     p1: "Tintagel",
@@ -9285,7 +9378,8 @@ cm.BOT_STATUS = {
     BOT_MARCH_INSUFFICIENT_TROOPS: 4,
     BOT_MARCH_MAX_RAIDS_EXCEEDED: 5,
     BOT_MARCH_TIMED_OUT: 6,
-    BOT_MARCH_RESTING: 7
+    BOT_MARCH_RESTING: 7,
+    BOT_MARCH_STOPPING: 200
 };
 cm.MARCH_STATUS = {
     MARCH_STATUS_INACTIVE: 0,
@@ -9393,60 +9487,89 @@ AjaxCall.Methods = {
 };
 Object.extend(AjaxCall, AjaxCall.Methods);
 Object.extend(AjaxCall, AjaxCall.Properties);
-var ajax = function (d) {
-        var f = {
+var ajax = function (f) {
+        var d = {
             lastSent: [],
-            timeout: 5
+            isSending: {},
+            timeout: 5,
+            loadingSymbolCounter: 0
         };
 
-        function b(g, h) {
-            f.params = h;
-            f.options = {
-                dataType: h.dataType || "json",
-                type: h.method || h.type || "POST",
-                url: g || "",
-                data: h.parameters || h.data || "",
-                success: e,
-                error: h.onFailure || h.error ||
-                function () {},
-                complete: h.onComplete,
+        function e(j, k) {
+            d.params = k;
+            d.options = {
+                dataType: k.dataType || "json",
+                type: k.method || k.type || "POST",
+                url: j || "",
+                data: k.parameters || k.data || "",
+                success: h,
+                error: b,
+                complete: c,
                 async: true,
-                loading: h.loading || false
+                loading: k.loading || false
             }
         }
-        function a() {
-            d("body").append("<div class='spinnyLoading'></div>");
-            setTimeout("jQuery('.spinnyLoading').remove();", 10000)
+        function i(j) {
+            if (0 == d.loadingSymbolCounter++) {
+                f("body").append("<div class='spinnyLoading'></div>")
+            }
+            setTimeout(function () {
+                a(j)
+            }, 10000)
         }
-        function e(g) {
-            d(".spinnyLoading").remove();
-            f.sending = false;
-            if (f.params.onSuccess) {
-                f.params.onSuccess({
-                    responseText: JSON.stringify(g),
-                    responseTextRaw: arguments[2].responseText
-                })
+        function a(j) {
+            if (j.loading && (0 == --d.loadingSymbolCounter)) {
+                f(".spinnyLoading").remove();
+                j.loading = false
             }
-            if (f.params.next) {
-                f.params.next(g)
-            }
+            d.loadingSymbolCounter = Math.max(0, d.loadingSymbolCounter)
         }
-        function c(g) {
-            if ((parseInt(f.lastSent[g]) + 2) >= unixtime()) {
-                return true
-            } else {
-                return false
-            }
+        function g(j) {
+            return d.isSending[j] ? true : false
+        }
+        function h(m, j, k) {
+            try {
+                if (k._params.onSuccess) {
+                    k._params.onSuccess({
+                        responseText: JSON.stringify(m),
+                        responseTextRaw: k.responseText
+                    })
+                }
+                if (k._params.next) {
+                    k._params.next(m)
+                }
+            } catch (l) {}
+        }
+        function b(k, j, n) {
+            try {
+                var m = k._params.onFailure || k._params.error ||
+                function () {};
+                m(k, j, n)
+            } catch (l) {}
+        }
+        function c(k, j) {
+            try {
+                d.isSending[k._options.url] = false;
+                a(k._options);
+                if (k._params.onComplete) {
+                    k._params.onComplete(k, j)
+                }
+            } catch (l) {}
         }
         return {
-            Request: function (g, h) {
-                if (!c(g)) {
-                    f.lastSent[g] = unixtime();
-                    b(g, h);
-                    if (f.options.loading) {
-                        a()
+            Request: function (k, l) {
+                if (!g(k)) {
+                    d.isSending[k] = true;
+                    d.lastSent[k] = unixtime();
+                    e(k, l);
+                    var j = f.ajax(d.options);
+                    if (j) {
+                        j._options = d.options;
+                        j._params = d.params;
+                        if (d.options.loading) {
+                            i(j._options)
+                        }
                     }
-                    d.ajax(f.options)
                 } else {
                     cm.log.l("Prevented another ajax call, because we haven't received the response yet.")
                 }
@@ -11539,27 +11662,50 @@ function modal_attack_update_time() {
     $("modal_attack_esttime").innerHTML = cm.MarchModal.marchTimeCalculator(a, $("modal_attack_target_coords_x").value, $("modal_attack_target_coords_y").value, false, b)
 }
 function modal_attack_check() {
-    if (cm.item.fire("stop_action", modal_attack_do) == true) {
-        return false
-    }
-    if ((parseInt(seed.playerEffects.fogExpire) > unixtime()) && ($("modal_attack_atktype").value == 4 || $("modal_attack_atktype").value == 3)) {
-        var b = new Array();
-        var a = new Array();
-        b.push("<div class='mistwarn'>");
-        b.push(g_js_strings.modal_attack_check.warning);
-        b.push("</div>");
-        b.push("<div class='mistsexpl'>");
-        b.push(g_js_strings.modal_attack_check.warningdesc);
-        b.push("</div>");
-        a.push("<a class='button20' onclick='Modal.hideModal();modal_attack_do();return false;'><span>");
-        a.push(g_js_strings.modal_attack_check.marchon);
-        a.push("</span></a>");
-        a.push("<a class='button20' onclick='Modal.hideModal();return false;'><span>");
-        a.push(g_js_strings.modal_attack_check.canmarch);
-        a.push("</span></a>");
-        Modal.showAlert(b.join(""), a.join(""))
+    if (Number(seed.playerEffects.vacationExpire) > unixtime()) {
+        Modal.multiButton({
+            buttons: [{
+                txt: g_js_strings.modal_myitems_confirm_vacation_continue_button,
+                exe: function () {
+                    seed.playerEffects.vacationExpire = unixtime() - 1;
+                    seed.player.truceExpireUnixTime = unixtime() - 1;
+                    seed.playerEffects.troopUpkeepReductExp = unixtime() - 1;
+                    seed.playerEffects.fogExpire = unixtime() - 1;
+                    update_boosts();
+                    modal_attack_do()
+                }
+            }, {
+                txt: g_js_strings.commonstr.cancel,
+                exe: function () {
+                    Modal.hideModal()
+                }
+            }],
+            body: g_js_strings.vacationMode.modal_attack_vacation
+        })
     } else {
-        modal_attack_do()
+        if (cm.item.fire("stop_action", modal_attack_do) == true) {
+            return false
+        } else {
+            if ((parseInt(seed.playerEffects.fogExpire) > unixtime()) && ($("modal_attack_atktype").value == 4 || $("modal_attack_atktype").value == 3)) {
+                var b = new Array();
+                var a = new Array();
+                b.push("<div class='mistwarn'>");
+                b.push(g_js_strings.modal_attack_check.warning);
+                b.push("</div>");
+                b.push("<div class='mistsexpl'>");
+                b.push(g_js_strings.modal_attack_check.warningdesc);
+                b.push("</div>");
+                a.push("<a class='button20' onclick='Modal.hideModal();modal_attack_do();return false;'><span>");
+                a.push(g_js_strings.modal_attack_check.marchon);
+                a.push("</span></a>");
+                a.push("<a class='button20' onclick='Modal.hideModal();return false;'><span>");
+                a.push(g_js_strings.modal_attack_check.canmarch);
+                a.push("</span></a>");
+                Modal.showAlert(b.join(""), a.join(""))
+            } else {
+                modal_attack_do()
+            }
+        }
     }
 }
 var boosted = false;
@@ -11663,51 +11809,119 @@ function modal_attack_do() {
     if (("on" == cm.features.AUTO_ATTACK) && (params.type == cm.MARCH_TYPES.MARCH_TYPE_ATTACK) && $("modal_attack_raidfilter_checkbox").checked) {
         return cm.MarchModal.saveRaid(params)
     }
-    var profiler = new cm.Profiler("ResponseTime", "march.php");
-    ajax.Request(g_ajaxpath + "ajax/march.php" + g_ajaxsuffix, {
-        method: "post",
-        parameters: params,
-        loading: true,
-        onSuccess: function (transport) {
-            profiler.stop();
-            var rslt = eval("(" + transport.responseText + ")");
-            if (rslt.ok) {
-                Modal.hideModalAll();
-                var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                var ut = unixtime();
-                attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                if (rslt.updateSeed) {
-                    update_seed(rslt.updateSeed)
+    var AttackCall_ = function () {
+            var profiler = new cm.Profiler("ResponseTime", "march.php");
+            ajax.Request(g_ajaxpath + "ajax/march.php" + g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                loading: true,
+                onSuccess: function (transport) {
+                    profiler.stop();
+                    var rslt = eval("(" + transport.responseText + ")");
+                    if (rslt.ok) {
+                        Modal.hideModalAll();
+                        var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+                        var ut = unixtime();
+                        attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+                        if (rslt.updateSeed) {
+                            update_seed(rslt.updateSeed)
+                        }
+                        var ut = unixtime();
+                        boosted = false;
+                        updateBoosts(rslt);
+                        if (rslt.liftFog) {
+                            boosted = true;
+                            seed.playerEffects.fogExpire = 0;
+                            g_mapObject.getMoreSlots()
+                        }
+                        if (boosted) {
+                            update_boosts()
+                        }
+                        if (parseInt(rslt.knightCombatBoostTime) > 0) {}
+                        var mpiused = "no";
+                        if (iused.length > 0) {
+                            mpiused = "yes"
+                        }
+                        for (var i = 0; i < iused.length; i++) {
+                            seed.items["i" + iused[i]] = parseInt(seed.items["i" + iused[i]]) - 1;
+                            ksoItems[iused[i]].subtract()
+                        }
+                        UserEngagement.popViralModalUEP()
+                    } else {
+                        if (rslt.user_action) {
+                            var user_action = {
+                                title: '<span class="march_useraction_title"></span>',
+                                marchWarning: function () {
+                                    var body = ['<div class="march_useraction_warning"><div class="title">WARNING!</div>', "<div>Caution!  You have been marching at a very high rate.  Continuing at this pace may affect your ability to send marches.</div></div>"].join("");
+                                    var buttons = {
+                                        okay: {
+                                            txt: "I understand",
+                                            cls: "inlineButton blue25",
+                                            exe: function () {
+                                                Modal.hideModal();
+                                                params.marchWarning = 1;
+                                                AttackCall_()
+                                            }
+                                        }
+                                    };
+                                    Modal.multiButton({
+                                        title: user_action.title,
+                                        noControl: true,
+                                        body: body,
+                                        buttonContainerClass: "",
+                                        buttons: buttons,
+                                        buttonContainerClass: "march_useraction_buttons clearfix"
+                                    })
+                                },
+                                marchCaptcha: function () {
+                                    var captcha_form_id = "march_captcha_" + Math.floor(Math.random() * 10000000);
+                                    var body = ["<div class='march_useraction_warning'><div>We've noticed you've been sending a large amount of marches.  Please confirm that you are still playing by following the instructions below:</div>", '<div class="captcha_container"><form id="', captcha_form_id, '"></form></div>', "<div>To avoid seeing these messages in the future, please lower the frequency of your marches. Remember that the Barbarian Raid feature allows automated attacks on barbarian camps.</div></div>"].join("");
+                                    var SubmitForm = function (event) {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                            params.marchWarning = 1;
+                                            params.marchCaptcha_challenge = Recaptcha.get_challenge();
+                                            params.marchCaptcha_response = Recaptcha.get_response();
+                                            Modal.hideModal();
+                                            AttackCall_();
+                                            return false
+                                        };
+                                    var buttons = {
+                                        okay: {
+                                            txt: g_js_strings.commonstr.ok,
+                                            cls: "inlineButton blue25",
+                                            exe: SubmitForm
+                                        }
+                                    };
+                                    Modal.onCloseCallback = function () {
+                                        Recaptcha.destroy()
+                                    };
+                                    Modal.multiButton({
+                                        title: user_action.title,
+                                        noControl: true,
+                                        body: body,
+                                        buttons: buttons,
+                                        buttonContainerClass: "march_useraction_buttons clearfix"
+                                    });
+                                    Recaptcha.create("6LcT7cQSAAAAAG4whvbBz60hGjJg0ON1wRIRv_iD", captcha_form_id, {
+                                        callback: Recaptcha.focus_response_field,
+                                        theme: "white"
+                                    });
+                                    jQuery("#" + captcha_form_id).submit(SubmitForm)
+                                }
+                            };
+                            user_action[rslt.user_action].call();
+                            return
+                        }
+                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    }
+                },
+                onFailure: function () {
+                    profiler.stop()
                 }
-                var ut = unixtime();
-                boosted = false;
-                updateBoosts(rslt);
-                if (rslt.liftFog) {
-                    boosted = true;
-                    seed.playerEffects.fogExpire = 0;
-                    g_mapObject.getMoreSlots()
-                }
-                if (boosted) {
-                    update_boosts()
-                }
-                if (parseInt(rslt.knightCombatBoostTime) > 0) {}
-                var mpiused = "no";
-                if (iused.length > 0) {
-                    mpiused = "yes"
-                }
-                for (var i = 0; i < iused.length; i++) {
-                    seed.items["i" + iused[i]] = parseInt(seed.items["i" + iused[i]]) - 1;
-                    ksoItems[iused[i]].subtract()
-                }
-                UserEngagement.popViralModalUEP()
-            } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
-            }
-        },
-        onFailure: function () {
-            profiler.stop()
-        }
-    })
+            })
+        };
+    AttackCall_()
 }
 function modal_attack_target_coords() {
     $("modal_attack_target_dropdown").hide();
@@ -12066,21 +12280,26 @@ function attack_generatequeue() {
                 var g = parseInt(q.marchStatus);
                 var e = parseInt(q.marchType);
                 if (q && q.destinationUnixTime) {
-                    if (m < parseInt(q.destinationUnixTime)) {
-                        a = parseInt(q.destinationUnixTime) - m
+                    if (g == cm.MARCH_STATUS.MARCH_STATUS_STOPPED) {
+                        n = false;
+                        a = 0
                     } else {
-                        if (g != cm.MARCH_STATUS.MARCH_STATUS_DEFENDING) {
-                            a = parseInt(q.returnUnixTime) - m
+                        if (m < parseInt(q.destinationUnixTime)) {
+                            a = parseInt(q.destinationUnixTime) - m
                         } else {
-                            a = 0
-                        }
-                        if (m == parseInt(q.destinationUnixTime)) {
-                            if ((g != cm.MARCH_STATUS.MARCH_STATUS_RETURNING) && (g != cm.MARCH_STATUS.MARCH_STATUS_DEFENDING)) {
-                                seed.queue_atkp[z][h[x]].marchStatus = cm.MARCH_STATUS.MARCH_STATUS_UNKNOWN
+                            if (g != cm.MARCH_STATUS.MARCH_STATUS_DEFENDING) {
+                                a = parseInt(q.returnUnixTime) - m
+                            } else {
+                                a = 0
                             }
-                            window.setTimeout("update_seed_ajax(true)", 5000)
+                            if (m == parseInt(q.destinationUnixTime)) {
+                                if ((g != cm.MARCH_STATUS.MARCH_STATUS_RETURNING) && (g != cm.MARCH_STATUS.MARCH_STATUS_DEFENDING)) {
+                                    seed.queue_atkp[z][h[x]].marchStatus = cm.MARCH_STATUS.MARCH_STATUS_UNKNOWN
+                                }
+                                window.setTimeout("update_seed_ajax(true)", 5000)
+                            }
+                            n = false
                         }
-                        n = false
                     }
                     if (a > 0 && g != cm.MARCH_STATUS.MARCH_STATUS_UNKNOWN) {
                         var b = 1;
@@ -12220,7 +12439,12 @@ function attack_generatequeue() {
                                     break;
                                 case cm.MARCH_STATUS.MARCH_STATUS_UNKNOWN:
                                 case cm.MARCH_STATUS.MARCH_STATUS_RETURNING:
-                                    l = g_js_strings.attack_generatequeue.waitreport;
+                                    if (e == cm.MARCH_TYPES.MARCH_TYPE_BOT_BARBARIAN && m >= q.returnUnixTime) {
+                                        l = g_js_strings.attack_generatequeue.raidresting;
+                                        y = "resting"
+                                    } else {
+                                        l = g_js_strings.attack_generatequeue.waitreport
+                                    }
                                     break
                                 }
                                 o.push('<div class="untqueue_item clearfix">');
@@ -12441,11 +12665,17 @@ cm.MarchModal = function ($) {
             $("#modal_attack .section.boost input").click(onBoostItemClick_);
             $("#modal_attack_supplyfilter_checkbox").click(filterTroops_);
             $("#modal_attack_raidfilter_checkbox").click(onRaidfilterClick_);
-            $("#modal_attack .raidfilter a").mouseover({
-                tooltip: g_js_strings.modal_attack.thisisabarbarianraidtooltip
-            }, onTooltipTatgetMouseover_);
-            $("#modal_attack .raidfilter a").mouseout(onTooltipTatgetMouseout_);
             $("#modal_attack .modal_attack_buy_item").click(onBuyItemButtonClick_);
+            var barbraidHelp = ["<ul>"];
+            barbraidHelp.push("<li>Barbarian Raids can be unlocked at Level 20.</li>");
+            barbraidHelp.push("<li>Barbarian Raids allow you to loot Barbarian Camps automatically.</li>");
+            barbraidHelp.push("<li>Raids can be saved by clicking 'Raid and Save' below.</li>");
+            barbraidHelp.push("<li>Saved Raids can be managed from the Rally Point under the 'Barbarian Raids' tab.</li>");
+            barbraidHelp.push("</ul>");
+            cm.Tooltip.setTooltip({
+                htmlElement: $("#modal_attack .raidfilter a"),
+                tooltip: barbraidHelp.join("")
+            });
             for (var i in march_detail_) {
                 var selector = "#modal_attack_tab_" + i;
                 $(selector).click({
@@ -12598,14 +12828,37 @@ cm.MarchModal = function ($) {
             if (is_round_trip) {
                 time *= 2
             }
+            var minimum_time = 173;
+            var barbarian_raid = $("#modal_attack_raidfilter_checkbox").attr("checked");
+            var attack_selected = $("#modal_attack_tab_4").hasClass("selected");
+            cm.log.l("br=" + barbarian_raid);
+            if (time < minimum_time && barbarian_raid && attack_selected) {
+                time = minimum_time
+            }
             return timestr(time)
         };
     var saveRaid_ = function (march_parameters, data_type, callback) {
             var xcoord = ("cityMarches" == data_type) ? march_parameters.toXCoord : march_parameters.xcoord;
             var ycoord = ("cityMarches" == data_type) ? march_parameters.toYCoord : march_parameters.ycoord;
+            var cityId = null;
+            var knightId = null;
+            if ("cityMarches" == data_type) {
+                cityId = march_parameters.fromCityId;
+                knightId = march_parameters.knightId
+            } else {
+                cityId = march_parameters.cid;
+                knightId = march_parameters.kid
+            }
+            var knight = seed.knights["city" + cityId]["knt" + knightId];
+            var knight_status_old = knight.knightStatus;
+            knight.knightStatus = 10;
+            var revert_knight_status = function () {
+                    knight.knightStatus = knight_status_old
+                };
             g_mapObject.getTileData(["bl_" + xcoord + "_bt_" + ycoord], function (rslt) {
                 var tile_id = "l_" + xcoord + "_t_" + ycoord;
                 if (!rslt.data[tile_id] || (rslt.data[tile_id].tileType != cm.TILE_TYPES.TILE_TYPE_CITY) || rslt.data[tile_id].tileUserId) {
+                    revert_knight_status();
                     Modal.showAlert(g_js_strings.modal_attack_do.selectbarbariancamps);
                     return
                 }
@@ -12613,12 +12866,11 @@ cm.MarchModal = function ($) {
                 parameters.ctrl = "BotManager";
                 parameters.action = march_parameters.is_edit ? "editMarch" : "saveMarch";
                 parameters.settings = {
-                    cityId: march_parameters.cid
+                    cityId: cityId
                 };
                 delete march_parameters.is_edit;
                 var raid = null;
                 if ("cityMarches" == data_type) {
-                    parameters.settings.cityId = march_parameters.fromCityId;
                     raid = march_parameters
                 } else {
                     raid = {
@@ -12671,11 +12923,13 @@ cm.MarchModal = function ($) {
                                 }
                             }
                         } else {
+                            revert_knight_status();
                             Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
                         }
-                    }
+                    },
+                    onFailure: revert_knight_status
                 })
-            })
+            }, revert_knight_status)
         };
     var onAutoAttackHelpClick_ = function () {
             Modal.showAlert([g_js_strings.modal_attack.barbarianraidhelpp1, g_js_strings.modal_attack.barbarianraidhelpp2, g_js_strings.modal_attack.barbarianraidhelpp3].join("<br /><br />"))
@@ -12984,7 +13238,8 @@ cm.MarchModal = function ($) {
     }
 }(jQuery);
 var cm = function (a) {
-        var c = a.util = a.util || {};
+        a.util = a.util || {};
+        var c = a.util;
         var b = {};
         c.preventDoubleClick = function (e, d) {
             d = d || 10;
@@ -13117,6 +13372,11 @@ cm.WorldSettings = new function () {
     this.getSetting = function (b) {
         return a[b]
     };
+    this.getSettingAsNumber = function (c, b) {
+        var d = parseInt(a[c]);
+        d = isNaN(d) ? b : d;
+        return d
+    };
     this.init = function (b) {
         a = b
     };
@@ -13202,6 +13462,47 @@ cm.BuildingFinder = {
         return null
     }
 };
+cm.IframeUtil = new function () {
+    var b = {};
+    var a = function (d) {
+            var c = d.srcElement ? d.srcElement : d.target;
+            var f = c.id;
+            $(f).stopObserving("load", a);
+            document.body.removeChild(b[f]);
+            delete b[f]
+        };
+    this.post = function (l, c) {
+        var e = document.createElement("form");
+        if ($(l)) {
+            b[l] = e;
+            $(l).observe("load", a)
+        }
+        var d = c.split("?");
+        var n = d[0];
+        var j = d.length > 1 ? d[1] : "";
+        e.setAttribute("target", l);
+        e.setAttribute("action", n);
+        e.setAttribute("method", "post");
+        var f = j.split("&");
+        var m = f.length;
+        var k, g, p, o, h;
+        for (k = 0; k < m; k++) {
+            g = f[k].split("=");
+            p = g[0];
+            o = g.length > 1 ? g[1] : "";
+            h = document.createElement("input");
+            h.setAttribute("type", "hidden");
+            h.setAttribute("name", p);
+            h.setAttribute("value", o);
+            e.appendChild(h)
+        }
+        document.body.appendChild(e);
+        e.submit();
+        if (!$(l)) {
+            document.body.removeChild(e)
+        }
+    }
+}();
 cm = cm || {};
 cm.AutoAttackLevelLock = 20;
 cm.AutoAttackManagerController = function (g, t) {
@@ -13218,14 +13519,23 @@ cm.AutoAttackManagerController = function (g, t) {
             D.bind("openraid", x);
             D.bind("refreshall", n);
             var C = w.getStartButton();
-            w.getStartButton().click(b);
-            w.getStartButton().bind("mouseenter mouseleave", e);
+            C.click(b);
+            C.bind("mouseenter mouseleave", e);
             w.getHtmlElement().find(".header .pause_setting .label a").click(f);
             w.getHtmlElement().find(".header .settings_input").change(l);
             w.getHtmlElement().find(".raids_manupulate .addraid").click(q);
             w.getHtmlElement().find(".main .raids .add_raid_message a").click(q);
             w.getHtmlElement().find(".raids_bulk_controller .inlineButton").click(A);
             w.getHtmlElement().find(".main .raids").bind("scroll DOMMouseScroll mousewheel", j);
+            cm.Tooltip.setTooltip({
+                htmlElement: C,
+                proxyElement: w.getStartButtonTooltipProxy(),
+                tooltip: "Raid Timer allows you to Raid Barbarian camps continously for up to 24 hours. Barbarian Raids can only be active when the timer is running. Once the Raid Timer times-out, all Barbarian Raids will be stopped until the timer is restarted and raids are resumed."
+            });
+            cm.Tooltip.setTooltip({
+                htmlElement: w.getHtmlElement().find(".header .report_setting a"),
+                tooltip: "Note that while you are not logged in no Barbarian Raid reports will be generated, and all Raid reports will be cleared after 3 days. Checking this option will allow auto delete of all battle reports from Barbarian Raids."
+            });
             if (null === d) {
                 d = setInterval(h, 1000)
             }
@@ -13267,8 +13577,37 @@ cm.AutoAttackManagerController = function (g, t) {
             C.preventDefault();
             C.stopPropagation()
         };
-    var A = function (C) {
-            p.setBulkAction(i(this).find("span")[0].className, n)
+    var A = function (D) {
+            if (i(this).find("span")[0].className == "stopAll") {
+                var C = {
+                    cancel: {
+                        txt: g_js_strings.commonstr.cancel,
+                        cls: "inlineButton brown20",
+                        exe: function () {
+                            Modal.hideModal()
+                        }
+                    },
+                    okay: {
+                        txt: "Stop All Barbarian Raidings",
+                        cls: "inlineButton blue20",
+                        description: "Raids will stop after march has been completed and troops have returned.",
+                        exe: function () {
+                            Modal.hideModal();
+                            p.setBulkAction("stopAll", n)
+                        }
+                    }
+                };
+                Modal.multiButton({
+                    additionalClass: "v2",
+                    title: "Stop All Barbarian Raidings",
+                    body: '<span style="font-weight: bold; font-size: 13px">Are you sure you want to stop all Barbarian Raids?</span>',
+                    buttons: C,
+                    buttonContainerClass: "inlineButtonRow clearfix",
+                    hasInlineDescription: true
+                })
+            } else {
+                p.setBulkAction(i(this).find("span")[0].className, n)
+            }
         };
     var m = function (C) {
             w.refresh();
@@ -13378,7 +13717,7 @@ cm.AutoAttackManagerModel = function () {
     var e = function () {
             c = {
                 settings: {
-                    autoDelReport: 0,
+                    autoDelReport: 1,
                     pausePct: 100,
                     raidStartTime: unixtime() - 100000,
                     endTime: unixtime() - 100000
@@ -13557,9 +13896,13 @@ cm.AutoAttackManagerView = function (f) {
                 i.find("> .main > .raids").html("")
             }
             for (var o = 0; o < r.queue.length; ++o) {
-                var n = new cm.AutoAttackRaidModel(r.queue[o]);
-                var p = new cm.AutoAttackRaidView(n);
-                m.push(new cm.AutoAttackRaidController(n, p))
+                try {
+                    var n = new cm.AutoAttackRaidModel(r.queue[o]);
+                    var p = new cm.AutoAttackRaidView(n);
+                    m.push(new cm.AutoAttackRaidController(n, p))
+                } catch (s) {
+                    cm.log.l(["Create raid instance failed. (", o, ")"].join(""))
+                }
             }
         };
     var b = function (n) {
@@ -13603,6 +13946,9 @@ cm.AutoAttackManagerView = function (f) {
     };
     this.getStartButton = function () {
         return i.find("area")
+    };
+    this.getStartButtonTooltipProxy = function () {
+        return i.find(".header img")[0]
     };
     this.hide = function () {
         i.css("display", "none")
@@ -13706,6 +14052,16 @@ cm.AutoAttackRaidController = function (e, m) {
                 "55": true,
                 "56": true,
                 "57": true,
+                "96": true,
+                "97": true,
+                "98": true,
+                "99": true,
+                "100": true,
+                "101": true,
+                "102": true,
+                "103": true,
+                "104": true,
+                "105": true,
                 "8": true,
                 "46": true,
                 "37": true,
@@ -13741,13 +14097,46 @@ cm.AutoAttackRaidController = function (e, m) {
     var q = function (w) {
             s.getHtmlElement().trigger("refreshall")
         };
-    var f = function (w) {
+    var f = function (y) {
             if (s.getButton("stop").hasClass("grey8")) {
                 return
             }
-            k.action("stopMarch", q)
+            var w = k.getData().botMarches.botMarchStatus;
+            if (w == cm.BOT_STATUS.BOT_MARCH_MARCHING || w == cm.BOT_STATUS.BOT_MARCH_RETURNING) {
+                var x = {
+                    cancel: {
+                        txt: g_js_strings.commonstr.cancel,
+                        cls: "inlineButton brown20",
+                        exe: function () {
+                            Modal.hideModal()
+                        }
+                    },
+                    okay: {
+                        txt: "Stop After Troops Return",
+                        cls: "inlineButton blue20",
+                        description: "Raid will stop after march has been completed and troops have returned.",
+                        exe: function () {
+                            Modal.hideModal();
+                            k.action("stopMarch", q)
+                        }
+                    }
+                };
+                Modal.multiButton({
+                    additionalClass: "v2",
+                    title: "Stop after Raiding",
+                    body: '<span style="font-weight: bold; font-size: 13px">Are you sure you want to stop this Barbarian Raid?</span>',
+                    buttons: x,
+                    buttonContainerClass: "inlineButtonRow clearfix",
+                    hasInlineDescription: true
+                })
+            } else {
+                k.action("stopMarch", q)
+            }
         };
     var o = function () {
+            if (s.getButton("edit").hasClass("grey8")) {
+                return
+            }
             k.action("resumeMarch", q)
         };
     var c = function (w) {
@@ -13764,6 +14153,9 @@ cm = cm || {};
 cm.AutoAttackRaidStatus = function () {
     var a = [];
     if ("on" == cm.features.AUTO_ATTACK) {
+        g_js_strings.attack_generatequeue.raidresting = "Unloading Loot";
+        g_js_strings.modal_auto_attack.resting = "Unloading Loot";
+        g_js_strings.modal_auto_attack.stopping = "Stopping";
         a[cm.BOT_STATUS.BOT_MARCH_MARCHING] = {
             css_class: "marching",
             display: g_js_strings.commonstr.marching,
@@ -13798,6 +14190,11 @@ cm.AutoAttackRaidStatus = function () {
             css_class: "resting",
             display: g_js_strings.modal_auto_attack.resting,
             action_button: "stop"
+        };
+        a[cm.BOT_STATUS.BOT_MARCH_STOPPING] = {
+            css_class: "resting",
+            display: g_js_strings.modal_auto_attack.stopping,
+            action_button: "resume"
         }
     }
     return a
@@ -13913,15 +14310,19 @@ cm.AutoAttackRaidView = function (g) {
     var d = function () {
             var u = p.getData();
             var r = [];
-            var v = seed.units["city" + currentcityid];
+            var w = seed.units["city" + currentcityid];
             for (var s = 1; s < 13; ++s) {
                 var t = "unt" + s;
                 r.push({
                     type_id: t.split("unt")[1],
                     type: unitcost[t][0],
                     quantity: u.cityMarches["unit" + s + "Return"],
-                    stock: v[t]
+                    stock: w[t]
                 })
+            }
+            var v = u.botMarches.botMarchStatus;
+            if (v == cm.BOT_STATUS.BOT_MARCH_STOPPED && u.botMarches.marchStatus != cm.MARCH_STATUS.MARCH_STATUS_STOPPED) {
+                v = cm.BOT_STATUS.BOT_MARCH_STOPPING
             }
             u = f.extend(true, {}, u, {
                 g_js_strings: g_js_strings,
@@ -13929,8 +14330,8 @@ cm.AutoAttackRaidView = function (g) {
                 last_march: formatDateByUnixTime(u.cityMarches.marchTimestamp),
                 round_trip: timestr(u.cityMarches.returnEta - u.cityMarches.marchTimestamp),
                 site_image_url: stimgUrl,
-                status: cm.AutoAttackRaidStatus[u.botMarches.botMarchStatus].display,
-                status_css: cm.AutoAttackRaidStatus[u.botMarches.botMarchStatus].css_class,
+                status: cm.AutoAttackRaidStatus[v].display,
+                status_css: cm.AutoAttackRaidStatus[v].css_class,
                 troops: r
             });
             if (!l) {
@@ -13945,9 +14346,11 @@ cm.AutoAttackRaidView = function (g) {
             j = l.find(".troops");
             n();
             q();
-            e(cm.AutoAttackRaidStatus[u.botMarches.botMarchStatus].action_button, true);
+            e(cm.AutoAttackRaidStatus[v].action_button, true);
             b(false);
-            switch (u.botMarches.botMarchStatus) {
+            switch (v) {
+            case cm.BOT_STATUS.BOT_MARCH_STOPPING:
+                c("resume").removeClass("brown8").addClass("grey8");
             case cm.BOT_STATUS.BOT_MARCH_MARCHING:
             case cm.BOT_STATUS.BOT_MARCH_RETURNING:
                 c("edit").removeClass("brown8").addClass("grey8");
@@ -14070,7 +14473,7 @@ cm.AutoAttackManagerTemplateLoader = function (b) {
                 "self.troops[*]": null
             };
             if ("on" == cm.features.AUTO_ATTACK) {
-                cm.ClientSideTemplate.getTemplate("jsonT/autoAttack_20.html", c)
+                cm.ClientSideTemplate.getTemplate("jsonT/autoAttack_26.html", c)
             }
         };
     var c = function (e) {
@@ -16292,6 +16695,27 @@ cm.Bookmarks = function ($) {
         get: get_
     }
 }(jQuery);
+cm = cm || {};
+cm.BoostModel = jQueryClass.extend({
+    init: function (a) {
+        this.id = a[0];
+        this.expireTime = Number(a[1])
+    },
+    isActive: function () {
+        return (this.expireTime > unixtime())
+    },
+    addTime: function (a) {
+        this.expireTime = this.expireTime + a;
+        return this.expireTime
+    },
+    setTime: function (a) {
+        this.expireTime = a;
+        return this.expireTime
+    },
+    timeLeft: function () {
+        return this.expireTime
+    }
+});
 var cm = cm || {};
 cm.FlashingNotifier = function (f) {
     var d = 0;
@@ -16523,7 +16947,7 @@ function update_boosts() {
             break
         }
     }
-    if (parseInt(seed.playerEffects.atkExpire) > c || parseInt(seed.playerEffects.atk2Expire) > c || parseInt(seed.playerEffects.defExpire) > c || parseInt(seed.playerEffects.def2Expire) > c || parseInt(seed.playerEffects.troopUpkeepReductExp) > c || parseInt(seed.playerEffects.loadExpire) > c || parseInt(seed.playerEffects.returnExpire) > c) {
+    if (parseInt(seed.playerEffects.atkExpire) > c || parseInt(seed.playerEffects.atk2Expire) > c || parseInt(seed.playerEffects.defExpire) > c || parseInt(seed.playerEffects.def2Expire) > c || parseInt(seed.playerEffects.troopUpkeepReductExp) > c || parseInt(seed.playerEffects.loadExpire) > c || parseInt(seed.playerEffects.returnExpire) > c || parseInt(seed.playerEffects.lifeExpire) > c) {
         b = true
     }
     if (undefined != seed.player.truceExpireUnixTime && seed.player.truceExpireUnixTime > c) {
@@ -16631,7 +17055,8 @@ function boosts_tooltip_combat(e, i, g) {
         truceExpireUnixTime: g_js_strings.boosts_tooltip_combat.cityinpeace,
         troopUpkeepReductExp: g_js_strings.boosts_tooltip_combat.troopupkeepreduct,
         loadExpire: g_js_strings.boosts_tooltip_combat.loadincrease,
-        returnExpire: g_js_strings.boosts_tooltip_combat.troopreturnreduct
+        returnExpire: g_js_strings.boosts_tooltip_combat.troopreturnreduct,
+        lifeExpire: g_js_strings.boosts_tooltip_combat.troophealthincrease
     };
     var f = 0;
     var a = -1;
@@ -16858,7 +17283,7 @@ function modal_build(z, o) {
     e.push("</div>");
     e.push("</div>");
     e.push("<div class='buildingdetail'>");
-    if (m < 10 || (m === 10 && parseInt(R, 10) === 0) || (m === 10 && parseInt(R, 10) === 1) || (m === 10 && parseInt(R, 10) === 2) || (m === 10 && parseInt(R, 10) === 3) || (m === 10 && parseInt(R, 10) === 4) || (m === 10 && parseInt(R, 10) === 11) || (m === 10 && parseInt(R, 10) === 12) || (m === 10 && parseInt(R, 10) === 18) || (m === 10 && parseInt(R, 10) === 19)) {
+    if (m < 10 || (m === 10 && parseInt(R, 10) === 0) || (m === 10 && parseInt(R, 10) === 1) || (m === 10 && parseInt(R, 10) === 2) || (m === 10 && parseInt(R, 10) === 3) || (m === 10 && parseInt(R, 10) === 4) || (m === 10 && parseInt(R, 10) === 8) || (m === 10 && parseInt(R, 10) === 9) || (m === 10 && parseInt(R, 10) === 11) || (m === 10 && parseInt(R, 10) === 12) || (m === 10 && parseInt(R, 10) === 18) || (m === 10 && parseInt(R, 10) === 19)) {
         var O = true;
         e.push("<div class='reqhd'>" + g_js_strings.commonstr.level + " ");
         e.push(r);
@@ -16968,7 +17393,7 @@ function modal_build(z, o) {
                     e.push("</div></td>");
                     e.push("</tr>")
                 } else {
-                    if (parseInt(R, 10) === 19 || parseInt(R, 10) === 12 || parseInt(R, 10) === 11 || parseInt(R, 10) === 18 || parseInt(R, 10) === 1 || parseInt(R, 10) === 2 || parseInt(R, 10) === 3 || parseInt(R, 10) === 4) {
+                    if (parseInt(R, 10) === 19 || parseInt(R, 10) === 12 || parseInt(R, 10) === 11 || parseInt(R, 10) === 8 || parseInt(R, 10) === 9 || parseInt(R, 10) === 18 || parseInt(R, 10) === 1 || parseInt(R, 10) === 2 || parseInt(R, 10) === 3 || parseInt(R, 10) === 4) {
                         e.push("<tr>");
                         e.push("<td class='rec'><div>");
                         e.push(g_js_strings.modal_build.divineinsp);
@@ -17348,51 +17773,65 @@ function modal_build(z, o) {
         buildingController = new cm.BuildingController(buildingModel, buildingView)
     }
 }
-function cancelConstruction(f, g) {
-    var l = new Array();
-    l.push("<div id='modal_lv10'>");
-    l.push("<div class='lv10 clearfix'>");
-    l.push("<div class='info' style='margin-left: 10px; width: 340px;'><div class='ttl'>");
-    l.push(g_js_strings.cancelconstruction.cancelconstructiontakes);
-    if (seed.buildings["city" + currentcityid]["pos" + g]) {
-        bldType = seed.buildings["city" + currentcityid]["pos" + g][0];
-        bldLvl = seed.buildings["city" + currentcityid]["pos" + g][1];
+function cancelConstruction(f, h) {
+    var n = new Array();
+    n.push("<div id='modal_lv10'>");
+    n.push("<div class='lv10 clearfix'>");
+    n.push("<div class='info' style='margin-left: 10px; width: 340px;'><div class='ttl'>");
+    n.push(g_js_strings.cancelconstruction.cancelconstructiontakes);
+    if (seed.buildings["city" + currentcityid]["pos" + h]) {
+        bldType = seed.buildings["city" + currentcityid]["pos" + h][0];
+        bldLvl = seed.buildings["city" + currentcityid]["pos" + h][1];
         if (bldLvl > 0) {
             var b = Math.pow(2, (bldLvl - 1));
-            var i = checkreq("bdg", bldType, bldLvl);
+            var m = checkreq("bdg", bldType, bldLvl);
             var d = new Array();
-            l.push("<table cellpadding='2' cellspacing='0'><tbody><tr>");
+            n.push("<table cellpadding='2' cellspacing='0'><tbody><tr>");
             var e = [resourceinfo.rec1, resourceinfo.rec2, resourceinfo.rec3, resourceinfo.rec4];
             var a = 1;
-            for (var c = 0; c < i[0].length; c++) {
-                if (e.indexOf(i[0][c]) != -1) {
-                    var h = new Array();
-                    h.push("<td class='recdesc'>" + i[0][c] + "</td>");
-                    if (parseInt(i[1][c]) > 0) {
-                        h.push("<td class='rec'>" + addCommas(parseInt(i[1][c])) + "</td>")
+            for (var c = 0; c < m[0].length; c++) {
+                if (e.indexOf(m[0][c]) != -1) {
+                    var l = new Array();
+                    l.push("<td class='recdesc'>" + m[0][c] + "</td>");
+                    if (parseInt(m[1][c]) > 0) {
+                        l.push("<td class='rec'>" + addCommas(parseInt(m[1][c])) + "</td>")
                     } else {
-                        h.push("<td class='rec'>" + i[1][c] + "</td>")
+                        l.push("<td class='rec'>" + m[1][c] + "</td>")
                     }
                     if (a % 2 == 0) {
-                        l.push(h.join("") + "</tr>")
+                        n.push(l.join("") + "</tr>")
                     } else {
-                        l.push(h.join(""))
+                        n.push(l.join(""))
                     }
                     a++
                 }
             }
-            l.push("</tbody></table>")
+            if (bldLvl >= 9) {
+                var i = h == 0;
+                itemKey = i && bldLvl == 10 ? "divineProvidence" : "divineInspiration";
+                var g = {
+                    divineInspiration: itemlist.i401.name,
+                    divineProvidence: itemlist.i402.name
+                };
+                var o = g[itemKey];
+                n.push('<tr><td colspan="4" class="warning">');
+                n.push(cm.StringFormatter.applyTemplate(g_js_strings.cancelconstruction.cancelconstructionloseitem, {
+                    itemName: o
+                }));
+                n.push("</td></tr>")
+            }
+            n.push("</tbody></table>")
         }
     } else {
-        l.push(g_js_strings.deconstructBuilding.deconstructinvalid)
+        n.push(g_js_strings.deconstructBuilding.deconstructinvalid)
     }
-    l.push("</div></div>");
-    l.push("</div>");
-    l.push("<div class='btns clearfix'>");
-    l.push("<a  class='button20' onclick='removeConstruction(" + g + "," + f + ");return false;'><span>" + g_js_strings.cancelconstruction.cancelconstruction + "</span></a>");
-    l.push("<a  class='cancel' onclick='Modal.hideModal();return false;'>" + g_js_strings.commonstr.cancel + "</a>");
-    l.push("</div></div>");
-    Modal.showModal(400, 400, 130, 130, g_js_strings.cancelconstruction.cancelconstructiontitle, l.join(""))
+    n.push("</div></div>");
+    n.push("</div>");
+    n.push("<div class='btns clearfix'>");
+    n.push("<a  class='button20' onclick='removeConstruction(" + h + "," + f + ");return false;'><span>" + g_js_strings.cancelconstruction.cancelconstruction + "</span></a>");
+    n.push("<a  class='cancel' onclick='Modal.hideModal();return false;'>" + g_js_strings.commonstr.cancel + "</a>");
+    n.push("</div></div>");
+    Modal.showModal(400, 400, 130, 130, g_js_strings.cancelconstruction.cancelconstructiontitle, n.join(""))
 }
 function removeConstruction(bldSlotId, currLevel) {
     var params = Object.clone(g_ajaxparams);
@@ -17522,7 +17961,7 @@ function destructBuilding(b, a) {
     if (seed.items.i9 > 0) {
         c.push("<a  class='button20' onclick='destructBuildingConfirm(" + b + "," + a + ");return false;'><span>" + g_js_strings.commonstr.destroy + "</span></a>")
     } else {
-        c.push("<a  class='button20' onclick='Modal.hideModalAll();modal_shop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a>")
+        c.push("<a  class='button20' onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a>")
     }
     c.push("<a  class='cancel' onclick='Modal.hideModal();return false;'>" + g_js_strings.commonstr.cancel + "</a>");
     c.push("</div></div>");
@@ -19196,6 +19635,44 @@ cm.CityIncomingAttackController = function (a) {
         };
     f()
 };
+cm = cm || {};
+cm.CityModel = jQueryClass.extend({
+    init: function (a) {
+        this.cityId = Number(a[0]);
+        this.name = a[1];
+        this.x = Number(a[2]);
+        this.y = Number(a[3]);
+        this.provinceId = Number(a[4]);
+        this.tileId = Number(a[5]);
+        this.positionId = 0;
+        this.silver = 0;
+        this.taxRate = 0;
+        this.resources = {};
+        this.buildings = {};
+        this.cityFortifications = {};
+        this.wildFortifications = {};
+        this.army = {};
+        this.knights = {};
+        this.leaders = {
+            politics: null,
+            combat: null,
+            intelligence: null,
+            resource: null
+        };
+        this.marches = {
+            incoming: {},
+            outgoing: {}
+        };
+        this.queues = {
+            training: {},
+            cityFortifications: {},
+            wildFortifications: {},
+            building: {},
+            research: {}
+        };
+        this.wilds = {}
+    }
+});
 
 function showClearingTooltip(c, b, a) {
     showTooltip(getMsg(a || c.id), c, b, "mod_maparea")
@@ -19891,7 +20368,7 @@ function checkreq(f, s, r) {
             }
         }
     }
-    if (f == "bdg" && (getBuildingLevel(s) === 10 || parseInt(r) === 11) && (parseInt(s) === 19 || parseInt(s) === 12 || parseInt(s) === 11 || parseInt(s) === 18 || (parseInt(s) === 1 && parseInt(r) === 11) || (parseInt(s) === 2 && parseInt(r) === 11) || (parseInt(s) === 3 && parseInt(r) === 11) || (parseInt(s) === 4 && parseInt(r) === 11))) {
+    if (f == "bdg" && (getBuildingLevel(s) === 10 || parseInt(r) === 11) && (parseInt(s) === 19 || parseInt(s) === 12 || parseInt(s) === 11 || parseInt(s) === 18 || (parseInt(s) === 8 && parseInt(r) === 11) || (parseInt(s) === 9 && parseInt(r) === 11) || (parseInt(s) === 1 && parseInt(r) === 11) || (parseInt(s) === 2 && parseInt(r) === 11) || (parseInt(s) === 3 && parseInt(r) === 11) || (parseInt(s) === 4 && parseInt(r) === 11))) {
         var t = getBuildingLevel(0);
         l[0].push(g_js_strings.commonstr.construction);
         l[1].push(g_js_strings.commonstr.lv + "11 " + buildingcost.bdg0[0]);
@@ -20218,9 +20695,21 @@ function change_avatar_do() {
     })
 }
 function printLocalError(g, i, b) {
-    if (g && g_js_strings.errorcode["err_" + g]) {
+    if (g != null && g_js_strings.errorcode["err_" + g]) {
         var a = null;
         switch (g.toString()) {
+        case "0":
+            a = "Unexpected Error.";
+            break;
+        case "1":
+            a = "Fatal Error.";
+            break;
+        case "2":
+            a = "Construction is already starting.";
+            break;
+        case "3":
+            a = "Unknown issue when updating game.";
+            break;
         case "4":
             var j = b.split("-");
             if (j[0] == 5) {
@@ -20251,10 +20740,23 @@ function printLocalError(g, i, b) {
             break;
         case "8":
             a = "Excess traffic.";
+            cm.GATracker("Error", a + " (" + g + ")", g_server);
+            break;
+        case "102":
+            a = "Another building already exists on the same spot!";
             break;
         case "103":
             var f = b;
-            return g_js_strings.errorcode.err_103.replace("%1$s", f);
+            a = "Can't change to level " + f;
+            return {
+                tracker: true,
+                errorCode: g.toString(),
+                msg: a,
+                text: g_js_strings.errorcode.err_103.replace("%1$s", f)
+            };
+            break;
+        case "216":
+            a = "Can't update knight.";
             break;
         case "1001":
             Modal.onCloseCallback = function () {
@@ -20263,10 +20765,15 @@ function printLocalError(g, i, b) {
             break;
         case "default":
             a = "Something has gone wrong.";
+            cm.GATracker("Error", a + " (" + g + ")", g_server);
             break
         }
         if (a) {
-            cm.GATracker("Error", a + " (" + g + ")", g_server)
+            return {
+                tracker: true,
+                errorCode: g.toString(),
+                msg: a
+            }
         }
         return g_js_strings.errorcode["err_" + g]
     } else {
@@ -20275,7 +20782,11 @@ function printLocalError(g, i, b) {
         }
     }
     cm.GATracker("Error", "Something has gone wrong", g_server);
-    return g_js_strings.errorcode.err_default
+    return {
+        tracker: true,
+        errorCode: "default",
+        msg: "Something has gone wrong."
+    }
 }
 function stopUpdateSeed() {
     if ($("updateSeedState") && $("updateSeedState").innerHTML == "ON") {
@@ -21228,53 +21739,59 @@ cm.CrossPromoBarController = function (b) {
         };
     d()
 };
-cm.CrossPromoBarLoader = function (d) {
-    var c = [
-        [{
-            linkUrl: "http://apps.facebook.com/gloryofrome/?entrypt=gor-xpkoc1&page=ts",
-            subclassName: "GoR",
-            trackingTag: "gor-xpkoc1"
-        }, {
-            linkUrl: "http://apps.facebook.com/dragonsofatlantis/ad/doa-xpkoc2",
-            subclassName: "DoA",
-            trackingTag: "doa-xpkoc2"
-        }],
-        [{
-            linkUrl: "http://apps.facebook.com/dragonsofatlantis/ad/doa-xpkoc1",
-            subclassName: "DoA",
-            trackingTag: "doa-xpkoc1"
-        }, {
-            linkUrl: "http://apps.facebook.com/gloryofrome/?entrypt=gor-xpkoc2&page=ts",
-            subclassName: "GoR",
-            trackingTag: "gor-xpkoc2"
-        }]
-    ];
-    var b = false;
-    var a = function (f, n) {
-            var e = d("#crossPromoBarContainer");
-            if (e.length < 1) {
+cm.CrossPromoBarLoader = function (f) {
+    var e = [],
+        a, d = ["gor", "doa", "gw"];
+    d.sort(function () {
+        return 0.5 - Math.random()
+    });
+    f.each(d, function (h, g) {
+        ++h;
+        a = {};
+        if (g == "gor") {
+            a.linkUrl = "http://apps.facebook.com/gloryofrome/?entrypt=gor-xpkoc-x-x-x-" + h + "&page=ts";
+            a.subclassName = "GoR";
+            a.trackingTag = "gor-xpkoc" + h
+        } else {
+            if (g == "doa") {
+                a.linkUrl = "http://apps.facebook.com/dragonsofatlantis/ad/doa-xpkoc-x-x-x-" + h;
+                a.subclassName = "DoA";
+                a.trackingTag = "doa-xpkoc" + h
+            } else {
+                if (g == "gw") {
+                    a.linkUrl = "http://apps.facebook.com/globalwarfaregame/?entrypt=gw-xpkoc-x-x-x-" + h;
+                    a.subclassName = "GW";
+                    a.trackingTag = "gw-xpkoc" + h
+                }
+            }
+        }
+        e.push(a)
+    });
+    var c = false;
+    var b = function (o, k) {
+            var h = f("#crossPromoBarContainer");
+            if (h.length < 1) {
                 return
             }
             if (seed.tutorial.t1 < 22) {
                 return
             }
-            if (b) {
+            if (c) {
                 return
             }
-            b = true;
-            e.css("display", "block");
-            var l = Math.floor(Math.random() * c.length);
-            var m = c[l];
-            var h = new cm.CrossPromoBar();
-            for (var j = 0; j < m.length; ++j) {
-                var g = m[j];
-                h.addButton(new cm.CrossPromoButton(g))
+            c = true;
+            h.css("display", "block");
+            var n = e;
+            var j = new cm.CrossPromoBar();
+            for (var l = 0; l < n.length; ++l) {
+                var m = n[l];
+                j.addButton(new cm.CrossPromoButton(m))
             }
-            var k = new cm.CrossPromoBarController(h);
-            e.append(h.getHtmlElement())
+            var g = new cm.CrossPromoBarController(j);
+            h.append(j.getHtmlElement())
         };
-    d(document).ready(a);
-    d(document).bind("tutorialEnd", a);
+    f(document).ready(b);
+    f(document).bind("tutorialEnd", b);
     return {}
 }(jQuery);
 
@@ -23815,13 +24332,7 @@ cm.guardianCity = function (d) {
         cm.log.l("cm.guardianModalModel.getType()=" + cm.guardianModalModel.getType());
         d(".bldg_guardian_0").remove();
         d("#citymap").append("<div class='guardianHover bldg_guardian_0' onmouseout='removeTooltip();'  onmouseover=\"showClearingTooltip(this,event,'slot_500');\"><img src='" + f + "'/></div>");
-        d(".guardianHover").hover(a, c).unbind("click").bind("click", function () {
-            if (cm.guardianModalModel.getLevel() == 0 && cm.guardianModalModel.upgrading() == false && cm.WorldSettings.isOn("GUARDIAN_ORE")) {
-                cm.guardianTransformView.render(true)
-            } else {
-                cm.guardianModalModel.open()
-            }
-        })
+        d(".guardianHover").hover(a, c).unbind("click").bind("click", cm.guardianModalModel.open)
     }
     function a() {
         var f = d(this).find("img");
@@ -23920,7 +24431,7 @@ cm.guardianModalModel = function (e) {
             if (e(".cmModalContainer .askFriends").is(":checked")) {
                 build_gethelp(q.buildingId)
             }
-            cm.guardianModalView.open();
+            cm.ModalManager.close();
             cm.guardianCity.rerender(true)
         }
     }
@@ -24043,6 +24554,9 @@ cm.guardianModalModel = function (e) {
                 }
                 cm.guardianModalModel.setLevel(l.cl0);
                 cm.guardianModalModel.setUpgrade(l.upgrade == true);
+                if (cm.guardianModalModel.getLevel() == 0) {
+                    cm.guardianModalModel.setType(cm.guardianConst.types[0])
+                }
                 cm.guardianModalView.open();
                 if (q && q.onOpen) {
                     q.onOpen()
@@ -24128,7 +24642,8 @@ cm.guardianModalView = function (i) {
         var p = (cm.guardianModalModel.getLevel() == 0 || cm.guardianModalModel.upgrading() ? "desat" : "non_desat");
         var r = n ? ("<div class='inventory'></div><div class='equipmentItems'></div><div class='equipment'></div><div class='equipment_labels'></div><div class='bonus_estr'></div><div class='garbage'></div>") : "";
         var q = j ? ("<div class='tl_bracket " + p + "'><div class='release but'>Release</div><div class='transform but'>Transform</div></div>") : "";
-        return "<div class='barTitle'></div><div class='name' title='" + g_js_strings.guardian.tooltipName + "' style='" + (n ? "" : "height: 28px;") + "'></div><div class='total_stats'></div><div class='figure'></div><div class='rightPanel'><div class='description'></div><div class='requiredSection'><div class='top'><span>" + g_js_strings.commonstr.resource + "</span><span>" + g_js_strings.commonstr.required + "</span><span>" + g_js_strings.commonstr.youown + "</span></div><div class='wild'><span>" + g_js_strings.commonstr.wilderness + "</span><span class='req'>0</span><span class='you'>0</span></div><div class='food'><span>" + g_js_strings.commonstr.food + "</span><span class='req'>loading...</span><span class='you'>loading...</span></div><div class='wood'><span>" + g_js_strings.commonstr.wood + "</span><span class='req'>loading...</span><span class='you'>loading...</span></div><div class='stone'><span>" + g_js_strings.commonstr.stone + "</span><span class='req'>loading...</span><span class='you'>loading...</span></div><div class='ore'><span>" + g_js_strings.commonstr.ore + "</span><span class='req'>loading...</span><span class='you'>loading...</span></div><div class='item'><span>" + g_js_strings.guardian.divineinsp + "</span><span class='req'>1</span><span class='you'>loading...</span></div></div><div class='currentLevelOuter lTile'><div class='cl0 bigNum'></div><div class='cl1 levDes'></div><div class='cl2'></div><div class='cl3'></div></div><div class='upgradeLevelOuter lTile'><div class='ul0 bigNum'></div><div class='ul1 levDes'></div><div class='ul2'></div><div class='ul3'></div></div><div class='arrow'></div><div class='time'></div><div class='upgrade'></div><div class='notenough'>" + g_js_strings.modal_build.reqnotmet + "</div><div class='rightBottom'></div></div><div class='temporary_patch'></div>" + r + q + "<div class='bottom'></div>"
+        q = "";
+        return "<div class='barTitle'></div><div class='name' title='" + g_js_strings.guardian.tooltipName + "' style='" + (n ? "" : "height: 28px;") + "'></div><div class='total_stats'></div><div class='figure'></div><div class='rightTopContainer'><div class='description'></div><div class='time_table left'><div class='time'></div><div class='notenough'>" + g_js_strings.modal_build.reqnotmet + "</div></div><div class='time_table right'><div class='checkHolder'></div><div class='rightBottom'></div><div class='story_button'></div></div></div><div class='rightPanel'><div class='upgradeRequirements' >Upgrade Requirements</div><div class='upgradeBenefits' >Upgrade Benefits</div><div class='requiredSection'><div class='top'><span>" + g_js_strings.commonstr.resource + "</span><span>" + g_js_strings.commonstr.required + "</span><span>" + g_js_strings.commonstr.youown + "</span></div><div class='wild'><span>" + g_js_strings.commonstr.wilderness + "</span><span class='req'>0</span><span class='you'>0</span></div><div class='food'><span>" + g_js_strings.commonstr.food + "</span><span class='req'>loading...</span><span class='you'>loading...</span></div><div class='wood'><span>" + g_js_strings.commonstr.wood + "</span><span class='req'>loading...</span><span class='you'>loading...</span></div><div class='stone'><span>" + g_js_strings.commonstr.stone + "</span><span class='req'>loading...</span><span class='you'>loading...</span></div><div class='ore'><span>" + g_js_strings.commonstr.ore + "</span><span class='req'>loading...</span><span class='you'>loading...</span></div><div class='item'><span>" + g_js_strings.guardian.divineinsp + "</span><span class='req'>1</span><span class='you'>loading...</span></div></div><div class='currentLevelOuter lTile'><div class='cl0 bigNum'></div><div class='cl1 levDes'></div><div class='cl2'></div><div class='cl3'></div></div><div class='upgradeLevelOuter lTile'><div class='ul0 bigNum'></div><div class='ul1 levDes'></div><div class='ul2'></div><div class='ul3'></div></div><div class='arrow'></div><div class='upgrade'></div><div class='bottom_boot'></div></div>" + r + q + "<div class='bottom'></div>"
     }
     function b() {
         j = cm.WorldSettings.isOn("GUARDIAN_ORE");
@@ -24143,7 +24658,7 @@ cm.guardianModalView = function (i) {
             "class": "guardianModal",
             curtain: true,
             width: 750,
-            height: n ? 900 : 620,
+            height: n ? 900 : 550,
             left: 5,
             top: 5
         })
@@ -24176,46 +24691,64 @@ cm.guardianModalView = function (i) {
         i(".guardianModal .notenough")[s && r < 10 ? "show" : "hide"]();
         i(".guardianModal .rightBottom")[s ? "addClass" : "removeClass"]("notclickable");
         i(".guardianModal .item")[r == 9 ? "show" : "hide"]();
-        i(".time, .checkHolder")[s ? "hide" : "show"]()
+        i(".time, .checkHolder")[s ? "hide" : "show"]();
+        if (r == 9) {
+            i(".rightPanel").addClass("lv9")
+        }
     }
     var o = [0, 1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 5];
 
     function m() {
-        var q = cm.guardianModalModel.getData();
-        for (var v in q) {
-            i(".guardianModal ." + v).html(q[v])
+        var s = cm.guardianModalModel.getData();
+        for (var y in s) {
+            i(".guardianModal ." + y).html(s[y])
         }
-        var t = cm.guardianModalModel.getType();
-        i(".guardianModal .description").html(g_js_strings[t + "_guardian"].description);
-        var u = cm.guardianModalModel.whatsBuilding();
-        a(q);
-        var r = [0, -330, -655, -965, -1280, -1650];
-        var p = o[parseInt(q.cl0)];
-        i(".guardianModal .figure").css("background", "url(" + stimgUrl + "img/guardian_" + t + ".png) " + r[p] + "px 0px");
+        var x = cm.guardianModalModel.getType();
+        i(".guardianModal .description").html(g_js_strings[x + "_guardian"].description);
+        var t = cm.guardianModalModel.whatsBuilding();
+        a(s);
+        var u = [0, -330, -655, -965, -1280, -1650];
+        var z = o[parseInt(s.cl0)];
+        i(".guardianModal .figure").css("background", "url(" + stimgUrl + "img/guardian_" + x + ".png) " + u[z] + "px 0px");
         if (cm.guardianModalModel.upgrading()) {
             i(".guardianModal .rightBottom").html("Speed Up").addClass("spd").removeClass("upr");
-            i(".checkHolder").html("")
+            i(".checkHolder").html("").hide();
+            var r = i(".guardianModal .story_button");
+            var p = i(".guardianModal .rightBottom.spd");
+            var w = seed.queue_con["city" + currentcityid][0][2];
+            var A = getBuildHelpEligible(w, currentcityid);
+            if (!A) {
+                r.html(g_js_strings.modal_messages_viewreports_view.askforhelp).unbind("click").bind("click", function () {
+                    build_gethelp(w)
+                }).show();
+                p.css("margin-top", "9px")
+            } else {
+                r.html("").hide();
+                p.css("margin-top", "22px")
+            }
         } else {
-            var s = cm.guardianModalModel.getLevel() == 0 ? g_js_strings.commonstr.build : g_js_strings.commonstr.upgrade;
-            i(".guardianModal .rightBottom").html(s).removeClass("spd").addClass("upr");
-            i(".checkHolder").html("<input type='checkbox' class='askFriends' onclick='cm.guardianController.askForHelpClicked(this)'/><div class='askForHelp'>" + g_js_strings.guardian.askForHelp + "</div>")
+            var v = cm.guardianModalModel.getLevel() == 0 ? g_js_strings.commonstr.build : g_js_strings.commonstr.upgrade;
+            i(".guardianModal .rightBottom").html(v).removeClass("spd").addClass("upr");
+            i(".checkHolder").html("<input type='checkbox' class='askFriends' onclick='cm.guardianController.askForHelpClicked(this)'/><div class='askForHelp'>" + g_js_strings.modal_build.sharemessagebuildorresearch + "</div>").show();
+            i(".guardianModal .story_button").html("").hide()
         }
-        h(q);
-        if (!cm.guardianModalModel.isGuardian(u) && u != undefined) {
+        h(s);
+        if (!cm.guardianModalModel.isGuardian(t) && t != undefined) {
             i(".rightBottom").addClass("notclickable");
             i(".time").html(g_js_strings.modal_build.buildoneattime).addClass("unable")
         }
-        var w = cm.guardianModalModel.gObj().level;
-        if (i(".guardianModal .notclickable").length == 0 && parseInt(w) != 10) {
+        var q = cm.guardianModalModel.gObj().level;
+        if (i(".guardianModal .notclickable").length == 0 && parseInt(q) != 10) {
             cm.guardianController.bind()
         }
         i(".name").unbind("click").bind("click", cm.guardianItem.render);
         i(".guardianModal .spd").unbind("click").bind("click", function () {
-            var x = seed.queue_con["city" + currentcityid][0][2];
-            modal_speedup("bdg", x, undefined, "Guardian")
+            var B = seed.queue_con["city" + currentcityid][0][2];
+            modal_speedup("bdg", B, undefined, "Guardian")
         });
-        if (parseInt(w) == 10) {
-            i(".guardianModal .rightBottom").removeClass("notclickable").removeClass("upr").removeClass("spd")
+        if (parseInt(q) == 10) {
+            i(".guardianModal .rightBottom").removeClass("notclickable").removeClass("upr").removeClass("spd");
+            i(".time_table, .upgradeRequirements").remove()
         }
         if (n) {
             cm.guardianModalView.renderItems()
@@ -24228,7 +24761,10 @@ cm.guardianModalView = function (i) {
         if (parseInt(p.cl0) == 10) {
             i(".rightBottom").html("").addClass("level10");
             i(".currentLevelOuter").addClass("currentLevelOuterLvl10");
-            i(".time, .checkHolder, .arrow, .requiredSection, .upgradeLevelOuter").remove()
+            i(".time, .checkHolder, .arrow, .requiredSection, .upgradeLevelOuter").remove();
+            i(".currentLevelOuter").appendTo(".rightTopContainer");
+            i(".rightPanel").remove();
+            i(".guardianModal").css("height", 413)
         }
     }
     function g(q, r, p) {
@@ -25828,8 +26364,8 @@ cm.IncomingAttackRecalledDialog = function (e) {
 cm.OOP.inherits(cm.IncomingAttackRecalledDialog, cm.BaseDialog);
 var cm = cm || {};
 cm.intelligentOrdering = function () {
-    var g = [],
-        b = [],
+    var d = [],
+        a = [],
         e = [];
     e[1] = 60;
     e[2] = 900;
@@ -25839,82 +26375,71 @@ cm.intelligentOrdering = function () {
     e[6] = 3600 * 15;
     e[7] = 3600 * 24;
     e[8] = 3600 * 60;
-    e[9] = 3600 * 96;
-    var d = e.clone();
-    d.reverse();
+    e[10] = 3600 * 96;
+    var g = e.clone().reverse();
 
-    function a(l, m) {
-        for (var j in l) {
-            var k = l[j];
-            if (m == "finishing" && k == "i9") {
-                l[j] = "i10"
-            }
-            if (m == "starting" && k == "i10") {
-                l[j] = "i9"
+    function b(k) {
+        var j = e.length;
+        for (var i = 1; i < j; i++) {
+            if (e[i] >= k) {
+                return "i" + i
             }
         }
-        return l
+        return "i" + (j - 1)
     }
-    function c(k) {
-        for (var j = 1; j < 10; j++) {
-            if (e[j] >= k) {
-                return "i" + j
-            }
-        }
-        return "i9"
-    }
-    function f(l, n, k, m) {
-        var j = m ? e : d;
-        return j.reduce(function (q, p, o) {
-            var s = m ? "i" + o : "i" + (9 - o);
-            var r = parseInt(p) > n;
-            if (h(g, s) && l != s && !h(q, s) && ((k && r) || (!k && !r))) {
-                return q.concat(s)
+    function h(k, m, j, l) {
+        var i = l ? e : g;
+        return i.reduce(function (p, o, n) {
+            var r = l ? "i" + n : "i" + (e.length - 1 - n);
+            var q = parseInt(o) > m;
+            if (c(d, r) && k != r && !c(p, r) && ((j && q) || (!j && !q))) {
+                return p.concat(r)
             } else {
-                return q
+                return p
             }
         }, [])
     }
-    function h(k, l) {
-        for (var j in k) {
-            if (k.hasOwnProperty(j)) {
-                if (j == l) {
+    function c(j, k) {
+        for (var i in j) {
+            if (j.hasOwnProperty(i)) {
+                if (i == k) {
                     return true
                 }
             }
         }
         return false
     }
-    function i(k) {
-        for (var j in k) {
-            if (parseInt(k[j]) == 0) {
-                delete k[j]
+    function f(j) {
+        for (var i in j) {
+            if (parseInt(j[i]) == 0) {
+                delete j[i]
             }
         }
-        return k
+        return j
     }
     return {
         getReduceTime: function (j) {
-            return parseInt(j) <= 8 ? e[j] : 3600 * 96
+            return e[j]
         },
-        get: function (l, j) {
-            g = a(i(l), "starting");
-            var k = c(j);
-            return a([k].concat(f(k, j, true, true), f(k, j, false, false)), "finishing")
+        get: function (k, i) {
+            d = f(k);
+            var j = b(i);
+            return [j].concat(h(j, i, true, true), h(j, i, false, false))
         },
         test: function () {
-            var j = [];
-            j[0] = {
+            var i = [];
+            i[0] = {
                 i1: 23,
                 i3: 178,
-                i6: 2000
+                i6: 2000,
+                i9: 100
             };
-            j[1] = {
+            i[1] = {
                 i3: 23,
                 i4: 178,
                 i8: 2000
             };
-            j[2] = {
+            i[2] = {
                 i1: 23,
                 i2: 178,
                 i3: 2000,
@@ -25923,31 +26448,32 @@ cm.intelligentOrdering = function () {
                 i6: 178,
                 i7: 2000,
                 i8: 2000,
-                i9: 2000
+                i9: 200,
+                i10: 2000
             };
-            j[3] = {
+            i[3] = {
                 i2: 384,
                 i4: 178,
                 i7: 2000,
-                i9: 203
+                i10: 203
             };
-            j[4] = {
+            i[4] = {
                 i3: 253
             };
-            j[5] = {
+            i[5] = {
                 i3: 423
             };
-            cm.test.go("cm.intelligentOrdering", this.get(j[0], 1000).join(","), "i3,i6,i1");
-            cm.test.go("cm.intelligentOrdering", this.get(j[0], 30).join(","), "i1,i3,i6");
-            cm.test.go("cm.intelligentOrdering", this.get(j[0], 7200).join(","), "i4,i6,i3,i1");
-            cm.test.go("cm.intelligentOrdering", this.get(j[1], 7280).join(","), "i4,i8,i3");
-            cm.test.go("cm.intelligentOrdering", this.get(j[1], 5557280).join(","), "i10,i8,i4,i3");
-            cm.test.go("cm.intelligentOrdering", this.get(j[2], 8540000).join(","), "i10,i8,i7,i6,i5,i4,i3,i2,i1");
-            cm.test.go("cm.intelligentOrdering", this.get(j[2], 34).join(","), "i1,i2,i3,i4,i5,i6,i7,i8,i10");
-            cm.test.go("cm.intelligentOrdering", this.get(j[2], 888).join(","), "i2,i3,i4,i5,i6,i7,i8,i10,i1");
-            cm.test.go("cm.intelligentOrdering", this.get(j[3], 32888).join(","), "i6,i7,i10,i4,i2");
-            cm.test.go("cm.intelligentOrdering", this.get(j[4], 1000).join(","), "i3");
-            cm.test.go("cm.intelligentOrdering", this.get(j[5], 1000).join(","), "i3")
+            cm.test.go("cm.intelligentOrdering", this.get(i[0], 1000).join(","), "i3,i6,i1");
+            cm.test.go("cm.intelligentOrdering", this.get(i[0], 30).join(","), "i1,i3,i6");
+            cm.test.go("cm.intelligentOrdering", this.get(i[0], 7200).join(","), "i4,i6,i3,i1");
+            cm.test.go("cm.intelligentOrdering", this.get(i[1], 7280).join(","), "i4,i8,i3");
+            cm.test.go("cm.intelligentOrdering", this.get(i[1], 5557280).join(","), "i10,i8,i4,i3");
+            cm.test.go("cm.intelligentOrdering", this.get(i[2], 8540000).join(","), "i10,i8,i7,i6,i5,i4,i3,i2,i1");
+            cm.test.go("cm.intelligentOrdering", this.get(i[2], 34).join(","), "i1,i2,i3,i4,i5,i6,i7,i8,i10");
+            cm.test.go("cm.intelligentOrdering", this.get(i[2], 888).join(","), "i2,i3,i4,i5,i6,i7,i8,i10,i1");
+            cm.test.go("cm.intelligentOrdering", this.get(i[3], 32888).join(","), "i6,i7,i10,i4,i2");
+            cm.test.go("cm.intelligentOrdering", this.get(i[4], 1000).join(","), "i3");
+            cm.test.go("cm.intelligentOrdering", this.get(i[5], 1000).join(","), "i3")
         }
     }
 }();
@@ -26000,398 +26526,434 @@ cm.speedUpModalTimer = function (d) {
             a = e
         },
         goToSpeedups: function () {
-            modal_shop();
-            modal_shop_load(3)
+            cm.ShopView.openShop(2)
         }
     }
 }(jQuery);
 cm = cm || {};
-cm.InventoryView = function (C) {
-    var S = [],
+cm.InventoryView = function (D) {
+    var U = [],
+        S = [],
         Q = [],
+        P = [],
         O = [],
         N = [],
-        M = [],
-        L = [],
-        K, m, G = 9;
-    var i = "<div id='inventoryModalContainer'><div id='inventoryModalHeader'><a class='button20' onclick='Modal.hideModalAll(); modal_shop();'><span>" + g_js_strings.modal_myitems.getmoreitems + "</span></a><div id='gemsContainer'><span class='label'> " + g_js_strings.commonstr.gems + " </span> <span id='inventoryGemQuantity' class='gemsQuantity'> </span><img src='img/gem.png' /><a class='buttonGreen20' onclick='cm.ConversionTracker.track(\"payments\", \"MORE_GEMS_MY_ITEMS\", \"\");modal_getgems();return false;'><span> + " + g_js_strings.modaltitles.getmoregems + " </span></a></div></div><div id='inventoryModalBody'><div id='inventoryTabs'><ul><li id='inventoryTab1' class='selected'><a onclick='cm.InventoryView.openTab(1);'> " + g_js_strings.commonstr.general + " </a></li><li id='inventoryTab2'><a onclick='cm.InventoryView.openTab(2);'> " + g_js_strings.commonstr.speedup + " </a></li><li id='inventoryTab3'><a onclick='cm.InventoryView.openTab(3);'> " + g_js_strings.commonstr.combat + " </a></li><li id='inventoryTab4'><a onclick='cm.InventoryView.openTab(4);'> " + g_js_strings.commonstr.resources + " </a></li><li id='inventoryTab5'><a onclick='cm.InventoryView.openTab(5);'> " + g_js_strings.commonstr.chest + " </a></li><li id='inventoryTab6'><a onclick='cm.InventoryView.openTab(6);'> " + g_js_strings.commonstr.court + " </a></li></ul></div><div id='inventoryMessage'></div><div id='inventoryBanner'></div><div id='inventoryItemsContainer'><a id='inventoryPrevPageButton' onclick='cm.InventoryView.goPrevPage();'></a><a id='inventoryNextPageButton' onclick='cm.InventoryView.goNextPage();'></a><ul id='inventoryItemsContainerList'></ul></div></div></div>";
-    var P = C.template(null, "<li><div id='item${id}' class='item' name='${description}' onmouseover='cm.InventoryView.showItemTooltip(this, event);' onmouseout='removeTooltip();'><div class='name'>${name}</div><div class='info'><img src='img/items/70/${id}.jpg' /><a class='button20' onclick='cm.ItemController.use(${id});'><span id='item${id}ButtonText'>" + g_js_strings.commonstr.use + "</span></a><div class='ownedContainer'><span class='label'>" + g_js_strings.commonstr.owned + ":</span><span id='item${id}Count'>${count}</span></div></div></div></li>");
-    var e = C.template(null, "<li><div id='item${id}' class='item' name='${description}' onmouseover='cm.InventoryView.showItemTooltip(this, event); 'onmouseoout='removeTooltip();'><div class='name'>${name}</div><div class='info'><img src='img/items/70/${id}.jpg' /><a class='button20' onclick='cm.ItemController.use(${id});'><span id='item${id}ButtonText'>" + g_js_strings.commonstr.equip + "</span></a><div class='ownedContainer'><span class='label'>" + g_js_strings.commonstr.owned + ":</span><span id='item${id}Count'>${count}</span></div></div></div></li>");
-    var z = C.template(null, "<li><div id='item${id}' class='item' name='${description}' onmouseover='cm.InventoryView.showItemTooltip(this, event);' onmouseover='removeTooltip();'><div class='name'>${name}</div><div class='info'><img src='img/items/70/${id}.jpg' /><a class='button20' onclick='cm.ItemController.use(${id});'><span id='item${id}ButtonText'>" + g_js_strings.commonstr.unequip + "</span></a><div class='ownedContainer'><span class='label'>" + g_js_strings.commonstr.owned + ":</span><span id='item${id}Count'>${count}</span></div></div></div></li>");
-    var g = C.template(null, "<li><div id='item${id}' class='item' name='${description}' onmouseover='cm.InventoryView.showItemTooltip(this, event);' onmouseout='removeTooltip();'><div class='name'>${name}</div><div class='info'><img src='img/items/70/${id}.jpg' /><div class='ownedContainer'><span class='label'>" + g_js_strings.commonstr.owned + ":</span><span id='item${id}Count'>${count}</span></div></div></div></li>");
-    var R = "<div id='itemsInChestContainer'><div class='title'> " + g_js_strings.modal_chest_itemusage.itemsgained + " </div><ul id='itemsInChestContainerList'></ul><a class='button20' onclick='Modal.hideModal();'><span> " + g_js_strings.commonstr.ok + " </span></a></div>";
-    var w = C.template(null, "<li><img src='img/items/70/${id}.jpg' /><span class='name'>${name}</span><span class='count'>${count}</span></li>");
-    var T = "<div id='portalOfRefugeContainer'> <div id='provinceContainer'> <div id='currentProvinceContainer'> <span class='label'>" + g_js_strings.modal_myitems_use_teleportprovince.yourcurrentprov + "</span> - <span id='currentProvinceName' class='name'></span> </div> <div id='newProvinceContainer'> <span class='label'>" + g_js_strings.modal_myitems_use_teleportprovince.newprov + "</span> <select id='provinceNamesList'> </select> </div><div id='teleportError' style='display: none;'></div></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.usePortalOfRefuge(911);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
-    var Y = C.template(null, "<option value='${value}'>${name}</option>");
-    var D = "<div id='portalOfOrderContainer'><div id='coordinatesContainer'><div id='currentCoordinatesContainer'><span class='label'>" + g_js_strings.modal_myitems_use_teleport.currentcoor + " - </span>X: <span id='xCoordinate'></span> Y: <span id='yCoordinate'></span></div><div id='newCoordinatesContainer'><span class='label'>" + g_js_strings.modal_myitems_use_escape.newcoor + "</span><div id='newCoordinatesInputsContainer'>X: <input type='text' id='newXCoordinate' maxLength='3' />Y: <input type='text' id='newYCoordinate' maxLength='3' /></div></div><div id='teleportError' style='display: none;'></div></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.usePortalOfOrder(912);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
-    var n = "<div id='portalConfirmContainer'> <div id='portalConfirmInfoContainer'> <div id='portalItemNameContainer'></div> <div id='teleportCoordinateContainer'></div> </div> <div class='buttonContainer'><a id='portalConfirmOKButton' class='button20'><span>" + g_js_strings.commonstr.ok + "</span></a></div></div>";
-    var H = "<div id='merlinsCloakContainer'><div id='merlinsCloakNameContainer'><div id='currentNameContainer'><span class='label'>" + g_js_strings.modal_get_cloak_name.yourcurrentname + "</span><span id='merlinsCloakCurrentName'></span></div><div id='newNameContainer'><span id='newNamePrefix' class='label'>" + g_js_strings.modal_get_cloak_name.newname + "</span><input type='text' id='merlinsCloakNewName' /></div><div id='merlinsCloakError'></div></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.useMerlinsCloak(922);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
-    var V = "<div id='merlinsEscapeContainer'><div id='nameContainer'><div id='currentNameContainer'><span class='label'>" + g_js_strings.modal_get_cloak_name.yourcurrentname + "</span>: <span id='merlinsCloakCurrentName'></span></div><div id='newNameContainer'><span id='newNamePrefix' class='label'>" + g_js_strings.modal_get_cloak_name.newname + "</span><input type='text' id='merlinsEscapeNewName' /></div></div><div id='coordinatesContainer'><div id='currentCoordinatesContainer'><span class='label'>" + g_js_strings.modal_myitems_use_teleport.currentcoor + " - </span>X: <span id='xCoordinate'></span> Y: <span id='yCoordinate'></span></div><div id='newCoordinatesContainer'><span class='label'>" + g_js_strings.modal_myitems_use_escape.newcoor + "</span><div id='newCoordinatesInputsContainer'>X: <input type='text' id='newXCoordinate' maxLength='3' />Y: <input type='text' id='newYCoordinate' maxLength='3' /></div></div></div><div id='escapeError'></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.useMerlinsEscape(924);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
-    var v = "<div id='merlinsEscapeConfirmContainer'><div id='confirmContainer'><p id='itemUsedContainer'></p><p id='nameChangedContainer'></p><p id='teleportedToContainer'></p></div><a id='merlinsEscapeConfirmButton' class='button20' onclick=''><span>" + g_js_strings.commonstr.ok + "</span></a></div>";
-    var y = "<div id='potionOfMistContainer'><div id='potionOfMistMessage'>" + g_js_strings.modal_myitems_confirm_potion_mist.mistwarning + "</div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.usePotionOfMist(10021);'><span>" + g_js_strings.modal_myitems_confirm_potion_mist.usemists + "</span></a><a class='button20' onclick='Modal.hideModal();'><span>" + g_js_strings.commonstr.cancel + "</span></a></div></div>";
-    var U = "<div id='renamingCelebrationContainer'><div id='nameContainer'><div id='currentCityContainer'><span class='label'>" + g_js_strings.modal_rename_celebration.currentcity + ": </span><span id='currentCityName'></span></div><div id='newCityContainer'><span class='label'>" + g_js_strings.modal_rename_celebration.newcityname + "</span><input type='text' id='newCityName' /></div><div id='cityNameError'></div></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.useRenamingCelebration(923);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
-    var X = "<div id='renamingCelebrationConfirmContainer'><div class='confirmContainer'><p id='confirmMessage'></p><div><span class='label'>" + g_js_strings.modal_rename_celebration.newcityname + ": </span><span id='newCityName'></span></div></div><a id='renamingCelebrationConfirmOKButton' class='button20' onclick=''><span>" + g_js_strings.commonstr.ok + "</span></a></div>";
-    var u = "<div id='vacationModeContainer'><div id='vacationModeWarningContainer'><span id='vacationModeWarning'></span><p id='vacationModeMessage'></p></div><div class='buttonContainer'> <a class='button20' onclick='cm.ItemController.useVacationMode(902);'><span>" + g_js_strings.modal_myitems_confirm_potion_mist.usevacation + "</span></a><a class='button20' onclick='Modal.hideModal()'><span>" + g_js_strings.commonstr.cancel + "</span></a></div></div>";
-    var x = "<div id='vacationModeContainer'><div id='vacationModeWarningContainer'><span id='vacationModeWarning'></span><p id='vacationModeMessage'></p></div><div class='buttonContainer'> <a class='button20' onclick='cm.ItemController.useVacationMode(903);'><span>" + g_js_strings.modal_myitems_confirm_potion_mist.usevacation + "</span></a><a class='button20' onclick='Modal.hideModal()'><span>" + g_js_strings.commonstr.cancel + "</span></a></div></div>";
-    var q = function (af) {
-            af = af || 1;
-            m = 1;
-            var ad = g_js_strings.changeview_court_content.myitems;
-            var ae;
+        M, n, I = 9;
+    var i = "<div id='inventoryModalContainer'><div id='inventoryModalHeader'><a class='button20' onclick='Modal.hideModalAll(); cm.ShopView.openShop();'><span>" + g_js_strings.modal_myitems.getmoreitems + "</span></a><div id='gemsContainer'><span class='label'> " + g_js_strings.commonstr.gems + " </span> <span id='inventoryGemQuantity' class='gemsQuantity'> </span><img src='img/gem.png' /><a class='buttonGreen20' onclick='cm.ConversionTracker.track(\"payments\", \"MORE_GEMS_MY_ITEMS\", \"\");modal_getgems();return false;'><span> + " + g_js_strings.modaltitles.getmoregems + " </span></a></div></div><div id='inventoryModalBody'><div id='inventoryTabs'><ul><li id='inventoryTab1' class='selected'><a onclick='cm.InventoryView.openTab(1);'> " + g_js_strings.commonstr.general + " </a></li><li id='inventoryTab2'><a onclick='cm.InventoryView.openTab(2);'> " + g_js_strings.commonstr.speedup + " </a></li><li id='inventoryTab3'><a onclick='cm.InventoryView.openTab(3);'> " + g_js_strings.commonstr.combat + " </a></li><li id='inventoryTab4'><a onclick='cm.InventoryView.openTab(4);'> " + g_js_strings.commonstr.resources + " </a></li><li id='inventoryTab5'><a onclick='cm.InventoryView.openTab(5);'> " + g_js_strings.commonstr.chest + " </a></li><li id='inventoryTab6'><a onclick='cm.InventoryView.openTab(6);'> " + g_js_strings.commonstr.court + " </a></li></ul></div><div id='inventoryMessage'></div><div id='inventoryBanner'></div><div id='inventoryItemsContainer'><a id='inventoryPrevPageButton' onclick='cm.InventoryView.goPrevPage();'></a><a id='inventoryNextPageButton' onclick='cm.InventoryView.goNextPage();'></a><ul id='inventoryItemsContainerList'></ul></div></div></div>";
+    var R = D.template(null, "<li><div id='item${id}' class='item' name='${description}' onmouseover='cm.InventoryView.showItemTooltip(this, event);' onmouseout='removeTooltip();'><div class='name'>${name}</div><div class='info'><img src='img/items/70/${id}.jpg' /><a class='button20' onclick='cm.ItemController.use(${id});'><span id='item${id}ButtonText'>" + g_js_strings.commonstr.use + "</span></a><div class='ownedContainer'><span class='label'>" + g_js_strings.commonstr.owned + ":</span><span id='item${id}Count'>${count}</span></div></div></div></li>");
+    var e = D.template(null, "<li><div id='item${id}' class='item' name='${description}' onmouseover='cm.InventoryView.showItemTooltip(this, event); 'onmouseoout='removeTooltip();'><div class='name'>${name}</div><div class='info'><img src='img/items/70/${id}.jpg' /><a class='button20' onclick='cm.ItemController.use(${id});'><span id='item${id}ButtonText'>" + g_js_strings.commonstr.equip + "</span></a><div class='ownedContainer'><span class='label'>" + g_js_strings.commonstr.owned + ":</span><span id='item${id}Count'>${count}</span></div></div></div></li>");
+    var A = D.template(null, "<li><div id='item${id}' class='item' name='${description}' onmouseover='cm.InventoryView.showItemTooltip(this, event);' onmouseover='removeTooltip();'><div class='name'>${name}</div><div class='info'><img src='img/items/70/${id}.jpg' /><a class='button20' onclick='cm.ItemController.use(${id});'><span id='item${id}ButtonText'>" + g_js_strings.commonstr.unequip + "</span></a><div class='ownedContainer'><span class='label'>" + g_js_strings.commonstr.owned + ":</span><span id='item${id}Count'>${count}</span></div></div></div></li>");
+    var g = D.template(null, "<li><div id='item${id}' class='item' name='${description}' onmouseover='cm.InventoryView.showItemTooltip(this, event);' onmouseout='removeTooltip();'><div class='name'>${name}</div><div class='info'><img src='img/items/70/${id}.jpg' /><div class='ownedContainer'><span class='label'>" + g_js_strings.commonstr.owned + ":</span><span id='item${id}Count'>${count}</span></div></div></div></li>");
+    var T = "<div id='itemsInChestContainer'><div class='title'> " + g_js_strings.modal_chest_itemusage.itemsgained + " </div><ul id='itemsInChestContainerList'></ul><a class='button20' onclick='Modal.hideModal();'><span> " + g_js_strings.commonstr.ok + " </span></a></div>";
+    var x = D.template(null, "<li><img src='img/items/70/${id}.jpg' /><span class='name'>${name}</span><span class='count'>${count}</span></li>");
+    var V = "<div id='portalOfRefugeContainer'> <div id='provinceContainer'> <div id='currentProvinceContainer'> <span class='label'>" + g_js_strings.modal_myitems_use_teleportprovince.yourcurrentprov + "</span> - <span id='currentProvinceName' class='name'></span> </div> <div id='newProvinceContainer'> <span class='label'>" + g_js_strings.modal_myitems_use_teleportprovince.newprov + "</span> <select id='provinceNamesList'> </select> </div><div id='teleportError' style='display: none;'></div></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.usePortalOfRefuge(911);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
+    var aa = D.template(null, "<option value='${value}'>${name}</option>");
+    var E = "<div id='portalOfOrderContainer'><div id='coordinatesContainer'><div id='currentCoordinatesContainer'><span class='label'>" + g_js_strings.modal_myitems_use_teleport.currentcoor + " - </span>X: <span id='xCoordinate'></span> Y: <span id='yCoordinate'></span></div><div id='newCoordinatesContainer'><span class='label'>" + g_js_strings.modal_myitems_use_escape.newcoor + "</span><div id='newCoordinatesInputsContainer'>X: <input type='text' id='newXCoordinate' maxLength='3' />Y: <input type='text' id='newYCoordinate' maxLength='3' /></div></div><div id='teleportError' style='display: none;'></div></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.usePortalOfOrder(912);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
+    var o = "<div id='portalConfirmContainer'> <div id='portalConfirmInfoContainer'> <div id='portalItemNameContainer'></div> <div id='teleportCoordinateContainer'></div> </div> <div class='buttonContainer'><a id='portalConfirmOKButton' class='button20'><span>" + g_js_strings.commonstr.ok + "</span></a></div></div>";
+    var J = "<div id='merlinsCloakContainer'><div id='merlinsCloakNameContainer'><div id='currentNameContainer'><span class='label'>" + g_js_strings.modal_get_cloak_name.yourcurrentname + "</span><span id='merlinsCloakCurrentName'></span></div><div id='newNameContainer'><span id='newNamePrefix' class='label'>" + g_js_strings.modal_get_cloak_name.newname + "</span><input type='text' id='merlinsCloakNewName' /></div><div id='merlinsCloakError'></div></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.useMerlinsCloak(922);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
+    var X = "<div id='merlinsEscapeContainer'><div id='nameContainer'><div id='currentNameContainer'><span class='label'>" + g_js_strings.modal_get_cloak_name.yourcurrentname + "</span>: <span id='merlinsCloakCurrentName'></span></div><div id='newNameContainer'><span id='newNamePrefix' class='label'>" + g_js_strings.modal_get_cloak_name.newname + "</span><input type='text' id='merlinsEscapeNewName' /></div></div><div id='coordinatesContainer'><div id='currentCoordinatesContainer'><span class='label'>" + g_js_strings.modal_myitems_use_teleport.currentcoor + " - </span>X: <span id='xCoordinate'></span> Y: <span id='yCoordinate'></span></div><div id='newCoordinatesContainer'><span class='label'>" + g_js_strings.modal_myitems_use_escape.newcoor + "</span><div id='newCoordinatesInputsContainer'>X: <input type='text' id='newXCoordinate' maxLength='3' />Y: <input type='text' id='newYCoordinate' maxLength='3' /></div></div></div><div id='escapeError'></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.useMerlinsEscape(924);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
+    var w = "<div id='merlinsEscapeConfirmContainer'><div id='confirmContainer'><p id='itemUsedContainer'></p><p id='nameChangedContainer'></p><p id='teleportedToContainer'></p></div><a id='merlinsEscapeConfirmButton' class='button20' onclick=''><span>" + g_js_strings.commonstr.ok + "</span></a></div>";
+    var z = "<div id='potionOfMistContainer'><div id='potionOfMistMessage'>" + g_js_strings.modal_myitems_confirm_potion_mist.mistwarning + "</div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.usePotionOfMist(10021);'><span>" + g_js_strings.modal_myitems_confirm_potion_mist.usemists + "</span></a><a class='button20' onclick='Modal.hideModal();'><span>" + g_js_strings.commonstr.cancel + "</span></a></div></div>";
+    var W = "<div id='renamingCelebrationContainer'><div id='nameContainer'><div id='currentCityContainer'><span class='label'>" + g_js_strings.modal_rename_celebration.currentcity + ": </span><span id='currentCityName'></span></div><div id='newCityContainer'><span class='label'>" + g_js_strings.modal_rename_celebration.newcityname + "</span><input type='text' id='newCityName' /></div><div id='cityNameError'></div></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.useRenamingCelebration(923);'><span>" + g_js_strings.commonstr.submit + "</span></a><a onclick='Modal.hideModal();'>" + g_js_strings.commonstr.cancel + "</a></div></div>";
+    var Z = "<div id='renamingCelebrationConfirmContainer'><div class='confirmContainer'><p id='confirmMessage'></p><div><span class='label'>" + g_js_strings.modal_rename_celebration.newcityname + ": </span><span id='newCityName'></span></div></div><a id='renamingCelebrationConfirmOKButton' class='button20' onclick=''><span>" + g_js_strings.commonstr.ok + "</span></a></div>";
+    var v = "<div id='vacationModeContainer'><div id='vacationModeWarningContainer'><span id='vacationModeWarning'></span><p id='vacationModeMessage'></p></div><div class='buttonContainer'> <a class='button20' onclick='cm.ItemController.useVacationMode(902);'><span>" + g_js_strings.modal_myitems_confirm_potion_mist.usevacation + "</span></a><a class='button20' onclick='Modal.hideModal()'><span>" + g_js_strings.commonstr.cancel + "</span></a></div></div>";
+    var y = "<div id='vacationModeContainer'><div id='vacationModeWarningContainer'><span id='vacationModeWarning'></span><p id='vacationModeMessage'></p></div><div class='buttonContainer'> <a class='button20' onclick='cm.ItemController.useVacationMode(903);'><span>" + g_js_strings.modal_myitems_confirm_potion_mist.usevacation + "</span></a><a class='button20' onclick='Modal.hideModal()'><span>" + g_js_strings.commonstr.cancel + "</span></a></div></div>";
+    var r = function (ah) {
+            ah = ah || 1;
+            n = 1;
+            var af = g_js_strings.changeview_court_content.myitems;
+            var ag;
             if (cm.WorldSettings.hasKeyValuePair("MIGRATION1", "true")) {
-                ae = g_js_strings.modal_shop_buy_banner.banner_exclusiveitemsonkabam;
-                var ac;
+                ag = g_js_strings.modal_shop_buy_banner.banner_exclusiveitemsonkabam;
+                var ae;
                 if (seed.platform.type == "facebook") {
-                    ac = "<div class='msg'><a href='" + seed.platform.url + "' target='_top'>" + ae + "</a></div>"
+                    ae = "<div class='msg'><a href='" + seed.platform.url + "' target='_top'>" + ag + "</a></div>"
                 } else {
-                    ac = "<div class='msg'>" + ae + "</div>"
+                    ae = "<div class='msg'>" + ag + "</div>"
                 }
-                var ab = "new"
+                var ad = "new"
             } else {
-                ae = "7th city is HERE!";
-                var ac;
-                ac = "<div class='msg'>" + ae + "</div>";
-                var ab = "old"
+                ag = "";
+                var ae;
+                ae = "<div class='msg'>" + ag + "</div>";
+                var ad = ""
             }
-            Modal.showModal(740, 400, 10, 10, ad, i);
-            C("#inventoryGemQuantity").text(seed.player.gems);
-            C("#inventoryBanner").html(ac);
-            C("#inventoryBanner").addClass(ab);
+            Modal.showModal(740, 400, 10, 10, af, i);
+            if (cm.WorldSettings.hasKeyValuePair("MIGRATION1", "true")) {
+                D("#inventoryBanner").addClass("fancy_banner")
+            }
+            D("#inventoryGemQuantity").text(seed.player.gems);
+            D("#inventoryBanner").html(ae);
+            D("#inventoryBanner").addClass(ad);
             a();
-            k(af)
+            k(ah)
         };
     var a = function () {
-            var ab;
+            var ad;
+            U = [];
             S = [];
             Q = [];
+            P = [];
             O = [];
             N = [];
-            M = [];
-            L = [];
-            C.each(ksoItems, function (ac, ad) {
-                if (![10025, 1062].include(ad.id)) {
-                    if (ad && ad.count > 0) {
-                        switch (ad.category) {
+            D.each(ksoItems, function (ae, af) {
+                if (![1062, 598].include(af.id)) {
+                    if (af && af.count > 0) {
+                        switch (af.category) {
                         case 1:
-                            S.push(ad);
+                            U.push(af);
                             break;
                         case 2:
-                            Q.push(ad);
+                            S.push(af);
                             break;
                         case 3:
-                            O.push(ad);
+                            Q.push(af);
                             break;
                         case 4:
-                            N.push(ad);
+                            P.push(af);
                             break;
                         case 5:
-                            M.push(ad);
+                            O.push(af);
                             break;
                         case 6:
-                            L.push(ad);
+                            N.push(af);
                             break;
                         default:
-                            S.push(ad);
+                            U.push(af);
                             break
                         }
                     }
                 }
             })
         };
-    var k = function (ab) {
-            m = 1;
-            C("div#inventoryMessage").hide();
-            C("li#inventoryTab" + K).removeClass("selected");
-            K = Number(ab);
-            C("li#inventoryTab" + K).addClass("selected");
+    var k = function (ad) {
+            n = 1;
+            D("div#inventoryMessage").hide();
+            D("li#inventoryTab" + M).removeClass("selected");
+            M = Number(ad);
+            D("li#inventoryTab" + M).addClass("selected");
             a();
             b()
         };
     var b = function () {
-            var ab, ac, ag;
-            switch (K) {
+            var ad, ae, ai;
+            switch (M) {
             case 1:
-                ab = S;
+                ad = U;
                 break;
             case 2:
-                ab = Q;
+                ad = S;
                 break;
             case 3:
-                ab = O;
+                ad = Q;
                 break;
             case 4:
-                ab = N;
+                ad = P;
                 break;
             case 5:
-                ab = M;
+                ad = O;
                 break;
             case 6:
-                ab = L;
+                ad = N;
                 break;
             default:
-                ab = S;
+                ad = U;
                 break
             }
-            t(ab.length);
-            if (m < 0) {
-                m = 1
+            u(ad.length);
+            H(ad.length);
+            if (n < 0) {
+                n = 1
             }
-            ac = (m - 1) * G;
-            ag = m * G;
-            ab = ab.slice(ac, ag);
-            C("#inventoryItemsContainerList").empty();
-            if (ab.length > 0) {
-                C.each(ab, function (ah, ai) {
-                    if (ai.usable) {
-                        C.tmpl(P, ai).appendTo("#inventoryItemsContainerList")
+            ae = (n - 1) * I;
+            ai = n * I;
+            ad = ad.slice(ae, ai);
+            D("#inventoryItemsContainerList").empty();
+            if (ad.length > 0) {
+                D.each(ad, function (aj, ak) {
+                    if (ak.usable) {
+                        D.tmpl(R, ak).appendTo("#inventoryItemsContainerList")
                     } else {
-                        if (ai.equippable) {
-                            if (ai.isEquipped) {
-                                C.tmpl(z, ai).appendTo("#inventoryItemsContainerList")
+                        if (ak.equippable) {
+                            if (ak.isEquipped) {
+                                D.tmpl(A, ak).appendTo("#inventoryItemsContainerList")
                             } else {
-                                C.tmpl(e, ai).appendTo("#inventoryItemsContainerList")
+                                D.tmpl(e, ak).appendTo("#inventoryItemsContainerList")
                             }
                         } else {
-                            C.tmpl(g, ai).appendTo("#inventoryItemsContainerList")
+                            D.tmpl(g, ak).appendTo("#inventoryItemsContainerList")
                         }
                     }
                 })
             } else {
-                var af = "",
-                    ad = "";
-                switch (K) {
+                var ah = "",
+                    af = "";
+                switch (M) {
                 case 1:
-                    af = g_js_strings.modal_myitems.ownnogeneral;
-                    ad = "Modal.hideModal(); modal_shop(1); return false;";
+                    ah = g_js_strings.modal_myitems.ownnogeneral;
+                    af = "Modal.hideModal(); modal_shop(1); return false;";
                     break;
                 case 2:
-                    af = g_js_strings.modal_myitems.ownnospeedup;
-                    ad = "Modal.hideModal(); modal_shop(2); return false;";
+                    ah = g_js_strings.modal_myitems.ownnospeedup;
+                    af = "Modal.hideModal(); modal_shop(2); return false;";
                     break;
                 case 3:
-                    af = g_js_strings.modal_myitems.ownnoattack;
-                    ad = "Modal.hideModal(); modal_shop(3); return false;";
+                    ah = g_js_strings.modal_myitems.ownnoattack;
+                    af = "Modal.hideModal(); modal_shop(3); return false;";
                     break;
                 case 4:
-                    af = g_js_strings.modal_myitems.ownnoprod;
-                    ad = "Modal.hideModal(); modal_shop(4); return false;";
+                    ah = g_js_strings.modal_myitems.ownnoprod;
+                    af = "Modal.hideModal(); modal_shop(4); return false;";
                     break;
                 case 5:
-                    af = g_js_strings.modal_myitems.ownnochest;
-                    ad = "Modal.hideModal(); modal_shop(5); return false;";
+                    ah = g_js_strings.modal_myitems.ownnochest;
+                    af = "Modal.hideModal(); modal_shop(5); return false;";
                     break;
                 case 6:
-                    af = g_js_strings.modal_myitems.ownnocourt;
-                    ad = "Modal.hideModal(); modal_shop(6); return false;";
+                    ah = g_js_strings.modal_myitems.ownnocourt;
+                    af = "Modal.hideModal(); modal_shop(6); return false;";
                     break;
                 default:
-                    af = g_js_strings.modal_myitems.ownnogeneral;
-                    ad = "Modal.hideModal(); modal_shop(1); return false;";
+                    ah = g_js_strings.modal_myitems.ownnogeneral;
+                    af = "Modal.hideModal(); modal_shop(1); return false;";
                     break
                 }
-                var ae = "<li><div id='emptyInventory'><p>" + af + "</p><div class='buttonCotainer'><a class='button20' onclick='" + ad + "'><span>" + g_js_strings.commonstr.buymore + "</span></a></div></div></li>";
-                C(ae).appendTo("#inventoryItemsContainerList")
+                var ag = "<li><div id='emptyInventory'><p>" + ah + "</p><div class='buttonCotainer'><a class='button20' onclick='" + af + "'><span>" + g_js_strings.commonstr.buymore + "</span></a></div></div></li>";
+                D(ag).appendTo("#inventoryItemsContainerList")
             }
         };
-    var t = function (ad) {
-            var ac = Math.ceil(ad / G),
-                ab = C("a#inventoryPrevPageButton"),
-                ae = C("a#inventoryNextPageButton").hide();
-            if (ac > 1) {
-                if (m > 1) {
-                    if ((m < ac) && (m > 1)) {
-                        ab.show();
-                        ae.show()
+    var H = function (ah) {
+            var af = Math.ceil(ah / I),
+                ae = [],
+                ag = [];
+            if (af != 1) {
+                for (var ad = 1; ad <= af; ++ad) {
+                    ag.push("<li class='page'>");
+                    if (ad == n) {
+                        ag.push("<span class='current'>" + ad + "</span>")
                     } else {
-                        if (m == ac) {
-                            ab.show();
-                            ae.hide()
+                        ag.push("<span onclick='cm.InventoryView.goToPage(" + ad + ");'>" + ad + "</span>")
+                    }
+                    ag.push("</li>")
+                }
+                if (D("#inventoryPaginationList").length != 0) {
+                    D("#inventoryPaginationList").empty();
+                    D("#inventoryPaginationList").append(ag.join(""))
+                } else {
+                    ae.push("<ul id='inventoryPaginationList'>");
+                    ae.push(ag.join(""));
+                    ae.push("</ul>");
+                    D("#inventoryBanner").append(ae.join(""))
+                }
+            } else {
+                D("#inventoryPaginationList").remove()
+            }
+        };
+    var u = function (af) {
+            var ae = Math.ceil(af / I),
+                ad = D("a#inventoryPrevPageButton"),
+                ag = D("a#inventoryNextPageButton").hide();
+            if (ae > 1) {
+                if (n > 1) {
+                    if ((n < ae) && (n > 1)) {
+                        ad.show();
+                        ag.show()
+                    } else {
+                        if (n == ae) {
+                            ad.show();
+                            ag.hide()
                         } else {
-                            ab.hide();
-                            ae.show()
+                            ad.hide();
+                            ag.show()
                         }
                     }
                 } else {
-                    ab.hide();
-                    ae.show()
+                    ad.hide();
+                    ag.show()
                 }
             } else {
-                ab.hide();
-                ae.hide()
+                ad.hide();
+                ag.hide()
             }
         };
     var h = function () {
-            ++m;
+            ++n;
             b();
             a();
             b()
         };
-    var aa = function () {
-            --m;
+    var ac = function () {
+            --n;
             a();
             b()
         };
-    var l = function (ac, ab) {
-            showTooltip(ac.getAttribute("name"), ac, ab, "inventoryItemsContainer")
+    var m = function (ad) {
+            n = ad;
+            a();
+            b()
         };
-    var B = function (ae) {
-            seed.items["i" + ae] = Number(seed.items["i" + ae]) - 1;
-            ksoItems[ae].subtract();
-            var ac = seed.items["i" + ae],
-                ad = ksoItems[ae].count;
-            if (ac === 0 && ad === 0) {
-                C("#item" + ae).remove()
+    var l = function (ae, ad) {
+            showTooltip(ae.getAttribute("name"), ae, ad, "inventoryItemsContainer")
+        };
+    var C = function (ag) {
+            seed.items["i" + ag] = Number(seed.items["i" + ag]) - 1;
+            ksoItems[ag].subtract();
+            var ae = seed.items["i" + ag],
+                af = ksoItems[ag].count;
+            if (ae === 0 && af === 0) {
+                D("#item" + ag).remove()
             } else {
-                C("#item" + ae + "Count").text(seed.items["i" + ae].toString());
-                C("#item" + ae + "Count").text(ksoItems[ae].count.toString())
+                D("#item" + ag + "Count").text(seed.items["i" + ag].toString());
+                D("#item" + ag + "Count").text(ksoItems[ag].count.toString())
             }
-            if (C(".item").length === 0) {
-                aa()
+            if (D(".item").length === 0) {
+                ac()
             } else {
                 a();
                 b()
             }
-            var ab = g_js_strings.modal_myitems_use.uused.replace("%1$s", itemlist["i" + ae].name);
-            C("#inventoryMessage").text(ab);
-            C("#inventoryMessage").show()
+            var ad = g_js_strings.modal_myitems_use.uused.replace("%1$s", itemlist["i" + ag].name);
+            D("#inventoryMessage").text(ad);
+            D("#inventoryMessage").show()
         };
-    var J = function (ab) {
-            if (ksoItems[ab].isEquipped) {
-                C("span#item" + ab + "ButtonText").text(g_js_strings.commonstr.unequip)
+    var L = function (ad) {
+            if (ksoItems[ad].isEquipped) {
+                D("span#item" + ad + "ButtonText").text(g_js_strings.commonstr.unequip)
             } else {
-                C("span#item" + ab + "ButtonText").text(g_js_strings.commonstr.equip)
+                D("span#item" + ad + "ButtonText").text(g_js_strings.commonstr.equip)
             }
         };
-    var I = function (ab, ac) {
-            var ad = itemlist["i" + ac].name || ksoItems[ac].name;
-            Modal.showModal(500, 500, 10, 10, ad, R);
-            f(ab)
+    var K = function (ad, ae) {
+            var af = itemlist["i" + ae].name || ksoItems[ae].name;
+            Modal.showModal(500, 500, 10, 10, af, T);
+            f(ad)
         };
-    var f = function (ab) {
-            C.tmpl(w, ab).appendTo("#itemsInChestContainerList")
+    var f = function (ad) {
+            D.tmpl(x, ad).appendTo("#itemsInChestContainerList")
         };
-    var W = function (ae) {
-            var ac, ab = [];
-            var ad = itemlist["i" + ae].name || ksoItems[ae];
-            Modal.showModal(500, 500, 10, 10, ad, T);
-            C.each(provincenames, function (af, ag) {
-                ac = {};
-                ac.value = af.split("p")[1];
-                ac.name = ag;
-                ab.push(ac)
+    var Y = function (ag) {
+            var ae, ad = [];
+            var af = itemlist["i" + ag].name || ksoItems[ag];
+            Modal.showModal(500, 500, 10, 10, af, V);
+            D.each(provincenames, function (ah, ai) {
+                ae = {};
+                ae.value = ah.split("p")[1];
+                ae.name = ai;
+                ad.push(ae)
             });
-            C.tmpl(Y, ab).appendTo("#provinceNamesList");
-            C("span#currentProvinceName").text(provincenames["p" + currentcityinfo[4]])
+            D.tmpl(aa, ad).appendTo("#provinceNamesList");
+            D("span#currentProvinceName").text(provincenames["p" + currentcityinfo[4]])
         };
-    var o = function (ae, ab, af) {
-            var ac = g_js_strings.modal_myitems_use_teleportprovince_do.aused.replace("%1$s", itemlist["i" + ae].name),
-                ad = g_js_strings.modal_myitems_use_teleportprovince_do.teleportto + ": " + ab + "," + af;
-            title = itemlist["i" + ae].name || ksoItems[ae];
-            Modal.showModal(500, 500, 10, 10, title, n);
-            C("#portalItemNameContainer").text(ac);
-            C("#teleportCoordinateContainer").text(ad);
-            if (ae == 912 || ae == 911) {
-                C("#portalConfirmOKButton").attr("onclick", "");
-                C("#portalConfirmOKButton").click(function () {
+    var p = function (ag, ad, ah) {
+            var ae = g_js_strings.modal_myitems_use_teleportprovince_do.aused.replace("%1$s", itemlist["i" + ag].name),
+                af = g_js_strings.modal_myitems_use_teleportprovince_do.teleportto + ": " + ad + "," + ah;
+            title = itemlist["i" + ag].name || ksoItems[ag];
+            Modal.showModal(500, 500, 10, 10, title, o);
+            D("#portalItemNameContainer").text(ae);
+            D("#teleportCoordinateContainer").text(af);
+            if (ag == 912 || ag == 911) {
+                D("#portalConfirmOKButton").attr("onclick", "");
+                D("#portalConfirmOKButton").click(function () {
                     top.location = appUrl
                 })
             }
         };
-    var F = function (ae) {
-            var ad = itemlist["i" + ae].name || ksoItems[ae],
-                ab = currentcityinfo[2],
-                ac = currentcityinfo[3];
-            Modal.showModal(500, 500, 10, 10, ad, D);
-            C("#xCoordinate").text(ab);
-            C("#yCoordinate").text(ac)
+    var G = function (ag) {
+            var af = itemlist["i" + ag].name || ksoItems[ag],
+                ad = currentcityinfo[2],
+                ae = currentcityinfo[3];
+            Modal.showModal(500, 500, 10, 10, af, E);
+            D("#xCoordinate").text(ad);
+            D("#yCoordinate").text(ae)
         };
     var j = function () {
-            var ac = g_js_strings.modaltitles.renamecelebration,
-                ad;
-            Modal.showModal(500, 500, 10, 10, ac, U);
-            for (var ab = 0; ab < seed.cities.length; ab++) {
-                if (Number(seed.cities[ab][0]) == Number(currentcityid)) {
-                    ad = seed.cities[ab][1];
+            var ae = g_js_strings.modaltitles.renamecelebration,
+                af;
+            Modal.showModal(500, 500, 10, 10, ae, W);
+            for (var ad = 0; ad < seed.cities.length; ad++) {
+                if (Number(seed.cities[ad][0]) == Number(currentcityid)) {
+                    af = seed.cities[ad][1];
                     break
                 }
             }
-            C("#currentCityName").text(ad)
+            D("#currentCityName").text(af)
         };
-    var c = function (ab, ac) {
-            var ad = g_js_strings.modal_rename_celebration.newcityname;
-            Modal.showModal(500, 500, 10, 10, ad, X);
-            C("#confirmMessage").text(ab);
-            C("#newCityName").text(ac);
-            C("#renamingCelebrationConfirmOKButton").click(function () {
+    var c = function (ad, ae) {
+            var af = g_js_strings.modal_rename_celebration.newcityname;
+            Modal.showModal(500, 500, 10, 10, af, Z);
+            D("#confirmMessage").text(ad);
+            D("#newCityName").text(ae);
+            D("#renamingCelebrationConfirmOKButton").click(function () {
                 top.location = appUrl
             })
         };
     var d = function () {};
-    var E = function () {
-            var ab = g_js_strings.modaltitles.magiccloak;
-            Modal.showModal(500, 500, 10, 10, ab, H);
-            C("#newNamePrefix").text(seed.player.prefix);
-            C("#merlinsCloakCurrentName").text(seed.player.prefix + " " + seed.player.name)
+    var F = function () {
+            var ad = g_js_strings.modaltitles.magiccloak;
+            Modal.showModal(500, 500, 10, 10, ad, J);
+            D("#newNamePrefix").text(seed.player.prefix);
+            D("#merlinsCloakCurrentName").text(seed.player.prefix + " " + seed.player.name)
         };
-    var Z = function (ae) {
-            var ad = itemlist["i" + 924].name,
-                ab = currentcityinfo[2],
-                ac = currentcityinfo[3];
-            Modal.showModal(500, 500, 10, 10, ad, V);
-            C("#merlinsCloakCurrentName").text(seed.player.prefix + " " + seed.player.name);
-            C("newNamePrefix").text(seed.player.prefix);
-            C("xCoordinate").text(ab);
-            C("yCoordinate").text(ac)
+    var ab = function (ag) {
+            var af = itemlist["i" + 924].name,
+                ad = currentcityinfo[2],
+                ae = currentcityinfo[3];
+            Modal.showModal(500, 500, 10, 10, af, X);
+            D("#merlinsCloakCurrentName").text(seed.player.prefix + " " + seed.player.name);
+            D("newNamePrefix").text(seed.player.prefix);
+            D("xCoordinate").text(ad);
+            D("yCoordinate").text(ae)
         };
-    var p = function (ag, ac, ah) {
-            var af = itemlist["i" + ag].name || ksoItems[ag].name,
-                ae, ad, ab;
-            ae = g_js_strings.modal_myitems_use_escape_do.aused.replace("%1$s", itemlist["i" + ag].name);
-            ad = g_js_strings.modal_myitems_use_escape_do.namechangedto + " " + seed.player.prefix + " " + seed.player.name;
-            ab = g_js_strings.modal_myitems_use_escape_do.teleportto + " " + ac + "," + ah;
-            Modal.showModal(500, 500, 10, 10, af, v);
-            C("#itemUsedContainer").text(ae);
-            C("#nameChangedContainer").text(ad);
-            C("#teleportedToContainer").text(ab);
-            C("#merlinsEscapeConfirmButton").click(function () {
+    var q = function (ai, ae, aj) {
+            var ah = itemlist["i" + ai].name || ksoItems[ai].name,
+                ag, af, ad;
+            ag = g_js_strings.modal_myitems_use_escape_do.aused.replace("%1$s", itemlist["i" + ai].name);
+            af = g_js_strings.modal_myitems_use_escape_do.namechangedto + " " + seed.player.prefix + " " + seed.player.name;
+            ad = g_js_strings.modal_myitems_use_escape_do.teleportto + " " + ae + "," + aj;
+            Modal.showModal(500, 500, 10, 10, ah, w);
+            D("#itemUsedContainer").text(ag);
+            D("#nameChangedContainer").text(af);
+            D("#teleportedToContainer").text(ad);
+            D("#merlinsEscapeConfirmButton").click(function () {
                 top.location = appUrl
             })
         };
-    var A = function (ae) {
-            var ad = g_js_strings.modaltitles.notice,
-                ab = (ae == 902) ? u : x,
-                ac = (ae == 902) ? g_js_strings.modal_myitems_confirm_vacation3_msg : g_js_strings.modal_myitems_confirm_vacation7_msg;
-            Modal.showModal(400, 400, 150, 150, ad, ab);
-            C("#vacationModeWarning").text(g_js_strings.modal_myitems_warning);
-            C("#vacationModeMessage").text(ac)
+    var B = function (ag) {
+            var af = g_js_strings.modaltitles.notice,
+                ad = (ag == 902) ? v : y,
+                ae = (ag == 902) ? g_js_strings.vacationMode.modal_myitems_confirm_vacation3_msg : g_js_strings.vacationMode.modal_myitems_confirm_vacation7_msg;
+            Modal.showModal(400, 400, 150, 150, af, ad);
+            D("#vacationModeWarning").text(g_js_strings.modal_myitems_warning);
+            D("#vacationModeMessage").text(ae)
         };
-    var s = function () {
-            var ab = g_js_strings.modaltitles.notice;
-            Modal.showModal(400, 400, 150, 150, ab, y)
+    var t = function () {
+            var ad = g_js_strings.modaltitles.notice;
+            Modal.showModal(400, 400, 150, 150, ad, z)
         };
-    var r = function () {};
-    r();
+    var s = function () {};
+    s();
     return {
         showItemTooltip: l,
-        openInventory: q,
+        openInventory: r,
         openTab: k,
         goNextPage: h,
-        goPrevPage: aa,
-        removeItemFromInventory: B,
-        openItemsInChestModal: I,
-        toggleCourtItem: J,
-        openPortalOfRefugeModal: W,
-        openPortalOfOrderModal: F,
-        openPortalConfirmModal: o,
-        openMerlinsCloakModal: E,
-        openMerlinsEscapeModal: Z,
-        openMerlinsEscapeConfirmModal: p,
+        goPrevPage: ac,
+        goToPage: m,
+        removeItemFromInventory: C,
+        openItemsInChestModal: K,
+        toggleCourtItem: L,
+        openPortalOfRefugeModal: Y,
+        openPortalOfOrderModal: G,
+        openPortalConfirmModal: p,
+        openMerlinsCloakModal: F,
+        openMerlinsEscapeModal: ab,
+        openMerlinsEscapeConfirmModal: q,
         openRenamingCelebrationModal: j,
         openRenamingCelebrationConfirmModal: c,
         openRenamingRitualModal: d,
-        openVacationModeModal: A,
-        openPotionOfMistModal: s,
-        removeItemFromInventory: B
+        openVacationModeModal: B,
+        openPotionOfMistModal: t,
+        removeItemFromInventory: C
     }
 }(jQuery);
 var cm = cm || {};
@@ -26415,7 +26977,7 @@ cm.InviteTypes = {
 var cm = function (b, d) {
         var e = b.invite = b.invite || {};
         var c = false;
-        var a = cm.InviteTypes.INVITE_TYPE_GENERAL;
+        var a;
         d(document).ready(function () {
             d(".invite_friends").live("click", e.open);
             a = g_popInviteType ? g_popInviteType : cm.InviteTypes.INVITE_TYPE_GENERAL
@@ -26429,9 +26991,9 @@ var cm = function (b, d) {
             c = false
         };
         e.load = function (g, f) {
-            if (a != g || f) {
+            if (a !== g || f) {
                 a = g;
-                d("#invitePopup").attr("src", g_baseInviteIframeURL + "&type=" + g)
+                cm.IframeUtil.post("invitePopup", g_baseInviteIframeURL + "&type=" + g)
             }
         };
         e.isShowing = function () {
@@ -26439,6 +27001,9 @@ var cm = function (b, d) {
         };
         return b
     }(cm, jQuery);
+cm.BootLoader.add(function () {
+    cm.invite.load(g_popInviteType ? g_popInviteType : cm.InviteTypes.INVITE_TYPE_GENERAL, true)
+});
 cm = cm || {};
 cm.ItemController = function ($) {
     var init_ = function () {};
@@ -26447,10 +27012,10 @@ cm.ItemController = function ($) {
             if ([101, 102, 111, 112, 121, 122, 131, 132, 141, 142].include(itemId)) {
                 useProductionBoost(itemId)
             } else {
-                if ([261, 262, 271, 272, 276, 277, 278, 279, 280, 281].include(itemId)) {
+                if ([261, 262, 271, 272, 276, 277, 278, 279, 280, 281, 282, 283].include(itemId)) {
                     useCombatBoost(itemId)
                 } else {
-                    if (itemId >= 273 && itemId <= 275) {
+                    if ((itemId >= 273 && itemId <= 275) || itemId == 284) {
                         useTroopUpkeepBoost(itemId)
                     } else {
                         if ([501, 502, 503, 504, 505, 531].include(itemId)) {
@@ -26670,6 +27235,21 @@ cm.ItemController = function ($) {
                                         seed.playerEffects.returnExpire = ut
                                     }
                                     seed.playerEffects.returnExpire = parseInt(seed.playerEffects.returnExpire) + bst
+                                } else {
+                                    if (iid == 282 || iid == 283) {
+                                        var expireTime;
+                                        bst = (iid == 282) ? 86400 : 604800;
+                                        if (seed.playerEffects.lifeExpire) {
+                                            expireTime = Number(seed.playerEffects.lifeExpire);
+                                            if (expireTime < unixtime()) {
+                                                seed.playerEffects.lifeExpire = unixtime() + bst
+                                            } else {
+                                                seed.playerEffects.lifeExpire = expireTime + bst
+                                            }
+                                        } else {
+                                            seed.playerEffects.lifeExpire = unixtime() + bst
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -26703,13 +27283,21 @@ cm.ItemController = function ($) {
                             } else {
                                 if (itemId == 275) {
                                     boostTime = 259200
+                                } else {
+                                    if (itemId == 284) {
+                                        boostTime = 604800
+                                    }
                                 }
                             }
                         }
                         if (!(Number(seed.playerEffects.troopUpkeepReductExp) > unixtime())) {
                             seed.playerEffects.troopUpkeepReductExp = unixtime()
                         }
-                        seed.playerEffects.troopUpkeepReductExp = Number(seed.playerEffects.troopUpkeepReductExp) + boostTime;
+                        if (seed.playerEffects.troopUpkeepReductExp) {
+                            seed.playerEffects.troopUpkeepReductExp = Number(seed.playerEffects.troopUpkeepReductExp) + boostTime
+                        } else {
+                            seed.playerEffects.troopUpkeepReductExp = unixtime() + boostTime
+                        }
                         cm.InventoryView.removeItemFromInventory(itemId);
                         update_boosts()
                     }
@@ -26777,11 +27365,8 @@ cm.ItemController = function ($) {
                             update_seed(rslt.updateSeed)
                         }
                         if (Number(rslt.rtype) == 0) {
-                            seed.citystats["city" + currentcityid].gold[0] = Number(seed.citystats["city" + currentcityid].gold[0]) + Number(rslt.amt);
                             update_gold()
-                        } else {
-                            seed.resources["city" + currentcityid]["rec" + rslt.rtype][0] = parseInt(seed.resources["city" + currentcityid]["rec" + rslt.rtype][0]) + parseInt(rslt.amt) * 3600
-                        }
+                        } else {}
                         cm.InventoryView.removeItemFromInventory(iid)
                     }
                 },
@@ -26877,6 +27462,7 @@ cm.ItemController = function ($) {
                 onFailure: function () {}
             })
         };
+    var useTroopHealthBoost = function () {};
     var useFertileWinds = function (itemId) {
             var params = Object.clone(g_ajaxparams);
             params.cid = currentcityid;
@@ -27181,11 +27767,13 @@ cm.ItemController = function ($) {
                 onSuccess: function (transport) {
                     var rslt = eval("(" + transport.responseText + ")");
                     if (rslt.ok) {
-                        var troopUpkeepExpire = Math.floor(rslt.updateSeed.playerEffects.troopUpkeepReductExp),
+                        var vacationExpire = Math.floor(rslt.updateSeed.playerEffects.vacationExpire),
+                            troopUpkeepExpire = Math.floor(rslt.updateSeed.playerEffects.troopUpkeepReductExp),
                             fogExpire = Math.floor(rslt.updateSeed.playerEffects.fogExpire),
                             truceExpire = Math.floor(rslt.updateSeed.player.truceExpireUnixTime);
                         seed.playerEffects.troopUpkeepReductExp = troopUpkeepExpire;
                         seed.playerEffects.fogExpire = fogExpire;
+                        seed.playerEffects.vacationExpire = vacationExpire;
                         seed.player.truceExpireUnixTime = truceExpire;
                         update_boosts();
                         Modal.hideModal();
@@ -27237,7 +27825,6 @@ cm.item = function (f) {
             },
             stop_action: i
         };
-        b[902] = b[903] = n;
         b[2000] = {
             use: function () {
                 cm.guardianItem.render(true)
@@ -27508,7 +28095,7 @@ cm.ItemModel = jQueryClass.extend({
     },
     canUse: function (a) {
         a = Number(a);
-        var b = [101, 102, 111, 112, 121, 122, 131, 132, 141, 142, 261, 262, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 351, 355, 501, 502, 503, 504, 505, 511, 512, 513, 514, 521, 522, 523, 524, 531, 599, 901, 902, 903, 911, 912, 922, 923, 924, 942, 2000];
+        var b = [101, 102, 111, 112, 121, 122, 131, 132, 141, 142, 261, 262, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 351, 355, 501, 502, 503, 504, 505, 511, 512, 513, 514, 521, 522, 523, 524, 531, 599, 901, 902, 903, 911, 912, 922, 923, 924, 942, 2000];
         if ((a >= 1000 && a <= 1050) || (a >= 1300 && a <= 1415) || (a >= 10000 && a <= 10031)) {
             return true
         } else {
@@ -29793,6 +30380,38 @@ function jsonT(self, rules) {
     };
     return T.init().apply("self")
 };
+cm = cm || {};
+cm.KnightModel = jQueryClass.extend({
+    init: function (a) {
+        this.id = Number();
+        this.fbuid = Number();
+        this.name = "";
+        this.level = Number();
+        this.status = Number();
+        this.pic = "";
+        this.pointsApplied = Number();
+        this.experience = Number();
+        this.cityId = Number();
+        this.lordsLevel = Number();
+        this.basePolitics = Number();
+        this.currentPolitics = Number();
+        this.politicsExpireTimeStamp = "";
+        this.politicsExpireUnixTime = Number();
+        this.baseCombat = Number();
+        this.currentCombat = Number();
+        this.combatExpireTimeStamp = "";
+        this.combatExpireUnixTime = Number();
+        this.baseIntelligence = Number();
+        this.currentIntelligence = Number();
+        this.intelligenceExpireTimeStamp = "";
+        this.intelligenceExpireUnixTime = Number();
+        this.baseResource = Number();
+        this.currentResource = Number();
+        this.resourceExpireTimeStamp = "";
+        this.resourceExpireUnixTime = Number();
+        this.loyalty = Number()
+    }
+});
 
 function openKnights() {
     var knights = new Hash(seed.knights["city" + currentcityid]);
@@ -30252,12 +30871,12 @@ function xpBoost_modal(g) {
         d.push("<div class='iteminfo'>");
         d.push("<div class='name'>" + c + "</div>");
         if (b == 0) {
-            d.push("<div class='btn'><a  class='button20' onclick='Modal.hideModalAll();modal_shop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a></div>")
+            d.push("<div class='btn'><a  class='button20' onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a></div>")
         } else {
             d.push("<div class='btn'><a  class='button20' onclick='increaseXPItem(\"" + a[e] + '",' + g + ");return false;'><span>" + g_js_strings.commonstr.apply + "</span></a></div>")
         }
         d.push("<div class='desc'>" + f + "</div>");
-        d.push("<div class='own'>" + g_js_strings.commonstr.youown + ": " + b + ".  <a  onclick='Modal.hideModalAll();modal_shop();return false;'>" + g_js_strings.commonstr.getmore + "</a></div>");
+        d.push("<div class='own'>" + g_js_strings.commonstr.youown + ": " + b + ".  <a  onclick='Modal.hideModalAll();cm.ShopView.openShop(1);return false;'>" + g_js_strings.commonstr.getmore + "</a></div>");
         d.push("</div>");
         d.push("</div>")
     }
@@ -30397,7 +31016,7 @@ function applyItemCrest(iid, kid) {
                 seed.knights["city" + currentcityid]["knt" + kid].loyalty = parseInt(seed.knights["city" + currentcityid]["knt" + kid].loyalty) + loyPts;
                 Modal.hideModal();
                 seed.items[iid] = parseInt(seed.items[iid]) - 1;
-                ksoItems[iid].subtract();
+                ksoItems[Number((iid).split("i")[1])].subtract();
                 reward_confirm_modal(kid, 0, loyPts, itemlist[iid].name);
                 cm.MixPanelTracker.track("item_use", {
                     item: itemlist["i" + params.rid].name,
@@ -30952,13 +31571,13 @@ function redistribute_modal(a, h) {
     d.push("<div class='iteminfo'>");
     d.push("<div class='name'>" + c + "</div>");
     if (b < f) {
-        d.push("<div class='btn'><a  class='button20' onclick='Modal.hideModalAll();modal_shop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a></div>")
+        d.push("<div class='btn'><a  class='button20' onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a></div>")
     } else {
         d.push("<div class='btn'><a  class='button20' onclick='applyFountain(\"" + e + '",' + a + "," + f + ");return false;'><span>" + g_js_strings.commonstr.apply + "</span></a></div>")
     }
     d.push("<div class='desc'>" + g + "</div>");
     d.push("<div class='own'>" + g_js_strings.commonstr.youneed + ": " + f + "</div>");
-    d.push("<div class='own'>" + g_js_strings.commonstr.youown + ": " + b + ".  <a  onclick='Modal.hideModalAll();modal_shop();return false;'>" + g_js_strings.commonstr.getmore + "</a></div>");
+    d.push("<div class='own'>" + g_js_strings.commonstr.youown + ": " + b + ".  <a  onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'>" + g_js_strings.commonstr.getmore + "</a></div>");
     d.push("</div>");
     d.push("</div>");
     d.push("</div>");
@@ -31094,12 +31713,12 @@ function trophy_modal(g) {
         c.push("<div class='iteminfo'>");
         c.push("<div class='name'>" + b + "</div>");
         if (a == 0) {
-            c.push("<div class='btn'><a  class='button20' onclick='Modal.hideModalAll();modal_shop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a></div>")
+            c.push("<div class='btn'><a  class='button20' onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a></div>")
         } else {
             c.push("<div class='btn'><a  class='button20' onclick='applyItemCrest(\"" + f[d] + '",' + g + ");return false;'><span>" + g_js_strings.commonstr.apply + "</span></a></div>")
         }
         c.push("<div class='desc'>" + e + "</div>");
-        c.push("<div class='own'>" + g_js_strings.commonstr.youown + ": " + a + ".  <a  onclick='Modal.hideModalAll();modal_shop();return false;'>" + g_js_strings.commonstr.getmore + "</a></div>");
+        c.push("<div class='own'>" + g_js_strings.commonstr.youown + ": " + a + ".  <a  onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'>" + g_js_strings.commonstr.getmore + "</a></div>");
         c.push("</div>");
         c.push("</div>")
     }
@@ -31139,12 +31758,12 @@ function boost_modal(d, g) {
     c.push("<div class='iteminfo'>");
     c.push("<div class='name'>" + b + "</div>");
     if (a == 0) {
-        c.push("<div class='btn'><a class='button20' onclick='Modal.hideModalAll();modal_shop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a></div>")
+        c.push("<div class='btn'><a class='button20' onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a></div>")
     } else {
         c.push("<div class='btn'><a class='button20' onclick='applyBoostItem(\"" + e + '",' + g + ");return false;'><span>" + g_js_strings.commonstr.apply + "</span></a></div>")
     }
     c.push("<div class='desc'>" + f + "</div>");
-    c.push("<div class='own'>" + g_js_strings.commonstr.youown + ": " + a + ".  <a  onclick='Modal.hideModalAll();modal_shop();return false;'>" + g_js_strings.commonstr.getmore + "</a></div>");
+    c.push("<div class='own'>" + g_js_strings.commonstr.youown + ": " + a + ".  <a  onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'>" + g_js_strings.commonstr.getmore + "</a></div>");
     c.push("</div>");
     c.push("</div>");
     c.push("</div>");
@@ -32036,7 +32655,7 @@ var g_ajaxpath = "";
 var g_ajaxsuffix = "";
 
 function build(c, a, d, f) {
-    if (parseInt(a) == 9 || (parseInt(c) === 1 && parseInt(a) == 10) || (parseInt(c) === 2 && parseInt(a) == 10) || (parseInt(c) === 3 && parseInt(a) == 10) || (parseInt(c) === 4 && parseInt(a) == 10) || (parseInt(c) === 19 && parseInt(a) == 10) || (parseInt(c) === 12 && parseInt(a) == 10) || (parseInt(c) === 11 && parseInt(a) == 10) || (parseInt(c) === 18 && parseInt(a) == 10)) {
+    if (parseInt(a) == 9 || (parseInt(c) === 1 && parseInt(a) == 10) || (parseInt(c) === 2 && parseInt(a) == 10) || (parseInt(c) === 3 && parseInt(a) == 10) || (parseInt(c) === 4 && parseInt(a) == 10) || (parseInt(c) === 8 && parseInt(a) == 10) || (parseInt(c) === 9 && parseInt(a) == 10) || (parseInt(c) === 19 && parseInt(a) == 10) || (parseInt(c) === 12 && parseInt(a) == 10) || (parseInt(c) === 11 && parseInt(a) == 10) || (parseInt(c) === 18 && parseInt(a) == 10)) {
         var e = new Array(),
             b = parseInt(a) + 1;
         e.push("<div id='modal_lv10'>");
@@ -32061,7 +32680,7 @@ function build(c, a, d, f) {
             }
             e.push("<a  class='button20' onclick='buildaction(" + c + "," + a + "," + d + "," + f + ",1);return false;'><span>" + g_js_strings.commonstr.apply + "</span></a>")
         } else {
-            e.push("<a  class='button20' onclick='Modal.hideModalAll();modal_shop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a>")
+            e.push("<a  class='button20' onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a>")
         }
         e.push("<a  class='cancel' onclick='Modal.hideModal();return false;'>" + g_js_strings.commonstr.cancel + "</a>");
         e.push("</div></div>");
@@ -32091,7 +32710,7 @@ function build(c, a, d, f) {
                 }
                 e.push("<a  class='button20' onclick='buildaction(" + c + "," + a + "," + d + "," + f + ",1);return false;'><span>" + g_js_strings.commonstr.apply + "</span></a>")
             } else {
-                e.push("<a  class='button20' onclick='Modal.hideModalAll();modal_shop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a>")
+                e.push("<a  class='button20' onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'><span>" + g_js_strings.commonstr.getmore + "</span></a>")
             }
             e.push("<a  class='cancel' onclick='Modal.hideModal();return false;'>" + g_js_strings.commonstr.cancel + "</a>");
             e.push("</div></div>");
@@ -32316,8 +32935,12 @@ function deleteaction(bdgid, curlvl, citpos, gethelp) {
                     update_seed(rslt.updateSeed)
                 }
             } else {
-                var msg = (rslt.msg) ? rslt.msg : g_js_strings.deleteaction.somethingwentwrong;
-                Modal.showAlert(msg)
+                if (rslt.tracker) {
+                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                } else {
+                    var msg = (rslt.msg) ? rslt.msg : g_js_strings.deleteaction.somethingwentwrong;
+                    Modal.showAlert(msg)
+                }
             }
         },
         onFailure: function () {}
@@ -34050,53 +34673,53 @@ var MapObject = Class.create({
             if (seed.con_hlp == 5) {
                 s += "<a style='" + B + "top:" + c + ";left:" + N + ";' class='" + j + " slot'><span>HELLO</span></a>"
             } else {
-                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + l + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + u + "' style='" + B + "top:" + c + ";left:" + N + ";' class='" + j + " slot'><span>" + b + "</span></a>"
+                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + (l || '"--------"') + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + u + "' style='" + B + "top:" + c + ";left:" + N + ";' class='" + j + " slot'><span>" + b + "</span></a>"
             }
             if (ab >= 745) {
                 var H = ((ab - 745) * that.hpxmultiplier) + "px";
                 var ac = "eh_" + u;
-                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + l + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='" + q + "top:" + c + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
+                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + (l || '"--------"') + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='" + q + "top:" + c + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
             } else {
                 if (ab < 5) {
                     var ac = "eh_" + u;
                     var H = (((ab + 750) * that.hpxmultiplier) + that.leftedgesize) + "px";
-                    s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + l + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='" + q + "top:" + c + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
+                    s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + (l || '"--------"') + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='" + q + "top:" + c + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
                 }
             }
             if (y >= 745) {
                 var ac = "ev_" + u;
                 var p = ((y - 745) * that.vpxmultiplier) + "px";
-                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + l + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='" + t + "top:" + p + ";left:" + N + ";' class='" + j + " slot'><span></span></a>"
+                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + (l || '"--------"') + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='" + t + "top:" + p + ";left:" + N + ";' class='" + j + " slot'><span></span></a>"
             } else {
                 if (y < 5) {
                     var ac = "ev_" + u;
                     var p = (((y + 750) * that.vpxmultiplier) + that.topedgesize) + "px";
-                    s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + l + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='" + t + "top:" + p + ";left:" + N + ";' class='" + j + " slot'><span></span></a>"
+                    s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + (l || '"--------"') + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='" + t + "top:" + p + ";left:" + N + ";' class='" + j + " slot'><span></span></a>"
                 }
             }
             if (y >= 745 && ab >= 745) {
                 var p = ((y - 745) * that.vpxmultiplier) + "px";
                 var H = ((ab - 745) * that.hpxmultiplier) + "px";
                 var ac = "c_" + u;
-                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + l + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='top:" + p + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
+                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + (l || '"--------"') + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='top:" + p + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
             }
             if (y < 5 && ab >= 745) {
                 var p = (((y + 750) * that.vpxmultiplier) + that.topedgesize) + "px";
                 var H = ((ab - 745) * that.hpxmultiplier) + "px";
                 var ac = "c_" + u;
-                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + l + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='top:" + p + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
+                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + (l || '"--------"') + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='top:" + p + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
             }
             if (y < 5 && ab < 5) {
                 var p = (((y + 750) * that.vpxmultiplier) + that.topedgesize) + "px";
                 var H = (((ab + 750) * that.hpxmultiplier) + that.leftedgesize) + "px";
                 var ac = "c_" + u;
-                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + l + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='top:" + p + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
+                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + (l || '"--------"') + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='top:" + p + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
             }
             if (y >= 745 && ab < 5) {
                 var H = (((ab + 750) * that.hpxmultiplier) + that.leftedgesize) + "px";
                 var p = ((y - 745) * that.vpxmultiplier) + "px";
                 var ac = "c_" + u;
-                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + l + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='top:" + p + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
+                s += "<a onclick='modal_maptile(" + M.tileId + ',"' + escape(M.cityName) + '",' + ab + "," + y + ',"' + Z + '","' + escape(z) + '",' + (l || '"--------"') + ',"' + J + '","' + d + '",' + K + "," + M.tileProvinceId + ',"' + R + '","' + G + '",' + Q + "," + W + "," + M.tileCityId + "," + M.tileUserId + ',"' + that.typename[R] + '",' + L + ");return false;' onmouseover='showMapTileTooltip(\"" + v + '",this,event,"mapwindow", ' + ab + ", " + y + ");return false;' onmouseout='removeTooltip();return false;' id='" + ac + "' style='top:" + p + ";left:" + H + ";' class='" + j + " slot'><span></span></a>"
             }
         }
         that.map.innerHTML = s
@@ -34119,7 +34742,7 @@ var MapObject = Class.create({
             onFailure: function () {}
         })
     },
-    getTileData: function (blocklist, callback) {
+    getTileData: function (blocklist, callback, failed_callback) {
         var params = Object.clone(g_ajaxparams);
         params.blocks = blocklist.join(",");
         new Ajax.Request(g_ajaxpath + "ajax/fetchMapTiles.php" + g_ajaxsuffix, {
@@ -34127,6 +34750,11 @@ var MapObject = Class.create({
             parameters: params,
             onSuccess: function (transport) {
                 callback(eval("(" + transport.responseText + ")"))
+            },
+            onFailure: function () {
+                if (failed_callback) {
+                    failed_callback()
+                }
             }
         })
     },
@@ -35381,7 +36009,15 @@ function modal_marketplace_cancel(mid, rtype, postingtype, kremaining, price) {
                 }
                 getModalResourceBar()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                if (!rslt.error_code && rslt.msg) {
+                    var msgObj = {
+                        type: "worker",
+                        text: rslt.msg
+                    };
+                    Modal.showTrackerAlert(msgObj)
+                } else {
+                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                }
             }
         },
         onFailure: function () {}
@@ -38584,13 +39220,13 @@ var cm = function (parent) {
             mmbhtml.push("<div class='playgametext'>" + g_js_strings.commonstr.cost + ": <span>1<img src='" + stimgUrl + "img/mmb_merlintoken1.png'/> " + g_js_strings.modal_mmb.magicaltokens + "</span></div>");
             mmbhtml.push("<div class='playgametoken'>" + g_js_strings.commonstr.youown + ": " + tokenCnt);
             if (tokenCnt > 0) {
-                mmbhtml.push("<a  onclick='Modal.hideModalAll();modal_shop();return false;'>" + g_js_strings.commonstr.buymore + "</a>")
+                mmbhtml.push("<a  onclick='Modal.hideModalAll();cm.ShopView.openShop();return false;'>" + g_js_strings.commonstr.buymore + "</a>")
             }
             mmbhtml.push("</div>");
             if (tokenCnt > 0) {
                 mmbhtml.push("<div class='playbtn clearfix'><a class='button30' onclick='Modal.hideModal();cm.mww.start(0);return false;'><span>" + g_js_strings.modal_mmb.playnow + "</span></a></div><div class='playbtn'><a class='closelink'  onclick='Modal.hideModal();return false;'>" + g_js_strings.modal_mmb.playlater + "</a></div>")
             } else {
-                mmbhtml.push("<div class='playbtn clearfix'><a  class='button30' onclick='Modal.hideModal();modal_shop();return false;'><span>" + g_js_strings.commonstr.buymore + "</span></a></div>")
+                mmbhtml.push("<div class='playbtn clearfix'><a  class='button30' onclick='Modal.hideModal();cm.ShopView.openShop();return false;'><span>" + g_js_strings.commonstr.buymore + "</span></a></div>")
             }
             mmbhtml.push("</div>");
             mmbhtml.push("</div>");
@@ -38679,7 +39315,7 @@ var cm = function (parent) {
                             if (seed.platform.type == "kabam") {
                                 mmbhtml.push("<div class='kabammsg' style='margin-top: 10px; color: #900;'> Playing on Kabam.com gives two tokens per day! </div>")
                             } else {
-                                mmbhtml.push("<div class='kabammsg' style='margin-top: 10px;'><a style=' color: #900;' href='" + seed.platform.url + "' target='_top'> Playing on Kabam.com for one additional FREE token! </a></div>")
+                                mmbhtml.push("<div class='kabammsg' style='margin-top: 10px;'><a style=' color: #900;' href='" + seed.platform.url + "' target='_top'> Play on Kabam.com for one additional FREE token! </a></div>")
                             }
                         }
                         mmbhtml.push("<div class='playbtn clearfix' id='mmbPlayBox'><a onclick='cm.mww.modal_mmb_play();return false;' class='button30' style='width:200px;'><span>" + g_js_strings.modal_mmb.playnow + "</span></a></div>");
@@ -38740,27 +39376,70 @@ Modal.Properties = {
     stack: []
 };
 Modal.Methods = {
-    showAlert: function (d, a, e) {
-        var c = new Array();
-        c.push("<div class='kofcalert'>");
-        c.push(d);
-        c.push("</div>");
-        if (a) {
-            c.push("<div class='kofccustombtn clearfix'>");
-            c.push(a);
-            c.push("</div>")
+    showAlert: function (d, a, e, f) {
+        if (d.tracker) {
+            this.showTrackerAlert(d, e)
         } else {
-            c.push("<div class='kofcalertbtn clearfix'>");
-            c.push("<a class='button20' onclick='Modal.hideModal();return false;'><span>");
-            c.push(g_js_strings.commonstr.ok);
-            c.push("</span></a>");
-            c.push("</div>")
+            f = f || {};
+            var c = new Array();
+            c.push("<div class='kofcalert'>");
+            c.push(d);
+            c.push("</div>");
+            if (a) {
+                c.push("<div class='" + (f.buttonContainerClass ? f.buttonContainerClass : "kofccustombtn clearfix") + "'>");
+                c.push(a);
+                c.push("</div>")
+            } else {
+                c.push("<div class='kofcalertbtn clearfix'>");
+                c.push("<a class='button20' onclick='Modal.hideModal();return false;'><span>");
+                c.push(g_js_strings.commonstr.ok);
+                c.push("</span></a>");
+                c.push("</div>")
+            }
+            var b = 150;
+            if (e) {
+                b = e
+            }
+            this.showModal(400, 400, 150, b, f.title ? f.title : g_js_strings.modaltitles.notice, c.join(""), null, null, null, f)
         }
-        var b = 150;
-        if (e) {
-            b = e
+    },
+    showTrackerAlert: function (a, d) {
+        var e = d || 150,
+            b = {
+                merlin: [
+                    ["default", "0", "1", "3"], "error"],
+                traffic: [
+                    ["8"], "excesstraffic"],
+                knight: [
+                    ["216"], "error"],
+                worker: [
+                    ["103", "2", "102"], "error"]
+            },
+            i = a.type || "",
+            g = g_js_strings.modaltitles.error,
+            f = a.text || "";
+        if (a.errorCode && a.msg) {
+            for (var h in b) {
+                if (b[h][0].indexOf(a.errorCode.toString()) != -1) {
+                    i = h;
+                    g = g_js_strings.modaltitles[b[h][1]];
+                    break
+                }
+            }
+            if (f == "") {
+                f = g_js_strings.errorcode["err_" + a.errorCode]
+            }
         }
-        this.showModal(400, 400, 150, b, g_js_strings.modaltitles.notice, c.join(""))
+        var c = [];
+        c.push("<div class='kofctrackeralert " + i + "'>");
+        c.push("<div class='text'>");
+        c.push(f);
+        c.push("</div>");
+        c.push("</div>");
+        c.push("<div class='btn' onclick='Modal.hideModal();return false;'>");
+        c.push(g_js_strings.commonstr.ok);
+        c.push("</div>");
+        this.showModal(436, 279, 150, e, g, c.join(""))
     },
     showModalUEP: function (c, b, d, e) {
         var a = new Array();
@@ -38849,7 +39528,9 @@ Modal.Methods = {
         this.modalid = 0
     },
     showWindow: function (e, g, k, h, p, l, n, i, f, c) {
-        c = c || {};
+        c = jQuery.extend({
+            additionalClass: ""
+        }, c);
         if (!$("modalBox" + this.modalid)) {
             if (this.onCloseCallback) {
                 this.m_onCloseCallbackMap[this.modalid] = this.onCloseCallback;
@@ -38859,7 +39540,7 @@ Modal.Methods = {
             a.id = "modalBox" + this.modalid;
             modalboxHtml = new Array();
             if (parseInt(e) == 740) {
-                a.className = "modalBox " + (f === false ? "" : ("modalBox740 " + ((c.additionalClass) ? c.additionalClass : "")));
+                a.className = "modalBox " + (f === false ? "" : ("modalBox740 " + c.additionalClass));
                 modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner modalInner' + (f === false ? "" : "740") + '">');
                 modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBar740" style="' + (f === false ? "display: none;" : "") + '">')
             } else {
@@ -38869,28 +39550,34 @@ Modal.Methods = {
                     modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBar500">')
                 } else {
                     if (parseInt(e) == 400) {
-                        a.className = "modalBox modalBox400";
+                        a.className = "modalBox modalBox400 " + c.additionalClass;
                         modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner modalInner400">');
                         modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBar400">')
                     } else {
-                        if (parseInt(e) == 544) {
-                            a.className = "modalBox modalBoxUEP";
-                            modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner modalInnerUEP">');
-                            modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBarUEP">')
+                        if (parseInt(e) == 436) {
+                            a.className = "modalBox modalBox436";
+                            modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner modalInner436">');
+                            modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBar436">')
                         } else {
-                            if (parseInt(e) == 250) {
-                                a.className = "modalBox modalBoxFBFan";
-                                modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner modalInnerFBFan">');
-                                modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBarFBFan">')
+                            if (parseInt(e) == 544) {
+                                a.className = "modalBox modalBoxUEP";
+                                modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner modalInnerUEP">');
+                                modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBarUEP">')
                             } else {
-                                if (parseInt(e) == 580) {
-                                    a.className = "modalBox modalBoxHelpDesk";
-                                    modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner modalInnerHelpDesk">');
-                                    modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBarHelpDesk">')
+                                if (parseInt(e) == 250) {
+                                    a.className = "modalBox modalBoxFBFan";
+                                    modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner modalInnerFBFan">');
+                                    modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBarFBFan">')
                                 } else {
-                                    a.className = "modalBox";
-                                    modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner">');
-                                    modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar">')
+                                    if (parseInt(e) == 580) {
+                                        a.className = "modalBox modalBoxHelpDesk";
+                                        modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner modalInnerHelpDesk">');
+                                        modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar modalTitleBarHelpDesk">')
+                                    } else {
+                                        a.className = "modalBox";
+                                        modalboxHtml.push('<div id="modalInner' + this.modalid + '" class="modalInner">');
+                                        modalboxHtml.push('<div id="modalTitleBar' + this.modalid + '" class="modalTitleBar">')
+                                    }
                                 }
                             }
                         }
@@ -38898,13 +39585,15 @@ Modal.Methods = {
                 }
             }
             modalboxHtml.push('<div id="modalTitle' + this.modalid + '" class="modalTitle"></div>');
-            modalboxHtml.push('<div id="modalControls' + this.modalid + '" class="modalControls">');
-            if (parseInt(e) == 250) {
-                modalboxHtml.push('<a onclick="Modal.hideModal();" id="modalControlsClose' + this.modalid + '">x</a>')
-            } else {
-                modalboxHtml.push('<a onclick="Modal.hideModal();" id="modalControlsClose' + this.modalid + '"><span>&nbsp;</span></a>')
+            if (!c.noControl) {
+                modalboxHtml.push('<div id="modalControls' + this.modalid + '" class="modalControls">');
+                if (parseInt(e) == 250) {
+                    modalboxHtml.push('<a onclick="Modal.hideModal();" id="modalControlsClose' + this.modalid + '">x</a>')
+                } else {
+                    modalboxHtml.push('<a onclick="Modal.hideModal();" id="modalControlsClose' + this.modalid + '"><span>&nbsp;</span></a>')
+                }
+                modalboxHtml.push("</div>")
             }
-            modalboxHtml.push("</div>");
             modalboxHtml.push("</div>");
             if (parseInt(e) == 740) {
                 modalboxHtml.push('<div id="modalContent' + this.modalid + '" class="modalContent modalContent740"></div>')
@@ -39041,19 +39730,34 @@ Modal.Methods = {
         a.formattedText = ["<div style='padding-top: 40px; font-size: 12px;'>", "<div style='width: 330px; margin: 0 auto 40px;'>", a.text, "</div>", "<div style='margin-top:10px; text-align: center;'>", "<a class='okay inlineButton blue20'><span>", g_js_strings.commonstr.ok, "</span></a> &nbsp; ", "<a class='cancel inlineButton blue20'><span>", g_js_strings.commonstr.cancel, "</span></a>", "</div>", "</div>"].join("");
         Modal.okay(a)
     },
-    multiButton: function (d) {
+    multiButton: function (h) {
+        var g = new Array();
         var c = new Array();
-        var b = new Array();
-        c.push("<div class='mistwarn'>" + d.body + "</div>");
-        for (var a in d.buttons) {
-            if (d.buttons.hasOwnProperty(a)) {
-                b.push("<a class='button20 choice" + a + "'><span>" + d.buttons[a].txt + "</span></a>")
+        var d = null;
+        var b = false;
+        g.push("<div class='mistwarn'>" + h.body + "</div>");
+        for (var a in h.buttons) {
+            if (h.buttons.hasOwnProperty(a)) {
+                var f = h.buttons[a];
+                if (!b && f.description) {
+                    b = true
+                }
+                d = f.cls || "button20";
+                c.push("<a class='" + d + " choice" + a + "'><span>" + f.txt + "</span></a>")
             }
         }
-        Modal.showAlert(c.join(""), b.join(""));
-        for (var a in d.buttons) {
-            if (d.buttons.hasOwnProperty(a)) {
-                jQuery(".choice" + a).bind("click", d.buttons[a].exe)
+        Modal.showAlert(g.join(""), c.join(""), undefined, h);
+        for (var a in h.buttons) {
+            if (h.buttons.hasOwnProperty(a)) {
+                var e = jQuery("#modalBox" + this.modalid + " .choice" + a);
+                if (b) {
+                    e.wrap('<div class="descriptionButtonWrapper" />')
+                }
+                e.bind("click", h.buttons[a].exe);
+                if (h.buttons[a].description) {
+                    e.parent().width(e.outerWidth());
+                    e.parent().append('<div class="description">' + h.buttons[a].description + "</div>")
+                }
             }
         }
     }
@@ -39503,6 +40207,18 @@ function loadPage_pagination(divId, currentPage, callbackFunction, totalPages) {
         $(divId + "_pageNo_" + currentPage_Pagination).className = "paginationHighlightedPage"
     }
 };
+
+function resizeIframe(b, a) {
+    var c = parseInt(a);
+    if (c > 100) {
+        if (b != "") {
+            $(b).height = (c + 20) + "px"
+        } else {
+            $("paymentIFrame").height = (c + 30) + "px";
+            $("paymentPage").height = (c + 30) + "px"
+        }
+    }
+}
 if (!window.Payment) {
     var Payment = new Object()
 }
@@ -39547,28 +40263,43 @@ Payment.Methods = {
         this.otherData = [];
         this.isDefaultPaypal = false
     },
-    startPaymentModal: function () {
-        var params = Object.clone(g_ajaxparams);
-        cm.flash.hideFlash();
-        var profiler = new cm.Profiler("ResponseTime", "paymentXml.php");
-        new Ajax.Request(g_ajaxpath + "ajax/paymentXml.php", {
-            method: "post",
-            parameters: params,
-            onSuccess: function (transport) {
-                profiler.stop();
-                var rslt = eval("(" + transport.responseText + ")");
-                if (rslt.ok) {
-                    var data = rslt.data;
-                    if (data) {
-                        Payment.initializeData(data);
-                        Payment.renderPaymentModal()
-                    }
-                } else {}
-            },
-            onFailure: function () {
-                profiler.stop()
+    processPaymentXML: function () {
+        var a = cm.PreloadedPaymentXMLService.getResult();
+        if (a.ok) {
+            if (cm.PreloadedPaymentXMLService.getVersion() == 2) {
+                var b = a.data.paymentURL;
+                this.paymentURL = b;
+                if (b) {
+                    Payment.renderPaymentModalV2(b)
+                } else {
+                    Modal.showAlert(g_js_strings.errorcode.err_default)
+                }
+            } else {
+                var c = a.data;
+                Payment.initializeData(c);
+                Payment.renderPaymentModal()
             }
-        })
+        } else {
+            Modal.showAlert(g_js_strings.errorcode.err_default)
+        }
+    },
+    startPaymentModal: function () {
+        cm.flash.hideFlash();
+        if (!cm.PreloadedPaymentXMLService.hasExpired()) {
+            Payment.processPaymentXML()
+        } else {
+            var a = function (c) {
+                    cm.PreloadedPaymentXMLService.removeEventListener(cm.ServiceEvent.SUCESS, a);
+                    Payment.processPaymentXML()
+                };
+            var b = function (c) {
+                    cm.PreloadedPaymentXMLService.removeEventListener(cm.ServiceEvent.FAILED, b);
+                    Modal.showAlert(g_js_strings.errorcode.err_default)
+                };
+            cm.PreloadedPaymentXMLService.addEventListener(cm.ServiceEvent.SUCCESS, a);
+            cm.PreloadedPaymentXMLService.addEventListener(cm.ServiceEvent.FAILED, b);
+            cm.PreloadedPaymentXMLService.makeRequest()
+        }
     },
     initializeData: function (c) {
         this.resetData();
@@ -39649,15 +40380,35 @@ Payment.Methods = {
             this.offersData = a
         }
     },
+    renderPaymentModalV2: function (a) {
+        var c = "paymentIFrame";
+        if ($(c)) {
+            return
+        }
+        var b = '<div class="modalBody" id="paymentPage">  <iframe style="background-color: transparent; margin-left: -2px; border: medium none;" width="760px" id="paymentIFrame" name="paymentIFrame" allowtransparency="true" frameborder="0"></iframe></div>';
+        Modal.onCloseCallback = modal_getgems_check;
+        Modal.show({
+            winWidth: 740,
+            winHeight: 400,
+            winLeft: 10,
+            winTop: 10,
+            winTitle: g_js_strings.modaltitles.getmoregems,
+            winContent: b,
+            callback: function () {
+                modal_getgems_open;
+                cm.IframeUtil.post("paymentIFrame", a)
+            },
+            shutdown: cm.flash.showFlash
+        })
+    },
     renderPaymentModal: function () {
         var a = [];
         a.push("<div id='modal_getgemsdiv'>");
         a.push(this.getTopHtml());
         a.push("<div class='payoptions clearfix'>");
-        a.push(this.getPackagesHtml());
         a.push(this.getOptionListHtml());
+        a.push(this.getPackagesHtml());
         a.push("</div>");
-        a.push('<div id="payment_form_container"></div>');
         a.push("</div>");
         if (g_env == "prod") {
             a.push('<div style="display:inline;"><img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1059019849/?label=C6l1CLvt5gEQybj9-AM&amp;guid=ON&amp;script=0"/></div>')
@@ -39700,55 +40451,53 @@ Payment.Methods = {
     },
     getPackagesHtml: function () {
         var a = this.modalGetPackages();
-        var f = [];
+        var h = [];
         var b = 0;
-        var h = 0;
-        var g = 0;
+        var k = 0;
+        var j = 0;
         var c = "";
-        var d = 0;
-        var l = "";
-        var j = false;
-        f.push("<div class='promolist'>");
-        for (var e = 0; e < a.length; e++) {
-            b = parseInt(a[e].base) + parseInt(a[e].bonus);
-            h = a[e].price;
-            g = a[e].msrpPrice;
-            if (g != h) {
-                j = true
+        var f = 0;
+        var p = "";
+        var l = false;
+        h.push("<div class='promolist'>");
+        for (var g = 0; g < a.length; g++) {
+            b = parseInt(a[g].base) + parseInt(a[g].bonus);
+            k = a[g].price;
+            j = a[g].msrpPrice;
+            if (j != k) {
+                l = true
             } else {
-                j = false
+                l = false
             }
-            c = a[e].url;
-            d = a[e].packageChestId;
-            l = this.c_payment_abbr_to_symbol[a[e].currency] || a[e].currency;
-            f.push("<a class='gembtn " + (j ? "discount" : "") + '\' onclick=\'cm.ConversionTracker.track("payments", "PAYMENT_BUY_PACKAGE", "PACKAGE' + (e + 1) + '");Payment.gotoIframe("' + c + '",' + a[e].cents + "," + e + ");return false;' onmouseout='removeTooltip();return false;' onmouseover='Payment.doPackageTooltip(" + e + ",this,event);'>");
-            f.push("<img src='");
-            f.push(stimgUrl);
-            f.push("img/trialpay/");
-            f.push(d);
-            f.push(".png' class='packagepic'/>");
-            f.push("<div class='packageinfo'><div class='ttl'>");
-            f.push(itemlist["i" + d].name);
-            f.push("</div><div class='desc'>");
-            f.push(itemlist["i" + d].description);
-            f.push("</div></div>");
-            f.push("<div class='pricing'>");
-            if (j) {
-                f.push(g_js_strings.modal_getgems.purchaseafordiscount.replace("%1$s", b).replace("%2$s", parseInt(g)).replace(/%3\$s/g, l).replace("%4$s", h))
+            c = a[g].url;
+            f = a[g].packageChestId;
+            p = this.c_payment_abbr_to_symbol[a[g].currency] || a[g].currency;
+            var n, e = "";
+            if (l) {
+                n = g_js_strings.modal_getgems.purchaseafordiscount.replace("%1$s", b).replace("%2$s", parseInt(j)).replace(/%3\$s/g, p).replace("%4$s", k);
+                var m = parseInt((parseFloat(j) - parseFloat(k)) / parseFloat(j) * 100);
+                e = "saleTag" + m
             } else {
-                f.push(g_js_strings.modal_getgems.purchaseaforb.replace("%1$s", b).replace("%2$s", h).replace("%3$s", l))
+                n = g_js_strings.modal_getgems.purchaseaforb.replace("%1$s", b).replace("%2$s", k).replace("%3$s", p)
             }
-            f.push("</div>");
-            if (j) {
-                var k = parseInt((parseFloat(g) - parseFloat(h)) / parseFloat(g) * 100);
-                if (k == 10 || k == 15 || k == 20 || k == 25 || k == 50) {
-                    f.push("<div class='discount'><img src='img/trialpay/discount_label_" + k + ".png' /></div>")
-                }
-            }
-            f.push("</a>")
+            var o = '				<div class="packageContainer package#{chestId} #{onsale}" onclick="cm.ConversionTracker.track(\'payments\', \'PAYMENT_BUY_PACKAGE\', \'PACKAGE#{index1}\');Payment.gotoIframe(\'#{iframeUrl}\',#{cents},#{index0});return false;" onmouseout="removeTooltip();return false;" onmouseover="Payment.doPackageTooltip(#{index0},this,event);">			    <div class="rightColumn"></div>			    <div class="leftColumn">			        <div class="packageName">#{name}</div>			        <div class="packageDescription">#{description}</div>			        <a class="packageButton"><span class="innerContainer">#{buttonText}</span></a><span class="#{saleTag}">&nbsp;</span>			    </div>			</div>			';
+            packageInfo = {
+                chestId: f,
+                onsale: (l ? "onsale" : ""),
+                index0: g,
+                index1: g + 1,
+                iframeUrl: c,
+                cents: a[g].cents,
+                name: itemlist["i" + f].name,
+                description: itemlist["i" + f].description,
+                buttonText: n,
+                saleTag: e
+            };
+            var d = new Template(o).evaluate(packageInfo);
+            h.push(d)
         }
-        f.push("</div>");
-        return f.join("")
+        h.push("</div>");
+        return h.join("")
     },
     doPackageTooltip: function (d, g, a) {
         var c = this.modalGetPackages();
@@ -39823,76 +40572,66 @@ Payment.Methods = {
         c.push("</div>");
         return c.join("")
     },
-    gotoIframe: function (p, a, d, e) {
+    gotoIframe: function (l, a, c, d) {
         removeTooltip();
-        var l = false;
-        if (p) {
-            var b = p;
-            var k = a || null;
-            l = this.isDefaultPaypal || e
+        var g = false;
+        if (l) {
+            var b = l;
+            var f = a || null;
+            g = this.isDefaultPaypal || d
         } else {
-            var q = $("gemsdirectselect").value;
-            var b = this.optionOrder[this.selectedIndex].campaigns[q].url;
-            var k = this.optionOrder[this.selectedIndex].campaigns[q].cents || null;
-            l = (this.optionOrder[this.selectedIndex].category == "Debit Cards" || this.optionOrder[this.selectedIndex].category == "PayPal") ? true : false;
-            var j = ["PAYMENT_CREDIT_CARD", "PAYMENT_PAYPAL2", "PAYMENT_MOBILE2"];
-            cm.ConversionTracker.track("payments", j[this.selectedIndex], "")
+            var m = $("gemsdirectselect").value;
+            var b = this.optionOrder[this.selectedIndex].campaigns[m].url;
+            var f = this.optionOrder[this.selectedIndex].campaigns[m].cents || null;
+            g = (this.optionOrder[this.selectedIndex].category == "Debit Cards" || this.optionOrder[this.selectedIndex].category == "PayPal") ? true : false;
+            var e = ["PAYMENT_CREDIT_CARD", "PAYMENT_PAYPAL2", "PAYMENT_MOBILE2"];
+            cm.ConversionTracker.track("payments", e[this.selectedIndex], "")
         }
-        var m = "_blank";
-        if (!l) {
-            m = "payment_iframe";
-            var o = [];
-            o.push("<div class=\"goback\"><a onclick=\"cm.ConversionTracker.track('payments', 'PAYMENT_TRIALPAY_BACK', '');Modal.hideModal();Payment.startPaymentModal();return false;\">" + g_js_strings.modal_getgems_direct.backtogem + "</a></div>");
-            if (parseInt(d) >= 0) {
-                var n = Payment.modalGetPackages()[d];
-                o.push("<div class='promobanner clearfix'");
-                o.push(">");
-                o.push("<img src='");
-                o.push(stimgUrl);
-                o.push("img/trialpay/");
-                o.push(n.packageChestId);
-                o.push(".png'/>");
-                o.push("<div class='promoinfo'>");
-                o.push("<div class='nm'>" + n.packageName + "</div>");
-                o.push("<div class='desc'>" + n.packageDescription + "</div>");
-                o.push("</div>");
-                o.push("</div>")
+        var h = "_blank";
+        if (!g) {
+            h = "payment_iframe";
+            var k = [];
+            k.push("<div class=\"goback\"><a onclick=\"cm.ConversionTracker.track('payments', 'PAYMENT_TRIALPAY_BACK', '');Modal.hideModal();Payment.startPaymentModal();return false;\">" + g_js_strings.modal_getgems_direct.backtogem + "</a></div>");
+            if (parseInt(c) >= 0) {
+                var j = Payment.modalGetPackages()[c];
+                k.push("<div class='promobanner clearfix'");
+                k.push(">");
+                k.push("<img src='");
+                k.push(stimgUrl);
+                k.push("img/payments/chests/");
+                k.push(j.packageChestId);
+                k.push(".png'/>");
+                k.push("<div class='promoinfo'>");
+                k.push("<div class='nm'>" + j.packageName + "</div>");
+                k.push("<div class='desc'>" + j.packageDescription + "</div>");
+                k.push("</div>");
+                k.push("</div>")
             }
-            if (k && Payment.payPalData) {
-                o.push("<div class='paybypaypal'><a onclick='Payment.gotoIframe(Payment.getPayPalLink(" + k + "), undefined, undefined, true);return false;'>");
-                o.push("<img src='");
-                o.push(stimgUrl);
-                o.push("img/paypal.jpg'/> " + g_js_strings.modal_getgems_direct.clickforpaypal + "</a></div>")
+            if (f && Payment.payPalData) {
+                k.push("<div class='paybypaypal'><a onclick='Payment.gotoIframe(Payment.getPayPalLink(" + f + "), undefined, undefined, true);return false;'>");
+                k.push("<img src='");
+                k.push(stimgUrl);
+                k.push("img/paypal.jpg'/> " + g_js_strings.modal_getgems_direct.clickforpaypal + "</a></div>")
             }
-            o.push('<div id="payment_iframe_loading" style="width:600px;height:585px;margin:20px 0 15px 55px;overflow:hidden;"><div style="margin: 50px;text-align:center;font-size: 20px;"><img src="' + stimgUrl + 'img/spinny.gif" /></div></div>');
-            o.push('<iframe name="payment_iframe" id="payment_iframe" width="600" height="585" scrolling="no" frameborder="0" style="display:none; margin:20px 0 15px 55px;"></iframe>');
+            k.push('<div id="payment_iframe_loading" style="width:600px;height:585px;margin:20px 0 15px 55px;overflow:hidden;"><div style="margin: 50px;text-align:center;font-size: 20px;"><img src="' + stimgUrl + 'img/spinny.gif" /></div></div>');
+            k.push('<iframe name="payment_iframe" id="payment_iframe" width="600" height="585" scrolling="no" frameborder="0" style="display:none; margin:20px 0 15px 55px;"></iframe>');
             if (undefined == cm.features.NO_RIGHTNOW_CRM || "true" == cm.features.NO_RIGHTNOW_CRM) {
-                o.push("<div class='phone'>Have a question? Contact us at (877) 399-6537</div>")
+                k.push("<div class='phone'>Have a question? Contact us at (877) 399-6537</div>")
             } else {
-                o.push("<div class='phone'><a onclick='HelpDesk.show();return false;'>");
-                o.push(g_js_strings.modal_getgems_direct.needassistance);
-                o.push("</a></div>")
+                k.push("<div class='phone'><a onclick='HelpDesk.show();return false;'>");
+                k.push(g_js_strings.modal_getgems_direct.needassistance);
+                k.push("</a></div>")
             }
-            o.push('<div id="payment_form_container"></div>');
-            $("modal_getgemsdiv").innerHTML = o.join("");
+            $("modal_getgemsdiv").innerHTML = k.join("");
             $("payment_iframe").observe("load", this.gotoIframeDone)
         }
-        var r = b.split("?", 2);
-        var g = r[1].split("&");
-        var f = [];
-        f.push('<form id="payment_iframe_form" method="post" action="' + r[0] + '" target="' + m + '">');
-        for (var h = g.length - 1; h >= 0; --h) {
-            var c = g[h].split("=", 2);
-            f.push('<input type="hidden" name="' + c[0] + '" value="' + c[1] + '" />')
-        }
-        f.push("</form>");
-        $("payment_form_container").innerHTML = f.join("");
-        $("payment_iframe_form").submit()
+        cm.IframeUtil.post(h, b)
     },
     gotoBigIframe: function (a) {
         this.gotoIframe(a)
     },
     gotoIframeDone: function (a) {
+        $("payment_iframe").stopObserving("load", this.gotoIframeDone);
         $("payment_iframe_loading").hide();
         $("payment_iframe").show()
     },
@@ -40854,6 +41593,128 @@ ProgressBar.Methods = {
 };
 Object.extend(ProgressBar, ProgressBar.Methods);
 Object.extend(ProgressBar, ProgressBar.Properties);
+cm = cm || {};
+cm.QuestModel = jQueryClass.extend({
+    init: function (b, a) {
+        this.id = Number(b);
+        this.heading = a.heading;
+        this.name = a.name;
+        this.category = a.category;
+        this.description = a.description;
+        this.objective = "";
+        this.order = Number(a.preferredorder);
+        this.prerequisite = Number(a.prerequisite);
+        this.reward = this.setReward(a.reward);
+        this.claimed = "";
+        this.prereqmet = "";
+        this.objectivemet = ""
+    },
+    setReward: function (g) {
+        var f = g[0],
+            b = g[1],
+            e = g[2],
+            h = g[3],
+            d = {};
+        d.resources = [];
+        d.units = [];
+        d.items = [];
+        d.player = [];
+        if (f.length !== 0) {
+            for (var j = 0; j < f.length; ++j) {
+                var c = Number(j),
+                    a, i = Number(f[j]);
+                switch (c) {
+                case 0:
+                    a = g_js_strings.commonstr.gold;
+                    break;
+                case 1:
+                    a = g_js_strings.commonstr.food;
+                    break;
+                case 2:
+                    a = g_js_strings.commonstr.wood;
+                    break;
+                case 3:
+                    a = g_js_strings.commonstr.stone;
+                    break;
+                case 4:
+                    a = g_js_strings.commonstr.ore;
+                    break;
+                case 5:
+                    a = g_js_strings.commonstr.population;
+                    break
+                }
+                d.resources.push({
+                    id: c,
+                    name: a,
+                    count: i,
+                    type: "resource"
+                })
+            }
+        } else {
+            d.resources = null
+        }
+        if (b.length !== 0) {
+            for (var j = 0; j < b.length; ++j) {
+                var c = Number(b[j][0]),
+                    i = Number(b[j][1]);
+                d.units.push({
+                    id: c,
+                    name: unitcost["unt" + c][0],
+                    count: i,
+                    type: "unit"
+                })
+            }
+        } else {
+            d.units = null
+        }
+        if (e.length !== 0) {
+            for (var j = 0; j < e.length; ++j) {
+                if (typeof (e[j]) == "number" || typeof (e[j]) == Number) {
+                    e = [
+                        [e[0], e[1]]
+                    ]
+                }
+                var c = Number(e[j][0]);
+                var a = itemlist["i" + c].name;
+                var i = Number(e[j][1]);
+                d.items.push({
+                    id: c,
+                    name: a,
+                    count: i,
+                    type: "item"
+                })
+            }
+        } else {
+            d.items = null
+        }
+        for (var j = 0; j < h.length; ++j) {
+            var c = Number(j),
+                a, i = Number(h[j]);
+            switch (j) {
+            case 0:
+                a = g_js_strings.commonstr.gems;
+                break;
+            case 1:
+                a = g_js_strings.commonstr.might;
+                break;
+            case 2:
+                a = g_js_strings.commonstr.title;
+                break
+            }
+            if (i > 0) {
+                d.player.push({
+                    id: c,
+                    name: a,
+                    count: i,
+                    type: "player"
+                })
+            } else {
+                d.player.push(null)
+            }
+        }
+        return d
+    }
+});
 
 function modal_quests() {
     var a = new Array();
@@ -41188,7 +42049,15 @@ function modal_quest_getaward(tgt, share) {
                     }
                     removePopOverLayer()
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    if (rslt.tracker) {
+                        var msgObj = {
+                            type: "knight",
+                            text: rslt.msg
+                        };
+                        Modal.showTrackerAlert(msgObj)
+                    } else {
+                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    }
                 }
             },
             onFailure: function () {}
@@ -42711,6 +43580,492 @@ cm.ItemServiceEvent.BUY_SUCCESS = "buySuccess";
 cm.ItemServiceEvent.BUY_FAILED = "buyFailed";
 cm.ItemServiceEvent.APPLY_SUCCESS = "applySuccess";
 cm.ItemServiceEvent.APPLY_FAILED = "applyFailed";
+cm.ServiceEvent = function (b) {
+    cm.CustomEvent.call(this, b);
+    var a;
+    this.setResponse = function (c) {
+        a = c
+    };
+    this.getResponse = function () {
+        return a
+    }
+};
+cm.OOP.inherits(cm.ItemServiceEvent, cm.CustomEvent);
+cm.ServiceEvent.SUCCESS = "success";
+cm.ServiceEvent.FAILED = "failed";
+cm.PaymentXMLService = function (b) {
+    cm.BaseItemService.call(this);
+    var d = this;
+    var e = b;
+    var a;
+    var c;
+    this.getResult = function () {
+        return c
+    };
+    this.getVersion = function () {
+        return e
+    };
+    this.hasExpired = function () {
+        var f = !c || !c.ok;
+        if (!f && e == 2) {
+            f = unixtime() > a
+        }
+        return f
+    };
+    this.makeRequest = function (g) {
+        var f = new cm.Profiler("ResponseTime", "paymentXml.php");
+        var i = Object.clone(g_ajaxparams);
+        i.v = e;
+        i.platform = seed.platform.type;
+        for (key in g) {
+            var h = g[key];
+            i[key] = h
+        }
+        new Ajax.Request(g_ajaxpath + "ajax/paymentXml.php", {
+            method: "post",
+            parameters: i,
+            onSuccess: function (j) {
+                f.stop();
+                a = unixtime() + 4 * 60;
+                c = j.responseText.evalJSON(true);
+                var k = new cm.ServiceEvent(cm.ServiceEvent.SUCCESS);
+                k.setTarget(d);
+                k.setResponse(j);
+                d.dispatchCustomEvent(k)
+            },
+            onFailure: function () {
+                f.stop();
+                var j = new cm.ServiceEvent(cm.ServiceEvent.FAILED);
+                d.DispatchCustomEvent(j)
+            }
+        })
+    }
+};
+cm.OOP.inherits(cm.PaymentXMLService, cm.BaseItemService);
+cm.BootLoader.add(function () {
+    var a = 1;
+    if (!window.g_devPaymentVersion) {
+        a = g_paymentVersion
+    } else {
+        a = g_devPaymentVersion
+    }
+    var b = {
+        v: a
+    };
+    cm.PreloadedPaymentXMLService = new cm.PaymentXMLService(a)
+});
+cm = cm || {};
+cm.ShopController = function ($) {
+    var buy = function (itemId) {
+            var item = ksoItems[itemId],
+                gems = Number(seed.player.gems),
+                isCourtItem;
+            if (item.price > gems) {
+                cm.ShopView.openGetMoreGemsModal()
+            } else {
+                var params = Object.clone(g_ajaxparams);
+                params.iid = item.id;
+                if (item.isOnSale) {
+                    params.sale = 1
+                }
+                var profiler = new cm.Profiler("ResponseTime", "buyItem.php");
+                new Ajax.Request(g_ajaxpath + "ajax/buyItem.php" + g_ajaxsuffix, {
+                    method: "post",
+                    parameters: params,
+                    onSuccess: function (transport) {
+                        var rslt = eval("(" + transport.responseText + ")");
+                        if (rslt.ok) {
+                            seed.player.gems = Number(seed.player.gems) - item.price;
+                            var kso1 = seed.items["i" + item.id];
+                            if (seed.items["i" + item.id]) {
+                                seed.items["i" + item.id] = Number(seed.items["i" + item.id]) + 1
+                            } else {
+                                seed.items["i" + item.id] = 1
+                            }
+                            var kso2 = seed.items["i" + item.id];
+                            item.add();
+                            $("#shopGemQuantity").text(seed.player.gems);
+                            var text = g_js_strings.modal_shop_buy.purchasealert.replace("%1$s", item.name);
+                            $("#shopMessage").text(text);
+                            $("#shopMessage").show();
+                            $("#item" + item.id + "Count").text(item.count);
+                            if (item.category == 6) {
+                                cm.ShopView.removeItemFromShop(item.id)
+                            }
+                            if ((item.id >= 1202 && item.id <= 1210) || (item.id >= 700 && item.id <= 900) || item.id == 10018) {
+                                if ($(".item").length === 0) {
+                                    cm.ShopView.goPrevPage()
+                                } else {
+                                    cm.ShopView.organizeItems()
+                                }
+                                if (item.id == 10018) {
+                                    common_postToProfile("20", Object.clone(template_data_20), Object.clone(actionlink_data_20), continuation_20, new Array())
+                                }
+                            }
+                            if (item.id == 2) {
+                                if (seed.player.spentFiveGems && seed.player.spentFiveGems == 0) {
+                                    seed.player.spentFiveGems = 1
+                                }
+                            }
+                            cm.MixPanelTracker.track("store_purchase", {
+                                item: itemlist["i" + itemId].name,
+                                cost: itemcost,
+                                usr_gen: seed.player.g,
+                                usr_byr: seed.player.y,
+                                usr_ttl: titlenames[seed.player.title],
+                                distinct_id: tvuid
+                            })
+                        }
+                    }
+                })
+            }
+        };
+    var init_ = function () {};
+    init_();
+    return {
+        buy: buy
+    }
+}(jQuery);
+cm = cm || {};
+cm.ShopView = function ($) {
+    var tab0 = [],
+        tab1 = [],
+        tab2 = [],
+        tab3 = [],
+        tab4 = [],
+        tab5 = [],
+        tab6 = [],
+        currentTab, currentPage, itemsPerPage = 9,
+        shopOrder, featuredInfo, featuredOrder, lastTimeChecked = 0;
+    var openShop = function (currentTab) {
+            currentTab = currentTab || 0;
+            currentPage = 1;
+            var title = g_js_strings.modaltitles.shop,
+                bannerMessage, bannerHTML, className;
+            if (cm.WorldSettings.hasKeyValuePair("MIGRATION1", "true")) {
+                bannerMessage = g_js_strings.modal_shop_buy_banner.banner_exclusiveitemsonkabam;
+                if (seed.platform.type == "facebook") {
+                    bannerHTML = "<div class='msg'><a href='" + seed.platform.url + "' target='_top'>" + bannerMessage + "</a></div>"
+                } else {
+                    bannerHTML = "<div class='msg'>" + bannerMessage + "</div>"
+                }
+                className = "new"
+            } else {
+                bannerMessage = "";
+                bannerHTML = "<div class='msg'>" + bannerMessage + "</div>";
+                className = "old"
+            }
+            var template = cm.Template.renderTemplate("Shop", "openShop", {
+                gemsString: g_js_strings.commonstr.gems,
+                getmoregemsString: g_js_strings.modaltitles.getmoregems,
+                getmoreitemsString: g_js_strings.commonstr.inventory,
+                featuredString: g_js_strings.commonstr.featured,
+                generalString: g_js_strings.commonstr.general,
+                speedupString: g_js_strings.commonstr.speedup,
+                combatString: g_js_strings.commonstr.combat,
+                resourcesString: g_js_strings.commonstr.resources,
+                chestString: g_js_strings.commonstr.chest,
+                courtString: g_js_strings.commonstr.court,
+                type: seed.platform.type,
+                url: seed.platform.type == "facebook" ? seed.platform.url : "#",
+                gemsAmount: seed.player.gems,
+                bannerHTML: bannerHTML,
+                className: className
+            });
+            Modal.showModal(740, 400, 10, 10, title, template);
+            if (cm.WorldSettings.hasKeyValuePair("MIGRATION1", "true")) {
+                $("#shopBanner").addClass("fancy_banner")
+            }
+            var params = Object.clone(g_ajaxparams);
+            new Ajax.Request(g_ajaxpath + "ajax/showShop.php" + g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                onSuccess: function (transport) {
+                    var rslt = eval("(" + transport.responseText + ")");
+                    if (rslt.ok) {
+                        shopOrder = rslt.data.shopOrder;
+                        featuredOrder = rslt.data.featuredOrder;
+                        featuredInfo = rslt.data.featureInfo;
+                        lastTimeChecked = unixtime();
+                        openTab(currentTab)
+                    }
+                }
+            })
+        };
+    var organizeItems = function () {
+            var item;
+            tab0 = [];
+            tab1 = [];
+            tab2 = [];
+            tab3 = [];
+            tab4 = [];
+            tab5 = [];
+            tab6 = [];
+            var featuredIndex, item, newEnd, saleStart, saleEnd, now = unixtime();
+            $.each(shopOrder, function (key, item) {
+                item = ksoItems[Number(item)];
+                if (item) {
+                    item.featuredInfo = featuredInfo["i" + item.id];
+                    item.setFeatured();
+                    if (item.isFeatured) {
+                        if (!(item.category === 6 && item.count > 0)) {
+                            newEnd = item.featuredInfo[0];
+                            saleStart = item.featuredInfo[1];
+                            saleEnd = item.featuredInfo[2];
+                            if ((newEnd && newEnd > now) || (saleStart && saleStart < now && saleEnd > now)) {
+                                featuredIndex = featuredOrder.indexOf(item.id);
+                                tab0[featuredIndex] = item.id
+                            }
+                        }
+                    }
+                    switch (item.category) {
+                    case 1:
+                        tab1.push(item.id);
+                        break;
+                    case 2:
+                        tab2.push(item.id);
+                        break;
+                    case 3:
+                        tab3.push(item.id);
+                        break;
+                    case 4:
+                        tab4.push(item.id);
+                        break;
+                    case 5:
+                        tab5.push(item.id);
+                        break;
+                    case 6:
+                        if (item.count === 0) {
+                            tab6.push(item.id)
+                        }
+                        break;
+                    default:
+                        tab1.push(item.id);
+                        break
+                    }
+                }
+            });
+            injectItems()
+        };
+    var openTab = function (tabIndex) {
+            $("#shopTabs").find("a").attr("disabled", true);
+            var link = $("#shopTabs").find("a")[tabIndex];
+            $(link).attr("onClick", "");
+            $("#shopNextPageButton").attr("disabled", true);
+            $("#shopNextPageButton").attr("onClick", "");
+            $("#shopPrevPageButton").attr("disabled", true);
+            $("#shopPrevPageButton").attr("onClick", "");
+            currentPage = 1;
+            $("div#shopMessage").hide();
+            $("li#shopTab" + currentTab).removeClass("selected");
+            currentTab = Number(tabIndex);
+            $("li#shopTab" + currentTab).addClass("selected");
+            organizeItems()
+        };
+    var injectItems = function () {
+            var currentItems, sliceStart, sliceEnd;
+            switch (currentTab) {
+            case 0:
+                currentItems = tab0;
+                break;
+            case 1:
+                currentItems = tab1;
+                break;
+            case 2:
+                currentItems = tab2;
+                break;
+            case 3:
+                currentItems = tab3;
+                break;
+            case 4:
+                currentItems = tab4;
+                break;
+            case 5:
+                currentItems = tab5;
+                break;
+            case 6:
+                currentItems = tab6;
+                break;
+            default:
+                currentItems = tab1;
+                break
+            }
+            if (currentPage < 0) {
+                currentPage = 1
+            }
+            controlPaginationButtons(currentItems.length);
+            controlPaginationList(currentItems.length);
+            sliceStart = (currentPage - 1) * itemsPerPage;
+            sliceEnd = currentPage * itemsPerPage;
+            currentItems = currentItems.slice(sliceStart, sliceEnd);
+            $("#shopItemsContainerList").empty();
+            var costContent, item, className, templateId, templateArray = [];
+            $.each(currentItems, function (key, item) {
+                item = ksoItems[item];
+                costContent = [];
+                if (item.isOnSale) {
+                    costContent.push("<span class='salePrice'>");
+                    costContent.push(item.price);
+                    costContent.push("</span>");
+                    costContent.push("<span class='defaultPrice'>");
+                    costContent.push(item.defaultPrice);
+                    costContent.push("</span>")
+                } else {
+                    costContent.push("<span class='price'>");
+                    costContent.push(item.price);
+                    costContent.push("</span>")
+                }
+                if (item.isOnSale) {
+                    className = "sale"
+                } else {
+                    if (item.isFeatured) {
+                        className = "featured"
+                    } else {
+                        className = "normal"
+                    }
+                }
+                var template = cm.Template.renderTemplate("Shop", "shopItem", {
+                    id: item.id,
+                    description: item.description,
+                    name: item.name,
+                    className: className,
+                    costContent: costContent.join(""),
+                    count: item.count,
+                    ownedString: g_js_strings.commonstr.owned,
+                    buyString: g_js_strings.commonstr.buy
+                });
+                templateArray.push(template)
+            });
+            $("#shopItemsContainerList").append(templateArray.join(""))
+        };
+    var controlPaginationList = function (totalItems) {
+            var totalPages = Math.ceil(totalItems / itemsPerPage),
+                html = [],
+                liHtml = [];
+            if (totalPages != 1) {
+                for (var i = 1; i <= totalPages; ++i) {
+                    liHtml.push("<li class='page'>");
+                    if (i == currentPage) {
+                        liHtml.push("<span class='current'>" + i + "</span>")
+                    } else {
+                        liHtml.push("<span onclick='cm.ShopView.goToPage(" + i + ");'>" + i + "</span>")
+                    }
+                    liHtml.push("</li>")
+                }
+                if ($("#shopPaginationList").length != 0) {
+                    $("#shopPaginationList").empty();
+                    $("#shopPaginationList").append(liHtml.join(""))
+                } else {
+                    html.push("<ul id='shopPaginationList'>");
+                    html.push(liHtml.join(""));
+                    html.push("</ul>");
+                    $("#shopBanner").append(html.join(""))
+                }
+            } else {
+                $("#shopPaginationList").remove()
+            }
+        };
+    var controlPaginationButtons = function (totalItems) {
+            var totalPages = Math.ceil(totalItems / itemsPerPage),
+                prevButton = $("a#shopPrevPageButton"),
+                nextButton = $("a#shopNextPageButton").hide();
+            if (totalPages > 1) {
+                if (currentPage > 1) {
+                    if ((currentPage < totalPages) && (currentPage > 1)) {
+                        prevButton.show();
+                        nextButton.show()
+                    } else {
+                        if (currentPage == totalPages) {
+                            prevButton.show();
+                            nextButton.hide()
+                        } else {
+                            prevButton.hide();
+                            nextButton.show()
+                        }
+                    }
+                } else {
+                    prevButton.hide();
+                    nextButton.show()
+                }
+            } else {
+                prevButton.hide();
+                nextButton.hide()
+            }
+            $("#shopNextPageButton").attr("disabled", false);
+            $("#shopNextPageButton").attr("onClick", "cm.ShopView.goNextPage();");
+            $("#shopPrevPageButton").attr("disabled", false);
+            $("#shopPrevPageButton").attr("onClick", "cm.ShopView.goPrevPage();");
+            var links = $("#shopTabs").find("a");
+            $.each(links, function (index, link) {
+                if (currentTab == index) {
+                    $(link).attr("disabled", true);
+                    $(link).attr("onClick", "")
+                } else {
+                    $(link).attr("disabled", false);
+                    $(link).attr("onClick", "cm.ShopView.openTab(" + index + ");")
+                }
+            })
+        };
+    var goNextPage = function () {
+            $("#shopNextPageButton").attr("disabled", true);
+            $("#shopNextPageButton").attr("onClick", "");
+            $("#shopPrevPageButton").attr("disabled", true);
+            $("#shopPrevPageButton").attr("onClick", "");
+            ++currentPage;
+            organizeItems()
+        };
+    var goPrevPage = function () {
+            $("#shopNextPageButton").attr("disabled", true);
+            $("#shopNextPageButton").attr("onClick", "");
+            $("#shopPrevPageButton").attr("disabled", true);
+            $("#shopPrevPageButton").attr("onClick", "");
+            --currentPage;
+            organizeItems()
+        };
+    var goToPage = function (pageNumber) {
+            currentPage = pageNumber;
+            organizeItems()
+        };
+    var showItemTooltip = function (tgt, evt) {
+            showTooltip(tgt.getAttribute("name"), tgt, evt, "shopItemsContainer")
+        };
+    var removeItemFromShop = function (itemId) {
+            var seedCount = seed.items["i" + itemId],
+                ksoItemsCount = ksoItems[itemId].count;
+            if (seedCount >= 1 && ksoItemsCount >= 1) {
+                $("#item" + itemId).remove()
+            } else {
+                $("#item" + itemId + "Count").text(seed.items["i" + itemId].toString());
+                $("#item" + itemId + "Count").text(ksoItems[itemId].count.toString())
+            }
+            if ($(".item").length === 0) {
+                goPrevPage()
+            } else {
+                organizeItems()
+            }
+        };
+    var openGetMoreGemsModal = function () {
+            var title = g_js_strings.modaltitles.getmoregems;
+            var template = cm.Template.renderTemplate("Shop", "getMoreGems", {
+                content1: g_js_strings.modal_shop_buy_notenough.notenoughgems,
+                content2: g_js_strings.modal_shop_buy_notenough.thatsokay,
+                getMoreGemsString: g_js_strings.modal_shop_buy_notenough.getmoregems
+            });
+            Modal.showModal(500, 400, 130, 10, title, template)
+        };
+    var init_ = function () {};
+    init_();
+    return {
+        showItemTooltip: showItemTooltip,
+        openShop: openShop,
+        openTab: openTab,
+        goNextPage: goNextPage,
+        goPrevPage: goPrevPage,
+        goToPage: goToPage,
+        openGetMoreGemsModal: openGetMoreGemsModal,
+        removeItemFromShop: removeItemFromShop
+    }
+}(jQuery);
 
 function modal_speedup(type, typeid, slotid, subjectCurrentlyBuilding) {
     var params = Object.clone(g_ajaxparams);
@@ -43742,53 +45097,76 @@ var swfobject = function () {
         }
     }();
 cm = cm || {};
-cm.Template = function (f) {
-    var d = null,
+cm.Template = function () {
+    var e = null,
+        d = null,
         c = null;
-    templateId = null;
-    var e = function (h) {
+    var f = function (h) {
             var i = this;
-            new Ajax.Request(g_htmlpath + h + ".html?" + new Date().getTime(), {
+            new Ajax.Request("html/" + h + ".html", {
                 asynchronous: false,
                 method: "get",
                 onSuccess: function (j) {
-                    d = j.responseText
+                    e = j.responseText
                 },
                 onFailure: function () {
-                    d = "Cannot load " + i.templateFile
+                    e = "Cannot load " + i.templateFile
                 }
             })
         };
     var a = function (i) {
-            var j, h;
-            j = d.indexOf("<!--" + i + "-->");
-            h = d.indexOf("<!--/" + i + "-->");
-            if (j >= 0 && h >= 0 && j < h) {
-                return d.substring(j, h)
+            var m, h, j, l, k;
+            j = "<!--" + i + "-->";
+            l = "<!--/" + i + "-->";
+            m = e.indexOf(j) + j.length;
+            h = e.indexOf("<!--/" + i + "-->");
+            if (m >= 0 && h >= 0 && m < h) {
+                k = e.substring(m, h);
+                k.replace("\n", " ");
+                k.replace("\t", " ");
+                k.replace("'", "'");
+                k.replace(/\\'/g, "'");
+                return unescape(k)
             } else {
-                return i + " not found in " + c
+                return i + " not found in " + d
             }
         };
-    var b = function (i, h, m) {
-            i = i;
-            h = h;
-            e(i);
-            var j = a(h),
-                l = f.tmpl(j, [m]),
-                k;
-            if (f.browser.msie) {
-                k = l[1].innerHTML
-            } else {
-                k = l[2].innerHTML
-            }
-            return k
+    var b = function (i, k, j) {
+            d = i;
+            c = k;
+            f(d);
+            var h = a(c);
+            return new Template(h).evaluate(j)
         };
     var g = function () {};
     g();
     return {
         renderTemplate: b
     }
-}(jQuery);
+}();
+cm = cm || {};
+cm.Tooltip = (function (a) {
+    var c = function (d) {
+            if (d.data.proxyElement) {
+                showTooltip(d.data.tooltip, d.data.proxyElement, d.originalEvent, "mainbody")
+            } else {
+                showTooltip(d.data.tooltip, d.target, d.originalEvent, "mainbody")
+            }
+            d.stopPropagation()
+        };
+    var b = function (d) {
+            removeTooltip();
+            d.stopPropagation()
+        };
+    return {
+        setTooltip: function (e) {
+            var d = a(e.htmlElement);
+            delete e.htmlElement;
+            d.mouseenter(e, c);
+            d.mouseout(b)
+        }
+    }
+})(jQuery);
 
 function showTooltip(d, o, j, u) {
     Event.extend(j);
@@ -43820,10 +45198,10 @@ function showTooltip(d, o, j, u) {
     var a = n.getWidth() - q;
     var m = n.getHeight() + n.positionedOffset()[1] - l;
     if (t > a) {
-        t = k - q
+        t = Math.max(0, k - q)
     }
     if (b > m) {
-        b = g - l
+        b = Math.max(0, g - l)
     }
     if (b < 0) {
         b = 60
@@ -45027,7 +46405,7 @@ function tutorialMerlinOver() {
     tutorialClear();
     tutorialAdvance(1, 50);
     jQuery(document).trigger("tutorialEnd");
-    ProgressBar.initializeProgressBar(1, true, ABTestFriendInviter)
+    ProgressBar.initializeProgressBar(1, true)
 }
 function tutorialNoShow() {
     cm.TutorialKeyController.enableKeys();
@@ -45044,9 +46422,7 @@ function tutorialNoShow() {
         usr_ttl: titlenames[seed.player.title],
         distinct_id: tvuid
     });
-    cm.ConversionTracker.track("biftetracking", 1800, 1);
-    cm.invite.load(cm.InviteTypes.INVITE_TYPE_SKIP);
-    cm.invite.open()
+    cm.ConversionTracker.track("biftetracking", 1800, 1)
 }
 function tutorialClear() {
     $("arrowtip").hide();
@@ -46997,6 +48373,7 @@ function getUserSettings() {
                 userHtml.push("<option value='sv' " + ((g_ajaxparams.lang == "sv") ? "selected" : "") + ">Svenska</option>");
                 userHtml.push("<option value='da' " + ((g_ajaxparams.lang == "da") ? "selected" : "") + ">Dansk</option>");
                 userHtml.push("<option value='tr' " + ((g_ajaxparams.lang == "tr") ? "selected" : "") + ">T&#252;rk&#231;e</option>");
+                userHtml.push("<option value='ko' " + ((g_ajaxparams.lang == "ko") ? "selected" : "") + ">&#54620;&#44397;&#50612;</option>");
                 userHtml.push("<option value='ja' " + ((g_ajaxparams.lang == "ja") ? "selected" : "") + ">&#26085;&#26412;&#35486;</option>");
                 userHtml.push("<option value='zh-Hant' " + ((g_ajaxparams.lang == "zh-Hant") ? "selected" : "") + ">&#32321;&#39636;&#20013;&#25991;</option>");
                 userHtml.push("<option value='zh-Hans' " + ((g_ajaxparams.lang == "zh-Hans") ? "selected" : "") + ">&#31616;&#20307;&#20013;&#25991;</option>");

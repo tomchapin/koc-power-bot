@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110626a
+// @version        20110702a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20110626a';
+var Version = '20110702a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -939,11 +939,13 @@ Tabs.tower = {
 
   newIncoming : function (m){
     var t = Tabs.tower;
+    t.postToChat (m);
+  },
+  
+  sendalert : function (m){
     var now = unixTime();
     if (Options.celltext.atext)
       t.postToCell (m);
-    if (Options.alertConfig.aChat)
-      t.postToChat (m);
     if (Options.alertSound.enabled){
       t.soundTheAlert(m);
       if (m.arrivalTime > Options.alertSound.expireTime)
@@ -960,7 +962,7 @@ Tabs.tower = {
 			saveAttackOptions();
 			Tabs.Barb.nextattack = null;
 		}
-	}
+	}  
   },
 
   ajaxSetDefMode : function (cityId, state, notify){
@@ -1146,6 +1148,10 @@ Tabs.tower = {
         }
       }
     }
+	
+	t.sendalert(m);
+    if (!Options.alertConfig.aChat) return;
+	
     if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
     if (SEND_ALERT_AS_WHISPER)
       sendChat ("/"+ Seed.player.name +' '+ msg);    // Whisper to myself
@@ -4680,7 +4686,7 @@ Tabs.Barb = {
   
   getnextCity: function(){
 	var t = Tabs.Barb;
-	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+2000));
+	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+8000));
 	if(t.searchRunning || !AttackOptions.Running) return;
 	
 	var city = t.city+1;
@@ -7930,10 +7936,21 @@ function AjaxRequest (url, opts){
   if (method == 'POST'){
     var a = [];
     for (k in opts.parameters){
-	  if(matTypeof(opts.parameters[k]) == 'object')
-		for(var h in opts.parameters[k])
+	  if(matTypeof(opts.parameters[k]) == 'object'){
+		for(var h in opts.parameters[k]){
+		  if(matTypeof(opts.parameters[k][h]) == 'object'){
+			for(var i in opts.parameters[k][h]){
+			  if(matTypeof(opts.parameters[k][h][i]) == 'object'){
+				for(var j in opts.parameters[k][h][i]){
+					a.push (k+'['+h+']['+i+']['+j+'] ='+ opts.parameters[k][h][i][j] );
+				}
+			  } else
+				a.push (k+'['+h+']['+i+'] ='+ opts.parameters[k][h][i] );
+			}
+		  } else
 			a.push (k+'['+h+'] ='+ opts.parameters[k][h] );
-	  else
+		}
+	  } else
         a.push (k +'='+ opts.parameters[k] );
 	}
     ajax.send (a.join ('&'));
