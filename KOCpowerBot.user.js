@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110703a
+// @version        20110704a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -11,12 +11,12 @@
 // ==/UserScript==
 
 
-var Version = '20110703a';
+var Version = '20110704a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
 var DEBUG_SEARCH = false;
-var ENABLE_TEST_TAB = false;
+var ENABLE_TEST_TAB = true;
 var ENABLE_ATTACK_TAB = false;
 var ENABLE_SAMPLE_TAB = false;
 var DISABLE_BULKADD_LIST = false;
@@ -143,10 +143,13 @@ var CrestOptions = {
 
 
 var TrainOptions = {
-  Running   : 	false,
-  Troops: 		{1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Keep:			{1:{Food:0,Wood:0,Stone:0,Ore:0},2:{Food:0,Wood:0,Stone:0,Ore:0},3:{Food:0,Wood:0,Stone:0,Ore:0},4:{Food:0,Wood:0,Stone:0,Ore:0},5:{Food:0,Wood:0,Stone:0,Ore:0},6:{Food:0,Wood:0,Stone:0,Ore:0},7:{Food:0,Wood:0,Stone:0,Ore:0}},
-  Enabled:		{1:false,2:false,3:false,4:false,5:false,6:false,7:false},
+  Running   : 		false,
+  Troops: 			{1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  Threshold: 		{1:500,2:500,3:500,4:500,5:500,6:500,7:500},
+  Keep:				{1:{Food:0,Wood:0,Stone:0,Ore:0},2:{Food:0,Wood:0,Stone:0,Ore:0},3:{Food:0,Wood:0,Stone:0,Ore:0},4:{Food:0,Wood:0,Stone:0,Ore:0},5:{Food:0,Wood:0,Stone:0,Ore:0},6:{Food:0,Wood:0,Stone:0,Ore:0},7:{Food:0,Wood:0,Stone:0,Ore:0}},
+  Enabled:			{1:false,2:false,3:false,4:false,5:false,6:false,7:false},
+  UseIdlePop:		{1:false,2:false,3:false,4:false,5:false,6:false,7:false},
+  Resource:		{1:true,2:true,3:true,4:true,5:true,6:true,7:true},
 };
 
 var nHtml={
@@ -4214,7 +4217,7 @@ cm.MARCH_TYPES = {
    					MarchStatus = Seed.queue_atkp[cityID][b]['marchStatus'];
    					MarchType = Seed.queue_atkp[cityID][b]['marchType'];
    					botMarchStatus = Seed.queue_atkp[cityID][b]['botMarchStatus'];
-   					if (MarchType == 9 && (botMarchStatus == 3 || MarchStatus == 3)) t.stopcount++;
+   					if (MarchType == 9 &&  MarchStatus == 3) t.stopcount++;
    					else if (MarchType == 9) t.activecount++;
    				}
    		}
@@ -4262,10 +4265,14 @@ cm.MARCH_TYPES = {
   						returnUnixTime = Seed.queue_atkp['city' + t.cityId][k]['returnUnixTime']
   						now = unixTime();
   						z+='<TR>';
-  						if (destinationUnixTime > now && botMarchStatus !=3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/attacking.jpg></td>';
-  						if ((destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/returning.jpg></td>';
-  						if (botMarchStatus == 3 || MarchStatus == 3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
-  						else if (returnUnixTime < now  && botMarchStatus !=3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/autoAttack/raid_resting.png></td>';
+  						//if (destinationUnixTime > now && botMarchStatus !=3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/attacking.jpg></td>';
+  						if (MarchStatus ==1) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/attacking.jpg></td>';
+  						//if ((destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/returning.jpg></td>';
+  						if (MarchStatus ==8 && (destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/returning.jpg></td>';
+  						if (MarchStatus == 3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
+  						//if (returnUnixTime < now  && botMarchStatus !=3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/autoAttack/raid_resting.png></td>';
+  						if (MarchStatus == 4 || (returnUnixTime < now  && botMarchStatus !=3)) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/autoAttack/raid_resting.png></td>';
+  						
   						if (destinationUnixTime >= now) z+='<TD>'+ timestr(Seed.queue_atkp['city' + t.cityId][k]['destinationUnixTime'] - unixTime())+'</td>';
   						if (destinationUnixTime <= now) {
   							if ((destinationUnixTime - now) <= 0 && returnUnixTime > now) z+='<TD>'+ timestr(returnUnixTime - now)+'</td>';
@@ -4588,8 +4595,30 @@ cm.MARCH_TYPES = {
   	              	  	unit11Count: 	units[11],
   	              	  	unit12Count: 	units[12],
   	              	  });
+  	              	  var troops = Seed.units["city" + cityId];
+                      for (var u = 1; u <= 12; ++u) {
+                          var troop_number = parseInt(rslt["unit" + u + "Return"]);
+                          if (isNaN(troop_number)) {
+                              troop_number = parseInt(Seed.units["city" + cityId]["unt" + u]);
+                          } else troop_number = parseInt(rslt["unit" + u + "Return"]) + parseInt(Seed.units["city" + cityId]["unt" + u]);
+                          troops["unt" + u] = troop_number;
+                      }
+                      for (u in Seed.queue_atkp['city' + cityId]){
+                      	if (Seed.queue_atkp['city' + cityId][u]['marchId'] == marchId){
+							Seed.queue_atkp['city' + cityId][u] = "";
+                      		unsafeWindow.seed.queue_atkp['city' + cityId] = Seed.queue_atkp['city' + cityId];
+                      	}
+                      }
+                      
+                      for (u in Seed.knights['city' + cityId]){
+                      	if (Seed.knights['city' + cityId][u]['knightId'] == knightId){
+                      		Seed.knights['city' + cityId][u]["knightStatus"] = 1;
+                      		unsafeWindow.seed.knights['city' + cityId] = Seed.knights['city' + cityId];
+                      	}
+                      }
+  	              	                              
   	              	  setTimeout (function (){GM_setValue ('SavedRaids_'+serverID, JSON2.stringify(t.save));}, 0);
-                      unsafeWindow.cityinfo_army();	  
+                      unsafeWindow.cityinfo_army();
   	                  setTimeout(unsafeWindow.update_seed_ajax, 250);
   	                  t.GetRaids(cityId);
   					}
@@ -4808,10 +4837,19 @@ cm.MARCH_TYPES = {
     	              	  	unit11Count: 	units[11],
     	              	  	unit12Count: 	units[12],
     	              	  });
+    	              	  
+    	              	  var troops = Seed.units["city" + cityId];
+    	              	  for (var u = 1; u <= 12; ++u) {
+    	              	      var troop_number = parseInt(rslt["unit" + u + "Return"]);
+    	              	      if (isNaN(troop_number)) {
+    	              	          troop_number = parseInt(Seed.units["city" + cityId]["unt" + u]);
+    	              	      } else troop_number = parseInt(rslt["unit" + u + "Return"]) + parseInt(Seed.units["city" + cityId]["unt" + u]);
+    	              	      troops["unt" + u] = troop_number;
+    	              	  }
+    	              	  
     	              	  setTimeout (function (){GM_setValue ('SavedRaids_'+serverID, JSON2.stringify(t.save));}, 0);
                           unsafeWindow.cityinfo_army();	  
     	                  setTimeout(unsafeWindow.update_seed_ajax, 250);
-    	                  t.GetRaids(cityId);
     					}
     			 },
     	 });
@@ -4820,6 +4858,7 @@ cm.MARCH_TYPES = {
   		  	 updateraidbutton('Deleting: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtabDel');
   		  	 if (t.stopprogress.toFixed(0) == 100) {
   		  	 	 t.stopprogress = 0;
+  		  	 	 t.GetRaids(cityId);
   		  	 	 setTimeout(function(){updateraidbutton('Delete Raids ('+ t.stopcount + ')', 'pbraidtabDel');t.deleting  = false;}, (5000));
   	}	
     	 
@@ -5089,6 +5128,7 @@ cm.MARCH_TYPES = {
   		t.raidtimer = setTimeout(t.checkRaids, 5000);
   		document.getElementById('pbRaidStart').value = 'Auto Reset = ON';
   	}
+  	saveOptions();
   },
   
     
@@ -7395,23 +7435,21 @@ Tabs.AutoTrain = {
 					  11:'BatteringRam',
 					  12:'Catapult'};  
 					  
-
-      var m = '<DIV id=pbAT class=pbStat>AUTO TRAIN</div><TABLE id=pbAT width=100% height=0% class=pbTab><TR align="center">';
       
-      var m = '<DIV id=pbAT class=pbStat>AUTO TRAIN</div><TABLE id=pbAT width=100% height=0% class=pbTab><TR align="center">';
+      var m = '<DIV id=pbAT class=pbStat>AUTO TRAIN</div><TABLE id=pbAT width=100% height=0% class=pbTab><TR>';
       if (TrainOptions.Running == false) {
-          m += '<TD><INPUT id=pbAutoTrainState type=submit value="AutoTrain = OFF"></td>';
+          m += '<TD align=left><INPUT id=pbAutoTrainState type=submit value="AutoTrain = OFF"></td>';
       }else {
-          m += '<TD><INPUT id=pbAutoTrainState   type=submit value="AutoTrain = ON"></td>';
+          m += '<TD align=center><INPUT id=pbAutoTrainState   type=submit value="AutoTrain = ON"></td>';
       }
-      m += '<TD><INPUT id=pbShowTrainHelp type=submit value="Help"></td>';
+      m += '<TD align=center><INPUT id=pbShowTrainHelp type=submit value="Help"></td>';
       m += '</tr></table></div>';
       
       
       
       
       m += '<DIV id=pbAT class=pbStat>TRAIN OPTIONS</div><TABLE id=pbAT width=100% height=0% class=pbTab><TR align="center">';
-      m += '<TABLE id=pbReinf width=95% height=0% class=pbTab><TR align="left">';
+      m += '<TABLE id=pbTrain width=100% height=0% class=pbTab><TR align="left">';
       
       
       for (i=0;i<Seed.cities.length;i++){
@@ -7420,14 +7458,20 @@ Tabs.AutoTrain = {
 	      m += '<TD width=20px><SELECT id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
 	      for (y in troops) m+='<option value="'+y+'">'+troops[y]+'</option>';
 	      m+='</select></td>';
+	      m +='<TD>Min.: <INPUT id=treshold'+city+' type=text size=4 maxlength=4 value="'+ TrainOptions.Threshold[city]+'"\></td>';
+	      m +='<TD><INPUT type=checkbox id="idlepop'+city+'"' +(TrainOptions.UseIdlePop[city]?'CHECKED':'')+' >Idle</td>';
 	      m += '<TD width=20px></td><TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
-	      m += '<TD><INPUT id="KeepFood'+city+'" type=text size=11 maxlength=11 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
-	      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
-	      m += '<TD><INPUT id="KeepWood'+city+'" type=text size=11 maxlength=11 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
-	      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
-	      m += '<TD><INPUT id="KeepStone'+city+'" type=text size=11 maxlength=11 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
-	      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
-	      m += '<TD><INPUT id="KeepOre'+city+'" type=text size=11 maxlength=11 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td></tr>';	    
+	      m += '<TD><INPUT id="KeepFood'+city+'" type=text size=6 maxlength=6 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
+	      m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
+	      m += '<TD><INPUT id="KeepWood'+city+'" type=text size=6 maxlength=6 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
+	      m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
+	      m += '<TD><INPUT id="KeepStone'+city+'" type=text size=6 maxlength=6 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
+	      m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
+	      m += '<TD><INPUT id="KeepOre'+city+'" type=text size=6 maxlength=6 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
+	      
+	      m += '<TD><SELECT id="Resource'+city+'"><option value="true">Keep</options>';
+	      m+='<option value="false">Use</option>';
+	      m+='</select></td></tr>';	    
 	         
 	  }
 	  m+='</table>';
@@ -7438,6 +7482,8 @@ Tabs.AutoTrain = {
            city = i+1;
            document.getElementById('TroopsCity'+city).value = TrainOptions.Troops[city];
            document.getElementById('SelectCity'+city).checked = TrainOptions.Enabled[city];
+           document.getElementById('idlepop'+city).checked = TrainOptions.UseIdlePop[city];
+           document.getElementById('Resource'+city).value = TrainOptions.Resource[city];
       }
        
        document.getElementById('pbShowTrainHelp').addEventListener('click', function(){
@@ -7449,6 +7495,19 @@ Tabs.AutoTrain = {
       }, false);
        
       if (Seed.cities.length >= 1){
+      	   document.getElementById('treshold1').addEventListener('change', function(){
+      	   	   if (isNaN(document.getElementById('treshold1').value)) document.getElementById('treshold1').value=0 ;
+      	       TrainOptions.Threshold['1'] = document.getElementById('treshold1').value;
+      	       saveTrainOptions();
+      	    }, false);
+            document.getElementById('idlepop1').addEventListener('change', function(){
+                TrainOptions.UseIdlePop['1'] = document.getElementById('idlepop1').checked;
+                saveTrainOptions();
+             }, false);
+ 			document.getElementById('Resource1').addEventListener('change', function(){
+ 			    TrainOptions.Resource['1'] = document.getElementById('Resource1').checked;
+ 			    saveTrainOptions();
+ 			 }, false);
            document.getElementById('SelectCity1').addEventListener('change', function(){
                TrainOptions.Enabled['1'] = document.getElementById('SelectCity1').checked;
                saveTrainOptions();
@@ -7460,9 +7519,7 @@ Tabs.AutoTrain = {
       	  
       	  document.getElementById('KeepFood1').addEventListener('keyup', function(){
       	       if (isNaN(document.getElementById('KeepFood1').value)) document.getElementById('KeepFood1').value=0 ;
-      	       
                TrainOptions.Keep['1']['Food'] = parseInt(document.getElementById('KeepFood1').value);
-               alert(TrainOptions.toSource());
                saveTrainOptions();
       	  }, false);
       	  document.getElementById('KeepWood1').addEventListener('keyup', function(){
@@ -7482,6 +7539,19 @@ Tabs.AutoTrain = {
       	  }, false);
      }
      if (Seed.cities.length >= 2){
+     	    document.getElementById('treshold2').addEventListener('change', function(){
+     	    	if (isNaN(document.getElementById('treshold2').value)) document.getElementById('treshold2').value=0 ;
+     	         TrainOptions.Threshold['2'] = document.getElementById('treshold2').value;
+     	         saveTrainOptions();
+     	      }, false);
+     	    document.getElementById('idlepop2').addEventListener('change', function(){
+     	        TrainOptions.UseIdlePop['2'] = document.getElementById('idlepop2').checked;
+     	        saveTrainOptions();
+     	     }, false);
+     	    	document.getElementById('Resource2').addEventListener('change', function(){
+     	    	    TrainOptions.Resource['2'] = document.getElementById('Resource2').checked;
+     	    	    saveTrainOptions();
+     	    	 }, false);
            document.getElementById('SelectCity2').addEventListener('change', function(){
                TrainOptions.Enabled['2'] = document.getElementById('SelectCity2').checked;
                saveTrainOptions();
@@ -7490,7 +7560,6 @@ Tabs.AutoTrain = {
       	       TrainOptions.Troops['2'] = document.getElementById('TroopsCity2').value;
                saveTrainOptions();
       	  }, false);
-      	  
       	  document.getElementById('KeepFood2').addEventListener('keyup', function(){
       	       if (isNaN(document.getElementById('KeepFood2').value)) document.getElementById('KeepFood2').value=0 ;
                TrainOptions.Keep['2']['Food'] = document.getElementById('KeepFood2').value;
@@ -7513,6 +7582,19 @@ Tabs.AutoTrain = {
       	  }, false);
      }
      if (Seed.cities.length >= 3){
+     		document.getElementById('treshold3').addEventListener('change', function(){
+     			 if (isNaN(document.getElementById('treshold3').value)) document.getElementById('treshold3').value=0 ;
+     		     TrainOptions.Threshold['3'] = document.getElementById('treshold3').value;
+     		     saveTrainOptions();
+     		  }, false);
+     		document.getElementById('idlepop3').addEventListener('change', function(){
+     		    TrainOptions.UseIdlePop['3'] = document.getElementById('idlepop3').checked;
+     		    saveTrainOptions();
+     		 }, false);
+     			document.getElementById('Resource3').addEventListener('change', function(){
+     			    TrainOptions.Resource['3'] = document.getElementById('Resource3').checked;
+     			    saveTrainOptions();
+     			 }, false);
            document.getElementById('SelectCity3').addEventListener('change', function(){
                TrainOptions.Enabled['3'] = document.getElementById('SelectCity3').checked;
                saveTrainOptions();
@@ -7544,6 +7626,19 @@ Tabs.AutoTrain = {
       	  }, false);
      }  
      if (Seed.cities.length >= 4){
+     		document.getElementById('treshold4').addEventListener('change', function(){
+     		     if (isNaN(document.getElementById('treshold4').value)) document.getElementById('treshold4').value=0 ;
+     		     TrainOptions.Threshold['4'] = document.getElementById('treshold4').value;
+     		     saveTrainOptions();
+     		  }, false);
+     		document.getElementById('idlepop4').addEventListener('change', function(){
+     		    TrainOptions.UseIdlePop['4'] = document.getElementById('idlepop4').checked;
+     		    saveTrainOptions();
+     		 }, false);
+     			document.getElementById('Resource4').addEventListener('change', function(){
+     			    TrainOptions.Resource['4'] = document.getElementById('Resource4').checked;
+     			    saveTrainOptions();
+     			 }, false);
            document.getElementById('SelectCity4').addEventListener('change', function(){
                TrainOptions.Enabled['4'] = document.getElementById('SelectCity4').checked;
                saveTrainOptions();
@@ -7575,6 +7670,19 @@ Tabs.AutoTrain = {
       	  }, false);
      }
      if (Seed.cities.length >= 5){
+     		document.getElementById('treshold5').addEventListener('change', function(){
+     		     if (isNaN(document.getElementById('treshold5').value)) document.getElementById('treshold5').value=0 ;
+     		     TrainOptions.Threshold['5'] = document.getElementById('treshold5').value;
+     		     saveTrainOptions();
+     		  }, false);
+     		document.getElementById('idlepop5').addEventListener('change', function(){
+     		    TrainOptions.UseIdlePop['5'] = document.getElementById('idlepop5').checked;
+     		    saveTrainOptions();
+     		 }, false);
+     			document.getElementById('Resource5').addEventListener('change', function(){
+     			    TrainOptions.Resource['5'] = document.getElementById('Resource5').checked;
+     			    saveTrainOptions();
+     			 }, false);
            document.getElementById('SelectCity5').addEventListener('change', function(){
                TrainOptions.Enabled['5'] = document.getElementById('SelectCity5').checked;
                saveTrainOptions();
@@ -7606,6 +7714,19 @@ Tabs.AutoTrain = {
       	  }, false);
      }
      if (Seed.cities.length >= 6){
+     		document.getElementById('treshold6').addEventListener('change', function(){
+     		     if (isNaN(document.getElementById('treshold6').value)) document.getElementById('treshold6').value=0 ;
+     		     TrainOptions.Threshold['6'] = document.getElementById('treshold6').value;
+     		     saveTrainOptions();
+     		  }, false);
+     		document.getElementById('idlepop6').addEventListener('change', function(){
+     		    TrainOptions.UseIdlePop['6'] = document.getElementById('idlepop6').checked;
+     		    saveTrainOptions();
+     		 }, false);
+     			document.getElementById('Resource6').addEventListener('change', function(){
+     			    TrainOptions.Resource['6'] = document.getElementById('Resource6').checked;
+     			    saveTrainOptions();
+     			 }, false);
            document.getElementById('SelectCity6').addEventListener('change', function(){
                TrainOptions.Enabled['6'] = document.getElementById('SelectCity6').checked;
                saveTrainOptions();
@@ -7637,6 +7758,19 @@ Tabs.AutoTrain = {
       	  }, false);
      }
      if (Seed.cities.length >= 7){
+     		document.getElementById('treshold7').addEventListener('change', function(){
+     		     if (isNaN(document.getElementById('treshold7').value)) document.getElementById('treshold7').value=0 ;
+     		     TrainOptions.Threshold['7'] = document.getElementById('treshold7').value;
+     		     saveTrainOptions();
+     		  }, false);
+     		document.getElementById('idlepop7').addEventListener('change', function(){
+     		    TrainOptions.UseIdlePop['7'] = document.getElementById('idlepop7').checked;
+     		    saveTrainOptions();
+     		 }, false);
+     			document.getElementById('Resource7').addEventListener('change', function(){
+     			    TrainOptions.Resource['7'] = document.getElementById('Resource7').checked;
+     			    saveTrainOptions();
+     			 }, false);
            document.getElementById('SelectCity7').addEventListener('change', function(){
                TrainOptions.Enabled['7'] = document.getElementById('SelectCity7').checked;
                saveTrainOptions();
@@ -7669,13 +7803,17 @@ Tabs.AutoTrain = {
      } 
   },
   
+  
   helpPop : function (){
-    var helpText = '<BR>Autotrain:<UL><LI>Select a trooptype per city in the dropdown boxes.\
-        <LI>Fill in the minimum resources you want to keep (0 is use all possible).\
-        <LI>Toggle the box in front of the row (the numer is the citynumer).\
-        <LI>Hit the AutoTrain toggle button.</ul>\
-        <BR><B>IMPORTANT: The minimun training threshold is 500 troops (this will be a changeable option in next release).</b>';
-    var pop = new CPopup ('giftHelp', 0, 0, 500, 200, true);
+    var helpText = '<BR><DL><dt>Autotrain:<dd><LI>Toggle the box in front of the row to enable autotrain for that city (the number is the citynumer).</dd>\
+    	<dd><LI>Select a trooptype per city in the dropdown boxes.</dd>\
+        <dd><LI>Fill in the minimum troops that triggers the autotrain (less then this will not be trained).</dd>\
+        <dt>Fill in resources:</dt>\
+          <dd><LI>Keep: Autotrain will keep this amount available in the city.</dd>\
+          <dd><LI>Use: Autotrain will only use the resources to train troops.</dd>\
+        <dt>Turn it on: </dt>\
+          <dd><LI>Hit the AutoTrain toggle button.</dd></ul>';
+    var pop = new CPopup ('giftHelp', 0, 0, 550, 250, true);
     pop.centerMe (mainPop.getMainDiv());  
     pop.getMainDiv().innerHTML = helpText;
     pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help</b>:  Auto Train</center>';
@@ -7683,7 +7821,7 @@ Tabs.AutoTrain = {
   },
   
   toggleAutoTrainState: function(obj){
-		var t = Tabs.Reassign;
+		var t = Tabs.AutoTrain;
         if (TrainOptions.Running == true) {
             TrainOptions.Running = false;
             obj.value = "AutoTrain = OFF";
@@ -7696,10 +7834,10 @@ Tabs.AutoTrain = {
     },
     
 	show: function(){
-		var t = Tabs.Reinforce;
+		var t = Tabs.AutoTrain;
     },
 	hide: function(){
-        var t = Tabs.Reinforce;
+        var t = Tabs.AutoTrain;
     },
     onUnload: function(){
     },
@@ -8488,8 +8626,8 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
       return;
     }
     rslt.errorMsg = unsafeWindow.printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null));
-    if ( (x = rslt.errorMsg.indexOf ('<br><br>')) > 0)
-      rslt.errorMsg = rslt.errorMsg.substr (0, x-1);
+    //if ( (x = rslt.errorMsg.indexOf ('<br><br>')) > 0)
+     // rslt.errorMsg = rslt.errorMsg.substr (0, x-1);
     if (!noRetry && (rslt.error_code==0 ||rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
       dialogRetry (rslt.errorMsg, delay, function(){myRetry()}, function(){wasSuccess (rslt)});
     } else {
@@ -10914,7 +11052,10 @@ function AjaxRequest2 (url, opts){
 function AutoTrain(){
      if (!TrainOptions.Running) return;
      if (TrainCity > (Seed.cities.length-1)) TrainCity = 0;
-     if (!TrainOptions.Enabled[(TrainCity+1)]) return;
+     if (!TrainOptions.Enabled[(TrainCity+1)]) {
+     	TrainCity++;
+     	return;
+     }
      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
      cityId = Seed.cities[TrainCity][0];
      var unitId = TrainOptions['Troops'][(TrainCity+1)];
@@ -10924,20 +11065,30 @@ function AutoTrain(){
      var cost = unsafeWindow.unitcost['unt'+unitId];
      var baracks = 0;
      var slots = false;
-     var idle = parseInt(Seed.citystats['city'+Seed.cities[TrainCity][0]].pop[0]) - parseInt(Seed.citystats['city'+Seed.cities[TrainCity][0]].pop[3]);
+     
+     if (TrainOptions.UseIdlePop[(TrainCity+1)]) idle=parseInt(Seed.citystats['city'+Seed.cities[TrainCity][0]].pop[0]);
+     else idle = parseInt(Seed.citystats['city'+Seed.cities[TrainCity][0]].pop[0]) - parseInt(Seed.citystats['city'+Seed.cities[TrainCity][0]].pop[3]);
+     
      if (idle < 0) idle = 0; 
      for (i=1;i<=12;i++){
         if (unitId == i) idle = (idle / cost[6]).toFixed(0);
         idle = idle-1;
      }
-     var Food = parseInt(Seed.resources["city" + cityId]['rec1'][0])/3600;
-     var Wood = parseInt(Seed.resources["city" + cityId]['rec2'][0])/3600;
-     var Stone = parseInt(Seed.resources["city" + cityId]['rec3'][0])/3600;
-     var Ore = parseInt(Seed.resources["city" + cityId]['rec4'][0])/3600;
-     if (Food <= TrainOptions['Keep'][(TrainCity+1)]['[Food']) idle =1;
-     if (Wood <= TrainOptions['Keep'][(TrainCity+1)]['[Wood']) idle =1;
-     if (Stone <= TrainOptions['Keep'][(TrainCity+1)]['[Stone']) idle =1;
-     if (Ore <= TrainOptions['Keep'][(TrainCity+1)]['[Ore'])idle =1;
+     if (TrainOptions.Resource[(TrainCity+1)]){
+	     Food = parseInt(Seed.resources["city" + cityId]['rec1'][0])/3600;
+	     Wood = parseInt(Seed.resources["city" + cityId]['rec2'][0])/3600;
+	     Stone = parseInt(Seed.resources["city" + cityId]['rec3'][0])/3600;
+	     Ore = parseInt(Seed.resources["city" + cityId]['rec4'][0])/3600;
+	     if (Food <= TrainOptions['Keep'][(TrainCity+1)]['Food']) idle =1;
+	     if (Wood <= TrainOptions['Keep'][(TrainCity+1)]['Wood']) idle =1;
+	     if (Stone <= TrainOptions['Keep'][(TrainCity+1)]['Stone']) idle =1;
+	     if (Ore <= TrainOptions['Keep'][(TrainCity+1)]['Ore'])idle =1;
+     } else{
+         if ((parseInt(Seed.resources["city" + cityId]['rec1'][0])/3600) > TrainOptions['Keep'][(TrainCity+1)]['[Food']) Food = TrainOptions['Keep'][(TrainCity+1)]['[Food'];
+         if ((parseInt(Seed.resources["city" + cityId]['rec2'][0])/3600) > TrainOptions['Keep'][(TrainCity+1)]['[Wood']) Wood = TrainOptions['Keep'][(TrainCity+1)]['[Wood'];
+         if ((parseInt(Seed.resources["city" + cityId]['rec3'][0])/3600) > TrainOptions['Keep'][(TrainCity+1)]['[Stone']) Stone = TrainOptions['Keep'][(TrainCity+1)]['[Stone'];
+         if ((parseInt(Seed.resources["city" + cityId]['rec4'][0])/3600) > TrainOptions['Keep'][(TrainCity+1)]['[Ore']) Ore = TrainOptions['Keep'][(TrainCity+1)]['[Ore'];
+     }
      for (y in Seed.buildings['city'+cityId]) {
      	  if (Seed.buildings['city'+cityId][y][0] == 13) baracks++;
      }
@@ -10945,13 +11096,13 @@ function AutoTrain(){
      for (z=1;z<=4;z++){
         if (cost[z] == 0) cost[z] = 1;
      }
-     if ((Food/cost[1]) < idle) idle = (Food/cost[1]).toFixed(0);
-     if ((Wood/cost[2]) < idle) idle = (Wood/cost[2]).toFixed(0);
-     if ((Stone/cost[3]) < idle) idle = (Stone/cost[3]).toFixed(0);
-     if ((Ore/cost[4]) < idle) idle = (Ore/cost[4]).toFixed(0);
+	 if ((Food/cost[1]) < idle) idle = (Food/cost[1]).toFixed(0);
+	 if ((Wood/cost[2]) < idle) idle = (Wood/cost[2]).toFixed(0);
+	 if ((Stone/cost[3]) < idle) idle = (Stone/cost[3]).toFixed(0);
+	 if ((Ore/cost[4]) < idle) idle = (Ore/cost[4]).toFixed(0);
      idle = idle-1;
      var time = unsafeWindow.modal_barracks_traintime(unitId, idle);  
-     if (slots && idle > 500) {
+     if (slots && idle > TrainOptions.Threshold[(TrainCity+1)]) {
          params.cid = cityId;
          params.type = unitId;
          params.quant = idle;
