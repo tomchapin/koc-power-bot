@@ -1,17 +1,18 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110704b
+// @version        20110704c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
 // @include        http://apps.facebook.com/kingdomsofcamelot/*
+// @include		   http://www.kabam.com/games/kingdoms-of-camelot/* 
 // @include        *facebook.com/connect/uiserver.php*
 // @description    Automated features for Kingdoms of Camelot
 // @require        http://tomchapin.me/auto-updater.php?id=101052
 // ==/UserScript==
 
 
-var Version = '20110704b';
+var Version = '20110704c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4910,7 +4911,8 @@ cm.MARCH_TYPES = {
   						destinationUnixTime = Seed.queue_atkp['city' + t.cityId][k]['destinationUnixTime'];
   						returnUnixTime = Seed.queue_atkp['city' + t.cityId][k]['returnUnixTime']
   						now = unixTime();
-  						z+='<TR><TD>('+ botMarchStatus +'/'+ MarchStatus +')</td>';
+  						//z+='<TR><TD>('+ botMarchStatus +'/'+ MarchStatus +')</td>';
+  						z+='<TR>';
   						//if (destinationUnixTime > now && botMarchStatus !=3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/attacking.jpg></td>';
   						if (MarchStatus ==1) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/attacking.jpg></td>';
   						//if ((destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/returning.jpg></td>';
@@ -11173,15 +11175,16 @@ function AutoTrain(){
         idle = idle-1;
      }
      if (TrainOptions.SelectMax[(TrainCity+1)] && TrainOptions.Max[(TrainCity+1)] <idle) idle = TrainOptions.Max[(TrainCity+1)];
-     if (TrainOptions.Resource[(TrainCity+1)]){
+     
+	     if (TrainOptions.Resource[(TrainCity+1)]){
 	     Food = parseInt(Seed.resources["city" + cityId]['rec1'][0]/3600);
 	     Wood = parseInt(Seed.resources["city" + cityId]['rec2'][0]/3600);
 	     Stone = parseInt(Seed.resources["city" + cityId]['rec3'][0]/3600);
 	     Ore = parseInt(Seed.resources["city" + cityId]['rec4'][0]/3600);
-	     if (Food <= TrainOptions['Keep'][(TrainCity+1)]['Food']) TrainCity++;return;
-	     if (Wood <= TrainOptions['Keep'][(TrainCity+1)]['Wood'])  TrainCity++;return;
-	     if (Stone <= TrainOptions['Keep'][(TrainCity+1)]['Stone'])  TrainCity++;return;
-	     if (Ore <= TrainOptions['Keep'][(TrainCity+1)]['Ore']) TrainCity++;return;
+	     if (Food <= parseInt(TrainOptions['Keep'][(TrainCity+1)]['Food'])) {TrainCity++;return;}
+	     if (Wood <= parseInt(TrainOptions['Keep'][(TrainCity+1)]['Wood']))  {TrainCity++;return;}
+	     if (Stone <= parseInt(TrainOptions['Keep'][(TrainCity+1)]['Stone']))  {TrainCity++;return;}
+	     if (Ore <= parseInt(TrainOptions['Keep'][(TrainCity+1)]['Ore'])) {TrainCity++;return;}
      } else{
          if ((parseInt(Seed.resources["city" + cityId]['rec1'][0]/3600)) > TrainOptions['Keep'][(TrainCity+1)]['[Food']) Food = TrainOptions['Keep'][(TrainCity+1)]['Food'];
          if ((parseInt(Seed.resources["city" + cityId]['rec2'][0]/3600)) > TrainOptions['Keep'][(TrainCity+1)]['[Wood']) Wood = TrainOptions['Keep'][(TrainCity+1)]['Wood'];
@@ -11218,8 +11221,8 @@ function AutoTrain(){
            unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(idle);
            unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(idle);
            unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, idle, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
-           actionLog(TrainCity + ': Train ' + idle + ':  ' + troops[unitId] );
-         } else {actionLog(TrainCity + ': FAIL Train ' + idle + ':  ' +  troops[unitId] + ' - '+ rslt.msg);}
+           actionLog(Seed.cities[TrainCity][1]  + ': Train ' + idle + ':  ' + troops[unitId] );
+         } else {actionLog(Seed.cities[TrainCity][1] + ': FAIL Train ' + idle + ':  ' +  troops[unitId] + ' - '+ rslt.msg);}
        },
        onFailure: function() {}
      }); 
