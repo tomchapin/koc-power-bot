@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110704c
+// @version        20110704d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,12 +12,12 @@
 // ==/UserScript==
 
 
-var Version = '20110704c';
+var Version = '20110704d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
 var DEBUG_SEARCH = false;
-var ENABLE_TEST_TAB = true;
+var ENABLE_TEST_TAB = false;
 var ENABLE_ATTACK_TAB = false;
 var ENABLE_SAMPLE_TAB = false;
 var DISABLE_BULKADD_LIST = false;
@@ -67,7 +67,7 @@ var Options = {
   pbChatOnRight: false,
   pbWideMap    : false,
   pbFoodAlert  : false,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false },
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, },
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -142,7 +142,6 @@ var CrestOptions = {
   R2Cat:0,
 };
 
-
 var TrainOptions = {
   Running   : 		false,
   Troops: 			{1:0,2:0,3:0,4:0,5:0,6:0,7:0},
@@ -213,7 +212,7 @@ if (document.URL.search(/facebook.com\/connect\/uiserver.php/i) >= 0){
   return;
 }
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
-	kocWideScreen ();
+  kocWideScreen ();
 }
 
 function kocWideScreen(){
@@ -604,8 +603,8 @@ Tabs.tower = {
     
     if (GM_getValue ('towerMarches_'+getServerId()) != null)
       GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
-    t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
-    unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
+    // t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
+    // unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
  
     var m = '<DIV class=pbStat>TOWER ALERTS</div><TABLE class=pbTab><TR align=center>';
 
@@ -654,6 +653,9 @@ Tabs.tower = {
             <TR><TD align=right>Display defend status: &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
             <TR><TD align=right>Minimum # of troops: &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
             </table></td></tr>\
+        <TR><TD align=right><INPUT id=pbalertbarb type=checkbox '+ (Options.alertConfig.barb?'CHECKED':'') +'/></td><TD>Stop barbing on impending.</td></tr>\
+        <TR><TD align=right><INPUT id=pbalertbarbres type=checkbox '+ (Options.alertConfig.barbresume?'CHECKED':'') +'/></td><TD>Resume barbing after impending.</td></tr>\
+        <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>Stop raids on impending.</td></tr>\
         <TR><TD><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>Play sound on incoming attack/scout</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>Loading SWF player</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
@@ -694,6 +696,9 @@ Tabs.tower = {
     document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
+    document.getElementById('pbalertbarb').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertbarbres').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertraid').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
         t.loadUrl (Options.alertSound.soundUrl);
@@ -792,6 +797,9 @@ Tabs.tower = {
     Options.alertConfig.scouting=document.getElementById('pbalertScout').checked;      
     Options.alertConfig.wilds=document.getElementById('pbalertWild').checked;
     Options.alertConfig.defend=document.getElementById('pbalertDefend').checked;
+    Options.alertConfig.barb=document.getElementById('pbalertbarb').checked;
+    Options.alertConfig.barbresume=document.getElementById('pbalertbarbres').checked;
+    Options.alertConfig.raid=document.getElementById('pbalertraid').checked;
     var mt = parseInt(document.getElementById('pbalertTroops').value);
     if (mt<1 || mt>120000){
       document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
@@ -835,11 +843,12 @@ Tabs.tower = {
     
   eachSecond : function (){
     var t = Tabs.tower;
-	  for (var cityId in Cities.byID){
+	for (var cityId in Cities.byID){
       if (Seed.citystats["city" + cityId].gate != t.defMode[cityId]){     // user changed def mode
         t.defMode[cityId] = Seed.citystats["city"+ cityId].gate;
         t.displayDefMode (cityId);
       }
+	  Options.alertConfig.raidautoswitch[cityId] = false;
     }
   	var now = unixTime();
 	var incomming = false;
@@ -852,6 +861,9 @@ Tabs.tower = {
             t.newIncoming (m);
           }
 		  incomming = true;
+		  if (Options.alertConfig.raid){
+			Options.alertConfig.raidautoswitch[m.toCityId] = true;
+		  }
         }
       }
     }
@@ -946,11 +958,13 @@ Tabs.tower = {
 
   newIncoming : function (m){
     var t = Tabs.tower;
+    t.postToChat (m);
+  },
+  
+  sendalert : function (m){
     var now = unixTime();
     if (Options.celltext.atext)
       t.postToCell (m);
-    if (Options.alertConfig.aChat)
-      t.postToChat (m);
     if (Options.alertSound.enabled){
       t.soundTheAlert(m);
       if (m.arrivalTime > Options.alertSound.expireTime)
@@ -968,6 +982,10 @@ Tabs.tower = {
 			Tabs.Barb.nextattack = null;
 		}
 	}*/
+	if (Options.alertConfig.raid){
+		Tabs.Raid.StopCityRaids(m.toCityId);
+		Options.alertConfig.raidautoswitch[m.toCityId] = true;
+	}  
   },
 
   ajaxSetDefMode : function (cityId, state, notify){
@@ -1153,6 +1171,10 @@ Tabs.tower = {
         }
       }
     }
+	
+	t.sendalert(m);
+    if (!Options.alertConfig.aChat) return;
+	
     if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
     if (SEND_ALERT_AS_WHISPER)
       sendChat ("/"+ Seed.player.name +' '+ msg);    // Whisper to myself
@@ -2984,8 +3006,7 @@ Tabs.Search = {
     
     document.getElementById ('pbHelp').addEventListener ('click', t.helpPop, false);
     document.getElementById ('pbRaidSave').addEventListener ('click', function(){
-   	
-    		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     			  		
     	params.pf = 0;
         params.ctrl = 'BotManager';
@@ -4695,8 +4716,6 @@ Tabs.transport = {
 }
 
 
-
-
 /*********************************  Raid Tab ***********************************/
 /************** Bot active
 (object) queue_atkp = [object Object]
@@ -4777,15 +4796,15 @@ cm.BOT_STATUS = {
     BOT_MARCH_RESTING: 7
 };
 cm.MARCH_STATUS = {
-	    MARCH_STATUS_INACTIVE: 0,
-	    MARCH_STATUS_OUTBOUND: 1,
-	    MARCH_STATUS_DEFENDING: 2,
-	    MARCH_STATUS_STOPPED: 3,
-	    MARCH_STATUS_RESTING: 4,
-	    MARCH_STATUS_UNKNOWN: 5,
-	    MARCH_STATUS_SITUATIONCHANGED: 7,
-	    MARCH_STATUS_RETURNING: 8,
-	    MARCH_STATUS_ABORTING: 9
+    MARCH_STATUS_INACTIVE: 0,
+    MARCH_STATUS_OUTBOUND: 1,
+    MARCH_STATUS_DEFENDING: 2,
+    MARCH_STATUS_STOPPED: 3,
+    MARCH_STATUS_RESTING: 4,
+    MARCH_STATUS_UNKNOWN: 5,
+    MARCH_STATUS_SITUATIONCHANGED: 7,
+    MARCH_STATUS_RETURNING: 8,
+    MARCH_STATUS_ABORTING: 9
 };
 cm.MARCH_TYPES = {
     MARCH_TYPE_NONE: 0,
@@ -4820,24 +4839,23 @@ cm.MARCH_TYPES = {
   activecount:0,
   count:0,
   
-        
   init : function (div){
     var t = Tabs.Raid;
     t.myDiv = div;
-	t.raidtimer = setTimeout(t.checkRaids, 30000);
-	setInterval(t.lookup, 2500);
+	t.raidtimer = setTimeout(t.checkRaids, 10*1000);
 	
 	AddSubTabLink('Stop Raids', t.StopAllRaids, 'pbraidtab');
 	AddSubTabLink('Resume Raids', t.ResumeAllRaids, 'pbraidtabRes');
 	AddSubTabLink('Delete Raids', t.DeleteAllRaids, 'pbraidtabDel');
 	
+	setInterval(t.lookup, 2500);
 	
 	var m = '<DIV class=pbStat>RAID FUNCTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 	    m += '<TD><INPUT id=pbRaidStart type=submit value="Auto Reset = '+ (Options.RaidRunning?'ON':'OFF') +'" ></td>';
 	    m += '</tr></table></div>';
 	    m += '<DIV class=pbStat>ACTIVE RAIDS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 	    m += '<TD><DIV style="margin-bottom:10px;"><span id=ptRaidCity></span></div></td></tr>';
-	    m+='<TR><TD><DIV style="margin-bottom:10px;"><span id=ptRaidTimer></span></div></td></tr></table>';
+	    m += '<TR><TD><DIV style="margin-bottom:10px;"><span id=ptRaidTimer></span></div></td></tr></table>';
 	    m += '<DIV id=PaintRaids></div>';
 	    m += '<DIV class=pbStat>SAVED RAIDS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 	    m += '<DIV id=SavedRaids></div>';
@@ -4846,9 +4864,7 @@ cm.MARCH_TYPES = {
 	t.from = new CdispCityPicker ('ptRaidpicker', document.getElementById('ptRaidCity'), true, t.clickCitySelect, 0);
 	document.getElementById('pbRaidStart').addEventListener('click', t.toggleRaidState, false);
 	
-	var serverID = getServerId();
-	t.save = GM_getValue ('SavedRaids_'+serverID);
-	if (t.save != undefined) t.save = JSON2.parse (t.save);
+	 t.save = JSON2.parse(GM_getValue ('SavedRaids_'+getServerId(), '[]'));
 	
 	setInterval (t.paint,1000);
   },
@@ -4858,22 +4874,28 @@ cm.MARCH_TYPES = {
       	t.activecount=0;
       	t.stopcount=0;
       	for (c=0; c< Seed.cities.length;c++) {
-      			cityID = 'city' + Seed.cities[c][0];    
-   				for (b in Seed.queue_atkp[cityID]){
-   					destinationUnixTime = Seed.queue_atkp[cityID][b]['destinationUnixTime']; 
-   					MarchStatus = Seed.queue_atkp[cityID][b]['marchStatus'];
-   					MarchType = Seed.queue_atkp[cityID][b]['marchType'];
-   					botMarchStatus = Seed.queue_atkp[cityID][b]['botMarchStatus'];
-   					if (MarchType == 9 &&  MarchStatus == 3) t.stopcount++;
-   					else if (MarchType == 9) t.activecount++;
-   				}
+			cityID = 'city' + Seed.cities[c][0];    
+			for (b in Seed.queue_atkp[cityID]){
+				destinationUnixTime = Seed.queue_atkp[cityID][b]['destinationUnixTime']; 
+				MarchStatus = Seed.queue_atkp[cityID][b]['marchStatus'];
+				MarchType = Seed.queue_atkp[cityID][b]['marchType'];
+				botMarchStatus = Seed.queue_atkp[cityID][b]['botMarchStatus'];
+				if (MarchType == 9 &&  MarchStatus == 3) t.stopcount++;
+				else if (MarchType == 9) t.activecount++;
+			}
    		}
-	   	if (t.resuming == false && t.stopping == false && t.deleting == false && t.activecount != 0) document.getElementById('pbraidtab').innerHTML = '<span style="color: #ff6">Stop Raids ('+ t.activecount + ')</span>';
-	   	else if (t.resuming == false && t.stopping == false && t.deleting == false) document.getElementById('pbraidtab').innerHTML = '<span style="color: #CCC">Stop Raids ('+ t.activecount + ')</span>';
-   		if (t.resuming == false && t.resuming == false && t.deleting == false && t.stopcount !=0) document.getElementById('pbraidtabRes').innerHTML = '<span style="color: #ff6">Resume Raids ('+ t.stopcount + ')</span>';
-   		else if (t.resuming == false && t.stopping == false && t.deleting == false) document.getElementById('pbraidtabRes').innerHTML = '<span style="color: #CCC">Resume Raids ('+ t.stopcount + ')</span>';
-   		if (t.resuming == false && t.stopping == false && t.deleting == false && t.stopcount !=0) document.getElementById('pbraidtabDel').innerHTML = '<span style="color: #ff6">Delete Raids ('+ t.stopcount + ')</span>';
-   		else if (t.resuming == false && t.stopping == false && t.deleting == false) document.getElementById('pbraidtabDel').innerHTML = '<span style="color: #CCC">Delete Raids ('+ t.stopcount + ')</span>';
+	   	if (t.resuming == false && t.stopping == false && t.deleting == false && t.activecount != 0)
+			document.getElementById('pbraidtab').innerHTML = '<span style="color: #ff6">Stop Raids ('+ t.activecount + ')</span>'
+	   	else if (t.resuming == false && t.stopping == false && t.deleting == false)
+			document.getElementById('pbraidtab').innerHTML = '<span style="color: #CCC">Stop Raids ('+ t.activecount + ')</span>'
+   		if (t.resuming == false && t.resuming == false && t.deleting == false && t.stopcount !=0)
+			document.getElementById('pbraidtabRes').innerHTML = '<span style="color: #ff6">Resume Raids ('+ t.stopcount + ')</span>'
+   		else if (t.resuming == false && t.stopping == false && t.deleting == false)
+			document.getElementById('pbraidtabRes').innerHTML = '<span style="color: #CCC">Resume Raids ('+ t.stopcount + ')</span>'
+   		if (t.resuming == false && t.stopping == false && t.deleting == false && t.stopcount !=0)
+			document.getElementById('pbraidtabDel').innerHTML = '<span style="color: #ff6">Delete Raids ('+ t.stopcount + ')</span>'
+   		else if (t.resuming == false && t.stopping == false && t.deleting == false)
+			document.getElementById('pbraidtabDel').innerHTML = '<span style="color: #CCC">Delete Raids ('+ t.stopcount + ')</span>'
   },
    
    	
@@ -4899,7 +4921,7 @@ cm.MARCH_TYPES = {
   	var o = '<FONT size=2px><B>Raid Timer: '+ timestr( 86400 - ( unixTime() - t.rslt.settings.lastUpdated )) +'</b></font>';
   	document.getElementById('ptRaidTimer').innerHTML = o;
   	
-  	var z ='<TABLE class=pbTab><TR><TD width=60px align=center><A onclick="pbStopAll()">STOP</a></td><TD width=70px>Time</td><TD width=85px>Coords</td><TD width=50px>Level</td><TD width=50px></td><TD width=50px><A onclick="pbDeleteAll()">DELETE</a></td></TR>';
+  	var z ='<TABLE class=pbTab><TR><TD width=60px align=center><A onclick="pbStopAll('+t.cityId+')">STOP</a></td><TD width=70px>Time</td><TD width=85px>Coords</td><TD width=50px>Level</td><TD width=50px></td><TD width=50px><A onclick="pbDeleteAll()">DELETE</a></td></TR>';
   	if (t.rslt['queue'] != ""){
   		for (y in t.rslt['queue']) {
   			if (t.rslt['queue'][y]['botMarches'] != undefined) {
@@ -5215,7 +5237,7 @@ cm.MARCH_TYPES = {
   			 loading: true,
   			 onSuccess: function(transport){
   				var rslt = eval("(" + transport.responseText + ")");
-  	              if (rslt != "") {
+  	              if (rslt.ok) {
   	              	  var serverID = getServerId();
   	              	  t.save = GM_getValue ('SavedRaids_'+serverID);
   	              	  if (t.save != undefined) t.save = JSON2.parse (t.save);
@@ -5274,7 +5296,7 @@ cm.MARCH_TYPES = {
   	 });
 },
   
-  StopCityRaids : function (){
+  StopCityRaids : function (cityId){
     	var t = Tabs.Raid;
     	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 
@@ -5284,7 +5306,7 @@ cm.MARCH_TYPES = {
     	params.action = 'stopAll';
     	params.settings = {};
 
-  	    params.settings.cityId = t.cityId;
+  	    params.settings.cityId = cityId;
   	    		
     	 new AjaxRequest2(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
     		  		method: "post",
@@ -5297,7 +5319,7 @@ cm.MARCH_TYPES = {
     					  }
     				 },
     		 });   
-    setTimeout(t.GetRaids, (750),t.cityId); 	
+    setTimeout(t.GetRaids, (750), cityId); 	
     },
   
   StopAllRaids : function (){
@@ -5656,13 +5678,15 @@ cm.MARCH_TYPES = {
 	if(!Options.RaidRunning) return;
 	
 	for (g=0;g<Seed.cities.length;g++){
-				
+		if(t.checkRaidresting('city'+Seed.cities[g][0]) && !Options.alertConfig.raidautoswitch[Seed.cities[g][0]]){
+			t.resumeRaids(Seed.cities[g][0]);
+		}
 	}
 	
-	t.raidtimer = setTimeout(t.checkRaids, 3600000);
+	t.raidtimer = setTimeout(t.checkRaids, 10*1000);
   },
   
-  /*checkRaidresting : function (city){
+  checkRaidresting : function (city){
 	for(i in Seed.queue_atkp[city]){
 		//Check if march is a barb raid if not disregard
 		if(Seed.queue_atkp[city][i].marchType == 9)
@@ -5674,7 +5698,7 @@ cm.MARCH_TYPES = {
 				return true;
 	}
 	return false;
-  },*/
+  },
 
   
   GetRaids : function(cityId){
@@ -5727,6 +5751,32 @@ cm.MARCH_TYPES = {
 							unsafeWindow.cityinfo_army();
                             setTimeout(unsafeWindow.update_seed_ajax, 250);
                             logit('reset' +cityId);
+						}
+				 },
+  		 });
+  },
+  
+  resumeRaids : function(cityId){
+  		var t = Tabs.Raid;
+  		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+  		  		
+  		params.pf = 0;
+  		params.ctrl = 'BotManager';
+  		params.action = 'resumeAll';
+		params.settings = {};
+  		params.settings.cityId = cityId;
+  		
+  		
+   		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
+  		         method: "post",
+  		         parameters: params,
+				 loading: true,
+				 onSuccess: function(transport){
+					var rslt = eval("(" + transport.responseText + ")");
+                        if (rslt.ok) {
+							unsafeWindow.cityinfo_army();
+                            setTimeout(unsafeWindow.update_seed_ajax, 250);
+                            logit('resume ' +cityId);
 						}
 				 },
   		 });
@@ -8806,7 +8856,6 @@ function saveCrestOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CrestOptions));}, 0);
 }
-
 
 
 
