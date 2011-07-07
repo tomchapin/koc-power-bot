@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110704d
+// @version        20110707a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110704d';
+var Version = '20110707a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -153,6 +153,11 @@ var TrainOptions = {
   SelectMax:			{1:false,2:false,3:false,4:false,5:false,6:false,7:false},
   Resource:		{1:true,2:true,3:true,4:true,5:true,6:true,7:true},
   UseIdlePop:		{1:true,2:true,3:true,4:true,5:true,6:true,7:true},
+};
+
+var ChatOptions = {
+  latestChats               : [],
+  AllowUsersRemoteControl   : [],
 };
 
 var nHtml={
@@ -381,6 +386,7 @@ function pbStartup (){
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readOptions();
   readAttackOptions();
+  readChatOptions();
   readCrestOptions();
   readTrainingOptions();
   setCities();
@@ -419,6 +425,7 @@ function pbStartup (){
   CollectGold.init();
   FoodAlerts.init();
   ChatPane.init();
+  ChatStuff.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
     tabManager.showTab();
@@ -8208,7 +8215,330 @@ var WideScreen = {
   },
 }
 
+/*******************   Chat functions ****************/
+Tabs.Chat = {
+  tabOrder : 300,                    // order to place tab in top bar
+  //tabDisabled : !ENABLE_SAMPLE_TAB, // if true, tab will not be added or initialized
+  //tabLabel : 'Click Me',            // label to show in main window tabs
+  myDiv : null,
+  timer : null,  
+  
+  init : function (div){    // called once, upon script startup
+    var t = Tabs.Chat;
+    t.myDiv = div;
+    var cityName = Cities.cities[0].name;
+    t.myDiv.innerHTML = '<DIV class=pbStat>Chat Answer/Reply Info</div><TABLE><TR>\
+						<TD>Allowed Players: </td><TD><textarea cols=30 rows=1 id=allowUserBox></textarea></td>\
+						</tr><TR>\
+						<TD colspan=2>Type "/[Player] units?" to get a reply\n Player name is cAsE-SeNsItIvE </td></tr></table>';
+	t.togtext('allowUserBox', 'AllowUsersRemoteControl');
+  },
+  
+  togtext : function(boxId, optionName){
+    var t = Tabs.Chat;
+	var e = document.getElementById(boxId);
+	var text = '';
+	for(i=0; i<ChatOptions[optionName].length; i++)
+		text += ChatOptions[optionName][i]+'\n';
+	e.value = text;
+	e.addEventListener('change', new eventToggle(boxId, optionName).handler, false);
+	function eventToggle (boxId, optionName){
+      this.handler = handler;
+      var optName = optionName;
+      function handler(event){
+	    ChatOptions[optionName] = [];
+		var values = this.value.split('\n');
+        for(var i=0; i<values.length; i++)
+			ChatOptions[optionName][i] = values[i];
+        saveChatOptions();
+      }
+    }
+  },
+  
+  togOpt : function (checkboxId, optionName, callEnable, callIsAvailable){
+    var t = Tabs.Options;
+    var checkbox = document.getElementById(checkboxId);
+    
+    if (callIsAvailable && callIsAvailable()==false){
+      checkbox.disabled = true;
+      return;
+    }
+    if (Options[optionName])
+      checkbox.checked = true;
+    checkbox.addEventListener ('change', new eventToggle(checkboxId, optionName, callEnable).handler, false);
+    function eventToggle (checkboxId, optionName, callOnChange){
+      this.handler = handler;
+      var optName = optionName;
+      var callback = callOnChange;
+      function handler(event){
+        Options[optionName] = this.checked;
+        saveOptions();
+        if (callback != null)
+          callback (this.checked);
+      }
+    }
+  },
+  
+  hide : function (){
 
+  },
+  
+  show : function (){
+
+  },
+
+}
+
+var ChatStuff = {
+timeout : null,
+processqueue : [],
+latestChats : [],
+
+  init:function() {
+	var t=ChatStuff;
+	var comm=document.getElementById('mod_comm_list2');
+	if(comm) {
+		if(t.timeout == null) {
+			t.GetLatestChat();
+			t.timeout = window.setTimeout(function() {
+				t.IterateChat(t.ChatAdded);
+			},200);
+		} else {
+			logit("Maybe too many chat messages, chat already processing.");
+		}
+	}
+	window.setTimeout(function() {
+		t.init();
+	},5000);
+  },
+
+  GetLatestChatStr:function(chatObj) { 
+	return chatObj.name+'#'+chatObj.time+'#'+chatObj.text.split(/[\.\?]/)[0]; 
+  },
+
+  GetLatestChat:function() {
+	var t = ChatStuff;
+	t.latestChats = ChatOptions.latestChats;
+	if(t.latestChats.length>25) {
+		t.latestChats.splice(0,1);
+	}
+  },
+
+  GetChatTimeNum:function(time) {
+	var tarr=time.split(':');
+	if(!time) return undefined;
+	var timeNum=(tarr[0]*60)+tarr[1];
+	return timeNum;
+  },
+
+  GetChatObj:function(htmlObj) {
+	var t=ChatStuff;
+	var nm=searchDOM(htmlObj,'node.className=="nm"',8);
+	var time=searchDOM(htmlObj,'node.className=="time"',8);
+	var tx=searchDOM(htmlObj,'node.className=="tx"',8);
+	if(!nm || !time || !tx) { return undefined; }
+	var nameArr=nm.innerHTML.split(' ');
+	var fromMe = nameArr[1]==Seed.player.name?true:false;
+	return { 
+		'obj':htmlObj,
+		'textObj':tx,
+		'name':nm.innerHTML,
+		'time':time.innerHTML,
+		'text':tx.innerHTML,
+		'shortName':nameArr[1],
+		'timeNum':t.GetChatTimeNum(time.innerHTML),
+		'fromMe':fromMe?1:0,
+	};
+  },
+
+  IterateChat:function(func) {
+	var t=ChatStuff;
+	var comm = document.getElementById('mod_comm_list2');
+	var directs = searchDOM(comm,'node.className=="chatwrap clearfix direct"',4,true);
+	var chats=[];
+	for(var d=directs.length-1; d>=0; d--) {
+		var direct=directs[d];
+		var chatObj=t.GetChatObj(direct);
+		if(chatObj) {
+			chats.push([direct,chatObj]);
+		}
+	}
+	t.checkProcessed(chats, func);
+  },
+
+  checkProcessed : function(chats, func){
+	var t=ChatStuff;
+	for(var c=0; c<chats.length; c++) {
+		var found = false;
+		var chatObj=chats[c][1];
+		for(var i=0; i<t.latestChats.length; i++){
+			if(t.latestChats[i] == t.GetLatestChatStr(chatObj))
+				found = true;
+		}
+		if(!found){
+		chatObj.notProcessed=true;
+		ChatOptions.latestChats.push(t.GetLatestChatStr(chatObj));
+		}
+		func(chatObj);
+	}
+	saveChatOptions();
+	t.timeout = null;
+  },
+
+  GetCitiesHash:function(arr) {
+	var h={};
+	for(var a=0; a<arr.length; a++) {
+		var city=arr[a];
+		var newA=[]
+		Array.prototype.push.apply(newA, city);
+
+		h[city[0]]=newA;
+	}
+	return h;
+  },
+
+  SendChat:function(name,mess) {
+	var inp=document.getElementById('mod_comm_input');
+	inp.value="@"+name+' '+mess;
+	logit('Send chat:'+mess);
+	unsafeWindow.Chat.sendChat();
+  },
+
+  ChatFuncs:{
+	'units':{
+		'question':function(chatObj,info) {
+			if(!chatObj.notProcessed) { return; }
+			var t=ChatStuff;
+			
+			t.SendChat(chatObj.shortName,"units."+JSON2.stringify({
+				'cities':t.GetCitiesHash(Seed.cities),
+				'units':Seed.units,
+			}));
+		},
+		'answer':function(chatObj,info) {
+			var t=ChatStuff;
+			// {"city24479":{"tick":1297589617,"rec1":"[756220044, 2592000000, 7100, 3033]","rec2":"[539696566, 1836000000, 5000, 0]","rec3":"[191319892, 1548000000, 4200, 0]","rec4":"[4512787, 1512000000, 4100, 0]"}}
+			var infoObj=JSON2.parse(info);
+			var res=infoObj.units;
+			var cities=infoObj.cities;
+			
+			chatObj.textObj.innerHTML='';
+			var table=document.createElement('table');
+			//table.className='direct';
+			function AddCell(tr) {
+				var td=tr.insertCell(-1);
+				//td.className='direct';
+				td.style.backgroundColor='#ffde75';
+				td.style.textAlign='right';
+				return td;
+			}
+			for(var city in res) {
+				var resObj=res[city];
+				
+				var tr=table.insertRow(-1);
+				//var cityTd=tr.insertCell(-1);
+				var cityTd=AddCell(tr);
+				cityTd.colspan='4';
+				cityTd.style.fontWeight='bold';
+				var cityM=/([0-9]+)$/.exec(city);
+				var cityObj=cities[cityM[1]];
+				if(!cityObj) {
+					logit('Cannot find city:'+cityM[1]);
+					continue; 
+				}
+				
+				cityTd.innerHTML=cityObj[1];
+				//for(var r=1; r<=4; r++ ) {
+				for(var unt in resObj) {
+					//var rarr=JSON2.parse(resObj['rec'+r].replace(' ',''));
+					var units=parseInt(resObj[unt]);
+					
+					if(units<=0) continue;
+					var tr=table.insertRow(-1);
+					AddCell(tr).innerHTML=unsafeWindow.unitcost[unt][0];
+					AddCell(tr).innerHTML=addCommas(units);
+				}
+			}
+			chatObj.textObj.appendChild(table);
+		},
+	}
+  },
+
+  allowUsersHash:null,
+  ChatAdded:function(chatObj) {
+	var t=ChatStuff;
+	GM_log('chatadded ' +chatObj);
+	if(chatObj) {
+		t.allowUsersHash = ChatOptions.AllowUsersRemoteControl;
+		if(t.allowUsersHash.length==0) { return; }
+
+		var cArr=/^([^\?\.]+)([\.\?])(.*)$/.exec(chatObj.text);
+		if(!cArr) {
+			return;
+		}
+		var cmd=cArr[1]
+		var info=cArr[3];
+		var question=false;
+		GM_log(cmd);
+		if(chatObj.fromMe) {
+			chatObj.obj.style.borderBottom='1px solid #0f0';
+		}
+		if(chatObj.notProcessed) {
+			chatObj.obj.style.borderLeft='1px solid #ff0';
+			//chatObj.obj.appendChild(document.createTextNode(' notprocessed '));
+		}
+		
+		var cmdInfo=t.ChatFuncs[cmd];
+
+		if(cArr[2]=='?') {
+			question=true;
+		} else {
+		}
+		
+		if(cmdInfo) {
+			// hide unreadable requests that are json
+			var shortCmd=(cmd+cArr[2]);
+
+			if(chatObj.textObj.innerHTML!=shortCmd && info.substr(0,1)=='{') {
+				chatObj.textObj.innerHTML=shortCmd;
+			}
+		}
+		
+		// if(chatObj.fromMe) {
+			// return;
+		// }
+		var done=0;
+
+		// process chat
+		if(chatObj.notProcessed) {
+			logit('remote command:'+cmd+cArr[2]+', not processed:'+chatObj.notProcessed);
+		}
+		if(cmdInfo) {
+			window.setTimeout(function() {
+				if(question) {
+					var permission = false;
+					for(var u=0; u<t.allowUsersHash.length; u++)
+						if(t.allowUsersHash[u] == chatObj.shortName){
+							permission = true;
+							break;
+						}
+					if(permission){
+						cmdInfo['question'].call(t,chatObj,info);
+					} else {
+						chatObj.obj.appendChild(document.createTextNode("Player does not have permission: "+chatObj.shortName));
+						t.SendChat(chatObj.shortName,"Player does not have permission");
+					}
+				} else {
+					cmdInfo['answer'].call(t,chatObj,info);
+				}
+			},0);				
+		}
+	} else {
+		logit('Chat object failed');
+	}
+	return true;
+  },
+}
 
 /*******************   KOC Map interface ****************/
 // 0:bog, 10:grassland, 11:lake, 20:woods, 30:hills, 40:mountain, 50:plain, 51:city / barb, 53:misted city
@@ -8847,6 +9177,11 @@ function saveAttackOptions (){
   setTimeout (function (){GM_setValue ('AttackOptions_'+serverID, JSON2.stringify(AttackOptions));}, 0);
 }
 
+function saveChatOptions (){
+  var serverID = getServerId();
+  setTimeout (function (){GM_setValue ('ChatOptions_'+serverID, JSON2.stringify(ChatOptions));}, 0);
+}
+
 function saveTrainOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('TrainOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(TrainOptions));}, 0);
@@ -8889,6 +9224,21 @@ function readAttackOptions (){
           AttackOptions[k][kk] = opts[k][kk];
       else
         AttackOptions[k] = opts[k];
+    }
+  }
+}
+
+function readChatOptions (){
+  var serverID = getServerId();
+  s = GM_getValue ('ChatOptions_'+serverID, '[]');
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          ChatOptions[k][kk] = opts[k][kk];
+      else
+        ChatOptions[k] = opts[k];
     }
   }
 }
@@ -9259,6 +9609,57 @@ var CalterUwFunc = function (funcName, findReplace) {
   } catch (err) {
   }
       
+  function setEnable (tf){
+    if (t.funcNew == null)
+      return;
+    if (t.isEnabled != tf){
+      if (tf){
+      	var scr=document.createElement('script');
+      	scr.innerHTML = funcName +' = '+ t.funcNew;
+      	document.body.appendChild(scr);
+        setTimeout ( function (){document.body.removeChild(scr);}, 0);
+      	t.isEnabled = true;
+      } else {
+        unsafeWindow[t.funcName] = t.funcOld;
+        t.isEnabled = false;
+      }
+    }
+  }
+  function isAvailable (){
+    if (t.funcNew == null)
+      return false;
+    return true;
+  }
+};
+
+var CalterUwVar = function (funcName, findReplace) {
+  var t = this;
+  this.isEnabled = false;
+  this.isAvailable = isAvailable;
+  this.setEnable = setEnable;
+  this.funcName = funcName;
+  this.funcOld = unsafeWindow[funcName];  
+  this.funcNew = null;
+  try {
+	var funcText = null;
+	funcName = funcName.split('.');
+	funcText = unsafeWindow[funcName[0]];
+	for(var i=1; i<funcName.length; i++)
+		funcText = funcText[funcName[i]];
+	
+	GM_log(funcText);
+    var rt = funcText.toString();
+    for (var i=0; i<findReplace.length; i++){
+      x = rt.replace(findReplace[i][0], findReplace[i][1]);
+      if (x == rt)
+        return false;
+      rt = x;
+    }
+    this.funcNew = rt;
+  } catch (err) {
+	GM_log(err);
+  }
+      GM_log(funcText);
   function setEnable (tf){
     if (t.funcNew == null)
       return;
