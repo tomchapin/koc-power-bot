@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110707a';
+var Version = '20110708a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -8467,7 +8467,6 @@ latestChats : [],
   allowUsersHash:null,
   ChatAdded:function(chatObj) {
 	var t=ChatStuff;
-	GM_log('chatadded ' +chatObj);
 	if(chatObj) {
 		t.allowUsersHash = ChatOptions.AllowUsersRemoteControl;
 		if(t.allowUsersHash.length==0) { return; }
@@ -8479,7 +8478,6 @@ latestChats : [],
 		var cmd=cArr[1]
 		var info=cArr[3];
 		var question=false;
-		GM_log(cmd);
 		if(chatObj.fromMe) {
 			chatObj.obj.style.borderBottom='1px solid #0f0';
 		}
@@ -8510,12 +8508,12 @@ latestChats : [],
 		var done=0;
 
 		// process chat
-		if(chatObj.notProcessed) {
-			logit('remote command:'+cmd+cArr[2]+', not processed:'+chatObj.notProcessed);
-		}
+		// if(chatObj.notProcessed) {
+			// logit('remote command:'+cmd+cArr[2]+', not processed:'+chatObj.notProcessed);
+		// }
 		if(cmdInfo) {
 			window.setTimeout(function() {
-				if(question) {
+				if(question && chatObj.notProcessed) {
 					var permission = false;
 					for(var u=0; u<t.allowUsersHash.length; u++)
 						if(t.allowUsersHash[u] == chatObj.shortName){
