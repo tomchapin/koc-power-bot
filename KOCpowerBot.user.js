@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110707a
+// @version        20110713a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110708a';
+var Version = '20110713a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -83,6 +83,11 @@ var Options = {
   HelpRequest  : false,
   DeleteRequest: false,
   MapShowExtra : false,
+  RaidRunning  : false,
+  RaidReset    : 0,
+  DeleteMsg	   : false,
+  DeleteMsgs0   : false,
+  DeleteMsgs1   : false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -92,34 +97,6 @@ var GlobalOptions = {
   pbWideScreenStyle : 'normal',
   autoPublishGamePopups : false,
   autoPublishPrivacySetting : 80,
-};
-
-var AttackOptions = {
-  LastReport    		: 0,
-  MsgEnabled          	: false,
-  MsgInterval	      	: 1,
-  Method			    : "distance",
-  SendInterval			: 30,
-  MarchInt				: 1,
-  MaxDistance           : 40,
-  RallyClip				: 0,
-  Running       		: false,
-  BarbsFailedKnight		: 0,
-  BarbsFailedRP 		: 0,
-  BarbsFailedTraffic   	: 0,
-  BarbsFailedVaria		: 0,
-  BarbsTried    		: 0,
-  DeleteMsg             : true,
-  DeleteMsgs0			: false,
-  DeleteMsgW			: false,
-  Foodstatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  MsgLevel			    : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
-  BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  BarbNumber    		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Levels    			: {1:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
-  Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0}},
-  MinDistance			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
-  Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750}	
 };
 
 var CrestOptions = {
@@ -142,6 +119,7 @@ var CrestOptions = {
   R2Cat:0,
 };
 
+
 var TrainOptions = {
   Running   : 		false,
   Troops: 			{1:0,2:0,3:0,4:0,5:0,6:0,7:0},
@@ -155,11 +133,8 @@ var TrainOptions = {
   UseIdlePop:		{1:true,2:true,3:true,4:true,5:true,6:true,7:true},
 };
 
-var ChatOptions = {
-  latestChats               : [],
-  AllowUsersRemoteControl   : [],
-};
-
+var ResetAll=false;
+var deleting=false;
 var nHtml={
   FindByXPath:function(obj,xpath,nodetype) {
 	if(!nodetype){
@@ -217,7 +192,7 @@ if (document.URL.search(/facebook.com\/connect\/uiserver.php/i) >= 0){
   return;
 }
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
-  kocWideScreen ();
+	kocWideScreen ();
 }
 
 function kocWideScreen(){
@@ -385,8 +360,6 @@ function pbStartup (){
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readOptions();
-  readAttackOptions();
-  readChatOptions();
   readCrestOptions();
   readTrainingOptions();
   setCities();
@@ -425,7 +398,6 @@ function pbStartup (){
   CollectGold.init();
   FoodAlerts.init();
   ChatPane.init();
-  ChatStuff.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
     tabManager.showTab();
@@ -436,7 +408,8 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
-  setInterval (AutoTrain,5000);
+  setInterval (AutoTrain,30* 1000);
+  setInterval(startdeletereports,5*60*1000)
 }
 
 /************************ Food Alerts *************************/
@@ -660,8 +633,6 @@ Tabs.tower = {
             <TR><TD align=right>Display defend status: &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
             <TR><TD align=right>Minimum # of troops: &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
             </table></td></tr>\
-        <TR><TD align=right><INPUT id=pbalertbarb type=checkbox '+ (Options.alertConfig.barb?'CHECKED':'') +'/></td><TD>Stop barbing on impending.</td></tr>\
-        <TR><TD align=right><INPUT id=pbalertbarbres type=checkbox '+ (Options.alertConfig.barbresume?'CHECKED':'') +'/></td><TD>Resume barbing after impending.</td></tr>\
         <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>Stop raids on impending.</td></tr>\
         <TR><TD><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>Play sound on incoming attack/scout</td></tr>\
@@ -703,8 +674,6 @@ Tabs.tower = {
     document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
-    document.getElementById('pbalertbarb').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertbarbres').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertraid').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
@@ -756,8 +725,6 @@ Tabs.tower = {
   setCountry : function(){
     var t = Tabs.tower;
     var myselect=document.getElementById("pbfrmprovider");
-// GM_log(document.getElementById("pbfrmprovider").value);
-// GM_log(document.getElementById("pbfrmcountry").value);
 	myselect.innerHTML = '<option value=0 >--Provider--</option>';
 	myselect.disabled = true;
     for (var i in t.Providers) {
@@ -804,8 +771,6 @@ Tabs.tower = {
     Options.alertConfig.scouting=document.getElementById('pbalertScout').checked;      
     Options.alertConfig.wilds=document.getElementById('pbalertWild').checked;
     Options.alertConfig.defend=document.getElementById('pbalertDefend').checked;
-    Options.alertConfig.barb=document.getElementById('pbalertbarb').checked;
-    Options.alertConfig.barbresume=document.getElementById('pbalertbarbres').checked;
     Options.alertConfig.raid=document.getElementById('pbalertraid').checked;
     var mt = parseInt(document.getElementById('pbalertTroops').value);
     if (mt<1 || mt>120000){
@@ -850,7 +815,7 @@ Tabs.tower = {
     
   eachSecond : function (){
     var t = Tabs.tower;
-	for (var cityId in Cities.byID){
+	  for (var cityId in Cities.byID){
       if (Seed.citystats["city" + cityId].gate != t.defMode[cityId]){     // user changed def mode
         t.defMode[cityId] = Seed.citystats["city"+ cityId].gate;
         t.displayDefMode (cityId);
@@ -874,22 +839,6 @@ Tabs.tower = {
         }
       }
     }
-	
-	/*if (Options.alertConfig.barbresume && Options.alertConfig.barbautoswitch && !incomming){
-		obj = document.getElementById('AttSearch');
-		if (!AttackOptions.Running) {
-			AttackOptions.Running = true;
-			obj.value = "Barb = ON";
-			updatebotbutton('Barb - ON', 'pbbarbtab');
-			saveAttackOptions();
-			Tabs.Barb.getnextCity();
-			Options.alertConfig.barbautoswitch = false;
-			saveOptions();
-		}
-	}*/
-	
-	
-//logit ("NOW="+ now + ' alarmActive='+ Options.alertSound.alarmActive + ' expireTime='+ Options.alertSound.expireTime);
     if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime))
       t.stopSoundAlerts();
 
@@ -969,6 +918,7 @@ Tabs.tower = {
   },
   
   sendalert : function (m){
+    var t = Tabs.tower;
     var now = unixTime();
     if (Options.celltext.atext)
       t.postToCell (m);
@@ -977,18 +927,6 @@ Tabs.tower = {
       if (m.arrivalTime > Options.alertSound.expireTime)
         Options.alertSound.expireTime = m.arrivalTime;
     }
-	/*if (Options.alertConfig.barb){
-		obj = document.getElementById('AttSearch');
-		if (AttackOptions.Running == true) {
-			Options.alertConfig.barbautoswitch = true;
-			saveOptions();
-			AttackOptions.Running = false;
-			obj.value = "Barb = OFF";
-			updatebotbutton('Barb - OFF', 'pbbarbtab');
-			saveAttackOptions();
-			Tabs.Barb.nextattack = null;
-		}
-	}*/
 	if (Options.alertConfig.raid){
 		Tabs.Raid.StopCityRaids(m.toCityId);
 		Options.alertConfig.raidautoswitch[m.toCityId] = true;
@@ -1178,10 +1116,8 @@ Tabs.tower = {
         }
       }
     }
-	
 	t.sendalert(m);
     if (!Options.alertConfig.aChat) return;
-	
     if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
     if (SEND_ALERT_AS_WHISPER)
       sendChat ("/"+ Seed.player.name +' '+ msg);    // Whisper to myself
@@ -1906,7 +1842,125 @@ Tabs.build = {
 		var now = unixTime();
 		if (buildingMode == 'build') {
 			var buildingMult = Math.pow(2, buildingLevel);
+        } 
+		if (buildingMode == 'destruct') {
+			var buildingMult = Math.pow(2, buildingLevel - 2);
+		}
+				
+		var knights = Seed.knights["city" + cityId];
+		if (knights) {
+			var polKniId = parseInt(Seed.leaders['city' + cityId].politicsKnightId);
+			if (polKniId) {
+				var polValue = parseInt(Seed.knights['city' + cityId]['knt' + polKniId].politics);
+				var polBoost = parseInt(Seed.knights['city' + cityId]['knt' + polKniId].politicsBoostExpireUnixtime);
+				if ((polBoost - now) > 0) {
+					polValue = parseInt(polValue * 1.25);
+				}
+			} else {
+				polValue = 0;
+			}
+		} else {
+			polValue = 0;
+		}
+        
+        var buildingTime = unsafeWindow.buildingcost["bdg" + buildingType][7] * buildingMult;
+        if (parseInt(buildingType) < 6 && parseInt(buildingType) > 0 && buildingMult == 1) {
+            buildingTime = 15;
         }
+		if (buildingMode == 'build') {
+			buildingTime = parseInt(buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16)));
+        } 
+		if (buildingMode == 'destruct') {
+			buildingTime = buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16));
+			if (buildingTime % 1 > 0) {
+				buildingTime = parseInt(buildingTime);
+			}
+		}
+		
+		var result = new Array(buildingMult, buildingTime);
+		return result;
+	},
+	bot_buildguardian: function(c, a){
+        var t = Tabs.build;
+		var cityId = t.getCurrentCityId();
+        var buildingType  = 50;
+		for(i=0; i < Cities.numCities; i++){
+			if(Seed.guardian[i].cityId == cityId){
+				var buildingLevel = Seed.guardian[i].level;
+				break;
+			}
+		}
+		var buildingId    = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][3]);
+		if (DEBUG_TRACE) logit("Pos: " + buildingPos + " Type: " + buildingType + " Level: " + buildingLevel + " Id: " + buildingId);
+  		var buildingAttempts = 0;
+		var loaded_bQ = t["bQ_" + cityId];
+		if (typeof Seed.queue_con['city' + cityId][0] != 'undefined') {
+			var current_construction_pos = Seed.queue_con['city' + cityId][0][2];
+		} else {
+			var current_construction_pos = "";
+		}
+		if (loaded_bQ.length == 0 && current_construction_pos != "" ) { //check anyway if there is currently build in progess for this specific building
+			if (current_construction_pos != 'NaN' && current_construction_pos == buildingId) {
+				buildingLevel += 1;
+			}
+		} else {
+			if (current_construction_pos != "" && current_construction_pos == buildingId) {
+				buildingLevel += 1;
+			}
+			for (var i = 0; i < loaded_bQ.length; i++) { // check if there are already queue items for this building or the building is currently building
+				var loadedCity = loaded_bQ[i].cityId;
+				var loadedSlot = loaded_bQ[i].buildingPos;
+				if (loadedSlot == buildingPos && loadedCity == cityId) {
+					buildingLevel += 1;
+				}
+				if (loaded_bQ[i].buildingMode == 'destruct' && loadedSlot == buildingPos && loadedCity == cityId) { // check if destrcution is already in queue
+					t.modalmessage('Destruction already in Queue!');
+					return;
+				}
+			}
+		}
+        if (t.currentBuildMode == "build") {
+		    if (buildingLevel >= 9) {
+                t.modalmessage('Due to building requirements (DI), buildings above level 9\nshould be manualy built.');
+                return;
+            }
+            var buildingMode = "build";
+			var result = t.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
+			var buildingMult = result[0];
+			var buildingTime = result[1];
+			var queueId = loaded_bQ.length;
+			t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);
+			t._addTab(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode);
+        }
+        if (t.currentBuildMode == "max") {
+            var buildingMode = "build";
+			for (var bL = buildingLevel; bL <9; bL++) {
+				var queueId = loaded_bQ.length;
+				var result = t.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult, buildingMode);
+				t._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+			}
+        }
+        if (t.currentBuildMode == "destruct") {
+            var buildingMode = "destruct";
+			var result = t.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
+			var buildingMult = result[0];
+			var buildingTime = result[1];
+			var queueId = loaded_bQ.length;
+			t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);
+			t._addTab(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode);
+        }
+
+    },
+	calculateQueueValues: function (cityId, buildingLevel, buildingType, buildingMode) {
+	    var t = Tabs.build;
+		var now = unixTime();
+		if (buildingMode == 'build') {
+			var buildingMult = Math.pow(2, buildingLevel);
+        } 
 		if (buildingMode == 'destruct') {
 			var buildingMult = Math.pow(2, buildingLevel - 2);
 		}
@@ -2016,7 +2070,7 @@ Tabs.build = {
         var t = Tabs.build;
         for (var i = 0; i < Cities.cities.length; i++) {
             //t["bQ_" + Cities.cities[i].id] = []; //clean up if needed
-            GM_setValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, JSON2.stringify((t["bQ_" + Cities.cities[i].id])));
+            if (!ResetAll) GM_setValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, JSON2.stringify((t["bQ_" + Cities.cities[i].id])));
         }
         t.saveBuildStates();
     },
@@ -2069,7 +2123,7 @@ Tabs.build = {
         if (focus)
           t.popBuildQueue.show(true);
 		document.getElementById('pbOptimizeByTime').addEventListener('click', function(){t.clearBuildQueue();t.paintBuildQueue(cityId, true);}, false);
-		t.timer = setTimeout (function() {t.showBuildQueue(cityId, false)}, 5000);  
+		t.timer = setTimeout (function() {t.showBuildQueue(cityId, false)}, 45000);  
 	},
     paintBuildQueue: function(cityId, optimize){
         var t = Tabs.build;
@@ -2127,10 +2181,16 @@ Tabs.build = {
 		var t = Tabs.build;
         if (obj.value == 'Build Mode = OFF') {
 			unsafeWindow.buildslot = t.bot_buildslot; // overwrite original koc function
+			var guardian = document.getElementById('citymap').getElementsByClassName('bldg_guardian_0');
+			if(guardian.length >0)
+				guardian[0].addEventListener('click', t.bot_buildguardian, false);
             obj.value = "Build Mode = ON";
         }
         else {
 			unsafeWindow.buildslot = t.koc_buildslot; // restore original koc function
+			var guardian = document.getElementById('citymap').getElementsByClassName('bldg_guardian_0');
+			if(guardian.length >0)
+				guardian[0].removeEventListener('click', t.bot_buildguardian, false);
 			obj.value = "Build Mode = OFF";
         }
     },
@@ -2148,7 +2208,7 @@ TODO: Better search algorithm (circular OR square, always start at center, worki
 **/
 
 Tabs.Search = {
-  tabOrder : 80,
+  tabOrder : 50,
   myDiv : null,
   MapAjax : new CMapAjax(),
   MAX_SHOW_WHILE_RUNNING : 250,
@@ -2358,6 +2418,13 @@ Tabs.Search = {
     if (t.opt.searchType == 1){
       m += '<TR><TD class=xtab align=right>Wilderness Type:</td><TD class=xtab><SELECT id=pafilWildType>';
       m += htmlOptions ( {1:'Glassland/Lake', 3:'Woodlands', 4:'Hills', 5:'Mountain', 6:'Plain', 0:'ALL'}, Options.wildType );
+	  m+= '</select></td></tr>';
+	  m+= '<TR><TD class=xtab align=right>Glassland/Lake:</td><TD class=xtab><INPUT name=pbfil id=pafilGrass type=CHECKBOX '+ (Options.GrassOnly?' CHECKED':'') +'\><td></tr>';
+	  m+= '<TR><TD class=xtab align=right>Woodlands:</td><TD class=xtab><INPUT name=pbfil id=pafilWood type=CHECKBOX '+ (Options.WoodOnly?' CHECKED':'') +'\><td></tr>';
+	  m+= '<TR><TD class=xtab align=right>Hills:</td><TD class=xtab><INPUT name=pbfil id=pafilHill type=CHECKBOX '+ (Options.HillOnly?' CHECKED':'') +'\><td></tr>';
+	  m+= '<TR><TD class=xtab align=right>Mountain:</td><TD class=xtab><INPUT name=pbfil id=pafilMount type=CHECKBOX '+ (Options.MountOnly?' CHECKED':'') +'\><td></tr>';
+	  m+= '<TR><TD class=xtab align=right>Plain:</td><TD class=xtab><INPUT name=pbfil id=pafilPlain type=CHECKBOX '+ (Options.PlainOnly?' CHECKED':'') +'\><td></tr>';
+	  m+= '<TR><TD class=xtab align=right>All:</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
       m += '</select></td></tr><TR><TD class=xtab align=right>Unowned Only:</td><TD class=xtab><INPUT id=pafilUnowned type=CHECKBOX '+ (Options.unownedOnly?' CHECKED':'') +'\><td></tr>';
     }
    if (t.opt.searchType == 1 || t.opt.searchType == 0) {
@@ -2956,6 +3023,7 @@ Tabs.Search = {
 
   ExportToRaid : function (X,Y){
     var t = Tabs.Search;
+    var cityId =t.selectedCity['id'];
     var pop = new CPopup ('pbExportRaid', 0,0, 800,300, true);
     if (t.popFirst){
       pop.centerMe (mainPop.getMainDiv());  
@@ -2964,47 +3032,47 @@ Tabs.Search = {
     pop.getTopDiv().innerHTML = '<CENTER><B>Export to Raid</b></center>';
     
 	  var m = '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
+	  
 	  m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-	  m += '<TD>Supply Troop</td>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-	  m += '<TD>Militiaman</td>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-	  m += '<TD>Scout</td>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-	  m += '<TD>Pikeman</td></tr>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
 	  m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="0"></td></tr>';
 	  
 	  m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-	  m += '<TD>Swordsman</td>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-	  m += '<TD>Archer</td>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-	  m += '<TD>Cavalry</td>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-	  m += '<TD>Heavy Cavalry</td></tr>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
 	  m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="0"></td></tr>';
 	  
 	  m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-	  m += '<TD>Supply Wagon</td>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-	  m += '<TD>Ballista</td>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-	  m += '<TD>Battering Ram</td>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-	  m += '<TD>Catapult</td></tr>'
+	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
 	  m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit11 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit12 type=text size=6 maxlength=6 value="0"></td></tr></table>';
 	  
 	  m += '<BR><CENTER>' +strButton20('Help', 'id=pbHelp')+'<SELECT id=RaidKnights type=list></select></center>';
-	  //m+= '<BR><CENTER>'+ strButton20('Help', 'id=pbHelp') +'</center>';
 	  m+= '<BR><CENTER>'+ strButton20('Raid and save', 'id=pbRaidSave') +'</center>';
           
     pop.getMainDiv().innerHTML = m;
@@ -3013,18 +3081,19 @@ Tabs.Search = {
     
     document.getElementById ('pbHelp').addEventListener ('click', t.helpPop, false);
     document.getElementById ('pbRaidSave').addEventListener ('click', function(){
-    	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+   	
+    		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     			  		
     	params.pf = 0;
         params.ctrl = 'BotManager';
     	params.action = 'saveMarch';
     	params.settings = {};
-    	params.settings.cityId = t.selectedCity['id'];
+    	params.settings.cityId = cityId;
     	params.queue = {0:{botMarches:{botMarchStatus:1,botState:1},cityMarches:{}}};    	
     	params.queue[0].cityMarches.knightId = parseInt(document.getElementById ('RaidKnights').value);
     	params.queue[0].cityMarches.toXCoord = X;
     	params.queue[0].cityMarches.toYCoord = Y;
-    	params.queue[0].cityMarches.unit0Count = 0; //document.getElementById ('Unit0').value;
+    	params.queue[0].cityMarches.unit0Count = 0;
     	params.queue[0].cityMarches.unit1Count = parseInt(document.getElementById ('Unit1').value);
     	params.queue[0].cityMarches.unit2Count = parseInt(document.getElementById ('Unit2').value);
     	params.queue[0].cityMarches.unit3Count = parseInt(document.getElementById ('Unit3').value);
@@ -3225,7 +3294,7 @@ var exportToKOCattack = {
   
   onUnload : function (){
     var t = exportToKOCattack;
-    GM_setValue ('atkTroops_'+ getServerId(),  JSON2.stringify(t.troops));
+    if (!ResetAll) GM_setValue ('atkTroops_'+ getServerId(),  JSON2.stringify(t.troops));
   },
   
   doExport : function (coordList, city){
@@ -3625,7 +3694,7 @@ DebugTimer.display ('Time to GM_getValue() '+ totTargets +' targets for all citi
 
 /*********************************** Test TAB ***********************************/
 Tabs.Test = {
-  tabOrder: 1000,
+  tabOrder: 140,
   tabDisabled : !ENABLE_TEST_TAB,         // if true, tab will not be added or initialized
   tabLabel : 'Test',
   myDiv : null,
@@ -3721,14 +3790,15 @@ Tabs.Test = {
 
 /*********************************  Cresting Tab ***********************************/
  Tabs.Crest = {
-  tabOrder : 40,
+  tabOrder : 70,
   myDiv : null,
   rallypointlevel:null,
+  error_code: 0,
   knt:{},
      
   init : function (div){
     var t = Tabs.Crest;
-    setInterval(t.FirstRound,5000);
+    setInterval(t.FirstRound,10000);
     t.myDiv = div;
     var selbut=0;
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
@@ -3862,15 +3932,13 @@ Tabs.Test = {
       var buzy = false;
       if (!CrestOptions.Running) return;
       cityID = 'city' + CrestOptions.CrestCity;
-      
       var abandon=0;
-      
       for (var k in Seed.wilderness[cityID] ){
-           if (Seed.wilderness[cityID][k]['xCoord']==CrestOptions.X && Seed.wilderness[cityID][k]['yCoord']==CrestOptions.Y) {
+           if (Seed.wilderness[cityID][k]['xCoord']==CrestOptions.X && Seed.wilderness[cityID][k]['yCoord']==CrestOptions.Y && t.error_code!=401) {
              t.abandonWilderness(Seed.wilderness[cityID][k]['tileId'],Seed.wilderness[cityID][k]['xCoord'],Seed.wilderness[cityID][k]['yCoord'],CrestOptions.CrestCity);
            }
       }
-      
+      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
       for (var k in Seed.queue_atkp[cityID]){
         if (Seed.queue_atkp[cityID][k]['toXCoord']==CrestOptions.X && Seed.queue_atkp[cityID][k]['toYCoord']==CrestOptions.Y)  buzy=true;
       }
@@ -3880,6 +3948,13 @@ Tabs.Test = {
         saveCrestOptions();
       }
       if(!CrestOptions.RoundOne) return;
+      
+      if (CrestOptions.R1MM == 0 && CrestOptions.R1Ball==0 && CrestOptions.R1Cat==0){
+      CrestOptions.RoundOne = false;
+      saveCrestOptions();
+      setTimeout (function(){t.SecondRound();}, 1000);
+      return;
+      }
       
       t.getAtkKnight(cityID);
       slots=0;
@@ -3913,12 +3988,11 @@ Tabs.Test = {
   		params.u10=CrestOptions.R1Ball;
   		params.u12=CrestOptions.R1Cat;
   		
-  		//alert(params.toSource());
   		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
   		         method: "post",
   		         parameters: params,
   		         loading: true,
-  		         onSuccess: function (transport) {
+	  		         onSuccess: function (transport) {
   		         var rslt = eval("(" + transport.responseText + ")");
   		         if (rslt.ok) {
   		         var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -3953,6 +4027,8 @@ Tabs.Test = {
       if (!CrestOptions.Running || !CrestOptions.RoundTwo) return;
       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
       cityID = 'city' + CrestOptions.CrestCity;
+      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
+      
       t.getAtkKnight(cityID);
       slots=0;
        for (z in Seed.queue_atkp[cityID]){
@@ -3967,7 +4043,7 @@ Tabs.Test = {
 
   		params.cid=CrestOptions.CrestCity;
   		params.type=4;
-  	  params.kid=kid;
+  	  	params.kid=kid;
   		params.xcoord = CrestOptions.X;
   		params.ycoord = CrestOptions.Y;
   		params.u2=CrestOptions.R2MM;
@@ -4020,7 +4096,7 @@ Tabs.Test = {
       var cityID = cid;
 	  var tileid = tid;
       params.tid=tid;
-  		params.cid=cid;
+  	  params.cid=cid;
   	  params.x=x;
   		params.y=y;
   		  		
@@ -4033,8 +4109,7 @@ Tabs.Test = {
   		         
   		         
 				  if (rslt.ok) {
-				     // Modal.hideModal();
-				     logit('abandon OK');
+				  	 t.error_code = 0;
 				     CrestOptions.RoundOne = true;
 				     CrestOptions.RoundTwo = true;
 				     saveCrestOptions();
@@ -4064,9 +4139,11 @@ Tabs.Test = {
   		         	  	delete Seed.wilderness["city"+cityID]["t"+tileid];
   		         	  }
                } else {
-               setTimeout (function(){t.abandonWilderness(tid,x,y,cid);}, 5000);
-  		         //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
-  		         }
+               		if (rslt.error_code != 401) {
+               		    t.error_code = rslt.error_code; 
+               			setTimeout (function(){t.abandonWilderness(tid,x,y,cid);}, 5000);
+               		}
+  		        }
   		         },
   		         onFailure: function () {}
   		 });
@@ -4084,7 +4161,7 @@ Tabs.Test = {
 
  /****************************  Transport Implementation  *******************************/
 Tabs.transport = {
-  tabOrder: 140,
+  tabOrder: 80,
   tabLabel: 'Transport',
   myDiv: null,
   timer: null,
@@ -4716,11 +4793,12 @@ Tabs.transport = {
     },
     onUnload: function(){
         var t = Tabs.transport;
-        t.saveTradeRoutes();
-		t.saveTraderState();
+        if (!ResetAll) t.saveTradeRoutes();
+		if (!ResetAll) t.saveTraderState();
         
     },
 }
+
 
 
 /*********************************  Raid Tab ***********************************/
@@ -4803,15 +4881,15 @@ cm.BOT_STATUS = {
     BOT_MARCH_RESTING: 7
 };
 cm.MARCH_STATUS = {
-    MARCH_STATUS_INACTIVE: 0,
-    MARCH_STATUS_OUTBOUND: 1,
-    MARCH_STATUS_DEFENDING: 2,
-    MARCH_STATUS_STOPPED: 3,
-    MARCH_STATUS_RESTING: 4,
-    MARCH_STATUS_UNKNOWN: 5,
-    MARCH_STATUS_SITUATIONCHANGED: 7,
-    MARCH_STATUS_RETURNING: 8,
-    MARCH_STATUS_ABORTING: 9
+	    MARCH_STATUS_INACTIVE: 0,
+	    MARCH_STATUS_OUTBOUND: 1,
+	    MARCH_STATUS_DEFENDING: 2,
+	    MARCH_STATUS_STOPPED: 3,
+	    MARCH_STATUS_RESTING: 4,
+	    MARCH_STATUS_UNKNOWN: 5,
+	    MARCH_STATUS_SITUATIONCHANGED: 7,
+	    MARCH_STATUS_RETURNING: 8,
+	    MARCH_STATUS_ABORTING: 9
 };
 cm.MARCH_TYPES = {
     MARCH_TYPE_NONE: 0,
@@ -4829,7 +4907,7 @@ cm.MARCH_TYPES = {
 
  Tabs.Raid = {
   tabDisabled : false,
-  tabOrder : 120,
+  tabOrder : 110,
   myDiv : null,
   rallypointlevel:null,
   knt:{},
@@ -4846,23 +4924,24 @@ cm.MARCH_TYPES = {
   activecount:0,
   count:0,
   
+        
   init : function (div){
     var t = Tabs.Raid;
     t.myDiv = div;
-	t.raidtimer = setTimeout(t.checkRaids, 10*1000);
+	t.raidtimer = setTimeout(t.checkRaids, 30000);
+	setInterval(t.lookup, 2500);
 	
 	AddSubTabLink('Stop Raids', t.StopAllRaids, 'pbraidtab');
 	AddSubTabLink('Resume Raids', t.ResumeAllRaids, 'pbraidtabRes');
 	AddSubTabLink('Delete Raids', t.DeleteAllRaids, 'pbraidtabDel');
 	
-	setInterval(t.lookup, 2500);
 	
 	var m = '<DIV class=pbStat>RAID FUNCTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 	    m += '<TD><INPUT id=pbRaidStart type=submit value="Auto Reset = '+ (Options.RaidRunning?'ON':'OFF') +'" ></td>';
 	    m += '</tr></table></div>';
 	    m += '<DIV class=pbStat>ACTIVE RAIDS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 	    m += '<TD><DIV style="margin-bottom:10px;"><span id=ptRaidCity></span></div></td></tr>';
-	    m += '<TR><TD><DIV style="margin-bottom:10px;"><span id=ptRaidTimer></span></div></td></tr></table>';
+	    m+='<TR><TD><DIV style="margin-bottom:10px;"><span id=ptRaidTimer></span></div></td></tr></table>';
 	    m += '<DIV id=PaintRaids></div>';
 	    m += '<DIV class=pbStat>SAVED RAIDS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 	    m += '<DIV id=SavedRaids></div>';
@@ -4871,7 +4950,9 @@ cm.MARCH_TYPES = {
 	t.from = new CdispCityPicker ('ptRaidpicker', document.getElementById('ptRaidCity'), true, t.clickCitySelect, 0);
 	document.getElementById('pbRaidStart').addEventListener('click', t.toggleRaidState, false);
 	
-	 t.save = JSON2.parse(GM_getValue ('SavedRaids_'+getServerId(), '[]'));
+	var serverID = getServerId();
+	t.save = GM_getValue ('SavedRaids_'+serverID);
+	if (t.save != undefined) t.save = JSON2.parse (t.save);
 	
 	setInterval (t.paint,1000);
   },
@@ -4881,15 +4962,15 @@ cm.MARCH_TYPES = {
       	t.activecount=0;
       	t.stopcount=0;
       	for (c=0; c< Seed.cities.length;c++) {
-			cityID = 'city' + Seed.cities[c][0];    
-			for (b in Seed.queue_atkp[cityID]){
-				destinationUnixTime = Seed.queue_atkp[cityID][b]['destinationUnixTime']; 
-				MarchStatus = Seed.queue_atkp[cityID][b]['marchStatus'];
-				MarchType = Seed.queue_atkp[cityID][b]['marchType'];
-				botMarchStatus = Seed.queue_atkp[cityID][b]['botMarchStatus'];
-				if (MarchType == 9 &&  MarchStatus == 3) t.stopcount++;
-				else if (MarchType == 9) t.activecount++;
-			}
+      			cityID = 'city' + Seed.cities[c][0];    
+   				for (b in Seed.queue_atkp[cityID]){
+   					destinationUnixTime = Seed.queue_atkp[cityID][b]['destinationUnixTime']; 
+   					MarchStatus = Seed.queue_atkp[cityID][b]['marchStatus'];
+   					MarchType = Seed.queue_atkp[cityID][b]['marchType'];
+   					botMarchStatus = Seed.queue_atkp[cityID][b]['botMarchStatus'];
+   					if (MarchType == 9 &&  MarchStatus == 3) t.stopcount++;
+   					else if (MarchType == 9) t.activecount++;
+   				}
    		}
 	   	if (t.resuming == false && t.stopping == false && t.deleting == false && t.activecount != 0)
 			document.getElementById('pbraidtab').innerHTML = '<span style="color: #ff6">Stop Raids ('+ t.activecount + ')</span>'
@@ -5247,9 +5328,9 @@ cm.MARCH_TYPES = {
   	              if (rslt.ok) {
   	              	  var serverID = getServerId();
   	              	  t.save = GM_getValue ('SavedRaids_'+serverID);
-  	              	  if (t.save != undefined) t.save = JSON2.parse (t.save);
   	              	  if (t.save == undefined) t.save =new Array();
-
+					  else t.save = JSON2.parse (t.save);
+					  
   	              	  t.save.push ({
   	              	  	marchId:		marchId,
   	              	  	cityId:   		cityId,
@@ -5294,7 +5375,8 @@ cm.MARCH_TYPES = {
                       	}
                       }
   	              	                              
-  	              	  setTimeout (function (){GM_setValue ('SavedRaids_'+serverID, JSON2.stringify(t.save));}, 0);
+  	              	  GM_setValue ('SavedRaids_'+serverID, JSON2.stringify(t.save));
+  	              	  t.save = null;
                       unsafeWindow.cityinfo_army();
   	                  setTimeout(unsafeWindow.update_seed_ajax, 250);
   	                  t.GetRaids(cityId);
@@ -5586,7 +5668,7 @@ cm.MARCH_TYPES = {
 	    		params.queue[0].cityMarches.knightId = t.save[y]['knightId']; //parseInt(document.getElementById('AddKnights').value);
 	    		params.queue[0].cityMarches.toXCoord = t.save[y]['toXCoord'];
 	    		params.queue[0].cityMarches.toYCoord = t.save[y]['toYCoord'];
-	    		params.queue[0].cityMarches.unit0Count = 0; //document.getElementById ('Unit0').value;
+	    		params.queue[0].cityMarches.unit0Count = 0;
 	    		params.queue[0].cityMarches.unit1Count = t.save[y]['unit1Count'];
 	    		params.queue[0].cityMarches.unit2Count = t.save[y]['unit2Count'];
 	    		params.queue[0].cityMarches.unit3Count = t.save[y]['unit3Count'];
@@ -5682,31 +5764,19 @@ cm.MARCH_TYPES = {
   
   checkRaids : function (){
 	var t = Tabs.Raid;
+	var now = unixTime();
 	if(!Options.RaidRunning) return;
-	
-	for (g=0;g<Seed.cities.length;g++){
-		if(t.checkRaidresting('city'+Seed.cities[g][0]) && !Options.alertConfig.raidautoswitch[Seed.cities[g][0]]){
-			t.resumeRaids(Seed.cities[g][0]);
+	if ( (now - Options.RaidReset) > 7200 ) {
+		Options.RaidReset = now;
+		saveOptions();
+		for (g=0;g<Seed.cities.length;g++){
+				t.citiesdone = "";
+				setTimeout(t.resetRaids, (1500*g), Seed.cities[g][0],Seed.cities[g][1]);
 		}
+		setTimeout(t.postLog, 30000);
 	}
-	
-	t.raidtimer = setTimeout(t.checkRaids, 10*1000);
+	t.raidtimer = setTimeout(t.checkRaids, 900000);
   },
-  
-  checkRaidresting : function (city){
-	for(i in Seed.queue_atkp[city]){
-		//Check if march is a barb raid if not disregard
-		if(Seed.queue_atkp[city][i].marchType == 9)
-			//Sometimes it only updates the marchstatus and not the botmarchstatus
-			if(Seed.queue_atkp[city][i].botMarchStatus == 7 ||
-				Seed.queue_atkp[city][i].marchStatus == 4 ||
-				(unixTime() > Seed.queue_atkp[city][i].returnUnixTime && Seed.queue_atkp[city][i].marchStatus == 8) ||
-				(Seed.queue_atkp[city][i].marchStatus == 3 && Seed.queue_atkp[city][i].botMarchStatus != 4)) 
-				return true;
-	}
-	return false;
-  },
-
   
   GetRaids : function(cityId){
   		var t = Tabs.Raid;
@@ -5730,14 +5800,13 @@ cm.MARCH_TYPES = {
   							t.paint();
   							unsafeWindow.cityinfo_army();
   							setTimeout(unsafeWindow.update_seed_ajax, 250);
-  							if ((86400 - (unixTime() - rslt.settings.lastUpdated )) < 43200) t.resetRaids(cityId);
   						}
   				 },
   		 });
   },
   
   
-  resetRaids : function(cityId){
+  resetRaids : function(cityId,cityName){
   		var t = Tabs.Raid;
   		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
   		  		
@@ -5757,36 +5826,15 @@ cm.MARCH_TYPES = {
                         if (rslt.ok) {
 							unsafeWindow.cityinfo_army();
                             setTimeout(unsafeWindow.update_seed_ajax, 250);
-                            logit('reset' +cityId);
+                            t.citiesdone += cityName + ' ';
 						}
 				 },
   		 });
   },
   
-  resumeRaids : function(cityId){
+  postLog : function (){
   		var t = Tabs.Raid;
-  		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-  		  		
-  		params.pf = 0;
-  		params.ctrl = 'BotManager';
-  		params.action = 'resumeAll';
-		params.settings = {};
-  		params.settings.cityId = cityId;
-  		
-  		
-   		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
-  		         method: "post",
-  		         parameters: params,
-				 loading: true,
-				 onSuccess: function(transport){
-					var rslt = eval("(" + transport.responseText + ")");
-                        if (rslt.ok) {
-							unsafeWindow.cityinfo_army();
-                            setTimeout(unsafeWindow.update_seed_ajax, 250);
-                            logit('resume ' +cityId);
-						}
-				 },
-  		 });
+  		actionLog('Reset Raidtimer: ' + t.citiesdone);
   },
   
    sendreport: function(){
@@ -5879,7 +5927,7 @@ Tabs.ActionLog = {
 
   onUnload : function (){
     var t = Tabs.ActionLog;
-    GM_setValue ('log_'+getServerId(), JSON2.stringify(t.last50));
+    if (!ResetAll) GM_setValue ('log_'+getServerId(), JSON2.stringify(t.last50));
   },
     
   _addTab : function (msg, ts){
@@ -5912,7 +5960,7 @@ function actionLog (msg){
 
 /*********************************** Options Tab ***********************************/
 Tabs.Options = {
-  tabOrder: 100,
+  tabOrder: 90,
   myDiv : null,
   fixAvailable : {},
 
@@ -5939,7 +5987,11 @@ Tabs.Options = {
         <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>Hide alliance requests in chat</td></tr>\
         <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>Auto publish Facebook posts for '+ htmlSelector({80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' (For all domains)</td>\
         <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>Show Player & Might in map.</td></tr>\
+        <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> Auto delete barb/transport reports from you</td></tr>\
+        <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> Auto delete transport reports to you</td></tr>\
+        <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> Auto delete wild reports</td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
+        m += strButton20('Reset ALL Options', 'id=ResetALL');
       div.innerHTML = m;
 
       document.getElementById('selectScreenMode').addEventListener ('change', function(){
@@ -5954,7 +6006,18 @@ Tabs.Options = {
       		GlobalOptions.autoPublishGamePopups = document.getElementById('PubReq').checked;
 			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);	
-
+	  
+	  document.getElementById('ResetALL').addEventListener ('click', function(){
+	  		var serverID = getServerId();
+	  		RemoveList = (GM_listValues());
+	  		for (i=0;i<RemoveList.length;i++){
+	  			logit(RemoveList[i]);
+	  			GM_deleteValue(RemoveList[i]);
+	  		}
+	  		ResetAll=true;
+	  		reloadKOC();
+	  },false);	
+	  	
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
       document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
       t.togOpt ('pballowWinMove', 'pbWinDrag', mainPop.setEnableDrag);
@@ -5972,6 +6035,9 @@ Tabs.Options = {
       t.togOpt ('HelReq', 'HelpRequest');
       t.togOpt ('DelReq', 'DeleteRequest');
       t.togOpt ('MapExtra', 'MapShowExtra');
+      t.togOpt ('deletetoggle', 'DeleteMsg');
+      t.togOpt ('deletes0toggle', 'DeleteMsgs0');
+	  t.togOpt ('deletes1toggle', 'DeleteMsgs1');
 	  	
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
@@ -6038,7 +6104,7 @@ var troops = {1:'SupplyTroops',
 			  11:'BatteringRam',
 			  12:'Catapult'};  
 Tabs.Reassign = {
-  tabOrder: 50,
+  tabOrder: 30,
   tabLabel: 'Reassign',
   myDiv: null,
   timer: null,
@@ -6702,8 +6768,8 @@ Tabs.Reassign = {
     },
     onUnload: function(){
         var t = Tabs.Reassign;
-        t.saveReassignRoutes();
-		t.saveReassignState();
+        if (!ResetAll) t.saveReassignRoutes();
+		if (!ResetAll) t.saveReassignState();
         
     },
 }
@@ -6711,7 +6777,7 @@ Tabs.Reassign = {
 
 /************************  Reinforce Tab ************************/
 Tabs.Reinforce = {
-  tabOrder: 60,
+  tabOrder: 40,
   tabLabel: 'Reinforce',
   myDiv: null,
   cityID: null,
@@ -7478,7 +7544,7 @@ Tabs.Reinforce = {
 
 /************************  AutoTrain Tab ************************/
 Tabs.AutoTrain = {
-  tabOrder: 130,
+  tabOrder: 120,
   tabLabel: 'AutoTrain',
   myDiv: null,
   
@@ -7554,6 +7620,7 @@ Tabs.AutoTrain = {
            document.getElementById('SelectCity'+city).checked = TrainOptions.Enabled[city];
            document.getElementById('Resource'+city).value = TrainOptions.Resource[city];
            document.getElementById('SelectMax'+city).checked = TrainOptions.SelectMax[city];
+           document.getElementById('workers'+city).value = TrainOptions.Workers[city];
            if (!TrainOptions.SelectMax[city]) document.getElementById('max'+city).disabled=true;
       }
        
@@ -8215,328 +8282,6 @@ var WideScreen = {
   },
 }
 
-/*******************   Chat functions ****************/
-Tabs.Chat = {
-  tabOrder : 300,                    // order to place tab in top bar
-  //tabDisabled : !ENABLE_SAMPLE_TAB, // if true, tab will not be added or initialized
-  //tabLabel : 'Click Me',            // label to show in main window tabs
-  myDiv : null,
-  timer : null,  
-  
-  init : function (div){    // called once, upon script startup
-    var t = Tabs.Chat;
-    t.myDiv = div;
-    var cityName = Cities.cities[0].name;
-    t.myDiv.innerHTML = '<DIV class=pbStat>Chat Answer/Reply Info</div><TABLE><TR>\
-						<TD>Allowed Players: </td><TD><textarea cols=30 rows=1 id=allowUserBox></textarea></td>\
-						</tr><TR>\
-						<TD colspan=2>Type "/[Player] units?" to get a reply\n Player name is cAsE-SeNsItIvE </td></tr></table>';
-	t.togtext('allowUserBox', 'AllowUsersRemoteControl');
-  },
-  
-  togtext : function(boxId, optionName){
-    var t = Tabs.Chat;
-	var e = document.getElementById(boxId);
-	var text = '';
-	for(i=0; i<ChatOptions[optionName].length; i++)
-		text += ChatOptions[optionName][i]+'\n';
-	e.value = text;
-	e.addEventListener('change', new eventToggle(boxId, optionName).handler, false);
-	function eventToggle (boxId, optionName){
-      this.handler = handler;
-      var optName = optionName;
-      function handler(event){
-	    ChatOptions[optionName] = [];
-		var values = this.value.split('\n');
-        for(var i=0; i<values.length; i++)
-			ChatOptions[optionName][i] = values[i];
-        saveChatOptions();
-      }
-    }
-  },
-  
-  togOpt : function (checkboxId, optionName, callEnable, callIsAvailable){
-    var t = Tabs.Options;
-    var checkbox = document.getElementById(checkboxId);
-    
-    if (callIsAvailable && callIsAvailable()==false){
-      checkbox.disabled = true;
-      return;
-    }
-    if (Options[optionName])
-      checkbox.checked = true;
-    checkbox.addEventListener ('change', new eventToggle(checkboxId, optionName, callEnable).handler, false);
-    function eventToggle (checkboxId, optionName, callOnChange){
-      this.handler = handler;
-      var optName = optionName;
-      var callback = callOnChange;
-      function handler(event){
-        Options[optionName] = this.checked;
-        saveOptions();
-        if (callback != null)
-          callback (this.checked);
-      }
-    }
-  },
-  
-  hide : function (){
-
-  },
-  
-  show : function (){
-
-  },
-
-}
-
-var ChatStuff = {
-timeout : null,
-processqueue : [],
-latestChats : [],
-
-  init:function() {
-	var t=ChatStuff;
-	var comm=document.getElementById('mod_comm_list2');
-	if(comm) {
-		if(t.timeout == null) {
-			t.GetLatestChat();
-			t.timeout = window.setTimeout(function() {
-				t.IterateChat(t.ChatAdded);
-			},200);
-		} else {
-			logit("Maybe too many chat messages, chat already processing.");
-		}
-	}
-	window.setTimeout(function() {
-		t.init();
-	},5000);
-  },
-
-  GetLatestChatStr:function(chatObj) { 
-	return chatObj.name+'#'+chatObj.time+'#'+chatObj.text.split(/[\.\?]/)[0]; 
-  },
-
-  GetLatestChat:function() {
-	var t = ChatStuff;
-	t.latestChats = ChatOptions.latestChats;
-	if(t.latestChats.length>25) {
-		t.latestChats.splice(0,1);
-	}
-  },
-
-  GetChatTimeNum:function(time) {
-	var tarr=time.split(':');
-	if(!time) return undefined;
-	var timeNum=(tarr[0]*60)+tarr[1];
-	return timeNum;
-  },
-
-  GetChatObj:function(htmlObj) {
-	var t=ChatStuff;
-	var nm=searchDOM(htmlObj,'node.className=="nm"',8);
-	var time=searchDOM(htmlObj,'node.className=="time"',8);
-	var tx=searchDOM(htmlObj,'node.className=="tx"',8);
-	if(!nm || !time || !tx) { return undefined; }
-	var nameArr=nm.innerHTML.split(' ');
-	var fromMe = nameArr[1]==Seed.player.name?true:false;
-	return { 
-		'obj':htmlObj,
-		'textObj':tx,
-		'name':nm.innerHTML,
-		'time':time.innerHTML,
-		'text':tx.innerHTML,
-		'shortName':nameArr[1],
-		'timeNum':t.GetChatTimeNum(time.innerHTML),
-		'fromMe':fromMe?1:0,
-	};
-  },
-
-  IterateChat:function(func) {
-	var t=ChatStuff;
-	var comm = document.getElementById('mod_comm_list2');
-	var directs = searchDOM(comm,'node.className=="chatwrap clearfix direct"',4,true);
-	var chats=[];
-	for(var d=directs.length-1; d>=0; d--) {
-		var direct=directs[d];
-		var chatObj=t.GetChatObj(direct);
-		if(chatObj) {
-			chats.push([direct,chatObj]);
-		}
-	}
-	t.checkProcessed(chats, func);
-  },
-
-  checkProcessed : function(chats, func){
-	var t=ChatStuff;
-	for(var c=0; c<chats.length; c++) {
-		var found = false;
-		var chatObj=chats[c][1];
-		for(var i=0; i<t.latestChats.length; i++){
-			if(t.latestChats[i] == t.GetLatestChatStr(chatObj))
-				found = true;
-		}
-		if(!found){
-		chatObj.notProcessed=true;
-		ChatOptions.latestChats.push(t.GetLatestChatStr(chatObj));
-		}
-		func(chatObj);
-	}
-	saveChatOptions();
-	t.timeout = null;
-  },
-
-  GetCitiesHash:function(arr) {
-	var h={};
-	for(var a=0; a<arr.length; a++) {
-		var city=arr[a];
-		var newA=[]
-		Array.prototype.push.apply(newA, city);
-
-		h[city[0]]=newA;
-	}
-	return h;
-  },
-
-  SendChat:function(name,mess) {
-	var inp=document.getElementById('mod_comm_input');
-	inp.value="@"+name+' '+mess;
-	logit('Send chat:'+mess);
-	unsafeWindow.Chat.sendChat();
-  },
-
-  ChatFuncs:{
-	'units':{
-		'question':function(chatObj,info) {
-			if(!chatObj.notProcessed) { return; }
-			var t=ChatStuff;
-			
-			t.SendChat(chatObj.shortName,"units."+JSON2.stringify({
-				'cities':t.GetCitiesHash(Seed.cities),
-				'units':Seed.units,
-			}));
-		},
-		'answer':function(chatObj,info) {
-			var t=ChatStuff;
-			// {"city24479":{"tick":1297589617,"rec1":"[756220044, 2592000000, 7100, 3033]","rec2":"[539696566, 1836000000, 5000, 0]","rec3":"[191319892, 1548000000, 4200, 0]","rec4":"[4512787, 1512000000, 4100, 0]"}}
-			var infoObj=JSON2.parse(info);
-			var res=infoObj.units;
-			var cities=infoObj.cities;
-			
-			chatObj.textObj.innerHTML='';
-			var table=document.createElement('table');
-			//table.className='direct';
-			function AddCell(tr) {
-				var td=tr.insertCell(-1);
-				//td.className='direct';
-				td.style.backgroundColor='#ffde75';
-				td.style.textAlign='right';
-				return td;
-			}
-			for(var city in res) {
-				var resObj=res[city];
-				
-				var tr=table.insertRow(-1);
-				//var cityTd=tr.insertCell(-1);
-				var cityTd=AddCell(tr);
-				cityTd.colspan='4';
-				cityTd.style.fontWeight='bold';
-				var cityM=/([0-9]+)$/.exec(city);
-				var cityObj=cities[cityM[1]];
-				if(!cityObj) {
-					logit('Cannot find city:'+cityM[1]);
-					continue; 
-				}
-				
-				cityTd.innerHTML=cityObj[1];
-				//for(var r=1; r<=4; r++ ) {
-				for(var unt in resObj) {
-					//var rarr=JSON2.parse(resObj['rec'+r].replace(' ',''));
-					var units=parseInt(resObj[unt]);
-					
-					if(units<=0) continue;
-					var tr=table.insertRow(-1);
-					AddCell(tr).innerHTML=unsafeWindow.unitcost[unt][0];
-					AddCell(tr).innerHTML=addCommas(units);
-				}
-			}
-			chatObj.textObj.appendChild(table);
-		},
-	}
-  },
-
-  allowUsersHash:null,
-  ChatAdded:function(chatObj) {
-	var t=ChatStuff;
-	if(chatObj) {
-		t.allowUsersHash = ChatOptions.AllowUsersRemoteControl;
-		if(t.allowUsersHash.length==0) { return; }
-
-		var cArr=/^([^\?\.]+)([\.\?])(.*)$/.exec(chatObj.text);
-		if(!cArr) {
-			return;
-		}
-		var cmd=cArr[1]
-		var info=cArr[3];
-		var question=false;
-		if(chatObj.fromMe) {
-			chatObj.obj.style.borderBottom='1px solid #0f0';
-		}
-		if(chatObj.notProcessed) {
-			chatObj.obj.style.borderLeft='1px solid #ff0';
-			//chatObj.obj.appendChild(document.createTextNode(' notprocessed '));
-		}
-		
-		var cmdInfo=t.ChatFuncs[cmd];
-
-		if(cArr[2]=='?') {
-			question=true;
-		} else {
-		}
-		
-		if(cmdInfo) {
-			// hide unreadable requests that are json
-			var shortCmd=(cmd+cArr[2]);
-
-			if(chatObj.textObj.innerHTML!=shortCmd && info.substr(0,1)=='{') {
-				chatObj.textObj.innerHTML=shortCmd;
-			}
-		}
-		
-		// if(chatObj.fromMe) {
-			// return;
-		// }
-		var done=0;
-
-		// process chat
-		// if(chatObj.notProcessed) {
-			// logit('remote command:'+cmd+cArr[2]+', not processed:'+chatObj.notProcessed);
-		// }
-		if(cmdInfo) {
-			window.setTimeout(function() {
-				if(question && chatObj.notProcessed) {
-					var permission = false;
-					for(var u=0; u<t.allowUsersHash.length; u++)
-						if(t.allowUsersHash[u] == chatObj.shortName){
-							permission = true;
-							break;
-						}
-					if(permission){
-						cmdInfo['question'].call(t,chatObj,info);
-					} else {
-						chatObj.obj.appendChild(document.createTextNode("Player does not have permission: "+chatObj.shortName));
-						t.SendChat(chatObj.shortName,"Player does not have permission");
-					}
-				} else {
-					cmdInfo['answer'].call(t,chatObj,info);
-				}
-			},0);				
-		}
-	} else {
-		logit('Chat object failed');
-	}
-	return true;
-  },
-}
 
 /*******************   KOC Map interface ****************/
 // 0:bog, 10:grassland, 11:lake, 20:woods, 30:hills, 40:mountain, 50:plain, 51:city / barb, 53:misted city
@@ -8714,7 +8459,7 @@ var tabManager = {
 
 function onUnload (){
   Options.pbWinPos = mainPop.getLocation();
-  saveOptions();
+  if (!ResetAll) saveOptions();
 }
 
 function mouseMainTab (me){   // right-click on main button resets window location
@@ -9170,16 +8915,6 @@ function saveOptions (){
   setTimeout (function (){GM_setValue ('Options_'+serverID, JSON2.stringify(Options));}, 0);
 }
 
-function saveAttackOptions (){
-  var serverID = getServerId();
-  setTimeout (function (){GM_setValue ('AttackOptions_'+serverID, JSON2.stringify(AttackOptions));}, 0);
-}
-
-function saveChatOptions (){
-  var serverID = getServerId();
-  setTimeout (function (){GM_setValue ('ChatOptions_'+serverID, JSON2.stringify(ChatOptions));}, 0);
-}
-
 function saveTrainOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('TrainOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(TrainOptions));}, 0);
@@ -9189,6 +8924,7 @@ function saveCrestOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CrestOptions));}, 0);
 }
+
 
 
 
@@ -9209,36 +8945,6 @@ function readOptions (){
 
 function readGlobalOptions (){
   GlobalOptions = JSON2.parse (GM_getValue ('Options_??', '{}'));
-}
-
-function readAttackOptions (){
-  var serverID = getServerId();
-  s = GM_getValue ('AttackOptions_'+serverID);
-  if (s != null){
-    opts = JSON2.parse (s);
-    for (k in opts){
-      if (matTypeof(opts[k]) == 'object')
-        for (kk in opts[k])
-          AttackOptions[k][kk] = opts[k][kk];
-      else
-        AttackOptions[k] = opts[k];
-    }
-  }
-}
-
-function readChatOptions (){
-  var serverID = getServerId();
-  s = GM_getValue ('ChatOptions_'+serverID, '[]');
-  if (s != null){
-    opts = JSON2.parse (s);
-    for (k in opts){
-      if (matTypeof(opts[k]) == 'object')
-        for (kk in opts[k])
-          ChatOptions[k][kk] = opts[k][kk];
-      else
-        ChatOptions[k] = opts[k];
-    }
-  }
 }
 
 function readCrestOptions (){
@@ -9389,7 +9095,7 @@ unsafeWindow.pbGotoMap = function (x, y){
 
 /****************************  Spam Tab  ******************************/
 Tabs.Spam = {
-  tabOrder : 50,                    // order to place tab in top bar
+  tabOrder : 100,                    // order to place tab in top bar
   tabLabel : 'Spam',            // label to show in main window tabs
   myDiv : null,
   timer : null,  
@@ -9680,7 +9386,6 @@ var CalterUwVar = function (funcName, findReplace) {
     return true;
   }
 };
-
 function getMarchInfo (cityID){
   var ret = {};
 
@@ -9727,6 +9432,7 @@ function strButton20 (label, tags){
     tags = '';
   return ('<TABLE class=ptNoPad><TR><TD><A class="button20 ptButton20" '+ tags +'><SPAN>'+ label +'</span></a></td></tr></table>' );
 }
+
 
 function reloadKOC (){
   var serverId = getServerId();
@@ -10698,7 +10404,7 @@ function GM_AjaxGet (url, args, notify, label){
 }         
   
 Tabs.Gifts = {
-  tabOrder : 3,
+  tabOrder : 60,
   gifts : null,
   myDiv : null,
   doList : [], // list of gifts to accept
@@ -11470,7 +11176,7 @@ function GetDisplayName(){
 //modal_maptile((tileID),(Name),(X),(Y),(Gender+Avatar),(User),(Might),(Title),(AllianceName),(null),(tileProvinceId),(tilename),(CityState),(TileLevel),(allianceId),(tileCityId),(tileUserId),(TypeName),(misted));
 //modal_maptile(453323,"Heineken4",172,622,"m6","Heineken",3758930,"60","Darkness",null,21,"city","Normal",9,2136,67677,1589067,"City",false);
 function DrawLevelIcons() {
-	var maptileRe = /modal_maptile.([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)/;
+	var maptileRe = /modal_maptile.([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)/;
 	var mapwindow=document.getElementById('mapwindow');
 	if(!mapwindow) return;
 	var levelIcons=document.getElementById('LevelIcons');
@@ -11488,8 +11194,8 @@ function DrawLevelIcons() {
 			var onclickM=maptileRe.exec(onclick);
 			if(onclickM && onclickM[6]!='"null"') {
 				var might=onclickM[7].StripQuotes();
-				var alliance=onclickM[9].StripQuotes();
-				
+				var alliance=onclickM[15].StripQuotes();
+				var dip=getDiplomacy(alliance);
 				owner=" "+onclickM[6].StripQuotes();
 			}
 		}
@@ -11502,8 +11208,9 @@ function DrawLevelIcons() {
 		sp[0].style.color='#cc0';
 		
 		if (alliance == 'null' && onclickM[12]=='"city"') sp[0].style.color='#33CCFF';
+		if (dip == 'hostile' && onclickM[12]=='"city"') sp[0].style.color='#FF0000';
 		if (onclickM[12]!='"city"' &&  onclickM[6]!='"null"') sp[0].style.color='#FF9900';
-		if (onclickM[12]!='"city"' &&  onclickM[5]=='"null"' && onclickM[6]=='"null"' && onclickM[7]=='"null"' && onclickM[8]=='"null"' && onclickM[9]=='"null"' && onclickM[10]=='"null"') sp[0].style.color='#CC0033';
+		if (onclickM[12]!='"city"' &&  onclickM[5]=='"null"' && onclickM[6]=='"null"' && onclickM[7]=='"null"' && onclickM[8]=='"null"' && onclickM[15]=='"null"' && onclickM[10]=='"null"') sp[0].style.color='#CC0033';
 		if (Options.MapShowExtra) {
 			if (onclickM && onclickM[6]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1]+owner+'<br />Might:'+addCommas(might);
 			else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
@@ -11596,10 +11303,10 @@ function AutoTrain(){
                     5:'Swordsman',
                     6:'Archers',
                     7:'Cavalry',
-                    8:'HeavyCavalry',
-                    9:'SupplyWagons',
+                    8:'Heavy Cavalry',
+                    9:'Supply Wagons',
                     10:'Ballista',
-                    11:'BatteringRams',
+                    11:'Battering Rams',
                     12:'Catapults'}; 
      cityId = Seed.cities[TrainCity][0];
      var unitId = TrainOptions['Troops'][(TrainCity+1)];
@@ -11669,13 +11376,96 @@ function AutoTrain(){
            unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(idle);
            unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(idle);
            unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, idle, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
-           actionLog(Seed.cities[TrainCity][1]  + ': Train ' + idle + ':  ' + troops[unitId] );
-         } else {actionLog(Seed.cities[TrainCity][1] + ': FAIL Train ' + idle + ':  ' +  troops[unitId] + ' - '+ rslt.msg);}
+           actionLog(Seed.cities[TrainCity][1]  + ' Train ' + idle + ':  ' + troops[unitId] );
+         } else {actionLog(Seed.cities[TrainCity][1] + ': FAIL Train ' + idle + ' ' +  troops[unitId] + ' - '+ rslt.msg);}
        },
        onFailure: function() {}
      }); 
      }
      TrainCity++;
    }	
+   
+    function startdeletereports  (){
+	  	if(!deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1)){
+	  		deleting = true;
+	  		fetchbarbreports(0, checkreports);
+	  	}
+    }
+    
+    function fetchbarbreports (pageNo, callback){
+      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+  	if(pageNo > 1)
+  		params.pageNo = pageNo;
+  	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
+          method: "post",
+          parameters: params,
+          onSuccess: function (rslt) {
+  			callback(rslt);
+          },
+          onFailure: function () {
+          },
+      });
+    }
+    function checkreports (rslt){
+  	if(!rslt.ok){
+  		return;
+  	}
+  	if(rslt.arReports.length < 1){
+  		return;
+  	}
+  	var reports = rslt.arReports;
+  	var totalPages = rslt.totalPages;
+  		var deletes1 = new Array();
+  		var deletes0 = new Array();
+  		for(k in reports){
+  			if(Options.DeleteMsg){
+  				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && reports[k].side0TileType > 50)
+  					deletes1.push(k.substr(2));
+  				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
+  					deletes1.push(k.substr(2));
+  			}
+  			if (Options.DeleteMsgs0){
+  				if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
+  					deletes0.push(k.substr(2));
+  			}
+  			if (Options.DeleteMsgs1){
+  				if(reports[k].marchType==4 && (reports[k].side0TileType == 10 || reports[k].side0TileType == 11 || reports[k].side0TileType == 20 || reports[k].side0TileType == 30 || reports[k].side0TileType == 40 || reports[k].side0TileType == 50))
+  					deletes0.push(k.substr(2));
+  			}
+  		}
+  		if(deletes1.length > 0 || deletes0.length > 0){
+  			deletereports(deletes1, deletes0);
+  		} else {
+  			deleting = false;
+  			return;
+  		}
+    }
+    function deletereports (deletes1, deletes0){
+  	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+  	params.s1rids = deletes1.join(",");
+  	params.s0rids = deletes0.join(",");
+  	params.cityrids = '';
+  	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
+  		method: "post",
+  		parameters: params,
+  		onSuccess: function (rslt) {
+  			Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
+  			fetchbarbreports(0, checkreports);
+  		},
+  		onFailure: function () {
+  		},
+  	});
+    }
+    isMyself: function(userID){
+  	if(!Seed.players["u"+userID])
+  		return false;
+  	if(Seed.players["u"+userID].n == Seed.player.name)
+  		return true;
+  	else
+  		return false;
+  	return false;
+    }
+  
+   
 //
 pbStartup ();
