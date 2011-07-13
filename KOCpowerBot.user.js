@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110713a
+// @version        20110713b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110713a';
+var Version = '20110713b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4968,10 +4968,12 @@ cm.MARCH_TYPES = {
    					MarchStatus = Seed.queue_atkp[cityID][b]['marchStatus'];
    					MarchType = Seed.queue_atkp[cityID][b]['marchType'];
    					botMarchStatus = Seed.queue_atkp[cityID][b]['botMarchStatus'];
-   					if (MarchType == 9 &&  MarchStatus == 3) t.stopcount++;
+   					if (MarchType == 9 &&  MarchStatus == 3 || MarchStatus==10) t.stopcount++;
    					else if (MarchType == 9) t.activecount++;
+   					//alert(MarchType +'/'+  MarchStatus);
    				}
    		}
+   		//logit(t.stopcount);	
 	   	if (t.resuming == false && t.stopping == false && t.deleting == false && t.activecount != 0)
 			document.getElementById('pbraidtab').innerHTML = '<span style="color: #ff6">Stop Raids ('+ t.activecount + ')</span>'
 	   	else if (t.resuming == false && t.stopping == false && t.deleting == false)
@@ -11433,6 +11435,7 @@ function AutoTrain(){
   					deletes0.push(k.substr(2));
   			}
   		}
+  		actionLog('Deleted: ' +(deletes1.length+ deletes0.length)+' reports');
   		if(deletes1.length > 0 || deletes0.length > 0){
   			deletereports(deletes1, deletes0);
   		} else {
