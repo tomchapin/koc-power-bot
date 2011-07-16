@@ -2000,6 +2000,13 @@ Tabs.build = {
 		return result;
 	},
 	bot_gethelp: function (f, currentcityid) {
+		var t = Tabs.build;
+		var city = t.getCityNameById(currentcityid);
+	for (i=0;i<Seed.cities.length;i++) {
+		if (Seed.cities[i][1]==city) var cityNum=i;
+	}
+	cityNum++;
+	unsafeWindow.citysel_click(document.getElementById('citysel_'+ (cityNum)));
 	  var a = qlist = Seed.queue_con["city" + currentcityid];
 	  var e = 0;
 	  var d = 0;
