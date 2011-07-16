@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110713b
+// @version        20110716a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110713b';
+var Version = '20110716a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -118,7 +118,6 @@ var CrestOptions = {
   R2Ram:0,
   R2Cat:0,
 };
-
 
 var TrainOptions = {
   Running   : 		false,
@@ -230,7 +229,7 @@ function facebookInstance (){
 	while ( (iFrame=iFrame.parentNode) != null)
 	  if (iFrame.tagName=='DIV')
 		iFrame.style.width = '100%';
-	
+	document.getElementById('globalContainer').style.left = '0px';
     try{    
       document.getElementById('rightCol').parentNode.removeChild(document.getElementById('rightCol'));
       document.getElementById('leftColContainer').parentNode.removeChild(document.getElementById('leftColContainer'));
@@ -282,7 +281,8 @@ function HandlePublishPopup() {
 						// 50: Friends of Friends
 						// 40: Friends Only
 						// 10: Only Me
-						privacy_setting.value = GlobalOptions.autoPublishPrivacySetting;
+						if(privacy_setting.value != GlobalOptions.autoPublishPrivacySetting && GlobalOptions.autoPublishPrivacySetting != 0)
+							privacy_setting.value = GlobalOptions.autoPublishPrivacySetting;
 						nHtml.Click(publish_button);
 					}
 				}
@@ -409,7 +409,7 @@ function pbStartup (){
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
   setInterval (AutoTrain,30* 1000);
-  setInterval(startdeletereports,5*60*1000)
+  setInterval(startdeletereports,2*60*1000)
 }
 
 /************************ Food Alerts *************************/
@@ -816,7 +816,7 @@ Tabs.tower = {
     
   eachSecond : function (){
     var t = Tabs.tower;
-	  for (var cityId in Cities.byID){
+	for (var cityId in Cities.byID){
       if (Seed.citystats["city" + cityId].gate != t.defMode[cityId]){     // user changed def mode
         t.defMode[cityId] = Seed.citystats["city"+ cityId].gate;
         t.displayDefMode (cityId);
@@ -3040,7 +3040,6 @@ Tabs.Search = {
     pop.getTopDiv().innerHTML = '<CENTER><B>Export to Raid</b></center>';
     
 	  var m = '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-	  
 	  m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
 	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
 	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
@@ -3089,8 +3088,7 @@ Tabs.Search = {
     
     document.getElementById ('pbHelp').addEventListener ('click', t.helpPop, false);
     document.getElementById ('pbRaidSave').addEventListener ('click', function(){
-   	
-    		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     			  		
     	params.pf = 0;
         params.ctrl = 'BotManager';
@@ -4000,7 +3998,7 @@ Tabs.Test = {
   		         method: "post",
   		         parameters: params,
   		         loading: true,
-	  		         onSuccess: function (transport) {
+  		         onSuccess: function (transport) {
   		         var rslt = eval("(" + transport.responseText + ")");
   		         if (rslt.ok) {
   		         var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -4932,7 +4930,6 @@ cm.MARCH_TYPES = {
   activecount:0,
   count:0,
   
-        
   init : function (div){
     var t = Tabs.Raid;
     t.myDiv = div;
@@ -5995,7 +5992,7 @@ Tabs.Options = {
         <TR><TD colspan=2><BR><B>Extra Features:</b></td></tr>\
         <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>Help alliance build/research posts</td></tr>\
         <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>Hide alliance requests in chat</td></tr>\
-        <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>Auto publish Facebook posts for '+ htmlSelector({80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' (For all domains)</td>\
+        <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>Auto publish Facebook posts for '+ htmlSelector({0:'----', 80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' (For all domains)</td>\
         <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>Show Player & Might in map.</td></tr>\
         <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> Auto delete barb/transport reports from you</td></tr>\
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> Auto delete transport reports to you</td></tr>\
@@ -8259,17 +8256,23 @@ var WideScreen = {
       chat.style.top = '-624px';
       chat.style.left = '760px';
       chat.style.height = '720px';
+	  chat.style.width = '345px';
       chat.style.background = 'url("'+ CHAT_BG_IMAGE +'")';
       document.getElementById('mod_comm_list1').style.height = '580px';
       document.getElementById('mod_comm_list2').style.height = '580px';
+      document.getElementById('mod_comm_list1').style.width = '330px';
+      document.getElementById('mod_comm_list2').style.width = '330px';
     } else {
       var chat = document.getElementById('kocmain_bottom').childNodes[1];
       chat.style.top = '0px';
       chat.style.left = '0px';
       chat.style.height = '';
+	  chat.style.width = '';
       chat.style.background = '';
       document.getElementById('mod_comm_list1').style.height = '287px';
       document.getElementById('mod_comm_list2').style.height = '287px';
+      document.getElementById('mod_comm_list1').style.width = '340px';
+      document.getElementById('mod_comm_list2').style.width = '340px';
     }
     t.chatIsRight = tf;
   },
