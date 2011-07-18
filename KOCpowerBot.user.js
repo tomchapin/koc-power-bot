@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110716a
+// @version        20110718a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110716a';
+var Version = '20110718a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -191,12 +191,12 @@ if (document.URL.search(/facebook.com\/connect\/uiserver.php/i) >= 0){
   return;
 }
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
-	kocWideScreen ();
+  kocWideScreen ();
 }
 
 function kocWideScreen(){
   function setWide (){
-	var kocFrame = parent.document.getElementsByName('kofc_main_canvas');
+	var kocFrame = parent.document.getElementsByName('kofc_iframe_0');
 	if (!kocFrame){
 	  setTimeout (setWide, 1000);
 	  return;
@@ -8260,8 +8260,6 @@ var WideScreen = {
       chat.style.background = 'url("'+ CHAT_BG_IMAGE +'")';
       document.getElementById('mod_comm_list1').style.height = '580px';
       document.getElementById('mod_comm_list2').style.height = '580px';
-      document.getElementById('mod_comm_list1').style.width = '330px';
-      document.getElementById('mod_comm_list2').style.width = '330px';
     } else {
       var chat = document.getElementById('kocmain_bottom').childNodes[1];
       chat.style.top = '0px';
@@ -8271,8 +8269,6 @@ var WideScreen = {
       chat.style.background = '';
       document.getElementById('mod_comm_list1').style.height = '287px';
       document.getElementById('mod_comm_list2').style.height = '287px';
-      document.getElementById('mod_comm_list1').style.width = '340px';
-      document.getElementById('mod_comm_list2').style.width = '340px';
     }
     t.chatIsRight = tf;
   },
