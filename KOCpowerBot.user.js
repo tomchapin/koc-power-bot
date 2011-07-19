@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110718a
+// @version        20110718b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110718a';
+var Version = '20110718b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -398,6 +398,7 @@ function pbStartup (){
   CollectGold.init();
   FoodAlerts.init();
   ChatPane.init();
+  DeleteReports.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
     tabManager.showTab();
@@ -409,7 +410,6 @@ function pbStartup (){
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
   setInterval (AutoTrain,30* 1000);
-  setInterval(startdeletereports,2*60*1000)
 }
 
 /************************ Food Alerts *************************/
@@ -4887,15 +4887,15 @@ cm.BOT_STATUS = {
     BOT_MARCH_RESTING: 7
 };
 cm.MARCH_STATUS = {
-	    MARCH_STATUS_INACTIVE: 0,
-	    MARCH_STATUS_OUTBOUND: 1,
-	    MARCH_STATUS_DEFENDING: 2,
-	    MARCH_STATUS_STOPPED: 3,
-	    MARCH_STATUS_RESTING: 4,
-	    MARCH_STATUS_UNKNOWN: 5,
-	    MARCH_STATUS_SITUATIONCHANGED: 7,
-	    MARCH_STATUS_RETURNING: 8,
-	    MARCH_STATUS_ABORTING: 9
+    MARCH_STATUS_INACTIVE: 0,
+    MARCH_STATUS_OUTBOUND: 1,
+    MARCH_STATUS_DEFENDING: 2,
+    MARCH_STATUS_STOPPED: 3,
+    MARCH_STATUS_RESTING: 4,
+    MARCH_STATUS_UNKNOWN: 5,
+    MARCH_STATUS_SITUATIONCHANGED: 7,
+    MARCH_STATUS_RETURNING: 8,
+    MARCH_STATUS_ABORTING: 9
 };
 cm.MARCH_TYPES = {
     MARCH_TYPE_NONE: 0,
@@ -5479,10 +5479,10 @@ cm.MARCH_TYPES = {
   		                  if (rslt.ok) {
   		                  		t.stopprogress = t.stopprogress + (100/Seed.cities.length);
   		                  		actionLog('Stopping: '+ Seed.cities[i][1]);
-  		                  		updateraidbutton('Stopping: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtab');
+  		                  		updatebotbutton('Stopping: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtab');
   		                  		if (t.stopprogress.toFixed(0) == 100) {
   		                  			 t.stopprogress = 0;
-  		                  			 setTimeout(function(){updateraidbutton('Stop Raids ('+ t.activecount + ')', 'pbraidtab');t.stopping = false;}, (5000));
+  		                  			 setTimeout(function(){updatebotbutton('Stop Raids ('+ t.activecount + ')', 'pbraidtab');t.stopping = false;}, (5000));
   		                  		}		
   						  }
   						  else {
@@ -5490,10 +5490,10 @@ cm.MARCH_TYPES = {
   						  		else {
   					 	  			t.stopprogress = t.stopprogress + (100/Seed.cities.length);
   					 	  			actionLog('Stopping: '+ Seed.cities[i][1] + ' - ' + rslt.msg);
-  					 	  			updateraidbutton('Stopping: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtab')
+  					 	  			updatebotbutton('Stopping: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtab')
   					 	  			if (t.stopprogress.toFixed(0) == 100) {
   					 	  				 t.stopprogress = 0;
-  					 	  				 setTimeout(function(){updateraidbutton('Stop Raids ('+ t.activecount + ')', 'pbraidtab');t.stopping = false;}, (5000));
+  					 	  				 setTimeout(function(){updatebotbutton('Stop Raids ('+ t.activecount + ')', 'pbraidtab');t.stopping = false;}, (5000));
   					 	  			}
   					 	  		}
   					 	  }
@@ -5519,10 +5519,10 @@ cm.MARCH_TYPES = {
   		                  if (rslt.ok) {
   		                  		t.stopprogress = t.stopprogress + (100/Seed.cities.length);
   		                  		actionLog('Resuming: '+ Seed.cities[i][1]);
-  		                  		updateraidbutton('Resuming: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtabRes');
+  		                  		updatebotbutton('Resuming: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtabRes');
   		                  		if (t.stopprogress.toFixed(0) == 100) {
   		                  			 t.stopprogress = 0;
-  		                  			 setTimeout(function(){updateraidbutton('Resume Raids ('+ t.stopcount + ')', 'pbraidtabRes');t.resuming = false;}, (5000));
+  		                  			 setTimeout(function(){updatebotbutton('Resume Raids ('+ t.stopcount + ')', 'pbraidtabRes');t.resuming = false;}, (5000));
   		                  		}		
   						  }
   						  else {
@@ -5530,10 +5530,10 @@ cm.MARCH_TYPES = {
   						  		else {
   					 	  			t.stopprogress = t.stopprogress + (100/Seed.cities.length);
   					 	  			actionLog('Stopping: '+ Seed.cities[i][1]  + ' - ' + rslt.msg);
-  					 	  			updateraidbutton('Resuming: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtabRes')
+  					 	  			updatebotbutton('Resuming: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtabRes')
   					 	  			if (t.stopprogress.toFixed(0) == 100) {
   					 	  				 t.stopprogress = 0;
-  					 	  				 setTimeout(function(){updateraidbutton('Resume Raids ('+ t.stopcount + ')', 'pbraidtabRes');t.resuming = false;}, (5000));
+  					 	  				 setTimeout(function(){updatebotbutton('Resume Raids ('+ t.stopcount + ')', 'pbraidtabRes');t.resuming = false;}, (5000));
   					 	  			}	
   					 	  		}
   					 	  }
@@ -5577,7 +5577,7 @@ cm.MARCH_TYPES = {
     				var rslt = eval("(" + transport.responseText + ")");
     	              if (rslt != "") {
     	              	  var serverID = getServerId();
-    	              	  t.save = GM_getValue ('SavedRaids_'+serverID);
+    	              	  t.save = GM_getValue ('SavedRaids_'+serverID, "[]");
     	              	  if (t.save != undefined) t.save = JSON2.parse (t.save);
     	              	  if (t.save == undefined) t.save =new Array();
   
@@ -5621,11 +5621,11 @@ cm.MARCH_TYPES = {
     	 });
   		  	 t.stopprogress = count * (100/t.count);
   		  	 actionLog('Deleting: '+ Seed.cities[city][1]);
-  		  	 updateraidbutton('Deleting: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtabDel');
+  		  	 updatebotbutton('Deleting: '+ t.stopprogress.toFixed(0) + '%', 'pbraidtabDel');
   		  	 if (t.stopprogress.toFixed(0) == 100) {
   		  	 	 t.stopprogress = 0;
   		  	 	 t.GetRaids(cityId);
-  		  	 	 setTimeout(function(){updateraidbutton('Delete Raids ('+ t.stopcount + ')', 'pbraidtabDel');t.deleting  = false;}, (5000));
+  		  	 	 setTimeout(function(){updatebotbutton('Delete Raids ('+ t.stopcount + ')', 'pbraidtabDel');t.deleting  = false;}, (5000));
   	}	
     	 
 },
@@ -8936,7 +8936,6 @@ function saveCrestOptions (){
 
 
 
-
 function readOptions (){
   var serverID = getServerId();
   s = GM_getValue ('Options_'+serverID);
@@ -9395,6 +9394,7 @@ var CalterUwVar = function (funcName, findReplace) {
     return true;
   }
 };
+
 function getMarchInfo (cityID){
   var ret = {};
 
@@ -9441,7 +9441,6 @@ function strButton20 (label, tags){
     tags = '';
   return ('<TABLE class=ptNoPad><TR><TD><A class="button20 ptButton20" '+ tags +'><SPAN>'+ label +'</span></a></td></tr></table>' );
 }
-
 
 function reloadKOC (){
   var serverId = getServerId();
@@ -10124,7 +10123,7 @@ function matTypeof (v){
   return typeof (v);
 }
 
-function updateraidbutton(text, id)
+function updatebotbutton(text, id)
 {
 	var but=document.getElementById(id);
 	but.innerHTML = '<span style="color: #ff6">'+text+'</span>';
@@ -11393,89 +11392,107 @@ function AutoTrain(){
      }
      TrainCity++;
    }	
-   
-    function startdeletereports  (){
-	  	if(!deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1)){
-	  		deleting = true;
-	  		fetchbarbreports(0, checkreports);
+ 
+var DeleteReports = {
+	deleting : false,
+	init : function(){
+		var t = DeleteReports;
+		setInterval(t.startdeletereports, 2*60*1000);
+	},
+	
+    startdeletereports : function(){
+		var t = DeleteReports;
+	  	if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1)){
+	  		t.deleting = true;
+	  		t.fetchreport(0, t.checkreports);
 	  	}
-    }
+    },
     
-    function fetchbarbreports (pageNo, callback){
-      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-  	if(pageNo > 1)
-  		params.pageNo = pageNo;
-  	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
-          method: "post",
-          parameters: params,
-          onSuccess: function (rslt) {
-  			callback(rslt);
-          },
-          onFailure: function () {
-          },
-      });
-    }
-    function checkreports (rslt){
-  	if(!rslt.ok){
-  		return;
-  	}
-  	if(rslt.arReports.length < 1){
-  		return;
-  	}
-  	var reports = rslt.arReports;
-  	var totalPages = rslt.totalPages;
-  		var deletes1 = new Array();
-  		var deletes0 = new Array();
-  		for(k in reports){
-  			if(Options.DeleteMsg){
-  				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && reports[k].side0TileType > 50)
-  					deletes1.push(k.substr(2));
-  				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
-  					deletes1.push(k.substr(2));
-  			}
-  			if (Options.DeleteMsgs0){
-  				if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
-  					deletes0.push(k.substr(2));
-  			}
-  			if (Options.DeleteMsgs1){
-  				if(reports[k].marchType==4 && (reports[k].side0TileType == 10 || reports[k].side0TileType == 11 || reports[k].side0TileType == 20 || reports[k].side0TileType == 30 || reports[k].side0TileType == 40 || reports[k].side0TileType == 50))
-  					deletes0.push(k.substr(2));
-  			}
-  		}
-  		actionLog('Deleted: ' +(deletes1.length+ deletes0.length)+' reports');
-  		if(deletes1.length > 0 || deletes0.length > 0){
-  			deletereports(deletes1, deletes0);
-  		} else {
-  			deleting = false;
-  			return;
-  		}
-    }
-    function deletereports (deletes1, deletes0){
-  	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-  	params.s1rids = deletes1.join(",");
-  	params.s0rids = deletes0.join(",");
-  	params.cityrids = '';
-  	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
-  		method: "post",
-  		parameters: params,
-  		onSuccess: function (rslt) {
-  			Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
-  			fetchbarbreports(0, checkreports);
-  		},
-  		onFailure: function () {
-  		},
-  	});
-    }
+    fetchreport : function(pageNo, callback){
+		var t = DeleteReports;
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		if(pageNo > 1)
+			params.pageNo = pageNo;
+		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			onSuccess: function (rslt) {
+				callback(rslt);
+			},
+				onFailure: function () {
+				callback();
+			},
+		});
+    },
+	
+    checkreports : function(rslt){
+		var t = DeleteReports;
+		if(!rslt.ok){
+			return;
+		}
+		if(rslt.arReports.length < 1){
+			return;
+		}
+		var reports = rslt.arReports;
+		var totalPages = rslt.totalPages;
+		var deletes1 = new Array();
+		var deletes0 = new Array();
+		for(k in reports){
+			if(Options.DeleteMsg){
+				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && reports[k].side0TileType > 50)
+					deletes1.push(k.substr(2));
+				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
+					deletes1.push(k.substr(2));
+			}
+			if (Options.DeleteMsgs0){
+				if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
+					deletes0.push(k.substr(2));
+			}
+			if (Options.DeleteMsgs1){
+				if(reports[k].marchType==4 && reports[k].side0TileType <= 50 && reports[k].side0PlayerId==0)
+					deletes1.push(k.substr(2));
+			}
+		}
+		if(deletes1.length > 0 || deletes0.length > 0){
+			t.deleteCheckedReports(deletes1, deletes0);
+		} else {
+			t.deleting = false;
+			return;
+		}
+    },
+    
+	deleteCheckedReports : function(deletes1, deletes0){
+		var t = DeleteReports;
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.s1rids = deletes1.join(",");
+		params.s0rids = deletes0.join(",");
+		params.cityrids = '';
+		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			onSuccess: function (rslt) {
+				if(rslt.ok){
+					Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
+					actionLog('Deleted: ' +parseInt(deletes1.length + deletes0.length)+' reports');
+				}
+				t.fetchreport(0, t.checkreports);
+			},
+			onFailure: function () {
+			},
+		});
+    },
+	
     isMyself: function(userID){
-  	if(!Seed.players["u"+userID])
-  		return false;
-  	if(Seed.players["u"+userID].n == Seed.player.name)
-  		return true;
-  	else
-  		return false;
-  	return false;
-    }
-  
+		var t = DeleteReports;
+		if(!Seed.players["u"+userID])
+			return false;
+		if(Seed.players["u"+userID].n == Seed.player.name)
+			return true;
+		else
+			return false;
+		return false;
+    },
+} 
    
 //
 pbStartup ();
