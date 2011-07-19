@@ -1,6 +1,39 @@
 REVISION HISTORY:
 ----------------
 
+20110718d
+   *Fixed widescreen
+   *Added food gain report for raid tab
+   *Added function for powerbot to switch to selected city when posting for build help
+   *Added option for auto publish facebook post to not change default privacy setting
+   *Fixed widescreen display for new facebook chat pane
+
+20110713a
+   *Fixed Tower Alert
+   *Fixed Crest being stuck on Abandon
+   *Fixed some small crest stuff
+   *Fixed Reset Raid Timer
+   *Added Troop check for crest
+   *Added Troop numbers to Export to Raid
+   *Added Auto Reports delete (barb/transport/wilds) every 5min
+   *Added AutoTrain options
+   *Fixed some AutoTrain bugs
+   *Added Reset All Options button
+
+20110704a
+   *Fixed resources not being accounted for in autotrain
+   *Fixed not training when city one not selected
+   *Fixed bugs on delete of raids
+   *Fixed raid status error's (hope so)
+   *Added extra options for autotrain
+
+20110703a
+   *Added Raid Tab (beta release)
+   *Added export to raid from search tab
+   *Added toggle city from search tab city selector
+   *Added AutoTrain Tab
+   *Fixed the transport bug with gold
+
 20110626a
    *Fixed refresh if KOC not loaded within 1 minute (changed to 30 seconds)
    *Added auto publish facebook posts
