@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110718d
+// @version        20110718e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110718d';
+var Version = '20110718e';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -206,7 +206,7 @@ function kocWideScreen(){
 	  return;
 	}
 	for(i=0; i<kocFrame.length; i++){
-		if(kocFrame[i].name.indexOf('kofc') > -1){
+		if(kocFrame[i].name.indexOf('kofc_iframe_0') > -1){
 			kocFrame[i].style.width = '100%';
 			var style = document.createElement('style')
 			style.innerHTML = 'body {margin:0; width:100%; !important;}';
