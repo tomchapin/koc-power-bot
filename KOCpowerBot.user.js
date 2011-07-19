@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110718b
+// @version        20110718c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110718b';
+var Version = '20110718c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -86,8 +86,12 @@ var Options = {
   RaidRunning  : false,
   RaidReset    : 0,
   DeleteMsg	   : false,
-  DeleteMsgs0   : false,
-  DeleteMsgs1   : false,
+  DeleteMsgs0  : false,
+  DeleteMsgs1  : false,
+  Foodstatus   : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  LastReport   : 0,
+  MsgInterval  : 1,
+  foodreport   : false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -4935,6 +4939,7 @@ cm.MARCH_TYPES = {
     t.myDiv = div;
 	t.raidtimer = setTimeout(t.checkRaids, 30000);
 	setInterval(t.lookup, 2500);
+	setInterval(t.sendreport, 1*60*1000);
 	
 	AddSubTabLink('Stop Raids', t.StopAllRaids, 'pbraidtab');
 	AddSubTabLink('Resume Raids', t.ResumeAllRaids, 'pbraidtabRes');
@@ -4943,6 +4948,8 @@ cm.MARCH_TYPES = {
 	
 	var m = '<DIV class=pbStat>RAID FUNCTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 	    m += '<TD><INPUT id=pbRaidStart type=submit value="Auto Reset = '+ (Options.RaidRunning?'ON':'OFF') +'" ></td>';
+	    m += '<TD><INPUT id=pbsendreport type=checkbox '+ (Options.foodreport?' CHECKED':'') +'\> Send raid report every ';
+	    m += '<INPUT id=pbsendreportint value='+ Options.MsgInterval +' type=text size=3 \> hours </td>';
 	    m += '</tr></table></div>';
 	    m += '<DIV class=pbStat>ACTIVE RAIDS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 	    m += '<TD><DIV style="margin-bottom:10px;"><span id=ptRaidCity></span></div></td></tr>';
@@ -4954,6 +4961,14 @@ cm.MARCH_TYPES = {
 	
 	t.from = new CdispCityPicker ('ptRaidpicker', document.getElementById('ptRaidCity'), true, t.clickCitySelect, 0);
 	document.getElementById('pbRaidStart').addEventListener('click', t.toggleRaidState, false);
+	document.getElementById('pbsendreport').addEventListener('change', function(){
+		Options.foodreport = document.getElementById('pbsendreport').checked;
+		saveOptions();
+	}, false);
+	document.getElementById('pbsendreportint').addEventListener('change', function(){
+		Options.MsgInterval = parseInt(document.getElementById('pbsendreportint').value);
+		saveOptions();
+	}, false);
 	
 	var serverID = getServerId();
 	t.save = GM_getValue ('SavedRaids_'+serverID);
@@ -5844,22 +5859,29 @@ cm.MARCH_TYPES = {
   		actionLog('Reset Raidtimer: ' + t.citiesdone);
   },
   
-   sendreport: function(){
+  sendreport: function(){
 	  var t = Tabs.Raid;
-	  var total = 0;
+	  if(!Options.foodreport) return;
+	  var now = new Date().getTime()/1000.0;
+      now = now.toFixed(0);
+      if (now < (parseInt(Options.LastReport)+(Options.MsgInterval*60*60))) return;
+	
+	var total = 0;
+    var message = 'Raid Stats: %0A';
+    message += '%0A Food Gain (for '+ Options.MsgInterval +' hour of raiding) %0A';
+    for (q=1;q<=Seed.cities.length;q++){
+    	var cityID = 'city' + Seed.cities[q-1][0];
+    	var gain = parseInt(Seed.resources[cityID]['rec1'][0] / 3600) - Options.Foodstatus[q];
+    	message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(Options.Foodstatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec1'][0] / 3600)) + ' Gain: ';
+    	message += addCommas(gain)  + '%0A';
+		total += gain;
+		Options.Foodstatus[q] = parseInt(Seed.resources[cityID]['rec1'][0] / 3600);
+    }
+	message += '%0A Total food gain : '+addCommas(total)+'%0A';
+	
     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     params.emailTo = Seed.player['name'];
     params.subject = "Raid Overview";
-    var message = 'Raid Stats:' + '%0A';
-    message += '%0A'+'%0A' + 'Food Gain (for 1 hour of raiding)' +'%0A';
-    for (q=1;q<=Seed.cities.length;q++){
-    	var cityID = 'city' + Seed.cities[q-1][0];
-    	var gain = parseInt(Seed.resources[cityID]['rec1'][0] / 3600) - AttackOptions.Foodstatus[q];
-    	message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.Foodstatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec1'][0] / 3600)) + ' Gain: ';
-    	message += addCommas(gain)  + '%0A';
-		total += gain;
-    }
-	message += '%0A Total food gain : '+addCommas(total)+'%0A';
     params.message = message;
     params.requestType = "COMPOSED_MAIL";
     new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
@@ -5874,7 +5896,9 @@ cm.MARCH_TYPES = {
         onFailure: function () {
         },
     });
-  
+	
+    Options.LastReport = now;
+    saveOptions();
   },
   
   toggleRaidState : function (){
