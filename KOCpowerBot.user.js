@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110718e
+// @version        20110720a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110718e';
+var Version = '20110720a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -10920,6 +10920,289 @@ Tabs.Gifts = {
     }
   },
 }
+
+/*********************************** Resources TAB ***********************************/
+/****
+courtDoAction.php
+&atype=4&toid=1290791&givercityid=26654
+{"ok":true,"gold":500,"resource":500,"resourcetype":"4"}
+***/
+Tabs.Resources = {
+  tabOrder : 100,
+  resource : {1:'Food', 2:'Wood', 3:'Stone', 4:'Ore'},
+  users : [],
+  myDiv : null,
+  doList : [], // list of gifts to accept
+  accepting : false,
+  city : null,
+  total : {gold:0, 1:0, 2:0, 3:0, 4:0},
+    
+  init : function (div){
+    var t = Tabs.Resources;
+		t.myDiv = div;    
+    div.innerHTML = '<TABLE cellpadding=0 cellspacing=0 class=pbTab width=100%><TR><TD align=center><INPUT id="pballlist" type=submit value="Fetch User List" \></td></tr></table><HR>\
+        <DIV id=resDiv style="width:100%; min-height:300px; height:100%">';
+    document.getElementById('pballlist').addEventListener ('click', t.e_clickfetchlist, false);
+
+  },
+  
+  show : function (){
+  },
+  hide : function (){
+  },
+  
+  progress : function (msg, span, add){
+	if(add)
+		document.getElementById(span).innerHTML+=msg;
+	else
+		document.getElementById(span).innerHTML=msg;
+  },
+
+  e_clickfetchlist : function  (){     // (also cancel accepting)
+    var t = Tabs.Resources;
+	t.users = [];
+    if (t.accepting){
+      document.getElementById('pballlist').value = 'Fetch User List';
+      document.getElementById('resDiv').innerHTML+= '<BR><SPAN class=boldRed>Cancelled.</span>';
+      t.accepting = false;
+      return;
+    }
+    document.getElementById('resDiv').innerHTML = 'Fetching user list ... <span id=pbResUserListCount></span>';
+    
+    t.fetchUserList (gotUserList);
+    function gotUserList(userList){
+		if(userList.length < 1){
+			listGifts();
+			return;
+		}
+		document.getElementById('resDiv').innerHTML += '<BR>Check if able to collect ... <span id=pbResUserAvailCount></span>';
+		t.checkDailyAction(userList, listGifts);
+	}
+    
+    function listGifts (){
+	  t.city = Cities.cities[0];
+	  var m = '<DIV class=pbStat><CENTER>User List &nbsp; &nbsp; &nbsp; ('+ t.users.length +' found)</center></div>';
+      if (t.users.length<1){
+        document.getElementById('resDiv').innerHTML = m + '<BR><BR><CENTER>No users found!</center>';
+        return;
+      }
+      m += '<TABLE class=pbTab align=center><TR><TD align=right>City to apply gifts to: </td><TD id=pbrescityselspan></td></tr>\
+          <TR><TD align=right>Select resource to collect</td><TD>'
+        + htmlSelector (t.resource, Options.getResType, 'id=pbResColType')
+        + '</td></tr><TR><TD>Select users you want to collect from and hit: </td><TD width=250><INPUT type=submit id=pbResDo value="Accept Resources">\
+        &nbsp; <SPAN id=pbResNone class=boldRed></span></td></tr></table><HR><TABLE class=pbTab><TR valign=top><TD>\
+        <INPUT id=pbResButAll type=submit value="All" style="width:100%; margin-bottom:5px"><BR><INPUT id=pbResButNone type=submit value="None"></td>\
+        <TD width=10></td><TD><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabLined>\
+        <TBODY id=pbResTbody>\
+        <TR style="font-weight:bold; background:white"><TD>Name</td><TD>Might</td><TD width=20></td></tr>';
+      for (var i=0; i<t.users.length; i++){
+        m += '<TR><TD><INPUT type=checkbox id=pbrchk_'+ i +'> &nbsp;'+ t.users[i].name +'</td><TD>'+ t.users[i].might +'</td></tr>';
+      }
+      document.getElementById('resDiv').innerHTML = m + '</tbody></table></td></tr></table>';
+	  new CdispCityPicker ('pbrescitysel', document.getElementById('pbrescityselspan'), true, t.e_CityButton, t.city.idx);
+      document.getElementById('pbResDo').addEventListener ('click', t.getErDone, false);
+      document.getElementById('pbResButAll').addEventListener ('click', t.e_butAll, false);
+      document.getElementById('pbResButNone').addEventListener ('click', t.e_butNone, false);
+      var tbody = document.getElementById('pbResTbody');
+      tbodyScroller (tbody, getRemainingHeight (tbody, mainPop.div));
+    }
+  },
+
+  e_CityButton : function (city, x, y){
+    var t = Tabs.Resources;
+	t.city = city;
+  },
+  
+  e_butAll : function (){
+    var t = Tabs.Resources;
+    for (var i=0; i<t.users.length; i++)
+      document.getElementById('pbrchk_'+i).checked = true;
+  },
+  
+  e_butNone : function (){
+    var t = Tabs.Resources;
+    for (var i=0; i<t.users.length; i++)
+      document.getElementById('pbrchk_'+i).checked = false;
+  },
+  
+  getErDone : function (){
+    var t = Tabs.Resources;
+    t.doList = [];
+    document.getElementById('pbResNone').innerHTML = '';
+	Options.getResType = document.getElementById('pbResColType').value;
+	t.total = {gold:0, 1:0, 2:0, 3:0, 4:0};
+    for (var i=0; i<t.users.length; i++){
+      if (document.getElementById('pbrchk_'+i).checked)
+        t.doList.push (t.users[i]);
+    }
+    if (t.doList.length==0){
+      document.getElementById('pbResNone').innerHTML = 'None Selected!';
+      return;
+    }
+    t.accepting = true;
+    document.getElementById('pballlist').value = 'Stop Accepting';
+    document.getElementById('resDiv').innerHTML = '<DIV id=rsltDiv style="height:400px; max-height:400px; overflow-y:auto"><B>Accepting from '+ t.doList.length +' users:</b><BR></div>';    
+    t.acceptNext ();
+  },
+
+    
+  allDone : function (msg){
+    var t = Tabs.Resources;
+	msg += '<BR><BR> Total resources gained : <BR>\
+		   Gold: '+addCommas(t.total.gold)+'<BR>';
+	for(var i=1; i<=4; i++){
+		msg += t.resource[i]+': '+addCommas(t.total[i])+'<BR>';
+	}
+    document.getElementById('rsltDiv').innerHTML += '<BR><BR>' + msg;
+    document.getElementById('pballlist').value = 'Fetch User List';
+    t.accepting = false;
+  },
+  
+    
+  acceptNext : function (){
+    var t = Tabs.Resources;
+    var gift = t.doList.shift();
+    if (gift == null){
+      t.allDone ('Done accepting resources.');
+      return;
+    }
+    var acpDiv = document.getElementById('rsltDiv');
+    var curDiv = document.createElement ('div');
+    acpDiv.appendChild (curDiv);
+    curDiv.innerHTML = '<B>From '+ gift.name +': ';    
+    var statSpan = document.createElement ('span');
+    curDiv.appendChild (statSpan);
+    statSpan.innerHTML = 'Accepting... ';
+    t.getCourtAction (gift, gotGiftData);
+        
+    function gotGiftData (rslt){
+//logit ("getErDone.gotGiftData ... \n"+ inspect (gift, 8, 1));
+      if (!t.accepting)
+        return;
+      if (rslt.ok){
+        var msg = rslt.gold +' gold and '+rslt.resource +' '+ t.resource[rslt.resourcetype]+'&nbsp; &nbsp; OK.';
+		actionLog ('Accepted from '+gift.name+': '+ rslt.gold +' gold and '+ rslt.resource +' '+ t.resource[rslt.resourcetype]);
+        statSpan.innerHTML += msg;
+		t.total.gold += rslt.gold;
+		t.total[rslt.resourcetype] += rslt.resource;
+		t.acceptNext ();  
+        return;
+      }
+        
+      if (rslt.msg)
+        msg = '<B>'+ rslt.msg + '</b>';
+      else
+        msg = '<SPAN class=boldRed>ERROR: '+ rslt.ajaxErr +'</span>';
+
+      curDiv.removeChild (statSpan);
+      curDiv = document.createElement ('div');
+      curDiv.className = 'indent25';
+      acpDiv.appendChild (curDiv);
+      curDiv.innerHTML = msg;
+      t.acceptNext ();  
+    }
+    
+  },
+
+  getMembersInfo : function (pageNo, notify) {
+    var t = Tabs.Resources;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    
+    params.pageNo = pageNo;
+    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/allianceGetMembersInfo.php" + unsafeWindow.g_ajaxsuffix, {
+      method: "post",
+      parameters: params,
+      onSuccess: function (rslt) {
+        notify (rslt);
+      },
+      onFailure: function (rslt) {
+        notify ({errMsg:'Ajax Comm Error'});
+      },
+    });
+  },
+  
+  getDailyAction : function (uid, notify){
+	var t = Tabs.Resources;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    
+    params.pid = uid;
+    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/viewCourt.php" + unsafeWindow.g_ajaxsuffix, {
+      method: "post",
+      parameters: params,
+      onSuccess: function (rslt) {
+        notify (rslt);
+      },
+      onFailure: function (rslt) {
+        notify ({errMsg:'Ajax Comm Error'});
+      },
+    });
+  },
+  
+  getCourtAction : function (gift, notify){
+	var t = Tabs.Resources;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    
+    params.atype = Options.getResType;
+	params.toid = gift.userId;
+	params.givercityid = t.city.id;
+    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/courtDoAction.php" + unsafeWindow.g_ajaxsuffix, {
+      method: "post",
+      parameters: params,
+      onSuccess: function (rslt) {
+        notify (rslt);
+      },
+      onFailure: function (rslt) {
+        notify ({errMsg:'Ajax Comm Error'});
+      },
+    });
+  },
+  
+  checkDailyAction : function (userList, notify){
+	var t = Tabs.Resources;
+	var count = 0;
+    t.getDailyAction(userList[count].userId, parseViewCourt);
+	
+	function parseViewCourt (rslt){
+		if (!rslt.ok || rslt.errMsg)
+			notify ({errMsg:'Ajax Comm Error'});
+		if(rslt.dailyActionFlag == 0)
+			t.users.push(userList[count]);
+		t.progress(count, 'pbResUserAvailCount');
+		count++;
+		if(count < userList.length){
+			t.getDailyAction(userList[count].userId, parseViewCourt);
+		} else {
+			notify();
+		}
+	}
+  },
+  
+  // notify with gifts[] or: {errMsg:xxx}
+  fetchUserList : function (notify){
+	var t = Tabs.Resources;
+	var userList = [];
+    t.getMembersInfo(1, parseAlliancePage);
+	
+    function parseAlliancePage (rslt){
+      if (!rslt.ok || rslt.errMsg)
+        notify ({errMsg:'Ajax Comm Error'});
+	  var users = rslt.memberInfo;
+      for(var k in users){
+		userList.push({userId:users[k].userId, name:users[k].name, might:users[k].prestige, type:'alliance'});
+	  }
+	  t.progress(userList.length, 'pbResUserListCount');
+	  if(rslt.currentPage < rslt.noOfPages){
+		t.getMembersInfo((rslt.currentPage+1), parseAlliancePage);
+	  } else {
+		notify(userList);
+	  }
+    }
+	
+	
+  },
+},
+
+
 
 function addCommasWhole(nStr){
   nStr += '';
