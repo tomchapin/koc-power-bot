@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110720a
+// @version        20110721a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110720a';
+var Version = '20110721a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -89,9 +89,13 @@ var Options = {
   DeleteMsgs0  : false,
   DeleteMsgs1  : false,
   Foodstatus   : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  Creststatus  : {1101:0,1102:0,1103:0,1104:0,1105:0,1106:0,1107:0,1108:0,1109:0,1110:0,1111:0,1112:0,1113:0,1114:0,1115:0},
   LastReport   : 0,
+  LastCrestReport   : 0,
   MsgInterval  : 1,
+  CrestMsgInterval  : 1,
   foodreport   : false,
+  crestreport  : true,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -3809,6 +3813,7 @@ Tabs.Test = {
   init : function (div){
     var t = Tabs.Crest;
     setInterval(t.FirstRound,10000);
+    setInterval(t.sendCrestReport, 1*60*1000);
     t.myDiv = div;
     var selbut=0;
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
@@ -3817,7 +3822,9 @@ Tabs.Test = {
 	   } else {
 	       m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = ON"></td>';
 	   }
-    m += '<TD><INPUT id=CrestHelp type=submit value="HELP"></td></table>';
+    m += '<TD><INPUT id=CrestHelp type=submit value="HELP"></td>';
+    m += '<TD><INPUT id=pbsendreport type=checkbox '+ (Options.crestreport?' CHECKED':'') +'\> Send Crest report every ';
+    m += '<INPUT id=pbsendreportint value='+ Options.CrestMsgInterval +' type=text size=3 \> hours </td></table>';
     
     m += '<DIV id=pbOpt class=pbStat>CRESTING OPTIONS</div><TABLE id=pbcrestopt	 width=100% height=0% class=pbTab><TR align="center"></table>';
     m += '<DIV style="margin-bottom:10px;">Crest from city: <span id=crestcity></span></div>';
@@ -3907,8 +3914,51 @@ Tabs.Test = {
         else {
             CrestOptions.Running = true;
             obj.value = "Crest = ON";
+            sendCrestReport();
             saveCrestOptions();
         }
+    },
+    
+    sendCrestReport: function(){
+    	var t = Tabs.Crest;
+    	if(!Options.crestreport || !CrestOptions.Running) return;
+    	var now = new Date().getTime()/1000.0;
+        now = now.toFixed(0);
+        if (now < (parseInt(Options.LastCrestReport)+(Options.CrestMsgInterval*60*60))) return;
+    	
+    	var total = 0;
+        var message = 'Crest Stats: %0A';
+        message += '%0A Crests Gained (for '+ Options.CrestMsgInterval +' hour of cresting) %0A';
+        for (crest in Options.Creststatus){
+        	owned = Seed.items['i'+crest];
+        	if (owned == undefined) owned=0;
+	      	if ( (owned - Options.Creststatus[crest]) > 0) message+= '<DIV><B>' + unsafeWindow.itemlist['i'+crest]['name'] +': '+ (owned - Options.Creststatus[crest]) +'%0A </b></div>';
+	      	else message+= unsafeWindow.itemlist['i'+crest]['name'] +': '+ (owned - Options.Creststatus[crest]) +'%0A';
+	    	total += (owned - Options.Creststatus[crest]);
+	    	Options.Creststatus[crest] = owned;
+      	}
+    	message += '%0A Total Crests gained: '+ total +'%0A';
+    	
+      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+      params.emailTo = Seed.player['name'];
+      params.subject = "Crest Overview";
+      params.message = message;
+      params.requestType = "COMPOSED_MAIL";
+      new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+          method: "post",
+          parameters: params,
+          onSuccess: function (message) {
+              var rslt = eval("(" + message.responseText + ")");
+              if (rslt.ok) {
+              		Options.LastCrestReport = now;
+              } else {
+              }
+          },
+          onFailure: function () {
+          },
+      });
+    	
+      saveOptions();
     },
     
     
@@ -6822,7 +6872,6 @@ Tabs.Reinforce = {
     init: function(div){
 		var t = Tabs.Reinforce;
         t.myDiv = div;
-		
 
       var m = '<DIV id=pbReinfMain class=pbStat>REINFORCE</div><TABLE id=pireinforce width=100% height=0% class=pbTab><TR align="center">';
       
@@ -6843,39 +6892,39 @@ Tabs.Reinforce = {
             
       m += '<TABLE id=pbaddreinfroute width=100% height=0% class=pbTab><TR align="center">';
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-      m += '<TD>Supply Troop</td>'
+      m += '<TD id=unt1></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-      m += '<TD>Militiaman</td>'
+      m += '<TD id=unt2></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-      m += '<TD>Scout</td>'
+      m += '<TD id=unt3></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-      m += '<TD>Pikeman</td></tr>'
+      m += '<TD id=unt4></td>'
       m += '<TR><TD><INPUT id=pitargetSupplyTroops type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyTroops type=submit value="Max"></td>';
       m += '<TD><INPUT id=pitargetMilitiaman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxMilitiaman type=submit value="Max"></td>';
       m += '<TD><INPUT id=pitargetScout type=text size=6 maxlength=6 value="0"\><INPUT id=MaxScout type=submit value="Max"></td>';
       m += '<TD><INPUT id=pitargetPikeman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxPikeman type=submit value="Max"></td></tr>';
       
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-      m += '<TD>Swordsman</td>'
+      m += '<TD id=unt5></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-      m += '<TD>Archer</td>'
+      m += '<TD id=unt6></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-      m += '<TD>Cavalry</td>'
+      m += '<TD id=unt7></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-      m += '<TD>Heavy Cavalry</td></tr>'
+      m += '<TD id=unt8></td>'
       m += '<TR><TD><INPUT id=pitargetSwordsman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSwordsman type=submit value="Max"></td>';
       m += '<TD><INPUT id=pitargetArcher type=text size=6 maxlength=6 value="0"\><INPUT id=MaxArcher type=submit value="Max"></td>';
       m += '<TD><INPUT id=pitargetCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCavalry type=submit value="Max"></td>';
       m += '<TD><INPUT id=pitargetHeavyCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxHeavyCavalry type=submit value="Max"></td></tr>';
       
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-      m += '<TD>Supply Wagon</td>'
+      m += '<TD id=unt9></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-      m += '<TD>Ballista</td>'
+      m += '<TD id=unt10></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-      m += '<TD>Battering Ram</td>'
+      m += '<TD id=unt11></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-      m += '<TD>Catapult</td></tr>'
+      m += '<TD id=unt12></td>'
       m += '<TR><TD><INPUT id=pitargetSupplyWagon type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyWagon type=submit value="Max"></td>';
       m += '<TD><INPUT id=pitargetBallista type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBallista type=submit value="Max"></td>';
       m += '<TD><INPUT id=pitargetBatteringRam type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBatteringRam type=submit value="Max"></td>';
@@ -6888,8 +6937,8 @@ Tabs.Reinforce = {
       t.myDiv.innerHTML = m;
       
       
-      t.from = new CdispCityPicker ('prfrom', document.getElementById('ptRfcityFrom'), true, t.clickCitySelect, 0);
-      t.to = new CdispCityPicker ('ptto', document.getElementById('ptRfcityTo'), true, t.clickCitySelect,0);
+      t.from = new CdispCityPicker ('prfrom', document.getElementById('ptRfcityFrom'), true, t.ClickCitySelect, 0);
+      t.to = new CdispCityPicker ('ptto', document.getElementById('ptRfcityTo'), true, t.NoClickCitySelect,0);
       
 	  t.getKnights();
 	  
@@ -6900,16 +6949,6 @@ Tabs.Reinforce = {
   	 document.getElementById('pfToX').value = t.to.city.x;
      document.getElementById('pfToY').value = t.to.city.y;
  	 }, false);
-          
-     document.getElementById('ptRfcityFrom').addEventListener('click', function(){
-     	t.getKnights();	 
-        t.clearbox();
-        t.dist = distance (t.from.city.x, t.from.city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
-	    document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
-	    t.SetETAType();
-	    t.ETA(t.dist);
-	    document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
       
       document.getElementById('ptRfcityTo').addEventListener('click', function(){
        t.dist = distance (t.from.city.x, t.from.city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
@@ -7332,6 +7371,18 @@ Tabs.Reinforce = {
       window.addEventListener('unload', t.onUnload, false);
     },
     
+    ClickCitySelect: function(city){
+    		var t = Tabs.Reinforce;
+    		t.getKnights();	 
+    		t.clearbox();
+    		t.dist = distance (city.x, city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
+    		document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
+    		t.SetETAType();
+    		t.ETA(t.dist);
+    		for (var i=1;i<=12;i++) document.getElementById('unt'+i).innerHTML = addCommas(Seed.units['city'+city.id]['unt'+i]) 
+    		document.getElementById('pbETA').innerHTML = (t.ETAstr);
+    },
+     		
     getKnights : function(){
        var t = Tabs.Reinforce;
        var knt = new Array();
@@ -11611,6 +11662,7 @@ function AutoTrain(){
      	return;
      }
      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+     var logcity=null;
      var troops = {1:'SupplyTroops',
                     2:'Militiaman',
                     3:'Scouts',
@@ -11691,8 +11743,9 @@ function AutoTrain(){
            unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(idle);
            unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(idle);
            unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, idle, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
-           actionLog(Seed.cities[TrainCity][1]  + ' Train ' + idle + ':  ' + troops[unitId] );
-         } else {actionLog(Seed.cities[TrainCity][1] + ': FAIL Train ' + idle + ' ' +  troops[unitId] + ' - '+ rslt.msg);}
+           for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
+           actionLog(logcity  + ' Train ' + idle + ':  ' + troops[unitId] );
+         } else {actionLog(logcity + ': FAIL Train ' + idle + ' ' +  troops[unitId] + ' - '+ rslt.msg);}
        },
        onFailure: function() {}
      }); 
