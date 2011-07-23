@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110721a
+// @version        20110723a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110721a';
+var Version = '20110723a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -204,20 +204,15 @@ if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
 
 function kocWideScreen(){
   function setWide (){
-	var kocFrame = parent.document.getElementsByTagName('IFRAME');
+	var kocFrame = parent.document.getElementById('kofc_iframe_0');
 	if (!kocFrame){
 	  setTimeout (setWide, 1000);
 	  return;
 	}
-	for(i=0; i<kocFrame.length; i++){
-		if(kocFrame[i].name.indexOf('kofc_iframe_0') > -1){
-			kocFrame[i].style.width = '100%';
-			var style = document.createElement('style')
-			style.innerHTML = 'body {margin:0; width:100%; !important;}';
-			kocFrame[i].parentNode.appendChild(style);
-			break;
-		}
-	}
+	kocFrame.style.width = '100%';
+	var style = document.createElement('style')
+	style.innerHTML = 'body {margin:0; width:100%; !important;}';
+	kocFrame.parentNode.appendChild(style);
   }
   kocWatchdog ();
   if (GlobalOptions.pbWideScreen)
@@ -8331,7 +8326,6 @@ var WideScreen = {
       chat.style.top = '-624px';
       chat.style.left = '760px';
       chat.style.height = '720px';
-	  chat.style.width = '345px';
       chat.style.background = 'url("'+ CHAT_BG_IMAGE +'")';
       document.getElementById('mod_comm_list1').style.height = '580px';
       document.getElementById('mod_comm_list2').style.height = '580px';
@@ -8340,7 +8334,6 @@ var WideScreen = {
       chat.style.top = '0px';
       chat.style.left = '0px';
       chat.style.height = '';
-	  chat.style.width = '';
       chat.style.background = '';
       document.getElementById('mod_comm_list1').style.height = '287px';
       document.getElementById('mod_comm_list2').style.height = '287px';
@@ -8763,7 +8756,7 @@ function setCities(){
 }
 
 
-function dialogRetry (errMsg, seconds, onRetry, onCancel){
+function dialogRetry (errMsg, seconds, onRetry, onCancel, errCode){
   seconds = parseInt(seconds);
   var pop = new CPopup ('pbretry', 0, 0, 400,200, true);
   pop.centerMe(mainPop.getMainDiv());
@@ -8773,7 +8766,10 @@ function dialogRetry (errMsg, seconds, onRetry, onCancel){
   document.getElementById('paretryCancel').addEventListener ('click', doCancel, false);
   pop.show(true);
   
-  document.getElementById('paretryErrMsg').innerHTML = errMsg;
+  if(errCode && unsafeWindow.g_js_strings.errorcode['err_'+errCode])
+	document.getElementById('paretryErrMsg').innerHTML = unsafeWindow.g_js_strings.errorcode['err_'+errCode];
+  else
+	document.getElementById('paretryErrMsg').innerHTML = errMsg;
   document.getElementById('paretrySeconds').innerHTML = seconds;
   var rTimer = setTimeout (doRetry, seconds*1000);
   countdown ();
@@ -8920,7 +8916,7 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
     //if ( (x = rslt.errorMsg.indexOf ('<br><br>')) > 0)
      // rslt.errorMsg = rslt.errorMsg.substr (0, x-1);
     if (!noRetry && (rslt.error_code==0 ||rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
-      dialogRetry (rslt.errorMsg, delay, function(){myRetry()}, function(){wasSuccess (rslt)});
+      dialogRetry (rslt.errorMsg, delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
     } else {
       wasSuccess (rslt);
     }
