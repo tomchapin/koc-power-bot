@@ -1818,6 +1818,10 @@ g_js_strings.wood_guardian = {};
 g_js_strings.wood_guardian.description = "Your Guardian is the protector of your city. The Weald Fenrir increases your Wood resource capabilities and strengthens the HP attribute of your troops.";
 g_js_strings.ore_guardian = {};
 g_js_strings.ore_guardian.description = "Your Guardian is the protector of your city. The Iron Indrik increases your Ore resource capabilities and strengthens the Attack attribute of your troops.";
+g_js_strings.food_guardian = {};
+g_js_strings.food_guardian.description = "TBD";
+g_js_strings.stone_guardian = {};
+g_js_strings.stone_guardian.description = "TBD";
 g_js_strings.guardian_item = {};
 g_js_strings.guardian_item.title = "Change Name";
 g_js_strings.guardian_item.description = "Choose a name for your guardian.  Names must be 15 characters or less.";
@@ -1864,6 +1868,24 @@ g_js_strings.guardian.ore.res1 = "(Production + Cap)";
 g_js_strings.guardian.ore.desc = "Magma flows in the Iron Indrik’s veins and where other creatures would have a streaming mane, the Indrik wears flame.  Black smoke billows and lava drips from his maw.  Spears cannot pierce his hematite hide.  Its fiery retaliation makes it a difficult beast to befriend and a dangerous enemy.";
 g_js_strings.guardian.ore.unlock = "Unlock ore guardian";
 g_js_strings.guardian.ore.unlockCost = "Cost: 1X Obsidian Rune";
+g_js_strings.guardian.food = {};
+g_js_strings.guardian.food.name = "Viand Kraken";
+g_js_strings.guardian.food.fullName = "Viand Kraken(Food Guardian)";
+g_js_strings.guardian.food.attr = "Attribute: Marching Speed";
+g_js_strings.guardian.food.res0 = "Resource: Food";
+g_js_strings.guardian.food.res1 = "(Production + Cap)";
+g_js_strings.guardian.food.desc = "TBD";
+g_js_strings.guardian.food.unlock = "Unlock food guardian";
+g_js_strings.guardian.food.unlockCost = "Cost: 1X Deluge Rune";
+g_js_strings.guardian.stone = {};
+g_js_strings.guardian.stone.name = "Terrene Golem";
+g_js_strings.guardian.stone.fullName = "Terrene Golem(Stone Guardian)";
+g_js_strings.guardian.stone.attr = "Attribute: Training Speed";
+g_js_strings.guardian.stone.res0 = "Resource: Stone";
+g_js_strings.guardian.stone.res1 = "(Production + Cap)";
+g_js_strings.guardian.stone.desc = "TBD";
+g_js_strings.guardian.stone.unlock = "Unlock stone guardian";
+g_js_strings.guardian.stone.unlockCost = "Cost: 1X Boulder Rune";
 g_js_strings.ImpendingAttacks = {};
 g_js_strings.ImpendingAttacks.marchTypeFrom = "{marchType} from {genderTitle} {name}";
 g_js_strings.ImpendingAttacks.targetCity = "{cityName} at {coordinate}";
@@ -1886,6 +1908,8 @@ g_js_strings.ImpendingAttacks.buildDefensesTip = "This will bring you to the Wal
 g_js_strings.ImpendingAttacks.trainTroopsTip = "This will bring you to the Barracks, where you can begin training troops in anticipation of this attack.";
 g_js_strings.ImpendingAttacks.askForHelpTip = "This will automatically create a chat message to your alliance asking them to send reinforcements to this city.";
 g_js_strings.guardian.guardians = "Guardians";
+g_js_strings.guardian.summoning = "Summoning guardian in ";
+g_js_strings.guardian.setBonus = "<b>Set Bonus</b>";
 g_js_strings.guardian.permanentlyReduce = "Permanently reduce troop upkeep by 5%";
 g_js_strings.gemGifting = {};
 g_js_strings.gemGifting.congratulations = "Congratulations!";
@@ -1953,6 +1977,10 @@ var buildingcost = {
     bdg50: ["Wood Guardian", 0, 0, 0, 0, 0, 0, 0, [],
         [], ""],
     bdg51: ["Ore Guardian", 0, 0, 0, 0, 0, 0, 0, [],
+        [], ""],
+    bdg52: ["Food Guardian", null, null, null, null, null, null, null, [],
+        [], ""],
+    bdg53: ["Stone Guardian", null, null, null, null, null, null, null, [],
         [], ""]
 };
 var techcost = {
@@ -4116,32 +4144,32 @@ var itemlist = {
         subCategory: 0
     },
     i1360: {
-        name: "150 Calvary",
-        description: "Summons 150 Cavlary",
+        name: "150 Cavalry",
+        description: "Summons 150 Cavalry",
         price: null,
         tradable: null,
         category: 3,
         subCategory: 0
     },
     i1361: {
-        name: "750 Calvary",
-        description: "Summons 750 Calvary",
+        name: "750 Cavalry",
+        description: "Summons 750 Cavalry",
         price: null,
         tradable: null,
         category: 3,
         subCategory: 0
     },
     i1370: {
-        name: "100 Heavy Calvary",
-        description: "Summons 100 Heavy Cavlary",
+        name: "100 Heavy Cavalry",
+        description: "Summons 100 Heavy Cavalry",
         price: null,
         tradable: null,
         category: 3,
         subCategory: 0
     },
     i1371: {
-        name: "500 Heavy Calvary",
-        description: "Summons 500 Heavy Calvary",
+        name: "500 Heavy Cavalry",
+        description: "Summons 500 Heavy Cavalry",
         price: null,
         tradable: null,
         category: 3,
@@ -4211,6 +4239,518 @@ var itemlist = {
         category: 3,
         subCategory: 0
     },
+    i1412: {
+        name: "10 Supply Troops",
+        description: "Summons 10 Supply Troops",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1413: {
+        name: "25 Supply Troops",
+        description: "Summons 25 Supply Troops",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1414: {
+        name: "50 Supply Troops",
+        description: "Summons 50 Supply Troops",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1415: {
+        name: "75 Supply Troops",
+        description: "Summons 75 Supply Troops",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1416: {
+        name: "100 Supply Troops",
+        description: "Summons 100 Supply Troops",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1417: {
+        name: "150 Supply Troops",
+        description: "Summons 150 Supply Troops",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1418: {
+        name: "10 Militiamen",
+        description: "Summons 10 Militiamen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1419: {
+        name: "25 Militiamen",
+        description: "Summons 25 Militiamen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1420: {
+        name: "50 Militiamen",
+        description: "Summons 50 Militiamen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1421: {
+        name: "75 Militiamen",
+        description: "Summons 75 Militiamen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1422: {
+        name: "100 Militiamen",
+        description: "Summons 100 Militiamen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1423: {
+        name: "150 Militiamen",
+        description: "Summons 150 Militiamen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1424: {
+        name: "10 Scouts",
+        description: "Summons 10 Scouts",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1425: {
+        name: "25 Scouts",
+        description: "Summons 25 Scouts",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1426: {
+        name: "50 Scouts",
+        description: "Summons 50 Scouts",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1427: {
+        name: "75 Scouts",
+        description: "Summons 75 Scouts",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1428: {
+        name: "100 Scouts",
+        description: "Summons 100 Scouts",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1429: {
+        name: "150 Scouts",
+        description: "Summons 150 Scouts",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1430: {
+        name: "10 Pikemen",
+        description: "Summons 10 Pikemen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1431: {
+        name: "25 Pikemen",
+        description: "Summons 25 Pikemen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1432: {
+        name: "50 Pikemen",
+        description: "Summons 50 Pikemen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1433: {
+        name: "75 Pikemen",
+        description: "Summons 75 Pikemen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1434: {
+        name: "100 Pikemen",
+        description: "Summons 100 Pikemen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1435: {
+        name: "150 Pikemen",
+        description: "Summons 150 Pikemen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1436: {
+        name: "10 Swordsmen",
+        description: "Summons 10 Swordsmen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1437: {
+        name: "25 Swordsmen",
+        description: "Summons 25 Swordsmen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1438: {
+        name: "50 Swordsmen",
+        description: "Summons 50 Swordsmen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1439: {
+        name: "75 Swordsmen",
+        description: "Summons 75 Swordsmen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1440: {
+        name: "100 Swordsmen",
+        description: "Summons 100 Swordsmen",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1441: {
+        name: "10 Archers",
+        description: "Summons 10 Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1442: {
+        name: "25 Archers",
+        description: "Summons 25 Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1443: {
+        name: "50 Archers",
+        description: "Summons 50 Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1444: {
+        name: "75 Archers",
+        description: "Summons 75 Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1445: {
+        name: "100 Archers",
+        description: "Summons 100 Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1446: {
+        name: "10 Cavalry",
+        description: "Summons 10 Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1447: {
+        name: "25 Cavalry",
+        description: "Summons 25 Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1448: {
+        name: "50 Cavalry",
+        description: "Summons 50 Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1449: {
+        name: "75 Cavalry",
+        description: "Summons 75 Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1450: {
+        name: "100 Cavalry",
+        description: "Summons 100 Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1451: {
+        name: "10 Heavy Cavalry",
+        description: "Summons 10 Heavy Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1452: {
+        name: "25 Heavy Cavalry",
+        description: "Summons 25 Heavy Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1453: {
+        name: "50 Heavy Cavalry",
+        description: "Summons 50 Heavy Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1454: {
+        name: "75 Heavy Cavalry",
+        description: "Summons 75 Heavy Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1455: {
+        name: "150 Heavy Cavalry",
+        description: "Summons 150 Heavy Cavalry",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1456: {
+        name: "10 Supply Wagons",
+        description: "Summons 10 Supply Wagons",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1457: {
+        name: "25 Supply Wagons",
+        description: "Summons 25 Supply Wagons",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1458: {
+        name: "50 Supply Wagons",
+        description: "Summons 50 Supply Wagons",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1459: {
+        name: "75 Supply Wagons",
+        description: "Summons 75 Supply Wagons",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1460: {
+        name: "150 Supply Wagons",
+        description: "Summons 150 Supply Wagons",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1461: {
+        name: "10 Ballistae",
+        description: "Summons 10 Ballistae",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1462: {
+        name: "25 Ballistae",
+        description: "Summons 25 Ballistae",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1463: {
+        name: "50 Ballistae",
+        description: "Summons 50 Ballistae",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1464: {
+        name: "75 Ballistae",
+        description: "Summons 75 Ballistae",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1465: {
+        name: "150 Ballistae",
+        description: "Summons 150 Ballistae",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1466: {
+        name: "10 Battering Rams",
+        description: "Summons 10 Battering Rams",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1467: {
+        name: "25 Battering Rams",
+        description: "Summons 25 Battering Rams",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1468: {
+        name: "75 Battering Rams",
+        description: "Summons 75 Battering Rams",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1469: {
+        name: "100 Battering Rams",
+        description: "Summons 100 Battering Rams",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1470: {
+        name: "150 Battering Rams",
+        description: "Summons 150 Battering Rams",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1471: {
+        name: "10 Catapults",
+        description: "Summons 10 Catapults",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1472: {
+        name: "25 Catapults",
+        description: "Summons 25 Catapults",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1473: {
+        name: "75 Catapults",
+        description: "Summons 75 Catapults",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1474: {
+        name: "100 Catapults",
+        description: "Summons 100 Catapults",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1475: {
+        name: "150 Catapults",
+        description: "Summons 150 Catapults",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
     i2000: {
         name: "Renaming Ritual",
         description: "Change the name of your Guardian.",
@@ -4238,7 +4778,15 @@ var itemlist = {
     i2003: {
         name: "Deluge Rune",
         description: "This rune allows you to summon the Viand Asherah to your city.  The Viand Asherah boosts your Food production and capacity.",
-        price: 200,
+        price: 70,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i2004: {
+        name: "Boulder Rune",
+        description: "This rune allows you to summon the Terrene Golem to your city.  The Terrene Golem boosts your Stone production and capacity.",
+        price: 50,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -8878,7 +9426,9 @@ var buildingmight = {
     "18": [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240, 20480],
     "19": [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600, 51200, 102400],
     "50": [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600],
-    "51": [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600]
+    "51": [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600],
+    "52": [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600],
+    "53": [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600]
 };
 var buildingmaxlvl = {
     "0": 12,
@@ -8902,7 +9452,9 @@ var buildingmaxlvl = {
     "18": 11,
     "19": 12,
     "50": 10,
-    "51": 10
+    "51": 10,
+    "52": 10,
+    "53": 10
 };
 var buildingupgradedesc = {
     "0": ["Control one Wilderness and build Level 2 Cottages", "Control two Wildernesses, build Level 3 Cottages, and gain 3 more Resource Fields", "Control three Wildernesses, build Level 4 Cottages, and gain 3 more Resource Fields", "Control four Wildernesses, build Level 5 Cottages, and gain 3 more Resource Fields", "Control five Wildernesses, build Level 6 Cottages, and gain 3 more Resource Fields", "Control six Wildernesses, build Level 7 Cottages, and gain 3 more Resource Fields", "Control seven Wildernesses, build Level 8 Cottages, and gain 3 more Resource Fields", "Control eight Wildernesses, build Level 9 Cottages, and gain 3 more Resource Fields", "Control nine Wildernesses, build Level 10 Cottages, and gain 3 more Resource Fields", "Control ten Wildernesses, build Level 10 Cottages, and gain 3 more Resource Fields", "Control twelve Wildernesses and build Level 11 Buildings", "Control fourteen Wildernesses and build Level 12 Buildings"],
@@ -8926,7 +9478,9 @@ var buildingupgradedesc = {
     "18": ["Causes troops to move 1.5x normal speed between your own and allied Cities", "Causes troops to move 2x normal speed between your own and allied Cities", "Causes troops to move 2.5x normal speed between your own and allied Cities", "Causes troops to move 3x normal speed between your own and allied Cities", "Causes troops to move 3.5x normal speed between your own and allied Cities", "Causes troops to move 4x normal speed between your own and allied Cities", "Causes troops to move 4.5x normal speed between your own and allied Cities", "Causes troops to move 5x normal speed between your own and allied Cities", "Causes troops to move 5.5x normal speed between your own and allied Cities", "Causes troops to move 6x normal speed between your own and allied Cities", "Causes troops to move 6.5x normal speed between your own and allied Cities"],
     "19": ["Provides 100,000 Durability and 1,000 Defensive Unit Spaces", "Provides 300,000 Durability and 3,000 Defensive Unit Spaces", "Provides 600,000 Durability and 6,000 Defensive Unit Spaces", "Provides 1,000,000 Durability and 10,000 Defensive Unit Spaces", "Provides 1,500,000 Durability and 15,000 Defensive Unit Spaces", "Provides 2,100,000 Durability and 21,000 Defensive Unit Spaces", "Provides 2,800,000 Durability and 28,000 Defensive Unit Spaces", "Provides 3,600,000 Durability and 36,000 Defensive Unit Spaces", "Provides 4,500,000 Durability and 45,000 Defensive Unit Spaces", "Provides 5,500,000 Durability and 55,000 Defensive Unit Spaces", "Provides 6,600,000 Durability and 66,000 Defensive Unit Spaces", "Provides 7,800,000 Durability and 78,000 Defensive Unit Spaces"],
     "50": ["", "", "", "", "", "", "", "", "", ""],
-    "51": ["", "", "", "", "", "", "", "", "", ""]
+    "51": ["", "", "", "", "", "", "", "", "", ""],
+    "52": ["", "", "", "", "", "", "", "", "", ""],
+    "53": ["", "", "", "", "", "", "", "", "", ""]
 };
 var provincenames = {
     p1: "Tintagel",
@@ -13646,6 +14200,34 @@ cm.InGameDestination = function () {
     })()
 };
 cm.InGameDestination.key = "m";
+cm.timer = function (d) {
+    var a = {};
+    var c = null;
+
+    function b() {
+        d.each(a, function (e, f) {
+            if (unixtime() % f.interval == 0) {
+                f["function"]()
+            }
+        })
+    }
+    d(document).ready(function () {});
+    return {
+        register: function (f, g, e) {
+            if (!e) {
+                e = 1
+            }
+            if (!c) {
+                c = setInterval(b, 1000)
+            }
+            a[f] = {
+                id: f,
+                "function": g,
+                interval: e
+            }
+        }
+    }
+}(jQuery);
 cm = cm || {};
 cm.AutoAttackLevelLock = 20;
 cm.AutoAttackManagerController = function (g, s) {
@@ -19010,7 +19592,11 @@ function showMyWilderness() {
     if (getBuildingLevel(0) === 11) {
         a.push("12")
     } else {
-        a.push(seed.buildings["city" + currentcityid]["pos0"][1])
+        if (getBuildingLevel(0) === 12) {
+            a.push("14")
+        } else {
+            a.push(seed.buildings["city" + currentcityid]["pos0"][1])
+        }
     }
     a.push("</div></div>");
     a.push("<table class='prodtable wild' border='0' cellspacing='0' cellpadding='0'>");
@@ -19243,7 +19829,8 @@ Chat.Properties = {
     hasNewChat: [true, true, true],
     lastActiveState: true,
     recipients: new Object(),
-    timestamp: 0
+    timestamp: 0,
+    allianceChatPrefix: "__A_l_liance_Ch@tHelp__:"
 };
 Chat.Methods = {
     changeTab: function (a) {
@@ -19535,6 +20122,7 @@ Chat.Methods = {
     },
     chatDivContent: function (k, d, h, g, f, b, c, l, a, j) {
         g = cm.formatModel.exe(g);
+        g = this.getAllianceHelpHtml(g);
         var i = l || a;
         var e = new Array();
         e.push("<img onclick='Chat.whisper(\"" + k.split(" ")[1] + "\"); return false;' ");
@@ -19567,11 +20155,7 @@ Chat.Methods = {
         e.push("</div>");
         e.push("<div class='clearfix'>");
         e.push("<div class='tx'>");
-        if (j) {
-            e.push((g).unescapeHTML().replace(/&#39;/g, "'"))
-        } else {
-            e.push(g)
-        }
+        e.push(g);
         e.push("</div>");
         if (b) {
             e.push("<div class='flag f" + b + "'></div>")
@@ -19738,6 +20322,73 @@ Chat.Methods = {
             },
             onFailure: function () {}
         })
+    },
+    sendAllianceHelpChat: function (a) {
+        var c = [];
+        for (var b in a) {
+            c.push(b + "=" + a[b])
+        }
+        Chat.sendChat(Chat.allianceChatPrefix + c.join("&"))
+    },
+    getAllianceHelpHtml: function (h) {
+        var e = h.split(this.allianceChatPrefix);
+        if (e.length < 2) {
+            return h
+        }
+        h = e[1].split("&");
+        var d = {};
+        for (var f = h.length - 1; f >= 0; --f) {
+            var a = h[f].split("=");
+            if (a.length < 2) {
+                continue
+            }
+            d[a[0]] = a[1]
+        }
+        var b = {
+            helpType: 1,
+            helpId: 1,
+            lvl: 1,
+            aid: 1,
+            inv: 1,
+            cid: 1,
+            player_prefix: 1,
+            playerName: 1
+        };
+        for (var g in b) {
+            if (undefined === d[g]) {
+                return h
+            }
+        }
+        for (var g in {
+            helpId: 1,
+            lvl: 1,
+            aid: 1,
+            inv: 1,
+            cid: 1
+        }) {
+            var j = parseInt(d[g]);
+            if (isNaN(j)) {
+                return h
+            }
+        }
+        if (!d.playerName.match(/^[\w\']{3,15}$/) && !d.playerName.match(/^[\w\'\u0000-\u024F\u1E00-\u1EFF\u2C60-\u2C7F\uA720-\uA7FF]{3,15}$/)) {
+            return h
+        }
+        if (!d.player_prefix.match(/^[a-z]+$/i)) {
+            return h
+        }
+        if (d.helpType == "tech") {
+            d.bname = techcost["tch" + d.helpId][0]
+        } else {
+            if (d.helpType == "building") {
+                d.bname = buildingcost["bdg" + d.helpId][0]
+            }
+        }
+        var c = g_js_strings.postToAllianceChat.helpmebuild.replace("%1$s", d.lvl).replace("%2$s", d.bname);
+        c += "<br/><a onclick='claimAllianceChatHelp(1," + d.aid + "," + d.lvl + "," + d.inv + "," + d.cid + ',"' + d.player_prefix + '","' + d.playerName + "\");return false;'>";
+        c += g_js_strings.postToAllianceChat.clicktobuild;
+        c += "</a>";
+        return c
     }
 };
 Object.extend(Chat, Chat.Methods);
@@ -21154,49 +21805,50 @@ function check_queue_con(c) {
     }
     return a
 }
-function postToAllianceChat(g, a) {
-    var b = seed.player.name;
-    b = b.replace("'", "&apos;");
+function postToAllianceChat(j, a) {
     if (seed.allianceNames) {
-        var c = "";
-        if (g == 1) {
-            var h = Object.keys(seed.queue_tch);
-            var k = 0;
-            var e = tvuid;
-            var j = 0;
-            var f = "";
-            for (var d = 0; d < h.length; d++) {
-                if (seed.queue_tch[h[d]][0]) {
-                    k = seed.queue_tch[h[d]][0][1];
-                    j = h[d].split("city")[1];
-                    f = techcost["tch" + seed.queue_tch[h[d]][0][0]][0];
+        var c = seed.player.name;
+        c = c.replace("'", "&apos;");
+        var b = {};
+        var d = "";
+        var k = 0;
+        var m = 0;
+        var f = tvuid;
+        var l = 0;
+        var g = "";
+        var h = 0;
+        if (j == 1) {
+            k = Object.keys(seed.queue_tch);
+            for (var e = 0; e < k.length; e++) {
+                if (seed.queue_tch[k[e]][0]) {
+                    m = seed.queue_tch[k[e]][0][1];
+                    l = k[e].split("city")[1];
+                    g = "tech";
+                    h = seed.queue_tch[k[e]][0][0];
                     break
                 }
             }
-            c += g_js_strings.postToAllianceChat.helpmersch.replace("%1$s", f).replace("%2$s", k);
-            c += "<br/><a onclick='claimAllianceChatHelp(2," + a + "," + k + "," + e + "," + j + ',"' + seed.player.prefix + '","' + b + "\");return false;'>";
-            c += g_js_strings.postToAllianceChat.clicktorsch;
-            c += "</a>"
         } else {
-            var h = Object.keys(seed.queue_con);
-            var k = 0;
-            var e = tvuid;
-            var j = 0;
-            var f = "";
-            for (var d = 0; d < h.length; d++) {
-                if (seed.queue_con[h[d]][0] && (seed.queue_con[h[d]][0][2] == a)) {
-                    k = seed.queue_con[h[d]][0][1];
-                    j = h[d].split("city")[1];
-                    f = buildingcost["bdg" + seed.queue_con[h[d]][0][0]][0]
+            k = Object.keys(seed.queue_con);
+            for (var e = 0; e < k.length; e++) {
+                if (seed.queue_con[k[e]][0] && (seed.queue_con[k[e]][0][2] == a)) {
+                    m = seed.queue_con[k[e]][0][1];
+                    l = k[e].split("city")[1];
+                    g = "building";
+                    h = seed.queue_con[k[e]][0][0]
                 }
             }
-            c += g_js_strings.postToAllianceChat.helpmebuild.replace("%1$s", k).replace("%2$s", f);
-            c += "<br/><a onclick='claimAllianceChatHelp(1," + a + "," + k + "," + e + "," + j + ',"' + seed.player.prefix + '","' + b + "\");return false;'>";
-            c += g_js_strings.postToAllianceChat.clicktobuild;
-            c += "</a>"
         }
+        b.helpType = g;
+        b.helpId = h;
+        b.lvl = m;
+        b.aid = a;
+        b.inv = f;
+        b.cid = l;
+        b.player_prefix = seed.player.prefix;
+        b.playerName = c;
         Chat.changeTab(2);
-        Chat.sendChat(c)
+        Chat.sendAllianceHelpChat(b)
     }
 }
 function claimAllianceChatHelp(resbld, aid, lvl, inv, cid, pref, nm) {
@@ -22092,7 +22744,6 @@ cm.CrossPromoBarLoader = function (f) {
                 return
             }
             c = true;
-            h.css("display", "block");
             var n = e;
             var j = new cm.CrossPromoBar();
             for (var l = 0; l < n.length; ++l) {
@@ -22103,7 +22754,10 @@ cm.CrossPromoBarLoader = function (f) {
             h.append(j.getHtmlElement())
         };
     f(document).ready(b);
-    f(document).bind("tutorialEnd", b);
+    f(document).bind("tutorialEnd", function () {
+        b();
+        f("#crossPromoBarContainer").show()
+    });
     return {}
 }(jQuery);
 
@@ -22535,10 +23189,10 @@ cm.LevelUpRewardDialog = function (f) {
             l.close()
         };
     var d = function (o) {
-            b();
             var n = new cm.DialogEvent(cm.DialogEvent.OK);
             n.setTarget(l);
-            l.dispatchCustomEvent(n)
+            l.dispatchCustomEvent(n);
+            b()
         };
     var m = function (n) {
             b()
@@ -22580,17 +23234,21 @@ cm.LevelUpRewardDialog = function (f) {
 };
 cm.OOP.inherits(cm.LevelUpRewardDialog, cm.BaseDialog);
 cm.LevelUpRewardDialogController = function (b, c) {
-    var a = function (g) {
+    var a = function (f) {
             c.removeEventListener(cm.DialogEvent.CLOSE, a);
+            c.removeEventListener(cm.DialogEvent.OK, e);
             seed.player.title = b.avatar.level;
-            $("topnav_level").innerHTML = seed.player.title;
+            $("topnav_level").innerHTML = seed.player.title
+        };
+    var e = function (g) {
             if (cm.feedTracking.get("shareQuestComplete") !== false && !cm.TutorialManager.inTutorialMode()) {
                 var f = cm.LevelUtil.getQuestId(b.avatar.level);
                 shareQuestComplete(f)
             }
         };
     var d = function () {
-            c.addEventListener(cm.DialogEvent.CLOSE, a)
+            c.addEventListener(cm.DialogEvent.CLOSE, a);
+            c.addEventListener(cm.DialogEvent.OK, e)
         };
     d()
 };
@@ -24571,7 +25229,7 @@ cm.guardianArmorModel = function (i) {
 }(jQuery);
 var cm = cm || {};
 cm.guardianConst = {
-    types: ["wood", "ore"],
+    types: ["wood", "ore", "food", "stone"],
     bdgTypes: {
         wood: 50,
         ore: 51
@@ -24640,7 +25298,8 @@ cm.guardianConst = {
     },
     unlockItem: {
         ore: "2002",
-        food: "2003"
+        food: "2003",
+        stone: "2003"
     }
 };
 cm.guardianController = function (g) {
@@ -24649,7 +25308,9 @@ cm.guardianController = function (g) {
             seed.queue_con["city" + currentcityid] = [];
             cm.guardianModalModel.open({
                 onOpen: function () {
-                    Modal.showAlert(g_js_strings.guardian.cancel);
+                    cm.ModalManager.alert({
+                        text: g_js_strings.guardian.cancel
+                    });
                     cm.guardianModalModel.setUpgrade(false);
                     cm.guardianCity.rerender(true)
                 }
@@ -24828,7 +25489,9 @@ cm.guardianItem = function (f) {
 }(jQuery);
 cm.gtype_map = {
     wood: "01",
-    ore: "02"
+    ore: "02",
+    food: "03",
+    stone: "04"
 };
 cm.lev_map = {
     "0": "build_here",
@@ -25086,7 +25749,7 @@ cm.guardianModalModel = function (e) {
             }, function (r) {
                 cm.guardianModalModel.setType(r.guardian.type);
                 if (r.ok == false) {
-                    cm.log.l("backend returned ok: false, talk to brad. ");
+                    cm.log.l("backend returned ok: false, talk to james. ");
                     if (r.msg) {
                         Modal.showAlert(r.msg)
                     }
@@ -25368,9 +26031,11 @@ cm.guardianModalView = function (i) {
     }
     return {
         proposeCancel: function () {
-            Modal.okay({
-                okay: cm.guardianController.cancel,
-                text: c(cm.guardianModalModel.getDynamics().required)
+            cm.ModalManager.alert({
+                button_text: g_js_strings.commonstr.cancel,
+                text: c(cm.guardianModalModel.getDynamics().required),
+                "class": "guardian_cancel",
+                exe: cm.guardianController.cancel
             })
         },
         open: function () {
@@ -25461,6 +26126,10 @@ cm.guardianSummonModel = function (b) {
             a(d);
             e({
                 ok: true
+            });
+            cm.UnlockView.addGlassPane({
+                showTimer: true,
+                timer: 12
             })
         },
         unlock: function (d) {
@@ -31303,20 +31972,24 @@ function timedUpdateXP() {
             }
         })
     }
-    var c = new Hash(seed.knights["city" + currentcityid]);
-    if (c) {
+    var e = seed.knights["city" + currentcityid];
+    var c = new Hash(e);
+    if (c && c.size()) {
         c.each(function (g) {
             var f = parseInt(g.value.experience) + a;
-            seed.knights["city" + currentcityid][g.key].experience = f.toString()
+            e[g.key].experience = f.toString()
         });
-        var e = new Hash(seed.leaders["city" + currentcityid]);
-        var d = a;
-        if (e) {
-            e.each(function (g) {
-                if (parseInt(g.value) > 0) {
-                    var f = parseInt(seed.knights["city" + currentcityid]["knt" + g.value].experience) + a;
-                    seed.knights["city" + currentcityid]["knt" + g.value].experience = f
+        var d = new Hash(seed.leaders["city" + currentcityid]);
+        if (d) {
+            d.each(function (g) {
+                if (!g.key.match(/KnightId$/) || parseInt(g.value) < 1) {
+                    return
                 }
+                var f = e["knt" + g.value];
+                if (!f) {
+                    return
+                }
+                f.experience = parseInt(f.experience) + a
             })
         }
     }
@@ -32844,6 +33517,7 @@ var currentcityid = null;
 var currentcityinfo = null;
 var g_timeoff = 0;
 var citylist = null;
+var startingTime = 0;
 var ksoItems = {};
 Array.prototype.sum = function () {
     for (var a = 0, b = 0; a < this.length; b += this[a++]) {}
@@ -32854,6 +33528,9 @@ function setcamelottime() {
     var b = new Date(unixtime() * 1000);
     var a = parseInt(b.getMinutes()) < 10 ? "0" + b.getMinutes() : b.getMinutes();
     $("kochead_time").innerHTML = b.getHours() + ":" + a
+}
+function starttime() {
+    return parseInt(startingTime) + g_timeoff
 }
 function unixtime(a) {
     return parseInt((new Date()).getTime() / 1000) + g_timeoff
@@ -32985,16 +33662,21 @@ function checkoutofdate(b) {
 }
 function update_might() {
     $("topnav_might").innerHTML = seed.player.might;
-    var a = parseInt(seed.tutorial.t1) >= 22;
-    if (cm.WorldSettings.hasKeyValuePair("LevelUpPopupEnabled", "true") && a) {
+    var b = parseInt(seed.tutorial.t1) >= 22;
+    if (cm.WorldSettings.hasKeyValuePair("LevelUpPopupEnabled", "true") && b) {
         if (!cm.currentPlayer) {
-            var c = {
+            var e = {
                 level: seed.player.title
             };
-            cm.currentPlayer = new cm.Player(c);
-            var b = new cm.PlayerController(cm.currentPlayer)
+            cm.currentPlayer = new cm.Player(e);
+            var d = new cm.PlayerController(cm.currentPlayer)
         }
-        cm.currentPlayer.setMight(seed.player.might)
+        var c = parseInt(jQuery("#modal_mmb").length) > 0;
+        var a = unixtime() - starttime();
+        cm.log.l("mmb_present=" + c + "   timeSinceStart=" + a);
+        if (!c && a > 45) {
+            cm.currentPlayer.setMight(seed.player.might)
+        }
     }
 }
 function update_knights() {
@@ -34194,7 +34876,7 @@ function init() {
         if (g_env == "prod" && g_track_loading == 1) {
             cm.MixPanelTracker.trackFunnel("Loading Flow 2", 1, "Init")
         }
-    } catch (f) {}
+    } catch (g) {}
     if (seed.playerSettings.s1 == "a") {
         Chat.chatType = 2
     }
@@ -34203,34 +34885,34 @@ function init() {
     cm.CitySwitch.setCurrentCity(currentcityid);
     cm.guardianCity.init();
     currentcityinfo = seed.cities[0];
-    var e = new Array();
+    var r = new Array();
     citylist = new Object();
-    for (var t = 0; t < seed.cities.length; t++) {
-        var o = seed.cities[t][0];
-        citylist["city" + o] = seed.prevtick;
-        if (t == 0) {
-            e.push('<a id="oldcitysel_1" class="sel city"></a>')
+    for (var o = 0; o < seed.cities.length; o++) {
+        var n = seed.cities[o][0];
+        citylist["city" + n] = seed.prevtick;
+        if (o == 0) {
+            r.push('<a id="oldcitysel_1" class="sel city"></a>')
         } else {
-            e.push('<a id="oldcitysel_' + (t + 1) + '" class="city"></a>')
+            r.push('<a id="oldcitysel_' + (o + 1) + '" class="city"></a>')
         }
-        seed.citystats["city" + o].pop[0] = parseInt(seed.citystats["city" + o].pop[0]);
-        seed.citystats["city" + o].pop[1] = parseInt(seed.citystats["city" + o].pop[1]);
-        seed.citystats["city" + o].pop[2] = parseInt(seed.citystats["city" + o].pop[2]);
-        seed.citystats["city" + o].gold[0] = parseInt(seed.citystats["city" + o].gold[0]);
-        seed.citystats["city" + o].gold[1] = parseInt(seed.citystats["city" + o].gold[1]);
+        seed.citystats["city" + n].pop[0] = parseInt(seed.citystats["city" + n].pop[0]);
+        seed.citystats["city" + n].pop[1] = parseInt(seed.citystats["city" + n].pop[1]);
+        seed.citystats["city" + n].pop[2] = parseInt(seed.citystats["city" + n].pop[2]);
+        seed.citystats["city" + n].gold[0] = parseInt(seed.citystats["city" + n].gold[0]);
+        seed.citystats["city" + n].gold[1] = parseInt(seed.citystats["city" + n].gold[1]);
         seed.newTradeReports = parseInt(seed.newTradeReports);
-        for (var s = 1; s < 5; s++) {
-            seed.resources["city" + o]["rec" + s][0] = parseInt(seed.resources["city" + o]["rec" + s][0]);
-            seed.resources["city" + o]["rec" + s][1] = parseInt(seed.resources["city" + o]["rec" + s][1]);
-            seed.resources["city" + o]["rec" + s][2] = parseInt(seed.resources["city" + o]["rec" + s][2]);
-            seed.resources["city" + o]["rec" + s][3] = parseInt(seed.resources["city" + o]["rec" + s][3])
+        for (var m = 1; m < 5; m++) {
+            seed.resources["city" + n]["rec" + m][0] = parseInt(seed.resources["city" + n]["rec" + m][0]);
+            seed.resources["city" + n]["rec" + m][1] = parseInt(seed.resources["city" + n]["rec" + m][1]);
+            seed.resources["city" + n]["rec" + m][2] = parseInt(seed.resources["city" + n]["rec" + m][2]);
+            seed.resources["city" + n]["rec" + m][3] = parseInt(seed.resources["city" + n]["rec" + m][3])
         }
-        var m = seed.queue_con["city" + o];
-        var z = Object.keys(seed.buildings["city" + o]);
-        for (var r = 0; r < m.length; r++) {
-            for (var s = 0; s < z.length; s++) {
-                if (seed.buildings["city" + o][z[s]][3] == m[r][2]) {
-                    m[r][7] = seed.buildings["city" + o][z[s]][2];
+        var b = seed.queue_con["city" + n];
+        var d = Object.keys(seed.buildings["city" + n]);
+        for (var h = 0; h < b.length; h++) {
+            for (var m = 0; m < d.length; m++) {
+                if (seed.buildings["city" + n][d[m]][3] == b[h][2]) {
+                    b[h][7] = seed.buildings["city" + n][d[m]][2];
                     break
                 }
             }
@@ -34241,147 +34923,158 @@ function init() {
             seed.items = new Object()
         }
     }
-    var l = Object.keys(seed.tech);
-    for (var t = 0; t < l.length; t++) {
-        seed.tech[l[t]] = parseInt(seed.tech[l[t]])
+    var c = Object.keys(seed.tech);
+    for (var o = 0; o < c.length; o++) {
+        seed.tech[c[o]] = parseInt(seed.tech[c[o]])
     }
     g_reqtime = parseInt(g_reqtime);
     g_restime = parseInt(g_restime);
     g_timeoff = g_restime - parseInt((new Date()).getTime() / 1000);
-    var d = seed.citystats["city" + currentcityid].pop[0];
-    var h = seed.citystats["city" + currentcityid].pop[1];
-    var c = seed.citystats["city" + currentcityid].pop[2];
-    var y = popgoldchg(d, h, seed.citystats["city" + currentcityid].gold[1], c);
+    startingTime = parseInt((new Date()).getTime() / 1000);
+    var f = seed.citystats["city" + currentcityid].pop[0];
+    var l = seed.citystats["city" + currentcityid].pop[1];
+    var p = seed.citystats["city" + currentcityid].pop[2];
+    var e = popgoldchg(f, l, seed.citystats["city" + currentcityid].gold[1], p);
     update_pop();
     update_gold();
-    $("stat_happy_num").innerHTML = c + "%";
-    if (e.length < 3) {}
-    $("maparea_citysel").innerHTML = e.join("");
+    $("stat_happy_num").innerHTML = p + "%";
+    if (r.length < 3) {}
+    $("maparea_citysel").innerHTML = r.join("");
     $("topnav_level").innerHTML = seed.player.title;
     cm.CitySwitch.init(currentcityid, "city");
     update_bdg();
-    var u = quests_validquests();
-    quest_allcompleted(u.valid);
+    var a = quests_validquests();
+    quest_allcompleted(a.valid);
     if (window.messages_update_count && typeof messages_update_count == "function") {
         messages_update_count()
     }
     update_knights();
     update_boosts();
-    $("kocinitloading").remove();
-    $("kochead").show();
-    $("kocmain").show();
-    setcamelottime();
-    try {
-        if (g_env == "prod" && g_track_loading == 1) {
-            cm.MixPanelTracker.trackFunnel("Loading Flow 2", 2, "Show Main")
-        }
-    } catch (f) {}
-    var g = parseInt(seed.tutorial.t1);
-    var w = false;
-    var p = false;
-    $("main_engagement_tabs").show();
-    var b = g_showNewTutorial ? cm.BLTutorialSteps : cm.MerlinTutorialSteps;
-    if (g == 0) {
-        tutorialAdvance(1, 10);
-        cm.TutorialManager.init(b);
-        cm.TutorialManager.startFromBeginning();
-        p = true;
-        cm.MixPanelTracker.track("fte_conv_founded_a_kingdom")
-    } else {
-        if (g == 10) {
-            tutorialAdvance(1, 10);
-            cm.TutorialManager.init(b);
-            cm.TutorialManager.startFromBeginning();
-            p = true
-        } else {
-            if (g < 8 && g > 0) {
-                cm.BLTutorialSteps = cm.MerlinTutorialSteps = null;
-                tutorialAdvance(1, 97)
+    jQuery("#kocinitloading .pBar_full").stop().animate({
+        width: "618px"
+    }, 900, function () {
+        jQuery("#kocinitloading").fadeOut(20, function () {
+            if (jQuery("#crossPromoBarContainer").html() != "") {
+                jQuery("#crossPromoBarContainer").fadeIn(140)
+            }
+            jQuery("#progressBar").fadeIn(140);
+            jQuery("#main_engagement_tabs").fadeIn(140);
+            jQuery("#kochead").fadeIn(140);
+            jQuery("#kocmain").fadeIn(140);
+            jQuery(".kocFooter").fadeIn(140);
+            setcamelottime();
+            try {
+                if (g_env == "prod" && g_track_loading == 1) {
+                    cm.MixPanelTracker.trackFunnel("Loading Flow 2", 2, "Show Main")
+                }
+            } catch (s) {}
+            var i = parseInt(seed.tutorial.t1);
+            var w = false;
+            var t = false;
+            var v = g_showNewTutorial ? cm.BLTutorialSteps : cm.MerlinTutorialSteps;
+            if (i == 0) {
+                tutorialAdvance(1, 10);
+                cm.TutorialManager.init(v);
+                cm.TutorialManager.startFromBeginning();
+                t = true;
+                cm.MixPanelTracker.track("fte_conv_founded_a_kingdom")
             } else {
-                if (g > 10 && g < 22) {
-                    var n = confirm(g_js_strings.init.tutorialcont);
-                    if (n) {
-                        cm.TutorialManager.init(b);
-                        cm.TutorialManager.startFromBeginning();
-                        p = true
-                    } else {
-                        seed.tutorial.t1 = 99;
-                        tutorialAdvance(1, 99);
-                        tutorialClear();
-                        Modal.hideModalAll();
-                        cm.BLTutorialSteps = cm.MerlinTutorialSteps = null
-                    }
+                if (i == 10) {
+                    tutorialAdvance(1, 10);
+                    cm.TutorialManager.init(v);
+                    cm.TutorialManager.startFromBeginning();
+                    t = true
                 } else {
-                    cm.BLTutorialSteps = cm.MerlinTutorialSteps = null
+                    if (i < 8 && i > 0) {
+                        cm.BLTutorialSteps = cm.MerlinTutorialSteps = null;
+                        tutorialAdvance(1, 97)
+                    } else {
+                        if (i > 10 && i < 22) {
+                            var x = confirm(g_js_strings.init.tutorialcont);
+                            if (x) {
+                                cm.TutorialManager.init(v);
+                                cm.TutorialManager.startFromBeginning();
+                                t = true
+                            } else {
+                                seed.tutorial.t1 = 99;
+                                tutorialAdvance(1, 99);
+                                tutorialClear();
+                                Modal.hideModalAll();
+                                cm.BLTutorialSteps = cm.MerlinTutorialSteps = null
+                            }
+                        } else {
+                            cm.BLTutorialSteps = cm.MerlinTutorialSteps = null
+                        }
+                    }
                 }
             }
-        }
-    }
-    update_might();
-    directory_changetab(1);
-    update_friendlist();
-    if (!cm.TutorialManager.inTutorialMode()) {
-        cm.TownCrierFetcher.fetchAnnoucements();
-        var v = new cm.InGameDestination();
-        if (cm.WorldSettings.hasKeyValuePair("IN_GAME_DESTINATION_ENABLED", "true") && v.isValid()) {
-            v.proceed()
-        } else {
-            if (g_allianceWindow != "") {
-                openAllianceWindow(g_allianceWindow);
-                w = true
-            } else {
-                if (g_messageWindow != "") {
-                    openMessageWindow(g_messageWindow);
-                    w = true
+            update_might();
+            directory_changetab(1);
+            update_friendlist();
+            if (!cm.TutorialManager.inTutorialMode()) {
+                cm.TownCrierFetcher.fetchAnnoucements();
+                var j = new cm.InGameDestination();
+                if (cm.WorldSettings.hasKeyValuePair("IN_GAME_DESTINATION_ENABLED", "true") && j.isValid()) {
+                    j.proceed()
                 } else {
-                    if (g_popInviteType) {} else {
-                        if (seed.platform.type == "kabam" && cm.WorldSettings.hasKeyValuePair("MWW_ON", "true")) {} else {
-                            if (mmbfreeplay == true) {
-                                cm.mww.start(1);
-                                w = true
+                    if (g_allianceWindow != "") {
+                        openAllianceWindow(g_allianceWindow);
+                        w = true
+                    } else {
+                        if (g_messageWindow != "") {
+                            openMessageWindow(g_messageWindow);
+                            w = true
+                        } else {
+                            if (g_popInviteType) {} else {
+                                if (seed.platform.type == "kabam" && cm.WorldSettings.hasKeyValuePair("MWW_ON", "true")) {} else {
+                                    if (mmbfreeplay == true) {
+                                        cm.mww.start(1);
+                                        w = true
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-    }
-    new PeriodicalExecuter(secondupdate, 1);
-    new PeriodicalExecuter(statusupdate, 30);
-    new PeriodicalExecuter(user_engagement_popup, 240);
-    new PeriodicalExecuter(threeminupdate, 180);
-    new PeriodicalExecuter(fullupdate, 360);
-    Event.observe("mainbody", "click", function () {
-        if (g_chatcount > 100) {
-            g_chatcount = 100
-        }
-    });
-    cm.log.l("tutorialFlag=" + p);
-    if (!p) {
-        jQuery(document).trigger("tutorialEnd");
-        ProgressBar.initializeProgressBar(1, true, function () {})
-    }
-    var a = 2;
-    if (!window.g_devPaymentVersion) {
-        a = g_paymentVersion
-    } else {
-        a = g_devPaymentVersion
-    }
-    var x = {
-        v: a
-    };
-    cm.PreloadedPaymentXMLService = new cm.PaymentXMLService(a);
-    if (g_modal) {
-        if (g_modal == 1) {
-            HelpDesk.show()
-        } else {
-            if (g_modal == 2) {
-                modal_getgems()
+            new PeriodicalExecuter(secondupdate, 1);
+            new PeriodicalExecuter(statusupdate, 30);
+            new PeriodicalExecuter(user_engagement_popup, 240);
+            new PeriodicalExecuter(threeminupdate, 180);
+            new PeriodicalExecuter(fullupdate, 360);
+            Event.observe("mainbody", "click", function () {
+                if (g_chatcount > 100) {
+                    g_chatcount = 100
+                }
+            });
+            cm.log.l("tutorialFlag=" + t);
+            if (!t) {
+                jQuery(document).trigger("tutorialEnd");
+                ProgressBar.initializeProgressBar(1, true, function () {}, true)
             }
-        }
-    }
-    cm.IncomingAttackManager.init();
-    createItems()
+            var u = 2;
+            if (!window.g_devPaymentVersion) {
+                u = g_paymentVersion
+            } else {
+                u = g_devPaymentVersion
+            }
+            var q = {
+                v: u
+            };
+            cm.PreloadedPaymentXMLService = new cm.PaymentXMLService(u);
+            if (g_modal) {
+                if (g_modal == 1) {
+                    HelpDesk.show()
+                } else {
+                    if (g_modal == 2) {
+                        modal_getgems()
+                    }
+                }
+            }
+            cm.IncomingAttackManager.init();
+            createItems()
+        })
+    })
 }
 function createItems() {
     Object.keys(itemlist).each(function (b) {
@@ -40423,7 +41116,7 @@ cm.ModalManager = function (d) {
             var h = "<div class='main'>" + i.text + "</div><div class='bottom_box'>" + (i.button_text || g_js_strings.commonstr.ok) + "</div>";
             cm.ModalManager.add({
                 body: h,
-                "class": "guardian_generic",
+                "class": "guardian_generic " + i["class"],
                 curtain: true,
                 width: 360,
                 height: 250,
@@ -41879,7 +42572,7 @@ cm.PlayerController = function (a) {
                 var m = h.getTarget();
                 var l = h.getPreviousState();
                 var d = cm.LevelUtil.getLevelUpRewards(l.level, m.getLevel());
-                var f = parseInt(seed.player.avatarId) > 8 ? ".jpg" : ".png";
+                var f = parseInt(seed.player.avatarId) > 6 ? ".jpg" : ".png";
                 var j = seed.player.avatarurl.replace("profile", "130").replace(".png", f);
                 var g = {
                     text: {
@@ -41966,67 +42659,69 @@ ProgressBar.Properties = {
     progressbar_data: null
 };
 ProgressBar.Methods = {
-    initializeProgressBar: function (d, e, c) {
-        var b = parseInt(d);
-        if (e) {
-            var a = e
+    initializeProgressBar: function (e, f, c, d) {
+        var b = parseInt(e);
+        if (f) {
+            var a = f
         } else {
             var a = false
         }
-        var f = Object.clone(g_ajaxparams);
+        var g = Object.clone(g_ajaxparams);
         if (b == 1) {
-            f.loadFlag = true
+            g.loadFlag = true
         } else {
-            f.loadFlag = false
+            g.loadFlag = false
         }
         new Ajax.Request(g_ajaxpath + "ajax/updateUserReengagement.php" + g_ajaxsuffix, {
             method: "post",
-            parameters: f,
-            onSuccess: function (l) {
-                var h = l.responseText.evalJSON();
-                if (h.ok && parseInt(h.maxScore) < 4) {
-                    var i = {
+            parameters: g,
+            onSuccess: function (m) {
+                var i = m.responseText.evalJSON();
+                if (i.ok && parseInt(i.maxScore) < 4) {
+                    var j = {
                         install: {
                             complete: "complete",
                             text: g_js_strings.initializeProgressBar.install
                         },
                         bookmark: {
-                            complete: h.status.bookmarked == "1" ? "complete" : "",
+                            complete: i.status.bookmarked == "1" ? "complete" : "",
                             text: g_js_strings.initializeProgressBar.bookmark
                         },
                         fan: {
-                            complete: h.status.fan ? "complete" : "",
+                            complete: i.status.fan ? "complete" : "",
                             text: g_js_strings.initializeProgressBar.fan
                         },
                         permissions: {
-                            complete: h.status.publish_stream == "1" ? "complete" : "",
+                            complete: i.status.publish_stream == "1" ? "complete" : "",
                             text: g_js_strings.initializeProgressBar.permissions
                         },
                         alliance: {
-                            complete: h.status.alliance == "1" ? "complete" : "",
+                            complete: i.status.alliance == "1" ? "complete" : "",
                             text: g_js_strings.initializeProgressBar.joinAlliance
                         }
                     };
-                    var k = [];
-                    k.push('<div class="progressBar">');
-                    k.push('    <div class="topRow">');
-                    k.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container end install {install.complete}">{install.text}</a>');
-                    k.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container bookmark {bookmark.complete}">{bookmark.text}</a>');
-                    k.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container fan {fan.complete}">{fan.text}</a>');
-                    k.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container permissions {permissions.complete}">{permissions.text}</a>');
-                    k.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container end alliance {alliance.complete}">{alliance.text}</a>');
-                    k.push("    </div>");
-                    k.push('    <div class="bottomRow">');
-                    k.push('        <a class="finishButton" onclick="ProgressBar.modal_progress_actions()">Click to Finish!</a>');
-                    k.push("    </div>");
-                    k.push("</div>");
-                    var g = {
-                        self: k.join("\n")
+                    var l = [];
+                    l.push('<div class="progressBar">');
+                    l.push('    <div class="topRow">');
+                    l.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container end install {install.complete}">{install.text}</a>');
+                    l.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container bookmark {bookmark.complete}">{bookmark.text}</a>');
+                    l.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container fan {fan.complete}">{fan.text}</a>');
+                    l.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container permissions {permissions.complete}">{permissions.text}</a>');
+                    l.push('        <a onclick="ProgressBar.modal_progress_actions()" class="container end alliance {alliance.complete}">{alliance.text}</a>');
+                    l.push("    </div>");
+                    l.push('    <div class="bottomRow">');
+                    l.push('        <a class="finishButton" onclick="ProgressBar.modal_progress_actions()">Click to Finish!</a>');
+                    l.push("    </div>");
+                    l.push("</div>");
+                    var h = {
+                        self: l.join("\n")
                     };
-                    ProgressBar.progressbar_data = h;
-                    $("progressBar").innerHTML = jsonT(i, g);
-                    $("progressBar").show();
-                    if (h.pop && !a) {
+                    ProgressBar.progressbar_data = i;
+                    $("progressBar").innerHTML = jsonT(j, h);
+                    if (!d) {
+                        $("progressBar").show()
+                    }
+                    if (i.pop && !a) {
                         ProgressBar.modal_progress_actions(2)
                     } else {
                         if (b == 2) {
@@ -42034,22 +42729,22 @@ ProgressBar.Methods = {
                         }
                     }
                 } else {
-                    if (h.ok && parseInt(h.maxScore) == 4 && !h.score && b == 2) {
-                        ProgressBar.progressbar_data = h;
+                    if (i.ok && parseInt(i.maxScore) == 4 && !i.score && b == 2) {
+                        ProgressBar.progressbar_data = i;
                         ProgressBar.modal_progress_actions(1)
                     } else {
-                        if (h.ok && h.score && b == 2) {
+                        if (i.ok && i.score && b == 2) {
                             Modal.hideModalAll();
                             $("progressBar").innerHTML = "";
                             $("progressBar").hide()
                         } else {
-                            if (!h.ok) {
-                                if (h.error_code && h.error_code != 0 && h.error_code != 1001) {
-                                    Modal.showAlert(printLocalError((h.error_code || null), (h.msg || null), (h.feedback || null)))
+                            if (!i.ok) {
+                                if (i.error_code && i.error_code != 0 && i.error_code != 1001) {
+                                    Modal.showAlert(printLocalError((i.error_code || null), (i.msg || null), (i.feedback || null)))
                                 } else {
-                                    if (h.error_code && h.error_code == 1001) {
-                                        var j = $("progressBar");
-                                        j.addClassName("fbdown").show()
+                                    if (i.error_code && i.error_code == 1001) {
+                                        var k = $("progressBar");
+                                        k.addClassName("fbdown").show()
                                     }
                                 }
                             }
@@ -42852,7 +43547,7 @@ function quest_check_objective(l) {
                                                 return 0
                                             }
                                         } else {
-                                            if (l >= 11002 && l <= 11060) {
+                                            if (l >= 11002 && l <= 11090) {
                                                 if (parseInt(seed.player.might) < parseInt(e)) {
                                                     return 0
                                                 }
@@ -43034,7 +43729,7 @@ function quest_string_objective(h) {
                                         if (h == 1502) {
                                             g = g_js_strings.quest_string_objective.buildsecond
                                         } else {
-                                            if (h >= 11002 && h <= 11060) {
+                                            if (h >= 11002 && h <= 11090) {
                                                 g = g_js_strings.quest_string_objective.mightreachesa.replace("%1$s", addCommas(parseInt(a)))
                                             } else {
                                                 if (h == 999001) {
@@ -48089,58 +48784,58 @@ cm.UnlockController = function (b) {
         }
     }
 }(jQuery);
-cm.UnlockView = function (f) {
-    function h() {
-        var l = cm.guardianSummonModel.getData();
-        var m = cm.guardianSummonModel.getAttrBonus();
-        var n = "<div class='icon wood'></div><div class='wood_stat'>" + (l[0].cl2).substr(0, 4) + "</div><div class='icon ore'></div><div class='ore_stat'>" + (l[1].cl2).substr(0, 4) + "</div><div class='icon food " + (l[2] ? "sat" : "desat") + "'></div><div class='food_stat " + (l[2] ? "sat" : "desat") + "'>" + (l[2] ? l[2].cl2.substr(0, 4) : "+0%") + "</div><div class='icon stone " + (l[3] ? "sat" : "desat") + "'></div><div class='stone_stat " + (l[3] ? "sat" : "desat") + "'>" + (l[3] ? l[3].cl2.substr(0, 4) : "+0%") + "</div><div class='attribute " + (m && m.type ? m.type.toLowerCase() : "none") + "'></div><div class='attribute_stat'>" + (m && m.value ? m.value.substr(0, 4) : "") + "</div>";
-        return "<div class='unlock_view'><div class='brown_top'></div><div class='brown_bottom'></div><div class='vanilla_middle'><div class='resource_top'>" + n + "</div></div><div class='apple_top'></div><div class='cityGuardianName'>" + fUp(currentcityinfo[1]) + "'s " + g_js_strings.guardian.guardians + "</div><div class='guardian_collection'>" + a(l) + "</div><div class='arrow'></div><div class='apple_bottom'>" + g_js_strings.guardian.permanentlyReduce + "</div></div>"
+cm.UnlockView = function (g) {
+    function j() {
+        var n = cm.guardianSummonModel.getData();
+        var o = cm.guardianSummonModel.getAttrBonus();
+        var p = "<div class='icon wood'></div><div class='wood_stat'>" + (n[0].cl2).substr(0, 4) + "</div><div class='icon ore'></div><div class='ore_stat'>" + (n[1].cl2).substr(0, 4) + "</div><div class='icon food " + (n[2] ? "sat" : "desat") + "'></div><div class='food_stat " + (n[2] ? "sat" : "desat") + "'>" + (n[2] ? n[2].cl2.substr(0, 4) : "+0%") + "</div><div class='icon stone " + (n[3] ? "sat" : "desat") + "'></div><div class='stone_stat " + (n[3] ? "sat" : "desat") + "'>" + (n[3] ? n[3].cl2.substr(0, 4) : "+0%") + "</div><div class='attribute " + (o && o.type ? o.type.toLowerCase() : "none") + "'></div><div class='attribute_stat'>" + (o && o.value ? o.value.substr(0, 4) : "") + "</div>";
+        return "<div class='unlock_view'><div class='brown_top'></div><div class='brown_bottom'></div><div class='vanilla_middle'><div class='resource_top'>" + p + "</div></div><div class='apple_top'></div><div class='cityGuardianName'>" + fUp(currentcityinfo[1]) + "'s " + g_js_strings.guardian.guardians + "</div><div class='guardian_collection'>" + a(n) + "</div><div class='arrow'></div><div class='apple_bottom'><strong>" + g_js_strings.guardian.setBonus + "</strong><br>" + g_js_strings.guardian.permanentlyReduce + "</div></div>"
     }
-    var c = {
+    var d = {
         summon: "orange",
         active: "active",
         unlock: "blue"
     };
-    var k = {
+    var m = {
         0: "wood",
         1: "ore",
-        2: "water",
+        2: "food",
         3: "stone"
     };
-    var d = {
+    var e = {
         wood: 0,
         ore: 1,
-        water: 2,
+        food: 2,
         stone: 3
     };
 
-    function a(m) {
-        var p = "";
-        var o = "";
-        for (var l = 0; l < 4; l++) {
-            var n = m[l] ? m[l].state : "";
-            if (n == "summon" || n == "unlock" || n == "active") {
-                o += cm.utilityView.button({
-                    text: fUp(n),
-                    color: c[n],
-                    "class": "pos" + l + " " + n + "_button",
+    function a(o) {
+        var r = "";
+        var q = "";
+        for (var n = 0; n < 4; n++) {
+            var p = o[n] ? o[n].state : "";
+            if (p == "summon" || p == "unlock" || p == "active") {
+                q += cm.utilityView.button({
+                    text: fUp(p),
+                    color: d[p],
+                    "class": "pos" + n + " " + p + "_button",
                     attributes: {
-                        guardian_type: k[l]
+                        guardian_type: m[n]
                     }
                 })
             } else {
-                o += ""
+                q += ""
             }
-            p += e(m[l], l) + o
+            r += f(o[n], n) + q
         }
-        return p
+        return r
     }
-    var j = {
+    var l = {
         wood: -430,
-        water: -531,
+        food: -551,
         ore: -669
     };
-    var i = {
+    var k = {
         plate: 10,
         junior: -96,
         teenager: -198,
@@ -48148,41 +48843,64 @@ cm.UnlockView = function (f) {
         adult2: -407,
         adult3: -490
     };
-    var g = {
-        0: i.plate,
-        1: i.junior,
-        2: i.junior,
-        3: i.junior,
-        4: i.teenager,
-        5: i.teenager,
-        6: i.adult,
-        7: i.adult,
-        8: i.adult,
-        9: i.adult,
-        10: i.adult2,
-        11: i.adult3
+    var i = {
+        0: k.plate,
+        1: k.junior,
+        2: k.junior,
+        3: k.junior,
+        4: k.teenager,
+        5: k.teenager,
+        6: k.adult,
+        7: k.adult,
+        8: k.adult,
+        9: k.adult,
+        10: k.adult2,
+        11: k.adult3
     };
 
-    function e(m, l) {
-        if (m == null && l == 2) {
+    function f(o, n) {
+        if (o == null && n == 2) {
             return "<div class='card noButton'><div class='greyWater middleGrey'></div></div>"
         }
-        if (m == null && l == 3) {
+        if (o == null && n == 3) {
             return "<div class='card noButton'><div class='greyStone middleGrey'></div></div>"
         }
-        return "<div class='card'>" + (m.state == "unlock" ? "<div class='locked'></div>" : "") + "<div class='pic " + m.type + "' style='background: url(" + stimgUrl + "img/guardian_change_spritemap.png) no-repeat scroll " + g[m.cl0] + "px " + j[m.type] + "px;'></div><div class='cl0'>level " + m.cl0 + "</div><div class='cl2'>" + m.cl2 + "</div><div class='cl3'>" + m.cl3 + "</div></div>"
+        return "<div class='card'>" + (o.state == "unlock" ? "<div class='locked'></div>" : "") + "<div class='pic " + o.type + "' style='background: url(" + stimgUrl + "img/guardian_change_spritemap.png) no-repeat scroll " + i[o.cl0] + "px " + l[o.type] + "px;'></div><div class='cl0'>level " + o.cl0 + "</div><div class='cl2'>" + o.cl2 + "</div><div class='cl3'>" + o.cl3 + "</div></div>"
     }
     function b() {
-        f(".unlock_view").remove();
-        f(".guardianModal").append(h());
+        g(".unlock_view").remove();
+        g(".guardianModal").append(j());
         cm.UnlockController.bind();
         if (cm.guardianModalModel.upgrading()) {
-            f(".guardianModal").append("<div class='guardianGlassPane'></div>")
+            cm.UnlockView.addGlassPane({
+                showTimer: false
+            })
         } else {
-            f(".guardianGlassPane").remove()
+            cm.UnlockView.removeGlassPane()
         }
     }
+    var c;
+
+    function h() {
+        c--;
+        if (c <= 0) {
+            cm.UnlockView.removeGlassPane()
+        }
+        g(".timerContainer .timer").html(g_js_strings.guardian.summoning + timestr(c))
+    }
     return {
+        addGlassPane: function (n) {
+            if (g(".guardianGlassPane").length == 0) {
+                g(".unlock_view").append("<div class='guardianGlassPane'></div>" + (n.showTimer ? "<div class='timerContainer'><div class='timer'></div></div>" : ""));
+                if (n.showTimer) {
+                    c = n.timer;
+                    cm.timer.register("summonTimer", h)
+                }
+            }
+        },
+        removeGlassPane: function () {
+            g(".guardianGlassPane, .timerContainer").remove()
+        },
         render: function () {
             if (cm.WorldSettings.isOn("GUARDIAN_SUMMON")) {
                 b()

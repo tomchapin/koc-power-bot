@@ -1,6 +1,13 @@
 REVISION HISTORY:
 ----------------
 
+20110723a
+   *Added crest report for auto cresting
+   *Fixed widescreen for users still displaying ads
+   *Added current troop count for reinforce tab
+   *Fixed popup error showing [object][object] message
+   *Added resource tab
+
 20110718d
    *Fixed widescreen
    *Added food gain report for raid tab
