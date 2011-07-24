@@ -8248,7 +8248,7 @@ var RefreshEvery  = {
     var t = RefreshEvery;
 	t.target = document.getElementById('comm_tabs');
 	if(t.target == null){
-		t.creatediv();
+		setTimeout(t.creatediv, 2000);
 		return;
 	}
 	t.box = document.createElement('div');
