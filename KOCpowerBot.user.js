@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110723a
+// @version        20110724a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110723a';
+var Version = '20110724a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -96,6 +96,10 @@ var Options = {
   CrestMsgInterval  : 1,
   foodreport   : false,
   crestreport  : true,
+  Crest1Count  : 0,
+  Crest2Count  : 0,
+  CrestLevel   : 0,
+  CrestType    : 0,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -3804,6 +3808,7 @@ Tabs.Test = {
   rallypointlevel:null,
   error_code: 0,
   knt:{},
+  
      
   init : function (div){
     var t = Tabs.Crest;
@@ -3909,7 +3914,18 @@ Tabs.Test = {
         else {
             CrestOptions.Running = true;
             obj.value = "Crest = ON";
-            sendCrestReport();
+            for (crest in Options.Creststatus){
+            		owned = Seed.items['i'+crest];
+            		if (owned == undefined) owned=0;
+            		Options.Creststatus[crest] = owned;
+            		Options.CrestLevel = 0;
+            		Options.CrestType = 0;
+            		Options.Crest1Count = 0;
+            		Options.Crest2Count = 0;
+            }
+            var now = new Date().getTime()/1000.0;
+            now = now.toFixed(0);
+            Options.LastCrestReport = now;
             saveCrestOptions();
         }
     },
@@ -3922,8 +3938,17 @@ Tabs.Test = {
         if (now < (parseInt(Options.LastCrestReport)+(Options.CrestMsgInterval*60*60))) return;
     	
     	var total = 0;
+    	var wildtype = '';
+    	switch (Options.CrestType) {
+    			  case '10' : wildtype = unsafeWindow.g_js_strings.commonstr.grassland;break;
+    			  case '11' : wildtype = unsafeWindow.g_js_strings.commonstr.lake;break;
+    			  case '20' : wildtype = unsafeWindow.g_js_strings.commonstr.woods;break;
+    			  case '30' : wildtype = unsafeWindow.g_js_strings.commonstr.hills;break;
+    			  case '40' : wildtype = unsafeWindow.g_js_strings.commonstr.mountain;break;
+    			  case '50' : wildtype = unsafeWindow.g_js_strings.commonstr.plain;break;
+    	}
         var message = 'Crest Stats: %0A';
-        message += '%0A Crests Gained (for '+ Options.CrestMsgInterval +' hour of cresting) %0A';
+        message += '%0A Crests Gained (for '+ Options.CrestMsgInterval +' hour of cresting) on a Level: '+Options.CrestLevel+' '+wildtype+'%0A';
         for (crest in Options.Creststatus){
         	owned = Seed.items['i'+crest];
         	if (owned == undefined) owned=0;
@@ -3933,6 +3958,11 @@ Tabs.Test = {
 	    	Options.Creststatus[crest] = owned;
       	}
     	message += '%0A Total Crests gained: '+ total +'%0A';
+    	message += '%0A Numbers of 1st Wave send: '+ Options.Crest1Count +'%0A';
+    	message += 'Numbers of 2nd Wave send: '+ Options.Crest2Count +'%0A';
+    	
+    	Options.Crest1Count = 0;
+    	Options.Crest2Count = 0;
     	
       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
       params.emailTo = Seed.player['name'];
@@ -4064,6 +4094,9 @@ Tabs.Test = {
   		         unsafeWindow.update_seed(rslt.updateSeed)
   		         if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
   		         CrestOptions.RoundOne = false;
+  		         Options.Crest1Count++;
+  		         Options.CrestLevel = rslt.tileLevel;
+  		         Options.CrestType = rslt.tileType;
   		         saveCrestOptions();
   		         setTimeout (function(){t.SecondRound();}, 10000);
                } else {
@@ -4133,6 +4166,7 @@ Tabs.Test = {
                var now = new Date().getTime()/1000.0;
                now = now.toFixed(0);
                CrestOptions.lastRoundTwo = now;
+               Options.Crest2Count++;
   		         saveCrestOptions();
                } else {
                setTimeout (function(){t.SecondRound();}, 5000);
@@ -4205,6 +4239,8 @@ Tabs.Test = {
 
 
     },
+    
+    
     
   hide : function (){
     var t = Tabs.Crest;
@@ -6103,7 +6139,7 @@ Tabs.Options = {
       t.togOpt ('pbGoldEnable', 'pbGoldEnable', CollectGold.setEnable);
       t.changeOpt ('pbgoldLimit', 'pbGoldHappy');
       t.togOpt ('pbFoodToggle', 'pbFoodAlert');
-      t.changeOpt ('pbeverymins', 'pbEveryMins');
+      t.changeOpt ('pbeverymins', 'pbEveryMins' , RefreshEvery.setTimer);
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
       t.togOpt ('pbChatREnable', 'pbChatOnRight', WideScreen.setChatOnRight);
       t.togOpt ('pbWMapEnable', 'pbWideMap', WideScreen.useWideMap);
@@ -8198,21 +8234,57 @@ var CollectGold = {
 /************************ Refresh Every X minutes ************************/
 var RefreshEvery  = {
   timer : null,
+  PaintTimer : null,
+  NextRefresh : 0,
+  content : null,
+  Original : null,
+  
   init : function (){
-    if (Options.pbEveryMins < 1)
-      Options.pbEveryMins = 1;
-    RefreshEvery.setEnable (Options.pbEveryEnable);
+    var t = RefreshEvery;
+    t.Original = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
+    t.content = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
+    t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
+    unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content ;    
+      if (Options.pbEveryMins < 1)
+        Options.pbEveryMins = 1;
+      RefreshEvery.setEnable (Options.pbEveryEnable);
   },
   setEnable : function (tf){
     var t = RefreshEvery;
     clearTimeout (t.timer);
-    if (tf)
+    if (tf) {
       t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
+      t.NextRefresh = unixTime() + (Options.pbEveryMins*60); 
+      t.PaintTimer = setTimeout (t.Paint, 1000);
+    }
+    else {
+        clearTimeout (t.PaintTimer);
+        t.content = t.Original;
+        t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
+        unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
+    }
   },
   doit : function (){
     actionLog ('Refreshing ('+ Options.pbEveryMins +' minutes expired)');
     reloadKOC();
-  }
+  },
+  setTimer : function (){
+    clearTimeout (t.timer);
+    if (Options.pbEveryMins < 1) Options.pbEveryMins = 1;
+    RefreshEvery.setEnable (Options.pbEveryEnable);
+  },
+  Paint : function(){
+     var t = RefreshEvery;
+     now = unixTime();
+     t.content = t.Original;
+     t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
+     var Left = (t.NextRefresh - now);
+     if ( Left < 0) Left = 0;
+     if ( Left < 60) t.content += '<BR>Time untill next refresh: <FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
+     else t.content += '<BR>Time untill next refresh: <B>'+ timestr(Left) +'</b></div>';
+     unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
+     t.PaintTimer = setTimeout (t.Paint, 1000);
+  },
 }
 
 /************************ Fairie Killer ************************/
@@ -11524,6 +11596,14 @@ function DoUnsafeWindow(func, execute_by_embed) {
 		}
 	}
 }	
+
+function GetServerId() {
+  var m=/^[a-zA-Z]+([0-9]+)\./.exec(document.location.hostname);
+  if(m)
+    return m[1];
+  return '';
+}
+
 
 function GetDisplayName(){
 	var DisplayName = document.getElementById('topnavDisplayName');
