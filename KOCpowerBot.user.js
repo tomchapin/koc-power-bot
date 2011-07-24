@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110724a
+// @version        20110724b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110724a';
+var Version = '20110724b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3808,7 +3808,6 @@ Tabs.Test = {
   rallypointlevel:null,
   error_code: 0,
   knt:{},
-  
      
   init : function (div){
     var t = Tabs.Crest;
@@ -4239,8 +4238,6 @@ Tabs.Test = {
 
 
     },
-    
-    
     
   hide : function (){
     var t = Tabs.Crest;
@@ -8236,19 +8233,28 @@ var RefreshEvery  = {
   timer : null,
   PaintTimer : null,
   NextRefresh : 0,
-  content : null,
-  Original : null,
+  box : null,
+  target : null,
   
   init : function (){
     var t = RefreshEvery;
-    t.Original = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
-    t.content = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
-    t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
-    unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content ;    
-      if (Options.pbEveryMins < 1)
+	t.creatediv();
+	if (Options.pbEveryMins < 1)
         Options.pbEveryMins = 1;
-      RefreshEvery.setEnable (Options.pbEveryEnable);
+    RefreshEvery.setEnable (Options.pbEveryEnable);
   },
+  
+  creatediv : function(){
+    var t = RefreshEvery;
+	t.target = document.getElementById('comm_tabs');
+	if(t.target == null){
+		t.creatediv();
+		return;
+	}
+	t.box = document.createElement('div');
+	t.target.appendChild(t.box);
+  },
+  
   setEnable : function (tf){
     var t = RefreshEvery;
     clearTimeout (t.timer);
@@ -8256,33 +8262,36 @@ var RefreshEvery  = {
       t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
       t.NextRefresh = unixTime() + (Options.pbEveryMins*60); 
       t.PaintTimer = setTimeout (t.Paint, 1000);
-    }
-    else {
-        clearTimeout (t.PaintTimer);
-        t.content = t.Original;
-        t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
-        unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
-    }
+    } else {
+        t.PaintTimer = null;
+		t.timer = null;
+		t.NextRefresh = 0;
+		t.box.innerHTML = '<BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
+	}
   },
+  
   doit : function (){
     actionLog ('Refreshing ('+ Options.pbEveryMins +' minutes expired)');
     reloadKOC();
   },
+  
   setTimer : function (){
+    var t = RefreshEvery;
     clearTimeout (t.timer);
     if (Options.pbEveryMins < 1) Options.pbEveryMins = 1;
     RefreshEvery.setEnable (Options.pbEveryEnable);
   },
+  
   Paint : function(){
      var t = RefreshEvery;
+	 if(t.timer == null) return;
      now = unixTime();
-     t.content = t.Original;
-     t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
+     var text = '<BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
      var Left = (t.NextRefresh - now);
      if ( Left < 0) Left = 0;
-     if ( Left < 60) t.content += '<BR>Time untill next refresh: <FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
-     else t.content += '<BR>Time untill next refresh: <B>'+ timestr(Left) +'</b></div>';
-     unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
+     if ( Left < 60) text += '<BR>Time untill next refresh: <FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
+     else text += '<BR>Time untill next refresh: <B>'+ timestr(Left) +'</b></div>';
+     t.box.innerHTML = text;
      t.PaintTimer = setTimeout (t.Paint, 1000);
   },
 }
@@ -11058,7 +11067,8 @@ Tabs.Resources = {
     
   init : function (div){
     var t = Tabs.Resources;
-		t.myDiv = div;    
+		t.myDiv = div;
+		t.myDiv.style.overflowY = 'scroll';
     div.innerHTML = '<TABLE cellpadding=0 cellspacing=0 class=pbTab width=100%><TR><TD align=center><INPUT id="pballlist" type=submit value="Fetch User List" \></td></tr></table><HR>\
         <DIV id=resDiv style="width:100%; min-height:300px; height:100%">';
     document.getElementById('pballlist').addEventListener ('click', t.e_clickfetchlist, false);
