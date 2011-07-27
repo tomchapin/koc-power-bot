@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110724b
+// @version        20110726a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110724b';
+var Version = '20110726a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6251,8 +6251,8 @@ Tabs.Reassign = {
       m += '<TD width=20px>To City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncityTo></span></div></td>';
 	  
 	    m += '<TR align="left">';
-	    m += '<TD colspan=4>Time inbetween to check reassign: <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> minutes</td></tr></table>';
-      
+	    m += '<TD colspan=4>Time inbetween to check reassign: <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> minutes</td></tr>';
+	    m += '<TR><TD><INPUT id=autofilloff type=checkbox unchecked=true\> Lock troop values</TR></TD></table>';
       m += '<DIV style="margin-top:10px;margin-bottom:5px;">Fill in the number of troops you want to keep in a city:</div>';
       m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
       
@@ -6318,9 +6318,9 @@ Tabs.Reassign = {
 	  }
 
       document.getElementById('ptassigncity').addEventListener('click', function(){
-	    for(var k in troops){
+		  if(document.getElementById('autofilloff').checked == false)
+	    for(var k in troops)
         document.getElementById('pbtarget'+troops[k]).value = parseInt(Seed.units['city' + t.tcp.city.id]['unt'+k]);
-	    }
       }, false);
       
       document.getElementById('pbReassignState').addEventListener('click', function(){
