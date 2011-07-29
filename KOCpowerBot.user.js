@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110726a
+// @version        20110729a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110726a';
+var Version = '20110729a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4278,65 +4278,120 @@ Tabs.transport = {
       }
       m += '<TD><INPUT id=pbShowRoutes type=submit value="Show Routes"></td>';
       m += '</tr></table></div>';
-      m += '<DIV id=pbTraderDivDRoute class=pbStat>ADD TRADE ROUTE</div>';
-
+      m += '<DIV id=pbTraderDivDRoute class=pbStat>TRADE ROUTE OPTIONS</div>';
+      m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center"><TR align="left">';
+	    m += '<TD colspan=4>Time inbetween to check transport: <INPUT id=pbtransportinterval type=text size=2 value="'+Options.transportinterval+'"\> minutes</td></tr></table>';
+      m += '<TD colspan=4>Dont send transport out if less then <INPUT id=pbminwagons type=text size=2 value="'+Options.minwagons+'"\> wagons are needed. (Needless transports are skipped this way)</td></tr></table>';
+      m += '<DIV style="margin-top:10px;margin-bottom:5px;">If the "trade" amount is 0 then it will transport the max amount above "keep". Gold only if there is space left...</div></table>';
+    
+      
+      m += '<DIV id=pbTraderDivDRoute class=pbStat>TRANSPORTS</div>';
       m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TD>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
+      m += '<TR align="left"><TD>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
 
       m += '<TR align="left">';
       m += '<TD>To City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptcityTo></span></div></td>';
       m += '<TD>OR</td>';
       m += '<TD>X:<INPUT id=ptcityX type=text size=3\></td>';
       m += '<TD>Y:<INPUT id=ptcityY type=text size=3\></td></tr>';
-	  
-	  m += '<TR align="left">';
-	  m += '<TD colspan=4>Time inbetween to check transport: <INPUT id=pbtransportinterval type=text size=2 value="'+Options.transportinterval+'"\> minutes</td></tr></table>';
-      m += '<TD colspan=4>Dont send transport out if less then <INPUT id=pbminwagons type=text size=2 value="'+Options.minwagons+'"\> wagons are needed. (Needless transports are skipped this way)</td></tr></table>';
-      
-      m += '<DIV style="margin-top:10px;margin-bottom:5px;">If the "trade" amount is 0 then it will transport the max amount above "keep". Gold only if there is space left...</div>';
-      m += '<TABLE id=pbaddtraderoute width=55% height=0% class=pbTab><TR align="center">';
+      m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="left">';
+      m += '<TD width=75px>TroopType:</td><TD width=150px><SELECT id="TransportTroop">';
+      for (y in unsafeWindow.unitcost) m+='<option value="'+y+'">'+unsafeWindow.unitcost[y][0]+'</option>';
+      m+='</select></td><TD width=75px>Troops Available:&nbsp;</td><TD id=TroopAmount align=left width=75px></td>';
+      m+='<TD width=75px>Global Carry Amount:&nbsp;</td><TD id=CarryAmount align=left width=75px></td>';
+      m += '<TR><TD >Troops: </td><TD><INPUT id=TroopsToSend type=text size=6 maxlength=6 value="0">&nbsp;&nbsp;<INPUT id=MaxTroops type=submit value="Max"></td>';
+      m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
+      m +='<TD id=Calc colspan=3></td></tr>';
+      m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
-      m += '<TD><INPUT id=pbshipFood type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountFood type=text size=11 maxlength=11 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountFood type=text size=11 maxlength=11 value="0"\></td></tr>';
+      m += '<TD id=TransRec1 align=right width=110px></td>';
+      m += '<TD id=HaveRec1 align=right width=110px></td>';
+      m += '<TD width=30px><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
+      m += '<TD width=100px>Keep: <INPUT id=pbtargetamountFood type=text size=11 maxlength=11 value="0" disabled=true\></td>';
+      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountFood type=text size=11 maxlength=11 value="0"\></td>';
+      m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
-      m += '<TD><INPUT id=pbshipWood type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountWood type=text size=11 maxlength=11 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountWood type=text size=11 maxlength=11 value="0"\></td></tr>';
+      m += '<TD id=TransRec2 align=right width=110px></td>';
+      m += '<TD id=HaveRec2 align=right width=110px></td>';
+      m += '<TD width=100px><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
+      m += '<TD width=100px>Keep: <INPUT id=pbtargetamountWood type=text size=11 maxlength=11 value="0" disabled=true\></td>';
+      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountWood type=text size=11 maxlength=11 value="0"\></td>';
+      m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
-      m += '<TD><INPUT id=pbshipStone type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountStone type=text size=11 maxlength=11 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountStone type=text size=11 maxlength=11 value="0"\></td></tr>';
+      m += '<TD id=TransRec3 align=right width=110px></td>';
+      m += '<TD id=HaveRec3 align=right width=110px></td>';
+      m += '<TD width=100px><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
+      m += '<TD width=100px>Keep: <INPUT id=pbtargetamountStone type=text size=11 maxlength=11 value="0" disabled=true\></td>';
+      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountStone type=text size=11 maxlength=11 value="0"\></td>';
+      m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
-      m += '<TD><INPUT id=pbshipOre type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountOre type=text size=11 maxlength=11 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountOre type=text size=11 maxlength=11 value="0"\></td></tr>';
+      m += '<TD id=TransRec4 align=right width=110px></td>';
+      m += '<TD id=HaveRec4 align=right width=110px></td>';
+      m += '<TD width=100px><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
+      m += '<TD width=100px>Keep: <INPUT id=pbtargetamountOre type=text size=11 maxlength=11 value="0" disabled=true\></td>';
+      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountOre type=text size=11 maxlength=11 value="0"\></td>';
+      m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td>';
-      m += '<TD><INPUT id=pbshipGold type=checkbox checked=true\></td>';
-      m += '<TD>Keep: <INPUT id=pbtargetamountGold type=text size=11 maxlength =11 value="0"\></td>';
-      m += '<TD>Trade: <INPUT id=pbtradeamountGold type=text size=11 maxlength=11 value="0"\></td></tr>'
+      m += '<TD id=TransGold align=right width=110px></td>';
+      m += '<TD id=HaveGold align=right width=110px></td>';
+      m += '<TD width=100px><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
+      m += '<TD width=100px>Keep: <INPUT id=pbtargetamountGold type=text size=11 maxlength=11 value="0" disabled=true\></td>';
+      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountGold type=text size=11 maxlength=11 value="0"\></td>';
+      m += '<TD width=50px><INPUT id=MaxGold type=submit value="Max"></td></tr>';
+
       m += '</table>';
 
-      m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRoute type=submit value="Add Route"></div>';
+      m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRoute type=submit value="Add Route"><INPUT id=pbManualSend type=submit value="Manual Transport"></div>';
+      m += '<DIV id=errorSpace></div>'
       
       t.myDiv.innerHTML = m;
       
-      t.tcp = new CdispCityPicker ('pttrader', document.getElementById('ptrescity'), true, t.clickCitySelect, 0);
+      document.getElementById('TransportTroop').value = 'unt9';
+      
+      t.tcp = new CdispCityPicker ('pttrader', document.getElementById('ptrescity'), true, t.updateResources, 0);
       t.tcpto = new CdispCityPicker ('pttraderTo', document.getElementById('ptcityTo'), true, t.clickCitySelect).bindToXYboxes(document.getElementById ('ptcityX'), document.getElementById ('ptcityY'));
       
-      document.getElementById('pbTraderState').addEventListener('click', function(){
-      t.toggleTraderState(this);
+      
+      document.getElementById('TransportTroop').addEventListener('change', function(){t.updateTroops();}, false);
+      document.getElementById('pbTraderState').addEventListener('click', function(){t.toggleTraderState(this);}, false);
+      document.getElementById('pbSaveRoute').addEventListener('click', function(){t.addTradeRoute();}, false);
+      document.getElementById('pbManualSend').addEventListener('click', function(){t.ManualTransport();}, false);
+      document.getElementById('pbShowRoutes').addEventListener('click', function(){t.showTradeRoutes();}, false);
+      document.getElementById('FillInMax').addEventListener('click', function(){document.getElementById('TroopsToSend').value = t.TroopsNeeded;}, false);
+      
+      document.getElementById('MaxTroops').addEventListener('click', function(){
+			var rallypointlevel = t.getRallypoint('city' + t.tcp.city.id);
+			if (rallypointlevel == 11) rallypointlevel = 15;
+			if (rallypointlevel == 12) rallypointlevel = 20;
+			var max = t.Troops;
+			if (t.Troops > (rallypointlevel*10000) ) max = (rallypointlevel*10000);
+			document.getElementById('TroopsToSend').value = max;
+	  }, false);
+      document.getElementById('MaxFood').addEventListener('click', function(){
+      		t.Food = 0;
+      		document.getElementById('pbtradeamountFood').value = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold);
       }, false);
-      document.getElementById('pbSaveRoute').addEventListener('click', function(){
-      t.addTradeRoute();
+      document.getElementById('MaxWood').addEventListener('click', function(){
+      		t.Wood = 0;
+      		document.getElementById('pbtradeamountWood').value = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold);
       }, false);
-      document.getElementById('pbShowRoutes').addEventListener('click', function(){
-      t.showTradeRoutes();
+      document.getElementById('MaxStone').addEventListener('click', function(){
+      		t.Stone = 0;
+      		document.getElementById('pbtradeamountStone').value = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold);
       }, false);
+      document.getElementById('MaxOre').addEventListener('click', function(){
+      		t.Ore = 0;
+      		document.getElementById('pbtradeamountOre').value = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold);
+      }, false);
+      document.getElementById('MaxGold').addEventListener('click', function(){
+      		t.Gold = 0;
+      		document.getElementById('pbtradeamountGold').value = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold);
+      }, false);
+      
       
       document.getElementById('pbtransportinterval').addEventListener('keyup', function(){
 		if (isNaN(document.getElementById('pbtransportinterval').value)){ document.getElementById('pbtransportinterval').value=60 ;}
@@ -4383,55 +4438,90 @@ Tabs.transport = {
       document.getElementById('pbshipFood').addEventListener('click', function(){
           if (document.getElementById('pbshipFood').checked==false) {
               document.getElementById('pbtargetamountFood').disabled = true;
-              document.getElementById('pbtradeamountFood').disabled = true;
           }
           else {
             document.getElementById('pbtargetamountFood').disabled = false;
-            document.getElementById('pbtradeamountFood').disabled = false;
           }
       },false);
       document.getElementById('pbshipWood').addEventListener('click', function(){
           if (document.getElementById('pbshipWood').checked==false) {
               document.getElementById('pbtargetamountWood').disabled = true;
-              document.getElementById('pbtradeamountWood').disabled = true;
           }
           else {
             document.getElementById('pbtargetamountWood').disabled = false;
-            document.getElementById('pbtradeamountWood').disabled = false;
           }
       },false);
       document.getElementById('pbshipStone').addEventListener('click', function(){
           if (document.getElementById('pbshipStone').checked==false) {
               document.getElementById('pbtargetamountStone').disabled = true;
-              document.getElementById('pbtradeamountStone').disabled = true;
           }
           else {
             document.getElementById('pbtargetamountStone').disabled = false;
-            document.getElementById('pbtradeamountStone').disabled = false;
           }
       },false);
       document.getElementById('pbshipOre').addEventListener('click', function(){
           if (document.getElementById('pbshipOre').checked==false) {
               document.getElementById('pbtargetamountOre').disabled = true;
-              document.getElementById('pbtradeamountOre').disabled = true;
           }
           else {
             document.getElementById('pbtargetamountOre').disabled = false;
-            document.getElementById('pbtradeamountOre').disabled = false;
           }
       },false);
       document.getElementById('pbshipGold').addEventListener('click', function(){
           if (document.getElementById('pbshipGold').checked==false) {
               document.getElementById('pbtargetamountGold').disabled = true;
-              document.getElementById('pbtradeamountGold').disabled = true;
           }
           else {
             document.getElementById('pbtargetamountGold').disabled = false;
-            document.getElementById('pbtradeamountGold').disabled = false;
           }
       },false);
       window.addEventListener('unload', t.onUnload, false);
     },
+        
+    updateResources : function (){
+    	var t = Tabs.transport;
+    	var ToCity = null;
+    	for (var i=1;i<=4;i++) document.getElementById('TransRec'+i).innerHTML = addCommas ( parseInt(Seed.resources["city" + t.tcp.city.id]['rec'+i][0]/3600) );
+    	document.getElementById('TransGold').innerHTML = addCommas ( parseInt(Seed.citystats["city" + t.tcp.city.id]['gold'][0]) );
+    	for (ii in Seed.cities)
+        if (Seed.cities[ii][2] == document.getElementById ('ptcityX').value && Seed.cities[ii][3] == document.getElementById ('ptcityY').value)
+          ToCity = Seed.cities[ii][0];
+      for (var i=1;i<=4;i++)
+          if (ToCity != null)
+               document.getElementById('HaveRec'+i).innerHTML = addCommas ( parseInt(Seed.resources["city" + ToCity]['rec'+i][0]/3600) );
+    	    else document.getElementById('HaveRec'+i).innerHTML = "----";
+      if (ToCity != null) document.getElementById('HaveGold').innerHTML = addCommas ( parseInt(Seed.citystats["city" + ToCity]['gold'][0]) );
+      else  document.getElementById('HaveGold').innerHTML =  "----";   
+    },
+    
+    updateTroops : function (city){
+    	var t = Tabs.transport;
+    	var fontcolor = 'black';
+    	t.Food = parseInt(document.getElementById('pbtradeamountFood').value);
+      	t.Wood = parseInt(document.getElementById('pbtradeamountWood').value);
+      	t.Stone = parseInt(document.getElementById('pbtradeamountStone').value);
+      	t.Ore = parseInt(document.getElementById('pbtradeamountOre').value);
+      	t.Gold = parseInt(document.getElementById('pbtradeamountGold').value);
+    	var unit = document.getElementById('TransportTroop').value;
+    	t.Troops = parseInt(Seed.units['city' + t.tcp.city.id][unit]);
+    	var featherweight = parseInt(Seed.tech.tch10);
+    	var Load = parseInt(unsafeWindow.unitstats[unit]['5'])
+    	var LoadUnit = (featherweight * ((Load/100)*10)) + Load;
+    	var GlobalMaxLoad = t.Troops * LoadUnit;
+    	t.MaxLoad = parseInt(document.getElementById('TroopsToSend').value) * LoadUnit;
+     	t.TroopsNeeded = (t.Food + t.Wood + t.Stone + t.Ore + t.Gold) / LoadUnit;
+     	t.TroopsNeeded = t.TroopsNeeded.toFixed(0);	
+		if (t.TroopsNeeded < ((t.Food + t.Wood + t.Stone + t.Ore + t.Gold) / LoadUnit)) t.TroopsNeeded++;	
+        
+        if ( t.TroopsNeeded > t.Troops) fontcolor = 'red';
+    	if (t.Troops > 0 ) document.getElementById('TroopAmount').innerHTML = '<FONT color='+fontcolor+'>' + addCommas(t.Troops) + '</font>';
+    	else document.getElementById('TroopAmount').innerHTML = 0;
+    	if (GlobalMaxLoad > 0) document.getElementById('CarryAmount').innerHTML = addCommas(GlobalMaxLoad);
+    	else  document.getElementById('CarryAmount').innerHTML = 0;
+    	
+    	document.getElementById('Calc').innerHTML = 'Resources: ' +  addCommas(t.Food + t.Wood + t.Stone + t.Ore + t.Gold) + ' / ' + addCommas(t.MaxLoad) + '&nbsp;&nbsp;(Troops Needed: <FONT color='+fontcolor+'>' + addCommas(t.TroopsNeeded) + '</font> )' ;
+    	
+    },    
     
     getRallypoint: function(cityId){
       var t = Tabs.transport;
@@ -4676,10 +4766,10 @@ Tabs.transport = {
 			}
 	},
     
-    doTrades: function(count){
-    	var t = Tabs.transport;
-   		if(t.tradeRoutes.length==0) return;
-   		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+  doTrades: function(count){
+    var t = Tabs.transport;
+   	if(t.tradeRoutes.length==0) return;
+   	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.gold =0;
 		params.r1 =0;
 		params.r2 =0;
@@ -4731,7 +4821,8 @@ Tabs.transport = {
     	if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseInt(trade_Ore);
     	var wagons =  parseInt(Seed.units[cityID]['unt'+9]);
     	var rallypointlevel = t.getRallypoint(cityID);	
-		if (rallypointlevel == 11) { rallypointlevel = 15; }
+		if (rallypointlevel == 11) rallypointlevel = 15;
+		if (rallypointlevel == 12) rallypointlevel = 20;
     	if (wagons > (rallypointlevel*10000)){ wagons = (rallypointlevel*10000); }
     	var featherweight = parseInt(Seed.tech.tch10);
     	var maxloadperwagon = ((featherweight *500) + 5000);
@@ -4873,11 +4964,96 @@ Tabs.transport = {
         }
 	},
 	
+	ManualTransport: function(){
+    var t = Tabs.transport;
+   	if (document.getElementById ('ptcityX').value == "" || document.getElementById ('ptcityY').value == "") return;
+    if ( t.TroopsNeeded > t.Troops) return;
+    
+   	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    var unitType = document.getElementById('TransportTroop').value;
+    var LoadUnit = (parseInt(Seed.tech.tch10) * ((parseInt(unsafeWindow.unitstats[unitType]['5'])/100)*10)) + parseInt(unsafeWindow.unitstats[unitType]['5']);
+    var MaxLoad =  parseInt(Seed.units['city' + t.tcp.city.id][unitType]) * LoadUnit;
+    document.getElementById ('errorSpace').innerHTML = '';
+      	
+	params.kid = 0;
+    params.cid=  t.tcp.city.id;
+	params.type = "1";
+	params.xcoord = parseInt(document.getElementById ('ptcityX').value);
+	params.ycoord = parseInt(document.getElementById ('ptcityY').value);
+	params.r1 = parseInt(document.getElementById ('pbtradeamountFood').value);
+	params.r2 = parseInt(document.getElementById ('pbtradeamountWood').value);
+	params.r3 = parseInt(document.getElementById ('pbtradeamountStone').value);
+	params.r4 = parseInt(document.getElementById ('pbtradeamountOre').value);
+	params.gold = parseInt(document.getElementById ('pbtradeamountGold').value);
+		
+    switch (unitType){
+      case 'unt1': params.u1 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt2': params.u2 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt3': params.u3 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt4': params.u4 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt5': params.u5 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt6': params.u6 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt7': params.u7 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt8': params.u8 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt9': params.u9 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt10': params.u10 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt11': params.u11 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt12': params.u12 = parseInt(document.getElementById ('TroopsToSend').value);break;
+    }
+
+    if ((params.r1 + params.r2 + params.r3 + params.r4 + params.gold) > 0) {
+                 
+         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+                  method: "post",
+                  parameters: params,
+                  loading: true,
+                  onSuccess: function (transport) {
+                  var rslt = eval("(" + transport.responseText + ")");
+                  if (rslt.ok) {                  
+		                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+		                  var ut = unixTime();
+		                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+		                  for(i = 0; i <= unitsarr.length; i++){
+		                  	if(params["u"+i]){
+		                  	unitsarr[i] = params["u"+i];
+		                  	}
+		                  }
+		                  var resources=new Array();
+		                  resources[0] = params.gold;
+		                  for(i=1; i<=4; i++){
+		                  	resources[i] = params["r"+i];
+		                  }
+		                  var currentcityid = t.tcp.city.id;
+		                  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+		                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+		                  document.getElementById ('errorSpace').innerHTML = 'Send: ' + addCommas(params.r1+params.r2+params.r3+params.r4+params.gold) + ' Resources with ' + addCommas(parseInt(document.getElementById ('TroopsToSend').value)) + ' ' + unsafeWindow.unitcost[unitType][0];
+		                  document.getElementById ('pbtradeamountFood').value = 0;
+		                  document.getElementById ('pbtradeamountWood').value = 0;
+		                  document.getElementById ('pbtradeamountStone').value = 0;
+		                  document.getElementById ('pbtradeamountOre').value = 0;
+		                  document.getElementById ('pbtradeamountGold').value = 0;
+		                  document.getElementById ('TroopsToSend').value = 0;
+                  } else {
+		                  var errorcode =  'err_' + rslt.error_code;
+		                  if (rlst.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>Error: ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
+		                  else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>Error: ' + rslt.msg +'</font>'; 
+                  }
+                  },
+                  onFailure: function () {}
+          });
+        }
+	},
+	
 	show: function(){
 		var t = Tabs.transport;
+		clearTimeout (t.timer);
+		t.updateTroops();
+		t.updateResources();  
+		t.timer = setTimeout (t.show, 1000); 
     },
 	hide: function(){
         var t = Tabs.transport;
+        clearTimeout (t.timer);
     },
     onUnload: function(){
         var t = Tabs.transport;
@@ -5106,7 +5282,8 @@ cm.MARCH_TYPES = {
   						5:'Max Raids Exceeded',
   						7:'Timed out',
   						8:'Resting'};
-  	var o = '<FONT size=2px><B>Raid Timer: '+ timestr( 86400 - ( unixTime() - t.rslt.settings.lastUpdated )) +'</b></font>';
+  	var o = '';
+  	if (t.rslt.settings != undefined) o+= '<FONT size=2px><B>Raid Timer: '+ timestr( 86400 - ( unixTime() - t.rslt.settings.lastUpdated )) +'</b></font>';
   	document.getElementById('ptRaidTimer').innerHTML = o;
   	
   	var z ='<TABLE class=pbTab><TR><TD width=60px align=center><A onclick="pbStopAll('+t.cityId+')">STOP</a></td><TD width=70px>Time</td><TD width=85px>Coords</td><TD width=50px>Level</td><TD width=50px></td><TD width=50px><A onclick="pbDeleteAll()">DELETE</a></td></TR>';
@@ -6848,7 +7025,7 @@ Tabs.Reassign = {
                   if (rslt.ok) {
                   actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                  var ut = unsafeWindow.unixtime();
+                  var ut = unixTime();
                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                   					for(i = 0; i <= unitsarr.length; i++){
                   						if(params["u"+i]){
@@ -6966,7 +7143,7 @@ Tabs.Reinforce = {
       
       
       t.from = new CdispCityPicker ('prfrom', document.getElementById('ptRfcityFrom'), true, t.ClickCitySelect, 0);
-      t.to = new CdispCityPicker ('ptto', document.getElementById('ptRfcityTo'), true, t.NoClickCitySelect,0);
+      t.to = new CdispCityPicker ('ptto', document.getElementById('ptRfcityTo'), true, t.clickcityselect,0);
       
 	  t.getKnights();
 	  
@@ -7609,7 +7786,7 @@ Tabs.Reinforce = {
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                  var ut = unsafeWindow.unixtime();
+                  var ut = unixTime();
                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                   for(i = 0; i <= unitsarr.length; i++){
                   	if(params["u"+i]){
@@ -7663,21 +7840,7 @@ Tabs.AutoTrain = {
 		var t = Tabs.AutoTrain;
         t.myDiv = div;
         t.myDiv.style.overflowY = 'scroll';
-		
-		var troops = {1:'SupplyTroops',
-					  2:'Militiaman',
-					  3:'Scout',
-					  4:'Pikeman',
-					  5:'Swordsman',
-					  6:'Archer',
-					  7:'Cavalry',
-					  8:'HeavyCavalry',
-					  9:'SupplyWagon',
-					  10:'Ballista',
-					  11:'BatteringRam',
-					  12:'Catapult'};  
 					  
-      
       var m = '<DIV id=pbAT class=pbStat>AUTO TRAIN</div><TABLE id=pbAT width=100% height=0% class=pbTab><TR>';
       if (TrainOptions.Running == false) {
           m += '<TD align=left><INPUT id=pbAutoTrainState type=submit value="AutoTrain = OFF"></td>';
@@ -7694,7 +7857,7 @@ Tabs.AutoTrain = {
       	   m += '<TABLE id=pbTrain width=100% height=0% class=pbTab><TR align="left">';
       	  m+='<TR><TD width=30px><INPUT type=checkbox id="SelectCity'+city+'"></td><TD width = 100px><B>'+ Seed.cities[i][1] +'</b></td>';
 	      m += '<TD width=150px><SELECT id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
-	      for (y in troops) m+='<option value="'+y+'">'+troops[y]+'</option>';
+	      for (y in unsafeWindow.unitcost) m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
 	      m+='</select></td>';
 	      m +='<TD width=100px>Min.: <INPUT id=treshold'+city+' type=text size=4 maxlength=4 value="'+ TrainOptions.Threshold[city]+'"\></td>';
 	      m +='<TD width=130px><INPUT type=checkbox id="SelectMax'+city+'"> Max.: <INPUT id=max'+city+' type=text size=5 maxlength=5 value="'+ TrainOptions.Max[city]+'"\></td>';
@@ -8233,28 +8396,19 @@ var RefreshEvery  = {
   timer : null,
   PaintTimer : null,
   NextRefresh : 0,
-  box : null,
-  target : null,
+  content : null,
+  Original : null,
   
   init : function (){
     var t = RefreshEvery;
-	t.creatediv();
-	if (Options.pbEveryMins < 1)
+    t.Original = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
+    t.content = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
+    t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
+    unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content ;    
+      if (Options.pbEveryMins < 1)
         Options.pbEveryMins = 1;
-    RefreshEvery.setEnable (Options.pbEveryEnable);
+      RefreshEvery.setEnable (Options.pbEveryEnable);
   },
-  
-  creatediv : function(){
-    var t = RefreshEvery;
-	t.target = document.getElementById('comm_tabs');
-	if(t.target == null){
-		setTimeout(t.creatediv, 2000);
-		return;
-	}
-	t.box = document.createElement('div');
-	t.target.appendChild(t.box);
-  },
-  
   setEnable : function (tf){
     var t = RefreshEvery;
     clearTimeout (t.timer);
@@ -8262,36 +8416,33 @@ var RefreshEvery  = {
       t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
       t.NextRefresh = unixTime() + (Options.pbEveryMins*60); 
       t.PaintTimer = setTimeout (t.Paint, 1000);
-    } else {
-        t.PaintTimer = null;
-		t.timer = null;
-		t.NextRefresh = 0;
-		t.box.innerHTML = '<BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
-	}
+    }
+    else {
+        clearTimeout (t.PaintTimer);
+        t.content = t.Original;
+        t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
+        unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
+    }
   },
-  
   doit : function (){
     actionLog ('Refreshing ('+ Options.pbEveryMins +' minutes expired)');
     reloadKOC();
   },
-  
   setTimer : function (){
-    var t = RefreshEvery;
     clearTimeout (t.timer);
     if (Options.pbEveryMins < 1) Options.pbEveryMins = 1;
     RefreshEvery.setEnable (Options.pbEveryEnable);
   },
-  
   Paint : function(){
      var t = RefreshEvery;
-	 if(t.timer == null) return;
      now = unixTime();
-     var text = '<BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
+     t.content = t.Original;
+     t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
      var Left = (t.NextRefresh - now);
      if ( Left < 0) Left = 0;
-     if ( Left < 60) text += '<BR>Time untill next refresh: <FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
-     else text += '<BR>Time untill next refresh: <B>'+ timestr(Left) +'</b></div>';
-     t.box.innerHTML = text;
+     if ( Left < 60) t.content += '<BR>Time untill next refresh: <FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
+     else t.content += '<BR>Time untill next refresh: <B>'+ timestr(Left) +'</b></div>';
+     unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
      t.PaintTimer = setTimeout (t.Paint, 1000);
   },
 }
