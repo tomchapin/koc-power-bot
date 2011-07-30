@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110730a
+// @version        20110730b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110730a';
+var Version = '20110730b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -146,6 +146,12 @@ var TrainOptions = {
 
 var ResetAll=false;
 var deleting=false;
+
+var ChatOptions = {
+  latestChats               : [],
+  AllowUsersRemoteControl   : [],
+};
+
 var nHtml={
   FindByXPath:function(obj,xpath,nodetype) {
 	if(!nodetype){
@@ -3850,6 +3856,11 @@ Tabs.Test = {
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R2Cat type=text size=5 maxlength=5 value="'+CrestOptions.R2Cat+'"</td></tr></table>';
     
     t.myDiv.innerHTML = m;
+	
+	document.getElementById('pbsendreport').addEventListener('change', function(){
+		Options.crestreport = document.getElementById('pbsendreport').checked;
+		saveOptions();
+	}, false);
     
     for (var i=0;i<Seed.cities.length;i++){
 		if (CrestOptions.CrestCity == Seed.cities[i][0]){
@@ -5207,7 +5218,7 @@ cm.MARCH_TYPES = {
 	
 	var m = '<DIV class=pbStat>RAID FUNCTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 	    m += '<TD><INPUT id=pbRaidStart type=submit value="Auto Reset = '+ (Options.RaidRunning?'ON':'OFF') +'" ></td>';
-	    m += '<TD><INPUT id=pbsendreport type=checkbox '+ (Options.foodreport?' CHECKED':'') +'\> Send raid report every ';
+	    m += '<TD><INPUT id=pbsendraidreport type=checkbox '+ (Options.foodreport?'CHECKED':'') +'\> Send raid report every ';
 	    m += '<INPUT id=pbsendreportint value='+ Options.MsgInterval +' type=text size=3 \> hours </td>';
 	    m += '</tr></table></div>';
 	    m += '<DIV class=pbStat>ACTIVE RAIDS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
@@ -5220,8 +5231,8 @@ cm.MARCH_TYPES = {
 	
 	t.from = new CdispCityPicker ('ptRaidpicker', document.getElementById('ptRaidCity'), true, t.clickCitySelect, 0);
 	document.getElementById('pbRaidStart').addEventListener('click', t.toggleRaidState, false);
-	document.getElementById('pbsendreport').addEventListener('change', function(){
-		Options.foodreport = document.getElementById('pbsendreport').checked;
+	document.getElementById('pbsendraidreport').addEventListener('change', function(){
+		Options.foodreport = document.getElementById('pbsendraidreport').checked;
 		saveOptions();
 	}, false);
 	document.getElementById('pbsendreportint').addEventListener('change', function(){
