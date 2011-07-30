@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110729a
+// @version        20110730a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110729a';
+var Version = '20110730a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -367,6 +367,7 @@ function pbStartup (){
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readOptions();
+  readChatOptions();
   readCrestOptions();
   readTrainingOptions();
   setCities();
@@ -405,6 +406,7 @@ function pbStartup (){
   CollectGold.init();
   FoodAlerts.init();
   ChatPane.init();
+  ChatStuff.init();
   DeleteReports.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
@@ -1091,9 +1093,13 @@ Tabs.tower = {
   
     if (m.fromXCoord)
       who += ' at '+ m.fromXCoord +','+ m.fromYCoord;
+	who += ' ('+getDiplomacy(m.aid)+')';
+	
     var msg = Options.alertConfig.aPrefix +' ';
-    msg += 'My '+ target +' is being '+ atkType  +' by '+ who +' . Incoming Troops (arriving in '+
-        unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
+	if(m.marchStatus == 9)
+		msg += 'The '+ atkType +' on my '+ target +' by '+ who +' has been recalled.';
+	else
+		msg += 'My '+ target +' is being '+ atkType  +' by '+ who +'. Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
     var totTroops = 0;
     for (k in m.unts){
       var uid = parseInt(k.substr (1));
@@ -4391,7 +4397,6 @@ Tabs.transport = {
       		t.Gold = 0;
       		document.getElementById('pbtradeamountGold').value = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold);
       }, false);
-      
       
       document.getElementById('pbtransportinterval').addEventListener('keyup', function(){
 		if (isNaN(document.getElementById('pbtransportinterval').value)){ document.getElementById('pbtransportinterval').value=60 ;}
@@ -8396,54 +8401,71 @@ var RefreshEvery  = {
   timer : null,
   PaintTimer : null,
   NextRefresh : 0,
-  content : null,
-  Original : null,
+  box : null,
+  target : null,
   
   init : function (){
     var t = RefreshEvery;
-    t.Original = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
-    t.content = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
-    t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
-    unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content ;    
-      if (Options.pbEveryMins < 1)
+	t.creatediv();
+	if (Options.pbEveryMins < 1)
         Options.pbEveryMins = 1;
-      RefreshEvery.setEnable (Options.pbEveryEnable);
+    RefreshEvery.setEnable (Options.pbEveryEnable);
   },
+  
+  creatediv : function(){
+    var t = RefreshEvery;
+	t.target = document.getElementById('comm_tabs');
+	if(t.target == null){
+		setTimeout(t.creatediv, 2000);
+		return;
+	}
+	t.box = document.createElement('div');
+	t.target.appendChild(t.box);
+  },
+  
   setEnable : function (tf){
     var t = RefreshEvery;
     clearTimeout (t.timer);
     if (tf) {
-      t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
+      //t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
       t.NextRefresh = unixTime() + (Options.pbEveryMins*60); 
-      t.PaintTimer = setTimeout (t.Paint, 1000);
-    }
-    else {
-        clearTimeout (t.PaintTimer);
-        t.content = t.Original;
-        t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
-        unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
-    }
+      t.timer = setTimeout (t.Paint, 1000);
+    } else {
+        //t.PaintTimer = null;
+		t.timer = null;
+		t.NextRefresh = 0;
+		t.box.innerHTML = '<BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
+	}
   },
+  
   doit : function (){
     actionLog ('Refreshing ('+ Options.pbEveryMins +' minutes expired)');
     reloadKOC();
   },
+  
   setTimer : function (){
+    var t = RefreshEvery;
     clearTimeout (t.timer);
     if (Options.pbEveryMins < 1) Options.pbEveryMins = 1;
     RefreshEvery.setEnable (Options.pbEveryEnable);
   },
+  
   Paint : function(){
      var t = RefreshEvery;
+	 if(t.timer == null) return;
      now = unixTime();
-     t.content = t.Original;
-     t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + GetServerId() +')</b></font>';
-     var Left = (t.NextRefresh - now);
-     if ( Left < 0) Left = 0;
-     if ( Left < 60) t.content += '<BR>Time untill next refresh: <FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
-     else t.content += '<BR>Time untill next refresh: <B>'+ timestr(Left) +'</b></div>';
-     unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
-     t.PaintTimer = setTimeout (t.Paint, 1000);
+     //var text = '<FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
+	 var text = '';
+     var Left = parseInt(t.NextRefresh - now);
+     if ( Left < 0){
+		Left = 0;
+		t.doit();
+	 }
+     if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
+     else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: <B>'+ timestr(Left) +'</b></font></div>';
+    
+	 t.box.innerHTML = text;
+     t.timer = setTimeout (t.Paint, 1000);
   },
 }
 
@@ -8591,6 +8613,423 @@ var WideScreen = {
   },
 }
 
+/*******************   Chat tab ****************/
+Tabs.Chat = {
+  tabOrder : 300,                    // order to place tab in top bar
+  //tabDisabled : !ENABLE_SAMPLE_TAB, // if true, tab will not be added or initialized
+  //tabLabel : 'Click Me',            // label to show in main window tabs
+  myDiv : null,
+  timer : null,  
+  
+  init : function (div){    // called once, upon script startup
+    var t = Tabs.Chat;
+    t.myDiv = div;
+    unsafeWindow.pbviewtroops = t.viewtroops;
+    t.myDiv.innerHTML = '<DIV class=pbStat>Chat Answer/Reply Info</div><TABLE><TR>\
+						<TD><input type=checkbox id=pbchatqaenable /></td><TD>Enable chat functions </td>\
+						</tr><TR><TD></td>\
+						<TD><table><TR><TD valign=top>Allowed Players: </td><TD><textarea cols=30 rows=1 id=allowUserBox></textarea></td></tr></table></td>\
+						</tr><TR>\
+						<TD colspan=3>Type "/[Player] units?" to get a unit count <br> Type "/[Player] attacks? to get impending attacks <br> Player name is cAsE-SeNsItIvE </td></tr></table>';
+	t.togtext('allowUserBox', 'AllowUsersRemoteControl');
+	t.togOpt('pbchatqaenable', 'Chatenable', ChatStuff.init);
+  },
+  
+  togtext : function(boxId, optionName){
+    var t = Tabs.Chat;
+	var e = document.getElementById(boxId);
+	var text = '';
+	for(i=0; i<ChatOptions[optionName].length; i++)
+		text += ChatOptions[optionName][i]+'\n';
+	e.value = text;
+	e.addEventListener('change', new eventToggle(boxId, optionName).handler, false);
+	function eventToggle (boxId, optionName){
+      this.handler = handler;
+      var optName = optionName;
+      function handler(event){
+	    ChatOptions[optionName] = [];
+		var values = this.value.split('\n');
+        for(var i=0; i<values.length; i++)
+			ChatOptions[optionName][i] = values[i];
+        saveChatOptions();
+      }
+    }
+  },
+  
+  togOpt : function (checkboxId, optionName, callEnable, callIsAvailable){
+    var t = Tabs.Chat;
+    var checkbox = document.getElementById(checkboxId);
+    
+    if (callIsAvailable && callIsAvailable()==false){
+      checkbox.disabled = true;
+      return;
+    }
+    if (ChatOptions[optionName])
+      checkbox.checked = true;
+    checkbox.addEventListener ('change', new eventToggle(checkboxId, optionName, callEnable).handler, false);
+    function eventToggle (checkboxId, optionName, callOnChange){
+      this.handler = handler;
+      var optName = optionName;
+      var callback = callOnChange;
+      function handler(event){
+        ChatOptions[optionName] = this.checked;
+        saveOptions();
+        if (callback != null)
+          callback (this.checked);
+      }
+    }
+  },
+  
+  viewtroops : function (u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12){
+	var t = Tabs.Chat;
+  	t.popReport = new CPopup('pbShowTroops', 0, 0, 500, 300, true);
+  	t.popReport.centerMe (mainPop.getMainDiv());  
+  	var m = '<DIV style="max-height:275px; height:275px; overflow-y:scroll">'; 
+  	
+  	m+='<TABLE class=ptTab>\
+		<TR><TD><b>Impending Attack</b></td></tr></table>';
+	m+='<TABLE class=ptTab><TR><TD align="center">Troops</td><TD align="center">Amount</td></tr>';
+	
+	if(u1) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_1_30.png></td><TD align="center">'+parseInt(u1)+'</td></tr>';
+	if(u2) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_2_30.png></td><TD align="center">'+parseInt(u2)+'</td></tr>';
+	if(u3) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_3_30.png></td><TD align="center">'+parseInt(u3)+'</td></tr>';
+	if(u4) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_4_30.png></td><TD align="center">'+parseInt(u4)+'</td></tr>';
+	if(u5) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_5_30.png></td><TD align="center">'+parseInt(u5)+'</td></tr>';
+	if(u6) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_6_30.png></td><TD align="center">'+parseInt(u6)+'</td></tr>';
+	if(u7) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_7_30.png></td><TD align="center">'+parseInt(u7)+'</td></tr>';
+	if(u8) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_8_30.png></td><TD align="center">'+parseInt(u8)+'</td></tr>';
+	if(u9) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_9_30.png></td><TD align="center">'+parseInt(u9)+'</td></tr>';
+	if(u10) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_10_30.png></td><TD align="center">'+parseInt(u10)+'</td></tr>';
+	if(u11) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_11_30.png></td><TD align="center">'+parseInt(u11)+'</td></tr>';
+	if(u12) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_12_30.png></td><TD align="center">'+parseInt(u12)+'</td></tr>';
+	
+  	m+='<TR><TD></TD></TR><TR><TD></TD></TR></table>';
+	
+	m+='</div>';
+  	t.popReport.getMainDiv().innerHTML = m;
+  	t.popReport.getTopDiv().innerHTML = '<TD><CENTER><B>Incoming</b></center></td>';
+  	t.popReport.show(true)	;
+  },
+  
+  hide : function (){
+
+  },
+  
+  show : function (){
+
+  },
+
+}
+
+var ChatStuff = {
+timeout : null,
+processqueue : [],
+latestChats : [],
+
+  init:function() {
+	var t=ChatStuff;
+	var comm=document.getElementById('mod_comm_list2');
+	if(comm && ChatOptions.Chatenable) {
+		if(t.timeout == null) {
+			t.GetLatestChat();
+			t.timeout = window.setTimeout(function() {
+				t.IterateChat(t.ChatAdded);
+			},200);
+		} else {
+			logit("Maybe too many chat messages, chat already processing.");
+		}
+	}
+	window.setTimeout(function() {
+		t.init();
+	},5000);
+  },
+
+  GetLatestChatStr:function(chatObj) { 
+	return chatObj.name+'#'+chatObj.time+'#'+chatObj.text.split(/[\.\?]/)[0]; 
+  },
+
+  GetLatestChat:function() {
+	var t = ChatStuff;
+	t.latestChats = ChatOptions.latestChats;
+	if(t.latestChats.length>25) {
+		t.latestChats.splice(0,1);
+	}
+  },
+
+  GetChatTimeNum:function(time) {
+	var tarr=time.split(':');
+	if(!time) return undefined;
+	var timeNum=(tarr[0]*60)+tarr[1];
+	return timeNum;
+  },
+
+  GetChatObj:function(htmlObj) {
+	var t=ChatStuff;
+	var nm=searchDOM(htmlObj,'node.className=="nm"',8);
+	var time=searchDOM(htmlObj,'node.className=="time"',8);
+	var tx=searchDOM(htmlObj,'node.className=="tx"',8);
+	if(!nm || !time || !tx) { return undefined; }
+	var nameArr=nm.innerHTML.split(' ');
+	var fromMe = nameArr[1]==Seed.player.name?true:false;
+	return { 
+		'obj':htmlObj,
+		'textObj':tx,
+		'name':nm.innerHTML,
+		'time':time.innerHTML,
+		'text':tx.innerHTML,
+		'shortName':nameArr[1],
+		'timeNum':t.GetChatTimeNum(time.innerHTML),
+		'fromMe':fromMe?1:0,
+	};
+  },
+
+  IterateChat:function(func) {
+	var t=ChatStuff;
+	var comm = document.getElementById('mod_comm_list2');
+	var directs = searchDOM(comm,'node.className=="chatwrap clearfix direct"',4,true);
+	var chats=[];
+	for(var d=directs.length-1; d>=0; d--) {
+		var direct=directs[d];
+		var chatObj=t.GetChatObj(direct);
+		if(chatObj) {
+			chats.push([direct,chatObj]);
+		}
+	}
+	t.checkProcessed(chats, func);
+  },
+
+  checkProcessed : function(chats, func){
+	var t=ChatStuff;
+	for(var c=0; c<chats.length; c++) {
+		var found = false;
+		var chatObj=chats[c][1];
+		for(var i=0; i<t.latestChats.length; i++){
+			if(t.latestChats[i] == t.GetLatestChatStr(chatObj))
+				found = true;
+		}
+		if(!found){
+		chatObj.notProcessed=true;
+		ChatOptions.latestChats.push(t.GetLatestChatStr(chatObj));
+		}
+		func(chatObj);
+	}
+	saveChatOptions();
+	t.timeout = null;
+  },
+
+  GetCitiesHash:function(arr) {
+	var h={};
+	for(var a=0; a<arr.length; a++) {
+		var city=arr[a];
+		var newA=[]
+		Array.prototype.push.apply(newA, city);
+
+		h[city[0]]=newA;
+	}
+	return h;
+  },
+
+  SendChat:function(name,mess) {
+	var inp=document.getElementById('mod_comm_input');
+	inp.value="@"+name+' '+mess;
+	logit('Send chat:'+mess);
+	unsafeWindow.Chat.sendChat();
+  },
+
+  ChatFuncs:{
+	'units':{
+		'question':function(chatObj,info) {
+			if(!chatObj.notProcessed) { return; }
+			var t=ChatStuff;
+			
+			t.SendChat(chatObj.shortName,"units."+JSON2.stringify({
+				'cities':t.GetCitiesHash(Seed.cities),
+				'units':Seed.units,
+			}));
+		},
+		'answer':function(chatObj,info) {
+			var t=ChatStuff;
+			// {"city24479":{"tick":1297589617,"rec1":"[756220044, 2592000000, 7100, 3033]","rec2":"[539696566, 1836000000, 5000, 0]","rec3":"[191319892, 1548000000, 4200, 0]","rec4":"[4512787, 1512000000, 4100, 0]"}}
+			var infoObj=JSON2.parse(info);
+			var res=infoObj.units;
+			var cities=infoObj.cities;
+			
+			chatObj.textObj.innerHTML='';
+			var table=document.createElement('table');
+			//table.className='direct';
+			function AddCell(tr) {
+				var td=tr.insertCell(-1);
+				//td.className='direct';
+				td.style.backgroundColor='#ffde75';
+				td.style.textAlign='right';
+				return td;
+			}
+			for(var city in res) {
+				var resObj=res[city];
+				
+				var tr=table.insertRow(-1);
+				//var cityTd=tr.insertCell(-1);
+				var cityTd=AddCell(tr);
+				cityTd.colspan='4';
+				cityTd.style.fontWeight='bold';
+				var cityM=/([0-9]+)$/.exec(city);
+				var cityObj=cities[cityM[1]];
+				if(!cityObj) {
+					logit('Cannot find city:'+cityM[1]);
+					continue; 
+				}
+				
+				cityTd.innerHTML=cityObj[1];
+				//for(var r=1; r<=4; r++ ) {
+				for(var unt in resObj) {
+					//var rarr=JSON2.parse(resObj['rec'+r].replace(' ',''));
+					var units=parseInt(resObj[unt]);
+					
+					if(units<=0) continue;
+					var tr=table.insertRow(-1);
+					AddCell(tr).innerHTML=unsafeWindow.unitcost[unt][0];
+					AddCell(tr).innerHTML=addCommas(units);
+				}
+			}
+			chatObj.textObj.appendChild(table);
+		},
+	},
+	'attacks':{
+		'question':function(chatObj,info) {
+			if(!chatObj.notProcessed) { return; }
+			var t=ChatStuff;
+			
+			t.SendChat(chatObj.shortName,"attacks."+JSON2.stringify({
+				'cities':t.GetCitiesHash(Seed.cities),
+				'marches':Seed.queue_atkinc,
+				'players':Seed.players,
+				'alliance':Seed.allianceNames,
+			}));
+		},
+		'answer':function(chatObj,info) {
+			var t=ChatStuff;
+			var infoObj=JSON2.parse(info);
+			var res=infoObj.marches;
+			var cities=infoObj.cities;
+			var names=infoObj.players;
+			var alliance=infoObj.alliance;
+			
+			chatObj.textObj.innerHTML='';
+			var div = document.createElement('div');
+			var table=document.createElement('table');
+			div.style.overflow = 'auto';
+			function AddCell(tr) {
+				var td=tr.insertCell(-1);
+				td.style.backgroundColor='#ffde75';
+				td.style.textAlign='right';
+				return td;
+			}
+			var cityTr = {};
+			for(var city in cities) {				
+				cityTr[city]=table.insertRow(-1);
+				cityTd=AddCell(cityTr[city]);
+				cityTd.colspan='4';
+				cityTd.style.fontWeight='bold';
+				cityTd.innerHTML=cities[city][1].substring(0,10)+' '+coordLink(cities[city][2],cities[city][3]);
+			}
+			for(var marches in res){
+				var marchObj = res[marches];
+				if(!marchObj.toCityId) continue;
+				if(marchObj.marchType == 3 || marchObj.marchType ==4){
+					var tr=table.insertRow(cityTr[marchObj.toCityId].rowIndex+1);//Specify which city to insert
+					var timeLeft = parseInt(marchObj.arrivalTime-unixTime());
+					if(timeLeft < 0) continue;
+					
+					AddCell(tr).innerHTML = timestr(timeLeft);
+					AddCell(tr).innerHTML = coordLink(marchObj.fromXCoord,marchObj.fromYCoord);
+					AddCell(tr).innerHTML = names['u'+marchObj.pid]?names['u'+marchObj.pid].n.substring(0,10):(marchObj.players['u'+marchObj.pid]?marchObj.players['u'+marchObj.pid].n.substring(0,10):'Undefined');
+					AddCell(tr).innerHTML = (alliance['a'+marchObj.fromAllianceId]?alliance['a'+marchObj.fromAllianceId].substring(0,10):'Undefined')+' ('+getDiplomacy(marchObj.fromAllianceId)+')';
+					var troops = [];
+					for(var t = 1; t<13; t++){
+						troops.push(parseInt(marchObj.unts['u'+t]));
+					}
+					AddCell(tr).innerHTML = '<a onclick=pbviewtroops('+ troops.join(',') +')>View troops</a>';
+				}
+			}
+			div.appendChild(table);
+			chatObj.textObj.appendChild(div);
+		},
+	}
+  },
+
+  allowUsersHash:null,
+  ChatAdded:function(chatObj) {
+	var t=ChatStuff;
+	if(chatObj) {
+		t.allowUsersHash = ChatOptions.AllowUsersRemoteControl;
+		if(t.allowUsersHash.length==0) { return; }
+
+		var cArr=/^([^\?\.]+)([\.\?])(.*)$/.exec(chatObj.text);
+		if(!cArr) {
+			return;
+		}
+		var cmd=cArr[1]
+		var info=cArr[3];
+		var question=false;
+		if(chatObj.fromMe) {
+			chatObj.obj.style.borderBottom='1px solid #0f0';
+		}
+		if(chatObj.notProcessed) {
+			chatObj.obj.style.borderLeft='1px solid #ff0';
+			//chatObj.obj.appendChild(document.createTextNode(' notprocessed '));
+		}
+		
+		var cmdInfo=t.ChatFuncs[cmd];
+
+		if(cArr[2]=='?') {
+			question=true;
+		} else {
+		}
+		
+		if(cmdInfo) {
+			// hide unreadable requests that are json
+			var shortCmd=(cmd+cArr[2]);
+
+			if(chatObj.textObj.innerHTML!=shortCmd && info.substr(0,1)=='{') {
+				chatObj.textObj.innerHTML=shortCmd;
+			}
+		}
+		
+		// if(chatObj.fromMe) {
+			// return;
+		// }
+		var done=0;
+
+		// process chat
+		// if(chatObj.notProcessed) {
+			// logit('remote command:'+cmd+cArr[2]+', not processed:'+chatObj.notProcessed);
+		// }
+		if(cmdInfo) {
+			window.setTimeout(function() {
+				if(question && chatObj.notProcessed) {
+					var permission = false;
+					for(var u=0; u<t.allowUsersHash.length; u++)
+						if(t.allowUsersHash[u] == chatObj.shortName){
+							permission = true;
+							break;
+						}
+					if(permission){
+						cmdInfo['question'].call(t,chatObj,info);
+					} else {
+						chatObj.obj.appendChild(document.createTextNode("Player does not have permission: "+chatObj.shortName));
+						t.SendChat(chatObj.shortName,"Player does not have permission");
+					}
+				} else {
+					cmdInfo['answer'].call(t,chatObj,info);
+				}
+			},0);				
+		}
+	} else {
+		logit('Chat object failed');
+	}
+	return true;
+  },
+}
 
 /*******************   KOC Map interface ****************/
 // 0:bog, 10:grassland, 11:lake, 20:woods, 30:hills, 40:mountain, 50:plain, 51:city / barb, 53:misted city
@@ -9165,6 +9604,8 @@ function getDiplomacy (aid) {
     return 'friendly';
   if (Seed.allianceDiplomacies.hostile && Seed.allianceDiplomacies.hostile['a'+aid] != null)
     return 'hostile';
+  if(getMyAlliance()[0] == aid)
+	return 'ally';
   return 'neutral';
 };
 
@@ -9227,6 +9668,11 @@ function saveOptions (){
   setTimeout (function (){GM_setValue ('Options_'+serverID, JSON2.stringify(Options));}, 0);
 }
 
+function saveChatOptions (){
+  var serverID = getServerId();
+  setTimeout (function (){GM_setValue ('ChatOptions_'+serverID, JSON2.stringify(ChatOptions));}, 0);
+}
+
 function saveTrainOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('TrainOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(TrainOptions));}, 0);
@@ -9256,6 +9702,21 @@ function readOptions (){
 
 function readGlobalOptions (){
   GlobalOptions = JSON2.parse (GM_getValue ('Options_??', '{}'));
+}
+
+function readChatOptions (){
+  var serverID = getServerId();
+  s = GM_getValue ('ChatOptions_'+serverID, '[]');
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          ChatOptions[k][kk] = opts[k][kk];
+      else
+        ChatOptions[k] = opts[k];
+    }
+  }
 }
 
 function readCrestOptions (){
@@ -9661,8 +10122,7 @@ var CalterUwVar = function (funcName, findReplace) {
 	funcText = unsafeWindow[funcName[0]];
 	for(var i=1; i<funcName.length; i++)
 		funcText = funcText[funcName[i]];
-	
-	GM_log(funcText);
+
     var rt = funcText.toString();
     for (var i=0; i<findReplace.length; i++){
       x = rt.replace(findReplace[i][0], findReplace[i][1]);
@@ -9674,7 +10134,7 @@ var CalterUwVar = function (funcName, findReplace) {
   } catch (err) {
 	GM_log(err);
   }
-      GM_log(funcText);
+  
   function setEnable (tf){
     if (t.funcNew == null)
       return;
