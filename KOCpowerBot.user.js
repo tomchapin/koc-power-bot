@@ -1092,7 +1092,7 @@ Tabs.tower = {
     if (m.fromXCoord)
       who += ' at '+ m.fromXCoord +','+ m.fromYCoord;
     var msg = Options.alertConfig.aPrefix +' ';
-    msg += 'My '+ target +' is being '+ atkType  +' by '+ who +'. Incoming Troops (arriving in '+
+    msg += 'My '+ target +' is being '+ atkType  +' by '+ who +' . Incoming Troops (arriving in '+
         unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
     var totTroops = 0;
     for (k in m.unts){
