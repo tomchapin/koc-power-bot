@@ -17,7 +17,7 @@ var Version = '20110730b';
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
 var DEBUG_SEARCH = false;
-var ENABLE_TEST_TAB = false;
+var ENABLE_TEST_TAB = true;
 var ENABLE_ATTACK_TAB = false;
 var ENABLE_SAMPLE_TAB = false;
 var DISABLE_BULKADD_LIST = false;
@@ -1078,14 +1078,14 @@ Tabs.tower = {
     var target, atkType, who;
     var city = Cities.byID[m.toCityId];
     if ( city.tileId == m.toTileId )
-      target = 'city at '+ city.x +','+ city.y;
+      target = 'city at ('+ city.x +','+ city.y + ')';
     else {
       if (!Options.alertConfig.wilds)
         return;
       target = 'wilderness';
       for (k in Seed.wilderness['city'+m.toCityId]){
         if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
-          target += ' at '+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord;
+          target += ' at ('+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord + ')';
           break;
         }
       }
@@ -1098,7 +1098,7 @@ Tabs.tower = {
       who = 'Unknown';
   
     if (m.fromXCoord)
-      who += ' at '+ m.fromXCoord +','+ m.fromYCoord;
+      who += ' at ('+ m.fromXCoord +','+ m.fromYCoord + ')';
 	who += ' ('+getDiplomacy(m.aid)+')';
 	
     var msg = Options.alertConfig.aPrefix +' ';
