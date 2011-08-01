@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110730b
+// @version        20110801a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,12 +12,12 @@
 // ==/UserScript==
 
 
-var Version = '20110730b';
+var Version = '20110801a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
 var DEBUG_SEARCH = false;
-var ENABLE_TEST_TAB = true;
+var ENABLE_TEST_TAB = false;
 var ENABLE_ATTACK_TAB = false;
 var ENABLE_SAMPLE_TAB = false;
 var DISABLE_BULKADD_LIST = false;
@@ -1527,6 +1527,11 @@ Tabs.build = {
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
+            m += '<TD colspan=2><CENTER><INPUT id=pbCancelAll_' + Cities.cities[i].id + ' type=submit value="Cancel All"></center></td>';
+        }
+        m += '</tr><TR>';
+        
+        for (var i = 0; i < Cities.cities.length; i++) {
             m += '<TD>Qc:</td><TD id=pbbuildcount_' + Cities.cities[i].id + '>' + t["bQ_" + Cities.cities[i].id].length + '</td>';
         }
         m += '</tr><TR>';
@@ -1548,6 +1553,8 @@ Tabs.build = {
             var cityId = Cities.cities[i].id;
             var btnName = 'pbbuild_' + cityId;
             addQueueEventListener(cityId, btnName);
+            var btn2Name = 'pbCancelAll_' + cityId;
+            CancelAllEventListener(cityId, btn2Name);
 			t.showBuildQueue(cityId, false);
         }
 
@@ -1572,6 +1579,17 @@ Tabs.build = {
                 t.showBuildQueue(cityId, true);
             }, false);
         }
+        
+        function CancelAllEventListener(cityId, name){
+            document.getElementById(name).addEventListener('click', function(){
+            	t["bQ_" + cityId] = [];
+            	t['totalTime_' + cityId] = 0;
+            	document.getElementById('pbbuildcount_' + cityId).innerHTML = 0;
+            	document.getElementById('pbbuildtotal_' + cityId).innerHTML = timestr(0);
+            }, false);
+        }
+        
+        
     },
 	setBuildMode: function (type) {
 	    var t = Tabs.build;
@@ -8412,71 +8430,57 @@ var RefreshEvery  = {
   timer : null,
   PaintTimer : null,
   NextRefresh : 0,
-  box : null,
-  target : null,
+  content : null,
+  Original : null,
+  alliance: null,
   
   init : function (){
     var t = RefreshEvery;
-	t.creatediv();
-	if (Options.pbEveryMins < 1)
+    t.Original = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
+    t.content = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
+    t.alliance = getMyAlliance()[1];
+    if (t.alliance.length > 20) t.alliance = t.alliance.substr(0, 20);
+    t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ t.alliance + ' (' + GetServerId() +')</b></font>';
+    unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content ;    
+      if (Options.pbEveryMins < 1)
         Options.pbEveryMins = 1;
-    RefreshEvery.setEnable (Options.pbEveryEnable);
+      RefreshEvery.setEnable (Options.pbEveryEnable);
   },
-  
-  creatediv : function(){
-    var t = RefreshEvery;
-	t.target = document.getElementById('comm_tabs');
-	if(t.target == null){
-		setTimeout(t.creatediv, 2000);
-		return;
-	}
-	t.box = document.createElement('div');
-	t.target.appendChild(t.box);
-  },
-  
   setEnable : function (tf){
     var t = RefreshEvery;
     clearTimeout (t.timer);
     if (tf) {
-      //t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
+      t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
       t.NextRefresh = unixTime() + (Options.pbEveryMins*60); 
-      t.timer = setTimeout (t.Paint, 1000);
-    } else {
-        //t.PaintTimer = null;
-		t.timer = null;
-		t.NextRefresh = 0;
-		t.box.innerHTML = '<BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
-	}
+      t.PaintTimer = setTimeout (t.Paint, 1000);
+    }
+    else {
+        clearTimeout (t.PaintTimer);
+        t.content = t.Original;
+        t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ t.alliance + ' (' + GetServerId() +')</b></font>';
+        unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
+    }
   },
-  
   doit : function (){
     actionLog ('Refreshing ('+ Options.pbEveryMins +' minutes expired)');
     reloadKOC();
   },
-  
   setTimer : function (){
-    var t = RefreshEvery;
     clearTimeout (t.timer);
     if (Options.pbEveryMins < 1) Options.pbEveryMins = 1;
     RefreshEvery.setEnable (Options.pbEveryEnable);
   },
-  
   Paint : function(){
      var t = RefreshEvery;
-	 if(t.timer == null) return;
      now = unixTime();
-     //var text = '<FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
-	 var text = '';
-     var Left = parseInt(t.NextRefresh - now);
-     if ( Left < 0){
-		Left = 0;
-		t.doit();
-	 }
-     if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
-     else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: <B>'+ timestr(Left) +'</b></font></div>';
-    
-	 t.box.innerHTML = text;
-     t.timer = setTimeout (t.Paint, 1000);
+     t.content = t.Original;
+     t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ t.alliance+ ' (' + GetServerId() +')</b></font>';
+     var Left = (t.NextRefresh - now);
+     if ( Left < 0) Left = 0;
+     if ( Left < 60) t.content += '<BR>Time untill next refresh: <FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
+     else t.content += '<BR>Time untill next refresh: <B>'+ timestr(Left) +'</b></div>';
+     unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
+     t.PaintTimer = setTimeout (t.Paint, 1000);
   },
 }
 
