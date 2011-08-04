@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110801a
+// @version        20110803a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20110801a';
+var Version = '20110803a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -150,6 +150,8 @@ var deleting=false;
 var ChatOptions = {
   latestChats               : [],
   AllowUsersRemoteControl   : [],
+  password                  : '',
+  Chatpassenable            : false,
 };
 
 var nHtml={
@@ -8641,13 +8643,18 @@ Tabs.Chat = {
     t.myDiv = div;
     unsafeWindow.pbviewtroops = t.viewtroops;
     t.myDiv.innerHTML = '<DIV class=pbStat>Chat Answer/Reply Info</div><TABLE><TR>\
-						<TD><input type=checkbox id=pbchatqaenable /></td><TD>Enable chat functions </td>\
-						</tr><TR><TD></td>\
-						<TD><table><TR><TD valign=top>Allowed Players: </td><TD><textarea cols=30 rows=1 id=allowUserBox></textarea></td></tr></table></td>\
-						</tr><TR>\
-						<TD colspan=3>Type "/[Player] units?" to get a unit count <br> Type "/[Player] attacks? to get impending attacks <br> Player name is cAsE-SeNsItIvE </td></tr></table>';
+						<TD><input type=checkbox id=pbchatqaenable /></td><TD>Enable chat functions </td></tr>\
+						<TR><TD><input type=checkbox id=pbchatpassenable /></td><TD>Enable password: <input type=text id=pbchatpass value="'+ ChatOptions.password +'"/></td></tr>\
+						<TR><TD></td><TD valign=top>Allowed Players: <br><textarea cols=30 rows=1 id=allowUserBox></textarea></td></tr>\
+						<TR><TD colspan=3>Type "/[Player] units?" to get a unit count <br> Type "/[Player] attacks? to get impending attacks <br> Player name is cAsE-SeNsItIvE </td></tr></table>';
 	t.togtext('allowUserBox', 'AllowUsersRemoteControl');
 	t.togOpt('pbchatqaenable', 'Chatenable', ChatStuff.init);
+	t.togOpt('pbchatpassenable', 'Chatpassenable');
+	document.getElementById('pbchatpass').addEventListener('change', function(e){
+		ChatOptions.password = e.target.value;
+		GM_log(e.target.value);
+		saveChatOptions();
+	}, false);
   },
   
   togtext : function(boxId, optionName){
@@ -8983,25 +8990,28 @@ latestChats : [],
 		if(!cArr) {
 			return;
 		}
-		var cmd=cArr[1]
-		var info=cArr[3];
+		var cmd=cArr[1];
+		
 		var question=false;
 		if(chatObj.fromMe) {
 			chatObj.obj.style.borderBottom='1px solid #0f0';
 		}
 		if(chatObj.notProcessed) {
 			chatObj.obj.style.borderLeft='1px solid #ff0';
-			//chatObj.obj.appendChild(document.createTextNode(' notprocessed '));
 		}
 		
 		var cmdInfo=t.ChatFuncs[cmd];
 
 		if(cArr[2]=='?') {
 			question=true;
+			if(ChatOptions.Chatpassenable){
+				var password=cArr[3];
+			}
 		} else {
+			var info=cArr[3];
 		}
 		
-		if(cmdInfo) {
+		if(cmdInfo && !question) {
 			// hide unreadable requests that are json
 			var shortCmd=(cmd+cArr[2]);
 
@@ -9015,10 +9025,6 @@ latestChats : [],
 		// }
 		var done=0;
 
-		// process chat
-		// if(chatObj.notProcessed) {
-			// logit('remote command:'+cmd+cArr[2]+', not processed:'+chatObj.notProcessed);
-		// }
 		if(cmdInfo) {
 			window.setTimeout(function() {
 				if(question && chatObj.notProcessed) {
@@ -9028,6 +9034,10 @@ latestChats : [],
 							permission = true;
 							break;
 						}
+					if(ChatOptions.Chatpassenable && password!=ChatOptions.password){
+						permission = false;
+						GM_log(password+' '+ChatOptions.password);
+					}
 					if(permission){
 						cmdInfo['question'].call(t,chatObj,info);
 					} else {
