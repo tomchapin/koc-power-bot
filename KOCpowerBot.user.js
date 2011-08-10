@@ -1,18 +1,17 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110804a
+// @version        20110809a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
 // @include        http://apps.facebook.com/kingdomsofcamelot/*
-// @include		   http://www.kabam.com/games/kingdoms-of-camelot/* 
 // @include        *facebook.com/connect/uiserver.php*
 // @description    Automated features for Kingdoms of Camelot
 // @require        http://tomchapin.me/auto-updater.php?id=101052
 // ==/UserScript==
 
 
-var Version = '20110804a';
+var Version = '20110809a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2041,12 +2040,28 @@ Tabs.build = {
 	bot_gethelp: function (f, currentcityid) {
 		var t = Tabs.build;
 		var city = t.getCityNameById(currentcityid);
-	for (i=0;i<Seed.cities.length;i++) {
-		if (Seed.cities[i][1]==city) var cityNum=i;
-	}
-	cityNum++;
-	unsafeWindow.citysel_click(document.getElementById('citysel_'+ (cityNum)));
-	  var a = qlist = Seed.queue_con["city" + currentcityid];
+		for (i=0;i<Seed.cities.length;i++) {
+			if (Seed.cities[i][1]==city) var cityNum=i;
+		}
+		cityNum++;
+		unsafeWindow.citysel_click(document.getElementById('citysel_'+ (cityNum)));
+	  var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	  params.bid = f;
+	  params.ctrl = 'AskForHelp';
+	  params.action = 'getHelpData';
+	  new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
+		  method: "post",
+		  parameters: params,
+		  onSuccess: function (rslt) {
+			unsafeWindow.handleHelpCallback (rslt.data);
+		  },
+		  onFailure: function (rslt) {
+			t.bot_gethelp (f, currentcityid);
+			return;
+		  },
+		  });
+
+	  var a = Seed.queue_con["city" + currentcityid];
 	  var e = 0;
 	  var d = 0;
 	  for (var c = 0; c < a.length; c++) {
@@ -5074,7 +5089,7 @@ Tabs.transport = {
     document.getElementById ('errorSpace').innerHTML = '';
       	
 	params.kid = 0;
-  params.cid=  t.tcp.city.id;
+    params.cid=  t.tcp.city.id;
 	params.type = "1";
 	params.xcoord = parseInt(document.getElementById ('ptcityX').value);
 	params.ycoord = parseInt(document.getElementById ('ptcityY').value);
@@ -8494,57 +8509,71 @@ var RefreshEvery  = {
   timer : null,
   PaintTimer : null,
   NextRefresh : 0,
-  content : null,
-  Original : null,
-  alliance: null,
+  box : null,
+  target : null,
   
   init : function (){
     var t = RefreshEvery;
-    t.Original = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
-    t.content = unsafeWindow.document.getElementById('comm_tabs').innerHTML;
-    t.alliance = getMyAlliance()[1];
-    if (t.alliance.length > 20) t.alliance = t.alliance.substr(0, 20);
-    t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ t.alliance + ' (' + GetServerId() +')</b></font>';
-    unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content ;    
-      if (Options.pbEveryMins < 1)
+	t.creatediv();
+	if (Options.pbEveryMins < 1)
         Options.pbEveryMins = 1;
-      RefreshEvery.setEnable (Options.pbEveryEnable);
+    RefreshEvery.setEnable (Options.pbEveryEnable);
   },
+  
+  creatediv : function(){
+    var t = RefreshEvery;
+	t.target = document.getElementById('comm_tabs');
+	if(t.target == null){
+		setTimeout(t.creatediv, 2000);
+		return;
+	}
+	t.box = document.createElement('div');
+	t.target.appendChild(t.box);
+  },
+  
   setEnable : function (tf){
     var t = RefreshEvery;
     clearTimeout (t.timer);
     if (tf) {
-      t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
+      //t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
       t.NextRefresh = unixTime() + (Options.pbEveryMins*60); 
-      t.PaintTimer = setTimeout (t.Paint, 1000);
-    }
-    else {
-        clearTimeout (t.PaintTimer);
-        t.content = t.Original;
-        t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ t.alliance + ' (' + GetServerId() +')</b></font>';
-        unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
-    }
+      t.timer = setTimeout (t.Paint, 1000);
+    } else {
+        //t.PaintTimer = null;
+		t.timer = null;
+		t.NextRefresh = 0;
+		t.box.innerHTML = '<BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
+	}
   },
+  
   doit : function (){
     actionLog ('Refreshing ('+ Options.pbEveryMins +' minutes expired)');
     reloadKOC();
   },
+  
   setTimer : function (){
+    var t = RefreshEvery;
     clearTimeout (t.timer);
     if (Options.pbEveryMins < 1) Options.pbEveryMins = 1;
     RefreshEvery.setEnable (Options.pbEveryEnable);
   },
+  
   Paint : function(){
      var t = RefreshEvery;
+	 if(t.timer == null) return;
      now = unixTime();
-     t.content = t.Original;
-     t.content += '<DIV><BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ t.alliance+ ' (' + GetServerId() +')</b></font>';
-     var Left = (t.NextRefresh - now);
-     if ( Left < 0) Left = 0;
-     if ( Left < 60) t.content += '<BR>Time untill next refresh: <FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
-     else t.content += '<BR>Time untill next refresh: <B>'+ timestr(Left) +'</b></div>';
-     unsafeWindow.document.getElementById('comm_tabs').innerHTML = t.content;
-     t.PaintTimer = setTimeout (t.Paint, 1000);
+     //var text = '<FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
+	 var text = '';
+     var Left = parseInt(t.NextRefresh - now);
+     if ( Left < 0){
+		Left = 0;
+		t.doit();
+	 }
+     if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
+     else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: <B>'+ timestr(Left) +'</b></font></div>';
+    
+	 t.box.innerHTML = text;
+     t.timer = setTimeout (t.Paint, 1000);
   },
 }
 
