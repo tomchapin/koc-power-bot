@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110816a
+// @version        20110817a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20110816a';
+var Version = '20110817a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -8137,6 +8137,7 @@ Tabs.AutoTrain = {
   },
   trainamt : function(cityId, unitId){
 	var t = Tabs.AutoTrain;
+	if(!unitId || unitId<1) return false;
 	var cost = unsafeWindow.unitcost['unt'+ unitId];
 	t.amt = (t.idle/cost[6]).toFixed(0);
 	if ((t.food/cost[1]) < t.amt) t.amt = (t.food/cost[1]).toFixed(0);
@@ -8146,7 +8147,7 @@ Tabs.AutoTrain = {
 	if(TrainOptions.SelectMax[t.city]){
 		if(t.amt > TrainOptions.Max[t.city]) t.amt = TrainOptions.Max[t.city];
 	}
-	if(t.amt < TrainOptions.Threshold[t.city]) t.amt = 0;
+	if(parseInt(t.amt) < parseInt(TrainOptions.Threshold[t.city])) t.amt = 0;
 	return t.amt>0?true:false;
   },
   nextcity : function(){
