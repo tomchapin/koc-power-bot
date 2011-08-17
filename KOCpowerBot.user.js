@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110817a
+// @version        20110817b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20110817a';
+var Version = '20110817b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3869,7 +3869,7 @@ Tabs.Test = {
 	   }
     m += '<TD><INPUT id=CrestHelp type=submit value="HELP"></td>';
     m += '<TD><INPUT id=pbsendreport type=checkbox '+ (Options.crestreport?' CHECKED':'') +'\> Send Crest report every ';
-    m += '<INPUT id=pbsendreportint value='+ Options.CrestMsgInterval +' type=text size=3 \> hours </td></table>';
+    m += '<INPUT id=pbsendcrestreportint value='+ Options.CrestMsgInterval +' type=text size=3 \> hours </td></table>';
     
     m += '<DIV id=pbOpt class=pbStat>CRESTING OPTIONS</div><TABLE id=pbcrestopt	 width=100% height=0% class=pbTab><TR align="center"></table>';
     m += '<DIV style="margin-bottom:10px;">Crest from city: <span id=crestcity></span></div>';
@@ -3893,6 +3893,10 @@ Tabs.Test = {
 	
 	document.getElementById('pbsendreport').addEventListener('change', function(){
 		Options.crestreport = document.getElementById('pbsendreport').checked;
+		saveOptions();
+	}, false);
+	document.getElementById('pbsendcrestreportint').addEventListener('change', function(){
+		Options.CrestMsgInterval = parseInt(document.getElementById('pbsendcrestreportint').value);
 		saveOptions();
 	}, false);
     
