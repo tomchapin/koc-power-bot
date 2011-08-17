@@ -1,6 +1,9 @@
 REVISION HISTORY:
 ----------------
 
+20110817a
+   *Fixed minimum troops not working
+   *Fixed init error for auto train tab
 20110816a
    *Fixed build help not publishing to alliance chat
    *Enhancements to autotrain logic
@@ -10,7 +13,6 @@ REVISION HISTORY:
    *Added current troop count for reinforce tab
    *Fixed popup error showing [object][object] message
    *Added resource tab
-
 20110718d
    *Fixed widescreen
    *Added food gain report for raid tab
