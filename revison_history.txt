@@ -1,6 +1,9 @@
 REVISION HISTORY:
 ----------------
 
+20110816a
+   *Fixed build help not publishing to alliance chat
+   *Enhancements to autotrain logic
 20110723a
    *Added crest report for auto cresting
    *Fixed widescreen for users still displaying ads
