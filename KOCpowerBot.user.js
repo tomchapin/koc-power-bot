@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110809a
+// @version        20110816a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20110809a';
+var Version = '20110816a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -425,7 +425,6 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
-  setInterval (AutoTrain,30* 1000);
 }
 
 /************************ Food Alerts *************************/
@@ -7947,454 +7946,131 @@ Tabs.AutoTrain = {
   tabOrder: 120,
   tabLabel: 'AutoTrain',
   myDiv: null,
+  city:0,
   
-  
-      init: function(div){
-		var t = Tabs.AutoTrain;
-        t.myDiv = div;
-        t.myDiv.style.overflowY = 'scroll';
-					  
-      var m = '<DIV id=pbAT class=pbStat>AUTO TRAIN</div><TABLE id=pbAT width=100% height=0% class=pbTab><TR>';
-      if (TrainOptions.Running == false) {
-          m += '<TD align=left><INPUT id=pbAutoTrainState type=submit value="AutoTrain = OFF"></td>';
-      }else {
-          m += '<TD align=center><INPUT id=pbAutoTrainState   type=submit value="AutoTrain = ON"></td>';
-      }
-      m += '<TD align=center><INPUT id=pbShowTrainHelp type=submit value="Help"></td>';
-      m += '</tr></table></div>';
-      
-      m += '<DIV id=pbAT class=pbStat>TRAIN OPTIONS</div><TABLE id=pbAT width=100% height=0% class=pbTab><TR align="center">';
+  init: function(div){
+	var t = Tabs.AutoTrain;
+    t.myDiv = div;
+    t.myDiv.style.overflowY = 'auto';
+	t.city = 0;
+	t.nextcity();
+	
+    var m = '<DIV class=pbStat>AUTO TRAIN</div><TABLE width=100% height=0% class=pbTab><TR><TD width=200></td>';
+        m += '<TD align=center><INPUT id=pbAutoTrainState type=submit value="AutoTrain = '+ (TrainOptions.Running?'ON':'OFF')+'"></td>';
+        m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value="HELP"></td>';
+        m += '</tr></table></div>';
+        m += '<DIV class=pbStat>TRAIN OPTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 
-      for (i=0;i<Seed.cities.length;i++){
-      	  city = i+1;
-      	   m += '<TABLE id=pbTrain width=100% height=0% class=pbTab><TR align="left">';
-      	  m+='<TR><TD width=30px><INPUT type=checkbox id="SelectCity'+city+'"></td><TD width = 100px><B>'+ Seed.cities[i][1] +'</b></td>';
-	      m += '<TD width=150px><SELECT id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
-	      for (y in unsafeWindow.unitcost) m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
-	      m+='</select></td>';
-	      m +='<TD width=100px>Min.: <INPUT id=treshold'+city+' type=text size=4 maxlength=4 value="'+ TrainOptions.Threshold[city]+'"\></td>';
-	      m +='<TD width=130px><INPUT type=checkbox id="SelectMax'+city+'"> Max.: <INPUT id=max'+city+' type=text size=5 maxlength=5 value="'+ TrainOptions.Max[city]+'"\></td>';
-	      m +='<TD>Use Workers: ';
-        m+='<SELECT id="workers'+city+'"><option value="0">0%</options>';
+    for (i=0;i<Seed.cities.length;i++){
+		city = i+1;
+      	m += '<TABLE id=pbTrain width=100% height=0% class=pbTab><TR align="left">';
+      	m+='<TR><TD width=30px><INPUT type=checkbox class='+city+' id="SelectCity'+city+'"></td><TD width = 100px><B>'+ Seed.cities[i][1] +'</b></td>';
+	    m += '<TD width=150px><SELECT class='+city+' id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
+	    for (y in unsafeWindow.unitcost) m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
+	    m+='</select></td>';
+	    m +='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=4 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
+	    m +='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> Max.: <INPUT class='+city+' id=max'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
+	    m +='<TD>Use Workers: ';
+        m+='<SELECT class='+city+' id="workers'+city+'"><option value="0">0%</options>';
         m+='<option value="25">25%</options>';
         m+='<option value="50">50%</options>';
         m+='<option value="75">75%</options>';
         m+='<option value="100">100%</options>';
         m+='</td></tr></table>';
-	       m += '<TABLE id=pbTrain width=80% height=0% class=pbTab><TR align="left">';
+	    m += '<TABLE id=pbTrain width=80% height=0% class=pbTab><TR align="left">';
         m += '<TD width=40px></td><TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
-	      m += '<TD><INPUT id="KeepFood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
-	      m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
-	      m += '<TD><INPUT id="KeepWood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
-	      m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
-	      m += '<TD><INPUT id="KeepStone'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
-	      m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
-	      m += '<TD><INPUT id="KeepOre'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
+	    m += '<TD><INPUT class='+city+' id="KeepFood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
+	    m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
+	    m += '<TD><INPUT class='+city+' id="KeepWood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
+	    m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
+	    m += '<TD><INPUT class='+city+' id="KeepStone'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
+	    m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
+	    m += '<TD><INPUT class='+city+' id="KeepOre'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
 	      
-	      m += '<TD><SELECT id="Resource'+city+'"><option value="true">Keep</options>';
-	      m+='<option value="false">Use</option>';
-	      m+='</select></td></tr>';	    
+	    m += '<TD><SELECT class='+city+' id="Resource'+city+'"><option value="true">Keep</options>';
+	    m+='<option value="false">Use</option>';
+	    m+='</select></td></tr>';	    
 	         
-	  }
-	  m+='</table>';
+	}
+	    m+='</table>';
       
-      t.myDiv.innerHTML = m;
+		t.myDiv.innerHTML = m;
       
-      for (i=0;i<Seed.cities.length;i++){
-           city = i+1;
-           document.getElementById('TroopsCity'+city).value = TrainOptions.Troops[city];
-           document.getElementById('SelectCity'+city).checked = TrainOptions.Enabled[city];
-           document.getElementById('Resource'+city).value = TrainOptions.Resource[city];
-           document.getElementById('SelectMax'+city).checked = TrainOptions.SelectMax[city];
-           document.getElementById('workers'+city).value = TrainOptions.Workers[city];
-           if (!TrainOptions.SelectMax[city]) document.getElementById('max'+city).disabled=true;
-      }
+    for (i=0;i<Seed.cities.length;i++){
+        city = i+1;
+        document.getElementById('TroopsCity'+city).value = TrainOptions.Troops[city];
+        document.getElementById('SelectCity'+city).checked = TrainOptions.Enabled[city];
+        document.getElementById('Resource'+city).value = TrainOptions.Resource[city];
+        document.getElementById('SelectMax'+city).checked = TrainOptions.SelectMax[city];
+        document.getElementById('workers'+city).value = TrainOptions.Workers[city];
+        if (!TrainOptions.SelectMax[city]) document.getElementById('max'+city).disabled=true;
+    }
        
-       document.getElementById('pbShowTrainHelp').addEventListener('click', function(){
-       	t.helpPop(this);
-       }, false);
+    document.getElementById('pbShowTrainHelp').addEventListener('click', function(){
+		t.helpPop(this);
+    }, false);
        
-       document.getElementById('pbAutoTrainState').addEventListener('click', function(){
-      	t.toggleAutoTrainState(this);
-      }, false);
-       
-      if (Seed.cities.length >= 1){
-      	   document.getElementById('treshold1').addEventListener('change', function(){
-      	   	   if (isNaN(document.getElementById('treshold1').value)) document.getElementById('treshold1').value=0 ;
-      	       TrainOptions.Threshold['1'] = document.getElementById('treshold1').value;
-      	       saveTrainOptions();
-      	    }, false);
-      	  document.getElementById('SelectMax1').addEventListener('change', function(){
- 			          TrainOptions.SelectMax['1'] = document.getElementById('SelectMax1').checked;
- 			          if (!TrainOptions.SelectMax['1']) document.getElementById('max1').disabled=true;
- 			          else document.getElementById('max1').disabled=false; 
- 			          saveTrainOptions();
- 			    }, false);
- 			    document.getElementById('max1').addEventListener('change', function(){
-      	       TrainOptions.Max['1'] = document.getElementById('max1').value;
-      	       saveTrainOptions();
-      	    }, false);
-      	    document.getElementById('workers1').addEventListener('change', function(){
-      	       TrainOptions.Workers['1'] = document.getElementById('workers1').value;
-      	       saveTrainOptions();
-      	    }, false);
- 			    document.getElementById('Resource1').addEventListener('change', function(){
- 			    TrainOptions.Resource['1'] = document.getElementById('Resource1').checked;
- 			    saveTrainOptions();
- 			    }, false);
-           document.getElementById('SelectCity1').addEventListener('change', function(){
-               TrainOptions.Enabled['1'] = document.getElementById('SelectCity1').checked;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('TroopsCity1').addEventListener('change', function(){
-      	       TrainOptions.Troops['1'] = document.getElementById('TroopsCity1').value;
-               saveTrainOptions();
-      	  }, false);
-      	  
-      	  document.getElementById('KeepFood1').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepFood1').value)) document.getElementById('KeepFood1').value=0 ;
-               TrainOptions.Keep['1']['Food'] = parseInt(document.getElementById('KeepFood1').value);
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepWood1').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepWood1').value)) document.getElementById('KeepWood1').value=0 ;
-               TrainOptions.Keep['1']['Wood'] = document.getElementById('KeepWood1').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepStone1').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepStone1').value)) document.getElementById('KeepStone1').value=0 ;
-               TrainOptions.Keep['1']['Stone'] = document.getElementById('KeepStone1').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepOre1').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepOre1').value)) document.getElementById('KeepOre1').value=0 ;
-               TrainOptions.Keep['1']['Ore'] = document.getElementById('KeepOre1').value;
-               saveTrainOptions();
-      	  }, false);
-     }
-     if (Seed.cities.length >= 2){
-     	    document.getElementById('treshold2').addEventListener('change', function(){
-     	    	if (isNaN(document.getElementById('treshold2').value)) document.getElementById('treshold2').value=0 ;
-     	         TrainOptions.Threshold['2'] = document.getElementById('treshold2').value;
-     	         saveTrainOptions();
-     	      }, false);
-     	            	  document.getElementById('SelectMax2').addEventListener('change', function(){
- 			          TrainOptions.SelectMax['2'] = document.getElementById('SelectMax2').checked;
- 			          if (!TrainOptions.SelectMax['2']) document.getElementById('max2').disabled=true;
- 			          else document.getElementById('max2').disabled=false; 
- 			          saveTrainOptions();
- 			    }, false);
- 			    document.getElementById('max2').addEventListener('change', function(){
-      	       TrainOptions.Max['2'] = document.getElementById('max2').value;
-      	       saveTrainOptions();
-      	    }, false);
-     	      document.getElementById('workers2').addEventListener('change', function(){
-      	       TrainOptions.Workers['2'] = document.getElementById('workers2').value;
-      	       saveTrainOptions();
-      	    }, false);
-     	    	document.getElementById('Resource2').addEventListener('change', function(){
-     	    	    TrainOptions.Resource['2'] = document.getElementById('Resource2').checked;
-     	    	    saveTrainOptions();
-     	    	 }, false);
-           document.getElementById('SelectCity2').addEventListener('change', function(){
-               TrainOptions.Enabled['2'] = document.getElementById('SelectCity2').checked;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('TroopsCity2').addEventListener('change', function(){
-      	       TrainOptions.Troops['2'] = document.getElementById('TroopsCity2').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepFood2').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepFood2').value)) document.getElementById('KeepFood2').value=0 ;
-               TrainOptions.Keep['2']['Food'] = document.getElementById('KeepFood2').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepWood2').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepWood2').value)) document.getElementById('KeepWood2').value=0 ;
-               TrainOptions.Keep['2']['Wood'] = document.getElementById('KeepWood2').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepStone2').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepStone2').value)) document.getElementById('KeepStone2').value=0 ;
-               TrainOptions.Keep['2']['Stone'] = document.getElementById('KeepStone2').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepOre2').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepOre2').value)) document.getElementById('KeepOre2').value=0 ;
-               TrainOptions.Keep['2']['Ore'] = document.getElementById('KeepOre2').value;
-               saveTrainOptions();
-      	  }, false);
-     }
-     if (Seed.cities.length >= 3){
-     		document.getElementById('treshold3').addEventListener('change', function(){
-     			 if (isNaN(document.getElementById('treshold3').value)) document.getElementById('treshold3').value=0 ;
-     		     TrainOptions.Threshold['3'] = document.getElementById('treshold3').value;
-     		     saveTrainOptions();
-     		  }, false);
-     		        	  document.getElementById('SelectMax3').addEventListener('change', function(){
- 			          TrainOptions.SelectMax['3'] = document.getElementById('SelectMax3').checked;
- 			          if (!TrainOptions.SelectMax['3']) document.getElementById('max3').disabled=true;
- 			          else document.getElementById('max3').disabled=false; 
- 			          saveTrainOptions();
- 			    }, false);
- 			    document.getElementById('max3').addEventListener('change', function(){
-      	       TrainOptions.Max['3'] = document.getElementById('max3').value;
-      	       saveTrainOptions();
-      	    }, false);
-     		  document.getElementById('workers3').addEventListener('change', function(){
-      	       TrainOptions.Workers['3'] = document.getElementById('workers3').value;
-      	       saveTrainOptions();
-      	    }, false);
-     			document.getElementById('Resource3').addEventListener('change', function(){
-     			    TrainOptions.Resource['3'] = document.getElementById('Resource3').checked;
-     			    saveTrainOptions();
-     			 }, false);
-           document.getElementById('SelectCity3').addEventListener('change', function(){
-               TrainOptions.Enabled['3'] = document.getElementById('SelectCity3').checked;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('TroopsCity3').addEventListener('change', function(){
-      	       TrainOptions.Troops['3'] = document.getElementById('TroopsCity3').value;
-               saveTrainOptions();
-      	  }, false);
-      	  
-      	  document.getElementById('KeepFood3').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepFood3').value)) document.getElementById('KeepFood3').value=0 ;
-               TrainOptions.Keep['3']['Food'] = document.getElementById('KeepFood3').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepWood3').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepWood3').value)) document.getElementById('KeepWood3').value=0 ;
-               TrainOptions.Keep['3']['Wood'] = document.getElementById('KeepWood3').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepStone3').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepStone3').value)) document.getElementById('KeepStone3').value=0 ;
-               TrainOptions.Keep['3']['Stone'] = document.getElementById('KeepStone3').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepOre3').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepOre3').value)) document.getElementById('KeepOre3').value=0 ;
-               TrainOptions.Keep['3']['Ore'] = document.getElementById('KeepOre3').value;
-               saveTrainOptions();
-      	  }, false);
-     }  
-     if (Seed.cities.length >= 4){
-     		document.getElementById('treshold4').addEventListener('change', function(){
-     		     if (isNaN(document.getElementById('treshold4').value)) document.getElementById('treshold4').value=0 ;
-     		     TrainOptions.Threshold['4'] = document.getElementById('treshold4').value;
-     		     saveTrainOptions();
-     		  }, false);
-     		        	  document.getElementById('SelectMax4').addEventListener('change', function(){
- 			          TrainOptions.SelectMax['4'] = document.getElementById('SelectMax4').checked;
- 			          if (!TrainOptions.SelectMax['4']) document.getElementById('max4').disabled=true;
- 			          else document.getElementById('max4').disabled=false; 
- 			          saveTrainOptions();
- 			    }, false);
- 			    document.getElementById('max4').addEventListener('change', function(){
-      	       TrainOptions.Max['4'] = document.getElementById('max4').value;
-      	       saveTrainOptions();
-      	    }, false);
-     		  document.getElementById('workers4').addEventListener('change', function(){
-      	       TrainOptions.Workers['4'] = document.getElementById('workers4').value;
-      	       saveTrainOptions();
-      	    }, false);
-     			document.getElementById('Resource4').addEventListener('change', function(){
-     			    TrainOptions.Resource['4'] = document.getElementById('Resource4').checked;
-     			    saveTrainOptions();
-     			 }, false);
-           document.getElementById('SelectCity4').addEventListener('change', function(){
-               TrainOptions.Enabled['4'] = document.getElementById('SelectCity4').checked;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('TroopsCity4').addEventListener('change', function(){
-      	       TrainOptions.Troops['4'] = document.getElementById('TroopsCity4').value;
-               saveTrainOptions();
-      	  }, false);
-      	  
-      	  document.getElementById('KeepFood4').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepFood4').value)) document.getElementById('KeepFood4').value=0 ;
-               TrainOptions.Keep['4']['Food'] = document.getElementById('KeepFood4').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepWood4').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepWood4').value)) document.getElementById('KeepWood4').value=0 ;
-               TrainOptions.Keep['4']['Wood'] = document.getElementById('KeepWood4').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepStone4').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepStone4').value)) document.getElementById('KeepStone4').value=0 ;
-               TrainOptions.Keep['4']['Stone'] = document.getElementById('KeepStone4').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepOre4').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepOre4').value)) document.getElementById('KeepOre4').value=0 ;
-               TrainOptions.Keep['4']['Ore'] = document.getElementById('KeepOre4').value;
-               saveTrainOptions();
-      	  }, false);
-     }
-     if (Seed.cities.length >= 5){
-     		document.getElementById('treshold5').addEventListener('change', function(){
-     		     if (isNaN(document.getElementById('treshold5').value)) document.getElementById('treshold5').value=0 ;
-     		     TrainOptions.Threshold['5'] = document.getElementById('treshold5').value;
-     		     saveTrainOptions();
-     		  }, false);
-     		        	  document.getElementById('SelectMax5').addEventListener('change', function(){
- 			          TrainOptions.SelectMax['5'] = document.getElementById('SelectMax5').checked;
- 			          if (!TrainOptions.SelectMax['5']) document.getElementById('max5').disabled=true;
- 			          else document.getElementById('max5').disabled=false; 
- 			          saveTrainOptions();
- 			    }, false);
- 			    document.getElementById('max5').addEventListener('change', function(){
-      	       TrainOptions.Max['5'] = document.getElementById('max5').value;
-      	       saveTrainOptions();
-      	    }, false);
-     		  document.getElementById('workers5').addEventListener('change', function(){
-      	       TrainOptions.Workers['5'] = document.getElementById('workers5').value;
-      	       saveTrainOptions();
-      	    }, false);
-     			document.getElementById('Resource5').addEventListener('change', function(){
-     			    TrainOptions.Resource['5'] = document.getElementById('Resource5').checked;
-     			    saveTrainOptions();
-     			 }, false);
-           document.getElementById('SelectCity5').addEventListener('change', function(){
-               TrainOptions.Enabled['5'] = document.getElementById('SelectCity5').checked;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('TroopsCity5').addEventListener('change', function(){
-      	       TrainOptions.Troops['5'] = document.getElementById('TroopsCity5').value;
-               saveTrainOptions();
-      	  }, false);
-      	  
-      	  document.getElementById('KeepFood5').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepFood5').value)) document.getElementById('KeepFood5').value=0 ;
-               TrainOptions.Keep['5']['Food'] = document.getElementById('KeepFood5').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepWood5').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepWood5').value)) document.getElementById('KeepWood5').value=0 ;
-               TrainOptions.Keep['5']['Wood'] = document.getElementById('KeepWood5').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepStone5').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepStone5').value)) document.getElementById('KeepStone5').value=0 ;
-               TrainOptions.Keep['5']['Stone'] = document.getElementById('KeepStone5').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepOre5').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepOre5').value)) document.getElementById('KeepOre5').value=0 ;
-               TrainOptions.Keep['5']['Ore'] = document.getElementById('KeepOre5').value;
-               saveTrainOptions();
-      	  }, false);
-     }
-     if (Seed.cities.length >= 6){
-     		document.getElementById('treshold6').addEventListener('change', function(){
-     		     if (isNaN(document.getElementById('treshold6').value)) document.getElementById('treshold6').value=0 ;
-     		     TrainOptions.Threshold['6'] = document.getElementById('treshold6').value;
-     		     saveTrainOptions();
-     		  }, false);
-     		        	  document.getElementById('SelectMax6').addEventListener('change', function(){
- 			          TrainOptions.SelectMax['6'] = document.getElementById('SelectMax6').checked;
- 			          if (!TrainOptions.SelectMax['6']) document.getElementById('max6').disabled=true;
- 			          else document.getElementById('max6').disabled=false; 
- 			          saveTrainOptions();
- 			    }, false);
- 			    document.getElementById('max6').addEventListener('change', function(){
-      	       TrainOptions.Max['6'] = document.getElementById('max6').value;
-      	       saveTrainOptions();
-      	    }, false);
-     		  document.getElementById('workers6').addEventListener('change', function(){
-      	       TrainOptions.Workers['6'] = document.getElementById('workers6').value;
-      	       saveTrainOptions();
-      	    }, false);
-     			document.getElementById('Resource6').addEventListener('change', function(){
-     			    TrainOptions.Resource['6'] = document.getElementById('Resource6').checked;
-     			    saveTrainOptions();
-     			 }, false);
-           document.getElementById('SelectCity6').addEventListener('change', function(){
-               TrainOptions.Enabled['6'] = document.getElementById('SelectCity6').checked;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('TroopsCity6').addEventListener('change', function(){
-      	       TrainOptions.Troops['6'] = document.getElementById('TroopsCity6').value;
-               saveTrainOptions();
-      	  }, false);
-      	  
-      	  document.getElementById('KeepFood6').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepFood6').value)) document.getElementById('KeepFood6').value=0 ;
-               TrainOptions.Keep['6']['Food'] = document.getElementById('KeepFood6').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepWood6').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepWood6').value)) document.getElementById('KeepWood6').value=0 ;
-               TrainOptions.Keep['6']['Wood'] = document.getElementById('KeepWood6').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepStone6').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepStone6').value)) document.getElementById('KeepStone6').value=0 ;
-               TrainOptions.Keep['6']['Stone'] = document.getElementById('KeepStone6').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepOre6').addEventListener('keyup', function(){
-      	       if (isNaN(document.getElementById('KeepOre6').value)) document.getElementById('KeepOre6').value=0 ;
-               TrainOptions.Keep['6']['Ore'] = document.getElementById('KeepOre6').value;
-               saveTrainOptions();
-      	  }, false);
-     }
-     if (Seed.cities.length >= 7){
-     		document.getElementById('treshold7').addEventListener('change', function(){
-     		     if (isNaN(document.getElementById('treshold7').value)) document.getElementById('treshold7').value=0 ;
-     		     TrainOptions.Threshold['7'] = document.getElementById('treshold7').value;
-     		     saveTrainOptions();
-     		  }, false);
-     		        	  document.getElementById('SelectMax7').addEventListener('change', function(){
- 			          TrainOptions.SelectMax['7'] = document.getElementById('SelectMax7').checked;
- 			          if (!TrainOptions.SelectMax['7']) document.getElementById('max7').disabled=true;
- 			          else document.getElementById('max7').disabled=false; 
- 			          saveTrainOptions();
- 			    }, false);
- 			    document.getElementById('max7').addEventListener('change', function(){
-      	       TrainOptions.Max['7'] = document.getElementById('max7').value;
-      	       saveTrainOptions();
-      	    }, false);
-     		  document.getElementById('workers7').addEventListener('change', function(){
-      	       TrainOptions.Workers['7'] = document.getElementById('workers7').value;
-      	       saveTrainOptions();
-      	    }, false);
-     			document.getElementById('Resource7').addEventListener('change', function(){
-     			    TrainOptions.Resource['7'] = document.getElementById('Resource7').checked;
-     			    saveTrainOptions();
-     			 }, false);
-           document.getElementById('SelectCity7').addEventListener('change', function(){
-               TrainOptions.Enabled['7'] = document.getElementById('SelectCity7').checked;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('TroopsCity7').addEventListener('change', function(){
-      	       TrainOptions.Troops['7'] = document.getElementById('TroopsCity7').value;
-               saveTrainOptions();
-      	  }, false);
-      	  
-      	  document.getElementById('KeepFood7').addEventListener('change', function(){
-      	       if (isNaN(document.getElementById('KeepFood7').value)) document.getElementById('KeepFood7').value=0 ;
-               TrainOptions.Keep['7']['Food'] = document.getElementById('KeepFood7').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepWood7').addEventListener('change', function(){
-      	       if (isNaN(document.getElementById('KeepWood7').value)) document.getElementById('KeepWood7').value=0 ;
-               TrainOptions.Keep['7']['Wood'] = document.getElementById('KeepWood7').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepStone7').addEventListener('change', function(){
-      	       if (isNaN(document.getElementById('KeepStone7').value)) document.getElementById('KeepStone7').value=0 ;
-               TrainOptions.Keep['7']['Stone'] = document.getElementById('KeepStone7').value;
-               saveTrainOptions();
-      	  }, false);
-      	  document.getElementById('KeepOre7').addEventListener('change', function(){
-      	       if (isNaN(document.getElementById('KeepOre7').value)) document.getElementById('KeepOre7').value=0 ;
-               TrainOptions.Keep['7']['Ore'] = document.getElementById('KeepOre7').value;
-               saveTrainOptions();
-      	  }, false);
-     } 
+    document.getElementById('pbAutoTrainState').addEventListener('click', function(){
+		t.toggleAutoTrainState(this);
+    }, false);
+
+	for(var k=1; k<=Seed.cities.length; k++){
+     	document.getElementById('treshold'+k).addEventListener('change', function(e){
+     	    if (isNaN(e.target.value)) e.target.value=0 ;
+			TrainOptions.Threshold[e.target['className']] = e.target.value;
+     		saveTrainOptions();
+     	}, false);
+     	document.getElementById('SelectMax'+k).addEventListener('change', function(e){
+ 		    TrainOptions.SelectMax[e.target['className']] = e.target.checked;
+ 		    if (!TrainOptions.SelectMax[e.target['className']]){
+				document.getElementById('max'+e.target['className']).value = 0;
+				document.getElementById('max'+e.target['className']).disabled=true;
+			} else {
+				document.getElementById('max'+e.target['className']).disabled=false;
+			}
+			saveTrainOptions();
+ 	    }, false);
+ 		document.getElementById('max'+k).addEventListener('change', function(e){
+      	    TrainOptions.Max[e.target['className']] = e.target.value;
+      	    saveTrainOptions();
+      	}, false);
+     		document.getElementById('workers'+k).addEventListener('change', function(e){
+      	    TrainOptions.Workers[e.target['className']] = e.target.value;
+      	    saveTrainOptions();
+      	}, false);
+     	document.getElementById('Resource'+k).addEventListener('change', function(e){
+			TrainOptions.Resource[e.target['className']] = e.target.value;
+     		saveTrainOptions();
+		}, false);
+        document.getElementById('SelectCity'+k).addEventListener('change', function(e){
+            TrainOptions.Enabled[e.target['className']] = e.target.checked;
+			saveTrainOptions();
+      	}, false);
+      	document.getElementById('TroopsCity'+k).addEventListener('change', function(e){
+			TrainOptions.Troops[e.target['className']] = e.target.value;
+            saveTrainOptions();
+      	}, false);
+      	document.getElementById('KeepFood'+k).addEventListener('change', function(e){
+			if (isNaN(e.target.value)) e.target.value=0 ;
+            TrainOptions.Keep[e.target['className']]['Food'] = e.target.value;
+            saveTrainOptions();
+      	}, false);
+      	document.getElementById('KeepWood'+k).addEventListener('change', function(e){
+      	    if (isNaN(e.target.value)) e.target.value=0 ;
+            TrainOptions.Keep[e.target['className']]['Wood'] = e.target.value;
+            saveTrainOptions();
+      	}, false);
+      	document.getElementById('KeepStone'+k).addEventListener('change', function(e){
+			if (isNaN(e.target.value)) e.target.value=0 ;
+            TrainOptions.Keep[e.target['className']]['Stone'] = e.target.value;
+            saveTrainOptions();
+      	}, false);
+      	document.getElementById('KeepOre'+k).addEventListener('change', function(e){
+      	    if (isNaN(e.target.value)) e.target.value=0 ;
+            TrainOptions.Keep[e.target['className']]['Ore'] = e.target.value;
+            saveTrainOptions();
+      	}, false);
+    } 
   },
   
   
@@ -8415,29 +8091,108 @@ Tabs.AutoTrain = {
   },
   
   toggleAutoTrainState: function(obj){
-		var t = Tabs.AutoTrain;
-        if (TrainOptions.Running == true) {
-            TrainOptions.Running = false;
-            obj.value = "AutoTrain = OFF";
-        }
-        else {
-            TrainOptions.Running = true;
-            obj.value = "AutoTrain = ON";
-        }
-        saveTrainOptions();
-    },
+	var t = Tabs.AutoTrain;
+    if (TrainOptions.Running == true) {
+        TrainOptions.Running = false;
+        obj.value = "AutoTrain = OFF";
+    }
+    else {
+        TrainOptions.Running = true;
+        obj.value = "AutoTrain = ON";
+		t.nextcity();
+    }
+    saveTrainOptions();
+  },
     
-	show: function(){
-		var t = Tabs.AutoTrain;
-    },
-	hide: function(){
-        var t = Tabs.AutoTrain;
-    },
-    onUnload: function(){
-    },
+  show: function(){
+	var t = Tabs.AutoTrain;
+  },
+  hide: function(){
+    var t = Tabs.AutoTrain;
+  },
+  
+  checkidlepopulation : function(cityId){
+	var t = Tabs.AutoTrain;
+	t.idle = parseInt(Seed.citystats['city'+cityId].pop[0]) - parseInt(Seed.citystats['city'+cityId].pop[3]);
+	t.idle = (TrainOptions.Workers[t.city]/100)*t.idle;
+	return t.idle>0?true:false;
+  },
+  checktrainslots : function(cityId){
+	var t = Tabs.AutoTrain;
+	t.barracks = getCityBuilding(cityId, 13).count;
+	t.slots = Seed.queue_unt['city'+cityId].length;
+	t.empty = parseInt(t.barracks - t.slots);
+	return t.empty>0?true:false;
+  },
+  checkresources : function(cityId){
+	var t = Tabs.AutoTrain;
+	t.food = parseInt((Seed.resources['city'+cityId].rec1[0]/3600) - TrainOptions['Keep'][t.city]['Food']);
+	t.wood = parseInt((Seed.resources['city'+cityId].rec2[0]/3600) - TrainOptions['Keep'][t.city]['Wood']);
+	t.stone = parseInt((Seed.resources['city'+cityId].rec3[0]/3600) - TrainOptions['Keep'][t.city]['Stone']);
+	t.ore = parseInt((Seed.resources['city'+cityId].rec4[0]/3600) - TrainOptions['Keep'][t.city]['Ore']);
+	if(t.food>0 && t.wood>0 && t.stone>0 && t.ore>0){
+		return true;
+	}
+	return false;
+  },
+  trainamt : function(cityId, unitId){
+	var t = Tabs.AutoTrain;
+	var cost = unsafeWindow.unitcost['unt'+ unitId];
+	t.amt = (t.idle/cost[6]).toFixed(0);
+	if ((t.food/cost[1]) < t.amt) t.amt = (t.food/cost[1]).toFixed(0);
+	if ((t.wood/cost[2]) < t.amt) t.amt = (t.wood/cost[2]).toFixed(0);
+	if ((t.stone/cost[3]) < t.amt) t.amt = (t.stone/cost[3]).toFixed(0);
+	if ((t.ore/cost[4]) < t.amt) t.amt = (t.ore/cost[4]).toFixed(0);
+	if(TrainOptions.SelectMax[t.city]){
+		if(t.amt > TrainOptions.Max[t.city]) t.amt = TrainOptions.Max[t.city];
+	}
+	if(t.amt < TrainOptions.Threshold[t.city]) t.amt = 0;
+	return t.amt>0?true:false;
+  },
+  nextcity : function(){
+	var t = Tabs.AutoTrain;
+	if (!TrainOptions.Running) return;
+	t.city++;
+	if(t.city > Seed.cities.length) t.city = 1;
+	var cityId = Seed.cities[t.city-1][0];
+	var idle = t.checkidlepopulation(cityId);
+	var trainslots = t.checktrainslots(cityId);
+	var resources = t.checkresources(cityId);
+	var train = t.trainamt(cityId, TrainOptions['Troops'][t.city]);
+	if(!TrainOptions.Enabled[t.city] || TrainOptions['Troops'][t.city]==0 || !idle || !trainslots || !resources || !train){
+		setTimeout(t.nextcity, 5000);
+		return;
+	}
+	t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity);
+  },
+  doTrain : function (cityId, unitId, num, notify){
+	var time = unsafeWindow.modal_barracks_traintime(unitId, num);
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	params.cid = cityId;
+	params.type = unitId;
+	params.quant = num;
+
+	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
+		method: "post",
+		parameters: params,
+		onSuccess: function(rslt) {
+		  if (rslt.ok) {
+			for (var i = 1; i < 5; i++) {
+			  unsafeWindow.seed.resources["city" + cityId]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num)
+			}
+			unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
+			unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(num);
+			unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
+			setTimeout (notify, 10000);
+			for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
+			actionLog(logcity  + ' Train ' + num + ':  ' + troops[unitId] );
+		  } else {
+			setTimeout (notify, 10000);
+		  }
+		},
+	});
+  },
 }
-
-
 
 /************************ Gold Collector ************************/
 var CollectGold = {
@@ -12334,14 +12089,6 @@ function DoUnsafeWindow(func, execute_by_embed) {
 	}
 }	
 
-function GetServerId() {
-  var m=/^[a-zA-Z]+([0-9]+)\./.exec(document.location.hostname);
-  if(m)
-    return m[1];
-  return '';
-}
-
-
 function GetDisplayName(){
 	var DisplayName = document.getElementById('topnavDisplayName');
 	if(DisplayName){
@@ -12465,106 +12212,6 @@ function AjaxRequest2 (url, opts){
         ajax.send();
     }
 }
-
-
-function AutoTrain(){
-     if (!TrainOptions.Running) return;
-     if (TrainCity > (Seed.cities.length-1)) TrainCity = 0;
-     if (!TrainOptions.Enabled[(TrainCity+1)]) {
-     	TrainCity++;
-     	return;
-     }
-     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-     var logcity=null;
-     var troops = {1:'SupplyTroops',
-                    2:'Militiaman',
-                    3:'Scouts',
-                    4:'Pikeman',
-                    5:'Swordsman',
-                    6:'Archers',
-                    7:'Cavalry',
-                    8:'Heavy Cavalry',
-                    9:'Supply Wagons',
-                    10:'Ballista',
-                    11:'Battering Rams',
-                    12:'Catapults'}; 
-     cityId = Seed.cities[TrainCity][0];
-     var unitId = TrainOptions['Troops'][(TrainCity+1)];
-     if (unitId == 0) {
-        logit (TrainCity+': No trooptype selected');
-        TrainCity++;
-        return;
-     }
-     var cost = unsafeWindow.unitcost['unt'+ unitId];
-     var baracks = 0;
-     var slots = false;
-     if (TrainOptions.Workers[(TrainCity+1)] != 0) {
-          idle=parseInt(Seed.citystats['city'+Seed.cities[TrainCity][0]].pop[0]);
-          idle = parseInt( (idle/100)* TrainOptions.Workers[(TrainCity+1)] );
-     }
-     else 
-      idle = parseInt(Seed.citystats['city'+Seed.cities[TrainCity][0]].pop[0]) - parseInt(Seed.citystats['city'+Seed.cities[TrainCity][0]].pop[3]);
-     if (idle < 0) idle = 0; 
-     for (i=1;i<=12;i++){
-        if (unitId == i) idle = (idle / cost[6]).toFixed(0);
-        idle = idle-1;
-     }
-     if (TrainOptions.SelectMax[(TrainCity+1)] && TrainOptions.Max[(TrainCity+1)] <idle) idle = TrainOptions.Max[(TrainCity+1)];
-     
-	     if (TrainOptions.Resource[(TrainCity+1)]){
-	     Food = parseInt(Seed.resources["city" + cityId]['rec1'][0]/3600);
-	     Wood = parseInt(Seed.resources["city" + cityId]['rec2'][0]/3600);
-	     Stone = parseInt(Seed.resources["city" + cityId]['rec3'][0]/3600);
-	     Ore = parseInt(Seed.resources["city" + cityId]['rec4'][0]/3600);
-	     if (Food <= parseInt(TrainOptions['Keep'][(TrainCity+1)]['Food'])) {TrainCity++;return;}
-	     if (Wood <= parseInt(TrainOptions['Keep'][(TrainCity+1)]['Wood']))  {TrainCity++;return;}
-	     if (Stone <= parseInt(TrainOptions['Keep'][(TrainCity+1)]['Stone']))  {TrainCity++;return;}
-	     if (Ore <= parseInt(TrainOptions['Keep'][(TrainCity+1)]['Ore'])) {TrainCity++;return;}
-     } else{
-         if ((parseInt(Seed.resources["city" + cityId]['rec1'][0]/3600)) > TrainOptions['Keep'][(TrainCity+1)]['[Food']) Food = TrainOptions['Keep'][(TrainCity+1)]['Food'];
-         if ((parseInt(Seed.resources["city" + cityId]['rec2'][0]/3600)) > TrainOptions['Keep'][(TrainCity+1)]['[Wood']) Wood = TrainOptions['Keep'][(TrainCity+1)]['Wood'];
-         if ((parseInt(Seed.resources["city" + cityId]['rec3'][0]/3600)) > TrainOptions['Keep'][(TrainCity+1)]['[Stone']) Stone = TrainOptions['Keep'][(TrainCity+1)]['Stone'];
-         if ((parseInt(Seed.resources["city" + cityId]['rec4'][0]/3600)) > TrainOptions['Keep'][(TrainCity+1)]['[Ore']) Ore = TrainOptions['Keep'][(TrainCity+1)]['Ore'];
-     }
-     for (y in Seed.buildings['city'+cityId]) {
-     	  if (Seed.buildings['city'+cityId][y][0] == 13) baracks++;
-     }
-     if (Seed.queue_unt['city'+cityId].length < baracks)  slots =true;
-     for (z=1;z<=4;z++){
-        if (cost[z] == 0) cost[z] = 1;
-     }
-	 if ((Food/cost[1]) < idle) idle = (Food/cost[1]).toFixed(0);
-	 if ((Wood/cost[2]) < idle) idle = (Wood/cost[2]).toFixed(0);
-	 if ((Stone/cost[3]) < idle) idle = (Stone/cost[3]).toFixed(0);
-	 if ((Ore/cost[4]) < idle) idle = (Ore/cost[4]).toFixed(0);
-     idle = idle-1;
-     var time = unsafeWindow.modal_barracks_traintime(unitId, idle);  
-     if (slots && idle >= TrainOptions.Threshold[(TrainCity+1)]) {
-         params.cid = cityId;
-         params.type = unitId;
-         params.quant = idle;
-         params.items = 0;
-     new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
-       method: "post",
-       parameters: params,
-       onSuccess: function(transport) {
-         var rslt=eval("("+transport.responseText+")")
-         if (rslt.ok) {
-           for (var i = 1; i < 5; i++) {
-             unsafeWindow.seed.resources["city" + cityId]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(idle);
-           }
-           unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(idle);
-           unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(idle);
-           unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, idle, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
-           for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
-           actionLog(logcity  + ' Train ' + idle + ':  ' + troops[unitId] );
-         } else {actionLog(logcity + ': FAIL Train ' + idle + ' ' +  troops[unitId] + ' - '+ rslt.msg);}
-       },
-       onFailure: function() {}
-     }); 
-     }
-     TrainCity++;
-   }	
  
 var DeleteReports = {
 	deleting : false,
