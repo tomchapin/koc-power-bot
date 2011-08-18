@@ -1,6 +1,10 @@
 REVISION HISTORY:
 ----------------
 
+20110818b
+   *Changed use workers percentage to use total population percentage instead of idle population percentage
+   *Fixed minimum and maximum troops not working
+   *Fixed raid report interval not saving
 20110817a
    *Fixed minimum troops not working
    *Fixed init error for auto train tab
