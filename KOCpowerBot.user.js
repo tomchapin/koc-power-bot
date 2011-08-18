@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110818a
+// @version        20110818b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20110818a';
+var Version = '20110818b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -8117,8 +8117,10 @@ Tabs.AutoTrain = {
   
   checkidlepopulation : function(cityId){
 	var t = Tabs.AutoTrain;
-	t.idle = parseInt(Seed.citystats['city'+cityId].pop[0]) - parseInt(Seed.citystats['city'+cityId].pop[3]);
-	t.idle = (TrainOptions.Workers[t.city]/100)*t.idle;
+	if(TrainOptions.Workers[t.city] == 0)
+		t.idle = parseInt(Seed.citystats['city'+cityId].pop[0]) - parseInt(Seed.citystats['city'+cityId].pop[3]);
+	else
+		t.idle = ((TrainOptions.Workers[t.city]/100)*parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
 	return t.idle>0?true:false;
   },
   checktrainslots : function(cityId){
