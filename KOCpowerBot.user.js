@@ -4925,11 +4925,12 @@ Tabs.transport = {
       var rallypointlevel = t.getRallypoint(cityID);	
 		  if (rallypointlevel == 11) rallypointlevel = 15;
 		  if (rallypointlevel == 12) rallypointlevel = 20;
-    	if (wagons > (rallypointlevel*10000)){ wagons = (rallypointlevel*10000); }
+    	if (parseInt(wagons) > parseInt(rallypointlevel*10000)){ wagons = (rallypointlevel*10000); }
     	
       if (t.tradeRoutes[count]['TroopType'] == undefined) var unit = 'unt9';
       else var unit = t.tradeRoutes[count]['TroopType'];
       var Troops = parseInt(Seed.units[cityID][unit]);
+	  if(parseInt(Troops)>parseInt(wagons)) Troops = wagons;
       var featherweight = parseInt(Seed.tech.tch10);
     	var Load = parseInt(unsafeWindow.unitstats[unit]['5'])
       var maxloadperwagon = (featherweight * ((Load/100)*10)) + Load;
