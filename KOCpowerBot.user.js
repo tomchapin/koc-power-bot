@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110818b
+// @version        20110902a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        http://*.kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20110818b';
+var Version = '20110902a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -149,6 +149,7 @@ var deleting=false;
 var ChatOptions = {
   latestChats               : [],
   AllowUsersRemoteControl   : [],
+  BlacklistUsersRemoteControl: [],
   password                  : '',
   Chatpassenable            : false,
 };
@@ -4881,6 +4882,7 @@ Tabs.transport = {
 		var city = t.tradeRoutes[count]["city"];
 		var cityID = 'city' + city;
 		
+		if(!Cities.byID[city]) return;
 		
    	 	var xcoord = t.tradeRoutes[count]["target_x"];
     	var ycoord = t.tradeRoutes[count]["target_y"];
@@ -4923,12 +4925,11 @@ Tabs.transport = {
       var rallypointlevel = t.getRallypoint(cityID);	
 		  if (rallypointlevel == 11) rallypointlevel = 15;
 		  if (rallypointlevel == 12) rallypointlevel = 20;
-    	if (parseInt(wagons) > parseInt(rallypointlevel*10000)){ wagons = (rallypointlevel*10000); }
+    	if (wagons > (rallypointlevel*10000)){ wagons = (rallypointlevel*10000); }
     	
       if (t.tradeRoutes[count]['TroopType'] == undefined) var unit = 'unt9';
       else var unit = t.tradeRoutes[count]['TroopType'];
       var Troops = parseInt(Seed.units[cityID][unit]);
-	  if(parseInt(Troops)>parseInt(wagons)) Troops = wagons;
       var featherweight = parseInt(Seed.tech.tch10);
     	var Load = parseInt(unsafeWindow.unitstats[unit]['5'])
       var maxloadperwagon = (featherweight * ((Load/100)*10)) + Load;
@@ -7079,6 +7080,7 @@ Tabs.Reassign = {
    	 	var ycoord = t.reassignRoutes[count]["target_y"];
     	
     	var cityID = 'city' + city;
+		if(!Cities.byID[city]) return;
 		var marching = getMarchInfo(cityID);
     	t.getRallypoint(cityID);
 		if(t.rallypointlevel == 11) t.rallypointlevel = 15;
@@ -8352,7 +8354,7 @@ var FairieKiller  = {
   },
   setEnable : function (tf){
     if (tf)
-      unsafeWindow.Modal.showModalUEP = eval ('function (a,b,c) {actionLog ("Blocked Faire popup");}');
+      unsafeWindow.Modal.showModalUEP = eval ('function FairieKiller (a,b,c) {actionLog ("Blocked Faire popup");}');
     else
       unsafeWindow.Modal.showModalUEP = FairieKiller.saveFunc;
   },
@@ -8499,12 +8501,16 @@ Tabs.Chat = {
     unsafeWindow.pbviewtroops = t.viewtroops;
     t.myDiv.innerHTML = '<DIV class=pbStat>Chat Answer/Reply Info</div><TABLE><TR>\
 						<TD><input type=checkbox id=pbchatqaenable /></td><TD>Enable chat functions </td></tr>\
-						<TR><TD><input type=checkbox id=pbchatpassenable /></td><TD>Enable password: <input type=text id=pbchatpass value="'+ ChatOptions.password +'"/></td></tr>\
-						<TR><TD></td><TD valign=top>Allowed Players: <br><textarea cols=30 rows=1 id=allowUserBox></textarea></td></tr>\
+						<TR><TD><input type=checkbox id=pbchatpassenable /></td><TD>Enable password: <input type=text id=pbchatpass value="'+ ChatOptions.password +'"/></td>\
+						<TD width=10px>&nbsp;</td><TD><input type=checkbox id=pbautoblacklist />Auto blacklist players if 1st attempt fails</td></tr>\
+						<TR><TD></td><TD valign=top>Allowed Players: <br><textarea cols=30 rows=1 id=allowUserBox></textarea></td>\
+						<TD width=10px>&nbsp;</td><TD> Blacklisted Players <br><textarea cols=30 rows=1 id=blacklistUserBox ></textarea></td></tr>\
 						<TR><TD colspan=3>Type "/[Player] units?" to get a unit count <br> Type "/[Player] attacks? to get impending attacks <br> Player name is cAsE-SeNsItIvE </td></tr></table>';
 	t.togtext('allowUserBox', 'AllowUsersRemoteControl');
+	t.togtext('blacklistUserBox', 'BlacklistUsersRemoteControl');
 	t.togOpt('pbchatqaenable', 'Chatenable', ChatStuff.init);
 	t.togOpt('pbchatpassenable', 'Chatpassenable');
+	t.togOpt('pbautoblacklist', 'Chatautoblacklist');
 	document.getElementById('pbchatpass').addEventListener('change', function(e){
 		ChatOptions.password = e.target.value;
 		GM_log(e.target.value);
@@ -8838,8 +8844,15 @@ latestChats : [],
   ChatAdded:function(chatObj) {
 	var t=ChatStuff;
 	if(chatObj) {
+		t.noAllow = ChatOptions.BlacklistUsersRemoteControl;
 		t.allowUsersHash = ChatOptions.AllowUsersRemoteControl;
 		if(t.allowUsersHash.length==0) { return; }
+		if(t.noAllow.length!=0) {
+			for(var u=0; u<t.noAllow.length; u++)
+				if(t.noAllow[u] == chatObj.shortName){
+					return;
+				}
+		}
 
 		var cArr=/^([^\?\.]+)([\.\?])(.*)$/.exec(chatObj.text);
 		if(!cArr) {
@@ -8891,13 +8904,17 @@ latestChats : [],
 						}
 					if(ChatOptions.Chatpassenable && password!=ChatOptions.password){
 						permission = false;
-						GM_log(password+' '+ChatOptions.password);
+						//GM_log(password+' '+ChatOptions.password);
 					}
 					if(permission){
 						cmdInfo['question'].call(t,chatObj,info);
 					} else {
 						chatObj.obj.appendChild(document.createTextNode("Player does not have permission: "+chatObj.shortName));
 						t.SendChat(chatObj.shortName,"Player does not have permission");
+						if(ChatOptions.Chatautoblacklist){
+							ChatOptions.BlacklistUsersRemoteControl.push(chatObj.shortName);
+							document.getElementById('blacklistUserBox').value += chatObj.shortName+'\n';
+						}
 					}
 				} else {
 					cmdInfo['answer'].call(t,chatObj,info);
@@ -8969,7 +8986,7 @@ var anticd = {
   init: function (){
     if (this.isInited)
       return this.KOCversion;
-    unsafeWindow.cm.cheatDetector = eval ('function (e){}');
+    unsafeWindow.cm.cheatDetector.detect = eval ('function a (){}');
     var scripts = document.getElementsByTagName('script');
     for (var i=0; i<scripts.length; i++){
       if (scripts[i].src.indexOf('camelotmain') >=0){
