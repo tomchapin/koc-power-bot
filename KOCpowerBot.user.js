@@ -1,17 +1,17 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110902a
+// @version        20110903a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
-// @include        http://*.kingdomsofcamelot.com/*main_src.php*
-// @include        http://apps.facebook.com/kingdomsofcamelot/*
+// @include        *.kingdomsofcamelot.com/*main_src.php*
+// @include        *apps.facebook.com/kingdomsofcamelot/*
 // @include        *facebook.com/connect/uiserver.php*
 // @description    Automated features for Kingdoms of Camelot
 // @require        http://tomchapin.me/auto-updater.php?id=101052
 // ==/UserScript==
 
 
-var Version = '20110902a';
+var Version = '20110903a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -11155,7 +11155,7 @@ Tabs.Gifts = {
         &nbsp; <SPAN id=pbGiftNone class=boldRed></span></td></tr></table><HR><TABLE class=pbTab><TR valign=top><TD>\
         <INPUT id=pbGiftButAll type=submit value="All" style="width:100%; margin-bottom:5px"><BR><INPUT id=pbGiftButNone type=submit value="None"></td>\
         <TD width=10></td><TD><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabLined>\
-        <TBODY id=pbGiftTbody>\
+        <TBODY id=pbGiftTbody style="height:250px; overflow:auto; display:block;">\
         <TR style="font-weight:bold; background:white"><TD>Gift</td><TD>Date</td><TD>From (server)</td><TD width=20></td></tr>';
       t.gifts.sort (function (a,b){  // sort by gift name, date
           var x = a.gift.localeCompare (b.gift);
@@ -11175,8 +11175,8 @@ Tabs.Gifts = {
       document.getElementById('pbGiftDo').addEventListener ('click', t.getErDone, false);
       document.getElementById('pbGiftButAll').addEventListener ('click', t.e_butAll, false);
       document.getElementById('pbGiftButNone').addEventListener ('click', t.e_butNone, false);
-      var tbody = document.getElementById('pbGiftTbody');
-      tbodyScroller (tbody, getRemainingHeight (tbody, mainPop.div));
+      // var tbody = document.getElementById('pbGiftTbody');
+      // tbodyScroller (tbody, getRemainingHeight (tbody, mainPop.div));
     }
   },
 
@@ -11577,7 +11577,6 @@ Tabs.Resources = {
   init : function (div){
     var t = Tabs.Resources;
 		t.myDiv = div;
-		t.myDiv.style.overflowY = 'scroll';
     div.innerHTML = '<TABLE cellpadding=0 cellspacing=0 class=pbTab width=100%><TR><TD align=center><INPUT id="pballlist" type=submit value="Fetch User List" \></td></tr></table><HR>\
         <DIV id=resDiv style="width:100%; min-height:300px; height:100%">';
     document.getElementById('pballlist').addEventListener ('click', t.e_clickfetchlist, false);
@@ -11631,7 +11630,7 @@ Tabs.Resources = {
         &nbsp; <SPAN id=pbResNone class=boldRed></span></td></tr></table><HR><TABLE class=pbTab><TR valign=top><TD>\
         <INPUT id=pbResButAll type=submit value="All" style="width:100%; margin-bottom:5px"><BR><INPUT id=pbResButNone type=submit value="None"></td>\
         <TD width=10></td><TD><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabLined>\
-        <TBODY id=pbResTbody>\
+        <TBODY id=pbResTbody style="height:250px; overflow:auto; display:block;">\
         <TR style="font-weight:bold; background:white"><TD>Name</td><TD>Might</td><TD width=20></td></tr>';
       for (var i=0; i<t.users.length; i++){
         m += '<TR><TD><INPUT type=checkbox id=pbrchk_'+ i +'> &nbsp;'+ t.users[i].name +'</td><TD>'+ t.users[i].might +'</td></tr>';
@@ -11641,8 +11640,8 @@ Tabs.Resources = {
       document.getElementById('pbResDo').addEventListener ('click', t.getErDone, false);
       document.getElementById('pbResButAll').addEventListener ('click', t.e_butAll, false);
       document.getElementById('pbResButNone').addEventListener ('click', t.e_butNone, false);
-      var tbody = document.getElementById('pbResTbody');
-      tbodyScroller (tbody, getRemainingHeight (tbody, mainPop.div));
+      // var tbody = document.getElementById('pbResTbody');
+      // tbodyScroller (tbody, getRemainingHeight (tbody, mainPop.div));
     }
   },
 
