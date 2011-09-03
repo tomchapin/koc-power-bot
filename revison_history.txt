@@ -1,6 +1,12 @@
 REVISION HISTORY:
 ----------------
 
+20110903a
+   *Fixes for Firefox 7
+   *Added auto blacklist function for chat tab (Powerbot won't reply or process chat from blacklisted people)
+   *Added Viaero provider for US
+   *Fixed transport tab not working
+   *Fixed resource tab and gifts tab not scrolling
 20110818b
    *Changed use workers percentage to use total population percentage instead of idle population percentage
    *Fixed minimum and maximum troops not working
