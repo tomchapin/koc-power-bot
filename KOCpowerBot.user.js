@@ -599,6 +599,8 @@ Tabs.tower = {
 	var t = Tabs.tower;
     t.myDiv = div;
     
+	AddTowerTab('Stop Sound Alert', t.stopSoundAlerts, 'pbtowertab');
+
     if (GM_getValue ('towerMarches_'+getServerId()) != null)
       GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
     // t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
@@ -922,12 +924,14 @@ Tabs.tower = {
      
   stopSoundAlerts : function (){
     var t = Tabs.tower;
-    t.mss.stop (1);
+	obj = document.getElementById('pbSoundStop');
+	t.mss.stop (1);
     clearTimeout (t.soundStopTimer);
     clearTimeout (t.soundRepeatTimer);
     document.getElementById('pbSoundStop').disabled = true;
     Options.alertSound.alarmActive = false;
     Options.alertSound.expireTime = 0;
+	updatebotbutton2('Stop Sound Alert', 'pbtowertab');
   },
 
   newIncoming : function (m){
@@ -1497,6 +1501,9 @@ Tabs.build = {
         };
         t.readBuildStates();
         
+		AddSubTabLink('Build', t.toggleStateRunning, 'pbbuildtab');
+		AddSubTabLink('Build Mode', t.toggleStateMode, 'pbbuildmtab');
+
         for (var i = 0; i < Cities.cities.length; i++) {
             t["bQ_" + Cities.cities[i].id] = JSON2.parse(GM_getValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, '[]'));
 			if (typeof t["bQ_" + Cities.cities[i].id] == 'undefined' || (t["bQ_" + Cities.cities[i].id]) == "") {
@@ -1507,11 +1514,14 @@ Tabs.build = {
         var m = '<DIV id=pbBuildDivF class=pbStat>BUILD FUNCTIONS</div><TABLE id=pbbuildfunctions width=100% height=0% class=pbTab><TR>';
         if (t.buildStates.running == false) {
             m += '<TD><INPUT id=pbBuildRunning type=submit value="Auto Build = OFF"></td>';
+	       updatebotbutton('Build - OFF', 'pbbuildtab');
         }
         else {
             m += '<TD><INPUT id=pbBuildRunning type=submit value="Auto Build = ON"></td>';
+	       updatebotbutton('Build - ON', 'pbbuildtab');
         }
 		m += '<TD><INPUT id=pbBuildMode type=submit value="Build Mode = OFF"></td>';
+	       updatebotbutton('Build Mode - OFF', 'pbbuildmtab');
 		m += '<TD>Build Type: <SELECT id="pbBuildType">\
 				<OPTION value=build>level up</option>\
 				<OPTION value=max>level max</option>\
@@ -1562,13 +1572,9 @@ Tabs.build = {
 
         t.e_autoBuild(); //start checking if we can build someting
         
+	   	document.getElementById('pbBuildRunning').addEventListener('click', t.toggleStateRunning, false);
 		document.getElementById('pbBuildType').addEventListener('change', function(){t.setBuildMode(this.value);}, false);
-		document.getElementById('pbBuildRunning').addEventListener('click', function(){
-            t.toggleStateRunning(this);
-        }, false);
-		document.getElementById('pbBuildMode').addEventListener('click', function(){
-            t.toggleStateMode(this);
-        }, false);
+	   	document.getElementById('pbBuildMode').addEventListener('click', t.toggleStateMode, false);
 		document.getElementById('pbHelpRequest').addEventListener ('change', function (){
         t.buildStates.help = (document.getElementById('pbHelpRequest').checked);
         t.saveBuildStates();
@@ -2229,25 +2235,30 @@ Tabs.build = {
     },
     toggleStateRunning: function(obj){
 		var t = Tabs.build;
+		obj = document.getElementById('pbBuildRunning');
         if (t.buildStates.running == true) {
             t.buildStates.running = false;
             t.saveBuildStates();
             obj.value = "Auto Build = OFF";
+	      updatebotbutton('Build - OFF', 'pbbuildtab');
         }
         else {
             t.buildStates.running = true;
             t.saveBuildStates();
             obj.value = "Auto Build = ON";
+	      updatebotbutton('Build - ON', 'pbbuildtab');
         }
     },
     toggleStateMode: function(obj){
 		var t = Tabs.build;
+		obj = document.getElementById('pbBuildMode');
         if (obj.value == 'Build Mode = OFF') {
 			unsafeWindow.buildslot = t.bot_buildslot; // overwrite original koc function
 			var guardian = document.getElementById('citymap').getElementsByClassName('bldg_guardian_0');
 			if(guardian.length >0)
 				guardian[0].addEventListener('click', t.bot_buildguardian, false);
             obj.value = "Build Mode = ON";
+	      updatebotbutton('Build Mode - ON', 'pbbuildmtab');
         }
         else {
 			unsafeWindow.buildslot = t.koc_buildslot; // restore original koc function
@@ -2255,6 +2266,7 @@ Tabs.build = {
 			if(guardian.length >0)
 				guardian[0].removeEventListener('click', t.bot_buildguardian, false);
 			obj.value = "Build Mode = OFF";
+	      updatebotbutton('Build Mode - OFF', 'pbbuildmtab');
         }
     },
 	getCityNameById: function (cityId) {
@@ -3862,12 +3874,16 @@ Tabs.Test = {
     setInterval(t.FirstRound,10000);
     setInterval(t.sendCrestReport, 1*60*1000);
     t.myDiv = div;
+	AddSubTabLink('Crest', t.toggleCrestState, 'pbcresttab');
+
     var selbut=0;
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (CrestOptions.Running == false) {
 	       m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = OFF"></td>';
+	       updatebotbutton('Crest - OFF', 'pbcresttab');
 	   } else {
 	       m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = ON"></td>';
+	      updatebotbutton('Crest - ON', 'pbcresttab');
 	   }
     m += '<TD><INPUT id=CrestHelp type=submit value="HELP"></td>';
     m += '<TD><INPUT id=pbsendreport type=checkbox '+ (Options.crestreport?' CHECKED':'') +'\> Send Crest report every ';
@@ -3962,14 +3978,17 @@ Tabs.Test = {
   
   toggleCrestState: function(obj){
 		var t = Tabs.Crest;
+		obj = document.getElementById('Cresttoggle');
         if (CrestOptions.Running == true) {
             CrestOptions.Running = false;
             obj.value = "Crest = OFF";
+		updatebotbutton('Crest - OFF', 'pbcresttab');
             saveCrestOptions();
         }
         else {
             CrestOptions.Running = true;
             obj.value = "Crest = ON";
+		updatebotbutton('Crest - ON', 'pbcresttab');
             for (crest in Options.Creststatus){
             		owned = Seed.items['i'+crest];
             		if (owned == undefined) owned=0;
@@ -4324,12 +4343,15 @@ Tabs.transport = {
     t.readTraderState();
 	  t.readTradeRoutes();
 	  t.e_tradeRoutes();
+	  	AddSubTabLink('Transport', t.toggleTraderState, 'pbtrantab');
 
       var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED TRANSPORT FUNCTION</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
       if (t.traderState.running == false) {
           m += '<TD><INPUT id=pbTraderState type=submit value="Transport = OFF"></td>';
+	       updatebotbutton('Transport - OFF', 'pbtrantab');
       } else {
           m += '<TD><INPUT id=pbTraderState type=submit value="Transport = ON"></td>';
+	      updatebotbutton('Transport - ON', 'pbtrantab');
       }
       m += '<TD><INPUT id=pbShowRoutes type=submit value="Show Routes"></td>';
       m += '</tr></table></div>';
@@ -4835,15 +4857,18 @@ Tabs.transport = {
     },
     toggleTraderState: function(obj){
 		var t = Tabs.transport;
+	obj = document.getElementById('pbTraderState');
         if (t.traderState.running == true) {
             t.traderState.running = false;
             obj.value = "Transport = OFF";
+		updatebotbutton('Transport - OFF', 'pbtrantab');
 			clearTimeout(t.checkdotradetimeout);
 			t.count = 0;
         }
         else {
             t.traderState.running = true;
             obj.value = "Transport = ON";
+		updatebotbutton('Transport - ON', 'pbtrantab');
 			t.e_tradeRoutes();
         }
     },
@@ -6530,12 +6555,17 @@ Tabs.Reassign = {
         t.readReassignState();
 		t.readReassignRoutes();
 		t.e_reassignRoutes();
+		
+AddSubTabLink('Reassign', t.toggleReassignState, 'pbsigntab');
 
       var m = '<DIV id=pbReMainDivF class=pbStat>AUTOMATED REASSIGN FUNCTION</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
       if (t.reassignState.running == false) {
+      if (t.reassignState.running == false) {
           m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = OFF"></td>';
+	       updatebotbutton('Reassign - OFF', 'pbsigntab');
       } else {
           m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = ON"></td>';
+	      updatebotbutton('Reassign - ON', 'pbsigntab');
       }
       m += '<TD><INPUT id=pbReassShowRoutes type=submit value="Show Routes"></td>';
       m += '</tr></table></div>';
@@ -7028,15 +7058,18 @@ Tabs.Reassign = {
     },
     toggleReassignState: function(obj){
 		var t = Tabs.Reassign;
+	obj = document.getElementById('pbReassignState');
         if (t.reassignState.running == true) {
             t.reassignState.running = false;
             obj.value = "Reassign = OFF";
+		updatebotbutton('Reassign - OFF', 'pbsigntab');
 			t.checkdoreassigntimeout = null;
 			t.count = 0;
         }
         else {
             t.reassignState.running = true;
             obj.value = "Reassign = ON";
+		updatebotbutton('Reassign - ON', 'pbsigntab');
 			t.e_reassignRoutes();
         }
     },
@@ -7963,9 +7996,11 @@ Tabs.AutoTrain = {
     t.myDiv.style.overflowY = 'auto';
 	t.city = 0;
 	t.nextcity();
-	
+		  	AddSubTabLink('AutoTraining', t.toggleAutoTrainState, 'pbautotab');
+
     var m = '<DIV class=pbStat>AUTO TRAIN</div><TABLE width=100% height=0% class=pbTab><TR><TD width=200></td>';
         m += '<TD align=center><INPUT id=pbAutoTrainState type=submit value="AutoTrain = '+ (TrainOptions.Running?'ON':'OFF')+'"></td>';
+	       updatebotbutton('AutoTrain - '+ (TrainOptions.Running?'ON':'OFF')+'', 'pbautotab');
         m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value="HELP"></td>';
         m += '</tr></table></div>';
         m += '<DIV class=pbStat>TRAIN OPTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
@@ -8101,13 +8136,16 @@ Tabs.AutoTrain = {
   
   toggleAutoTrainState: function(obj){
 	var t = Tabs.AutoTrain;
+	obj = document.getElementById('pbAutoTrainState');
     if (TrainOptions.Running == true) {
         TrainOptions.Running = false;
         obj.value = "AutoTrain = OFF";
+		updatebotbutton('AutoTrain - OFF', 'pbautotab');
     }
     else {
         TrainOptions.Running = true;
         obj.value = "AutoTrain = ON";
+		updatebotbutton('AutoTrain - ON', 'pbautotab');
 		t.nextcity();
     }
     saveTrainOptions();
@@ -9651,7 +9689,22 @@ function createButton (label,id){
   var a=document.createElement('a');
   a.className='button20';
   a.id = id;
+  a.innerHTML='<span style="color: #1EFF00">'+ label +'</span>';
+  return a;
+}
+function createYellowButton (label,id){
+  var a=document.createElement('a');
+  a.className='button20';
+  a.id = id;
   a.innerHTML='<span style="color: #ff6">'+ label +'</span>';
+  return a;
+}
+
+function createRedButton (label,id){
+  var a=document.createElement('a');
+  a.className='button20';
+  a.id = id;
+  a.innerHTML='<span style="color: #F71F02">'+ label +'</span>';
   return a;
 }
 
@@ -9693,7 +9746,7 @@ function AddMainTabLink(text, eventListener, mouseListener) {
 }
 
 function AddSubTabLink(text, eventListener, id) {
-  var a = createButton (text,'botbutton');
+  var a = createYellowButton (text,'botbutton');
   a.className='tab';
   var tabs=document.getElementById('main_engagement_tabs');
   if(!tabs) {
@@ -9718,6 +9771,44 @@ function AddSubTabLink(text, eventListener, id) {
       tabs.parentNode.insertBefore (gmTabs, tabs);
       gmTabs.style.whiteSpace='nowrap';
       gmTabs.style.width='735px';
+      gmTabs.lang = 'en_PB';
+    }
+    gmTabs.appendChild(a);
+    a.addEventListener('click',eventListener, false);
+    if (id != null)
+      a.id = id;
+    return a;
+  }
+  return null;
+}
+
+function AddTowerTab(text, eventListener, id) {
+  var a = createRedButton (text,'botbutton');
+  a.className='tab';
+  var tabs=document.getElementById('main_engagement_tabs');
+  if(!tabs) {
+    tabs=document.getElementById('topnav_msg');
+    if (tabs)
+      tabs=tabs.parentNode;
+  }
+  if (tabs) {
+    var e = tabs.parentNode;
+    var gmTabs = null;
+    for (var i=0; i<e.childNodes.length; i++){
+      var ee = e.childNodes[i];
+      if (ee.tagName && ee.tagName=='DIV' && ee.className=='tabs_engagement' && ee.id!='main_engagement_tabs'){
+        gmTabs = ee;
+        break;
+      }
+    }
+    if (gmTabs == null){
+      gmTabs = document.createElement('div');
+      gmTabs.className='tabs_engagement';
+      gmTabs.style.background='#ca5';
+      tabs.parentNode.insertBefore (gmTabs, tabs);
+      gmTabs.style.whiteSpace='nowrap';
+      gmTabs.style.width='735px';
+	  gmTabs.style.height='60px';
       gmTabs.lang = 'en_PB';
     }
     gmTabs.appendChild(a);
@@ -10789,7 +10880,13 @@ function updatebotbutton(text, id)
 	var but=document.getElementById(id);
 	but.innerHTML = '<span style="color: #ff6">'+text+'</span>';
 }
-    
+
+ function updatebotbutton2(text, id)
+{
+	var but=document.getElementById(id);
+	but.innerHTML = '<span style="color: #F71F02">'+text+'</span>';
+}
+   
 
 
 function tbodyScroller (tbody, maxHeight){  
