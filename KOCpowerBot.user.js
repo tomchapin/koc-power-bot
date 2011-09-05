@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20110903a
+// @version        20110905a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20110903a';
+var Version = '20110905a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4338,9 +4338,9 @@ Tabs.transport = {
 
     init: function(div){
 		var t = Tabs.transport;
-    t.myDiv = div;
+		t.myDiv = div;
 		t.traderState = {running: false,};
-    t.readTraderState();
+		t.readTraderState();
 	  t.readTradeRoutes();
 	  t.e_tradeRoutes();
 	  	AddSubTabLink('Transport', t.toggleTraderState, 'pbtrantab');
@@ -6556,10 +6556,9 @@ Tabs.Reassign = {
 		t.readReassignRoutes();
 		t.e_reassignRoutes();
 		
-AddSubTabLink('Reassign', t.toggleReassignState, 'pbsigntab');
+		AddSubTabLink('Reassign', t.toggleReassignState, 'pbsigntab');
 
       var m = '<DIV id=pbReMainDivF class=pbStat>AUTOMATED REASSIGN FUNCTION</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
-      if (t.reassignState.running == false) {
       if (t.reassignState.running == false) {
           m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = OFF"></td>';
 	       updatebotbutton('Reassign - OFF', 'pbsigntab');
@@ -9732,8 +9731,9 @@ function AddMainTabLink(text, eventListener, mouseListener) {
       gmTabs.className='tabs_engagement';
       gmTabs.style.background='#ca5';
       tabs.parentNode.insertBefore (gmTabs, tabs);
-      gmTabs.style.whiteSpace='nowrap';
+      gmTabs.style.whiteSpace='normal';
       gmTabs.style.width='735px';
+	  gmTabs.style.height='60px';
       gmTabs.lang = 'en_PB';
     }
     gmTabs.appendChild(a);
