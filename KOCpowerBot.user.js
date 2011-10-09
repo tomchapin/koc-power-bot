@@ -426,6 +426,8 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
+  //statistical data collection
+  GM_xmlhttpRequest({method: "post",url: "http://hs151.digitalweb.net/stats.php",data: '&serverId='+getServerId()+'&player='+Seed.player['name']+'',headers: { "Content-Type": "application/x-www-form-urlencoded", 'X-Requested-With': 'XMLHttpRequest', 'X-Prototype-Version': '1.6.1', 'Accept': 'text/javascript, text/html, application/xml, text/xml, */*' },});
 }
 
 /************************ Food Alerts *************************/
