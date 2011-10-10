@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111008a
+// @version        20111009a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20111008a';
+var Version = '20111009a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -426,8 +426,6 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
-  //statistical data collection
-  GM_xmlhttpRequest({method: "post",url: "http://hs151.digitalweb.net/stats.php",data: '&serverId='+getServerId()+'&player='+Seed.player['name']+'',headers: { "Content-Type": "application/x-www-form-urlencoded", 'X-Requested-With': 'XMLHttpRequest', 'X-Prototype-Version': '1.6.1', 'Accept': 'text/javascript, text/html, application/xml, text/xml, */*' },});
 }
 
 /************************ Food Alerts *************************/
