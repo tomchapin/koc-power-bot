@@ -1,28 +1,28 @@
-	// ==UserScript==
-	// @name           KOC Power Bot
-	// @version        20111009a
-	// @namespace      mat
-	// @homepage       http://userscripts.org/scripts/show/101052
-	// @include        *kingdomsofcamelot.com/*main_src.php*
-	// @include        *apps.facebook.com/kingdomsofcamelot/*
-	// @include        *facebook.com/connect/uiserver.php*
-	// @description    Automated features for Kingdoms of Camelot
-	// @require        http://tomchapin.me/auto-updater.php?id=101052
-	// ==/UserScript==
+// ==UserScript==
+// @name           KOC Power Bot
+// @version        20111009a
+// @namespace      mat
+// @homepage       http://userscripts.org/scripts/show/101052
+// @include        *kingdomsofcamelot.com/*main_src.php*
+// @include        *apps.facebook.com/kingdomsofcamelot/*
+// @include        *facebook.com/connect/uiserver.php*
+// @description    Automated features for Kingdoms of Camelot
+// @require        http://tomchapin.me/auto-updater.php?id=101052
+// ==/UserScript==
 
 
-	var Version = '20111009a';
+var Version = '20111009a';
 
-	// These switches are for testing, all should be set to false for released version:
-	var DEBUG_TRACE = false;
-	var DEBUG_SEARCH = false;
-	var ENABLE_TEST_TAB = false;
-	var ENABLE_ATTACK_TAB = false;
-	var ENABLE_SAMPLE_TAB = false;
-	var DISABLE_BULKADD_LIST = false;
-	var ENABLE_GM_AJAX_TRACE = false;
-	var SEND_ALERT_AS_WHISPER = false;
-	// end test switches
+// These switches are for testing, all should be set to false for released version:
+var DEBUG_TRACE = false;
+var DEBUG_SEARCH = false;
+var ENABLE_TEST_TAB = false;
+var ENABLE_ATTACK_TAB = false;
+var ENABLE_SAMPLE_TAB = false;
+var DISABLE_BULKADD_LIST = false;
+var ENABLE_GM_AJAX_TRACE = false;
+var SEND_ALERT_AS_WHISPER = false;
+// end test switches
 
 	var MAP_DELAY = 1200;
 
