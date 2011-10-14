@@ -1,6 +1,8 @@
 REVISION HISTORY:
 ----------------
 
+20111014a
+   *Added resource speed up for auto train
 20110903a
    *Fixes for Firefox 7
    *Added auto blacklist function for chat tab (Powerbot won't reply or process chat from blacklisted people)

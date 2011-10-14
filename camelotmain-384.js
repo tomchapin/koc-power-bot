@@ -87,6 +87,7 @@ g_js_strings.commonstr.actions = "Actions";
 g_js_strings.commonstr.alchemystic = "Alchemystic";
 g_js_strings.commonstr.all = "All";
 g_js_strings.commonstr.max = "Max";
+g_js_strings.commonstr.allianceAtSign = "@Alliance";
 g_js_strings.commonstr.alliance = "Alliance";
 g_js_strings.commonstr.alliances = "Alliances";
 g_js_strings.commonstr.amount = "Amount";
@@ -140,6 +141,7 @@ g_js_strings.commonstr.court = "Court";
 g_js_strings.commonstr.crest = "Crest";
 g_js_strings.commonstr.current = "current";
 g_js_strings.commonstr.date = "Date";
+g_js_strings.commonstr.darkForest = "Dark Forest";
 g_js_strings.commonstr.days = "Days";
 g_js_strings.commonstr.decontruct = "Deconstruct";
 g_js_strings.commonstr.defeat = "Defeat";
@@ -252,6 +254,7 @@ g_js_strings.commonstr.note = "Note";
 g_js_strings.commonstr.nothanks = "No Thanks";
 g_js_strings.commonstr.novices = "Novices";
 g_js_strings.commonstr.obtain = "Obtain";
+g_js_strings.commonstr.officersAtSign = "@Officers";
 g_js_strings.commonstr.officer = "Officer";
 g_js_strings.commonstr.officers = "Officers";
 g_js_strings.commonstr.offline = "Offline";
@@ -313,6 +316,7 @@ g_js_strings.commonstr.returning = "Returning";
 g_js_strings.commonstr.reward = "Reward";
 g_js_strings.commonstr.roles = "Roles";
 g_js_strings.commonstr.ruin = "Ruin";
+g_js_strings.commonstr.boss = "Dark Forest";
 g_js_strings.commonstr.salary = "Salary";
 g_js_strings.commonstr.salaries = "Salaries";
 g_js_strings.commonstr.save = "Save";
@@ -700,6 +704,7 @@ g_js_strings.openCastle.wildbonus = "Wilderness Bonus";
 g_js_strings.openCastle.provbonus = "Providence Bonus";
 g_js_strings.openCastle.itembonus = "Item Bonus";
 g_js_strings.openCastle.totalprod = "Total Production";
+g_js_strings.openCastle.guardianbonus = "Guardian Bonus";
 g_js_strings.changeTax = new Object();
 g_js_strings.changeTax.changetaxdesc = "Change the % of tax that you collect from your population.";
 g_js_strings.changeTax.newtaxrate = "New Tax Rate";
@@ -893,6 +898,7 @@ g_js_strings.MapObject.hillsdesc2 = "Conquer to receive %1$s to stone production
 g_js_strings.MapObject.mtndesc2 = "Conquer to receive %1$s to ore production";
 g_js_strings.MapObject.plaindesc2 = "You can build cities on Plains.";
 g_js_strings.MapObject.bogdesc2 = "Bogs are impenetrable and cannot be attacked.";
+g_js_strings.MapObject.bossdesc2 = "Sinister things are happening in this dark forest...";
 g_js_strings.MapObject.ownedby = "Owned By";
 g_js_strings.MapObject.ownedbyyou = "Owned By You";
 g_js_strings.modal_messages = new Object();
@@ -998,6 +1004,9 @@ g_js_strings.modal_messages_viewreports_view.soundthecall = "Sound the Call!";
 g_js_strings.modal_messages_viewreports_view.backtoreports = "Back to Reports";
 g_js_strings.modal_messages_viewreports_view.askforhelp = "Ask for Help";
 g_js_strings.modal_messages_viewreports_view.deletereport = "Delete";
+g_js_strings.modal_messages_viewreports_view.guardian_attackboosted = "Attack Boosted (Guardian)";
+g_js_strings.modal_messages_viewreports_view.guardian_marchboosted = "March Boosted (Guardian)";
+g_js_strings.modal_messages_viewreports_view.guardian_defenseboosted = "Defense Boosted (Guardian)";
 g_js_strings.modal_messages_viewreinforcedreports = new Object();
 g_js_strings.modal_messages_viewreinforcedreports.reinforcementreceived = "You've Received Reinforcements!";
 g_js_strings.modal_messages_viewreinforcedreports.alliancemember = "Alliance member:";
@@ -1270,6 +1279,8 @@ g_js_strings.modal_maptile.viewtroops = "View Troops";
 g_js_strings.modal_maptile.viewreinforcements = "View Reinforcements";
 g_js_strings.modal_maptile.ownermisted = "The owner of this Wilderness is hidden in the Mists of Avalon.";
 g_js_strings.modal_maptile.cantportal = "Cannot portal to an owned plain";
+g_js_strings.modal_maptile.boghint = "No creatures roam this land.";
+g_js_strings.modal_maptile.bosshint = "Unknown creatures dominate this dark space...";
 g_js_strings.modal_maptile.portalmodalTitle = "Portal Your City";
 g_js_strings.modal_maptile.portalmodalOkButton = "Use Portal of Order";
 g_js_strings.modal_maptile.portalmodalNotification = "Do you want to portal %1$s to";
@@ -1841,9 +1852,9 @@ g_js_strings.wood_guardian.description = "Your Guardian is the protector of your
 g_js_strings.ore_guardian = {};
 g_js_strings.ore_guardian.description = "Your Guardian is the protector of your city. The Iron Indrik increases your Ore resource capabilities and strengthens the Attack attribute of your troops.";
 g_js_strings.food_guardian = {};
-g_js_strings.food_guardian.description = "TBD";
+g_js_strings.food_guardian.description = "Your Guardian is the protector of your city. The Iron Indrik increases your Ore resource capabilities and strengthens the Attack attribute of your troops.";
 g_js_strings.stone_guardian = {};
-g_js_strings.stone_guardian.description = "TBD";
+g_js_strings.stone_guardian.description = "Your Guardian is the protector of your city. The Iron Indrik increases your Ore resource capabilities and strengthens the Attack attribute of your troops.";
 g_js_strings.guardian_item = {};
 g_js_strings.guardian_item.title = "Change Name";
 g_js_strings.guardian_item.description = "Choose a name for your guardian.  Names must be 15 characters or less.";
@@ -1858,8 +1869,9 @@ g_js_strings.guardian.release = "Are you sure you want to release your Guardian?
 g_js_strings.guardian.release_text = "Release";
 g_js_strings.guardian.buy_transform = "Buy and Transform";
 g_js_strings.guardian.buy_unlock = "Buy and Unlock";
-g_js_strings.guardian.summonWarning = "Are you sure you want to change your Ore Guardian? The Attack boost for active marches will no longer be applied.";
-g_js_strings.guardian.summonWarningInc = "Are you sure you want to change your Wood Guardian? The Health boost for defending troops will no longer be applied.";
+g_js_strings.guardian.summonWarningOre = "Are you sure you want to change your Ore Guardian? The Attack boost for active marches will no longer be applied.";
+g_js_strings.guardian.summonWarningWood = "Are you sure you want to change your Wood Guardian? The Health boost for defending troops will no longer be applied.";
+g_js_strings.guardian.summonWarningFood = "Are you sure you want to change your Food Guardian?  The March Speed boost for active marches will no longer be applied.";
 g_js_strings.guardian.tooltipFigure_0 = "Upgrade to level 1 to summon your Guardian. You receive resource bonuses from all your Guardians but only troop bonuses from your active Guardian.";
 g_js_strings.guardian.tooltipFigure_1 = "This is your active Guardian. You receive resource bonuses from all your Guardians but only troop bonuses from your active Guardian";
 g_js_strings.guardian.tooltipResource = "These are requirements to upgrade your active Guardian.";
@@ -1904,7 +1916,7 @@ g_js_strings.guardian.food_fullName = "Viand Kraken(Food Guardian)";
 g_js_strings.guardian.food_attr = "Attribute: Marching Speed";
 g_js_strings.guardian.food_res0 = "Resource: Food";
 g_js_strings.guardian.food_res1 = "(Production + Cap)";
-g_js_strings.guardian.food_desc = "TBD";
+g_js_strings.guardian.food_desc = "The Viand Kraken rises from the depths, a carapace covering its backside and its many-fanged mouth jutting from a blunt face.  Ink-black eyes dot the sides of the creature’s head, and arm-like tentacles spring from below the head.  The murky water of its pool seems far deeper than any know; investigating the pond enrages the Kraken.";
 g_js_strings.guardian.food_unlock = "Unlock food guardian";
 g_js_strings.guardian.food_unlockCost = "Cost: 1X Deluge Rune";
 g_js_strings.guardian.stone_name = "Terrene Golem";
@@ -1970,6 +1982,25 @@ g_js_strings.beginnerPackage.buynow = "<div class='text'>BUY NOW</div>";
 g_js_strings.beginnerPackage.countDownText = "Beginner's Sale Time Left: {days}d {hours}h {minutes}m";
 g_js_strings.title = {};
 g_js_strings.title.text = "Share Kingdoms of Camelot on Facebook!";
+g_js_strings.monsterUnitsNames = {};
+g_js_strings.monsterUnitsNames.m101 = "Wanderer of Din";
+g_js_strings.monsterUnitsNames.m102 = "Blade of Netzekt";
+g_js_strings.monsterUnitsNames.m103 = "Arm of Gevrah";
+g_js_strings.monsterUnitsNames.m104 = "Priest of Yeshod";
+g_js_strings.monsterUnitsNames.m105 = "Sahereen Hound";
+g_js_strings.monsterUnitsNames.m106 = "Remez Banshee";
+g_js_strings.monsterUnitsNames.m107 = "Son of Ysbadden";
+g_js_strings.monsterUnitsNames.m108 = "Dark Rider";
+g_js_strings.monsterUnitsNames.m109 = "Sidhe Scorpion";
+g_js_strings.monsterUnitsNames.m110 = "Sidhe Templar";
+g_js_strings.battleReport = {};
+g_js_strings.battleReport.noMatch = "The %1$s was no match against the %2$s";
+g_js_strings.battleReport.struggled = "The %1$s struggled against the %2$s";
+g_js_strings.battleReport.valiantly = "The %1$s fought valiantly against the %2$s";
+g_js_strings.battleReport.upperHand = "The %1$s gained a significant upper hand against the %2$s";
+g_js_strings.battleReport.dominated = "The %1$s dominated against the %2$s";
+g_js_strings.battleReport.loserNoHint = "Your forces were overwhelmed...";
+g_js_strings.battleReport.winnerNoHint = "Your forces overwhelmed their foes!";
 var buildingcost = {
     bdg0: ["Castle", 200, 3000, 2500, 100, 0, 0, 900,
     {
@@ -3929,7 +3960,7 @@ var itemlist = {
     i1101: {
         name: "Sir Bor's Crest",
         description: "Increases your Knight's loyalty by 5",
-        price: null,
+        price: 25,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -3937,7 +3968,7 @@ var itemlist = {
     i1102: {
         name: "Sir Ector's Crest",
         description: "Increases your Knight's loyalty by 10",
-        price: null,
+        price: 50,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -3945,7 +3976,7 @@ var itemlist = {
     i1103: {
         name: "Sir Kay's Crest",
         description: "Increases your Knight's loyalty by 15",
-        price: null,
+        price: 75,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -3953,7 +3984,7 @@ var itemlist = {
     i1104: {
         name: "Sir Bedivere's Crest",
         description: "Increases your Knight's loyalty by 20",
-        price: null,
+        price: 70,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -3961,7 +3992,7 @@ var itemlist = {
     i1105: {
         name: "Sir Gawain's Crest",
         description: "Increases your Knight's loyalty by 25",
-        price: null,
+        price: 200,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -3969,7 +4000,7 @@ var itemlist = {
     i1106: {
         name: "Sir Percival's Crest",
         description: "Increases your Knight's loyalty by 30",
-        price: null,
+        price: 75,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -3977,7 +4008,7 @@ var itemlist = {
     i1107: {
         name: "Sir Galahad's Crest",
         description: "Increases your Knight's loyalty by 40",
-        price: null,
+        price: 100,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -3985,7 +4016,7 @@ var itemlist = {
     i1108: {
         name: "Sir Lancelot's Crest",
         description: "Increases your Knight's loyalty by 50",
-        price: null,
+        price: 150,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -3993,7 +4024,7 @@ var itemlist = {
     i1109: {
         name: "King Arthur's Crest",
         description: "Increases your Knight's loyalty by 60",
-        price: null,
+        price: 85,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -4001,7 +4032,7 @@ var itemlist = {
     i1110: {
         name: "Morgana's Seal",
         description: "Morgana's Seal",
-        price: null,
+        price: 115,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -4009,7 +4040,7 @@ var itemlist = {
     i1111: {
         name: "Mordred's Seal",
         description: "Mordred's Seal",
-        price: null,
+        price: 170,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -4017,7 +4048,7 @@ var itemlist = {
     i1112: {
         name: "Stag King's Seal",
         description: "Stag King's Seal",
-        price: null,
+        price: 90,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -4025,7 +4056,7 @@ var itemlist = {
     i1113: {
         name: "Pendragon Seal",
         description: "Pendragon Seal",
-        price: null,
+        price: 120,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -4033,7 +4064,7 @@ var itemlist = {
     i1114: {
         name: "Lady of the Lake's Seal",
         description: "Lady of the Lake's Seal",
-        price: null,
+        price: 180,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -4042,6 +4073,14 @@ var itemlist = {
         name: "Merlin's Seal",
         description: "Merlin's Seal",
         price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i1199: {
+        name: "Vellum Scroll",
+        description: "A Vellum Scroll is marked with the secrets of raising a druid Stone Circle. The Stone Circle allows you to expend Aetherstones and train Kerns",
+        price: 10,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -4858,6 +4897,102 @@ var itemlist = {
         name: "Boulder Rune",
         description: "This rune allows you to summon the Terrene Golem to your city.  The Terrene Golem boosts your Stone production and capacity.",
         price: 50,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3000: {
+        name: "Ohrstone",
+        description: "A brittle, white rock with many small facets.",
+        price: 2,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3001: {
+        name: "Flax Wing",
+        description: "Spun flax in teh shape of a great bird's wing.",
+        price: 1,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3002: {
+        name: "Animal Hide",
+        description: "The skin of an animal, ready for tanning.",
+        price: 1,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3003: {
+        name: "Keterstone",
+        description: "A smooth, golden rock that is incredibly hard.",
+        price: 2,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3004: {
+        name: "Scroll of Blessing",
+        description: "A scroll of holy writings, describing the way to bless water.",
+        price: 16,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3005: {
+        name: "Blessed Water",
+        description: "A vial of holy water.",
+        price: 27,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3006: {
+        name: "Divine Sacrament",
+        description: "Incense, blessed water, wine, bread - all the necessary things to perform a holy ritual.",
+        price: 40,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3007: {
+        name: "Bloodstone",
+        description: "A scarlet rock that pulses with warmth.",
+        price: 1,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3008: {
+        name: "Lodestone",
+        description: "A blue-grey rock that is far heavier than it looks.",
+        price: 1,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3009: {
+        name: "Tiferstone",
+        description: "A malleable, dun rock.",
+        price: 1,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3010: {
+        name: "Vellum Scroll",
+        description: "A scroll made of tanned animal hides.",
+        price: 8,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i3011: {
+        name: "Guinevere's Blessing",
+        description: "A lady's silk kerchief.",
+        price: 3,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -9604,6 +9739,16 @@ var unitupkeeps = {
 };
 var cm = cm || {};
 cm.FETemplates = {
+    MarchReport: {
+        marchReport: '<div class="marchReport">#{info}#{title}<div class="sceneContainer">#{loot}#{scene}</div><div class="buttonsContainer"></div><div class="unitsContainer">#{units}</div><div class="buttonsContainer"></div></div>',
+        marchReportInfo: '<div id="marchReportInfo"><div class="location">#{location}</div><div class="time">#{time}</div></div>',
+        marchReportTitle: '<div id="marchReportTitle"><p class="status">#{status}</p><p class="hint">#{hint}</p>#{maxWilderness}</div>',
+        marchReportLoot: '<div id="marchReportLoot"><ul>#{lis}</ul></div>',
+        marchReportScenery: '<div id="marchReportScenery"><img src="#{image}" />#{hint}</div>',
+        marchReportUnits: '<div id="marchReportUnits"><div class="unitContainer attacker"><div class="roleInfo">#{attackerRole}</div><div class="knightInfo">#{attackerBoosts}</div><div class="unitsContainer">#{attackerUnits}</div></div><div class="unitContainer defender"><div class="roleInfo">#{defenderRole}</div><div class="knightInfo">#{defenderBoosts}</div><div class="unitsContainer">#{defenderUnits}</div></div></div>',
+        marchReportUnitsOverwhelmedTable: "<table><thead><tr><th>#{troopHeader}</th><th>#{killedHeader}</th></tr></thead><tbody>#{units}</tbody></table>",
+        marchReportUnitsTable: "<table><thead><tr><th>#{troopHeader}</th><th>#{foughtHeader}</th><th>#{survivedHeader}</th></tr></thead><tbody>#{units}</tbody></table>"
+    },
     Barracks: {
         unit_training_modal: '<div id="barracks_train"><div class="imageContainer"><img src="#{unitImage}"/></div><div class="unitInfoContainer"><div class="unitDescription">#{unitDescription}</div><div class="unitStats"><ul><li> <span class="label">#{attackLabel}</span> <span class="value">#{attackValue}</span></li><li> <span class="label">#{speedLabel}</span> <span class="value">#{speedValue}</span></li><li> <span class="label">#{defenseLabel}</span> <span class="value">#{defenseValue}</span></li><li> <span class="label">#{rangeLabel}</span> <span class="value">#{rangeValue}</span></li><li> <span class="label">#{lifeLabel}</span> <span class="value">#{lifeValue}</span></li><li> <span class="label">#{loadLabel}</span> <span class="value">#{loadValue}</span></li><li class="bottom"> <span class="label">#{upkeepLabel}</span> <span class="value">#{upkeepValue}</span></li><li class="bottom"> <span class="label">#{typeLabel}</span> <span class="value">#{typeValue}</span></li></ul></div><div class="unitReqs"><table><thead><tr><td>#{resourceHeader}</td><td>#{requiredHeader}</td><td>#{youOwnHeader}</td></tr></thead><tbody>#{reqs}</tbody></table></div><div class="unitsQuantity"><div class="youOwnContainer"><span class="label">#{youOwnLabel}:</span> <span class="value">#{youOwnValue}</span></div><div class="maxContainer"><span class="label">#{maxLabel}:</span> <span id="modal_barracks_max_num" class="value">#{maxValue}</span></div></div><div class="unitsTrainingQuantity"><p>#{troopTrainLabel}</p><input type="text" id="modal_barracks_num" onkeyup="modal_barracks_train_timecalc(this, #{unitId});" /><a class="inlineButton blue14" onclick="modal_barracks_train_maxbtn(#{unitId});return false;"> <span>#{maxLabel}</span> </a></div><div class="unitsTrainingTime"><span class="label">#{trainTimeLabel} </span><span class="value" id="modal_barracks_traintime"></span></div>#{misc}<div class="buttonContainer"><a onclick="modal_barracks_train_action(#{unitId});" class="button25" id="unit_btns_start"><span>#{buttonLabel}</span></a></div></div></div>',
         unit_training_boost: '<div id="trainingBoostContainer" class="trainingBoostContainer"><input type="checkbox" name="trainingBoost" id="#{inputId}" onclick="clearOtherTuts(#{index});" #{isDisabled} /><div class="trainingBoostInfoContainer"><img src="#{imgSource}" /><div class="trainingBoostInfo"><div class="name">#{name}</div><div class="time"><span class="timeLabel">#{timeLabel}:</span><span id="#{timeId}" class="timeAmount">0 #{secLabel}</span></div><div class="quantity"><span class="quantityAmount">#{youOwnLabel}: #{youOwnValue}.</span><a onclick="modal_barracks_getmoreshop();">#{getMoreLabel}</a></div></div></div></div>',
@@ -10131,7 +10276,9 @@ cm.MARCH_TYPES = {
     MARCH_TYPE_BARBARIAN: 6,
     MARCH_TYPE_MERCENARY: 7,
     MARCH_TYPE_BARBARIAN_REINFORCE: 8,
-    MARCH_TYPE_BOT_BARBARIAN: 9
+    MARCH_TYPE_BOT_BARBARIAN: 9,
+    MARCH_TYPE_DARK_FOREST: 10,
+    MARCH_TYPE_DARK_FOREST_SCOUT: 11
 };
 cm.TILE_TYPES = {
     TILE_TYPE_VOID: 0,
@@ -13459,7 +13606,7 @@ function attack_generatequeue() {
                                 if ((g == cm.MARCH_STATUS.MARCH_STATUS_UNKNOWN) || (g == cm.MARCH_STATUS.MARCH_STATUS_DEFENDING)) {
                                     o.push("reinforce")
                                 } else {
-                                    if (e == cm.MARCH_TYPES.MARCH_TYPE_SCOUT) {
+                                    if (e == cm.MARCH_TYPES.MARCH_TYPE_SCOUT || e == cm.MARCH_TYPES.MARCH_TYPE_DARK_FOREST_SCOUT) {
                                         o.push("scouting")
                                     } else {
                                         if (e == cm.MARCH_TYPES.MARCH_TYPE_REINFORCE) {
@@ -14130,7 +14277,7 @@ cm.MarchModal = function ($) {
             }
             var params = Object.clone(g_ajaxparams);
             params.iid = item_id;
-            params.original_quantity = seed.items["i" + item_id];
+            params.original_quantity = ksoItems[item_id].count;
             $("#modal_attack_itemprice_" + item_id).css("visibility", "hidden");
             var profiler = new cm.Profiler("ResponseTime", "buyItem.php");
             new Ajax.Request(g_ajaxpath + "ajax/buyItem.php" + g_ajaxsuffix, {
@@ -14163,12 +14310,12 @@ cm.MarchModal = function ($) {
             if (isNaN(quantity)) {
                 quantity = 0
             }++quantity;
-            var stock = parseInt(seed.items["i" + item_id]);
+            var stock = ksoItems[item_id].count;
             if (!isNaN(stock) && (stock > quantity)) {
                 quantity = stock
             } else {
                 seed.items["i" + item_id] = quantity;
-                ksoItems[item_id].add(quantity)
+                ksoItems[item_id].add(quantity - stock)
             }
             owned_element.html(itemOwnString_(quantity));
             if (quantity > 0) {
@@ -14413,6 +14560,80 @@ cm.MarchModal = function ($) {
         updateTroopResource: updateTroopResource_
     }
 }(jQuery);
+
+function processUserAction(a, d, c) {
+    if (a.user_action) {
+        var b = {
+            title: '<span class="march_useraction_title"></span>',
+            marchWarning: function () {
+                var e = ['<div class="march_useraction_warning"><div class="title">', g_js_strings.modal_attack.useractionwarningtitle, "</div>", "<div>", g_js_strings.modal_attack.useractionwarningmessage, "</div></div>"].join("");
+                var f = {
+                    okay: {
+                        txt: g_js_strings.modal_attack.useractionwarningiunderstand,
+                        cls: "inlineButton blue25",
+                        exe: function () {
+                            Modal.hideModal();
+                            c.marchWarning = 1;
+                            d()
+                        }
+                    }
+                };
+                Modal.multiButton({
+                    title: b.title,
+                    noControl: true,
+                    body: e,
+                    buttonContainerClass: "",
+                    buttons: f,
+                    buttonContainerClass: "march_useraction_buttons clearfix"
+                })
+            },
+            marchCaptcha: function () {
+                var f = "march_captcha_" + Math.floor(Math.random() * 10000000);
+                var e = ["<div class='march_useraction_warning'><div>", g_js_strings.modal_attack.useractioncaptchap1, "</div>", '<div class="captcha_container"><form id="', f, '"></form></div>', "<div>", g_js_strings.modal_attack.useractioncaptchap2, "</div></div>"].join("");
+                var h = function (i) {
+                        i.preventDefault();
+                        i.stopPropagation();
+                        c.marchWarning = 1;
+                        c.marchCaptcha_challenge = Recaptcha.get_challenge();
+                        c.marchCaptcha_response = Recaptcha.get_response();
+                        Modal.hideModal();
+                        d();
+                        return false
+                    };
+                var g = {
+                    okay: {
+                        txt: g_js_strings.commonstr.ok,
+                        cls: "inlineButton blue25",
+                        exe: h
+                    }
+                };
+                Modal.onCloseCallback = function () {
+                    Recaptcha.destroy()
+                };
+                Modal.multiButton({
+                    title: b.title,
+                    noControl: true,
+                    body: e,
+                    buttons: g,
+                    buttonContainerClass: "march_useraction_buttons clearfix"
+                });
+                Recaptcha.create("6LcT7cQSAAAAAG4whvbBz60hGjJg0ON1wRIRv_iD", f, {
+                    callback: Recaptcha.focus_response_field,
+                    theme: "white"
+                });
+                jQuery("#" + f).submit(h)
+            },
+            backOffWaitTime: function () {
+                cm.MarchModal.setBackedOff(true);
+                c.tt = a.tt;
+                setTimeout(d, a.wait_time * 1000)
+            }
+        };
+        b[a.user_action].call();
+        return true
+    }
+    return false
+};
 var cm = function (a) {
         a.util = a.util || {};
         var c = a.util;
@@ -15127,6 +15348,11 @@ cm.AutoAttackManagerModel = function () {
                             k.onSuccess()
                         }
                     } else {
+                        if (processUserAction(m, function () {
+                            h(l, k, j)
+                        }, l)) {
+                            return
+                        }
                         Modal.showAlert(printLocalError((m.error_code || null), (m.msg || null), (m.feedback || null)));
                         if (k.onFailure) {
                             k.onFailure()
@@ -15696,6 +15922,11 @@ cm.AutoAttackRaidModel = function (e) {
                             i()
                         }
                     } else {
+                        if (processUserAction(j, function () {
+                            a(h, i, g)
+                        }, h)) {
+                            return
+                        }
                         Modal.showAlert(printLocalError((j.error_code || null), (j.msg || null), (j.feedback || null)))
                     }
                 },
@@ -19776,8 +20007,11 @@ function cancelConstruction(f, g) {
     l.push("</div></div>");
     Modal.showModal(400, 400, 130, 130, g_js_strings.cancelconstruction.cancelconstructiontitle, l.join(""))
 }
-function removeConstruction(bldSlotId, currLevel) {
+function removeConstruction(bldSlotId, currLevel, paramsOverride) {
     var params = Object.clone(g_ajaxparams);
+    if (paramsOverride) {
+        params = paramsOverride
+    }
     params.requestType = "CANCEL_CONSTRUCTION";
     params.cityId = currentcityid;
     params.buildingPosition = bldSlotId;
@@ -19812,6 +20046,10 @@ function removeConstruction(bldSlotId, currLevel) {
                     update_gold()
                 }
                 update_bdg()
+            } else {
+                processUserAction(rslt, function () {
+                    removeConstruction(bldSlotId, currLevel, params)
+                }, params)
             }
         },
         onFailure: function () {}
@@ -20324,7 +20562,7 @@ function openCastle() {
     h.push("</tr>");
     h.push("</thead>");
     var n = new Array();
-    var f = new Array();
+    var f = new Array(0, 0, 0, 0, 0);
     h.push("<tbody>");
     h.push("<tr class='stripe hdg'>");
     h.push("<td class='stat'>");
@@ -20338,7 +20576,8 @@ function openCastle() {
         h.push("</td>")
     }
     h.push("</tr>");
-    h.push("<tr><td class='stat'>" + g_js_strings.openCastle.knightbonus + "</td>");
+    cm.guardianBonusView.html(h, f);
+    h.push("<tr class='stripe'><td class='stat'>" + g_js_strings.openCastle.knightbonus + "</td>");
     var p = 0;
     var c = seed.knights["city" + currentcityid];
     if (c) {
@@ -20359,7 +20598,7 @@ function openCastle() {
         h.push("</td>")
     }
     h.push("</tr>");
-    h.push("<tr class='stripe'><td class='stat'>" + g_js_strings.openCastle.resbonus + "</td>");
+    h.push("<tr><td class='stat'>" + g_js_strings.openCastle.resbonus + "</td>");
     for (var m = 1; m < 5; m++) {
         var o = parseInt(n[m] * (parseInt(seed.tech["tch" + m]) / 10));
         f[m] = f[m] + o;
@@ -20368,7 +20607,7 @@ function openCastle() {
         h.push("</td>")
     }
     h.push("</tr>");
-    h.push("<tr><td class='stat'>" + g_js_strings.openCastle.wildbonus + "</td>");
+    h.push("<tr  class='stripe'><td class='stat'>" + g_js_strings.openCastle.wildbonus + "</td>");
     var e = [0, 0, 0, 0, 0];
     if (!Object.isArray(seed.wilderness["city" + currentcityid])) {
         var q = Object.keys(seed.wilderness["city" + currentcityid]);
@@ -20402,8 +20641,8 @@ function openCastle() {
         h.push("</td>")
     }
     h.push("</tr>");
-    h.push("<tr class='stripe'><td class='stat'>" + g_js_strings.openCastle.provbonus + "</td><td>100</td><td>100</td><td>100</td><td>100</td></tr>");
-    h.push("<tr><td class='stat'>" + g_js_strings.openCastle.itembonus + "</td>");
+    h.push("<tr><td class='stat'>" + g_js_strings.openCastle.provbonus + "</td><td>100</td><td>100</td><td>100</td><td>100</td></tr>");
+    h.push("<tr class='stripe'><td class='stat'>" + g_js_strings.openCastle.itembonus + "</td>");
     for (var m = 1; m < 5; m++) {
         var s = 0;
         if (parseInt(seed.playerEffects["r" + m + "BstExp"]) > unixtime()) {
@@ -20415,7 +20654,7 @@ function openCastle() {
         h.push("</td>")
     }
     h.push("</tr>");
-    h.push("<tr class='stripe'><td class='stat'>" + g_js_strings.commonstr.upkeep + "</td>");
+    h.push("<tr><td class='stat'>" + g_js_strings.commonstr.upkeep + "</td>");
     for (var m = 1; m < 5; m++) {
         var g = parseInt(seed.resources["city" + currentcityid]["rec" + m][3]);
         f[m] = f[m] - g;
@@ -20429,7 +20668,7 @@ function openCastle() {
     h.push("</tr>");
     h.push("</tbody>");
     h.push("<tfoot>");
-    h.push("<tr class='hdg'>");
+    h.push("<tr class='hdg stripe'>");
     h.push("<td class='stat'>");
     h.push(g_js_strings.openCastle.totalprod);
     h.push("</td>");
@@ -24029,7 +24268,6 @@ cm.DailyRewardsView = function (d) {
                 if (n) {
                     var q = new Array(),
                         p = seed.player.fname + " " + seed.player.lname;
-                    q.push(["REPLACE_UsEr", p]);
                     common_postToProfile("303", Object.cloneFeed(template_data_303), Object.cloneFeed(actionlink_data_303), continuation_303, q)
                 }
                 if (seed.beginnerPromo) {
@@ -25547,6 +25785,11 @@ cm.log = function () {
                 Modal.showAlert(a.msg, "Ok")
             }
         },
+        dir: function (a) {
+            if (a) {
+                console.dir(a)
+            }
+        },
         l: function (a) {
             if (window.console && typeof console.log == "function") {
                 console.log(a)
@@ -26555,12 +26798,48 @@ cm.guardianArmorModel = function (i) {
         }
     }
 }(jQuery);
+cm.guardianBonusView = function (c) {
+    var b = ["food", "wood", "stone", "ore"];
+
+    function a(d) {
+        d.resources = {
+            stone: 388,
+            wood: 277,
+            food: 28345,
+            ore: 2228
+        }
+    }
+    return {
+        html: function (e, d) {
+            return false;
+            var h = {
+                food: 0,
+                wood: 0,
+                stone: 0,
+                ore: 0
+            };
+            var j = cm.guardianModalModel.gObj();
+            var g = c.extend({}, h, j.resources || {});
+            e.push("<tr><td class='stat'>" + g_js_strings.openCastle.guardianbonus + "</td>");
+            for (var f = 0; f < 4; f++) {
+                var k = parseInt(g[b[f]]);
+                d[f + 1] = d[f + 1] + k;
+                e.push("<td>");
+                e.push(addCommas(k));
+                e.push("</td>")
+            }
+            e.push("</tr>")
+        }
+    }
+}(jQuery);
 var cm = cm || {};
 cm.guardianConst = {
     types: ["wood", "ore"],
     bdgTypes: {
         wood: 50,
-        ore: 51
+        ore: 51,
+        food: 52,
+        stone: 53
     },
     items: {
         "2100": {
@@ -26627,12 +26906,12 @@ cm.guardianConst = {
     unlockItem: {
         ore: "2002",
         food: "2003",
-        stone: "2003"
+        stone: "2004"
     },
     bonusAttr: {
         wood: "hp",
         ore: "attack",
-        water: ""
+        food: "speed"
     }
 };
 cm.guardianController = function (g) {
@@ -27045,7 +27324,7 @@ cm.guardianModalModel = function (f) {
             }
         },
         isGuardian: function (r) {
-            return r == 50 || r == 51
+            return r == 50 || r == 51 || r == 52 || r == 53
         },
         update: function (r) {
             if (cm.guardianModalModel.gObj().upgrading) {
@@ -27063,6 +27342,15 @@ cm.guardianModalModel = function (f) {
         updateUprTime: function (r) {
             h = r;
             f(".guardianModal .timeChange").html(timestr(r))
+        },
+        ref: function (s) {
+            var r = -1;
+            seed.guardian.forEach(function (u, t) {
+                if (u.cityId && s == u.cityId) {
+                    r = t
+                }
+            });
+            return seed.guardian[r]
         },
         gObj: function () {
             var r = seed.guardian.filter(function (s) {
@@ -28007,13 +28295,20 @@ cm.HUDIconTypes = {
     NEXT_UNPURCHASED_PACKAGE: 5,
     SHARE: 6,
     DAILY_REWARD: 7,
-    GEM_GIFTING: 8
+    GEM_GIFTING: 8,
+    DEAL_OF_THE_DAY_NEW: 10
 };
 cm.HUDIconFactory = {
     getIcon: function (b) {
         switch (b.type) {
         case cm.HUDIconTypes.DEAL_OF_THE_DAY:
             return new cm.HUDDealOfTheDayIcon(b);
+            break;
+        case cm.HUDIconTypes.DEAL_OF_THE_DAY_NEW:
+            b.clickCallback = function () {
+                parent.KB.TrialPay.DealSpot.getInstance().show()
+            };
+            return new cm.HUDIcon(b);
             break;
         case cm.HUDIconTypes.INVITE:
             b.clickCallback = function () {
@@ -28085,10 +28380,10 @@ cm.HUDIconShare = function (e) {
             removeTooltip()
         },
         fieldview: function () {
-            e(c).css("top", 109).appendTo("#fieldmap")
+            e(c).css("top", 109).attr("title", g_js_strings.title.text).appendTo("#fieldmap")
         },
         cityview: function () {
-            e(c).css("top", 82).prependTo("#hudBottomContainer")
+            e(c).css("top", 82).attr("title", g_js_strings.title.text).prependTo("#hudBottomContainer")
         },
         redoImg: function () {
             setTimeout(a, 1000);
@@ -35479,7 +35774,7 @@ function build_divine() {
         return false
     }
 }
-function buildaction(bdgid, curlvl, citpos, gethelp, divineFlag) {
+function buildaction(bdgid, curlvl, citpos, gethelp, divineFlag, paramsOverride) {
     var mult = Math.pow(2, curlvl);
     var chk = checkreq("bdg", bdgid, curlvl)[3];
     var invalid = false;
@@ -35514,6 +35809,9 @@ function buildaction(bdgid, curlvl, citpos, gethelp, divineFlag) {
         }
         modal_build_waiting_state();
         var params = Object.clone(g_ajaxparams);
+        if (paramsOverride) {
+            params = paramsOverride
+        }
         params.cid = currentcityid;
         params.bid = "";
         params.pos = citpos;
@@ -35588,6 +35886,11 @@ function buildaction(bdgid, curlvl, citpos, gethelp, divineFlag) {
                         helpstr = "yes"
                     }
                 } else {
+                    if (processUserAction(rslt, function () {
+                        buildaction(bdgid, curlvl, citpos, gethelp, divineFlag, params)
+                    }, params)) {
+                        return
+                    }
                     if (parseInt(seed.tutorial.t1) == 15) {
                         Modal.hideModalAll();
                         seed.tutorial.t1 = 18;
@@ -36573,7 +36876,14 @@ function init() {
             }
             cm.DailyRewardsView.init()
         })
-    })
+    });
+    update_seed_ajax();
+    if (cm.WorldSettings.hasKeyValuePair("LOST_KNIGHTS", "on")) {
+        AjaxCall.gPostRequest("ajax/_dispatch.php", {
+            ctrl: "LostKnightsRecs",
+            action: "getRecommendations"
+        }, function () {})
+    }
 }
 function createItems() {
     Object.keys(itemlist).each(function (b) {
@@ -37020,10 +37330,18 @@ function modal_maptile(t, v, p, q, r, g, A, E, m, d, b, f, y, c, l, x, n, e, k) 
                     u.push(g_js_strings.modal_maptile.ownermisted);
                     u.push("</div>")
                 }
-                u.push("<div>" + w + ": " + (g || "---") + "</div>");
-                u.push("<div>" + g_js_strings.commonstr.might + ": " + (A || "---") + "</div>");
-                u.push("<div>" + g_js_strings.commonstr.title + ": " + (titlenames[parseInt(E)] || "---") + "</div>");
-                u.push("<div>" + g_js_strings.commonstr.alliance + ": " + (m == "null" ? "---" : m) + "</div>");
+                if (f == "bog") {
+                    u.push(" <div> " + g_js_strings.modal_maptile.boghint + " </div> ")
+                } else {
+                    if (f == "boss") {
+                        u.push(" <div> " + g_js_strings.modal_maptile.bosshint + " </div> ")
+                    } else {
+                        u.push("<div>" + w + ": " + (g || "---") + "</div>");
+                        u.push("<div>" + g_js_strings.commonstr.might + ": " + (A || "---") + "</div>");
+                        u.push("<div>" + g_js_strings.commonstr.title + ": " + (titlenames[parseInt(E)] || "---") + "</div>");
+                        u.push("<div>" + g_js_strings.commonstr.alliance + ": " + (m == "null" ? "---" : m) + "</div>")
+                    }
+                }
                 u.push("</div>");
                 u.push("</div>");
                 u.push("<div class='maptileinfowrap'>");
@@ -37060,20 +37378,23 @@ function modal_maptile(t, v, p, q, r, g, A, E, m, d, b, f, y, c, l, x, n, e, k) 
                     u.push("</div>");
                     u.push("<div id='error_overmarch'></div>")
                 } else {
-                    if (f != "bog") {
-                        u.push("<div class='btnrow clearfix'>");
+                    u.push("<div class='btnrow clearfix'>");
+                    if (f == "bog") {
+                        u.push("<a id='btnScout' class='inlineButton gray20'><span>" + g_js_strings.commonstr.scout + "</span></a>");
+                        u.push("<a id='btnAttack' class='inlineButton gray20'><span>" + g_js_strings.commonstr.attack + "</span></a>")
+                    } else {
                         u.push("<a id='btnScout' class='button20' onclick='modal_attack(3," + p + "," + q + ");return false;'><span>" + g_js_strings.commonstr.scout + "</span></a>");
-                        u.push("<a id='btnAttack' class='button20' onclick='modal_attack(4," + p + "," + q + ");return false;'><span>" + g_js_strings.commonstr.attack + "</span></a>");
-                        if (f == "plain" && cm.WorldSettings.hasKeyValuePair("PORTAL_BUTTON", "true")) {
-                            if (x != Number(currentcityid) && x != null && x != 0) {
-                                u.push("<a id='btnScout' class='inlineButton gray20'><span>" + g_js_strings.modal_myitems_use_teleport.teleport + "</span></a>")
-                            } else {
-                                u.push("<a id='btnScout' class='button20' onclick='teleport_modal(\"cityname\"," + p + "," + q + ");'><span>" + g_js_strings.modal_myitems_use_teleport.teleport + "</span></a>")
-                            }
-                        }
-                        u.push("</div>");
-                        u.push("<div id='error_overmarch'></div>")
+                        u.push("<a id='btnAttack' class='button20' onclick='modal_attack(4," + p + "," + q + ");return false;'><span>" + g_js_strings.commonstr.attack + "</span></a>")
                     }
+                    if (f == "plain" && cm.WorldSettings.hasKeyValuePair("PORTAL_BUTTON", "true")) {
+                        if (x != Number(currentcityid) && x != null && x != 0) {
+                            u.push("<a id='btnScout' class='inlineButton gray20'><span>" + g_js_strings.modal_myitems_use_teleport.teleport + "</span></a>")
+                        } else {
+                            u.push("<a id='btnScout' class='button20' onclick='teleport_modal(\"cityname\"," + p + "," + q + ");'><span>" + g_js_strings.modal_myitems_use_teleport.teleport + "</span></a>")
+                        }
+                    }
+                    u.push("</div>");
+                    u.push("<div id='error_overmarch'></div>")
                 }
                 u.push("</div>")
             }
@@ -37375,6 +37696,7 @@ var MapObject = Class.create({
             plain: 50,
             city: 51,
             ruin: 52,
+            boss: 54,
             city_mist: 53,
             camelot1: 101,
             camelot2: 102,
@@ -37393,6 +37715,7 @@ var MapObject = Class.create({
         this.types[this.typeId.plain] = "plain";
         this.types[this.typeId.city] = "city";
         this.types[this.typeId.ruin] = "ruin";
+        this.types[this.typeId.boss] = "boss";
         this.types[this.typeId.city_mist] = "city_mist";
         this.types[this.typeId.camelot1] = "camelot1";
         this.types[this.typeId.camelot2] = "camelot2";
@@ -37410,6 +37733,7 @@ var MapObject = Class.create({
         this.ttMsg.plain = g_js_strings.MapObject.plaindesc2;
         this.ttMsg.ruin = g_js_strings.MapObject.ruindesc2;
         this.ttMsg.bog = g_js_strings.MapObject.bogdesc2;
+        this.ttMsg.boss = g_js_strings.MapObject.bossdesc2;
         this.typename = [];
         this.typename.bcity = g_js_strings.commonstr.barbariancamp;
         this.typename.bog = g_js_strings.commonstr.bog;
@@ -37421,6 +37745,7 @@ var MapObject = Class.create({
         this.typename.plain = g_js_strings.commonstr.plain;
         this.typename.city = g_js_strings.commonstr.city;
         this.typename.ruin = g_js_strings.commonstr.ruin;
+        this.typename.boss = g_js_strings.commonstr.boss;
         this.typename.camelot1 = "Camelot";
         this.typename.camelot2 = "Camelot";
         this.typename.camelot3 = "Camelot";
@@ -37560,6 +37885,7 @@ var MapObject = Class.create({
             var r = seed.cities[f][3];
             var n = this.distance(E, r, ab, y);
             var m = g_js_strings.commonstr.distance + ": <span class='distance'>" + n + "</span>";
+            if (M.tileType == 54 || M.tileType == "54") {}
             var v = "";
             var C = "";
             var h = "";
@@ -37700,6 +38026,7 @@ var MapObject = Class.create({
             if (M.tileUserId && M.tileUserId == tvuid && M.tileType == 51 && parseInt(seed.playerEffects.fogExpire) > F) {
                 j = "city_mist_0"
             }
+            if (M.tileType == 54 || M.tileType == "54") {}
             var F = unixtime();
             if (seed.con_hlp == 5) {
                 s += "<a style='" + B + "top:" + c + ";left:" + N + ";' class='" + j + " slot'><span>HELLO</span></a>"
@@ -38109,6 +38436,64 @@ cm.MarchProgressBar = function (d) {
         updateView: a
     }
 }(jQuery);
+cm = cm || {};
+cm.MarchReportController = function (c) {
+    var b = function () {
+            var f = arguments[0],
+                e = arguments[1],
+                g = {},
+                d;
+            g.reportId = f[0];
+            g.side = f[1];
+            g.tileType = f[2];
+            g.tileLevel = f[3];
+            g.defenderId = f[4];
+            g.defenderName = f[5];
+            g.defenderGender = f[6];
+            g.attackerName = f[7];
+            g.attackerGender = f[8];
+            g.marchType = f[9];
+            g.defenderXCoordinate = f[10];
+            g.defenderYCoordinate = f[11];
+            g.timestamp = f[12];
+            g.readStatus = f[13];
+            g.attackerXCoordinate = f[14];
+            g.attackerYCoordinate = f[15];
+            g.rslt = e;
+            switch (g.marchType) {
+            case 1:
+                d = new cm.TransportReportModel(g);
+                d = d.render();
+                break;
+            case 3:
+                d = new cm.ScoutReportModel(g);
+                d = d.render();
+                break;
+            case 4:
+                d = new cm.AttackReportModel(g);
+                d = d.render();
+                break;
+            case 8:
+            case 9:
+                d = new cm.AttackReportModel(g);
+                d = d.render();
+                break;
+            case 10:
+                d = new cm.BossAttackReportModel(g);
+                d = d.render();
+                break;
+            case 11:
+                d = new cm.BossScoutReportModel(g);
+                d = d.render()
+            }
+            return d
+        };
+    var a = function () {};
+    a();
+    return {
+        getMarchReport: b
+    }
+}(jQuery);
 var MarchReport = Class.create({
     initialize: function (b, o, e, h, d, a, p, i, c, l, f, n, k, g, j, q, m) {
         this.rptid = b;
@@ -38291,6 +38676,17 @@ var MarchReport = Class.create({
                 if (typeof (this.rslt.s1atkBoost) != "undefined" && this.rslt.s1atkBoost != 0) {
                     d.push("<br/>" + g_js_strings.modal_messages_viewreports_view.attackboosted + ": " + this.rslt.s1atkBoost * 100 + "%")
                 }
+                if (false) {
+                    this.rslt.s0guardianDefBoost = 0.16;
+                    this.rslt.s1guardianAtkBoost = 0.18;
+                    this.rslt.s1guardianMarchBoost = 0.24
+                }
+                if (this.rslt.s1guardianAtkBoost) {
+                    d.push("<br/>" + g_js_strings.modal_messages_viewreports_view.guardian_attackboosted + ": " + this.rslt.s1guardianAtkBoost * 100 + "%")
+                }
+                if (this.rslt.s1guardianMarchBoost) {
+                    d.push("<br/>" + g_js_strings.modal_messages_viewreports_view.guardian_marchboosted + ": " + this.rslt.s1guardianMarchBoost * 100 + "%")
+                }
                 if (typeof (this.rslt.s1defBoost) != "undefined" && this.rslt.s1defBoost != 0) {
                     d.push("<br/>" + g_js_strings.modal_messages_viewreports_view.defenseboosted + ": " + this.rslt.s1defBoost * 100 + "%")
                 }
@@ -38339,6 +38735,9 @@ var MarchReport = Class.create({
                 d.push("<br/>" + g_js_strings.modal_messages_viewreports_view.knightskills + ": " + this.rslt.s0KCombatLv);
                 if (typeof (this.rslt.s0atkBoost) != "undefined" && this.rslt.s0atkBoost != 0) {
                     d.push("<br/>" + g_js_strings.modal_messages_viewreports_view.attackboosted + ": " + this.rslt.s0atkBoost * 100 + "%")
+                }
+                if (this.rslt.s0guardianDefBoost) {
+                    d.push("<br/>" + g_js_strings.modal_messages_viewreports_view.guardian_defenseboosted + ": " + this.rslt.s0guardianDefBoost * 100 + "%")
                 }
                 if (typeof (this.rslt.s0defBoost) != "undefined" && this.rslt.s0defBoost != 0) {
                     d.push("<br/>" + g_js_strings.modal_messages_viewreports_view.defenseboosted + ": " + this.rslt.s0defBoost * 100 + "%")
@@ -38857,9 +39256,11 @@ var AttackReport = Class.create(MarchReport, {
         return a.join("")
     },
     renderAttackScenery: function () {
-        var a = "";
-        a = this.renderMarchScenery(this.getAttackReportType() + ".jpg");
-        return a
+        var a = this.getAttackReportType();
+        if (a.indexOf("barbarian") != -1) {
+            a += "_s33"
+        }
+        return this.renderMarchScenery(a + ".jpg")
     },
     showFeedButton: function () {
         return false;
@@ -39123,6 +39524,1224 @@ var AttackReport = Class.create(MarchReport, {
         }
     }
 });
+cm = cm || {};
+cm.MarchReportModel = jQueryClass.extend({
+    init: function (a) {
+        this.reportId = a.reportId;
+        this.totalPages = pageNavigatorModel.getPageCount();
+        this.currentPage = pageNavigatorModel.getCurrentPage();
+        this.timestamp = a.timestamp;
+        this.readStatus = a.readStatus;
+        this.tileType = ~~ (1 * a.tileType);
+        this.tileLevel = ~~ (1 * a.tileLevel);
+        this.marchType = ~~ (1 * a.marchType);
+        this.rslt = a.rslt
+    },
+    render: function () {},
+    renderReportInfo: function () {
+        return cm.MarchReportView.renderReportInfo(this)
+    },
+    renderTitle: function () {},
+    renderLoot: function () {
+        return cm.MarchReportView.renderLoot(this)
+    },
+    renderScene: function (a, b) {
+        return cm.MarchReportView.renderScene(a, b)
+    },
+    renderUnits: function () {
+        return cm.MarchReportView.renderUnits(this)
+    },
+    renderBackButton: function () {
+        return cm.MarchReportView.renderBackButton(this)
+    }
+});
+cm.AttackReportModel = cm.MarchReportModel.extend({
+    init: function (a) {
+        this._super(a);
+        this.side = (a.side == 0) ? "defender" : "attacker";
+        this.winner = ~~ (1 * a.rslt.winner);
+        this.wall = a.rslt.wall || 0;
+        this.isConquered = a.rslt.conquered || false;
+        this.defenderId = a.defenderId;
+        this.defenderName = a.defenderName;
+        this.defenderGender = a.defenderGender;
+        this.defenderXCoordinate = a.defenderXCoordinate;
+        this.defenderYCoordinate = a.defenderYCoordinate;
+        this.defenderKnightLevel = a.rslt.s0KCombatLv;
+        this.defenderAttackBoostPercent = ~~ (1 * a.rslt.s0atkBoost) * 100;
+        this.defenderDefendBoostPercent = ~~ (1 * a.rslt.s0defBoost) * 100;
+        this.defenderGuardianDefendBoost = ~~ (1 * a.rslt.s0guardianDefBoost) * 100;
+        this.defenderUnits = a.rslt.fght.s0;
+        this.attackerName = a.attackerName;
+        this.attackerGender = a.attackerGender;
+        this.attackerXCoordinate = a.attackerXCoordinate;
+        this.attackerYCoordinate = a.attackerYCoordinate;
+        this.attackerKnightLevel = a.rslt.s1KCombatLv;
+        this.attackerAttackBoostPercent = ~~ (1 * a.rslt.s1atkBoost) * 100;
+        this.attackerDefendBoostPercent = ~~ (1 * a.rslt.s1defBoost) * 100;
+        this.attackerGuardianAttackBoost = ~~ (1 * a.s1guardianAtkBoost) * 100;
+        this.attackerGuardianMarchBoost = ~~ (1 * a.s1guardianMarchBoost) * 100;
+        this.attackerUnits = a.rslt.fght.s1;
+        this.reportType = this.getReportType()
+    },
+    render: function () {
+        var c = [],
+            f = this.renderReportInfo(),
+            g = this.renderAttackTitle(),
+            e = this.renderLoot(),
+            d = this.renderAttackScene(),
+            b = this.renderBackButton(),
+            a = this.renderUnits();
+        return "<div id='marchReportContainer'>" + f + g + e + d + b + a + b + "</div>"
+    },
+    renderAttackScene: function () {
+        var b = this.reportType + ".jpg",
+            a = this.renderScene(b);
+        return a
+    },
+    renderAttackTitle: function () {
+        return cm.MarchReportView.renderAttackTitle(this)
+    },
+    isIWinner: function () {
+        if (this.winner == 1 || this.winner == 2 && this.side == "attacker") {
+            return true
+        } else {
+            if (this.winner == 0 && this.side == "defender") {
+                return true
+            } else {
+                return false
+            }
+        }
+    },
+    getReportType: function () {
+        var a, c = 1 + Math.floor(Math.random() * 2),
+            b = ~~ (1 * this.winner);
+        if (this.marchType == 8) {
+            if (b == 0) {
+                a = "barbarianraid_lose" + c
+            } else {
+                a = "barbarian_win" + c
+            }
+        } else {
+            if (this.tileType != cm.TILE_TYPES.TILE_TYPE_CITY) {
+                if (this.winner == 1 && this.side == "attacker" || this.winner == 2 && this.side == "attacker") {
+                    a = "wilderness_win"
+                } else {
+                    if (this.winner == 0 && this.side == "defender") {
+                        a = "wilderness_win"
+                    } else {
+                        if (this.winner == 0 && this.side == "attacker" || this.winner == 1 && this.side == "defender") {
+                            a = "wilderness_lose"
+                        } else {
+                            if (this.winner == 1 && this.side == "defender" || this.winner == 2 && this.side == "defender") {
+                                a = "wilderness_win"
+                            }
+                        }
+                    }
+                }
+            } else {
+                if (this.defenderId == 0) {
+                    if (this.winner == 1 && this.side == "attacker" || this.winner == 2 && this.side == "attacker") {
+                        a = "barbarian_win"
+                    } else {
+                        if (this.winner == 0 && this.side == "attacker") {
+                            a = "barbarian_lose"
+                        }
+                    }
+                } else {
+                    if (this.winner == 1 && this.side == "attacker" || this.winner == 2 && this.side == "attacker") {
+                        a = "attack_win"
+                    } else {
+                        if (this.winner == 0 && this.side == "attacker") {
+                            a = "attack_defeat"
+                        } else {
+                            if (this.winner == 0 && this.side == "defender") {
+                                a = "defend_victory"
+                            } else {
+                                if (this.winner == 1 || this.winner == 2 && this.side == "defender") {
+                                    a = "defend_defeat"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return a
+    },
+    shouldShowFeedButton: function () {
+        var c = new Date().getTime(),
+            n = c - (this.timestamp * 1000),
+            g = (n < (23 * 60 * 60 * 1000)),
+            d, a = this.isIWinner(),
+            j;
+        if (this.reportType == "wilderness_lose") {
+            return false
+        }
+        if (a) {
+            if (this.rslt.loot) {
+                for (var h = 0; h < 5; ++h) {
+                    j = ~~ (1 * this.rslt.loot[h]);
+                    if (j > 100) {
+                        d = true
+                    } else {
+                        d = false
+                    }
+                }
+            }
+        } else {
+            var b, e, f, m, l;
+            if (this.side == "defender") {
+                b = Object.keys(this.rslt.fght.s0);
+                for (var h = 0, k = b.length; h < k; ++h) {
+                    l = b[h];
+                    e = ~~ (1 * this.rslt.fght.s0[l][0]);
+                    f = ~~ (1 * this.rslt.fght.s0[l][1]);
+                    m = e - f;
+                    if (m > 100) {
+                        d = true;
+                        break
+                    }
+                }
+            } else {
+                b = Object.keys(this.rslt.fght.s1);
+                for (var h = 0, k = b.length; h < k; ++h) {
+                    l = b[h];
+                    e = ~~ (1 * this.rslt.fght.s1[l][0]);
+                    f = ~~ (1 * this.rslt.fght.s1[l][1]);
+                    m = e - f;
+                    if (m > 100) {
+                        d = true;
+                        break
+                    }
+                }
+            }
+        }
+        return d && g
+    },
+    renderFeedText: function () {},
+    renderFeedButton: function () {},
+    showFeed: function () {}
+});
+cm.TransportReportModel = cm.MarchReportModel.extend({
+    init: function (a) {
+        this._super(a);
+        this.defenderId = a.defenderId;
+        this.defenderName = a.defenderName;
+        this.defenderGender = a.defenderGender;
+        this.defenderXCoordinate = a.defenderXCoordinate;
+        this.defenderYCoordinate = a.defenderYCoordinate;
+        this.attackerName = a.attackerName;
+        this.attackerGender = a.attackerGender;
+        this.attackerXCoordinate = a.attackerXCoordinate;
+        this.attackerYCoordinate = a.attackerYCoordinate;
+        this.gold = ~~ (1 * a.rslt.gold);
+        this.food = ~~ (1 * a.rslt.resource1);
+        this.wood = ~~ (1 * a.rslt.resource2);
+        this.stone = ~~ (1 * a.rslt.resource3);
+        this.ore = ~~ (1 * a.rslt.resource4);
+        this.loot = [this.gold, this.food, this.wood, this.stone, this.ore]
+    },
+    render: function () {
+        var b = [],
+            e = this.renderReportInfo(),
+            d = this.renderTransportLoot(),
+            c = this.renderTransportScene(),
+            a = this.renderBackButton();
+        return "<div id='marchReportContainer'>" + e + d + c + a + "</div>"
+    },
+    renderTransportScene: function () {
+        var b = "transport_scene.jpg",
+            a = this.renderScene(b);
+        return a
+    },
+    renderTransportLoot: function () {
+        return cm.MarchReportView.renderTransportLoot(this)
+    }
+});
+cm.ScoutReportModel = cm.MarchReportModel.extend({
+    init: function (a) {
+        this._super(a);
+        this.side = (a.side == 0) ? "defender" : "attacker";
+        this.winner = ~~ (1 * a.rslt.winner);
+        this.defenderId = a.defenderId;
+        this.defenderName = a.defenderName;
+        this.defenderGender = a.defenderGender;
+        this.defenderXCoordinate = a.defenderXCoordinate;
+        this.defenderYCoordinate = a.defenderYCoordinate;
+        this.attackerName = a.attackerName;
+        this.attackerGender = a.attackerGender;
+        this.attackerXCoordinate = a.attackerXCoordinate;
+        this.attackerYCoordinate = a.attackerYCoordinate;
+        this.attackerUnits = a.rslt.fght.s1;
+        this.score = ~~ (1 * a.rslt.score) || null;
+        this.units = ((a.rslt.unts && a.rslt.unts.length > 0) || !(a.rslt.unts instanceof Array)) ? a.rslt.unts : null;
+        this.lastLogin = ~~ (1 * a.rslt.lstlgn) || null;
+        this.knight = a.rslt.knght || null;
+        this.fortifications = ((a.rslt.frt && a.rslt.frt.length > 0) || !(a.rslt.frt instanceof Array)) ? a.rslt.frt : null;
+        this.buildings = ((a.rslt.blds && a.rslt.blds.length > 0) || !(a.rslt.blds instanceof Array)) ? a.rslt.blds : null;
+        this.resources = a.rslt.rsc || null;
+        this.technologies = ((a.rslt.tch && a.rslt.tch.length > 0) || !(a.rslt.tch instanceof Array)) ? a.rslt.tch : null
+    },
+    render: function () {
+        var e = [],
+            f = this.renderReportInfo(),
+            d = this.renderScoutInfo(),
+            b = this.renderUnits(),
+            c = this.renderEagleEyes(),
+            a = this.renderBackButton();
+        return "<div id='marchReportContainer'>" + f + d + a + b + c + a + "</div>"
+    },
+    renderScoutInfo: function () {
+        return cm.MarchReportView.renderScountInfo(this)
+    },
+    renderEagleEyes: function () {
+        return cm.MarchReportView.renderEagleEyes(this)
+    }
+});
+cm.BossScoutReportModel = cm.ScoutReportModel.extend({
+    init: function (d) {
+        var b = {};
+        unitKeys = Object.keys(d.rslt.fght.s0), unitsValue = Object.values(d.rslt.fght.s0);
+        for (var c = 0, a = unitKeys.length; c < a; ++c) {
+            b[unitKeys[c]] = unitsValue[c][0]
+        }
+        d.rslt.units = b;
+        this.units = b;
+        d.rslt.fght.s0 = {};
+        this._super(d);
+        this.units = b
+    }
+});
+cm.BossAttackReportModel = cm.AttackReportModel.extend({
+    init: function (a) {
+        this.side = (a.side == 0) ? "defender" : "attacker";
+        this.winner = ~~ (1 * a.rslt.win);
+        this.defenderId = a.defenderId;
+        this.defenderName = a.defenderName;
+        this.defenderGender = a.defenderGender;
+        this.defenderXCoordinate = a.attackerXCoordinate;
+        this.defenderYCoordinate = a.attackerYCoordinate;
+        this.defenderKnightLevel = a.rslt.s0KCombatLv;
+        this.defenderUnits = a.rslt.fght.s0;
+        this.attackerName = a.attackerName;
+        this.attackerGender = a.attackerGender;
+        this.attackerXCoordinate = a.attackerXCoordinate;
+        this.attackerYCoordinate = a.attackerYCoordinate;
+        this.attackerKnightLevel = a.rslt.s1KCombatLv;
+        this.attackerUnits = a.rslt.fght.s1;
+        this.reportType = this.getReportType();
+        this._super(a)
+    },
+    render: function (f) {
+        var c = [],
+            h = this.renderEffectiveHint(),
+            f = this.renderReportInfo(),
+            e = this.renderLoot(),
+            g = this.renderAttackTitle(),
+            d = this.renderAttackScene(h),
+            b = this.renderBackButton(),
+            a = this.renderUnits();
+        return "<div id='marchReportContainer'>" + f + g + e + d + b + a + b + "</div>"
+    },
+    renderAttackScene: function (c) {
+        var b = this.reportType + ".jpg",
+            a = this.renderScene(b, c);
+        return a
+    },
+    renderEffectiveHint: function (a) {
+        return cm.MarchReportView.renderEffectiveHint(this)
+    },
+    renderAttackTitle: function (a) {
+        return cm.MarchReportView.renderAttackTitle(this)
+    },
+    getReportType: function (b) {
+        var a;
+        if (this.winner == 0) {
+            a = "boss_lose"
+        } else {
+            if (this.winner = 1) {
+                a = "boss_win"
+            }
+        }
+        return a
+    }
+});
+cm = cm || {};
+cm.MarchReportView = function (d) {
+    var o = function (s) {
+            var p = [],
+                r = [],
+                v = ~~ (1 * s.tileType),
+                x = s.tileLevel,
+                u = s.defenderId,
+                w = s.defenderXCoordinate,
+                t = s.defenderYCoordinate,
+                q = new cm.utils.CoordinateLink(w, t);
+            switch (s.marchType) {
+            case 1:
+                p.push(g_js_strings.modal_messages_viewreports_view.transpto + " ");
+                break;
+            case 3:
+            case 11:
+                if (s.side == "attacker") {
+                    p.push(g_js_strings.modal_messages_viewreports_view.scoutingat + " ")
+                } else {
+                    p.push(g_js_strings.modal_messages_viewreports_view.antiscoutingat + " ")
+                }
+                break;
+            case 4:
+            case 10:
+                p.push(g_js_strings.modal_messages_viewreports_view.battleat + " ");
+                break
+            }
+            if (s.tileType == 54) {
+                p.push(g_js_strings.commonstr.darkForest);
+                p.push(" " + g_js_strings.commonstr.lv + x)
+            } else {
+                if (s.tileType != 51) {
+                    p.push(g_mapObject.types[parseInt(s.tileType)].capitalize());
+                    p.push(" " + g_js_strings.commonstr.lv + x)
+                } else {
+                    if (s.defenderId == 0) {
+                        p.push(g_js_strings.commonstr.barbariancamp);
+                        p.push(" " + g_js_strings.commonstr.lv + x)
+                    }
+                }
+            }
+            p.push(" " + q.getHTML());
+            if (s.marchType != 1 && s.conquered == 1) {
+                p.push(" - <span>" + g_js_strings.commonstr.conquered + "</span>")
+            }
+            r.push("<div class='time'>" + formatDateByUnixTime(s.timestamp) + "</div>");
+            r.push("<div class='id'>" + g_js_strings.modal_messages_viewreports_view.reportno + " " + s.reportId + "</div>");
+            var y = cm.Template.renderTemplate("MarchReport", "marchReportInfo", {
+                location: p.join(""),
+                time: r.join("")
+            });
+            return y
+        };
+    var l = function () {
+            var p = [];
+            p.push("<p id='maxWilderness'>");
+            p.push(g_js_strings.modal_messages_viewreports_view.cannotbeconq);
+            p.push("</p>");
+            return p.join("")
+        };
+    var c = function (r, s) {
+            if (r.indexOf("barbarian") != -1) {
+                r = r.replace(".", "_s33.")
+            }
+            var q = stimgUrl + "img/marchreport/" + r;
+            var p = cm.Template.renderTemplate("MarchReport", "marchReportScenery", {
+                image: q,
+                hint: s
+            });
+            return p
+        };
+    var k = function (t) {
+            var v = [],
+                s = t.rslt.loot || [0, 0, 0, 0, 0],
+                q = Object.keys(s[5]),
+                z = (!d.isArray(s[5])) ? Object.keys(s[5]) : [],
+                C, A, w, r, x, p;
+            if (t.side == "attacker") {
+                r = 1;
+                x = "looted";
+                A = g_js_strings.commonstr.loot
+            } else {
+                if (t.side == "defender") {
+                    r = -1;
+                    x = "plundered";
+                    A = g_js_strings.commonstr.plundered
+                }
+            }
+            w = ~~ (1 * s[0]);
+            w = w * r;
+            v.push("<li class='gold " + x + " " + t.side + "'>");
+            v.push("<span class='name'>" + resourceinfo.rec0 + "</span>");
+            v.push("<span class='amount'>" + w + "</span>");
+            v.push("</li>");
+            for (var u = 1; u <= 4; ++u) {
+                switch (u) {
+                case 1:
+                    p = "food";
+                    break;
+                case 2:
+                    p = "wood";
+                    break;
+                case 3:
+                    p = "stone";
+                    break;
+                case 4:
+                    p = "iron";
+                    break
+                }
+                w = ~~ (1 * s[u]);
+                w = w * r;
+                w = addCommas(w);
+                v.push("<li class='" + p + " " + x + " " + t.side + "'>");
+                v.push("<span class='name'>" + resourceinfo["rec" + u] + "</span>");
+                v.push("<span class='amount'>" + w + "</span>");
+                v.push("</li>")
+            }
+            if (z.length > 0) {
+                for (var u = 0, y = q.length; u < y; ++u) {
+                    C = q[u];
+                    w = ~~ (1 * s[5][C]);
+                    w = addCommas(w);
+                    v.push("<li class='" + x + " item item" + C + " " + t.side + "'>");
+                    v.push("<img src='" + stimgUrl + "img/items/70/" + C + ".jpg' />");
+                    v.push("<span class='name'>" + ksoItems[C].name + "</span>");
+                    v.push("<span class='amount'>" + w + "</span>");
+                    v.push("</li>")
+                }
+            }
+            var B = cm.Template.renderTemplate("MarchReport", "marchReportLoot", {
+                lis: v.join("")
+            });
+            return B
+        };
+    var f = function (D) {
+            var p = [],
+                r = [],
+                w = [],
+                u = [],
+                M, y = [],
+                C = [],
+                K = [],
+                H = [],
+                I, t, s, x, v, A, G, B, L, z, q;
+            p.push("<span class='role'>" + g_js_strings.commonstr.attackers + "</span>");
+            if (D.attackerName != "") {
+                p.push(" <span class='name'> (" + unescape(D.attackerName) + ") </span> ");
+                if (D.attackerXCoordinate != undefined || D.attackerXCoordinate != null) {
+                    t = new cm.utils.CoordinateLink(D.attackerXCoordinate, D.attackerYCoordinate);
+                    p.push(" - " + t.getHTML())
+                }
+            } else {
+                p.push(" <span class='name'> " + g_js_strings.commonstr.enemy + " </span> ")
+            }
+            if (D.winner == 1 || D.winner == 2) {
+                p.push(" <span class='winner'> " + g_js_strings.commonstr.winner + " </span> ")
+            }
+            r.push("<ul>");
+            if (D.rslt.s1KCombatLv) {
+                r.push("<li>");
+                r.push("<span class='label'>" + g_js_strings.modal_messages_viewreports_view.knightskills + ": </span>");
+                r.push("<span class='value'>" + D.rslt.s1KCombatLv + "</span>");
+                r.push("</li>")
+            }
+            if (D.rslt.s1atkBoost && D.rslt.s1atkBoost != 0) {
+                s = D.rslt.s1atkBoost * 100;
+                r.push("<li>");
+                r.push("<span class='label'>" + g_js_strings.modal_messages_viewreports_view.attackboosted + ": </span>");
+                r.push("<span class='value'>" + s + "%</span>");
+                r.push("</li>")
+            }
+            if (D.rslt.s1guardianAtkBoost && D.rslt.s1guardianAtkBoost != 0) {
+                s = D.rslt.s1guardianAtkBoost * 100;
+                r.push("<li>");
+                r.push("<span class='label'>" + g_js_strings.modal_messages_viewreports_view.guardian_attackboosted + ": </span>");
+                r.push("<span class='value'>" + s + "%</span>");
+                r.push("</li>")
+            }
+            if (D.rslt.s1guardianMarchBoost && D.rslt.s1guardianMarchBoost != 0) {
+                s = D.rslt.s1guardianMarchBoost * 100;
+                r.push("<li>");
+                r.push("<span class='label'>" + g_js_strings.modal_messages_viewreports_view.guardian_marchboosted + "</span>");
+                r.push("<span class='value'>" + s + "%</span>");
+                r.push("</li>")
+            }
+            if (D.rslt.s1defBoost & D.rslt.s1defBoost != 0) {
+                x = D.rslt.s1defBoost * 100;
+                r.push("<li>");
+                r.push("<span class='label'>" + g_js_strings.modal_messages_viewreports_view.defenseboosted + "</span>");
+                r.push("<span class='value'>" + x + "%</span>");
+                r.push("</li>")
+            }
+            r.push("</ul>");
+            v = Object.keys(D.rslt.fght.s1);
+            w.push("<table>");
+            for (var E = 0, F = v.length; E < F; ++E) {
+                if (v[E].charAt(0) == "u") {
+                    G = v[E].split("u")[1] || v[E];
+                    B = stimgUrl + "img/units/unit_" + G + "_30.jpg";
+                    L = unitcost["unt" + G][0];
+                    A = D.rslt.fght.s1["u" + G] || D.rslt.fght.s1[G]
+                } else {
+                    if (v[E].charAt(0) == "f") {
+                        G = v[E].split("f")[1] || v[E];
+                        B = stimgUrl + "img/units/unit_" + G + "_30.jpg";
+                        A = D.rslt.fght.s0["f" + G] || D.rslt.fght.s0[G];
+                        L = fortcost["frt" + G][0]
+                    }
+                }
+                z = ~~ (1 * A[0]);
+                z = addCommas(z);
+                q = ~~ (1 * A[1]);
+                q = addCommas(q);
+                u.push("<tr class='unit" + G + "'>");
+                u.push("<td class='name'>");
+                u.push("<img src='" + B + "' />");
+                u.push("<span class='name'>" + L + "</span>");
+                u.push("</td>");
+                u.push("<td class='fought'>");
+                u.push("<span class='fought'>" + z + "</span>");
+                u.push("</td>");
+                u.push("<td class='survived'>");
+                u.push("<span class='survived'>" + q + "</span>");
+                u.push("</td>");
+                u.push("</tr>")
+            }
+            u.push("</table>");
+            M = cm.Template.renderTemplate("MarchReport", "marchReportUnitsTable", {
+                troopHeader: g_js_strings.commonstr.troops,
+                foughtHeader: g_js_strings.commonstr.fought,
+                survivedHeader: g_js_strings.commonstr.survived,
+                units: u.join("")
+            });
+            w.push(M);
+            y.push("<span class='role'>" + g_js_strings.commonstr.defenders + "</span>");
+            y.push(" <span class='name'> (" + unescape(D.defenderName) + ") </span> ");
+            if (D.winner == 0) {
+                y.push(" <span class='winner'> " + g_js_strings.commonstr.winner + " </span> ")
+            }
+            C.push("<ul>");
+            if (D.rslt.s0KCombatLv) {
+                C.push("<li>");
+                C.push("<span class='label'>" + g_js_strings.modal_messages_viewreports_view.knightskills + ": </span>");
+                C.push("<span class='value'>" + D.rslt.s0KCombatLv + "</span>");
+                C.push("</li>")
+            }
+            if (D.rslt.s0atkBoost & D.rslt.s0atkBoost != 0) {
+                s = D.rslt.s0atkBoost * 100;
+                C.push("<li>");
+                C.push("<span class='label'>" + g_js_strings.modal_messages_viewreports_view.attackboosted + "</span>");
+                C.push("<span class='value'>" + s + "%</span>");
+                C.push("</li>")
+            }
+            if (D.rslt.s0guardianDefBoost && D.rslt.s0guardianDefBoost != 0) {
+                x = D.rslt.s0guardianDefBoost * 100;
+                C.push("<li>");
+                C.push("<span class='label'>" + g_js_strings.modal_messages_viewreports_view.guardian_defenseboosted + "</span>");
+                C.push("<span class='value'>" + x + "%</span>");
+                C.push("</li>")
+            }
+            if (D.rslt.s0defBoost & D.rslt.s0defBoost != 0) {
+                x = D.rslt.s0defBoost * 100;
+                C.push("<li>");
+                C.push("<span class='label'>" + g_js_strings.modal_messages_viewreports_view.defenseboosted + "</span>");
+                C.push("<span class='value'>" + x + "%</span>");
+                C.push("</li>")
+            }
+            C.push("</ul>");
+            v = Object.keys(D.rslt.fght.s0);
+            if (D.rslt.overwhelmed) {
+                K.push("<p>" + g_js_strings.modal_messages_viewreports_view.overwhelmedinbattle + "</p>");
+                K.push("<table>");
+                for (var E = 0, F = v.length; E < F; ++E) {
+                    if (v[E].charAt(0) == "u") {
+                        G = v[E].split("u")[1] || v[E];
+                        B = stimgUrl + "img/units/unit_" + G + "_30.jpg";
+                        A = D.rslt.fght.s0["u" + G] || D.rslt.fght.s0[G];
+                        L = unitcost["unt" + G][0]
+                    } else {
+                        if (v[E].charAt(0) == "m") {
+                            G = v[E].split("m")[1] || v[E];
+                            B = stimgUrl + "img/units/unit_" + G + "_30.jpg";
+                            A = D.rslt.fght.s0["m" + G] || D.rslt.fght.s0[G];
+                            L = g_js_strings.monsterUnitsNames["m" + G]
+                        } else {
+                            if (v[E].charAt(0) == "f") {
+                                G = v[E].split("f")[1] || v[E];
+                                B = stimgUrl + "img/units/unit_" + G + "_30.jpg";
+                                A = D.rslt.fght.s0["f" + G] || D.rslt.fght.s0[G];
+                                L = fortcost["frt" + G][0]
+                            }
+                        }
+                    }
+                    z = ~~ (1 * A[0]);
+                    q = ~~ (1 * A[1]);
+                    H.push("<tr class='unit" + G + "'>");
+                    H.push("<td class='name'>");
+                    H.push("<img src='" + B + "' />");
+                    H.push("<span class='name'>" + L + "</span>");
+                    H.push("</td>");
+                    H.push("<td class='killed'>");
+                    H.push("<span class='killed'>" + addCommas(z - q) + "</span>");
+                    H.push("</td>");
+                    H.push("</tr>")
+                }
+                K.push("</table>");
+                I = cm.Template.renderTemplate("MarchReport", "marchReportUnitsOverwhelmedTable", {
+                    troopHeader: g_js_strings.commonstr.troops,
+                    killedHeader: g_js_strings.commonstr.killed,
+                    units: H.join("")
+                });
+                K.push(I)
+            } else {
+                if (v.length > 0) {
+                    for (var E = 0, F = v.length; E < F; ++E) {
+                        if (v[E].charAt(0) == "u") {
+                            G = v[E].split("u")[1] || v[E];
+                            B = stimgUrl + "img/units/unit_" + G + "_30.jpg";
+                            A = D.rslt.fght.s0["u" + G] || D.rslt.fght.s0[G];
+                            L = unitcost["unt" + G][0]
+                        } else {
+                            if (v[E].charAt(0) == "m") {
+                                G = v[E].split("m")[1] || v[E];
+                                B = stimgUrl + "img/units/unit_" + G + "_30.jpg";
+                                A = D.rslt.fght.s0["m" + G] || D.rslt.fght.s0[G];
+                                L = g_js_strings.monsterUnitsNames["m" + G]
+                            } else {
+                                if (v[E].charAt(0) == "f") {
+                                    G = v[E].split("f")[1] || v[E];
+                                    B = stimgUrl + "img/units/unit_" + G + "_30.jpg";
+                                    A = D.rslt.fght.s0["f" + G] || D.rslt.fght.s0[G];
+                                    L = fortcost["frt" + G][0]
+                                }
+                            }
+                        }
+                        z = ~~ (1 * A[0]);
+                        q = ~~ (1 * A[1]);
+                        H.push("<tr class='unit" + G + "'>");
+                        H.push("<td class='name'>");
+                        H.push("<img src='" + B + "' />");
+                        H.push("<span class='name'>" + L + "</span>");
+                        H.push("</td>");
+                        H.push("<td class='fought'>");
+                        H.push("<span class='fought'>" + addCommas(z) + "</span>");
+                        H.push("</td>");
+                        H.push("<td class='survived'>");
+                        H.push("<span class='survived'>" + addCommas(q) + "</span>");
+                        H.push("</td>");
+                        H.push("</tr>")
+                    }
+                    I = cm.Template.renderTemplate("MarchReport", "marchReportUnitsTable", {
+                        troopHeader: g_js_strings.commonstr.troops,
+                        foughtHeader: g_js_strings.commonstr.fought,
+                        survivedHeader: g_js_strings.commonstr.survived,
+                        units: H.join("")
+                    });
+                    K.push(I)
+                } else {
+                    K.push("<p>" + g_js_strings.modal_messages_viewreports_view.notroopsdef + "</p>")
+                }
+            }
+            var J = cm.Template.renderTemplate("MarchReport", "marchReportUnits", {
+                attackerRole: p.join(""),
+                attackerBoosts: r.join(""),
+                attackerUnits: w.join(""),
+                defenderRole: y.join(""),
+                defenderBoosts: C.join(""),
+                defenderUnits: K.join("")
+            });
+            return J
+        };
+    var n = function (p) {
+            var r = [],
+                q = 'loadPage_pagination("modal_msg_list_pagination", ' + p.currentPage + ', "modal_messages_viewreports", ' + p.totalPages + ")";
+            r.push("<div class='buttonContainer'>");
+            r.push("<a class='button20' onclick='" + q + "'>");
+            r.push("<span>" + g_js_strings.modal_messages_viewreports_view.backtoreports + "</span>");
+            r.push("</a>");
+            r.push("</div>");
+            return r.join("")
+        };
+    var i = function (p) {
+            var r = p.attackType,
+                q = r + ".jpg";
+            return q
+        };
+    var b = function (r) {
+            var q, v, p, s = r.rslt.conquered,
+                u;
+            switch (r.reportType) {
+            case "wilderness_win":
+                q = g_js_strings.modal_messages_viewreports_view.attack_result_wilderness_barbarian_win;
+                break;
+            case "wilderness_lose":
+                q = g_js_strings.modal_messages_viewreports_view.attack_result_wilderness_barbarian_lose;
+                break;
+            case "barbarian_win":
+                q = g_js_strings.modal_messages_viewreports_view.attack_result_wilderness_barbarian_win;
+                break;
+            case "barbarian_lose":
+                q = g_js_strings.modal_messages_viewreports_view.attack_result_wilderness_barbarian_lose;
+                break;
+            case "attack_win":
+            case "boss_win":
+                q = g_js_strings.modal_messages_viewreports_view.attack_result_attacked_enemy_win;
+                break;
+            case "defend_victory":
+                q = g_js_strings.modal_messages_viewreports_view.attack_result_attack_by_enemy_win;
+                break;
+            case "defend_defeat":
+                q = g_js_strings.modal_messages_viewreports_view.attack_result_attack_by_enemy_lose;
+                break;
+            case "attack_defeat":
+            case "boss_lose":
+                q = g_js_strings.modal_messages_viewreports_view.attack_result_attacked_enemy_lose;
+                break;
+            case "barbarianraid_win1":
+            case "barbarianraid_win2":
+                q = g_js_strings.barbarian.barbarianwin;
+                break;
+            case "barbarianraid_lose1":
+            case "barbarianraid_lose2":
+                q = g_js_strings.barbarian.barbarianlose;
+                break;
+            default:
+                throw "No attack result found"
+            }
+            if (r.winner == 1 && r.rslt.wall) {
+                if (r.tileType == 51) {
+                    v = g_js_strings.modal_messages_viewreports_view.wallbreach + " "
+                } else {
+                    v = g_js_strings.modal_messages_viewreports_view.securedwilderness + " "
+                }
+                if (!s || s == false || ~~ (1 * s) == 0) {
+                    u = false
+                } else {
+                    u = true
+                }
+                if (!u && r.winner == 1 && r.tileType != 51 && r.side == "attacker") {
+                    p = this.renderMaxWilderness()
+                }
+            } else {
+                if (r.winner == 2) {
+                    if (r.tileType == 51) {
+                        v = g_js_strings.modal_messages_viewreports_view.nowallbreach + " "
+                    } else {
+                        v = g_js_strings.modal_messages_viewreports_view.nosecuredwilderness + " ";
+                        if (r.rslt.wall) {
+                            v += r.rslt.wall + g_js_strings.modal_messages_viewreports_view.wildernesspercsec
+                        }
+                    }
+                }
+            }
+            if (r.winner == 1 && r.side == "defender" && r.tileType == 51) {
+                if (r.rslt.wall) {
+                    v += r.rslt.wall;
+                    v += g_js_strings.modal_messages_viewreports_view.percdamage
+                }
+                if (r.rslt.wall == 100) {
+                    v += " " + g_js_strings.modal_messages_viewreports_view.pendingcancel
+                }
+            }
+            var t = cm.Template.renderTemplate("MarchReport", "marchReportTitle", {
+                status: q,
+                hint: v,
+                maxWilderness: p
+            });
+            return t
+        };
+    var a = function (p) {
+            var s = [],
+                u = p.loot,
+                q;
+            s.push("<li class='gold'>");
+            s.push("<span class='name'>" + resourceinfo.rec0 + "</span>");
+            s.push("<span class='amount'>" + u[0] + "</span>");
+            s.push("</li>");
+            for (var r = 1; r <= 4; ++r) {
+                switch (r) {
+                case 1:
+                    q = "food";
+                    break;
+                case 2:
+                    q = "wood";
+                    break;
+                case 3:
+                    q = "stone";
+                    break;
+                case 4:
+                    q = "iron";
+                    break
+                }
+                s.push("<li class='" + q + "'>");
+                s.push("<span class='name'>" + resourceinfo["rec" + r] + "</span>");
+                s.push("<span class='amount'>" + u[r] + "</span>");
+                s.push("</li>")
+            }
+            var t = cm.Template.renderTemplate("MarchReport", "marchReportLoot", {
+                lis: s.join("")
+            });
+            return t
+        };
+    var h = function (v) {
+            var r = [],
+                B = [],
+                s = [],
+                A = [],
+                u = [],
+                C = [],
+                z = [],
+                F = [],
+                E, D, q, t, p, x;
+            if (v.score > 0) {
+                r.push("<div class='scoutTitle'>");
+                r.push(g_js_strings.modal_messages_viewreports_view.scoutrpt);
+                r.push("</div>");
+                B.push("<div class='container units'>");
+                B.push("<table>");
+                B.push("<thead>");
+                B.push("<tr>");
+                B.push("<td> &nbsp; </td>");
+                B.push("<td>" + g_js_strings.commonstr.nametx + "</td>");
+                B.push("<td>" + g_js_strings.commonstr.count + "</td>");
+                B.push("</tr>");
+                B.push("</thead>");
+                B.push("<tbody>");
+                if (v.units != null) {
+                    E = Object.keys(v.units);
+                    D = Object.values(v.units);
+                    for (var w = 0, y = E.length; w < y; ++w) {
+                        if (E[w].charAt(0) == "u") {
+                            q = E[w].split("u")[1];
+                            t = stimgUrl + "img/units/unit_" + q + "_30.jpg";
+                            p = unitcost["unt" + q][0]
+                        } else {
+                            if (E[w].charAt(0) == "m") {
+                                q = E[w].split("m")[1];
+                                t = stimgUrl + "img/units/unit_" + q + "_30.jpg";
+                                p = g_js_strings.monsterUnitsNames["m" + q]
+                            }
+                        }
+                        B.push("<tr>");
+                        B.push("<td> <img src='" + t + "' /> </td>");
+                        B.push("<td>" + p + "</td>");
+                        B.push("<td>" + D[w] + "</td>");
+                        B.push("</tr>")
+                    }
+                } else {
+                    B.push(" <tr> ");
+                    B.push(" <td colspan='3'> ");
+                    B.push(g_js_strings.modal_messages_viewreports_view.nounits);
+                    B.push(" </td> ");
+                    B.push(" </tr> ")
+                }
+                B.push("</tbody>");
+                B.push("</table>");
+                B.push("</div>");
+                if (v.lastLogin != null) {
+                    s.push("<div class='container login'>");
+                    s.push("<table>");
+                    s.push("<thead>");
+                    s.push("<tr>");
+                    s.push("<td> &nbsp; </td>");
+                    s.push("<td>" + g_js_strings.modal_messages_viewreports_view.lastlogin + "</td>");
+                    s.push("</tr>");
+                    s.push("</thead>");
+                    s.push("<tbody>");
+                    s.push("<tr>");
+                    s.push("<td>");
+                    s.push("<td>" + new Date(v.lastLogin * 1000).toGMTString() + "</td");
+                    s.push("</td>");
+                    s.push("</tr>");
+                    s.push("</tbody>");
+                    s.push("</table>");
+                    s.push("</div>")
+                }
+                if (v.knight != null) {
+                    A.push("<div class='container knight'>");
+                    A.push("<table>");
+                    A.push("<thead>");
+                    A.push("<tr>");
+                    A.push("<td> &nbsp; </td>");
+                    A.push("<td>" + g_js_strings.modal_messages_viewreports_view.knightcomabtlv + "</td>");
+                    A.push("</tr>");
+                    A.push("</thead>");
+                    A.push("<tbody>");
+                    A.push("<tr>");
+                    A.push("<td>");
+                    A.push("<td>" + v.knight.cbt + "</td");
+                    A.push("</td>");
+                    A.push("</tr>");
+                    A.push("</tbody>");
+                    A.push("</table>");
+                    A.push("</div>")
+                }
+                if (v.fortifications != null) {
+                    u.push("<div class='container fortfications'>");
+                    u.push("<table>");
+                    u.push("<thead>");
+                    u.push("<tr>");
+                    u.push("<td> &nbsp; </td>");
+                    u.push("<td>" + g_js_strings.commonstr.nametx + "</td>");
+                    u.push("<td>" + g_js_strings.commonstr.count + "</td>");
+                    u.push("</tr>");
+                    u.push("</thead>");
+                    u.push("<tbody>");
+                    E = Object.keys(v.fortifications);
+                    D = Object.values(v.fortifications);
+                    for (var w = 0, y = E.length; w < y; ++w) {
+                        q = E[w].split("f")[1];
+                        t = stimgUrl + "img/units/unit_" + q + "_30.png";
+                        p = fortcost["frt" + q][0];
+                        u.push("<tr>");
+                        u.push("<td> <img src='" + t + "' /> </td>");
+                        u.push("<td>" + p + "</td>");
+                        u.push("<td>" + D[w] + "</td>");
+                        u.push("</tr>")
+                    }
+                    u.push("</tbody>");
+                    u.push("</table>");
+                    u.push("</div>")
+                }
+                if (v.buildings != null) {
+                    C.push("<div class='container buildings'>");
+                    C.push("<table>");
+                    C.push("<thead>");
+                    C.push("<tr>");
+                    C.push("<td> &nbsp; </td>");
+                    C.push("<td>" + g_js_strings.commonstr.building + "</td>");
+                    C.push("<td>" + g_js_strings.commonstr.levels + "</td>");
+                    C.push("</tr>");
+                    C.push("</thead>");
+                    C.push("<tbody>");
+                    E = Object.keys(v.buildings);
+                    D = Object.values(v.buildings);
+                    for (var w = 0, y = E.length; w < y; ++w) {
+                        q = E[w].split("b")[1];
+                        p = buildingcost["bdg" + q][0];
+                        C.push("<tr>");
+                        C.push("<td> &nbsp; </td>");
+                        C.push("<td>" + p + "</td>");
+                        C.push("<td>" + D[w].join(", ") + "</td>");
+                        C.push("</tr>")
+                    }
+                    C.push("</tbody>");
+                    C.push("</table>");
+                    C.push("</div>")
+                }
+                if (v.resources != null) {
+                    z.push("<div class='container resources'>");
+                    z.push("<table>");
+                    z.push("<thead>");
+                    z.push("<tr>");
+                    z.push("<td>" + g_js_strings.commonstr.resource + "</td>");
+                    z.push("<td>" + g_js_strings.commonstr.quantity + "</td>");
+                    z.push("</tr>");
+                    z.push("</thead>");
+                    z.push("<tbody>");
+                    E = Object.keys(v.resources);
+                    D = Object.values(v.resources);
+                    for (var w = 0, y = E.length; w < y; ++w) {
+                        q = ~~ (1 * E[w].split("r")[1]);
+                        x = Number(D[w]);
+                        x = Math.floor(x);
+                        t = stimgUrl + "img/";
+                        switch (q) {
+                        case 1:
+                            t += "food";
+                            break;
+                        case 2:
+                            t += "wood";
+                            break;
+                        case 3:
+                            t += "stone";
+                            break;
+                        case 4:
+                            t += "iron";
+                            break
+                        }
+                        t += "_30.png";
+                        p = resourceinfo["rec" + q];
+                        z.push("<tr>");
+                        z.push("<td class='name'> <img src='" + t + "' /> <span class='name'>" + p + "</span></td>");
+                        z.push("<td>" + addCommas(x) + "</td>");
+                        z.push("</tr>")
+                    }
+                    z.push("</tbody>");
+                    z.push("</table>");
+                    z.push("</div>")
+                }
+                if (v.technologies != null) {
+                    F.push("<div class='container technologies'>");
+                    F.push("<table>");
+                    F.push("<thead>");
+                    F.push("<tr>");
+                    F.push("<td>" + g_js_strings.commonstr.research + "</td>");
+                    F.push("<td>" + g_js_strings.commonstr.levels + "</td>");
+                    F.push("</tr>");
+                    F.push("</thead>");
+                    F.push("<tbody>");
+                    E = Object.keys(v.technologies);
+                    D = Object.values(v.technologies);
+                    for (var w = 0, y = E.length; w < y; ++w) {
+                        q = E[w].split("t")[1];
+                        p = techcost["tch" + q][0];
+                        F.push("<tr>");
+                        F.push("<td>" + p + "</td>");
+                        F.push("<td>" + D[w] + "</td>");
+                        F.push("</tr>")
+                    }
+                    F.push("</tbody>");
+                    F.push("</table>");
+                    F.push("</div>")
+                }
+            } else {
+                if (this.side == "attacker") {
+                    r.push("<div class='scoutTitle'>");
+                    r.push(g_js_strings.modal_messages_viewreports_view.scoutfail);
+                    r.push("</div>")
+                }
+            }
+            r = r.join("");
+            B = B.join("");
+            s = s.join("");
+            A = A.join("");
+            u = u.join("");
+            C = C.join("");
+            z = z.join("");
+            F = F.join("");
+            return "<div id='scoutingInformationContainer'>" + r + B + s + A + u + C + z + F + "</div>"
+        };
+    var m = function (p) {
+            var r = ~~ (1 * seed.tech.tch6),
+                q = [];
+            if (r < 11) {
+                q.push("<div class='eagleEyesContainer'>");
+                q.push(g_js_strings.modal_messages_viewreports_view.eagleeyes);
+                q.push("</div>")
+            }
+            return q.join("")
+        };
+    var g = {
+        u1m101: "0",
+        u1m102: "0",
+        u1m103: "0",
+        u1m104: "0",
+        u2m101: "0",
+        u2m102: "+",
+        u2m103: "0",
+        u2m104: "-",
+        u3m101: "0",
+        u3m102: "0",
+        u3m103: "0",
+        u3m104: "0",
+        u4m101: "0",
+        u4m102: "+",
+        u4m103: "0",
+        u4m104: "-",
+        u5m101: "0",
+        u5m102: "++",
+        u5m103: "0",
+        u5m104: "-",
+        u6m101: "+",
+        u6m102: "-",
+        u6m103: "0",
+        u6m104: "0",
+        u7m101: "-",
+        u7m102: "0",
+        u7m103: "0",
+        u7m104: "+",
+        u8m101: "-",
+        u8m102: "0",
+        u8m103: "0",
+        u8m104: "++",
+        u9m101: "0",
+        u9m102: "0",
+        u9m103: "0",
+        u9m104: "0",
+        u10m101: "++",
+        u10m102: "-",
+        u10m103: "0",
+        u10m104: "0",
+        u11m101: "-",
+        u11m102: "-",
+        u11m103: "0",
+        u11m104: "-",
+        u12m101: "-",
+        u12m102: "-",
+        u12m103: "0",
+        u12m104: "-"
+    };
+    var j = function (w) {
+            var v = [],
+                z = [],
+                B, y, u, C, A, p, t;
+            C = Object.keys(w.attackerUnits);
+            p = Object.keys(w.defenderUnits);
+            for (var x = 0, r = C.length; x < r; ++x) {
+                for (var s = 0, q = p.length; s < q; ++s) {
+                    u = C[x].split("u")[1];
+                    A = p[s].split("m")[1];
+                    B = g["u" + u + "m" + A];
+                    if (w.winner == 0) {
+                        if (B == "-" || B == "--" || B == "0") {
+                            z.push("u" + u + "-m" + A)
+                        }
+                    } else {
+                        if (w.winner == 1) {
+                            if (B == "+" || B == "++" || B == "0") {
+                                z.push("u" + u + "-m" + A)
+                            }
+                        }
+                    }
+                }
+            }
+            if (w.winner == 0 && z.length == 0) {
+                B = "-+"
+            } else {
+                if (w.winner == 1 && z.length == 0) {
+                    B = "+-"
+                } else {
+                    t = Math.floor(Math.random() * z.length);
+                    y = z[t];
+                    u = y.split("-")[0];
+                    u = u.split("u")[1];
+                    A = y.split("-")[1];
+                    B = g["u" + u + A]
+                }
+            }
+            switch (B) {
+            case "++":
+                B = g_js_strings.battleReport.dominated.replace("%1$s", unitcost["unt" + u][0]).replace("%2$s", g_js_strings.monsterUnitsNames[A]);
+                break;
+            case "+":
+                B = g_js_strings.battleReport.upperHand.replace("%1$s", unitcost["unt" + u][0]).replace("%2$s", g_js_strings.monsterUnitsNames[A]);
+                break;
+            case "-":
+                B = g_js_strings.battleReport.struggled.replace("%1$s", unitcost["unt" + u][0]).replace("%2$s", g_js_strings.monsterUnitsNames[A]);
+                break;
+            case "--":
+                B = g_js_strings.battleReport.noMatch.replace("%1$s", unitcost["unt" + u][0]).replace("%2$s", g_js_strings.monsterUnitsNames[A]);
+                break;
+            case "0":
+                B = g_js_strings.battleReport.valiantly.replace("%1$s", unitcost["unt" + u][0]).replace("%2$s", g_js_strings.monsterUnitsNames[A]);
+                break;
+            case "-+":
+                B = g_js_strings.battleReport.loserNoHint;
+                break;
+            case "+-":
+                B = g_js_strings.battleReport.winnerNoHint;
+                break
+            }
+            v.push("<p id='effectiveHintContainer'>");
+            v.push(B);
+            v.push("</p>");
+            return v.join("")
+        };
+    var e = function () {};
+    e();
+    return {
+        renderReportInfo: o,
+        renderMaxWilderness: l,
+        renderScene: c,
+        renderLoot: k,
+        renderBackButton: n,
+        renderTransportLoot: a,
+        renderUnits: f,
+        renderAttackTitle: b,
+        renderAttackScenery: i,
+        renderScountInfo: h,
+        renderEagleEyes: m,
+        renderEffectiveHint: j
+    }
+}(jQuery);
 
 function modal_openMarket(a) {
     modal_marketplace(a)
@@ -40403,10 +42022,10 @@ cm.messageController = function ($) {
         sendGroupOnChange: function () {
             var val = $(".selectComposeSubject").val();
             if (val == g_js_strings.commonstr.alliance) {
-                $("#modal_msg_write_to").val(g_js_strings.commonstr.alliance)
+                $("#modal_msg_write_to").val(g_js_strings.commonstr.allianceAtSign)
             }
             if (val == g_js_strings.commonstr.officers) {
-                $("#modal_msg_write_to").val(g_js_strings.commonstr.officers)
+                $("#modal_msg_write_to").val(g_js_strings.commonstr.officersAtSign)
             }
             reset(".selectComposeSubject")
         },
@@ -40531,7 +42150,7 @@ Messages.Methods = {
         })
     },
     deleteCheckedReports: function (a) {
-        var g = $("modal_msg_reports_tablediv").getElementsByTagName("input");
+        var g = $("modal_msg_reports_tablediv") ? $("modal_msg_reports_tablediv").getElementsByTagName("input") : [];
         var d = new Array();
         var b = new Array();
         var h = new Array();
@@ -40576,7 +42195,9 @@ Messages.Methods = {
                     messages_notify_bug()
                 }
                 pageNavigatorModel.gotoPage(1);
-                Messages.listReports()
+                Messages.listReports();
+                seed.newReportCount = 0;
+                cm.NotificationView.exe()
             }
         })
     },
@@ -40592,7 +42213,7 @@ Messages.Methods = {
                 seed.newReportCount = parseInt(seed.newReportCount) - 1;
                 messages_notify_bug()
             }
-            $("modal_msg_list").innerHTML = MarchReport.getMarchReport(m, r).render();
+            $("modal_msg_list").innerHTML = cm.MarchReportController.getMarchReport(m, r);
             jQuery(".msgTopBar, .reportDeletes, .tradeDeletes").hide();
             cm.GloryView.render()
         })
@@ -40651,8 +42272,11 @@ Messages.Methods = {
                                 j.push(g_js_strings.commonstr.transport);
                                 break;
                             case 3:
+                            case 11:
                                 j.push(g_js_strings.commonstr.scout);
                                 break;
+                            case 10:
+                            case 4:
                             default:
                                 j.push(g_js_strings.commonstr.attack);
                                 break
@@ -40668,7 +42292,11 @@ Messages.Methods = {
                             j.push(" ");
                             if (parseInt(k.side0TileType) != 51) {
                                 j.push(" - ");
-                                j.push(g_mapObject.types[parseInt(k.side0TileType)].capitalize());
+                                if (k.marchType == 10 || k.marchType == 11) {
+                                    j.push(g_js_strings.commonstr.boss.capitalize())
+                                } else {
+                                    j.push(g_mapObject.types[parseInt(k.side0TileType)].capitalize())
+                                }
                                 j.push(" Lv." + k.side0TileLevel)
                             } else {
                                 var o = "<a href='javascript:void(0)' onclick='getInfoForAnUser(" + k.side1PlayerId + ")'>" + l.arPlayerNames["p" + k.side1PlayerId] + "</a>";
@@ -41068,8 +42696,8 @@ function modal_messages_reply(a, c) {
 function modal_messages_send() {
     var mess = cm.messageController.escape(document.getElementById("modal_msg_write_txt").value);
     var recipient = document.getElementById("modal_msg_write_to").value;
-    var alli = g_js_strings.commonstr.alliance.toLowerCase();
-    if (recipient.toLowerCase() == g_js_strings.commonstr.officers.toLowerCase() || recipient.toLowerCase() == alli) {
+    var alli = g_js_strings.commonstr.allianceAtSign.toLowerCase();
+    if (recipient.toLowerCase() == g_js_strings.commonstr.officersAtSign.toLowerCase() || recipient.toLowerCase() == alli) {
         cm.messageController.messageWide(recipient.toLowerCase() == alli)
     } else {
         var params = Object.clone(g_ajaxparams);
@@ -41627,7 +43255,8 @@ function modal_messages_tradereports_chkdel(rType) {
                     }
                     messages_notify_bug()
                 }
-                modal_messages_viewtrades()
+                modal_messages_viewtrades();
+                cm.NotificationView.exe()
             }
         },
         onFailure: function () {}
@@ -42361,7 +43990,8 @@ function messages_action(d, b) {
     }
     e.boxType = a;
     AjaxCall.gPostRequest("ajax/getEmail.php", e, function (f) {
-        Messages.handleGetEmail(f, e, d, a)
+        Messages.handleGetEmail(f, e, d, a);
+        cm.NotificationView.exe()
     })
 }
 function getSelectedMessages(b) {
@@ -42552,7 +44182,7 @@ var cm = function (parent) {
             var mmbhtml = new Array();
             mmbhtml.push("<div class='modal_mmb'>");
             mmbhtml.push("<div class='topinfo clearfix'>");
-            mmbhtml.push("<div class='enddeco'></div>");
+            mmbhtml.push("<div class='enddeco_s33'></div>");
             mmbhtml.push("<div class='middlecontent'>");
             mmbhtml.push("<div class='titlebar'>");
             mmbhtml.push(g_js_strings.modal_mmb.playmmb);
@@ -42567,7 +44197,7 @@ var cm = function (parent) {
                 }
             }
             mmbhtml.push("</div>");
-            mmbhtml.push("<div class='enddeco'></div>");
+            mmbhtml.push("<div class='enddeco_s33'></div>");
             mmbhtml.push("</div>");
             mmbhtml.push("<div class='playgamewrap'>");
             mmbhtml.push("<div class='playgametext'>" + g_js_strings.modal_mmb.usetokens + "</div>");
@@ -42658,7 +44288,7 @@ var cm = function (parent) {
                         var mmbhtml = new Array();
                         mmbhtml.push("<div id='modal_mmb' class='modal_mmb' style=''>");
                         mmbhtml.push("<div class='topinfo clearfix'>");
-                        mmbhtml.push("<div class='enddeco'></div>");
+                        mmbhtml.push("<div class='enddeco_s33'></div>");
                         mmbhtml.push("<div class='middlecontent'>");
                         mmbhtml.push("<div class='titlebar'>");
                         mmbhtml.push(g_js_strings.modal_mmb.playmmb);
@@ -42675,7 +44305,7 @@ var cm = function (parent) {
                         mmbhtml.push("<div class='playbtn clearfix' id='mmbPlayBox'><a onclick='cm.mww.modal_mmb_play();return false;' class='button30' style='width:200px;'><span>" + g_js_strings.modal_mmb.playnow + "</span></a></div>");
                         mmbhtml.push("<div id='mmbPickText' class='mmbpicktext' style='display:none;'>" + g_js_strings.modal_mmb_game.pickbox + "</div>");
                         mmbhtml.push("</div>");
-                        mmbhtml.push("<div class='enddeco'></div>");
+                        mmbhtml.push("<div class='enddeco_s33'></div>");
                         mmbhtml.push("</div>");
                         mmbhtml.push("<div class='displaycase clearfix'>");
                         mmbhtml.push("<div id='mmbDisplayCase'>");
@@ -46819,7 +48449,7 @@ Research.Methods = {
             n.push(stimgUrl);
             n.push("img/tech/");
             n.push(l);
-            n.push(".png'/></td>");
+            n.push("_s33.png'/></td>");
             n.push("<td class='tchlist_info'>");
             n.push("<div class='techhd'>");
             n.push(y[0]);
@@ -51119,34 +52749,46 @@ cm.UnlockController = function (e) {
             });
             e(".summon_button").unbind("click").bind("click", function () {
                 var g = e(this).attr("guardian_type");
-                var i = false;
-                var j = (Object.keys(seed.queue_atkinc).length > 0);
-                var h = seed.queue_atkp["city" + currentcityid];
-                for (var f in h) {
-                    if (h[f].marchType == cm.MARCH_TYPES.MARCH_TYPE_ATTACK && h[f].marchStatus == cm.MARCH_STATUS.MARCH_STATUS_OUTBOUND) {
-                        i = true;
+                var j = false;
+                var k = (Object.keys(seed.queue_atkinc).length > 0);
+                var i = seed.queue_atkp["city" + currentcityid];
+                for (var f in i) {
+                    if (i[f].marchType == cm.MARCH_TYPES.MARCH_TYPE_ATTACK && i[f].marchStatus == cm.MARCH_STATUS.MARCH_STATUS_OUTBOUND) {
+                        j = true;
                         break
                     }
                 }
-                if (g == "wood" && i) {
+                var h = e(".sprite_button_20.active").attr("guardian_type");
+                cm.log.l("currentType=" + h + "  atkWarning=" + j + "   incWarning=" + k);
+                if (h == "food" && j) {
                     cm.ModalManager.alert({
                         button_text: g_js_strings.commonstr.summon_text,
-                        text: g_js_strings.guardian.summonWarning,
+                        text: g_js_strings.guardian.summonWarningFood,
                         exe: function () {
                             cm.guardianSummonModel.summon(g, d)
                         }
                     })
                 } else {
-                    if (g != "wood" && j) {
+                    if (h == "ore" && j) {
                         cm.ModalManager.alert({
                             button_text: g_js_strings.commonstr.summon_text,
-                            text: g_js_strings.guardian.summonWarningInc,
+                            text: g_js_strings.guardian.summonWarningOre,
                             exe: function () {
                                 cm.guardianSummonModel.summon(g, d)
                             }
                         })
                     } else {
-                        cm.guardianSummonModel.summon(g, d)
+                        if (h == "wood" && k) {
+                            cm.ModalManager.alert({
+                                button_text: g_js_strings.commonstr.summon_text,
+                                text: g_js_strings.guardian.summonWarningWood,
+                                exe: function () {
+                                    cm.guardianSummonModel.summon(g, d)
+                                }
+                            })
+                        } else {
+                            cm.guardianSummonModel.summon(g, d)
+                        }
                     }
                 }
             });
@@ -51183,7 +52825,7 @@ cm.UnlockView = function (e) {
     function g() {
         var k = cm.guardianSummonModel.getData();
         var l = cm.guardianSummonModel.getAttrBonus();
-        var m = "<div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon wood'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='wood_stat'>" + (k[0].cl2).substr(0, 4) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon ore'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='ore_stat'>" + (k[1].cl2).substr(0, 4) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon food " + (k[2] ? "sat" : "desat") + "'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='food_stat " + (k[2] ? "sat" : "desat") + "'>" + (k[2] ? k[2].cl2.substr(0, 4) : "+0%") + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon stone " + (k[3] ? "sat" : "desat") + "'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='stone_stat " + (k[3] ? "sat" : "desat") + "'>" + (k[3] ? k[3].cl2.substr(0, 4) : "+0%") + "</div><div title='" + g_js_strings.guardian.tooltipAttrReceived + "' class='attribute " + (l && l.type ? l.type.toLowerCase() : "none") + "'></div><div title='" + g_js_strings.guardian.tooltipAttrReceived + "' class='attribute_stat'>" + (l && l.value ? l.value.substr(0, 4) : "") + "</div>";
+        var m = "<div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon wood'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='wood_stat'>" + (k[0].cl2).substr(0, 4) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon ore'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='ore_stat'>" + (k[1].cl2).substr(0, 4) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon food'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='food_stat'>" + (k[2].cl2).substr(0, 4) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon stone " + (k[3] ? "sat" : "desat") + "'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='stone_stat " + (k[3] ? "sat" : "desat") + "'>" + (k[3] ? k[3].cl2.substr(0, 4) : "+0%") + "</div><div title='" + g_js_strings.guardian.tooltipAttrReceived + "' class='attribute " + (l && l.type ? l.type.toLowerCase() : "none") + "'></div><div title='" + g_js_strings.guardian.tooltipAttrReceived + "' class='attribute_stat'>" + (l && l.value ? l.value.substr(0, 4) : "") + "</div>";
         return "<div class='unlock_view'><div class='brown_top'></div><div class='brown_bottom'></div><div class='vanilla_middle'><div class='resource_top'>" + m + "</div></div><div class='apple_top' title='" + g_js_strings.guardian.tooltipSetBonus + "'></div><div class='cityGuardianName'>" + fUp(currentcityinfo[1]) + "'s " + g_js_strings.guardian.guardians + "</div><div class='guardian_collection'>" + a(k) + "</div><div class='arrow'></div><div class='apple_bottom' title='" + g_js_strings.guardian.tooltipSetBonus + "'><strong>" + g_js_strings.guardian.setBonus + "</strong><br>" + g_js_strings.guardian.permanentlyReduce + "</div></div>"
     }
     var b = {
@@ -51205,25 +52847,26 @@ cm.UnlockView = function (e) {
     };
 
     function a(l) {
+        var p = "";
         var o = "";
-        var n = "";
         for (var k = 0; k < 4; k++) {
-            var m = l[k] ? l[k].status : "";
-            if (m == "summon" || m == "unlock" || m == "active") {
-                n += cm.utilityView.button({
-                    text: fUp(m),
-                    color: b[m],
-                    "class": "pos" + k + " " + m + "_button",
+            var n = l[k] ? l[k].status : "";
+            var m = cm.guardianConst.types[k];
+            if (m && (n == "summon" || n == "unlock" || n == "active")) {
+                o += cm.utilityView.button({
+                    text: fUp(n),
+                    color: b[n],
+                    "class": "pos" + k + " " + n + "_button",
                     attributes: {
                         guardian_type: j[k]
                     }
                 })
             } else {
-                n += ""
+                o += ""
             }
-            o += d(l[k], k) + n
+            p += d(m ? l[k] : null, k) + o
         }
-        return o
+        return p
     }
     var i = {
         wood: -430,
@@ -51768,9 +53411,15 @@ function update_seed(k) {
             seed.citystats["city" + g].pop[2] = parseInt(f.happiness)
         }
     }
+    update_guardian(k);
     update_gold();
     update_pop();
     return true
+}
+function update_guardian(b) {
+    for (var a in b.guardian) {
+        cm.guardianModalModel.ref(a).resources = b.guardian[a].resources
+    }
 }
 cm.epochTimeOffset = function () {
     var a = 10;
