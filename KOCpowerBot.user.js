@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20111006a';
+var Version = '20111014a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -131,17 +131,24 @@ var CrestOptions = {
 };
 
 var TrainOptions = {
-  Running   : 		false,
-  Troops: 			{1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Threshold: 		{1:500,2:500,3:500,4:500,5:500,6:500,7:500},
-  Max: 		{1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Workers: 		{1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Keep:				{1:{Food:0,Wood:0,Stone:0,Ore:0},2:{Food:0,Wood:0,Stone:0,Ore:0},3:{Food:0,Wood:0,Stone:0,Ore:0},4:{Food:0,Wood:0,Stone:0,Ore:0},5:{Food:0,Wood:0,Stone:0,Ore:0},6:{Food:0,Wood:0,Stone:0,Ore:0},7:{Food:0,Wood:0,Stone:0,Ore:0}},
-  Enabled:			{1:false,2:false,3:false,4:false,5:false,6:false,7:false},
-  SelectMax:			{1:false,2:false,3:false,4:false,5:false,6:false,7:false},
-  Resource:		{1:true,2:true,3:true,4:true,5:true,6:true,7:true},
-  UseIdlePop:		{1:true,2:true,3:true,4:true,5:true,6:true,7:true},
-  gamble : 0,
+  Running    : false,
+  Troops     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  Threshold  : {1:500,2:500,3:500,4:500,5:500,6:500,7:500},
+  Max        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  Gamble     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  Workers    : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  Keep       : {1:{Food:0,Wood:0,Stone:0,Ore:0},
+                2:{Food:0,Wood:0,Stone:0,Ore:0},
+				3:{Food:0,Wood:0,Stone:0,Ore:0},
+				4:{Food:0,Wood:0,Stone:0,Ore:0},
+				5:{Food:0,Wood:0,Stone:0,Ore:0},
+				6:{Food:0,Wood:0,Stone:0,Ore:0},
+				7:{Food:0,Wood:0,Stone:0,Ore:0}
+			   },
+  Enabled    : {1:false,2:false,3:false,4:false,5:false,6:false,7:false},
+  SelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false},
+  Resource   : {1:true,2:true,3:true,4:true,5:true,6:true,7:true},
+  UseIdlePop : {1:true,2:true,3:true,4:true,5:true,6:true,7:true},
 };
 
 var ResetAll=false;
@@ -7960,6 +7967,7 @@ Tabs.AutoTrain = {
   tabLabel: 'AutoTrain',
   myDiv: null,
   city:0,
+  gamble : {"1":{"min":"5","max":"15","cost":"2"},"2":{"min":"10","max":"25","cost":"4"}},
   
   init: function(div){
 	var t = Tabs.AutoTrain;
@@ -7976,22 +7984,24 @@ Tabs.AutoTrain = {
 
     for (i=0;i<Seed.cities.length;i++){
 		city = i+1;
-      	m += '<TABLE id=pbTrain width=100% height=0% class=pbTab><TR align="left">';
-      	m+='<TR><TD width=30px><INPUT type=checkbox class='+city+' id="SelectCity'+city+'"></td><TD width = 100px><B>'+ Seed.cities[i][1] +'</b></td>';
-	    m += '<TD width=150px><SELECT class='+city+' id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
-	    for (y in unsafeWindow.unitcost) m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
+      	m += '<TABLE width=100% height=0% class=pbTab><TR align="left">';
+      	m+='<TR><TD width=30px><INPUT type=checkbox class='+city+' id="SelectCity'+city+'"></td>';
+		m+='<TD><TABLE><TR>';
+		m+='<TD><B>'+ Seed.cities[i][1] +'</b></td>';
+	    m+='<TD width=150px><SELECT class='+city+' id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
+			for (y in unsafeWindow.unitcost) m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
 	    m+='</select></td>';
-	    m +='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=4 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
-	    m +='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> Max.: <INPUT class='+city+' id=max'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
+	    m+='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=4 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
+	    m+='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> Max.: <INPUT class='+city+' id=max'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
 	    m +='<TD>Use Workers: ';
         m+='<SELECT class='+city+' id="workers'+city+'"><option value="0">0%</options>';
         m+='<option value="25">25%</options>';
         m+='<option value="50">50%</options>';
         m+='<option value="75">75%</options>';
         m+='<option value="100">100%</options>';
-        m+='</td></tr></table>';
-	    m += '<TABLE id=pbTrain width=80% height=0% class=pbTab><TR align="left">';
-        m += '<TD width=40px></td><TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
+		m+='</td></tr></table></td><tr>';
+        m += '<TD></td><TD><TABLE><TR>';
+		m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
 	    m += '<TD><INPUT class='+city+' id="KeepFood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
 	    m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
 	    m += '<TD><INPUT class='+city+' id="KeepWood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
@@ -7999,13 +8009,18 @@ Tabs.AutoTrain = {
 	    m += '<TD><INPUT class='+city+' id="KeepStone'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
 	    m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
 	    m += '<TD><INPUT class='+city+' id="KeepOre'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
-	      
-	    m += '<TD><SELECT class='+city+' id="Resource'+city+'"><option value="true">Keep</options>';
+		m += '<TD><SELECT class='+city+' id="Resource'+city+'"><option value="true">Keep</options>';
 	    m+='<option value="false">Use</option>';
-	    m+='</select></td></tr>';	    
+	    m+='</select></td>';
+	      
+	    m += '<TD><SELECT class='+city+' id="TrainSpeed_'+city+'">\
+		<option value=0><CENTER>--- '+unsafeWindow.g_js_strings.commonstr.speedup+' ---</center></option>\
+		<option value=1>'+ t.gamble[1].cost+'x res ('+ t.gamble[1].min+' - '+t.gamble[1].max+'%)</option>\
+		<option value=2>'+ t.gamble[2].cost+'x res ('+ t.gamble[2].min+' - '+t.gamble[2].max+'%)</option></select>';
+	    m+='</td></tr></table>';	    
+	    m+='</td></tr></table>';
 	         
 	}
-	    m+='</table>';
       
 		t.myDiv.innerHTML = m;
       
@@ -8016,6 +8031,7 @@ Tabs.AutoTrain = {
         document.getElementById('Resource'+city).value = TrainOptions.Resource[city];
         document.getElementById('SelectMax'+city).checked = TrainOptions.SelectMax[city];
         document.getElementById('workers'+city).value = TrainOptions.Workers[city];
+        document.getElementById('TrainSpeed_'+city).value = TrainOptions.Gamble[city];
         if (!TrainOptions.SelectMax[city]) document.getElementById('max'+city).disabled=true;
     }
        
@@ -8047,12 +8063,16 @@ Tabs.AutoTrain = {
       	    TrainOptions.Max[e.target['className']] = e.target.value;
       	    saveTrainOptions();
       	}, false);
-     		document.getElementById('workers'+k).addEventListener('change', function(e){
+     	document.getElementById('workers'+k).addEventListener('change', function(e){
       	    TrainOptions.Workers[e.target['className']] = e.target.value;
       	    saveTrainOptions();
       	}, false);
      	document.getElementById('Resource'+k).addEventListener('change', function(e){
 			TrainOptions.Resource[e.target['className']] = e.target.value;
+     		saveTrainOptions();
+		}, false);
+     	document.getElementById('TrainSpeed_'+k).addEventListener('change', function(e){
+			TrainOptions.Gamble[e.target['className']] = e.target.value;
      		saveTrainOptions();
 		}, false);
         document.getElementById('SelectCity'+k).addEventListener('change', function(e){
@@ -8141,10 +8161,11 @@ Tabs.AutoTrain = {
   },
   checkresources : function(cityId){
 	var t = Tabs.AutoTrain;
-	t.food = parseInt((Seed.resources['city'+cityId].rec1[0]/3600) - TrainOptions['Keep'][t.city]['Food']);
-	t.wood = parseInt((Seed.resources['city'+cityId].rec2[0]/3600) - TrainOptions['Keep'][t.city]['Wood']);
-	t.stone = parseInt((Seed.resources['city'+cityId].rec3[0]/3600) - TrainOptions['Keep'][t.city]['Stone']);
-	t.ore = parseInt((Seed.resources['city'+cityId].rec4[0]/3600) - TrainOptions['Keep'][t.city]['Ore']);
+	var gamble = (TrainOptions.Gamble[t.city]>0)?t.gamble[TrainOptions.Gamble[t.city]].cost:1;
+	t.food = parseInt((Seed.resources['city'+cityId].rec1[0]/3600) - (TrainOptions['Keep'][t.city]['Food']*gamble));
+	t.wood = parseInt((Seed.resources['city'+cityId].rec2[0]/3600) - (TrainOptions['Keep'][t.city]['Wood']*gamble));
+	t.stone = parseInt((Seed.resources['city'+cityId].rec3[0]/3600) - (TrainOptions['Keep'][t.city]['Stone']*gamble));
+	t.ore = parseInt((Seed.resources['city'+cityId].rec4[0]/3600) - (TrainOptions['Keep'][t.city]['Ore']*gamble));
 	if(t.food>0 && t.wood>0 && t.stone>0 && t.ore>0){
 		return true;
 	}
@@ -8187,6 +8208,8 @@ Tabs.AutoTrain = {
 	params.cid = cityId;
 	params.type = unitId;
 	params.quant = num;
+	if(parseInt(TrainOptions.gamble) > 0)
+		params.gambleId = TrainOptions.gamble;
 
 	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
 		method: "post",
@@ -8194,7 +8217,9 @@ Tabs.AutoTrain = {
 		onSuccess: function(rslt) {
 		  if (rslt.ok) {
 			for (var i = 1; i < 5; i++) {
-			  unsafeWindow.seed.resources["city" + cityId]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num)
+				var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
+				if(rslt.gamble) resourceLost = resourceLost*rslt.gamble[i];
+				unsafeWindow.seed.resources["city" + cityId]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]) - resourceLost;
 			}
 			unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
 			unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(num);
