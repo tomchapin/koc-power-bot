@@ -8175,11 +8175,8 @@ Tabs.AutoTrain = {
 	var cost = unsafeWindow.Object.clone(unsafeWindow.unitcost['unt'+ unitId]);
 	var gamble = (parseInt(TrainOptions.Gamble[t.city])>0)?t.gamble[TrainOptions.Gamble[t.city]].cost:1;
 	t.amt = (t.idle/cost[6]).toFixed(0);
-	for(var rs=1; rs<5; rs++){
-		GM_log(t.city+' '+rs+' '+cost[rs]);
+	for(var rs=1; rs<5; rs++)
 		cost[rs] *= gamble;
-		GM_log(t.city+' '+rs+' '+cost[rs]);
-	}
 	if ((t.food/cost[1]) < t.amt) t.amt = (t.food/cost[1]).toFixed(0);
 	if ((t.wood/cost[2]) < t.amt) t.amt = (t.wood/cost[2]).toFixed(0);
 	if ((t.stone/cost[3]) < t.amt) t.amt = (t.stone/cost[3]).toFixed(0);
