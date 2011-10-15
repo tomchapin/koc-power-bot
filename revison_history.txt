@@ -1,6 +1,8 @@
 REVISION HISTORY:
 ----------------
 
+20111015a
+   *Fixed resource speed up not working
 20111014a
    *Added resource speed up for auto train
 20110903a

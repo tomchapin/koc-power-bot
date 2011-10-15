@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111014a
+// @version        20111015a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20111014a';
+var Version = '20111015a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7972,7 +7972,6 @@ Tabs.AutoTrain = {
   init: function(div){
 	var t = Tabs.AutoTrain;
     t.myDiv = div;
-    t.myDiv.style.overflowY = 'auto';
 	t.city = 0;
 	t.nextcity();
 	
@@ -8161,11 +8160,10 @@ Tabs.AutoTrain = {
   },
   checkresources : function(cityId){
 	var t = Tabs.AutoTrain;
-	var gamble = (TrainOptions.Gamble[t.city]>0)?t.gamble[TrainOptions.Gamble[t.city]].cost:1;
-	t.food = parseInt((Seed.resources['city'+cityId].rec1[0]/3600) - (TrainOptions['Keep'][t.city]['Food']*gamble));
-	t.wood = parseInt((Seed.resources['city'+cityId].rec2[0]/3600) - (TrainOptions['Keep'][t.city]['Wood']*gamble));
-	t.stone = parseInt((Seed.resources['city'+cityId].rec3[0]/3600) - (TrainOptions['Keep'][t.city]['Stone']*gamble));
-	t.ore = parseInt((Seed.resources['city'+cityId].rec4[0]/3600) - (TrainOptions['Keep'][t.city]['Ore']*gamble));
+	t.food = parseInt((Seed.resources['city'+cityId].rec1[0]/3600) - TrainOptions['Keep'][t.city]['Food']);
+	t.wood = parseInt((Seed.resources['city'+cityId].rec2[0]/3600) - TrainOptions['Keep'][t.city]['Wood']);
+	t.stone = parseInt((Seed.resources['city'+cityId].rec3[0]/3600) - TrainOptions['Keep'][t.city]['Stone']);
+	t.ore = parseInt((Seed.resources['city'+cityId].rec4[0]/3600) - TrainOptions['Keep'][t.city]['Ore']);
 	if(t.food>0 && t.wood>0 && t.stone>0 && t.ore>0){
 		return true;
 	}
@@ -8174,8 +8172,14 @@ Tabs.AutoTrain = {
   trainamt : function(cityId, unitId){
 	var t = Tabs.AutoTrain;
 	if(!unitId || unitId<1) return false;
-	var cost = unsafeWindow.unitcost['unt'+ unitId];
+	var cost = unsafeWindow.Object.clone(unsafeWindow.unitcost['unt'+ unitId]);
+	var gamble = (parseInt(TrainOptions.Gamble[t.city])>0)?t.gamble[TrainOptions.Gamble[t.city]].cost:1;
 	t.amt = (t.idle/cost[6]).toFixed(0);
+	for(var rs=1; rs<5; rs++){
+		GM_log(t.city+' '+rs+' '+cost[rs]);
+		cost[rs] *= gamble;
+		GM_log(t.city+' '+rs+' '+cost[rs]);
+	}
 	if ((t.food/cost[1]) < t.amt) t.amt = (t.food/cost[1]).toFixed(0);
 	if ((t.wood/cost[2]) < t.amt) t.amt = (t.wood/cost[2]).toFixed(0);
 	if ((t.stone/cost[3]) < t.amt) t.amt = (t.stone/cost[3]).toFixed(0);
@@ -8203,13 +8207,14 @@ Tabs.AutoTrain = {
 	t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity);
   },
   doTrain : function (cityId, unitId, num, notify){
+	var t = Tabs.AutoTrain;
 	var time = unsafeWindow.modal_barracks_traintime(unitId, num);
 	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 	params.cid = cityId;
 	params.type = unitId;
 	params.quant = num;
-	if(parseInt(TrainOptions.gamble) > 0)
-		params.gambleId = TrainOptions.gamble;
+	if(parseInt(TrainOptions.Gamble[t.city]) > 0)
+		params.gambleId = TrainOptions.Gamble[t.city];
 
 	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
 		method: "post",
@@ -10439,7 +10444,7 @@ function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
   this.div.style.width = width + 'px';
   this.div.style.height = height + 'px';
   this.div.style.maxHeight = height + 'px';
-  this.div.style.overflowY = 'hidden';
+  this.div.style.overflowY = 'show';
   this.div.style.position = "absolute";
   this.div.style.top = y +'px';
   this.div.style.left = x + 'px';
@@ -11606,7 +11611,6 @@ Tabs.Resources = {
   init : function (div){
     var t = Tabs.Resources;
 		t.myDiv = div;
-		t.myDiv.style.overflowY = 'scroll';
     div.innerHTML = '<TABLE cellpadding=0 cellspacing=0 class=pbTab width=100%><TR><TD align=center><INPUT id="pballlist" type=submit value="Fetch User List" \></td></tr></table><HR>\
         <DIV id=resDiv style="width:100%; min-height:300px; height:100%">';
     document.getElementById('pballlist').addEventListener ('click', t.e_clickfetchlist, false);
