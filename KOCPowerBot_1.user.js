@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111024b
+// @version        20111024c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20111024b';
+var Version = '20111024c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6763,9 +6763,9 @@ Tabs.Barb = {
 		if (!AttackOptions.Levels[i][0]) continue; //Skip city if not selected
 		
 		t.barbArray[i] = [];
-	  	var myarray = GM_getValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId());
+	  	var myarray = JSON2.parse(GM_getValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(),"[]"));
 		
-		if (myarray == undefined && t.searchRunning==false) {
+		if ((myarray == undefined || myarray.length == 0) && t.searchRunning==false) {
 			t.searchRunning = true;
 	  		t.lookup=i;
 	  		t.opt.startX = parseInt(Seed.cities[(i-1)][2]);
@@ -6774,7 +6774,6 @@ Tabs.Barb = {
 			break;
 	  	}
 		if (myarray){
-			myarray = JSON2.parse(myarray);
 			if(AttackOptions.Method == 'distance') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
 			if(AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a > b ? -1 : 1);});
 			if(AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
