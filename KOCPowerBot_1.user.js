@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111024d
+// @version        20111024e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20111024d';
+var Version = '20111024e';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6860,7 +6860,11 @@ Tabs.Barb = {
 		if (AttackOptions.Levels[city][barbinfo.level])
 			check=1;
 		
-        if (barbinfo.dist < AttackOptions.MinDistance[barblevel] || barbinfo.dist > AttackOptions.Distance[barblevel]) check=0;
+        if (barbinfo.dist < AttackOptions.MinDistance[barblevel] || barbinfo.dist > AttackOptions.Distance[barblevel]){
+			check=0;
+			GM_setValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.barbArray[city]));
+			return;
+		}
 
          // check troop levels in city
          var trps = AttackOptions.Troops[barblevel];
@@ -7043,7 +7047,7 @@ Tabs.Barb = {
   clickedSearch : function (){
     var t = Tabs.Barb;
     
-    t.opt.maxDistance = AttackOptions.MaxDistance; 
+    t.opt.maxDistance = parseInt(AttackOptions.MaxDistance); 
     t.opt.searchShape = 'circle'; 
     t.mapDat = [];
     t.firstX =  t.opt.startX - t.opt.maxDistance;
@@ -7073,12 +7077,11 @@ Tabs.Barb = {
     map = rslt.data;
 	
     for (k in map){
-	  if (map[k].tileType==54 && AttackOptions.Levels[t.lookup][map[k].tileLevel])
-	     type = 8;
-	  else
-	     continue;
-       var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
-	   t.mapDat.push ({time:0,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel});
+	  if (map[k].tileType==54 && AttackOptions.Levels[t.lookup][map[k].tileLevel]){
+	     var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
+		 if(dist <= parseInt(AttackOptions.MaxDistance))
+			t.mapDat.push ({time:0,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel});
+	  }
     }
     
     t.tilesSearched += (15*15);
