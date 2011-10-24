@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111024a
+// @version        20111024b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20111024a';
+var Version = '20111024b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6419,10 +6419,10 @@ Tabs.Barb = {
 
      setInterval(t.startdeletereports,(120000));
      for(i=0;i<Seed.cities.length;i++){
-    		var element = 'pdtotalcity'+i;
-    		if (t.barbArray[i+1] == undefined) document.getElementById(element).innerHTML = 'No Data';
-    		else document.getElementById(element).innerHTML =  'Forests:' + t.barbArray[i+1].length;
-    }
+		var element = 'pdtotalcity'+i;
+		if (t.barbArray[i+1] == undefined) document.getElementById(element).innerHTML = 'No Data';
+		else document.getElementById(element).innerHTML =  'Forests:' + t.barbArray[i+1].length;
+     }
     
     for(i=0;i<Seed.cities.length;i++){
 		for (w=1;w<=10;w++){
@@ -6629,7 +6629,7 @@ Tabs.Barb = {
       var myarray = t.barbArray[citynumber];
       if (myarray) {
         myarray.splice((queueId-1), 1);
-        GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId(), JSON2.stringify(myarray));
+        GM_setValue('DF_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId(), JSON2.stringify(myarray));
         t.checkBarbData();
         if (showFlag) t.showBarbs(citynumber,cityname);
       }
@@ -6642,7 +6642,7 @@ Tabs.Barb = {
   deleteBarbsCity: function(citynumber,cityname){
       var t = Tabs.Barb;
       var queueId = parseInt(queueId);
-      GM_deleteValue('Barbs_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId())
+      GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId())
       t.checkBarbData();
       t.showBarbs(citynumber,cityname);
       reloadKOC();
@@ -6663,7 +6663,7 @@ Tabs.Barb = {
   
   deletebarbs: function(){
     for (i=1;i<=Seed.cities.length;i++){
-          GM_deleteValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId())
+          GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId())
     } 
     reloadKOC();
   },
@@ -6754,6 +6754,7 @@ Tabs.Barb = {
 
   checkBarbData: function(){
   	var t = Tabs.Barb;
+	if(!AttackOptions.Running) return;
 	  for (i=1;i<=Seed.cities.length;i++){
 	  
 		// if(GM_getValue('Barbs_' + Seed.player['name'] + '_city_' + i + '_' + getServerId())) //Remove old auto barb data
@@ -6877,6 +6878,10 @@ Tabs.Barb = {
 		return;
 	   }
 	   
+	   var element = 'pdtotalcity'+(city-1);
+		if (t.barbArray[city] == undefined) document.getElementById(element).innerHTML = 'No Data';
+		else document.getElementById(element).innerHTML =  'Forests:' + t.barbArray[city].length;
+	   
 	   var xcoord = barbinfo['x'];
        var ycoord = barbinfo['y'];
        t.doBarb(citynumber,city,xcoord,ycoord,barblevel,kid,trps);
@@ -6970,7 +6975,6 @@ Tabs.Barb = {
 					 document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
 					 var now = new Date().getTime()/1000.0;
 					 now = now.toFixed(0);
-					 t.barbArray[counter][queue_id]['time'] = now;
 					 GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
 					 saveAttackOptions();
 				   } else {
@@ -6981,12 +6985,8 @@ Tabs.Barb = {
 					 if (rslt.error_code == 8) AttackOptions.BarbsFailedTraffic++;
 					 if (rslt.error_code == 104) {
 					   AttackOptions.BarbsFailedBog++;
-					   var now = new Date().getTime()/1000.0;
-					   now = now.toFixed(0);
-					   t.barbArray[counter][queue_id]['time'] = now;
-					   GM_setValue('Barbs_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
+					   GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
 					   saveAttackOptions();
-					   t.deleteBarbElement(counter,queue_id,"none", false);
 					 }
 					 document.getElementById('pberror2').innerHTML = 'Excess Traffic errors:' + AttackOptions.BarbsFailedTraffic; 
 					 document.getElementById('pberror3').innerHTML = 'Rally Point errors: '+ AttackOptions.BarbsFailedRP;
