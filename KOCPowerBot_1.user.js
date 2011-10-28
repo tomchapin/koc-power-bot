@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111024e
+// @version        20111027a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 
-var Version = '20111024e';
+var Version = '20111027a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -156,7 +156,7 @@ var AttackOptions = {
   MsgEnabled          	: true,
   MsgInterval	      	: 30,
   Method			    : "distance",
-  SendInterval			: 30,
+  SendInterval			: 8,
   MaxDistance           : 40,
   RallyClip				: 0,
   Running       		: false,
@@ -175,7 +175,12 @@ var AttackOptions = {
   Levels    			: {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
   Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
   MinDistance			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
-  Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750}	
+  Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750},
+  Update                : {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0],6:[0,0],7:[0,0]},
+  UpdateEnabled         : true,
+  UpdateInterval	    : 30,
+  stopsearch            : 1,
+  knightselector        : 0,
 };
 
 var ResetAll=false;
@@ -4094,7 +4099,7 @@ Tabs.Test = {
      			});
      		}
      }
-     t.knt = t.knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
+     t.knt = t.knt.sort(function sort(a,b) {a = parseInt(a['Combat']);b = parseInt(b['Combat']);return a == b ? 0 : (a > b ? -1 : 1);});
   },
   
   getRallypointLevel: function(cityId){
@@ -6417,7 +6422,7 @@ Tabs.Barb = {
      saveAttackOptions();
 	 t.checkBarbData();
 
-     setInterval(t.startdeletereports,(120000));
+     //setInterval(t.startdeletereports,(120000));
      for(i=0;i<Seed.cities.length;i++){
 		var element = 'pdtotalcity'+i;
 		if (t.barbArray[i+1] == undefined) document.getElementById(element).innerHTML = 'No Data';
@@ -6504,8 +6509,10 @@ Tabs.Barb = {
      y +='<TR><TD>Attack interval: <INPUT id=pbsendint type=text size=4 maxlength=4 value='+ AttackOptions.SendInterval +' \> seconds</td></tr>';
      y +='<TR><TD>Max search distance: <INPUT id=pbmaxdist type=text size=4 maxlength=4 value='+ AttackOptions.MaxDistance +' \></td></tr>';
      y +='<TR><TD>Keep <INPUT id=rallyclip type=text size=1 maxlength=2 value="'+AttackOptions.RallyClip+'" \> rallypoint slot(s) free</td></tr>';
-     y +='<TR><TD><INPUT id=pbreport type=checkbox '+(AttackOptions.MsgEnabled?'CHECKED':'')+'\> Reset search every <INPUT id=pbmsgint type=text size=2 maxlength=2 value='+AttackOptions.MsgInterval+' \>minutes (Not working!)</td></tr>';
+     y +='<TR><TD><INPUT id=pbreport type=checkbox '+(AttackOptions.UpdateEnabled?'CHECKED':'')+'\> Reset search every <INPUT id=pbmsgint type=text size=2 maxlength=2 value='+AttackOptions.UpdateInterval+' \>minutes</td></tr>';
+	 y +='<TR><TD> Skip city after <INPUT id=barbstopsearch type=text size=4 value='+AttackOptions.stopsearch+' \> tries.</td></tr>';
      y +='<TR><TD>Method : '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
+     y +='<TR><TD>Knight priority : '+htmlSelector({0:'Lowest combat skill', 1:'Highest combat skill', lowlevel:'Lowest level first'}, AttackOptions.knightselector, 'id=barbknight')+'</td></tr>';
      y +='<TR><TD><INPUT id=deletetoggle type=checkbox '+(AttackOptions.DeleteMsg?'CHECKED':'')+' /> Auto delete barb/transport reports from you</td></tr>';
      y +='<TR><TD><INPUT id=deletes0toggle type=checkbox '+(AttackOptions.DeleteMsgs0?'CHECKED':'')+' /> Auto delete transport reports to you</td></tr>';
      y +='<TR><TD>Select barbreport levels to delete: <BR>';
@@ -6535,15 +6542,21 @@ Tabs.Barb = {
 		saveAttackOptions();
 		t.checkBarbData();
 	},false);
+	document.getElementById('barbknight').addEventListener('change', function(){
+		AttackOptions.knightselector=document.getElementById('barbknight').value;
+		saveAttackOptions();
+	},false);
 	document.getElementById('pbreport').addEventListener('change', function(){
-		AttackOptions.MsgEnabled=document.getElementById('pbreport').checked;
+		AttackOptions.UpdateEnabled=document.getElementById('pbreport').checked;
 		saveAttackOptions();
 	},false);
 	document.getElementById('pbmsgint').addEventListener('change', function(){
-		AttackOptions.MsgInterval=parseInt(document.getElementById('pbmsgint').value);
+		AttackOptions.UpdateInterval=parseInt(document.getElementById('pbmsgint').value);
 		saveAttackOptions();
 	},false);
     document.getElementById('pbsendint').addEventListener('change', function(){
+		if(parseInt(document.getElementById('pbsendint').value) <5) //Set minimum attack interval to 5 seconds
+			document.getElementById('pbsendint').value = 5;
 		AttackOptions.SendInterval=parseInt(document.getElementById('pbsendint').value);
 		saveAttackOptions();
 	},false);
@@ -6563,6 +6576,11 @@ Tabs.Barb = {
 	},false);
     document.getElementById('rallyclip').addEventListener('change', function(){
 		AttackOptions.RallyClip=parseInt(document.getElementById('rallyclip').value);
+		saveAttackOptions();
+	},false);
+    document.getElementById('barbstopsearch').addEventListener('change', function(){
+		document.getElementById('barbstopsearch').value = parseInt(document.getElementById('barbstopsearch').value)>0?document.getElementById('barbstopsearch').value:1
+		AttackOptions.stopsearch=parseInt(document.getElementById('barbstopsearch').value);
 		saveAttackOptions();
 	},false);
     var lvl = document.getElementsByClassName('msglvl')
@@ -6766,8 +6784,9 @@ Tabs.Barb = {
 	  	var myarray = JSON2.parse(GM_getValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(),"[]"));
 		
 		if ((myarray == undefined || myarray.length == 0) && t.searchRunning==false) {
-			t.searchRunning = true;
 	  		t.lookup=i;
+			if(parseInt(AttackOptions.Update[t.lookup][1]) >= parseInt(AttackOptions.stopsearch)) continue; //Skip if search results are empty more than X times
+			t.searchRunning = true;
 	  		t.opt.startX = parseInt(Seed.cities[(i-1)][2]);
 	  		t.opt.startY = parseInt(Seed.cities[(i-1)][3]);  
 	  		t.clickedSearch();
@@ -6778,8 +6797,9 @@ Tabs.Barb = {
 			if(AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a > b ? -1 : 1);});
 			if(AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
 	  		GM_setValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(), JSON2.stringify(t.barbArray[i]));
-			
 	  	}
+		AttackOptions.Update[i][1] = 0;
+		saveAttackOptions();
 	  }
 	  t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+2000));
   },
@@ -6803,27 +6823,7 @@ Tabs.Barb = {
   barbing : function(){
   	   var t = Tabs.Barb;
 	   var city = t.city;
-       // var now = new Date().getTime()/1000.0;
-       // now = now.toFixed(0);
-       // if ( now > (parseInt(AttackOptions.LastReport)+(60*AttackOptions.MsgInterval))) {
-          // AttackOptions.LastReport=now;
-	      // logit("starting forest search");
-	     
-       	  // //if (AttackOptions.MsgEnabled==true) t.sendreport();
-          // for (z=1;z<=Seed.cities.length;z++){
-       			// AttackOptions.BarbsDone[z]=0;
-       			// AttackOptions.Foodstatus[z] = parseInt(Seed.resources['city'+Seed.cities[z-1][0]]['rec1'][0] / 3600);
-       		// }	
-       		// AttackOptions.LastReport=now;
-       		// AttackOptions.BarbsFailedKnight=0;
-       		// AttackOptions.BarbsFailedRP=0;
-       		// AttackOptions.BarbsFailedTraffic=0;
-       		// AttackOptions.BarbsFailedVaria=0;
-       		// AttackOptions.BarbsFailedBog=0;
-       		// AttackOptions.BarbsTried=0;
-       	  // saveAttackOptions();
-          // t.deletebarbs();
-       // }
+	   
        citynumber = Seed.cities[city-1][0];
        cityID = 'city' + citynumber; 
 	   
@@ -6850,10 +6850,12 @@ Tabs.Barb = {
 	   
 	   if(t.barbArray[city].length > 0)
 		var barbinfo = t.barbArray[city].shift();
-	   else {
+	   else if(parseInt(AttackOptions.Update[t.lookup][1])==0){
 		t.checkBarbData();
 		return;
-	   }
+	   } else 
+		return;
+	
        var check=0;
        var barblevel = parseInt(barbinfo.level);
 		
@@ -6894,13 +6896,21 @@ Tabs.Barb = {
   getnextCity: function(){
 	var t = Tabs.Barb;
 	if(t.searchRunning || !AttackOptions.Running) return;
-	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+2000));
+	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+AttackOptions.SendInterval));
 	
 	var city = t.city+1;
 	if (city>Seed.cities.length){
 		city=1;
 	}
 	t.city = city;
+	if(AttackOptions.UpdateEnabled){
+		var now = unixTime();
+		if(now > parseInt(AttackOptions.Update[city][0] + (AttackOptions.UpdateInterval*60))){
+			t.barbArray[city] = []; //Clears data if last update was more than X minutes
+			GM_setValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.barbArray[city]));
+		}
+	}
+	
 	if(AttackOptions.Levels[city][0])
 		t.barbing();
   },
@@ -6927,7 +6937,14 @@ Tabs.Barb = {
      			});
      		}
      }
-     t.knt = t.knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
+     t.knt = t.knt.sort(function sort(a,b) {
+							a = parseInt(a['Combat']);
+							b = parseInt(b['Combat']);
+							if(AttackOptions.knightselector)
+								return a == b ? 0 : (a > b ? -1 : 1);
+							else
+								return a == b ? 0 : (a < b ? -1 : 1);
+							});
   },
     
   doBarb: function(cityID,counter,xcoord,ycoord,level,kid,trps){
@@ -7091,11 +7108,7 @@ Tabs.Barb = {
       t.curX = t.firstX;
       t.curY += 15;
       if (t.curY > t.lastY){
-        var element = 'pdtotalcity'+(t.lookup-1);
-        document.getElementById(element).innerHTML = 'Found: ' + t.mapDat.length;
-        GM_setValue('DF_' + Seed.player['name'] + '_city_' + t.lookup + '_' + getServerId(), JSON2.stringify(t.mapDat));
-        t.searchRunning = false;
-        t.checkBarbData();
+		t.stopSearch('Found: ' + t.mapDat.length);
         return;
       }
     }
@@ -7110,8 +7123,13 @@ Tabs.Barb = {
     var t = Tabs.Barb;
 	var element = 'pddatacity'+(t.lookup-1);
         document.getElementById(element).innerHTML = msg;
+	GM_setValue('DF_' + Seed.player['name'] + '_city_' + t.lookup + '_' + getServerId(), JSON2.stringify(t.mapDat));
+	AttackOptions.Update[t.lookup][0] = unixTime();
+	AttackOptions.Update[t.lookup][1]++;
     t.searchRunning = false;
+	saveAttackOptions();
 	t.checkBarbData();
+	return;
   },
   
   hide : function (){
