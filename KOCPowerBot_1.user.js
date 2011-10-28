@@ -1,17 +1,16 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111027a
+// @version        20111027b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
 // @include        *apps.facebook.com/kingdomsofcamelot/*
 // @include        *facebook.com/connect/uiserver.php*
 // @description    Automated features for Kingdoms of Camelot
-// @require        http://tomchapin.me/auto-updater.php?id=101052
 // ==/UserScript==
 
 
-var Version = '20111027a';
+var Version = '20111027b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -10823,6 +10822,161 @@ var ChatPane = {
   },
 
 }
+
+/************* Updater code *************/
+// Function for displaying a confirmation message modal popup similar to the default javascript confirm() function
+// but with the advantage being that it won't halt all other javascript being executed on the page.
+// Original Author: Thomas Chapin (April 6, 2011)
+function display_confirm(confirm_msg,ok_function,cancel_function){
+    if(!confirm_msg){confirm_msg="";}
+    
+    var container_div = document.getElementById('modal_js_confirm');
+    var div;
+    if(!container_div) {
+        container_div=document.createElement('div');
+        container_div.id='modal_js_confirm';
+        container_div.style.position='absolute';
+        container_div.style.top='0px';
+        container_div.style.left='0px';
+        container_div.style.width='100%';
+        container_div.style.height='1px';
+        container_div.style.overflow='visible';
+        container_div.style.zIndex=100000;
+        
+        div=document.createElement('div');
+        div.id='modal_js_confirm_contents';
+        div.style.zIndex=100000;
+        div.style.backgroundColor='#eee';
+        div.style.fontFamily='"lucida grande",tahoma,verdana,arial,sans-serif';
+        div.style.fontSize='11px';
+        div.style.textAlign='center';
+        div.style.color='#333333';
+        div.style.border='2px outset #666';
+        div.style.padding='10px';
+        div.style.position='relative';
+        div.style.width='300px';
+        div.style.height='100px';
+        div.style.margin='300px auto 0px auto';
+        div.style.display='block';
+        
+        container_div.appendChild(div);
+        document.body.appendChild(container_div);
+        
+        div.innerHTML = '<div style="text-align:center"><div>'+confirm_msg+'</div><br/><div>Press OK to continue.</div><br><button id="modal_js_confirm_ok_button">OK</button> <button id="modal_js_confirm_cancel_button">Cancel</button></div>';
+        var ok_button = document.getElementById('modal_js_confirm_ok_button');
+        ok_button.addEventListener('click',function() {
+            if(ok_function && typeof(ok_function) == "function"){
+           	 ok_function();
+            }
+            container_div.parentNode.removeChild(container_div);
+        },false);
+        var cancel_button = document.getElementById('modal_js_confirm_cancel_button');
+        cancel_button.addEventListener('click',function() {
+            if(cancel_function && typeof(cancel_function) == "function"){
+            	cancel_function();
+            }
+            container_div.parentNode.removeChild(container_div);
+        },false);
+	}
+}
+
+// The following code is released under public domain.
+
+var AutoUpdater_101052 = {
+    id: 101052,
+    days: 1,
+    name: "KOC Power Bot",
+    version: Version,
+	beta: false,
+    time: new Date().getTime(),
+    call: function(response, secure) {
+        GM_xmlhttpRequest({
+            method: 'GET',
+	    url: this.beta ? 'http://koc-power-bot.googlecode.com/svn/trunk/KOCPowerBot_1.user.js' : 'http'+(secure ? 's' : '')+'://userscripts.org/scripts/source/'+this.id+'.meta.js',
+	    onload: function(xpr) {AutoUpdater_101052.compare(xpr, response);},
+            onerror: function(xpr) {if (secure) AutoUpdater_101052.call(response, false);}
+        });
+    },
+    enable: function() {
+        GM_registerMenuCommand("Enable "+this.name+" updates", function() {
+            GM_setValue('updated_101052', new Date().getTime()+'');
+            AutoUpdater_101052.call(true, true)
+        });
+    },
+    compareVersion: function(r_version, l_version) {
+        var r_parts = r_version.split(''),
+            l_parts = l_version.split(''),
+            r_len = r_parts.length,
+            l_len = l_parts.length,
+            r = l = 0;
+        for(var i = 0, len = (r_len > l_len ? r_len : l_len); i < len && r == l; ++i) {
+            r = +(r_parts[i] || '0');
+            l = +(l_parts[i] || '0');
+        }
+        return (r !== l) ? r > l : false;
+    },
+    compare: function(xpr,response) {
+        this.xversion=/\/\/\s*@version\s+(.+)\s*\n/i.exec(xpr.responseText);
+        this.xname=/\/\/\s*@name\s+(.+)\s*\n/i.exec(xpr.responseText);
+        if ( (this.xversion) && (this.xname[1] == this.name) ) {
+            this.xversion = this.xversion[1];
+            this.xname = this.xname[1];
+        } else {
+            if ( (xpr.responseText.match("the page you requested doesn't exist")) || (this.xname[1] != this.name) ) {
+            	GM_setValue('updated_101052', 'off');
+            }
+            return false;
+        }
+        var updated = this.compareVersion(this.xversion, this.version);
+        
+        if ( updated ) {
+                         
+            display_confirm('A new version of '+this.xname+' is available.\nDo you wish to install the latest version?',
+                // Ok
+                function(){
+                    try { 
+                        location.href = this.beta ? 'http://koc-power-bot.googlecode.com/svn/trunk/KOCPowerBot_1.user.js' :  'http://userscripts.org/scripts/source/101052.user.js'; 
+                    } catch(e) {}
+                },
+                // Cancel
+                function(){
+                    if ( AutoUpdater_101052.xversion ) {
+                        if(confirm('Do you want to turn off auto updating for this script?')) {
+                            GM_setValue('updated_101052', 'off');
+                            AutoUpdater_101052.enable();
+                            alert('Automatic updates can be re-enabled for this script from the User Script Commands submenu.');
+                        }
+                    }
+                }
+            );
+                                      
+        } else if (response){
+        	alert('No updates available for '+this.name);
+        }
+    },
+    check: function() {
+        if (GM_getValue('updated_101052', 0) == "off"){
+            this.enable();
+        } else {
+            GM_registerMenuCommand("Check "+this.name+" for updates", function() {
+                GM_setValue('updated_101052', new Date().getTime()+'');
+                AutoUpdater_101052.call(true, true)
+            });
+            if (+this.time > (+GM_getValue('updated_101052', 0) + 1000*60*60*24*this.days)) {
+                GM_setValue('updated_101052', this.time+'');
+                this.call(false, true);
+            }
+        }
+    }
+};
+if (typeof(GM_xmlhttpRequest) !== 'undefined' && typeof(GM_updatingEnabled) === 'undefined') { // has an updater?
+    try {
+        AutoUpdater_101052.check();
+    } catch(e) {
+        AutoUpdater_101052.check();
+    }
+}
+/********* End updater code *************/
 
 /**********************************************************************************/
 var CalterUwFunc = function (funcName, findReplace) {
