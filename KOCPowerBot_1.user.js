@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111030c
+// @version        20111030d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111030c';
+var Version = '20111030d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6740,7 +6740,7 @@ Tabs.Barb = {
 	   
 	   if(t.barbArray[city].length > 0)
 		var barbinfo = t.barbArray[city].shift();
-	   else if(parseInt(AttackOptions.Update[t.lookup][1])==0){
+	   else if(parseInt(AttackOptions.Update[city][1])==0){
 		t.checkBarbData();
 		return;
 	   } else 
