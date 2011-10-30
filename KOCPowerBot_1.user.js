@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111030a
+// @version        20111030b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111030a';
+var Version = '20111030b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6831,7 +6831,7 @@ Tabs.Barb = {
      t.knt = t.knt.sort(function sort(a,b) {
 							a = parseInt(a['Combat']);
 							b = parseInt(b['Combat']);
-							if(AttackOptions.knightselector)
+							if(parseInt(AttackOptions.knightselector) > 0)
 								return a == b ? 0 : (a > b ? -1 : 1);
 							else
 								return a == b ? 0 : (a < b ? -1 : 1);
