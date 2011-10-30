@@ -12404,6 +12404,7 @@ Tabs.Gifts = {
       p = p.replace ('\\u003c', '<', 'g');
 	  p = p.replace('\\/', '/', 'g');
       p = p.replace('&amp;', '&', 'g');   
+	  p = p.replace('\\\\', '\\', 'g');
       var t = Tabs.Gifts;
       var gifts = [];
       try {    
