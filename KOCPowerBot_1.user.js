@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111030b
+// @version        20111030c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111030b';
+var Version = '20111030c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12250,7 +12250,7 @@ Tabs.Gifts = {
 //      if (gift.inputs[i].name != 'actions[reject]')
         pargs[gift.inputs[i].name] = gift.inputs[i].value;
     }
-    GM_AjaxPost ('http://www.facebook.com/ajax/reqs.php?__a=1', pargs, gotAjaxPost, 'Delete');
+    GM_AjaxPost (window.location.protocol+'//www.facebook.com/ajax/reqs.php?__a=1', pargs, gotAjaxPost, 'Delete');
     function gotAjaxPost (p){
     }
   },
@@ -12391,7 +12391,7 @@ Tabs.Gifts = {
   
   // notify with gifts[] or: {errMsg:xxx}
   fetchGiftsPage : function (notify){
-    GM_AjaxGet ('http://www.facebook.com/games?ap=1', '', parseGiftsPage, 'FB Gifts Page');
+    GM_AjaxGet (window.location.protocol+'//www.facebook.com/games?ap=1', '', parseGiftsPage, 'FB Gifts Page');
     
     // ...profile.php?id=100000710937192">Anestis Mallos</
     // Here is a GIFTNAME you can use
@@ -12401,7 +12401,9 @@ Tabs.Gifts = {
     function parseGiftsPage  (p){
       if (p == null)
         notify ({errMsg:'Ajax Comm Error'});
-      p = p.replace ('\\u003c', '<', 'g');    
+      p = p.replace ('\\u003c', '<', 'g');
+	  p = p.replace('\\/', '/', 'g');
+      p = p.replace('&amp;', '&', 'g');   
       var t = Tabs.Gifts;
       var gifts = [];
       try {    
@@ -12409,9 +12411,9 @@ Tabs.Gifts = {
         for (var i=0; i<m.length; i++){
           if ( m[i].indexOf('kingdomsofcamelot')<0)
             continue;
-		  var mm = m[i].match( /facebook.com\\\/.*\">(.*?)<\\\/a><\\\/span>.*?(?:give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
+		  var mm = m[i].match( /facebook.com\/.*\">(.*?)<\/a><\/span>.*?(?:would like to give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
 		  if (mm==null)
-            mm = m[i].match( /facebook.com\\\/.*\">(.*?)<\\\/span><\\\/span><\\\/a>.*?(?:give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
+            mm = m[i].match( /facebook.com\/.*\">(.*?)<\/span><\/span><\/a>.*?(?:give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
           if (mm==null)
             continue;
           var giver = mm[1];
@@ -12427,11 +12429,11 @@ Tabs.Gifts = {
           var ins = m[i].match (/<input.*?>/igm);
           for (var ii=0; ii<ins.length; ii++){
             var it = {};
-            mm = /value=\\\"(.*?)\\\"/im.exec(ins[ii]);  
+            mm = /value=\"(.*?)\"/im.exec(ins[ii]);  
             it.value = mm[1];
-            mm = /name=\\\"(.*?)\\\"/im.exec(ins[ii]);  
+            mm = /name=\"(.*?)\"/im.exec(ins[ii]);  
             it.name = mm[1];
-            mm = /type=\\\"(.*?)\\\"/im.exec(ins[ii]);  
+            mm = /type=\"(.*?)\"/im.exec(ins[ii]);  
             it.type = mm[1];
             if (it.type=='submit' && it.name!='actions[reject]'){
               it.name = eval ('"'+ it.name +'"');          
