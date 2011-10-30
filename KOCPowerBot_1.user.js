@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111029a
+// @version        20111030a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111029a';
+var Version = '20111030a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6412,8 +6412,7 @@ Tabs.Barb = {
         m += '<TR><TD>' + Seed.cities[i][1] +'</td>';
         for (w=1;w<=10;w++){
            m += '<TD class=pblevelopt><INPUT id=pbcity'+i+'level'+w+' type=checkbox unchecked=true>Lvl:'+w+'</td>';
-        }		
-        		
+        }
      }
     
      t.myDiv.innerHTML = m;
@@ -6633,6 +6632,7 @@ Tabs.Barb = {
   deleteBarbsCity: function(citynumber,cityname){
       var t = Tabs.Barb;
       var queueId = parseInt(queueId);
+	  AttackOptions.Update[citynumber][1] = 0;
       GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId())
       t.checkBarbData();
       t.showBarbs(citynumber,cityname);
@@ -6652,64 +6652,13 @@ Tabs.Barb = {
 	 saveAttackOptions();
   },
   
-  checkbarbreports : function (rslt){
-	var t = Tabs.Barb;
-	if(!rslt.ok){
-		return;
+   deletebarbs: function(){
+	for (i=1;i<=Seed.cities.length;i++){
+		AttackOptions.Update[i][1] = 0;
+		GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId())
 	}
-	if(rslt.arReports.length < 1){
-		return;
-	}
-	var reports = rslt.arReports;
-	var totalPages = rslt.totalPages;
-		var deletes1 = new Array();
-		var deletes0 = new Array();
-		for(k in reports){
-			if(AttackOptions.DeleteMsg){
-				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && AttackOptions.MsgLevel[reports[k].side0TileLevel])
-					deletes1.push(k.substr(2));
-				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
-					deletes1.push(k.substr(2));
-			} else if (AttackOptions.DeleteMsgs0){
-				if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
-					deletes0.push(k.substr(2));
-			}
-		}
-		if(deletes1.length > 0 || deletes0.length > 0){
-			t.deletereports(deletes1, deletes0);
-		} else {
-			t.deleting = false;
-			return;
-		}
-  },
-  
-  deletereports : function (deletes1, deletes0){
-	var t = Tabs.Barb;
-	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-	params.s1rids = deletes1.join(",");
-	params.s0rids = deletes0.join(",");
-	params.cityrids = '';
-	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
-		method: "post",
-		parameters: params,
-		onSuccess: function (rslt) {
-			Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
-			t.fetchbarbreports(0, t.checkbarbreports);
-		},
-		onFailure: function () {
-		},
-	});
-  },
-  
-  isMyself: function(userID){
-	if(!Seed.players["u"+userID])
-		return false;
-	if(Seed.players["u"+userID].n == Seed.player.name)
-		return true;
-	else
-		return false;
-	return false;
-  },
+	reloadKOC();
+   },
 
   checkBarbData: function(){
   	var t = Tabs.Barb;
@@ -6837,7 +6786,7 @@ Tabs.Barb = {
   getnextCity: function(){
 	var t = Tabs.Barb;
 	if(t.searchRunning || !AttackOptions.Running) return;
-	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+AttackOptions.SendInterval));
+	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3)+AttackOptions.SendInterval)*1000);
 	
 	var city = t.city+1;
 	if (city>Seed.cities.length){
