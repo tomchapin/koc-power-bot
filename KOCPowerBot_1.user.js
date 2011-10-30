@@ -12403,6 +12403,7 @@ Tabs.Gifts = {
         notify ({errMsg:'Ajax Comm Error'});
       p = p.replace ('\\u003c', '<', 'g');
 	  p = p.replace('\\/', '/', 'g');
+	  p = p.replace('\\"', '"', 'g');
       p = p.replace('&amp;', '&', 'g');   
 	  p = p.replace('\\\\', '\\', 'g');
       var t = Tabs.Gifts;
