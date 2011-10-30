@@ -1,6 +1,11 @@
 REVISION HISTORY:
 ----------------
 
+20111030d
+   Added Auto DF tab (credits to Phil Cazz for original build)
+   Added auto updater check into script
+   Fixed gifts tab
+   Auto delete wild reports now deletes DF reports
 20111015a
    *Fixed resource speed up not working
 20111014a

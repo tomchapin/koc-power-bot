@@ -53760,7 +53760,7 @@ function update_march(c) {
                                                                 o["unit" + O + "Return"] = o["unit" + O + "Count"]
                                                             }
                                                         } else {
-                                                            if (d == cm.MARCH_TYPES.MARCH_TYPE_REINFORCE || d == cm.MARCH_TYPES.MARCH_TYPE_BOT_BARBARIAN) {
+                                                            if (d == cm.MARCH_TYPES.MARCH_TYPE_REINFORCE || d == cm.MARCH_TYPES.MARCH_TYPE_BOT_BARBARIAN || d == cm.MARCH_TYPES.MARCH_TYPE_ATTACK) {
                                                                 for (var O = 1; O < 13; O++) {
                                                                     if (B["unit" + O + "Return"] != undefined) {
                                                                         o["unit" + O + "Return"] = parseInt(B["unit" + O + "Return"])
