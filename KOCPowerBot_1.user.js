@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111027c
+// @version        20111029a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111027c';
+var Version = '20111029a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6421,7 +6421,6 @@ Tabs.Barb = {
      saveAttackOptions();
 	 t.checkBarbData();
 
-     //setInterval(t.startdeletereports,(120000));
      for(i=0;i<Seed.cities.length;i++){
 		var element = 'pdtotalcity'+i;
 		if (t.barbArray[i+1] == undefined) document.getElementById(element).innerHTML = 'No Data';
@@ -6511,15 +6510,8 @@ Tabs.Barb = {
      y +='<TR><TD><INPUT id=pbreport type=checkbox '+(AttackOptions.UpdateEnabled?'CHECKED':'')+'\> Reset search every <INPUT id=pbmsgint type=text size=2 maxlength=2 value='+AttackOptions.UpdateInterval+' \>minutes</td></tr>';
 	 y +='<TR><TD> Skip city after <INPUT id=barbstopsearch type=text size=4 value='+AttackOptions.stopsearch+' \> tries.</td></tr>';
      y +='<TR><TD>Method : '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
-     y +='<TR><TD>Knight priority : '+htmlSelector({0:'Lowest combat skill', 1:'Highest combat skill', lowlevel:'Lowest level first'}, AttackOptions.knightselector, 'id=barbknight')+'</td></tr>';
-     y +='<TR><TD><INPUT id=deletetoggle type=checkbox '+(AttackOptions.DeleteMsg?'CHECKED':'')+' /> Auto delete barb/transport reports from you</td></tr>';
-     y +='<TR><TD><INPUT id=deletes0toggle type=checkbox '+(AttackOptions.DeleteMsgs0?'CHECKED':'')+' /> Auto delete transport reports to you</td></tr>';
-     y +='<TR><TD>Select barbreport levels to delete: <BR>';
-	 y +='<TABLE><TR>';
-     for (w=1;w<=10;w++){
-     y += '<TD><INPUT id=pbmsglvl'+w+' class=msglvl type=checkbox '+(AttackOptions.MsgLevel[w]?'CHECKED':'') +'>Lvl:'+w+'</td>';
-     }	
-     y+='</tr></table></td></tr></table>';
+     y +='<TR><TD>Knight priority : '+htmlSelector({0:'Lowest combat skill', 1:'Highest combat skill'}, AttackOptions.knightselector, 'id=barbknight')+'</td></tr>';
+     y+='</table></td></tr></table>';
 	   t.barboptions.getMainDiv().innerHTML = y;
 	   t.barboptions.show(true);
 	
@@ -6565,14 +6557,6 @@ Tabs.Barb = {
 		AttackOptions.MaxDistance=parseInt(document.getElementById('pbmaxdist').value);
 		saveAttackOptions();
 	},false);
-    document.getElementById('deletetoggle').addEventListener('change', function(){
-		AttackOptions.DeleteMsg=document.getElementById('deletetoggle').checked;
-		saveAttackOptions();
-	},false);
-    document.getElementById('deletes0toggle').addEventListener('change', function(){
-		AttackOptions.DeleteMsgs0=document.getElementById('deletes0toggle').checked;
-		saveAttackOptions();
-	},false);
     document.getElementById('rallyclip').addEventListener('change', function(){
 		AttackOptions.RallyClip=parseInt(document.getElementById('rallyclip').value);
 		saveAttackOptions();
@@ -6581,17 +6565,7 @@ Tabs.Barb = {
 		document.getElementById('barbstopsearch').value = parseInt(document.getElementById('barbstopsearch').value)>0?document.getElementById('barbstopsearch').value:1
 		AttackOptions.stopsearch=parseInt(document.getElementById('barbstopsearch').value);
 		saveAttackOptions();
-	},false);
-    var lvl = document.getElementsByClassName('msglvl')
-    for (k=0; k<lvl.length; k++){
-		lvl[k].addEventListener('click', function(){
-			for (w=1;w<=10;w++){
-				AttackOptions.MsgLevel[w] = document.getElementById('pbmsglvl'+w).checked;
-				saveAttackOptions();
-			}
-		},false);
-    }
-    
+	},false);    
   },
   
     showBarbs: function (citynumber,cityname) {
@@ -6676,38 +6650,6 @@ Tabs.Barb = {
   	 	AttackOptions.Distance[i+1] = parseIntNan(document.getElementById('dist'+i).value);	 		
 	 }
 	 saveAttackOptions();
-  },
-  
-  deletebarbs: function(){
-    for (i=1;i<=Seed.cities.length;i++){
-          GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId())
-    } 
-    reloadKOC();
-  },
-  
-  startdeletereports : function (){
-	var t = Tabs.Barb;
-	if (!AttackOptions.DeleteMsg && !AttackOptions.DeleteMsgs0) return;
-	if(!t.deleting){
-		t.deleting = true;
-		t.fetchbarbreports(0, t.checkbarbreports);
-	}
-  },
-  
-  fetchbarbreports : function (pageNo, callback){
-	var t = Tabs.Barb;
-    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-	if(pageNo > 1)
-		params.pageNo = pageNo;
-	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
-        method: "post",
-        parameters: params,
-        onSuccess: function (rslt) {
-			callback(rslt);
-        },
-        onFailure: function () {
-        },
-    });
   },
   
   checkbarbreports : function (rslt){
@@ -6905,6 +6847,7 @@ Tabs.Barb = {
 	if(AttackOptions.UpdateEnabled){
 		var now = unixTime();
 		if(now > parseInt(AttackOptions.Update[city][0] + (AttackOptions.UpdateInterval*60))){
+			AttackOptions.Update[city][1]=0;
 			t.barbArray[city] = []; //Clears data if last update was more than X minutes
 			GM_setValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.barbArray[city]));
 		}
