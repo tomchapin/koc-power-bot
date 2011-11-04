@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111103a
+// @version        20111104a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111103a';
+var Version = '20111104a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -5001,28 +5001,28 @@ Tabs.transport = {
     	var ship_Ore = t.tradeRoutes[count]["ship_Ore"];
 		var ship_Astone = t.tradeRoutes[count]["ship_Astone"];
     	var ship_Gold = t.tradeRoutes[count]["ship_Gold"];
-    	var citymax_Food = parseInt(Seed.resources[cityID]['rec1'][0] / 3600);
-    	var citymax_Wood = parseInt(Seed.resources[cityID]['rec2'][0] / 3600);
-    	var citymax_Stone = parseInt(Seed.resources[cityID]['rec3'][0] / 3600);
-    	var citymax_Ore = parseInt(Seed.resources[cityID]['rec4'][0] / 3600);
-		var citymax_Astone = parseInt(Seed.resources[cityID]['rec5'][0]);
-    	var citymax_Gold = parseInt(Seed.citystats[cityID]['gold']);
-    	var carry_Food = (citymax_Food - target_Food);
-    	var carry_Wood = (citymax_Wood - target_Wood);
-    	var carry_Stone = (citymax_Stone - target_Stone);
-    	var carry_Ore = (citymax_Ore - target_Ore);
-		var carry_Astone = (citymax_Astone - target_Astone);
+    	var citymax_Food = parseIntNan(Seed.resources[cityID]['rec1'][0] / 3600);
+    	var citymax_Wood = parseIntNan(Seed.resources[cityID]['rec2'][0] / 3600);
+    	var citymax_Stone = parseIntNan(Seed.resources[cityID]['rec3'][0] / 3600);
+    	var citymax_Ore = parseIntNan(Seed.resources[cityID]['rec4'][0] / 3600);
+		var citymax_Astone = parseIntNan(Seed.resources[cityID]['rec5'][0]);
+    	var citymax_Gold = parseIntNan(Seed.citystats[cityID]['gold']);
+    	var carry_Food = parseIntNan(citymax_Food - target_Food);
+    	var carry_Wood = parseIntNan(citymax_Wood - target_Wood);
+    	var carry_Stone = parseIntNan(citymax_Stone - target_Stone);
+    	var carry_Ore = parseIntNan(citymax_Ore - target_Ore);
+		var carry_Astone = parseIntNan(citymax_Astone - target_Astone);
     	var carry_Gold = 0;
     	if (carry_Food < 0 || ship_Food==false) carry_Food = 0;
     	if (carry_Wood < 0 || ship_Wood==false) carry_Wood = 0;
     	if (carry_Stone < 0 || ship_Stone==false) carry_Stone = 0;
     	if (carry_Ore < 0 || ship_Ore==false) carry_Ore = 0;
 		if (carry_Astone < 0 || ship_Astone==false) carry_Astone = 0;
-    	if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseInt(trade_Food);
-    	if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseInt(trade_Wood);
-    	if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseInt(trade_Stone);
-    	if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseInt(trade_Ore);
-		if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseInt(trade_Astone);
+    	if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseIntNan(trade_Food);
+    	if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseIntNan(trade_Wood);
+    	if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseIntNan(trade_Stone);
+    	if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseIntNan(trade_Ore);
+		if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
 		carry_Astone *= 5; //Multiply by 5 to account for 5 times less carrying capacity
       
       if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]); 
@@ -5046,12 +5046,11 @@ Tabs.transport = {
 			   if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
 		  }                     
 		
-		  var shift_Food = (maxload / 9); //Total of 9 portions
-		  var shift_Wood = (maxload / 9);
-		  var shift_Stone = (maxload / 9);
-		  var shift_Ore = (maxload / 9);
-		  var shift_Astone = (maxload / 9 * 5); //Aetherstone takes 5 of 9 portions
-					
+		  var shift_Food = parseIntNan(maxload / 9); //Total of 9 portions
+		  var shift_Wood = parseIntNan(maxload / 9);
+		  var shift_Stone = parseIntNan(maxload / 9);
+		  var shift_Ore = parseIntNan(maxload / 9);
+		  var shift_Astone = parseIntNan(maxload / 9 * 5); //Aetherstone takes 5 of 9 portions	
 		  if ((maxload - carry_Food - carry_Wood - carry_Stone - carry_Ore - carry_Astone) < 0){
 			 var shift_num=0;
 			 var shift_spare=0;
@@ -5150,7 +5149,7 @@ Tabs.transport = {
 		params.r2 = carry_Wood;
 		params.r3 = carry_Stone;
 		params.r4 = carry_Ore;
-		params.r5 = parseInt(carry_Astone)/5;
+		params.r5 = parseInt(carry_Astone/5);
 		params.gold = carry_Gold;
 		
 		switch (unit){
