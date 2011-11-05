@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111104a
+// @version        20111105a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111104a';
+var Version = '20111105a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4825,7 +4825,7 @@ Tabs.transport = {
        var queueId = parseInt(queueId);
 	     var cityname;
 	     var citynameTo = null;
-	     var Types = ['food','wood','stone','ore','aetherstone','gold'];
+	     var Types = ['food','wood','stone','iron','aetherstone','gold'];
 	     for (var y=0; y< Seed.cities.length;y++) {
 					if ( parseInt(Seed.cities[y][0]) == r[queueId].city) var cityname = Seed.cities[y][1];
 					if ( parseInt(Seed.cities[y][2]) == r[queueId].target_x && parseInt(Seed.cities[y][3]) == r[queueId].target_y) var citynameTo = Seed.cities[y][1];
@@ -4839,8 +4839,7 @@ Tabs.transport = {
        for (y in unsafeWindow.unitcost) n+='<option value="'+y+'">'+unsafeWindow.unitcost[y][0]+'</option>';
        n+='</select></td></table><BR><TABLE  id=editRoutes class=pbTab>';
        for (var i=0;i<Types.length;i++){
-	       if (Types[i] == 'ore') var icon = 'iron';
-	       else var icon = Types[i];
+		 var icon = Types[i];
          n += '<TR><TD width=50px align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/'+icon+'_30.png"></td>';
          n += '<TD width=50px align=center><INPUT id=pbbship'+Types[i]+' type=checkbox></td>';
          n += '<TD width=125px>Keep: <INPUT id=pbbtargetamount'+Types[i]+' type=text size=11 maxlength=11 value="0"></td>';
@@ -4858,20 +4857,20 @@ Tabs.transport = {
        document.getElementById('pbbshipfood').checked = r[queueId].ship_Food;
        document.getElementById('pbbshipwood').checked = r[queueId].ship_Wood;
        document.getElementById('pbbshipstone').checked = r[queueId].ship_Stone;
-       document.getElementById('pbbshipore').checked = r[queueId].ship_Ore;
-	   document.getElementById('pbbshipAstone').checked = r[queueId].ship_Astone;
+       document.getElementById('pbbshipiron').checked = r[queueId].ship_Ore;
+	   document.getElementById('pbbshipaetherstone').checked = r[queueId].ship_Astone;
        document.getElementById('pbbshipgold').checked = r[queueId].ship_Gold;
        document.getElementById('pbbtargetamountfood').value = r[queueId].target_Food;
        document.getElementById('pbbtargetamountwood').value = r[queueId].target_Wood;
        document.getElementById('pbbtargetamountstone').value = r[queueId].target_Stone;
-       document.getElementById('pbbtargetamountore').value = r[queueId].target_Ore;
-	   document.getElementById('pbbtargetamountAstone').value = r[queueId].target_Astone;
+       document.getElementById('pbbtargetamountiron').value = r[queueId].target_Ore;
+	   document.getElementById('pbbtargetamountaetherstone').value = r[queueId].target_Astone;
        document.getElementById('pbbtargetamountgold').value = r[queueId].target_Gold;
        document.getElementById('pbbtradeamountfood').value = r[queueId].trade_Food;
        document.getElementById('pbbtradeamountwood').value = r[queueId].trade_Wood;
        document.getElementById('pbbtradeamountstone').value = r[queueId].trade_Stone;
-       document.getElementById('pbbtradeamountore').value = r[queueId].trade_Ore;
-	   document.getElementById('pbbtradeamountAstone').value = r[queueId].trade_Astone;
+       document.getElementById('pbbtradeamountiron').value = r[queueId].trade_Ore;
+	   document.getElementById('pbbtradeamountaetherstone').value = r[queueId].trade_Astone;
        document.getElementById('pbbtradeamountgold').value = r[queueId].trade_Gold;
        document.getElementById('Cancel').addEventListener('click', function(){t.showTradeRoutes();}, false);
        document.getElementById('Save').addEventListener('click', function(){
@@ -4880,20 +4879,20 @@ Tabs.transport = {
             r[queueId].ship_Food = document.getElementById('pbbshipfood').checked;
             r[queueId].ship_Wood = document.getElementById('pbbshipwood').checked;
             r[queueId].ship_Stone = document.getElementById('pbbshipstone').checked;
-            r[queueId].ship_Ore = document.getElementById('pbbshipore').checked;
-			r[queueId].ship_Astone = document.getElementById('pbbshipAstone').checked;
+            r[queueId].ship_Ore = document.getElementById('pbbshipiron').checked;
+			r[queueId].ship_Astone = document.getElementById('pbbshipaetherstone').checked;
             r[queueId].ship_Gold = document.getElementById('pbbshipgold').checked;
             r[queueId].target_Food = document.getElementById('pbbtargetamountfood').value;
             r[queueId].target_Wood = document.getElementById('pbbtargetamountwood').value;
             r[queueId].target_Stone = document.getElementById('pbbtargetamountstone').value;
-            r[queueId].target_Ore = document.getElementById('pbbtargetamountore').value;
-			r[queueId].target_Astone = document.getElementById('pbbtargetamountAstone').value;
+            r[queueId].target_Ore = document.getElementById('pbbtargetamountiron').value;
+			r[queueId].target_Astone = document.getElementById('pbbtargetamountaetherstone').value;
             r[queueId].target_Gold = document.getElementById('pbbtargetamountgold').value;
             r[queueId].trade_Food = document.getElementById('pbbtradeamountfood').value;
             r[queueId].trade_Wood = document.getElementById('pbbtradeamountwood').value;
             r[queueId].trade_Stone = document.getElementById('pbbtradeamountstone').value;
-            r[queueId].trade_Ore = document.getElementById('pbbtradeamountore').value;
-			r[queueId].trade_Astone = document.getElementById('pbbtradeamountAstone').value;
+            r[queueId].trade_Ore = document.getElementById('pbbtradeamountiron').value;
+			r[queueId].trade_Astone = document.getElementById('pbbtradeamountaetherstone').value;
             r[queueId].trade_Gold = document.getElementById('pbbtradeamountgold').value;
             t.showTradeRoutes();
         }, false);
