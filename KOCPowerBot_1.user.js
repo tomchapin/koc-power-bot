@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111105a
+// @version        20111105b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111105a';
+var Version = '20111105b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12500,7 +12500,7 @@ Tabs.Gifts = {
             continue;
 		  var mm = m[i].match( /facebook.com\/.*\">(.*?)<\/a><\/span>.*?(?:would like to give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
 		  if (mm==null)
-            mm = m[i].match( /facebook.com\/.*\">(.*?)<\/span><\/span><\/a>.*?(?:give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
+            mm = m[i].match( /facebook.com\/.*\">(.*?)<\/span><\/span><\/a>.*?(?:would like to give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
           if (mm==null)
             continue;
           var giver = mm[1];
@@ -12516,11 +12516,17 @@ Tabs.Gifts = {
           var ins = m[i].match (/<input.*?>/igm);
           for (var ii=0; ii<ins.length; ii++){
             var it = {};
-            mm = /value=\"(.*?)\"/im.exec(ins[ii]);  
+            mm = /value=\"(.*?)\"/im.exec(ins[ii]);
+			if (mm==null)
+				continue;
             it.value = mm[1];
-            mm = /name=\"(.*?)\"/im.exec(ins[ii]);  
+            mm = /name=\"(.*?)\"/im.exec(ins[ii]);
+            if (mm==null)
+				continue;
             it.name = mm[1];
-            mm = /type=\"(.*?)\"/im.exec(ins[ii]);  
+            mm = /type=\"(.*?)\"/im.exec(ins[ii]);
+            if (mm==null)
+				continue;
             it.type = mm[1];
             if (it.type=='submit' && it.name!='actions[reject]'){
               it.name = eval ('"'+ it.name +'"');          
@@ -12550,7 +12556,7 @@ Tabs.Gifts = {
         }
         notify (gifts);
       } catch (e) {
-        notify ({errMsg:"Error parsing Facebook gift page"+ e});
+        notify ({errMsg:"Error parsing Facebook gift page "+ e});
       }
     }
   },
