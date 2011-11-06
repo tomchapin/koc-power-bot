@@ -10870,12 +10870,13 @@ var AutoUpdater_101052 = {
     days: 1,
     name: "KOC Power Bot",
     version: Version,
-	beta: false,
+	beta: GlobalOptions.pbupdatebeta,
+	betaUrl : 'http://koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js',
     time: new Date().getTime(),
     call: function(response, secure) {
         GM_xmlhttpRequest({
             method: 'GET',
-	    url: this.beta ? 'http://koc-power-bot.googlecode.com/svn/trunk/KOCPowerBot_1.user.js' : 'http'+(secure ? 's' : '')+'://userscripts.org/scripts/source/'+this.id+'.meta.js',
+	    url: this.beta ? this.betaUrl : 'http'+(secure ? 's' : '')+'://userscripts.org/scripts/source/'+this.id+'.meta.js',
 	    onload: function(xpr) {AutoUpdater_101052.compare(xpr, response);},
             onerror: function(xpr) {if (secure) AutoUpdater_101052.call(response, false);}
         });
@@ -10918,7 +10919,7 @@ var AutoUpdater_101052 = {
                 // Ok
                 function(){
                     try { 
-                        location.href = this.beta ? 'http://koc-power-bot.googlecode.com/svn/trunk/KOCPowerBot_1.user.js' :  'http://userscripts.org/scripts/source/101052.user.js'; 
+                        location.href = this.beta ? this.betaUrl :  'http://userscripts.org/scripts/source/101052.user.js'; 
                     } catch(e) {}
                 },
                 // Cancel
@@ -10929,7 +10930,7 @@ var AutoUpdater_101052 = {
 							GlobalOptions.pbupdate = false;
 							GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
                             AutoUpdater_101052.enable();
-                            alert('Automatic updates can be re-enabled for this script from the User Script Commands submenu.');
+                            alert('Automatic updates can be re-enabled for this script in the Options tab.');
                         }
                     }
                 }

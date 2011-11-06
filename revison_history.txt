@@ -1,6 +1,11 @@
 REVISION HISTORY:
 ----------------
 
+20111105c
+   Added aetherstone to auto transport
+   Added option to enable/disable auto updater
+   Added option to check google code for beta updates
+   Fixed gifts tab
 20111030d
    Added Auto DF tab (credits to Phil Cazz for original build)
    Added auto updater check into script
