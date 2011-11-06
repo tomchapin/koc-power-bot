@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111105c
+// @version        20111106a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111105c';
+var Version = '20111106a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4805,7 +4805,7 @@ Tabs.transport = {
 				if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td><TD>Target: '+ addCommas(r[i].target_Wood) +'</td><TD>Trade: '+ addCommas(r[i].trade_Wood)+'</td>';
 				if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td><TD>Target: '+ addCommas(r[i].target_Stone) +'</td><TD>Trade: '+ addCommas(r[i].trade_Stone)+'</td>';
 				if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td><TD>Target: '+ addCommas(r[i].target_Ore) +'</td><TD>Trade: '+ addCommas(r[i].trade_Ore)+'</td>';
-				if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td><TD>Target: '+ addCommas(r[i].target_Ore) +'</td><TD>Trade: '+ addCommas(r[i].trade_Astone)+'</td>';
+				if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td><TD>Target: '+ addCommas(r[i].target_Astone) +'</td><TD>Trade: '+ addCommas(r[i].trade_Astone)+'</td>';
 				if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td><TD>Target: '+ addCommas(r[i].target_Gold) +'</td><TD>Trade: '+ addCommas(r[i].trade_Gold)+'</td>';
        }
 	     m +='</table>';
