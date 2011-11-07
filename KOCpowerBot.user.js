@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111106a
+// @version        20111107a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111106a';
+var Version = '20111107a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -13326,7 +13326,7 @@ var DeleteReports = {
 		var deletes0 = new Array();
 		for(k in reports){
 			if(Options.DeleteMsg){
-				if(reports[k].marchType==4 && reports[k].side0PlayerId==0 && reports[k].side0TileType > 50)
+				if((reports[k].marchType==4 || reports[k].marchType==9) && reports[k].side0PlayerId==0 && reports[k].side0TileType > 50)
 					deletes1.push(k.substr(2));
 				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
 					deletes1.push(k.substr(2));
