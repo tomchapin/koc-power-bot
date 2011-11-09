@@ -1,6 +1,11 @@
 REVISION HISTORY:
 ----------------
 
+20111109a
+   Fixed auto delete raid reports not working
+   Fixed gifts tab "Parse page 1 error"
+   Fixed show transport routes aetherstone not showing
+   Fixed update script source not saving
 20111105c
    Added aetherstone to auto transport
    Added option to enable/disable auto updater

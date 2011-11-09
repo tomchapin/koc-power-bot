@@ -4190,7 +4190,7 @@ var itemlist = {
     i1208: {
         name: "Eighth City Deed",
         description: "Required to build a Eighth City.",
-        price: null,
+        price: 950,
         tradable: null,
         category: 6,
         subCategory: 0
@@ -20365,7 +20365,7 @@ function modal_build(u, r) {
                                                         F = g_js_strings.modal_build.sharemessagebuildorresearch
                                                     } else {
                                                         S = g_js_strings.commonstr.build;
-                                                        F = g_js_strings.modal_build.g_js_strings.modal_build.sharemessagebuildorresearch
+                                                        F = g_js_strings.modal_build.sharemessagebuildorresearch
                                                     }
                                                     if (Z < parseInt(buildingmaxlvl[y])) {
                                                         var q = cm.Template.renderTemplate("Building", "buildContainer1", {
@@ -20466,7 +20466,7 @@ function modal_build(u, r) {
                                                         if (m) {
                                                             jQuery("#buildingBuildButton").click(function () {
                                                                 var aI = jQuery("#askHelpCheckbox:checked");
-                                                                if (aI.length > 1) {
+                                                                if (aI.length >= 1) {
                                                                     aG = true
                                                                 }
                                                                 if (buildingId == 0 && M == 0 && currentLevel == 4 && aD == 2) {
@@ -20519,6 +20519,9 @@ function modal_build(u, r) {
                                                 });
                                                 jQuery("#recipeConsolationItem").bind("mouseout", function () {
                                                     Tooltip.hide()
+                                                });
+                                                jQuery("#askHelpCheckbox").bind("click", function (aI) {
+                                                    buildingController.askHelpCheckboxChanged(aI)
                                                 })
                                             }, null, null, {
                                                 additionalClass: "feySpire"
@@ -46039,6 +46042,7 @@ cm.ModalManager = function (d) {
             }
             var h = "<div class='main'>" + i.text + "</div><div class='bottom_box'>" + (i.button_text || g_js_strings.commonstr.ok) + "</div>";
             cm.ModalManager.add({
+                close: (i.close) ? i.close() : null,
                 body: h,
                 "class": "guardian_generic " + i["class"],
                 curtain: true,
@@ -49390,6 +49394,10 @@ cm.RecipeController = function (f) {
                 i = jQuery("#insuranceCheckbox").is(":checked");
             if (!k) {
                 cm.ModalManager.alert({
+                    close: function () {
+                        Modal.hideModalAll();
+                        cm.ModalManager.close()
+                    },
                     button_text: g_js_strings.commonstr.ok,
                     text: g_js_strings.crafting.notEnoughIngredients,
                     "class": "craftFailure",
@@ -49402,6 +49410,10 @@ cm.RecipeController = function (f) {
             } else {
                 if (!l) {
                     cm.ModalManager.alert({
+                        close: function () {
+                            Modal.hideModalAll();
+                            cm.ModalManager.close()
+                        },
                         button_text: g_js_strings.commonstr.ok,
                         text: g_js_strings.crafting.notEnoughSlots,
                         "class": "craftFailure",
@@ -49414,6 +49426,10 @@ cm.RecipeController = function (f) {
                 } else {
                     if (i && !j) {
                         cm.ModalManager.alert({
+                            close: function () {
+                                Modal.hideModalAll();
+                                cm.ModalManager.close()
+                            },
                             button_text: g_js_strings.commonstr.ok,
                             text: g_js_strings.crafting.notEnoughGems,
                             "class": "craftFailure",
@@ -50841,7 +50857,7 @@ function do_modal_speedup(d, a, b, c, s) {
     })
 }
 function addHelp(c, e, a, d, b) {
-    if (c == 1 && e == false && d != "trn") {
+    if (c == 1 && e == false && d != "trn" && d != "craft") {
         a.push("<div class='item askForHelp clearfix'>");
         a.push("<img class='itemIcon' src='");
         a.push(stimgUrl);
