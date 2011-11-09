@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111107a
+// @version        20111109a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111107a';
+var Version = '20111109a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7227,7 +7227,7 @@ Tabs.Options = {
 			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);	
 	  document.getElementById('pbupdatebeta').addEventListener ('change', function(){
-      		GlobalOptions.pbupdatebeta = document.getElementById('pbupdatebeta').checked;
+      		GlobalOptions.pbupdatebeta = document.getElementById('pbupdatebeta').value;
 			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);	
 	  
@@ -11707,7 +11707,8 @@ Array.prototype.compare = function(testArr) {
 String.prototype.StripQuotes = function() {
 	return this.replace(/"/g,'');
 }
-String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;', '\'':'&#039' };
+	  
+String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;', '\'':'&#039', '<':'\\u003c', '/':'\\/', '\\\\':'\\'};
 String.prototype.htmlSpecialChars = function() {
   var ret = this.toString();
   for (k in this.entityTrans)
@@ -12372,7 +12373,8 @@ Tabs.Gifts = {
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 1'});
       progress ('1');
-      var m = page.match (/form action=\\"(.*?)\\"/im);
+	  page = page.htmlSpecialCharsDecode();
+      var m = page.match (/form action="(.*?)"/im);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 1'});
 	  var url = m[1].htmlSpecialCharsDecode(); 
@@ -12380,7 +12382,7 @@ Tabs.Gifts = {
         url = url.replace ('\\/', '/', 'g');
 		url = url.replace (/\\u00253A/g, ':');
 		url = url.replace (/\\u00257C/g, '|');
-	  var signed_request = /signed_request\\" value=\\"(.*?)\\"/im.exec (page);
+	  var signed_request = /signed_request" value="(.*?)"/im.exec (page);
 	  var opts = [];
 	  opts.signed_request = signed_request[1];
       GM_AjaxPost (url, opts, got2, 'Page 2');        
@@ -12402,13 +12404,14 @@ Tabs.Gifts = {
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 3'});
       progress ('3');
-	  var m = page.match (/form action=\\"(.*?)\\"/im);
+	  page = page.htmlSpecialCharsDecode();
+	  var m = page.match (/form action="(.*?)"/im);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 3'});
       var url = m[1].htmlSpecialCharsDecode();
 	  url = unescape(url);
 	  url = url.replace ('\\/', '/', 'g');
-	  var signed_request = /signed_request\\" value=\\"(.*?)\\"/im.exec (page);
+	  var signed_request = /signed_request" value="(.*?)"/im.exec (page);
 	  var opts = [];
 	  opts.signed_request = signed_request[1];
       GM_AjaxPost (url, opts, got4, 'Page 4');        
@@ -12418,6 +12421,7 @@ Tabs.Gifts = {
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 4'});
       progress ('4');
+	  page = page.htmlSpecialCharsDecode();
 	  
 	  var m = page.match (/src='(.*?)'/im);
       if (m == null)
@@ -12435,6 +12439,7 @@ Tabs.Gifts = {
       if (page == null)
         notify ({ajaxErr:'COMM Error - page 5'});
       progress ('5');
+	  page = page.htmlSpecialCharsDecode();
       var m = /<div class=\'giftreturned\'>(.*?)<\/div/im.exec(page);
       if (m != null){
         notify ({feedback:m[1], del:true});
