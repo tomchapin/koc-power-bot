@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111109a
+// @version        20111112a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111109a';
+var Version = '20111112a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7193,7 +7193,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>Remember window open state on refresh</td></tr>\
         <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>Hide window when clicking on map coordinates</td></tr>\
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>Enable widescreen style: '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' (all domains, requires refresh)</td></tr>\
-        <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>Check updates on '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' (all domains)</td></tr>\
+        <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>Check updates on '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' (all domains) &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="Update Now" /></td></tr>\
         <TR><TD colspan=2><BR><B>KofC Features:</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>Disable all Fairie popup windows</td></tr>\
         <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>Refresh if KOC not loaded within 1 minute (all domains)</td></tr>\
@@ -7229,6 +7229,9 @@ Tabs.Options = {
 	  document.getElementById('pbupdatebeta').addEventListener ('change', function(){
       		GlobalOptions.pbupdatebeta = document.getElementById('pbupdatebeta').value;
 			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);	
+	  document.getElementById('pbupdatenow').addEventListener ('click', function(){
+			AutoUpdater_101052.call(true,true);
       },false);	
 	  
 	  document.getElementById('ResetALL').addEventListener ('click', function(){
@@ -13386,5 +13389,171 @@ var DeleteReports = {
     },
 }
 
+/******************* Combat Tab **********************/
+Tabs.Combat = {
+	myDiv: null,
+	troops: [{},{}],
+	active: [{},{}],
+	lost: [{},{}],
+	total: [],
+	stats: unsafeWindow.unitstats,   //  Life, Attack, Defense, Speed, Range, Load
+	priority: [12,10,6,3,7,8,4,5,2,1,9,11],
+	round: 0,
+	range: [0,0],
+	distance: 0,
+	speed: 0,
+	start: 0,
+	
+	init: function(div){
+		var t = Tabs.Combat;
+		t.myDiv = div;
+		var m = '<table><TR><TD colspan=2><b>Attacking</b></td><TD colspan=2><b>Defending</b></td></TR>';
+		for(var troops in unsafeWindow.unitcost){
+			var name = unsafeWindow.unitcost[troops][0];
+			m+='<tr><td>'+name+' :</td><td><input type=text id="pbcombata_'+troops+'" /></td><td>'+name+' :</td><td><input type=text id="pbcombatd_'+troops+'" /></td></tr>';
+		}
+		m+='</table><DIV id=pbcombat_rslt></div>';
+		t.myDiv.innerHTML = m;
+		
+		for(var troops in unsafeWindow.unitcost){
+			document.getElementById('pbcombata_'+troops).addEventListener('change', t.e_calculate, false);
+			document.getElementById('pbcombatd_'+troops).addEventListener('change', t.e_calculate, false);
+		}
+	},
+	
+	e_calculate: function(){
+		var t = Tabs.Combat;
+		t.round = 0;
+		t.total[0] = 0;
+		t.total[1] = 0;
+		t.range[0] = 0
+		t.range[1] = 0;
+		t.speed = 0;
+		for(var tr in unsafeWindow.unitcost){
+			var name = unsafeWindow.unitcost[tr][0];
+			t.troops[0][tr] = parseIntNan(document.getElementById('pbcombatd_'+tr).value);
+			t.troops[1][tr] = parseIntNan(document.getElementById('pbcombata_'+tr).value);
+			t.total[0] += t.troops[0][tr];
+			t.total[1] += t.troops[1][tr];
+			t.lost[0][tr] = 0;
+			t.lost[1][tr] = 0;
+			if(t.troops[0][tr]>0 && parseInt(t.stats[tr][4]) > t.range[0]) t.range[0] = parseInt(t.stats[tr][4]);
+			if(t.troops[1][tr]>0 && parseInt(t.stats[tr][4]) > t.range[1]) t.range[1] = parseInt(t.stats[tr][4]);
+			if((t.troops[0][tr]>0 || t.troops[1][tr]>0) && parseInt(t.stats[tr][3]) > t.speed) t.speed = parseInt(t.stats[tr][3]);
+		}
+		if(t.range[1]>t.range[0]){
+			t.start = 1; //Attacker starts first if range is longer than defender
+			t.distance = t.range[1];
+		} else {
+			t.distance = t.range[0];
+			t.start = 0;
+		}
+		t.c_rounds();
+	},
+	
+	c_rounds: function(){
+		var t = Tabs.Combat;
+		if(t.total[0]<1 || t.total[1]<1){
+			t.print();
+			return;
+		}
+		t.round++;
+		if(t.round>1 && t.distance > 0){
+			t.distance -= t.speed;
+			if(t.distance < 0) t.distance = 0;
+		}
+		t.c_remainder();
+	},
+	
+	c_remainder: function(){  //  Life, Attack, Defense, Speed, Range, Load
+		var t = Tabs.Combat;
+		for(var tr in t.troops[0]){ //Only troops in range are counted
+			if(t.stats[tr][4] >= t.distance)
+				t.active[0][tr] = t.troops[0][tr];
+		}
+		for(var tr in t.troops[1]){
+			if(t.stats[tr][4] >= t.distance)
+				t.active[1][tr] = t.troops[1][tr];
+		}
+		//Defender
+		var attack = t.c_attack(0);
+		var count = 0;
+		while(attack > 0 && count<t.priority.length){
+			var tr = 'unt'+t.priority[count];
+			var defense = t.c_defense(1,tr);
+			var life = t.c_life(1,tr);
+			if((attack - parseInt(life+defense)) > 0){
+				t.lost[1][tr] += t.troops[1][tr];
+				t.total[1] -= t.troops[1][tr];
+				t.troops[1][tr] = 0;
+				attack -= parseInt(life+defense);
+			} else {
+				var killed = parseInt(attack/(t.stats[tr][0]+t.stats[tr][2]));
+				t.lost[1][tr] += killed;
+				t.troops[1][tr] -= killed;
+				t.total[1] -= killed;
+				attack = 0;
+			}
+			count++;
+		}
+		//Attacker
+		var attack = t.c_attack(1);
+		var count = 0;
+		while(attack > 0 && count<t.priority.length){
+			var tr = 'unt'+t.priority[count];
+			var defense = t.c_defense(0,tr);
+			var life = t.c_life(0,tr);
+			if((attack - parseInt(life+defense)) > 0){
+				t.lost[0][tr] += t.troops[0][tr];
+				t.total[0] -= t.troops[0][tr];
+				t.troops[0][tr] = 0;
+				attack -= parseInt(life+defense);
+			} else {
+				var killed = parseInt(attack/(t.stats[tr][0]+t.stats[tr][2]));
+				t.lost[0][tr] += killed;
+				t.troops[0][tr] -= killed;
+				t.total[0] -= killed;
+				attack = 0;
+			}
+			count++;
+		}
+		t.c_rounds();
+	},
+	
+	c_attack: function(side){
+		var t = Tabs.Combat;
+		var attack = 0;
+		for(var tr in t.active[side]){
+			attack += parseInt(t.stats[tr][1] * t.active[side][tr]);
+		}
+		return parseInt(attack);
+	},
+	c_defense: function(side,tr){
+		var t = Tabs.Combat;
+		return parseInt(t.stats[tr][3] * t.troops[side][tr]);
+	},
+	c_life: function(side,tr){
+		var t = Tabs.Combat;
+		return parseInt(t.stats[tr][0] * t.troops[side][tr]);
+	},
+	
+	print: function (){
+		var t = Tabs.Combat;
+		var m = '<div class=pbStat>Results</div><table><TR><TD colspan=2><b>Attacking</b></td><TD colspan=2><b>Defending</b></td><TD>Rounds :'+t.round+'</td></TR>';
+		for(var tr in unsafeWindow.unitcost){
+			var name = unsafeWindow.unitcost[tr][0];
+			m+='<tr><td>'+name+' :</td><td>'+ t.troops[1][tr] +'</td><td>'+name+' :</td><td>'+ t.troops[0][tr] +'</td></tr>';
+		}
+		m+='</table>';
+		document.getElementById('pbcombat_rslt').innerHTML = m;
+	},
+	show: function(){
+	
+	},
+	
+	hide: function(){
+	
+	},
+}
 //
 pbStartup ();
