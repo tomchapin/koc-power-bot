@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111113a
+// @version        20111113b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *kingdomsofcamelot.com/*main_src.php*
@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 
-var Version = '20111113a';
+var Version = '20111113b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -11711,7 +11711,7 @@ String.prototype.StripQuotes = function() {
 	return this.replace(/"/g,'');
 }
 
-String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;', '\'':'&#039', '<':'\\u003c', '/':'\\/', '\\':'\\\\'};
+String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;', '\'':'&#039', '<':'\\u003c', '/':'\\/', '\\':'\\\\', '\"':'\\\"'};
 String.prototype.htmlSpecialChars = function() {
   var ret = this.toString();
   for (k in this.entityTrans)
@@ -12511,11 +12511,7 @@ Tabs.Gifts = {
     function parseGiftsPage  (p){
       if (p == null)
         notify ({errMsg:'Ajax Comm Error'});
-      p = p.replace ('\\u003c', '<', 'g');
-	  p = p.replace('\\/', '/', 'g');
-	  p = p.replace('\\"', '"', 'g');
-      p = p.replace('&amp;', '&', 'g');   
-	  p = p.replace('\\\\', '\\', 'g');
+      p = p.htmlSpecialCharsDecode();
       var t = Tabs.Gifts;
       var gifts = [];
       try {    
