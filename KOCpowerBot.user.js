@@ -1,16 +1,18 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111113b
+// @version        20111118a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
-// @include        *kingdomsofcamelot.com/*main_src.php*
+// @include        *.kingdomsofcamelot.com/*main_src.php*
+// @include        *.kingdomsofcamelot.com/*standAlone.php*
 // @include        *apps.facebook.com/kingdomsofcamelot/*
+// @include        *kabam.com/kingdoms-of-camelot/play*
 // @include        *facebook.com/connect/uiserver.php*
 // @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
 
 
-var Version = '20111113b';
+var Version = '20111118a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -133,23 +135,24 @@ var CrestOptions = {
 
 var TrainOptions = {
   Running    : false,
-  Troops     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Threshold  : {1:500,2:500,3:500,4:500,5:500,6:500,7:500},
-  Max        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Gamble     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Workers    : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  Troops     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  Threshold  : {1:500,2:500,3:500,4:500,5:500,6:500,7:500,8:500},
+  Max        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  Gamble     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  Workers    : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   Keep       : {1:{Food:0,Wood:0,Stone:0,Ore:0},
                 2:{Food:0,Wood:0,Stone:0,Ore:0},
 				3:{Food:0,Wood:0,Stone:0,Ore:0},
 				4:{Food:0,Wood:0,Stone:0,Ore:0},
 				5:{Food:0,Wood:0,Stone:0,Ore:0},
 				6:{Food:0,Wood:0,Stone:0,Ore:0},
-				7:{Food:0,Wood:0,Stone:0,Ore:0}
+				7:{Food:0,Wood:0,Stone:0,Ore:0},
+				8:{Food:0,Wood:0,Stone:0,Ore:0}
 			   },
-  Enabled    : {1:false,2:false,3:false,4:false,5:false,6:false,7:false},
-  SelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false},
-  Resource   : {1:true,2:true,3:true,4:true,5:true,6:true,7:true},
-  UseIdlePop : {1:true,2:true,3:true,4:true,5:true,6:true,7:true},
+  Enabled    : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
+  SelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
+  Resource   : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true},
+  UseIdlePop : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true},
 };
 
 var AttackOptions = {
@@ -169,15 +172,15 @@ var AttackOptions = {
   BarbsTried    		: 0,
   DeleteMsg             : true,
   DeleteMsgs0			: false,
-  Foodstatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
+  Foodstatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   MsgLevel			    : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
-  BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  BarbNumber    		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
-  Levels    			: {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
+  BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  BarbNumber    		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  Levels    			: {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},8:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
   Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
   MinDistance			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
   Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750},
-  Update                : {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0],6:[0,0],7:[0,0]},
+  Update                : {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0],6:[0,0],7:[0,0],8:[0,0]},
   UpdateEnabled         : true,
   UpdateInterval	    : 30,
   stopsearch            : 1,
@@ -247,6 +250,10 @@ if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
   return;
 }
+if (document.URL.search(/kabam.com\/kingdoms-of-camelot\/play/i) >= 0 || document.URL.search(/kingdomsofcamelot\.com\/fb\/.*?\/standAlone\.php/i) >= 0){
+  kabamStandAlone ();
+  return;
+}
 if (document.URL.search(/facebook.com\/connect\/uiserver.php/i) >= 0){
   HandlePublishPopup ();
   return;
@@ -256,10 +263,10 @@ if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
 }
 
 function kocWideScreen(){
-  function setWide (){
+  function setWideFb (){
 	var kocFrame = parent.document.getElementById('kofc_iframe_0');
 	if (!kocFrame){
-	  setTimeout (setWide, 1000);
+	  setTimeout (setWideFb, 1000);
 	  return;
 	}
 	kocFrame.style.width = '100%';
@@ -267,9 +274,11 @@ function kocWideScreen(){
 	style.innerHTML = 'body {margin:0; width:100%; !important;}';
 	kocFrame.parentNode.appendChild(style);
   }
-  kocWatchdog ();
-  if (GlobalOptions.pbWideScreen)
-    setWide();
+  if(window.location.href.match(/apps\.facebook\.com\/kingdomsofcamelot/i)){
+	  kocWatchdog ();
+	  if (GlobalOptions.pbWideScreen)
+			setWideFb();
+  }
 }
 
 /***  Run only in "apps.facebook.com" instance ... ***/
@@ -317,6 +326,27 @@ function facebookInstance (){
     
   }
   facebookWatchdog();
+  if (GlobalOptions.pbWideScreen)
+    setWide();
+}
+
+function kabamStandAlone (){
+  function setWide (){
+	var iFrames = document.getElementsByTagName('IFRAME');
+	if (!iFrames){
+	  setTimeout (setWide, 1000);
+	  return;
+	}
+	for(var f = 0; f<iFrames.length; f++){
+		if(iFrames[f].src.match(/kingdomsofcamelot\.com\/fb\/.*?\/standAlone\.php/i)){
+			iFrames[f].style.width = '100%';
+			document.getElementById('content').style.width = '100%';
+		}
+		if(iFrames[f].src.match(/kingdomsofcamelot\.com\/fb\/.*?\/main_src\.php/i)){
+			iFrames[f].style.width = '100%';
+		}
+	}
+  }
   if (GlobalOptions.pbWideScreen)
     setWide();
 }
@@ -11113,6 +11143,9 @@ function reloadKOC (){
   var serverId = getServerId();
   if(serverId == '??') window.location.reload(true);
   var goto = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+serverId;
+  if(window.location.href.match(/kabam.com\/kingdoms-of-camelot\/play/i)){
+	goto = window.location.protocol+'//www.kabam.com/kingdoms-of-camelot/play?s='+serverId;
+  }
   var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ serverId +'"</form>';
   var e = document.createElement ('div');
   e.innerHTML = t;
@@ -12522,13 +12555,13 @@ Tabs.Gifts = {
 		  var mm = m[i].match( /facebook.com\/.*\">(.*?)<\/a><\/span>.*?(?:would like to give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
 		  if (mm==null)
             mm = m[i].match( /facebook.com\/.*\">(.*?)<\/span><\/span><\/a>.*?(?:would like to give you a (?:gift of|)(.*?) in |Here is a(.*?)you can use)/im );
+		  if (mm==null)
+             mm = m[i].match( /appRequestBodyNewA\">(.*) sent an you an invitation to use Kingdoms of Camelot/im );
           if (mm==null)
             continue;
           var giver = mm[1];
           if (mm[2])
             var gift = mm[2].trim();
-          else
-            var gift = mm[3].trim();
             
           // get all inputs ...  (name, value, type)          
           var inps = [];
@@ -12565,9 +12598,13 @@ Tabs.Gifts = {
                     var ss = s[iiii].split(':');
                     if (ss[0] == 's')
                       args.exs = ss[1];
+					else
+					  args[ss[0]] = ss[1];
                   }
                 }
               }
+			  if(args.gid)
+				gift = unsafeWindow.itemlist['i'+args.gid].name;
             } else {
               inps.push (it);
             }
@@ -13388,16 +13425,16 @@ var DeleteReports = {
 /******************* Combat Tab **********************/
 Tabs.Combat = {
 	myDiv: null,
-	troops: [{},{}],
+	troops: [{},{}], //Array[Defender, Attacker]
 	active: [{},{}],
 	lost: [{},{}],
 	total: [],
 	stats: unsafeWindow.unitstats,   //  Life, Attack, Defense, Speed, Range, Load
 	priority: [12,10,6,3,7,8,4,5,2,1,9,11],
 	round: 0,
-	range: [0,0],
-	distance: 0,
-	speed: 0,
+	range: 0,
+	distance: [{},{}], // [Defender, Attacker]
+	speed: [0,0], // [Defender max, Attacker max]
 	start: 0,
 	
 	init: function(div){
