@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111118a
+// @version        20111118b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20111118a';
+var Version = '20111118b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -274,7 +274,7 @@ function kocWideScreen(){
 	style.innerHTML = 'body {margin:0; width:100%; !important;}';
 	kocFrame.parentNode.appendChild(style);
   }
-  if(window.location.href.match(/apps\.facebook\.com\/kingdomsofcamelot/i)){
+  if(document.URL.match(/standalone=0/i)){
 	  kocWatchdog ();
 	  if (GlobalOptions.pbWideScreen)
 			setWideFb();
@@ -11143,7 +11143,7 @@ function reloadKOC (){
   var serverId = getServerId();
   if(serverId == '??') window.location.reload(true);
   var goto = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+serverId;
-  if(window.location.href.match(/kabam.com\/kingdoms-of-camelot\/play/i)){
+  if(document.URL.match(/standalone=1/i)){
 	goto = window.location.protocol+'//www.kabam.com/kingdoms-of-camelot/play?s='+serverId;
   }
   var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ serverId +'"</form>';
