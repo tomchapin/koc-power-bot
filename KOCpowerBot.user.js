@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111118b
+// @version        20111118c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20111118b';
+var Version = '20111118c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7258,6 +7258,7 @@ Tabs.Options = {
       },false);	
 	  document.getElementById('pbupdatebeta').addEventListener ('change', function(){
       		GlobalOptions.pbupdatebeta = document.getElementById('pbupdatebeta').value;
+			AutoUpdater_101052.beta = GlobalOptions.pbupdatebeta;
 			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);	
 	  document.getElementById('pbupdatenow').addEventListener ('click', function(){
@@ -10952,7 +10953,7 @@ var AutoUpdater_101052 = {
                 // Ok
                 function(){
                     try { 
-                        location.href = this.beta ? this.betaUrl :  'http://userscripts.org/scripts/source/101052.user.js'; 
+                        location.href = AutoUpdater_101052.beta ? AutoUpdater_101052.betaUrl :  'http://userscripts.org/scripts/source/101052.user.js'; 
                     } catch(e) {}
                 },
                 // Cancel
