@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111118c
+// @version        20111120a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20111118c';
+var Version = '20111120a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -13433,7 +13433,7 @@ Tabs.Combat = {
 	stats: unsafeWindow.unitstats,   //  Life, Attack, Defense, Speed, Range, Load
 	priority: [12,10,6,3,7,8,4,5,2,1,9,11],
 	round: 0,
-	range: 0,
+	range: [0,0,0], //[Defender, Attacker, Max]
 	distance: [{},{}], // [Defender, Attacker]
 	speed: [0,0], // [Defender max, Attacker max]
 	start: 0,
@@ -13462,7 +13462,8 @@ Tabs.Combat = {
 		t.total[1] = 0;
 		t.range[0] = 0
 		t.range[1] = 0;
-		t.speed = 0;
+		t.speed[0] = 0;
+		t.speed[1] = 0;
 		for(var tr in unsafeWindow.unitcost){
 			var name = unsafeWindow.unitcost[tr][0];
 			t.troops[0][tr] = parseIntNan(document.getElementById('pbcombatd_'+tr).value);
@@ -13471,16 +13472,29 @@ Tabs.Combat = {
 			t.total[1] += t.troops[1][tr];
 			t.lost[0][tr] = 0;
 			t.lost[1][tr] = 0;
+			t.active[0][tr] = 0;
+			t.active[1][tr] = 0;
 			if(t.troops[0][tr]>0 && parseInt(t.stats[tr][4]) > t.range[0]) t.range[0] = parseInt(t.stats[tr][4]);
 			if(t.troops[1][tr]>0 && parseInt(t.stats[tr][4]) > t.range[1]) t.range[1] = parseInt(t.stats[tr][4]);
-			if((t.troops[0][tr]>0 || t.troops[1][tr]>0) && parseInt(t.stats[tr][3]) > t.speed) t.speed = parseInt(t.stats[tr][3]);
+			if(t.troops[0][tr]>0 && parseInt(t.stats[tr][3]) > t.speed[0]) t.speed[0] = parseInt(t.stats[tr][3]);
+			if(t.troops[1][tr]>0 && parseInt(t.stats[tr][3]) > t.speed[1]) t.speed[1] = parseInt(t.stats[tr][3]);
 		}
 		if(t.range[1]>t.range[0]){
 			t.start = 1; //Attacker starts first if range is longer than defender
-			t.distance = t.range[1];
+			t.range[2] = t.range[1];
 		} else {
-			t.distance = t.range[0];
 			t.start = 0;
+			t.range[2] = t.range[0];
+		}
+		for(var tr in unsafeWindow.unitcost){
+			if(t.troops[0][tr]>0)
+				t.distance[0][tr] = parseInt(t.range[2]/((t.speed[1]/t.speed[0])+1));
+			else
+				t.distance[0][tr] = 0;
+			if(t.troops[1][tr]>0)
+				t.distance[1][tr] = parseInt(t.range[2]/((t.speed[0]/t.speed[1])+1));
+			else
+				t.distance[1][tr] = 0;
 		}
 		t.c_rounds();
 	},
@@ -13492,9 +13506,15 @@ Tabs.Combat = {
 			return;
 		}
 		t.round++;
-		if(t.round>1 && t.distance > 0){
-			t.distance -= t.speed;
-			if(t.distance < 0) t.distance = 0;
+		if(t.round>1){
+			for(var tr in t.distance[0]){
+				t.distance[0][tr] -= t.stats[tr][3];
+				if(t.distance[0][tr] < 1) t.distance[0][tr] = 0;
+			}
+			for(var tr in t.distance[1]){
+				t.distance[1][tr] -= t.stats[tr][3];
+				if(t.distance[1][tr] < 1) t.distance[1][tr] = 0;
+			}
 		}
 		t.c_remainder();
 	},
@@ -13502,69 +13522,92 @@ Tabs.Combat = {
 	c_remainder: function(){  //  Life, Attack, Defense, Speed, Range, Load
 		var t = Tabs.Combat;
 		for(var tr in t.troops[0]){ //Only troops in range are counted
-			if(t.stats[tr][4] >= t.distance)
+			if(t.stats[tr][4] >= (t.distance[0][tr]))
 				t.active[0][tr] = t.troops[0][tr];
 		}
 		for(var tr in t.troops[1]){
-			if(t.stats[tr][4] >= t.distance)
+			if(t.stats[tr][4] >= (t.distance[1][tr]))
 				t.active[1][tr] = t.troops[1][tr];
 		}
 		//Defender
-		var attack = t.c_attack(0);
-		var count = 0;
-		while(attack > 0 && count<t.priority.length){
-			var tr = 'unt'+t.priority[count];
-			var defense = t.c_defense(1,tr);
-			var life = t.c_life(1,tr);
-			if((attack - parseInt(life+defense)) > 0){
-				t.lost[1][tr] += t.troops[1][tr];
-				t.total[1] -= t.troops[1][tr];
-				t.troops[1][tr] = 0;
-				attack -= parseInt(life+defense);
-			} else {
-				var killed = parseInt(attack/(t.stats[tr][0]+t.stats[tr][2]));
-				t.lost[1][tr] += killed;
-				t.troops[1][tr] -= killed;
-				t.total[1] -= killed;
-				attack = 0;
+		for(var tr in t.active[0]){
+			if(t.active[0][tr] < 1) continue;
+			var range = t.stats[tr][4] - t.distance[0][tr];
+			// GM_log(range);
+			var attack = t.c_attack(0,tr);
+			// GM_log('range 0 '+attack);
+			var count = 0;
+			while(attack > 0 && count<t.priority.length){
+				var trr = 'unt'+t.priority[count];
+				if((t.troops[1][trr] < 1) || (range < t.distance[1][trr])){
+					count++;
+					continue;
+				}
+				// GM_log('1 '+tr);
+				var defense = t.c_defense(1,trr);
+				var life = t.c_life(1,trr);
+				if((attack - parseInt(life+defense)) > 0){
+					t.lost[1][trr] += t.troops[1][trr];
+					t.total[1] -= t.troops[1][trr];
+					t.troops[1][trr] = 0;
+					attack -= parseInt(life+defense);
+				} else {
+					var killed = parseInt(attack/(t.stats[trr][0]+t.stats[trr][2]));
+					// GM_log(t.active[1][tr]+' '+killed);
+					t.lost[1][trr] += killed;
+					t.troops[1][trr] -= killed;
+					t.total[1] -= killed;
+					attack = 0;
+				}
+				// GM_log(tr+' '+t.lost[1][tr]);
+				count++;
 			}
-			count++;
 		}
+		
 		//Attacker
-		var attack = t.c_attack(1);
-		var count = 0;
-		while(attack > 0 && count<t.priority.length){
-			var tr = 'unt'+t.priority[count];
-			var defense = t.c_defense(0,tr);
-			var life = t.c_life(0,tr);
-			if((attack - parseInt(life+defense)) > 0){
-				t.lost[0][tr] += t.troops[0][tr];
-				t.total[0] -= t.troops[0][tr];
-				t.troops[0][tr] = 0;
-				attack -= parseInt(life+defense);
-			} else {
-				var killed = parseInt(attack/(t.stats[tr][0]+t.stats[tr][2]));
-				t.lost[0][tr] += killed;
-				t.troops[0][tr] -= killed;
-				t.total[0] -= killed;
-				attack = 0;
+		for(var tr in t.active[1]){
+			if(t.active[1][tr] < 1) continue;
+		// GM_log(t.distance[1][tr]);
+			var attack = t.c_attack(1,tr);
+			var range = t.stats[tr][4] - t.distance[1][tr];
+			// GM_log('range 1 '+attack);
+			var count = 0;
+			while(attack > 0 && count<t.priority.length){
+				var trr = 'unt'+t.priority[count];
+				if((t.troops[0][trr] < 1) || (range < t.distance[0][trr])){
+					count++;
+					continue;
+				}
+				// GM_log('1 '+tr);
+				var defense = t.c_defense(0,trr);
+				var life = t.c_life(0,trr);
+				if((attack - parseInt(life+defense)) > 0){
+					t.lost[0][trr] += t.troops[0][trr];
+					t.total[0] -= t.troops[0][trr];
+					t.troops[0][trr] = 0;
+					attack -= parseInt(life+defense);
+				} else {
+					var killed = parseInt(attack/(t.stats[trr][0]+t.stats[trr][2]));
+					GM_log(t.active[0][tr]+' '+killed);
+					t.lost[0][trr] += killed;
+					t.troops[0][trr] -= killed;
+					t.total[0] -= killed;
+					attack = 0;
+				}
+				// GM_log(tr+' '+t.lost[0][tr]);
+				count++;
 			}
-			count++;
 		}
 		t.c_rounds();
 	},
 	
-	c_attack: function(side){
+	c_attack: function(side,tr){
 		var t = Tabs.Combat;
-		var attack = 0;
-		for(var tr in t.active[side]){
-			attack += parseInt(t.stats[tr][1] * t.active[side][tr]);
-		}
-		return parseInt(attack);
+		return parseInt(t.stats[tr][1] * t.active[side][tr]);
 	},
 	c_defense: function(side,tr){
 		var t = Tabs.Combat;
-		return parseInt(t.stats[tr][3] * t.troops[side][tr]);
+		return parseInt(t.stats[tr][2] * t.troops[side][tr]);
 	},
 	c_life: function(side,tr){
 		var t = Tabs.Combat;
