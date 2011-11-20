@@ -1,6 +1,12 @@
 REVISION HISTORY:
 ----------------
 
+20111120a
+   Fixed to work with kabam standalone site
+   Fixed to work with 8th city
+   Added update now button
+   Fixed gifts tab "parse error page 1" and "no gifts found"
+   Added combat tab (Formula still needs improvement)
 20111109a
    Fixed auto delete raid reports not working
    Fixed gifts tab "Parse page 1 error"
