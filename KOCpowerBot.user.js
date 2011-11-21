@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111120a
+// @version        20111120b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -153,6 +153,10 @@ var TrainOptions = {
   SelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
   Resource   : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true},
   UseIdlePop : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true},
+  CraftingRunning : false,
+  CraftIntervallMin : 3,
+  CraftingActif : {3000:false,3001:false,3002:false,3003:false,3004:false,3005:false,3006:false,3007:false,3008:false,3009:false,3010:false,3011:false},
+  CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0,},
 };
 
 var AttackOptions = {
@@ -6449,7 +6453,315 @@ cm.MARCH_TYPES = {
   show : function (){
   },
  }; 
- 
+ /*************************** Auto Craft Tab *************************************/
+Tabs.AutoCraft = {
+	tabOrder: 20, //CHECKTHIS ?
+	tabLabel: "Auto Craft",
+	myDiv: null,
+	timer: null,
+	craftIntervall  : TrainOptions.CraftIntervallMin,
+	crafting: [],
+	myDiv: null,
+	timer: null,
+	timerStat: null,
+	numcity :-1,
+
+	init: function(div){
+        var t = Tabs.AutoCraft;
+        t.myDiv = div;   
+        t.crafting = {
+	            running: TrainOptions.CraftingRunning,
+        };
+        var m = '<DIV id=pbCraftingDiv class=pbStat>AUTO CRAFTING - SETTINGS</div><TABLE id=pbcraftingfunc width=100% height=0% class=pbTab><TR><TD width="10%">Intervall: <input type=text value="'+TrainOptions.CraftIntervallMin+'" size=2  maxlength=2 id=pbCraftIntervall> Minute(s) <b>(</b><span class=boldRed>need Refresh</span><b>)</b></td>';
+        if (t.crafting.running == false) {
+	            m += '<TD  width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = OFF"></td>';
+	 }	        else {
+	            m += '<TD width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = ON"></td>';
+	            t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
+        }
+        m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr></table></div>';
+        m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
+
+        m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td></tr>"; 
+        
+        for(var d=0;d<12;d++) {
+         if (d!=2) {
+	        var h=parseInt(3000+d);
+	        var qte=0;
+	        if (parseInt(Seed.items["i"+h])>0) qte=parseInt(Seed.items["i"+h]);
+	        m += "<tr><td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+qte+"</span></center></td>";
+       	
+         	m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseInt(TrainOptions.CraftingNb[h]) +"'></td>";
+        m += "";
+        	m += "</tr>";
+         }
+        }
+        m+="</table><b>Note:</b> If you complete more than one Item, the creation will be done randomly. <BR> <b>Important: Min. 50 000 Aethestones and Refresh to Update the Inventar!</b> ";
+          m += '<DIV id=pbCraftingStats class=pbStat>AEHTERSTONES AND CRAFTING TIME</div><span id="CraftStat"></span>';
+
+       t.myDiv.innerHTML = m;
+       
+       window.addEventListener('unload', t.onUnload, false);
+       
+	document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
+	document.getElementById("pbCraftRunning").addEventListener ('click', function (){t.toggleStateRunning(this)}, false);     
+	t.changeCraft ('pbCraftIntervall', 'CraftIntervallMin')
+  }, 
+  	changeCraft : function (valueId, optionName, callOnChange){
+	var t = Tabs.AutoCraft;
+	var e = document.getElementById(valueId);
+	e.value = TrainOptions[optionName];
+	e.addEventListener ('change', eventHandler, false);
+	function eventHandler (){
+	  TrainOptions[optionName] = this.value;
+	  saveTrainOptions();
+	  if (callOnChange)
+		callOnChange (this.value);
+	  }
+	},
+  updateStat: function() {
+   var t = Tabs.AutoCraft;
+   var rownum = 0;
+   function _row (name, row, noTotal, typee){
+         if (rownum++ % 2)
+           style = '';
+         else
+           style = ' style = "background: #e8e8e8"';
+         var tot = 0;
+         var m = [];
+         m.push ('<TR style="background: #fff" align=right');
+         m.push (style);
+         m.push ('><TD');
+         m.push (style);
+         m.push ('><B>');
+         m.push (name);
+         m.push ('</td>');
+         if (noTotal){
+           m.push ('<TD');
+           m.push (style);
+           m.push ('>&nbsp;</td>');
+         } else {
+           for (i=0; i<row.length; i++)
+             tot += row[i];
+           m.push ('<TD style="background: #ffc">');
+            if (tot<0) {
+             m.push ("<SPAN class=boldRed>"+addCommas(tot)+"</span>");
+            } else {
+             m.push (addCommas(tot));
+            }
+           //}
+           m.push ('</td>');
+         }
+         for (i=0; i<row.length; i++){
+           m.push ('<TD');
+           m.push (style);
+           m.push ('>');
+           if (row[i]<50000) {
+	                m.push ("<SPAN class=boldRed>"+addCommas(row[i])+"</span>");
+	   } else {
+	                m.push (addCommas(row[i]));
+           }
+           m.push ('</td>');
+         }
+   
+         m.push ('</tr>');
+         return m.join('');
+       }
+
+   clearTimeout(t.timerStat);
+   var str="<TABLE class=pbTabOverview cellpadding=0 cellspacing=0><TR  align=center><TD width=55 align=center></td><TD width=88 style='background: #ffc; font-size:150%' align=center><SPAN class=oohfancy>TOTAL</SPAN></td>";
+   for(i=0; i<Cities.numCities; i++) {
+            cityID = 'city'+ Cities.cities[i].id;
+         
+            str += "<TD width=81><SPAN class=oohfancy>"+ Cities.cities[i].name.substring(0,10) +"</SPAN></td>";
+          
+   }
+   rows = [];
+   var now = unixTime();
+   rows[0] = [];
+   for(i=0; i<Cities.numCities; i++) {
+          cityID = 'city'+ Cities.cities[i].id;
+          rows[0][i] = parseInt(Seed.citystats[cityID].gold[0]);
+        }
+        for (r=1; r<6; r++){
+          rows[r] = [];
+          for(i=0; i<Cities.numCities; i++) {
+            cityID = 'city'+ Cities.cities[i].id;
+            if (r==5)
+             rows[r][i] = parseInt(Seed.resources[cityID]['rec'+r][0]);
+            else
+             rows[r][i] = parseInt(Seed.resources[cityID]['rec'+r][0] / 3600);
+            
+          }
+         
+      }
+      str += _row ('<img height=18 src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png>', rows[5], false, 0);
+      str +='<tr style="background: #e8e8e8" align=right><td><img height=20 src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/items/70/3.jpg title="Crafting"></b></td><td>&nbsp;</td>';
+                for(i=0; i<Cities.numCities; i++) {
+                 var totTime = 0;
+                 if (Seed.queue_craft["city" + Cities.cities[i].id].length > 0) {
+                  var q=Seed.queue_craft["city" + Cities.cities[i].id][0];
+                  var totTime = 0;
+                  totTime = q.craftingEtaUnixTime - now;
+                  if (totTime < 0)
+                    totTime = 0;
+                  if (getCityBuilding(Cities.cities[i].id,20).count>0 && totTime == 0)
+                    affuichage = '<SPAN class=boldRed><B>'+ timestr(totTime) +'</b></span>';
+                  else
+                    affuichage = timestr(totTime);
+                  
+                  str +="<td><span onclick='Crafting("+Cities.cities[i].id+");'>"+ affuichage + "</span></td>";  
+           
+                 } else {
+                 affuichage = timestr(totTime);
+                 if (getCityBuilding(Cities.cities[i].id,20).count>0)
+                    affuichage = '<SPAN class=boldRed><B>'+ timestr(totTime) +'</b></span>';
+                    
+                 str +="<td><span onclick='Crafting("+Cities.cities[i].id+");'>"+affuichage+"</span></td>";
+                 }
+                }    
+             str +="</tr>";    
+             
+         document.getElementById("CraftStat").innerHTML=str;
+         t.timerStat = setTimeout(function() { t.updateStat(); }, 2000);
+         
+         
+  },
+  updateCraftnb : function() {
+   var t = Tabs.AutoCraft;
+   for(var d=0;d<12;d++) {
+    var h=parseInt(3000+d);
+     if (document.getElementById("Craft_nb_" +h)) {
+      document.getElementById("Craft_nb_"+h).value=parseInt(TrainOptions.CraftingNb[h]) ;
+      }
+   
+   }
+  },
+  saveCraftState : function() {
+   var t = Tabs.AutoCraft;
+   TrainOptions.CraftingRunning =  t.crafting.running;
+    for(var d=0;d<12;d++) {
+      var h=parseInt(3000+d);
+      if (document.getElementById("Craft_nb_" +h)) TrainOptions.CraftingNb[h] = document.getElementById("Craft_nb_"+h).value;
+    }
+    saveTrainOptions();
+  },
+  toggleStateRunning: function(obj){
+  	var t = Tabs.AutoCraft;
+  	obj = document.getElementById('pbCraftRunning');
+          if (t.crafting.running == true) {
+              t.crafting.running = false;
+              t.saveCraftState();
+              if (obj) obj.value = "Crafting = OFF";
+              clearInterval(t.timer);
+          }
+          else {
+              t.crafting.running = true;
+              t.saveCraftState();
+              if (obj) obj.value  = "Crafting = ON";
+              t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
+          }
+          t.updateCraftnb();
+    },
+    Start: function() {
+     var t = Tabs.AutoCraft;
+     if(!TrainOptions.CraftingRunning) {
+      clearInterval(t.timer);
+      return;
+     }
+     if (t.numcity<Cities.numCities-1) {
+           t.numcity++;
+         } else {
+          t.numcity=0; 
+     }
+     var c=t.numcity;
+     var cityId=Cities.cities[c].id;
+     
+     var ret=getCityBuilding(cityId,20).count;
+     if (ret==0) { 
+       t.Start();
+       return;
+     }
+     if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<50000) 
+            return;
+     var tableau = [];
+     for(var d=0;d<12;d++) {
+           var h=parseInt(3000+d);
+           if (parseInt(TrainOptions.CraftingNb[h])>0) {
+            tableau.push (h);
+           }
+     }
+     var itemId = tableau[Math.floor(Math.random()*tableau.length)] 
+     var recipeId = parseInt(itemId) - 3000 + 1;
+     var i=Seed.queue_craft["city"+cityId];
+     if(i.length>0) {
+          var q=i[0];
+     	  var totTime = 0;
+     	  var now = unixTime();
+          totTime = q.craftingEtaUnixTime - now;
+          if (totTime > 0) {
+           return;
+          }
+     } 
+     t.CraftingItem(cityId,  itemId, recipeId);
+    },
+    CraftingItem: function (currentcity, itemId, recipeId) {
+      var t = Tabs.AutoCraft;
+      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+          params.action="craft";
+          params.ctrl="Crafting";
+          params.cityId=currentcity;
+          params.insurance=false;
+     	  params.itemId=itemId;
+     	  params.recipeId=recipeId;
+     	  params.categoryId=1;
+      new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, { method: "post", parameters: params,loading: true,
+          onSuccess: function (transport) {
+              var o=eval("("+transport.responseText+")");
+              if(o.ok===true){
+               if (o.status=="error") {
+			   
+               } else if(o.status=="failure"){
+    	        setTimeout(function() {
+    	         t.CraftingItem(currentcity,  itemId, recipeId);
+    	        }, 5000);
+     	       } else if (o.status=="success"){
+				//actionLog ('<b>'+culang.auto+' '+culang.crafting+'</b>:  <span class=boldGreen>OK</span> #'+ (TrainOptions.CraftingNb[itemId] -1)+' ');
+     	        TrainOptions.CraftingNb[itemId] =  TrainOptions.CraftingNb[itemId] -1;
+     	        saveTrainOptions();
+     	        t.updateCraftnb();
+       		if(!Seed.queue_craft["city"+currentcity]) {
+    		 Seed.queue_craft["city"+currentcity]=[];
+    		}
+         	var n={};
+         	n.recipeId=recipeId;
+         	n.craftingUnixTime=o.time.startTime;
+         	n.craftingEtaUnixTime=o.time.endTime;
+         	n.craftingId=o.craftingId;
+         	n.categoryId=null;
+         	n.recipeIndex=null;
+         	unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
+         	t.Start()
+               }
+              }
+            },
+            onFailure: function () {    }
+       });
+ },
+    show : function (){
+		var t = Tabs.AutoCraft;
+		clearTimeout(t.timerStat);
+		t.updateStat();
+    },
+    hide: function(){
+		var t = Tabs.AutoCraft;
+		clearTimeout(t.timerStat);
+      },
+	  onUnload: function(){
+		  var t = Tabs.AutoCraft;
+		   t.saveCraftState();
+    },
+};
  /*********************************  Barbing Tab - now the Dark Forest Tab ***********************************/
 Tabs.Barb = {
   tabLabel: 'AutoDF',
