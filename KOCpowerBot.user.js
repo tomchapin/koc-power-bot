@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111120b
+// @version        20111120c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20111120a';
+var Version = '20111120c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -675,7 +675,8 @@ Tabs.tower = {
   init: function(div){
 	var t = Tabs.tower;
     t.myDiv = div;
-    
+    unsafeWindow.Crafting = t.Crafting;
+unsafeWindow.CraftingItem = t.CraftingItem;
     if (GM_getValue ('towerMarches_'+getServerId()) != null)
       GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
     // t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
@@ -798,7 +799,98 @@ Tabs.tower = {
     }	
     setInterval (t.eachSecond, 2000);
   },      
+ CraftingItem : function (obj, currentcity, itemId, recipeId, categoryId) {
+  if (obj) obj.value="Crafting...";
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.action="craft";
+        params.ctrl="Crafting";
+        params.cityId=currentcity;
+        params.insurance=false;
+		params.itemId=itemId;
+		params.recipeId=recipeId;
+		params.categoryId=categoryId;
+ 
+        new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
+                      method: "post",
+       		    parameters: params,
+      	onSuccess: function (transport) {
+          var o=eval("("+transport.responseText+")");
+          if(o.ok===true){
+           if (o.status=="error") {
+            alert("Crafting Error:" + o.errorMessage);
+            if (obj) obj.value="Craft";
+           } else if(o.status=="failure"){
+	     alert(""+culang.craftfail+"");
+	     if (obj) obj.value="Craft";
+	   } else if (o.status=="success"){
+	     if (obj) obj.value="Craft OK";
+		if(!Seed.queue_craft["city"+currentcity]) {
+		 Seed.queue_craft["city"+currentcity]=[];
+		}
+     		var n={};
+     		n.recipeId=recipeId;
+     		n.craftingUnixTime=o.time.startTime;
+     		n.craftingEtaUnixTime=o.time.endTime;
+     		n.craftingId=o.craftingId;
+     		n.categoryId=null;
+     		n.recipeIndex=null;
+     		unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
+     	  }
+        } 
+        t.Crafting(currentcity);
+        },
+         onFailure: function () {
+          alert(""+culang.craftfail+"");
+          t.Crafting(currentcity);
+         }
+        });
+ },
+ Crafting : function (currentcity) {
+   var messagebody ="";
+   var ret=getCityBuilding(currentcity,20).count;
+   if (ret>0) {
+     var texte="";
+     var i=Seed.queue_craft["city"+currentcity];
+     if(i.length>0) {
+      var q=i[0];
+      var totTime = 0;
+      var now = unixTime();
+      totTime = q.craftingEtaUnixTime - now;
+      if (totTime > 0) {
+         texte= "in work...";
+      }
+     }
+    
+       messagebody += "<div class=pbStat>CRAFTING</div><TABLE width=95% border=0 align=center><tr><td colspan=8><b></td></tr>";
+       messagebody += "<tr><td colspan=2>Items</td><td>Inventar</td><td>Action</td></tr>";       
+       for(var d=0;d<12;d++) {
+        if (d!=2) {
+         var h=parseInt(3000+d);
+         var qte=0;
+         if (parseInt(Seed.items["i"+h])>0) qte=parseInt(Seed.items["i"+h]);
+         messagebody += "<tr><td><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></td><td>"+unsafeWindow.itemlist["i"+h].name+"</td><td><center><b>"+qte+"</td>";
+         if (texte!="")
+           messagebody += "<td>in work...</td>";
+         else
+           messagebody += "<td><input type=button value='Craft' onclick='CraftingItem(this,"+currentcity+","+h+","+(d+1)+",1)'></td>";
+         messagebody += "</tr>";
+        }
+       }
+       messagebody+="</table>";  
+   
+  } else {
+   messagebody += "<BR><b><center>no Fey in City!</center></b>";
+  }
+  if (t.PopCrafting == null) {
+     	t.PopCrafting = new CPopup('PopCrafting', 0, 0, 740, 300, true, function() {clearTimeout (1000);});
+     	t.PopCrafting.centerMe (mainPop.getMainDiv());
+     	}
+     	var m = '<DIV style="max-height:465px; height:465px; overflow-y:auto">';
+     	m+= messagebody + '</div>';
+     	t.PopCrafting.getMainDiv().innerHTML = m;
+	t.PopCrafting.show(true);  
 
+ },
   show : function (){
   },
   
@@ -6748,6 +6840,7 @@ Tabs.AutoCraft = {
             onFailure: function () {    }
        });
  },
+
     show : function (){
 		var t = Tabs.AutoCraft;
 		clearTimeout(t.timerStat);
@@ -6762,6 +6855,9 @@ Tabs.AutoCraft = {
 		   t.saveCraftState();
     },
 };
+
+ 
+  
  /*********************************  Barbing Tab - now the Dark Forest Tab ***********************************/
 Tabs.Barb = {
   tabLabel: 'AutoDF',
