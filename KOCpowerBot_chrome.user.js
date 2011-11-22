@@ -11,12 +11,10 @@
 // @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
 
-// var isChrome = (navigator.userAgent.toLowerCase().indexOf('chrome') > -1);
-var isChrome = true;
+var isChrome = (navigator.userAgent.toLowerCase().indexOf('chrome') > -1);
 
 var ChromeFuncs = {
-// isChrome:navigator.userAgent.toLowerCase().indexOf('chrome') > -1,
-isChrome:true,
+isChrome:navigator.userAgent.toLowerCase().indexOf('chrome') > -1,
 valuesCache:{},
 GetValuesCache:function(doneFunc) {
 	if(!this.isChrome) {
@@ -123,7 +121,8 @@ if(!this.GM_log || isChrome) {
 	}
 	//UnsafeWindow function from Enzyme (http://userscripts.org/users/367424)
 	var div = document.createElement("div");
-	div.setAttribute("onclick", "return window;");
+	// div.setAttribute("onclick", "return window;");
+	div.onclick = function(){return window;}
 	unsafeWindow = div.onclick();
 	//End copy
 }
@@ -13134,7 +13133,8 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     this.div.style.backgroundColor='#ddd';
   
   this.slider = document.createElement ('div');
-  this.slider.setAttribute ('style', 'position:relative;');
+  // this.slider.setAttribute ('style', 'position:relative;');
+  this.slider.style.position = 'relative';
   this.slider.style.height = sliderHeight + 'px'
   this.slider.style.top = sliderTop + 'px';
   this.slider.style.width = this.sliderWidth +'px';
@@ -13145,14 +13145,21 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     this.slider.style.backgroundColor='#fff';
   
   this.sliderL = document.createElement ('div');
-  this.sliderL.setAttribute ('style', 'width:100px; height:100%; position:relative; ');
+  // this.sliderL.setAttribute ('style', 'width:100px; height:100%; position:relative; ');
+  this.sliderL.style.width = '100px';
+  this.sliderL.style.height = '100%';
+  this.sliderL.style.position = 'relative';
   this.sliderL.className = classPrefix +'Part';
   this.sliderL.draggable = true;
   if (noClass)
     this.sliderL.style.backgroundColor='#0c0';
   
   this.knob = document.createElement ('div');
-  this.knob.setAttribute ('style', 'width:3px; position:relative; left:0px; background-color:#222');
+  // this.knob.setAttribute ('style', 'width:3px; position:relative; left:0px; background-color:#222');
+  this.knob.style.width = '3px';
+  this.knob.style.position = 'relative';
+  this.knob.style.left = '0px';
+  this.knob.style['background-color'] = '#222';
   this.knob.style.height = height +'px';
   this.knob.style.top = (0-sliderTop) +'px';
   this.knob.className = classPrefix +'Knob';
@@ -13243,7 +13250,8 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   else
     document.body.appendChild (div);
   for (k in attrs)
-    this.player.setAttribute(k, attrs[k]);
+    // this.player.setAttribute(k, attrs[k]);
+	this.player[k] = attrs[k];
        
   this.setVolume = function (chanNum, vol){
     if (!self.isLoaded)
