@@ -119,6 +119,14 @@ if(!this.GM_log || isChrome) {
 	GM_listValues = function(){
 		return ChromeFuncs.browser_listValues();
 	}
+	GM_addStyle = function(css) {
+        var style = document.createElement('style');
+        style.textContent = css;
+        document.getElementsByTagName('head')[0].appendChild(style);
+    }
+	GM_openInTab = function(url) {
+        return window.open(url, "_blank");
+    }
 	//UnsafeWindow function from Enzyme (http://userscripts.org/users/367424)
 	var div = document.createElement("div");
 	// div.setAttribute("onclick", "return window;");
@@ -10618,7 +10626,8 @@ function readChatOptions (){
 
 function readCrestOptions (){
   var serverID = getServerId();
-  s = GM_getValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID);
+  // s = GM_getValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID);
+  s = GM_getValue ('CrestOptions_' +serverID);
   if (s != null){
     opts = JSON2.parse (s);
     for (k in opts){
