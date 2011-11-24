@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111120c
+// @version        20111124a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20111120c';
+var Version = '20111124a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4030,8 +4030,9 @@ Tabs.Test = {
      
   init : function (div){
     var t = Tabs.Crest;
-    setInterval(t.FirstRound,10000);
+    // setInterval(t.FirstRound,10000);
     setInterval(t.sendCrestReport, 1*60*1000);
+    setTimeout(function(){ t.Rounds(1,0);}, 5*1000);
     t.myDiv = div;
     var selbut=0;
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
@@ -4154,6 +4155,7 @@ Tabs.Test = {
             now = now.toFixed(0);
             Options.LastCrestReport = now;
             saveCrestOptions();
+			setTimeout(function(){ t.Rounds(1,0);}, 5*1000);
         }
     },
     
@@ -4403,9 +4405,152 @@ Tabs.Test = {
   		         onFailure: function () {}
   		 });
   		 },
-  		 
-  		 
-  	abandonWilderness: function(tid,x,y,cid){
+  	
+
+	Rounds: function(r, retry){
+		var t = Tabs.Crest;
+		if (!CrestOptions.Running) return;
+		cityID = 'city' + CrestOptions.CrestCity;
+		retry++;
+		logit('autocrest '+r+' '+retry);
+		if(retry>50){
+			reloadKOC(); //Reload if too many errors
+		}
+		
+		for (var k in Seed.wilderness[cityID] ){
+		   if (Seed.wilderness[cityID][k]['xCoord']==CrestOptions.X && Seed.wilderness[cityID][k]['yCoord']==CrestOptions.Y && t.error_code!=401) {
+			 t.abandonWilderness(Seed.wilderness[cityID][k]['tileId'],Seed.wilderness[cityID][k]['xCoord'],Seed.wilderness[cityID][k]['yCoord'],CrestOptions.CrestCity,t.Rounds,retry);
+			 return;
+		   }
+		}
+		
+		if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat){
+			setTimeout(function(){ t.Rounds(r,retry);},20000);
+			return;
+		}
+		
+		t.getAtkKnight(cityID);
+      slots=0;
+       for (z in Seed.queue_atkp[cityID]){
+             slots++;
+       }
+       if  (Seed.queue_atkp[cityID].toSource() == "[]") slots=0;
+       t.getRallypointLevel(cityID);     
+       if ((t.rallypointlevel) <= slots){
+			setTimeout(function(){ t.Rounds(r,retry);},20000);
+			return;
+		}
+       // if (t.rallypointlevel == slots) return;
+       
+       if  (t.knt.toSource() == "[]"){
+			setTimeout(function(){ t.Rounds(r,retry);},20000);
+			return;
+		} 
+       var kid = t.knt[0].ID;
+       
+       var now = new Date().getTime()/1000.0;
+       now = now.toFixed(0);
+		if (now > (parseInt(CrestOptions.lastRoundTwo) + 300)) {
+			r=1;
+		}
+		
+		switch(r){
+			case 1:
+				if ((t.rallypointlevel-slots) < 2){
+					setTimeout(function(){ t.Rounds(r,retry);},20000);
+					return;
+				}
+				var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+				params.cid=CrestOptions.CrestCity;
+				params.type=4;
+				params.kid=kid;
+				params.xcoord = CrestOptions.X;
+				params.ycoord = CrestOptions.Y;
+				if (now < (parseInt(CrestOptions.lastRoundTwo) + 300)) { 
+					params.u2= (CrestOptions.R1MM / 10);
+					params.u2 = params.u2.toFixed(0);	
+					if (params.u2 < (CrestOptions.R1MM / 10)) params.u2++;
+				}	
+				else{
+					params.u2= CrestOptions.R1MM;
+					params.u10=CrestOptions.R1Ball;
+					params.u12=CrestOptions.R1Cat;
+				}
+				t.sendMarch(params,t.Rounds,r,retry);
+				break;
+			default:
+				var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+				params.cid=CrestOptions.CrestCity;
+				params.type=4;
+				params.kid=kid;
+				params.xcoord = CrestOptions.X;
+				params.ycoord = CrestOptions.Y;
+				params.u2=CrestOptions.R2MM;
+				params.u4=CrestOptions.R2Pike;
+				params.u5=CrestOptions.R2Sword;
+				params.u6=CrestOptions.R2Arch;
+				params.u10=CrestOptions.R2Ball;
+				params.u11=CrestOptions.R2Ram;
+				params.u12=CrestOptions.R2Cat;
+				t.sendMarch(params,t.Rounds,r,retry);
+				break;
+				
+		
+		
+		
+		}
+	
+	},
+		
+	sendMarch: function(p,callback,r,retry){
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+			 method: "post",
+			 parameters: p,
+			 loading: true,
+			 onSuccess: function (transport) {
+			 var rslt = eval("(" + transport.responseText + ")");
+			 if (rslt.ok) {
+			 var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+			 var ut = unsafeWindow.unixtime();
+			 var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+			 var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+			 for(i = 0; i <= unitsarr.length; i++){
+				if(p["u"+i]){
+				unitsarr[i] = p["u"+i];
+				}
+			 }
+			 var currentcityid = p.cid;
+			 unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, p.xcoord, p.ycoord, unitsarr, p.type, p.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+			 unsafeWindow.update_seed(rslt.updateSeed)
+			 if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+			 GM_log(r);
+			 if(r==1){
+				Options.Crest1Count++;
+				r = 2;
+			} else{
+			   Options.Crest2Count++;
+			}
+				var now = new Date().getTime()/1000.0;
+               now = now.toFixed(0);
+               CrestOptions.lastRoundTwo = now;
+			 Options.CrestLevel = rslt.tileLevel;
+			 Options.CrestType = rslt.tileType;
+			 saveCrestOptions();
+			 setTimeout (function(){callback(r,0);}, 5000);
+		   } else {
+				//setTimeout (function(){t.FirstRound();}, 5000);
+			 //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+			if(rslt.user_action){
+				new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
+				setTimeout (function(){callback(r,retry);}, 1*60*1000);
+			}
+			 setTimeout (function(){callback(r,retry);}, 5000);
+			 }
+			 },
+			 onFailure: function () {}
+  		 });
+	},
+  	abandonWilderness: function(tid,x,y,cid,callback,retry){
       var t = Tabs.Crest;
       if (!CrestOptions.Running) return;
       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -4420,10 +4565,8 @@ Tabs.Test = {
   		         method: "post",
   		         parameters: params,
   		         loading: true,
-  		         onSuccess: function (transport) {
-  		         var rslt=eval("("+transport.responseText+")");
-  		         
-  		         
+  		         onSuccess:function(transport){
+				var rslt=eval("("+transport.responseText+")");
 				  if (rslt.ok) {
 				  	 t.error_code = 0;
 				     CrestOptions.RoundOne = true;
@@ -4454,12 +4597,15 @@ Tabs.Test = {
   		         	  } else{
   		         	  	delete Seed.wilderness["city"+cityID]["t"+tileid];
   		         	  }
+					  setTimeout (function(){callback(1,0);}, 10000);
                } else {
                		if (rslt.error_code != 401) {
                		    t.error_code = rslt.error_code; 
-               			setTimeout (function(){t.abandonWilderness(tid,x,y,cid);}, 5000);
+               			// setTimeout (function(){t.abandonWilderness(tid,x,y,cid);}, 5000);
                		}
+					setTimeout (function(){callback(1,retry);}, 10000);
   		        }
+				
   		         },
   		         onFailure: function () {}
   		 });
