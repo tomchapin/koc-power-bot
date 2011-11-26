@@ -1289,7 +1289,9 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     msg += '.';
     if ( city.tileId == m.toTileId ){
       var emb = getCityBuilding(m.toCityId, 8);
-      if (emb.count > 0){
+      if (emb.count == 0)
+      msg += ' My embassy has not been constructed in this kingdom.  Do not attempt to reinforce.';
+      else {
         var availSlots = emb.maxLevel;
         for (k in Seed.queue_atkinc){
           if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){
