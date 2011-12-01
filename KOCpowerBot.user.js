@@ -4299,6 +4299,8 @@ Tabs.Test = {
         	params.u2= (CrestOptions.R1MM / 10);
         	params.u2 = params.u2.toFixed(0);	
         	if (params.u2 < (CrestOptions.R1MM / 10)) params.u2++;
+          params.u10=CrestOptions.R1Ball;
+          params.u12=CrestOptions.R1Cat;
         }	
   		else params.u2= CrestOptions.R1MM;
   		params.u10=CrestOptions.R1Ball;
@@ -4472,6 +4474,8 @@ Tabs.Test = {
 					params.u2= (CrestOptions.R1MM / 10);
 					params.u2 = params.u2.toFixed(0);	
 					if (params.u2 < (CrestOptions.R1MM / 10)) params.u2++;
+          params.u10=CrestOptions.R1Ball;
+          params.u12=CrestOptions.R1Cat;
 				}	
 				else{
 					params.u2= CrestOptions.R1MM;
