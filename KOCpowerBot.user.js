@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111124a
+// @version        20111208a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20111124a';
+var Version = '20111208a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1307,6 +1307,12 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         {
             msg+= ' My troops are DEFENDING!';
         }
+            msg+= ' My technology levels are: Fl Lv' + parseInt(Seed.tech.tch13)
+             + ', HP Lv'+ parseInt(Seed.tech.tch15)
+             + ', PE Lv'+ parseInt(Seed.tech.tch8)
+             + ', MA Lv'+ parseInt(Seed.tech.tch9)
+             + ', MM Lv'+ parseInt(Seed.tech.tch11)
+             + ', AH Lv'+ parseInt(Seed.tech.tch12);
       }
     }
 	t.sendalert(m);
