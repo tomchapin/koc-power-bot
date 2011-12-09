@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111208a
+// @version        20111209a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20111208a';
+var Version = '20111209a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -201,6 +201,15 @@ var ChatOptions = {
   password                  : '',
   Chatpassenable            : false,
 };
+
+var CombatOptions = {
+	research : [{tch8:0,tch9:0,tch13:0,tch15:0}, //Poison Edge, Metal Alloys, Fletching, Healing Potions
+	            {tch8:0,tch9:0,tch13:0,tch15:0}],
+	knt      : [50,50],
+	guardian : [['wood',0],['wood',0]],
+	ratio    : [{unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}},
+	            {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
+}
 
 var nHtml={
   FindByXPath:function(obj,xpath,nodetype) {
@@ -454,6 +463,7 @@ function pbStartup (){
   readChatOptions();
   readCrestOptions();
   readTrainingOptions();
+  readCombatOptions();
   readAttackOptions();
   setCities();
 
@@ -2218,11 +2228,6 @@ Tabs.build = {
 	bot_gethelp: function (f, currentcityid) {
 		var t = Tabs.build;
 		var city = t.getCityNameById(currentcityid);
-		for (i=0;i<Seed.cities.length;i++) {
-			if (Seed.cities[i][1]==city) var cityNum=i;
-		}
-		cityNum++;
-		unsafeWindow.citysel_click(document.getElementById('citysel_'+ (cityNum)));
 	  var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 	  params.bid = f;
 	  params.ctrl = 'AskForHelp';
@@ -3038,6 +3043,7 @@ Tabs.Search = {
 		return;
 	}
 	var rallypointlevel = t.getRallypoint(city.id);
+	if(rallypointlevel == 12) rallypointlevel = 11;
 	var slots = 0;
        for (z in Seed.queue_atkp['city'+city.id]){
              slots++;
@@ -4242,9 +4248,9 @@ Tabs.Test = {
   getRallypointLevel: function(cityId){
     var t = Tabs.Crest;
     for (var o in Seed.buildings[cityId]){
-  	var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-  	var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-  	if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
+		var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+		var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+		if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
      }
   },
   
@@ -4284,8 +4290,11 @@ Tabs.Test = {
              slots++;
        }
        if  (Seed.queue_atkp[cityID].toSource() == "[]") slots=0;
-       t.getRallypointLevel(cityID);     
-       if ((t.rallypointlevel) <= slots)return;
+       t.getRallypointLevel(cityID);
+	   if(t.rallypointlevel == 12)
+		if((t.rallypointlevel-1) <= slots) return;
+	   else
+		if ((t.rallypointlevel) <= slots) return;
        
        if  (t.knt.toSource() == "[]") {return;}  
        var kid = t.knt[0].ID;
@@ -4305,8 +4314,6 @@ Tabs.Test = {
         	params.u2= (CrestOptions.R1MM / 10);
         	params.u2 = params.u2.toFixed(0);	
         	if (params.u2 < (CrestOptions.R1MM / 10)) params.u2++;
-          params.u10=CrestOptions.R1Ball;
-          params.u12=CrestOptions.R1Cat;
         }	
   		else params.u2= CrestOptions.R1MM;
   		params.u10=CrestOptions.R1Ball;
@@ -4363,7 +4370,10 @@ Tabs.Test = {
        }
        if  (Seed.queue_atkp[cityID].toSource() == "[]") slots=0;
        t.getRallypointLevel(cityID);
-       if ((t.rallypointlevel) <= slots)return;
+       if(t.rallypointlevel == 12)
+		if((t.rallypointlevel-1) <= slots) return;
+	   else
+		if ((t.rallypointlevel) <= slots) return;
           
        if  (t.knt.toSource() == "[]") {return;}  
        var kid = t.knt[0].ID;
@@ -4423,7 +4433,7 @@ Tabs.Test = {
 		cityID = 'city' + CrestOptions.CrestCity;
 		retry++;
 		logit('autocrest '+r+' '+retry);
-		if(retry>50){
+		if(retry>20){
 			reloadKOC(); //Reload if too many errors
 		}
 		
@@ -4445,12 +4455,18 @@ Tabs.Test = {
              slots++;
        }
        if  (Seed.queue_atkp[cityID].toSource() == "[]") slots=0;
-       t.getRallypointLevel(cityID);     
-       if ((t.rallypointlevel) <= slots){
+       t.getRallypointLevel(cityID);
+	   if(t.rallypointlevel == 12){
+		if((t.rallypointlevel-1) <= slots){
 			setTimeout(function(){ t.Rounds(r,retry);},20000);
 			return;
 		}
-       // if (t.rallypointlevel == slots) return;
+	   } else{
+		if ((t.rallypointlevel) <= slots){
+			setTimeout(function(){ t.Rounds(r,retry);},20000);
+			return;
+		}
+	   }
        
        if  (t.knt.toSource() == "[]"){
 			setTimeout(function(){ t.Rounds(r,retry);},20000);
@@ -4480,14 +4496,12 @@ Tabs.Test = {
 					params.u2= (CrestOptions.R1MM / 10);
 					params.u2 = params.u2.toFixed(0);	
 					if (params.u2 < (CrestOptions.R1MM / 10)) params.u2++;
-          params.u10=CrestOptions.R1Ball;
-          params.u12=CrestOptions.R1Cat;
 				}	
 				else{
 					params.u2= CrestOptions.R1MM;
+				}
 					params.u10=CrestOptions.R1Ball;
 					params.u12=CrestOptions.R1Cat;
-				}
 				t.sendMarch(params,t.Rounds,r,retry);
 				break;
 			default:
@@ -4614,6 +4628,10 @@ Tabs.Test = {
                		if (rslt.error_code != 401) {
                		    t.error_code = rslt.error_code; 
                			// setTimeout (function(){t.abandonWilderness(tid,x,y,cid);}, 5000);
+						if(retry > 1){
+							reloadKOC();
+							return;
+						}
                		}
 					setTimeout (function(){callback(1,retry);}, 10000);
   		        }
@@ -5461,7 +5479,7 @@ Tabs.transport = {
                   onSuccess: function (transport) {
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
-                  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Wagons: " + wagons_needed);
+                  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unsafeWindow.unixtime();
                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
@@ -8509,6 +8527,7 @@ Tabs.Reassign = {
 		var marching = getMarchInfo(cityID);
     	t.getRallypoint(cityID);
 		if(t.rallypointlevel == 11) t.rallypointlevel = 15;
+		else if(t.rallypointlevel == 12) t.rallypointlevel = 20;
     	var maxsend = (t.rallypointlevel * 10000);
     	totalsend=0;
     	
@@ -9202,6 +9221,7 @@ Tabs.Reinforce = {
 		if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
 	   }
      if(t.rallypointlevel == 11) t.rallypointlevel = 15;
+	 else if(t.rallypointlevel == 12) t.rallypointlevel == 20;
      t.maxsend = (t.rallypointlevel * 10000); 	  
  },
  
@@ -11025,6 +11045,11 @@ function saveCrestOptions (){
   setTimeout (function (){GM_setValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CrestOptions));}, 0);
 }
 
+function saveCombatOptions (){
+  var serverID = getServerId();
+  setTimeout (function (){GM_setValue ('CombatOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CombatOptions));}, 0);
+}
+
 
 
 function readOptions (){
@@ -11061,6 +11086,21 @@ function readChatOptions (){
   }
 }
 
+function readTrainingOptions (){
+  var serverID = getServerId();
+  s = GM_getValue ('TrainOptions_' + Seed.player['name'] + '_' +serverID);
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          TrainOptions[k][kk] = opts[k][kk];
+      else
+        TrainOptions[k] = opts[k];
+    }
+  }
+}
+
 function readCrestOptions (){
   var serverID = getServerId();
   s = GM_getValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID);
@@ -11076,17 +11116,21 @@ function readCrestOptions (){
   }
 }
 
-function readTrainingOptions (){
+function readCombatOptions (){
   var serverID = getServerId();
-  s = GM_getValue ('TrainOptions_' + Seed.player['name'] + '_' +serverID);
+  s = GM_getValue ('CombatOptions_' + Seed.player['name'] + '_' +serverID);
   if (s != null){
     opts = JSON2.parse (s);
     for (k in opts){
       if (matTypeof(opts[k]) == 'object')
         for (kk in opts[k])
-          TrainOptions[k][kk] = opts[k][kk];
+			if (matTypeof(opts[k][kk]) == 'object')
+				for (kkk in opts[k][kk])
+				  CombatOptions[k][kk][kkk] = opts[k][kk][kkk];
+			else
+				CombatOptions[k][kk] = opts[k][kk];
       else
-        TrainOptions[k] = opts[k];
+        CombatOptions[k] = opts[k];
     }
   }
 }
@@ -13997,17 +14041,18 @@ Tabs.Combat = {
 	lost: [{},{}],
 	total: [],
 	stats: unsafeWindow.unitstats,   //  Life, Attack, Defense, Speed, Range, Load
-	priority: [12,10,6,3,7,8,4,5,2,1,9,11],
+	priority: [[3,7,8,4,5,6,2,1,9,11,10,12],[12,10,6,3,7,8,4,5,2,1,9,11]],
 	round: 0,
 	range: [0,0,0], //[Defender, Attacker, Max]
 	distance: [{},{}], // [Defender, Attacker]
 	speed: [0,0], // [Defender max, Attacker max]
 	start: 0,
+	pop : null,
 	
 	init: function(div){
 		var t = Tabs.Combat;
 		t.myDiv = div;
-		var m = '<table><TR><TD colspan=2><b>Attacking</b></td><TD colspan=2><b>Defending</b></td></TR>';
+		var m = '<table><TR><TD colspan=2><b>Attacking</b>&nbsp;&nbsp;<INPUT id=pbcombat_1 type=submit value=Research></td><TD colspan=2><b>Defending</b>&nbsp;&nbsp;<INPUT id=pbcombat_0 type=submit value=Research></td></TR>';
 		for(var troops in unsafeWindow.unitcost){
 			var name = unsafeWindow.unitcost[troops][0];
 			m+='<tr><td>'+name+' :</td><td><input type=text id="pbcombata_'+troops+'" /></td><td>'+name+' :</td><td><input type=text id="pbcombatd_'+troops+'" /></td></tr>';
@@ -14018,6 +14063,82 @@ Tabs.Combat = {
 		for(var troops in unsafeWindow.unitcost){
 			document.getElementById('pbcombata_'+troops).addEventListener('change', t.e_calculate, false);
 			document.getElementById('pbcombatd_'+troops).addEventListener('change', t.e_calculate, false);
+		}
+		document.getElementById('pbcombat_1').addEventListener('click', function() t.e_research(1),false);
+		document.getElementById('pbcombat_0').addEventListener('click', function() t.e_research(0),false);
+	},
+	
+	e_research : function(side){
+		var t = Tabs.Combat;
+		t.pop = new CPopup ('pbcombatresearch', 0, 0, 270, 300, true, function(){t.c_ratio(); t.pop.destroy();});
+		t.pop.centerMe (mainPop.getMainDiv()); 
+		t.pop.getTopDiv().innerHTML = '<CENTER><B>Research Levels</b>: '+ (side?'Attacker':'Defender') +'</center>';
+		var m = '<DIV><TABLE>';
+		for(var k in CombatOptions.research[side]){
+			m += '<TR><TD>'+unsafeWindow.techcost[k][0]+':</td><td><input id="pbcombat_'+k+'" /></td></tr>';
+		}
+		m += '<TR><TD>Knight Combat:</td><td><input id="pbcombat_knt" value='+ CombatOptions.knt[side] +' /></td></tr>';
+		m += '<TR><TD>Guardian: </td><td> \
+			  <table><tr><td>Type: </td><td>'+ htmlSelector({wood:'Wood',ore:'Ore'},CombatOptions.guardian[side][0],'id=pbcombat_guartype') +'</td></tr><tr>\
+			  <td>Level: </td><td><input id="pbcombat_guarlvl" value='+ CombatOptions.guardian[side][1] +' size=4 /></td></tr></table>\
+			  </td></tr>';
+		m += '<TR><TD colspan=2><CENTER><button id=pbcombatresearchsave>Save</button></CENTER></td></tr></table></div>';
+		t.pop.getMainDiv().innerHTML = m;
+		t.pop.centerMe (mainPop.getMainDiv());  
+		t.pop.show (true);
+		for(var k in CombatOptions.research[side]){
+			t.e_saveresearch('pbcombat_'+k, k, side);
+		}
+		document.getElementById('pbcombat_knt').addEventListener('change',function(){
+			CombatOptions.knt[side] = parseInt(document.getElementById('pbcombat_knt').value);
+			saveCombatOptions();
+		},false);
+		document.getElementById('pbcombat_guartype').addEventListener('change',function(){
+			CombatOptions.guardian[side][0] = document.getElementById('pbcombat_guartype').value;
+			saveCombatOptions();
+		},false);
+		document.getElementById('pbcombat_guarlvl').addEventListener('change',function(){
+			CombatOptions.guardian[side][1] = parseInt(document.getElementById('pbcombat_guarlvl').value);
+			saveCombatOptions();
+		},false);
+		document.getElementById('pbcombatresearchsave').addEventListener('click',t.c_ratio,false);
+	},
+	
+	e_saveresearch : function(checkboxId, optionName, side){
+		var t = Tabs.Combat;
+		var checkbox = document.getElementById(checkboxId);
+		if (CombatOptions.research[side][optionName])
+		  checkbox.value = CombatOptions.research[side][optionName];
+		checkbox.addEventListener ('change', new eventToggle(checkboxId, optionName, side).handler, false);
+		function eventToggle (checkboxId, optionName, side){
+		  this.handler = handler;
+		  var optName = optionName;
+		  function handler(event){
+			CombatOptions.research[side][optionName] = parseInt(this.value);
+			saveCombatOptions();
+		  }
+		}
+	},
+	
+	c_ratio : function (){
+		var t = Tabs.Combat;
+		for(var k in CombatOptions.ratio[0]){
+			var attack = parseFloat(t.c_attack(k,0));
+			for(var tr in unsafeWindow.unitcost){
+				var defense = parseFloat(t.c_defense(tr,1));
+				var life = parseFloat(t.c_life(tr,1));
+				var ratio = ((life+defense)/attack);
+				CombatOptions.ratio[0][k][tr] = ratio.toFixed(20);
+			}
+		}
+		for(var k in CombatOptions.ratio[1]){
+			var attack = parseFloat(t.c_attack(k,1));
+			for(var tr in unsafeWindow.unitcost){
+				var defense = parseFloat(t.c_defense(tr,0));
+				var life = parseFloat(t.c_life(tr,0));
+				var ratio = ((life+defense)/attack);
+				CombatOptions.ratio[1][k][tr] = ratio.toFixed(20);
+			}
 		}
 	},
 	
@@ -14067,7 +14188,7 @@ Tabs.Combat = {
 	
 	c_rounds: function(){
 		var t = Tabs.Combat;
-		if(t.total[0]<1 || t.total[1]<1){
+		if(t.total[0]<1 || t.total[1]<1 || t.round>99){
 			t.print();
 			return;
 		}
@@ -14099,33 +14220,42 @@ Tabs.Combat = {
 		for(var tr in t.active[0]){
 			if(t.active[0][tr] < 1) continue;
 			var range = t.stats[tr][4] - t.distance[0][tr];
-			// GM_log(range);
-			var attack = t.c_attack(0,tr);
-			// GM_log('range 0 '+attack);
 			var count = 0;
-			while(attack > 0 && count<t.priority.length){
-				var trr = 'unt'+t.priority[count];
+			var type = 0;
+			if(tr == 'unt6' || tr == 'unt10' || tr == 'unt12') type = 1;
+			// GM_log('side0 '+type);
+			while(t.active[0][tr] > 0 && count<t.priority[type].length){
+				var trr = 'unt'+t.priority[type][count];
 				if((t.troops[1][trr] < 1) || (range < t.distance[1][trr])){
 					count++;
 					continue;
 				}
-				// GM_log('1 '+tr);
-				var defense = t.c_defense(1,trr);
-				var life = t.c_life(1,trr);
-				if((attack - parseInt(life+defense)) > 0){
-					t.lost[1][trr] += t.troops[1][trr];
-					t.total[1] -= t.troops[1][trr];
-					t.troops[1][trr] = 0;
-					attack -= parseInt(life+defense);
+				if(parseInt(CombatOptions.ratio[0][tr][trr]) < 1){
+					if(t.active[0][tr] > t.troops[1][trr]){
+						t.active[0][tr] -= t.troops[1][trr];
+						t.lost[1][trr] += t.troops[1][trr];
+						t.total[1] -= t.troops[1][trr];
+						t.troops[1][trr] = 0;
+					}else {
+						t.lost[1][trr] += t.active[0][tr];
+						t.total[1] -= t.active[0][tr];
+						t.troops[1][trr] -= t.active[0][tr];
+						t.active[0][tr] = 0;
+					}
 				} else {
-					var killed = parseInt(attack/(t.stats[trr][0]+t.stats[trr][2]));
-					// GM_log(t.active[1][tr]+' '+killed);
-					t.lost[1][trr] += killed;
-					t.troops[1][trr] -= killed;
-					t.total[1] -= killed;
-					attack = 0;
+					var killed = parseInt(t.active[0][tr]/CombatOptions.ratio[0][tr][trr]);
+					if(killed > t.troops[1][trr]){
+						t.lost[1][trr] += t.troops[1][trr];
+						t.total[1] -= t.troops[1][trr];
+						t.active[0][tr] -= parseInt(CombatOptions.ratio[0][tr][trr]* t.troops[1][trr]);
+						t.troops[1][trr] = 0;
+					} else {
+						t.lost[1][trr] += killed;
+						t.total[1] -= killed;
+						t.troops[1][trr] -= killed;
+						t.active[0][tr] = 0;
+					}
 				}
-				// GM_log(tr+' '+t.lost[1][tr]);
 				count++;
 			}
 		}
@@ -14133,51 +14263,152 @@ Tabs.Combat = {
 		//Attacker
 		for(var tr in t.active[1]){
 			if(t.active[1][tr] < 1) continue;
-		// GM_log(t.distance[1][tr]);
-			var attack = t.c_attack(1,tr);
 			var range = t.stats[tr][4] - t.distance[1][tr];
-			// GM_log('range 1 '+attack);
 			var count = 0;
-			while(attack > 0 && count<t.priority.length){
-				var trr = 'unt'+t.priority[count];
+			var type = 0;
+			if(tr == 'unt6' || tr == 'unt10' || tr == 'unt12') type = 1;
+			// GM_log('side1 '+type);
+			while(t.active[1][tr] > 0 && count<t.priority[type].length){
+				var trr = 'unt'+t.priority[type][count];
 				if((t.troops[0][trr] < 1) || (range < t.distance[0][trr])){
 					count++;
 					continue;
 				}
-				// GM_log('1 '+tr);
-				var defense = t.c_defense(0,trr);
-				var life = t.c_life(0,trr);
-				if((attack - parseInt(life+defense)) > 0){
-					t.lost[0][trr] += t.troops[0][trr];
-					t.total[0] -= t.troops[0][trr];
-					t.troops[0][trr] = 0;
-					attack -= parseInt(life+defense);
+				if(parseInt(CombatOptions.ratio[1][tr][trr]) < 1){
+					if(t.active[1][tr] > t.troops[0][trr]){
+						t.active[1][tr] -= t.troops[0][trr];
+						t.lost[0][trr] += t.troops[0][trr];
+						t.total[0] -= t.troops[0][trr];
+						t.troops[0][trr] = 0;
+					}else {
+						t.lost[0][trr] += t.active[1][tr];
+						t.total[0] -= t.active[1][tr];
+						t.troops[0][trr] -= t.active[1][tr];
+						t.active[1][tr] = 0;
+					}
 				} else {
-					var killed = parseInt(attack/(t.stats[trr][0]+t.stats[trr][2]));
-					GM_log(t.active[0][tr]+' '+killed);
-					t.lost[0][trr] += killed;
-					t.troops[0][trr] -= killed;
-					t.total[0] -= killed;
-					attack = 0;
+					var killed = parseInt(t.active[1][tr]/CombatOptions.ratio[1][tr][trr]);
+					if(killed > t.troops[0][trr]){
+						t.lost[0][trr] += t.troops[0][trr];
+						t.total[0] -= t.troops[0][trr];
+						t.active[1][tr] -= parseInt(CombatOptions.ratio[1][tr][trr]* t.troops[0][trr]);
+						t.troops[0][trr] = 0;
+					} else {
+						t.lost[0][trr] += killed;
+						t.total[0] -= killed;
+						t.troops[0][trr] -= killed;
+						t.active[1][tr] = 0;
+					}
 				}
-				// GM_log(tr+' '+t.lost[0][tr]);
 				count++;
 			}
 		}
 		t.c_rounds();
 	},
 	
-	c_attack: function(side,tr){
+	c_attack: function(tr,side){
 		var t = Tabs.Combat;
-		return parseInt(t.stats[tr][1] * t.active[side][tr]);
+		var att = t.stats[tr][1];
+		if(CombatOptions.research[side].tch8) //Add Poison Edge
+			att += t.stats[tr][1]*parseFloat(CombatOptions.research[side].tch8*5/100);
+		if(CombatOptions.guardian[side][0] == 'ore'){ //Add Guardian Boost
+			var boost = 0;
+			switch(CombatOptions.guardian[side][1]){
+				case 1:
+					boost = 0.02;
+					break;
+				case 2:
+					boost = 0.04;
+					break;
+				case 3:
+					boost = 0.06;
+					break;
+				case 4:
+					boost = 0.08;
+					break;
+				case 5:
+					boost = 0.12;
+					break;
+				case 6:
+					boost = 0.16;
+					break;
+				case 7:
+					boost = 0.20;
+					break;
+				case 8:
+					boost = 0.26;
+					break;
+				case 9:
+					boost = 0.32;
+					break;
+				case 10:
+					boost = 0.40;
+					break;
+				default:
+					boost = 0;
+			}
+			att += t.stats[tr][1]*boost;
+		}
+		if(CombatOptions.knt[side]) //Add knight boost
+			att += t.stats[tr][1]*parseFloat((CombatOptions.knt[side]/2)/100);
+		// logit('side'+side+' '+tr+' att'+att);
+		return att;
 	},
-	c_defense: function(side,tr){
+	c_defense: function(tr,side){
 		var t = Tabs.Combat;
-		return parseInt(t.stats[tr][2] * t.troops[side][tr]);
+		var def = t.stats[tr][2];
+		if(CombatOptions.research[side].tch9) //Add Metal Alloy
+			def += t.stats[tr][2]*parseFloat(CombatOptions.research[side].tch9*5/100);
+		if(CombatOptions.knt[side]) //Add knight boost
+			def += t.stats[tr][2]*parseFloat((CombatOptions.knt[side]/2)/100);
+		// logit('side'+side+' '+tr+' def'+def);
+		return def;
 	},
-	c_life: function(side,tr){
+	c_life: function(tr,side){
 		var t = Tabs.Combat;
-		return parseInt(t.stats[tr][0] * t.troops[side][tr]);
+		var life = t.stats[tr][0];
+		if(CombatOptions.research[side].tch15) //Add Healing Potions
+			life += t.stats[tr][0]*parseFloat(CombatOptions.research[side].tch15*5/100);
+		if(CombatOptions.guardian[side][0] == 'wood'){ //Add Guardian Boost
+			var boost = 0;
+			switch(CombatOptions.guardian[side][1]){
+				case 1:
+					boost = 0.01;
+					break;
+				case 2:
+					boost = 0.02;
+					break;
+				case 3:
+					boost = 0.03;
+					break;
+				case 4:
+					boost = 0.04;
+					break;
+				case 5:
+					boost = 0.06;
+					break;
+				case 6:
+					boost = 0.08;
+					break;
+				case 7:
+					boost = 0.10;
+					break;
+				case 8:
+					boost = 0.13;
+					break;
+				case 9:
+					boost = 0.16;
+					break;
+				case 10:
+					boost = 0.20;
+					break;
+				default:
+					boost = 0;
+			}
+			life += t.stats[tr][0]*boost;
+		}
+		// logit('side'+side+' '+tr+' life'+life);
+		return life;
 	},
 	
 	print: function (){
