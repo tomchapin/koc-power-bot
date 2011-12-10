@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111209a
+// @version        20111209b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20111209a';
+var Version = '20111209b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -206,7 +206,7 @@ var CombatOptions = {
 	research : [{tch8:0,tch9:0,tch13:0,tch15:0}, //Poison Edge, Metal Alloys, Fletching, Healing Potions
 	            {tch8:0,tch9:0,tch13:0,tch15:0}],
 	knt      : [50,50],
-	guardian : [['wood',0],['wood',0]],
+	guardian : [['wood',0],['ore',0]],
 	ratio    : [{unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}},
 	            {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
 }
@@ -14311,7 +14311,7 @@ Tabs.Combat = {
 		var att = t.stats[tr][1];
 		if(CombatOptions.research[side].tch8) //Add Poison Edge
 			att += t.stats[tr][1]*parseFloat(CombatOptions.research[side].tch8*5/100);
-		if(CombatOptions.guardian[side][0] == 'ore'){ //Add Guardian Boost
+		if(CombatOptions.guardian[side][0] == 'ore' && side == 1){ //Add Guardian Boost
 			var boost = 0;
 			switch(CombatOptions.guardian[side][1]){
 				case 1:
@@ -14369,7 +14369,7 @@ Tabs.Combat = {
 		var life = t.stats[tr][0];
 		if(CombatOptions.research[side].tch15) //Add Healing Potions
 			life += t.stats[tr][0]*parseFloat(CombatOptions.research[side].tch15*5/100);
-		if(CombatOptions.guardian[side][0] == 'wood'){ //Add Guardian Boost
+		if(CombatOptions.guardian[side][0] == 'wood' && side == 0){ //Add Guardian Boost
 			var boost = 0;
 			switch(CombatOptions.guardian[side][1]){
 				case 1:
