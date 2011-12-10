@@ -1,6 +1,15 @@
 REVISION HISTORY:
 ----------------
 
+20111209b
+   Add autocraft tab
+   Add research, knight, guardian info to combat tab
+   Rework combat tab priority system
+   Rework combat tab rounds system
+   Add research levels to tower alert
+   Removed switch to city for build help
+   Fixed rally point info for level 12
+   Reworked auto crest tab
 20111120a
    Fixed to work with kabam standalone site
    Fixed to work with 8th city
