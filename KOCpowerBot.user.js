@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20111209b
+// @version        20111216a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20111209b';
+var Version = '20111216a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -10553,7 +10553,7 @@ var tabManager = {
   
   e_clickedTab : function (e){
     var t = tabManager;
-    newTab = t.tabList[e.target.parentNode.parentNode.id.substring(4)];
+    var newTab = t.tabList[e.target.parentNode.parentNode.id.substring(4)];
     if (t.currentTab.name != newTab.name){
       t.setTabStyle (document.getElementById ('pbtc'+ t.currentTab.name), false);
       t.setTabStyle (document.getElementById ('pbtc'+ newTab.name), true);
@@ -13079,7 +13079,10 @@ Tabs.Gifts = {
 	  url = url.replace ('&amp;', '&', 'g');
 	  url = url.replace ('" + (new Date()).getTime() + "', (new Date()).getTime());
       gift.dat.url = url;
-      GM_AjaxGet (url, opts, got5, 'Page 5');        
+	  var signed_request = /signed_request" value="(.*?)"/im.exec (page);
+	  var opts = [];
+	  opts.signed_request = signed_request[1];
+      GM_AjaxPost (url, opts, got5, 'Page 5');        
     }
     
     function got5 (page){
