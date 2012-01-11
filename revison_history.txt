@@ -1,6 +1,9 @@
 REVISION HISTORY:
 ----------------
 
+20120111a
+    Fixed tower alert
+    Fixed widescreen
 20111209b
    Add autocraft tab
    Add research, knight, guardian info to combat tab
