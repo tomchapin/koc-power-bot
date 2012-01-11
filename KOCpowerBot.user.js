@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120111a
+// @version        20120111b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20120111a';
+var Version = '20120111b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -13041,6 +13041,8 @@ Tabs.Gifts = {
       progress ('2');
       var m = /top.location.href = \"(.*?)\"/im.exec (page);
       if (m == null)
+		m = /top.location.replace\(\"(.*?)\"\)/im.exec (page);
+      if (m == null)
         notify ({ajaxErr:'PARSE Error - page 2'});
 	  var url = m[1].htmlSpecialCharsDecode(); 
       GM_AjaxGet (url, '', got3, 'Page 3');        
@@ -13071,6 +13073,8 @@ Tabs.Gifts = {
 	  page = page.htmlSpecialCharsDecode();
 	  
 	  var m = page.match (/src='(.*?)'/im);
+      if (m == null)
+		m = page.match (/form action="(.*?)"/im);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 4'});
       var url = m[1].htmlSpecialCharsDecode();
