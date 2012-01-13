@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120111b
+// @version        20120113a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20120111b';
+var Version = '20120113a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -752,7 +752,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         </table><BR>';
   	t.myDiv.innerHTML = m;
 
-//    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y');
+//   t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y');
     t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n');
     t.mss.swfDebug = function (m){ logit ('SWF: '+ m)};
     t.mss.swfPlayComplete = t.e_soundFinished;
@@ -11468,11 +11468,11 @@ function display_confirm(confirm_msg,ok_function,cancel_function){
         container_div.style.width='100%';
         container_div.style.height='1px';
         container_div.style.overflow='visible';
-        container_div.style.zIndex=100000;
+        container_div.style.zIndex=10000000;
         
         div=document.createElement('div');
         div.id='modal_js_confirm_contents';
-        div.style.zIndex=100000;
+        div.style.zIndex=10000000;
         div.style.backgroundColor='#eee';
         div.style.fontFamily='"lucida grande",tahoma,verdana,arial,sans-serif';
         div.style.fontSize='11px';
@@ -14420,10 +14420,10 @@ Tabs.Combat = {
 	
 	print: function (){
 		var t = Tabs.Combat;
-		var m = '<div class=pbStat>Results</div><table><TR><TD colspan=2><b>Attacking</b></td><TD colspan=2><b>Defending</b></td><TD>Rounds :'+t.round+'</td></TR>';
+		var m = '<div class=pbStat>Results</div><table><TR><TD colspan=3><b>Attacking</b></td><TD colspan=3><b>Defending</b></td><TD>Rounds :'+t.round+'</td></TR>';
 		for(var tr in unsafeWindow.unitcost){
 			var name = unsafeWindow.unitcost[tr][0];
-			m+='<tr><td>'+name+' :</td><td>'+ t.troops[1][tr] +'</td><td>'+name+' :</td><td>'+ t.troops[0][tr] +'</td></tr>';
+			m+='<tr><td>'+name+' :</td><td>'+ t.troops[1][tr] +'</td><td><span class=boldRed>'+ t.lost[1][tr] +'</span></td><td>'+name+' :</td><td>'+ t.troops[0][tr] +'</td><td><span class=boldRed>'+ t.lost[0][tr] +'</span></td></tr>';
 		}
 		m+='</table>';
 		document.getElementById('pbcombat_rslt').innerHTML = m;
