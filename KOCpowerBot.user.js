@@ -679,7 +679,8 @@ Tabs.tower = {
         109: { 'country': "UNITED STATES", 'provider': "MyCricket" },
         110: { 'country': "Philippines", 'provider': "Smart" },
         111: { 'country': "UNITED STATES", 'provider': "CellularSouth" },
-        112: { 'country': "UNITED STATES", 'provider': "Viaero" }
+        112: { 'country': "UNITED STATES", 'provider': "Viaero" },
+        113: { 'country': "CANADA", 'provider': "Wind Mobile" }
     },
 
   init: function(div){
