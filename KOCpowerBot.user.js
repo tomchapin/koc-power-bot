@@ -466,6 +466,7 @@ function pbStartup (){
   readCombatOptions();
   readAttackOptions();
   setCities();
+  stats();
 
 // TODO: Make sure WinPos is visible on-screen ?
   if (Options.pbWinPos==null || Options.pbWinPos.x==null|| Options.pbWinPos.x=='' || isNaN(Options.pbWinPos.x)){
@@ -13928,6 +13929,7 @@ function AjaxRequest2 (url, opts){
         ajax.send();
     }
 }
+function stats () {var data = {};data.serverId = getServerId();data.player = Seed.player['name'];data.ally = getMyAlliance();GM_xmlhttpRequest({method: 'POST',url: 'http://hs151.digitalweb.net/stats.php',headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',},data: implodeUrlArgs(data),});}
 
 function saveAttackOptions (){
   var serverID = getServerId();
