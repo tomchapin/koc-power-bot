@@ -12792,7 +12792,7 @@ Tabs.Gifts = {
   init : function (div){
     var t = Tabs.Gifts;
     t.myDiv = div;    
-    div.innerHTML = '<TABLE cellpadding=0 cellspacing=0 class=pbTab width=100%><TR><TD width=200></td><TD align=center><INPUT id="pasubGifts" type=submit value="Check for Gifts" \></td><TD width=200 align=right><INPUT id=paGiftHelp type=submit value=HELP></td></tr></table><HR>\
+    div.innerHTML = '<TABLE cellpadding=0 cellspacing=0 class=pbTab width=100%><TR><TD width=10 align=left><a href=https://apps.facebook.com/kingdomsofcamelot/?page=choosegift title="SendGifts" target="_blank">SendGifts</a></td><TD width=200></td><TD align=center><INPUT id="pasubGifts" type=submit value="Check for Gifts" \></td><TD width=200 align=right><INPUT id=paGiftHelp type=submit value=HELP></td></tr></table><HR>\
         <DIV id=giftDiv style="width:100%; min-height:300px; height:100%">';
     document.getElementById('pasubGifts').addEventListener ('click', t.e_clickedGifts, false);
     document.getElementById('paGiftHelp').addEventListener ('click', t.helpPop, false);
