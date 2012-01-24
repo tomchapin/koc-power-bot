@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120119a
+// @version        20120124a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20120119a';
+var Version = '20120124a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -156,7 +156,7 @@ var TrainOptions = {
   CraftingRunning : false,
   CraftIntervallMin : 3,
   CraftingActif : {3000:false,3001:false,3002:false,3003:false,3004:false,3005:false,3006:false,3007:false,3008:false,3009:false,3010:false,3011:false},
-  CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0,},
+  CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0},
 };
 
 var AttackOptions = {
@@ -6745,7 +6745,658 @@ cm.MARCH_TYPES = {
   show : function (){
   },
  }; 
- /*************************** Auto Craft Tab *************************************/
+ 
+ /******* Crafting List ******
+(array) 1 = [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+    (object) 0 = [object Object]
+      (string) recipe_id = 1
+      (string) name = Crystal Song
+      (string) output_item_id = 3000
+      (null) consolation_item_id: null = null
+      (string) category = 1
+      (object) input = [object Object]
+        (array) items = 
+
+        (object) resources = [object Object]
+          (string) 1 = 10500
+
+
+      (object) requirements = [object Object]
+        (string) building = 1
+
+      (string) insurance_cost = 5
+      (string) failure_chance = low
+
+    (object) 1 = [object Object]
+      (string) recipe_id = 2
+      (string) name = Tricked Wind
+      (string) output_item_id = 3001
+      (null) consolation_item_id: null = null
+      (string) category = 1
+      (object) input = [object Object]
+        (array) items = 
+
+        (object) resources = [object Object]
+          (string) 1 = 5200
+
+
+      (object) requirements = [object Object]
+        (string) building = 1
+
+      (string) insurance_cost = 5
+      (string) failure_chance = low
+
+    (object) 2 = [object Object]
+      (string) recipe_id = 4
+      (string) name = Spun Bone
+      (string) output_item_id = 3003
+      (null) consolation_item_id: null = null
+      (string) category = 1
+      (object) input = [object Object]
+        (array) items = 
+
+        (object) resources = [object Object]
+          (string) 1 = 10500
+
+
+      (object) requirements = [object Object]
+        (string) building = 1
+
+      (string) insurance_cost = 5
+      (string) failure_chance = low
+
+    (object) 3 = [object Object]
+      (string) recipe_id = 8
+      (string) name = Sewn Blood
+      (string) output_item_id = 3007
+      (null) consolation_item_id: null = null
+      (string) category = 1
+      (object) input = [object Object]
+        (array) items = 
+
+        (object) resources = [object Object]
+          (string) 1 = 2500
+
+
+      (object) requirements = [object Object]
+        (string) building = 1
+
+      (string) insurance_cost = 5
+      (string) failure_chance = low
+
+    (object) 4 = [object Object]
+      (string) recipe_id = 9
+      (string) name = Sewn Weight
+      (string) output_item_id = 3008
+      (null) consolation_item_id: null = null
+      (string) category = 1
+      (object) input = [object Object]
+        (array) items = 
+
+        (object) resources = [object Object]
+          (string) 1 = 2500
+
+
+      (object) requirements = [object Object]
+        (string) building = 1
+
+      (string) insurance_cost = 5
+      (string) failure_chance = low
+
+    (object) 5 = [object Object]
+      (string) recipe_id = 10
+      (string) name = Shape Muck
+      (string) output_item_id = 3009
+      (null) consolation_item_id: null = null
+      (string) category = 1
+      (object) input = [object Object]
+        (array) items = 
+
+        (object) resources = [object Object]
+          (string) 1 = 2500
+
+
+      (object) requirements = [object Object]
+        (string) building = 1
+
+      (string) insurance_cost = 5
+      (string) failure_chance = low
+
+    (object) 6 = [object Object]
+      (string) recipe_id = 12
+      (string) name = Knit Grace
+      (string) output_item_id = 3011
+      (string) consolation_item_id = 3000
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3000 = 1
+          (string) 3001 = 2
+
+        (object) resources = [object Object]
+          (string) 1 = 21000
+
+
+      (object) requirements = [object Object]
+        (string) building = 1
+
+      (string) insurance_cost = 5
+      (string) failure_chance = low
+
+    (object) 7 = [object Object]
+      (string) recipe_id = 11
+      (string) name = Cast Hide
+      (string) output_item_id = 3010
+      (string) consolation_item_id = 1107
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 1107 = 1
+          (string) 3002 = 2
+
+        (object) resources = [object Object]
+          (string) 1 = 75000
+
+
+      (object) requirements = [object Object]
+        (string) building = 5
+
+      (string) insurance_cost = 5
+      (string) failure_chance = low
+
+    (object) 8 = [object Object]
+      (string) recipe_id = 25
+      (string) name = Knit Courage
+      (string) output_item_id = 221
+      (string) consolation_item_id = 3003
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3003 = 2
+          (string) 3007 = 5
+
+        (object) resources = [object Object]
+          (string) 1 = 50000
+
+
+      (object) requirements = [object Object]
+        (string) building = 5
+
+      (string) insurance_cost = 33
+      (string) failure_chance = med
+
+    (object) 9 = [object Object]
+      (string) recipe_id = 26
+      (string) name = Knit Wisdom
+      (string) output_item_id = 231
+      (string) consolation_item_id = 3003
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3003 = 2
+          (string) 3009 = 5
+
+        (object) resources = [object Object]
+          (string) 1 = 50000
+
+
+      (object) requirements = [object Object]
+        (string) building = 5
+
+      (string) insurance_cost = 33
+      (string) failure_chance = med
+
+    (object) 10 = [object Object]
+      (string) recipe_id = 27
+      (string) name = Knit Beauty
+      (string) output_item_id = 211
+      (string) consolation_item_id = 3000
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3000 = 2
+          (string) 3007 = 5
+
+        (object) resources = [object Object]
+          (string) 1 = 50000
+
+
+      (object) requirements = [object Object]
+        (string) building = 5
+
+      (string) insurance_cost = 33
+      (string) failure_chance = med
+
+    (object) 11 = [object Object]
+      (string) recipe_id = 28
+      (string) name = Knit Toil
+      (string) output_item_id = 241
+      (string) consolation_item_id = 3000
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3000 = 2
+          (string) 3009 = 5
+
+        (object) resources = [object Object]
+          (string) 1 = 50000
+
+
+      (object) requirements = [object Object]
+        (string) building = 5
+
+      (string) insurance_cost = 33
+      (string) failure_chance = med
+
+    (object) 12 = [object Object]
+      (string) recipe_id = 5
+      (string) name = Divine Act
+      (string) output_item_id = 3004
+      (string) consolation_item_id = 3010
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3000 = 3
+          (string) 3003 = 3
+          (string) 3010 = 1
+
+        (object) resources = [object Object]
+          (string) 1 = 120000
+
+
+      (object) requirements = [object Object]
+        (string) building = 6
+
+      (string) insurance_cost = 20
+      (string) failure_chance = med
+
+    (object) 13 = [object Object]
+      (string) recipe_id = 29
+      (string) name = Forge Fury
+      (string) output_item_id = 2002
+      (string) consolation_item_id = 3003
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3003 = 7
+          (string) 3007 = 21
+
+        (object) resources = [object Object]
+          (string) 1 = 400000
+
+
+      (object) requirements = [object Object]
+        (string) building = 6
+
+      (string) insurance_cost = 40
+      (string) failure_chance = high
+
+    (object) 14 = [object Object]
+      (string) recipe_id = 6
+      (string) name = Divine Rite
+      (string) output_item_id = 3005
+      (string) consolation_item_id = 3004
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3000 = 3
+          (string) 3003 = 3
+          (string) 3004 = 1
+
+        (object) resources = [object Object]
+          (string) 1 = 180000
+
+
+      (object) requirements = [object Object]
+        (string) building = 7
+
+      (string) insurance_cost = 40
+      (string) failure_chance = high
+
+    (object) 15 = [object Object]
+      (string) recipe_id = 7
+      (string) name = Divine Toll
+      (string) output_item_id = 3006
+      (string) consolation_item_id = 3005
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3000 = 3
+          (string) 3003 = 3
+          (string) 3005 = 1
+
+        (object) resources = [object Object]
+          (string) 1 = 240000
+
+
+      (object) requirements = [object Object]
+        (string) building = 8
+
+      (string) insurance_cost = 40
+      (string) failure_chance = high
+
+    (object) 16 = [object Object]
+      (string) recipe_id = 13
+      (string) name = Divine Song
+      (string) output_item_id = 401
+      (string) consolation_item_id = 3006
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3000 = 3
+          (string) 3003 = 3
+          (string) 3006 = 1
+
+        (object) resources = [object Object]
+          (string) 1 = 320000
+
+
+      (object) requirements = [object Object]
+        (string) building = 9
+
+      (string) insurance_cost = 40
+      (string) failure_chance = high
+
+    (object) 17 = [object Object]
+      (string) recipe_id = 14
+      (string) name = Divine Hymn
+      (string) output_item_id = 402
+      (string) consolation_item_id = 401
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3000 = 3
+          (string) 3003 = 3
+          (string) 401 = 1
+
+        (object) resources = [object Object]
+          (string) 1 = 500000
+
+
+      (object) requirements = [object Object]
+        (string) building = 10
+
+      (string) insurance_cost = 124
+      (string) failure_chance = high
+
+    (object) 18 = [object Object]
+      (string) recipe_id = 31
+      (string) name = Mist Song
+      (string) output_item_id = 1120
+      (string) consolation_item_id = 1110
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 1110 = 1
+          (string) 261 = 1
+          (string) 3007 = 7
+          (string) 3011 = 2
+
+        (object) resources = [object Object]
+          (string) 1 = 80000
+
+
+      (object) requirements = [object Object]
+        (string) building = 10
+
+      (string) insurance_cost = 18
+      (string) failure_chance = low
+
+    (object) 19 = [object Object]
+      (string) recipe_id = 32
+      (string) name = Mist Dirge
+      (string) output_item_id = 1121
+      (string) consolation_item_id = 1120
+      (string) category = 1
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 1120 = 1
+          (string) 272 = 1
+          (string) 3009 = 3
+          (string) 3008 = 3
+          (string) 3011 = 2
+
+        (object) resources = [object Object]
+          (string) 1 = 85000
+
+
+      (object) requirements = [object Object]
+        (string) building = 10
+
+      (string) insurance_cost = 20
+      (string) failure_chance = med
+
+
+  (array) 3 = [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
+    (object) 0 = [object Object]
+      (string) recipe_id = 15
+      (string) name = Crimson Act
+      (string) output_item_id = 261
+      (string) consolation_item_id = 3007
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3007 = 5
+
+        (object) resources = [object Object]
+          (string) 1 = 10000
+
+
+      (object) requirements = [object Object]
+        (string) building = 2
+
+      (string) insurance_cost = 9
+      (string) failure_chance = low
+
+    (object) 1 = [object Object]
+      (string) recipe_id = 18
+      (string) name = Aegis Act
+      (string) output_item_id = 271
+      (string) consolation_item_id = 3008
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3008 = 5
+
+        (object) resources = [object Object]
+          (string) 1 = 10000
+
+
+      (object) requirements = [object Object]
+        (string) building = 2
+
+      (string) insurance_cost = 9
+      (string) failure_chance = low
+
+    (object) 2 = [object Object]
+      (string) recipe_id = 20
+      (string) name = Trapped Wind
+      (string) output_item_id = 55
+      (string) consolation_item_id = 1103
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 1103 = 1
+          (string) 3001 = 5
+
+        (object) resources = [object Object]
+          (string) 1 = 25000
+
+
+      (object) requirements = [object Object]
+        (string) building = 2
+
+      (string) insurance_cost = 5
+      (string) failure_chance = low
+
+    (object) 3 = [object Object]
+      (string) recipe_id = 22
+      (string) name = Trick Hunger
+      (string) output_item_id = 273
+      (string) consolation_item_id = 3000
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 3000 = 5
+
+        (object) resources = [object Object]
+          (string) 1 = 160000
+
+
+      (object) requirements = [object Object]
+        (string) building = 2
+
+      (string) insurance_cost = 33
+      (string) failure_chance = med
+
+    (object) 4 = [object Object]
+      (string) recipe_id = 16
+      (string) name = Crimson Rite
+      (string) output_item_id = 262
+      (string) consolation_item_id = 261
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 261 = 1
+          (string) 3007 = 3
+
+        (object) resources = [object Object]
+          (string) 1 = 30000
+
+
+      (object) requirements = [object Object]
+        (string) building = 3
+
+      (string) insurance_cost = 43
+      (string) failure_chance = med
+
+    (object) 5 = [object Object]
+      (string) recipe_id = 19
+      (string) name = Aegis Rite
+      (string) output_item_id = 272
+      (string) consolation_item_id = 271
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 271 = 1
+          (string) 3008 = 3
+
+        (object) resources = [object Object]
+          (string) 1 = 30000
+
+
+      (object) requirements = [object Object]
+        (string) building = 3
+
+      (string) insurance_cost = 43
+      (string) failure_chance = med
+
+    (object) 6 = [object Object]
+      (string) recipe_id = 21
+      (string) name = Poached Wind
+      (string) output_item_id = 57
+      (string) consolation_item_id = 55
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 55 = 1
+          (string) 3001 = 3
+
+        (object) resources = [object Object]
+          (string) 1 = 75000
+
+
+      (object) requirements = [object Object]
+        (string) building = 3
+
+      (string) insurance_cost = 20
+      (string) failure_chance = med
+
+    (object) 7 = [object Object]
+      (string) recipe_id = 23
+      (string) name = Trap Hunger
+      (string) output_item_id = 274
+      (string) consolation_item_id = 273
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 273 = 1
+          (string) 3000 = 3
+
+        (object) resources = [object Object]
+          (string) 1 = 240000
+
+
+      (object) requirements = [object Object]
+        (string) building = 3
+
+      (string) insurance_cost = 60
+      (string) failure_chance = med
+
+    (object) 8 = [object Object]
+      (string) recipe_id = 17
+      (string) name = Crimson Toll
+      (string) output_item_id = 280
+      (string) consolation_item_id = 262
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 262 = 1
+          (string) 3007 = 3
+
+        (object) resources = [object Object]
+          (string) 1 = 90000
+
+
+      (object) requirements = [object Object]
+        (string) building = 4
+
+      (string) insurance_cost = 40
+      (string) failure_chance = high
+
+    (object) 9 = [object Object]
+      (string) recipe_id = 24
+      (string) name = Poach Hunger
+      (string) output_item_id = 275
+      (string) consolation_item_id = 274
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 274 = 1
+          (string) 3000 = 3
+
+        (object) resources = [object Object]
+          (string) 1 = 320000
+
+
+      (object) requirements = [object Object]
+        (string) building = 4
+
+      (string) insurance_cost = 168
+      (string) failure_chance = high
+
+    (object) 10 = [object Object]
+      (string) recipe_id = 30
+      (string) name = Aegis Toll
+      (string) output_item_id = 281
+      (string) consolation_item_id = 272
+      (string) category = 3
+      (object) input = [object Object]
+        (object) items = [object Object]
+          (string) 272 = 1
+          (string) 3008 = 3
+
+        (object) resources = [object Object]
+          (string) 1 = 90000
+
+
+      (object) requirements = [object Object]
+        (string) building = 4
+
+      (string) insurance_cost = 40
+      (string) failure_chance = high
+*******/
+/*************************** Auto Craft Tab *************************************/
 Tabs.AutoCraft = {
 	tabOrder: 20, //CHECKTHIS ?
 	tabLabel: "Auto Craft",
@@ -6774,20 +7425,35 @@ Tabs.AutoCraft = {
         m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr></table></div>';
         m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
 
-        m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td></tr>"; 
+        m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>"; 
+        m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>"; 
+		m += "</tr><tr>";
         
-        for(var d=0;d<12;d++) {
-         if (d!=2) {
-	        var h=parseInt(3000+d);
-	        var qte=0;
-	        if (parseInt(Seed.items["i"+h])>0) qte=parseInt(Seed.items["i"+h]);
-	        m += "<tr><td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+qte+"</span></center></td>";
+        // for(var d=0;d<12;d++) {
+         // if (d!=2) {
+	        // var h=parseInt(3000+d);
+	        // var qte=0;
+	        // if (parseInt(Seed.items["i"+h])>0) qte=parseInt(Seed.items["i"+h]);
+	        // m += "<tr><td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+qte+"</span></center></td>";
        	
-         	m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseInt(TrainOptions.CraftingNb[h]) +"'></td>";
-        m += "";
-        	m += "</tr>";
-         }
-        }
+         	// m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseInt(TrainOptions.CraftingNb[h]) +"'></td>";
+        // m += "";
+        	// m += "</tr>";
+         // }
+        // }
+		for(var i=0; i < unsafeWindow.recipelist[1].length; i++){
+			var h = parseInt(unsafeWindow.recipelist[1][i].output_item_id);
+			m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
+			m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
+			if ((i+1)%2 == 0) m += "</tr><tr>";
+		}
+		for(var i=0; i < unsafeWindow.recipelist[3].length; i++){
+			var h = parseInt(unsafeWindow.recipelist[3][i].output_item_id);
+			m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
+			m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
+			if ((i+1)%2 == 0) m += "</tr><tr>";
+		}
+		
         m+="</table><b>Note:</b> If you complete more than one Item, the creation will be done randomly. <BR> <b>Important: Min. 50 000 Aethestones and Refresh to Update the Inventar!</b> ";
           m += '<DIV id=pbCraftingStats class=pbStat>AEHTERSTONES AND CRAFTING TIME</div><span id="CraftStat"></span>';
 
@@ -6974,7 +7640,7 @@ Tabs.AutoCraft = {
        t.Start();
        return;
      }
-     if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<50000) 
+     if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<5000) 
             return;
      var tableau = [];
      for(var d=0;d<12;d++) {
@@ -10828,9 +11494,118 @@ function setCities(){
     city.x = parseInt(Seed.cities[i][2]);
     city.y = parseInt(Seed.cities[i][3]);
     city.tileId = parseInt(Seed.cities[i][5]);
+    city.provId = parseInt(Seed.cities[i][4]);
+	getTroopDefTrainEstimates('city'+ city.id, city);
     Cities.cities[i] = city;
     Cities.byID[Seed.cities[i][0]] = city;
   }
+}
+
+function getTroopDefTrainEstimates (cityID, city){
+	var b = Seed.buildings[cityID];
+	city.numCottages = 0;
+	city.numBarracks = 0;
+	city.maxBarracks = 0;
+	city.totLevelsBarracks = 0;
+	city.blacksmithLevel = 0;
+	city.stableLevel = 0;
+	city.workshopLevel = 0;
+	city.wallLevel = 0;
+	city.feyLevel = 0;
+	for (var j=1; j<33; j++){
+		if (b['pos'+j]) {
+			var bname = parseInt(b['pos'+j][0]);
+			var blvl = parseInt(b['pos'+j][1]);
+			switch(bname){
+				case 13:
+					city.numBarracks++;
+					city.totLevelsBarracks += parseInt(blvl);
+					if (blvl>city.maxBarracks) city.maxBarracks=blvl;
+					break;
+				case 5:
+					city.numCottages++;
+					break;
+				case 15:
+					city.blacksmithLevel = blvl;
+					break;
+				case 16:
+					city.workshopLevel = blvl;
+					break;
+				case 17:
+					city.stableLevel = blvl;
+					break;
+				case 19:
+					city.wallLevel = blvl;
+					break;
+				case 20:
+				    city.feyLevel = blvl;
+					break;
+			}
+		}
+	}
+
+	var now = unixTime();
+	city.marshallCombatScore = 0;
+	var s = Seed.knights[cityID];
+	if (s) {
+		s = s["knt" + Seed.leaders[cityID].combatKnightId];
+		if (s){
+			city.marshallCombatScore = s.combat;
+			if (s.combatBoostExpireUnixtime > now)
+				city.marshallCombatScore *= 1.25;
+		}
+	}
+	city.foremanBasePoliticsScore = 0;
+	var s = Seed.knights[cityID];
+	if (s) {
+		s = s["knt" + Seed.leaders[cityID].politicsKnightId];
+		if (s){
+			city.foremanBasePoliticsScore = s.politics;
+			if (s.politicsBoostExpireUnixtime > now)
+				city.foremanBasePoliticsScore *= 1.25;
+		}
+	}
+
+	city.loggingLevel = parseInt(Seed.tech["tch2"]);
+	city.geometryLevel = parseInt(Seed.tech["tch5"]);
+	city.eagleEyesLevel = parseInt(Seed.tech["tch6"]);
+	city.poisonedEdgeLevel = parseInt(Seed.tech["tch8"]);
+	city.metalAlloysLevel = parseInt(Seed.tech["tch9"]);
+	city.featherweightPowderLevel = parseInt(Seed.tech["tch10"]);
+	city.alloyHorseshoesLevel = parseInt(Seed.tech["tch12"]);
+	city.fletchingLevel = parseInt(Seed.tech["tch13"]);
+	city.giantsStrengthLevel = parseInt(Seed.tech["tch16"]);
+
+	var bm = city.numBarracks + 0.1 * (city.totLevelsBarracks - city.numBarracks);
+	var mf = city.marshallCombatScore / 200;
+	var gf = city.geometryLevel / 10;
+	var sf = city.stableLevel / 10;
+	var wf = city.workshopLevel / 10;
+	var isf = bm * (1 + mf + gf);
+	var csf = bm * (1 + mf + gf + sf);
+	var ssf = bm * (1 + mf + gf + sf + wf);
+	var pf = city.foremanBasePoliticsScore / 200;
+	var gsf = city.giantsStrengthLevel / 10;
+	var dsf = 1 + pf + gsf;
+
+	
+	city.Troop1Time = ((city.maxBarracks > 0)?(50/isf):0);
+	city.Troop2Time = city.Troop1Time/2;
+	city.Troop3Time = ((city.maxBarracks > 1 && city.eagleEyesLevel > 0)?(100/isf):0);
+	city.Troop4Time = ((city.maxBarracks > 1 && city.poisonedEdgeLevel > 0)?(150/isf):0);
+	city.Troop5Time = ((city.maxBarracks > 2 && city.blacksmithLevel > 0 && city.metalAlloysLevel > 0)?(225/isf):0);
+	city.Troop6Time = ((city.maxBarracks > 3 && city.fletchingLevel > 0)?(350/isf):0);
+	city.Troop7Time = ((city.maxBarracks > 4 && city.stableLevel > 0 && city.alloyHorseshoesLevel > 0)?(500/csf):0);
+	city.Troop8Time = ((city.maxBarracks > 6 && city.blacksmithLevel > 4 && city.stableLevel > 4 && city.alloyHorseshoesLevel > 4)?(1500/csf):0);
+	city.Troop9Time = ((city.maxBarracks > 5 && city.stableLevel > 0 && city.workshopLevel > 2 && city.featherweightPowderLevel > 0)?(1000/ssf):0);
+	city.Troop10Time = ((city.maxBarracks > 7 && city.stableLevel > 1 && city.workshopLevel > 4 && city.geometryLevel > 4 && city.fletchingLevel > 5)?(3000/ssf):0);
+	city.Troop11Time = ((city.maxBarracks > 8 && city.blacksmithLevel > 4 && city.stableLevel > 2 && city.workshopLevel > 6 && city.metalAlloysLevel > 7 && city.geometryLevel > 6)?(4500/ssf):0);
+	city.Troop12Time = ((city.maxBarracks > 9 && city.stableLevel > 1 && city.workshopLevel > 8 && city.geometryLevel > 9 && city.fletchingLevel > 9)?(6000/ssf):0);
+	city.Def53Time = ((city.wallLevel > 5 && city.blacksmithLevel > 5 && city.fletchingLevel > 4)?(180/dsf):0);
+	city.Def55Time = ((city.wallLevel > 7 && city.blacksmithLevel > 7 && city.fletchingLevel > 6 && city.geometryLevel > 6)?(135/dsf):0);
+	city.Def60Time = ((city.wallLevel > 3 && city.blacksmithLevel > 3 && city.poisonedEdgeLevel > 1)?(90/dsf):0);
+	city.Def61Time = ((city.wallLevel > 0 && city.metalAlloysLevel > 0)?(30/dsf):0);
+	city.Def62Time = ((city.wallLevel > 1 && city.blacksmithLevel > 1 && city.loggingLevel > 1)?(60/dsf):0);
 }
 
 
@@ -12405,7 +13180,7 @@ String.prototype.StripQuotes = function() {
 	return this.replace(/"/g,'');
 }
 
-String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;', '\'':'&#039', '<':'\\u003c', '/':'\\/', '\\':'\\\\', '\"':'\\\"'};
+String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;', '\'':'&#039', '<':'\\u003c', '/':'\\/', '\\':'\\\\', '\"':'\\\"','{':'&#123;','}':'&#125;'};
 String.prototype.htmlSpecialChars = function() {
   var ret = this.toString();
   for (k in this.entityTrans)
@@ -13202,7 +13977,8 @@ Tabs.Gifts = {
   
   // notify with gifts[] or: {errMsg:xxx}
   fetchGiftsPage : function (notify){
-    GM_AjaxGet (window.location.protocol+'//www.facebook.com/games?ap=1', '', parseGiftsPage, 'FB Gifts Page');
+	var gifts = [];
+    GM_AjaxGet (window.location.protocol+'//www.facebook.com/games', '', parseGiftsPage, 'FB Gifts Page');
     
     // ...profile.php?id=100000710937192">Anestis Mallos</
     // Here is a GIFTNAME you can use
