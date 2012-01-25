@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120124b
+// @version        20120124c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20120124b';
+var Version = '20120124c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7586,14 +7586,14 @@ Tabs.AutoCraft = {
   },
   updateCraftnb : function() {
    var t = Tabs.AutoCraft;
-   for(var h in TrainOptions.CraftingNb) {
+   for(var h in t.craftinfo) {
 		if (document.getElementById("Craft_nb_" +h)) document.getElementById("Craft_nb_"+h).value=parseInt(TrainOptions.CraftingNb[h]) ;
      }
   },
   saveCraftState : function() {
    var t = Tabs.AutoCraft;
    TrainOptions.CraftingRunning =  t.crafting.running;
-   for(var h in TrainOptions.CraftingNb) {
+   for(var h in t.craftinfo) {
 		if (document.getElementById("Craft_nb_" +h)) TrainOptions.CraftingNb[h] = document.getElementById("Craft_nb_"+h).value;
      }
     saveTrainOptions();
