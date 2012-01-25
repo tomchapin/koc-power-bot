@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120124a
+// @version        20120124b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 
-var Version = '20120124a';
+var Version = '20120124b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7408,6 +7408,7 @@ Tabs.AutoCraft = {
 	timer: null,
 	timerStat: null,
 	numcity :-1,
+	craftinfo : {},
 
 	init: function(div){
         var t = Tabs.AutoCraft;
@@ -7428,27 +7429,25 @@ Tabs.AutoCraft = {
         m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>"; 
         m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>"; 
 		m += "</tr><tr>";
-        
-        // for(var d=0;d<12;d++) {
-         // if (d!=2) {
-	        // var h=parseInt(3000+d);
-	        // var qte=0;
-	        // if (parseInt(Seed.items["i"+h])>0) qte=parseInt(Seed.items["i"+h]);
-	        // m += "<tr><td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+qte+"</span></center></td>";
-       	
-         	// m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseInt(TrainOptions.CraftingNb[h]) +"'></td>";
-        // m += "";
-        	// m += "</tr>";
-         // }
-        // }
+        	 
 		for(var i=0; i < unsafeWindow.recipelist[1].length; i++){
 			var h = parseInt(unsafeWindow.recipelist[1][i].output_item_id);
+			t.craftinfo[h] = {};
+			t.craftinfo[h].recipe_id = unsafeWindow.recipelist[1][i].recipe_id;
+			t.craftinfo[h].category = unsafeWindow.recipelist[1][i].category;
+			t.craftinfo[h].input = unsafeWindow.recipelist[1][i].input;
+			t.craftinfo[h].requirements = unsafeWindow.recipelist[1][i].requirements;
 			m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
 			m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
 			if ((i+1)%2 == 0) m += "</tr><tr>";
 		}
 		for(var i=0; i < unsafeWindow.recipelist[3].length; i++){
 			var h = parseInt(unsafeWindow.recipelist[3][i].output_item_id);
+			t.craftinfo[h] = {};
+			t.craftinfo[h].recipe_id = unsafeWindow.recipelist[3][i].recipe_id;
+			t.craftinfo[h].category = unsafeWindow.recipelist[3][i].category;
+			t.craftinfo[h].input = unsafeWindow.recipelist[3][i].input;
+			t.craftinfo[h].requirements = unsafeWindow.recipelist[3][i].requirements;
 			m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
 			m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
 			if ((i+1)%2 == 0) m += "</tr><tr>";
@@ -7587,21 +7586,16 @@ Tabs.AutoCraft = {
   },
   updateCraftnb : function() {
    var t = Tabs.AutoCraft;
-   for(var d=0;d<12;d++) {
-    var h=parseInt(3000+d);
-     if (document.getElementById("Craft_nb_" +h)) {
-      document.getElementById("Craft_nb_"+h).value=parseInt(TrainOptions.CraftingNb[h]) ;
-      }
-   
-   }
+   for(var h in TrainOptions.CraftingNb) {
+		if (document.getElementById("Craft_nb_" +h)) document.getElementById("Craft_nb_"+h).value=parseInt(TrainOptions.CraftingNb[h]) ;
+     }
   },
   saveCraftState : function() {
    var t = Tabs.AutoCraft;
    TrainOptions.CraftingRunning =  t.crafting.running;
-    for(var d=0;d<12;d++) {
-      var h=parseInt(3000+d);
-      if (document.getElementById("Craft_nb_" +h)) TrainOptions.CraftingNb[h] = document.getElementById("Craft_nb_"+h).value;
-    }
+   for(var h in TrainOptions.CraftingNb) {
+		if (document.getElementById("Craft_nb_" +h)) TrainOptions.CraftingNb[h] = document.getElementById("Craft_nb_"+h).value;
+     }
     saveTrainOptions();
   },
   toggleStateRunning: function(obj){
@@ -7643,14 +7637,15 @@ Tabs.AutoCraft = {
      if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<5000) 
             return;
      var tableau = [];
-     for(var d=0;d<12;d++) {
-           var h=parseInt(3000+d);
-           if (parseInt(TrainOptions.CraftingNb[h])>0) {
-            tableau.push (h);
+     for(var d in TrainOptions.CraftingNb) {
+           if (parseInt(TrainOptions.CraftingNb[d])>0) {
+            tableau.push (d);
            }
      }
-     var itemId = tableau[Math.floor(Math.random()*tableau.length)] 
-     var recipeId = parseInt(itemId) - 3000 + 1;
+
+     var itemId = tableau[Math.floor(Math.random()*tableau.length)];
+     var recipeId = t.craftinfo[itemId].recipe_id;
+	 var category = t.craftinfo[itemId].category;
      var i=Seed.queue_craft["city"+cityId];
      if(i.length>0) {
           var q=i[0];
@@ -7661,9 +7656,9 @@ Tabs.AutoCraft = {
            return;
           }
      } 
-     t.CraftingItem(cityId,  itemId, recipeId);
+     t.CraftingItem(cityId,  itemId, recipeId, category);
     },
-    CraftingItem: function (currentcity, itemId, recipeId) {
+    CraftingItem: function (currentcity, itemId, recipeId, category) {
       var t = Tabs.AutoCraft;
       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
           params.action="craft";
@@ -7672,7 +7667,7 @@ Tabs.AutoCraft = {
           params.insurance=false;
      	  params.itemId=itemId;
      	  params.recipeId=recipeId;
-     	  params.categoryId=1;
+     	  params.categoryId=category;
       new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, { method: "post", parameters: params,loading: true,
           onSuccess: function (transport) {
               var o=eval("("+transport.responseText+")");
