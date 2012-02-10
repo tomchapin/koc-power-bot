@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120124c
+// @version        20120209a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -8,11 +8,15 @@
 // @include        *apps.facebook.com/kingdomsofcamelot/*
 // @include        *kabam.com/kingdoms-of-camelot/play*
 // @include        *facebook.com/connect/uiserver.php*
+// @include        *facebook.com/*/serverfbml*
+// @include        *facebook.com/dialog/feed*
+// @include        *facebook.com/dialog/stream.publish*
+// @include        *facebook.com/dialog/apprequests*
 // @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
 
 
-var Version = '20120124c';
+var Version = '20120209a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -267,8 +271,14 @@ if (document.URL.search(/kabam.com\/kingdoms-of-camelot\/play/i) >= 0 || documen
   kabamStandAlone ();
   return;
 }
-if (document.URL.search(/facebook.com\/connect\/uiserver.php/i) >= 0){
-  HandlePublishPopup ();
+
+if (document.URL.search(/facebook.com/i) >= 0){
+	if(document.URL.search(/connect\/uiserver.php/i) >= 0 ||
+	   document.URL.search(/serverfbml/i) >= 0 ||
+	   document.URL.search(/dialog\/stream.publish/i) >= 0 ||
+	   document.URL.search(/dialog\/apprequests/i) >= 0 ||
+	   document.URL.search(/dialog\/feed/i) >= 0)
+		HandlePublishPopup ();
   return;
 }
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
@@ -368,13 +378,19 @@ function HandlePublishPopup() {
 	if(GlobalOptions.autoPublishGamePopups){
 		// Check the app id (we only want to handle the popup for kingdoms of camelot)
 		var FBInputForm = document.getElementById('uiserver_form');
+		GM_log("form"+FBInputForm);
 		if(FBInputForm){
 			var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
+			GM_log("channel"+channel_input);
 			if(channel_input){
 				var current_channel_url = channel_input.value;
-				if (current_channel_url.match(/(http|https):\/\/.{0,100}kingdomsofcamelot\.com\/.*?\/cross_iframe\.htm/i)) {
+				GM_log(current_channel_url);//[Scriptish] mat/KOC Power Bot: https://s-static.ak.fbcdn.net/connect/xd_proxy.php?version=3#cb=f23f69c95392fd&origin=http%3A%2F%2Fwww339.kingdomsofcamelot.com%2Ff1a8cf2f6c7573c&relation=parent.parent&transport=postmessage
+				if (current_channel_url.match(/(http|https):\/\/.{0,100}kingdomsofcamelot\.com\/.*?\/cross_iframe\.htm/i) ||
+					current_channel_url.match(/kingdomsofcamelot.com/i)) {
 					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
 					var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
+					GM_log("publish"+publish_button);
+					GM_log("privacy"+privacy_setting);
 					if(publish_button && privacy_setting){
 						// 80: Everyone
 						// 50: Friends of Friends
