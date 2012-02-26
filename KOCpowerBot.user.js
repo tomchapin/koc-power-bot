@@ -92,6 +92,7 @@ var Options = {
   DeleteMsg	   : false,
   DeleteMsgs0  : false,
   DeleteMsgs1  : false,
+  DeleteMsgs2  : false,
   Foodstatus   : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   Creststatus  : {1101:0,1102:0,1103:0,1104:0,1105:0,1106:0,1107:0,1108:0,1109:0,1110:0,1111:0,1112:0,1113:0,1114:0,1115:0},
   LastReport   : 0,
@@ -8525,6 +8526,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> Auto delete barb/transport reports from you</td></tr>\
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> Auto delete transport reports to you</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> Auto delete wild reports</td></tr>\
+        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> Auto delete crest target reguardless of type</td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
         m += strButton20('Reset ALL Options', 'id=ResetALL');
       div.innerHTML = m;
@@ -8582,6 +8584,7 @@ Tabs.Options = {
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
 	  t.togOpt ('deletes1toggle', 'DeleteMsgs1');
+	  t.togOpt ('deletes2toggle', 'DeleteMsgs2');
 	  	
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
@@ -14786,7 +14789,7 @@ var DeleteReports = {
 	
     startdeletereports : function(){
 		var t = DeleteReports;
-	  	if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1)){
+	  	if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2)){
 	  		t.deleting = true;
 	  		t.fetchreport(0, t.checkreports);
 	  	}
@@ -14834,6 +14837,10 @@ var DeleteReports = {
 			}
 			if (Options.DeleteMsgs1){
 				if((reports[k].side0TileType <= 50 || reports[k].side0TileType==54)&& reports[k].side0PlayerId==0)
+					deletes1.push(k.substr(2));
+			}
+			if (Options.DeleteMsgs2){//righthere
+				if(reports[k].side0XCoord == CrestOptions.X && reports[k].side0YCoord == CrestOptions.Y && t.isMyself(reports[k].side1PlayerId))
 					deletes1.push(k.substr(2));
 			}
 		}
