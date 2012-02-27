@@ -15282,5 +15282,25 @@ Tabs.Combat = {
 	
 	},
 }
+//Will delete everything in throne room that is lower than blue
+/*****
+for (k in Seed.throne.inventory) {
+if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < 3) {
+var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
+params.action = 'salvage';
+params.itemId = Seed.throne.inventory[k].id;
+params.cityId = Seed.cities[0][0];
+new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+method: "post",
+parameters: params,
+onSuccess: function () {
+},
+onFailure: function () {
+},
+});
+};
+};
+******/
 //
 pbStartup ();
