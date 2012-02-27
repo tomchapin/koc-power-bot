@@ -14871,7 +14871,6 @@ var DeleteReports = {
 			onFailure: function () {
 			},
 		});
-					t.deleting = false;
     },
 	
     isMyself: function(userID){
