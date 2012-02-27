@@ -14865,13 +14865,13 @@ var DeleteReports = {
 				if(rslt.ok){
 					Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
 					actionLog('Deleted: ' +parseInt(deletes1.length + deletes0.length)+' reports');
-					t.deleting = false;
 				}
 				t.fetchreport(0, t.checkreports);
 			},
 			onFailure: function () {
 			},
 		});
+					t.deleting = false;
     },
 	
     isMyself: function(userID){
