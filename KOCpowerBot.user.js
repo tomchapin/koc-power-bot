@@ -14815,9 +14815,11 @@ var DeleteReports = {
     checkreports : function(rslt){
 		var t = DeleteReports;
 		if(!rslt.ok){
+			t.deleting = false;
 			return;
 		}
 		if(rslt.arReports.length < 1){
+			t.deleting = false;
 			return;
 		}
 		var reports = rslt.arReports;
