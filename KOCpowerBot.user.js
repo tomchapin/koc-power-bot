@@ -137,6 +137,10 @@ var CrestOptions = {
   R2Ram:0,
   R2Cat:0,
 };
+var ThroneOptions = {
+	DeleteItems	:	false,
+	DeleteLevel	:	1,
+};
 
 var TrainOptions = {
   Running    : false,
@@ -482,6 +486,7 @@ function pbStartup (){
   readTrainingOptions();
   readCombatOptions();
   readAttackOptions();
+  readThroneOptions();
   setCities();
   stats();
 
@@ -521,6 +526,7 @@ function pbStartup (){
   ChatPane.init();
   ChatStuff.init();
   DeleteReports.init();
+  DeleteThrone.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
     tabManager.showTab();
@@ -11879,6 +11885,11 @@ function saveCrestOptions (){
   setTimeout (function (){GM_setValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CrestOptions));}, 0);
 }
 
+function saveThroneOptions (){
+  var serverID = getServerId();
+  setTimeout (function (){GM_setValue ('ThroneOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(ThroneOptions));}, 0);
+}
+
 function saveCombatOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('CombatOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CombatOptions));}, 0);
@@ -11946,6 +11957,21 @@ function readCrestOptions (){
           CrestOptions[k][kk] = opts[k][kk];
       else
         CrestOptions[k] = opts[k];
+    }
+  }
+}
+
+function readThroneOptions (){
+  var serverID = getServerId();
+  s = GM_getValue ('ThroneOptions_' + Seed.player['name'] + '_' +serverID);
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          ThroneOptions[k][kk] = opts[k][kk];
+      else
+        ThroneOptions[k] = opts[k];
     }
   }
 }
@@ -14784,7 +14810,7 @@ var DeleteReports = {
 	deleting : false,
 	init : function(){
 		var t = DeleteReports;
-		setInterval(t.startdeletereports, 2*60*1000);
+		setInterval(t.startdeletereports, 3*60*1000);
 	},
 	
     startdeletereports : function(){
@@ -14887,6 +14913,38 @@ var DeleteReports = {
     },
 }
 
+/******************* Throne Tab **********************/
+var DeleteThrone = {
+	deleting : false,
+	init : function(){
+		var t = DeleteThrone;
+		if(ThroneOptions.DeleteItems) {
+	  setTimeout (t.startdeletethrone, 2.5*60*1000);
+		};
+	},
+	
+    startdeletethrone : function(){
+		var t = DeleteThrone;
+for (k in Seed.throne.inventory) {
+if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < 3) {
+var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
+params.action = 'salvage';
+params.itemId = Seed.throne.inventory[k].id;
+params.cityId = Seed.cities[0][0];
+new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+method: "post",
+parameters: params,
+onSuccess: function () {
+					actionLog('Deleted Throne room item');
+},
+onFailure: function () {
+},
+});
+};
+};
+    },
+}
 /******************* Combat Tab **********************/
 Tabs.Combat = {
 	myDiv: null,
@@ -15284,8 +15342,7 @@ Tabs.Combat = {
 	
 	},
 }
-//Will delete everything in throne room that is lower than blue
-/*****
+/***
 for (k in Seed.throne.inventory) {
 if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < 3) {
 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -15303,6 +15360,6 @@ onFailure: function () {
 });
 };
 };
-******/
+****/
 //
 pbStartup ();
