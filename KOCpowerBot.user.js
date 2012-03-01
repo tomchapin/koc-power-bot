@@ -14924,13 +14924,11 @@ params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
 params.action = 'salvage';
 params.itemId = Seed.throne.inventory[k].id;
 params.cityId = Seed.cities[0][0];
-	delete Seed.throne.inventory[k];
+      unsafeWindow.kocThroneItems[Seed.throne.inventory[k].id].salvage();
 new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
 method: "post",
 parameters: params,
 onSuccess: function (rslt) {
-	//actionLog('rendering new throne room');
-	//unsafeWindow.cm.ThroneView.renderInventory(Seed.throne.inventory)  ??
 },
 onFailure: function () {
 },
