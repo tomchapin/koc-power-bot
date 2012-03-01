@@ -14797,7 +14797,7 @@ var DeleteReports = {
 	deleting : false,
 	init : function(){
 		var t = DeleteReports;
-		setInterval(t.startdeletereports, 15*1000);
+		setInterval(t.startdeletereports, 20*1000);
 	},
 	
     startdeletereports : function(){
@@ -14906,7 +14906,8 @@ var DeleteThrone = {
 	init : function(){
 		var t = DeleteThrone;
 		if(Options.ThroneDeleteItems) {
-	  setTimeout (t.startdeletethrone, 2.5*60*1000);
+	  setTimeout (t.startdeletethrone, 21*1000);
+	  //t.startdeletethrone
 		};
 	},
 	
@@ -14917,6 +14918,7 @@ var DeleteThrone = {
 		};
 for (k in Seed.throne.inventory) {
 if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < Options.ThroneDeleteLevel) {
+					actionLog('Deleted Throne room item'+Seed.throne.inventory[k].id);
 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
 params.action = 'salvage';
@@ -14927,7 +14929,8 @@ new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindo
 method: "post",
 parameters: params,
 onSuccess: function (rslt) {
-					actionLog('Deleted Throne room item');
+				//	actionLog('rendering new throne room');
+	//unsafewindow.cm.ThroneView.renderInventory(Seed.throne.inventory) ????
 },
 onFailure: function () {
 },
