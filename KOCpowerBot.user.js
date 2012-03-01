@@ -105,6 +105,8 @@ var Options = {
   Crest2Count  : 0,
   CrestLevel   : 0,
   CrestType    : 0,
+  ThroneDeleteItems	:	false,
+  ThroneDeleteLevel	:	0,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -136,10 +138,6 @@ var CrestOptions = {
   R2Ball:0,
   R2Ram:0,
   R2Cat:0,
-};
-var ThroneOptions = {
-	DeleteItems	:	false,
-	DeleteLevel	:	1,
 };
 
 var TrainOptions = {
@@ -486,7 +484,6 @@ function pbStartup (){
   readTrainingOptions();
   readCombatOptions();
   readAttackOptions();
-  readThroneOptions();
   setCities();
   stats();
 
@@ -8533,6 +8530,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> Auto delete transport reports to you</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> Auto delete wild reports</td></tr>\
         <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> Auto delete crest target reguardless of type</td></tr>\
+        <TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> Auto delete throne items (including equiped) below '+ htmlSelector({0:'----', 1:'Common', 2:'Uncommon', 3:'Rare'},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
         m += strButton20('Reset ALL Options', 'id=ResetALL');
       div.innerHTML = m;
@@ -8569,6 +8567,11 @@ Tabs.Options = {
 	  		reloadKOC();
 	  },false);	
 	  	
+	  document.getElementById('selecttil').addEventListener ('change', function(){
+		Options.ThroneDeleteLevel = this.value;
+		saveOptions();
+      },false);
+	  	
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
       document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
       document.getElementById('pbupdate').addEventListener ('change', t.e_updateChanged, false);
@@ -8591,7 +8594,10 @@ Tabs.Options = {
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
 	  t.togOpt ('deletes1toggle', 'DeleteMsgs1');
 	  t.togOpt ('deletes2toggle', 'DeleteMsgs2');
+	  t.togOpt ('deletethrone', 'ThroneDeleteItems', DeleteThrone.startdeletethrone);
 	  	
+
+      
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }      
@@ -11885,11 +11891,6 @@ function saveCrestOptions (){
   setTimeout (function (){GM_setValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CrestOptions));}, 0);
 }
 
-function saveThroneOptions (){
-  var serverID = getServerId();
-  setTimeout (function (){GM_setValue ('ThroneOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(ThroneOptions));}, 0);
-}
-
 function saveCombatOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('CombatOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CombatOptions));}, 0);
@@ -11961,20 +11962,6 @@ function readCrestOptions (){
   }
 }
 
-function readThroneOptions (){
-  var serverID = getServerId();
-  s = GM_getValue ('ThroneOptions_' + Seed.player['name'] + '_' +serverID);
-  if (s != null){
-    opts = JSON2.parse (s);
-    for (k in opts){
-      if (matTypeof(opts[k]) == 'object')
-        for (kk in opts[k])
-          ThroneOptions[k][kk] = opts[k][kk];
-      else
-        ThroneOptions[k] = opts[k];
-    }
-  }
-}
 
 function readCombatOptions (){
   var serverID = getServerId();
@@ -14810,7 +14797,7 @@ var DeleteReports = {
 	deleting : false,
 	init : function(){
 		var t = DeleteReports;
-		setInterval(t.startdeletereports, 3*60*1000);
+		setInterval(t.startdeletereports, 15*1000);
 	},
 	
     startdeletereports : function(){
@@ -14913,29 +14900,33 @@ var DeleteReports = {
     },
 }
 
-/******************* Throne Tab **********************/
+/******************* Throne Delete **********************/
 var DeleteThrone = {
 	deleting : false,
 	init : function(){
 		var t = DeleteThrone;
-		if(ThroneOptions.DeleteItems) {
+		if(Options.ThroneDeleteItems) {
 	  setTimeout (t.startdeletethrone, 2.5*60*1000);
 		};
 	},
 	
     startdeletethrone : function(){
 		var t = DeleteThrone;
+		if(!Options.ThroneDeleteItems) {
+			return;
+		};
 for (k in Seed.throne.inventory) {
-if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < 3) {
+if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < Options.ThroneDeleteLevel) {
 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
 params.action = 'salvage';
 params.itemId = Seed.throne.inventory[k].id;
 params.cityId = Seed.cities[0][0];
+	delete Seed.throne.inventory[k];
 new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
 method: "post",
 parameters: params,
-onSuccess: function () {
+onSuccess: function (rslt) {
 					actionLog('Deleted Throne room item');
 },
 onFailure: function () {
@@ -14943,6 +14934,7 @@ onFailure: function () {
 });
 };
 };
+setTimeout (t.startdeletethrone, 2.5*60*1000);
     },
 }
 /******************* Combat Tab **********************/
@@ -15342,24 +15334,5 @@ Tabs.Combat = {
 	
 	},
 }
-/***
-for (k in Seed.throne.inventory) {
-if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < 3) {
-var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
-params.action = 'salvage';
-params.itemId = Seed.throne.inventory[k].id;
-params.cityId = Seed.cities[0][0];
-new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-method: "post",
-parameters: params,
-onSuccess: function () {
-},
-onFailure: function () {
-},
-});
-};
-};
-****/
 //
 pbStartup ();
