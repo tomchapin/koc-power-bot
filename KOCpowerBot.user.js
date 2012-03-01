@@ -14929,8 +14929,8 @@ new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindo
 method: "post",
 parameters: params,
 onSuccess: function (rslt) {
-				//	actionLog('rendering new throne room');
-	//unsafewindow.cm.ThroneView.renderInventory(Seed.throne.inventory) ????
+	//actionLog('rendering new throne room');
+	//unsafeWindow.cm.ThroneView.renderInventory(Seed.throne.inventory)  ??
 },
 onFailure: function () {
 },
