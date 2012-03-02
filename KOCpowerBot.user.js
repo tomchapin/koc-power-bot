@@ -14907,7 +14907,7 @@ var DeleteThrone = {
 	init : function(){
 		var t = DeleteThrone;
 		if(Options.ThroneDeleteItems) {
-		setInterval(t.startdeletethrone, 60*1000);
+		setTimeout(t.startdeletethrone, 60*1000);
 		};
 	},
 	
@@ -14936,8 +14936,8 @@ new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindo
 method: "post",
 parameters: params,
 onSuccess: function () {
-      unsafeWindow.kocThroneItems[Seed.throne.inventory[k].id].salvage();
 		actionLog('Deleted Throne room item '+Seed.throne.inventory[k].id);
+      unsafeWindow.kocThroneItems[Seed.throne.inventory[k].id].salvage();
 },
 onFailure: function () {
 },
