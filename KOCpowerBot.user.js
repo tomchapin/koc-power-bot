@@ -2879,6 +2879,7 @@ Tabs.Search = {
       type = t.mapDat[i][3];
       if (t.opt.searchType==2 && type==7 ) {
 		if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5])
+		if(lvl >= 12)
 		if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
 		   (Options.mistedOnly && t.mapDat[i][5]===true) ||
 		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
@@ -14797,7 +14798,7 @@ var DeleteReports = {
 	deleting : false,
 	init : function(){
 		var t = DeleteReports;
-		setInterval(t.startdeletereports, 2*60*1000);
+		setInterval(t.startdeletereports, 60*1000);
 	},
 	
     startdeletereports : function(){
@@ -14906,8 +14907,7 @@ var DeleteThrone = {
 	init : function(){
 		var t = DeleteThrone;
 		if(Options.ThroneDeleteItems) {
-	  setTimeout (t.startdeletethrone, 21*1000);
-	  //t.startdeletethrone
+		setInterval(t.startdeletethrone, 60*1000);
 		};
 	},
 	
@@ -14918,25 +14918,31 @@ var DeleteThrone = {
 		};
 for (k in Seed.throne.inventory) {
 if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < Options.ThroneDeleteLevel) {
-					actionLog('Deleted Throne room item'+Seed.throne.inventory[k].id);
+	
+t.dodelete(k);
+
+
+};
+};
+    },
+    dodelete : function(k){
+		var t = DeleteThrone;
 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
 params.action = 'salvage';
 params.itemId = Seed.throne.inventory[k].id;
 params.cityId = Seed.cities[0][0];
-      unsafeWindow.kocThroneItems[Seed.throne.inventory[k].id].salvage();
 new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
 method: "post",
 parameters: params,
-onSuccess: function (rslt) {
+onSuccess: function () {
+      unsafeWindow.kocThroneItems[Seed.throne.inventory[k].id].salvage();
+		actionLog('Deleted Throne room item '+Seed.throne.inventory[k].id);
 },
 onFailure: function () {
 },
 });
-};
-};
-setTimeout (t.startdeletethrone, 2.5*60*1000);
-    },
+	},
 }
 /******************* Combat Tab **********************/
 Tabs.Combat = {
