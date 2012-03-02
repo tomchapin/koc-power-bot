@@ -2879,7 +2879,7 @@ Tabs.Search = {
       type = t.mapDat[i][3];
       if (t.opt.searchType==2 && type==7 ) {
 		if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5])
-		if(lvl >= 12)
+		//if(lvl >= 12)
 		if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
 		   (Options.mistedOnly && t.mapDat[i][5]===true) ||
 		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
