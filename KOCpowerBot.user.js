@@ -14798,7 +14798,7 @@ var DeleteReports = {
 	deleting : false,
 	init : function(){
 		var t = DeleteReports;
-		setInterval(t.startdeletereports, 5*60*1000);
+		setInterval(t.startdeletereports, 1.5*60*1000);
 	},
 	
     startdeletereports : function(){
@@ -14907,7 +14907,7 @@ var DeleteThrone = {
 	init : function(){
 		var t = DeleteThrone;
 		if(Options.ThroneDeleteItems) {
-		setTimeout(t.startdeletethrone, 60*1000);
+		setInterval(t.startdeletethrone, 60*1000);
 		};
 	},
 	
@@ -14927,6 +14927,7 @@ t.dodelete(k);
     },
     dodelete : function(k){
 		var t = DeleteThrone;
+      unsafeWindow.kocThroneItems[Seed.throne.inventory[k].id].salvage();
 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
 params.action = 'salvage';
@@ -14937,7 +14938,6 @@ method: "post",
 parameters: params,
 onSuccess: function () {
 		actionLog('Deleted Throne room item '+Seed.throne.inventory[k].id);
-      unsafeWindow.kocThroneItems[Seed.throne.inventory[k].id].salvage();
 },
 onFailure: function () {
 },
