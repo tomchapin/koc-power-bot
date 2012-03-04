@@ -8531,7 +8531,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> Auto delete transport reports to you</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> Auto delete wild reports</td></tr>\
         <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> Auto delete crest target reguardless of type</td></tr>\
-        <TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> Auto delete throne items (including equiped) below '+ htmlSelector({0:'----', 1:'Common', 2:'Uncommon', 3:'Rare'},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>\
+        <TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> Auto delete throne items (including equiped) below '+ htmlSelector({0:'Simple', 1:'Common', 2:'Uncommon', 3:'Rare', 4:'Epic', 5:'Wonderous'},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
         m += strButton20('Reset ALL Options', 'id=ResetALL');
       div.innerHTML = m;
@@ -14798,7 +14798,7 @@ var DeleteReports = {
 	deleting : false,
 	init : function(){
 		var t = DeleteReports;
-		setInterval(t.startdeletereports, 2.5*60*1000);
+		setInterval(t.startdeletereports, 2*60*1000);
 	},
 	
     startdeletereports : function(){
