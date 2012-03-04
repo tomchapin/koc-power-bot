@@ -14798,7 +14798,7 @@ var DeleteReports = {
 	deleting : false,
 	init : function(){
 		var t = DeleteReports;
-		setInterval(t.startdeletereports, 5*60*1000);
+		setInterval(t.startdeletereports, 2.5*60*1000);
 	},
 	
     startdeletereports : function(){
@@ -14838,6 +14838,8 @@ var DeleteReports = {
 		}
 		var reports = rslt.arReports;
 		var totalPages = rslt.totalPages;
+		if (rslt.totalPages > 30)
+		var totalPages = 30;
 		var deletes1 = new Array();
 		var deletes0 = new Array();
 		for(k in reports){
@@ -14855,8 +14857,8 @@ var DeleteReports = {
 				if((reports[k].side0TileType <= 50 || reports[k].side0TileType==54)&& reports[k].side0PlayerId==0)
 					deletes1.push(k.substr(2));
 			}
-			if (Options.DeleteMsgs2){//righthere
-				if(reports[k].side0XCoord == CrestOptions.X && reports[k].side0YCoord == CrestOptions.Y && t.isMyself(reports[k].side1PlayerId))
+			if (Options.DeleteMsgs2){
+				if(reports[k].side0XCoord == CrestOptions.X && reports[k].side0YCoord == CrestOptions.Y && reports[k].marchType==4 && t.isMyself(reports[k].side1PlayerId))
 					deletes1.push(k.substr(2));
 			}
 		}
@@ -14903,6 +14905,7 @@ var DeleteReports = {
 
 /******************* Throne Delete **********************/
 var DeleteThrone = {
+	deltitems : new Array(),
 	deleting : false,
 	init : function(){
 		var t = DeleteThrone;
@@ -14916,30 +14919,41 @@ var DeleteThrone = {
 		if(!Options.ThroneDeleteItems) {
 			return;
 		};
+		if (t.deleting == true) 
+		return;
+		t.deleting = true;
 for (k in Seed.throne.inventory) {
 if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < Options.ThroneDeleteLevel) {
-	
-t.dodelete(k);
-
-
+	t.deltitems.push(Seed.throne.inventory[k].id);
 };
 };
+t.dodelete();
     },
-    dodelete : function(k){
+    dodelete : function(){
 		var t = DeleteThrone;
-      unsafeWindow.kocThroneItems[Seed.throne.inventory[k].id].salvage();
 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
 params.action = 'salvage';
-params.itemId = Seed.throne.inventory[k].id;
+params.itemId = t.deltitems[0];
 params.cityId = Seed.cities[0][0];
 new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
 method: "post",
 parameters: params,
-onSuccess: function () {
-		actionLog('Deleted Throne room item '+Seed.throne.inventory[k].id);
+onSuccess: function (rslt) {
+	if(rslt.ok) {
+		actionLog('Deleted Throne room item '+unsafeWindow.kocThroneItems[t.deltitems[0]].name);
+      unsafeWindow.kocThroneItems[t.deltitems.shift()].salvage();
+		if (t.deltitems[0] != null) {
+		t.dodelete();
+	} else {
+		t.deleting = false;
+		return;
+	}
+	} else
+	t.dodelete();
 },
 onFailure: function () {
+		t.dodelete();
 },
 });
 	},
