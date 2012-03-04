@@ -11795,7 +11795,8 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
     rslt.errorMsg = unsafeWindow.printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null));
     //if ( (x = rslt.errorMsg.indexOf ('<br><br>')) > 0)
      // rslt.errorMsg = rslt.errorMsg.substr (0, x-1);
-    if (!noRetry && (rslt.error_code==0 ||rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
+     //rslt.error_code==0 ||
+    if (!noRetry && (rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
       dialogRetry (rslt.errorMsg, delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
     } else {
       wasSuccess (rslt);
@@ -14950,14 +14951,14 @@ onSuccess: function (rslt) {
 		actionLog('Deleted Throne room item '+unsafeWindow.kocThroneItems[t.deltitems[0]].name);
       unsafeWindow.kocThroneItems[t.deltitems.shift()].salvage();
 		if (t.deltitems[0] != null) {
-		t.dodelete();
+			setTimeout (function() {t.dodelete()}, 5000);
 	} else {
 		t.deleting = false;
 		return;
 	}
 	} else {
 		if (t.deltitems[0] != null) {
-t.dodelete();
+			setTimeout (function() {t.dodelete()}, 5000);
 } else {
 		t.deleting = false;
 		return;
@@ -14966,7 +14967,7 @@ t.dodelete();
 },
 onFailure: function () {
 		if (t.deltitems[0] != null) {
-t.dodelete();
+			setTimeout (function() {t.dodelete()}, 5000);
 } else {
 		t.deleting = false;
 		return;
