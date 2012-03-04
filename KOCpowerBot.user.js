@@ -14927,8 +14927,14 @@ if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < O
 	t.deltitems.push(Seed.throne.inventory[k].id);
 };
 };
+		if (t.deltitems[0] != null) {
 t.dodelete();
+} else {
+		t.deleting = false;
+		return;
+};
     },
+    
     dodelete : function(){
 		var t = DeleteThrone;
 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -14949,11 +14955,22 @@ onSuccess: function (rslt) {
 		t.deleting = false;
 		return;
 	}
-	} else
-	t.dodelete();
+	} else {
+		if (t.deltitems[0] != null) {
+t.dodelete();
+} else {
+		t.deleting = false;
+		return;
+};
+	};
 },
 onFailure: function () {
-		t.dodelete();
+		if (t.deltitems[0] != null) {
+t.dodelete();
+} else {
+		t.deleting = false;
+		return;
+};
 },
 });
 	},
