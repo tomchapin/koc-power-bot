@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120305b
+// @version        20120305c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120305b';
+var Version = '20120305c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4096,17 +4096,17 @@ Tabs.Test = {
     m += '<TABLE class=ptTab><TR><TD>Wild coords: X:<INPUT id=pbcrestx type=text size=3 maxlength=3 value="'+CrestOptions.X+'"</td>';
     m += '<TD>Y:<INPUT id=pbcresty type=text size=3 maxlength=3 value="'+CrestOptions.Y+'"</td></tr></table>';
    
-    m += '<TABLE class=ptTab><TR><TD>Wave <b>1</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R1MM type=text size=5 maxlength=5 value="'+CrestOptions.R1MM+'" (When left 0 it will not send out a first wave, for whatever reason you want to do that...)</td>';
-    m += '</td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=5 value="'+CrestOptions.R1Ball+'"</td>';
-    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=5 value="'+CrestOptions.R1Cat+'"</td></tr>';
+    m += '<TABLE class=ptTab><TR><TD>Wave <b>1</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R1MM type=text size=5 maxlength=6 value="'+CrestOptions.R1MM+'" (When left 0 it will not send out a first wave, for whatever reason you want to do that...)</td>';
+    m += '</td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=6 value="'+CrestOptions.R1Ball+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=6 value="'+CrestOptions.R1Cat+'"</td></tr>';
     
-    m += '<TR><TD>Wave <b>2</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R2MM type=text size=5 maxlength=5 value="'+CrestOptions.R2MM+'"</td>';
-    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.png></td><TD><INPUT id=R2Pike type=text size=5 maxlength=5 value="'+CrestOptions.R2Pike+'"</td>';
-    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_30.png></td><TD><INPUT id=R2Sword type=text size=5 maxlength=5 value="'+CrestOptions.R2Sword+'"</td>';
-    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_30.png></td><TD><INPUT id=R2Arch type=text size=5 maxlength=5 value="'+CrestOptions.R2Arch+'"</td>';
-    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R2Ball type=text size=5 maxlength=5 value="'+CrestOptions.R2Ball+'"</td>';
-    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_30.png></td><TD><INPUT id=R2Ram type=text size=5 maxlength=5 value="'+CrestOptions.R2Ram+'"</td>';
-    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R2Cat type=text size=5 maxlength=5 value="'+CrestOptions.R2Cat+'"</td></tr></table>';
+    m += '<TR><TD>Wave <b>2</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R2MM type=text size=5 maxlength=6 value="'+CrestOptions.R2MM+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.png></td><TD><INPUT id=R2Pike type=text size=5 maxlength=6 value="'+CrestOptions.R2Pike+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_30.png></td><TD><INPUT id=R2Sword type=text size=5 maxlength=6 value="'+CrestOptions.R2Sword+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_30.png></td><TD><INPUT id=R2Arch type=text size=5 maxlength=6 value="'+CrestOptions.R2Arch+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R2Ball type=text size=5 maxlength=6 value="'+CrestOptions.R2Ball+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_30.png></td><TD><INPUT id=R2Ram type=text size=5 maxlength=6 value="'+CrestOptions.R2Ram+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R2Cat type=text size=5 maxlength=6 value="'+CrestOptions.R2Cat+'"</td></tr></table>';
     
     t.myDiv.innerHTML = m;
 	
