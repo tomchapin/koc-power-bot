@@ -11795,9 +11795,8 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
     rslt.errorMsg = unsafeWindow.printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null));
     //if ( (x = rslt.errorMsg.indexOf ('<br><br>')) > 0)
      // rslt.errorMsg = rslt.errorMsg.substr (0, x-1);
-     //rslt.error_code==0 ||
-    if (!noRetry && (rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
-      dialogRetry (rslt.errorMsg, delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
+    if (!noRetry && (rslt.error_code==0 || rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
+      dialogRetry (inspect(rslt.errorMsg), delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
     } else {
       wasSuccess (rslt);
     }
