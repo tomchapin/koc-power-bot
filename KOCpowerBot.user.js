@@ -14922,6 +14922,7 @@ var DeleteThrone = {
 		if (t.deleting == true) 
 		return;
 		t.deleting = true;
+		deltitems = [];
 for (k in Seed.throne.inventory) {
 if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < Options.ThroneDeleteLevel) {
 	t.deltitems.push(Seed.throne.inventory[k].id);
@@ -14936,41 +14937,30 @@ t.dodelete();
     },
     
     dodelete : function(){
-		var t = DeleteThrone;
+		var t = DeleteThrone;	
 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
 params.action = 'salvage';
 params.itemId = t.deltitems[0];
 params.cityId = Seed.cities[0][0];
-new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-method: "post",
-parameters: params,
-onSuccess: function (rslt) {
-	if(rslt.ok) {
 		actionLog('Deleted Throne room item '+unsafeWindow.kocThroneItems[t.deltitems[0]].name);
       unsafeWindow.kocThroneItems[t.deltitems.shift()].salvage();
+      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+                  method: "post",
+                  parameters: params,
+                  loading: true,
+onSuccess: function (rslt) {
 		if (t.deltitems[0] != null) {
-			setTimeout (function() {t.dodelete()}, 5000);
+			setTimeout (function() {t.dodelete()}, 3000);
 	} else {
 		t.deleting = false;
 		return;
-	}
-	} else {
-		if (t.deltitems[0] != null) {
-			setTimeout (function() {t.dodelete()}, 5000);
-} else {
-		t.deleting = false;
-		return;
-};
 	};
 },
 onFailure: function () {
-		if (t.deltitems[0] != null) {
-			setTimeout (function() {t.dodelete()}, 5000);
-} else {
+		deltitems = [];
 		t.deleting = false;
 		return;
-};
 },
 });
 	},
