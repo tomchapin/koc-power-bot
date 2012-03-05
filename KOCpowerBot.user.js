@@ -14919,13 +14919,14 @@ var DeleteThrone = {
 		if(!Options.ThroneDeleteItems) {
 			return;
 		};
+//		alert(t.deleting);
 		if (t.deleting == true) 
 		return;
 		t.deleting = true;
 		deltitems = [];
-for (k in Seed.throne.inventory) {
-if (Seed.throne.inventory[k].status == 1 && Seed.throne.inventory[k].quality < Options.ThroneDeleteLevel) {
-	t.deltitems.push(Seed.throne.inventory[k].id);
+for (k in unsafeWindow.kocThroneItems) {
+if (unsafeWindow.kocThroneItems[k].quality < Options.ThroneDeleteLevel && unsafeWindow.kocThroneItems[k].isEquipped == false && unsafeWindow.kocThroneItems[k].level == 0) {
+	t.deltitems.push(unsafeWindow.kocThroneItems[k].id);
 };
 };
 		if (t.deltitems[0] != null) {
