@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120305a
+// @version        20120305b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120305a';
+var Version = '20120305b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -107,6 +107,7 @@ var Options = {
   CrestType    : 0,
   ThroneDeleteItems	:	false,
   ThroneDeleteLevel	:	0,
+  Opacity :0.9,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -446,8 +447,7 @@ function pbStartup (){
     table.pbTabPad tr td.ptentry {background-color:#ffeecc; padding-left: 8px;}\
     table.ptNoPad tr td {border:none; background:none; white-space:nowrap; padding:0px}\
     .pbDetLeft {padding:0 5px 0 0 !important; font-weight:bold; text-align:right}\
-    .pbStat {border:1px solid; border-color:#ffffff; font-weight:bold; padding-top:2px; padding-bottom:2px; text-align:center; color:#ffffff; background-color:#357}\
-    .ptentry {padding: 7px; border:1px solid; border-color:#000000; background-color:#ffeecc; white-space:nowrap;}\
+    .pbStat {border:1px solid; border-color:#000000; font-weight:bold; padding-top:2px; padding-bottom:2px; text-align:center; color:#ffffff ; background-color:#357;  -moz-border-radius:5px;}\.ptentry {padding: 7px; border:1px solid; border-color:#000000; background-color:#ffeecc; white-space:nowrap;}\
     .ptErrText {font-weight:bold; color:#600000}\
     .castleBut {outline:0px; margin-left:0px; margin-right:0px; width:24px; height:26px; font-size:12px; font-weight:bold;}\
     .castleBut:hover {border-size:3px; border-color:#000;}\
@@ -456,21 +456,21 @@ function pbStartup (){
     span.boldRed {color:#800; font-weight:bold}\
     .castleButNon {background-image:url("'+ URL_CASTLE_BUT +'")}\
     .castleButSel {background-image:url("'+ URL_CASTLE_BUT_SEL +'")}\
-    input.pbDefButOn {cursor:pointer; border:1px solid black; background-color:red;}\
-    input.pbDefButOff {cursor:pointer; border:1px solid black; background-color:#0a0;}\
+    input.pbDefButOn {cursor:pointer; border:1px solid #45d183; -moz-box-shadow:inset 0px 1px 5px #3aef8b; -moz-border-radius:5px;}\
+    input.pbDefButOff {cursor:pointer; border:1px solid #f61646; -moz-box-shadow:inset 0px 1px 5px #f6375f; -moz-border-radius:5px;}\
     a.ptButton20 {color:#ffff80}\
-    table.pbMainTab {empty-cells:show; margin-top:5px }\
+    table.pbMainTab { empty-cells: show;  margin-left: 5px;  margin-top: 4px; padding: 1px;  }\
     table.pbMainTab tr td a {color:inherit }\
-    table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 4px 0px 4px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; }\
-    table.pbMainTab tr td.spacer {padding: 0px 0px;}\
-    table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid solid solid; background-color:#eed;}\
-    table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid solid solid; background-color:#00a044; color:white; border-color:black;}\
-    tr.pbPopTop td { background-color:#ded; border:none; height: 21px;  padding:0px; }\
+    table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 4px 0px 4px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; -moz-border-radius:5px; }\table.pbMainTab tr td.spacer {padding: 0px 0px;}\
+	table.pbMainTab tr td.spacer {padding: 0px 0px;}\
+    table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid #000000; background: -moz-linear-gradient(top,#00a045 0%,#94eb9a 0%,#045c28);}\table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; border: 1px solid; border-style: solid solid solid solid; background-color:#00a044; color:white; border-color:black;}\
+	table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; color: #ffffff; border: 1px solid #000000; background: -moz-linear-gradient(top,#00a045 0%,#94eb9a 0%,#045c28);}\
+    tr.pbPopTop td { background-color:transparent; height: 21px;  padding-left:30px; -moz-border-radius-topright: 20px; }\
     tr.pbretry_pbPopTop td { background-color:#a00; color:#fff; border:none; height: 21px;  padding:0px; }\
     tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px;  padding:0px; }\
     tr.pbretry_pbMainPopTop td { background-color:#a00; color:#fff; border:none; height: 42px;  padding:0px; }\
-    .CPopup .CPopMain { background-color:#f8f8f8; padding:6px;}\
-    .CPopup  {border:3px ridge #666}\
+    .CPopup .CPopMain  { border:1px solid #000000; -moz-box-shadow:inset 0px 0px 10px #6a6a6a; -moz-border-radius-bottomright: 20px; -moz-border-radius-bottomleft: 20px;}\
+    .CPopup  {border:5px ridge #666; opacity:'+Options.Opacity+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000;}\
     span.pbTextFriendly {color: #080}\
     span.pbTextHostile {color: #800}\
 	.pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
@@ -502,7 +502,7 @@ function pbStartup (){
     saveOptions ();
   }
 
-  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,600, Options.pbWinDrag,
+  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,800, Options.pbWinDrag,
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false;
@@ -737,7 +737,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
     <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
 &nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold">(Standard text messaging rates apply)</span></td></tr><tr><td></td>\
+&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold"><sup>*Standard text messaging rates apply</sup></span></td></tr><tr><td></td>\
     <TD align=left>Country: <select id="pbfrmcountry">';
     for (var i in t.Providers) {
        var ret=m.indexOf(t.Providers[i].country);
@@ -7437,7 +7437,7 @@ Tabs.AutoCraft = {
         t.crafting = {
 	            running: TrainOptions.CraftingRunning,
         };
-        var m = '<DIV id=pbCraftingDiv class=pbStat>AUTO CRAFTING - SETTINGS</div><TABLE id=pbcraftingfunc width=100% height=0% class=pbTab><TR><TD width="10%">Intervall: <input type=text value="'+TrainOptions.CraftIntervallMin+'" size=2  maxlength=2 id=pbCraftIntervall> Minute(s) <b>(</b><span class=boldRed>need Refresh</span><b>)</b></td>';
+        var m = '<DIV id=pbCraftingDiv class=pbStat>AUTO CRAFTING - SETTINGS</div><TABLE id=pbcraftingfunc width=100% height=0% class=pbTab><TR><TD width="10%">Intervall: <input type=text value="'+TrainOptions.CraftIntervallMin+'" size=2  maxlength=2 id=pbCraftIntervall> Minute(s)<span class=boldRed><sup>*Refresh Required</sup></span></td>';
         if (t.crafting.running == false) {
 	            m += '<TD  width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = OFF"></td>';
 	 }	        else {
@@ -8514,6 +8514,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>Hide window when clicking on map coordinates</td></tr>\
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>Enable widescreen style: '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' (all domains, requires refresh)</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>Check updates on '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' (all domains) &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="Update Now" /></td></tr>\
+		<TR><TD>&nbsp;&nbsp;&nbsp-</td><TD>Change window transparency between "0.7 - 2" &nbsp <INPUT id=togOpacity type=text size=3 maxlength=3 value="'+Options.Opacity+'"/> <span style="color:#800; font-weight:bold"><sup>*Requires Refresh</sup></span></td></tr>\
         <TR><TD colspan=2><BR><B>KofC Features:</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>Disable all Fairie popup windows</td></tr>\
         <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>Refresh if KOC not loaded within 1 minute (all domains)</td></tr>\
@@ -8572,7 +8573,12 @@ Tabs.Options = {
 		Options.ThroneDeleteLevel = this.value;
 		saveOptions();
       },false);
-	  	
+	   document.getElementById('togOpacity').addEventListener ('change', function(){
+	   Options.Opacity = this.value;
+	   saveOptions();
+	   },false);
+	   
+	  document.getElementById('togOpacity').addEventListener('change', function(){Options.Opacity = document.getElementById('togOpacity').value;t.Layout()}, false);
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
       document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
       document.getElementById('pbupdate').addEventListener ('change', t.e_updateChanged, false);
