@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120305d
+// @version        20120305e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120305d';
+var Version = '20120305e';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -130,9 +130,11 @@ var CrestOptions = {
   X:0,
   Y:0,
   R1MM:0,
+  R1Scout:0,
   R1Ball:0,
   R1Cat:0,
   R2MM:0,
+  R2Scout:0,
   R2Pike:0,
   R2Sword:0,
   R2Arch:0,
@@ -502,7 +504,7 @@ function pbStartup (){
     saveOptions ();
   }
 
-  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,800, Options.pbWinDrag,
+  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 800,800, Options.pbWinDrag,
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false;
@@ -4089,18 +4091,20 @@ Tabs.Test = {
     m += '<TD><INPUT id=CrestHelp type=submit value="HELP"></td>';
     m += '<TD><INPUT id=pbsendreport type=checkbox '+ (Options.crestreport?' CHECKED':'') +'\> Send Crest report every ';
     m += '<INPUT id=pbsendcrestreportint value='+ Options.CrestMsgInterval +' type=text size=3 \> hours </td></table>';
-    
+  
     m += '<DIV id=pbOpt class=pbStat>CRESTING OPTIONS</div><TABLE id=pbcrestopt	 width=100% height=0% class=pbTab><TR align="center"></table>';
     m += '<DIV style="margin-bottom:10px;">Crest from city: <span id=crestcity></span></div>';
     
     m += '<TABLE class=ptTab><TR><TD>Wild coords: X:<INPUT id=pbcrestx type=text size=3 maxlength=3 value="'+CrestOptions.X+'"</td>';
     m += '<TD>Y:<INPUT id=pbcresty type=text size=3 maxlength=3 value="'+CrestOptions.Y+'"</td></tr></table>';
    
-    m += '<TABLE class=ptTab><TR><TD>Wave <b>1</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R1MM type=text size=5 maxlength=6 value="'+CrestOptions.R1MM+'" (When left 0 it will not send out a first wave, for whatever reason you want to do that...)</td>';
-    m += '</td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=6 value="'+CrestOptions.R1Ball+'"</td>';
-    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=6 value="'+CrestOptions.R1Cat+'"</td></tr>';
+    m += '<TABLE class=ptTab><TR><TD>Wave <b>1</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R1MM type=text size=5 maxlength=6 value="'+CrestOptions.R1MM+'"</td>';
+    m += '</td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.png></td><TD><INPUT id=R1Scout type=text size=5 maxlength=6 value="'+CrestOptions.R1Scout+'"</td>';
+    m += '</td><TD></td><TD></td><TD></td><TD></td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=6 value="'+CrestOptions.R1Ball+'"</td>';
+    m += '</td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=6 value="'+CrestOptions.R1Cat+'"</td></tr>';
     
     m += '<TR><TD>Wave <b>2</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R2MM type=text size=5 maxlength=6 value="'+CrestOptions.R2MM+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.png></td><TD><INPUT id=R2Scout type=text size=5 maxlength=6 value="'+CrestOptions.R2Scout+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.png></td><TD><INPUT id=R2Pike type=text size=5 maxlength=6 value="'+CrestOptions.R2Pike+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_30.png></td><TD><INPUT id=R2Sword type=text size=5 maxlength=6 value="'+CrestOptions.R2Sword+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_30.png></td><TD><INPUT id=R2Arch type=text size=5 maxlength=6 value="'+CrestOptions.R2Arch+'"</td>';
@@ -4139,9 +4143,11 @@ Tabs.Test = {
     document.getElementById('pbcrestx').addEventListener('change', function(){CrestOptions.X = document.getElementById('pbcrestx').value; saveCrestOptions();} , false);
     document.getElementById('pbcresty').addEventListener('change', function(){CrestOptions.Y = document.getElementById('pbcresty').value; saveCrestOptions()} , false);
     document.getElementById('R1MM').addEventListener('change', function(){CrestOptions.R1MM = document.getElementById('R1MM').value; saveCrestOptions()} , false);
+    document.getElementById('R1Scout').addEventListener('change', function(){CrestOptions.R1Scout = document.getElementById('R1Scout').value; saveCrestOptions()} , false);
     document.getElementById('R1Ball').addEventListener('change', function(){CrestOptions.R1Ball = document.getElementById('R1Ball').value; saveCrestOptions()} , false);
     document.getElementById('R1Cat').addEventListener('change', function(){CrestOptions.R1Cat = document.getElementById('R1Cat').value; saveCrestOptions()} , false);
     document.getElementById('R2MM').addEventListener('change', function(){CrestOptions.R2MM = document.getElementById('R2MM').value; saveCrestOptions()} , false);
+    document.getElementById('R2Scout').addEventListener('change', function(){CrestOptions.R2Scout = document.getElementById('R2Scout').value; saveCrestOptions()} , false);
     document.getElementById('R2Pike').addEventListener('change', function(){CrestOptions.R2Pike = document.getElementById('R2Pike').value; saveCrestOptions()} , false);
     document.getElementById('R2Sword').addEventListener('change', function(){CrestOptions.R2Sword = document.getElementById('R2Sword').value; saveCrestOptions()} , false);
     document.getElementById('R2Arch').addEventListener('change', function(){CrestOptions.R2Arch = document.getElementById('R2Arch').value; saveCrestOptions()} , false);
@@ -4265,7 +4271,9 @@ Tabs.Test = {
      var t = Tabs.Crest;
      t.knt = new Array();
      for (k in Seed.knights[cityID]){
-     		if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
+     		if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]
+
+["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
      			t.knt.push ({
      				Name:   Seed.knights[cityID][k]["knightName"],
      				Combat:	parseInt(Seed.knights[cityID][k]["combat"]),
@@ -4297,7 +4305,7 @@ Tabs.Test = {
              t.abandonWilderness(Seed.wilderness[cityID][k]['tileId'],Seed.wilderness[cityID][k]['xCoord'],Seed.wilderness[cityID][k]['yCoord'],CrestOptions.CrestCity);
            }
       }
-      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
+      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R1Scout || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
       for (var k in Seed.queue_atkp[cityID]){
         if (Seed.queue_atkp[cityID][k]['toXCoord']==CrestOptions.X && Seed.queue_atkp[cityID][k]['toYCoord']==CrestOptions.Y)  buzy=true;
       }
@@ -4308,7 +4316,7 @@ Tabs.Test = {
       }
       if(!CrestOptions.RoundOne) return;
       
-      if (CrestOptions.R1MM == 0 && CrestOptions.R1Ball==0 && CrestOptions.R1Cat==0){
+      if (CrestOptions.R1MM == 0 && CrestOptions.R1Scout == 0 && CrestOptions.R1Ball==0 && CrestOptions.R1Cat==0){
       CrestOptions.RoundOne = false;
       saveCrestOptions();
       setTimeout (function(){t.SecondRound();}, 1000);
@@ -4333,12 +4341,12 @@ Tabs.Test = {
        var now = new Date().getTime()/1000.0;
        now = now.toFixed(0)
 		
-	   if (CrestOptions.R1MM > parseInt(Seed.units[cityID]['unt2']) || CrestOptions.R1Ball > parseInt(Seed.units[cityID]['unt10']) || CrestOptions.R1Cat > parseInt(Seed.units[cityID]['unt12'])){return;}
+	   if (CrestOptions.R1MM > parseInt(Seed.units[cityID]['unt2']) || CrestOptions.R1Scout > parseInt(Seed.units[cityID]['unt3']) || CrestOptions.R1Ball > parseInt(Seed.units[cityID]['unt10']) || CrestOptions.R1Cat > parseInt(Seed.units[cityID]['unt12'])){return;}
           
 	    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
   		params.cid=CrestOptions.CrestCity;
   		params.type=4;
-  	    params.kid=kid;
+  	    	params.kid=kid;
   		params.xcoord = CrestOptions.X;
   		params.ycoord = CrestOptions.Y;
         if (now < (parseInt(CrestOptions.lastRoundTwo) + 300)) { 
@@ -4346,7 +4354,9 @@ Tabs.Test = {
         	params.u2 = params.u2.toFixed(0);	
         	if (params.u2 < (CrestOptions.R1MM / 10)) params.u2++;
         }	
-  		else params.u2= CrestOptions.R1MM;
+  		else 
+		params.u2=CrestOptions.R1MM;
+  		params.u3=CrestOptions.R1Scout;
   		params.u10=CrestOptions.R1Ball;
   		params.u12=CrestOptions.R1Cat;
   		
@@ -4392,7 +4402,7 @@ Tabs.Test = {
       if (!CrestOptions.Running || !CrestOptions.RoundTwo) return;
       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
       cityID = 'city' + CrestOptions.CrestCity;
-      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
+      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R1Scout || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
       
       t.getAtkKnight(cityID);
       slots=0;
@@ -4415,6 +4425,7 @@ Tabs.Test = {
   		params.xcoord = CrestOptions.X;
   		params.ycoord = CrestOptions.Y;
   		params.u2=CrestOptions.R2MM;
+  		params.u3=CrestOptions.R2Scout;
   		params.u4=CrestOptions.R2Pike;
   		params.u5=CrestOptions.R2Sword;
   		params.u6=CrestOptions.R2Arch;
@@ -4475,7 +4486,7 @@ Tabs.Test = {
 		   }
 		}
 		
-		if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat){
+		      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R1Scout || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat){
 			setTimeout(function(){ t.Rounds(r,retry);},20000);
 			return;
 		}
@@ -4531,6 +4542,7 @@ Tabs.Test = {
 				else{
 					params.u2= CrestOptions.R1MM;
 				}
+					params.u3=CrestOptions.R1Scout;
 					params.u10=CrestOptions.R1Ball;
 					params.u12=CrestOptions.R1Cat;
 				t.sendMarch(params,t.Rounds,r,retry);
@@ -4543,6 +4555,7 @@ Tabs.Test = {
 				params.xcoord = CrestOptions.X;
 				params.ycoord = CrestOptions.Y;
 				params.u2=CrestOptions.R2MM;
+				params.u3=CrestOptions.R2Scout;
 				params.u4=CrestOptions.R2Pike;
 				params.u5=CrestOptions.R2Sword;
 				params.u6=CrestOptions.R2Arch;
