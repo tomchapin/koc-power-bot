@@ -4308,11 +4308,13 @@ Tabs.Test = {
              t.abandonWilderness(Seed.wilderness[cityID][k]['tileId'],Seed.wilderness[cityID][k]['xCoord'],Seed.wilderness[cityID][k]['yCoord'],CrestOptions.CrestCity);
            }
       }
-      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R1Scout || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
+      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R1Scout || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt7']) < CrestOptions.R2Cav || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
       for (var k in Seed.queue_atkp[cityID]){
         if (Seed.queue_atkp[cityID][k]['toXCoord']==CrestOptions.X && Seed.queue_atkp[cityID][k]['toYCoord']==CrestOptions.Y)  buzy=true;
       }
+      alert('here');
       if (!buzy)  {
+		  alert('busy??');
         CrestOptions.RoundOne=true;
         CrestOptions.RoundTwo=true;
         saveCrestOptions();
@@ -4320,6 +4322,7 @@ Tabs.Test = {
       if(!CrestOptions.RoundOne) return;
       
       if (CrestOptions.R1MM == 0 && CrestOptions.R1Scout == 0 && CrestOptions.R1Ball==0 && CrestOptions.R1Cat==0){
+		  alert('made it here');
       CrestOptions.RoundOne = false;
       saveCrestOptions();
       setTimeout (function(){t.SecondRound();}, 1000);
@@ -4563,6 +4566,7 @@ Tabs.Test = {
 				params.u4=CrestOptions.R2Pike;
 				params.u5=CrestOptions.R2Sword;
 				params.u6=CrestOptions.R2Arch;
+				params.u7=CrestOptions.R2Cav;
 				params.u10=CrestOptions.R2Ball;
 				params.u11=CrestOptions.R2Ram;
 				params.u12=CrestOptions.R2Cat;
