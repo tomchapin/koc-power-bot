@@ -4312,9 +4312,7 @@ Tabs.Test = {
       for (var k in Seed.queue_atkp[cityID]){
         if (Seed.queue_atkp[cityID][k]['toXCoord']==CrestOptions.X && Seed.queue_atkp[cityID][k]['toYCoord']==CrestOptions.Y)  buzy=true;
       }
-      alert('here');
       if (!buzy)  {
-		  alert('busy??');
         CrestOptions.RoundOne=true;
         CrestOptions.RoundTwo=true;
         saveCrestOptions();
@@ -4322,7 +4320,6 @@ Tabs.Test = {
       if(!CrestOptions.RoundOne) return;
       
       if (CrestOptions.R1MM == 0 && CrestOptions.R1Scout == 0 && CrestOptions.R1Ball==0 && CrestOptions.R1Cat==0){
-		  alert('made it here');
       CrestOptions.RoundOne = false;
       saveCrestOptions();
       setTimeout (function(){t.SecondRound();}, 1000);
