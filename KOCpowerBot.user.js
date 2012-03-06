@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120305e
+// @version        20120306a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120305e';
+var Version = '20120306a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -505,7 +505,7 @@ function pbStartup (){
     saveOptions ();
   }
 
-  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 800,800, Options.pbWinDrag,
+  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 775,800, Options.pbWinDrag,
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false;
@@ -4101,9 +4101,9 @@ Tabs.Test = {
    
     m += '<TABLE class=ptTab><TR><TD>Wave <b>1</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R1MM type=text size=5 maxlength=6 value="'+CrestOptions.R1MM+'"</td>';
     m += '</td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.png></td><TD><INPUT id=R1Scout type=text size=5 maxlength=6 value="'+CrestOptions.R1Scout+'"</td>';
-    m += '</td><TD></td><TD></td><TD></td><TD></td><TD></td><TD></td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=6 value="'+CrestOptions.R1Ball+'"</td>';
-    m += '</tr><tr><td></td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=6 value="'+CrestOptions.R1Cat+'"</td></tr>';
-    
+    m += '</td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=6 value="'+CrestOptions.R1Ball+'"</td>';
+    m += '</td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=6 value="'+CrestOptions.R1Cat+'"</td></tr>';
+	
     m += '<TR><TD>Wave <b>2</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R2MM type=text size=5 maxlength=6 value="'+CrestOptions.R2MM+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.png></td><TD><INPUT id=R2Scout type=text size=5 maxlength=6 value="'+CrestOptions.R2Scout+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.png></td><TD><INPUT id=R2Pike type=text size=5 maxlength=6 value="'+CrestOptions.R2Pike+'"</td>';
@@ -11667,7 +11667,7 @@ function getTroopDefTrainEstimates (cityID, city){
 
 function dialogRetry (errMsg, seconds, onRetry, onCancel, errCode){
   seconds = parseInt(seconds);
-  var pop = new CPopup ('pbretry', 0, 0, 400,200, true);
+  var pop = new CPopup ('pbretry', 0, 0, 400,250, true);
   pop.centerMe(mainPop.getMainDiv());
   pop.getTopDiv().innerHTML = '<CENTER>KOC Power Bot</center>';
   pop.getMainDiv().innerHTML = '<CENTER><BR><FONT COLOR=#550000><B>An error has ocurred:</b></font><BR><BR><DIV id=paretryErrMsg></div>\
