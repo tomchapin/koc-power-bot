@@ -4522,13 +4522,15 @@ Tabs.Test = {
 			return;
 		} 
        var kid = t.knt[0].ID;
-       
-       var now = new Date().getTime()/1000.0;
-       now = now.toFixed(0);
-		if (now > (parseInt(CrestOptions.lastRoundTwo) + 300)) {
-			r=1;
+       if (CrestOptions.R1MM == 0 && CrestOptions.R1Scout == 0 && CrestOptions.R1Ball == 0 && CrestOptions.R1Cat == 0) {
+		   r=2;
+	   }else {
+			var now = new Date().getTime()/1000.0;
+			now = now.toFixed(0);
+			if (now > (parseInt(CrestOptions.lastRoundTwo) + 300)) {
+				r=1;
+			}
 		}
-		
 		switch(r){
 			case 1:
 				if ((t.rallypointlevel-slots) < 2){
