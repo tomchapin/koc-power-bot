@@ -138,6 +138,7 @@ var CrestOptions = {
   R2Pike:0,
   R2Sword:0,
   R2Arch:0,
+  R2Cav:0,
   R2Ball:0,
   R2Ram:0,
   R2Cat:0,
@@ -4100,15 +4101,16 @@ Tabs.Test = {
    
     m += '<TABLE class=ptTab><TR><TD>Wave <b>1</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R1MM type=text size=5 maxlength=6 value="'+CrestOptions.R1MM+'"</td>';
     m += '</td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.png></td><TD><INPUT id=R1Scout type=text size=5 maxlength=6 value="'+CrestOptions.R1Scout+'"</td>';
-    m += '</td><TD></td><TD></td><TD></td><TD></td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=6 value="'+CrestOptions.R1Ball+'"</td>';
-    m += '</td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=6 value="'+CrestOptions.R1Cat+'"</td></tr>';
+    m += '</td><TD></td><TD></td><TD></td><TD></td><TD></td><TD></td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R1Ball type=text size=5 maxlength=6 value="'+CrestOptions.R1Ball+'"</td>';
+    m += '</tr><tr><td></td><TD></td><TD><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R1Cat type=text size=5 maxlength=6 value="'+CrestOptions.R1Cat+'"</td></tr>';
     
     m += '<TR><TD>Wave <b>2</b>: </td><TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png></td><TD><INPUT id=R2MM type=text size=5 maxlength=6 value="'+CrestOptions.R2MM+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.png></td><TD><INPUT id=R2Scout type=text size=5 maxlength=6 value="'+CrestOptions.R2Scout+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.png></td><TD><INPUT id=R2Pike type=text size=5 maxlength=6 value="'+CrestOptions.R2Pike+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_30.png></td><TD><INPUT id=R2Sword type=text size=5 maxlength=6 value="'+CrestOptions.R2Sword+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_30.png></td><TD><INPUT id=R2Arch type=text size=5 maxlength=6 value="'+CrestOptions.R2Arch+'"</td>';
-    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R2Ball type=text size=5 maxlength=6 value="'+CrestOptions.R2Ball+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_30.png></td><TD><INPUT id=R2Cav type=text size=5 maxlength=5 value="'+CrestOptions.R2Cav+'"</td>';
+    m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R2Ball type=text size=5 maxlength=6 value="'+CrestOptions.R2Ball+'"</td></tr><tr><td></td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_30.png></td><TD><INPUT id=R2Ram type=text size=5 maxlength=6 value="'+CrestOptions.R2Ram+'"</td>';
     m += '<TD><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R2Cat type=text size=5 maxlength=6 value="'+CrestOptions.R2Cat+'"</td></tr></table>';
     
@@ -4151,6 +4153,7 @@ Tabs.Test = {
     document.getElementById('R2Pike').addEventListener('change', function(){CrestOptions.R2Pike = document.getElementById('R2Pike').value; saveCrestOptions()} , false);
     document.getElementById('R2Sword').addEventListener('change', function(){CrestOptions.R2Sword = document.getElementById('R2Sword').value; saveCrestOptions()} , false);
     document.getElementById('R2Arch').addEventListener('change', function(){CrestOptions.R2Arch = document.getElementById('R2Arch').value; saveCrestOptions()} , false);
+    document.getElementById('R2Cav').addEventListener('change', function(){CrestOptions.R2Cav = document.getElementById('R2Cav').value; saveCrestOptions()} , false);
     document.getElementById('R2Ball').addEventListener('change', function(){CrestOptions.R2Ball = document.getElementById('R2Ball').value; saveCrestOptions()} , false);
     document.getElementById('R2Ram').addEventListener('change', function(){CrestOptions.R2Ram = document.getElementById('R2Ram').value; saveCrestOptions()} , false);
     document.getElementById('R2Cat').addEventListener('change', function(){CrestOptions.R2Cat = document.getElementById('R2Cat').value; saveCrestOptions()} , false);
@@ -4402,7 +4405,7 @@ Tabs.Test = {
       if (!CrestOptions.Running || !CrestOptions.RoundTwo) return;
       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
       cityID = 'city' + CrestOptions.CrestCity;
-      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R1Scout || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
+      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R1Scout || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt7']) < CrestOptions.R2Cav || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat) return;
       
       t.getAtkKnight(cityID);
       slots=0;
@@ -4429,6 +4432,7 @@ Tabs.Test = {
   		params.u4=CrestOptions.R2Pike;
   		params.u5=CrestOptions.R2Sword;
   		params.u6=CrestOptions.R2Arch;
+  		params.u7=CrestOptions.R2Cav;
   		params.u10=CrestOptions.R2Ball;
   		params.u11=CrestOptions.R2Ram;
   		params.u12=CrestOptions.R2Cat;
