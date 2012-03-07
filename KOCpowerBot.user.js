@@ -4509,12 +4509,12 @@ Tabs.Test = {
        t.getRallypointLevel(cityID);
 	   if(t.rallypointlevel == 12){
 		if((t.rallypointlevel-1) <= slots){
-			setTimeout(function(){ t.Rounds(r,retry);},20000);
+			setTimeout(function(){ t.Rounds(r,retry);},30000);
 			return;
 		}
 	   } else{
 		if ((t.rallypointlevel) <= slots){
-			setTimeout(function(){ t.Rounds(r,retry);},20000);
+			setTimeout(function(){ t.Rounds(r,retry);},30000);
 			return;
 		}
 	   }
