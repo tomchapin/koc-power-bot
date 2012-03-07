@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120306b
+// @version        20120307a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120306b';
+var Version = '20120307a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -467,7 +467,6 @@ function pbStartup (){
     table.pbMainTab tr td a {color:inherit }\
     table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 4px 0px 4px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; -moz-border-radius:5px; }\
 	table.pbMainTab tr td.spacer {padding: 0px 0px;}\
-	table.pbMainTab tr td.spacer {padding: 0px 0px;}\
     table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid #000000; background: -moz-linear-gradient(top,#00a045 0%,#94eb9a 0%,#045c28);}\
 	table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; color: #ffffff; border: 1px solid #000000; background: -moz-linear-gradient(top,#00a045 0%,#94eb9a 0%,#045c28);}\
     tr.pbPopTop td { background-color:transparent; height: 21px;  padding-left:30px; -moz-border-radius-topright: 20px; }\
@@ -507,7 +506,7 @@ function pbStartup (){
     saveOptions ();
   }
 
-  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 775,800, Options.pbWinDrag,
+  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,800, Options.pbWinDrag,
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false;
