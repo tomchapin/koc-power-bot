@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120307a
+// @version        20120309a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120307a';
+var Version = '20120309a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -107,6 +107,9 @@ var Options = {
   CrestType    : 0,
   ThroneDeleteItems	:	false,
   ThroneDeleteLevel	:	0,
+  throneSaveNum	:	10,
+  throneDeletedNum : 0,
+  RangeSaveModeSetting : 0,
   Opacity :0.9,
 };
 //unsafeWindow.pt_Options=Options;
@@ -8555,8 +8558,12 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> Auto delete barb/transport reports from you</td></tr>\
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> Auto delete transport reports to you</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> Auto delete wild reports</td></tr>\
-        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> Auto delete crest target regardless of type</td></tr>\
-        <TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> Auto delete throne items below '+ htmlSelector({0:'Simple', 1:'Common', 2:'Uncommon', 3:'Rare', 4:'Epic', 5:'Wonderous'},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>\
+        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> Auto delete crest target reguardless of type</td></tr>\
+		<tr><td colspan=2><br><b>Throne Room Auto Salvage:</td></tr>\
+        <TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> Auto delete throne items (including equiped) below '+ htmlSelector({0:'----', 1:'Simple', 2:'Common', 3:'Uncommon', 4:'Rare', 5:'Epic', 6:'Wonderous'},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>\
+		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>Save the first: <INPUT id=throneSaveNum type=text size=2 maxlength=3 \> items</td></tr>\
+		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>Save Range items: '+ htmlSelector({0:'----', 1:'All Range', 5:'Only Best and Active Range', 8:'Top 2 and Active Range'},Options.RangeSaveModeSetting,'id=selectRangeSaveMode') + '<span style="color:#800; font-weight:bold"><sup> &nbsp *Saves range items (ALL domains)</sup></span></td></tr>\
+        <tr><td>&nbsp;&nbsp;&nbsp-</td><td></b>Bot Deleted: &nbsp;' + Options.throneDeletedNum + '&nbsp; Items &nbsp; <span style="color:#800; font-weight:bold"><sup>*Updates On Refresh</sup></span></td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
         m += strButton20('Reset ALL Options', 'id=ResetALL');
       div.innerHTML = m;
@@ -8568,7 +8575,8 @@ Tabs.Options = {
       document.getElementById('selectprivacymode').addEventListener ('change', function(){
       		GlobalOptions.autoPublishPrivacySetting = document.getElementById('selectprivacymode').value;
 			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-      },false);
+	  },false);
+		
 	  document.getElementById('PubReq').addEventListener ('change', function(){
       		GlobalOptions.autoPublishGamePopups = document.getElementById('PubReq').checked;
 			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
@@ -8601,7 +8609,12 @@ Tabs.Options = {
 	   Options.Opacity = this.value;
 	   saveOptions();
 	   },false);
-	   
+
+	   document.getElementById('selectRangeSaveMode').addEventListener ('change', function(){
+      		Options.RangeSaveModeSetting = document.getElementById('selectRangeSaveMode').value;
+			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);
+
 	  document.getElementById('togOpacity').addEventListener('change', function(){Options.Opacity = document.getElementById('togOpacity').value;t.Layout()}, false);
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
       document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
@@ -8626,6 +8639,7 @@ Tabs.Options = {
 	  t.togOpt ('deletes1toggle', 'DeleteMsgs1');
 	  t.togOpt ('deletes2toggle', 'DeleteMsgs2');
 	  t.togOpt ('deletethrone', 'ThroneDeleteItems', DeleteThrone.startdeletethrone);
+	  t.changeOpt ('throneSaveNum', 'throneSaveNum', DeleteThrone.startdeletethrone);
 	  	
 
       
@@ -14943,9 +14957,15 @@ var DeleteThrone = {
 		setInterval(t.startdeletethrone, 60*1000);
 		};
 	},
+
 	
     startdeletethrone : function(){
 		var t = DeleteThrone;
+        var rangeNum = new Array("5", "21", "58", "63"); 
+        var rangeIndex1 = 0;
+        var throneSaveNum;
+        var countItem = 0;
+        
 		if(!Options.ThroneDeleteItems) {
 			return;
 		};
@@ -14954,8 +14974,32 @@ var DeleteThrone = {
 		return;
 		t.deleting = true;
 		deltitems = [];
+		
+
+
+
+		
 for (k in unsafeWindow.kocThroneItems) {
-if (unsafeWindow.kocThroneItems[k].quality < Options.ThroneDeleteLevel && unsafeWindow.kocThroneItems[k].isEquipped == false && unsafeWindow.kocThroneItems[k].level == 0) {
+countItem += 1;
+
+        rangeIndex1 = 0;	
+        if (Options.RangeSaveModeSetting == 0)
+            rangeIndex1 = -999;
+        for (var z = 0; z < rangeNum.length; z++) {
+            if (unsafeWindow.kocThroneItems[k].effects.slot3.id == rangeNum[z])
+                rangeIndex1 += 1;
+            if (unsafeWindow.kocThroneItems[k].effects.slot4.id == rangeNum[z])
+                rangeIndex1 += 3;
+            if (unsafeWindow.kocThroneItems[k].effects.slot5.id == rangeNum[z])
+                rangeIndex1 += 5;
+            if (unsafeWindow.kocThroneItems[k].quality == 3 && unsafeWindow.kocThroneItems[k].effects.slot3.id == rangeNum[z])
+                rangeIndex1 += 99;
+        }
+		
+
+
+
+if (unsafeWindow.kocThroneItems[k].quality < Options.ThroneDeleteLevel && unsafeWindow.kocThroneItems[k].isEquipped == false && unsafeWindow.kocThroneItems[k].level == 0 && countItem > Options.throneSaveNum && rangeIndex1 < Options.RangeSaveModeSetting) {
 	t.deltitems.push(unsafeWindow.kocThroneItems[k].id);
 };
 };
@@ -14974,6 +15018,7 @@ params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
 params.action = 'salvage';
 params.itemId = t.deltitems[0];
 params.cityId = Seed.cities[0][0];
+		Options.throneDeletedNum += 1;
 		actionLog('Deleted Throne room item '+unsafeWindow.kocThroneItems[t.deltitems[0]].name);
       unsafeWindow.kocThroneItems[t.deltitems.shift()].salvage();
       	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
@@ -14996,6 +15041,7 @@ onFailure: function () {
 });
 	},
 }
+
 /******************* Combat Tab **********************/
 Tabs.Combat = {
 	myDiv: null,
