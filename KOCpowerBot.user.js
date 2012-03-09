@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120309a
+// @version        20120309b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120309a';
+var Version = '20120309b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -388,19 +388,19 @@ function HandlePublishPopup() {
 	if(GlobalOptions.autoPublishGamePopups){
 		// Check the app id (we only want to handle the popup for kingdoms of camelot)
 		var FBInputForm = document.getElementById('uiserver_form');
-		logit("form"+FBInputForm);
+		GM_log("form"+FBInputForm);
 		if(FBInputForm){
 			var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
-			logit("channel"+channel_input);
+			GM_log("channel"+channel_input);
 			if(channel_input){
 				var current_channel_url = channel_input.value;
-				logit(current_channel_url);//[Scriptish] mat/KOC Power Bot: https://s-static.ak.fbcdn.net/connect/xd_proxy.php?version=3#cb=f23f69c95392fd&origin=http%3A%2F%2Fwww339.kingdomsofcamelot.com%2Ff1a8cf2f6c7573c&relation=parent.parent&transport=postmessage
+				GM_log(current_channel_url);//[Scriptish] mat/KOC Power Bot: https://s-static.ak.fbcdn.net/connect/xd_proxy.php?version=3#cb=f23f69c95392fd&origin=http%3A%2F%2Fwww339.kingdomsofcamelot.com%2Ff1a8cf2f6c7573c&relation=parent.parent&transport=postmessage
 				if (current_channel_url.match(/(http|https):\/\/.{0,100}kingdomsofcamelot\.com\/.*?\/cross_iframe\.htm/i) ||
 					current_channel_url.match(/kingdomsofcamelot.com/i)) {
 					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
 					var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
-					logit("publish"+publish_button);
-					logit("privacy"+privacy_setting);
+					GM_log("publish"+publish_button);
+					GM_log("privacy"+privacy_setting);
 					if(publish_button && privacy_setting){
 						// 80: Everyone
 						// 50: Friends of Friends
@@ -423,7 +423,7 @@ var Tabs = {};
 var pbButtons = {};
 var mainPop;
 var pbStartupTimer = null;
-var CPopUpTopClass = 'pbPopTop';
+var pbPopUpTopClass = 'pbPopTop';
 var firefoxVersion = getFirefoxVersion();
 var TrainCity = 0;
 
@@ -444,18 +444,17 @@ function pbStartup (){
     .xtabBR {padding-right: 5px; border:none; background:none;}\
     table.pbTab tr td {border:none; background:none; white-space:nowrap; padding:0px}\
     .hostile td { background:red; }.friendly td{background:lightgreen; }.ally td{background:lightblue; }\
-	  table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
+	table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
     table.pbTabBR tr td {border:none; background:none;}\
     table.pbTabLined tr td {border:1px none none solid none; padding: 2px 5px; white-space:nowrap;}\
     table.pbOptions tr td {border:1px none none solid none; padding: 1px 3px; white-space:nowrap;}\
     table.pbSrchResults tr td {border:1px none none solid none; padding: 1px 3px; white-space:nowrap;}\
     table.pbTabSome tr td {border:none; background:none; padding: 1px 3px; white-space:nowrap;}\
-    table.pbTabPad tr td.ptentry {background-color:#ffeecc; padding-left: 8px;}\
+    table.pbTabPad tr td { padding-left: 8px;}\
     table.ptNoPad tr td {border:none; background:none; white-space:nowrap; padding:0px}\
     .pbDetLeft {padding:0 5px 0 0 !important; font-weight:bold; text-align:right}\
     .pbStat {border:1px solid; border-color:#000000; font-weight:bold; padding-top:2px; padding-bottom:2px; text-align:center; color:#ffffff ; background-color:#357;  -moz-border-radius:5px;}\
-	.ptentry {padding: 7px; border:1px solid; border-color:#000000; background-color:#ffeecc; white-space:nowrap;}\
-    .ptErrText {font-weight:bold; color:#600000}\
+	.pbentry {padding: 7px; white-space:nowrap;}\
     button::-moz-focus-inner, input[type="submit"]::-moz-focus-inner { border: none; }\
     span.whiteOnRed {padding-left:3px; padding-right:3px; background-color:#700; color:white; font-weight:bold}\
     span.boldRed {color:#800; font-weight:bold}\
@@ -466,18 +465,18 @@ function pbStartup (){
     input.pbDefButOn {cursor:pointer; border:1px solid #45d183; -moz-box-shadow:inset 0px 1px 5px #3aef8b; -moz-border-radius:5px;}\
     input.pbDefButOff {cursor:pointer; border:1px solid #f61646; -moz-box-shadow:inset 0px 1px 5px #f6375f; -moz-border-radius:5px;}\
     a.ptButton20 {color:#ffff80}\
-    table.pbMainTab { empty-cells: show;  margin-left: 5px;  margin-top: 4px; padding: 1px;  }\
+    table.pbMainTab { empty-cells: show;  margin-left: 5px;  margin-top: 4px; padding: 1px;  padding-left:30px;}\
     table.pbMainTab tr td a {color:inherit }\
     table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 4px 0px 4px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; -moz-border-radius:5px; }\
 	table.pbMainTab tr td.spacer {padding: 0px 0px;}\
     table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid #000000; background: -moz-linear-gradient(top,#00a045 0%,#94eb9a 0%,#045c28);}\
 	table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; color: #ffffff; border: 1px solid #000000; background: -moz-linear-gradient(top,#00a045 0%,#94eb9a 0%,#045c28);}\
-    tr.pbPopTop td { background-color:transparent; height: 21px;  padding-left:30px; -moz-border-radius-topright: 20px; }\
+    tr.pbPopTop td { background-color:transparent; border:none; height: 21px;  padding:0px;}\
     tr.pbretry_pbPopTop td { background-color:#a00; color:#fff; border:none; height: 21px;  padding:0px; }\
     tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px;  padding:0px; }\
     tr.pbretry_pbMainPopTop td { background-color:#a00; color:#fff; border:none; height: 42px;  padding:0px; }\
-    .CPopup .CPopMain  { border:1px solid #000000; -moz-box-shadow:inset 0px 0px 10px #6a6a6a; -moz-border-radius-bottomright: 20px; -moz-border-radius-bottomleft: 20px;}\
-    .CPopup  {border:5px ridge #666; opacity:'+Options.Opacity+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000;}\
+    .pbPopMain  { border:1px solid #000000; -moz-box-shadow:inset 0px 0px 10px #6a6a6a; -moz-border-radius-bottomright: 20px; -moz-border-radius-bottomleft: 20px;}\
+    .pbPopup  {border:5px ridge #666; opacity:'+Options.Opacity+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000;}\
     span.pbTextFriendly {color: #080}\
     span.pbTextHostile {color: #800}\
 	.pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
@@ -509,7 +508,7 @@ function pbStartup (){
     saveOptions ();
   }
 
-  mainPop = new CPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,800, Options.pbWinDrag,
+  mainPop = new pbPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,800, Options.pbWinDrag,
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false;
@@ -929,7 +928,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
    messagebody += "<BR><b><center>no Fey in City!</center></b>";
   }
   if (t.PopCrafting == null) {
-     	t.PopCrafting = new CPopup('PopCrafting', 0, 0, 740, 300, true, function() {clearTimeout (1000);});
+     	t.PopCrafting = new pbPopup('PopCrafting', 0, 0, 740, 300, true, function() {clearTimeout (1000);});
      	t.PopCrafting.centerMe (mainPop.getMainDiv());
      	}
      	var m = '<DIV style="max-height:465px; height:465px; overflow-y:auto">';
@@ -1492,7 +1491,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         var cityName = Tabs.build.getCityNameById(cityId);
         
         if (t.popTowerIncoming == null) {
-            t.popTowerIncoming = new CPopup('pbtower_' + cityId, 0, 0, 750, 500, true, function() {clearTimeout (t.timer);});
+            t.popTowerIncoming = new pbPopup('pbtower_' + cityId, 0, 0, 820, 500, true, function() {clearTimeout (t.timer);});
         }
         t.popTowerIncoming.show(false);
         var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityTowerContent">';
@@ -1743,7 +1742,7 @@ Tabs.build = {
 				</select></td>';
 		m += '<TD><INPUT id=pbHelpRequest type=checkbox '+ (t.buildStates.help?' CHECKED':'') +'\></td><TD>Ask for help?</td>';
 		m += '</tr></table></div>';
-        m += '<DIV id=pbBuildDivQ class=pbStat>BUILD QUEUES</div><TABLE id=pbbuildqueues width=100% height=0% class=ptentry><TR>';
+        m += '<DIV id=pbBuildDivQ class=pbStat>BUILD QUEUES</div><TABLE id=pbbuildqueues width=100% height=0% class=pbentry><TR>';
 		for (var i = 0; i < Cities.cities.length; i++) {
             m += '<TD colspan=2><CENTER><B>' + Cities.cities[i].name + '</b></center></td>';
         }
@@ -2396,7 +2395,7 @@ Tabs.build = {
         var popBuildQueue = null;
         var cityName = t.getCityNameById(cityId);
         if (t.popBuildQueue == null) {
-            t.popBuildQueue = new CPopup('pbbuild_' + cityId, 0, 0, 350, 500, true, function() {clearTimeout (t.timer);});
+            t.popBuildQueue = new pbPopup('pbbuild_' + cityId, 0, 0, 350, 500, true, function() {clearTimeout (t.timer);});
         }
         var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityQueueContent">';       
         t.popBuildQueue.getMainDiv().innerHTML = '</table></div>' + m;
@@ -2531,7 +2530,7 @@ Tabs.Search = {
     t.selectedCity = Cities.cities[0];
     t.myDiv = div;
     
-    m = '<DIV class=ptentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>Search for: </td><TD width=99%>';
+    m = '<DIV class=pbentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>Search for: </td><TD width=99%>';
     m += htmlSelector ({0:"Barb Camp", 1:"Wilderness", 2:"Cities"}, null, 'id=pasrcType');
 	m += '&nbsp; &nbsp; &nbsp; <span class=pbDetLeft>Search style: &nbsp;';
 	m += htmlSelector({square:"Square", circle:"Circle"}, Options.srcdisttype, 'id=pbsrcdist');
@@ -2622,7 +2621,7 @@ Tabs.Search = {
        helpText += '<TR><TD>9</td><TD>56000 Ballista WITH Level 10 fletching and Knight 98+</td></tr>';
        helpText += '<TR><TD>10</td><TD>125000 Catapults (500 Catapults loss!)</td></tr></tr></table>';
   
-       var pop = new CPopup ('giftHelp', 0, 0, 425, 375, true);
+       var pop = new pbPopup ('giftHelp', 0, 0, 425, 375, true);
        pop.centerMe (mainPop.getMainDiv());  
        pop.getMainDiv().innerHTML = helpText;
        pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help: Raids</b></center>';
@@ -2691,7 +2690,7 @@ Tabs.Search = {
       var distName = 'Radius';
     m = '<CENTER><B>Search for '+ typeName +'<BR>\
         Center: '+ t.opt.startX +','+ t.opt.startY +'  &nbsp; '+ distName +': '+ t.opt.maxDistance +'<BR></center>\
-        <DIV class=ptentry><TABLE cellspacing=0 width=100%><TR align=center><TD class=xtab colspan=10><B>LIST OPTIONS:</b><BR></td></tr>';
+        <DIV class=pbentry><TABLE cellspacing=0 width=100%><TR align=center><TD class=xtab colspan=10><B>LIST OPTIONS:</b><BR></td></tr>';
         
     if (t.opt.searchType == 1 || t.opt.searchType == 0) {
       m += '<TR><TD class=xtab align=right>Min. level to show:</td><TD class=xtab> <INPUT id=pafilMinLvl size=2 value='+ Options.srcMinLevel +' /></td></tr>\
@@ -3020,7 +3019,7 @@ Tabs.Search = {
 	t.scoutcity = city;
 	
 	if(popScout==null){
-	  popScout = new CPopup ('pbsrcscout', 0,0, 350,500, true, function (){popScout.destroy(); popScout=null;});
+	  popScout = new pbPopup ('pbsrcscout', 0,0, 350,500, true, function (){popScout.destroy(); popScout=null;});
       popScout.centerMe (mainPop.getMainDiv());  
     }
 	var m = '<DIV class=pbStat>Auto Scout Options</div>';
@@ -3294,7 +3293,7 @@ Tabs.Search = {
     
   clickedLookup : function (pid){
     var t = Tabs.Search;
-    var pop = new CPopup ('pbsrclookup', 0,0, 500,500, true);
+    var pop = new pbPopup ('pbsrclookup', 0,0, 500,500, true);
     if (t.popFirst){
       pop.centerMe (mainPop.getMainDiv());  
       t.popFirst = false;
@@ -3310,7 +3309,7 @@ Tabs.Search = {
   ExportToRaid : function (X,Y){
     var t = Tabs.Search;
     var cityId =t.selectedCity['id'];
-    var pop = new CPopup ('pbExportRaid', 0,0, 800,300, true);
+    var pop = new pbPopup ('pbExportRaid', 0,0, 800,300, true);
     if (t.popFirst){
       pop.centerMe (mainPop.getMainDiv());  
       t.popFirst = false;
@@ -3597,7 +3596,7 @@ var exportToKOCattack = {
     ];
     
     if (popExp == null){
-      popExp = new CPopup ('pbsrcexp', 0,0, 625,600, true, function (){popExp.destroy(); popExp=null;});
+      popExp = new pbPopup ('pbsrcexp', 0,0, 625,600, true, function (){popExp.destroy(); popExp=null;});
       popExp.centerMe (mainPop.getMainDiv());  
     }
     var m = '<DIV class=pbStat>Export data to KOC Attack</div><BR><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW>\
@@ -3888,7 +3887,7 @@ DebugTimer.display ('Time to GM_getValue() '+ totTargets +' targets for all citi
   e_clickedShow : function (){    // show all current attack data
     var t = Tabs.Attack;
     if (t.popShow == null){
-      t.popShow = new CPopup ('pbbs', 0,0, 500,500, true, function (){t.popShow.destroy(); t.popShow=null;});
+      t.popShow = new pbPopup ('pbbs', 0,0, 500,500, true, function (){t.popShow.destroy(); t.popShow=null;});
       t.popShow.centerMe (mainPop.getMainDiv());  
     }
     var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPad>';
@@ -4183,7 +4182,7 @@ Tabs.Test = {
     helpText += '<TR><TD>9</td><TD>599 MM + 1Bal</td><TD>13000 archers + 900 Bal</td><TD>1st Wave + 2 Archer</td><TD>10</td></tr>';
     helpText += '<TR><TD>10</td><TD>1199 MM + 1Cat</td><TD>35000 archers + 2500 Cat</td><TD>1st Wave + 6 Archer + 50 Cat</td><TD>10</td></tr></table>';
     
-    var pop = new CPopup ('giftHelp', 0, 0, 585, 400, true);
+    var pop = new pbPopup ('giftHelp', 0, 0, 650, 400, true);
     pop.centerMe (mainPop.getMainDiv());  
     pop.getMainDiv().innerHTML = helpText;
     pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help: Cresting</b></center>';
@@ -4356,7 +4355,7 @@ Tabs.Test = {
 	    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
   		params.cid=CrestOptions.CrestCity;
   		params.type=4;
-  	    params.kid=kid;
+  	    	params.kid=kid;
   		params.xcoord = CrestOptions.X;
   		params.ycoord = CrestOptions.Y;
         if (now < (parseInt(CrestOptions.lastRoundTwo) + 300)) { 
@@ -4497,7 +4496,7 @@ Tabs.Test = {
 		   }
 		}
 		
-		if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat){
+		      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R1Scout || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt7']) < CrestOptions.R2Cav || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat){
 			setTimeout(function(){ t.Rounds(r,retry);},20000);
 			return;
 		}
@@ -5136,7 +5135,7 @@ Tabs.transport = {
 	showTradeRoutes: function () {
 		var t = Tabs.transport;
 		var popTradeRoutes = null;
-		t.popTradeRoutes = new CPopup('pbShowTrade', 0, 0, 750, 500, true, function() {clearTimeout (1000);});
+		t.popTradeRoutes = new pbPopup('pbShowTrade', 0, 0, 750, 500, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pbRoutesQueue">';       
 		t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
 		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>Transport routes:</td>';
@@ -5990,7 +5989,7 @@ cm.MARCH_TYPES = {
   
   EditSavedRaid : function (y){
       var t = Tabs.Raid;
-	  var pop = new CPopup ('pbEditRaid', 0,0, 750,350, true);
+	  var pop = new pbPopup ('pbEditRaid', 0,0, 750,350, true);
 	  if (t.popFirst){
 	    pop.centerMe (mainPop.getMainDiv());  
 	    t.popFirst = false;
@@ -6077,7 +6076,7 @@ cm.MARCH_TYPES = {
       
   EditRaid : function (y){
   	  var t = Tabs.Raid;
-  	  var pop = new CPopup ('pbEditRaid', 0,0, 750,350, true);
+  	  var pop = new pbPopup ('pbEditRaid', 0,0, 750,350, true);
   	  if (t.popFirst){
   	    pop.centerMe (mainPop.getMainDiv());  
   	    t.popFirst = false;
@@ -6596,7 +6595,7 @@ cm.MARCH_TYPES = {
       	                  		setTimeout (function (){GM_setValue ('SavedRaids_'+serverID, JSON2.stringify(t.save));}, 0);
       	                  		t.paint();
     					 } else {
-    					 	 /* var pop = new CPopup ('pbEditRaid', 0,0, 750,250, true);
+    					 	 /* var pop = new pbPopup ('pbEditRaid', 0,0, 750,250, true);
 				 		  	  if (t.popFirst){
 				 		  	    pop.centerMe (mainPop.getMainDiv());  
 				 		  	    t.popFirst = false;
@@ -7897,7 +7896,7 @@ Tabs.Barb = {
 	  ['Cats', 12],
      ];
   	 if(t.troopselect == null)	
-		t.troopselect = new CPopup ('pbtroopselect', 0, 0, 850, 450, true, function(){t.saveTroops();});
+		t.troopselect = new pbPopup ('pbtroopselect', 0, 0, 850, 450, true, function(){t.saveTroops();});
   	 t.troopselect.centerMe (mainPop.getMainDiv());  
   	 var z= '<DIV id=pbTraderDivD class=pbStat>TROOP SELECTION</div><TABLE width=100%><TR>';
 	 z+='<TD></td>';
@@ -7921,7 +7920,7 @@ Tabs.Barb = {
   barbOptions: function(){
   	 var t = Tabs.Barb;
   	 if(t.barboptions == null)	
-		t.barboptions = new CPopup ('pbbarboptions', 0,0, 375,350, true);
+		t.barboptions = new pbPopup ('pbbarboptions', 0,0, 375,350, true);
   	 t.barboptions.centerMe (mainPop.getMainDiv());  
 	 t.barboptions.getTopDiv().innerHTML = '<CENTER><b>Dark Forest Options for server '+getServerId()+'</b></CENTER>';
   	var y = '<DIV style="max-height:400px; overflow-y:auto;"><DIV class=pbStat>RESET FORESTS</div><TABLE width=100%>';
@@ -7996,7 +7995,7 @@ Tabs.Barb = {
     showBarbs: function (citynumber,cityname) {
 		var t = Tabs.Barb;
 		var popTradeRoutes = null;
-		t.popTradeRoutes = new CPopup('pbShowBarbs', 0, 0, 500, 500, true, function() {clearTimeout (1000);});
+		t.popTradeRoutes = new pbPopup('pbShowBarbs', 0, 0, 500, 500, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbBars">';       
 		t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
 		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>Dark Forests for city: '+cityname+'</td>';
@@ -9102,7 +9101,7 @@ Tabs.Reassign = {
 	showReassignRoutes: function () {
 		var t = Tabs.Reassign;
 		var popReassignRoutes = null;
-		t.popReassignRoutes = new CPopup('pbShowTrade', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+		t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 1100, 550, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
 		t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
 		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><B>Reassign routes:</td>';
@@ -10330,7 +10329,7 @@ Tabs.AutoTrain = {
           <dd><LI>Use: Autotrain will only use the resources to train troops.</dd>\
         <dt>Turn it on: </dt>\
           <dd><LI>Hit the AutoTrain toggle button.</dd></ul>';
-    var pop = new CPopup ('giftHelp', 0, 0, 550, 250, true);
+    var pop = new pbPopup ('giftHelp', 0, 0, 550, 250, true);
     pop.centerMe (mainPop.getMainDiv());  
     pop.getMainDiv().innerHTML = helpText;
     pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help</b>:  Auto Train</center>';
@@ -10812,7 +10811,7 @@ Tabs.Chat = {
   
   viewtroops : function (u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12){
 	var t = Tabs.Chat;
-  	t.popReport = new CPopup('pbShowTroops', 0, 0, 500, 300, true);
+  	t.popReport = new pbPopup('pbShowTroops', 0, 0, 500, 300, true);
   	t.popReport.centerMe (mainPop.getMainDiv());  
   	var m = '<DIV style="max-height:275px; height:275px; overflow-y:scroll">'; 
   	
@@ -11682,7 +11681,7 @@ function getTroopDefTrainEstimates (cityID, city){
 
 function dialogRetry (errMsg, seconds, onRetry, onCancel, errCode){
   seconds = parseInt(seconds);
-  var pop = new CPopup ('pbretry', 0, 0, 400,250, true);
+  var pop = new pbPopup ('pbretry', 0, 0, 400,250, true);
   pop.centerMe(mainPop.getMainDiv());
   pop.getTopDiv().innerHTML = '<CENTER>KOC Power Bot</center>';
   pop.getMainDiv().innerHTML = '<CENTER><BR><FONT COLOR=#550000><B>An error has ocurred:</b></font><BR><BR><DIV id=paretryErrMsg></div>\
@@ -12006,6 +12005,7 @@ function readCrestOptions (){
     }
   }
 }
+
 
 function readCombatOptions (){
   var serverID = getServerId();
@@ -12881,7 +12881,7 @@ function getFirefoxVersion (){
 }
 
 var WinManager = {
-  wins : {},    // prefix : CPopup obj
+  wins : {},    // prefix : pbPopup obj
   didHide : [],
   
   
@@ -12924,7 +12924,7 @@ var WinManager = {
 
 // creates a 'popup' div
 // prefix must be a unique (short) name for the popup window
-function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
+function pbPopup (prefix, x, y, width, height, enableDrag, onClose) {
   var pop = WinManager.get(prefix);
   if (pop){
     pop.show (false);
@@ -12956,7 +12956,7 @@ function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
   this.onClose = onClose;
   
   var t = this;
-  this.div.className = 'CPopup '+ prefix +'_CPopup';
+  this.div.className = 'pbPopup '+ prefix +'_pbPopup';
   this.div.id = prefix +'_outer';
   this.div.style.background = "#fff";
   this.div.style.zIndex = this.BASE_ZINDEX        // KOC modal is 100210 ?
@@ -12969,14 +12969,14 @@ function CPopup (prefix, x, y, width, height, enableDrag, onClose) {
   this.div.style.top = y +'px';
   this.div.style.left = x + 'px';
   
-  if (CPopUpTopClass==null)
-    topClass = 'CPopupTop '+ prefix +'_CPopupTop';
+  if (pbPopUpTopClass==null)
+    topClass = 'pbPopupTop '+ prefix +'_pbPopupTop';
   else
-    topClass = CPopUpTopClass +' '+ prefix +'_'+ CPopUpTopClass;
+    topClass = pbPopUpTopClass +' '+ prefix +'_'+ pbPopUpTopClass;
     
   var m = '<TABLE cellspacing=0 width=100% height=100%><TR id="'+ prefix +'_bar" class="'+ topClass +'"><TD width=99% valign=bottom><SPAN id="'+ prefix +'_top"></span></td>\
-      <TD id='+ prefix +'_X align=right valign=middle onmouseover="this.style.cursor=\'pointer\'" style="color:#fff; background:#333; font-weight:bold; font-size:14px; padding:0px 5px">X</td></tr>\
-      <TR><TD height=100% valign=top class="CPopMain '+ prefix +'_CPopMain" colspan=2 id="'+ prefix +'_main"></td></tr></table>';
+      <TD id='+ prefix +'_X align=right valign=middle onmouseover="this.style.cursor=\'pointer\'" style="color:#fff; background:#333; font-weight:bold; font-size:14px; padding:0px 5px; -moz-border-radius-topright: 20px;">x</td></tr>\
+      <TR><TD height=100% valign=top class="pbPopMain '+ prefix +'_pbPopMain" colspan=2 id="'+ prefix +'_main"></td></tr></table>';
   document.body.appendChild(this.div);
   this.div.innerHTML = m;
   document.getElementById(prefix+'_X').addEventListener ('click', e_XClose, false);
@@ -13662,7 +13662,7 @@ Tabs.Gifts = {
         gifts which are available will be listed. After accepting gifts, be sure to \'Check for Gifts\' again to see if more show up!<p>\
         <LI>If you choose not to delete gifts after accepting them, they may be available to get again! After the process is complete, just press the\
         \'Check for Gifts\' button again to see what gifts are available.</ul>';
-    var pop = new CPopup ('giftHelp', 0, 0, 500, 400, true);
+    var pop = new pbPopup ('giftHelp', 0, 0, 500, 400, true);
     pop.centerMe (mainPop.getMainDiv());  
     pop.getMainDiv().innerHTML = helpText;
     pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help</b>: Accepting gifts</center>';
@@ -14439,7 +14439,7 @@ function decode_utf8( s ){
 }
 
 function CdialogCancelContinue (msg, canNotify, contNotify, centerElement){
-  var pop = new CPopup ('ptcancont', 10, 10, 400,200, true, canNotify);
+  var pop = new pbPopup ('ptcancont', 10, 10, 400,200, true, canNotify);
   if (centerElement)
     pop.centerMe(centerElement);
   else
@@ -14452,7 +14452,7 @@ function CdialogCancelContinue (msg, canNotify, contNotify, centerElement){
 }
 
 function CdialogConfirm (msg, canNotify, contNotify, centerElement){
-  var pop = new CPopup ('ptcancont', 10, 10, 400,200, true, canNotify);
+  var pop = new pbPopup ('ptcancont', 10, 10, 400,200, true, canNotify);
   if (centerElement)
     pop.centerMe(centerElement);
   else
@@ -15079,7 +15079,7 @@ Tabs.Combat = {
 	
 	e_research : function(side){
 		var t = Tabs.Combat;
-		t.pop = new CPopup ('pbcombatresearch', 0, 0, 270, 300, true, function(){t.c_ratio(); t.pop.destroy();});
+		t.pop = new pbPopup ('pbcombatresearch', 0, 0, 270, 300, true, function(){t.c_ratio(); t.pop.destroy();});
 		t.pop.centerMe (mainPop.getMainDiv()); 
 		t.pop.getTopDiv().innerHTML = '<CENTER><B>Research Levels</b>: '+ (side?'Attacker':'Defender') +'</center>';
 		var m = '<DIV><TABLE>';
