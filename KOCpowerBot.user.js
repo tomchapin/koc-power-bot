@@ -388,19 +388,19 @@ function HandlePublishPopup() {
 	if(GlobalOptions.autoPublishGamePopups){
 		// Check the app id (we only want to handle the popup for kingdoms of camelot)
 		var FBInputForm = document.getElementById('uiserver_form');
-		GM_log("form"+FBInputForm);
+		logit("form"+FBInputForm);
 		if(FBInputForm){
 			var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
-			GM_log("channel"+channel_input);
+			logit("channel"+channel_input);
 			if(channel_input){
 				var current_channel_url = channel_input.value;
-				GM_log(current_channel_url);//[Scriptish] mat/KOC Power Bot: https://s-static.ak.fbcdn.net/connect/xd_proxy.php?version=3#cb=f23f69c95392fd&origin=http%3A%2F%2Fwww339.kingdomsofcamelot.com%2Ff1a8cf2f6c7573c&relation=parent.parent&transport=postmessage
+				logit(current_channel_url);//[Scriptish] mat/KOC Power Bot: https://s-static.ak.fbcdn.net/connect/xd_proxy.php?version=3#cb=f23f69c95392fd&origin=http%3A%2F%2Fwww339.kingdomsofcamelot.com%2Ff1a8cf2f6c7573c&relation=parent.parent&transport=postmessage
 				if (current_channel_url.match(/(http|https):\/\/.{0,100}kingdomsofcamelot\.com\/.*?\/cross_iframe\.htm/i) ||
 					current_channel_url.match(/kingdomsofcamelot.com/i)) {
 					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
 					var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
-					GM_log("publish"+publish_button);
-					GM_log("privacy"+privacy_setting);
+					logit("publish"+publish_button);
+					logit("privacy"+privacy_setting);
 					if(publish_button && privacy_setting){
 						// 80: Everyone
 						// 50: Friends of Friends
@@ -4356,7 +4356,7 @@ Tabs.Test = {
 	    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
   		params.cid=CrestOptions.CrestCity;
   		params.type=4;
-  	    	params.kid=kid;
+  	    params.kid=kid;
   		params.xcoord = CrestOptions.X;
   		params.ycoord = CrestOptions.Y;
         if (now < (parseInt(CrestOptions.lastRoundTwo) + 300)) { 
@@ -4497,7 +4497,7 @@ Tabs.Test = {
 		   }
 		}
 		
-		      if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R1Scout || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestOptions.R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt7']) < CrestOptions.R2Cav || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat){
+		if (parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R1Ball || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R1Cat || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R1MM || parseInt(Seed.units[cityID]['unt2']) < CrestOptions.R2MM || parseInt(Seed.units[cityID]['unt4']) < CrestOptions.R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestOptions.R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestOptions.R2Arch || parseInt(Seed.units[cityID]['unt10']) < CrestOptions.R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestOptions.R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestOptions.R2Cat){
 			setTimeout(function(){ t.Rounds(r,retry);},20000);
 			return;
 		}
@@ -12006,7 +12006,6 @@ function readCrestOptions (){
     }
   }
 }
-
 
 function readCombatOptions (){
   var serverID = getServerId();
