@@ -8610,7 +8610,7 @@ Tabs.Options = {
 
 	   document.getElementById('selectRangeSaveMode').addEventListener ('change', function(){
       		Options.RangeSaveModeSetting = document.getElementById('selectRangeSaveMode').value;
-			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+			saveOptions();
       },false);
 
 	  document.getElementById('togOpacity').addEventListener('change', function(){Options.Opacity = document.getElementById('togOpacity').value;t.Layout()}, false);
