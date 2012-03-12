@@ -14648,14 +14648,17 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   }
   
   this.play = function (chanNum, position){
+	  if (this.isLoaded)
     self.player.jsPlay (chanNum, position);
   }
     
   this.stop = function (chanNum){
+	  if (this.isLoaded)
     self.player.jsStop (chanNum);
   }
     
   this.getStatus = function (chanNum){           // returns null if sound channel is 'empty'
+  if (this.isLoaded)
     return self.player.jsGetStatus (chanNum);
   }
   
