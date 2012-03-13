@@ -10404,8 +10404,8 @@ Tabs.AutoTrain = {
 	var t = Tabs.AutoTrain;
 	if (!TrainOptions.Running) return;
 	t.city++;
-	if(t.city > Seed.cities.length) t.city = 0;
-	var cityId = Seed.cities[t.city][0];
+	if(t.city > Seed.cities.length) t.city = 1;
+	var cityId = Seed.cities[t.city-1][0];
 	var idle = t.checkidlepopulation(cityId);
 	var trainslots = t.checktrainslots(cityId);
 	var resources = t.checkresources(cityId);
