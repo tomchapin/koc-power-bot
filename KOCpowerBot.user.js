@@ -10403,7 +10403,6 @@ Tabs.AutoTrain = {
   nextcity : function(){
 	var t = Tabs.AutoTrain;
 	if (!TrainOptions.Running) return;
-	t.city++;
 	if(t.city > Seed.cities.length) t.city = 1;
 	var cityId = Seed.cities[t.city-1][0];
 	var idle = t.checkidlepopulation(cityId);
@@ -10415,6 +10414,7 @@ Tabs.AutoTrain = {
 		return;
 	}
 	t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity);
+	t.city++;
   },
   doTrain : function (cityId, unitId, num, notify){
 	var t = Tabs.AutoTrain;
