@@ -1,6 +1,10 @@
 REVISION HISTORY:
 ----------------
 
+
+20120312a
+    Added all troops to crest function
+    Added ability to add multiple routes (from multiple cities) in the crest function
 20120111a
     Fixed tower alert
     Fixed widescreen
