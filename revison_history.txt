@@ -1,43 +1,49 @@
 REVISION HISTORY:
 ----------------
 
-
+20120314e
+   *Fixed auto salvage to continue looping
+20120314d
+   *Changed UI
+   *More options to auto salvage
+   *Updated crest tab to enable multiple attacks from different cities
+   *Fixed transport tab error
 20120312a
-    Added all troops to crest function
-    Added ability to add multiple routes (from multiple cities) in the crest function
+   *Added all troops to crest function
+   *Added ability to add multiple routes (from multiple cities) in the crest function
 20120111a
-    Fixed tower alert
-    Fixed widescreen
+   *Fixed tower alert
+   *Fixed widescreen
 20111209b
-   Add autocraft tab
-   Add research, knight, guardian info to combat tab
-   Rework combat tab priority system
-   Rework combat tab rounds system
-   Add research levels to tower alert
-   Removed switch to city for build help
-   Fixed rally point info for level 12
-   Reworked auto crest tab
+   *Add autocraft tab
+   *Add research, knight, guardian info to combat tab
+   *Rework combat tab priority system
+   *Rework combat tab rounds system
+   *Add research levels to tower alert
+   *Removed switch to city for build help
+   *Fixed rally point info for level 12
+   *Reworked auto crest tab
 20111120a
-   Fixed to work with kabam standalone site
-   Fixed to work with 8th city
-   Added update now button
-   Fixed gifts tab "parse error page 1" and "no gifts found"
-   Added combat tab (Formula still needs improvement)
+   *Fixed to work with kabam standalone site
+   *Fixed to work with 8th city
+   *Added update now button
+   *Fixed gifts tab "parse error page 1" and "no gifts found"
+   *Added combat tab (Formula still needs improvement)
 20111109a
-   Fixed auto delete raid reports not working
-   Fixed gifts tab "Parse page 1 error"
-   Fixed show transport routes aetherstone not showing
-   Fixed update script source not saving
+   *Fixed auto delete raid reports not working
+   *Fixed gifts tab "Parse page 1 error"
+   *Fixed show transport routes aetherstone not showing
+   *Fixed update script source not saving
 20111105c
-   Added aetherstone to auto transport
-   Added option to enable/disable auto updater
-   Added option to check google code for beta updates
-   Fixed gifts tab
+   *Added aetherstone to auto transport
+   *Added option to enable/disable auto updater
+   *Added option to check google code for beta updates
+   *Fixed gifts tab
 20111030d
-   Added Auto DF tab (credits to Phil Cazz for original build)
-   Added auto updater check into script
-   Fixed gifts tab
-   Auto delete wild reports now deletes DF reports
+   *Added Auto DF tab (credits to Phil Cazz for original build)
+   *Added auto updater check into script
+   *Fixed gifts tab
+   *Auto delete wild reports now deletes DF reports
 20111015a
    *Fixed resource speed up not working
 20111014a
