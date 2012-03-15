@@ -7978,7 +7978,7 @@ Tabs.Options = {
 		<tr><td colspan=2><br><b>Throne Room Auto Salvage:</td></tr>\
         <TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> Auto delete throne items below '+ htmlSelector({0:'-----', 1:'Common', 2:'Uncommon', 3:'Rare', 4:'Epic', 5:'Wonderous'},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>\
 		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>Save the first: <INPUT id=throneSaveNum type=text size=2 maxlength=3 \> items</td></tr>\
-		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>Save inactive Range items: '+ htmlSelector({0:'----', 1:'All slots', 3:'slot 4 or slot 5', 5:'slot 5 only', 8:'slot 4 and slot 5',9:'slot 3,4,5'},Options.RangeSaveModeSetting,'id=selectRangeSaveMode') + '<span style="color:#800; font-weight:bold"><sup> &nbsp *Saves range items</sup></span></td></tr>\
+		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>Save inactive Range items: '+ htmlSelector({0:'----', 1:'All', 3:'Epic or Wonderous', 5:'Wonderous only', 8:'Epic and Wonderous',9:'Uncommon Epic and Wonderous'},Options.RangeSaveModeSetting,'id=selectRangeSaveMode') + '<span style="color:#800; font-weight:bold"><sup> &nbsp *Saves range items</sup></span></td></tr>\
         <tr><td>&nbsp;&nbsp;&nbsp-</td><td></b>Bot Deleted: &nbsp;' + Options.throneDeletedNum + '&nbsp; Items &nbsp; <span style="color:#800; font-weight:bold"><sup>*Updates On Refresh</sup></span></td></tr>\
         </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
         m += strButton20('Reset ALL Options', 'id=ResetALL');
