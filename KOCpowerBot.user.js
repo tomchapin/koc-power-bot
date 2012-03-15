@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120314c
+// @version        20120314d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120314c';
+var Version = '20120314d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4513,8 +4513,9 @@ Tabs.transport = {
 		var target_city = 0;
 		var TroopType = document.getElementById('TransportTroop').value;
 		var route_state = true;
-		if(t.tcpto.city.x == target_x && t.tcpto.city.y == target_y)
-			target_city = t.tcpto.city.id;
+		if(t.tcpto.city)
+			if(t.tcpto.city.x == target_x && t.tcpto.city.y == target_y)
+				target_city = t.tcpto.city.id;
 			
 		if (valid == true) {
 			var lTR = t.tradeRoutes;
@@ -4562,12 +4563,11 @@ Tabs.transport = {
 	        var t = Tabs.transport;
 	        var r = t.tradeRoutes;
 	        var cityname;
-	        var citynameTo = null;
 	    var m= '<TABLE id=paintRoutes class=pbTab>'; 
 			for (var i=0;i<(r.length);i++) {
 				var queueId = i;
 				var cityname = Cities.byID[r[queueId].city].name;
-				var citynameTo, TO, status, unit;
+				var citynameTo = null, TO, status, unit;
 				if(typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0)
 					citynameTo = Cities.byID[r[queueId].target_city].name;	  
 				if (citynameTo == null) TO = r[i].target_x +','+ r[i].target_y;
@@ -14442,12 +14442,11 @@ var DeleteThrone = {
 			loading: true,
 			onSuccess: function (transport) {
 				var rslt = eval("(" + transport.responseText + ")");
-				logit(inspect(rslt));
 				if(rslt.ok){
 					actionLog('Deleted Throne room item '+unsafeWindow.kocThroneItems[t.deltitems[0]].name);
 					unsafeWindow.kocThroneItems[t.deltitems[0]].salvage();
 				}
-				t.deltems.shift(); //Remove item from array regardless of success. Catch on next refresh
+				t.deltitems.shift(); //Remove item from array regardless of success. Catch on next refresh
 				if (t.deltitems[0] != null) { //Check if the array is empty
 					setTimeout (t.dodelete, 3000);
 				} else {
