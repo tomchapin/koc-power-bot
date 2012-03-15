@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120314d
+// @version        20120314e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120314d';
+var Version = '20120314e';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -14382,7 +14382,7 @@ var DeleteThrone = {
 	init : function(){
 		var t = DeleteThrone;
 		if(Options.ThroneDeleteItems) {
-			setInterval(t.startdeletethrone, 60*1000);
+			setTimeout(t.startdeletethrone, 5*1000);
 		}
 	},
 
@@ -14404,24 +14404,25 @@ var DeleteThrone = {
 		t.deltitems = [];
 
 		for (k in unsafeWindow.kocThroneItems) {
+			var throne_item = unsafeWindow.kocThroneItems[k];
 			countItem += 1;
 			rangeIndex1 = 0;	
 			if (Options.RangeSaveModeSetting == 0)
 				rangeIndex1 = -999;
 			for (var z = 0; z < rangeNum.length; z++) {
-				if (unsafeWindow.kocThroneItems[k].effects.slot3.id == rangeNum[z])
+				if (throne_item.effects.slot3.id == rangeNum[z])
 					rangeIndex1 += 1;
-				if (unsafeWindow.kocThroneItems[k].effects.slot4.id == rangeNum[z])
+				if (throne_item.effects.slot4.id == rangeNum[z])
 					rangeIndex1 += 3;
-				if (unsafeWindow.kocThroneItems[k].effects.slot5.id == rangeNum[z])
+				if (throne_item.effects.slot5.id == rangeNum[z])
 					rangeIndex1 += 5;
 			}
 
-			if (unsafeWindow.kocThroneItems[k].quality < Options.ThroneDeleteLevel && unsafeWindow.kocThroneItems[k].isEquipped == false && unsafeWindow.kocThroneItems[k].level == 0 && countItem > Options.throneSaveNum && rangeIndex1 < Options.RangeSaveModeSetting) {
+			if (throne_item.quality < Options.ThroneDeleteLevel && throne_item.isEquipped == false && throne_item.level == 0 && countItem > Options.throneSaveNum && rangeIndex1 < Options.RangeSaveModeSetting) {
 				t.deltitems.push(unsafeWindow.kocThroneItems[k].id);
 			}
 		};
-		if (t.deltitems[0] != null) {
+		if (t.deltitems.length > 0) {
 			t.dodelete();
 		} else {
 			t.deleting = false;
@@ -14447,9 +14448,10 @@ var DeleteThrone = {
 					unsafeWindow.kocThroneItems[t.deltitems[0]].salvage();
 				}
 				t.deltitems.shift(); //Remove item from array regardless of success. Catch on next refresh
-				if (t.deltitems[0] != null) { //Check if the array is empty
+				if (t.deltitems.length > 0) { //Check if the array is empty
 					setTimeout (t.dodelete, 3000);
 				} else {
+					setTimeout(t.startdeletethrone, 5*1000);
 					t.deleting = false;
 					return;
 				}
