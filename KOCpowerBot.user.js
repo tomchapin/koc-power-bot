@@ -14390,7 +14390,6 @@ var DeleteThrone = {
     startdeletethrone : function(){
 		var t = DeleteThrone;
         var rangeNum = [5, 21, 58, 63, 77]; 
-        var rangeIndex1 = 0;
         var throneSaveNum;
         var countItem = 0;
         
@@ -14405,8 +14404,8 @@ var DeleteThrone = {
 
 		for (k in unsafeWindow.kocThroneItems) {
 			var throne_item = unsafeWindow.kocThroneItems[k];
-			countItem += 1;
-			rangeIndex1 = 0;	
+			countItem++;
+			var rangeIndex1 = 0;	
 			if (Options.RangeSaveModeSetting == 0)
 				rangeIndex1 = -999;
 			for (var z = 0; z < rangeNum.length; z++) {
@@ -14426,6 +14425,7 @@ var DeleteThrone = {
 			t.dodelete();
 		} else {
 			t.deleting = false;
+			setTimeout(t.startdeletethrone, 5*1000);
 			return;
 		};
     },
