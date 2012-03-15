@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120314a
+// @version        20120314b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120314a';
+var Version = '20120314b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -14377,19 +14377,19 @@ var DeleteReports = {
 
 /******************* Throne Delete **********************/
 var DeleteThrone = {
-	deltitems : new Array(),
+	deltitems : [],
 	deleting : false,
 	init : function(){
 		var t = DeleteThrone;
 		if(Options.ThroneDeleteItems) {
-		setInterval(t.startdeletethrone, 60*1000);
-		};
+			setTimeout(t.startdeletethrone, 5*1000);
+		}
 	},
 
 	
     startdeletethrone : function(){
 		var t = DeleteThrone;
-        var rangeNum = new Array("5", "21", "58", "63", "77"); 
+        var rangeNum = [5, 21, 58, 63, 77]; 
         var rangeIndex1 = 0;
         var throneSaveNum;
         var countItem = 0;
@@ -14399,9 +14399,9 @@ var DeleteThrone = {
 		};
 //		alert(t.deleting);
 		if (t.deleting == true) 
-		return;
+			return;
 		t.deleting = true;
-		deltitems = [];
+		t.deltitems = [];
 		
 
 
@@ -14440,7 +14440,7 @@ t.dodelete();
     dodelete : function(){
 		var t = DeleteThrone;	
 		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
+		params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
 		params.action = 'salvage';
 		params.itemId = t.deltitems[0];
 		params.cityId = Seed.cities[0][0];
@@ -14448,13 +14448,13 @@ t.dodelete();
 			method: "post",
 			parameters: params,
 			loading: true,
-			onSuccess: function (rslt) {
+			onSuccess: function (transport) {
+				var rslt = eval("(" + transport.responseText + ")");
+				logit(inspect(rslt));
 				if(rslt.ok){
 					actionLog('Deleted Throne room item '+unsafeWindow.kocThroneItems[t.deltitems[0]].name);
 					unsafeWindow.kocThroneItems[t.deltitems[0]].salvage();
-					t.deltitems.shift(); //Remove item from array only if action was successful
-					Options.throneDeletedNum += 1;
-				}
+tems.shift(); //Remove item from array regardless of success. Catch on next refresh
 				if (t.deltitems[0] != null) { //Check if the array is empty
 					setTimeout (t.dodelete, 3000);
 				} else {
@@ -14465,6 +14465,7 @@ t.dodelete();
 			onFailure: function () {
 					t.deltitems = [];
 					t.deleting = false;
+					setTimeout(t.startdeletethrone, 5*1000);
 					return;
 			},
 		});
