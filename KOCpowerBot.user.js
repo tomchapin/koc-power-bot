@@ -15443,11 +15443,14 @@ Tabs.Combat = {
 			return;
 		} 
 		var kid = t.knt[0].ID;
-		var now = new Date().getTime()/1000.0;
-		now = now.toFixed(0);
-		
-		if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + 300)) {
-			r=1;
+		if (CrestData[CrestDataNum].R1ST == 0 && CrestData[CrestDataNum].R1MM == 0 && CrestData[CrestDataNum].R1Scout == 0 && CrestData[CrestDataNum].R1Pike == 0 && CrestData[CrestDataNum].R1Sword == 0 && CrestData[CrestDataNum].R1Arch == 0 && CrestData[CrestDataNum].R1LC == 0 && CrestData[CrestDataNum].R1HC == 0 && CrestData[CrestDataNum].R1SW == 0 && CrestData[CrestDataNum].R1Ball == 0 && CrestData[CrestDataNum].R1Ram == 0 && CrestData[CrestDataNum].R1Cat == 0) {
+		   r=2;
+	   }else {
+			var now = new Date().getTime()/1000.0;
+			now = now.toFixed(0);
+			if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + 300)) {
+				r=1;
+			}
 		}
 
 		switch(r) {
