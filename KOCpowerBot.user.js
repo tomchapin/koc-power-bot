@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120314b
+// @version        20120314c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120314b';
+var Version = '20120314c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -14402,39 +14402,31 @@ var DeleteThrone = {
 			return;
 		t.deleting = true;
 		t.deltitems = [];
-		
 
+		for (k in unsafeWindow.kocThroneItems) {
+			countItem += 1;
+			rangeIndex1 = 0;	
+			if (Options.RangeSaveModeSetting == 0)
+				rangeIndex1 = -999;
+			for (var z = 0; z < rangeNum.length; z++) {
+				if (unsafeWindow.kocThroneItems[k].effects.slot3.id == rangeNum[z])
+					rangeIndex1 += 1;
+				if (unsafeWindow.kocThroneItems[k].effects.slot4.id == rangeNum[z])
+					rangeIndex1 += 3;
+				if (unsafeWindow.kocThroneItems[k].effects.slot5.id == rangeNum[z])
+					rangeIndex1 += 5;
+			}
 
-
-		
-for (k in unsafeWindow.kocThroneItems) {
-countItem += 1;
-
-        rangeIndex1 = 0;	
-        if (Options.RangeSaveModeSetting == 0)
-            rangeIndex1 = -999;
-        for (var z = 0; z < rangeNum.length; z++) {
-            if (unsafeWindow.kocThroneItems[k].effects.slot3.id == rangeNum[z])
-                rangeIndex1 += 1;
-            if (unsafeWindow.kocThroneItems[k].effects.slot4.id == rangeNum[z])
-                rangeIndex1 += 3;
-            if (unsafeWindow.kocThroneItems[k].effects.slot5.id == rangeNum[z])
-                rangeIndex1 += 5;
-        }
-		
-
-
-
-if (unsafeWindow.kocThroneItems[k].quality < Options.ThroneDeleteLevel && unsafeWindow.kocThroneItems[k].isEquipped == false && unsafeWindow.kocThroneItems[k].level == 0 && countItem > Options.throneSaveNum && rangeIndex1 < Options.RangeSaveModeSetting) {
-	t.deltitems.push(unsafeWindow.kocThroneItems[k].id);
-};
-};
+			if (unsafeWindow.kocThroneItems[k].quality < Options.ThroneDeleteLevel && unsafeWindow.kocThroneItems[k].isEquipped == false && unsafeWindow.kocThroneItems[k].level == 0 && countItem > Options.throneSaveNum && rangeIndex1 < Options.RangeSaveModeSetting) {
+				t.deltitems.push(unsafeWindow.kocThroneItems[k].id);
+			}
+		};
 		if (t.deltitems[0] != null) {
-t.dodelete();
-} else {
-		t.deleting = false;
-		return;
-};
+			t.dodelete();
+		} else {
+			t.deleting = false;
+			return;
+		};
     },
     
     dodelete : function(){
@@ -14454,7 +14446,8 @@ t.dodelete();
 				if(rslt.ok){
 					actionLog('Deleted Throne room item '+unsafeWindow.kocThroneItems[t.deltitems[0]].name);
 					unsafeWindow.kocThroneItems[t.deltitems[0]].salvage();
-tems.shift(); //Remove item from array regardless of success. Catch on next refresh
+				}
+				t.deltems.shift(); //Remove item from array regardless of success. Catch on next refresh
 				if (t.deltitems[0] != null) { //Check if the array is empty
 					setTimeout (t.dodelete, 3000);
 				} else {
@@ -14471,6 +14464,7 @@ tems.shift(); //Remove item from array regardless of success. Catch on next refr
 		});
 	},
 }
+
 
 
 
