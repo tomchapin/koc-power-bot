@@ -14382,7 +14382,7 @@ var DeleteThrone = {
 	init : function(){
 		var t = DeleteThrone;
 		if(Options.ThroneDeleteItems) {
-			setTimeout(t.startdeletethrone, 5*1000);
+			setInterval(t.startdeletethrone, 60*1000);
 		}
 	},
 
