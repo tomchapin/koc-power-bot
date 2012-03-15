@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120313a
+// @version        20120314a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120313a';
+var Version = '20120314a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -536,7 +536,7 @@ function pbStartup (){
     div.indent25 {padding-left:25px}';
     
   window.name = 'PT';
-  //logit ("* KOC Power Bot v"+ Version +" Loaded");
+  logit ("* KOC Power Bot v"+ Version +" Loaded");
   readOptions();
   readChatOptions();
   readCrestData();
@@ -7829,7 +7829,8 @@ Tabs.Barb = {
 	  if (map[k].tileType==54 && AttackOptions.Levels[t.lookup][map[k].tileLevel]){
 	     var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
 		 if(dist <= parseInt(AttackOptions.MaxDistance))
-			t.mapDat.push ({time:0,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel});
+			if(dist <= parseInt(AttackOptions.Distance[map[k].tileLevel]))
+				t.mapDat.push ({time:0,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel});
 	  }
     }
     
@@ -14435,32 +14436,35 @@ t.dodelete();
     
     dodelete : function(){
 		var t = DeleteThrone;	
-var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
-params.action = 'salvage';
-params.itemId = t.deltitems[0];
-params.cityId = Seed.cities[0][0];
-		Options.throneDeletedNum += 1;
-		actionLog('Deleted Throne room item '+unsafeWindow.kocThroneItems[t.deltitems[0]].name);
-      unsafeWindow.kocThroneItems[t.deltitems.shift()].salvage();
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.ctrl = 'throneRoom%5CThroneRoomServiceAjax';
+		params.action = 'salvage';
+		params.itemId = t.deltitems[0];
+		params.cityId = Seed.cities[0][0];
       	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-                  method: "post",
-                  parameters: params,
-                  loading: true,
-onSuccess: function (rslt) {
-		if (t.deltitems[0] != null) {
-			setTimeout (function() {t.dodelete()}, 3000);
-	} else {
-		t.deleting = false;
-		return;
-	};
-},
-onFailure: function () {
-		deltitems = [];
-		t.deleting = false;
-		return;
-},
-});
+			method: "post",
+			parameters: params,
+			loading: true,
+			onSuccess: function (rslt) {
+				if(rslt.ok){
+					actionLog('Deleted Throne room item '+unsafeWindow.kocThroneItems[t.deltitems[0]].name);
+					unsafeWindow.kocThroneItems[t.deltitems[0]].salvage();
+					t.deltitems.shift(); //Remove item from array only if action was successful
+					Options.throneDeletedNum += 1;
+				}
+				if (t.deltitems[0] != null) { //Check if the array is empty
+					setTimeout (t.dodelete, 3000);
+				} else {
+					t.deleting = false;
+					return;
+				}
+			},
+			onFailure: function () {
+					t.deltitems = [];
+					t.deleting = false;
+					return;
+			},
+		});
 	},
 }
 
