@@ -15642,7 +15642,6 @@ Tabs.Combat = {
 
 	
 	
-	
 
 //
 pbStartup ();
