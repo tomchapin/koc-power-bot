@@ -1,6 +1,8 @@
 REVISION HISTORY:
 ----------------
 
+20120314f
+   *Fixed auto crest not checking to ensure LC and HC present in city
 20120314e
    *Fixed auto salvage to continue looping
 20120314d
