@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120316a
+// @version        20120316b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120316a';
+var Version = '20120316b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -256,6 +256,8 @@ var AttackOptions = {
   UpdateInterval	    : 30,
   stopsearch            : 1,
   knightselector        : 0,
+  barbMinKnight			: 56,
+  barbMaxKnight			: 250,
 };
 
 var ResetAll=false;
@@ -7343,14 +7345,16 @@ Tabs.Barb = {
 	   y +='<TR><TD style="margin-top:5px; text-align:center;"><INPUT id=pbresetbarbs type=submit value="Reset Forests"></td>';
 	   y +='<TD style="margin-top:5px; text-align:center;"><INPUT id=pbpaintbarbs type=submit value="Show forests"></td>';
 	   y += '<TD><SELECT id=pbcity type=list></td></tr></table>';
-	   y +='<TD style="margin-top:5px; text-align:center;"><DIV class=pbStat> OPTIONS </div></td><TABLE>';
-     y +='<TR><TD>Attack interval: <INPUT id=pbsendint type=text size=4 maxlength=4 value='+ AttackOptions.SendInterval +' \> seconds</td></tr>';
-     y +='<TR><TD>Max search distance: <INPUT id=pbmaxdist type=text size=4 maxlength=4 value='+ AttackOptions.MaxDistance +' \></td></tr>';
-     y +='<TR><TD>Keep <INPUT id=rallyclip type=text size=1 maxlength=2 value="'+AttackOptions.RallyClip+'" \> rallypoint slot(s) free</td></tr>';
-     y +='<TR><TD><INPUT id=pbreport type=checkbox '+(AttackOptions.UpdateEnabled?'CHECKED':'')+'\> Reset search every <INPUT id=pbmsgint type=text size=2 maxlength=2 value='+AttackOptions.UpdateInterval+' \>minutes</td></tr>';
-	 y +='<TR><TD> Skip city after <INPUT id=barbstopsearch type=text size=4 value='+AttackOptions.stopsearch+' \> tries.</td></tr>';
-     y +='<TR><TD>Method : '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
-     y +='<TR><TD>Knight priority : '+htmlSelector({0:'Lowest combat skill', 1:'Highest combat skill'}, AttackOptions.knightselector, 'id=barbknight')+'</td></tr>';
+	   y +='<table width=100%><TD colspan=2 style="margin-top:5px; text-align:center;"><DIV class=pbStat> OPTIONS </div></td>';
+     y +='<TR><TD>Attack interval: </td><td><INPUT id=pbsendint type=text size=4 maxlength=3 value='+ AttackOptions.SendInterval +' \> seconds</td></tr>';
+     y +='<TR><TD>Max search distance: </td><td><INPUT id=pbmaxdist type=text size=4 maxlength=3 value='+ AttackOptions.MaxDistance +' \></td></tr>';
+     y +='<TR><TD>Keep rallypoint slot(s) free: </td><Td><INPUT id=rallyclip type=text size=3 maxlength=2 value="'+AttackOptions.RallyClip+'" \> </td></tr>';
+     y +='<TR><TD><INPUT id=pbreport type=checkbox '+(AttackOptions.UpdateEnabled?'CHECKED':'')+'\> Reset search every </td><td><INPUT id=pbmsgint type=text size=3 maxlength=2 value='+AttackOptions.UpdateInterval+' \>minutes</td></tr>';
+	 y +='<TR><TD> Skip city after </td><td><INPUT id=barbstopsearch type=text size=3 value='+AttackOptions.stopsearch+' \> tries.</td></tr>';
+     y +='<TR><TD>Method : </td><Td> '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
+     y +='<TR><TD>Knight priority : </td><td>'+htmlSelector({0:'Lowest combat skill', 1:'Highest combat skill'}, AttackOptions.knightselector, 'id=barbknight')+'</td></tr>';
+	 y +='<tr><td>Minimum knight Combat level to send: </td><td><input id=barbMinKnight type=text size=3 value='+AttackOptions.barbMinKnight+' \></td></tr>';
+	 y +='<tr><td>Maximum knight Combat level to send: </td><td><input id=barbMaxKnight type=text size=3 value='+AttackOptions.barbMaxKnight+' \></td></tr>';
      y+='</table></td></tr></table>';
 	   t.barboptions.getMainDiv().innerHTML = y;
 	   t.barboptions.show(true);
@@ -7399,6 +7403,15 @@ Tabs.Barb = {
 	},false);
     document.getElementById('rallyclip').addEventListener('change', function(){
 		AttackOptions.RallyClip=parseInt(document.getElementById('rallyclip').value);
+		saveAttackOptions();
+	},false);
+	
+	document.getElementById('barbMinKnight').addEventListener('change', function(){
+		AttackOptions.barbMinKnight=parseInt(document.getElementById('barbMinKnight').value);
+		saveAttackOptions();
+	},false);
+	document.getElementById('barbMaxKnight').addEventListener('change', function(){
+		AttackOptions.barbMaxKnight=parseInt(document.getElementById('barbMaxKnight').value);
 		saveAttackOptions();
 	},false);
     document.getElementById('barbstopsearch').addEventListener('change', function(){
@@ -7661,7 +7674,7 @@ Tabs.Barb = {
      t.knt = new Array();
      t.getRallypointLevel(cityID);
      for (k in Seed.knights[cityID]){
-     		if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.knights[cityID][k]["combat"] > 55){
+     		if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.knights[cityID][k]["combat"] >= AttackOptions.barbMinKnight && Seed.knights[cityID][k]["combat"] <= AttackOptions.barbMaxKnight){
      			t.knt.push ({
      				Name:   Seed.knights[cityID][k]["knightName"],
      				Combat:	Seed.knights[cityID][k]["combat"],
