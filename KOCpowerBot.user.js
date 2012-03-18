@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120318a
+// @version        20120318b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120316b';
+var Version = '20120318b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -443,19 +443,18 @@ function HandlePublishPopup() {
 	if(GlobalOptions.autoPublishGamePopups){
 		// Check the app id (we only want to handle the popup for kingdoms of camelot)
 		var FBInputForm = document.getElementById('uiserver_form');
-		GM_log("form"+FBInputForm);
+		logit("FBInputForm "+FBInputForm);
 		if(FBInputForm){
 			var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
-			GM_log("channel"+channel_input);
+			logit("channel_input "+channel_input);
 			if(channel_input){
 				var current_channel_url = channel_input.value;
-				GM_log(current_channel_url);//[Scriptish] mat/KOC Power Bot: https://s-static.ak.fbcdn.net/connect/xd_proxy.php?version=3#cb=f23f69c95392fd&origin=http%3A%2F%2Fwww339.kingdomsofcamelot.com%2Ff1a8cf2f6c7573c&relation=parent.parent&transport=postmessage
-				if (current_channel_url.match(/(http|https):\/\/.{0,100}kingdomsofcamelot\.com\/.*?\/cross_iframe\.htm/i) ||
-					current_channel_url.match(/kingdomsofcamelot.com/i)) {
+				logit("current_channel_url "+current_channel_url);
+				if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {
 					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
 					var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
-					GM_log("publish"+publish_button);
-					GM_log("privacy"+privacy_setting);
+					logit("publish_button "+publish_button);
+					logit("privacy_setting "+privacy_setting);
 					if(publish_button && privacy_setting){
 						// 80: Everyone
 						// 50: Friends of Friends
