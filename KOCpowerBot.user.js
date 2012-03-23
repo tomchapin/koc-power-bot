@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120323a
+// @version        20120323b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120323a';
+var Version = '20120323b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -782,13 +782,13 @@ unsafeWindow.CraftingItem = t.CraftingItem;
 	m += '</tr><TR align=center>';
 	  for (var cityId in Cities.byID)
 	   m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
-    m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="Stop Sound Alert"></center></div><DIV id=pbSwfPlayer></div>';
-    m += '<BR><DIV class=pbStat>CONFIGURATION</div><TABLE class=pbTab>\
+    m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="'+translate("Stop Sound Alert")+'"></center></div><DIV id=pbSwfPlayer></div>';
+    m += '<BR><DIV class=pbStat>'+translate("CONFIGURATION")+'</div><TABLE class=pbTab>\
     <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
-    <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
+    <td align=left>'+translate("Text message incoming attack to")+': <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
 &nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold"><sup>*Standard text messaging rates apply</sup></span></td></tr><tr><td></td>\
-    <TD align=left>Country: <select id="pbfrmcountry">';
+&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold"><sup>*'+translate("Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>\
+    <TD align=left>'+translate("Country")+': <select id="pbfrmcountry">';
     for (var i in t.Providers) {
        var ret=m.indexOf(t.Providers[i].country);
        if (ret==-1) {
@@ -802,7 +802,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     }
 
     m += '</select>\
-    <select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--Provider--</option>';
+    <select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--'+translate("Provider")+'--</option>';
     for (var i in t.Providers) {
  if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
 		if(Options.celltext.provider == i)
@@ -811,24 +811,24 @@ unsafeWindow.CraftingItem = t.CraftingItem;
            m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
     }
     m += '</select></td></tr>\
-        <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>Automatically post incoming attacks to alliance chat.</td></tr>\
+        <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
         <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
-            <TR><TD align=right>Message Prefix: &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
-            <TR><TD align=right>Alert on scouting: &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>Alert on wild attack: &nbsp; </td><TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>Display defend status: &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>Minimum # of troops: &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
+            <TR><TD align=right>'+translate("Message Prefix")+': &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
+            <TR><TD align=right>'+translate("Alert on scouting")+': &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
+            <TR><TD align=right>'+translate("Alert on wild attack")+': &nbsp; </td><TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td></tr>\
+            <TR><TD align=right>'+translate("Display defend status")+': &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
+            <TR><TD align=right>'+translate("Minimum # of troops")+': &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
             </table></td></tr>\
-        <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>Stop raids on impending.</td></tr>\
+        <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>'+translate("Stop raids on impending")+'.</td></tr>\
         <TR><TD><BR></td></tr>\
-        <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>Play sound on incoming attack/scout</td></tr>\
-        <TR><TD></td><TD><DIV id=pbLoadingSwf>Loading SWF player</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
-            <TR><TD align=right>Sound file: &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=55 maxlength=160 value="'+ Options.alertSound.soundUrl +'" \>\
-             &nbsp; </td><TD><INPUT id=pbSoundLoad type=submit value=Load><INPUT id=pbSoundDefault type=submit value=Default></td></tr>\
-            <TR><TD align=right>Volume: &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td><TD align=center><SPAN id=pbLoadStat>xx</span></td></tr>\
-            <TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> Repeat every <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> minutes</td></tr>\
-            <TR><TD></td><TD>Play for <INPUT id=pbSoundLength type=text size=3 maxlength=5 value="'+ Options.alertSound.playLength +'"> seconds</td></tr>\
-            <TR><TD></td><TD><INPUT type=submit value="Play Now" id=pbPlayNow></td></tr></table></div></td></tr>\
+        <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
+        <TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
+            <TR><TD align=right>'+translate("Sound file")+': &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=55 maxlength=160 value="'+ Options.alertSound.soundUrl +'" \>\
+             &nbsp; </td><TD><INPUT id=pbSoundLoad type=submit value='+translate("Load")+' ><INPUT id=pbSoundDefault type=submit value='+translate("Default")+' ></td></tr>\
+            <TR><TD align=right>'+translate("Volume")+': &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td><TD align=center><SPAN id=pbLoadStat>xx</span></td></tr>\
+            <TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> '+translate("Repeat every")+' <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> '+translate("minutes")+'</td></tr>\
+            <TR><TD></td><TD>Play for <INPUT id=pbSoundLength type=text size=3 maxlength=5 value="'+ Options.alertSound.playLength +'"> '+translate("seconds")+'</td></tr>\
+            <TR><TD></td><TD><INPUT type=submit value="'+translate("Play Now")+'" id=pbPlayNow></td></tr></table></div></td></tr>\
         </table><BR>';
   	t.myDiv.innerHTML = m;
 
@@ -890,7 +890,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     setInterval (t.eachSecond, 2000);
   },      
  CraftingItem : function (obj, currentcity, itemId, recipeId, categoryId) {
-  if (obj) obj.value="Crafting...";
+  if (obj) obj.value= translate("Crafting")+"...";
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.action="craft";
         params.ctrl="Crafting";
@@ -907,13 +907,13 @@ unsafeWindow.CraftingItem = t.CraftingItem;
           var o=eval("("+transport.responseText+")");
           if(o.ok===true){
            if (o.status=="error") {
-            alert("Crafting Error:" + o.errorMessage);
-            if (obj) obj.value="Craft";
+            alert(translate("Crafting Error")+":" + o.errorMessage);
+            if (obj) obj.value=translate("Craft");
            } else if(o.status=="failure"){
-	     alert(""+culang.craftfail+"");
-	     if (obj) obj.value="Craft";
+	     alert(translate("Craft Fail"));
+	     if (obj) obj.value=translate("Craft");
 	   } else if (o.status=="success"){
-	     if (obj) obj.value="Craft OK";
+	     if (obj) obj.value=translate("Craft OK");
 		if(!Seed.queue_craft["city"+currentcity]) {
 		 Seed.queue_craft["city"+currentcity]=[];
 		}
@@ -930,7 +930,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         t.Crafting(currentcity);
         },
          onFailure: function () {
-          alert(""+culang.craftfail+"");
+          alert(translate("Craft Fail"));
           t.Crafting(currentcity);
          }
         });
@@ -947,12 +947,12 @@ unsafeWindow.CraftingItem = t.CraftingItem;
       var now = unixTime();
       totTime = q.craftingEtaUnixTime - now;
       if (totTime > 0) {
-         texte= "in work...";
+         texte= translate("in work...");
       }
      }
     
-       messagebody += "<div class=pbStat>CRAFTING</div><TABLE width=95% border=0 align=center><tr><td colspan=8><b></td></tr>";
-       messagebody += "<tr><td colspan=2>Items</td><td>Inventar</td><td>Action</td></tr>";       
+       messagebody += "<div class=pbStat>"+translate("CRAFTING")+"</div><TABLE width=95% border=0 align=center><tr><td colspan=8><b></td></tr>";
+       messagebody += "<tr><td colspan=2>"+translate("Items")+"</td><td>"+translate("Inventory")+"</td><td>"+translate("Action")+"</td></tr>";       
        for(var d=0;d<12;d++) {
         if (d!=2) {
          var h=parseInt(3000+d);
@@ -960,16 +960,16 @@ unsafeWindow.CraftingItem = t.CraftingItem;
          if (parseInt(Seed.items["i"+h])>0) qte=parseInt(Seed.items["i"+h]);
          messagebody += "<tr><td><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></td><td>"+unsafeWindow.itemlist["i"+h].name+"</td><td><center><b>"+qte+"</td>";
          if (texte!="")
-           messagebody += "<td>in work...</td>";
+           messagebody += "<td>"+translate("in work")+"...</td>";
          else
-           messagebody += "<td><input type=button value='Craft' onclick='CraftingItem(this,"+currentcity+","+h+","+(d+1)+",1)'></td>";
+           messagebody += "<td><input type=button value='"+translate("Craft")+"' onclick='CraftingItem(this,"+currentcity+","+h+","+(d+1)+",1)'></td>";
          messagebody += "</tr>";
         }
        }
        messagebody+="</table>";  
    
   } else {
-   messagebody += "<BR><b><center>no Fey in City!</center></b>";
+   messagebody += "<BR><b><center>"+translate("no Fey in City!")+"</center></b>";
   }
   if (t.PopCrafting == null) {
      	t.PopCrafting = new pbPopup('PopCrafting', 0, 0, 740, 300, true, function() {clearTimeout (1000);});
@@ -990,7 +990,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
   loadUrl : function (url){
     var t = Tabs.tower;
     t.mss.load (1, url, true);
-    document.getElementById('pbLoadStat').innerHTML = 'Loading';
+    document.getElementById('pbLoadStat').innerHTML = translate('Loading');
   },
   phonenum : function() {
    Options.celltext.num1 = document.getElementById('pbnum1').value;
@@ -1002,7 +1002,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
   setCountry : function(){
     var t = Tabs.tower;
     var myselect=document.getElementById("pbfrmprovider");
-	myselect.innerHTML = '<option value=0 >--Provider--</option>';
+	myselect.innerHTML = '<option value=0 >--'+translate("Provider")+'--</option>';
 	myselect.disabled = true;
     for (var i in t.Providers) {
      if (t.Providers[i].country == document.getElementById("pbfrmcountry").value){
@@ -1052,7 +1052,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     var mt = parseInt(document.getElementById('pbalertTroops').value);
     if (mt<1 || mt>120000){
       document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
-      document.getElementById('pbalerterr').innerHTML = '<font color=#600000><B>INVALID</b></font>';
+      document.getElementById('pbalerterr').innerHTML = '<font color=#600000><B>'+translate("INVALID")+'</b></font>';
       setTimeout (function (){document.getElementById('pbalerterr').innerHTML =''}, 2000);
       return;
     }
@@ -1155,9 +1155,9 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     if (chan != 1)
       return;
     if (isError)  
-      document.getElementById('pbLoadStat').innerHTML = 'Error!';
+      document.getElementById('pbLoadStat').innerHTML = translate("Error")+"!";
     else
-      document.getElementById('pbLoadStat').innerHTML = 'Loaded';
+      document.getElementById('pbLoadStat').innerHTML = translate("Loaded");
   },  
   
   playSound : function (doRepeats){
@@ -1326,24 +1326,24 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     if (DEBUG_TRACE) logit ("checkTower(): INCOMING at "+ unixTime()  +": \n"+ inspect (m, 8, 1));
     if (m.marchType == null)      // bogus march (returning scouts)
       return;
-    if (ENABLE_TEST_TAB) Tabs.Test.addDiv ("Incoming!<BR><PRE style='margin:0px;'>" + inspect (m, 8, 1) +'</pre>');
+    if (ENABLE_TEST_TAB) Tabs.Test.addDiv (translate("Incoming")+"!<BR><PRE style='margin:0px;'>" + inspect (m, 8, 1) +'</pre>');
+    var target, atkType, who;
     if (m.marchType == 3){
       if (!Options.alertConfig.scouting)
         return;
-      atkType = 'scouted';
+      atkType = translate('scouted');
     } else if (m.marchType == 4){
-      atkType = 'attacked';
+      atkType = translate("attacked");
     } else {
       return;
     }
-    var target, atkType, who;
     var city = Cities.byID[m.toCityId];
     if ( city.tileId == m.toTileId )
-      target = 'city at ('+ city.x +','+ city.y + ')';
+      target = translate('city at')+' ('+ city.x +','+ city.y + ')';
     else {
       if (!Options.alertConfig.wilds)
         return;
-      target = 'wilderness';
+      target = translate('wilderness');
       for (k in Seed.wilderness['city'+m.toCityId]){
         if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
           target += ' at ('+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord + ')';
@@ -1356,7 +1356,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     else if (m.players && m.players['u'+m.pid])
       who = m.players['u'+m.pid].n;
     else
-      who = 'Unknown';
+      who = translate('Unknown');
   
     if (m.fromXCoord)
       who += ' at ('+ m.fromXCoord +','+ m.fromYCoord + ')';
@@ -1380,7 +1380,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     if ( city.tileId == m.toTileId ){
       var emb = getCityBuilding(m.toCityId, 8);
       if (emb.count == 0)
-      msg += ' My embassy has not been constructed in this kingdom.  Do not attempt to reinforce.';
+      msg += translate("My embassy has not been constructed in this kingdom.  Do not attempt to reinforce.");
       else {
         var availSlots = emb.maxLevel;
         for (k in Seed.queue_atkinc){
@@ -1540,7 +1540,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         t.popTowerIncoming.show(false);
         var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityTowerContent">';
         t.popTowerIncoming.getMainDiv().innerHTML = '</table></div>' + m;
-        t.popTowerIncoming.getTopDiv().innerHTML = '<TD width="200px"><B>Tower Report of ' + cityName + '</b></td></td>';
+        t.popTowerIncoming.getTopDiv().innerHTML = '<TD width="200px"><B>'+translate("Tower Report of")+' ' + cityName + '</b></td></td>';
         t.addCityData2Pop(cityId);
         t.popTowerIncoming.show(true);
 		clearTimeout (t.timer);
@@ -1631,14 +1631,14 @@ unsafeWindow.CraftingItem = t.CraftingItem;
                     }
                 }
             } else {
-                s1 += '<TR align=right><TD align=left class="city"><B>Reinforcment:</b></td>'
+                s1 += '<TR align=right><TD align=left class="city"><B>'+translate("Reinforcment")+':</b></td>'
                 for (i = 1; i < 13; i++) {
                     s1 += '<TD class="city">0</td>';
                 }
                 
             }
 			s1 += '<TR align=right><TD colspan=14><BR></tr>';
-            s1 += '<TR align=right><TD class="own" align=left><B>Own Troops:</b></td>';
+            s1 += '<TR align=right><TD class="own" align=left><B>'+translate("Own Troops")+':</b></td>';
             //OWNTROOPS
             var ownTroops = "";
             for (r = 1; r < 13; r++) {
@@ -1647,12 +1647,12 @@ unsafeWindow.CraftingItem = t.CraftingItem;
                 s1 += '<TD class="own">' + num + '</td>';
                 tot[r] += num;
             }
-            s1 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>Defenders:</b></td>';
+            s1 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>'+translate("Defenders")+':</b></td>';
             for (i = 1; i < 13; i++)
                 s1 += '<TD class="tot">' + tot[i] + '</td>';      
 			s3 += '</tr></table>';
         
-        s3 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>Incoming Attacks:</b></td>';
+        s3 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>'+translate("Incoming Attacks")+':</b></td>';
         
         var names = ['Supply', 'Mil', 'Scout', 'Pike', 'Sword', 'Archer', 'Cav', 'Heavy', 'Wagon', 'Balli', 'Ram', 'Cat'];
         if (t.towerMarches.length > 0) {
@@ -1668,16 +1668,16 @@ unsafeWindow.CraftingItem = t.CraftingItem;
                             if (t.towerMarches[k].atkType == 'scouted') {
                                 s3 += '<TD rowspan=2 width=5%><B><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.jpg?6545"></b></td>';
                             }
-                        s3 += '<TD width=15%  ><B>Location</b></td>';
-                        s3 += '<TD width=15%  ><B>Name</b></td>';
-						s3 += '<TD width=10%><B>Source: </b></td><TD width=10%>' + t.towerMarches[k].source + '</td>';
-                        s3 += '<TD width=10%><B>Might: </b></td><TD width=10%>' + t.towerMarches[k].attackermight + '</td>';
-                        s3 += '<TD width=10%><B>Alliance: </b></td><TD width=10%>' + t.towerMarches[k].allianceName + '</td>';
-                        s3 += '<TD width=10%><B>State: </b></td><TD width=10%>' + t.towerMarches[k].diplomacy + '</td></tr>';
+                        s3 += '<TD width=15%><B>'+translate("Location")+'</b></td>';
+                        s3 += '<TD width=15%><B>'+translate("Name")+'</b></td>';
+						s3 += '<TD width=10%><B>'+translate("Source")+': </b></td><TD width=10%>' + t.towerMarches[k].source + '</td>';
+                        s3 += '<TD width=10%><B>'+translate("Might")+': </b></td><TD width=10%>' + t.towerMarches[k].attackermight + '</td>';
+                        s3 += '<TD width=10%><B>'+translate("Alliance")+': </b></td><TD width=10%>' + t.towerMarches[k].allianceName + '</td>';
+                        s3 += '<TD width=10%><B>'+translate("State")+': </b></td><TD width=10%>' + t.towerMarches[k].diplomacy + '</td></tr>';
                         s3 += '<TR><TD width=10%  >' + t.towerMarches[k].target + '</td>';
                         s3 += '<TD  >' + t.towerMarches[k].who + '</td>';
-                        s3 += '<TD><B>Remaining: </b></td><TD width=10%>' + t.towerMarches[k].rtime + '</td>';
-                        s3 += '<TD><B>Arrival: </b></td><TD  colspan=5 width=10%>' + t.towerMarches[k].arrivingDatetime + '</td></tr>';
+                        s3 += '<TD><B>'+translate("Remaining")+': </b></td><TD width=10%>' + t.towerMarches[k].rtime + '</td>';
+                        s3 += '<TD><B>'+translate("Arrival")+': </b></td><TD  colspan=5 width=10%>' + t.towerMarches[k].arrivingDatetime + '</td></tr>';
                         s3 += '</tr></table>';
                         s3 += '<TABLE cellspacing=0 width=100%><TR align=right><TD align=left width=16%></td>';
                         for (n = 0; n < names.length; n++)
@@ -1694,7 +1694,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
                 
             }
         }
-		s2 += '<TR><TD colspan=14><BR></td></tr><TR align=right><TD class="attack" align=left><B>Attackers:</b></td>';
+		s2 += '<TR><TD colspan=14><BR></td></tr><TR align=right><TD class="attack" align=left><B>'+translate("Attackers")+':</b></td>';
         for (a = 1; a < 13; a++)
             s2 += '<TD class="attack" width=7%>' + atk[a] + '</td>';
 		var html = s1 + s2 + s3;
@@ -1771,32 +1771,32 @@ Tabs.build = {
 			}
         }
         
-        var m = '<DIV id=pbBuildDivF class=pbStat>BUILD FUNCTIONS</div><TABLE id=pbbuildfunctions width=100% height=0% class=pbTab><TR>';
+        var m = '<DIV id=pbBuildDivF class=pbStat>'+translate("BUILD FUNCTIONS")+'</div><TABLE id=pbbuildfunctions width=100% height=0% class=pbTab><TR>';
         if (t.buildStates.running == false) {
-            m += '<TD><INPUT id=pbBuildRunning type=submit value="Auto Build = OFF"></td>';
+            m += '<TD><INPUT id=pbBuildRunning type=submit value="'+translate("Auto Build = OFF")+'"></td>';
         }
         else {
-            m += '<TD><INPUT id=pbBuildRunning type=submit value="Auto Build = ON"></td>';
+            m += '<TD><INPUT id=pbBuildRunning type=submit value="'+translate("Auto Build = ON")+'"></td>';
         }
-		m += '<TD><INPUT id=pbBuildMode type=submit value="Build Mode = OFF"></td>';
-		m += '<TD>Build Type: <SELECT id="pbBuildType">\
-				<OPTION value=build>level up</option>\
-				<OPTION value=max>level max</option>\
-				<OPTION value=destruct>destruct</option>\
+		m += '<TD><INPUT id=pbBuildMode type=submit value="'+translate("Build Mode = OFF")+'"></td>';
+		m += '<TD>'+translate("Build Type")+': <SELECT id="pbBuildType">\
+				<OPTION value=build>'+translate("level up")+'</option>\
+				<OPTION value=max>'+translate("level max")+'</option>\
+				<OPTION value=destruct>'+translate("destruct")+'</option>\
 				</select></td>';
-		m += '<TD><INPUT id=pbHelpRequest type=checkbox '+ (t.buildStates.help?' CHECKED':'') +'\></td><TD>Ask for help?</td>';
+		m += '<TD><INPUT id=pbHelpRequest type=checkbox '+ (t.buildStates.help?' CHECKED':'') +'\></td><TD>'+translate("Ask for help")+'?</td>';
 		m += '</tr></table></div>';
-        m += '<DIV id=pbBuildDivQ class=pbStat>BUILD QUEUES</div><TABLE id=pbbuildqueues width=100% height=0% class=pbentry><TR>';
+        m += '<DIV id=pbBuildDivQ class=pbStat>'+translate("BUILD QUEUES")+'</div><TABLE id=pbbuildqueues width=100% height=0% class=pbentry><TR>';
 		for (var i = 0; i < Cities.cities.length; i++) {
             m += '<TD colspan=2><CENTER><B>' + Cities.cities[i].name + '</b></center></td>';
         }
 		m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
-            m += '<TD colspan=2><CENTER><INPUT id=pbbuild_' + Cities.cities[i].id + ' type=submit value="Show"></center></td>';
+            m += '<TD colspan=2><CENTER><INPUT id=pbbuild_' + Cities.cities[i].id + ' type=submit value="'+translate("Show")+'"></center></td>';
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
-            m += '<TD colspan=2><CENTER><INPUT id=pbCancelAll_' + Cities.cities[i].id + ' type=submit value="Cancel All"></center></td>';
+            m += '<TD colspan=2><CENTER><INPUT id=pbCancelAll_' + Cities.cities[i].id + ' type=submit value="'+translate("Cancel All")+'"></center></td>';
         }
         m += '</tr><TR>';
         
@@ -1927,27 +1927,27 @@ Tabs.build = {
 									
 			if (curlvl > 8 && mode == 'build') {
 				t.cancelQueueElement(0, currentcityid, time, false);
-				actionLog("Queue item deleted: Building Level equals 9 or higher!!!");
+				actionLog(translate("Queue item deleted: Building Level equals 9 or higher!!!"));
 				return;
 			};
 			if (isNaN(curlvl)) {
 				t.cancelQueueElement(0, currentcityid, time, false);
-				actionLog("Found no correct value for current building!!!!");
+				actionLog(translate("Found no correct value for current building!!!!"));
 				return;
 			}
 			if (l_bdgid != bdgid) {
 				t.cancelQueueElement(0, currentcityid, time, false);
-				actionLog("Building Type does not match!!!!");
+				actionLog(translate("Building Type does not match!!!!"));
 				return;
 			}
 			if (l_bid != bid) {
 				t.cancelQueueElement(0, currentcityid, time, false);
-				actionLog("Building ID does not match!!!!");
+				actionLog(translate("Building ID does not match!!!!"));
 				return;
 			}
 			if (l_curlvl < curlvl) {
 					t.cancelQueueElement(0, currentcityid, time, false);
-					actionLog("Queue item deleted: Buildinglevel is equal or higher!!!");
+					actionLog(translate("Queue item deleted: Buildinglevel is equal or higher!!!"));
 					return;
 			}
 			if (l_curlvl > curlvl && mode == 'build') {
@@ -1985,7 +1985,7 @@ Tabs.build = {
 						}
 					},
 					onFailure: function(){
-						document.getElementById('pbbuildError').innerHTML = "Connection Error while destructing! Please try later again";
+						document.getElementById('pbbuildError').innerHTML = translate("Connection Error while destructing! Please try later again");
 					}
 				})
 			}
@@ -2005,7 +2005,7 @@ Tabs.build = {
 					params.lv = curlvl + 1;
 					if (params.lv > 9){ //make sure that no level 10+ is built
 						t.cancelQueueElement(0, currentcityid, time, false);
-						actionLog("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!");
+						actionLog(translate("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!"));
 						return;
 					}
 					if (params.lv > 1) {
@@ -2018,7 +2018,7 @@ Tabs.build = {
 						parameters: params,
 						onSuccess: function(rslt){
 							if (rslt.ok) {
-								actionLog("Building " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);								
+								actionLog(translate("Building")+" " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);								
 								Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
 								Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
 								Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
@@ -2034,16 +2034,16 @@ Tabs.build = {
 								var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
 								if (rslt.error_code == 103) { // building has already the target level => just  delete
 									t.cancelQueueElement(0, currentcityid, time, false);
-									actionLog("Queue item deleted: Building at this Level already exists or build process already started!");
+									actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
 								} else {
 									t.requeueQueueElement(bQi);
-									document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name +': '+ errmsg + " Item was requeued. Check for retry count.";
+									document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name +': '+ errmsg + translate(" Item was requeued. Check for retry count.");
 								}
 								logit(errmsg);
 							}
 					},
 						onFailure: function(){
-							document.getElementById('pbbuildError').innerHTML = "Connection Error while building! Please try later again";
+							document.getElementById('pbbuildError').innerHTML = translate("Connection Error while building! Please try later again");
 						}
 					});
 				} else {
@@ -2052,7 +2052,7 @@ Tabs.build = {
 			}
 		} else {
 			t.cancelQueueElement(0, currentcityid, time, false);
-			actionLog("Queue item deleted: Building does not exist!!!");
+			actionLog(translate("Queue item deleted: Building does not exist!!!"));
 		}
 	},
 	requeueQueueElement: function (bQi) {
@@ -2103,14 +2103,14 @@ Tabs.build = {
 					buildingLevel += 1;
 				}
 				if (loaded_bQ[i].buildingMode == 'destruct' && loadedSlot == buildingPos && loadedCity == cityId) { // check if destrcution is already in queue
-					t.modalmessage('Destruction already in Queue!');
+					t.modalmessage(translate("Destruction already in Queue!"));
 					return;
 				}
 			}
 		}
         if (t.currentBuildMode == "build") {
 		    if (buildingLevel >= 9) {
-                t.modalmessage('Due to building requirements (DI), buildings above level 9\nshould be manualy built.');
+                t.modalmessage(translate('Due to building requirements (DI), buildings above level 9\nshould be manualy built.'));
                 return;
             }
             var buildingMode = "build";
@@ -2221,14 +2221,14 @@ Tabs.build = {
 					buildingLevel += 1;
 				}
 				if (loaded_bQ[i].buildingMode == 'destruct' && loadedSlot == buildingPos && loadedCity == cityId) { // check if destrcution is already in queue
-					t.modalmessage('Destruction already in Queue!');
+					t.modalmessage(translate("Destruction already in Queue!"));
 					return;
 				}
 			}
 		}
         if (t.currentBuildMode == "build") {
 		    if (buildingLevel >= 9) {
-                t.modalmessage('Due to building requirements (DI), buildings above level 9\nshould be manualy built.');
+                t.modalmessage(translate('Due to building requirements (DI), buildings above level 9\nshould be manualy built.'));
                 return;
             }
             var buildingMode = "build";
@@ -2367,7 +2367,7 @@ Tabs.build = {
     modalmessage: function(message){
 	    var t = Tabs.build;
         var timeout = 10000;
-        var content = "autoclose after 10sec...<br><br>"
+        var content = translate("autoclose after 10sec")+"...<br><br>"
         content += message;
         unsafeWindow.Modal.showAlert(content);
         window.setTimeout('unsafeWindow.Modal.hideModal();', timeout);
@@ -2443,7 +2443,7 @@ Tabs.build = {
         }
         var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityQueueContent">';       
         t.popBuildQueue.getMainDiv().innerHTML = '</table></div>' + m;
-        t.popBuildQueue.getTopDiv().innerHTML = '<TD width="200px"><B>Build Queue of ' + cityName + '</b></td><TD><INPUT id=pbOptimizeByTime type=submit value="Optimize by Time"></td>';
+        t.popBuildQueue.getTopDiv().innerHTML = '<TD width="200px"><B>'+translate("Build Queue of")+' ' + cityName + '</b></td><TD><INPUT id=pbOptimizeByTime type=submit value="'+translate("Optimize by Time")+'"></td>';
         t.paintBuildQueue(cityId);
         if (focus)
           t.popBuildQueue.show(true);
@@ -2494,29 +2494,29 @@ Tabs.build = {
         if (t.buildStates.running == true) {
             t.buildStates.running = false;
             t.saveBuildStates();
-            obj.value = "Auto Build = OFF";
+            obj.value = translate("Auto Build = OFF");
         }
         else {
             t.buildStates.running = true;
             t.saveBuildStates();
-            obj.value = "Auto Build = ON";
+            obj.value = translate("Auto Build = ON");
         }
     },
     toggleStateMode: function(obj){
 		var t = Tabs.build;
-        if (obj.value == 'Build Mode = OFF') {
+        if (obj.value == translate('Build Mode = OFF')) {
 			unsafeWindow.buildslot = t.bot_buildslot; // overwrite original koc function
 			var guardian = document.getElementById('citymap').getElementsByClassName('bldg_guardian_0');
 			if(guardian.length >0)
 				guardian[0].addEventListener('click', t.bot_buildguardian, false);
-            obj.value = "Build Mode = ON";
+            obj.value = translate("Build Mode = ON");
         }
         else {
 			unsafeWindow.buildslot = t.koc_buildslot; // restore original koc function
 			var guardian = document.getElementById('citymap').getElementsByClassName('bldg_guardian_0');
 			if(guardian.length >0)
 				guardian[0].removeEventListener('click', t.bot_buildguardian, false);
-			obj.value = "Build Mode = OFF";
+			obj.value = translate("Build Mode = OFF");
         }
     },
 	getCityNameById: function (cityId) {
@@ -2574,17 +2574,17 @@ Tabs.Search = {
     t.selectedCity = Cities.cities[0];
     t.myDiv = div;
     
-    m = '<DIV class=pbentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>Search for: </td><TD width=99%>';
-    m += htmlSelector ({0:"Barb Camp", 1:"Wilderness", 2:"Cities"}, null, 'id=pasrcType');
-	m += '&nbsp; &nbsp; &nbsp; <span class=pbDetLeft>Search style: &nbsp;';
-	m += htmlSelector({square:"Square", circle:"Circle"}, Options.srcdisttype, 'id=pbsrcdist');
-    m += '</span></td></tr><TR><TD class=pbDetLeft>At: </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
-      &nbsp; Radius: <INPUT id=pasrcDist size=3 value=10 /> &nbsp; <SPAN id=paspInXY></span></tr>\
-      <TR><TD class=pbDetLeft>Or:</td><TD>Search entire province: <select id="provinceXY"><option>--provinces--</option>';
+    m = '<DIV class=pbentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>'+translate("Search for")+': </td><TD width=99%>';
+    m += htmlSelector ({0:translate("Barb Camp"), 1:translate("Wilderness"), 2:translate("Cities")}, null, 'id=pasrcType');
+	m += '&nbsp; &nbsp; &nbsp; <span class=pbDetLeft>'+translate("Search style")+': &nbsp;';
+	m += htmlSelector({square:translate("Square"), circle:translate("Circle")}, Options.srcdisttype, 'id=pbsrcdist');
+    m += '</span></td></tr><TR><TD class=pbDetLeft>'+translate("At")+': </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
+      &nbsp; '+translate("Radius")+': <INPUT id=pasrcDist size=3 value=10 /> &nbsp; <SPAN id=paspInXY></span></tr>\
+      <TR><TD class=pbDetLeft>Or:</td><TD>'+translate("Search entire province")+': <select id="provinceXY"><option>--'+translate("provinces")+'--</option>';
     for (var i in Provinces)
     	m += '<option value="'+i+'">'+Provinces[i].name+'</option>';
     m += '</select></td></tr>';
-    m += '<TR><TD colspan=2 align=center><INPUT id=pasrcStart type=submit value="Start Search"/></td></tr>';
+    m += '<TR><TD colspan=2 align=center><INPUT id=pasrcStart type=submit value="'+translate("Start Search")+'"/></td></tr>';
     m += '</table></div>\
         <DIV id="pasrcResults" style="height:400px; max-height:400px;"></div>';
     
@@ -2647,28 +2647,12 @@ Tabs.Search = {
   },
   
   helpPop : function (){
-       var helpText = 'Troop numbers (from KOC WIKI):<BR>';
-       helpText += '<A target="_tab" href="http://koc.wikia.com/wiki/Barbarian_Camps">A lot more can be found on Koc Wikia</a>';
-       helpText += '<TABLE><TR><TD>Lvl</td><TD>Troops</td></tr>';
-       helpText += '<TR><TD>1</td><TD>500 Supply Troops + 500 Archers</td></tr>';
-       helpText += '<TR><TD>2</td><TD>500 Supply Troops + 2500 Archers</td></tr>';
-       helpText += '<TR><TD>3</td><TD>500 Supply Troops + 5000 Archers</td></tr>';
-       helpText += '<TR><TD>4</td><TD>500 Supply Troops + 7500 Archers</td></tr>';
-       helpText += '<TR><TD>5</td><TD>15000 Archers</td></tr>';
-       helpText += '<TR><TD>5</td><TD>12000 Archers IF Level 10 fletching and Level 9 Featherweight</td></tr>';
-       helpText += '<TR><TD>6</td><TD>25000 Archers IF Level 9 fletching</td></tr>';
-       helpText += '<TR><TD>6</td><TD>22000 Archers IF Level 10 fletching</td></tr>';
-       helpText += '<TR><TD>7</td><TD>45000 Archers IF Level 10 fletching</td></tr>';
-       helpText += '<TR><TD>7</td><TD>44000 Archers IF Level 10 fletching and knight 69+</td></tr>';
-       helpText += '<TR><TD>7</td><TD>40000 Archers IF Level 10 fletching and knight 94+</td></tr>';
-       helpText += '<TR><TD>8</td><TD>28000 Ballista WITH Level 10 fletching and Knight 91+</td></tr>';
-       helpText += '<TR><TD>9</td><TD>56000 Ballista WITH Level 10 fletching and Knight 98+</td></tr>';
-       helpText += '<TR><TD>10</td><TD>125000 Catapults (500 Catapults loss!)</td></tr></tr></table>';
+       var helpText = translate("Raids_Help");
   
        var pop = new pbPopup ('giftHelp', 0, 0, 425, 375, true);
        pop.centerMe (mainPop.getMainDiv());  
        pop.getMainDiv().innerHTML = helpText;
-       pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help: Raids</b></center>';
+       pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot '+translate("Help")+': '+translate("Raids")+'</b></center>';
        pop.show (true);
      },
      
@@ -2689,7 +2673,7 @@ Tabs.Search = {
     var t = Tabs.Search;
 
     if (t.searchRunning){
-      t.stopSearch ('SEARCH CANCELLED!');
+      t.stopSearch (translate('SEARCH CANCELLED!'));
       return;
     }
     t.opt.searchType = document.getElementById ('pasrcType').value;
@@ -2700,49 +2684,49 @@ Tabs.Search = {
     errMsg = '';
 
     if (isNaN (t.opt.startX) ||t.opt.startX<0 || t.opt.startX>749)
-      errMsg = "X must be between 0 and 749<BR>";
+      errMsg = "X "+translate("must be between 0 and 749")+"<BR>";
     if (isNaN (t.opt.startY) ||t.opt.startY<0 || t.opt.startY>749)
-      errMsg += "Y must be between 0 and 749<BR>";
+      errMsg += "Y "+translate("must be between 0 and 749")+"<BR>";
     if (isNaN (t.opt.maxDistance) ||t.opt.maxDistance<1 || t.opt.maxDistance>75)
-      errMsg += "Radius (distance) must be between 1 and 75<BR>";
+      errMsg += translate("Radius (distance) must be between")+" 1 +"+translate("and")+" 75<BR>";
     if (errMsg != ''){
-      document.getElementById('pasrcResults').innerHTML = '<FONT COLOR=#660000>ERROR:</font><BR><BR>'+ errMsg;
+      document.getElementById('pasrcResults').innerHTML = '<FONT COLOR=#660000>'+translate("ERROR")+':</font><BR><BR>'+ errMsg;
       return;
     }
 
     t.searchRunning = true;
-    document.getElementById ('pasrcStart').value = 'Stop Search';
+    document.getElementById ('pasrcStart').value = translate('Stop Search');
     m = '<DIV class=pbStat><TABLE width=100% cellspacing=0><TR><TD class=xtab width=125><DIV id=pastatSearched></div></td>\
         <TD class=xtab align=center><SPAN style="white-space:normal" id=pastatStatus></span></td>\
         <TD class=xtab align=right width=125><DIV id=pastatFound></div></td></tr></table></div>\
           <TABLE width=100%><TR valign=top>\
             <TD width=99% style="max-width:50px"><DIV id=padivOutTab style="height:380px; max-height:380px; overflow-y:auto;"></div></td>\
-            <TD align=center valign=middle><A id=pbAhideShow style="text-decoration:none; cursor:pointer;"><DIV style="width:1em; border:1px solid red; padding:10px 2px; background-color:#fee"><SPAN id=spanHideShow> H I D E</span><BR><BR> L<BR>I<BR>S<BR>T<BR><BR> O<BR>P<BR>T<BR>I<BR>O<BR>N<BR>S </div></a></td>\
+            <TD align=center valign=middle><A id=pbAhideShow style="text-decoration:none; cursor:pointer;"><DIV style="width:1em; border:1px solid red; padding:10px 2px; background-color:#fee"><SPAN id=spanHideShow> '+translate("H I D E")+'</span><BR><BR> '+translate("L<BR>I<BR>S<BR>T<BR><BR> O<BR>P<BR>T<BR>I<BR>O<BR>N<BR>S")+' </div></a></td>\
             <TD width=100% height=100% style="background:#e0e0f0; height:100%; padding:5px"><DIV id=padivOutOpts></div></td>\
           </table>';
       
     document.getElementById('pasrcResults').innerHTML = m;
     if (t.opt.searchType == 0)
-      var typeName = 'Barbarians';
+      var typeName = translate('Barbarians');
     else if (t.opt.searchType == 1)
-      var typeName = 'Wildernesses';
+      var typeName = translate('Wildernesses');
     else
-      var typeName = 'Cities';
+      var typeName = translate('Cities');
     if (t.opt.searchShape == 'square')
-      var distName = 'Distance';
+      var distName = translate('Distance');
     else
-      var distName = 'Radius';
-    m = '<CENTER><B>Search for '+ typeName +'<BR>\
-        Center: '+ t.opt.startX +','+ t.opt.startY +'  &nbsp; '+ distName +': '+ t.opt.maxDistance +'<BR></center>\
-        <DIV class=pbentry><TABLE cellspacing=0 width=100%><TR align=center><TD class=xtab colspan=10><B>LIST OPTIONS:</b><BR></td></tr>';
+      var distName = translate('Radius');
+    m = '<CENTER><B>'+translate("Search for")+' '+ typeName +'<BR>\
+        '+translate("Center")+': '+ t.opt.startX +','+ t.opt.startY +'  &nbsp; '+ distName +': '+ t.opt.maxDistance +'<BR></center>\
+        <DIV class=pbentry><TABLE cellspacing=0 width=100%><TR align=center><TD class=xtab colspan=10><B>'+translate("LIST OPTIONS")+':</b><BR></td></tr>';
         
     if (t.opt.searchType == 1 || t.opt.searchType == 0) {
-      m += '<TR><TD class=xtab align=right>Min. level to show:</td><TD class=xtab> <INPUT id=pafilMinLvl size=2 value='+ Options.srcMinLevel +' /></td></tr>\
-        <TR><TD class=xtab align=right>Max. level to show:</td><TD class=xtab> <INPUT id=pafilMaxLvl size=2 value='+ Options.srcMaxLevel +' /></td></tr>';
+      m += '<TR><TD class=xtab align=right>'+translate("Min")+". "+translate("level to show")+':</td><TD class=xtab> <INPUT id=pafilMinLvl size=2 value='+ Options.srcMinLevel +' /></td></tr>\
+        <TR><TD class=xtab align=right>'+translate("Max")+". "+translate("level to show")+':</td><TD class=xtab> <INPUT id=pafilMaxLvl size=2 value='+ Options.srcMaxLevel +' /></td></tr>';
 		}
     if (t.opt.searchType == 1){
-      m += '<TR><TD class=xtab align=right>Wilderness Type:</td><TD class=xtab><SELECT id=pafilWildType>';
-      m += htmlOptions ( {1:'Glassland/Lake', 3:'Woodlands', 4:'Hills', 5:'Mountain', 6:'Plain', 8:'Dark Forest', 0:'ALL'}, Options.wildType );
+      m += '<TR><TD class=xtab align=right>'+translate("Wilderness Type")+':</td><TD class=xtab><SELECT id=pafilWildType>';
+      m += htmlOptions ( {1:translate('Glassland/Lake'), 3:translate('Woodlands'), 4:translate('Hills'), 5:translate('Mountain'), 6:translate('Plain'), 8:translate('Dark Forest'), 0:translate('ALL')}, Options.wildType );
 	  m+= '</select></td></tr>';
 	  // m+= '<TR><TD class=xtab align=right>Glassland/Lake:</td><TD class=xtab><INPUT name=pbfil id=pafilGrass type=CHECKBOX '+ (Options.GrassOnly?' CHECKED':'') +'\><td></tr>';
 	  // m+= '<TR><TD class=xtab align=right>Woodlands:</td><TD class=xtab><INPUT name=pbfil id=pafilWood type=CHECKBOX '+ (Options.WoodOnly?' CHECKED':'') +'\><td></tr>';
@@ -2750,29 +2734,29 @@ Tabs.Search = {
 	  // m+= '<TR><TD class=xtab align=right>Mountain:</td><TD class=xtab><INPUT name=pbfil id=pafilMount type=CHECKBOX '+ (Options.MountOnly?' CHECKED':'') +'\><td></tr>';
 	  // m+= '<TR><TD class=xtab align=right>Plain:</td><TD class=xtab><INPUT name=pbfil id=pafilPlain type=CHECKBOX '+ (Options.PlainOnly?' CHECKED':'') +'\><td></tr>';
 	  // m+= '<TR><TD class=xtab align=right>All:</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
-      m += '</select></td></tr><TR><TD class=xtab align=right>Unowned Only:</td><TD class=xtab><INPUT id=pafilUnowned type=CHECKBOX '+ (Options.unownedOnly?' CHECKED':'') +'\><td></tr>';
+      m += '</select></td></tr><TR><TD class=xtab align=right>'+translate("Unowned Only")+':</td><TD class=xtab><INPUT id=pafilUnowned type=CHECKBOX '+ (Options.unownedOnly?' CHECKED':'') +'\><td></tr>';
     }
    if (t.opt.searchType == 1 || t.opt.searchType == 0) {
         m+= '<TR><TD class=xtab align=right>Sort By:</td><TD class=xtab><SELECT id=pafilSortBy>\
-          <OPTION value="level" '+ (Options.srcSortBy=='level'?'SELECTED':'')  +'>Level</option>\
-          <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
+          <OPTION value="level" '+ (Options.srcSortBy=='level'?'SELECTED':'')  +'>'+translate("Level")+'</option>\
+          <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>'+translate("Distance")+'</option>\
 			</select></td></tr>\
-			<TR><TD class=xtab align=right>Coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
+			<TR><TD class=xtab align=right>'+translate("Coordinates only")+':</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
 			</table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
     } else {
-		m+= '</select></td></tr><TR><TD class=xtab align=right>Misted:</td><TD class=xtab><INPUT name=pbfil id=pafilMisted type=CHECKBOX '+ (Options.mistedOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Hostile:</td><TD class=xtab><INPUT name=pbfil id=pafilHostile type=CHECKBOX '+ (Options.hostileOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Friendly:</td><TD class=xtab><INPUT name=pbfil id=pafilFriendly type=CHECKBOX '+ (Options.friendlyOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Allied:</td><TD class=xtab><INPUT name=pbfil id=pafilAllied type=CHECKBOX '+ (Options.alliedOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Neutral:</td><TD class=xtab><INPUT name=pbfil id=pafilNeutral type=CHECKBOX '+ (Options.neutralOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Unallianced:</td><TD class=xtab><INPUT name=pbfil id=pafilunAllied type=CHECKBOX '+ (Options.unalliedOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>All:</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Sort By:</td><TD class=xtab><SELECT id=pafilSortBy>\
-          <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>Might</option>\
-             <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
+		m+= '</select></td></tr><TR><TD class=xtab align=right>'+translate("Misted")+':</td><TD class=xtab><INPUT name=pbfil id=pafilMisted type=CHECKBOX '+ (Options.mistedOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>'+translate("Hostile")+':</td><TD class=xtab><INPUT name=pbfil id=pafilHostile type=CHECKBOX '+ (Options.hostileOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>'+translate("Friendly")+':</td><TD class=xtab><INPUT name=pbfil id=pafilFriendly type=CHECKBOX '+ (Options.friendlyOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>'+translate("Allied")+':</td><TD class=xtab><INPUT name=pbfil id=pafilAllied type=CHECKBOX '+ (Options.alliedOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>'+translate("Neutral")+':</td><TD class=xtab><INPUT name=pbfil id=pafilNeutral type=CHECKBOX '+ (Options.neutralOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>'+translate("Unallianced")+':</td><TD class=xtab><INPUT name=pbfil id=pafilunAllied type=CHECKBOX '+ (Options.unalliedOnly?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>'+translate("All")+':</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
+		m+= '<TR><TD class=xtab align=right>'+translate("Sort By")+':</td><TD class=xtab><SELECT id=pafilSortBy>\
+          <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>'+translate("Might")+'</option>\
+             <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>'+translate("Distance")+'</option>\
         </select></td></tr>\
-		<TR><TD class=xtab align=right>Min might:</td><TD class=xtab><INPUT type=text id=paminmight size=6 value='+ Options.minmight +'>\
-        <TR><TD class=xtab align=right>Coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
+		<TR><TD class=xtab align=right>'+translate("Min")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=paminmight size=6 value='+ Options.minmight +'>\
+        <TR><TD class=xtab align=right>'+translate("Coordinates only")+':</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
 	
 	}
@@ -2891,7 +2875,7 @@ Tabs.Search = {
     t.curY = t.firstY;
     var xxx = t.MapAjax.normalize(t.curX);
     var yyy = t.MapAjax.normalize(t.curY);
-    document.getElementById ('pastatStatus').innerHTML = 'Searching at '+ xxx +','+ yyy;
+    document.getElementById ('pastatStatus').innerHTML = translate('Searching at ')+ xxx +','+ yyy;
     setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.eventgetplayeronline)}, MAP_DELAY);
   },
 
@@ -2899,10 +2883,10 @@ Tabs.Search = {
     var div = document.getElementById('padivOutOpts');
     if (div.style.display == 'none'){
       div.style.display = 'block';
-      document.getElementById('spanHideShow').innerHTML = 'H I D E';
+      document.getElementById('spanHideShow').innerHTML = translate('H I D E');
     } else {
       div.style.display = 'none';
-      document.getElementById('spanHideShow').innerHTML = 'S H O W';
+      document.getElementById('spanHideShow').innerHTML = translate('S H O W');
     }
   },
   
@@ -2951,25 +2935,25 @@ Tabs.Search = {
     }
     if (DEBUG_SEARCH) DebugTimer.display('SEACHdraw: FILTER');
 
-    document.getElementById('pastatFound').innerHTML = 'Found: '+ dat.length;
+    document.getElementById('pastatFound').innerHTML = translate('Found')+': '+ dat.length;
     if (dat.length == 0){
-      m = '<BR><CENTER>None found</center>';
+      m = '<BR><CENTER>'+translate("None found")+'</center>';
     } else {
       dat.sort(mySort);
       if (DEBUG_SEARCH) DebugTimer.display('SEACHdraw: SORT');
       if (coordsOnly)
-        m = '<TABLE align=center id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td></tr>';
+        m = '<TABLE align=center id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Location")+'</td></tr>';
       else {
       if (t.opt.searchType == 2) {
-			 m = '<TABLE id=pasrcOutTab class=pbSrchResults cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Loc</td><TD align=right>Dist</td><TD>Player</td><TD align=right>Might</td><TD>Alliance</td><TD>Online</td><TD></td></tr>';
+			 m = '<TABLE id=pasrcOutTab class=pbSrchResults cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Loc")+'</td><TD align=right>'+translate("Dist")+'</td><TD>'+translate("Player")+'</td><TD align=right>'+translate("Might")+'</td><TD>'+translate("Alliance")+'</td><TD>'+translate("Online")+'</td><TD></td></tr>';
 		} else {
-			m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td><TD style="padding-left: 10px">Distance</td><TD style="padding-left: 10px;">Lvl</td><TD width=100px> &nbsp; Type</td><TD></td><TD>Export to Raid</td></tr>';
+			m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Location")+'</td><TD style="padding-left: 10px">'+translate("Distance")+'</td><TD style="padding-left: 10px;">'+translate("Lvl")+'</td><TD width=100px> &nbsp; '+translate("Type")+'</td><TD></td><TD>'+translate("Export to Raid")+'</td></tr>';
 		}
 	}
       var numRows = dat.length;
       if (numRows > t.MAX_SHOW_WHILE_RUNNING && t.searchRunning){
         numRows = t.MAX_SHOW_WHILE_RUNNING;
-        document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>NOTE: Table only shows '+ t.MAX_SHOW_WHILE_RUNNING +' of '+ dat.length +' results until search is complete.</font>';
+        document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>'+translate('NOTE: Table only shows ')+ t.MAX_SHOW_WHILE_RUNNING +' of '+ dat.length +translate(' results until search is complete')+'.</font>';
       }
       for (i=0; i<numRows; i++){
         m += '<TR><TD><DIV onclick="pbGotoMap('+ dat[i][0] +','+ dat[i][1] +')"><A>'+ dat[i][0] +','+ dat[i][1] +'</a></div></td>';
@@ -2979,19 +2963,19 @@ Tabs.Search = {
           if (t.opt.searchType == 2) { // city search
             m += '<TD align="right" >'+ dat[i][2].toFixed(2) +'</td>';
             if (dat[i][5])
-              m += '<TD colspan=4>* MISTED * &nbsp; &nbsp; <SPAN onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;"><A>Scout</a></span></td></tr>';
+              m += '<TD colspan=4>* '+translate("MISTED")+' * &nbsp; &nbsp; <SPAN onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;"><A>'+translate("Scout")+'</a></span></td></tr>';
             else{
               var allStyle = '';
               if (dat[i][12]=='f')
                 allStyle = 'class=pbTextFriendly';
               else if (dat[i][12]=='h')
                 allStyle = 'class=pbTextHostile';
-              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">Lookup</a></td></tr>';
+              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>'+translate("ONLINE")+'</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">'+translate("Lookup")+'</a></td></tr>';
             }
 			} else {
           m += '<TD align=right  valign="top">'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
-            +'</td><TD  valign="top">'+ (dat[i][5]?(dat[i][6]!=0?' <A onclick="pbSearchLookup('+dat[i][6]+')">OWNED</a>':'<A onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;">MISTED</a>'):'') +'</td>';
-          if (t.opt.searchType == 0) m+= '<TD align=center  valign="top"><A onclick="pbExportToRaid('+ dat[i][0]+','+dat[i][1] +')">Export</a></td>';
+            +'</td><TD  valign="top">'+ (dat[i][5]?(dat[i][6]!=0?' <A onclick="pbSearchLookup('+dat[i][6]+')">'+translate("OWNED")+'</a>':'<A onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;">'+translate("MISTED")+'</a>'):'') +'</td>';
+          if (t.opt.searchType == 0) m+= '<TD align=center  valign="top"><A onclick="pbExportToRaid('+ dat[i][0]+','+dat[i][1] +')">'+translate("Export")+'</a></td>';
           m+='</tr>';
 			}
 		}
@@ -3009,14 +2993,14 @@ Tabs.Search = {
   stopSearch : function (msg){
     var t = Tabs.Search;
     document.getElementById ('pastatStatus').innerHTML = '<FONT color=#ffaaaa>'+ msg +'</font>';
-    document.getElementById ('pasrcStart').value = 'Start Search';
+    document.getElementById ('pasrcStart').value = translate('Start Search');
     document.getElementById ('pasrchSizeWarn').innerHTML = '';
     if (t.opt.searchType==0 && document.getElementById('KOCAttackToggle')!=null){    
-      document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Export Results', 'id=pbSrcDoExp') +'</center>';
+      document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20(translate('Export Results'), 'id=pbSrcDoExp') +'</center>';
       document.getElementById ('pbSrcDoExp').addEventListener ('click', t.exportKOCattack, false);
     }
 	if (t.opt.searchType==2){
-	  document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Generate Scout List', 'id=pbSrcDoScout') +'</center>';
+	  document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20(translate('Generate Scout List'), 'id=pbSrcDoScout') +'</center>';
       document.getElementById ('pbSrcDoScout').addEventListener ('click', t.generateScoutList, false);
 	}
     t.searchRunning = false;
@@ -3066,20 +3050,20 @@ Tabs.Search = {
 	  popScout = new pbPopup ('pbsrcscout', 0,0, 350,500, true, function (){popScout.destroy(); popScout=null;});
       popScout.centerMe (mainPop.getMainDiv());  
     }
-	var m = '<DIV class=pbStat>Auto Scout Options</div>';
-		m += '<DIV>Amount of Scouts to send: <input id=pbsrcScoutAmt value="'+Options.srcScoutAmt+'" /></div><BR>';
-		m += '<DIV>Select City: <span id=pbsrcScoutcitypick> </span></div><BR>';
-		m += '<DIV class=pbStat>Scout from <span id=pbsrcScoutcity>'+city.name+'</span> <BR> Total targets '+coordlist.length+'</div>';
-		m += '<DIV style="max-height:220px; overflow-y:auto;"><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW><TR style="font-weight:bold; background-color:white"><TD width=15><input type=checkbox id=pbsrcScout_All /></td><TD>Target Coords</td></tr>';
+	var m = '<DIV class=pbStat>'+translate("Auto Scout Options")+'</div>';
+		m += '<DIV>'+translate("Amount of Scouts to send")+': <input id=pbsrcScoutAmt value="'+Options.srcScoutAmt+'" /></div><BR>';
+		m += '<DIV>'+translate("Select City")+': <span id=pbsrcScoutcitypick> </span></div><BR>';
+		m += '<DIV class=pbStat>'+translate("Scout from")+' <span id=pbsrcScoutcity>'+city.name+'</span> <BR> '+translate("Total targets ")+coordlist.length+'</div>';
+		m += '<DIV style="max-height:220px; overflow-y:auto;"><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW><TR style="font-weight:bold; background-color:white"><TD width=15><input type=checkbox id=pbsrcScout_All /></td><TD>'+translate("Target Coords")+'</td></tr>';
 	  for(i=0; i<coordlist.length; i++){
 			m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck id="pbsrcScoutCheck_'+coordlist[i].x+'_'+coordlist[i].y+'" value="'+coordlist[i].x+'_'+coordlist[i].y+'" /></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td></tr>';
 	  }
 	    m += '</table></div>';
-		m += '<BR><CENTER>'+ strButton20('Start Scout', 'id=pbSrcStartScout') +'</center>';
+		m += '<BR><CENTER>'+ strButton20(translate('Start Scout'), 'id=pbSrcStartScout') +'</center>';
 		m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
 	popScout.getMainDiv().innerHTML = m;
 	new CdispCityPicker ('pbScoutPick', document.getElementById('pbsrcScoutcitypick'), false, function(c,x,y){document.getElementById('pbsrcScoutcity').innerHTML = c.name; t.scoutcity = c; }, city.idx);
-	popScout.getTopDiv().innerHTML = '<CENTER><B>Power Bot Scout List</b></center>';
+	popScout.getTopDiv().innerHTML = '<CENTER><B>Power Bot '+translate("Scout List")+'</b></center>';
 	popScout.show(true);
 	
 	document.getElementById('pbsrcScoutAmt').addEventListener('change', function(){
@@ -3098,12 +3082,12 @@ Tabs.Search = {
 	var t = Tabs.Search;
 	document.getElementById('pbSrcScoutResult').innerHTML = '';
 	if(list.length < 1){
-		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>ERROR: No coords selected</span>';
+		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>'+translate("ERROR")+': '+translate("No coords selected")+'</span>';
 		t.clickedStartScout();
 		return;
 	}
 	if(parseInt(Seed.units['city'+city.id]['unt'+3]) < Options.srcScoutAmt){
-		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>ERROR: No scouts available</span>';
+		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>'+translate("ERROR")+': '+translate("No scouts available")+'</span>';
 		t.clickedStartScout();
 		return;
 	}
@@ -3113,13 +3097,13 @@ Tabs.Search = {
   doScoutCount : function(list, city, total, count){
 	var t = Tabs.Search;
 	if(!t.scouting){
-		document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>Scouting stopped by user</span><BR>';
+		document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>'+translate("Scouting stopped by user")+'</span><BR>';
 		document.getElementById('pbSrcStartScout').className = 'button20 ptButton20';
-		document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>Start Scout</span>';
+		document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>'+translate("Start Scout")+'</span>';
 		return;
 	}
 	if(total <= (count)){
-		document.getElementById('pbSrcScoutResult').innerHTML += 'Done!<BR>';
+		document.getElementById('pbSrcScoutResult').innerHTML += translate("Done")+'!<BR>';
 		t.clickedStartScout();
 		return;
 	}
@@ -3133,16 +3117,16 @@ Tabs.Search = {
 
 	if(slots >= rallypointlevel){
 		setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
-		document.getElementById('pbSrcScoutResult').innerHTML += 'Waiting for rally point to clear...';
+		document.getElementById('pbSrcScoutResult').innerHTML += translate('Waiting for rally point to clear')+'...';
 		return;
 	}
 	var coords = list[count].split("_");
 	if(coords[0] == 'undefined' || coords[1] == 'undefined'){
-		document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>ERROR: Invalid coords</span>';
+		document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>'+translate("ERROR")+': '+translate("Invalid coords")+'</span>';
 		t.clickedStartScout();
 		return;
 	}
-	document.getElementById('pbSrcScoutResult').innerHTML += 'Sending scouts to '+coords[0]+','+coords[1]+'...';
+	document.getElementById('pbSrcScoutResult').innerHTML += translate('Sending scouts to ')+coords[0]+','+coords[1]+'...';
 	document.getElementById('pbsrcScoutCheck_'+coords[0]+'_'+coords[1]).checked = false;
 	t.sendScout(coords[0], coords[1], city, count, function(c){t.doScoutCount(list, city, total, c)});
   },
@@ -3175,11 +3159,11 @@ Tabs.Search = {
 			 var currentcityid = params.cid;
 			 unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
 			 if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-			 document.getElementById('pbSrcScoutResult').innerHTML += 'Sent!<BR>';
+			 document.getElementById('pbSrcScoutResult').innerHTML += translate('Sent!')+'<BR>';
 			 if (notify)
 			  setTimeout(function(){ notify(count+1); }, 1000);
 		 } else {
-			 document.getElementById('pbSrcScoutResult').innerHTML += 'Failed! Retrying....<BR>';
+			 document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Retrying')+'....<BR>';
 			 if (notify)
 			  setTimeout(function(){ notify(count); }, 1000);
 		  }
@@ -3212,11 +3196,11 @@ Tabs.Search = {
 			}
 			t.doScout(ScoutList, t.scoutcity);
 			document.getElementById('pbSrcStartScout').className = 'button20 pbButCancel';
-			document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>Stop</span>';
+			document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>'+translate("Stop")+'</span>';
 		} else {
 			t.scouting = false;
 			document.getElementById('pbSrcStartScout').className = 'button20 ptButton20';
-			document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>Start Scout</span>';
+			document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>'+translate("Start Scout")+'</span>';
 		}
 	},
     
@@ -3293,7 +3277,7 @@ Tabs.Search = {
     }
     
     t.tilesSearched += (15*15);
-    document.getElementById('pastatSearched').innerHTML = 'Searched: '+ t.tilesSearched;
+    document.getElementById('pastatSearched').innerHTML = translate('Searched: ')+ t.tilesSearched;
     t.dispMapTable();
 
     t.curX += 15;
@@ -3301,7 +3285,7 @@ Tabs.Search = {
       t.curX = t.firstX;
       t.curY += 15;
       if (t.curY > t.lastY){
-        t.stopSearch ('Done!');
+        t.stopSearch (translate('Done!'));
         return;
       }
     }
@@ -3316,7 +3300,7 @@ Tabs.Search = {
     if (!t.searchRunning)
       return;
     if (!rslt.ok){
-      t.stopSearch ('ERROR: '+ rslt.errorMsg);
+      t.stopSearch (translate('ERROR')+': '+ rslt.errorMsg);
       return;
     }
 	
@@ -3342,9 +3326,9 @@ Tabs.Search = {
       pop.centerMe (mainPop.getMainDiv());  
       t.popFirst = false;
     }
-    pop.getTopDiv().innerHTML = '<CENTER><B>Player Lookup</b></center>';
-    pop.getMainDiv().innerHTML = '<DIV class=pbStat>Leaderboard information</div><SPAN id=pblupLB>Looking up leaderboard...</span>\
-      <BR><DIV class=pbStat>Alliance Lookup</div><SPAN id=pblupAI>Looking up alliance info...</span>';
+    pop.getTopDiv().innerHTML = '<CENTER><B>'+translate("Player Lookup")+'</b></center>';
+    pop.getMainDiv().innerHTML = '<DIV class=pbStat>'+translate("Leaderboard information")+'</div><SPAN id=pblupLB>'+translate("Looking up leaderboard")+'...</span>\
+      <BR><DIV class=pbStat>'+translate("Alliance Lookup")+'</div><SPAN id=pblupAI>'+translate("Looking up alliance info")+'...</span>';
     pop.show (true);
     t.fetchLeaderboard (pid, function (r){t.gotPlayerLeaderboard(r, document.getElementById('pblupLB'))});
     t.fetchPlayerInfo (pid, function (r){t.gotPlayerInfo(r, document.getElementById('pblupAI'))});
@@ -3358,7 +3342,7 @@ Tabs.Search = {
       pop.centerMe (mainPop.getMainDiv());  
       t.popFirst = false;
     }
-    pop.getTopDiv().innerHTML = '<CENTER><B>Export to Raid</b></center>';
+    pop.getTopDiv().innerHTML = '<CENTER><B>'+translate("Export to Raid")+'</b></center>';
     
 	  var m = '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
 	  m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
@@ -3400,8 +3384,8 @@ Tabs.Search = {
 	  m += '<TD><INPUT id=Unit11 type=text size=6 maxlength=6 value="0"></td>';
 	  m += '<TD><INPUT id=Unit12 type=text size=6 maxlength=6 value="0"></td></tr></table>';
 	  
-	  m += '<BR><CENTER>' +strButton20('Help', 'id=pbHelp')+'<SELECT id=RaidKnights type=list></select></center>';
-	  m+= '<BR><CENTER>'+ strButton20('Raid and save', 'id=pbRaidSave') +'</center>';
+	  m += '<BR><CENTER>' +strButton20(translate('Help'), 'id=pbHelp')+'<SELECT id=RaidKnights type=list></select></center>';
+	  m+= '<BR><CENTER>'+ strButton20(translate('Raid and save'), 'id=pbRaidSave') +'</center>';
           
     pop.getMainDiv().innerHTML = m;
     
@@ -3492,7 +3476,7 @@ Tabs.Search = {
       return;
     }
     if (rslt.totalResults == 0){
-      span.innerHTML = '<B>Leaderboard:</b> Not found! (misted?)<BR><BR>';
+      span.innerHTML = '<B>'+translate("Leaderboard")+':</b> '+translate("Not found")+'! ('+translate("misted")+'?)<BR><BR>';
       return;
     }
     var p = rslt.results[0];
@@ -3509,11 +3493,11 @@ Tabs.Search = {
     if (!aName || aName=='')
       aName = 'none';
              
-    var m = '<CENTER><SPAN class=boldRed>NOTE: Leaderboard information is delayed up to 24 hours</span></center><TABLE class=pbTabSome>';
-    m += '<TR><TD class=pbDetLeft>Player Name:</td><TD>'+ name +'</td></tr>\
-      <TR><TD class=pbDetLeft>Might:</td><TD>'+ p.might +' (rank #'+ p.rank +')</td></tr>\
-      <TR><TD class=pbDetLeft>Alliance:</td><TD>'+ aName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
-      <TR valign=top><TD class=pbDetLeft>Cities:</td><TD><TABLE class=pbTabSome><TR style="font-weight:bold"><TD>City Name</td><TD>Coords</td><TD>Level</td><TD>Status</td><TD>Created</td></tr>';
+    var m = '<CENTER><SPAN class=boldRed>'+translate("NOTE: Leaderboard information is delayed up to 24 hours")+'</span></center><TABLE class=pbTabSome>';
+    m += '<TR><TD class=pbDetLeft>'+translate("Player Name")+':</td><TD>'+ name +'</td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Might")+':</td><TD>'+ p.might +' ('+translate("rank")+' #'+ p.rank +')</td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Alliance")+':</td><TD>'+ aName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
+      <TR valign=top><TD class=pbDetLeft>'+translate("Cities")+':</td><TD><TABLE class=pbTabSome><TR style="font-weight:bold"><TD>'+translate("City Name")+'</td><TD>'+translate("Coords")+'</td><TD>'+translate("Level")+'</td><TD>'+translate("Status")+'</td><TD>'+translate("Created")+'</td></tr>';
       
     for (var i=0; i<p.cities.length; i++){
       var c = p.cities[i];
@@ -3539,11 +3523,11 @@ Tabs.Search = {
     var prov = [];
     for (var i=0; i<pids.length; i++)
       prov.push(unsafeWindow.provincenames['p'+pids[i]]);
-    m += '<TR><TD class=pbDetLeft>Player Name:</td><TD>'+ p.genderAndName +'</td></tr>\
-      <TR><TD class=pbDetLeft>Might:</td><TD>'+ p.might +'</td></tr>\
-      <TR><TD class=pbDetLeft>Facebook profile:</td><TD><A target="_tab" href="http://www.facebook.com/profile.php?id='+ p.fbuid +'">Click to open in new tab</a></td></tr>\
-      <TR><TD class=pbDetLeft>Alliance:</td><TD>'+ p.allianceName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
-      <TR valign=top><TD class=pbDetLeft>Provinces:</td><TD style="white-space:normal">'+ prov.join(', ') +'</td></tr>';
+    m += '<TR><TD class=pbDetLeft>'+translate("Player Name")+':</td><TD>'+ p.genderAndName +'</td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Might")+':</td><TD>'+ p.might +'</td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Facebook profile")+':</td><TD><A target="_tab" href="http://www.facebook.com/profile.php?id='+ p.fbuid +'">'+translate("Click to open in new tab")+'</a></td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Alliance")+':</td><TD>'+ p.allianceName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
+      <TR valign=top><TD class=pbDetLeft>'+translate("Provinces")+':</td><TD style="white-space:normal">'+ prov.join(', ') +'</td></tr>';
     span.innerHTML = m + '</table>';
   },
       
@@ -10656,9 +10640,9 @@ Tabs.Language = {
   
   showlanguage : function(){
 	  var t = Tabs.Language;
-	  t.poplangshow = new pbPopup('pbShowLanguage', 10, 10, 400, 500, true, function() {t.popshowlang.destroy();});
+	  t.poplangshow = new pbPopup('pbShowLanguage', 10, 10, 600, 500, true, function() {t.poplangshow.destroy();});
 	  t.poplangshow.getTopDiv().innerHTML = '<TD><B>Language Array:</td>';
-	  t.poplangshow.getMainDiv().innerHTML = '<DIV style="overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pblang_showarray"></table><div id=pblang_status ></div></div>';
+	  t.poplangshow.getMainDiv().innerHTML = '<DIV style="max-height:430px;overflow-y:auto"><TABLE style="overflow-y:auto" align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pblang_showarray"></table></div><div id=pblang_status ></div>';
 	  t.paintlanguagearray();
 	  t.poplangshow.show(true);
   },
@@ -10667,17 +10651,17 @@ Tabs.Language = {
 	  var t = Tabs.Language;
 	  var m = '';
 	  for (var k in t.language.needTranslation){
-		  m += "<TR><TD>"+k+": </td><TD><input id='pblang_"+k+"' value='"+(t.language.needTranslation[k]==1?'':t.language.needTranslation[k])+"' /></td></tr>";
+		  m += "<TR><TD style='max-width:250px;word-wrap:break-word' >"+k.escape_space()+": </td><TD><input id='pblang_"+escape(k)+"' value='"+(t.language.needTranslation[k]==1?'':t.language.needTranslation[k].unescape_space())+"' /></td></tr>";
 	  }
 	  for (var k in t.language){
 		  if(k != "needTranslation")
-			m += "<TR><TD>"+k+": </td><TD>"+t.language[k]+"</td></tr>";
+			m += "<TR><TD style='max-width:250px;word-wrap:break-word' >"+k.escape_space()+": </td><TD>"+t.language[k].escape_space()+"</td></tr>";
 	  }
 	  document.getElementById("pblang_showarray").innerHTML = m;
 	  document.getElementById("pblang_status").innerHTML = "<center><input type=submit id=pblang_statussave value=Save /><input type=submit id=pblang_statusexport value='Export new translation' /></center>";
 	  document.getElementById("pblang_statussave").addEventListener('click', function(){
 		for (var k in t.language.needTranslation){
-			var j = document.getElementById("pblang_"+k).value;
+			var j = document.getElementById("pblang_"+escape(k)).value;
 			if(j != '')
 				t.language.needTranslation[k] = j;
 		}
@@ -12864,6 +12848,18 @@ String.prototype.htmlSpecialCharsDecode = function() {
 String.prototype.trim = function () {
     return this.replace(/^\s*/, "").replace(/\s*$/, "");
 }
+String.prototype.escape_space = function(){
+	var s = this.split(" ");
+	for(var i=0; i<s.length; i++)
+		s[i] = escape(s[i]);
+	return s.join(" ");
+}
+String.prototype.unescape_space = function(){
+	var s = this.split(" ");
+	for(var i=0; i<s.length; i++)
+		s[i] = unescape(s[i]);
+	return s.join(" ");
+}
 
 function officerId2String (oid){
   if (oid==null)
@@ -15047,59 +15043,6 @@ Tabs.Combat = {
 	
 	},
 	
-}
-	
-	
-/*********************************** DOMAIN BREAK IN TAB ***********************************/
-Tabs.DbIn = {
-tabOrder: 10000,
-tabDisabled : false,
-tabLabel : 'Domain',
-myDiv : null,
-init: function(div){
-var t = Tabs.DbIn;
-t.myDiv = div;
-var m = '<DIV class=pbStat>Domain Breakin!!</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
-m += '<br> Lord or Lady?: <INPUT id=pbLordLadyt type=submit value="Lord">';
-m += '<br> Name: <INPUT id=pbNewName type=text size=10 value="YourNameHere" maxlength=10 \> ';
-m += '<br>Domain: <INPUT id=pbNewDomain type=text size=3 value="0" maxlength=3 \> ';
-m += '<br><INPUT id=pbJoinDomain type=submit value="Join">';
-t.myDiv.innerHTML = m
-document.getElementById('pbLordLadyt').addEventListener('click', function(){if (this.value == "Lord") {this.value = "Lady"} else {this.value = "Lord"}},false);
-document.getElementById('pbJoinDomain').addEventListener ('click', function(){t.newdomain(document.getElementById('pbLordLadyt').value,document.getElementById('pbNewName').value,document.getElementById('pbNewDomain').value)}, false);
-},
-hide : function (){
-},
-show : function (){
-},
-toggleLordLady: function(obj){
-},
-newdomain : function (Sex,Name,Domain){
-var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-params.pf =0;
-params.displayname=Name;
-if (Sex == "Lord") {
-params.gender='M';
-} else {
-params.gender='F';
-};
-params.portrait=1;
-params.server=Domain;
-params.inviter=0;
-params.gid=0;
-params.hid=0;
-GM_xmlhttpRequest({
-method: 'POST',
-url: "http://www"+Domain+".kingdomsofcamelot.com/fb/e2/src/ajax/initPlayer.php" + unsafeWindow.g_ajaxsuffix,
-headers: {
-'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-},
-onload:function(rslt) {
-alert(rslt.responseText);
-},
-data: implodeUrlArgs(params),
-});
-},
 }
 
 /*********************************  Cresting Tab ***********************************/
