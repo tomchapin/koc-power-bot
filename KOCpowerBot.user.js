@@ -199,6 +199,12 @@ var CrestData = new Array();
 		
 	};
 
+var TicklerOptions = {
+Running : false,
+TicklerCity:0,
+slots:0,
+siege:false,
+};
 
 var TrainOptions = {
   Running    : false,
@@ -544,6 +550,7 @@ function pbStartup (){
   readTrainingOptions();
   readCombatOptions();
   readAttackOptions();
+readTicklerOptions();
   setCities();
 
 // TODO: Make sure WinPos is visible on-screen ?
@@ -11368,7 +11375,10 @@ function saveCombatOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('CombatOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CombatOptions));}, 0);
 }
-
+function saveTicklerOptions (){
+var serverID = getServerId();
+setTimeout (function (){GM_setValue ('TicklerOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(TicklerOptions));}, 0);
+}
 
 
 function readOptions (){
@@ -11453,6 +11463,20 @@ function readCombatOptions (){
         CombatOptions[k] = opts[k];
     }
   }
+}
+function readTicklerOptions (){
+var serverID = getServerId();
+s = GM_getValue ('TicklerOptions_' + Seed.player['name'] + '_' +serverID);
+if (s != null){
+opts = JSON2.parse (s);
+for (k in opts){
+if (matTypeof(opts[k]) == 'object')
+for (kk in opts[k])
+TicklerOptions[k][kk] = opts[k][kk];
+else
+TicklerOptions[k] = opts[k];
+}
+}
 }
 
 function createButton (label,id){
@@ -14882,9 +14906,447 @@ Tabs.Combat = {
 }
 	
 	
+/*********************************** DOMAIN BREAK IN TAB ***********************************/
+Tabs.DbIn = {
+tabOrder: 10000,
+tabDisabled : false,
+tabLabel : 'Domain Break in',
+myDiv : null,
+init: function(div){
+var t = Tabs.DbIn;
+t.myDiv = div;
+var m = '<DIV class=pbStat>Domain Breakin!!</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
+m += '<br> Lord or Lady?: <INPUT id=pbLordLadyt type=submit value="Lord">';
+m += '<br> Name: <INPUT id=pbNewName type=text size=10 value="YourNameHere" maxlength=10 \> ';
+m += '<br>Domain: <INPUT id=pbNewDomain type=text size=3 value="0" maxlength=3 \> ';
+m += '<br><INPUT id=pbJoinDomain type=submit value="Join">';
+t.myDiv.innerHTML = m
+document.getElementById('pbLordLadyt').addEventListener('click', function(){if (this.value == "Lord") {this.value = "Lady"} else {this.value = "Lord"}},false);
+document.getElementById('pbJoinDomain').addEventListener ('click', function(){t.newdomain(document.getElementById('pbLordLadyt').value,document.getElementById('pbNewName').value,document.getElementById('pbNewDomain').value)}, false);
+},
+hide : function (){
+},
+show : function (){
+},
+toggleLordLady: function(obj){
+},
+newdomain : function (Sex,Name,Domain){
+var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+params.pf =0;
+params.displayname=Name;
+if (Sex == "Lord") {
+params.gender='M';
+} else {
+params.gender='F';
+};
+params.portrait=1;
+params.server=Domain;
+params.inviter=0;
+params.gid=0;
+params.hid=0;
+GM_xmlhttpRequest({
+method: 'POST',
+url: "http://www"+Domain+".kingdomsofcamelot.com/fb/e2/src/ajax/initPlayer.php" + unsafeWindow.g_ajaxsuffix,
+headers: {
+'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+},
+onload:function(rslt) {
+alert(rslt.responseText);
+},
+data: implodeUrlArgs(params),
+});
+},
+}
+/*********************************** Tickler TAB ***********************************/
+Tabs.Tickler = {
+tabOrder: 600,
+tabDisabled : false,
+tabLabel : 'Tickler',
+myDiv : null,
+cityId : 0,
+init: function(div){
+var t = Tabs.Tickler;
+t.myDiv = div;
+t.resetallydata();
+var selbut=0;
+var m = '<DIV class=pbStat>Select City to Tickle From</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
+if (TicklerOptions.Running == false) {
+m += '<TD><INPUT id=Tickletoggle type=submit value="Tickler = OFF"></td>';
+} else {
+m += '<TD><INPUT id=Tickletoggle type=submit value="Tickler = ON"></td>';
+}
+m += '<TD><DIV style="margin-bottom:10px;"><span id=ptTickleCity></span></div></td></tr></TABLE>';
+m += '<br> Keep <INPUT id=pbTickleSlots type=text size=1 value="'+ TicklerOptions.slots +'" \> rally point slots free';
+m += '<br><INPUT id=pbTickleSiege type=checkbox '+ (TicklerOptions.siege?' CHECKED':'') +'\> Do Siege Attacks in the mix';
+t.myDiv.innerHTML = m;
+for (var i=0;i<Seed.cities.length;i++){
+if (TicklerOptions.TicklerCity == Seed.cities[i][0]){
+selbut=i;
+break;
+}
+}
+t.annoy = new CdispCityPicker ('ptTicklepicker', document.getElementById('ptTickleCity'), true, t.clickCitySelect, selbut);
+if (TicklerOptions.TicklerCity == 0) {
+TicklerOptions.TicklerCity = t.annoy.city.id;
+saveTicklerOptions();
+}
+document.getElementById('pbTickleSlots').addEventListener ('change', function(){TicklerOptions.slots = parseInt(this.value);saveTicklerOptions();}, false);
+document.getElementById('ptTickleCity').addEventListener('click', function(){TicklerOptions.TicklerCity = t.annoy.city.id;saveTicklerOptions();} , false);
+document.getElementById('Tickletoggle').addEventListener('click', function(){t.toggleTickleState(this)} , false);
+document.getElementById('pbTickleSiege').addEventListener ('change', function (){
+TicklerOptions.siege = (!TicklerOptions.siege);
+saveTicklerOptions();
+}, false);
+},
+hide : function (){
+},
+show : function (){
+},
+clickCitySelect : function (city){
+var t = Tabs.Tickler;
+t.cityId = city['id'];
+TicklerOptions.TicklerCity = t.cityId;
+saveTicklerOptions();
+},
+toggleTickleState: function(obj){
+var t = Tabs.Tickler;
+if (TicklerOptions.Running == true) {
+TicklerOptions.Running = false;
+obj.value = "Tickler = OFF";
+saveTicklerOptions();
+}
+else {
+TicklerOptions.Running = true;
+obj.value = "Tickler = ON";
+saveTicklerOptions();
+setTimeout (t.resetallydata, 200000);
+}
+},
+resetallydata : function () {
+var t = Tabs.Tickler;
+var allydata=[];
+var e = 0;
+for (z in Seed.allianceDiplomacies.hostile) e++
+for (z in Seed.allianceDiplomacies.hostile) {
+var a = Seed.allianceDiplomacies.hostile[z];
+var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+params.perPage = 100;
+params.allianceId = a.allianceId;
+
+new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getUserLeaderboard.php" + unsafeWindow.g_ajaxsuffix, {
+method: "post",
+parameters: params,
+onSuccess: function (rslt) {
+var city = '';
+for (var i=0; i<rslt.results.length; i++) {
+//alert(rslt.results[i].toSource());
+if (rslt.results[i]['userId'] !=0){
+player = rslt.results[i]['cities'];
+for (var ii=0; ii<player.length; ii++) {
+allydata.push ({X:player[ii]['xCoord'],Y:player[ii]['yCoord']});
+}
+}
+}
+e--
+if (e == 0) {if (allydata != []){ doTickle(allydata);};};
+},
+onFailure: function (rslt) {
+setTimeout (t.resetallydata, 5);
+notify ({errorMsg:'AJAX error'});
+},
+});
+}
+},
+}
+
 	
-	
-	
+																																																																										
+function doTickle (list){
+//alert('TicklerOptions.Running'+TicklerOptions.Running);
+if(!TicklerOptions.Running) { return;};
+var slots=0;
+var cty = TicklerOptions.TicklerCity;
+var rallypointlevel = 0;
+for (var o in Seed.buildings['city'+cty]){
+var buildingType = parseInt(Seed.buildings['city'+cty][o][0]);
+var buildingLevel = parseInt(Seed.buildings['city'+cty][o][1]);
+if (buildingType == 12) rallypointlevel=parseInt(buildingLevel);
+};
+//alert('Seed slots '+Seed.queue_atkp['city'+cty].toSource());
+if  (Seed.queue_atkp['city'+cty].toSource() == "[]") {
+slots=0;
+} else {
+for (aa in Seed.queue_atkp['city'+cty]) slots++;
+slots = (slots+TicklerOptions.slots);
+};
+if (slots == 39)
+slots = 12;
+if (slots >= rallypointlevel) {
+setTimeout (function() {doTickle(list)}, 45000);
+return;
+};
+var pick = Math.floor(Math.random()*list.length);
+var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+params.cid = cty;
+getKnights(cty);
+//alert('knight '+knt[0]);
+if (knt[0] != undefined) {
+if (TicklerOptions.siege) {
+var n = Math.floor(Math.random()*10);
+} else {
+var n = Math.floor(Math.random()*7);
+};
+switch(n)
+{
+case 5:
+params.type=4;
+params.kid=knt[0]['ID'];
+params.xcoord = list[pick]['X'];
+params.ycoord = list[pick]['Y'];
+params.u3= Math.floor(Math.random()*20);
+break;
+case 6:
+params.type=4;
+params.kid=knt[0]['ID'];
+params.xcoord = list[pick]['X'];
+params.ycoord = list[pick]['Y'];
+params.u2= Math.floor(Math.random()*200);
+break;
+case 7:
+params.type=4;
+params.kid=knt[0]['ID'];
+params.xcoord = list[pick]['X'];
+params.ycoord = list[pick]['Y'];
+params.u6= Math.floor(Math.random()*100);
+break;
+//siege
+case 8:
+params.type=4;
+params.kid=knt[0]['ID'];
+params.xcoord = list[pick]['X'];
+params.ycoord = list[pick]['Y'];
+params.u11= Math.floor(Math.random()*5);
+break;
+case 9:
+params.type=4;
+params.kid=knt[0]['ID'];
+params.xcoord = list[pick]['X'];
+params.ycoord = list[pick]['Y'];
+params.u12= Math.floor(Math.random()*5);
+break;
+case 10:
+params.type=4;
+params.kid=knt[0]['ID'];
+params.xcoord = list[pick]['X'];
+params.ycoord = list[pick]['Y'];
+params.u10= Math.floor(Math.random()*5);
+break;
+default:
+params.type=3;
+params.kid=knt[0]['ID'];
+params.xcoord = list[pick]['X'];
+params.ycoord = list[pick]['Y'];
+params.u3= Math.floor(Math.random()*20);
+};
+																																																																										
+																																																																										
+																																																																										
+
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+			 method: "post",
+			 parameters: params,
+			 loading: true,
+			 onSuccess: function (transport) {
+				 setTimeout (function() {doTickle(list)}, 45000);
+			 var rslt = eval("(" + transport.responseText + ")");
+			 if (rslt.ok) {
+			 var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+			 var ut = unsafeWindow.unixtime();
+			 var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+			 var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+			 for(i = 0; i <= unitsarr.length; i++){
+				if(params["u"+i]){
+				unitsarr[i] = params["u"+i];
+				}
+			 }
+			 var currentcityid = params.cid;
+			 unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+			 unsafeWindow.update_seed(rslt.updateSeed)
+			 if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+		   } else {
+			if(rslt.user_action){
+				new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
+
+			}
+			 }
+			 },
+			 onFailure: function () {
+				 setTimeout (function() {doTickle(list)}, 45000);
+				 }
+			 
+			 
+  		 });
+
+} else {
+setTimeout (function() {doTickle(list)}, 45000);
+};
+}
+function getKnights (city){
+cityId = city;
+knt = [];
+for (k in Seed.knights['city' + cityId]){
+if (Seed.knights['city' + cityId][k]["knightStatus"] == 1 && Seed.leaders['city' + cityId]["resourcefulnessKnightId"] != Seed.knights['city' + cityId][k]["knightId"] && Seed.leaders['city' + cityId]["politicsKnightId"] != Seed.knights['city' + cityId][k]["knightId"] && Seed.leaders['city' + cityId]["combatKnightId"] != Seed.knights['city' + cityId][k]["knightId"] && Seed.leaders['city' + cityId]["intelligenceKnightId"] != Seed.knights['city' + cityId][k]["knightId"]){
+knt.push ({
+Name: Seed.knights['city' + cityId][k]["knightName"],
+Combat: parseInt(Seed.knights['city' + cityId][k]["combat"]),
+ID: Seed.knights['city' + cityId][k]["knightId"],
+});
+}
+}
+knt = knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
+};
+
+
+/*********************************** SMOKESCREEN TAB ***********************************/
+Tabs.ss = {
+tabOrder: 800,
+tabDisabled : false,
+tabLabel : 'SmokeScreen',
+MyCities	:	new Array(),
+myDiv : null,
+xcoord : 0,
+ycoord : 0,
+init: function(div){
+var t = Tabs.ss;
+t.myDiv = div;
+var m = '<DIV class=pbStat>SmokeScreen!!</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
+m += '<br> x coords? <INPUT id=pbssxcoords type=text size=3 value="0" maxlength=3 \> ';
+m += '<br> y coords? <INPUT id=pbssycoords type=text size=3 value="0" maxlength=3 \> ';
+m += '<br><INPUT id=pbssattack type=submit value="SmokeScreen ATTACK">';
+t.myDiv.innerHTML = m;
+document.getElementById('pbssattack').addEventListener ('click', function(){t.smokescreen(document.getElementById('pbssxcoords').value,document.getElementById('pbssycoords').value)}, false);
+},
+hide : function (){
+},
+show : function (){
+},
+smokescreen : function (xcoord, ycoord) {
+var t = Tabs.ss;
+t.xcoord = xcoord;
+t.ycoord = ycoord;
+for (var i=0;i<Seed.cities.length;i++){
+var sccity = Seed.cities[i][0];
+var rallypointlevel = 0;
+for (var o in Seed.buildings['city'+sccity]){
+var buildingType = parseInt(Seed.buildings['city'+sccity][o][0]);
+var buildingLevel = parseInt(Seed.buildings['city'+sccity][o][1]);
+if (buildingType == 12) rallypointlevel=parseInt(buildingLevel);
+};
+var slots=0;
+for (aa in Seed.queue_atkp['city'+sccity]) {
+slots++;
+};
+if (slots == 39)
+slots = 12;
+for (var aa = slots; aa <= rallypointlevel;aa++) {
+	if (parseInt(Seed.units['city'+sccity]['unt3']) > 10) 
+t.MyCities.push(sccity);
+};
+
+
+};
+t.doattack();
+},
+doattack : function () {
+var t = Tabs.ss;
+if(t.MyCities[0] == null)
+return;
+
+var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+params.cid=t.MyCities.shift();
+params.type=3;
+params.xcoord = t.xcoord;
+params.ycoord = t.ycoord;
+params.u3= 1;
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+			 method: "post",
+			 parameters: params,
+			 loading: true,
+			 onSuccess: function (transport) {
+			 var rslt = eval("(" + transport.responseText + ")");
+			 if (rslt.ok) {
+			 var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+			 var ut = unsafeWindow.unixtime();
+			 var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+			 var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+			 for(i = 0; i <= unitsarr.length; i++){
+				if(params["u"+i]){
+				unitsarr[i] = params["u"+i];
+				}
+			 }
+			 var currentcityid = params.cid;
+			 unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, 0, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+			 unsafeWindow.update_seed(rslt.updateSeed)
+			 if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+		   } else {
+			if(rslt.user_action){
+				new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
+
+			}
+			 }
+			 },
+			 onFailure: function () {
+				 }
+			 
+			 
+  		 });
+setTimeout (function() {t.doattack()}, 5000);
+},
+}
+/*********************************** PURCHASE TAB ***********************************/
+Tabs.purchase = {
+tabOrder: 1201,
+tabDisabled : false,
+tabLabel : 'Purchase',
+myDiv : null,
+init: function(div){
+var t = Tabs.purchase;
+t.myDiv = div;
+var m = '<DIV class=pbStat>Purchase items for gems</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
+m += '<br> Item Id? <INPUT id=pbItem type=text size=6 value="0" maxlength=6 \> ';
+m += '<br><INPUT id=pbpurchase type=submit value="Purchase Item">';
+t.myDiv.innerHTML = m;
+document.getElementById('pbpurchase').addEventListener ('click', function(){t.DoPurchase(document.getElementById('pbItem').value)}, false);
+},
+hide : function (){
+},
+show : function (){
+},
+
+DoPurchase : function (ItemId) {
+var t = Tabs.purchase;
+  		 		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+params.iid = ItemId;
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/buyItem.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			onSuccess: function (transport) {
+			 var rslt = eval("(" + transport.responseText + ")");
+				if(rslt.ok){
+				alert('success '+inspect(rslt));
+			} else {
+				alert('failed');
+			}
+			},
+			onFailure: function () {
+				alert('failed '+inspect(rslt));
+			}
+		})
+  		 
+  		 
+},
+}
+
 	
 
 
