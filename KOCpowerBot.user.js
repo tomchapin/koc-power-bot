@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120322a
+// @version        20120323a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120322a';
+var Version = '20120323a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -109,7 +109,8 @@ var Options = {
   throneSaveNum	:	10,
   throneDeletedNum : 0,
   RangeSaveModeSetting : 0,
-  Opacity :0.9,
+  Opacity : 0.9,
+  language : 'en',
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -538,6 +539,7 @@ function pbStartup (){
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readOptions();
+  readLanguage();
   readChatOptions();
   readCrestData();
   readTrainingOptions();
@@ -618,9 +620,9 @@ var FoodAlerts = {
           var msg = '';
         if (usage < 0) {
     if (Options.pbFoodAlert && timeLeft<(6*3600)) {
-                msg += 'My city ' + Cities.cities[i].name.substring(0,10) + ' (' +
+                msg += translate("My city")+' '+Cities.cities[i].name.substring(0,10) + ' (' +
                       Cities.cities[i].x +','+ Cities.cities[i].y + ')';
-                msg += ' is low on food. Remaining: '+addCommasWhole(foodleft)+' ('+timestrShort(timeLeft)+') Upkeep: '+addCommas(usage);
+                msg += translate("is low on food")+". "+translate("Remaining")+': '+addCommasWhole(foodleft)+' ('+timestrShort(timeLeft)+') '+translate("Upkeep")+': '+addCommas(usage);
                 sendChat ("/a " + msg);
           }
     }
@@ -628,7 +630,6 @@ var FoodAlerts = {
   f.minuteTimer = setTimeout (f.e_eachMinute, 1800000);
   },
 }
-
 
 
 /****************************  Tower Tab  ******************************/
@@ -10593,6 +10594,183 @@ latestChats : [],
   },
 }
 
+/******************* Language Tab ******************/
+Tabs.Language = {
+  tabOrder : 800,                    // order to place tab in top bar
+  tabLabel : 'Language',            // label to show in main window tabs
+  myDiv : null,
+  language : {needTranslation:{}},
+  link : {"http://koc-power-bot.googlecode.com/svn/trunk/translation/translation_en.js":"en"},
+  
+  init : function (div){    // called once, upon script startup
+    var t = Tabs.Language;
+    t.myDiv = div;
+    var m = "<DIV class=pbStat>"+translate("Language Settings")+"</div><TABLE><TR>\
+			<TD>"+translate("Set Language")+" : "+ htmlSelector({en:"en"},Options.language,"id=pblang_type") +"</td>\
+			<TD><input id=pblang_update value='"+translate("Save Settings")+"' type=submit DISABLED /><span id=pblang_msg ></span></td></tr>\
+			<TR><TD>"+translate("Language files download")+" : "+ htmlSelector(t.link,null,"id=pblang_link") +"</td>\
+			<td><input id=pblang_download value='"+translate("Download")+"' type=submit /></td></tr>\
+			<TR><TD>Show current language array: </td>\
+			<TD><input id=pblang_show value='"+translate("Show")+"' type=submit /></td></tr>";
+    t.myDiv.innerHTML = m;
+    
+    document.getElementById("pblang_type").addEventListener('change', function (){
+		if(Options.language != document.getElementById("pblang_type").value)
+			document.getElementById("pblang_update").disabled = false;
+		else
+			document.getElementById("pblang_update").disabled = true;
+	},false);
+	document.getElementById("pblang_update").addEventListener('click', function (){
+		var language = document.getElementById("pblang_type").value;
+		var s = GM_getValue ("Language_"+language);
+		if (s != null){
+			var lang = JSON2.parse (s);
+			t.sendMessage("Loaded <b>"+language+"</b> Version <b>"+lang.Version+"</b>");
+			Options.language = document.getElementById("pblang_type").value;
+		} else {
+			t.sendMessage("<span class=boldRed> Language <b>"+language+"</b> not found. Please download language file!</span>");
+			document.getElementById("pblang_type").value = Options.language;
+		}
+	},false);
+	document.getElementById("pblang_download").addEventListener('click', function (){
+		document.getElementById("pblang_download").disabled = true;
+		GM_xmlhttpRequest({
+            method: 'GET',
+			url: document.getElementById("pblang_link").value,
+			onload: function(xpr) {t.updatelanguage(xpr.responseText, document.getElementById("pblang_link").value);},
+            onerror: function(xpr) {t.updatelanguage(xpr.responseText, false);}
+        });
+	},false);
+	document.getElementById("pblang_show").addEventListener('click', function(){
+		t.showlanguage();
+	},false);
+  },
+  
+  hide : function (){         // called whenever the main window is hidden, or another tab is selected
+    var t = Tabs.Language;
+  },
+  
+  show : function (){
+	  
+  },
+  
+  showlanguage : function(){
+	  var t = Tabs.Language;
+	  t.poplangshow = new pbPopup('pbShowLanguage', 10, 10, 400, 500, true, function() {t.popshowlang.destroy();});
+	  t.poplangshow.getTopDiv().innerHTML = '<TD><B>Language Array:</td>';
+	  t.poplangshow.getMainDiv().innerHTML = '<DIV style="overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pblang_showarray"></table><div id=pblang_status ></div></div>';
+	  t.paintlanguagearray();
+	  t.poplangshow.show(true);
+  },
+  
+  paintlanguagearray : function(){
+	  var t = Tabs.Language;
+	  var m = '';
+	  for (var k in t.language.needTranslation){
+		  m += "<TR><TD>"+k+": </td><TD><input id='pblang_"+k+"' value='"+(t.language.needTranslation[k]==1?'':t.language.needTranslation[k])+"' /></td></tr>";
+	  }
+	  for (var k in t.language){
+		  if(k != "needTranslation")
+			m += "<TR><TD>"+k+": </td><TD>"+t.language[k]+"</td></tr>";
+	  }
+	  document.getElementById("pblang_showarray").innerHTML = m;
+	  document.getElementById("pblang_status").innerHTML = "<center><input type=submit id=pblang_statussave value=Save /><input type=submit id=pblang_statusexport value='Export new translation' /></center>";
+	  document.getElementById("pblang_statussave").addEventListener('click', function(){
+		for (var k in t.language.needTranslation){
+			var j = document.getElementById("pblang_"+k).value;
+			if(j != '')
+				t.language.needTranslation[k] = j;
+		}
+		saveLanguage();
+	  },false);
+	  document.getElementById("pblang_statusexport").addEventListener('click', function(){
+		  t.export();
+	  },false);
+  },  
+  
+  export : function(){
+	  var t = Tabs.Language;
+	  var pop = new pbPopup('pbExportLanguage', 0, 0, 400, 400, true, function() {this.destroy();});
+	  var m = "<textarea rows=15 cols=50 >";
+	   for (var k in t.language.needTranslation){
+		  if(t.language.needTranslation[k] != 1)
+		    m += "\""+k+"\":\""+t.language.needTranslation[k]+"\",\n";
+	  }
+	  m += "</textarea>";
+	  pop.getMainDiv().innerHTML = m;
+	  pop.show(true);
+  },
+  
+  sendMessage : function (msg){
+	  document.getElementById("pblang_msg").innerHTML = msg;
+  },
+  
+  updatelanguage : function(result, response){
+	  var t = Tabs.Language;
+	  if(!response) {
+		  t.sendMessage("<span class=boldRed>Error loading file. Try again later</span>");
+	  document.getElementById("pblang_download").disabled = false;
+		  return;
+	  }
+	  var rslt = null;
+	  try{
+		rslt = JSON2.parse(result);
+	  } catch (e){
+		t.sendMessage("<span class=boldRed>Error reading file. Please notify devs</span>");
+		logit(inspect(e,7,1));
+		document.getElementById("pblang_download").disabled = false;
+		return;
+	  }
+	  var s = GM_getValue ("Language_"+rslt.curlang);
+	  if (s != null){
+		var lang = JSON2.parse (s);
+		for (k in rslt){
+			if(lang.needTranslation)
+				if(lang.needTranslation[k]) //Remove from array if already translated
+					delete lang.needTranslation[k];
+			lang[k] = rslt[k];
+		}
+	  } else {
+		  var lang = rslt;
+	  }
+	  setTimeout (function (){GM_setValue ('Language_'+rslt.curlang, JSON2.stringify(lang));}, 0);
+	  t.sendMessage("Successfully loaded language file. Please refresh");
+	  document.getElementById("pblang_download").disabled = false;
+  },
+}
+
+function readLanguage () {
+	var t = Tabs.Language;
+	if(!Options.language) return;
+	var s = GM_getValue ("Language_"+Options.language);
+	if (s != null){
+		var lang = JSON2.parse (s);
+		for (k in lang){
+			t.language[k] = lang[k];
+		}
+	}
+	t.language.curlang = Options.language;
+}
+
+function saveLanguage (){
+	var t = Tabs.Language;
+	setTimeout (function (){GM_setValue ('Language_'+t.language.curlang, JSON2.stringify(t.language));}, 0);
+}
+
+function translate (str) {
+	var t = Tabs.Language;
+	if(t.language[str])
+		return t.language[str];
+	else {
+		if(t.language.needTranslation[str] == undefined)
+			t.language.needTranslation[str] = 1;
+		else if (t.language.needTranslation[str] != 1)
+			return t.language.needTranslation[str];
+	}
+	return str;	
+}
+
+
 /*******************   KOC Map interface ****************/
 // 0:bog, 10:grassland, 11:lake, 20:woods, 30:hills, 40:mountain, 50:plain, 51:city / barb, 53:misted city
 function CMapAjax (){
@@ -10770,6 +10948,7 @@ var tabManager = {
 function onUnload (){
   Options.pbWinPos = mainPop.getLocation();
   if (!ResetAll) saveOptions();
+  saveLanguage();
 }
 
 function mouseMainTab (me){   // right-click on main button resets window location
