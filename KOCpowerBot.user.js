@@ -4138,19 +4138,19 @@ Tabs.transport = {
       
       m += '<DIV id=pbTraderDivDRoute class=pbStat>'+translate("TRANSPORTS")+'</div>';
       m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TR align="left"><TD>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
+      m += '<TR align="left"><TD>'+translate("From City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
 
       m += '<TR align="left">';
-      m += '<TD>To City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptcityTo></span></div></td>';
-      m += '<TD>OR</td>';
+      m += '<TD>'+translate("To City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptcityTo></span></div></td>';
+      m += '<TD>'+translate("OR")+'</td>';
       m += '<TD>X:<INPUT id=ptcityX type=text size=3\></td>';
       m += '<TD>Y:<INPUT id=ptcityY type=text size=3\></td></tr>';
       m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="left">';
       m += '<TD width=75px>TroopType:</td><TD width=150px><SELECT id="TransportTroop">';
       for (y in unsafeWindow.unitcost) m+='<option value="'+y+'">'+unsafeWindow.unitcost[y][0]+'</option>';
-      m+='</select></td><TD width=75px>Troops Available:&nbsp;</td><TD id=TroopAmount align=left width=75px></td>';
-      m+='<TD width=75px>Global Carry Amount:&nbsp;</td><TD id=CarryAmount align=left width=75px></td>';
-      m += '<TR><TD >Troops: </td><TD><INPUT id=TroopsToSend type=text size=6 maxlength=6 value="0">&nbsp;&nbsp;<INPUT id=MaxTroops type=submit value="Max"></td>';
+      m+='</select></td><TD width=75px>'+translate("Troops Available:")+'&nbsp;</td><TD id=TroopAmount align=left width=75px></td>';
+      m+='<TD width=75px>'+translate("Global Carry Amount:")+'&nbsp;</td><TD id=CarryAmount align=left width=75px></td>';
+      m += '<TR><TD >'+translate("Troops:")+' </td><TD><INPUT id=TroopsToSend type=text size=6 maxlength=6 value="0">&nbsp;&nbsp;<INPUT id=MaxTroops type=submit value="Max"></td>';
       m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
       m +='<TD id=Calc colspan=3></td></tr>';
       m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="center">';
@@ -4158,53 +4158,53 @@ Tabs.transport = {
       m += '<TD id=TransRec1 align=right width=110px></td>';
       m += '<TD id=HaveRec1 align=right width=110px></td>';
       m += '<TD width=55px align=right><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px  align=left>Keep: <INPUT id=pbtargetamountFood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
+      m += '<TD width=180px  align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountFood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
       m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
       m += '<TD id=TransRec2 align=right width=110px></td>';
       m += '<TD id=HaveRec2 align=right width=110px></td>';
       m += '<TD width=55px align=right><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>Keep: <INPUT id=pbtargetamountWood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
+      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountWood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
       m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
       m += '<TD id=TransRec3 align=right width=110px></td>';
       m += '<TD id=HaveRec3 align=right width=110px></td>';
       m += '<TD width=55px align=right><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>Keep: <INPUT id=pbtargetamountStone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
+      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountStone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
       m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
       m += '<TD id=TransRec4 align=right width=110px></td>';
       m += '<TD id=HaveRec4 align=right width=110px></td>';
       m += '<TD width=55px align=right><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>Keep: <INPUT id=pbtargetamountOre type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
+      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountOre type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
       m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
 	  m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td>';
       m += '<TD id=TransRec5 align=right width=110px></td>';
       m += '<TD id=HaveRec5 align=right width=110px></td>';
       m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>Keep: <INPUT id=pbtargetamountAstone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
+      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountAstone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
       m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
       m += '<TR align="center">';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td>';
       m += '<TD id=TransGold align=right width=110px></td>';
       m += '<TD id=HaveGold align=right width=110px></td>';
       m += '<TD width=55px align=right><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>Keep: <INPUT id=pbtargetamountGold type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>Trade: <INPUT id=pbtradeamountGold type=text size=11 maxlength=20 value="0"\></td>';
+      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountGold type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountGold type=text size=11 maxlength=20 value="0"\></td>';
       m += '<TD width=50px><INPUT id=MaxGold type=submit value="Max"></td></tr>';
 
       m += '</table>';
 
-      m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRoute type=submit value="Add Route"><INPUT id=pbManualSend type=submit value="Manual Transport"></div>';
+      m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRoute type=submit value="'+translate("Add Route")+'"><INPUT id=pbManualSend type=submit value="'+translate("Manual Transport")+'"></div>';
       m += '<DIV id=errorSpace></div>'
       
       t.myDiv.innerHTML = m;
@@ -4410,7 +4410,7 @@ Tabs.transport = {
     	if (GlobalMaxLoad > 0) document.getElementById('CarryAmount').innerHTML = addCommas(GlobalMaxLoad);
     	else  document.getElementById('CarryAmount').innerHTML = 0;
     	
-    	document.getElementById('Calc').innerHTML = 'Resources: ' +  addCommas(t.Food + t.Wood + t.Stone + t.Ore + t.Gold  + t.Astone) + ' / ' + addCommas(t.MaxLoad) + '&nbsp;&nbsp;(Troops Needed: <FONT color='+fontcolor+'>' + addCommas(t.TroopsNeeded) + '</font> )' ;
+    	document.getElementById('Calc').innerHTML = ''+translate("Resources:")+' ' +  addCommas(t.Food + t.Wood + t.Stone + t.Ore + t.Gold  + t.Astone) + ' / ' + addCommas(t.MaxLoad) + '&nbsp;&nbsp;('+translate("Troops Needed:")+' <FONT color='+fontcolor+'>' + addCommas(t.TroopsNeeded) + '</font> )' ;
     	
     },    
     
@@ -4463,7 +4463,7 @@ Tabs.transport = {
 		var city = t.tcp.city.id;
 		if (document.getElementById('ptcityX').value==0 && document.getElementById('ptcityY').value ==0 && !t.check)
 		{
-			new CdialogConfirm ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv); 
+			new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv); 
 			return;
 		}
 		var ship_Food = document.getElementById('pbshipFood').checked;
@@ -4531,7 +4531,7 @@ Tabs.transport = {
 		t.popTradeRoutes = new pbPopup('pbShowTrade', 0, 0, 750, 500, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pbRoutesQueue">';       
 		t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>Transport routes:</td>';
+		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>'+translate("Transport routes:")+'</td>';
 		t.paintTradeRoutes();
 		t.popTradeRoutes.show(true)	;
 	},
@@ -4548,20 +4548,20 @@ Tabs.transport = {
 					citynameTo = Cities.byID[r[queueId].target_city].name;	  
 				if (citynameTo == null) TO = r[i].target_x +','+ r[i].target_y;
 					else TO = citynameTo;
-				if (r[i].route_state) status = '<FONT color=green>Enabled</font>';
-					else status = '<FONT color=red>Disabled</font>';
+				if (r[i].route_state) status = '<FONT color=green>'+translate("Enabled")+'</font>';
+					else status = '<FONT color=red>'+translate("Disabled")+'</font>';
 				if (r[i].TroopType == undefined) unit = 'unt9';
 					else unit = r[i].TroopType;
 				m += '<TR><TD TD width=12px>&nbsp;&nbsp;</td></tr>';
-        m +='<TR><TD width=20px>'+(i+1)+'</td><TD width=175px>From:&nbsp;&nbsp;'+ cityname +'</TD><TD width=175px>To:&nbsp;&nbsp;'+ TO +'</td><TD width=175px>'+status+'</td>';
-        m +='<TD width=60px><A onclick="traceEdit('+queueId+')">Edit</a></td><TD width=60px><A onclick="traceDelete('+queueId+')">Delete</a></td></tr>';
+        m +='<TR><TD width=20px>'+(i+1)+'</td><TD width=175px>'+translate("From:")+'&nbsp;&nbsp;'+ cityname +'</TD><TD width=175px>'+translate("To:")+'&nbsp;&nbsp;'+ TO +'</td><TD width=175px>'+status+'</td>';
+        m +='<TD width=60px><A onclick="traceEdit('+queueId+')">'+translate("Edit")+'</a></td><TD width=60px><A onclick="traceDelete('+queueId+')">Delete</a></td></tr>';
         m += '<TR><TD></td><TD>Troops:&nbsp;&nbsp;'+unsafeWindow.unitcost[unit][0]+'</td></tr>';
-        if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td><TD>Target: '+ addCommas(r[i].target_Food) +'</td><TD>Trade: '+ addCommas(r[i].trade_Food)+'</td>';
-				if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td><TD>Target: '+ addCommas(r[i].target_Wood) +'</td><TD>Trade: '+ addCommas(r[i].trade_Wood)+'</td>';
-				if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td><TD>Target: '+ addCommas(r[i].target_Stone) +'</td><TD>Trade: '+ addCommas(r[i].trade_Stone)+'</td>';
-				if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td><TD>Target: '+ addCommas(r[i].target_Ore) +'</td><TD>Trade: '+ addCommas(r[i].trade_Ore)+'</td>';
-				if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td><TD>Target: '+ addCommas(r[i].target_Astone) +'</td><TD>Trade: '+ addCommas(r[i].trade_Astone)+'</td>';
-				if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td><TD>Target: '+ addCommas(r[i].target_Gold) +'</td><TD>Trade: '+ addCommas(r[i].trade_Gold)+'</td>';
+        if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Food) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Food)+'</td>';
+				if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Wood) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Wood)+'</td>';
+				if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Stone) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Stone)+'</td>';
+				if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Ore) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Ore)+'</td>';
+				if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Astone) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Astone)+'</td>';
+				if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Gold) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Gold)+'</td>';
        }
 	     m +='</table>';
 	     document.getElementById('pbRoutesQueue').innerHTML= m; 
@@ -4588,20 +4588,20 @@ Tabs.transport = {
          if (citynameTo == null) TO = r[queueId].target_x +','+ r[queueId].target_y;
 			 else TO = citynameTo; 
          var n = '<TABLE id=editRoutes class=pbTab>';
-	     n +='<TD>From:&nbsp;'+ cityname +'</td><TD>To:&nbsp;'+ TO +'</td>';
+	     n +='<TD>'+translate("From:")+'&nbsp;'+ cityname +'</td><TD>'+translate("To:")+'&nbsp;'+ TO +'</td>';
 	     n +='<TD><INPUT id=TradeStatus type=checkbox>&nbsp;Enable Route</td>';
-	     n += '<TD width=150px>Troop Type:<SELECT id="pbbTransportTroop">';
+	     n += '<TD width=150px>'+translate("Troop Type:")+'<SELECT id="pbbTransportTroop">';
          for (y in unsafeWindow.unitcost) n+='<option value="'+y+'">'+unsafeWindow.unitcost[y][0]+'</option>';
          n+='</select></td></table><BR><TABLE  id=editRoutes class=pbTab>';
          for (var i=0;i<Types.length;i++){
 			 var icon = Types[i];
 			 n += '<TR><TD width=50px align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/'+icon+'_30.png"></td>';
 			 n += '<TD width=50px align=center><INPUT id=pbbship'+icon+' type=checkbox></td>';
-			 n += '<TD width=125px>Keep: <INPUT id=pbbtargetamount'+icon+' type=text size=11 maxlength=11 value="0"></td>';
-			 n += '<TD width=125px>Trade: <INPUT id=pbbtradeamount'+icon+' type=text size=11 maxlength=11 value="0"\></td></tr>';
+			 n += '<TD width=125px>'+translate("Keep:")+' <INPUT id=pbbtargetamount'+icon+' type=text size=11 maxlength=11 value="0"></td>';
+			 n += '<TD width=125px>'+translate("Trade:")+' <INPUT id=pbbtradeamount'+icon+' type=text size=11 maxlength=11 value="0"\></td></tr>';
 		 }
-       n+='</table><BR><TABLE id=editRoutes class=pbTab><TR><TD><a class="button20" id="Cancel"><span>Cancel</span></a></td>';
-       n+='<TD><a class="button20" id="Save"><span>Save</span></a></td></tr>';
+       n+='</table><BR><TABLE id=editRoutes class=pbTab><TR><TD><a class="button20" id="Cancel"><span>'+translate("Cancel")+'</span></a></td>';
+       n+='<TD><a class="button20" id="Save"><span>'+translate("Save")+'</span></a></td></tr>';
        n +='</table>';
        
        document.getElementById('pbRoutesQueue').innerHTML= n;
@@ -4961,7 +4961,7 @@ Tabs.transport = {
                   unsafeWindow.update_seed(rslt.updateSeed)
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
-                  actionLog('TRANSPORT FAIL: ' + cityname + ' -> ' + rslt.msg);
+                  actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
                   }
                   },
                   onFailure: function () {}
@@ -5042,8 +5042,8 @@ Tabs.transport = {
 		                  document.getElementById ('TroopsToSend').value = 0;
                   } else {
 		                  var errorcode =  'err_' + rslt.error_code;
-		                  if (rlst.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>Error: ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
-		                  else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>Error: ' + rslt.msg +'</font>'; 
+		                  if (rlst.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
+		                  else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + rslt.msg +'</font>'; 
                   }
                   },
                   onFailure: function () {}
