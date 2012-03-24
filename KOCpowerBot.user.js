@@ -10148,12 +10148,12 @@ Tabs.Chat = {
     var t = Tabs.Chat;
     t.myDiv = div;
     unsafeWindow.pbviewtroops = t.viewtroops;
-    t.myDiv.innerHTML = '<DIV class=pbStat>Chat Answer/Reply Info</div><TABLE><TR>\
-						<TD><input type=checkbox id=pbchatqaenable /></td><TD>Enable chat functions </td></tr>\
-						<TR><TD><input type=checkbox id=pbchatpassenable /></td><TD>Enable password: <input type=text id=pbchatpass value="'+ ChatOptions.password +'"/></td>\
-						<TD width=10px>&nbsp;</td><TD><input type=checkbox id=pbautoblacklist />Auto blacklist players if 1st attempt fails</td></tr>\
-						<TR><TD></td><TD valign=top>Allowed Players: <br><textarea cols=30 rows=1 id=allowUserBox></textarea></td>\
-						<TD width=10px>&nbsp;</td><TD> Blacklisted Players <br><textarea cols=30 rows=1 id=blacklistUserBox ></textarea></td></tr>\
+    t.myDiv.innerHTML = '<DIV class=pbStat>'+translate("Chat Answer/Reply Info")+'</div><TABLE><TR>\
+						<TD><input type=checkbox id=pbchatqaenable /></td><TD>'+translate("Enable chat functions")+' </td></tr>\
+						<TR><TD><input type=checkbox id=pbchatpassenable /></td><TD>'+translate("Enable password:")+'  <input type=text id=pbchatpass value="'+ ChatOptions.password +'"/></td>\
+						<TD width=10px>&nbsp;</td><TD><input type=checkbox id=pbautoblacklist />'+translate("Auto blacklist players if 1st attempt fails")+'</td></tr>\
+						<TR><TD></td><TD valign=top>'+translate("Allowed Players:")+' <br><textarea cols=30 rows=1 id=allowUserBox></textarea></td>\
+						<TD width=10px>&nbsp;</td><TD> '+translate("Blacklisted Players")+' <br><textarea cols=30 rows=1 id=blacklistUserBox ></textarea></td></tr>\
 						<TR><TD colspan=3>Type "/[Player] units?" to get a unit count <br> Type "/[Player] attacks? to get impending attacks <br> Player name is cAsE-SeNsItIvE </td></tr></table>';
 	t.togtext('allowUserBox', 'AllowUsersRemoteControl');
 	t.togtext('blacklistUserBox', 'BlacklistUsersRemoteControl');
@@ -10219,8 +10219,8 @@ Tabs.Chat = {
   	var m = '<DIV style="max-height:275px; height:275px; overflow-y:scroll">'; 
   	
   	m+='<TABLE class=ptTab>\
-		<TR><TD><b>Impending Attack</b></td></tr></table>';
-	m+='<TABLE class=ptTab><TR><TD align="center">Troops</td><TD align="center">Amount</td></tr>';
+		<TR><TD><b>'+translate("Impending Attack")+'</b></td></tr></table>';
+	m+='<TABLE class=ptTab><TR><TD align="center">'+translate("Troops")+'</td><TD align="center">'+translate("Amount")+'</td></tr>';
 	
 	if(u1) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_1_30.png></td><TD align="center">'+parseInt(u1)+'</td></tr>';
 	if(u2) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_2_30.png></td><TD align="center">'+parseInt(u2)+'</td></tr>';
@@ -10239,7 +10239,7 @@ Tabs.Chat = {
 	
 	m+='</div>';
   	t.popReport.getMainDiv().innerHTML = m;
-  	t.popReport.getTopDiv().innerHTML = '<TD><CENTER><B>Incoming</b></center></td>';
+  	t.popReport.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Incoming")+'</b></center></td>';
   	t.popReport.show(true)	;
   },
   
@@ -10593,7 +10593,7 @@ Tabs.Language = {
 			<TD><input id=pblang_update value='"+translate("Save Settings")+"' type=submit DISABLED /><span id=pblang_msg ></span></td></tr>\
 			<TR><TD>"+translate("Language files download")+" : "+ htmlSelector(t.link,null,"id=pblang_link") +"</td>\
 			<td><input id=pblang_download value='"+translate("Download")+"' type=submit /></td></tr>\
-			<TR><TD>Show current language array: </td>\
+			<TR><TD>"+translate("Show current language array:")+" </td>\
 			<TD><input id=pblang_show value='"+translate("Show")+"' type=submit /></td></tr>";
     t.myDiv.innerHTML = m;
     
@@ -10640,7 +10640,7 @@ Tabs.Language = {
   showlanguage : function(){
 	  var t = Tabs.Language;
 	  t.poplangshow = new pbPopup('pbShowLanguage', 10, 10, 600, 500, true, function() {t.poplangshow.destroy();});
-	  t.poplangshow.getTopDiv().innerHTML = '<TD><B>Language Array:</td>';
+	  t.poplangshow.getTopDiv().innerHTML = '<TD><B>'+translate("Language Array:")+'</td>';
 	  t.poplangshow.getMainDiv().innerHTML = '<DIV style="max-height:430px;overflow-y:auto"><TABLE style="overflow-y:auto" align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pblang_showarray"></table></div><div id=pblang_status ></div>';
 	  t.paintlanguagearray();
 	  t.poplangshow.show(true);
