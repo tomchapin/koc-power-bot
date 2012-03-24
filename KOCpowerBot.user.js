@@ -8163,9 +8163,9 @@ Tabs.Reassign = {
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
       m += '<TD>'+translate("Militiaman")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-      m += '<TD>Scout</td>'
+      m += '<TD>'+translate("Scout")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-      m += '<TD>Pikeman</td></tr>'
+      m += '<TD>'+translate("Pikeman")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSupplyTroops type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyTroops disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbMilitiaman type=checkbox unchecked=true\>';
@@ -8176,7 +8176,7 @@ Tabs.Reassign = {
       m += '<INPUT id=pbtargetPikeman disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-      m += '<TD>Swordsman</td>'
+      m += '<TD>'+translate("Swordsman")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
       m += '<TD>Archer</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
