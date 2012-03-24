@@ -369,6 +369,7 @@ function kocWideScreen(){
   }
 }
 
+
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
   function setWide (){
@@ -418,7 +419,6 @@ function facebookInstance (){
     setWide();
 }
 
-
 function kabamStandAlone (){
   function setWide (){
 	var iFrames = document.getElementsByTagName('IFRAME');
@@ -439,7 +439,6 @@ function kabamStandAlone (){
   if (GlobalOptions.pbWideScreen)
     setWide();
 }
-
 
 function HandlePublishPopup() {
 	if(GlobalOptions.autoPublishGamePopups){
@@ -473,6 +472,7 @@ function HandlePublishPopup() {
 	}
 }
 
+
 var Cities = {};
 var Seed = unsafeWindow.seed;
 var Tabs = {};
@@ -482,6 +482,7 @@ var pbStartupTimer = null;
 var pbPopUpTopClass = 'pbPopTop';
 var firefoxVersion = getFirefoxVersion();
 var TrainCity = 0;
+
 
 function pbStartup (){
   clearTimeout (pbStartupTimer);
