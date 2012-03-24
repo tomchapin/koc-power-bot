@@ -260,8 +260,7 @@ var AttackOptions = {
   barbMaxKnight			: 250,
 };
 
-var ResetAll=false;
-var deleting=false;
+var ResetAll=false;var deleting=false;
 
 var ChatOptions = {
   latestChats               : [],
@@ -369,7 +368,6 @@ function kocWideScreen(){
   }
 }
 
-
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
   function setWide (){
@@ -472,7 +470,6 @@ function HandlePublishPopup() {
 	}
 }
 
-
 var Cities = {};
 var Seed = unsafeWindow.seed;
 var Tabs = {};
@@ -482,7 +479,6 @@ var pbStartupTimer = null;
 var pbPopUpTopClass = 'pbPopTop';
 var firefoxVersion = getFirefoxVersion();
 var TrainCity = 0;
-
 
 function pbStartup (){
   clearTimeout (pbStartupTimer);
