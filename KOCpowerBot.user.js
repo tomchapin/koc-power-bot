@@ -7937,12 +7937,12 @@ Tabs.Options = {
     t.myDiv = div;
     try {      
       m = '<DIV style="height:500px; max-height:500px; overflow-y:auto"><TABLE width=100% class=pbOptions cellspacing=0 cellpadding=0>\
-        <TR><TD colspan=2><B>Power Bot Config:</b></td></tr>\
-        <TR><TD><INPUT id=pballowWinMove type=checkbox /></td><TD>Enable window drag (move window by dragging top bar with mouse)</td></tr>\
-        <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>Remember window open state on refresh</td></tr>\
-        <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>Hide window when clicking on map coordinates</td></tr>\
-        <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>Enable widescreen style: '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' (all domains, requires refresh)</td></tr>\
-        <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>Check updates on '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' (all domains) &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="Update Now" /></td></tr>\
+        <TR><TD colspan=2><B>'+translate("Power Bot Config:")+'</b></td></tr>\
+        <TR><TD><INPUT id=pballowWinMove type=checkbox /></td><TD>'+translate("Enable window drag (move window by dragging top bar with mouse)")+'</td></tr>\
+        <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>'+translate("Remember window open state on refresh")+'</td></tr>\
+        <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>'+translate("Hide window when clicking on map coordinates")+'</td></tr>\
+        <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>'+translate("Enable widescreen style:")+' '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' (all domains, requires refresh)</td></tr>\
+        <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' (all domains) &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="Update Now" /></td></tr>\
 		<TR><TD>&nbsp;&nbsp;&nbsp-</td><TD>Change window transparency between "0.7 - 2" &nbsp <INPUT id=togOpacity type=text size=3 maxlength=3 value="'+Options.Opacity+'"/> <span style="color:#800; font-weight:bold"><sup>*Requires Refresh</sup></span></td></tr>\
         <TR><TD colspan=2><BR><B>KofC Features:</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>Disable all Fairie popup windows</td></tr>\
