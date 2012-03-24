@@ -418,6 +418,7 @@ function facebookInstance (){
     setWide();
 }
 
+
 function kabamStandAlone (){
   function setWide (){
 	var iFrames = document.getElementsByTagName('IFRAME');
@@ -438,6 +439,7 @@ function kabamStandAlone (){
   if (GlobalOptions.pbWideScreen)
     setWide();
 }
+
 
 function HandlePublishPopup() {
 	if(GlobalOptions.autoPublishGamePopups){
