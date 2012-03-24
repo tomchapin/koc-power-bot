@@ -8507,7 +8507,7 @@ Tabs.Reassign = {
 		t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 1100, 550, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
 		t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><B>Reassign routes:</td>';
+		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><B>'+translate("Reassign routes:")+'</td>';
 		t.paintReassignRoutes();
 		t._addTabHeader();
 		t.popReassignRoutes.show(true)	;
@@ -8563,7 +8563,7 @@ Tabs.Reassign = {
 	 	 row.insertCell(24).innerHTML = addCommas(BatteringRam);
 	 	 row.insertCell(25).innerHTML = SendCatapult;
 	 	 row.insertCell(26).innerHTML = addCommas(Catapult);
-	     row.insertCell(27).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>Delete</span></a>';
+	     row.insertCell(27).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
 	     document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
 	        t.cancelQueueElement(queueId);
 	     }, false);
@@ -8574,33 +8574,33 @@ Tabs.Reassign = {
 	     var row = document.getElementById('pbRoutesQueue').insertRow(0);
 	     row.vAlign = 'top';
 	     row.insertCell(0).innerHTML = "ID";
-	     row.insertCell(1).innerHTML = "From";
-	     row.insertCell(2).innerHTML = "To";
-	     row.insertCell(3).innerHTML = "Sup. Tr.";
+	     row.insertCell(1).innerHTML = translate("From");
+	     row.insertCell(2).innerHTML = translate("To");
+	     row.insertCell(3).innerHTML = translate("Sup. Tr.");
 	     row.insertCell(4).innerHTML = "";
-	     row.insertCell(5).innerHTML = "MM";
+	     row.insertCell(5).innerHTML = translate("MM");
 	     row.insertCell(6).innerHTML = "";
-	 	 row.insertCell(7).innerHTML = "Scouts";
+	 	 row.insertCell(7).innerHTML = translate("Scouts");
 	     row.insertCell(8).innerHTML = "";
-	     row.insertCell(9).innerHTML = "Pike";
+	     row.insertCell(9).innerHTML = translate("Pike");
 	     row.insertCell(10).innerHTML = "";
-	     row.insertCell(11).innerHTML = "Swords";
+	     row.insertCell(11).innerHTML = translate("Swords");
 	     row.insertCell(12).innerHTML = "";
-	     row.insertCell(13).innerHTML = "Archers";
+	     row.insertCell(13).innerHTML = translate("Archers");
 	     row.insertCell(14).innerHTML = "";
-	     row.insertCell(15).innerHTML = "Cav.";
+	     row.insertCell(15).innerHTML = translate("Cav");
 	     row.insertCell(16).innerHTML = "";
-	     row.insertCell(17).innerHTML = "HC";
+	     row.insertCell(17).innerHTML = translate("HC");
 	     row.insertCell(18).innerHTML = "";
-	     row.insertCell(19).innerHTML = "Wagons";
+	     row.insertCell(19).innerHTML = translate("Wagons");
 	     row.insertCell(20).innerHTML = "";
-	     row.insertCell(21).innerHTML = "Ballista";
+	     row.insertCell(21).innerHTML = translate("Ballista");
 	     row.insertCell(22).innerHTML = "";
-	     row.insertCell(23).innerHTML = "Rams";
+	     row.insertCell(23).innerHTML = translate("Rams");
 	     row.insertCell(24).innerHTML = "";
-	     row.insertCell(25).innerHTML = "Catapults";
+	     row.insertCell(25).innerHTML = translate("Catapults");
 	     row.insertCell(26).innerHTML = "";
-	     row.insertCell(27).innerHTML = "Delete";
+	     row.insertCell(27).innerHTML = translate("Delete");
 	   },   
 	   
 	 cancelQueueElement: function(queueId){
