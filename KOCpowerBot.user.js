@@ -1039,7 +1039,6 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     if (Options.alertSound.alarmActive && Options.alertSound.expireTime>unixTime())   
       t.soundTheAlert();
   },
-  
   e_alertOptChanged : function (){
     var t = Tabs.tower;
     Options.alertConfig.aChat = document.getElementById('pbalertEnable').checked;
@@ -1058,14 +1057,12 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     Options.alertConfig.minTroops = mt;
 	saveOptions();
   },
-  
   e_volChanged : function (val){
     var t = Tabs.tower;
     document.getElementById('pbVolOut').innerHTML = parseInt(val*100);
     Options.alertSound.volume = parseInt(val*100);
     t.mss.setVolume (1, Options.alertSound.volume);
   },
-  
   butToggleDefMode : function (cityId){
     var t = Tabs.tower;
     var mode = 1;
@@ -1075,8 +1072,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         t.defMode[cityId] = newMode;
         t.displayDefMode (cityId);
       });
-  },
-      
+  }, 
   displayDefMode : function (cityId){
     var t = Tabs.tower;
     var but = document.getElementById('pbtabut_'+ cityId);
@@ -1087,8 +1083,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
       but.className = 'pbDefButOff';
       but.value = 'Def = OFF';  
     }  
-  },
-    
+  }, 
   eachSecond : function (){
     var t = Tabs.tower;
 	for (var cityId in Cities.byID){
