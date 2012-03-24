@@ -4121,7 +4121,7 @@ Tabs.transport = {
 	  t.readTradeRoutes();
 	  t.e_tradeRoutes();
 
-      var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED TRANSPORT FUNCTION</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
+      var m = '<DIV id=pbTowrtDivF class=pbStat>'+translate("AUTOMATED TRANSPORT FUNCTION")+'</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
       if (t.traderState.running == false) {
           m += '<TD><INPUT id=pbTraderState type=submit value="Transport = OFF"></td>';
       } else {
@@ -7875,7 +7875,7 @@ Tabs.ActionLog = {
   init : function (div){
     var t = Tabs.ActionLog;
     t.myDiv = div;
-    t.myDiv.innerHTML = '<DIV class=pbStat>'+translate("ACTION LOG - VERSION:")+' '+ Version+'</div><DIV style="height:535px; max-height:535px; overflow-y:auto">\
+    t.myDiv.innerHTML = '<DIV class=pbStat>ACTION LOG - VERSION: '+ Version+'</div><DIV style="height:535px; max-height:535px; overflow-y:auto">\
       <TABLE cellpadding=0 cellspacing=0 id=pbactionlog class=pbTabLined><TR><TD></td><TD width=95%></td></table></div>';
     t.logTab = document.getElementById('pbactionlog');  
     t.state = 1;
@@ -7938,9 +7938,9 @@ Tabs.Options = {
     t.myDiv = div;
     try {      
       m = '<DIV style="height:500px; max-height:500px; overflow-y:auto"><TABLE width=100% class=pbOptions cellspacing=0 cellpadding=0>\
-        <TR><TD colspan=2><B>'+translate("Power Bot Config:")+'</b></td></tr>\
-        <TR><TD><INPUT id=pballowWinMove type=checkbox /></td><TD>'+translate("Enable window drag (move window by dragging top bar with mouse)")+'</td></tr>\
-        <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>'+translate("Remember window open state on refresh")+'</td></tr>\
+        <TR><TD colspan=2><B>Power Bot Config:</b></td></tr>\
+        <TR><TD><INPUT id=pballowWinMove type=checkbox /></td><TD>Enable window drag (move window by dragging top bar with mouse)</td></tr>\
+        <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>Remember window open state on refresh</td></tr>\
         <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>Hide window when clicking on map coordinates</td></tr>\
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>Enable widescreen style: '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' (all domains, requires refresh)</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>Check updates on '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' (all domains) &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="Update Now" /></td></tr>\
@@ -8827,20 +8827,20 @@ Tabs.Reinforce = {
 		var t = Tabs.Reinforce;
         t.myDiv = div;
 
-      var m = '<DIV id=pbReinfMain class=pbStat>REINFORCE</div><TABLE id=pireinforce width=100% height=0% class=pbTab><TR align="center">';
+      var m = '<DIV id=pbReinfMain class=pbStat>'+translate("REINFORCE")+'</div><TABLE id=pireinforce width=100% height=0% class=pbTab><TR align="center">';
       
       m += '<TABLE id=pbReinf width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TD width=20px>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptRfcityFrom></span></div></td></tr>';
+      m += '<TD width=20px>'+translate("From City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptRfcityFrom></span></div></td></tr>';
 
       m += '<TR align="left">';
-      m += '<TD>To City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptRfcityTo></span></div></td>';
-      m += '<TD>OR</td>';
+      m += '<TD>'+translate("To City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptRfcityTo></span></div></td>';
+      m += '<TD>'+translate("OR")+'</td>';
       m += '<TD>X:<INPUT id=pfToX type=text size=3\></td>';
       m += '<TD>Y:<INPUT id=pfToY type=text size=3\></td></tr></table>';
       
       m += '<TABLE id=pbReinfETA width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TD><DIV id=pbdistance>Distance N/A</div></td>';
-      m += '<TD><DIV id=pbETA>ETA N/A</div></td>';
+      m += '<TD><DIV id=pbdistance>'+translate("Distance N/A")+'</div></td>';
+      m += '<TD><DIV id=pbETA>'+translate("ETA N/A")+'</div></td>';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
       m += '<TD><INPUT id=pisendfood type=text size=11 maxlength=11 value="0"\><INPUT id=MaxFood type=submit value="Max"></td></tr></table>';
             
@@ -8886,7 +8886,7 @@ Tabs.Reinforce = {
       
       m += '<TABLE id=pbReinfETA width=95% height=0% class=pbTab><TR align="center">';
       m += '<TD><SELECT id=piKnight type=list></select></td>';
-      m += '<TD><INPUT id=piDoreinforce type=submit value="Reinforce"></td>';
+      m += '<TD><INPUT id=piDoreinforce type=submit value="'+translate("Reinforce")+'"></td>';
       
       t.myDiv.innerHTML = m;
       
@@ -10481,7 +10481,7 @@ latestChats : [],
 					for(var t = 1; t<13; t++){
 						troops.push(parseInt(marchObj.unts['u'+t]));
 					}
-					AddCell(tr).innerHTML = '<a onclick=pbviewtroops('+ troops.join(',') +')>View troops</a>';
+					AddCell(tr).innerHTML = '<a onclick=pbviewtroops('+ troops.join(',') +')>'+translate("View troops")+'</a>';
 				}
 			}
 			div.appendChild(table);
