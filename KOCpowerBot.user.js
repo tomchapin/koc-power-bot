@@ -8136,7 +8136,7 @@ Tabs.Reassign = {
 		t.readReassignRoutes();
 		t.e_reassignRoutes();
 
-      var m = '<DIV id=pbReMainDivF class=pbStat>AUTOMATED REASSIGN FUNCTION</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
+      var m = '<DIV id=pbReMainDivF class=pbStat>'+translate("AUTOMATED REASSIGN FUNCTION")+'</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
       if (t.reassignState.running == false) {
           m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = OFF"></td>';
       } else {
@@ -8144,18 +8144,18 @@ Tabs.Reassign = {
       }
       m += '<TD><INPUT id=pbReassShowRoutes type=submit value="Show Routes"></td>';
       m += '</tr></table></div>';
-      m += '<DIV id=pbReassignDivD class=pbStat>ADD REASSIGN ROUTE</div>';
+      m += '<DIV id=pbReassignDivD class=pbStat>'+translate("ADD REASSIGN ROUTE")+'</div>';
 
       m += '<TABLE id=pbaddreasignroute width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TD width=20px>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncity></span></div></td></tr>';
+      m += '<TD width=20px>'+translate("From City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncity></span></div></td></tr>';
 
       m += '<TR align="left">';
-      m += '<TD width=20px>To City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncityTo></span></div></td>';
+      m += '<TD width=20px>'+translate("To City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncityTo></span></div></td>';
 	  
 	    m += '<TR align="left">';
-	    m += '<TD colspan=4>Time inbetween to check reassign: <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> minutes</td></tr>';
-	    m += '<TR><TD><INPUT id=autofilloff type=checkbox unchecked=true\> Lock troop values</TR></TD></table>';
-      m += '<DIV style="margin-top:10px;margin-bottom:5px;">Fill in the number of troops you want to keep in a city:</div>';
+	    m += '<TD colspan=4>'+translate("Time inbetween to check reassign:")+' <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> '+translate("minutes")+'</td></tr>';
+	    m += '<TR><TD><INPUT id=autofilloff type=checkbox unchecked=true\> '+translate("Lock troop values")+'</TR></TD></table>';
+      m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("Fill in the number of troops you want to keep in a city:")+'</div>';
       m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
       
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
