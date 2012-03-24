@@ -8193,13 +8193,13 @@ Tabs.Reassign = {
       m += '<INPUT id=pbtargetHeavyCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-      m += '<TD>Supply Wagon</td>'
+      m += '<TD>'+translate("Supply Wagon")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-      m += '<TD>Ballista</td>'
+      m += '<TD>'+translate("Ballista")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-      m += '<TD>Battering Ram</td>'
+      m += '<TD>'+translate("Battering Ram")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-      m += '<TD>Catapult</td></tr>'
+      m += '<TD>'+translate("Catapult")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSupplyWagon type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyWagon disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbBallista type=checkbox unchecked=true\>';
