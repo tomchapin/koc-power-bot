@@ -8178,11 +8178,11 @@ Tabs.Reassign = {
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
       m += '<TD>'+translate("Swordsman")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-      m += '<TD>Archer</td>'
+      m += '<TD>'+translate("Archer")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-      m += '<TD>Cavalry</td>'
+      m += '<TD>'+translate("Cavalry")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-      m += '<TD>Heavy Cavalry</td></tr>'
+      m += '<TD>'+translate("Heavy Cavalry")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSwordsman type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSwordsman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbArcher type=checkbox unchecked=true\>';
