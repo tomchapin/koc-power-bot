@@ -8161,7 +8161,7 @@ Tabs.Reassign = {
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
       m += '<TD>'+translate("Supply Troop")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-      m += '<TD>Militiaman</td>'
+      m += '<TD>'+translate("Militiaman")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
       m += '<TD>Scout</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
