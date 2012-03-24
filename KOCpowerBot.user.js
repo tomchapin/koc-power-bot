@@ -8209,7 +8209,7 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbCatapult type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr></table>';
       
-      m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteReassign type=submit value="Add Route"></div>';
+      m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteReassign type=submit value="'+translate("Add Route")+'"></div>';
       
       t.myDiv.innerHTML = m;
       
@@ -8425,16 +8425,16 @@ Tabs.Reassign = {
 		var t = Tabs.Reassign;
 		var city = t.tcp.city.id;
 		if(t.tcpto.city == null){
-			new CdialogCancelContinue('<SPAN class=boldRed>No destination selected!</span>', null, null, mainPop.getMainDiv);
+			new CdialogCancelContinue('<SPAN class=boldRed>'+translate("No destination selected!")+'</span>', null, null, mainPop.getMainDiv);
 			return;
 		}
 		if(t.tcp.city.id == t.tcpto.city.id){
-			new CdialogCancelContinue('<SPAN class=boldRed>Can\'t reassign to same city!</span>', null, null, mainPop.getMainDiv);
+			new CdialogCancelContinue('<SPAN class=boldRed>'+translate("Can\'t reassign to same city!")+'</span>', null, null, mainPop.getMainDiv);
 			return;
 		}
 		if ((t.tcpto.city.x == 0 && t.tcpto.city.y == 0)&& !t.check)
 		{
-			new CdialogConfirm ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv); 
+			new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv); 
 			return;
 		}
 		t.check = false;
