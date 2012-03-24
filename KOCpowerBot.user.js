@@ -4127,16 +4127,16 @@ Tabs.transport = {
       } else {
           m += '<TD><INPUT id=pbTraderState type=submit value="Transport = ON"></td>';
       }
-      m += '<TD><INPUT id=pbShowRoutes type=submit value="Show Routes"></td>';
+      m += '<TD><INPUT id=pbShowRoutes type=submit value="'+translate("Show Routes")+'"></td>';
       m += '</tr></table></div>';
-      m += '<DIV id=pbTraderDivDRoute class=pbStat>TRADE ROUTE OPTIONS</div>';
+      m += '<DIV id=pbTraderDivDRoute class=pbStat>'+translate("TRADE ROUTE OPTIONS")+'</div>';
       m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center"><TR align="left">';
-	    m += '<TD colspan=4>Time inbetween to check transport: <INPUT id=pbtransportinterval type=text size=2 value="'+Options.transportinterval+'"\> minutes</td></tr></table>';
-      m += '<TD colspan=4>Dont send transport out if less then <INPUT id=pbminwagons type=text size=2 value="'+Options.minwagons+'"\> troops are needed. (Needless transports are skipped this way)</td></tr></table>';
-      m += '<DIV style="margin-top:10px;margin-bottom:5px;">If the "trade" amount is 0 then it will transport the max amount above "keep". Gold only if there is space left...</div></table>';
+	    m += '<TD colspan=4>'+translate("Time inbetween to check transport:")+' <INPUT id=pbtransportinterval type=text size=2 value="'+Options.transportinterval+'"\> '+translate("minutes")+'</td></tr></table>';
+      m += '<TD colspan=4>'+translate("Dont send transport out if less then")+' <INPUT id=pbminwagons type=text size=2 value="'+Options.minwagons+'"\> '+translate("troops are needed. (Needless transports are skipped this way)")+'</td></tr></table>';
+      m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...")+'</div></table>';
     
       
-      m += '<DIV id=pbTraderDivDRoute class=pbStat>TRANSPORTS</div>';
+      m += '<DIV id=pbTraderDivDRoute class=pbStat>'+translate("TRANSPORTS")+'</div>';
       m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
       m += '<TR align="left"><TD>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
 
