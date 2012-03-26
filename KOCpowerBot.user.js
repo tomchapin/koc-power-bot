@@ -7966,7 +7966,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> '+translate("Auto delete throne items below")+' '+ htmlSelector({0:'-----', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>\
 		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>'+translate("Save the first")+': <INPUT id=throneSaveNum type=text size=2 maxlength=3 \> '+translate("items")+'</td></tr>\
 		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>'+translate("Save inactive Range items")+': '+ htmlSelector({0:'----', 1:translate('All'), 3:translate('Epic or Wonderous'), 5:translate('Wonderous only'), 8:translate('Epic and Wonderous'),9:translate('Rare Epic and Wonderous')},Options.RangeSaveModeSetting,'id=selectRangeSaveMode') + '<span style="color:#800; font-weight:bold"><sup> &nbsp *'+translate("Saves range items")+'</sup></span></td></tr>\
-        <tr><td>&nbsp;&nbsp;&nbsp-</td><td></b>'+translate("Bot Deleted")+': &nbsp;' + Options.throneDeletedNum + '&nbsp; '+translate("Items")+' &nbsp; <span style="color:#800; font-weight:bold"><sup>*+'translate("Updates On Refresh")+'</sup></span></td></tr>\
+        <tr><td>&nbsp;&nbsp;&nbsp-</td><td></b>'+translate("Bot Deleted")+': &nbsp;' + Options.throneDeletedNum + '&nbsp; '+translate("Items")+' &nbsp; <span style="color:#800; font-weight:bold"><sup>*+'+translate("Updates On Refresh")+'</sup></span></td></tr>\
         </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
         m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
       div.innerHTML = m;
@@ -8842,7 +8842,7 @@ Tabs.Reinforce = {
       m += '<TD><DIV id=pbdistance>'+translate("Distance N/A")+'</div></td>';
       m += '<TD><DIV id=pbETA>'+translate("ETA N/A")+'</div></td>';
       m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
-      m += '<TD><INPUT id=pisendfood type=text size=11 maxlength=11 value="0"\><INPUT id=MaxFood type=submit value="Max"></td></tr></table>';
+      m += '<TD><INPUT id=pisendfood type=text size=11 maxlength=11 value="0"\><INPUT id=MaxFood type=submit value='+translate("Max")+' ></td></tr></table>';
             
       m += '<TABLE id=pbaddreinfroute width=100% height=0% class=pbTab><TR align="center">';
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
@@ -8853,10 +8853,10 @@ Tabs.Reinforce = {
       m += '<TD id=unt3></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
       m += '<TD id=unt4></td>'
-      m += '<TR><TD><INPUT id=pitargetSupplyTroops type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyTroops type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetMilitiaman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxMilitiaman type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetScout type=text size=6 maxlength=6 value="0"\><INPUT id=MaxScout type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetPikeman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxPikeman type=submit value="Max"></td></tr>';
+      m += '<TR><TD><INPUT id=pitargetSupplyTroops type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyTroops type=submit value='+translate("Max")+'></td>';
+      m += '<TD><INPUT id=pitargetMilitiaman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxMilitiaman type=submit value='+translate("Max")+'></td>';
+      m += '<TD><INPUT id=pitargetScout type=text size=6 maxlength=6 value="0"\><INPUT id=MaxScout type=submit value='+translate("Max")+'></td>';
+      m += '<TD><INPUT id=pitargetPikeman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxPikeman type=submit value='+translate("Max")+'></td></tr>';
       
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
       m += '<TD id=unt5></td>'
@@ -8866,10 +8866,10 @@ Tabs.Reinforce = {
       m += '<TD id=unt7></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
       m += '<TD id=unt8></td>'
-      m += '<TR><TD><INPUT id=pitargetSwordsman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSwordsman type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetArcher type=text size=6 maxlength=6 value="0"\><INPUT id=MaxArcher type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCavalry type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetHeavyCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxHeavyCavalry type=submit value="Max"></td></tr>';
+      m += '<TR><TD><INPUT id=pitargetSwordsman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSwordsman type=submit value='+translate("Max")+'></td>';
+      m += '<TD><INPUT id=pitargetArcher type=text size=6 maxlength=6 value="0"\><INPUT id=MaxArcher type=submit value='+translate("Max")+'></td>';
+      m += '<TD><INPUT id=pitargetCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCavalry type=submit value='+translate("Max")+'></td>';
+      m += '<TD><INPUT id=pitargetHeavyCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxHeavyCavalry type=submit value='+translate("Max")+'></td></tr>';
       
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
       m += '<TD id=unt9></td>'
@@ -8879,10 +8879,10 @@ Tabs.Reinforce = {
       m += '<TD id=unt11></td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
       m += '<TD id=unt12></td>'
-      m += '<TR><TD><INPUT id=pitargetSupplyWagon type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyWagon type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetBallista type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBallista type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetBatteringRam type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBatteringRam type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetCatapult type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCatapult type=submit value="Max"></td></tr></table>';
+      m += '<TR><TD><INPUT id=pitargetSupplyWagon type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyWagon type=submit value='+translate("Max")+'></td>';
+      m += '<TD><INPUT id=pitargetBallista type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBallista type=submit value='+translate("Max")+'></td>';
+      m += '<TD><INPUT id=pitargetBatteringRam type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBatteringRam type=submit value='+translate("Max")+'></td>';
+      m += '<TD><INPUT id=pitargetCatapult type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCatapult type=submit value='+translate("Max")+'></td></tr></table>';
       
       m += '<TABLE id=pbReinfETA width=95% height=0% class=pbTab><TR align="center">';
       m += '<TD><SELECT id=piKnight type=list></select></td>';
@@ -9486,7 +9486,7 @@ Tabs.Reinforce = {
        gSpeed = fSpeed/6000;
        estSec = (dist/gSpeed).toFixed(0);
        if (t.checkETA == null || t.checkETA < (parseInt((estSec+''))+30)){
-       		 t.ETAstr = 'Reinforce ETA: ' + timestr ((parseInt((estSec+''))+30));
+       		 t.ETAstr = translate('Reinforce ETA')+': ' + timestr ((parseInt((estSec+''))+30));
        		 t.checkETA = (parseInt((estSec+''))+30);
        }
  },
@@ -9594,8 +9594,8 @@ Tabs.AutoTrain = {
 	t.nextcity();
 	
     var m = '<DIV class=pbStat>AUTO TRAIN</div><TABLE width=100% height=0% class=pbTab><TR><TD width=200></td>';
-        m += '<TD align=center><INPUT id=pbAutoTrainState type=submit value="AutoTrain = '+ (TrainOptions.Running?'ON':'OFF')+'"></td>';
-        m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value="HELP"></td>';
+        m += '<TD align=center><INPUT id=pbAutoTrainState type=submit value="'+translate("AutoTrain")+' = '+ (TrainOptions.Running?'ON':'OFF')+'"></td>';
+        m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value='+translate("HELP")+'></td>';
         m += '</tr></table></div>';
         m += '<DIV class=pbStat>TRAIN OPTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 
@@ -9609,8 +9609,8 @@ Tabs.AutoTrain = {
 			for (y in unsafeWindow.unitcost) m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
 	    m+='</select></td>';
 	    m+='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=4 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
-	    m+='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> Max.: <INPUT class='+city+' id=max'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
-	    m +='<TD>Use Workers: ';
+	    m+='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=max'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
+	    m +='<TD>'+translate("Use Workers")+': ';
         m+='<SELECT class='+city+' id="workers'+city+'"><option value="0">0%</options>';
         m+='<option value="25">25%</options>';
         m+='<option value="50">50%</options>';
@@ -9626,8 +9626,8 @@ Tabs.AutoTrain = {
 	    m += '<TD><INPUT class='+city+' id="KeepStone'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
 	    m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
 	    m += '<TD><INPUT class='+city+' id="KeepOre'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
-		m += '<TD><SELECT class='+city+' id="Resource'+city+'"><option value="true">Keep</options>';
-	    m+='<option value="false">Use</option>';
+		m += '<TD><SELECT class='+city+' id="Resource'+city+'"><option value="true">'+translate("Keep")+'</options>';
+	    m+='<option value="false">'+translate("Use")+'</option>';
 	    m+='</select></td>';
 	      
 	    m += '<TD><SELECT class='+city+' id="TrainSpeed_'+city+'">\
@@ -9736,7 +9736,7 @@ Tabs.AutoTrain = {
     var pop = new pbPopup ('giftHelp', 0, 0, 550, 250, true);
     pop.centerMe (mainPop.getMainDiv());  
     pop.getMainDiv().innerHTML = helpText;
-    pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help</b>:  Auto Train</center>';
+    pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot '+translate("Help")+'</b>:  '+translate("Auto Train")+'</center>';
     pop.show (true);
   },
   
@@ -9744,11 +9744,11 @@ Tabs.AutoTrain = {
 	var t = Tabs.AutoTrain;
     if (TrainOptions.Running == true) {
         TrainOptions.Running = false;
-        obj.value = "AutoTrain = OFF";
+        obj.value = translate("AutoTrain = OFF");
     }
     else {
         TrainOptions.Running = true;
-        obj.value = "AutoTrain = ON";
+        obj.value = translate("AutoTrain = ON");
 		t.nextcity();
     }
     saveTrainOptions();
