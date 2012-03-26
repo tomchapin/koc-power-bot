@@ -260,7 +260,8 @@ var AttackOptions = {
   barbMaxKnight			: 250,
 };
 
-var ResetAll=false;var deleting=false;
+var ResetAll=false;
+var deleting=false;
 
 var ChatOptions = {
   latestChats               : [],
@@ -565,7 +566,7 @@ function pbStartup (){
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false;
-        saveOptions()
+        saveOptions();
       });
   mainPop.autoHeight (true);  
 
@@ -822,7 +823,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         <TR><TD><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
-            <TR><TD align=right>'+translate("Sound file")+': &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=55 maxlength=160 value="'+ Options.alertSound.soundUrl +'" \>\
+            <TR><TD align=right>'+translate("Sound file")+': &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=40 maxlength=1000 value="'+ Options.alertSound.soundUrl +'" \>\
              &nbsp; </td><TD><INPUT id=pbSoundLoad type=submit value='+translate("Load")+' ><INPUT id=pbSoundDefault type=submit value='+translate("Default")+' ></td></tr>\
             <TR><TD align=right>'+translate("Volume")+': &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td><TD align=center><SPAN id=pbLoadStat>xx</span></td></tr>\
             <TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> '+translate("Repeat every")+' <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> '+translate("minutes")+'</td></tr>\
@@ -1075,8 +1076,8 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         t.defMode[cityId] = newMode;
         t.displayDefMode (cityId);
       });
-  }, 
-  
+  },
+      
   displayDefMode : function (cityId){
     var t = Tabs.tower;
     var but = document.getElementById('pbtabut_'+ cityId);
@@ -1087,8 +1088,8 @@ unsafeWindow.CraftingItem = t.CraftingItem;
       but.className = 'pbDefButOff';
       but.value = 'Def = OFF';  
     }  
-  }, 
-  
+  },
+    
   eachSecond : function (){
     var t = Tabs.tower;
 	for (var cityId in Cities.byID){
@@ -7946,28 +7947,28 @@ Tabs.Options = {
 		<TR><TD>&nbsp;&nbsp;&nbsp-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=togOpacity type=text size=3 maxlength=3 value="'+Options.Opacity+'"/> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
         <TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable all Fairie popup windows")+'</td></tr>\
-        <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>Refresh if KOC not loaded within 1 minute (all domains)</td></tr>\
-        <TR><TD><INPUT id=pbEveryEnable type=checkbox /></td><TD>Refresh KOC every <INPUT id=pbeverymins type=text size=2 maxlength=3 \> minutes</td></tr>\
-        <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>Put chat on right (requires wide screen)</td></tr>\
-		<TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>Use WideMap (requires wide screen)</td></tr>\
-        <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>Auto collect gold when happiness reaches <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
-        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert (On less then 6 Hours of food checked every hour)</td></tr>\
-        <TR><TD colspan=2><BR><B>Extra Features:</b></td></tr>\
-        <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>Help alliance build/research posts</td></tr>\
-        <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>Hide alliance requests in chat</td></tr>\
-        <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>Auto publish Facebook posts for '+ htmlSelector({0:'----', 80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' (For all domains)</td>\
-        <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>Show Player & Might in map.</td></tr>\
-        <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> Auto delete barb/transport reports from you</td></tr>\
-        <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> Auto delete transport reports to you</td></tr>\
-        <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> Auto delete wild reports</td></tr>\
-        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> Auto delete crest target regardless of type</td></tr>\
-		<tr><td colspan=2><br><b>Throne Room Auto Salvage:</td></tr>\
-        <TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> Auto delete throne items below '+ htmlSelector({0:'-----', 1:'Common', 2:'Uncommon', 3:'Rare', 4:'Epic', 5:'Wonderous'},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>\
-		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>Save the first: <INPUT id=throneSaveNum type=text size=2 maxlength=3 \> items</td></tr>\
-		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>Save inactive Range items: '+ htmlSelector({0:'----', 1:'All', 3:'Epic or Wonderous', 5:'Wonderous only', 8:'Epic and Wonderous',9:'Rare Epic and Wonderous'},Options.RangeSaveModeSetting,'id=selectRangeSaveMode') + '<span style="color:#800; font-weight:bold"><sup> &nbsp *Saves range items</sup></span></td></tr>\
-        <tr><td>&nbsp;&nbsp;&nbsp-</td><td></b>Bot Deleted: &nbsp;' + Options.throneDeletedNum + '&nbsp; Items &nbsp; <span style="color:#800; font-weight:bold"><sup>*Updates On Refresh</sup></span></td></tr>\
-        </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
-        m += strButton20('Reset ALL Options', 'id=ResetALL');
+        <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>'+translate("Refresh if KOC not loaded within 1 minute (all domains)")+'</td></tr>\
+        <TR><TD><INPUT id=pbEveryEnable type=checkbox /></td><TD>'+translate("Refresh KOC every")+' <INPUT id=pbeverymins type=text size=2 maxlength=3 \> '+translate("minutes")+'</td></tr>\
+        <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>'+translate("Put chat on right (requires wide screen)")+'</td></tr>\
+		<TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>'+translate("Use WideMap (requires wide screen)")+'</td></tr>\
+        <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>'+translate("Auto collect gold when happiness reaches")+' <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
+        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>'+translate("Enable Food Alert (On less then 6 Hours of food checked every hour)")+'</td></tr>\
+        <TR><TD colspan=2><BR><B>'+translate("Extra Features")+':</b></td></tr>\
+        <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>'+translate("Help alliance build/research posts")+'</td></tr>\
+        <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>'+translate("Hide alliance requests in chat")+'</td></tr>\
+        <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>'+translate("Auto publish Facebook posts for")+' '+ htmlSelector({0:'----', 80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' '+translate("(For all domains)")+'</td>\
+        <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>'+translate("Show Player & Might in map")+'.</td></tr>\
+        <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> '+translate("Auto delete barb/transport reports from you")+'</td></tr>\
+        <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> '+translate("Auto delete transport reports to you")+'</td></tr>\
+        <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> '+translate("Auto delete wild reports")+'</td></tr>\
+        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest target regardless of type")+'</td></tr>\
+		<tr><td colspan=2><br><b>'+translate("Throne Room Auto Salvage")+':</td></tr>\
+        <TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> '+translate("Auto delete throne items below")+' '+ htmlSelector({0:'-----', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>\
+		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>'+translate("Save the first")+': <INPUT id=throneSaveNum type=text size=2 maxlength=3 \> '+translate("items")+'</td></tr>\
+		<tr><td>&nbsp;&nbsp;&nbsp-</td><td>'+translate("Save inactive Range items")+': '+ htmlSelector({0:'----', 1:translate('All'), 3:translate('Epic or Wonderous'), 5:translate('Wonderous only'), 8:translate('Epic and Wonderous'),9:translate('Rare Epic and Wonderous')},Options.RangeSaveModeSetting,'id=selectRangeSaveMode') + '<span style="color:#800; font-weight:bold"><sup> &nbsp *'+translate("Saves range items")+'</sup></span></td></tr>\
+        <tr><td>&nbsp;&nbsp;&nbsp-</td><td></b>'+translate("Bot Deleted")+': &nbsp;' + Options.throneDeletedNum + '&nbsp; '+translate("Items")+' &nbsp; <span style="color:#800; font-weight:bold"><sup>*+'translate("Updates On Refresh")+'</sup></span></td></tr>\
+        </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
+        m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
       div.innerHTML = m;
 
       document.getElementById('selectScreenMode').addEventListener ('change', function(){
@@ -10641,7 +10642,7 @@ Tabs.Language = {
 	  var t = Tabs.Language;
 	  t.poplangshow = new pbPopup('pbShowLanguage', 10, 10, 600, 500, true, function() {t.poplangshow.destroy();});
 	  t.poplangshow.getTopDiv().innerHTML = '<TD><B>'+translate("Language Array:")+'</td>';
-	  t.poplangshow.getMainDiv().innerHTML = '<DIV style="max-height:430px;overflow-y:auto"><TABLE style="overflow-y:auto" align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pblang_showarray"></table></div><div id=pblang_status ></div>';
+	  t.poplangshow.getMainDiv().innerHTML = '<DIV style="max-height:440px;overflow-y:auto"><TABLE style="overflow-y:auto" align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pblang_showarray"></table></div><div id=pblang_status ></div>';
 	  t.paintlanguagearray();
 	  t.poplangshow.show(true);
   },
@@ -12554,9 +12555,9 @@ function pbPopup (prefix, x, y, width, height, enableDrag, onClose) {
   else
     topClass = pbPopUpTopClass +' '+ prefix +'_'+ pbPopUpTopClass;
     
-  var m = '<TABLE cellspacing=0 width=100% height=100%><TR id="'+ prefix +'_bar" class="'+ topClass +'"><TD width=99% valign=bottom><SPAN id="'+ prefix +'_top"></span></td>\
+  var m = '<TABLE cellspacing=0 width=100% ><TR id="'+ prefix +'_bar" class="'+ topClass +'"><TD width=99% valign=bottom><SPAN id="'+ prefix +'_top"></span></td>\
       <TD id='+ prefix +'_X align=right valign=middle onmouseover="this.style.cursor=\'pointer\'" style="color:#fff; background:#333; font-weight:bold; font-size:14px; padding:0px 5px; -moz-border-radius-topright: 20px;">x</td></tr>\
-      <TR><TD height=100% valign=top class="pbPopMain '+ prefix +'_pbPopMain" colspan=2 id="'+ prefix +'_main"></td></tr></table>';
+      </table><TABLE cellspacing=0 width=100% ><TR><TD height=100% valign=top class="pbPopMain '+ prefix +'_pbPopMain" colspan=2 id="'+ prefix +'_main"></td></tr></table>';
   document.body.appendChild(this.div);
   this.div.innerHTML = m;
   document.getElementById(prefix+'_X').addEventListener ('click', e_XClose, false);
@@ -12851,13 +12852,15 @@ String.prototype.escape_space = function(){
 	var s = this.split(" ");
 	for(var i=0; i<s.length; i++)
 		s[i] = escape(s[i]);
-	return s.join(" ");
+	//return s.join(" ");
+	return this.replace(/</ig,"&#60;");
 }
 String.prototype.unescape_space = function(){
 	var s = this.split(" ");
 	for(var i=0; i<s.length; i++)
 		s[i] = unescape(s[i]);
-	return s.join(" ");
+	//return s.join(" ");
+	return this;
 }
 
 function officerId2String (oid){
