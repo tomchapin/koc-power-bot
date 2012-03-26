@@ -9985,8 +9985,8 @@ var RefreshEvery  = {
 		Left = 0;
 		t.doit();
 	 }
-     if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
-     else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: <B>'+ timestr(Left) +'</b></font></div>';
+     if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
+     else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
     
 	 t.box.innerHTML = text;
      t.timer = setTimeout (t.Paint, 1000);
@@ -10054,8 +10054,7 @@ function KOCnotFound(secs){
   var endSecs = (new Date().getTime()/1000) + secs;
     
   div = document.createElement('div');
-  div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>KOC Power Bot has detected that KOC is not loaded<BR>\
-      Refreshing in <SPAN id=pbwdsecs></span><BR><INPUT id=pbwdcan type=submit value="Cancel Refresh"><BR><BR></div>';
+  div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>'+translate("KOC Power Bot has detected that KOC is not loaded")+'<BR>'+translate("Refreshing in")+' <SPAN id=pbwdsecs></span><BR><INPUT id=pbwdcan type=submit value="'+translate("Cancel Refresh")+'"><BR><BR></div>';
   document.body.insertBefore (div, document.body.firstChild);
   document.getElementById('pbwdcan').addEventListener('click', cancel, false);
   countdown();
@@ -10155,7 +10154,7 @@ Tabs.Chat = {
 						<TD width=10px>&nbsp;</td><TD><input type=checkbox id=pbautoblacklist />'+translate("Auto blacklist players if 1st attempt fails")+'</td></tr>\
 						<TR><TD></td><TD valign=top>'+translate("Allowed Players:")+' <br><textarea cols=30 rows=1 id=allowUserBox></textarea></td>\
 						<TD width=10px>&nbsp;</td><TD> '+translate("Blacklisted Players")+' <br><textarea cols=30 rows=1 id=blacklistUserBox ></textarea></td></tr>\
-						<TR><TD colspan=3>Type "/[Player] units?" to get a unit count <br> Type "/[Player] attacks? to get impending attacks <br> Player name is cAsE-SeNsItIvE </td></tr></table>';
+						<TR><TD colspan=3>'+translate("Type \"/[Player] units?\" to get a unit count <br> Type \"/[Player] attacks? to get impending attacks")+' <br> '+translate("Player name is cAsE-SeNsItIvE")+' </td></tr></table>';
 	t.togtext('allowUserBox', 'AllowUsersRemoteControl');
 	t.togtext('blacklistUserBox', 'BlacklistUsersRemoteControl');
 	t.togOpt('pbchatqaenable', 'Chatenable', ChatStuff.init);
@@ -10559,8 +10558,8 @@ latestChats : [],
 					if(permission){
 						cmdInfo['question'].call(t,chatObj,info);
 					} else {
-						chatObj.obj.appendChild(document.createTextNode("Player does not have permission: "+chatObj.shortName));
-						t.SendChat(chatObj.shortName,"Player does not have permission");
+						chatObj.obj.appendChild(document.createTextNode(translate("Player does not have permission")+": "+chatObj.shortName));
+						t.SendChat(chatObj.shortName,translate("Player does not have permission"));
 						if(ChatOptions.Chatautoblacklist){
 							ChatOptions.BlacklistUsersRemoteControl.push(chatObj.shortName);
 							document.getElementById('blacklistUserBox').value += chatObj.shortName+'\n';
