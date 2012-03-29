@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120329a
+// @version        20120329b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120329a';
+var Version = '20120329b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -14714,6 +14714,9 @@ Tabs.upgrader = {
 	   // retry interval entry
  	   m += '<td>Retry interval (seconds): <INPUT id=pbUpRefresh type=text size=3 maxlength=3 value="' +upgradeData.retryInterval+ '"></td>';
  	   m += '</tr>';
+ 	   m += '<tr><td><div><br></div></td></tr></table></div>';
+
+	    m += '<TABLE  class=pbTabPad2><tr align="center"><td><div><span><b>Warning:</b> Running out of Aetherstone may result in using gems.  Keep at least 100k Aetherstone in main city.';	   
  	   m += '<tr><td><div><br></div></td></tr></table></div>';
 	   
  	   // upgrade selector
