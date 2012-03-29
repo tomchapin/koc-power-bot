@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120323c
+// @version        20120329a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120323c';
+var Version = '20120329a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -42,6 +42,18 @@ var JSON;if(!JSON){JSON={};}(function(){"use strict";function f(n){return n<10?'
 var JSON2 = JSON;
 
 //logit ("+++ STARTUP: "+ document.URL);
+
+
+var upgradeData = {
+  active : false,
+  item : 0,
+  retryInterval : 30,
+  enhanceAction : false,
+  enhanceItem : 0,
+  enhanceMax  : 1,
+  minStones : 100000,
+};
+
 
 var Options = {
   srcSortBy    : 'level',
@@ -480,6 +492,7 @@ var pbStartupTimer = null;
 var pbPopUpTopClass = 'pbPopTop';
 var firefoxVersion = getFirefoxVersion();
 var TrainCity = 0;
+var CM = unsafeWindow.cm;
 
 function pbStartup (){
   clearTimeout (pbStartupTimer);
@@ -538,6 +551,7 @@ function pbStartup (){
     
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
+  readUpgradeData();
   readOptions();
   readLanguage();
   readChatOptions();
@@ -11495,6 +11509,11 @@ function logit (msg){
 }
 
 
+function saveUpgradeData (){
+  var serverID = getServerId();
+  setTimeout (function (){GM_setValue ('UpgradeData_'+serverID, JSON2.stringify(upgradeData));}, 0);
+}
+
 
 function saveOptions (){
   var serverID = getServerId();
@@ -11519,6 +11538,22 @@ function saveCrestData (){
 function saveCombatOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('CombatOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CombatOptions));}, 0);
+}
+
+
+function readUpgradeData (){
+  var serverID = getServerId();
+  s = GM_getValue ('UpgradeData_'+serverID);
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          upgradeData[k][kk] = opts[k][kk];
+      else
+        upgradeData[k] = opts[k];
+    }
+  }
 }
 
 
@@ -14643,6 +14678,407 @@ var DeleteThrone = {
 }
 
 
+
+
+/******************* Throne upgrade **********************/
+
+
+
+Tabs.upgrader = {   
+	tabOrder: 500,
+    tabLabel: 'TR Upgrader',
+    tabDisabled : false,
+	myDiv : null,
+	timer : null,
+	repairId : 0,
+	repairEnd : 0,
+		
+	init : function (div){
+       var t = Tabs.upgrader;
+       t.myDiv = div;
+ 
+       // header stuff
+       var m = '<Div><DIV id=pbUpgrader class=pbStat>AUTOMATED UPGRADER</div><TABLE id=pbupgrader width=100% height=0% class=pbTab><TR align="center">';
+	   if (upgradeData.active == false) {
+	       m += '<TD><INPUT id=UpgraderPower type=submit value="Upgrade = OFF"></td>';
+	   } else {
+	       m += '<TD><INPUT id=UpgraderPower type=submit value="Upgrader = ON"></td>';
+	   }
+	   
+	   if (upgradeData.enhanceAction == false) {
+	       m += '<TD><INPUT id=UpgraderSelect type=submit value="Action = Upgrade"></td>';
+	   } else {
+	       m += '<TD><INPUT id=UpgraderSelect type=submit value="Action = Enhance"></td>';
+	   }
+	   
+	   // retry interval entry
+ 	   m += '<td>Retry interval (seconds): <INPUT id=pbUpRefresh type=text size=3 maxlength=3 value="' +upgradeData.retryInterval+ '"></td>';
+ 	   m += '</tr>';
+ 	   m += '<tr><td><div><br></div></td></tr></table></div>';
+	   
+ 	   // upgrade selector
+ 	   m += '<TABLE  class=pbTabPad2><tr align="center"><td><div><span>Item to upgrade: <select id="UpgradeList">';
+ 	   m += '<option value="0">--Items--</option>';
+	   for (k in unsafeWindow.kocThroneItems) {
+         var throne_item = unsafeWindow.kocThroneItems[k];
+         m += '<option value="'+k+'">'+throne_item.name+'</option>';
+	   }
+       m += '</select></span></div></td></tr></table>';
+       m += '<tr><td><div> <br> </div></td></tr>';
+       
+       // enhance selector
+ 	   m += '<TABLE  class=pbTabPad2><tr align="center"><td><div><span>Item to enhance: <select id="EnhanceList">';
+ 	   m += '<option value="0">--Items--</option>';
+	   for (k in unsafeWindow.kocThroneItems) {
+         var throne_item = unsafeWindow.kocThroneItems[k];
+         m += '<option value="'+k+'">'+throne_item.name+'</option>';
+	   }
+       m += '</select></span></div></td>';
+       m += '<td><div> Maximum quality: <select id="MaxQuality">';
+       m += '<option value="1">Common</option>';
+       m += '<option value="2">Uncommon</option>';
+       m += '<option value="3">Rare</option>';
+       m += '<option value="4">Epic</option>';
+       m += '<option value="5">Wonderous</option>';
+
+       m += '</select></div></td>';
+       
+       m += '</tr></table>';
+       
+       m += '<tr><td><div> <br> </div></td></tr>';
+       
+       m+='</div>';
+       t.myDiv.innerHTML = m;
+       
+       document.getElementById ('UpgradeList').addEventListener ('click', function() {
+    	  if (this.value >= 1) {
+    		  logit(" Item selected to upgrade: " + this.value + "/" + unsafeWindow.kocThroneItems[this.value].name);
+    		  upgradeData.item = this.value;
+    		  saveUpgradeData();
+    	  }
+	    }, false);
+	    
+	    document.getElementById ('EnhanceList').addEventListener ('click', function() {
+    	  if (this.value >= 1) {
+    		  logit(" Item selected to enhance: " + this.value + "/" + unsafeWindow.kocThroneItems[this.value].name);
+    		  upgradeData.enhanceItem = this.value;
+    		  saveUpgradeData();
+    	  }
+	    }, false);
+	    
+	   document.getElementById ('MaxQuality').addEventListener ('click', function() {
+    	  if (this.value >= 0) {
+    		  logit(" Enhance max set to: " + this.value);
+    		  upgradeData.enhanceMax = this.value;
+    		  saveUpgradeData();
+    	  }
+	    }, false);
+	    
+	   document.getElementById('pbUpRefresh').addEventListener('change', function(){
+		  upgradeData.retryInterval = parseInt(document.getElementById('pbUpRefresh').value);
+		  if (upgradeData.retryInterval < 15) upgradeData.retryInterval = 15;
+		  saveUpgradeData();
+	    }, false);
+
+	   document.getElementById('UpgraderPower').addEventListener('click', function(){t.togglePower(this)} , false);
+	   document.getElementById('UpgraderSelect').addEventListener('click', function(){t.toggleSelect(this)} , false);
+	   
+	   if (unsafeWindow.kocThroneItems[upgradeData.item] != null)
+	     document.getElementById('UpgradeList').value = upgradeData.item;
+	     
+	   if (unsafeWindow.kocThroneItems[upgradeData.enhanceItem] != null)
+	     document.getElementById('EnhanceList').value = upgradeData.enhanceItem;
+	   
+	   document.getElementById('MaxQuality').value = upgradeData.enhanceMax;  
+	   
+	   // wait for the current repair to finish before starting  
+	   var d = 5;
+	   
+	   if (Seed.queue_throne != null && Seed.queue_throne.end != null)
+	   {
+	      var repairTimeLeft = Seed.queue_throne.end- unixTime();
+	      //logit("repair time left: " + repairTimeLeft);
+	      t.repairEnd = Seed.queue_throne.end;
+	      t.repairId = Seed.queue_throne.itemId;
+	   
+	      if (repairTimeLeft >0) d += repairTimeLeft;
+      }
+	   setTimeout(t.doAction, d*1000);
+   },
+	
+	togglePower: function(obj){
+	 var t = Tabs.upgrader;
+	 if (upgradeData.active == true) {
+		upgradeData.active = false;
+		obj.value = "Upgrade = OFF";
+	} else {
+		upgradeData.active = true;
+		obj.value = "Upgrade = ON";
+	}
+	saveUpgradeData();
+  },
+  
+  	toggleSelect: function(obj){
+	 var t = Tabs.upgrader;
+	 if (upgradeData.enhanceAction == true) {
+		upgradeData.enhanceAction = false;
+		obj.value = "Action = Upgrade";
+	} else {
+		upgradeData.enhanceAction = true;
+		obj.value = "Action = Enhance";
+	}
+	saveUpgradeData();
+  },
+  
+  doAction :function ()
+  {
+	  var t = Tabs.upgrader;
+	  t.clearRepair();
+      if (upgradeData.enhanceAction == true)
+      {
+	      t.doEnhance();
+      }	  
+      else
+      {
+	      t.doUpgrade();
+      }
+  },
+  
+  doEnhance : function() {
+		var t = Tabs.upgrader;
+		var eItem = upgradeData.enhanceItem;
+		logit("enhance");
+		if (upgradeData.active == false || upgradeData.enhanceAction == false || eItem ==0)
+		{ 
+			logit("enhance is turned off");
+			setTimeout(t.doAction, upgradeData.retryInterval*1000);
+			return;
+		}
+		var y = unsafeWindow.kocThroneItems[eItem];
+		if ( y.quality >= upgradeData.enhanceMax)
+		{
+			actionLog('Throne room item '+unsafeWindow.kocThroneItems[eItem].name + ' is already at quality ' + y.quality);
+			setTimeout(t.doAction, upgradeData.retryInterval*1000);
+			return;
+		}
+		if (y.isBroken) 
+		{
+			// repair and then try again later
+			logit("enhance repair");
+			t.doRepair(eItem);
+			setTimeout(t.doAction, upgradeData.retryInterval*1000);
+			return;
+		}
+		
+		if ( Seed.resources["city" + Seed.cities[0][0]]["rec5"][0] < upgradeData.minStones)
+		{
+		   logit("not enough gems to enhance");
+		   setTimeout(t.doAction, upgradeData.retryInterval*1000);
+		   return;	
+		}
+		
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+		params.action = 'upgradeQuality';
+		params.throneRoomItemId = eItem;
+		params.buffItemId = 0;
+		params.payment = "aetherstone";
+		params.cityId = Seed.cities[0][0];
+      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			loading: true,
+			onSuccess: function (transport) {
+				var rslt = eval("(" + transport.responseText + ")");
+				if(rslt.ok){
+					//logit("results: " + inspect(rslt, 3,1));
+					Seed.resources["city" + Seed.cities[0][0]]["rec5"][0] -= rslt.aetherstones;
+				    y.level = rslt.item.level;
+	                y.quality = rslt.item.quality
+					y.status = rslt.item.status;
+					if (rslt.success)
+					{					
+					   actionLog('Enhanced Throne room item '+unsafeWindow.kocThroneItems[eItem].name + ' to quality ' + rslt.item.quality);
+					   y.name = y.createName();
+					   //t.doEnhance();  // lets go for 2 in a row
+				    }
+				    else
+				    {
+					   actionLog('Enhance failed Throne room item '+unsafeWindow.kocThroneItems[eItem].name);
+					   y.isBroken = true;
+					   y.brokenType = "quality";
+					   y.name = y.createName();
+					   t.doRepair(y.id);
+				    }
+				    if (rslt.gems > 0)
+				    {
+					    actionLog('Upgrader accidentally spent gems!  Turning upgrader off');
+					    upgradeData.active = false;
+					    saveUpgradeData();
+				    }
+				    unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+				}
+				else
+				{
+			      //logit("enhance request not accepted");
+				  //logit("Enhance result:" + inspect (rslt, 3, 1))
+			    }
+			    return;
+			},
+			onFailure: function () {
+			   logit("enhance error");
+			   return;
+			},
+		});
+		
+		// cycle to try again later
+		logit("interval: " + upgradeData.retryInterval);
+		setTimeout(t.doAction, upgradeData.retryInterval*1000);
+	},
+	   
+	doUpgrade : function() {
+		var t = Tabs.upgrader;
+		var uItem = upgradeData.item;
+		var y = unsafeWindow.kocThroneItems[uItem];
+		if (upgradeData.active == false || upgradeData.enhanceAction == true || uItem ==0 || y == null)
+		{ 
+			logit("upgrade is turned off");
+			setTimeout(t.doAction, upgradeData.retryInterval*1000);
+			return;
+		}
+		if (y.isBroken) 
+		{
+			// repair and then try again later
+			t.doRepair(uItem);
+			setTimeout(t.doAction, upgradeData.retryInterval*1000);
+			return;
+		}
+		if ( Seed.resources["city" + Seed.cities[0][0]]["rec5"][0] < upgradeData.minStones)
+		{
+		   logit("not enough gems to upgrade");
+		   setTimeout(t.doAction, upgradeData.retryInterval*1000);
+		   return;	
+		}
+		
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+		params.action = 'upgradeLevel';
+		params.throneRoomItemId = uItem;
+		params.buffItemId = 0;
+		params.payment = "aetherstone";
+		params.cityId = Seed.cities[0][0];
+      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			loading: true,
+			onSuccess: function (transport) {
+				var rslt = eval("(" + transport.responseText + ")");
+				if(rslt.ok){
+					Seed.resources["city" + Seed.cities[0][0]]["rec5"][0] -= rslt.aetherstones;
+					if (rslt.success)
+					{
+					   actionLog('Upgraded Throne room item '+unsafeWindow.kocThroneItems[uItem].name + ' to level ' + rslt.item.level);
+					   y.level = rslt.item.level;
+					   y.quality = rslt.item.quality;
+					   y.name = y.createName();
+					   //t.doUpgrade();  // upgrade right away
+				    }
+				    else
+				    {
+					   actionLog('Upgrade failed Throne room item '+unsafeWindow.kocThroneItems[uItem].name);
+					   y.isBroken = true;
+					   y.brokenType = "level";
+					   y.status = rslt.item.status;
+                       y.name = y.createName();
+                       t.doRepair(uItem);  //fix item
+				    }
+				    unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+				    
+				    if (rslt.gems > 0)
+				    {
+					    actionLog('Upgrader accidentally spent gems!  Turning upgrader off');
+					    upgradeData.active = false;
+					    saveUpgradeData();
+				    }
+				    return;
+				}
+				else
+				{
+					logit("upgrade request not accepted");
+				    //logit("Upgrade result:" + inspect (rslt, 3, 1))/
+			    }
+			    return;
+			},
+			onFailure: function () {
+			   logit("upgrade error");
+			   return;
+			},
+		});
+		
+		// try again later
+		setTimeout(t.doAction, upgradeData.retryInterval*1000);
+	},
+		
+	 doRepair : function( rItem) {
+		var t = Tabs.upgrader;	
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		//var rItem = upgradeData.item;
+		params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+		params.action = 'timeRepair';
+		params.throneRoomItemId = rItem;
+		params.cityId = Seed.cities[0][0];
+		
+		// need to set these values in case we don't get the return.  there is an estiamted time in the thronestats to use ...
+		//t.repairId = rItem;
+		//t.repairEnd =
+			
+      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			loading: true,
+			onSuccess: function (transport) {
+				var rslt = eval("(" + transport.responseText + ")");
+				   if(rslt.ok){
+				 	 actionLog('Starting repair for Throne room item '+unsafeWindow.kocThroneItems[rItem].name);
+				 	 Seed.queue_throne.itemId= rItem;
+		             Seed.queue_throne.start=unixTime();
+					 Seed.queue_throne.end= rslt.eta;
+					 t.repairId = rItem;
+					 t.repairend = rslt.eta;
+					 unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+					 var x = rslt.eta - unixTime();
+					 setTimeout(t.clearRepair, (x+1)*1000);
+				   }
+				   return;
+			},
+			onFailure: function () {
+			    logit("repair error");
+			   return;
+			},
+		});
+	},
+	
+	clearRepair : function () {
+		var t = Tabs.upgrader;	
+		//logit(" time, end, id: " + unixTime() +", " + t.repairEnd + ", " + t.repairId);
+		if ( (t.repairEnd == 0) || (unixTime() > t.repairEnd))
+		{
+	      //logit("clearing repair");
+	      if (t.repairId != 0)
+	      {
+		     unsafeWindow.kocThroneItems[t.repairId].isBroken = false;
+		     unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+		     t.repairId = 0;
+	      }
+		} 
+	},
+		
+	show: function(){
+	},
+	
+	hide: function(){
+	},		
+};
 
 
 
