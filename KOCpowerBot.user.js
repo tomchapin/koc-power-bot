@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120331a
+// @version        20120401a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120331a';
+var Version = '20120401a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -738,7 +738,7 @@ Tabs.farm = {
 	m += '<TD width=50>Min.:<INPUT type=text id=FarmMinMight size=8 maxlength=8 value='+ FarmOptions.MinMight +'></td>';
 	m += '<TD>Max.:<INPUT type=text id=FarmMaxMight size=9 maxlength=9 value='+ FarmOptions.MaxMight +'></td></tr>';
 	m += '<TR><TD>Farm if inactive for more then: </td>';
-	m += '<TD><INPUT type=text id=FarmInactive size=3 value='+ FarmOptions.Inactive +'>days</td></table>';
+	m += '<TD><INPUT type=text id=FarmInactive size=3 value='+ FarmOptions.Inactive +'> days (checked every 6 hours)</td></table>';
 	m += '<TABLE id=pbfarmstats width=90% height=0% class=pbTab><TR align="left"><TR><TD width=100>City:</td>';
 	for (i=1;i<=Seed.cities.length;i++) {
 	 	m+='<TD class=pbCityEn><INPUT id=CityEnable'+ i +'  type=checkbox '+(FarmOptions.CityEnable[i]?'CHECKED':'')+'>'+ Seed.cities[i-1][1] +'</td>';
@@ -811,8 +811,8 @@ Tabs.farm = {
 			o.value = i;
 			document.getElementById("FarmInterval").options.add(o);
 	}
-		
-     for(i=0;i<Seed.cities.length;i++){
+	document.getElementById('FarmInterval').value = FarmOptions.Interval;	
+    for(i=0;i<Seed.cities.length;i++){
     		var elem = 'pdtotalFarm'+i;
     		if (t.FarmArray[i+1] == undefined) document.getElementById(elem).innerHTML = 'No Data';
     		else document.getElementById(elem).innerHTML =  'Farms :' + t.FarmArray[i+1].length +'/'+ t.helpArray[i+1].length;
@@ -836,6 +836,10 @@ Tabs.farm = {
 	document.getElementById('FarmAttSearch').addEventListener('click', function(){t.toggleBarbState(this)} , false);
 	document.getElementById('FarmSearch').addEventListener('click', function(){
 		for (i=1;i<=Seed.cities.length;i++) GM_deleteValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId());
+		for(i=0;i<Seed.cities.length;i++){
+	    		var elem = 'pdtotalFarm'+i;
+	    		document.getElementById(elem).innerHTML = 'No Data';
+	    }
 		t.checkFarmData();
 	} , false);
 	document.getElementById('pbpaintFarms').addEventListener('click', function(){t.showFarms(document.getElementById("pbFarmcity").value,Seed.cities[document.getElementById("pbFarmcity").value -1][1]);},false);  
@@ -911,7 +915,6 @@ Tabs.farm = {
 				var marchId = "m" + FarmOptions.farmMarches[i]["marchId"];
 				if (Seed.queue_atkp[cityId][marchId] !=undefined){
 							if (Seed.queue_atkp[cityId][marchId].marchStatus == 8  && Seed.queue_atkp[cityId][marchId].hasUpdated) {
-									logit("Checked ------------------");
 									for(u=1;u<=12;u++) if (Seed.queue_atkp[cityId][marchId]["unit"+u+"Return"] < Seed.queue_atkp[cityId][marchId]["unit"+u+"Count"]){
 												t.FarmArray[FarmOptions.farmMarches[i]["city"]][FarmOptions.farmMarches[i]["number"]]["lost"] = true;
 												t.FarmArray[FarmOptions.farmMarches[i]["city"]][FarmOptions.farmMarches[i]["number"]]["enabled"] = false;
@@ -1178,8 +1181,7 @@ Tabs.farm = {
   
   FilterFarms: function() {
 	var t = Tabs.farm;
-	if (t.searchRunning)
-      return;
+	if (t.searchRunning) return;
     t.FarmArray = new Array();
 	t.FarmArray["1"] = new Array();
 	t.FarmArray["2"] = new Array();
@@ -1189,22 +1191,26 @@ Tabs.farm = {
 	t.FarmArray["6"] = new Array();
 	t.FarmArray["7"] = new Array();
 	t.FarmArray["8"] = new Array();	
-		
 	for (u=1;u<=Seed.cities.length;u++){		
 		for (i=0;i<t.helpArray[u].length;i++){
 			var checkLvl = false;
 			var checkMight = false;
 			var checkDip = false;
+			var checkAlliance = false;
+			var AllianceName = "";
 			for (j=1;j<=12;j++) if (FarmOptions.CityLevel[j] && t.helpArray[u][i].level == j) checkLvl=true;
+			if (Seed.allianceDiplomacies.allianceName != undefined) AllianceName = Seed.allianceDiplomacies.allianceName;
+			if (t.helpArray[u][i].AllianceName != AllianceName) checkAlliance = true;
 			if (t.helpArray[u][i].might >= FarmOptions.MinMight && t.helpArray[u][i].might <= FarmOptions.MaxMight) checkMight = true;
 			for (j in FarmOptions.Diplomacy) if (FarmOptions.Diplomacy[j] && t.helpArray[u][i].Diplomacy == j) checkDip=true;
-			if (checkLvl && checkMight && checkDip) t.FarmArray[u].push (t.helpArray[u][i]);
+			if (checkLvl && checkMight && checkDip && checkAlliance) t.FarmArray[u].push (t.helpArray[u][i]);
 		}
     	var elem = 'pdtotalFarm'+(u-1);
     	if (t.FarmArray[u] == undefined) document.getElementById(elem).innerHTML = 'No Data';
     	else document.getElementById(elem).innerHTML =  'Farms :' + t.FarmArray[u].length +'/'+ t.helpArray[u].length;
 	}
   },
+
 
   SortDist: function(a,b) {
   	a = parseFloat(a['dist']);
@@ -1272,12 +1278,12 @@ Tabs.farm = {
 
 		 var interval = 0;
 		 switch(FarmOptions.Interval){
-				case 1:interval = 1;break;
-				case 2:interval = 2;break;
-				case 3:interval = 3;break;
-				case 4:interval = 6;break;
-				case 5:interval = 12;break;
-				case 6:interval = 24;break;
+				case "1":interval = 1;break;
+				case "2":interval = 2;break;
+				case "3":interval = 3;break;
+				case "4":interval = 6;break;
+				case "5":interval = 12;break;
+				case "6":interval = 24;break;
 		}
 		
          var check=0;
@@ -1288,7 +1294,7 @@ Tabs.farm = {
       		 } 
            if (FarmOptions.Troops[1] == 0 && FarmOptions.Troops[2] == 0 && FarmOptions.Troops[3] == 0 && FarmOptions.Troops[4] == 0 && FarmOptions.Troops[5] == 0 && FarmOptions.Troops[6] == 0 && FarmOptions.Troops[7] == 0 && FarmOptions.Troops[8] == 0 && FarmOptions.Troops[9] == 0 &&FarmOptions.Troops[10] == 0 && FarmOptions.Troops[11] == 0 && FarmOptions.Troops[12] == 0) check=0;
            if (!t.FarmArray[city][FarmOptions.FarmNumber[city]]['enabled']) check=0;
-		   if (now < parseInt(t.FarmArray[city][FarmOptions.FarmNumber[city]]['time']) + (3600 * interval)) check=0;
+		   if (now < (parseInt(t.FarmArray[city][FarmOptions.FarmNumber[city]]['time']) + (3600 * interval)) ) check=0;
            if (check ==0) FarmOptions.FarmNumber[city]++;
            if (FarmOptions.FarmNumber[city]>=t.FarmArray[city].length) {
 	               FarmOptions.FarmNumber[city]=0;
@@ -1419,7 +1425,6 @@ Tabs.farm = {
   clickedSearch : function (){
     var t = Tabs.farm;
     t.opt.searchType = 0; 
-	logit(FarmOptions.MaxDistance +" / " + AttackOptions.MaxDistance);
     t.opt.maxDistance = FarmOptions.MaxDistance; 
     t.opt.searchShape = 'circle'; 
     t.mapDat = [];
@@ -1454,15 +1459,14 @@ Tabs.farm = {
 	  var who = "u" + map[k].tileUserId;
 	  var AllianceName = "";
  	  if (map[k].cityName == null && map[k].misted ==false) CityCheck = false;
-	  if (Seed.players[who] != undefined) CityCheck = false;
-	  if (map[k].tileType== 51 && CityCheck) {
+	 if (t.isMyself(map[k].tileUserId)) CityCheck = false;
+	 if (map[k].tileType== 51 && CityCheck) {
 			var Diplomacy = "neutral";
 			for (DipStatus in t.DipArray) {
 				var AllianceId = 0;
 				if (rslt.userInfo[who] != undefined) AllianceId = "a" + rslt.userInfo[who].a;				
 				for (alliance in Seed.allianceDiplomacies[t.DipArray[DipStatus]]) if (Seed.allianceDiplomacies[t.DipArray[DipStatus]][AllianceId] != undefined) Diplomacy = t.DipArray[DipStatus];
 			}
-			
 			if (rslt.allianceNames[AllianceId] != undefined) AllianceName = rslt.allianceNames[AllianceId];
 			if (Diplomacy == "neutral" && AllianceName =="") Diplomacy = "unallied";
 			t.mapDat.push ({time:0,empty:0,lost:false,enabled:'true',attacked:0,DaysInactive:"?",LastCheck:0,Diplomacy:Diplomacy,UserId:map[k].tileUserId,AllianceName:AllianceName,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel,PlayerName:rslt.userInfo[who].n,cityName:map[k].cityName,might:rslt.userInfo[who].m,cityNumber:map[k].cityNum});
