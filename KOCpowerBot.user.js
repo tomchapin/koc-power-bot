@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120329b
+// @version        20120331a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120329b';
+var Version = '20120331a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -237,7 +237,23 @@ var TrainOptions = {
   CraftingActif : {3000:false,3001:false,3002:false,3003:false,3004:false,3005:false,3006:false,3007:false,3008:false,3009:false,3010:false,3011:false},
   CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0},
 };
-
+var FarmOptions = {
+	RallyClip: 0,
+    Running: false,
+    MinMight: 0,
+    MaxMight: 999999999,
+    Interval: 0,
+    SendInterval: 10,
+    MaxDistance: 20,
+    Inactive:30,
+	DeleteReports:false,
+	Troops: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,10: 0,11: 0,12: 0},
+	FarmNumber: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0},
+    CityEnable: {1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true},
+    CityLevel: {0: true,1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true,9: true,10: true,11: true,12: true},
+    Diplomacy: {friendly: true,hostile: true,friendlyToThem: true,friendlyToYou: true,neutral:true,unallied:true},
+    farmMarches: {},   
+};
 var AttackOptions = {
   LastReport    		: 0,
   MsgEnabled          	: true,
@@ -559,6 +575,7 @@ function pbStartup (){
   readTrainingOptions();
   readCombatOptions();
   readAttackOptions();
+  readFarmOptions();
   setCities();
 
 // TODO: Make sure WinPos is visible on-screen ?
@@ -644,6 +661,855 @@ var FoodAlerts = {
   f.minuteTimer = setTimeout (f.e_eachMinute, 1800000);
   },
 }
+
+
+/*********************************  Farm Tab ***********************************/
+
+Tabs.farm = {
+  tabLabel: 'Auto Farm',
+  tabOrder : 600,
+  myDiv : null,
+  MapAjax : new CMapAjax(),
+  popFirst : true,
+  opt : {},
+  nextattack : null,
+  updateSeedTimer: null,
+  searchRunning : false,
+  tilesSearched : 0,
+  tilesFound : 0,
+  curX : 0,
+  curY : 0,
+  lastX : 0,
+  firstX : 0,
+  firstY : 0,
+  lastY : 0,
+  rallypointlevel:0,
+  knt:{},
+  helpArray:{},
+  FarmArray:{},
+  marchArray:[],
+  lookup:1,
+  city:0,
+  deleting:false,
+  DipArray: ["friendly","hostile","friendlyToThem","friendlyToYou","neutral","unallied"],
+  interval: ["Continuously","1 Hour","2 Hours","3 Hours","6 Hours","12 Hours","24 Hours"],
+	
+  init : function (div){
+    var t = Tabs.farm;
+    t.myDiv = div;
+
+    var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED FARMING FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
+	 if (FarmOptions.Running == false) {
+	       m += '<TD><INPUT id=FarmAttSearch type=submit value="Farming = OFF"></td>';
+	   } else {
+	       m += '<TD><INPUT id=FarmAttSearch type=submit value="Farming = ON"></td>';
+	   }
+	  m +='<TD><INPUT id=pbpaintFarms type=submit value="Show Farms">';
+      m += '<SELECT id=pbFarmcity type=list></td></tr></table>'; 
+	  m += '</tr></table></div>';
+	  
+	  m += '<DIV id=pbTraderDivD class=pbStat>FARMING STATS</div>';
+	
+	  m += '<TABLE id=pbfarmstats width=95% height=0% class=pbTab><TR align="left"><TR>';
+	  for(i=0;i<Seed.cities.length;i++){
+	  		m += '<TD>' + Seed.cities[i][1] +'</td>';
+	  }
+	  m+='</tr><TR>';
+	  for(i=0;i<Seed.cities.length;i++){
+	  		m += '<TD><DIV><span id='+ 'pdtotalFarm' + i +'></span></div></td>';
+	  }
+	  m+='</tr><TR>';
+	  for(i=0;i<Seed.cities.length;i++){
+	  		m += '<TD><DIV><span id='+ 'pddataFarm' + i +'></span></div></td>';
+	  }
+	  m+='</tr><TR>'
+	   for(i=0;i<Seed.cities.length;i++){
+	  		m += '<TD><DIV><span id='+ 'pddataFarmarray' + i +'></span></div></td>';
+	 }
+	 m+='</tr></table>';
+
+	m += '<DIV id=pbTraderDivD class=pbStat>FARMING OPTIONS</div>';
+	m += '<TABLE id=pbfarmstats width=90% height=0% class=pbTab>';
+	m += '<TR><TD width=180>Keep rallypoint slot(s) free: </td><TD><INPUT id=FarmRallyClip type=text size=2 maxlength=2 value=' + FarmOptions.RallyClip +'></td></tr>';
+	m += '<TR><TD>Farm Interval</td><TD><SELECT id=FarmInterval type=list></td></tr>'; 
+	m += '<TR><TD>Delete reports:</td><TD><INPUT id=FarmReports type=checkbox '+(FarmOptions.DeleteReports?'CHECKED':'')+'></td><tr>';
+	m += '<TR><TD>Search distance:</td><TD><INPUT type=text id=FarmRadius size=3 maxlength=3 value='+ FarmOptions.MaxDistance +'><INPUT id=FarmSearch type=submit value="Search again"></td><tr>';
+	m += '<TR><TD>Might:</td>';
+	m += '<TD width=50>Min.:<INPUT type=text id=FarmMinMight size=8 maxlength=8 value='+ FarmOptions.MinMight +'></td>';
+	m += '<TD>Max.:<INPUT type=text id=FarmMaxMight size=9 maxlength=9 value='+ FarmOptions.MaxMight +'></td></tr>';
+	m += '<TR><TD>Farm if inactive for more then: </td>';
+	m += '<TD><INPUT type=text id=FarmInactive size=3 value='+ FarmOptions.Inactive +'>days</td></table>';
+	m += '<TABLE id=pbfarmstats width=90% height=0% class=pbTab><TR align="left"><TR><TD width=100>City:</td>';
+	for (i=1;i<=Seed.cities.length;i++) {
+	 	m+='<TD class=pbCityEn><INPUT id=CityEnable'+ i +'  type=checkbox '+(FarmOptions.CityEnable[i]?'CHECKED':'')+'>'+ Seed.cities[i-1][1] +'</td>';
+     }
+	m += '</tr></table><TABLE id=pbfarmstats width=90% height=0% class=pbTab><TR align="left"><TD width=100>City Level:</td>';
+	for (i=1;i<=12;i++) {
+	 	m+='<TD class=pbCityOpt><INPUT id=CityLevel'+ i +'  type=checkbox '+(FarmOptions.CityLevel[i]?'CHECKED':'')+'>'+ i +'</td>';
+     }
+	m += '</tr></table><TABLE id=pbfarmstats width=90% height=0% class=pbTab><TR align="left"><TR><TD width=100>Diplomacy:</td>';
+	for (i=0;i<t.DipArray.length;i++) {
+	 	m+='<TD class=pbDipOpt><INPUT id=Diplomacy'+ t.DipArray[i] +'  type=checkbox '+(FarmOptions.Diplomacy[t.DipArray[i]]?'CHECKED':'')+'>'+ t.DipArray[i] +'</td>';
+     }
+	m+='</tr></table>';
+	
+     m += '<DIV id=pbTraderDivD class=pbStat>FARMING TROOPS</div>';
+     m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
+        m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+        m += '<TD>Supply Troop</td>'
+        m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+        m += '<TD>Militiaman</td>'
+        m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+        m += '<TD>Scout</td>'
+        m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+        m += '<TD>Pikeman</td></tr>'
+        m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop1  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[1] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop2  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[2] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop3  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[3] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop4  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[4] +'\></td></tr>';
+        m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+        m += '<TD>Swordsman</td>'
+        m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+        m += '<TD>Archer</td>'
+        m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+        m += '<TD>Cavalry</td>'
+        m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+        m += '<TD>Heavy Cavalry</td></tr>'
+        m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop5  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[5] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop6  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[6] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop7  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[7] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop8  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[8] +'\></td></tr>';
+        m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+        m += '<TD>Supply Wagon</td>'
+        m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+        m += '<TD>Ballista</td>'
+        m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+        m += '<TD>Battering Ram</td>'
+        m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+        m += '<TD>Catapult</td></tr>'
+        m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop9  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[9] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop10  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[10] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop11  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[11] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop12 type=text size=10 maxlength=10 value='+ FarmOptions.Troops[12] +'\></td></tr></table>';
+    
+     t.myDiv.innerHTML = m;
+	  t.checkFarmData();
+	   if(t.nextattack == null) t.nextattack = setInterval(t.getnextCity, FarmOptions.SendInterval*1000);
+     setInterval(t.startdeletereports,(120000));
+     setInterval( t.checkMarches ,2000);
+     document.getElementById('pbFarmcity').options.length=0;
+		for (i=0;i<Seed.cities.length;i++){
+			var o = document.createElement("option");
+			o.text = Seed.cities[i][1]
+			o.value = i+1;
+			document.getElementById("pbFarmcity").options.add(o);
+	}
+	document.getElementById('FarmInterval').options.length=0;
+		for (i=0;i<t.interval.length;i++){
+			var o = document.createElement("option");
+			o.text = t.interval[i];
+			o.value = i;
+			document.getElementById("FarmInterval").options.add(o);
+	}
+		
+     for(i=0;i<Seed.cities.length;i++){
+    		var elem = 'pdtotalFarm'+i;
+    		if (t.FarmArray[i+1] == undefined) document.getElementById(elem).innerHTML = 'No Data';
+    		else document.getElementById(elem).innerHTML =  'Farms :' + t.FarmArray[i+1].length +'/'+ t.helpArray[i+1].length;
+    }
+    document.getElementById('FarmInterval').addEventListener('change', function(){
+			FarmOptions.Interval = document.getElementById('FarmInterval').value;
+			saveFarmOptions();
+	} , false);
+	document.getElementById('FarmRallyClip').addEventListener('change', function(){
+			FarmOptions.RallyClip = document.getElementById('FarmRallyClip').value;
+			saveFarmOptions();
+	} , false);
+	document.getElementById('FarmReports').addEventListener('change', function(){
+			FarmOptions.DeleteReports = document.getElementById('FarmReports').checked;
+			saveFarmOptions();
+	} , false);
+	document.getElementById('FarmRadius').addEventListener('change', function(){
+			FarmOptions.MaxDistance = parseInt(document.getElementById('FarmRadius').value);
+			saveFarmOptions();
+	} , false);
+	document.getElementById('FarmAttSearch').addEventListener('click', function(){t.toggleBarbState(this)} , false);
+	document.getElementById('FarmSearch').addEventListener('click', function(){
+		for (i=1;i<=Seed.cities.length;i++) GM_deleteValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId());
+		t.checkFarmData();
+	} , false);
+	document.getElementById('pbpaintFarms').addEventListener('click', function(){t.showFarms(document.getElementById("pbFarmcity").value,Seed.cities[document.getElementById("pbFarmcity").value -1][1]);},false);  
+  
+	document.getElementById('FarmMinMight').addEventListener('change', function(){
+			FarmOptions.MinMight = parseInt(document.getElementById('FarmMinMight').value);
+			t.FilterFarms();
+			saveFarmOptions(); 
+	} , false);
+	document.getElementById('FarmMaxMight').addEventListener('change', function(){
+			FarmOptions.MaxMight = parseInt(document.getElementById('FarmMaxMight').value);
+			t.FilterFarms();
+			saveFarmOptions(); 
+	} , false);
+	document.getElementById('FarmInactive').addEventListener('change', function(){
+			FarmOptions.Inactive = parseInt(document.getElementById('FarmInactive').value);
+			t.FilterFarms();
+			saveFarmOptions(); 
+	} , false);
+  
+	var element = document.getElementsByClassName('pbTroopOpt');
+	 for (k=0;k<element.length;k++){
+	    	element[k].addEventListener('change', function(){
+					for (i=1;i<=10;i++){
+						FarmOptions.Troops[i] = document.getElementById('FarmTroop' + i).value;
+						saveFarmOptions(); 
+					}
+			}, false);
+	  }
+	
+	element = document.getElementsByClassName('pbCityOpt');
+	 for (k=0;k<element.length;k++){
+	    	element[k].addEventListener('change', function(){
+					for (i=1;i<=12;i++){
+						FarmOptions.CityLevel[i] = document.getElementById('CityLevel' + i).checked;
+            			saveFarmOptions(); 
+					}
+					t.FilterFarms();
+			}, false);
+	  }
+	
+	element = document.getElementsByClassName('pbCityEn');
+	 for (k=0;k<element.length;k++){
+	    	element[k].addEventListener('change', function(){
+					for (i=1;i<=Seed.cities.length;i++){
+						FarmOptions.CityEnable[i] = document.getElementById('CityEnable' + i).checked;
+            			saveFarmOptions(); 
+					}
+					t.FilterFarms();
+			}, false);
+	  }
+	
+	element = document.getElementsByClassName('pbDipOpt');
+	 for (k=0;k<element.length;k++){
+	    	element[k].addEventListener('change', function(){
+					for (i=0;i<t.DipArray.length;i++){
+						FarmOptions.Diplomacy[t.DipArray[i]] = document.getElementById('Diplomacy' + t.DipArray[i]).checked;
+            			saveFarmOptions();
+					}
+					t.FilterFarms();
+			}, false);
+      
+	  }
+	
+   },
+   
+
+	checkMarches: function () {
+		var t = Tabs.farm;
+		for (i=0;i<FarmOptions.farmMarches.length;i++){
+				var cityId = "city"+ FarmOptions.farmMarches[i]["cityId"];
+				var city = FarmOptions.farmMarches[i]["city"];
+				var marchId = "m" + FarmOptions.farmMarches[i]["marchId"];
+				if (Seed.queue_atkp[cityId][marchId] !=undefined){
+							if (Seed.queue_atkp[cityId][marchId].marchStatus == 8  && Seed.queue_atkp[cityId][marchId].hasUpdated) {
+									logit("Checked ------------------");
+									for(u=1;u<=12;u++) if (Seed.queue_atkp[cityId][marchId]["unit"+u+"Return"] < Seed.queue_atkp[cityId][marchId]["unit"+u+"Count"]){
+												t.FarmArray[FarmOptions.farmMarches[i]["city"]][FarmOptions.farmMarches[i]["number"]]["lost"] = true;
+												t.FarmArray[FarmOptions.farmMarches[i]["city"]][FarmOptions.farmMarches[i]["number"]]["enabled"] = false;
+									}
+									for (a=0;a<t.helpArray[FarmOptions.farmMarches[i]["city"]].length;a++){
+											for (b=0;b<t.FarmArray[FarmOptions.farmMarches[i]["city"]].length;b++){
+												 if (parseInt(t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['x']) == parseInt(t.helpArray[FarmOptions.farmMarches[i]["city"]][b]['x']) && parseInt(t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['y']) == parseInt(t.helpArray[FarmOptions.farmMarches[i]["city"]][b]['y'])){
+							           					t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['gold'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['gold'];
+							           					t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['resource1'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['resource1'];
+														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['resource2'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['resource2'];
+														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['resource3'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['resource3'];
+														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['resource4'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['resource4'];
+														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['empty'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['empty'];
+														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['lost'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['lost'];
+							       					}    
+											}
+									}
+									GM_setValue('Farms_' + Seed.player['name'] + '_city_' + FarmOptions.farmMarches[i]["city"] + '_' + getServerId(), JSON2.stringify(t.helpArray[FarmOptions.farmMarches[i]["city"]]));
+									FarmOptions.farmMarches.splice(i,1);
+									saveFarmOptions();
+							}
+				} else {
+					FarmOptions.farmMarches.splice(i,1);
+					saveFarmOptions();
+				}	
+		}
+	 },	
+	
+   checkInactives : function (citynumber,city,FarmNumber,xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12){
+        var t = Tabs.farm;
+        var now = new Date().getTime()/1000.0;
+		var hours = (now - t.FarmArray[city][FarmOptions.FarmNumber[city]]['LastCheck']) / 3600;
+        if (t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive'] == "?" || hours > 6){
+				var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		        params.pid = uid;
+		        new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/viewCourt.php" + unsafeWindow.g_ajaxsuffix, {
+		                 method: "post",
+		                  parameters: params,
+		                  onSuccess: function (transport) {
+		                            var rslt = eval("(" + transport.responseText + ")");
+		                            var lastLogin = rslt.playerInfo.lastLogin;
+									var fullDate = lastLogin.substr(0,4) +", "+ lastLogin.substr(5,2) +", "+ lastLogin.substr(8,2) ;
+									var time = new Date (fullDate).getTime()/1000;
+		                            var days = Math.floor((now - time) / 86400); 
+									t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive'] = days;
+									for (i=0;i<t.helpArray[city].length;i++){
+												 if (xcoord == parseInt(t.helpArray[city][i]['x']) && ycoord == parseInt(t.helpArray[city][i]['y'])){
+					                   			 t.helpArray[city][i]['DaysInactive'] = days;
+					                   			 t.helpArray[city][i]['LastCheck'] = now;
+					               				}    
+									}
+									GM_setValue('Farms_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.helpArray[city]));
+									if (days > FarmOptions.Inactive) {
+										t.doBarb(citynumber,city,FarmNumber,xcoord,ycoord,kid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+		                            } else 	{
+												FarmOptions.FarmNumber[city]++;
+												saveFarmOptions();
+												t.barbing();
+											}
+		                   },
+		                  onFailure: function (rslt) {
+		                            notify (rslt);
+		                  },
+		        });
+		} else {
+			if (t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive'] > FarmOptions.Inactive) {
+				t.doBarb(citynumber,city,FarmNumber,xcoord,ycoord,kid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+			 } 	else{
+					FarmOptions.FarmNumber[city]++;
+					saveFarmOptions();
+					t.barbing();
+				}
+		}
+    },
+    
+  	showFarms: function (citynumber,cityname) {
+		var t = Tabs.farm;
+		var popTradeRoutes = null;
+		t.popTradeRoutes = new pbPopup('pbShowFarms', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbBars">';       
+		t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
+		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>Farms for city: '+cityname+'</td>';
+		t.paintFarms(citynumber,cityname);
+		t._addTabHeader(citynumber,cityname);
+		t.popTradeRoutes.show(true)	;
+	 },
+	
+	
+		ToggleFarms: function(citynumber) {
+			var t = Tabs.farm;
+			var id=0;
+			var element_class = document.getElementsByClassName('Farm');
+			       for (d = 1; d <= t.FarmArray[citynumber].length; d++) {
+				        id = d-1;
+						var ele = document.getElementById('FarmToggle' + d);
+			      if (ele.checked) {
+                t.FarmArray[citynumber][id].enabled = true;
+                t.FarmArray[citynumber][id].lost = false;
+                t.FarmArray[citynumber][id].empty = 0;   
+            }
+						else t.FarmArray[citynumber][id].enabled = false;
+				}
+			for (i=0;i<t.helpArray[citynumber].length;i++){
+					for (j=0;j<t.FarmArray[citynumber].length;j++){
+						 if (parseInt(t.FarmArray[citynumber][j]['x']) == parseInt(t.helpArray[citynumber][i]['x']) && parseInt(t.FarmArray[citynumber][j]['y']) == parseInt(t.helpArray[citynumber][i]['y'])) t.helpArray[citynumber][i].enabled = t.FarmArray[citynumber][j].enabled;
+					}
+			}
+			GM_setValue('Farms_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId(), JSON2.stringify(t.helpArray[citynumber]));
+		},
+		
+ 	paintFarms: function(i,cityname){
+	        var t = Tabs.farm;
+			for (k=(t.FarmArray[i].length-1);k>=0;k--){t._addTab(i,cityname,k+1,t.FarmArray[i][k]['enabled'], t.FarmArray[i][k]['x'], t.FarmArray[i][k]['y'],t.FarmArray[i][k]['dist'], t.FarmArray[i][k]['level'],t.FarmArray[i][k]['AllianceName'], t.FarmArray[i][k]['Diplomacy'], t.FarmArray[i][k]['PlayerName'], t.FarmArray[i][k]['cityName'],t.FarmArray[i][k]['might'], t.FarmArray[i][k]['cityNumber'], t.FarmArray[i][k]['attacked'],t.FarmArray[i][k]['DaysInactive'],t.FarmArray[i][k]['lost'],t.FarmArray[i][k]['empty'],t.FarmArray[i][k]['gold'],t.FarmArray[i][k]['resource1'],t.FarmArray[i][k]['resource2'],t.FarmArray[i][k]['resource3'],t.FarmArray[i][k]['resource4']);}
+	    },
+
+
+  		_addTab: function(citynumber,cityname,queueId,status,X,Y,dist,level,AllianceName,diplomacy,playerName,cityName,might,cityNumber,attacked,DaysInactive,lost,empty,gold,rec1,rec2,rec3,rec4){
+		 	var t = Tabs.farm;
+		     var row = document.getElementById('pbBars').insertRow(0);
+		     row.vAlign = 'top';	 
+         	 if (lost) row.style.color = "red";
+		     if (!lost && empty == 0) row.style.color = "black";
+		   	 if (FarmOptions.Inactive > DaysInactive) row.style.color = "orange";
+		     row.insertCell(0).innerHTML = queueId;
+			 row.insertCell(1).innerHTML = coordLink(X,Y);
+		     row.insertCell(2).innerHTML = dist;
+		   	 row.insertCell(3).innerHTML = level;
+		  	 row.insertCell(4).innerHTML = AllianceName;
+		  	 row.insertCell(5).innerHTML = diplomacy;    
+		   	 row.insertCell(6).innerHTML = playerName;
+		  	 row.insertCell(7).innerHTML = cityName;
+	   	   	 row.insertCell(8).innerHTML = addCommas(might);
+	   		 row.insertCell(9).innerHTML = DaysInactive;
+       	 	 row.insertCell(10).innerHTML = attacked;
+		     row.insertCell(11).innerHTML = '<INPUT class=Farm id="FarmToggle' + queueId + '" type=checkbox>';
+		     
+			var element_class = document.getElementsByClassName('Farm');
+			       for (c = 0; c < element_class.length; c++) {
+						element_class[c].checked = t.FarmArray[citynumber][c].enabled;
+			            element_class[c].addEventListener('click', function(){t.ToggleFarms(citynumber)}, false);
+					}
+		 },
+		
+		 _addTabHeader: function(citynumber,cityname) {
+		 var t = Tabs.farm;
+		     var row = document.getElementById('pbBars').insertRow(0);
+		     row.vAlign = 'top';
+		     row.insertCell(0).innerHTML = "Id";
+		     row.insertCell(1).innerHTML = "Coords";
+		     row.insertCell(2).innerHTML = "Dist.";
+		     row.insertCell(3).innerHTML = "Level";
+		     row.insertCell(4).innerHTML = "Allaince Name";
+			row.insertCell(5).innerHTML = "Diplomacy";
+			row.insertCell(6).innerHTML = "Player Name";
+			row.insertCell(7).innerHTML = "City Name";
+			row.insertCell(8).innerHTML = "Might";
+			row.insertCell(9).innerHTML = "Inactive";
+      		row.insertCell(10).innerHTML = "# Attacks";
+		   },
+		
+		
+  startdeletereports : function (){
+	var t = Tabs.farm;
+	if (!FarmOptions.DeleteReports) return;
+	if(!t.deleting){
+		t.deleting = true;
+		t.fetchbarbreports(0, t.checkbarbreports);
+	}
+  },
+  fetchbarbreports : function (pageNo, callback){
+	var t = Tabs.farm;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	if(pageNo > 1)
+		params.pageNo = pageNo;
+	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
+        method: "post",
+        parameters: params,
+        onSuccess: function (rslt) {
+			callback(rslt);
+        },
+        onFailure: function () {
+        },
+    });
+  },
+  checkbarbreports : function (rslt){
+	var t = Tabs.farm;
+	if(!rslt.ok){
+		return;
+	}
+	if(rslt.arReports.length < 1){
+		return;
+	}
+	var reports = rslt.arReports;
+	var totalPages = rslt.totalPages;
+		var deletes1 = new Array();
+		for(k in reports){
+			for (i=1;i<=Seed.cities.length;i++){
+					var x=Seed.cities[i-1]["2"];
+					var y=Seed.cities[i-1]["3"];
+					for (j=0;j<t.FarmArray[i].length;j++){
+								if (reports[k].side1XCoord == x && reports[k].side1YCoord == y && reports[k].side0XCoord == t.FarmArray[i][j]["x"] && reports[k].side0YCoord == t.FarmArray[i][j]["y"]) deletes1.push(k.substr(2));
+					}
+			}	
+		}
+		if(deletes1.length > 0){
+			t.deletereports(deletes1);
+		} else {
+			t.deleting = false;
+			return;
+		}
+  },
+
+  deletereports : function (deletes1){
+	var t = Tabs.farm;
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	params.s1rids = deletes1.join(",");
+	params.s0rids = '';
+	params.cityrids = '';
+	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
+		method: "post",
+		parameters: params,
+		onSuccess: function (rslt) {
+			Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length);
+			t.fetchbarbreports(0, t.checkbarbreports);
+		},
+		onFailure: function () {
+		},
+	});
+  },
+
+  isMyself: function(userID){
+	if(!Seed.players["u"+userID])
+		return false;
+	if(Seed.players["u"+userID].n == Seed.player.name)
+		return true;
+	else
+		return false;
+	return false;
+  },
+
+  checkFarmData: function(){
+  	var t = Tabs.farm;
+	  for (i=1;i<=Seed.cities.length;i++){
+		t.helpArray[i] = [];
+	  	var myarray = (GM_getValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
+		if (myarray == undefined && t.searchRunning==false) {
+			t.searchRunning = true;
+	  		t.lookup=i;
+	  		t.opt.startX=parseInt(Seed.cities[(i-1)][2]);
+	  		t.opt.startY=parseInt(Seed.cities[(i-1)][3]);  
+	  		t.clickedSearch();
+	  	}
+		if (myarray != undefined){
+			myarray = JSON2.parse(myarray);
+			//if(AttackOptions.Method == 'distance') 
+			t.helpArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
+			//if(AttackOptions.Method == 'level') t.helpArray[i] = myarray.sort(function function (a,b) {a = parseInt(a['level']);b = parseInt(b['level']);return (a > b )? -1 : ((a < b ? 1 : t.SortDist(a,b)));});
+			//if(AttackOptions.Method == 'lowlevel') t.helpArray[i] = myarray.sort(function function (a,b) {a = parseInt(a['level']);b = parseInt(b['level']);return (a < b )? -1 : ((a > b ? 1 : t.SortDist(a,b)));});
+	  		GM_setValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(), JSON2.stringify(t.helpArray[i]));
+	  		}
+	  	}
+	t.FilterFarms();
+  },
+  
+  FilterFarms: function() {
+	var t = Tabs.farm;
+	if (t.searchRunning)
+      return;
+    t.FarmArray = new Array();
+	t.FarmArray["1"] = new Array();
+	t.FarmArray["2"] = new Array();
+	t.FarmArray["3"] = new Array();
+	t.FarmArray["4"] = new Array();
+	t.FarmArray["5"] = new Array();
+	t.FarmArray["6"] = new Array();
+	t.FarmArray["7"] = new Array();
+	t.FarmArray["8"] = new Array();	
+		
+	for (u=1;u<=Seed.cities.length;u++){		
+		for (i=0;i<t.helpArray[u].length;i++){
+			var checkLvl = false;
+			var checkMight = false;
+			var checkDip = false;
+			for (j=1;j<=12;j++) if (FarmOptions.CityLevel[j] && t.helpArray[u][i].level == j) checkLvl=true;
+			if (t.helpArray[u][i].might >= FarmOptions.MinMight && t.helpArray[u][i].might <= FarmOptions.MaxMight) checkMight = true;
+			for (j in FarmOptions.Diplomacy) if (FarmOptions.Diplomacy[j] && t.helpArray[u][i].Diplomacy == j) checkDip=true;
+			if (checkLvl && checkMight && checkDip) t.FarmArray[u].push (t.helpArray[u][i]);
+		}
+    	var elem = 'pdtotalFarm'+(u-1);
+    	if (t.FarmArray[u] == undefined) document.getElementById(elem).innerHTML = 'No Data';
+    	else document.getElementById(elem).innerHTML =  'Farms :' + t.FarmArray[u].length +'/'+ t.helpArray[u].length;
+	}
+  },
+
+  SortDist: function(a,b) {
+  	a = parseFloat(a['dist']);
+  	b = parseFloat(b['dist']);
+  	return (a < b )? -1 : ((a > b ? 1 : 0));
+  },
+  
+  toggleBarbState: function(obj){
+	var t = Tabs.farm;
+	if (FarmOptions.Running == true) {
+		FarmOptions.Running = false;
+		obj.value = "Farm = OFF";
+		saveFarmOptions();
+		t.nextattack = null;
+    t.updateSeedTimer = null;
+	} else {
+		FarmOptions.Running = true;
+		obj.value = "Farm = ON";
+		saveFarmOptions();
+		t.checkFarmData();
+		t.nextattack = setInterval(t.getnextCity,(FarmOptions.SendInterval*1000));
+	}
+  },
+  
+  barbing : function(){
+  	   var t = Tabs.farm;
+	   var city = t.city;
+	   var u1 = FarmOptions.Troops[1];
+	   var u2 = FarmOptions.Troops[2];
+	   var u3 = FarmOptions.Troops[3];
+	   var u4 = FarmOptions.Troops[4];
+	   var u5 = FarmOptions.Troops[5];
+	   var u6 = FarmOptions.Troops[6];
+	   var u7 = FarmOptions.Troops[7];
+       var u8 = FarmOptions.Troops[8];
+       var u9 = FarmOptions.Troops[9];
+       var u10 = FarmOptions.Troops[10];
+       var u11 = FarmOptions.Troops[11];
+       var u12 = FarmOptions.Troops[12];
+       var now = new Date().getTime()/1000.0;
+       now = now.toFixed(0);
+       citynumber = Seed.cities[city-1][0];
+       cityID = 'city' + citynumber; 
+	   
+       t.getAtkKnight(cityID);
+       t.getRallypointLevel(cityID);
+	   var slots=0;
+	   if (Seed.queue_atkp[cityID] != undefined){
+	       for(var k in Seed.queue_atkp[cityID])
+		      slots++;
+		      if(Seed.queue_atkp[cityID].toSource() == "[]")
+		  slots = 0;
+		}
+	  else slots=0; 
+       
+       var element2 = 'pddataFarmarray'+(city-1); 
+       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
+	   
+	   if (!FarmOptions.CityEnable[city]) return;
+	   if ((t.rallypointlevel-FarmOptions.RallyClip) <= slots) return;
+	   if (t.knt.toSource() == "[]") return; 
+		if (u1 > parseInt(Seed.units[cityID]['unt1']) || u2 > parseInt(Seed.units[cityID]['unt2']) || u3 > parseInt(Seed.units[cityID]['unt3']) || u4 > parseInt(Seed.units[cityID]['unt4']) || u5 > parseInt(Seed.units[cityID]['unt5']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u11 > parseInt(Seed.units[cityID]['unt11']) || u12 > parseInt(Seed.units[cityID]['unt12'])) return;
+		if (FarmOptions.FarmNumber[city]>=t.FarmArray[city].length) FarmOptions.FarmNumber[city]=0;
+	    var kid = t.knt[0].ID;
+
+		 var interval = 0;
+		 switch(FarmOptions.Interval){
+				case 1:interval = 1;break;
+				case 2:interval = 2;break;
+				case 3:interval = 3;break;
+				case 4:interval = 6;break;
+				case 5:interval = 12;break;
+				case 6:interval = 24;break;
+		}
+		
+         var check=0;
+         while (check == 0){
+         check=1;
+      		 for (i=1;i<=12;i++){
+      				if (FarmOptions.Troops[i] > parseInt(Seed.units[cityID]['unt'+i])) check=0;
+      		 } 
+           if (FarmOptions.Troops[1] == 0 && FarmOptions.Troops[2] == 0 && FarmOptions.Troops[3] == 0 && FarmOptions.Troops[4] == 0 && FarmOptions.Troops[5] == 0 && FarmOptions.Troops[6] == 0 && FarmOptions.Troops[7] == 0 && FarmOptions.Troops[8] == 0 && FarmOptions.Troops[9] == 0 &&FarmOptions.Troops[10] == 0 && FarmOptions.Troops[11] == 0 && FarmOptions.Troops[12] == 0) check=0;
+           if (!t.FarmArray[city][FarmOptions.FarmNumber[city]]['enabled']) check=0;
+		   if (now < parseInt(t.FarmArray[city][FarmOptions.FarmNumber[city]]['time']) + (3600 * interval)) check=0;
+           if (check ==0) FarmOptions.FarmNumber[city]++;
+           if (FarmOptions.FarmNumber[city]>=t.FarmArray[city].length) {
+	               FarmOptions.FarmNumber[city]=0;
+         		   break;
+            }
+       }
+       	if (check == 0) return;
+	   
+	    var xcoord = t.FarmArray[city][FarmOptions.FarmNumber[city]]['x'];
+        var ycoord = t.FarmArray[city][FarmOptions.FarmNumber[city]]['y'];
+        var uid = t.FarmArray[city][FarmOptions.FarmNumber[city]]['UserId'];
+		saveFarmOptions();
+       	if ((t.rallypointlevel - FarmOptions.RallyClip) > slots) t.checkInactives(citynumber,city,FarmOptions.FarmNumber[city],xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+  },
+  
+  getnextCity: function(){
+	var t = Tabs.farm;
+    if (!FarmOptions.Running) return;
+	if(t.searchRunning) return;
+	var city = t.city+1;
+	if (city>Seed.cities.length){
+		city=1;
+	}
+	t.city = city;
+	t.barbing();
+  },
+  
+  getRallypointLevel: function(cityId){
+    var t = Tabs.farm;
+    for (var o in Seed.buildings[cityId]){
+  	var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+  	var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+  	if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
+     }
+  }, 
+  
+  getAtkKnight : function(cityID){
+     var t = Tabs.farm;
+     t.knt = new Array();
+     t.getRallypointLevel(cityID);
+     for (k in Seed.knights[cityID]){
+     		if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
+     			t.knt.push ({
+     				Name:   Seed.knights[cityID][k]["knightName"],
+     				Combat:	Seed.knights[cityID][k]["combat"],
+     				ID:		Seed.knights[cityID][k]["knightId"],
+     			});
+     		}
+     }
+     t.knt = t.knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
+  },
+  
+  doBarb: function(cityID,counter,number,xcoord,ycoord,kid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12){
+  		var t = Tabs.farm;
+  		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+  		params.cid=cityID;
+  		params.type=4;
+  	  params.kid=kid;
+  		params.xcoord = xcoord;
+  		params.ycoord = ycoord;
+  		if (u1>0) params.u1=u1;
+		  if (u2>0)params.u2=u2;
+		  if (u3>0)params.u3=u3;
+		  if (u4>0)params.u4=u4;
+		  if (u5>0)params.u5=u5;
+		  if (u6>0)params.u6=u6;
+  		if (u7>0)params.u7=u7;
+  		if (u8>0)params.u8=u8;
+  		if (u9>0)params.u9=u9;
+  		if (u10>0)params.u10=u10;
+  		if (u11>0)params.u11=u11;
+  		if (u12>0)params.u12=u12;
+  		params.gold =0;
+      params.r1=0;
+      params.r2=0,
+      params.r3=0;
+      params.r4=0;
+      params.r5=0;
+      
+  		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+  		         method: "post",
+  		         parameters: params,
+  		         loading: true,
+  		         onSuccess: function (transport) {
+  		         var rslt = eval("(" + transport.responseText + ")");
+				 if (rslt.ok) {
+  		         var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+  		         var ut = unsafeWindow.unixtime();
+  		         var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+  		         var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+  		         for(i = 0; i <= unitsarr.length; i++){
+  		         	if(params["u"+i]){
+  		         	unitsarr[i] = params["u"+i];
+  		         	}
+  		         }
+  		         var currentcityid = params.cid;
+  		         unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+  		         //unsafeWindow.update_seed(rslt.updateSeed)
+                 if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+				 var slots=0;
+			     for(var k in Seed.queue_atkp['city'+cityID]) slots++;
+			     if(Seed.queue_atkp['city'+cityID].toSource() == "[]") slots = 0;
+				 var element1 = 'pddataFarmarray'+(counter-1); 
+				 document.getElementById(element1).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
+  		         var now = new Date().getTime()/1000.0;
+  		         now = now.toFixed(0);
+  		         t.FarmArray[counter][number]['time'] = now;
+                 t.FarmArray[counter][number]['attacked']++;
+				 FarmOptions.farmMarches.push ({city:counter,cityId:cityID,marchId:rslt.marchId,number:number});
+                 FarmOptions.FarmNumber[counter]++;
+				 saveFarmOptions();
+				 for (i=0;i<t.helpArray[counter].length;i++){
+						for (j=0;j<t.FarmArray[counter].length;j++){
+							 if (parseInt(t.FarmArray[counter][j]['x']) == parseInt(t.helpArray[counter][i]['x']) && parseInt(t.FarmArray[counter][j]['y']) == parseInt(t.helpArray[counter][i]['y'])){
+                   					t.helpArray[counter][i]['time'] = t.FarmArray[counter][j]['time'];
+                   					t.helpArray[counter][i]['attacked'] = t.FarmArray[counter][j]['attacked'];
+               					}    
+						}
+				}
+				GM_setValue('Farms_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.helpArray[counter]));
+               } 
+  		         },
+  		         onFailure: function () {}
+  		 });
+  	 saveFarmOptions();
+  },
+
+  clickedSearch : function (){
+    var t = Tabs.farm;
+    t.opt.searchType = 0; 
+	logit(FarmOptions.MaxDistance +" / " + AttackOptions.MaxDistance);
+    t.opt.maxDistance = FarmOptions.MaxDistance; 
+    t.opt.searchShape = 'circle'; 
+    t.mapDat = [];
+    t.firstX =  t.opt.startX - t.opt.maxDistance;
+    t.lastX = t.opt.startX + t.opt.maxDistance;
+    t.firstY =  t.opt.startY - t.opt.maxDistance;
+    t.lastY = t.opt.startY + t.opt.maxDistance;
+    t.tilesSearched = 0;
+    t.tilesFound = 0;
+    t.curX = t.firstX;
+    t.curY = t.firstY;
+    var xxx = t.MapAjax.normalize(t.curX);
+    var yyy = t.MapAjax.normalize(t.curY);
+    var element = 'pddataFarm'+(t.lookup-1);
+    document.getElementById(element).innerHTML = 'Searching at '+ xxx +','+ yyy;
+   
+    setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.mapCallback)}, MAP_DELAY);
+  },
+  
+  mapCallback : function (left, top, width, rslt){
+    var t = Tabs.farm;
+    if (!t.searchRunning)
+      return;
+    if (!rslt.ok){
+      t.stopSearch ('ERROR: '+ rslt.errorMsg);
+      return;
+    }
+    map = rslt.data;
+    for (k in map){
+      var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord); 
+      var CityCheck = true;
+	  var who = "u" + map[k].tileUserId;
+	  var AllianceName = "";
+ 	  if (map[k].cityName == null && map[k].misted ==false) CityCheck = false;
+	  if (Seed.players[who] != undefined) CityCheck = false;
+	  if (map[k].tileType== 51 && CityCheck) {
+			var Diplomacy = "neutral";
+			for (DipStatus in t.DipArray) {
+				var AllianceId = 0;
+				if (rslt.userInfo[who] != undefined) AllianceId = "a" + rslt.userInfo[who].a;				
+				for (alliance in Seed.allianceDiplomacies[t.DipArray[DipStatus]]) if (Seed.allianceDiplomacies[t.DipArray[DipStatus]][AllianceId] != undefined) Diplomacy = t.DipArray[DipStatus];
+			}
+			
+			if (rslt.allianceNames[AllianceId] != undefined) AllianceName = rslt.allianceNames[AllianceId];
+			if (Diplomacy == "neutral" && AllianceName =="") Diplomacy = "unallied";
+			t.mapDat.push ({time:0,empty:0,lost:false,enabled:'true',attacked:0,DaysInactive:"?",LastCheck:0,Diplomacy:Diplomacy,UserId:map[k].tileUserId,AllianceName:AllianceName,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel,PlayerName:rslt.userInfo[who].n,cityName:map[k].cityName,might:rslt.userInfo[who].m,cityNumber:map[k].cityNum});
+	  }
+	}
+    t.tilesSearched += (15*15);
+
+    t.curX += 15;
+    if (t.curX > t.lastX){
+      t.curX = t.firstX;
+      t.curY += 15;
+      if (t.curY > t.lastY){
+        var element = 'pdtotalFarm'+(t.lookup-1);
+        document.getElementById(element).innerHTML = 'Found: ' + t.mapDat.length;
+        var element = 'pddataFarm'+(t.lookup-1);
+        document.getElementById(element).innerHTML = "";
+        GM_setValue('Farms_' + Seed.player['name'] + '_city_' + t.lookup + '_' + getServerId(), JSON2.stringify(t.mapDat));
+        t.searchRunning = false;
+        for (y=1;y<=8;y++) FarmOptions.FarmNumber[y] = 0;
+        t.checkFarmData();
+        return;
+      }
+    }
+    var x = t.MapAjax.normalize(t.curX);
+    var y = t.MapAjax.normalize(t.curY);
+    var element = 'pddataFarm'+(t.lookup-1);
+    document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
+    setTimeout (function(){t.MapAjax.request (x, y, 15, t.mapCallback)}, MAP_DELAY);
+  },
+  
+  stopSearch : function (msg){
+    var t = Tabs.farm;
+	var element = 'pddataFarm'+(t.lookup-1);
+        document.getElementById(element).innerHTML = msg;
+    t.searchRunning = false;
+  },
+  
+  hide : function (){
+  
+  },
+
+  show : function (){
+  
+  },
+
+}; 
+
 
 
 /****************************  Tower Tab  ******************************/
@@ -14467,6 +15333,27 @@ function readAttackOptions (){
     }
   }
 }
+
+function saveFarmOptions() {
+    var serverID = getServerId();
+    setTimeout(function () {
+        GM_setValue('FarmOptions_' + serverID, JSON2.stringify(FarmOptions));
+    }, 0);
+}
+
+function readFarmOptions() {
+    var serverID = getServerId();
+    s = GM_getValue('FarmOptions_' + serverID);
+    if (s != null) {
+        opts = JSON2.parse(s);
+        for (k in opts) {
+            if (matTypeof(opts[k]) == 'object') for (kk in opts[k])
+            FarmOptions[k][kk] = opts[k][kk];
+            else FarmOptions[k] = opts[k];
+        }
+    }
+}
+
  
 var DeleteReports = {
 	deleting : false,
