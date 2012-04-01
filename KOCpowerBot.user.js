@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120401b
+// @version        20120401c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120401b';
+var Version = '20120401c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -15618,6 +15618,8 @@ Tabs.upgrader = {
  	   var count = 1;
  	   for (k in unsafeWindow.kocThroneItems) {
 		   var item = unsafeWindow.kocThroneItems[k];
+		   if(item.faction == "briton")
+			item.faction = "britton";
 		   m+= '<td title="'+item.name+'">\
 		        <img id="pbthroneitem_'+k+'" style="cursor:pointer;" src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/throne/icons/30/'+item.faction+'/'+item.faction+'_'+item.type+'_'+(item.isEquipped?"equip":"normal")+'_1.png">\
 		        </td>';
