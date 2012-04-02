@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120402a
+// @version        20120402b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120402a';
+var Version = '20120402b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -256,7 +256,7 @@ var FarmOptions = {
     CityEnable: {1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true},
     CityLevel: {0: true,1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true,9: true,10: true,11: true,12: true},
     Diplomacy: {friendly: true,hostile: true,friendlyToThem: true,friendlyToYou: true,neutral:true,unallied:true},
-    FarmMarches: [],   
+    farmMarches: {},   
 };
 var AttackOptions = {
   LastReport    		: 0,
@@ -552,23 +552,26 @@ function pbStartup (){
     input.pbDefButOn {cursor:pointer; border:1px solid #45d183; -moz-box-shadow:inset 0px 1px 5px #3aef8b; -moz-border-radius:5px;}\
     input.pbDefButOff {cursor:pointer; border:1px solid #f61646; -moz-box-shadow:inset 0px 1px 5px #f6375f; -moz-border-radius:5px;}\
     a.ptButton20 {color:#ffff80}\
-    table.pbMainTab { empty-cells: show;  margin-left: 5px;  margin-top: 4px; padding: 1px;  padding-left:30px;}\
+    table.pbMainTab { empty-cells: show; margin-left: 5px; margin-top: 4px; padding: 1px;  padding-left:5px;}\
     table.pbMainTab tr td a {color:inherit }\
     table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 4px 0px 4px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; -moz-border-radius:5px; }\
 	table.pbMainTab tr td.spacer {padding: 0px 0px;}\
-    table.pbMainTab tr td.sel    {font-weight:bold; font-size:13px; border: 1px solid #000000; background: -moz-linear-gradient(top,#00a045 0%,#94eb9a 0%,#045c28);}\
-	table.pbMainTab tr td.notSel {font-weight:bold; font-size:13px; color: #ffffff; border: 1px solid #000000; background: -moz-linear-gradient(top,#00a045 0%,#94eb9a 0%,#045c28);}\
-    tr.pbPopTop td { background-color:transparent; border:none; height: 21px;  padding:0px;}\
+    table.pbMainTab tr td.notSel { color: #ffffff; font-size: 12px; font-weight:bold; -moz-border-radius: 10px; -moz-box-shadow: 0px 1px 3px #357544; text-shadow: -1px 1px 3px #666666; border: solid #615461 1px; background: -moz-linear-gradient(top, #6ff28e, #196b2c);}\
+	table.pbMainTab tr td.sel { color: #000000; font-size: 12px; font-weight:bold; -moz-border-radius: 10px; -moz-box-shadow: 0px 1px 3px #357544; text-shadow: -1px 1px 3px #CECECE; border: solid #615461 1px; background: -moz-linear-gradient(top, #6ff28e, #196b2c);}\
+	table.pbMainTab tr td:hover { color: #191919; font-size: 12px; font-weight:bold; text-shadow: -1px 1px 3px #CECECE; background: -moz-linear-gradient(top, #43cc7e, #20a129)}\
+    tr.pbPopTop td { background-color:transparent; border:none; height: 21px; padding:0px;}\
     tr.pbretry_pbPopTop td { background-color:#a00; color:#fff; border:none; height: 21px;  padding:0px; }\
-    tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px;  padding:0px; }\
+    tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px; width:80%; padding:0px; }\
     tr.pbretry_pbMainPopTop td { background-color:#a00; color:#fff; border:none; height: 42px;  padding:0px; }\
     .pbPopMain  { border:1px solid #000000; -moz-box-shadow:inset 0px 0px 10px #6a6a6a; -moz-border-radius-bottomright: 20px; -moz-border-radius-bottomleft: 20px;}\
-    .pbPopup  {border:5px ridge #666; opacity:'+Options.Opacity+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000;}\
+    .pbPopup  {border:5px ridge #666; opacity:'+Options.Opacity+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000; }\
     span.pbTextFriendly {color: #080}\
     span.pbTextHostile {color: #800}\
 	.pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
     div.indent25 {padding-left:25px}';
-    
+
+
+	
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readUpgradeData();
@@ -671,7 +674,7 @@ var FoodAlerts = {
 
 Tabs.farm = {
   tabLabel: 'Auto Farm',
-  tabOrder : 600,
+  tabOrder : 612,
   myDiv : null,
   MapAjax : new CMapAjax(),
   popFirst : true,
@@ -997,10 +1000,10 @@ Tabs.farm = {
   	showFarms: function (citynumber,cityname) {
 		var t = Tabs.farm;
 		var popTradeRoutes = null;
-		t.popTradeRoutes = new pbPopup('pbShowFarms', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+		t.popTradeRoutes = new pbPopup('pbShowFarms', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbBars">';       
 		t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>Farms for city: '+cityname+'</td>';
+		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><center><B>Farms for city: '+cityname+'</center></td>';
 		t.paintFarms(citynumber,cityname);
 		t._addTabHeader(citynumber,cityname);
 		t.popTradeRoutes.show(true)	;
@@ -3536,6 +3539,23 @@ Tabs.Search = {
   
   helpPop : function (){
        var helpText = translate("Raids_Help");
+       helpText += '<A target="_tab" href="http://koc.wikia.com/wiki/Barbarian_Camps">A lot more can be found on Koc Wikia</a>';
+       helpText += '<TABLE><TR><TD>Lvl</td><TD>Troops</td></tr>';
+       helpText += '<TR><TD>1</td><TD>500 Supply Troops + 500 Archers</td></tr>';
+       helpText += '<TR><TD>2</td><TD>500 Supply Troops + 2500 Archers</td></tr>';
+       helpText += '<TR><TD>3</td><TD>500 Supply Troops + 5000 Archers</td></tr>';
+       helpText += '<TR><TD>4</td><TD>500 Supply Troops + 7500 Archers</td></tr>';
+       helpText += '<TR><TD>5</td><TD>15000 Archers</td></tr>';
+       helpText += '<TR><TD>5</td><TD>12000 Archers IF Level 10 fletching and Level 9 Featherweight</td></tr>';
+       helpText += '<TR><TD>6</td><TD>25000 Archers IF Level 9 fletching</td></tr>';
+       helpText += '<TR><TD>6</td><TD>22000 Archers IF Level 10 fletching</td></tr>';
+       helpText += '<TR><TD>7</td><TD>45000 Archers IF Level 10 fletching</td></tr>';
+       helpText += '<TR><TD>7</td><TD>44000 Archers IF Level 10 fletching and knight 69+</td></tr>';
+       helpText += '<TR><TD>7</td><TD>40000 Archers IF Level 10 fletching and knight 94+</td></tr>';
+       helpText += '<TR><TD>8</td><TD>28000 Ballista WITH Level 10 fletching and Knight 91+</td></tr>';
+       helpText += '<TR><TD>9</td><TD>56000 Ballista WITH Level 10 fletching and Knight 98+</td></tr>';
+       helpText += '<TR><TD>10</td><TD>125000 Catapults (500 Catapults loss!)</td></tr></tr></table>';
+  
   
        var pop = new pbPopup ('giftHelp', 0, 0, 425, 375, true);
        pop.centerMe (mainPop.getMainDiv());  
@@ -4990,7 +5010,7 @@ Tabs.Test = {
 
  /****************************  Transport Implementation  *******************************/
 Tabs.transport = {
-  tabOrder: 80,
+  tabOrder: 101,
   tabLabel: 'Transport',
   myDiv: null,
   timer: null,
@@ -5416,10 +5436,10 @@ Tabs.transport = {
 	showTradeRoutes: function () {
 		var t = Tabs.transport;
 		var popTradeRoutes = null;
-		t.popTradeRoutes = new pbPopup('pbShowTrade', 0, 0, 750, 500, true, function() {clearTimeout (1000);});
+		t.popTradeRoutes = new pbPopup('pbShowTrade', 0, 0, 750, 485, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pbRoutesQueue">';       
 		t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><B>'+translate("Transport routes:")+'</td>';
+		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Transport routes")+'</center></td>';
 		t.paintTradeRoutes();
 		t.popTradeRoutes.show(true)	;
 	},
@@ -8817,7 +8837,7 @@ function actionLog (msg){
 
 /*********************************** Options Tab ***********************************/
 Tabs.Options = {
-  tabOrder: 90,
+  tabOrder: 699,
   myDiv : null,
   fixAvailable : {},
 
@@ -9393,10 +9413,10 @@ Tabs.Reassign = {
 	showReassignRoutes: function () {
 		var t = Tabs.Reassign;
 		var popReassignRoutes = null;
-		t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 1100, 550, true, function() {clearTimeout (1000);});
+		t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
 		t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><B>'+translate("Reassign routes:")+'</td>';
+		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Reassign routes")+'</center></td>';
 		t.paintReassignRoutes();
 		t._addTabHeader();
 		t.popReassignRoutes.show(true)	;
@@ -10621,7 +10641,7 @@ Tabs.AutoTrain = {
           <dd><LI>Use: Autotrain will only use the resources to train troops.</dd>\
         <dt>Turn it on: </dt>\
           <dd><LI>Hit the AutoTrain toggle button.</dd></ul>';
-    var pop = new pbPopup ('giftHelp', 0, 0, 550, 250, true);
+    var pop = new pbPopup ('giftHelp', 0, 0, 550, 230, true);
     pop.centerMe (mainPop.getMainDiv());  
     pop.getMainDiv().innerHTML = helpText;
     pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot '+translate("Help")+'</b>:  '+translate("Auto Train")+'</center>';
@@ -12150,7 +12170,7 @@ function getTroopDefTrainEstimates (cityID, city){
 
 function dialogRetry (errMsg, seconds, onRetry, onCancel, errCode){
   seconds = parseInt(seconds);
-  var pop = new pbPopup ('pbretry', 0, 0, 400,250, true);
+  var pop = new pbPopup ('pbretry', 0, 0, 400,225, true);
   pop.centerMe(mainPop.getMainDiv());
   pop.getTopDiv().innerHTML = '<CENTER>KOC Power Bot</center>';
   pop.getMainDiv().innerHTML = '<CENTER><BR><FONT COLOR=#550000><B>An error has ocurred:</b></font><BR><BR><DIV id=paretryErrMsg></div>\
@@ -12633,7 +12653,7 @@ unsafeWindow.pbGotoMap = function (x, y){
 
 /****************************  Spam Tab  ******************************/
 Tabs.Spam = {
-  tabOrder : 100,                    // order to place tab in top bar
+  tabOrder : 611,                    // order to place tab in top bar
   tabLabel : 'Spam',            // label to show in main window tabs
   myDiv : null,
   timer : null,  
@@ -14165,7 +14185,7 @@ Tabs.Gifts = {
         gifts which are available will be listed. After accepting gifts, be sure to \'Check for Gifts\' again to see if more show up!<p>\
         <LI>If you choose not to delete gifts after accepting them, they may be available to get again! After the process is complete, just press the\
         \'Check for Gifts\' button again to see what gifts are available.</ul>';
-    var pop = new pbPopup ('giftHelp', 0, 0, 500, 400, true);
+    var pop = new pbPopup ('giftHelp', 0, 0, 500, 340, true);
     pop.centerMe (mainPop.getMainDiv());  
     pop.getMainDiv().innerHTML = helpText;
     pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help</b>: Accepting gifts</center>';
@@ -15478,10 +15498,6 @@ var DeleteReports = {
     },
 }
 
-
-
-
-
 /******************* Throne Delete **********************/
 var DeleteThrone = {
 	deltitems : [],
@@ -16122,7 +16138,7 @@ Tabs.Combat = {
 	
 	e_research : function(side){
 		var t = Tabs.Combat;
-		t.pop = new pbPopup ('pbcombatresearch', 0, 0, 270, 300, true, function(){t.c_ratio(); t.pop.destroy();});
+		t.pop = new pbPopup ('pbcombatresearch', 0, 0, 270, 250, true, function(){t.c_ratio(); t.pop.destroy();});
 		t.pop.centerMe (mainPop.getMainDiv()); 
 		t.pop.getTopDiv().innerHTML = '<CENTER><B>Research Levels</b>: '+ (side?'Attacker':'Defender') +'</center>';
 		var m = '<DIV><TABLE>';
@@ -16730,7 +16746,7 @@ Tabs.Combat = {
     helpText += '<TR><TD>9</td><TD>599 MM + 1Bal</td><TD>13000 archers + 900 Bal</td><TD>1st Wave + 2 Archer</td><TD>10</td></tr>';
     helpText += '<TR><TD>10</td><TD>1199 MM + 1Cat</td><TD>35000 archers + 2500 Cat</td><TD>1st Wave + 6 Archer + 50 Cat</td><TD>10</td></tr></table>';
     
-    var pop = new pbPopup ('giftHelp', 0, 0, 650, 400, true);
+    var pop = new pbPopup ('giftHelp', 0, 0, 650, 385, true);
     pop.centerMe (mainPop.getMainDiv());  
     pop.getMainDiv().innerHTML = helpText;
     pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help: Cresting</b></center>';
@@ -16758,10 +16774,10 @@ Tabs.Combat = {
     showCrestRoute : function () {
 		var t = Tabs.Crest;
 		var popCrestTargets = null;
-		t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+		t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';       
 		t.popCrestTargets.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popCrestTargets.getTopDiv().innerHTML = '<TD><B>Crest Targets:</td>';
+		t.popCrestTargets.getTopDiv().innerHTML = '<TD><CENTER><B>Crest Targets</center></td>';
 		t.paintCrestTargets();
 		t._addTabHeader();
 		t.popCrestTargets.show(true);
