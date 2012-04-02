@@ -15617,7 +15617,7 @@ Tabs.upgrader = {
  	   m += '<TABLE  class=pbTabPad2><tr align="center">';
  	   var count = 1;
  	   for (k in unsafeWindow.kocThroneItems) {
-		   var item = unsafeWindow.kocThroneItems[k];
+		   var item = unsafeWindow.Object.clone(unsafeWindow.kocThroneItems[k]);
 		   if(item.faction == "briton")
 			item.faction = "britton";
 		   m+= '<td title="'+item.name+'">\
