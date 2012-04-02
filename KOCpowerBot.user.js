@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120401c
+// @version        20120402a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120401c';
+var Version = '20120402a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -256,7 +256,7 @@ var FarmOptions = {
     CityEnable: {1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true},
     CityLevel: {0: true,1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true,9: true,10: true,11: true,12: true},
     Diplomacy: {friendly: true,hostile: true,friendlyToThem: true,friendlyToYou: true,neutral:true,unallied:true},
-    farmMarches: {},   
+    FarmMarches: [],   
 };
 var AttackOptions = {
   LastReport    		: 0,
@@ -913,35 +913,35 @@ Tabs.farm = {
 
 	checkMarches: function () {
 		var t = Tabs.farm;
-		for (i=0;i<FarmOptions.farmMarches.length;i++){
-				var cityId = "city"+ FarmOptions.farmMarches[i]["cityId"];
-				var city = FarmOptions.farmMarches[i]["city"];
-				var marchId = "m" + FarmOptions.farmMarches[i]["marchId"];
+		for (i=0;i<FarmOptions.FarmMarches.length;i++){
+				var cityId = "city"+ FarmOptions.FarmMarches[i]["cityId"];
+				var city = FarmOptions.FarmMarches[i]["city"];
+				var marchId = "m" + FarmOptions.FarmMarches[i]["marchId"];
 				if (Seed.queue_atkp[cityId][marchId] !=undefined){
 							if (Seed.queue_atkp[cityId][marchId].marchStatus == 8  && Seed.queue_atkp[cityId][marchId].hasUpdated) {
 									for(u=1;u<=12;u++) if (Seed.queue_atkp[cityId][marchId]["unit"+u+"Return"] < Seed.queue_atkp[cityId][marchId]["unit"+u+"Count"]){
-												t.FarmArray[FarmOptions.farmMarches[i]["city"]][FarmOptions.farmMarches[i]["number"]]["lost"] = true;
-												t.FarmArray[FarmOptions.farmMarches[i]["city"]][FarmOptions.farmMarches[i]["number"]]["enabled"] = false;
+												t.FarmArray[FarmOptions.FarmMarches[i]["city"]][FarmOptions.FarmMarches[i]["number"]]["lost"] = true;
+												t.FarmArray[FarmOptions.FarmMarches[i]["city"]][FarmOptions.FarmMarches[i]["number"]]["enabled"] = false;
 									}
-									for (a=0;a<t.helpArray[FarmOptions.farmMarches[i]["city"]].length;a++){
-											for (b=0;b<t.FarmArray[FarmOptions.farmMarches[i]["city"]].length;b++){
-												 if (parseInt(t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['x']) == parseInt(t.helpArray[FarmOptions.farmMarches[i]["city"]][b]['x']) && parseInt(t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['y']) == parseInt(t.helpArray[FarmOptions.farmMarches[i]["city"]][b]['y'])){
-							           					t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['gold'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['gold'];
-							           					t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['resource1'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['resource1'];
-														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['resource2'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['resource2'];
-														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['resource3'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['resource3'];
-														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['resource4'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['resource4'];
-														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['empty'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['empty'];
-														t.helpArray[FarmOptions.farmMarches[i]["city"]][a]['lost'] = t.FarmArray[FarmOptions.farmMarches[i]["city"]][b]['lost'];
+									for (a=0;a<t.helpArray[FarmOptions.FarmMarches[i]["city"]].length;a++){
+											for (b=0;b<t.FarmArray[FarmOptions.FarmMarches[i]["city"]].length;b++){
+												 if (parseInt(t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['x']) == parseInt(t.helpArray[FarmOptions.FarmMarches[i]["city"]][b]['x']) && parseInt(t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['y']) == parseInt(t.helpArray[FarmOptions.FarmMarches[i]["city"]][b]['y'])){
+							           					t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['gold'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['gold'];
+							           					t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['resource1'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['resource1'];
+														t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['resource2'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['resource2'];
+														t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['resource3'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['resource3'];
+														t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['resource4'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['resource4'];
+														t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['empty'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['empty'];
+														t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['lost'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['lost'];
 							       					}    
 											}
 									}
-									GM_setValue('Farms_' + Seed.player['name'] + '_city_' + FarmOptions.farmMarches[i]["city"] + '_' + getServerId(), JSON2.stringify(t.helpArray[FarmOptions.farmMarches[i]["city"]]));
-									FarmOptions.farmMarches.splice(i,1);
+									GM_setValue('Farms_' + Seed.player['name'] + '_city_' + FarmOptions.FarmMarches[i]["city"] + '_' + getServerId(), JSON2.stringify(t.helpArray[FarmOptions.FarmMarches[i]["city"]]));
+									FarmOptions.FarmMarches.splice(i,1);
 									saveFarmOptions();
 							}
 				} else {
-					FarmOptions.farmMarches.splice(i,1);
+					FarmOptions.FarmMarches.splice(i,1);
 					saveFarmOptions();
 				}	
 		}
@@ -1407,7 +1407,7 @@ Tabs.farm = {
   		         now = now.toFixed(0);
   		         t.FarmArray[counter][number]['time'] = now;
                  t.FarmArray[counter][number]['attacked']++;
-				 FarmOptions.farmMarches.push ({city:counter,cityId:cityID,marchId:rslt.marchId,number:number});
+				 FarmOptions.FarmMarches.push ({city:counter,cityId:cityID,marchId:rslt.marchId,number:number});
                  FarmOptions.FarmNumber[counter]++;
 				 saveFarmOptions();
 				 for (i=0;i<t.helpArray[counter].length;i++){
