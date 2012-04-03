@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120402b
+// @version        20120403a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120402b';
+var Version = '20120403a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -5338,6 +5338,7 @@ Tabs.transport = {
 
  e_tradeRoutes: function(){
       var t = Tabs.transport;
+      clearTimeout(t.timer);
       var now = new Date();
       if (t.traderState.running == true)    {
       	var now = new Date().getTime()/1000.0;
@@ -5347,7 +5348,7 @@ Tabs.transport = {
 				  t.checkdoTrades();
       		}
       }
-	  setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*1000);
+	  t.timer = setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*1000);
 	  
     },
     	
