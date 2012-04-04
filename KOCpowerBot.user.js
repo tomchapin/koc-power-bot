@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120404a
+// @version        20120405a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120404a';
+var Version = '20120405a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1546,6 +1546,10 @@ Tabs.Throne = {
     var t = Tabs.Throne;
     t.cont = div;
     
+    var a = JSON2.parse(GM_getValue ('ThroneHistory_'+getServerId(), '[]'));
+    logit(a.toSource());
+    if (matTypeof(a) == 'array') t.log = a;
+
     var main = '<TABLE align=center><TR><TD><INPUT class=pbSubtab ID=ptmrchSubSal type=submit value="Salvage"></td>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubUE type=submit value="Upgrade/Enhance"></td>';
 	main +='<TD><INPUT class=pbSubtab ID=ptmrchSubEQ type=submit value="Equip"></td></tr></table><HR class=ptThin>';
@@ -1735,6 +1739,26 @@ toggleThroneState: function(){
 
 _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,cost){
 	 	var t = Tabs.Throne;
+	    var a="";
+	    var b=""; 
+	    switch (qualityfrom) {
+        		case 0:a = unsafeWindow.g_js_strings.throneRoom.simple;break;
+        		case 1:a = unsafeWindow.g_js_strings.throneRoom.common;break;
+        		case 2:a = unsafeWindow.g_js_strings.throneRoom.uncommon;break;
+       			 case 3:a = unsafeWindow.g_js_strings.throneRoom.rare;break;
+        		case 4:a = unsafeWindow.g_js_strings.throneRoom.epic;break;
+        		case 5:a = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+        		default:a = unsafeWindow.g_js_strings.throneRoom.simple;break;
+        }
+        switch (qualityto) {
+        		case 0:b = unsafeWindow.g_js_strings.throneRoom.simple;break;
+        		case 1:b = unsafeWindow.g_js_strings.throneRoom.common;break;
+        		case 2:b = unsafeWindow.g_js_strings.throneRoom.uncommon;break;
+       			case 3:b = unsafeWindow.g_js_strings.throneRoom.rare;break;
+       			case 4:b = unsafeWindow.g_js_strings.throneRoom.epic;break;
+        		case 5:b = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+        		default:b = unsafeWindow.g_js_strings.throneRoom.simple;break;
+        }
 	     var row = document.getElementById('ShowQueue').insertRow(0);
 	     row.vAlign = 'top';
 	     row.style.color = "black";	
@@ -1742,11 +1766,11 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
 	     row.insertCell(0).innerHTML = id+1;
 		 row.insertCell(1).innerHTML = name;
 	     if (action == "Enhance") {
-				row.insertCell(2).innerHTML = qualityfrom + " -> " + qualityto;
+				row.insertCell(2).innerHTML = a + " -> " + b;
 	   	 		row.insertCell(3).innerHTML = levelfrom;
 	     }
 	     if (action == "Upgrade") {
-				row.insertCell(2).innerHTML = qualityfrom;
+				row.insertCell(2).innerHTML = a;
 	   	 		row.insertCell(3).innerHTML = levelfrom + " -> " + levelto;
 	     }
 	     row.insertCell(4).innerHTML = action;
@@ -1779,25 +1803,28 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
 	     row.insertCell(6).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 	   },
 
-PaintHistory : function(id,name,action,tries,good,bad) {
+PaintHistory : function() {
 	var t = Tabs.Throne;
 	var popHistory = null;
 	popHistory = new pbPopup('pbShowHistory', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
 	var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbBars">';       
 	popHistory.getMainDiv().innerHTML = '</table></div>' + m;
 	popHistory.getTopDiv().innerHTML = '<TD><B>Succesfull Upgrade/Enhance list:</td>';
+	for (i=0;i<t.log.length;i++){
+		var row = document.getElementById('pbBars').insertRow(0);
+		row.vAlign = 'top';
+		row.style.color = "black";
+		row.insertCell(0).innerHTML = t.log[i].time;
+		row.insertCell(1).innerHTML = t.log[i].name;
+		row.insertCell(2).innerHTML = t.log[i].action;
+		row.insertCell(3).innerHTML = t.log[i].tries;
+		row.insertCell(4).innerHTML = t.log[i].good;
+		row.insertCell(5).innerHTML = t.log[i].bad;
+	}
 	var row = document.getElementById('pbBars').insertRow(0);
 	row.vAlign = 'top';
 	row.style.color = "black";
-	for (i=0;i<t.log.length;i++){
-		row.insertCell(0).innerHTML = id;
-		row.insertCell(1).innerHTML = name;
-		row.insertCell(2).innerHTML = action;
-		row.insertCell(3).innerHTML = tries;
-		row.insertCell(4).innerHTML = good;
-		row.insertCell(5).innerHTML = bad;
-	}
-	row.insertCell(0).innerHTML = "Id";
+	row.insertCell(0).innerHTML = "Time";
 	row.insertCell(1).innerHTML = "Name";
     row.insertCell(2).innerHTML = "Action";
     row.insertCell(3).innerHTML = "Tries";
@@ -1894,7 +1921,6 @@ PaintHistory : function(id,name,action,tries,good,bad) {
   doEnhance : function() {
 		var t = Tabs.Throne;
 		var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
-		logit('doEnhance');
 		var cityid = 0;
 		for (var k in Cities.byID) {
 			if ( Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])))
@@ -1919,7 +1945,6 @@ PaintHistory : function(id,name,action,tries,good,bad) {
 			loading: true,
 			onSuccess: function (transport) {
 				var rslt = eval("(" + transport.responseText + ")");
-        logit(rslt.toSource());
 				if(rslt.ok){
 				    if (rslt.gems > 0)
 				    {
@@ -1973,7 +1998,6 @@ PaintHistory : function(id,name,action,tries,good,bad) {
 	doUpgrade : function() {
 		var t = Tabs.Throne;
 		var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
-		logit('doUpgrade');
 		var cityid = 0;
 		for (var k in Cities.byID) {
 			if ( Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])))
@@ -1998,7 +2022,6 @@ PaintHistory : function(id,name,action,tries,good,bad) {
 			loading: true,
 			onSuccess: function (transport) {
 				var rslt = eval("(" + transport.responseText + ")");
-        logit(rslt.toSource());
 				if(rslt.ok){
 				    if (rslt.gems > 0)
 				    {
@@ -2053,7 +2076,6 @@ PaintHistory : function(id,name,action,tries,good,bad) {
 	 doRepair : function() {
 		var t = Tabs.Throne;
 		var cityid = 0;
-		logit("doRepair");
 		for (var k in Cities.byID) {
 			if ( Seed.resources["city"+k]["rec5"][0] > ThroneOptions.minStones)
 			{
@@ -2076,7 +2098,6 @@ PaintHistory : function(id,name,action,tries,good,bad) {
 			loading: true,
 			onSuccess: function (transport) {
 				var rslt = eval("(" + transport.responseText + ")");
-				    logit(rslt.toSource());
 					if(rslt.ok){
               				ThroneOptions.RepairEnd = rslt.eta; 
               				var now = new Date().getTime()/1000.0;
@@ -2194,8 +2215,10 @@ paintStones : function (){
 
 addToLog : function (id,action,tries,good,bad){
 	var t = Tabs.Throne;
+	var now = new Date();
+	var time = now.getDate() +"/"+ (now.getMonth()+1) +"/"+ now.getFullYear() +"  "+ now.getUTCHours() + ":" + now.getMinutes();
 	var name = unsafeWindow.kocThroneItems[id]["name"];
-	t.log.push ({id:id,name:name,action:action,tries:tries,good:good,bad:bad});
+	t.log.push ({time:time,name:name,action:action,tries:tries,good:good,bad:bad});
 	if (t.log.length > 30) t.log.splice(0,1);
 	GM_setValue ('ThroneHistory_'+getServerId(), JSON2.stringify(t.log));
 },
