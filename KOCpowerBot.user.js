@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120406c
+// @version        20120406d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120406c';
+var Version = '20120406d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -16440,7 +16440,7 @@ Tabs.Apothecary = {
   e_displayarray : function(){
     var t = Tabs.Apothecary;
     if(t.pop == null)
-		t.pop = new pbPopup('pbapothecary_pop',20,20,400,500,true,function(){t.pop.destroy(); t.pop = null;});
+		t.pop = new pbPopup('pbapothecary_pop',0,0,400,500,true,function(){t.pop.destroy(); t.pop = null;});
 	t.pop.getTopDiv().innerHTML = '<DIV><center>Auto Heal Array</center></div>';
 	var m = '<table><tr>';
 	for (var city in ApothecaryOptions.city){
@@ -16469,7 +16469,7 @@ Tabs.Apothecary = {
 		evt = "delete";
 	if(evt == null || id == null) return;
 	if(evt == "delete"){
-		ApothecaryOptions.city[city].splice(i,1);
+		ApothecaryOptions.city[city].splice(id,1);
 	}
 	if(evt == "edit"){
 		t.display_edit(id,city);
@@ -16481,9 +16481,9 @@ Tabs.Apothecary = {
   display_edit : function(id, city){
 	var t = Tabs.Apothecary;
     if(t.pop2 == null)
-		t.pop2 = new pbPopup('pbapodisp_pop',50,40,300,150,true,function(){t.pop2.destroy(); t.pop2 = null;});
+		t.pop2 = new pbPopup('pbapodisp_pop',410,0,300,150,true,function(){t.pop2.destroy(); t.pop2 = null;});
 	var m = '<table><tr><td><b>'+Cities.cities[city].name+'</b></td></tr>';
-	var info = ApothecaryOptions.city[city][i];
+	var info = ApothecaryOptions.city[city][id];
 	m += '<tr><td>Troop Type: </td><td>'+unsafeWindow.unitcost['unt'+info.troop][0]+'</td></tr>\
 		  <tr><td>Minimum: </td><td><INPUT id=pbapodisp_min type=text size=4 value="'+info.min+'" \>\
 		  <tr><td><INPUT type=checkbox id=pbapodisp_maxcheck '+(info.max_sel?'CHECKED':'')+' /> Maximum: </td><td><INPUT id=pbapodisp_max type=text size=4 value="'+info.max+'" '+(info.max_sel?'':'DISABLED')+' \></td></tr>\
