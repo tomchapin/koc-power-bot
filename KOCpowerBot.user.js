@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120406b
+// @version        20120406c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120406b';
+var Version = '20120406c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -119,7 +119,8 @@ var Options = {
   crestreport  : true,
   Crest1Count  : 0,							
   Crest2Count  : 0,																			
-  crestRunning   : false,					
+  crestRunning   : false,	
+  Crestinterval		: 5,		
   ThroneDeleteItems	:	false,
   ThroneDeleteLevel	:	0,
   throneSaveNum	:	10,
@@ -17003,7 +17004,7 @@ Tabs.Combat = {
 	Options.crestMarchError = 0;
 
     setInterval(t.sendCrestReport, 1*60*1000);	
-    setTimeout(function(){ t.Rounds(1,0,0);}, 5*1000);
+    t.timer = setTimeout(function(){ t.Rounds(1,0,0);}, CrestOptions.interval*1000);
 
 
     t.myDiv = div;
@@ -17020,7 +17021,8 @@ Tabs.Combat = {
     m += '<TD><INPUT id=CrestHelp type=submit value="HELP"></td>';
     m += '<td><INPUT id=showCrestTargets type=submit value="Show Targets"></td>';
     m += '<TD><INPUT id=pbsendreport type=checkbox '+ (Options.crestreport?' CHECKED':'') +'\> Send Crest report every ';
-    m += '<INPUT id=pbsendcrestreportint value='+ Options.CrestMsgInterval +' type=text size=3 \> hours </td></table>';
+    m += '<INPUT id=pbsendcrestreportint value='+ Options.CrestMsgInterval +' type=text size=3 \> hours </td>\
+		  <TD>Attack interval <INPUT type=text size=3 value='+Options.Crestinterval+' id=pbcrest_interval />seconds</table>';
   
     m += '<DIV id=pbOpt class=pbStat>CRESTING OPTIONS</div><TABLE id=pbcrestopt	 width=100% height=0% class=pbTab><TR align="center"></table>';
     m += '<DIV style="margin-bottom:10px;">Crest from city: <span id=crestcity></span></div>';
@@ -17066,6 +17068,10 @@ Tabs.Combat = {
 		Options.CrestMsgInterval = parseInt(document.getElementById('pbsendcrestreportint').value);
 		saveOptions();
 	}, false);
+	$("pbcrest_interval").addEventListener('change', function(e){
+		Options.Crestinterval = parseIntNan(e.target.value);
+		saveOptions();
+	},false);
     
     for (var i=0;i<Seed.cities.length;i++){
 		if (CrestOptions.CrestCity == Seed.cities[i][0]){
@@ -17414,7 +17420,7 @@ Tabs.Combat = {
 					now = now.toFixed(0);
 					CrestData[CrestDataNum].lastRoundTwo = now;
 					saveCrestData();
-					setTimeout (function(){callback(r,0,CrestDataNum);}, 5000);	
+					setTimeout (function(){callback(r,0,CrestDataNum);}, (Math.random()*10*1000)+(5*1000));	
 					return;
 					
 				} else {
@@ -17483,11 +17489,7 @@ Tabs.Combat = {
   		         	}
 				} else {
 					if (rslt.error_code != 401) {
-						t.error_code = rslt.error_code; 
-               			if(retry > 5){
-							reloadKOC();
-							return;
-						}
+						t.error_code = rslt.error_code;
                		}
   		        }				
   		    },
@@ -17499,7 +17501,7 @@ Tabs.Combat = {
 	
 	Rounds : function (r, retry, CrestDataNum) {
 		var t = Tabs.Crest;
-		
+		clearTimeout(t.timer);
 		//r = (typeof r === 'undefined') ? 0 : r;
 		//retry = (typeof retry === 'undefined') ? 0 : retry;
 		//CrestDataNum = (typeof CrestDataNum === 'undefined') ? 0 : CrestDataNum;
@@ -17536,10 +17538,10 @@ Tabs.Combat = {
 
 		if (parseInt(Seed.units[cityID]['unt1']) < CrestData[CrestDataNum].R1ST || parseInt(Seed.units[cityID]['unt2']) < CrestData[CrestDataNum].R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestData[CrestDataNum].R1Scout || parseInt(Seed.units[cityID]['unt4']) < CrestData[CrestDataNum].R1Pike || parseInt(Seed.units[cityID]['unt5']) < CrestData[CrestDataNum].R1Sword || parseInt(Seed.units[cityID]['unt6']) < CrestData[CrestDataNum].R1Arch || parseInt(Seed.units[cityID]['unt7']) < CrestData[CrestDataNum].R1LC || parseInt(Seed.units[cityID]['unt8']) < CrestData[CrestDataNum].R1HC || parseInt(Seed.units[cityID]['unt9']) < CrestData[CrestDataNum].R1SW || parseInt(Seed.units[cityID]['unt10']) < CrestData[CrestDataNum].R1Ball || parseInt(Seed.units[cityID]['unt11']) < CrestData[CrestDataNum].R1Ram || parseInt(Seed.units[cityID]['unt12']) < CrestData[CrestDataNum].R1Cat || parseInt(Seed.units[cityID]['unt1']) < CrestData[CrestDataNum].R2ST || parseInt(Seed.units[cityID]['unt2']) < CrestData[CrestDataNum].R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestData[CrestDataNum].R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestData[CrestDataNum].R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestData[CrestDataNum].R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestData[CrestDataNum].R2Arch || parseInt(Seed.units[cityID]['unt7']) < CrestData[CrestDataNum].R2LC || parseInt(Seed.units[cityID]['unt8']) < CrestData[CrestDataNum].R2HC || parseInt(Seed.units[cityID]['unt9']) < CrestData[CrestDataNum].R2SW || parseInt(Seed.units[cityID]['unt10']) < CrestData[CrestDataNum].R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestData[CrestDataNum].R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestData[CrestDataNum].R2Cat) {
 			if (CrestData.length == 1) {
-				setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},20000);
+				t.timer = setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
 				return;
 			 } else
-				setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},5000);
+				t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 			return;
 		}
 
@@ -17559,9 +17561,9 @@ Tabs.Combat = {
 			default:
 				if (t.rallypointlevel <= slots) {
 					if (CrestData.length == 1) {
-						setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},20000);
+						t.timer = setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
 					} else {
-						setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},5000);
+						t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 					}
 					return;
 					break;
@@ -17570,7 +17572,7 @@ Tabs.Combat = {
 
        
 		if  (t.knt.toSource() == "[]") {
-			setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},5000);
+			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 			return;
 		} 
 		var kid = t.knt[0].ID;
@@ -17587,7 +17589,7 @@ Tabs.Combat = {
 		switch(r) {
 			case 1:
 				if ((t.rallypointlevel-slots) < 2) {
-					setTimeout(function(){ t.Rounds(1,retry,CrestDataNum+1);},5000);
+					t.timer = setTimeout(function(){ t.Rounds(1,retry,CrestDataNum+1);},Options.Crestinterval*1000);
 					return;
 				}
 				var params 		= 	unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -17670,7 +17672,7 @@ Tabs.Combat = {
 				now = now.toFixed(0);
 				Options.LastCrestReport = now;
 				saveOptions();
-				setTimeout(function(){ t.Rounds(1,0,0);}, 5*1000);
+				t.timer = setTimeout(function(){ t.Rounds(1,0,0);}, Options.Crestinterval*1000);
 			}
 	},
 	
