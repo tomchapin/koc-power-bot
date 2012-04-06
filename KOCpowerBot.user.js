@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120405a
+// @version        20120406a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120405a';
+var Version = '20120406a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -42,6 +42,21 @@ var JSON;if(!JSON){JSON={};}(function(){"use strict";function f(n){return n<10?'
 var JSON2 = JSON;
 
 //logit ("+++ STARTUP: "+ document.URL);
+
+
+var upgradeData = {
+  active : false,
+  item_upgrade : {},
+  item_enhance : {},
+  item_repair : [],
+  retryInterval : 30,
+  enhanceAction : "show",
+  enhanceItem : 0,
+  enhanceMax  : 1,
+  minStones : 100000,
+  queuetype : 0,
+  upgradetype : 0,
+};
 
 
 var Options = {
@@ -301,6 +316,12 @@ var ChatOptions = {
   Chatpassenable            : false,
 };
 
+var ApothecaryOptions = {
+	Active : false,
+	goldkeep : 0,
+	city : {0:[],1:[],2:[],3:[],4:[],5:[],6:[],7:[]},
+};
+
 var CombatOptions = {
 	research : [{tch8:0,tch9:0,tch13:0,tch15:0}, //Poison Edge, Metal Alloys, Fletching, Healing Potions
 	            {tch8:0,tch9:0,tch13:0,tch15:0}],
@@ -309,6 +330,9 @@ var CombatOptions = {
 	ratio    : [{unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}},
 	            {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
 }
+
+// Get element by id shortform with parent node option
+function $(ID,root) {return (root||document).getElementById(ID);}
 
 var nHtml={
   FindByXPath:function(obj,xpath,nodetype) {
@@ -567,9 +591,7 @@ function pbStartup (){
     span.pbTextHostile {color: #800}\
 	.pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
     div.indent25 {padding-left:25px}';
-
-
-	
+    
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readOptions();
@@ -581,6 +603,7 @@ function pbStartup (){
   readAttackOptions();
   readFarmOptions();
   readThroneOptions();
+  readApothecaryOptions();
   setCities();
 
 // TODO: Make sure WinPos is visible on-screen ?
@@ -12648,7 +12671,7 @@ var fortNamesShort = {
 }
 
 // onClick (city{name, id, x, y}, x, y)   city may be null!
-function CdispCityPicker (id, span, dispName, notify, selbut){
+function CdispCityPicker (id, span, dispName, notify, selbut, disable_list){
   function CcityButHandler (t){
     var that = t;
     this.clickedCityBut = clickedCityBut;
@@ -12733,8 +12756,15 @@ function CdispCityPicker (id, span, dispName, notify, selbut){
   this.selected = null;
   this.city = null;
   var m = '';
-  for (var i=0; i<Cities.cities.length; i++)
-    m += '<INPUT class="castleBut castleButNon" id="'+ id +'_'+ i +'" value="'+ (i+1) +'" type=submit \>';
+  for (var i=0; i<Cities.cities.length; i++){
+	if(matTypeof(disable_list) == 'array'){
+		if(disable_list[i])
+			m += '<INPUT class="castleBut castleButNon" id="'+ id +'_'+ i +'" value="'+ (i+1) +'" type=submit DISABLED \>';
+		else
+			m += '<INPUT class="castleBut castleButNon" id="'+ id +'_'+ i +'" value="'+ (i+1) +'" type=submit \>';
+	} else
+		m += '<INPUT class="castleBut castleButNon" id="'+ id +'_'+ i +'" value="'+ (i+1) +'" type=submit \>';
+  }
   if (dispName)
     m += ' &nbsp; <SPAN style="display:inline-block; width:85px; font-weight:bold;" id='+ id +'cname' +'></span>';
   span.innerHTML = m;
@@ -13132,6 +13162,27 @@ function saveCombatOptions (){
   setTimeout (function (){GM_setValue ('CombatOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CombatOptions));}, 0);
 }
 
+function saveApothecaryOptions (){
+  var serverID = getServerId();
+  setTimeout (function (){GM_setValue ('ApothecaryOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(ApothecaryOptions));}, 0);
+}
+
+
+function readUpgradeData (){
+  var serverID = getServerId();
+  s = GM_getValue ('UpgradeData_'+serverID);
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          upgradeData[k][kk] = opts[k][kk];
+      else
+        upgradeData[k] = opts[k];
+    }
+  }
+}
+
 
 function readOptions (){
   var serverID = getServerId();
@@ -13163,6 +13214,21 @@ function readChatOptions (){
           ChatOptions[k][kk] = opts[k][kk];
       else
         ChatOptions[k] = opts[k];
+    }
+  }
+}
+
+function readApothecaryOptions (){
+  var serverID = getServerId();
+  s = GM_getValue ('ApothecaryOptions_'+Seed.player['name']+'_'+serverID, '[]');
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          ApothecaryOptions[k][kk] = opts[k][kk];
+      else
+        ApothecaryOptions[k] = opts[k];
     }
   }
 }
@@ -16291,6 +16357,239 @@ var DeleteThrone = {
 	},
 }
 
+/******************* Apothecary Tab **********************/
+Tabs.Apothecary = {
+  tabOrder : 591,                    // order to place tab in top bar
+  tabDisabled : false, // if true, tab will not be added or initialized
+  tabLabel : 'Apothecary',            // label to show in main window tabs
+  cities : [],
+  pop : null,
+  pop2 : null,
+  myDiv : null,
+  timer : null,
+  
+  init : function (div){    // called once, upon script startup
+    var t = Tabs.Apothecary;
+    t.myDiv = div;
+    var m = '<DIV class=pbStat >APOTHECARY TAB</div><table width=100% height=0% class=pbTab><tr align=center >';
+    m += '<td><input type=submit id=pbapothecary_power value="Auto Heal = '+(ApothecaryOptions.Active?'ON':'OFF')+'" /></td>\
+          <td><input type=submit id=pbapothecary_show value="Show" /></td></tr></table>';
+	m += '<DIV class=pbStat id=pbapothecary_options >OPTIONS</div></div><table></tr>\
+	      <td>Keep Gold : <INPUT type=text id="pbapothecary_gold" size=6 value='+ApothecaryOptions.goldkeep+' /></td>\
+		  <td colspan=4><span id="pbapothecary_citysel"></span></td></tr><tr>\
+		  <td>Troop type : <SELECT id="pbapothecary_troops"><option value=0>--Select--</options>';
+	for (y in unsafeWindow.unitcost)
+		m += '<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
+    m += '</select></td>\
+		  <td>Min.: <INPUT id=pbapothecary_min type=text size=4 \></td>\
+		  <td><INPUT type=checkbox id=pbapothecary_maxcheck /> Max.: <INPUT id=pbapothecary_max type=text size=4 DISABLED \></td>\
+		  <td><INPUT type=submit id=pbapothecary_save value=Add /></td>';
+	m += '</tr></table>';
+    div.innerHTML = m;
+    $("pbapothecary_gold").addEventListener('change', function(){
+		ApothecaryOptions.goldkeep = parseIntNan(this.value);
+	},false);
+    $("pbapothecary_maxcheck").addEventListener('click', function(){
+		$("pbapothecary_max").disabled = !($("pbapothecary_maxcheck").checked);
+	},false);
+    $("pbapothecary_save").addEventListener('click', function(){
+		t.e_addqueue();
+	},false);
+	$("pbapothecary_power").addEventListener('click', function(){
+		t.e_toggleswitch(this);
+	},false);
+	$("pbapothecary_show").addEventListener('click', function(){
+		t.e_displayarray();
+	},false);
+    for (var cid in Cities.byID){
+		var city = 'city'+cid;
+		var x = Cities.byID[cid].idx;
+		t.cities[x] = true;
+		for (var y in Seed.buildings[city]) {
+    		if (Seed.buildings[city][y][0] == 21){
+				t.cities[x] = false;
+				continue;
+			}
+    	}
+	}
+	t.citysel = new CdispCityPicker ('pbapo_sel', document.getElementById("pbapothecary_citysel"), true, null, 0, t.cities);
+	t.timer = setTimeout(t.loop,5000);
+  },
+  
+  e_addqueue : function (){
+    var t = Tabs.Apothecary;
+    var city = t.citysel.city.idx;
+	var troopsel = $("pbapothecary_troops").value;
+	var min = parseIntNan($("pbapothecary_min").value);
+	var max = parseIntNan($("pbapothecary_max").value);
+	var max_sel = $("pbapothecary_maxcheck").checked;
+	try {
+		if((troopsel < 1 || min < 1) || (max_sel && max < 1) || (max_sel && (max < min)))
+			throw "Incomplete/Invalid Input!";
+		ApothecaryOptions.city[city].push({troop:troopsel,min:min,max:max,max_sel:max_sel});
+		saveApothecaryOptions();
+		$('pbapothecary_options').style.background ='#99FF99';
+		setTimeout(function(){ ($('pbapothecary_options').style.background =''); }, 1000);
+	} catch (e){
+		$('pbapothecary_options').style.background ='#FF0000';
+		setTimeout(function(){ ($('pbapothecary_options').style.background =''); }, 1000);
+	}
+  },
+  
+  e_displayarray : function(){
+    var t = Tabs.Apothecary;
+    if(t.pop == null)
+		t.pop = new pbPopup('pbapothecary_pop',20,20,400,500,true,function(){t.pop.destroy(); t.pop = null;});
+	t.pop.getTopDiv().innerHTML = '<DIV><center>Auto Heal Array</center></div>';
+	var m = '<table><tr>';
+	for (var city in ApothecaryOptions.city){
+		if(!Cities.cities[city] || ApothecaryOptions.city[city].length < 1) continue;
+		m += '<td colspan=2><b>'+Cities.cities[city].name+'</b></td>\
+			  <td>Minimum</td><td>Maximum</td><tr>';
+		for(var i=0; i<ApothecaryOptions.city[city].length; i++){
+			var info = ApothecaryOptions.city[city][i];
+			m += '<td>'+(i+1)+'</td><td>'+unsafeWindow.unitcost['unt'+info.troop][0]+'</td>\
+				  <td>'+info.min+'</td><td>'+info.max+'</td><td>'+strButton20('Edit','title="Apothecary edit" onclick="pbapo(this,'+i+','+city+')"')+'</td><td>'+strButton20('Delete','title="Apothecary delete" onclick="pbapo(this,'+i+','+city+')"')+'</td>';
+			m += '</tr><tr>';
+		}
+		m += '</tr><tr>';
+	}
+	t.pop.getMainDiv().innerHTML = m;
+	unsafeWindow.pbapo = t.display_action;
+	t.pop.show(true);
+  },
+  
+  display_action : function(obj,id,city){
+    var t = Tabs.Apothecary;
+	var evt = null;
+	if(obj.title.indexOf("edit") > 0)
+		evt = "edit";
+	if(obj.title.indexOf("delete") > 0)
+		evt = "delete";
+	if(evt == null || id == null) return;
+	if(evt == "delete"){
+		ApothecaryOptions.city[city].splice(i,1);
+	}
+	if(evt == "edit"){
+		t.display_edit(id,city);
+	}
+	saveApothecaryOptions();
+	t.e_displayarray();
+  },
+  
+  display_edit : function(id, city){
+	var t = Tabs.Apothecary;
+    if(t.pop2 == null)
+		t.pop2 = new pbPopup('pbapodisp_pop',50,40,300,150,true,function(){t.pop2.destroy(); t.pop2 = null;});
+	var m = '<table><tr><td><b>'+Cities.cities[city].name+'</b></td></tr>';
+	var info = ApothecaryOptions.city[city][i];
+	m += '<tr><td>Troop Type: </td><td>'+unsafeWindow.unitcost['unt'+info.troop][0]+'</td></tr>\
+		  <tr><td>Minimum: </td><td><INPUT id=pbapodisp_min type=text size=4 value="'+info.min+'" \>\
+		  <tr><td><INPUT type=checkbox id=pbapodisp_maxcheck '+(info.max_sel?'CHECKED':'')+' /> Maximum: </td><td><INPUT id=pbapodisp_max type=text size=4 value="'+info.max+'" '+(info.max_sel?'':'DISABLED')+' \></td></tr>\
+		  <tr><td><INPUT type=submit id=pbapodisp_save value=Save /></td></tr>';
+	t.pop2.getMainDiv().innerHTML = m;
+	t.pop2.show(true);
+	$('pbapodisp_save').addEventListener('click', function(){
+		var min = parseIntNan($("pbapodisp_min").value);
+		var max = parseIntNan($("pbapodisp_max").value);
+		var max_sel = $("pbapodisp_maxcheck").checked;
+		if(min < 1 || (max_sel && max < 1) || (max_sel && (max < min))){
+			alert("Invalid/Incorrect input!");
+			return;
+		}
+		info.min = min;
+		info.max = max;
+		info.max_sel = max_sel;
+		saveApothecaryOptions();
+		t.pop2.show(false);
+		t.e_displayarray();
+	},false);
+  },
+  
+  loop : function(){
+    var t = Tabs.Apothecary;
+    clearTimeout(t.timer);
+    if(!ApothecaryOptions.Active) return;
+    for (var city in ApothecaryOptions.city){
+		if(!Cities.cities[city] || ApothecaryOptions.city[city].length < 1) continue;
+		if(t.cities[city]) continue; //Skip if Apothecary doesn't exist
+		if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0) continue; //Skip city if queue is full
+		if(Seed.citystats["city" + Cities.cities[city].id].gold[0] < parseInt(ApothecaryOptions.goldkeep)) continue; //Skip if gold is less than reserve
+		for(var i=0; i<ApothecaryOptions.city[city].length; i++){
+			var info = ApothecaryOptions.city[city][i];
+			var cid = Cities.cities[city].id;
+			var amt = 0;
+			if(Seed.woundedUnits['city'+cid]['unt'+info.troop] < info.min) continue;
+			if(Seed.woundedUnits['city'+cid]['unt'+info.troop] > info.max){
+				amt = info.max;
+			} else {
+				amt = Seed.woundedUnits['city'+cid]['unt'+info.troops];
+			}
+			if(cid > 0 && info.troop > 0 && amt > 0){
+				t.do_revive(cid,info.troop,amt);
+				break;
+			}
+		}
+	}
+	t.timer = setTimeout(t.loop, 10000);
+  },
+  
+  e_toggleswitch : function(obj){
+    var t = Tabs.Apothecary;
+	if(ApothecaryOptions.Active){
+		obj.value = "Auto Heal = OFF";
+		ApothecaryOptions.Active = false;
+		clearTimeout(t.timer);
+	} else {
+		obj.value = "Auto Heal = ON";
+		ApothecaryOptions.Active = true;
+		t.timer = setTimeout(t.loop,5000);
+	}
+	saveApothecaryOptions();
+  },
+  
+  do_revive : function(currentcityid,unitId,num,notify){
+    var t = Tabs.Apothecary;
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	params.cid = currentcityid;
+    params.type = unitId;
+    params.quant = num;
+    params.apothecary = true;
+	var time = unsafeWindow.cm.RevivalModel.getRevivalStats(unitId, num).time;
+
+	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
+		method: "post",
+		parameters: params,
+		onSuccess: function(rslt) {
+		  if (rslt.ok) {
+			for (var i = 1; i < 5; i++) {
+				var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
+				if(rslt.gamble) resourceLost = resourceLost*rslt.gamble[i];
+				unsafeWindow.seed.resources["city" + currentcityid]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + currentcityid]["rec" + i][0]) - resourceLost;
+			}
+			if (!rslt.initTS) {
+				rslt.initTS = unixTime() - 1;
+			}
+			Seed.queue_revive["city" + currentcityid].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
+			var cost = unsafeWindow.cm.RevivalModel.getRevivalStats(unitId, num).cost;
+			Seed.citystats["city" + currentcityid].gold[0] -= parseInt(cost);
+			unsafeWindow.update_gold();
+			unsafeWindow.cm.WoundedModel.sub(tid, num);
+		  } else {
+			
+		  }
+		},
+	});
+  },
+  
+  hide : function (){
+    var t = Tabs.Apothecary;
+  },
+  
+  show : function (){
+    var t = Tabs.Apothecary;
+  },
+}
 
 /******************* Combat Tab **********************/
 Tabs.Combat = {
