@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120406a
+// @version        20120406b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120406a';
+var Version = '20120406b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -16523,7 +16523,7 @@ Tabs.Apothecary = {
 			if(Seed.woundedUnits['city'+cid]['unt'+info.troop] > info.max){
 				amt = info.max;
 			} else {
-				amt = Seed.woundedUnits['city'+cid]['unt'+info.troops];
+				amt = Seed.woundedUnits['city'+cid]['unt'+info.troop];
 			}
 			if(cid > 0 && info.troop > 0 && amt > 0){
 				t.do_revive(cid,info.troop,amt);
