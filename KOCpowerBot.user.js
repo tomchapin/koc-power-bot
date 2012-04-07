@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120406d
+// @version        20120407a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120406d';
+var Version = '20120407a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -271,6 +271,8 @@ var ThroneOptions = {
 	Good:0,
 	Bad:0,
 	Items: [],
+	Salvage:{Attack:true,Defense:true,Life:true,Speed:true,Accuracy:true,Range:true,Load:true,MarchSize:true,MarchSpeed:true,CombatSkill:true,IntelligenceSkill:true,PoliticsSkill:true,ResourcefulnessSkill:true,TrainingSpeed:true,ConstructionSpeed:true,ResearchSpeed:true,CraftingSpeed:true,Upkeep:true,ResourceProduction:true,ResourceCap:true,Storehouse:true,Morale:true,ItemDrop:true},
+	SalvageQuality:0,
 };
 var AttackOptions = {
   LastReport    		: 0,
@@ -643,7 +645,7 @@ function pbStartup (){
   ChatPane.init();
   ChatStuff.init();
   DeleteReports.init();
-  DeleteThrone.init();
+  //DeleteThrone.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
     tabManager.showTab();
@@ -1561,18 +1563,23 @@ Tabs.Throne = {
   curTabBut : null,
   curTabName : null,
   SelId:null,
-  Items:[],
   log:[],
+  SalvageLog:[],
   setRepairTimer:null,
   setActionTimer:null,
+  SalvageArray:[],
+  SalvageRunning:false,
+  LastDeleted:0,
 
   init : function (div){
     var t = Tabs.Throne;
     t.cont = div;
     
     var a = JSON2.parse(GM_getValue ('ThroneHistory_'+getServerId(), '[]'));
-    logit(a.toSource());
     if (matTypeof(a) == 'array') t.log = a;
+    var a = JSON2.parse(GM_getValue ('ThroneSalvageHistory_'+getServerId(), '[]'));
+    if (matTypeof(a) == 'array') t.SalvageLog = a;
+
 
     var main = '<TABLE align=center><TR><TD><INPUT class=pbSubtab ID=ptmrchSubSal type=submit value="Salvage"></td>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubUE type=submit value="Upgrade/Enhance"></td>';
@@ -1607,34 +1614,78 @@ Tabs.Throne = {
       Options.curMarchTab = t.curTabName;
       t.show ();
     }
-
     t.checkUpgradeInfo(true);
     if (ThroneOptions.Active) t.setActionTimer = setInterval(t.doAction,10000);
-
+    setInterval(t.salvageCheck,10*60*1000);
  },
     
-    Savalge : function (){ 
+ Salvage : function (){ 
     var t = Tabs.Throne; 
     try {      
-      m = '<TABLE class=ptTab>';
-	  m+= '<TR><TD colspan=2><br><b>'+translate("Throne Room Auto Salvage")+':</td></tr>';
-      m+= '<TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/></td><TD> '+translate("Auto delete throne items below")+' '+ htmlSelector({0:'-----', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>';
-	  m+= '<TR><TD>&nbsp;&nbsp;&nbsp-</td><td>'+translate("Save the first")+': <INPUT id=throneSaveNum type=text size=2 maxlength=3 \> '+translate("items")+'</td></tr>';
-	  m+= '<TR><TD>&nbsp;&nbsp;&nbsp-</td><td>'+translate("Save inactive Range items")+': '+ htmlSelector({0:'----', 1:translate('All'), 3:translate('Epic or Wonderous'), 5:translate('Wonderous only'), 8:translate('Epic and Wonderous'),9:translate('Rare Epic and Wonderous')},Options.RangeSaveModeSetting,'id=selectRangeSaveMode') + '<span style="color:#800; font-weight:bold"><sup> &nbsp *'+translate("Saves range items")+'</sup></span></td></tr>';
-      m+= '<TR><TD>&nbsp;&nbsp;&nbsp-</td><td></b>'+translate("Bot Deleted")+': &nbsp;' + Options.throneDeletedNum + '&nbsp; '+translate("Items")+' &nbsp; <span style="color:#800; font-weight:bold"><sup>*+'+translate("Updates On Refresh")+'</sup></span></td></tr></table>';
-	
+      m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=60% class=pbTab>';
+      //m+= '<TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/>ON</td></tr>'; //<TD> '+translate("Auto delete throne items below")+' '+ htmlSelector({0:'-----', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>';
+	  m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
+	  m+='<TD><INPUT id=ShowSalvageHistory type=submit value="History"></td></tr></table>'
+      
+      m+='<TABLE id=pbbarbingfunctions width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Defense type=checkbox '+ (ThroneOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Life type=checkbox '+ (ThroneOptions.Salvage.Life?'CHECKED ':'') +'/>&nbsp;Life</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Speed type=checkbox '+ (ThroneOptions.Salvage.Speed?'CHECKED ':'') +'/>&nbsp;Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Accuracy type=checkbox '+ (ThroneOptions.Salvage.Accuracy?'CHECKED ':'') +'/>&nbsp;Accuracy</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Range type=checkbox '+ (ThroneOptions.Salvage.Range?'CHECKED ':'') +'/>&nbsp;Range</td></tr>';
+      m+='<TR></tr><TR><TD><B>March:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Load type=checkbox '+ (ThroneOptions.Salvage.Load?'CHECKED ':'') +'/>&nbsp;Load</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=MarchSize type=checkbox '+ (ThroneOptions.Salvage.MarchSize?'CHECKED ':'') +'/>&nbsp;March Size</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=MarchSpeed type=checkbox '+ (ThroneOptions.Salvage.MarchSpeed?'CHECKED ':'') +'/>&nbsp;March Speed</td></tr>';
+      m+='<TR></tr><TR><TD><B>Skills:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=CombatSkill type=checkbox '+ (ThroneOptions.Salvage.CombatSkill?'CHECKED ':'') +'/>&nbsp;Combat Skill</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=IntelligenceSkill type=checkbox '+ (ThroneOptions.Salvage.IntelligenceSkill?'CHECKED ':'') +'/>&nbsp;Intelligence Skill</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=PoliticsSkill type=checkbox '+ (ThroneOptions.Salvage.PoliticsSkill?'CHECKED ':'') +'/>&nbsp;Politics Skill</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourcefulnessSkill type=checkbox '+ (ThroneOptions.Salvage.Resourcefulness?'CHECKED ':'') +'/>&nbsp;Resourcefulness Skill</td></tr>';
+ 	  m+='<TR></tr><TR><TD><B>Speed:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=TrainingSpeed type=checkbox '+ (ThroneOptions.Salvage.TrainingSpeed?'CHECKED ':'') +'/>&nbsp;Training Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ConstructionSpeed type=checkbox '+ (ThroneOptions.Salvage.ConstructionSpeed?'CHECKED ':'') +'/>&nbsp;Construction Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResearchSpeed type=checkbox '+ (ThroneOptions.Salvage.ResearchSpeed?'CHECKED ':'') +'/>&nbsp;Research Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=CraftingSpeed type=checkbox '+ (ThroneOptions.Salvage.CraftingSpeed?'CHECKED ':'') +'/>&nbsp;Crafting Speed</td></tr>';
+	  m+='<TR></tr><TR><TD><B>Recources:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Upkeep type=checkbox '+ (ThroneOptions.Salvage.Upkeep?'CHECKED ':'') +'/>&nbsp;Upkeep</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourceProduction type=checkbox '+ (ThroneOptions.Salvage.ResourceProduction?'CHECKED ':'') +'/>&nbsp;Resource Production</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourceCap type=checkbox '+ (ThroneOptions.Salvage.ResourceCap?'CHECKED ':'') +'/>&nbsp;Resource Cap</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Storehouse type=checkbox '+ (ThroneOptions.Salvage.Storehouse?'CHECKED ':'') +'/>&nbsp;Storehouse</td></tr>';
+      m+='<TR></tr><TR><TD><B>Varia:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Morale type=checkbox '+ (ThroneOptions.Salvage.Morale?'CHECKED ':'') +'/>&nbsp;Morale</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ItemDrop type=checkbox '+ (ThroneOptions.Salvage.ItemDrop?'CHECKED ':'') +'/>&nbsp;ItemDrop</td></tr></table>';
+      
       t.Overv.innerHTML = m;
-      document.getElementById('selecttil').addEventListener ('change', function(){
-		Options.ThroneDeleteLevel = this.value;
-		saveOptions();
-      },false);
-	  document.getElementById('selectRangeSaveMode').addEventListener ('change', function(){
-      		Options.RangeSaveModeSetting = document.getElementById('selectRangeSaveMode').value;
-      		saveOptions();
-      },false);
+      
+      document.getElementById('Attack').addEventListener ('change', function(){ThroneOptions.Salvage.Attack = document.getElementById('Attack').checked;saveThroneOptions();},false);
+      document.getElementById('Defense').addEventListener ('change', function(){ThroneOptions.Salvage.Defense = document.getElementById('Defense').checked;saveThroneOptions();},false);
+      document.getElementById('Life').addEventListener ('change', function(){ThroneOptions.Salvage.Life = document.getElementById('Life').checked;saveThroneOptions();},false);
+      document.getElementById('Speed').addEventListener ('change', function(){ThroneOptions.Salvage.Speed = document.getElementById('Speed').checked;saveThroneOptions();},false);
+      document.getElementById('Accuracy').addEventListener ('change', function(){ThroneOptions.Salvage.Accuracy = document.getElementById('Accuracy').checked;saveThroneOptions();},false);
+      document.getElementById('Range').addEventListener ('change', function(){ThroneOptions.Salvage.Range = document.getElementById('Range').checked;saveThroneOptions();},false);
+      document.getElementById('Load').addEventListener ('change', function(){ThroneOptions.Salvage.Load = document.getElementById('Load').checked;saveThroneOptions();},false);
+      document.getElementById('MarchSize').addEventListener ('change', function(){ThroneOptions.Salvage.MarchSize = document.getElementById('MarchSize').checked;saveThroneOptions();},false);
+      document.getElementById('MarchSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.MarchSpeed = document.getElementById('MarchSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('CombatSkill').addEventListener ('change', function(){ThroneOptions.Salvage.CombatSkill = document.getElementById('CombatSkill').checked;saveThroneOptions();},false);
+      document.getElementById('IntelligenceSkill').addEventListener ('change', function(){ThroneOptions.Salvage.IntelligenceSkill = document.getElementById('IntelligenceSkill').checked;saveThroneOptions();},false);
+      document.getElementById('PoliticsSkill').addEventListener ('change', function(){ThroneOptions.Salvage.PoliticsSkill = document.getElementById('PoliticsSkill').checked;saveThroneOptions();},false);
+      document.getElementById('ResourcefulnessSkill').addEventListener ('change', function(){ThroneOptions.Salvage.ResourcefulnessSkill = document.getElementById('ResourcefulnessSkill').checked;saveThroneOptions();},false);
+      document.getElementById('TrainingSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.TrainingSpeed = document.getElementById('TrainingSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('ConstructionSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.ConstructionSpeed = document.getElementById('ConstructionSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('ResearchSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.ResearchSpeed = document.getElementById('ResearchSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('CraftingSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.CraftingSpeed = document.getElementById('CraftingSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('Upkeep').addEventListener ('change', function(){ThroneOptions.Salvage.Upkeep = document.getElementById('Upkeep').checked;saveThroneOptions();},false);
+      document.getElementById('ResourceProduction').addEventListener ('change', function(){ThroneOptions.Salvage.ResourceProduction = document.getElementById('ResourceProduction').checked;saveThroneOptions();},false);
+      document.getElementById('ResourceCap').addEventListener ('change', function(){ThroneOptions.Salvage.ResourceCap = document.getElementById('ResourceCap').checked;saveThroneOptions();},false);
+      document.getElementById('Storehouse').addEventListener ('change', function(){ThroneOptions.Salvage.Storehouse = document.getElementById('Storehouse').checked;saveThroneOptions();},false);
+      document.getElementById('Morale').addEventListener ('change', function(){ThroneOptions.Salvage.Morale = document.getElementById('Morale').checked;saveThroneOptions();},false);
+      document.getElementById('ItemDrop').addEventListener ('change', function(){ThroneOptions.Salvage.ItemDrop = document.getElementById('ItemDrop').checked;saveThroneOptions();},false);
 
-	  t.togOpt ('deletethrone', 'ThroneDeleteItems', DeleteThrone.startdeletethrone);
-	  t.changeOpt ('throneSaveNum', 'throneSaveNum', DeleteThrone.startdeletethrone);
+      document.getElementById('Quality').addEventListener  ('change', function(){ThroneOptions.SalvageQuality = this.value;saveThroneOptions();},false);
+      document.getElementById('ShowSalvageHistory').addEventListener('click', function(){t.PaintSalvageHistory()} , false);
+
       
     } catch (e) {
       t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
@@ -1644,7 +1695,7 @@ Tabs.Throne = {
 Upgrade_Enhance :function (){
     var t = Tabs.Throne;  
     try {      
-      var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED FARMING FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
+      var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED UPGRADE/ENHANCE/REPAIR FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
 	       if (ThroneOptions.Active == false) {
 	             m += '<TD><INPUT id=Enable type=submit value="Queue = OFF"></td>';
 	       } else {
@@ -1693,14 +1744,13 @@ Upgrade_Enhance :function (){
   
 	if (ThroneOptions.Tries > 0) document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
 		else document.getElementById('ShowTries').innerHTML = "Tries: --";
-   
-    t.PaintQueue();
-	setInterval(t.paintStones,30000);
-	if (ThroneOptions.Items.length>0) {t.paintInfo();t.paintStones();}
+   	
+	if (ThroneOptions.Items.length>0) {t.paintInfo();t.paintStones();t.PaintQueue();}
     
   } catch (e) {
       t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }
+setInterval(t.paintStones,30000);
 },
   
 Equip :function (){
@@ -1856,6 +1906,32 @@ PaintHistory : function() {
 	row.insertCell(5).innerHTML = "Bad Req.";
 	popHistory.show(true)	;
 },
+
+
+PaintSalvageHistory : function() {
+	var t = Tabs.Throne;
+	var popHistory = null;
+	popHistory = new pbPopup('pbSalvageShowHistory', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+	var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbBars">';       
+	popHistory.getMainDiv().innerHTML = '</table></div>' + m;
+	popHistory.getTopDiv().innerHTML = '<TD><B>Throne room Salvage list:</td>';
+	for (i=0;i<t.SalvageLog.length;i++){
+		var row = document.getElementById('pbBars').insertRow(0);
+		row.vAlign = 'top';
+		row.style.color = "black";
+		row.insertCell(0).innerHTML = t.SalvageLog[i].time;
+		row.insertCell(1).innerHTML = t.SalvageLog[i].stones;
+		row.insertCell(2).innerHTML = t.SalvageLog[i].msg;
+	}
+	var row = document.getElementById('pbBars').insertRow(0);
+	row.vAlign = 'top';
+	row.style.color = "black";
+	row.insertCell(0).innerHTML = "Time";
+	row.insertCell(1).innerHTML = "Aetherstones";
+	row.insertCell(2).innerHTML = "Action";
+	popHistory.show(true)	;
+},
+
  	addToQueue : function (id,action){
 		var t= Tabs.Throne;
 		document.getElementById('ShowHoover').innerHTML = "";
@@ -1869,39 +1945,40 @@ PaintHistory : function() {
   },
 
   checkUpgradeInfo : function (firstRun){
-		var t= Tabs.Throne;
-    	var countUpgrade = 0;
-		var countEnhance = 0;
-    	var levelfrom = 0;
-		var levelto =0;
-		var qualityfrom = 0;
-		var qualityto = 0;
+	var t= Tabs.Throne;
+    var countUpgrade = 0;
+	var countEnhance = 0;
+    var levelfrom = 0;
+	var levelto =0;
+	var qualityfrom = 0;
+	var qualityto = 0;
 	if (ThroneOptions.Items.length == 0) return;
     for (k=0;k<ThroneOptions.Items.length;k++){
 		countUpgrade = 0;
 		countEnhance = 0;
-
-		if (k>0) for (l=0;l<k;l++) {
-          	if (ThroneOptions.Items[l]["id"] == ThroneOptions.Items[k]["id"] && ThroneOptions.Items[l]["action"] == "Upgrade") {countUpgrade++;}
-			if (ThroneOptions.Items[l]["id"] == ThroneOptions.Items[k]["id"] && ThroneOptions.Items[l]["action"] == "Enhance") {countEnhance++;}
-      	}
-		if (ThroneOptions.Items[k]["action"] == "Upgrade") {
-			ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
-			ThroneOptions.Items[k]["levelto"] = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
-				ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
-			if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {alert("You cant upgrade higher then level 10!");ThroneOptions.Items.splice (k,1);return;}
-		}
-		if (ThroneOptions.Items[k]["action"] == "Enhance") {
-			ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
-			ThroneOptions.Items[k]["qualityto"] = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
-			 ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
-			if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {alert("You cant upgrade higher then quality 5!");ThroneOptions.Items.splice (k,1);return;}
-		}
-		if (ThroneOptions.Items[k]["action"] == "Enhance") var lvl = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
-		if (ThroneOptions.Items[k]["action"] == "Upgrade") var lvl = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
-		costAction = ThroneOptions.Items[k]["action"].toLowerCase();
-		if (unsafeWindow.cm.thronestats[costAction][lvl] != undefined) ThroneOptions.Items[k]["cost"] = unsafeWindow.cm.thronestats[costAction][lvl].Stones;
-		else ThroneOptions.Items.splice (k,1);
+		if (unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]] != undefined) {
+				if (k>0) for (l=0;l<k;l++) {
+		          	if (ThroneOptions.Items[l]["id"] == ThroneOptions.Items[k]["id"] && ThroneOptions.Items[l]["action"] == "Upgrade") {countUpgrade++;}
+					if (ThroneOptions.Items[l]["id"] == ThroneOptions.Items[k]["id"] && ThroneOptions.Items[l]["action"] == "Enhance") {countEnhance++;}
+		      	}
+				if (ThroneOptions.Items[k]["action"] == "Upgrade") {
+					ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
+					ThroneOptions.Items[k]["levelto"] = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
+						ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
+					if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {alert("You cant upgrade higher then level 10!");ThroneOptions.Items.splice (k,1);return;}
+				}
+				if (ThroneOptions.Items[k]["action"] == "Enhance") {
+					ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
+					ThroneOptions.Items[k]["qualityto"] = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
+					 ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
+					if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {alert("You cant upgrade higher then quality 5!");ThroneOptions.Items.splice (k,1);return;}
+				}
+				if (ThroneOptions.Items[k]["action"] == "Enhance") var lvl = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
+				if (ThroneOptions.Items[k]["action"] == "Upgrade") var lvl = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
+				costAction = ThroneOptions.Items[k]["action"].toLowerCase();
+				if (unsafeWindow.cm.thronestats[costAction][lvl] != undefined) ThroneOptions.Items[k]["cost"] = unsafeWindow.cm.thronestats[costAction][lvl].Stones;
+				else ThroneOptions.Items.splice (k,1);
+		} else ThroneOptions.Items.splice (k,1);
     }
     saveThroneOptions();
   },
@@ -1909,8 +1986,11 @@ PaintHistory : function() {
     
 	PaintQueue : function (){
 		var t= Tabs.Throne;
-		document.getElementById('ShowQueueDiv').innerHTML = '<TABLE id=ShowQueue class=pbStat align="center" width=80%></table>';
-		for (k=(ThroneOptions.Items.length-1);k>=0;k--){t._addTab(k,ThroneOptions.Items[k]["name"],ThroneOptions.Items[k]["qualityfrom"],ThroneOptions.Items[k]["qualityto"],ThroneOptions.Items[k]["levelfrom"],ThroneOptions.Items[k]["levelto"],ThroneOptions.Items[k]["action"],ThroneOptions.Items[k]["active"],ThroneOptions.Items[k]["cost"]);}
+		document.getElementById('ShowQueueDiv').innerHTML = '<TABLE id=ShowQueue class=pbStat align="center" width=90%></table>';
+		for (k=(ThroneOptions.Items.length-1);k>=0;k--){
+			if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]) == 'object') t._addTab(k,ThroneOptions.Items[k]["name"],ThroneOptions.Items[k]["qualityfrom"],ThroneOptions.Items[k]["qualityto"],ThroneOptions.Items[k]["levelfrom"],ThroneOptions.Items[k]["levelto"],ThroneOptions.Items[k]["action"],ThroneOptions.Items[k]["active"],ThroneOptions.Items[k]["cost"]);
+			else ThroneOptions.Items.splice (k,1);
+		}
 		t._addTabHeader();
   },
   
@@ -1944,7 +2024,9 @@ PaintHistory : function() {
   
   doEnhance : function() {
 		var t = Tabs.Throne;
-		var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
+		if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]) == 'object') {
+				var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
+		} else return;
 		var cityid = 0;
 		for (var k in Cities.byID) {
 			if ( Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])))
@@ -2013,7 +2095,6 @@ PaintHistory : function() {
 				return;	
 			},
 			onFailure: function () {
-			   logit("enhance error");
 			   return;
 			},
 		});
@@ -2021,12 +2102,15 @@ PaintHistory : function() {
 	   
 	doUpgrade : function() {
 		var t = Tabs.Throne;
-		var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
+		if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]) == 'object') {
+				var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
+		} else return;
 		var cityid = 0;
 		for (var k in Cities.byID) {
 			if ( Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])))
 			{
 			   cityid = k;
+			   break;
 			}
 		}
 		if(cityid == 0){
@@ -2091,7 +2175,6 @@ PaintHistory : function() {
 			    return;
 			},
 			onFailure: function () {
-			   logit("upgrade error");
 			   return;
 			},
 		});   
@@ -2142,7 +2225,6 @@ PaintHistory : function() {
 				   return;
 			},
 			onFailure: function () {
-			    logit("repair error");
 			   return;
 			},
 		});
@@ -2171,7 +2253,9 @@ PaintHistory : function() {
 
   paintInfo : function (){
 		var t = Tabs.Throne;
-  		var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
+		if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]) == 'number') {
+				var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
+		} else return;
 		  var id =0;
 		  var tier=0;
 		  var Current=0;
@@ -2243,18 +2327,124 @@ addToLog : function (id,action,tries,good,bad){
 	var time = now.getDate() +"/"+ (now.getMonth()+1) +"/"+ now.getFullYear() +"  "+ now.getUTCHours() + ":" + now.getMinutes();
 	var name = unsafeWindow.kocThroneItems[id]["name"];
 	t.log.push ({time:time,name:name,action:action,tries:tries,good:good,bad:bad});
-	if (t.log.length > 30) t.log.splice(0,1);
+	if (t.log.length > 50) t.log.splice(0,1);
 	GM_setValue ('ThroneHistory_'+getServerId(), JSON2.stringify(t.log));
 },
 
-	
+
+addToSalvageLog : function (msg,stones){
+	var t = Tabs.Throne;
+	var now = new Date();
+	D = t.addZero(now.getDate());
+	M = t.addZero(now.getMonth()+1);
+	Y = t.addZero(now.getFullYear());
+	h = t.addZero(now.getHours());
+	m = t.addZero(now.getMinutes()); 
+	var time =  D +"/"+ M +"/"+ Y +"  "+ h + ":" + m;
+	t.SalvageLog.push ({time:time,stones:stones,msg:msg});
+	if (t.SalvageLog.length > 100) t.SalvageLog.splice(0,1);
+	GM_setValue ('ThroneSalvageHistory_'+getServerId(), JSON2.stringify(t.SalvageLog));
+},
+
+addZero : function (i){
+if (i<10) 
+  {
+  i="0" + i;
+  }
+return i;
+},
+
+
+salvageCheck : function (){
+	var t = Tabs.Throne;
+	var del = true;
+	var level = false;
+	var type ="";
+	var NotUpgrading = true;
+	var count=0;
+	if (t.SalvageRunning == true) return;
+	t.SalvageRunning = true;
+	for (m in unsafeWindow.kocThroneItems) {
+		y =   unsafeWindow.kocThroneItems[m];
+		count++;
+		if (typeof(y.id) == 'number') {
+			NotUpgrading = true;
+			for (k in ThroneOptions.Items) {if (ThroneOptions.Items[k]["id"] == y.id) NotUpgrading = false;}
+			if (count<=(parseInt(Seed.throne.rowNum)*5)) {
+					del = true;
+					level = false;
+					if (y.quality > ThroneOptions.SalvageQuality) level=true;
+					if (ThroneOptions.SalvageQuality == 0) level=true;
+					for (i=1;i<=5;i++){
+						for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++){
+							type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];
+							if (ThroneOptions.Salvage[type]  && level) {del = false};
+						}
+					}
+					if (del && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
+						t.SalvageArray.push(y.id);
+					}					 
+			}
+		}
+	}
+	if (t.SalvageArray.length == 0) {
+		t.SalvageRunning = false;		
+	} else setTimeout(t.doSalvage, 6000);		
+},	
+
+doSalvage : function(){
+		var t = Tabs.Throne;	
+		var cityid = 0;
+		for (var k in Cities.byID) {
+			if (Seed.resources["city"+k]["rec5"][0] < 1000000)
+			{
+			   cityid = k;
+			   break;
+			}
+		}
+		if (cityid == 0) cityid = Seed.cities[0][0];
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+		params.action = 'salvage';
+		params.itemId = t.SalvageArray[0];
+		params.cityId = cityid;
+      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			loading: true,
+			onSuccess: function (transport) {
+				var rslt = eval("(" + transport.responseText + ")");
+				if(rslt.ok){
+					y =  unsafeWindow.kocThroneItems[params.itemId];
+					z = unsafeWindow.cm.thronestats.effects;
+					var msg = (y.name + " (" + z[y.effects["slot1"].id]["2"] + "/"+ z[y.effects["slot2"].id]["2"]+ "/"+ z[y.effects["slot3"].id]["2"]+ "/"+ z[y.effects["slot4"].id]["2"]+ "/"+ z[y.effects["slot5"].id]["2"] +")");
+					t.addToSalvageLog(msg,rslt.aetherstones);
+					unsafeWindow.kocThroneItems[params.itemId].salvage();
+				}
+				else {
+					t.addToSalvageLog("Salvage Failed :(","");
+				}
+			},
+			onFailure: function () {
+					return;
+			},
+		});
+		t.SalvageArray.splice(0,1);
+		t.LastDeleted = params.itemId;
+		if (t.SalvageArray.length > 0) setTimeout(t.doSalvage, 6000);
+		else {
+			t.SalvageRunning = false;
+			t.salvageCheck();
+		}
+},
+
 hide : function (){
 },
 
 show : function (){
     var t = Tabs.Throne;
     if (t.curTabName == 'Sal') 
-    	t.Savalge();
+    	t.Salvage();
     else if (t.curTabName == 'UE')
     	t.Upgrade_Enhance();
 	else if (t.curTabName == 'EQ')
