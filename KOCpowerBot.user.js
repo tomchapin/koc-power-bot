@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120407a
+// @version        20120407b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120407a';
+var Version = '20120407b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1624,6 +1624,7 @@ Tabs.Throne = {
     try {      
       m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=60% class=pbTab>';
       //m+= '<TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/>ON</td></tr>'; //<TD> '+translate("Auto delete throne items below")+' '+ htmlSelector({0:'-----', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>';
+	  m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td>';
 	  m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
 	  m+='<TD><INPUT id=ShowSalvageHistory type=submit value="History"></td></tr></table>'
       
@@ -1659,6 +1660,17 @@ Tabs.Throne = {
       
       t.Overv.innerHTML = m;
       
+      $("pbsalvage_run").addEventListener('click', function(e){
+		  if(Options.ThroneDeleteItems){
+			e.target.value = "Auto Salvage = OFF";
+			Options.ThroneDeleteItems = false;
+			saveOptions();
+		  } else {
+			e.target.value = "Auto Salvage = ON";
+			Options.ThroneDeleteItems = true;
+			saveOptions();
+		  }
+	  },false);
       document.getElementById('Attack').addEventListener ('change', function(){ThroneOptions.Salvage.Attack = document.getElementById('Attack').checked;saveThroneOptions();},false);
       document.getElementById('Defense').addEventListener ('change', function(){ThroneOptions.Salvage.Defense = document.getElementById('Defense').checked;saveThroneOptions();},false);
       document.getElementById('Life').addEventListener ('change', function(){ThroneOptions.Salvage.Life = document.getElementById('Life').checked;saveThroneOptions();},false);
@@ -2362,6 +2374,7 @@ salvageCheck : function (){
 	var type ="";
 	var NotUpgrading = true;
 	var count=0;
+	if(!Options.ThroneDeleteItems) return;
 	if (t.SalvageRunning == true) return;
 	t.SalvageRunning = true;
 	for (m in unsafeWindow.kocThroneItems) {
