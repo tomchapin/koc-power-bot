@@ -16689,7 +16689,7 @@ var DeleteReports = {
     },
 }
 
-/******************* Throne Delete **********************/
+/******************* Throne Delete *********************
 var DeleteThrone = {
 	deltitems : [],
 	deleting : false,
