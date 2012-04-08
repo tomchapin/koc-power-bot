@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120407b
+// @version        20120408a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120407b';
+var Version = '20120408a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -273,6 +273,7 @@ var ThroneOptions = {
 	Items: [],
 	Salvage:{Attack:true,Defense:true,Life:true,Speed:true,Accuracy:true,Range:true,Load:true,MarchSize:true,MarchSpeed:true,CombatSkill:true,IntelligenceSkill:true,PoliticsSkill:true,ResourcefulnessSkill:true,TrainingSpeed:true,ConstructionSpeed:true,ResearchSpeed:true,CraftingSpeed:true,Upkeep:true,ResourceProduction:true,ResourceCap:true,Storehouse:true,Morale:true,ItemDrop:true},
 	SalvageQuality:0,
+	saveXitems:0,
 };
 var AttackOptions = {
   LastReport    		: 0,
@@ -1428,7 +1429,6 @@ Tabs.farm = {
   		         }
   		         var currentcityid = params.cid;
   		         unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-  		         //unsafeWindow.update_seed(rslt.updateSeed)
                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
 				 var slots=0;
 			     for(var k in Seed.queue_atkp['city'+cityID]) slots++;
@@ -1570,6 +1570,7 @@ Tabs.Throne = {
   SalvageArray:[],
   SalvageRunning:false,
   LastDeleted:0,
+  EquipType: ["Advisor","Banner","Chair","Table","Windows"],
 
   init : function (div){
     var t = Tabs.Throne;
@@ -1622,11 +1623,10 @@ Tabs.Throne = {
  Salvage : function (){ 
     var t = Tabs.Throne; 
     try {      
-      m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=60% class=pbTab>';
-      //m+= '<TR><TD><INPUT id=deletethrone type=checkbox '+ (Options.ThroneDeleteItems?'CHECKED ':'') +'/>ON</td></tr>'; //<TD> '+translate("Auto delete throne items below")+' '+ htmlSelector({0:'-----', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},Options.ThroneDeleteLevel,'id=selecttil') +'</td></tr>';
-	  m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td>';
+      m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
+	  m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td></tr>';
 	  m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
-	  m+='<TD><INPUT id=ShowSalvageHistory type=submit value="History"></td></tr></table>'
+	  m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td><TD><FONT color=red>Ckeck boxes for items you want to <b>KEEP</b>.</font></td></table>';
       
       m+='<TABLE id=pbbarbingfunctions width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td></tr>';
@@ -1643,7 +1643,7 @@ Tabs.Throne = {
       m+='<TR><TD></td><TD><INPUT id=CombatSkill type=checkbox '+ (ThroneOptions.Salvage.CombatSkill?'CHECKED ':'') +'/>&nbsp;Combat Skill</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=IntelligenceSkill type=checkbox '+ (ThroneOptions.Salvage.IntelligenceSkill?'CHECKED ':'') +'/>&nbsp;Intelligence Skill</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=PoliticsSkill type=checkbox '+ (ThroneOptions.Salvage.PoliticsSkill?'CHECKED ':'') +'/>&nbsp;Politics Skill</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=ResourcefulnessSkill type=checkbox '+ (ThroneOptions.Salvage.Resourcefulness?'CHECKED ':'') +'/>&nbsp;Resourcefulness Skill</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourcefulnessSkill type=checkbox '+ (ThroneOptions.Salvage.ResourcefulnessSkill?'CHECKED ':'') +'/>&nbsp;Resourcefulness Skill</td></tr>';
  	  m+='<TR></tr><TR><TD><B>Speed:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=TrainingSpeed type=checkbox '+ (ThroneOptions.Salvage.TrainingSpeed?'CHECKED ':'') +'/>&nbsp;Training Speed</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=ConstructionSpeed type=checkbox '+ (ThroneOptions.Salvage.ConstructionSpeed?'CHECKED ':'') +'/>&nbsp;Construction Speed</td></tr>';
@@ -1696,6 +1696,7 @@ Tabs.Throne = {
       document.getElementById('ItemDrop').addEventListener ('change', function(){ThroneOptions.Salvage.ItemDrop = document.getElementById('ItemDrop').checked;saveThroneOptions();},false);
 
       document.getElementById('Quality').addEventListener  ('change', function(){ThroneOptions.SalvageQuality = this.value;saveThroneOptions();},false);
+      document.getElementById('saveXitems').addEventListener('change', function(){ThroneOptions.saveXitems = document.getElementById('saveXitems').value;saveThroneOptions();} , false);
       document.getElementById('ShowSalvageHistory').addEventListener('click', function(){t.PaintSalvageHistory()} , false);
 
       
@@ -1730,12 +1731,12 @@ Upgrade_Enhance :function (){
 	  m+= '<br/><DIV id=ShowQueueDiv></div>';
 	  t.Overv.innerHTML = m;
       
-     document.getElementById('ThroneItems').options.length=0;
-		for (i in unsafeWindow.kocThroneItems){
-			var o = document.createElement("option");
-			o.text = unsafeWindow.kocThroneItems[i]["name"];
-			o.value = unsafeWindow.kocThroneItems[i]["id"];
-			document.getElementById("ThroneItems").options.add(o);
+    document.getElementById('ThroneItems').options.length=0;
+	for (i in unsafeWindow.kocThroneItems){
+		var o = document.createElement("option");
+		o.text = unsafeWindow.kocThroneItems[i]["name"];
+		o.value = unsafeWindow.kocThroneItems[i]["id"];
+		document.getElementById("ThroneItems").options.add(o);
 	}
 	document.getElementById('addEnhance').addEventListener ('click', function (){t.addToQueue(document.getElementById('ThroneItems').value,"Enhance");},false);
 	document.getElementById('addUpgrade').addEventListener ('click', function (){t.addToQueue(document.getElementById('ThroneItems').value,"Upgrade");},false);
@@ -1767,13 +1768,44 @@ setInterval(t.paintStones,30000);
   
 Equip :function (){
     var t = Tabs.Throne;  
-    try {      
-      m = '<TABLE class=ptTab>';
-	  m+='<TR><TD colspan=2><U><B>Equip tab coming soon!!!</b></u></td></tr></table>';
-
-      t.Overv.innerHTML = m;
-
-
+    try {   
+     var m = '<DIV id=pbTowrtDivF class=pbStat>EQUIP THRONE ITEMS</div><br>';
+     m+='<DIV align=center>Preset: <SELECT id=preset type=list></select></div><br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab>';
+	 for (k in t.EquipType){
+	 	var y = t.EquipType[k];
+	 	if (typeof(y) == "string") {
+	 		what = y.toLowerCase();
+	 		if (y == "Windows") y = "Window";
+	 		m+='<TR><TD>'+ y +':</td><TD></td><TD><SELECT id='+ what +' type=list></select></td><TD><INPUT id="Equip'+ what +'" type=submit value="Equip"></td><TD><INPUT id="Unequip'+ what +'" type=submit value="Unequip"></td><TD><div id="info'+ what +'"</td></tr><TR><TD>&nbsp;</td></tr><TR><TD>&nbsp;</td></tr>';
+	 	}
+	 }
+     m+="</table>"
+    t.Overv.innerHTML = m;
+	document.getElementById("preset").options.length=0;
+	for (i=1;i<=Seed.throne.slotNum;i++){
+		var o = document.createElement("option");			
+		o.text = i;
+		o.value = i;
+		document.getElementById("preset").options.add(o);
+	}	
+	document.getElementById("advisor").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("advisor").value,"advisor")},false);
+	document.getElementById("banner").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("banner").value,"banner")},false);
+	document.getElementById("chair").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("chair").value,"chair")},false);
+	document.getElementById("table").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("table").value,"table")},false);
+	document.getElementById("windows").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("windows").value,"windows")},false);
+	document.getElementById("Equipadvisor").addEventListener ('click', function (){t.doEquip(document.getElementById("advisor").value)},false);
+	document.getElementById("Equipbanner").addEventListener ('click', function (){t.doEquip(document.getElementById("banner").value)},false);
+	document.getElementById("Equipchair").addEventListener ('click', function (){t.doEquip(document.getElementById("chair").value)},false);
+	document.getElementById("Equiptable").addEventListener ('click', function (){t.doEquip(document.getElementById("table").value)},false);
+	document.getElementById("Equipwindows").addEventListener ('click', function (){t.doEquip(document.getElementById("windows").value)},false);
+	document.getElementById("Unequipadvisor").addEventListener ('click', function (){t.doUnequip(document.getElementById("advisor").value)},false);
+	document.getElementById("Unequipbanner").addEventListener ('click', function (){t.doUnequip(document.getElementById("banner").value)},false);
+	document.getElementById("Unequipchair").addEventListener ('click', function (){t.doUnequip(document.getElementById("chair").value)},false);
+	document.getElementById("Unequiptable").addEventListener ('click', function (){t.doUnequip(document.getElementById("table").value)},false);
+	document.getElementById("Unequipwindows").addEventListener ('click', function (){t.doUnequip(document.getElementById("windows").value)},false);
+	document.getElementById("preset").addEventListener ('change', function (){t.doPreset(document.getElementById("preset").value)},false);
+	document.getElementById("preset").value = Seed.throne.activeSlot;	
+	t.FillEquipCheckboxes();
     } catch (e) {
       t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }
@@ -1888,6 +1920,122 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
 		 row.insertCell(5).innerHTML = "Cost";
 	     row.insertCell(6).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 	   },
+
+
+FillEquipCheckboxes: function(){
+	var t = Tabs.Throne;
+	for (k in t.EquipType) {
+    	var y = t.EquipType[k];
+    	var itemEquiped = 0;
+    	var count = 0;
+    	if (typeof(y) == "string") {
+    		what = y.toLowerCase();
+			document.getElementById(what).options.length=0;
+			for (l in unsafeWindow.kocThroneItems) {
+				z = unsafeWindow.kocThroneItems[l];
+				check = what;
+				if (check == "windows") check = "window";
+				count++;
+				if (count<=(parseInt(Seed.throne.rowNum)*5)){
+					if (z.type == check) {	
+						var o = document.createElement("option");			
+						o.text = z.name;
+						o.value = l;
+						document.getElementById(what).options.add(o);
+						if (z.isEquipped) itemEquiped = l;
+					}
+				}	
+
+			}
+			if (document.getElementById(what).options.length == 0){
+					var o = document.createElement("option");	
+					o.text = "No " + check + " item available :(";
+					o.value = 1;
+					document.getElementById(what).options.add(o);
+					itemEquiped = 1;
+			} else if (itemEquiped == 0) {
+				var o = document.createElement("option");			
+				o.text = "No " + check + " item equiped !!!";
+				o.value = 2;
+				document.getElementById(what).options.add(o);
+				document.getElementById('info'+what).innerHTML = "";
+				itemEquiped = 2;
+			}
+			logit(what + ' / ' + itemEquiped);
+			document.getElementById(what).value = itemEquiped;	
+		}
+		switch(itemEquiped){
+			case 0:
+				break;
+			case 1: 
+				document.getElementById("Equip"+what).disabled = true;
+				document.getElementById("Unequip"+what).disabled = true;
+				break;
+			case 2:
+				document.getElementById("Equip"+what).disabled = false;
+				document.getElementById("Unequip"+what).disabled = true;
+				break;
+			default:
+				document.getElementById("Equip"+what).disabled = true;
+				document.getElementById("Unequip"+what).disabled = false;
+				t.paintEquipInfo(document.getElementById(what).value,what);
+				break;
+		}
+		
+	}
+},
+
+doPreset : function (preset){
+	var t = Tabs.Throne;
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+	params.action = 'setPreset';
+	params.presetId = preset;
+				
+  	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+		method: "post",
+		parameters: params,
+		loading: true,
+		onSuccess: function (transport) {
+			var rslt = eval("(" + transport.responseText + ")");
+				if(rslt.ok){
+					button = '<li id="throneInventoryPreset' + preset + '" class="active">'+preset+'</li>';
+					unsafeWindow.cm.ThroneView.clickActivePreset(button);
+					t.FillEquipCheckboxes();
+			   } 
+		},
+		onFailure: function () {
+		   return;
+		},
+	});
+		
+},
+
+paintEquipInfo : function (z,what){
+		var t = Tabs.Throne;
+		var m="";
+		if (typeof(unsafeWindow.kocThroneItems[z]) == 'object') {
+				var y = unsafeWindow.kocThroneItems[z];
+		} else return;
+		  var id =0;
+		  var tier=0;
+		  var Current=0;
+		  m="<TABLE width=80% height=0% align='center' class=pbTab>";
+		  for (i=1;i<=5;i++) {
+			   id = y["effects"]["slot"+i]["id"];
+			   tier = parseInt(y["effects"]["slot"+i]["tier"]);
+			   level = y["level"];
+			   p = unsafeWindow.cm.thronestats.tiers[id][tier];
+			   Current = p.base + ((level * level + level) * p.growth * 0.5);
+			   var quality = parseInt(y["quality"]);
+				if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+				else m+='<TR><TD><FONT color=red>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+		}
+		m+="</table>"
+
+		document.getElementById('info'+what).innerHTML = m;
+},
+
 
 PaintHistory : function() {
 	var t = Tabs.Throne;
@@ -2241,7 +2389,69 @@ PaintSalvageHistory : function() {
 			},
 		});
 	},
+
+
+	doEquip : function(n,preset) {
+		var t = Tabs.Throne;
+		if (typeof(unsafeWindow.kocThroneItems[n]) == 'object') {
+				var y = unsafeWindow.kocThroneItems[n];
+		} else return;
+
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		logit(n.toSource());
+		params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+		params.action = 'equipItem';
+		params.itemId = y.id;
+		params.presetId = document.getElementById("preset").value;
+					
+      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			loading: true,
+			onSuccess: function (transport) {
+				var rslt = eval("(" + transport.responseText + ")");
+					if(rslt.ok){
+							unsafeWindow.cm.ThroneView.clickItemEquip(y);
+							t.FillEquipCheckboxes();
+				   } 
+			},
+			onFailure: function () {
+			   return;
+			},
+		});
+	},
   
+  doUnequip : function(n,preset) {
+		var t = Tabs.Throne;
+		if (typeof(unsafeWindow.kocThroneItems[n]) == 'object') {
+				var y = unsafeWindow.kocThroneItems[n];
+		} else return;
+
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		logit(n.toSource());
+		params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+		params.action = 'unequipItem';
+		params.itemId = y.id;
+		params.presetId = document.getElementById("preset").value;
+					
+      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			loading: true,
+			onSuccess: function (transport) {
+				var rslt = eval("(" + transport.responseText + ")");
+					if(rslt.ok){
+							unsafeWindow.cm.ThroneView.clickItemUnequip(y);
+							t.FillEquipCheckboxes();
+				   } 
+			},
+			onFailure: function () {
+			   return;
+			},
+		});
+	},
+  
+
   repairTimerUpdate :function (){
 		var t = Tabs.Throne;
         if (ThroneOptions.Items.length == 0) return;
@@ -2383,7 +2593,7 @@ salvageCheck : function (){
 		if (typeof(y.id) == 'number') {
 			NotUpgrading = true;
 			for (k in ThroneOptions.Items) {if (ThroneOptions.Items[k]["id"] == y.id) NotUpgrading = false;}
-			if (count<=(parseInt(Seed.throne.rowNum)*5)) {
+			if (count<=(parseInt(Seed.throne.rowNum)*5) && count>ThroneOptions.saveXitems) {
 					del = true;
 					level = false;
 					if (y.quality > ThroneOptions.SalvageQuality) level=true;
@@ -2460,8 +2670,16 @@ show : function (){
     	t.Salvage();
     else if (t.curTabName == 'UE')
     	t.Upgrade_Enhance();
-	else if (t.curTabName == 'EQ')
+	else if (t.curTabName == 'EQ'){
     	t.Equip();
+    	for (k in t.EquipType) {
+    	var y = t.EquipType[k];
+    		if (typeof(y) == "string") {
+				what = y.toLowerCase();
+				t.paintEquipInfo(document.getElementById(what).value,what)
+			}
+		}
+	}
   },
   
 }
