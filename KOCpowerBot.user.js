@@ -126,7 +126,7 @@ var Options = {
   throneSaveNum	:	10,
   throneDeletedNum : 0,
   RangeSaveModeSetting : 0,
-  Opacity : 0.9,
+  Opacity : '0.9',
   language : 'en',
 };
 //unsafeWindow.pt_Options=Options;
@@ -591,7 +591,7 @@ function pbStartup (){
     tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px; width:80%; padding:0px; }\
     tr.pbretry_pbMainPopTop td { background-color:#a00; color:#fff; border:none; height: 42px;  padding:0px; }\
     .pbPopMain  { border:1px solid #000000; -moz-box-shadow:inset 0px 0px 10px #6a6a6a; -moz-border-radius-bottomright: 20px; -moz-border-radius-bottomleft: 20px;}\
-    .pbPopup  {border:5px ridge #666; opacity:'+(parseInt(Options.Opacity)<'0.5'?'0.5':Options.Opacity)+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000; }\
+    .pbPopup  {border:5px ridge #666; opacity:'+(parseFloat(Options.Opacity)<'0.5'?'0.5':Options.Opacity)+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000; }\
     span.pbTextFriendly {color: #080}\
     span.pbTextHostile {color: #800}\
 	.pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
@@ -599,7 +599,6 @@ function pbStartup (){
     
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
-  readOptions();
   readLanguage();
   readChatOptions();
   readCrestData();
@@ -10017,7 +10016,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>'+translate("Hide window when clicking on map coordinates")+'</td></tr>\
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>'+translate("Enable widescreen style:")+' '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' '+translate("(all domains, requires refresh)")+'</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
-		<TR><TD>&nbsp;&nbsp;&nbsp-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=togOpacity type=text size=3 maxlength=3 value="'+Options.Opacity+'"/> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
+		<TR><TD>&nbsp;&nbsp;&nbsp-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
         <TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable all Fairie popup windows")+'</td></tr>\
         <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>'+translate("Refresh if KOC not loaded within 1 minute (all domains)")+'</td></tr>\
@@ -10070,17 +10069,12 @@ Tabs.Options = {
 	  		}
 	  		ResetAll=true;
 	  		reloadKOC();
-	  },false);	
-	  	
-	   document.getElementById('togOpacity').addEventListener ('change', function(){
-	   Options.Opacity = this.value;
-	   saveOptions();
-	   },false);
+	  },false);
 
-	  document.getElementById('togOpacity').addEventListener('change', function(){Options.Opacity = document.getElementById('togOpacity').value;t.Layout()}, false);
       document.getElementById('pbWatchEnable').addEventListener ('change', t.e_watchChanged, false);
       document.getElementById('pbWideOpt').addEventListener ('change', t.e_wideChanged, false);
       document.getElementById('pbupdate').addEventListener ('change', t.e_updateChanged, false);
+      t.changeOpt ('pbtogOpacity', 'Opacity');
       t.togOpt ('pballowWinMove', 'pbWinDrag', mainPop.setEnableDrag);
       t.togOpt ('pbTrackWinOpen', 'pbTrackOpen');
       t.togOpt ('pbHideOnGoto', 'hideOnGoto');
