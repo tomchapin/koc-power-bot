@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120408a
+// @version        20120410a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120408a';
+var Version = '20120410a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -553,6 +553,7 @@ function pbStartup (){
   //logit ("KofC client version: "+ anticd.getKOCversion());
   
   Seed = unsafeWindow.seed;
+  readOptions();
   var styles = '.xtab {padding-right: 5px; border:none; background:none; white-space:nowrap;}\
     .xtabBR {padding-right: 5px; border:none; background:none;}\
     table.pbTab tr td {border:none; background:none; white-space:nowrap; padding:0px}\
@@ -590,7 +591,7 @@ function pbStartup (){
     tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px; width:80%; padding:0px; }\
     tr.pbretry_pbMainPopTop td { background-color:#a00; color:#fff; border:none; height: 42px;  padding:0px; }\
     .pbPopMain  { border:1px solid #000000; -moz-box-shadow:inset 0px 0px 10px #6a6a6a; -moz-border-radius-bottomright: 20px; -moz-border-radius-bottomleft: 20px;}\
-    .pbPopup  {border:5px ridge #666; opacity:'+Options.Opacity+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000; }\
+    .pbPopup  {border:5px ridge #666; opacity:'+(parseInt(Options.Opacity)<'0.5'?'0.5':Options.Opacity)+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000; }\
     span.pbTextFriendly {color: #080}\
     span.pbTextHostile {color: #800}\
 	.pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
@@ -6603,7 +6604,7 @@ Tabs.transport = {
 		t.popTradeRoutes = new pbPopup('pbShowTrade', 0, 0, 750, 485, true, function() {clearTimeout (1000);});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pbRoutesQueue">';       
 		t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Transport routes")+'</center></td>';
+		t.popTradeRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Transport routes")+'</b></center></td>';
 		t.paintTradeRoutes();
 		t.popTradeRoutes.show(true)	;
 	},
