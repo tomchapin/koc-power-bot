@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120410a
+// @version        20120419a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
-// @include        *.kingdomsofcamelot.com/*standAlone.php*
+// @include        *.kingdomsofcamelot.com/*platforms/kabam*
 // @include        *apps.facebook.com/kingdomsofcamelot/*
 // @include        *kabam.com/kingdoms-of-camelot/play*
 // @include        *facebook.com/connect/uiserver.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120410a';
+var Version = '20120419a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -126,8 +126,9 @@ var Options = {
   throneSaveNum	:	10,
   throneDeletedNum : 0,
   RangeSaveModeSetting : 0,
-  Opacity : '0.9',
+  Opacity : 0.9,
   language : 'en',
+  curMarchTab : "transport",
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -139,6 +140,8 @@ var GlobalOptions = {
   autoPublishPrivacySetting : 80,
   pbupdate : true,
   pbupdatebeta : 0,
+  pbNoMoreKabam : false,
+  escapeurl : null,
 };
 
 var CrestOptions = {
@@ -390,7 +393,7 @@ if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
   return;
 }
-if (document.URL.search(/kabam.com\/kingdoms-of-camelot\/play/i) >= 0 || document.URL.search(/kingdomsofcamelot\.com\/fb\/.*?\/standAlone\.php/i) >= 0){
+if (document.URL.search(/kabam.com\/kingdoms-of-camelot\/play/i) >= 0){
   kabamStandAlone ();
   return;
 }
@@ -420,11 +423,9 @@ function kocWideScreen(){
 	style.innerHTML = 'body {margin:0; width:100%; !important;}';
 	kocFrame.parentNode.appendChild(style);
   }
-  if(document.URL.match(/standalone=0/i)){
-	  kocWatchdog ();
-	  if (GlobalOptions.pbWideScreen)
-			setWideFb();
-  }
+  kocWatchdog ();
+  if (GlobalOptions.pbWideScreen)
+		setWideFb();
 }
 
 /***  Run only in "apps.facebook.com" instance ... ***/
@@ -478,23 +479,22 @@ function facebookInstance (){
 
 function kabamStandAlone (){
   function setWide (){
-	var iFrames = document.getElementsByTagName('IFRAME');
+	var iFrames = $('game_frame');
 	if (!iFrames){
 	  setTimeout (setWide, 1000);
 	  return;
 	}
-	for(var f = 0; f<iFrames.length; f++){
-		if(iFrames[f].src.match(/kingdomsofcamelot\.com\/fb\/.*?\/standAlone\.php/i)){
-			iFrames[f].style.width = '100%';
-			document.getElementById('content').style.width = '100%';
-		}
-		if(iFrames[f].src.match(/kingdomsofcamelot\.com\/fb\/.*?\/main_src\.php/i)){
-			iFrames[f].style.width = '100%';
-		}
-	}
+	iFrames.style.width = '100%';
+	while ( (iFrames=iFrames.parentNode) != null)
+	  if (iFrames.tagName=='DIV')
+		iFrames.style.width = '100%';
   }
   if (GlobalOptions.pbWideScreen)
     setWide();
+  if(GlobalOptions.pbNoMoreKabam){
+	var sr = /signed_request" value="(.*?)"/im.exec ($("post_form").innerHTML);
+	window.location = $("post_form").action+"?signed_request="+sr[1];
+  }
 }
 
 function HandlePublishPopup() {
@@ -1612,7 +1612,6 @@ Tabs.Throne = {
       but.className='pbSubtab pbSubtabSel'; 
       but.disabled=true;
       t.curTabName = but.id.substr(9);
-      Options.curMarchTab = t.curTabName;
       t.show ();
     }
     t.checkUpgradeInfo(true);
@@ -10015,6 +10014,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>'+translate("Remember window open state on refresh")+'</td></tr>\
         <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>'+translate("Hide window when clicking on map coordinates")+'</td></tr>\
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>'+translate("Enable widescreen style:")+' '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' '+translate("(all domains, requires refresh)")+'</td></tr>\
+        <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away")+'</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
 		<TR><TD>&nbsp;&nbsp;&nbsp-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
         <TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
@@ -10059,6 +10059,10 @@ Tabs.Options = {
 	  document.getElementById('pbupdatenow').addEventListener ('click', function(){
 			AutoUpdater_101052.call(true,true);
       },false);	
+	  document.getElementById('pbsendmeaway').addEventListener ('click', function(){
+			GlobalOptions.pbNoMoreKabam = document.getElementById('pbsendmeaway').checked;
+			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);	
 	  
 	  document.getElementById('ResetALL').addEventListener ('click', function(){
 	  		var serverID = getServerId();
@@ -10093,9 +10097,7 @@ Tabs.Options = {
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
 	  t.togOpt ('deletes1toggle', 'DeleteMsgs1');
-	  t.togOpt ('deletes2toggle', 'DeleteMsgs2');
-	  
-	  	
+	  t.togOpt ('deletes2toggle', 'DeleteMsgs2');	  	
 
       
     } catch (e) {
