@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120419a
+// @version        20120419b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120419a';
+var Version = '20120419b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -492,8 +492,9 @@ function kabamStandAlone (){
   if (GlobalOptions.pbWideScreen)
     setWide();
   if(GlobalOptions.pbNoMoreKabam){
+	var serverID = /s=([0-9]+)/im.exec (document.location.href);
 	var sr = /signed_request" value="(.*?)"/im.exec ($("post_form").innerHTML);
-	window.location = $("post_form").action+"?signed_request="+sr[1];
+	window.location = $("post_form").action+"?signed_request="+sr[1]+(serverID?"&s="+serverID[1]:'');
   }
 }
 
@@ -10014,7 +10015,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>'+translate("Remember window open state on refresh")+'</td></tr>\
         <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>'+translate("Hide window when clicking on map coordinates")+'</td></tr>\
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>'+translate("Enable widescreen style:")+' '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' '+translate("(all domains, requires refresh)")+'</td></tr>\
-        <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away")+'</td></tr>\
+        <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away from kabam!")+'</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
 		<TR><TD>&nbsp;&nbsp;&nbsp-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
         <TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
@@ -14001,7 +14002,7 @@ var ChatPane = {
 						}
 					}
 				// Hide alliance reports in chat
-					var myregexp1 = /You are # [1-5] of 5 to help/i;
+					var myregexp1 = /You are # [0-9]+ of 10 to help/i;
 					var myregexp2 = /\'s Kingdom does not need help\./i;
 					var myregexp3 = /\'s project has already been completed\./i;
 					var myregexp4 = /\'s project has received the maximum amount of help\./i;
