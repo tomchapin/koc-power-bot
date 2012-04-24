@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120419b
+// @version        20120424a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120419b';
+var Version = '20120424a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -489,14 +489,22 @@ function kabamStandAlone (){
 	  if (iFrames.tagName=='DIV')
 		iFrames.style.width = '100%';
   }
-  if (GlobalOptions.pbWideScreen)
-    setWide();
-  if(GlobalOptions.pbNoMoreKabam){
+
+  function sendmeaway (){
 	var serverID = /s=([0-9]+)/im.exec (document.location.href);
 	var sr = /signed_request" value="(.*?)"/im.exec ($("post_form").innerHTML);
-	window.location = $("post_form").action+"?signed_request="+sr[1]+(serverID?"&s="+serverID[1]:'');
+	var goto = $("post_form").action+(serverID?"?s="+serverID[1]:'');
+	var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxxpbutExplode type=submit value=RELOAD><INPUT type=hidden name=signed_request value="'+ sr[1] +'" /><INPUT type=hidden name=platform_req value=A /></form>';
+	var e = document.createElement ('div');
+	e.innerHTML = t;
+	document.body.appendChild (e);
+	setTimeout (function (){document.getElementById('xxxpbutExplode').click();}, 0);
   }
-}
+  if (GlobalOptions.pbWideScreen)
+	setWide();
+  if(GlobalOptions.pbNoMoreKabam)
+	sendmeaway();
+  }
 
 function HandlePublishPopup() {
 	if(GlobalOptions.autoPublishGamePopups){
@@ -9640,12 +9648,12 @@ Tabs.Barb = {
 	   
 	   if(t.barbArray[city].length > 0)
 		var barbinfo = t.barbArray[city].shift();
-	   else if(parseInt(AttackOptions.Update[city][1])==0){
+	   else if(!t.searchRunning){
 		t.checkBarbData();
 		return;
-	   } else 
+	   } else {
 		return;
-	
+	   }
        var check=0;
        var barblevel = parseInt(barbinfo.level);
 		
@@ -9686,7 +9694,6 @@ Tabs.Barb = {
   getnextCity: function(){
 	var t = Tabs.Barb;
 	if(t.searchRunning || !AttackOptions.Running) return;
-	t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3)+AttackOptions.SendInterval)*1000);
 	
 	var city = t.city+1;
 	if (city>Seed.cities.length){
@@ -9702,8 +9709,13 @@ Tabs.Barb = {
 		}
 	}
 	
-	if(AttackOptions.Levels[city][0])
+	if(AttackOptions.Levels[city][0]){
 		t.barbing();
+		t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3)+AttackOptions.SendInterval)*1000);
+	} else {
+		t.getnextCity();
+	}
+		
   },
   
   getRallypointLevel: function(cityId){
@@ -9871,7 +9883,7 @@ Tabs.Barb = {
     var element = 'pddatacity'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ xxx +','+ yyy;
    
-    setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (xxx, yyy, 40, t.mapCallback)}, MAP_DELAY);
   },
   
   mapCallback : function (left, top, width, rslt){
@@ -9893,12 +9905,12 @@ Tabs.Barb = {
 	  }
     }
     
-    t.tilesSearched += (15*15);
+    t.tilesSearched += (40*40);
 
-    t.curX += 15;
+    t.curX += 40;
     if (t.curX > t.lastX){
       t.curX = t.firstX;
-      t.curY += 15;
+      t.curY += 40;
       if (t.curY > t.lastY){
 		t.stopSearch('Found: ' + t.mapDat.length);
         return;
@@ -9908,7 +9920,7 @@ Tabs.Barb = {
     var y = t.MapAjax.normalize(t.curY);
     var element = 'pddatacity'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
-    setTimeout (function(){t.MapAjax.request (x, y, 15, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (x, y, 40, t.mapCallback)}, MAP_DELAY);
   },
   
   stopSearch : function (msg){
