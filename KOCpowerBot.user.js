@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120430a
+// @version        20120430b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120430a';
+var Version = '20120430b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -9869,6 +9869,10 @@ Tabs.Barb = {
     var t = Tabs.Barb;
     
     t.opt.maxDistance = parseInt(AttackOptions.MaxDistance); 
+	t.opt.searchDistance = (t.opt.maxDistance*2);
+	if(t.opt.maxDistance > 40){
+		t.opt.searchDistance = 40;
+	}
     t.opt.searchShape = 'circle'; 
     t.mapDat = [];
     t.firstX =  t.opt.startX - t.opt.maxDistance;
@@ -9884,7 +9888,7 @@ Tabs.Barb = {
     var element = 'pddatacity'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ xxx +','+ yyy;
    
-    setTimeout (function(){t.MapAjax.request (xxx, yyy, 40, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (xxx, yyy, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
   },
   
   mapCallback : function (left, top, width, rslt){
@@ -9906,12 +9910,12 @@ Tabs.Barb = {
 	  }
     }
     
-    t.tilesSearched += (40*40);
+    t.tilesSearched += (t.opt.searchDistance*t.opt.searchDistance);
 
-    t.curX += 40;
+    t.curX += t.opt.searchDistance;
     if (t.curX > t.lastX){
       t.curX = t.firstX;
-      t.curY += 40;
+      t.curY += t.opt.searchDistance;
       if (t.curY > t.lastY){
 		t.stopSearch('Found: ' + t.mapDat.length);
         return;
@@ -9921,7 +9925,7 @@ Tabs.Barb = {
     var y = t.MapAjax.normalize(t.curY);
     var element = 'pddatacity'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
-    setTimeout (function(){t.MapAjax.request (x, y, 40, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (x, y, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
   },
   
   stopSearch : function (msg){
@@ -10030,7 +10034,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>'+translate("Enable widescreen style:")+' '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' '+translate("(all domains, requires refresh)")+'</td></tr>\
         <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away from kabam!")+'</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
-		<TR><TD>&nbsp;&nbsp;&nbsp-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
+		<TR><TD>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
         <TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable all Fairie popup windows")+'</td></tr>\
         <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>'+translate("Refresh if KOC not loaded within 1 minute (all domains)")+'</td></tr>\
