@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120430b
+// @version        20120430c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120430b';
+var Version = '20120430c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -11902,7 +11902,7 @@ Tabs.AutoTrain = {
 		setTimeout(t.nextcity, 5000);
 		return;
 	}
-	t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity, TrainOptions.Items[t.city]);
+	t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity, TrainOptions.Item[t.city]);
   },
   doTrain : function (cityId, unitId, num, notify, tut){
 	var t = Tabs.AutoTrain;
