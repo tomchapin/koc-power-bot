@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120424a
+// @version        20120430a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120424a';
+var Version = '20120430a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -227,6 +227,7 @@ var TrainOptions = {
   Max        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   Gamble     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   Workers    : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  Item       : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   Keep       : {1:{Food:0,Wood:0,Stone:0,Ore:0},
                 2:{Food:0,Wood:0,Stone:0,Ore:0},
 				3:{Food:0,Wood:0,Stone:0,Ore:0},
@@ -11682,7 +11683,13 @@ Tabs.AutoTrain = {
         m+='<option value="25">25%</options>';
         m+='<option value="50">50%</options>';
         m+='<option value="75">75%</options>';
-        m+='<option value="100">100%</options>';
+        m+='<option value="100">100%</options></select>';
+		m+='</td><td>';
+		m += '<TD><SELECT class='+city+' id="TrainSpeedItem_'+city+'">\
+		<option value=0><CENTER>--- '+unsafeWindow.g_js_strings.commonstr.items+' '+unsafeWindow.g_js_strings.commonstr.speedup+' ---</center></option>\
+		<option value=36>'+unsafeWindow.itemlist.i36.name+'</option>\
+		<option value=37>'+unsafeWindow.itemlist.i37.name+'</option>\
+		<option value=38>'+unsafeWindow.itemlist.i38.name+'</option></select>';
 		m+='</td></tr></table></td><tr>';
         m += '<TD></td><TD><TABLE><TR>';
 		m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
@@ -11716,6 +11723,7 @@ Tabs.AutoTrain = {
         document.getElementById('SelectMax'+city).checked = TrainOptions.SelectMax[city];
         document.getElementById('workers'+city).value = TrainOptions.Workers[city];
         document.getElementById('TrainSpeed_'+city).value = TrainOptions.Gamble[city];
+        document.getElementById('TrainSpeedItem_'+city).value = TrainOptions.Item[city];
         if (!TrainOptions.SelectMax[city]) document.getElementById('max'+city).disabled=true;
     }
        
@@ -11757,6 +11765,10 @@ Tabs.AutoTrain = {
 		}, false);
      	document.getElementById('TrainSpeed_'+k).addEventListener('change', function(e){
 			TrainOptions.Gamble[e.target['className']] = e.target.value;
+     		saveTrainOptions();
+		}, false);
+     	document.getElementById('TrainSpeedItem_'+k).addEventListener('change', function(e){
+			TrainOptions.Item[e.target['className']] = e.target.value;
      		saveTrainOptions();
 		}, false);
         document.getElementById('SelectCity'+k).addEventListener('change', function(e){
@@ -11839,7 +11851,7 @@ Tabs.AutoTrain = {
   checktrainslots : function(cityId){
 	var t = Tabs.AutoTrain;
 	t.barracks = getCityBuilding(cityId, 13).count;
-	t.slots = Seed.queue_unt['city'+cityId].length;
+	t.slots = parseIntNan(Seed.queue_unt['city'+cityId].length);
 	t.empty = parseInt(t.barracks - t.slots);
 	return t.empty>0?true:false;
   },
@@ -11886,15 +11898,17 @@ Tabs.AutoTrain = {
 		setTimeout(t.nextcity, 5000);
 		return;
 	}
-	t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity);
+	t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity, TrainOptions.Items[t.city]);
   },
-  doTrain : function (cityId, unitId, num, notify){
+  doTrain : function (cityId, unitId, num, notify, tut){
 	var t = Tabs.AutoTrain;
 	var time = unsafeWindow.modal_barracks_traintime(unitId, num);
 	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 	params.cid = cityId;
 	params.type = unitId;
 	params.quant = num;
+	if(parseIntNan(tut) > 0)
+		params.items = tut;
 	if(parseInt(TrainOptions.Gamble[t.city]) > 0)
 		params.gambleId = TrainOptions.Gamble[t.city];
 
@@ -13458,8 +13472,10 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
   var wasSuccess = o.onSuccess;
   var wasFailure = o.onFailure;
   var retry = 0;
-  var delay = 5;
+  var delay = 3;
+  var show = true;
   var noRetry = noRetry===true?true:false;
+  var silentTimer;
   opts.onSuccess = mySuccess;
   opts.onFailure = myFailure;
 
@@ -13478,7 +13494,17 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
     wasFailure (o);
   }
   function mySuccess (msg){
-    var rslt = eval("(" + msg.responseText + ")");
+    var rslt;
+    try {
+        rslt = JSON2.parse(msg.responseText);
+    } catch(e) {
+        //alert(unescape(msg.responseText));
+        if (retry<2) {
+            rslt = {"ok":false,"error_code":9,"errorMsg":"Failed due to invalid json"}
+        } else {
+            rslt = {"ok":true,"error_code":9,"data":[]};
+        }
+    }
     var x;
     if (window.EmulateAjaxError){
       rslt.ok = false;  
@@ -13495,9 +13521,16 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
      // rslt.errorMsg = rslt.errorMsg.substr (0, x-1);
     if (!noRetry && (rslt.error_code==0 || rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
       dialogRetry (inspect(rslt.errorMsg), delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
+    } else if (!noRetry && rslt.error_code==9) {
+        silentTimer = setTimeout(silentRetry, delay*100);
     } else {
       wasSuccess (rslt);
     }
+  }
+  
+  function silentRetry() {
+    clearTimeout(silentTimer);
+    myRetry();
   }
 }
 
@@ -14014,7 +14047,7 @@ var ChatPane = {
 						}
 					}
 				// Hide alliance reports in chat
-					var myregexp1 = /You are # [0-9]+ of 10 to help/i;
+					var myregexp1 = /You are # [0-9]+ of [0-9]+ to help/i;
 					var myregexp2 = /\'s Kingdom does not need help\./i;
 					var myregexp3 = /\'s project has already been completed\./i;
 					var myregexp4 = /\'s project has received the maximum amount of help\./i;
