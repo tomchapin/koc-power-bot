@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120430c
+// @version        20120505a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120430c';
+var Version = '20120505a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1626,7 +1626,7 @@ Tabs.Throne = {
     }
     t.checkUpgradeInfo(true);
     if (ThroneOptions.Active) t.setActionTimer = setInterval(t.doAction,10000);
-    setInterval(t.salvageCheck,10*60*1000);
+    setInterval(t.salvageCheck,1*60*1000);
  },
     
  Salvage : function (){ 
@@ -2588,7 +2588,7 @@ return i;
 
 salvageCheck : function (){
 	var t = Tabs.Throne;
-	var del = true;
+	var del = false; //false by default
 	var level = false;
 	var type ="";
 	var NotUpgrading = true;
@@ -2597,7 +2597,10 @@ salvageCheck : function (){
 	if (t.SalvageRunning == true) return;
 	t.SalvageRunning = true;
 	for (m in unsafeWindow.kocThroneItems) {
-		y =   unsafeWindow.kocThroneItems[m];
+		y = unsafeWindow.kocThroneItems[m];
+		level = false;
+		type = "";
+		NotUpgrading = true;
 		count++;
 		if (typeof(y.id) == 'number') {
 			NotUpgrading = true;
@@ -2610,10 +2613,10 @@ salvageCheck : function (){
 					for (i=1;i<=5;i++){
 						for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++){
 							type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];
-							if (ThroneOptions.Salvage[type]  && level) {del = false};
+							if (ThroneOptions.Salvage[type]) {del = false};
 						}
 					}
-					if (del && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
+					if (!level && del && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
 						t.SalvageArray.push(y.id);
 					}					 
 			}
