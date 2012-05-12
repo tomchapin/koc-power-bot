@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120505a
+// @version        20120512a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120505a';
+var Version = '20120512a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -278,6 +278,7 @@ var ThroneOptions = {
 	Salvage:{Attack:true,Defense:true,Life:true,Speed:true,Accuracy:true,Range:true,Load:true,MarchSize:true,MarchSpeed:true,CombatSkill:true,IntelligenceSkill:true,PoliticsSkill:true,ResourcefulnessSkill:true,TrainingSpeed:true,ConstructionSpeed:true,ResearchSpeed:true,CraftingSpeed:true,Upkeep:true,ResourceProduction:true,ResourceCap:true,Storehouse:true,Morale:true,ItemDrop:true},
 	SalvageQuality:0,
 	saveXitems:0,
+	thronekeep:1,
 };
 var AttackOptions = {
   LastReport    		: 0,
@@ -1633,9 +1634,9 @@ Tabs.Throne = {
     var t = Tabs.Throne; 
     try {      
       m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
-	  m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td></tr>';
+	  m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
 	  m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
-	  m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td><TD><FONT color=red>Ckeck boxes for items you want to <b>KEEP</b>.</font></td></table>';
+	  m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>.</font></td></table>';
       
       m+='<TABLE id=pbbarbingfunctions width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td></tr>';
@@ -1703,6 +1704,7 @@ Tabs.Throne = {
       document.getElementById('Storehouse').addEventListener ('change', function(){ThroneOptions.Salvage.Storehouse = document.getElementById('Storehouse').checked;saveThroneOptions();},false);
       document.getElementById('Morale').addEventListener ('change', function(){ThroneOptions.Salvage.Morale = document.getElementById('Morale').checked;saveThroneOptions();},false);
       document.getElementById('ItemDrop').addEventListener ('change', function(){ThroneOptions.Salvage.ItemDrop = document.getElementById('ItemDrop').checked;saveThroneOptions();},false);
+      document.getElementById('pbthrone_keep').addEventListener ('change', function(){ThroneOptions.thronekeep = parseInt(document.getElementById('pbthrone_keep').value);saveThroneOptions();},false);
 
       document.getElementById('Quality').addEventListener  ('change', function(){ThroneOptions.SalvageQuality = this.value;saveThroneOptions();},false);
       document.getElementById('saveXitems').addEventListener('change', function(){ThroneOptions.saveXitems = document.getElementById('saveXitems').value;saveThroneOptions();} , false);
@@ -2134,13 +2136,13 @@ PaintSalvageHistory : function() {
 					ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
 					ThroneOptions.Items[k]["levelto"] = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
 						ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
-					if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {alert("You cant upgrade higher then level 10!");ThroneOptions.Items.splice (k,1);return;}
+					if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {alert("You can't upgrade higher then level 10!");ThroneOptions.Items.splice (k,1);return;}
 				}
 				if (ThroneOptions.Items[k]["action"] == "Enhance") {
 					ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
 					ThroneOptions.Items[k]["qualityto"] = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
 					 ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
-					if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {alert("You cant upgrade higher then quality 5!");ThroneOptions.Items.splice (k,1);return;}
+					if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {alert("You can't upgrade higher then quality 5!");ThroneOptions.Items.splice (k,1);return;}
 				}
 				if (ThroneOptions.Items[k]["action"] == "Enhance") var lvl = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
 				if (ThroneOptions.Items[k]["action"] == "Upgrade") var lvl = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
@@ -2592,6 +2594,7 @@ salvageCheck : function (){
 	var level = false;
 	var type ="";
 	var NotUpgrading = true;
+	var number = 0;
 	var count=0;
 	if(!Options.ThroneDeleteItems) return;
 	if (t.SalvageRunning == true) return;
@@ -2601,22 +2604,26 @@ salvageCheck : function (){
 		level = false;
 		type = "";
 		NotUpgrading = true;
+		number = 0;
 		count++;
 		if (typeof(y.id) == 'number') {
 			NotUpgrading = true;
 			for (k in ThroneOptions.Items) {if (ThroneOptions.Items[k]["id"] == y.id) NotUpgrading = false;}
 			if (count<=(parseInt(Seed.throne.rowNum)*5) && count>ThroneOptions.saveXitems) {
-					del = true;
+					//del = true;
 					level = false;
 					if (y.quality > ThroneOptions.SalvageQuality) level=true;
 					if (ThroneOptions.SalvageQuality == 0) level=true;
 					for (i=1;i<=5;i++){
 						for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++){
 							type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];
-							if (ThroneOptions.Salvage[type]) {del = false};
+							if (ThroneOptions.Salvage[type]) {number++;}
+							
 						}
 					}
-					if (!level && del && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
+					if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
+					logit(y.name+' '+number);
+					if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
 						t.SalvageArray.push(y.id);
 					}					 
 			}
@@ -16992,7 +16999,7 @@ Tabs.Apothecary = {
 			var cid = Cities.cities[city].id;
 			var amt = 0;
 			if(Seed.woundedUnits['city'+cid]['unt'+info.troop] < info.min) continue;
-			if(Seed.woundedUnits['city'+cid]['unt'+info.troop] > info.max){
+			if(Seed.woundedUnits['city'+cid]['unt'+info.troop] > info.max && info.max_sel){
 				amt = info.max;
 			} else {
 				amt = Seed.woundedUnits['city'+cid]['unt'+info.troop];
@@ -17899,7 +17906,7 @@ Tabs.Combat = {
 					if (rslt.user_action) {
 						new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
 						logit('send march captcha');
-						setTimeout (function(){callback(r,retry,CrestDataNum);}, 1*60*1000);
+						setTimeout (function(){callback(r,retry,CrestDataNum);}, 5*60*1000);
 						return;
 					}
 					setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
@@ -18002,7 +18009,7 @@ Tabs.Combat = {
 				return;
 				break;
 			case 30:
-				reloadKOC();
+				//reloadKOC();
 				return;
 				break;
 		}
