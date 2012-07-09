@@ -3272,8 +3272,11 @@ unsafeWindow.CraftingItem = t.CraftingItem;
   newIncoming : function (m){
     var t = Tabs.tower;
     if (Options.alertConfig.alertTR){
-        var preset = Options.alertConfig.alertTRset
-        Tabs.Throne.doPreset(preset);
+	var currentset = Seed.throne.activeSlot
+	if (Options.alertConfig.alertTRset != currentset){
+        	var preset = Options.alertConfig.alertTRset
+        	Tabs.Throne.doPreset(preset);
+	}
     }  
     t.postToChat (m);
   },
