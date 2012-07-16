@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120709a
+// @version        20120716a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120709a';
+var Version = '20120716a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1891,6 +1891,7 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
          var row = document.getElementById('ShowQueue').insertRow(0);
          row.vAlign = 'top';
          row.style.color = "black";    
+	     row.style.background = "rgb(246,243,236)";	
          if (active) row.style.color = "green";     
          row.insertCell(0).innerHTML = id+1;
          row.insertCell(1).innerHTML = name;
@@ -1923,6 +1924,7 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
          var row = document.getElementById('ShowQueue').insertRow(0);
          row.vAlign = 'top';
          row.style.color = "black";
+	     row.style.background = "rgb(246,243,236)";	
          row.insertCell(0).innerHTML = "Id";
          row.insertCell(1).innerHTML = "Name";
          row.insertCell(2).innerHTML = "Quality";
