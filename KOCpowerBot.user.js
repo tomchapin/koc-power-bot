@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120822a
+// @version        20120822b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120822a';
+var Version = '20120822b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -9174,7 +9174,7 @@ Tabs.AutoCraft = {
      if (t.numcity<Cities.numCities-1) {
            t.numcity++;
          } else {
-          t.numcity=0; 
+          t.numcity=-1; 
           return;
      }
      var c=t.numcity;
