@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120716a
+// @version        20120822a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120716a';
+var Version = '20120822a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -9161,6 +9161,7 @@ Tabs.AutoCraft = {
               t.saveCraftState();
               if (obj) obj.value  = "Crafting = ON";
               t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
+              t.Start();
           }
           t.updateCraftnb();
     },
@@ -9174,17 +9175,20 @@ Tabs.AutoCraft = {
            t.numcity++;
          } else {
           t.numcity=0; 
+          return;
      }
      var c=t.numcity;
      var cityId=Cities.cities[c].id;
      
      var ret=getCityBuilding(cityId,20).count;
-     if (ret==0) { 
+     if (ret==0) {
        t.Start();
        return;
      }
-     if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<5000) 
-            return;
+     if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<5000) {
+       t.Start();
+       return;
+     }
      var tableau = [];
      for(var d in TrainOptions.CraftingNb) {
            if (parseInt(TrainOptions.CraftingNb[d])>0) {
@@ -9202,6 +9206,7 @@ Tabs.AutoCraft = {
            var now = unixTime();
           totTime = q.craftingEtaUnixTime - now;
           if (totTime > 0) {
+			  t.Start();
            return;
           }
      } 
@@ -9222,7 +9227,8 @@ Tabs.AutoCraft = {
               var o=eval("("+transport.responseText+")");
               if(o.ok===true){
                if (o.status=="error") {
-               
+                t.Start();
+                return;
                } else if(o.status=="failure"){
                 setTimeout(function() {
                  t.CraftingItem(currentcity,  itemId, recipeId);
@@ -9243,11 +9249,11 @@ Tabs.AutoCraft = {
              n.categoryId=null;
              n.recipeIndex=null;
              unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
-             t.Start()
+             t.Start();
                }
               }
             },
-            onFailure: function () {    }
+            onFailure: function () {  t.Start();  }
        });
  },
 
