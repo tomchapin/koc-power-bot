@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120822b
+// @version        20120822c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120822b';
+var Version = '20120822c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2840,8 +2840,6 @@ Tabs.tower = {
   init: function(div){
     var t = Tabs.tower;
     t.myDiv = div;
-    unsafeWindow.Crafting = t.Crafting;
-unsafeWindow.CraftingItem = t.CraftingItem;
     if (GM_getValue ('towerMarches_'+getServerId()) != null)
       GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
     // t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
@@ -2859,32 +2857,8 @@ unsafeWindow.CraftingItem = t.CraftingItem;
        m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
     m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="'+translate("Stop Sound Alert")+'"></center></div><DIV id=pbSwfPlayer></div>';
     m += '<BR><DIV class=pbStat>'+translate("CONFIGURATION")+'</div><TABLE class=pbTab>\
-    <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
-    <td align=left>'+translate("Text message incoming attack to")+': <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-&nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold"><sup>*'+translate("Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>\
-    <TD align=left>'+translate("Country")+': <select id="pbfrmcountry">';
-    for (var i in t.Providers) {
-       var ret=m.indexOf(t.Providers[i].country);
-       if (ret==-1) {
-         if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
-           m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
-         }
-         else {
-           m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
-         }
-       }
-    }
+    <TR><td align=center>-</td><TD align=left>'+translate("Minimum # of troops to trigger tower options")+':<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> <span style="color:#800; font-weight:bold"><sup>*NEW! Controls All Tower Options</sup></span></td></tr>';
 
-    m += '</select>\
-    <select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--'+translate("Provider")+'--</option>';
-    for (var i in t.Providers) {
- if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
-        if(Options.celltext.provider == i)
-            m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
-        else
-           m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
-    }
     m += '</select></td></tr>\
         <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
         <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
@@ -2892,7 +2866,6 @@ unsafeWindow.CraftingItem = t.CraftingItem;
             <TR><TD align=right>'+translate("Alert on scouting")+': &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
             <TR><TD align=right>'+translate("Alert on wild attack")+': &nbsp; </td><TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td></tr>\
             <TR><TD align=right>'+translate("Display defend status")+': &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>'+translate("Minimum # of troops")+': &nbsp; </td><TD><INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> &nbsp; &nbsp; <span id=pbalerterr></span></td></tr>\
             </table></td></tr>\
         <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>'+translate("Stop raids on impending")+'.</td></tr>\
     <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=1 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending")+'</td></tr>\
@@ -2924,7 +2897,6 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
     document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
     document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
-    document.getElementById('pbcellenable').addEventListener ('change', function (e){Options.celltext.atext = e.target.checked;}, false);
     document.getElementById('pbSoundStop').disabled = true;
     document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
@@ -2932,11 +2904,6 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertDefend').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
-    document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
-    document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
-    document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
-    document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbalertraid').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTR').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRset').addEventListener ('change', t.e_alertOptChanged, false);
@@ -2968,98 +2935,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     }    
     setInterval (t.eachSecond, 2000);
   },      
- CraftingItem : function (obj, currentcity, itemId, recipeId, categoryId) {
-  if (obj) obj.value= translate("Crafting")+"...";
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        params.action="craft";
-        params.ctrl="Crafting";
-        params.cityId=currentcity;
-        params.insurance=false;
-        params.itemId=itemId;
-        params.recipeId=recipeId;
-        params.categoryId=categoryId;
- 
-        new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
-                      method: "post",
-                   parameters: params,
-          onSuccess: function (transport) {
-          var o=eval("("+transport.responseText+")");
-          if(o.ok===true){
-           if (o.status=="error") {
-            alert(translate("Crafting Error")+":" + o.errorMessage);
-            if (obj) obj.value=translate("Craft");
-           } else if(o.status=="failure"){
-         alert(translate("Craft Fail"));
-         if (obj) obj.value=translate("Craft");
-       } else if (o.status=="success"){
-         if (obj) obj.value=translate("Craft OK");
-        if(!Seed.queue_craft["city"+currentcity]) {
-         Seed.queue_craft["city"+currentcity]=[];
-        }
-             var n={};
-             n.recipeId=recipeId;
-             n.craftingUnixTime=o.time.startTime;
-             n.craftingEtaUnixTime=o.time.endTime;
-             n.craftingId=o.craftingId;
-             n.categoryId=null;
-             n.recipeIndex=null;
-             unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
-           }
-        } 
-        t.Crafting(currentcity);
-        },
-         onFailure: function () {
-          alert(translate("Craft Fail"));
-          t.Crafting(currentcity);
-         }
-        });
- },
- Crafting : function (currentcity) {
-   var messagebody ="";
-   var ret=getCityBuilding(currentcity,20).count;
-   if (ret>0) {
-     var texte="";
-     var i=Seed.queue_craft["city"+currentcity];
-     if(i.length>0) {
-      var q=i[0];
-      var totTime = 0;
-      var now = unixTime();
-      totTime = q.craftingEtaUnixTime - now;
-      if (totTime > 0) {
-         texte= translate("in work...");
-      }
-     }
-    
-       messagebody += "<div class=pbStat>"+translate("CRAFTING")+"</div><TABLE width=95% border=0 align=center><tr><td colspan=8><b></td></tr>";
-       messagebody += "<tr><td colspan=2>"+translate("Items")+"</td><td>"+translate("Inventory")+"</td><td>"+translate("Action")+"</td></tr>";       
-       for(var d=0;d<12;d++) {
-        if (d!=2) {
-         var h=parseInt(3000+d);
-         var qte=0;
-         if (parseInt(Seed.items["i"+h])>0) qte=parseInt(Seed.items["i"+h]);
-         messagebody += "<tr><td><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></td><td>"+unsafeWindow.itemlist["i"+h].name+"</td><td><center><b>"+qte+"</td>";
-         if (texte!="")
-           messagebody += "<td>"+translate("in work")+"...</td>";
-         else
-           messagebody += "<td><input type=button value='"+translate("Craft")+"' onclick='CraftingItem(this,"+currentcity+","+h+","+(d+1)+",1)'></td>";
-         messagebody += "</tr>";
-        }
-       }
-       messagebody+="</table>";  
-   
-  } else {
-   messagebody += "<BR><b><center>"+translate("no Fey in City!")+"</center></b>";
-  }
-  if (t.PopCrafting == null) {
-         t.PopCrafting = new pbPopup('PopCrafting', 0, 0, 740, 300, true, function() {clearTimeout (1000);});
-         t.PopCrafting.centerMe (mainPop.getMainDiv());
-         }
-         var m = '<DIV style="max-height:465px; height:465px; overflow-y:auto">';
-         m+= messagebody + '</div>';
-         t.PopCrafting.getMainDiv().innerHTML = m;
-    t.PopCrafting.show(true);  
 
- },
   show : function (){
   },
   
@@ -3219,9 +3095,7 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         for (var i = 0; i < Cities.cities.length; i++) {
             var cId = Cities.cities[i].id;
             document.getElementById('pbattackqueue_' + cId).value = 'A ' + t['attackCount_' + cId] + ' | S ' + t['scoutCount_' + cId];
-        }
-
-      
+        }    
   },   
   
   e_soundFinished : function (chan){ // called by SWF when sound finishes playing
@@ -3273,15 +3147,27 @@ unsafeWindow.CraftingItem = t.CraftingItem;
 
   newIncoming : function (m){
     var t = Tabs.tower;
+    var totTroops = 0;
+    for (k in m.unts){
+      totTroops += m.unts[k];
+    }
+    if (totTroops < Options.alertConfig.minTroops){
+      return;
+    }
+    t.towerPreset (m);
+  },
+
+  towerPreset : function (m){
+    var t = Tabs.tower;
     if (Options.alertConfig.alertTR){
-	var currentset = Seed.throne.activeSlot
-	if (Options.alertConfig.alertTRset != currentset){
-        	var preset = Options.alertConfig.alertTRset
-        	Tabs.Throne.doPreset(preset);
-	}
+    var currentset = Seed.throne.activeSlot
+    if (Options.alertConfig.alertTRset != currentset){
+            var preset = Options.alertConfig.alertTRset
+            Tabs.Throne.doPreset(preset);
+    }
     }  
     t.postToChat (m);
-  },
+  },    
   
   sendalert : function (m){
     var t = Tabs.tower;
@@ -3361,15 +3247,6 @@ unsafeWindow.CraftingItem = t.CraftingItem;
     if (m.fromXCoord)
       data.who += m.fromXCoord +','+ m.fromYCoord;
      data.arrival = unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime()));
-    var totTroops = 0;
-    data.totTroops = ' '
-    for (k in m.unts){
-      var uid = parseInt(k.substr (1));
-      data.totTroops += m.unts[k] +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
-      totTroops += m.unts[k];
-    }
-    if (totTroops < Options.alertConfig.minTroops)
-      return;
 
 
     if ( city.tileId == m.toTileId ){
@@ -3457,14 +3334,6 @@ unsafeWindow.CraftingItem = t.CraftingItem;
         msg += 'The '+ atkType +' on my '+ target +' by '+ who +' has been recalled.';
     else
         msg += 'My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
-    var totTroops = 0;
-    for (k in m.unts){
-      var uid = parseInt(k.substr (1));
-      msg += m.unts[k] +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
-      totTroops += m.unts[k];
-    }
-    if (totTroops < Options.alertConfig.minTroops)
-      return;
     msg = msg.slice (0, -2);
     msg += '.';
     if ( city.tileId == m.toTileId ){
