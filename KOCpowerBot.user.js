@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120822c
+// @version        20120822d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120822c';
+var Version = '20120822d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3334,6 +3334,10 @@ Tabs.tower = {
         msg += 'The '+ atkType +' on my '+ target +' by '+ who +' has been recalled.';
     else
         msg += 'My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
+    for (k in m.unts){
+      var uid = parseInt(k.substr (1));
+      msg += m.unts[k] +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
+    }
     msg = msg.slice (0, -2);
     msg += '.';
     if ( city.tileId == m.toTileId ){
