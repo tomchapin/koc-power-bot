@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120822d
+// @version        20120825a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120822d';
+var Version = '20120825a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -8829,6 +8829,7 @@ Tabs.AutoCraft = {
     timerStat: null,
     numcity :-1,
     craftinfo : {},
+    retrycount : 0,
 
     init: function(div){
         var t = Tabs.AutoCraft;
@@ -9100,6 +9101,11 @@ Tabs.AutoCraft = {
               var o=eval("("+transport.responseText+")");
               if(o.ok===true){
                if (o.status=="error") {
+				if (o.errorCode == 2)
+					t.numcity--;
+				t.retrycount++;
+				if(t.retrycount > 10)
+					return;
                 t.Start();
                 return;
                } else if(o.status=="failure"){
@@ -9107,6 +9113,7 @@ Tabs.AutoCraft = {
                  t.CraftingItem(currentcity,  itemId, recipeId);
                 }, 5000);
                 } else if (o.status=="success"){
+					t.retrycount == 0;
                 //actionLog ('<b>'+culang.auto+' '+culang.crafting+'</b>:  <span class=boldGreen>OK</span> #'+ (TrainOptions.CraftingNb[itemId] -1)+' ');
                  TrainOptions.CraftingNb[itemId] =  TrainOptions.CraftingNb[itemId] -1;
                  saveTrainOptions();
