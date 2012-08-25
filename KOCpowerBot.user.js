@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120825a
+// @version        20120825b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120825a';
+var Version = '20120825b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2138,13 +2138,13 @@ PaintSalvageHistory : function() {
                     ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
                     ThroneOptions.Items[k]["levelto"] = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
                         ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
-                    if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {alert("You can't upgrade higher then level 10!");ThroneOptions.Items.splice (k,1);return;}
+                    if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {ThroneOptions.Items.splice (k,1);alert("You can't upgrade higher then level 10!");return;}
                 }
                 if (ThroneOptions.Items[k]["action"] == "Enhance") {
                     ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
                     ThroneOptions.Items[k]["qualityto"] = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
                      ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
-                    if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {alert("You can't upgrade higher then quality 5!");ThroneOptions.Items.splice (k,1);return;}
+                    if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {ThroneOptions.Items.splice (k,1);alert("You can't upgrade higher then quality 5!");return;}
                 }
                 if (ThroneOptions.Items[k]["action"] == "Enhance") var lvl = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
                 if (ThroneOptions.Items[k]["action"] == "Upgrade") var lvl = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
