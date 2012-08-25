@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120825b
+// @version        20120825a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120825b';
+var Version = '20120825a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2320,9 +2320,9 @@ PaintSalvageHistory : function() {
                        ThroneOptions.Tries = 0;
                        ThroneOptions.Good = 0;
                        ThroneOptions.Bad = 0;
+                        ThroneOptions.Items.splice (0,1);
                        saveThroneOptions();
                        document.getElementById('ShowTries').innerHTML = "Tries: --";
-                        ThroneOptions.Items.splice (0,1);
                     }
                     else
                     {
