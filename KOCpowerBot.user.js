@@ -8858,6 +8858,7 @@ Tabs.AutoCraft = {
             t.craftinfo[h].category = unsafeWindow.recipelist[1][i].category;
             t.craftinfo[h].input = unsafeWindow.recipelist[1][i].input;
             t.craftinfo[h].requirements = unsafeWindow.recipelist[1][i].requirements;
+            t.craftinfo[h].inputItems = unsafeWindow.recipelist[1][i].input.items;
             m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
             m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
             if ((count+1)%2 == 0) m += "</tr><tr>";
@@ -8870,6 +8871,7 @@ Tabs.AutoCraft = {
             t.craftinfo[h].category = unsafeWindow.recipelist[3][i].category;
             t.craftinfo[h].input = unsafeWindow.recipelist[3][i].input;
             t.craftinfo[h].requirements = unsafeWindow.recipelist[3][i].requirements;
+            t.craftinfo[h].inputItems = unsafeWindow.recipelist[3][i].input.items;
             m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
             m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
             if ((count+1)%2 == 0) m += "</tr><tr>";
@@ -8880,7 +8882,8 @@ Tabs.AutoCraft = {
           m += '<DIV id=pbCraftingStats class=pbStat>AEHTERSTONES AND CRAFTING TIME</div><span id="CraftStat"></span>';
 
        t.myDiv.innerHTML = m;
-       
+
+
        window.addEventListener('unload', t.onUnload, false);
        
     document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
@@ -9066,10 +9069,16 @@ Tabs.AutoCraft = {
      var tableau = [];
      for(var d in TrainOptions.CraftingNb) {
            if (parseInt(TrainOptions.CraftingNb[d])>0) {
-            tableau.push (d);
+			if(t.craftinfo[d].inputItems == "") {
+				tableau.push (d);
+			} else {
+				for(var i in t.craftinfo[d].inputItems) {
+					if(unsafeWindow.seed.items["i"+i] >= t.craftinfo[d].inputItems[i])
+						tableau.push (d);
+				}
+			}
            }
      }
-
      var itemId = tableau[Math.floor(Math.random()*tableau.length)];
      var recipeId = t.craftinfo[itemId].recipe_id;
      var category = t.craftinfo[itemId].category;
@@ -17375,7 +17384,6 @@ Tabs.Combat = {
     
     },
 }
-
 /*********************************  Cresting Tab ***********************************/
  Tabs.Crest = {
   tabOrder : 70,
@@ -18190,7 +18198,6 @@ Tabs.Combat = {
     },
  };
 /** End Cresting tab **/
-
 
 
     
