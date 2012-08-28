@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120828b
+// @version        20120828c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120828b';
+var Version = '20120828c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -9071,14 +9071,16 @@ Tabs.AutoCraft = {
      var tableau = [];
      for(var d in TrainOptions.CraftingNb) {
            if (parseInt(TrainOptions.CraftingNb[d])>0) {
+			if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
 			if(t.craftinfo[d].inputItems == "") {
 				tableau.push (d);
 			} else {
 				for(var i in t.craftinfo[d].inputItems) {
-					if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
-					 if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
+					if(parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
+						break;
+				}	
+				if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
 						tableau.push (d);
-				}
 			}
            }
      }
@@ -9116,6 +9118,7 @@ Tabs.AutoCraft = {
           onSuccess: function (transport) {
               var o=eval("("+transport.responseText+")");
               if(o.ok===true){
+				  //alert(inspect(o));
                if (o.status=="error") {
 				if (o.errorCode == 2)
 					t.numcity--;
