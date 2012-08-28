@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120825a
+// @version        20120828a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120825a';
+var Version = '20120828a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -8859,6 +8859,7 @@ Tabs.AutoCraft = {
             t.craftinfo[h].input = unsafeWindow.recipelist[1][i].input;
             t.craftinfo[h].requirements = unsafeWindow.recipelist[1][i].requirements;
             t.craftinfo[h].inputItems = unsafeWindow.recipelist[1][i].input.items;
+            t.craftinfo[h].astone = unsafeWindow.recipelist[1][i].input.resources;
             m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
             m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
             if ((count+1)%2 == 0) m += "</tr><tr>";
@@ -8872,6 +8873,7 @@ Tabs.AutoCraft = {
             t.craftinfo[h].input = unsafeWindow.recipelist[3][i].input;
             t.craftinfo[h].requirements = unsafeWindow.recipelist[3][i].requirements;
             t.craftinfo[h].inputItems = unsafeWindow.recipelist[3][i].input.items;
+            t.craftinfo[h].astone = unsafeWindow.recipelist[3][i].input.resources;
             m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
             m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
             if ((count+1)%2 == 0) m += "</tr><tr>";
@@ -9074,11 +9076,16 @@ Tabs.AutoCraft = {
 			} else {
 				for(var i in t.craftinfo[d].inputItems) {
 					if(unsafeWindow.seed.items["i"+i] >= t.craftinfo[d].inputItems[i])
+					 if(Seed.resources["city" + cityId]['rec5'][0] <= t.craftinfo[d].astone[1])
 						tableau.push (d);
 				}
 			}
            }
      }
+     if (tableau == []) {
+		t.Start();
+		return;
+	 }
      var itemId = tableau[Math.floor(Math.random()*tableau.length)];
      var recipeId = t.craftinfo[itemId].recipe_id;
      var category = t.craftinfo[itemId].category;
