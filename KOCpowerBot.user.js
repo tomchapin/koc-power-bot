@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120828a
+// @version        20120828b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120828a';
+var Version = '20120828b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -9075,8 +9075,8 @@ Tabs.AutoCraft = {
 				tableau.push (d);
 			} else {
 				for(var i in t.craftinfo[d].inputItems) {
-					if(unsafeWindow.seed.items["i"+i] >= t.craftinfo[d].inputItems[i])
-					 if(Seed.resources["city" + cityId]['rec5'][0] <= t.craftinfo[d].astone[1])
+					if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
+					 if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
 						tableau.push (d);
 				}
 			}
