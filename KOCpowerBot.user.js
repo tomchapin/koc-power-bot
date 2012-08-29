@@ -2631,6 +2631,7 @@ salvageCheck : function (){
 							}
                         }
                     }
+                    if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
                     if(ThroneOptions.SingleStat) {
 						for (h in ThroneOptions.Salvage) {
 							if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep) 
@@ -2639,7 +2640,6 @@ salvageCheck : function (){
 								ThroneOptions.Salvage[h] = true;
 						}
 					}
-                    if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
                     logit(y.name+' '+number);
                     if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
                         t.SalvageArray.push(y.id);
