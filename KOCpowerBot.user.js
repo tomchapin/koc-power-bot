@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120828c
+// @version        20120829a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120828c';
+var Version = '20120829a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -279,6 +279,7 @@ var ThroneOptions = {
     SalvageQuality:0,
     saveXitems:0,
     thronekeep:1,
+    SingleStat:false,
 };
 var AttackOptions = {
   LastReport            : 0,
@@ -1636,7 +1637,8 @@ Tabs.Throne = {
       m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
       m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
       m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
-      m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>.</font></td></table>';
+      m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>.</font></td>';
+      m+='<TR><TD><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Dont save mixed cards: ie range with life</TD></TR></table>';
       
       m+='<TABLE id=pbbarbingfunctions width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td></tr>';
@@ -1681,6 +1683,7 @@ Tabs.Throne = {
             saveOptions();
           }
       },false);
+      document.getElementById('SingleStat').addEventListener ('change', function(){ThroneOptions.SingleStat = document.getElementById('SingleStat').checked;saveThroneOptions();},false);
       document.getElementById('Attack').addEventListener ('change', function(){ThroneOptions.Salvage.Attack = document.getElementById('Attack').checked;saveThroneOptions();},false);
       document.getElementById('Defense').addEventListener ('change', function(){ThroneOptions.Salvage.Defense = document.getElementById('Defense').checked;saveThroneOptions();},false);
       document.getElementById('Life').addEventListener ('change', function(){ThroneOptions.Salvage.Life = document.getElementById('Life').checked;saveThroneOptions();},false);
@@ -2619,10 +2622,23 @@ salvageCheck : function (){
                     for (i=1;i<=5;i++){
                         for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++){
                             type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];
-                            if (ThroneOptions.Salvage[type]) {number++;}
-                            
+                            if (ThroneOptions.Salvage[type]) {
+								if(ThroneOptions.SingleStat) {
+									ThroneOptions.Salvage[type]++
+								} else {
+									number++;
+								}
+							}
                         }
                     }
+                    if(ThroneOptions.SingleStat) {
+						for (h in ThroneOptions.Salvage) {
+							if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep) 
+								number = parseInt(ThroneOptions.Salvage[h] - 1);
+							if(ThroneOptions.Salvage[h])
+								ThroneOptions.Salvage[h] = true;
+						}
+					}
                     if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
                     logit(y.name+' '+number);
                     if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
@@ -9061,10 +9077,6 @@ Tabs.AutoCraft = {
      
      var ret=getCityBuilding(cityId,20).count;
      if (ret==0) {
-       t.Start();
-       return;
-     }
-     if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<5000) {
        t.Start();
        return;
      }
