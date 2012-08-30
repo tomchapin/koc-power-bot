@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120829a
+// @version        20120830a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120829a';
+var Version = '20120830a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2873,10 +2873,37 @@ Tabs.tower = {
        m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
     m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="'+translate("Stop Sound Alert")+'"></center></div><DIV id=pbSwfPlayer></div>';
     m += '<BR><DIV class=pbStat>'+translate("CONFIGURATION")+'</div><TABLE class=pbTab>\
-    <TR><td align=center>-</td><TD align=left>'+translate("Minimum # of troops to trigger tower options")+':<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> <span style="color:#800; font-weight:bold"><sup>*NEW! Controls All Tower Options</sup></span></td></tr>';
+    <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
+    <td align=left>'+translate("Text message incoming attack to")+': <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
+&nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
+&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold"><sup>*'+translate("Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>\
+    <TD align=left>'+translate("Country")+': <select id="pbfrmcountry">';
+    for (var i in t.Providers) {
+       var ret=m.indexOf(t.Providers[i].country);
+       if (ret==-1) {
+         if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
+           m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
+         }
+         else {
+           m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
+         }
+       }
+    }
+    
+    m += '</select>\
+    <select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--'+translate("Provider")+'--</option>';
+    for (var i in t.Providers) {
+ if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
+        if(Options.celltext.provider == i)
+            m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
+        else
+           m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+    }
 
-    m += '</select></td></tr>\
-        <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
+    m += '</select></td></tr>';
+    m += '<TR><td align=center>-</td><TD align=left>'+translate("Minimum # of troops to trigger tower options")+':<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> <span style="color:#800; font-weight:bold"><sup>*NEW! Controls All Tower Options</sup></span></td></tr>';
+
+    m += '<TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
         <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
             <TR><TD align=right>'+translate("Message Prefix")+': &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
             <TR><TD align=right>'+translate("Alert on scouting")+': &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
@@ -2913,6 +2940,7 @@ Tabs.tower = {
     document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
     document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
     document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
+    document.getElementById('pbcellenable').addEventListener ('change', function (e){Options.celltext.atext = e.target.checked;}, false);
     document.getElementById('pbSoundStop').disabled = true;
     document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
@@ -2920,6 +2948,11 @@ Tabs.tower = {
     document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertDefend').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
+    document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
+    document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
+    document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
+    document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
     document.getElementById('pbalertraid').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTR').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRset').addEventListener ('change', t.e_alertOptChanged, false);
