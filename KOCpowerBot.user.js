@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120830a
+// @version        20120831a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120830a';
+var Version = '20120831a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12139,6 +12139,7 @@ Tabs.AutoTrain = {
             saveTrainOptions();
           }, false);
           document.getElementById('TroopsCity'+k).addEventListener('change', function(e){
+			t.AF_TU_Change(e.target['className'],e.target.value);
             TrainOptions.Troops[e.target['className']] = e.target.value;
             saveTrainOptions();
           }, false);
@@ -12202,7 +12203,16 @@ Tabs.AutoTrain = {
   hide: function(){
     var t = Tabs.AutoTrain;
   },
-  
+  	AF_TU_Change: function(numcity,unit) {
+		var t = Tabs.AutoTrain;
+		var cityId = Cities.cities[numcity-1].id
+		var coutenpop= unsafeWindow.unitcost['unt'+unit][6];
+		var X = Seed.citystats['city'+cityId].pop[1];
+		var Y = unsafeWindow.seed.citystats["city"+cityId].pop[3];
+		var Q= coutenpop;
+		var Z = document.getElementById('workers'+numcity).value/100;
+		document.getElementById("max"+numcity).value = parseIntNan(X/Q);
+	},
   checkidlepopulation : function(cityId){
     var t = Tabs.AutoTrain;
     if(TrainOptions.Workers[t.city] == 0)
