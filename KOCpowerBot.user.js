@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120831a
+// @version        20120902a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120831a';
+var Version = '20120902a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -245,6 +245,8 @@ var TrainOptions = {
   CraftIntervallMin : 3,
   CraftingActif : {3000:false,3001:false,3002:false,3003:false,3004:false,3005:false,3006:false,3007:false,3008:false,3009:false,3010:false,3011:false},
   CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0},
+  tr	:	false,
+  trset	:	0,
 };
 var FarmOptions = {
 	RallyClip: 0,
@@ -12026,7 +12028,8 @@ Tabs.AutoTrain = {
     
     var m = '<DIV class=pbStat>AUTO TRAIN</div><TABLE width=100% height=0% class=pbTab><TR><TD width=200></td>';
         m += '<TD align=center><INPUT id=pbAutoTrainState type=submit value="'+translate("AutoTrain")+' = '+ (TrainOptions.Running?'ON':'OFF')+'"></td>';
-        m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value='+translate("HELP")+'></td>';
+        m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value='+translate("HELP")+'></td></tr></table>';
+        m += '<table><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> Only train when throne room set <INPUT id=pbatTRset type=text size=2 maxlength=1 value="'+ TrainOptions.trset +'">  is equiped</td>';
         m += '</tr></table></div>';
         m += '<DIV class=pbStat>TRAIN OPTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
 
@@ -12097,6 +12100,15 @@ Tabs.AutoTrain = {
     document.getElementById('pbAutoTrainState').addEventListener('click', function(){
         t.toggleAutoTrainState(this);
     }, false);
+
+	document.getElementById('pbatTR').addEventListener ('change', function() {
+		TrainOptions.tr = this.checked;
+		saveTrainOptions();
+		}, false);
+    document.getElementById('pbatTRset').addEventListener ('change', function() {
+		TrainOptions.trset = this.value;
+		saveTrainOptions();
+		}, false);
 
     for(var k=1; k<=Seed.cities.length; k++){
          document.getElementById('treshold'+k).addEventListener('change', function(e){
@@ -12260,6 +12272,11 @@ Tabs.AutoTrain = {
   nextcity : function(){
     var t = Tabs.AutoTrain;
     if (!TrainOptions.Running) return;
+    if (TrainOptions.tr && TrainOptions.trset != 0) {
+		if (Seed.throne.activeSlot != TrainOptions.trset) {
+			return;
+			};
+		};
     t.city++;
     if(t.city > Seed.cities.length) t.city = 1;
     var cityId = Seed.cities[t.city-1][0];
