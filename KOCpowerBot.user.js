@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120904c
+// @version        20120904d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120904c';
+var Version = '20120904d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12260,7 +12260,10 @@ Tabs.AutoTrain = {
 		var Y = unsafeWindow.seed.citystats["city"+cityId].pop[3];
 		var Q= coutenpop;
 		var Z = document.getElementById('workers'+numcity).value/100;
-		document.getElementById("max"+numcity).value = parseIntNan(X/Q);
+		if (Z == 0)
+		document.getElementById("max"+numcity).value=parseIntNan((X-Y)/Q);
+		else
+		document.getElementById("max"+numcity).value = parseIntNan(X/Q*Z);
 	},
   checkidlepopulation : function(cityId){
     var t = Tabs.AutoTrain;
