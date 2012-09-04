@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120904b
+// @version        20120904c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120904b';
+var Version = '20120904c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1641,8 +1641,8 @@ Tabs.Throne = {
       m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
       m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
       m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>.</font></td>';
-      m+='<TR><TD><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Dont save mixed cards: ie range with life</TD></TR>';
-      m+='<TR><TD><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order</TD></TR></table>';
+      m+='<TR><TD><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Choose only 1 attribute to save at a time. (i.e. Range OR Life, not Range AND Life)</TD></TR>';
+      m+='<TR><TD><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all cities for crafing purposes)</TD></TR></table>';
       m+='<TABLE id=pbbarbingfunctions width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Defense type=checkbox '+ (ThroneOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td></tr>';
@@ -2660,14 +2660,18 @@ doSalvage : function(){
         var t = Tabs.Throne;    
         var cityid = 0;
         var cities = [];
+        var spirecities = [];
         for (var k in Cities.byID) {
             if (Seed.resources["city"+k]["rec5"][0] < 1000000)
             {
+				var a = getCityBuilding(k,20);
+				if (a.count == 1)
+				spirecities.push(k);
 				cities.push(k);
-               //cityid = k;
-               //break;
             }
         }
+        if (spirecities != [])
+        cities = spirecities;
 		if (cities != [])
         if (ThroneOptions.Cityrand) {
 			cityid = cities[Math.floor(Math.random()*cities.length)];
@@ -10050,7 +10054,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> '+translate("Auto delete barb/transport reports from you")+'</td></tr>\
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> '+translate("Auto delete transport reports to you")+'</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> '+translate("Auto delete wild reports")+'</td></tr>\
-        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto-delete crest reports regardless of target type")+'</td></tr>\
+        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest target regardless of type")+'</td></tr>\
         </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
         m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
       div.innerHTML = m;
@@ -18692,9 +18696,7 @@ Tabs.Combat = {
     },
  };
 /** End Cresting tab **/
-
-
-    
+   
 
 //
 pbStartup ();
