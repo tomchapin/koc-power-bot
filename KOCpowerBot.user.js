@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120904a
+// @version        20120904b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120904a';
+var Version = '20120904b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12050,7 +12050,29 @@ Tabs.AutoTrain = {
         m+='<TD><TABLE><TR>';
         m+='<TD><B>'+ Seed.cities[i][1] +'</b></td>';
         m+='<TD width=150px><SELECT class='+city+' id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
-            for (y in unsafeWindow.unitcost) m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
+            for (y in unsafeWindow.unitcost) {
+				var faux = 0;
+				var uc = unsafeWindow.unitcost[y];
+				if (matTypeof(uc[8]) == 'object'){
+					for (k in uc[8]){
+						var b = getCityBuilding (Seed.cities[i][0], k.substr(1));
+						if (b.maxLevel < uc[8][k][1]){
+							faux = 1;
+							break;
+						}
+					}
+				}
+				if (matTypeof(uc[9]) == 'object'){
+					for (k in uc[9]){
+						if (parseInt(Seed.tech['tch'+k.substr(1)]) < uc[9][k][1]){
+							faux = 1;
+							break;
+						}
+					}
+				}
+				if (faux==0)
+					m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
+			}
         m+='</select></td>';
         m+='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=4 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
         m+='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=max'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
