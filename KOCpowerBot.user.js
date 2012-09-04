@@ -4767,9 +4767,9 @@ Tabs.Search = {
         }
     if (t.opt.searchType == 1){
       m += '<TR><TD class=xtab align=right>'+translate("Wilderness Type")+':</td><TD class=xtab><SELECT id=pafilWildType>';
-      m += htmlOptions ( {1:translate('Glassland/Lake'), 3:translate('Woodlands'), 4:translate('Hills'), 5:translate('Mountain'), 6:translate('Plain'), 8:translate('Dark Forest'), 0:translate('ALL')}, Options.wildType );
+      m += htmlOptions ( {1:translate('Grassland/Lake'), 3:translate('Woodlands'), 4:translate('Hills'), 5:translate('Mountain'), 6:translate('Plain'), 8:translate('Dark Forest'), 0:translate('ALL')}, Options.wildType );
       m+= '</select></td></tr>';
-      // m+= '<TR><TD class=xtab align=right>Glassland/Lake:</td><TD class=xtab><INPUT name=pbfil id=pafilGrass type=CHECKBOX '+ (Options.GrassOnly?' CHECKED':'') +'\><td></tr>';
+      // m+= '<TR><TD class=xtab align=right>Grassland/Lake:</td><TD class=xtab><INPUT name=pbfil id=pafilGrass type=CHECKBOX '+ (Options.GrassOnly?' CHECKED':'') +'\><td></tr>';
       // m+= '<TR><TD class=xtab align=right>Woodlands:</td><TD class=xtab><INPUT name=pbfil id=pafilWood type=CHECKBOX '+ (Options.WoodOnly?' CHECKED':'') +'\><td></tr>';
       // m+= '<TR><TD class=xtab align=right>Hills:</td><TD class=xtab><INPUT name=pbfil id=pafilHill type=CHECKBOX '+ (Options.HillOnly?' CHECKED':'') +'\><td></tr>';
       // m+= '<TR><TD class=xtab align=right>Mountain:</td><TD class=xtab><INPUT name=pbfil id=pafilMount type=CHECKBOX '+ (Options.MountOnly?' CHECKED':'') +'\><td></tr>';
