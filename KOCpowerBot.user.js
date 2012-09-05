@@ -54,12 +54,12 @@ unsafeWindow.arthurCheck = function (a) {
   if (b) {
     unsafeWindow.AjaxCall.gPostRequest("ajax/funnelTracking.php", {
       action: 1300,
-      serverId: g_server,
+      serverId: unsafeWindow.g_server,
       uid: 1729784
     })
   }
 };
-//uid 1729784 is our programmer friend Daniel from kabam afterall we don't want kabam thinking no one uses scripts
+//uid 1729784 is our programmer friend Daniel from kabam
 var upgradeData = {
   active : false,
   item_upgrade : {},
