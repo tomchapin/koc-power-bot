@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120905a
+// @version        20120905b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120905a';
+var Version = '20120905b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -42,8 +42,24 @@ var JSON;if(!JSON){JSON={};}(function(){"use strict";function f(n){return n<10?'
 var JSON2 = JSON;
 
 //logit ("+++ STARTUP: "+ document.URL);
-
-
+//Kabams new cheat detector
+unsafeWindow.arthurCheck = function (a) {
+  var b = false;
+  for (var c = 0; c < a.length; c++) {
+    if ($(unescape(a[c]))) {
+      b = true;
+      break
+    }
+  }
+  if (b) {
+    unsafeWindow.AjaxCall.gPostRequest("ajax/funnelTracking.php", {
+      action: 1300,
+      serverId: g_server,
+      uid: 1729784
+    })
+  }
+};
+//uid 1729784 is our programmer friend Daniel from kabam afterall we don't want kabam thinking no one uses scripts
 var upgradeData = {
   active : false,
   item_upgrade : {},
@@ -18703,6 +18719,5 @@ Tabs.Combat = {
 /** End Cresting tab **/
    
 
-//
 pbStartup ();
 
