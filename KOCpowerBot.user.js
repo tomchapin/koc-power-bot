@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120904d
+// @version        20120905a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120904d';
+var Version = '20120905a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12169,6 +12169,7 @@ Tabs.AutoTrain = {
           }, false);
          document.getElementById('workers'+k).addEventListener('change', function(e){
               TrainOptions.Workers[e.target['className']] = e.target.value;
+              t.AF_TU_Change(e.target['className'],document.getElementById('TroopsCity'+e.target['className']).value);
               saveTrainOptions();
           }, false);
          document.getElementById('Resource'+k).addEventListener('change', function(e){
