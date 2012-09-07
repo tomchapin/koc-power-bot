@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120905b
+// @version        20120907a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120905b';
+var Version = '20120907a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6604,11 +6604,11 @@ Tabs.transport = {
         var m= '<TABLE id=paintRoutes class=pbTab>'; 
             for (var i=0;i<(r.length);i++) {
                 var queueId = i;
-                var cityname = Cities.byID[r[queueId].city].name;
+                var cityname = (Cities.byID[r[queueId].city] ? Cities.byID[r[queueId].city].name : "null");
                 var citynameTo = null, TO, status, unit;
                 if(typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0 && Cities.byID[r[queueId].target_city] != 'undefined')
-                    citynameTo = Cities.byID[r[queueId].target_city].name;      
-                if (citynameTo == null) TO = r[i].target_x +','+ r[i].target_y;
+                    citynameTo = (Cities.byID[r[queueId].target_city] ? Cities.byID[r[queueId].target_city].name : "null");      
+                else if (citynameTo == null) TO = r[i].target_x +','+ r[i].target_y;
                     else TO = citynameTo;
                 if (r[i].route_state) status = '<FONT color=green>'+translate("Enabled")+'</font>';
                     else status = '<FONT color=red>'+translate("Disabled")+'</font>';
@@ -18279,7 +18279,7 @@ Tabs.Combat = {
                 row.insertCell(i).innerHTML = "<a id=pbCrestDel_" + QueID + " value=" + i + ">Delete</a>";
                 document.getElementById('pbCrestDel_' + QueID).addEventListener('click', function(){t.cancelCrestTarget(QueID);}, false);
             } else if (col14 == "Delete" && i == 0) {
-                row.insertCell(i).innerHTML = Cities.byID[col0].name;
+                row.insertCell(i).innerHTML = (Cities.byID[col0] ? Cities.byID[col0].name : '');
             } else {
                 row.insertCell(i).innerHTML = eval("col" + i) + "&nbsp; &nbsp;";
             }
@@ -18717,7 +18717,6 @@ Tabs.Combat = {
     },
  };
 /** End Cresting tab **/
-   
 
 pbStartup ();
 
