@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120907a
+// @version        20120907b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120907a';
+var Version = '20120907b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18369,7 +18369,7 @@ Tabs.Combat = {
                     now = now.toFixed(0);
                     CrestData[CrestDataNum].lastRoundTwo = now;
                     saveCrestData();
-                    setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(5*1000));    
+                    setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));    
                     return;
                     
                 } else {
@@ -18475,11 +18475,11 @@ Tabs.Combat = {
 
         switch (retry) {
             case 10:
-                setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},30*1000);
+                setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
                 return;
                 break;
             case 20:
-                setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},30*1000);
+                setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
                 return;
                 break;
         }
@@ -18530,7 +18530,7 @@ Tabs.Combat = {
        }else {
             var now = new Date().getTime()/1000.0;
             now = now.toFixed(0);
-            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + 300)) {
+            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + Options.Crestinterval)) {
                 r=1;
             }
         }
