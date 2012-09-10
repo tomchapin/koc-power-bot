@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120909a
+// @version        20120909b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120909a';
+var Version = '20120909b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -449,7 +449,21 @@ function kocWideScreen(){
   if (GlobalOptions.pbWideScreen)
 		setWideFb();
 }
-
+    var aj2 = function(c, d, b, a)
+    {
+        if (d.ctrl && d.ctrl == "Tracking")
+        {
+            logit("Tracking intercepted");
+            logit("Ajax d: " + uneval(d));
+            return;
+            //disable - don't send on the message
+        }
+        else
+        {
+            unsafeWindow.AjaxCall.gAjaxRequest(c, d, b, a, "post");
+        }
+    }
+    unsafeWindow.AjaxCall.gPostRequest = aj2
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
   function setWide (){
