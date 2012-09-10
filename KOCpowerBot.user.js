@@ -17085,7 +17085,7 @@ var DeleteReports = {
     deleting : false,
     init : function(){
         var t = DeleteReports;
-//        setInterval(t.startdeletereports, 2*60*1000);
+        setInterval(t.startdeletereports, 2*60*1000);
         setTimeout(t.startdeletereports, 10);
     },
     
