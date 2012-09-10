@@ -17090,7 +17090,6 @@ var DeleteReports = {
     },
     
     startdeletereports : function(){
-		logit('delete reports starting');
         var t = DeleteReports;
           if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2)){
               t.deleting = true;
