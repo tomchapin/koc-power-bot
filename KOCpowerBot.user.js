@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120909b
+// @version        20120913a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120909b';
+var Version = '20120913a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7041,6 +7041,17 @@ Tabs.transport = {
                   unsafeWindow.update_seed(rslt.updateSeed)
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
+					    if (rslt.user_action) {
+                        //new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
+                        //logit('send march captcha');
+                        if(rslt.tt)
+                        p.tt = rslt.tt;
+                        var wait = 0;
+                        if(rslt.wait_time)
+                        wait = rslt.wait_time;
+                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*60*1000);
+                        return;
+					  };
                   actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
                   }
                   },
@@ -18345,7 +18356,7 @@ Tabs.Combat = {
 
    
      sendMarch: function(p,callback,r,retry, CrestDataNum){
-        var t = Tabs.Crest;            
+        var t = Tabs.Crest;
         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {    
              method: "post",
              parameters: p,
@@ -18390,9 +18401,15 @@ Tabs.Combat = {
                 } else {
 
                     if (rslt.user_action) {
-                        new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
-                        logit('send march captcha');
-                        setTimeout (function(){callback(r,retry,CrestDataNum);}, 5*60*1000);
+                        //new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
+                        //logit('send march captcha');
+                        if(rslt.tt)
+                        p.tt = rslt.tt;
+                        var wait = 1;
+                        if(rslt.wait_time)
+                        wait = rslt.wait_time;
+                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*60*1000);
+                        //setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
                         return;
                     }
                     setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
