@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120913a
+// @version        20120913b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120913a';
+var Version = '20120913b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1661,7 +1661,7 @@ Tabs.Throne = {
     }
     t.checkUpgradeInfo(true);
     if (ThroneOptions.Active) t.setActionTimer = setInterval(t.doAction,10000);
-    setInterval(t.salvageCheck,2*60*1000);
+    setInterval(t.salvageCheck,1*60*1000);
  },
     
  Salvage : function (){ 
@@ -1671,8 +1671,9 @@ Tabs.Throne = {
       m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
       m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
       m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>.</font></td>';
-      m+='<TR><TD><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Keep one checked attribute per card (salvage mixed cards)</TD></TR>';
-      m+='<TR><TD><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all cities for crafing purposes)</TD></TR></table>';
+      m+='<TR><TD colspan=3><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Keep one checked attribute per card (salvage mixed cards)</TD></TR>';
+      m+='<TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all cities for crafing purposes)</TD></TR></table>';
+      m+='<TR><TD colspan=3><INPUT id=pbsalvage_cityspire type=checkbox '+ (ThroneOptions.CitySpire?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in cities with Fey Spire first before other cities</TD></TR></table>';
       m+='<TABLE id=pbbarbingfunctions width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Defense type=checkbox '+ (ThroneOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td></tr>';
@@ -1718,6 +1719,7 @@ Tabs.Throne = {
       },false);
       document.getElementById('SingleStat').addEventListener ('change', function(){ThroneOptions.SingleStat = document.getElementById('SingleStat').checked;saveThroneOptions();},false);
       document.getElementById('Cityrand').addEventListener ('change', function(){ThroneOptions.Cityrand = this.checked;saveThroneOptions();},false);
+      document.getElementById('pbsalvage_cityspire').addEventListener ('change', function(){ThroneOptions.CitySpire = this.checked;saveThroneOptions();},false);
       document.getElementById('Attack').addEventListener ('change', function(){ThroneOptions.Salvage.Attack = document.getElementById('Attack').checked;saveThroneOptions();},false);
       document.getElementById('Defense').addEventListener ('change', function(){ThroneOptions.Salvage.Defense = document.getElementById('Defense').checked;saveThroneOptions();},false);
       document.getElementById('Life').addEventListener ('change', function(){ThroneOptions.Salvage.Life = document.getElementById('Life').checked;saveThroneOptions();},false);
@@ -2416,9 +2418,7 @@ PaintSalvageHistory : function() {
             onSuccess: function (transport) {
                 var rslt = eval("(" + transport.responseText + ")");
                     if(rslt.ok){
-                              ThroneOptions.RepairEnd = rslt.eta; 
-                              var now = new Date().getTime()/1000.0;
-                              t.setRepairTimer = setInterval (t.repairTimerUpdate,1000); 
+                              ThroneOptions.RepairEnd = rslt.eta;
                               Seed.queue_throne.itemId= ThroneOptions.Items["0"]["id"];
                              Seed.queue_throne.start=unixTime();
                              Seed.queue_throne.end= rslt.eta;
@@ -2504,23 +2504,26 @@ PaintSalvageHistory : function() {
 
   repairTimerUpdate :function (){
         var t = Tabs.Throne;
-        if (ThroneOptions.Items.length == 0) return;
-        var now = new Date().getTime()/1000.0;
-        var diff = 0;
-        if (Seed.queue_throne.end == undefined) return;
-        else diff = Seed.queue_throne.end - now;
-        if (diff <0){
-            clearTimeout(t.setRepairTimer);
-            if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
-            else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF."; 
-            unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
-            Seed.queue_throne = "";
-            return;
-        } else {
-              document.getElementById('ShowStatus').innerHTML = "Repairing on: " + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name + "<br/>Time left: " + timestr(diff)+ " ("+ timestr(Seed.queue_throne.end - Seed.queue_throne.start) + ")";
-              document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
-        }
-  
+		try {
+			if (ThroneOptions.Items.length == 0) return;
+			var now = new Date().getTime()/1000.0;
+			var diff = 0;
+			if (Seed.queue_throne.end == undefined) return;
+			else diff = Seed.queue_throne.end - now;
+			if (diff <0){
+				clearInterval(t.setRepairTimer);
+				if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
+				else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF."; 
+				unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
+				Seed.queue_throne = "";
+				return;
+			} else {
+				  document.getElementById('ShowStatus').innerHTML = "Repairing on: " + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name + "<br/>Time left: " + timestr(diff)+ " ("+ timestr(Seed.queue_throne.end - Seed.queue_throne.start) + ")";
+				  document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
+			}
+		} catch (e){
+			//do nothing
+		}
   },
 
   paintInfo : function (){
@@ -2696,19 +2699,22 @@ doSalvage : function(){
             {
 				var a = getCityBuilding(k,20);
 				if (a.count == 1)
-				spirecities.push(k);
+					spirecities.push(k);
 				cities.push(k);
             }
         }
-        if (spirecities != [])
-        cities = spirecities;
-		if (cities != [])
-        if (ThroneOptions.Cityrand) {
-			cityid = cities[Math.floor(Math.random()*cities.length)];
-		}else{
-			cityid = cities[0];
-		};
-        if (cityid == 0) cityid = Seed.cities[0][0];
+		if(ThroneOptions.CitySpire){
+			if (spirecities.toSource != "[]")
+				cities = spirecities;
+		}
+		if (cities.toSource() != "[]"){
+			if (ThroneOptions.Cityrand) {
+				cityid = cities[Math.floor(Math.random()*cities.length)];
+			}else{
+				cityid = cities[0];
+			}
+		}
+        if (cityid == 0) cityid = Seed.cities[0][0]; //If all else failss default to city 1
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'salvage';
