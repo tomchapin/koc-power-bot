@@ -7047,7 +7047,8 @@ Tabs.transport = {
                   unsafeWindow.update_seed(rslt.updateSeed)
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
-					    if (rslt.user_action == 'backOffWaitTime') {
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime');
                         if(rslt.tt)
                         p.tt = rslt.tt;
                         var wait = 1;
@@ -7137,7 +7138,8 @@ Tabs.transport = {
                           document.getElementById ('pbtradeamountGold').value = 0;
                           document.getElementById ('TroopsToSend').value = 0;
                   } else {
-					if (rslt.user_action == 'backOffWaitTime') {
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime');
                         if(rslt.tt)
                         var tt = rslt.tt;
                         var wait = 1;
@@ -11292,7 +11294,8 @@ Tabs.Reassign = {
                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
-					    if (rslt.user_action == 'backOffWaitTime') {
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime');
                         var tt = null;
                         if(rslt.tt)
                         tt = rslt.tt;
@@ -18425,8 +18428,8 @@ Tabs.Combat = {
                     return;
                     
                 } else {
-
-                    if (rslt.user_action == 'backOffWaitTime') {
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime');
                         if(rslt.tt)
                         p.tt = rslt.tt;
                         var wait = 1;
