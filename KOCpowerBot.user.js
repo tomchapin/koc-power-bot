@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120913b
+// @version        20120915a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120913b';
+var Version = '20120915a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7047,12 +7047,10 @@ Tabs.transport = {
                   unsafeWindow.update_seed(rslt.updateSeed)
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
-					    if (rslt.user_action) {
-                        //new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
-                        //logit('send march captcha');
+					    if (rslt.user_action == 'backOffWaitTime') {
                         if(rslt.tt)
                         p.tt = rslt.tt;
-                        var wait = 0;
+                        var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
                         setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*60*1000);
@@ -7066,7 +7064,7 @@ Tabs.transport = {
         }
     },
     
-    ManualTransport: function(){
+    ManualTransport: function(tt){
     var t = Tabs.transport;
        if (document.getElementById ('ptcityX').value == "" || document.getElementById ('ptcityY').value == "") return;
     if ( t.TroopsNeeded > t.Troops) return;
@@ -7103,7 +7101,8 @@ Tabs.transport = {
       case 'unt11': params.u11 = parseInt(document.getElementById ('TroopsToSend').value);break;
       case 'unt12': params.u12 = parseInt(document.getElementById ('TroopsToSend').value);break;
     }
-
+	if (tt)
+	params.tt = tt;
     if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
                  
          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
@@ -7138,8 +7137,18 @@ Tabs.transport = {
                           document.getElementById ('pbtradeamountGold').value = 0;
                           document.getElementById ('TroopsToSend').value = 0;
                   } else {
+					if (rslt.user_action == 'backOffWaitTime') {
+                        if(rslt.tt)
+                        var tt = rslt.tt;
+                        var wait = 1;
+                        if(rslt.wait_time)
+                        wait = rslt.wait_time;
+                        setTimeout (function(){t.ManualTransport(tt);}, wait*60*1000);
+                        document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + 'kabam making us wait for 60 seconds then retry march' +'</font>';
+                        return;
+					  };
                           var errorcode =  'err_' + rslt.error_code;
-                          if (rlst.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
+                          if (rslt.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
                           else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + rslt.msg +'</font>'; 
                   }
                   },
@@ -11178,7 +11187,7 @@ Tabs.Reassign = {
         }
     },
     
-    doReassign: function(count){
+    doReassign: function(count,tt){
         var t = Tabs.Reassign;
            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
            if(t.reassignRoutes.length==0) return;
@@ -11198,6 +11207,8 @@ Tabs.Reassign = {
         params.u11 = 0;
         params.u12 = 0;    
                 
+           if(tt)
+           params.tt = tt;
             var city = t.reassignRoutes[count]["city"];
             var xcoord = t.reassignRoutes[count]["target_x"];
             var ycoord = t.reassignRoutes[count]["target_y"];
@@ -11281,8 +11292,17 @@ Tabs.Reassign = {
                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
+					    if (rslt.user_action == 'backOffWaitTime') {
+                        var tt = null;
+                        if(rslt.tt)
+                        tt = rslt.tt;
+                        var wait = 1;
+                        if(rslt.wait_time)
+                        wait = rslt.wait_time;
+                        setTimeout (function(){t.doReassign(count,tt);}, wait*60*1000);
+                        return;
+                    };
                   actionLog('REASSIGN FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
-                  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
                   }
                   },
                   onFailure: function () {}
@@ -18406,18 +18426,15 @@ Tabs.Combat = {
                     
                 } else {
 
-                    if (rslt.user_action) {
-                        //new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
-                        //logit('send march captcha');
+                    if (rslt.user_action == 'backOffWaitTime') {
                         if(rslt.tt)
                         p.tt = rslt.tt;
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
                         setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*60*1000);
-                        //setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
                         return;
-                    }
+                    };
                     setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
                     return;
                 }
