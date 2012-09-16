@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120915a
+// @version        20120916a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120915a';
+var Version = '20120916a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7054,7 +7054,7 @@ Tabs.transport = {
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*60*1000);
+                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*1000);
                         return;
 					  };
                   actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
@@ -7145,7 +7145,7 @@ Tabs.transport = {
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.ManualTransport(tt);}, wait*60*1000);
+                        setTimeout (function(){t.ManualTransport(tt);}, wait*1000);
                         document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + 'kabam making us wait for 60 seconds then retry march' +'</font>';
                         return;
 					  };
@@ -11302,7 +11302,7 @@ Tabs.Reassign = {
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.doReassign(count,tt);}, wait*60*1000);
+                        setTimeout (function(){t.doReassign(count,tt);}, wait*1000);
                         return;
                     };
                   actionLog('REASSIGN FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
@@ -18435,7 +18435,7 @@ Tabs.Combat = {
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*60*1000);
+                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*1000);
                         return;
                     };
                     setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
