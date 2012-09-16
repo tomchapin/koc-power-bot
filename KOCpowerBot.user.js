@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120916a
+// @version        20120916b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120916a';
+var Version = '20120916b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7106,11 +7106,13 @@ Tabs.transport = {
 	params.tt = tt;
     if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
                  
+        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
                   method: "post",
                   parameters: params,
                   loading: true,
                   onSuccess: function (transport) {
+					  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {                  
                           var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -7154,7 +7156,7 @@ Tabs.transport = {
                           else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + rslt.msg +'</font>'; 
                   }
                   },
-                  onFailure: function () {}
+                  onFailure: function () {profiler.stop();}
           });
         }
     },
@@ -11273,11 +11275,13 @@ Tabs.Reassign = {
         
            if (totalsend >0) {
            
+        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
               new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
                   method: "post",
                   parameters: params,
                   loading: true,
                   onSuccess: function (transport) {
+					  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
                   actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
@@ -11308,7 +11312,7 @@ Tabs.Reassign = {
                   actionLog('REASSIGN FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
                   }
                   },
-                  onFailure: function () {}
+                  onFailure: function () {profiler.stop();}
           });
         }      
     },
@@ -12240,6 +12244,7 @@ Tabs.AutoTrain = {
          document.getElementById('workers'+k).addEventListener('change', function(e){
               TrainOptions.Workers[e.target['className']] = e.target.value;
               t.AF_TU_Change(e.target['className'],document.getElementById('TroopsCity'+e.target['className']).value);
+              TrainOptions.Max[e.target['className']] = document.getElementById('max'+e.target['className']).value;
               saveTrainOptions();
           }, false);
          document.getElementById('Resource'+k).addEventListener('change', function(e){
@@ -12261,6 +12266,7 @@ Tabs.AutoTrain = {
           document.getElementById('TroopsCity'+k).addEventListener('change', function(e){
 			t.AF_TU_Change(e.target['className'],e.target.value);
             TrainOptions.Troops[e.target['className']] = e.target.value;
+              TrainOptions.Max[e.target['className']] = document.getElementById('max'+e.target['className']).value;
             saveTrainOptions();
           }, false);
           document.getElementById('KeepFood'+k).addEventListener('change', function(e){
@@ -12413,10 +12419,12 @@ Tabs.AutoTrain = {
     if(parseInt(TrainOptions.Gamble[t.city]) > 0)
         params.gambleId = TrainOptions.Gamble[t.city];
 
+    var profiler = new cm.Profiler("ResponseTime", "train.php");
     new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
         method: "post",
         parameters: params,
         onSuccess: function(rslt) {
+			profiler.stop();
           if (rslt.ok) {
             for (var i = 1; i < 5; i++) {
                 var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
@@ -12432,7 +12440,8 @@ Tabs.AutoTrain = {
           } else {
             setTimeout (notify, 10000);
           }
-        },
+        }, 
+      onFailure: function () {profiler.stop();}
     });
   },
 }
@@ -17527,10 +17536,12 @@ Tabs.Apothecary = {
     params.apothecary = true;
     var time = unsafeWindow.cm.RevivalModel.getRevivalStats(unitId, num).time;
 
+    var profiler = new cm.Profiler("ResponseTime", "train.php");
     new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
         method: "post",
         parameters: params,
         onSuccess: function(rslt) {
+			profiler.stop();
           if (rslt.ok) {
             for (var i = 1; i < 5; i++) {
                 var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
@@ -17549,6 +17560,7 @@ Tabs.Apothecary = {
             
           }
         },
+      onFailure: function () {profiler.stop();}
     });
   },
   
@@ -18386,11 +18398,13 @@ Tabs.Combat = {
    
      sendMarch: function(p,callback,r,retry, CrestDataNum){
         var t = Tabs.Crest;
+        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {    
              method: "post",
              parameters: p,
              loading: true,
-             onSuccess: function (transport) {        
+             onSuccess: function (transport) { 
+					profiler.stop();             
                 var rslt = eval("(" + transport.responseText + ")");
                 if (rslt.ok) {
                     var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -18443,6 +18457,7 @@ Tabs.Combat = {
                 }
             },
              onFailure: function () {
+					profiler.stop();      
                 setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
                 return;
              }
