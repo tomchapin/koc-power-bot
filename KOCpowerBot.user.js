@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120916b
+// @version        20120916bc
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120916b';
+var Version = '20120916c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -9815,10 +9815,12 @@ Tabs.Barb = {
                             });
   },
     
-  doBarb: function(cityID,counter,xcoord,ycoord,level,kid,trps){
+  doBarb: function(cityID,counter,xcoord,ycoord,level,kid,trps,tt){
           var t = Tabs.Barb;
           
           var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+          if(tt)
+          params.tt = tt;
           params.cid=cityID;
           params.type=4;
           params.kid=kid;
@@ -9831,11 +9833,13 @@ Tabs.Barb = {
           
           AttackOptions.BarbsTried++;
           document.getElementById('pberror1').innerHTML = 'Tries:'+ AttackOptions.BarbsTried; 
+        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
                    method: "post",
                    parameters: params,
                    loading: true,
                    onSuccess: function (transport) {
+					   profiler.stop();
                    var rslt = eval("(" + transport.responseText + ")");
                    if (rslt.ok) {
                      var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -9866,6 +9870,16 @@ Tabs.Barb = {
                      GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                      saveAttackOptions();
                    } else {
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime');
+                        if(rslt.tt)
+                        var tt = rslt.tt;
+                        var wait = 1;
+                        if(rslt.wait_time)
+                        wait = rslt.wait_time;
+                        setTimeout (function(){t.doBarb(cityID,counter,xcoord,ycoord,level,kid,trps,tt);}, wait*1000);
+                        return;
+						};
                      //logit( inspect(rslt,3,1));
                      if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
                      if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
@@ -9884,7 +9898,7 @@ Tabs.Barb = {
                      //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
                      }
                    },
-                   onFailure: function () {}
+                   onFailure: function () {profiler.stop();}
            });
        saveAttackOptions();
   },
