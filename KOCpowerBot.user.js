@@ -2875,7 +2875,6 @@ Tabs.tower = {
         83: { 'country': "UNITED STATES", 'provider': "Bellsouth" },
         84: { 'country': "UNITED STATES", 'provider': "Boost" },
         85: { 'country': "UNITED STATES", 'provider': "CellularOne" },
-        86: { 'country': "UNITED STATES", 'provider': "CellularOne MMS" },
         87: { 'country': "UNITED STATES", 'provider': "Cingular" },
         88: { 'country': "UNITED STATES", 'provider': "Edge Wireless" },
         90: { 'country': "UNITED STATES", 'provider': "T-Mobile" },
