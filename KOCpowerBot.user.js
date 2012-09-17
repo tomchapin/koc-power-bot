@@ -7020,12 +7020,14 @@ Tabs.transport = {
     }
         
            if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
-                 
+            
+        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");     
          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
                   method: "post",
                   parameters: params,
                   loading: true,
                   onSuccess: function (transport) {
+					  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
                   actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
@@ -7060,7 +7062,7 @@ Tabs.transport = {
                   actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
                   }
                   },
-                  onFailure: function () {}
+                  onFailure: function () {profiler.stop();}
           });
         }
     },
