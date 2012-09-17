@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120916be
+// @version        20120917a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120916e';
+var Version = '20120917a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7028,24 +7028,24 @@ Tabs.transport = {
 					  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
-                  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
-                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                  var ut = unsafeWindow.unixtime();
-                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                  for(i = 0; i <= unitsarr.length; i++){
-                      if(params["u"+i]){
-                      unitsarr[i] = params["u"+i];
-                      }
-                  }
-                  var resources=new Array();
-                  resources[0] = params.gold;
-                  for(i=1; i<=5; i++){
-                      resources[i] = params["r"+i];
-                  }
-                  var currentcityid = city;
-                  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                  unsafeWindow.update_seed(rslt.updateSeed)
-                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+					  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
+					  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+					  var ut = unsafeWindow.unixtime();
+					  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+					  for(i = 0; i <= unitsarr.length; i++){
+						  if(params["u"+i]){
+						  unitsarr[i] = params["u"+i];
+						  }
+					  }
+					  var resources=new Array();
+					  resources[0] = params.gold;
+					  for(i=1; i<=5; i++){
+						  resources[i] = params["r"+i];
+					  }
+					  var currentcityid = city;
+					  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+					  unsafeWindow.update_seed(rslt.updateSeed)
+					  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
 					    if (rslt.user_action == "backOffWaitTime") {
 						logit('backoffwaittime');
@@ -9713,7 +9713,7 @@ Tabs.Barb = {
        
        if(t.barbArray[city].length > 0)
         var barbinfo = t.barbArray[city].shift();
-       else if(!t.searchRunning){
+       else if(parseInt(AttackOptions.Update[city][1])==0){
         t.checkBarbData();
         return;
        } else {
@@ -9776,7 +9776,7 @@ Tabs.Barb = {
     
     if(AttackOptions.Levels[city][0]){
         t.barbing();
-        t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3)+AttackOptions.SendInterval)*1000);
+        t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+AttackOptions.SendInterval)*1000);
     } else {
         t.getnextCity();
     }
@@ -12454,7 +12454,7 @@ Tabs.AutoTrain = {
           } else {
             setTimeout (notify, 10000);
           }
-        }, 
+        },
       onFailure: function () {profiler.stop();}
     });
   },
@@ -18463,9 +18463,9 @@ Tabs.Combat = {
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*1000);
+                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*60*1000);
                         return;
-                    };
+                    }
                     setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
                     return;
                 }
