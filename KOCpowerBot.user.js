@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120916bd
+// @version        20120916be
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120916d';
+var Version = '20120916e';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2820,7 +2820,6 @@ Tabs.tower = {
         28: { 'country': "INDIA", 'provider': "Gujaret Airtel" },
         29: { 'country': "INDIA", 'provider': "Gujaret Celforce" },
         30: { 'country': "INDIA", 'provider': "Goa Airtel" },
-        31: { 'country': "INDIA", 'provider': "Goa BPL Mobile" },
         32: { 'country': "INDIA", 'provider': "Goa Idea Cellular" },
         33: { 'country': "INDIA", 'provider': "Haryana Airtel" },
         34: { 'country': "INDIA", 'provider': "Haryana Escotel" },
@@ -2875,6 +2874,7 @@ Tabs.tower = {
         83: { 'country': "UNITED STATES", 'provider': "Bellsouth" },
         84: { 'country': "UNITED STATES", 'provider': "Boost" },
         85: { 'country': "UNITED STATES", 'provider': "CellularOne" },
+        86: { 'country': "UNITED STATES", 'provider': "CellularOne MMS" },
         87: { 'country': "UNITED STATES", 'provider': "Cingular" },
         88: { 'country': "UNITED STATES", 'provider': "Edge Wireless" },
         90: { 'country': "UNITED STATES", 'provider': "T-Mobile" },
@@ -2887,6 +2887,7 @@ Tabs.tower = {
         97: { 'country': "UNITED STATES", 'provider': "Telus Mobility" },
         98: { 'country': "UNITED STATES", 'provider': "US Cellular" },
         99: { 'country': "UNITED STATES", 'provider': "Verizon" },
+        100: { 'country': "UNITED STATES", 'provider': "Virgin Mobile" },
         101: { 'country': "UNITED KINGDOM", 'provider': "O2 1" },
         102: { 'country': "UNITED KINGDOM", 'provider': "O2 2" },
         103: { 'country': "UNITED KINGDOM", 'provider': "Orange" },
@@ -2896,6 +2897,7 @@ Tabs.tower = {
         107: { 'country': "BELGIUM", 'provider': "mobistar" },
         108: { 'country': "GERMANY", 'provider': "1und1" },
         109: { 'country': "UNITED STATES", 'provider': "MyCricket" },
+        110: { 'country': "Philippines", 'provider': "Smart" },
         111: { 'country': "UNITED STATES", 'provider': "CellularSouth" },
         112: { 'country': "UNITED STATES", 'provider': "Viaero" },
         113: { 'country': "CANADA", 'provider': "Wind Mobile" }
