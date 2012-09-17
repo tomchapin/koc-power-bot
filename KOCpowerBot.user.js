@@ -2887,7 +2887,6 @@ Tabs.tower = {
         97: { 'country': "UNITED STATES", 'provider': "Telus Mobility" },
         98: { 'country': "UNITED STATES", 'provider': "US Cellular" },
         99: { 'country': "UNITED STATES", 'provider': "Verizon" },
-        100: { 'country': "UNITED STATES", 'provider': "Virgin Mobile" },
         101: { 'country': "UNITED KINGDOM", 'provider': "O2 1" },
         102: { 'country': "UNITED KINGDOM", 'provider': "O2 2" },
         103: { 'country': "UNITED KINGDOM", 'provider': "Orange" },
