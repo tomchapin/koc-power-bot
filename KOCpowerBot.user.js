@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120919b
+// @version        20120919c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120919b';
+var Version = '20120919c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18464,7 +18464,7 @@ Tabs.Combat = {
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*60*1000);
+                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*1000);
                         return;
                     }
                     setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
