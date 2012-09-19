@@ -7149,7 +7149,7 @@ Tabs.transport = {
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
                         setTimeout (function(){t.ManualTransport(tt);}, wait*1000);
-                        document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + 'kabam making us wait for 60 seconds then retry march' +'</font>';
+                        document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + 'kabam making us wait for '+wait+' seconds then retry march' +'</font>';
                         return;
 					  };
                           var errorcode =  'err_' + rslt.error_code;
