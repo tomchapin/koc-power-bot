@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120919a
+// @version        20120919b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,11 +12,12 @@
 // @include        *facebook.com/dialog/feed*
 // @include        *facebook.com/dialog/stream.publish*
 // @include        *facebook.com/dialog/apprequests*
+// @include        *kabam1-a.akamaihd.net/kingdomsofcamelot/*
 // @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
 
 
-var Version = '20120919a';
+var Version = '20120919b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7048,7 +7049,7 @@ Tabs.transport = {
 					  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
 					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime');
+						logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
                         p.tt = rslt.tt;
                         var wait = 1;
@@ -7141,7 +7142,7 @@ Tabs.transport = {
                           document.getElementById ('TroopsToSend').value = 0;
                   } else {
 					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime');
+						logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
                         var tt = rslt.tt;
                         var wait = 1;
@@ -9871,7 +9872,7 @@ Tabs.Barb = {
                      saveAttackOptions();
                    } else {
 					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime');
+						logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
                         var tt = rslt.tt;
                         var wait = 1;
@@ -11313,7 +11314,7 @@ Tabs.Reassign = {
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
 					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime');
+						logit('backoffwaittime '+rslt.wait_time);
                         var tt = null;
                         if(rslt.tt)
                         tt = rslt.tt;
@@ -18457,7 +18458,7 @@ Tabs.Combat = {
                     
                 } else {
 					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime');
+						logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
                         p.tt = rslt.tt;
                         var wait = 1;
