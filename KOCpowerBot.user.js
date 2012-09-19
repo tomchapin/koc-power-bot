@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120917a
+// @version        20120919a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20120917a';
+var Version = '20120919a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1669,7 +1669,7 @@ Tabs.Throne = {
     try {      
       m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
       m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
-      m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wonderous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
+      m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wondrous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
       m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>.</font></td>';
       m+='<TR><TD colspan=3><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Keep one checked attribute per card (salvage mixed cards)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all cities for crafing purposes)</TD></TR></table>';
@@ -2922,7 +2922,7 @@ Tabs.tower = {
       for (var cityId in Cities.byID)
        m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
     m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="'+translate("Stop Sound Alert")+'"></center></div><DIV id=pbSwfPlayer></div>';
-    m += '<BR><DIV class=pbStat>'+translate("CONFIGURATION")+'</div><TABLE class=pbTab>\
+    m += '<BR><DIV class=pbStat>'+translate("SETUP")+'</div><TABLE class=pbTab>\
     <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
     <td align=left>'+translate("Text message incoming attack to")+': <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
 &nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
@@ -3844,7 +3844,7 @@ Tabs.build = {
         m += '<TD>'+translate("Build Type")+': <SELECT id="pbBuildType">\
                 <OPTION value=build>'+translate("level up")+'</option>\
                 <OPTION value=max>'+translate("level max")+'</option>\
-                <OPTION value=destruct>'+translate("destruct")+'</option>\
+                <OPTION value=destruct>'+translate("deconstruct")+'</option>\
                 </select></td>';
         m += '<TD><INPUT id=pbHelpRequest type=checkbox '+ (t.buildStates.help?' CHECKED':'') +'\></td><TD>'+translate("Ask for help")+'?</td>';
         m += '</tr></table></div>';
@@ -3989,7 +3989,7 @@ Tabs.build = {
                                     
             if (curlvl > 8 && mode == 'build') {
                 t.cancelQueueElement(0, currentcityid, time, false);
-                actionLog(translate("Queue item deleted: Building Level equals 9 or higher!!!"));
+                actionLog(translate("Queue item deleted: Building level equals 9 or higher!!!"));
                 return;
             };
             if (isNaN(curlvl)) {
@@ -4009,7 +4009,7 @@ Tabs.build = {
             }
             if (l_curlvl < curlvl) {
                     t.cancelQueueElement(0, currentcityid, time, false);
-                    actionLog(translate("Queue item deleted: Buildinglevel is equal or higher!!!"));
+                    actionLog(translate("Queue item deleted: Building level is equal or higher!!!"));
                     return;
             }
             if (l_curlvl > curlvl && mode == 'build') {
@@ -6210,8 +6210,8 @@ Tabs.transport = {
       m += '</tr></table></div>';
       m += '<DIV id=pbTraderDivDRoute class=pbStat>'+translate("TRADE ROUTE OPTIONS")+'</div>';
       m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center"><TR align="left">';
-        m += '<TD colspan=4>'+translate("Time inbetween to check transport:")+' <INPUT id=pbtransportinterval type=text size=2 value="'+Options.transportinterval+'"\> '+translate("minutes")+'</td></tr></table>';
-      m += '<TD colspan=4>'+translate("Dont send transport out if less then")+' <INPUT id=pbminwagons type=text size=2 value="'+Options.minwagons+'"\> '+translate("troops are needed. (Needless transports are skipped this way)")+'</td></tr></table>';
+        m += '<TD colspan=4>'+translate("Check transport every:")+' <INPUT id=pbtransportinterval type=text size=2 value="'+Options.transportinterval+'"\> '+translate("minutes")+'</td></tr></table>';
+      m += '<TD colspan=4>'+translate("Do not send transport out if less than")+' <INPUT id=pbminwagons type=text size=2 value="'+Options.minwagons+'"\> '+translate("troops are needed. (Needless transports are skipped this way)")+'</td></tr></table>';
       m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...")+'</div></table>';
     
       
@@ -10110,17 +10110,17 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>'+translate("Remember window open state on refresh")+'</td></tr>\
         <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>'+translate("Hide window when clicking on map coordinates")+'</td></tr>\
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>'+translate("Enable widescreen style:")+' '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' '+translate("(all domains, requires refresh)")+'</td></tr>\
-        <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away from kabam!")+'</td></tr>\
+        <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away from Kabam!")+'</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
         <TR><TD>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
         <TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
-        <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable all Fairie popup windows")+'</td></tr>\
+        <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
         <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>'+translate("Refresh if KOC not loaded within 1 minute (all domains)")+'</td></tr>\
         <TR><TD><INPUT id=pbEveryEnable type=checkbox /></td><TD>'+translate("Refresh KOC every")+' <INPUT id=pbeverymins type=text size=2 maxlength=3 \> '+translate("minutes")+'</td></tr>\
         <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>'+translate("Put chat on right (requires wide screen)")+'</td></tr>\
         <TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>'+translate("Use WideMap (requires wide screen)")+'</td></tr>\
         <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>'+translate("Auto collect gold when happiness reaches")+' <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
-        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>'+translate("Enable Food Alert (On less then 6 Hours of food checked every hour)")+'</td></tr>\
+        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>'+translate("Enable Food Alert (on less than 6 Hours of food. Checked every hour)")+'</td></tr>\
         <TR><TD colspan=2><BR><B>'+translate("Extra Features")+':</b></td></tr>\
         <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>'+translate("Help alliance build/research posts")+'</td></tr>\
         <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>'+translate("Hide alliance requests in chat")+'</td></tr>\
@@ -10129,7 +10129,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> '+translate("Auto delete barb/transport reports from you")+'</td></tr>\
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> '+translate("Auto delete transport reports to you")+'</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> '+translate("Auto delete wild reports")+'</td></tr>\
-        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest target regardless of type")+'</td></tr>\
+        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest reports regardless of target type")+'</td></tr>\
         </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
         m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
       div.innerHTML = m;
@@ -10671,7 +10671,7 @@ Tabs.Reassign = {
       m += '<TD width=20px>'+translate("To City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncityTo></span></div></td>';
       
         m += '<TR align="left">';
-        m += '<TD colspan=4>'+translate("Time inbetween to check reassign:")+' <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> '+translate("minutes")+'</td></tr>';
+        m += '<TD colspan=4>'+translate("Check reassign every:")+' <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> '+translate("minutes")+'</td></tr>';
         m += '<TR><TD><INPUT id=autofilloff type=checkbox unchecked=true\> '+translate("Lock troop values")+'</TR></TD></table>';
       m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("Fill in the number of troops you want to keep in a city:")+'</div>';
       m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
@@ -11100,7 +11100,7 @@ Tabs.Reassign = {
          row.insertCell(6).innerHTML = "";
           row.insertCell(7).innerHTML = translate("Scouts");
          row.insertCell(8).innerHTML = "";
-         row.insertCell(9).innerHTML = translate("Pike");
+         row.insertCell(9).innerHTML = translate("Pikes");
          row.insertCell(10).innerHTML = "";
          row.insertCell(11).innerHTML = translate("Swords");
          row.insertCell(12).innerHTML = "";
