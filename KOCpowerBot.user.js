@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120919c
+// @version        20120919d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120919c';
+var Version = '20120919d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -11314,6 +11314,7 @@ Tabs.Reassign = {
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
 					    if (rslt.user_action == "backOffWaitTime") {
+        var t = Tabs.Reassign;// doesn't work if not here.. no idea
 						logit('backoffwaittime '+rslt.wait_time);
                         var tt = null;
                         if(rslt.tt)
@@ -12114,7 +12115,6 @@ Tabs.Reinforce = {
     onUnload: function(){
     },
 }
-
 
 /************************  AutoTrain Tab ************************/
 Tabs.AutoTrain = {
