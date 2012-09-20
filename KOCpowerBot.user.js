@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120919d
+// @version        20120920a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120919d';
+var Version = '20120920a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -13958,6 +13958,8 @@ function AjaxRequest (url, opts){
   ajax.onreadystatechange = function(){
 //  ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete']; states 0-4
     if (ajax.readyState==4) {
+      if (ajax.status == 500) 
+       if (opts.onFailure) opts.onFailure(ajax);
       if (ajax.status >= 200 && ajax.status < 305)
         if (opts.onSuccess) opts.onSuccess(ajax);
       else
@@ -18457,14 +18459,10 @@ Tabs.Combat = {
                     return;
                     
                 } else {
-					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime '+rslt.wait_time);
-                        if(rslt.tt)
-                        p.tt = rslt.tt;
-                        var wait = 1;
-                        if(rslt.wait_time)
-                        wait = rslt.wait_time;
-                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*1000);
+	                  if (rslt.user_action) {
+                        new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
+                        logit('send march captcha');
+                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, 5*60*1000);
                         return;
                     }
                     setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
