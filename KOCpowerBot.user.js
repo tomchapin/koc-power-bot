@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120920a
+// @version        20120920b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120920a';
+var Version = '20120920b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18459,10 +18459,14 @@ Tabs.Combat = {
                     return;
                     
                 } else {
-	                  if (rslt.user_action) {
-                        new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
-                        logit('send march captcha');
-                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, 5*60*1000);
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime '+rslt.wait_time);
+                        if(rslt.tt)
+                        p.tt = rslt.tt;
+                        var wait = 1;
+                        if(rslt.wait_time)
+                        wait = rslt.wait_time;
+                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*1000);
                         return;
                     }
                     setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
