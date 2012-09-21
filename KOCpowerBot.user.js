@@ -2678,7 +2678,7 @@ salvageCheck : function (){
 								ThroneOptions.Salvage[h] = true;
 						}
 					}
-                    logit(y.name+' '+number);
+                    // logit(y.name+' '+number);
                     if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
                         t.SalvageArray.push(y.id);
                     }                     
@@ -18417,7 +18417,7 @@ Tabs.Combat = {
         var t = Tabs.Crest;
 		March.sendMarch(p, function(rslt){
 			if(rslt.ok){
-				GM_log(r);
+				logit("cresting sendMarch: "+r);
                 if(r==1){
                     Options.Crest1Count++;
                     r = 2;
@@ -18757,6 +18757,9 @@ Tabs.Combat = {
     },
  };
 /** End Cresting tab **/
+
+/****** Global march function ****/
+
 var March = {
 	tt : null,
 	profiler : null,
@@ -18841,6 +18844,7 @@ var March = {
 							theme: "white"
 						});
 					}
+					setTimeout (function(){callback(rslt)}, 5*1000); //return all sever excess traffic error to original function to handle
                     return;
                 }
             },
