@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120921b
+// @version        20120921c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120921b';
+var Version = '20120921c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18838,7 +18838,7 @@ var March = {
 									params.marchCaptcha_challenge = unsafeWindow.Recaptcha.get_challenge();
 									params.marchCaptcha_response = unsafeWindow.Recaptcha.get_response();
 									setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
-									captchawin.destroy();
+									t.captchawin.destroy();
 								}, false);
 							},
 							theme: "white"
