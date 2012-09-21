@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120921a
+// @version        20120921b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120921a';
+var Version = '20120921b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18799,13 +18799,13 @@ var March = {
 						callback(rslt);
                 } else {
 					if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime');
+						logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
 							params.tt = rslt.tt;
                         var wait = 1;
                         if(rslt.wait_time)
 							wait = rslt.wait_time;
-                        setTimeout (function(){t.sendMarch(params,callback);}, wait*60*1000);
+                        setTimeout (function(){t.sendMarch(params,callback);}, wait*1000);
                         return;
                     }
 					if (rslt.user_action == "marchWarning") {
