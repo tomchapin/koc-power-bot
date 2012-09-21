@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120920b
+// @version        20120921a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120920b';
+var Version = '20120921a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -13958,8 +13958,8 @@ function AjaxRequest (url, opts){
   ajax.onreadystatechange = function(){
 //  ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete']; states 0-4
     if (ajax.readyState==4) {
-      if (ajax.status == 500) 
-       if (opts.onFailure) opts.onFailure(ajax);
+	 if (ajax.status == 500)
+		if (opts.onFailure) opts.onFailure(ajax);
       if (ajax.status >= 200 && ajax.status < 305)
         if (opts.onSuccess) opts.onSuccess(ajax);
       else
@@ -18415,70 +18415,25 @@ Tabs.Combat = {
    
      sendMarch: function(p,callback,r,retry, CrestDataNum){
         var t = Tabs.Crest;
-        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
-        new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {    
-             method: "post",
-             parameters: p,
-             loading: true,
-             onSuccess: function (transport) { 
-					profiler.stop();             
-                var rslt = eval("(" + transport.responseText + ")");
-                if (rslt.ok) {
-                    var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                    var ut = unsafeWindow.unixtime();
-                    var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                    var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                    for(i = 0; i <= unitsarr.length; i++){
-                        if(p["u"+i]){
-                            unitsarr[i] = p["u"+i];
-                        }
-                    }
-
-                    var currentcityid = p.cid;
-                    unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, p.xcoord, p.ycoord, unitsarr, p.type, p.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                    unsafeWindow.update_seed(rslt.updateSeed)
-                
-                    if (rslt.updateSeed) {
-                        unsafeWindow.update_seed(rslt.updateSeed);
-                    }
-             
-                    GM_log(r);
-             
-                    if(r==1){
-                        Options.Crest1Count++;
-                        r = 2;
-                    } else {
-                        Options.Crest2Count++;
-                    }                
-            
-                    var now = new Date().getTime()/1000.0;
-                    now = now.toFixed(0);
-                    CrestData[CrestDataNum].lastRoundTwo = now;
-                    saveCrestData();
-                    setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));    
-                    return;
-                    
+		March.sendMarch(p, function(rslt){
+			if(rslt.ok){
+				GM_log(r);
+                if(r==1){
+                    Options.Crest1Count++;
+                    r = 2;
                 } else {
-					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime '+rslt.wait_time);
-                        if(rslt.tt)
-                        p.tt = rslt.tt;
-                        var wait = 1;
-                        if(rslt.wait_time)
-                        wait = rslt.wait_time;
-                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*1000);
-                        return;
-                    }
-                    setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
-                    return;
+                    Options.Crest2Count++;
                 }
-            },
-             onFailure: function () {
-					profiler.stop();      
-                setTimeout (function(){callback(r,retry,CrestDataNum);}, 5000);
-                return;
-             }
-          });    
+				var now = new Date().getTime()/1000.0;
+				now = now.toFixed(0);
+				CrestData[CrestDataNum].lastRoundTwo = now;
+				saveCrestData();
+				setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));    
+				return;
+			} else { //onFailure
+				setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000)); 
+			}
+		});
     },
     
 
@@ -18686,9 +18641,7 @@ Tabs.Combat = {
         }
 
     },
-    
 
-    
     toggleCrestState: function(obj) {
         var t = Tabs.Crest;
             if (Options.crestRunning == true) {
@@ -18715,9 +18668,6 @@ Tabs.Combat = {
             }
     },
     
-    
-    
-
     sendCrestReport: function(){
         if(!Options.crestreport || !CrestOptions.Running) 
             return;
@@ -18807,6 +18757,101 @@ Tabs.Combat = {
     },
  };
 /** End Cresting tab **/
+var March = {
+	tt : null,
+	profiler : null,
+	currentrequests : 0,
+	
+	sendMarch : function (params, callback){
+		var t = this;
+		t.profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
+		// if(t.currentrequests > 5){ //future addition
+            // setTimeout (function(){t.sendMarch(params,callback);}, 5*1000); //back off 5 seconds if more than 5 simultaneous march requests are ongoing
+		// }
+		t.currentrequests++;
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {    
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+				t.profiler.stop();
+				--t.currentrequests;
+                var rslt = eval("(" + transport.responseText + ")");
+                if (rslt.ok) {
+                    var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+                    var ut = unsafeWindow.unixtime();
+                    var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                    var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                    for(i = 0; i <= unitsarr.length; i++){
+                        if(params["u"+i]){
+                            unitsarr[i] = params["u"+i];
+                        }
+                    }
+
+                    var currentcityid = params.cid;
+                    unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+					
+                    unsafeWindow.update_seed(rslt.updateSeed);
+                    if (rslt.updateSeed) {
+                        unsafeWindow.update_seed(rslt.updateSeed);
+                    }
+					if(callback) //Only invoke callback when on success or on failure so that no multiple instances run at the same time.
+						callback(rslt);
+                } else {
+					if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime');
+                        if(rslt.tt)
+							params.tt = rslt.tt;
+                        var wait = 1;
+                        if(rslt.wait_time)
+							wait = rslt.wait_time;
+                        setTimeout (function(){t.sendMarch(params,callback);}, wait*60*1000);
+                        return;
+                    }
+					if (rslt.user_action == "marchWarning") {
+						logit('marchWarning');
+						params.marchWarning = 1;
+                        setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
+						return;
+					}
+					if (rslt.user_action == "marchCaptcha") {
+						logit('captcha');
+						//new CdialogCancelContinue('<SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span>', null, null, mainPop.getMainDiv);
+						t.captchawin = new pbPopup ('pbmarch_captcha', 0, 0, 300, 200, true);
+						t.captchawin.centerMe (mainPop.getMainDiv);
+						var m = "<CENTER><SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span></center><br \>";
+						m += "<CENTER><div class=\"captcha_container\"><form id=pbmarch_captchaform ></form></div></center>";
+						t.captchawin.getMainDiv().innerHTML = m;
+						t.captchawin.getTopDiv().innerHTML = "<CENTER><b>KOC Power Bot - March Captcha</b></center>";
+						t.captchawin.show(true);
+						
+						unsafeWindow.Recaptcha.create("6LcT7cQSAAAAAG4whvbBz60hGjJg0ON1wRIRv_iD", "pbmarch_captchaform", {
+							callback: function(){
+								unsafeWindow.Recaptcha.focus_response_field();
+								$("pbmarch_captchaform").addEventListener("submit", function(e){
+									e.preventDefault();
+									e.stopPropagation();
+									params.marchWarning = 1;
+									params.marchCaptcha_challenge = unsafeWindow.Recaptcha.get_challenge();
+									params.marchCaptcha_response = unsafeWindow.Recaptcha.get_response();
+									setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
+									captchawin.destroy();
+								}, false);
+							},
+							theme: "white"
+						});
+					}
+                    return;
+                }
+            },
+            onFailure: function (transport) {
+				t.profiler.stop();
+				if(callback)
+					callback({ok:false}); //return all onFailure as {ok:false} so as to trigger remarch
+            }
+          });  
+	}
+}
 
 pbStartup ();
 
