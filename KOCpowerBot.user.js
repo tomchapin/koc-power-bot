@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120921e
+// @version        20120922a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120921e';
+var Version = '20120922a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18575,7 +18575,7 @@ Tabs.Combat = {
        }else {
             var now = new Date().getTime()/1000.0;
             now = now.toFixed(0);
-            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + Options.Crestinterval)) {
+            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + Options.Crestinterval + (15*1000))) {
                 r=1;
             }
         }
