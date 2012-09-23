@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120922a
+// @version        20120922b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120922a';
+var Version = '20120922b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18415,7 +18415,7 @@ Tabs.Combat = {
    
      sendMarch: function(p,callback,r,retry, CrestDataNum){
         var t = Tabs.Crest;
-		March.sendMarch(p, function(rslt){
+		March.addMarch(p, function(rslt){
 			if(rslt.ok){
 				logit("cresting sendMarch: "+r);
                 if(r==1){
@@ -18575,7 +18575,7 @@ Tabs.Combat = {
        }else {
             var now = new Date().getTime()/1000.0;
             now = now.toFixed(0);
-            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + Options.Crestinterval + (15*1000))) {
+            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + Options.Crestinterval + 15)) {
                 r=1;
             }
         }
@@ -18764,13 +18764,36 @@ var March = {
 	tt : null,
 	profiler : null,
 	currentrequests : 0,
+	queue : [],
+	lastattack : null,
+	timer : null,
+	
+	//March queue system
+	addMarch : function (params, callback){
+		var t = this;
+		var opts = {params:params, callback:callback};
+		if(t.currentrequests < 5){
+			t.sendMarch(opts.params, opts.callback);
+		} else {
+			t.queue.push(opts);
+			setTimeout(t.loop, 2000);
+		}
+	},
+	loop : function (){
+		if(t.currentrequests < 5){
+			var opts = t.queue.shift();
+			t.sendMarch(opts.params, opts.callback);
+		}
+	},
+	getQueueLength : function (){
+		var t = this;
+		return t.queue.length;
+	},
+	//End march queue
 	
 	sendMarch : function (params, callback){
 		var t = this;
 		t.profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
-		// if(t.currentrequests > 5){ //future addition
-            // setTimeout (function(){t.sendMarch(params,callback);}, 5*1000); //back off 5 seconds if more than 5 simultaneous march requests are ongoing
-		// }
 		t.currentrequests++;
 		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {    
             method: "post",
@@ -18798,7 +18821,7 @@ var March = {
                     if (rslt.updateSeed) {
                         unsafeWindow.update_seed(rslt.updateSeed);
                     }
-					if(callback) //Only invoke callback when on success or on failure so that no multiple instances run at the same time.
+					if(callback)
 						callback(rslt);
                 } else {
 					if (rslt.user_action == "backOffWaitTime") {
@@ -18851,11 +18874,14 @@ var March = {
 					setTimeout (function(){callback(rslt)}, 5*1000); //return all sever excess traffic error to original function to handle
                     return;
                 }
+				t.loop();
             },
             onFailure: function (transport) {
 				t.profiler.stop();
+				--t.currentrequests;
 				if(callback)
 					callback({ok:false}); //return all onFailure as {ok:false} so as to trigger remarch
+				t.loop(); //Always check for the next queued march after a request
             }
           });  
 	}
