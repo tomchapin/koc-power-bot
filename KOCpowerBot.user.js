@@ -6304,13 +6304,21 @@ Tabs.transport = {
       document.getElementById('FillInMax').addEventListener('click', function(){document.getElementById('TroopsToSend').value = t.TroopsNeeded;}, false);
       
       document.getElementById('MaxTroops').addEventListener('click', function(){
-            var rallypointlevel = t.getRallypoint('city' + t.tcp.city.id);
-            if (rallypointlevel == 11) rallypointlevel = 15;
-            if (rallypointlevel == 12) rallypointlevel = 20;
-            var max = t.Troops;
-            if (t.Troops > (rallypointlevel*10000) ) max = (rallypointlevel*10000);
-            document.getElementById('TroopsToSend').value = max;
-      }, false);
+			var rallypointlevel = t.getRallypoint('city' + t.tcp.city.id);
+			if (rallypointlevel == 11) rallypointlevel = 15;
+			if (rallypointlevel == 12) rallypointlevel = 20;
+			var max = t.Troops;
+			var maxCalced = 0;
+			if (t.Troops > (rallypointlevel*10000) ) max = (rallypointlevel*10000);
+			total = t.calcTRBoosts(66);
+
+			if (total > 0) {
+				maxCalced = max + (max * (total/100))
+				document.getElementById('TroopsToSend').value = maxCalced;
+			}else{
+				document.getElementById('TroopsToSend').value = max;
+			}	
+	  }, false);
       document.getElementById('MaxFood').addEventListener('click', function(){
               t.Food = 0;
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
@@ -6440,7 +6448,25 @@ Tabs.transport = {
       },false);
       window.addEventListener('unload', t.onUnload, false);
     },
-        
+     calcTRBoosts : function (StatID){
+		var equipped = Seed.throne.slotEquip[1];
+		var total = 0;
+		for(var k = 0; k<equipped.length; k++){
+			var item_id = equipped[k];
+			var item = unsafeWindow.kocThroneItems[item_id];
+			for(var i = 1; i<=item.quality; i++){
+				var id = item['effects']['slot'+i]['id'];
+				if(id == StatID){
+					var tier = parseInt(item["effects"]["slot"+i]["tier"]);
+					var level = item["level"];
+					var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+					var Percent = p.base + ((level * level + level) * p.growth * 0.5);
+					total += Percent;
+				}
+			}
+		}
+		return total;
+	},
     updateResources : function (){
         var t = Tabs.transport;
         var ToCity = null;
