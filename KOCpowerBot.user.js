@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120923b
+// @version        20120923c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120923b';
+var Version = '20120923c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18056,7 +18056,7 @@ Tabs.startup = {
 	tabDisabled : false,
 	tabLabel : 'StartUp',
 	myDiv : null,
-	where: '',
+	where: 'City', //Initialize to city by default
 
 
 	init : function (div){
@@ -18101,6 +18101,20 @@ Tabs.startup = {
 	    	if (t.where == "City") t.addCityToQueue();
 	    	if (t.where == "Field") t.addFieldToQueue();
 	    });
+	},
+	ClickCitySelect : function(){ //Call this function when users switch to another city
+		var t = Tabs.startup;
+		switch(t.where){
+			case 'City':
+				t.paintCityGrid();
+				break;
+			case 'Field':
+				t.paintFieldGrid();
+				break;
+			default : //If somehow something goes wrong then paint city view by default
+				t.paintCityGrid();
+				break;
+		}
 	},
 	getCastleLevel:function(){
 		var t = Tabs.startup
