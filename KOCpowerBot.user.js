@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120922b
+// @version        20120923b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120922b';
+var Version = '20120923b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -653,6 +653,7 @@ function pbStartup (){
   readAttackOptions();
   readFarmOptions();
   readThroneOptions();
+  readLayoutOptions();
   readApothecaryOptions();
   setCities();
 
@@ -14153,7 +14154,10 @@ function logit (msg){
   var now = new Date();
   GM_log (getServerId() +' @ '+ now.toTimeString().substring (0,8) +'.' + now.getMilliseconds() +': '+  msg);
 }
-
+function saveLayoutOptions (){
+	var serverID = getServerId();
+	setTimeout (function (){GM_setValue ('LayoutOptions_'+serverID,JSON2.stringify(layoutOptions));},0);
+}
 
 function saveOptions (){
   var serverID = getServerId();
@@ -14200,7 +14204,20 @@ function readUpgradeData (){
     }
   }
 }
-
+function readLayoutOptions (){
+	var serverID = getServerId();
+ 	s = GM_getValue ('LayoutOptions_'+serverID, '[]');
+  	if (s != null){
+    	opts = JSON2.parse (s);
+    	for (k in opts){
+      		if (matTypeof(opts[k]) == 'object')
+        		for (kk in opts[k])
+          			layoutOptions[k][kk] = opts[k][kk];
+    else
+        layoutOptions[k] = opts[k];
+    }
+  }
+}
 
 function readOptions (){
   var serverID = getServerId();
@@ -18013,6 +18030,400 @@ Tabs.Combat = {
     
     },
 }
+/**************************** Start Up Tab ******************************************/
+
+var buildingIDs = {
+	Farm:1,Mine:4,Quarry:3,Sawmill:2,Castle:0,Wall:19,Barracks:13,Cottage:5,RelStat:18,Stable:17,Blacksmith:15,KnightsHall:7,Workshop:16,FeySpire:20,Apothecary:21,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,Wall:19
+	};
+var buildingTypes = {
+	type5:"Cottage",type6:"",type7:"KnightsHall",type8:"Embassy",type9:"",type10:"",type11:"AlcLab",type12:"RallyPoint",type13:"Barracks",type14:"WatchTower",type15:"Blacksmith",type16:"Workshop",type17:"Stable",type18:"RelStation",type19:"Wall",type20:"FeySpire",type21:"Apothecary",
+};
+var cityBuildingNames = {
+	Wall:"Wall",Cottage:"Cottage",Barracks:"Barracks",Blacksmith:"Blacksmith",Stable:"Stable",Apothecary:"Apothecary",Workshop:"Workshop",FeySpire:"Fey Spire",Embassy:"Embassy",RelStation:"Relief Station",AlcLab:"Alchemy Lab",WatchTower:"Watch Tower",KnightsHall:"Knights Hall",RallyPoint:"Rally Point",
+	};
+var fieldBuildingNames = {
+	Farm:"Farm",Mine:"Mine",Sawmill:"Mill",Quarry:"Quarry",
+	}; 
+var layoutOptions = {
+	pos1:"Wall",pos2:"Barracks",pos3:"Cottage",pos4:"RelStation",pos5:"Barracks",pos6:"Barracks",pos7:"Barracks",pos8:"Stable",pos9:"KnightsHall",pos10:"RallyPoint",pos11:"Barracks",pos12:"Barracks",pos13:"Barracks",pos14:"Cottage",pos15:"FeySpire",pos16:"Apothecary",pos17:"Blacksmith",pos18:"Workshop",pos19:"AlcLab",pos20:"Barracks",pos21:"Barracks",pos22:"Barracks",pos23:"Embassy",pos24:"Cottage",pos25:"Barracks",pos26:"Barracks",pos27:"Barracks",pos28:"Cottage",pos29:"Cottage",pos30:"Barracks",pos31:"Barracks",pos32:"Cottage"
+	};
+var fieldlayoutOptions = {
+	pos100:"Farm",pos101:"Sawmill",pos104:"Quarry",pos105:"Mine",pos102:"Mine",pos103:"Mine",pos106:"Mine",pos107:"Mine",pos108:"Mine",pos109:"Mine",pos110:"Mine",pos111:"Mine",pos112:"Mine",pos113:"Mine",pos114:"Mine",pos115:"Mine",pos116:"Mine",pos117:"Mine",pos118:"Mine",pos119:"Mine",pos120:"Mine",pos121:"Mine",pos122:"Mine",pos123:"Mine",pos124:"Mine",pos125:"Mine",pos126:"Mine",pos127:"Mine",pos128:"Mine",pos129:"Mine",pos130:"Mine",pos131:"Mine",pos132:"Mine",pos133:"Mine",pos134:"Mine",pos135:"Mine",pos136:"Mine",pos137:"Mine",pos138:"Mine",pos139:"Mine",pos142:"Mine"
+	};	
+
+Tabs.startup = {
+	tabOrder : 99999,
+	tabDisabled : false,
+	tabLabel : 'StartUp',
+	myDiv : null,
+	where: '',
+
+
+	init : function (div){
+		var t = Tabs.startup;
+		t.myDiv= div;
+		var counter=0;
+	    var m = '<DIV id=pbStartupDiv class=pbStat>New Domain Tools</div><TABLE id=pbNewDomain width=100% height=0% class=pbTab><TR align="center">';
+		m += '<DIV id=pblvlcity align=center></div><DIv><INPUT id=addToBuildQueue type=submit value="Add to build queue"></div>';
+	    m += '<INPUT id=toggleFieldLayout type=submit value="Show Field Layout"><INPUT id=toggleCityLayout type=submit value="Show City Layout"><INPUT id=hideGrids type=submit value="Hide Layouts">';
+	    m += '<DIV id=mainTitles></div>';  	
+	    m += '<DIV id=gridPicture></div>';
+   	    m += '<DIV id=layoutBoxes></div>';
+   	    
+	    t.myDiv.innerHTML = m;
+		t.city = new CdispCityPicker ('pblvlcity', document.getElementById('pblvlcity'), true, t.ClickCitySelect, 0);
+
+		/*
+		document.getElementById('test').addEventListener('click', function () {
+	    		Options.lvl5FarmDone = "false";
+	    		Options.lvl3MineDone = "false";
+	    		Options.lvl2BarracksDone = "false";
+	    		Options.lvl3WallDone = "false";
+	    		Options.lvl5CastleDone = "false";
+	    		Options.lvl2WorkshopDone = "false";
+	    		saveOptions();
+	    });*/
+		
+
+		document.getElementById('toggleFieldLayout').addEventListener('click', function () {
+	    		t.paintFieldGrid();
+	    });
+	    document.getElementById('toggleCityLayout').addEventListener('click', function () {
+	    		t.paintCityGrid();
+	    });
+		document.getElementById('hideGrids').addEventListener('click', function () {
+	    		document.getElementById('mainTitles').innerHTML = "";
+	    		document.getElementById('gridPicture').innerHTML = "";
+	    		document.getElementById('layoutBoxes').innerHTML = "";
+
+	    });
+	    document.getElementById('addToBuildQueue').addEventListener('click', function () {
+	    	if (t.where == "City") t.addCityToQueue();
+	    	if (t.where == "Field") t.addFieldToQueue();
+	    });
+	},
+	getCastleLevel:function(){
+		var t = Tabs.startup
+	var castle = Seed.buildings["city" + t.city.city.id]["pos0"][1];
+	    switch(castle){
+				case "1":fields = 13;break;
+				case "2":fields = 16;break;
+				case "3":fields = 19;break;
+				case "4":fields = 22;break;
+				case "5":fields = 25;break;
+				case "6":fields = 28;break;
+				case "7":fields = 31;break;
+				case "8":fields = 34;break;
+				case "9":fields = 37;break;
+				case "10":fields = 40;break;
+				case "11":fields = 41;break;
+				case "12":fields = 42;break;
+		}
+		max = (fields-1) + 100;
+		return(max)
+	},
+
+	addCityToQueue:function(){
+		var t = Tabs.startup;
+			for (pos=1;pos<=32;pos++){
+			  		if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
+			  			if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+		    			var buildingMode = "build";
+						var cityId =  t.city.city.id;
+						var buildingPos = pos;
+						var buildingType = buildingIDs[document.getElementById('tileID' + pos).value];
+						var buildingLevel = 0;
+						var buildingAttempts = 0;
+						var result = Tabs.build.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
+						var buildingMult = result[0];
+						var buildingTime = result[1];
+						var buildingId = buildingIDs[document.getElementById('tileID' + pos).value];
+						Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);	
+						}	    			
+		    		}
+	    	}
+	},	
+	buildExtraLevels:function(rslt,buildItem){
+		logit('lvl5FarmDone = ' + Options.lvl5FarmDone + ' lvl3MineDone = ' + Options.lvl3MineDone + ' lvl2BarracksDone = ' + Options.lvl2BarracksDone + ' lvl3WallDone = ' + Options.lvl3WallDone + ' lvl2WorkshopDone = ' + Options.lvl2WorkshopDone + ' lvl5CastleDone = ' + Options.lvl5CastleDone + ' buildingType =' + buildItem.buildingType)
+		if (Options.lvl5FarmDone == "false" && buildItem.buildingType == "1") {
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 1;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <5; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl5FarmDone = "true";
+		   	saveOptions();
+		}
+		if (Options.lvl3MineDone == "false" && buildItem.buildingType == "4") {
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 4;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <3; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl3MineDone = "true";
+		   	saveOptions();
+		}
+		if (Options.lvl2BarracksDone == "false" && buildItem.buildingType == "13") {
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 13;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <2; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl2BarracksDone = "true";
+		   	saveOptions();
+		}
+		if (Options.lvl3WallDone == "false" && buildItem.buildingType == "19") { //WALL
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 19;
+        	var buildingLevel = 1;
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <3; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl3WallDone = "true";
+		   	saveOptions();
+		}
+		if (Options.lvl2WorkshopDone == "false" && buildItem.buildingType == "16") { //workshop
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 16;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <=2; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl2WorkshopDone = "true";
+		   	saveOptions();
+		}
+		/*if (Options.lvl5CastleDone == "false" && buildItem.buildingType == "") {
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = //;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = Seed.buildings["city" + cityId]["pos0"][3]
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <5; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl2BarracksDone = "true";
+		   	saveOptions();
+		}*/
+
+	},
+
+	addFieldToQueue:function(){
+		var t = Tabs.startup;
+		var max = t.getCastleLevel();
+		Options.lvl5FarmDone = "false"
+		//var skipMain = false;
+		//1=5
+		//4=3
+		//lvl5FarmDone: "false",
+ 		 //lvl3MineDone: "false",
+			for (pos=100;pos<=max;pos++){
+		    		if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
+		    			if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+		    			var buildingMode = "build";
+						var cityId =  t.city.city.id;
+						var buildingPos = pos;
+						var buildingType = buildingIDs[document.getElementById('tileID' + pos).value];
+						var buildingLevel = 0;
+						var buildingAttempts = 0;
+						var result = Tabs.build.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
+						var buildingMult = result[0];
+						var buildingTime = result[1];
+						var buildingId = buildingIDs[document.getElementById('tileID' + pos).value];
+						Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);		    			
+		    			}
+		    	}
+	    	}
+	},	
+
+	paintCityGrid:function(cityDiv){
+		var t = Tabs.startup;
+		t.myDiv = cityDiv;
+		t.where = "City";
+		var counter = 0;
+		var cityGrid = '<img src="https://dl.dropbox.com/u/66837575/grid/CityTileIDs.jpg">';
+		document.getElementById('gridPicture').innerHTML = "";
+    	document.getElementById('gridPicture').innerHTML = cityGrid;
+    	var message='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showDefaults type=submit value="Load Defaults"><INPUT id=setDefaults type=submit value="Set Defaults">';
+
+		for (k=1;k<=32;k++){
+			if (k==1){
+				counter++
+				message += '<TD>Tile1<SELECT id=tileID1><OPTION value="Wall">Wall</option>'
+			}else{
+			counter++;
+    	    message += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
+    		  	for (kk in cityBuildingNames){
+    		  		message += '<OPTION value='+kk+'>'+cityBuildingNames[kk]+'</option>';
+    	        }
+    	    message += '</options>';
+		if (counter % 4 == 0)message+='</tr>';
+	    }
+		}
+	    document.getElementById('layoutBoxes').innerHTML = message;
+	    	for (pos=1;pos<=32;pos++){
+	    		if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
+	    			document.getElementById('tileID' + pos).value = buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
+	    			document.getElementById('tileID' + pos).disabled = true;
+	    			logit("POS = " + pos + ' ' + buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
+	    		}
+	    	}
+	    
+	    document.getElementById('showDefaults').addEventListener('click', function(){
+	    	for (pos=1;pos<=32;pos++){
+	    		//logit(document.getElementById('tileID' + i).value)
+	    		if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+	    			document.getElementById('tileID' + pos).value = layoutOptions['pos' +pos];
+	    		}else{
+	    			//logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0]);
+
+	    			document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
+	    			document.getElementById('tileID' + pos).disabled = true;
+	    		}
+	       	}
+	    });
+	    document.getElementById('setDefaults').addEventListener('click', function(){
+	    	for (pos=1;pos<=32;pos++){
+	    		layoutOptions['pos'+pos] = document.getElementById('tileID' + pos).value
+
+	    	}
+	    	saveLayoutOptions();
+	    });
+	    //code for set buttons
+	},
+	paintFieldGrid:function(fieldsDiv){
+		var t = Tabs.startup;
+		t.myDiv = fieldsDiv;
+		t.where = "Field";
+		var counter = 0;
+		var fields = 13;
+		var max = t.getCastleLevel();
+		var fieldGrid = '<img src="https://dl.dropbox.com/u/66837575/grid/FieldsTileIDs.jpg">';
+		document.getElementById('gridPicture').innerHTML = "";
+    	document.getElementById('gridPicture').innerHTML = fieldGrid;
+    	var mess='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showFieldDefaults type=submit value="Load Defaults"><INPUT id=setFieldDefaults type=submit value="Set Defaults">';
+		for (k=100;k<=max;k++){
+			if (k != 140 && k != 141){
+				counter++
+    	    	mess += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
+    		  		for (kk in fieldBuildingNames){
+    		  			mess += '<OPTION value='+kk+'>'+ fieldBuildingNames[kk]+'</option>';
+    	        	}
+    	    	mess += '</options>';
+			if (counter % 4 == 0)mess+='<tr>';
+	    	}
+	    }
+	    document.getElementById('layoutBoxes').innerHTML = mess;
+	    for (pos=100;pos<=max;pos++){
+	    		if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
+	    			document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
+	    			document.getElementById('tileID' + pos).disabled = true;
+	    		}
+	    	}
+	
+	document.getElementById('showFieldDefaults').addEventListener('click', function(){
+	    	for (pos=100;pos<=max;pos++){
+	    		//logit(document.getElementById('tileID' + i).value)
+	    		if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+	    			document.getElementById('tileID' + pos).value = fieldlayoutOptions['pos' +pos];
+	    		}else{
+	    			//logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0]);
+					//logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0])
+	    			document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
+	    			document.getElementById('tileID' + pos).disabled = true;
+	    		}
+	       	}
+	});
+	document.getElementById('setFieldDefaults').addEventListener('click', function(){
+	    	for (pos=100;pos<=max;pos++){
+	    		fieldlayoutOptions['pos'+pos] = document.getElementById('tileID' + pos).value;
+	    	}
+	    	savefieldlayoutOptions();
+	});
+	},
+	
+	
+	show : function(){},
+	hide : function(){},
+}	
 /*********************************  Cresting Tab ***********************************/
  Tabs.Crest = {
   tabOrder : 70,
