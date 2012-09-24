@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120923d
+// @version        20120924a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120923d';
+var Version = '20120924a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6838,7 +6838,7 @@ Tabs.transport = {
             }
     },
     
-  doTrades: function(count){
+  doTrades: function(count,tt){
     var t = Tabs.transport;
        if(t.tradeRoutes.length==0) return;
        if(!t.tradeRoutes[count]["route_state"]) return;
@@ -7046,7 +7046,8 @@ Tabs.transport = {
     }
         
            if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
-            
+        if(tt)
+        params.tt = tt;    
         var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");     
          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
                   method: "post",
@@ -7077,12 +7078,10 @@ Tabs.transport = {
                   } else {
 					    if (rslt.user_action == "backOffWaitTime") {
 						logit('backoffwaittime '+rslt.wait_time);
-                        if(rslt.tt)
-                        p.tt = rslt.tt;
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.sendMarch(p,callback,r,retry, CrestDataNum);}, wait*1000);
+                        setTimeout (function(){t.doTrades(Count,rslt.tt);}, wait*1000);
                         return;
 					  };
                   actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
@@ -18868,16 +18867,15 @@ Tabs.startup = {
         var t = Tabs.Crest;
 		March.addMarch(p, function(rslt){
 			if(rslt.ok){
-				logit("cresting sendMarch: "+r);
                 if(r==1){
                     Options.Crest1Count++;
                     r = 2;
+				var now = new Date().getTime()/1000.0;
+				now = now.toFixed(0);
+				CrestData[CrestDataNum].lastRoundTwo = now;//is actually lastround1 and must be here to work properly
                 } else {
                     Options.Crest2Count++;
                 }
-				var now = new Date().getTime()/1000.0;
-				now = now.toFixed(0);
-				CrestData[CrestDataNum].lastRoundTwo = now;
 				saveCrestData();
 				setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));   
 				return;
@@ -18979,7 +18977,6 @@ Tabs.startup = {
                 return;
                 break;
         }
-        
         if (parseInt(Seed.units[cityID]['unt1']) < CrestData[CrestDataNum].R1ST || parseInt(Seed.units[cityID]['unt2']) < CrestData[CrestDataNum].R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestData[CrestDataNum].R1Scout || parseInt(Seed.units[cityID]['unt4']) < CrestData[CrestDataNum].R1Pike || parseInt(Seed.units[cityID]['unt5']) < CrestData[CrestDataNum].R1Sword || parseInt(Seed.units[cityID]['unt6']) < CrestData[CrestDataNum].R1Arch || parseInt(Seed.units[cityID]['unt7']) < CrestData[CrestDataNum].R1LC || parseInt(Seed.units[cityID]['unt8']) < CrestData[CrestDataNum].R1HC || parseInt(Seed.units[cityID]['unt9']) < CrestData[CrestDataNum].R1SW || parseInt(Seed.units[cityID]['unt10']) < CrestData[CrestDataNum].R1Ball || parseInt(Seed.units[cityID]['unt11']) < CrestData[CrestDataNum].R1Ram || parseInt(Seed.units[cityID]['unt12']) < CrestData[CrestDataNum].R1Cat || parseInt(Seed.units[cityID]['unt1']) < CrestData[CrestDataNum].R2ST || parseInt(Seed.units[cityID]['unt2']) < CrestData[CrestDataNum].R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestData[CrestDataNum].R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestData[CrestDataNum].R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestData[CrestDataNum].R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestData[CrestDataNum].R2Arch || parseInt(Seed.units[cityID]['unt7']) < CrestData[CrestDataNum].R2LC || parseInt(Seed.units[cityID]['unt8']) < CrestData[CrestDataNum].R2HC || parseInt(Seed.units[cityID]['unt9']) < CrestData[CrestDataNum].R2SW || parseInt(Seed.units[cityID]['unt10']) < CrestData[CrestDataNum].R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestData[CrestDataNum].R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestData[CrestDataNum].R2Cat) {
             if (CrestData.length == 1) {
                 t.timer = setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
@@ -19015,7 +19012,6 @@ Tabs.startup = {
                 }
         }
 
-       
         if  (t.knt.toSource() == "[]") {
             t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
             return;
@@ -19026,11 +19022,11 @@ Tabs.startup = {
        }else {
             var now = new Date().getTime()/1000.0;
             now = now.toFixed(0);
-            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + Options.Crestinterval + 15)) {
+            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + Options.Crestinterval+30)) {
                 r=1;
             }
         }
-
+				saveCrestData();
         switch(r) {
             case 1:
                 if ((t.rallypointlevel-slots) < 2) {
