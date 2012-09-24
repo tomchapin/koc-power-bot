@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120923c
+// @version        20120923d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120923c';
+var Version = '20120923d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -784,7 +784,7 @@ Tabs.farm = {
            m += '<TD><INPUT id=FarmAttSearch type=submit value="Farming = ON"></td>';
        }
       m +='<TD><INPUT id=pbpaintFarms type=submit value="Show Farms">';
-      m += '<SELECT id=pbFarmcity type=list></td></tr></table>'; 
+      m += '<SELECT id=pbFarmcity type=list></td></tr></table>';
       m += '</tr></table></div>';
       
       m += '<DIV id=pbTraderDivD class=pbStat>FARMING STATS</div>';
@@ -812,7 +812,7 @@ Tabs.farm = {
     m += '<DIV id=pbTraderDivD class=pbStat>FARMING OPTIONS</div>';
     m += '<TABLE id=pbfarmstats width=90% height=0% class=pbTab>';
     m += '<TR><TD width=180>Keep rallypoint slot(s) free: </td><TD><INPUT id=FarmRallyClip type=text size=2 maxlength=2 value=' + FarmOptions.RallyClip +'></td></tr>';
-    m += '<TR><TD>Farm Interval</td><TD><SELECT id=FarmInterval type=list></td></tr>'; 
+    m += '<TR><TD>Farm Interval</td><TD><SELECT id=FarmInterval type=list></td></tr>';
     m += '<TR><TD>Delete reports:</td><TD><INPUT id=FarmReports type=checkbox '+(FarmOptions.DeleteReports?'CHECKED':'')+'></td><tr>';
     m += '<TR><TD>Search distance:</td><TD><INPUT type=text id=FarmRadius size=3 maxlength=3 value='+ FarmOptions.MaxDistance +'><INPUT id=FarmSearch type=submit value="Search again"></td><tr>';
     m += '<TR><TD>Might:</td>';
@@ -928,17 +928,17 @@ Tabs.farm = {
     document.getElementById('FarmMinMight').addEventListener('change', function(){
             FarmOptions.MinMight = parseInt(document.getElementById('FarmMinMight').value);
             t.FilterFarms();
-            saveFarmOptions(); 
+            saveFarmOptions();
     } , false);
     document.getElementById('FarmMaxMight').addEventListener('change', function(){
             FarmOptions.MaxMight = parseInt(document.getElementById('FarmMaxMight').value);
             t.FilterFarms();
-            saveFarmOptions(); 
+            saveFarmOptions();
     } , false);
     document.getElementById('FarmInactive').addEventListener('change', function(){
             FarmOptions.Inactive = parseInt(document.getElementById('FarmInactive').value);
             t.FilterFarms();
-            saveFarmOptions(); 
+            saveFarmOptions();
     } , false);
   
     var element = document.getElementsByClassName('pbTroopOpt');
@@ -946,7 +946,7 @@ Tabs.farm = {
             element[k].addEventListener('change', function(){
                     for (i=1;i<=10;i++){
                         FarmOptions.Troops[i] = document.getElementById('FarmTroop' + i).value;
-                        saveFarmOptions(); 
+                        saveFarmOptions();
                     }
             }, false);
       }
@@ -956,7 +956,7 @@ Tabs.farm = {
             element[k].addEventListener('change', function(){
                     for (i=1;i<=12;i++){
                         FarmOptions.CityLevel[i] = document.getElementById('CityLevel' + i).checked;
-                        saveFarmOptions(); 
+                        saveFarmOptions();
                     }
                     t.FilterFarms();
             }, false);
@@ -967,7 +967,7 @@ Tabs.farm = {
             element[k].addEventListener('change', function(){
                     for (i=1;i<=Seed.cities.length;i++){
                         FarmOptions.CityEnable[i] = document.getElementById('CityEnable' + i).checked;
-                        saveFarmOptions(); 
+                        saveFarmOptions();
                     }
                     t.FilterFarms();
             }, false);
@@ -1042,7 +1042,7 @@ Tabs.farm = {
                                     var lastLogin = rslt.playerInfo.lastLogin;
                                     var fullDate = lastLogin.substr(0,4) +", "+ lastLogin.substr(5,2) +", "+ lastLogin.substr(8,2) ;
                                     var time = new Date (fullDate).getTime()/1000;
-                                    var days = Math.floor((now - time) / 86400); 
+                                    var days = Math.floor((now - time) / 86400);
                                     t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive'] = days;
                                     for (i=0;i<t.helpArray[city].length;i++){
                                                  if (xcoord == parseInt(t.helpArray[city][i]['x']) && ycoord == parseInt(t.helpArray[city][i]['y'])){
@@ -1253,7 +1253,7 @@ Tabs.farm = {
           }
         if (myarray != undefined){
             myarray = JSON2.parse(myarray);
-            //if(AttackOptions.Method == 'distance') 
+            //if(AttackOptions.Method == 'distance')
             t.helpArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
             //if(AttackOptions.Method == 'level') t.helpArray[i] = myarray.sort(function function (a,b) {a = parseInt(a['level']);b = parseInt(b['level']);return (a > b )? -1 : ((a < b ? 1 : t.SortDist(a,b)));});
             //if(AttackOptions.Method == 'lowlevel') t.helpArray[i] = myarray.sort(function function (a,b) {a = parseInt(a['level']);b = parseInt(b['level']);return (a < b )? -1 : ((a > b ? 1 : t.SortDist(a,b)));});
@@ -1337,7 +1337,7 @@ Tabs.farm = {
        var now = new Date().getTime()/1000.0;
        now = now.toFixed(0);
        citynumber = Seed.cities[city-1][0];
-       cityID = 'city' + citynumber; 
+       cityID = 'city' + citynumber;
        
        t.getAtkKnight(cityID);
        t.getRallypointLevel(cityID);
@@ -1348,14 +1348,14 @@ Tabs.farm = {
               if(Seed.queue_atkp[cityID].toSource() == "[]")
           slots = 0;
         }
-      else slots=0; 
+      else slots=0;
        
-       var element2 = 'pddataFarmarray'+(city-1); 
+       var element2 = 'pddataFarmarray'+(city-1);
        document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
        
        if (!FarmOptions.CityEnable[city]) return;
        if ((t.rallypointlevel-FarmOptions.RallyClip) <= slots) return;
-       if (t.knt.toSource() == "[]") return; 
+       if (t.knt.toSource() == "[]") return;
         if (u1 > parseInt(Seed.units[cityID]['unt1']) || u2 > parseInt(Seed.units[cityID]['unt2']) || u3 > parseInt(Seed.units[cityID]['unt3']) || u4 > parseInt(Seed.units[cityID]['unt4']) || u5 > parseInt(Seed.units[cityID]['unt5']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u11 > parseInt(Seed.units[cityID]['unt11']) || u12 > parseInt(Seed.units[cityID]['unt12'])) return;
         if (FarmOptions.FarmNumber[city]>=t.FarmArray[city].length) FarmOptions.FarmNumber[city]=0;
         var kid = t.knt[0].ID;
@@ -1375,7 +1375,7 @@ Tabs.farm = {
          check=1;
                for (i=1;i<=12;i++){
                       if (FarmOptions.Troops[i] > parseInt(Seed.units[cityID]['unt'+i])) check=0;
-               } 
+               }
            if (FarmOptions.Troops[1] == 0 && FarmOptions.Troops[2] == 0 && FarmOptions.Troops[3] == 0 && FarmOptions.Troops[4] == 0 && FarmOptions.Troops[5] == 0 && FarmOptions.Troops[6] == 0 && FarmOptions.Troops[7] == 0 && FarmOptions.Troops[8] == 0 && FarmOptions.Troops[9] == 0 &&FarmOptions.Troops[10] == 0 && FarmOptions.Troops[11] == 0 && FarmOptions.Troops[12] == 0) check=0;
            if (!t.FarmArray[city][FarmOptions.FarmNumber[city]]['enabled']) check=0;
                if (now < (parseInt(t.FarmArray[city][FarmOptions.FarmNumber[city]]['time']) + (3600 * interval))) check=0;
@@ -1413,7 +1413,7 @@ Tabs.farm = {
       var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
       if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
      }
-  }, 
+  },
   
   getAtkKnight : function(cityID){
      var t = Tabs.farm;
@@ -1480,7 +1480,7 @@ Tabs.farm = {
                  var slots=0;
                  for(var k in Seed.queue_atkp['city'+cityID]) slots++;
                  if(Seed.queue_atkp['city'+cityID].toSource() == "[]") slots = 0;
-                 var element1 = 'pddataFarmarray'+(counter-1); 
+                 var element1 = 'pddataFarmarray'+(counter-1);
                  document.getElementById(element1).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
                    var now = new Date().getTime()/1000.0;
                    now = now.toFixed(0);
@@ -1500,7 +1500,7 @@ Tabs.farm = {
                         }
                 }
                 GM_setValue('Farms_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.helpArray[counter]));
-               } 
+               }
                    },
                    onFailure: function () {}
            });
@@ -1509,9 +1509,9 @@ Tabs.farm = {
 
   clickedSearch : function (){
     var t = Tabs.farm;
-    t.opt.searchType = 0; 
-    t.opt.maxDistance = FarmOptions.MaxDistance; 
-    t.opt.searchShape = 'circle'; 
+    t.opt.searchType = 0;
+    t.opt.maxDistance = FarmOptions.MaxDistance;
+    t.opt.searchShape = 'circle';
     t.mapDat = [];
     t.firstX =  t.opt.startX - t.opt.maxDistance;
     t.lastX = t.opt.startX + t.opt.maxDistance;
@@ -1539,7 +1539,7 @@ Tabs.farm = {
     }
     map = rslt.data;
     for (k in map){
-      var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord); 
+      var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
       var CityCheck = true;
       var who = "u" + map[k].tileUserId;
       var AllianceName = "";
@@ -1597,7 +1597,7 @@ Tabs.farm = {
   
   },
 
-}; 
+};
 
 
 
@@ -1652,11 +1652,11 @@ Tabs.Throne = {
       if (but == t.curTabBut)
         return;
       if (t.curTabBut){
-        t.curTabBut.className='pbSubtab'; 
+        t.curTabBut.className='pbSubtab';
         t.curTabBut.disabled=false;
       }
       t.curTabBut = but;
-      but.className='pbSubtab pbSubtabSel'; 
+      but.className='pbSubtab pbSubtabSel';
       but.disabled=true;
       t.curTabName = but.id.substr(9);
       t.show ();
@@ -1666,8 +1666,8 @@ Tabs.Throne = {
     setInterval(t.salvageCheck,1*60*1000);
  },
     
- Salvage : function (){ 
-    var t = Tabs.Throne; 
+ Salvage : function (){
+    var t = Tabs.Throne;
     try {      
       m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
       m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
@@ -1802,9 +1802,9 @@ Upgrade_Enhance :function (){
     else {
       if (ThroneOptions.Active && Seed.queue_throne.end == undefined) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
       if (ThroneOptions.Active && Seed.queue_throne.end != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
-      if (!ThroneOptions.Active && Seed.queue_throne.end != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000); 
+      if (!ThroneOptions.Active && Seed.queue_throne.end != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
       if (!ThroneOptions.Active && Seed.queue_throne.end == undefined) document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
-    } 
+    }
       
   
     if (ThroneOptions.Tries > 0) document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
@@ -1910,7 +1910,7 @@ toggleThroneState: function(){
 _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,cost){
          var t = Tabs.Throne;
         var a="";
-        var b=""; 
+        var b="";
         switch (qualityfrom) {
                 case 0:a = unsafeWindow.g_js_strings.throneRoom.simple;break;
                 case 1:a = unsafeWindow.g_js_strings.throneRoom.common;break;
@@ -2021,7 +2021,7 @@ FillEquipCheckboxes: function(){
         switch(itemEquiped){
             case 0:
                 break;
-            case 1: 
+            case 1:
                 document.getElementById("Equip"+what).disabled = true;
                 document.getElementById("Unequip"+what).disabled = true;
                 break;
@@ -2056,7 +2056,7 @@ doPreset : function (preset){
                     button = '<li id="throneInventoryPreset' + preset + '" class="active">'+preset+'</li>';
                     unsafeWindow.cm.ThroneView.clickActivePreset(button);
                     t.FillEquipCheckboxes();
-               } 
+               }
         },
         onFailure: function () {
            return;
@@ -2155,7 +2155,7 @@ PaintSalvageHistory : function() {
         t.PaintQueue();
         t.paintInfo();
         if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Starting Next Queue item..."
-         else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF."; 
+         else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
   },
 
   checkUpgradeInfo : function (firstRun){
@@ -2225,7 +2225,7 @@ PaintSalvageHistory : function() {
                   clearTimeout(t.setActionTimer);
                   t.setActionTimer = setInterval(t.doAction,10000);
                 return;
-        } 
+        }
         if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == false && Seed.queue_throne.end == undefined){
                   document.getElementById('ShowStatus').innerHTML = "Doing " + ThroneOptions.Items["0"]["action"] + "...";
             if (ThroneOptions.Items["0"]["action"] == "Upgrade") setTimeout(t.doUpgrade,5000);
@@ -2465,7 +2465,7 @@ PaintSalvageHistory : function() {
                     if(rslt.ok){
                             unsafeWindow.cm.ThroneView.clickItemEquip(y);
                             t.FillEquipCheckboxes();
-                   } 
+                   }
             },
             onFailure: function () {
                return;
@@ -2495,7 +2495,7 @@ PaintSalvageHistory : function() {
                     if(rslt.ok){
                             unsafeWindow.cm.ThroneView.clickItemUnequip(y);
                             t.FillEquipCheckboxes();
-                   } 
+                   }
             },
             onFailure: function () {
                return;
@@ -2515,7 +2515,7 @@ PaintSalvageHistory : function() {
 			if (diff <0){
 				clearInterval(t.setRepairTimer);
 				if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
-				else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF."; 
+				else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
 				unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
 				Seed.queue_throne = "";
 				return;
@@ -2616,7 +2616,7 @@ addToSalvageLog : function (msg,stones){
     M = t.addZero(now.getMonth()+1);
     Y = t.addZero(now.getFullYear());
     h = t.addZero(now.getHours());
-    m = t.addZero(now.getMinutes()); 
+    m = t.addZero(now.getMinutes());
     var time =  D +"/"+ M +"/"+ Y +"  "+ h + ":" + m;
     t.SalvageLog.push ({time:time,stones:stones,msg:msg});
     if (t.SalvageLog.length > 100) t.SalvageLog.splice(0,1);
@@ -2624,7 +2624,7 @@ addToSalvageLog : function (msg,stones){
 },
 
 addZero : function (i){
-if (i<10) 
+if (i<10)
   {
   i="0" + i;
   }
@@ -2673,7 +2673,7 @@ salvageCheck : function (){
                     if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
                     if(ThroneOptions.SingleStat) {
 						for (h in ThroneOptions.Salvage) {
-							if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep) 
+							if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep)
 								number = parseInt(ThroneOptions.Salvage[h] - 1);
 							if(ThroneOptions.Salvage[h])
 								ThroneOptions.Salvage[h] = true;
@@ -2757,7 +2757,7 @@ hide : function (){
 
 show : function (){
     var t = Tabs.Throne;
-    if (t.curTabName == 'Sal') 
+    if (t.curTabName == 'Sal')
         t.Salvage();
     else if (t.curTabName == 'UE')
         t.Upgrade_Enhance();
@@ -4213,7 +4213,7 @@ Tabs.build = {
         var now = unixTime();
         if (buildingMode == 'build') {
             var buildingMult = Math.pow(2, buildingLevel);
-        } 
+        }
         if (buildingMode == 'destruct') {
             var buildingMult = Math.pow(2, buildingLevel - 2);
         }
@@ -4240,7 +4240,7 @@ Tabs.build = {
         }
         if (buildingMode == 'build') {
             buildingTime = parseInt(buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16)));
-        } 
+        }
         if (buildingMode == 'destruct') {
             buildingTime = buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16));
             if (buildingTime % 1 > 0) {
@@ -4331,7 +4331,7 @@ Tabs.build = {
         var now = unixTime();
         if (buildingMode == 'build') {
             var buildingMult = Math.pow(2, buildingLevel);
-        } 
+        }
         if (buildingMode == 'destruct') {
             var buildingMult = Math.pow(2, buildingLevel - 2);
         }
@@ -6437,7 +6437,7 @@ Tabs.transport = {
           }
           else {
             document.getElementById('pbtargetamountAstone').disabled = false;
-          } 
+          }
       },false);
        document.getElementById('pbshipGold').addEventListener('click', function(){
           if (document.getElementById('pbshipGold').checked==false) {
@@ -6571,7 +6571,7 @@ Tabs.transport = {
         var city = t.tcp.city.id;
         if (document.getElementById('ptcityX').value==0 && document.getElementById('ptcityY').value ==0 && !t.check)
         {
-            new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv); 
+            new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv);
             return;
         }
         var ship_Food = document.getElementById('pbshipFood').checked;
@@ -6647,7 +6647,7 @@ Tabs.transport = {
             var t = Tabs.transport;
             var r = t.tradeRoutes;
             var cityname;
-        var m= '<TABLE id=paintRoutes class=pbTab>'; 
+        var m= '<TABLE id=paintRoutes class=pbTab>';
             for (var i=0;i<(r.length);i++) {
                 var queueId = i;
                 var cityname = (Cities.byID[r[queueId].city] ? Cities.byID[r[queueId].city].name : "null");
@@ -6672,7 +6672,7 @@ Tabs.transport = {
                 if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Gold) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Gold)+'</td>';
        }
          m +='</table>';
-         document.getElementById('pbRoutesQueue').innerHTML= m; 
+         document.getElementById('pbRoutesQueue').innerHTML= m;
        unsafeWindow.traceEdit = t.editQueueElement;
        unsafeWindow.traceDelete = t.cancelQueueElement;
         },
@@ -6694,7 +6694,7 @@ Tabs.transport = {
             citynameTo = Cities.byID[r[queueId].target_city].name;
          var Types = ['food','wood','stone','iron','aetherstone','gold'];
          if (citynameTo == null) TO = r[queueId].target_x +','+ r[queueId].target_y;
-             else TO = citynameTo; 
+             else TO = citynameTo;
          var n = '<TABLE id=editRoutes class=pbTab>';
          n +='<TD>'+translate("From:")+'&nbsp;'+ cityname +'</td><TD>'+translate("To:")+'&nbsp;'+ TO +'</td>';
          n +='<TD><INPUT id=TradeStatus type=checkbox>&nbsp;Enable Route</td>';
@@ -6903,7 +6903,7 @@ Tabs.transport = {
         if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
         carry_Astone *= 5; //Multiply by 5 to account for 5 times less carrying capacity
       
-      if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]); 
+      if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]);
       else var wagons =  parseInt(Seed.units[cityID][t.tradeRoutes[count]['TroopType']]);
       var rallypointlevel = t.getRallypoint(cityID);    
           if (rallypointlevel == 11) rallypointlevel = 15;
@@ -7181,7 +7181,7 @@ Tabs.transport = {
 					  };
                           var errorcode =  'err_' + rslt.error_code;
                           if (rslt.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
-                          else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + rslt.msg +'</font>'; 
+                          else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + rslt.msg +'</font>';
                   }
                   },
                   onFailure: function () {profiler.stop();}
@@ -7194,7 +7194,7 @@ Tabs.transport = {
         clearTimeout (t.timer);
         t.updateTroops();
         t.updateResources();  
-        t.timer = setTimeout (t.show, 1000); 
+        t.timer = setTimeout (t.show, 1000);
     },
     hide: function(){
         var t = Tabs.transport;
@@ -7383,7 +7383,7 @@ cm.MARCH_TYPES = {
           for (c=0; c< Seed.cities.length;c++) {
                   cityID = 'city' + Seed.cities[c][0];    
                    for (b in Seed.queue_atkp[cityID]){
-                       destinationUnixTime = Seed.queue_atkp[cityID][b]['destinationUnixTime']; 
+                       destinationUnixTime = Seed.queue_atkp[cityID][b]['destinationUnixTime'];
                        MarchStatus = Seed.queue_atkp[cityID][b]['marchStatus'];
                        MarchType = Seed.queue_atkp[cityID][b]['marchType'];
                        botMarchStatus = Seed.queue_atkp[cityID][b]['botMarchStatus'];
@@ -7439,7 +7439,7 @@ cm.MARCH_TYPES = {
                       if (Seed.queue_atkp['city' + t.cityId][k]['marchId'] == t.rslt['queue'][y]['botMarches']['marchId']) {
                           botMarchStatus = Seed.queue_atkp['city' + t.cityId][k]['botMarchStatus'];
                           MarchStatus = Seed.queue_atkp['city' + t.cityId][k]['marchStatus'];
-                          restPeriod = (Seed.queue_atkp['city' + t.cityId][k]['restPeriod']/60); 
+                          restPeriod = (Seed.queue_atkp['city' + t.cityId][k]['restPeriod']/60);
                           destinationUnixTime = Seed.queue_atkp['city' + t.cityId][k]['destinationUnixTime'];
                           returnUnixTime = Seed.queue_atkp['city' + t.cityId][k]['returnUnixTime']
                           now = unixTime();
@@ -7864,7 +7864,7 @@ cm.MARCH_TYPES = {
                 for (d=0; d< Seed.cities.length;d++) {
                         cityID = 'city' + Seed.cities[d][0];    
                             for (e in Seed.queue_atkp[cityID]){
-                                destinationUnixTime = Seed.queue_atkp[cityID][e]['destinationUnixTime']; 
+                                destinationUnixTime = Seed.queue_atkp[cityID][e]['destinationUnixTime'];
                                 MarchStatus = Seed.queue_atkp[cityID][e]['marchStatus'];
                                 MarchType = Seed.queue_atkp[cityID][e]['marchType'];
                                 if (MarchType == 9 && (botMarchStatus == 3 || MarchStatus == 3)) {
@@ -7873,7 +7873,7 @@ cm.MARCH_TYPES = {
                                 }
                             }
                 }
-    }, 
+    },
     
   
   DoAllStop: function(i) {
@@ -8321,7 +8321,7 @@ cm.MARCH_TYPES = {
 
   show : function (){
   },
- }; 
+ };
  
  /******* Crafting List ******
 (array) 1 = [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
@@ -8332,7 +8332,7 @@ cm.MARCH_TYPES = {
       (null) consolation_item_id: null = null
       (string) category = 1
       (object) input = [object Object]
-        (array) items = 
+        (array) items =
 
         (object) resources = [object Object]
           (string) 1 = 10500
@@ -8351,7 +8351,7 @@ cm.MARCH_TYPES = {
       (null) consolation_item_id: null = null
       (string) category = 1
       (object) input = [object Object]
-        (array) items = 
+        (array) items =
 
         (object) resources = [object Object]
           (string) 1 = 5200
@@ -8370,7 +8370,7 @@ cm.MARCH_TYPES = {
       (null) consolation_item_id: null = null
       (string) category = 1
       (object) input = [object Object]
-        (array) items = 
+        (array) items =
 
         (object) resources = [object Object]
           (string) 1 = 10500
@@ -8389,7 +8389,7 @@ cm.MARCH_TYPES = {
       (null) consolation_item_id: null = null
       (string) category = 1
       (object) input = [object Object]
-        (array) items = 
+        (array) items =
 
         (object) resources = [object Object]
           (string) 1 = 2500
@@ -8408,7 +8408,7 @@ cm.MARCH_TYPES = {
       (null) consolation_item_id: null = null
       (string) category = 1
       (object) input = [object Object]
-        (array) items = 
+        (array) items =
 
         (object) resources = [object Object]
           (string) 1 = 2500
@@ -8427,7 +8427,7 @@ cm.MARCH_TYPES = {
       (null) consolation_item_id: null = null
       (string) category = 1
       (object) input = [object Object]
-        (array) items = 
+        (array) items =
 
         (object) resources = [object Object]
           (string) 1 = 2500
@@ -9004,8 +9004,8 @@ Tabs.AutoCraft = {
         m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr></table></div>';
         m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
 
-        m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>"; 
-        m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>"; 
+        m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>";
+        m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>";
         m += "</tr><tr>";
         var count = 0;
         for(var i=0; i < unsafeWindow.recipelist[1].length; i++){
@@ -9048,7 +9048,7 @@ Tabs.AutoCraft = {
     document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
     document.getElementById("pbCraftRunning").addEventListener ('click', function (){t.toggleStateRunning(this)}, false);     
     t.changeCraft ('pbCraftIntervall', 'CraftIntervallMin')
-  }, 
+  },
       changeCraft : function (valueId, optionName, callOnChange){
     var t = Tabs.AutoCraft;
     var e = document.getElementById(valueId);
@@ -9210,7 +9210,7 @@ Tabs.AutoCraft = {
      if (t.numcity<Cities.numCities-1) {
            t.numcity++;
          } else {
-          t.numcity=-1; 
+          t.numcity=-1;
           return;
      }
      var c=t.numcity;
@@ -9259,7 +9259,7 @@ Tabs.AutoCraft = {
 			  t.Start();
            return;
           }
-     } 
+     }
      t.CraftingItem(cityId,  itemId, recipeId, category);
     },
     CraftingItem: function (currentcity, itemId, recipeId, category) {
@@ -9418,7 +9418,7 @@ Tabs.Barb = {
     
     for(i=0;i<Seed.cities.length;i++){
         for (w=1;w<=10;w++){
-            document.getElementById('pbcity'+i+'level'+w).checked = AttackOptions.Levels[i+1][w]; 
+            document.getElementById('pbcity'+i+'level'+w).checked = AttackOptions.Levels[i+1][w];
         }
     }
     
@@ -9624,7 +9624,7 @@ Tabs.Barb = {
         t.checkBarbData();
         if (showFlag) t.showBarbs(citynumber,cityname);
       }
-      else 
+      else
       {
           //logit("not found");
       }
@@ -9716,7 +9716,7 @@ Tabs.Barb = {
        var city = t.city;
        
        citynumber = Seed.cities[city-1][0];
-       cityID = 'city' + citynumber; 
+       cityID = 'city' + citynumber;
        
        t.getAtkKnight(cityID);
        t.getRallypointLevel(cityID);
@@ -9728,15 +9728,15 @@ Tabs.Barb = {
            if(Seed.queue_atkp[cityID].toSource() == "[]")
             slots = 0;
         } else
-            slots=0; 
+            slots=0;
        
        var element1 = 'pddatacity'+(city-1);
-       document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city]; 
-       var element2 = 'pddataarray'+(city-1); 
+       document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
+       var element2 = 'pddataarray'+(city-1);
        document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
        
        if ((t.rallypointlevel-AttackOptions.RallyClip) <= slots) return;
-       if (t.knt.toSource() == "[]") return; 
+       if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
        
        if(t.barbArray[city].length > 0)
@@ -9818,7 +9818,7 @@ Tabs.Barb = {
       var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
       if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
      }
-  }, 
+  },
   
   getAtkKnight : function(cityID){
      var t = Tabs.Barb;
@@ -9860,7 +9860,7 @@ Tabs.Barb = {
         }
           
           AttackOptions.BarbsTried++;
-          document.getElementById('pberror1').innerHTML = 'Tries:'+ AttackOptions.BarbsTried; 
+          document.getElementById('pberror1').innerHTML = 'Tries:'+ AttackOptions.BarbsTried;
         var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
                    method: "post",
@@ -9890,8 +9890,8 @@ Tabs.Barb = {
                       slots = 0;
                      AttackOptions.BarbsDone[counter]++;
                      var element1 = 'pddatacity'+(counter-1);
-                     document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[counter]; 
-                     var element2 = 'pddataarray'+(counter-1); 
+                     document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[counter];
+                     var element2 = 'pddataarray'+(counter-1);
                      document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
                      var now = new Date().getTime()/1000.0;
                      now = now.toFixed(0);
@@ -9918,7 +9918,7 @@ Tabs.Barb = {
                        GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                        saveAttackOptions();
                      }
-                     document.getElementById('pberror2').innerHTML = 'Excess Traffic errors:' + AttackOptions.BarbsFailedTraffic; 
+                     document.getElementById('pberror2').innerHTML = 'Excess Traffic errors:' + AttackOptions.BarbsFailedTraffic;
                      document.getElementById('pberror3').innerHTML = 'Rally Point errors: '+ AttackOptions.BarbsFailedRP;
                      document.getElementById('pberror4').innerHTML = 'Knight errors:' + AttackOptions.BarbsFailedKnight;
                      document.getElementById('pberror5').innerHTML = 'Other errors:' + AttackOptions.BarbsFailedVaria;
@@ -9974,12 +9974,12 @@ Tabs.Barb = {
   clickedSearch : function (){
     var t = Tabs.Barb;
     
-    t.opt.maxDistance = parseInt(AttackOptions.MaxDistance); 
+    t.opt.maxDistance = parseInt(AttackOptions.MaxDistance);
     t.opt.searchDistance = (t.opt.maxDistance*2);
     if(t.opt.maxDistance > 40){
         t.opt.searchDistance = 40;
     }
-    t.opt.searchShape = 'circle'; 
+    t.opt.searchShape = 'circle';
     t.mapDat = [];
     t.firstX =  t.opt.startX - t.opt.maxDistance;
     t.lastX = t.opt.startX + t.opt.maxDistance;
@@ -10055,7 +10055,7 @@ Tabs.Barb = {
   
   },
 
-}; 
+};
 
 /*********************************** Log Tab ***********************************/
 Tabs.ActionLog = {
@@ -10378,7 +10378,7 @@ Tabs.Export = {
 							break;
 					}
 				}
-				new CdialogConfirm ('<SPAN class=boldRed>'+msg+'</span>', t.startexport, null, mainPop.getMainDiv); 
+				new CdialogConfirm ('<SPAN class=boldRed>'+msg+'</span>', t.startexport, null, mainPop.getMainDiv);
 			} else if (rslt.errMsg) {
 				new CdialogCancelContinue('<SPAN class=boldRed>ERROR! <br />'+rslt.errMsg+'</span>', null, null, mainPop.getMainDiv);
 			} else {
@@ -10980,7 +10980,7 @@ Tabs.Reassign = {
         }
         if ((t.tcpto.city.x == 0 && t.tcpto.city.y == 0)&& !t.check)
         {
-            new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv); 
+            new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv);
             return;
         }
         t.check = false;
@@ -11079,7 +11079,7 @@ Tabs.Reassign = {
                 To = Seed.cities[y][1];
                 break;
             }
-        } 
+        }
          var row = document.getElementById('pbRoutesQueue').insertRow(0);
          row.vAlign = 'top';
          row.insertCell(0).innerHTML = queueId;
@@ -11898,7 +11898,7 @@ Tabs.Reinforce = {
             document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
             t.SetETAType();
             t.ETA(t.dist);
-            for (var i=1;i<=12;i++) document.getElementById('unt'+i).innerHTML = addCommas(Seed.units['city'+city.id]['unt'+i]) 
+            for (var i=1;i<=12;i++) document.getElementById('unt'+i).innerHTML = addCommas(Seed.units['city'+city.id]['unt'+i])
             document.getElementById('pbETA').innerHTML = (t.ETAstr);
     },
              
@@ -12331,7 +12331,7 @@ Tabs.AutoTrain = {
             TrainOptions.Keep[e.target['className']]['Ore'] = e.target.value;
             saveTrainOptions();
           }, false);
-    } 
+    }
   },
   
   
@@ -12585,7 +12585,7 @@ var RefreshEvery  = {
     clearTimeout (t.timer);
     if (tf) {
       //t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
-      t.NextRefresh = unixTime() + (Options.pbEveryMins*60); 
+      t.NextRefresh = unixTime() + (Options.pbEveryMins*60);
       t.timer = setTimeout (t.Paint, 1000);
     } else {
         //t.PaintTimer = null;
@@ -12849,7 +12849,7 @@ Tabs.Chat = {
     var t = Tabs.Chat;
       t.popReport = new pbPopup('pbShowTroops', 0, 0, 500, 300, true);
       t.popReport.centerMe (mainPop.getMainDiv());  
-      var m = '<DIV style="max-height:275px; height:275px; overflow-y:scroll">'; 
+      var m = '<DIV style="max-height:275px; height:275px; overflow-y:scroll">';
       
       m+='<TABLE class=ptTab>\
         <TR><TD><b>'+translate("Impending Attack")+'</b></td></tr></table>';
@@ -12909,8 +12909,8 @@ latestChats : [],
     },5000);
   },
 
-  GetLatestChatStr:function(chatObj) { 
-    return chatObj.name+'#'+chatObj.time+'#'+chatObj.text.split(/[\.\?]/)[0]; 
+  GetLatestChatStr:function(chatObj) {
+    return chatObj.name+'#'+chatObj.time+'#'+chatObj.text.split(/[\.\?]/)[0];
   },
 
   GetLatestChat:function() {
@@ -12936,7 +12936,7 @@ latestChats : [],
     if(!nm || !time || !tx) { return undefined; }
     var nameArr=nm.innerHTML.split(' ');
     var fromMe = nameArr[1]==Seed.player.name?true:false;
-    return { 
+    return {
         'obj':htmlObj,
         'textObj':tx,
         'name':nm.innerHTML,
@@ -13041,7 +13041,7 @@ latestChats : [],
                 var cityObj=cities[cityM[1]];
                 if(!cityObj) {
                     logit('Cannot find city:'+cityM[1]);
-                    continue; 
+                    continue;
                 }
                 
                 cityTd.innerHTML=cityObj[1];
@@ -14745,8 +14745,8 @@ var AutoUpdater_101052 = {
             display_confirm('A new version of '+this.xname+' is available.\nDo you wish to install the latest version?',
                 // Ok
                 function(){
-                    try { 
-                        location.href = AutoUpdater_101052.beta ? AutoUpdater_101052.betaUrl :  'http://userscripts.org/scripts/source/101052.user.js'; 
+                    try {
+                        location.href = AutoUpdater_101052.beta ? AutoUpdater_101052.betaUrl :  'http://userscripts.org/scripts/source/101052.user.js';
                     } catch(e) {}
                 },
                 // Cancel
@@ -16226,7 +16226,7 @@ Tabs.Gifts = {
       var m = page.match (/form action="(.*?)"/im);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 1'});
-      var url = m[1].htmlSpecialCharsDecode(); 
+      var url = m[1].htmlSpecialCharsDecode();
         url = unescape(url);
         url = url.replace ('\\/', '/', 'g');
         url = url.replace (/\\u00253A/g, ':');
@@ -16246,7 +16246,7 @@ Tabs.Gifts = {
         m = /top.location.replace\(\"(.*?)\"\)/im.exec (page);
       if (m == null)
         notify ({ajaxErr:'PARSE Error - page 2'});
-      var url = m[1].htmlSpecialCharsDecode(); 
+      var url = m[1].htmlSpecialCharsDecode();
       GM_AjaxGet (url, '', got3, 'Page 3');        
     }
     
@@ -16801,7 +16801,7 @@ function hexDump (dat){
   }
   function hexDig (d){
     hexdigs = '0123456789ABCDEF';
-    return hexdigs.charAt(d&15);      
+    return hexdigs.charAt(d&15);     
   }
 }
  
@@ -16819,12 +16819,12 @@ function SliderBar (container, width, height, value, classPrefix, margin){
   if (classPrefix == null){
     classPrefix = 'slider';
     var noClass = true;
-  }      
-  var sliderHeight = parseInt(height/2);  
+  }     
+  var sliderHeight = parseInt(height/2); 
   var sliderTop = parseInt(height/4);
   this.sliderWidth = width - (margin*2);
     
-  this.div = document.createElement ('div');  
+  this.div = document.createElement ('div'); 
   this.div.style.height = height +'px';
   this.div.style.width = width +'px';
   this.div.className = classPrefix +'Cont';
@@ -16886,14 +16886,14 @@ function SliderBar (container, width, height, value, classPrefix, margin){
       relX = self.sliderWidth;
     self.knob.style.left = (relX - (self.knob.clientWidth/2) ) +'px';   // - half knob width !?!?
     self.sliderL.style.width = relX + 'px';
-    self.value =  relX / self.sliderWidth;   
+    self.value =  relX / self.sliderWidth;  
     if (self.listener)
       self.listener(self.value);
   }
   function doneMoving (){
     self.div.removeEventListener('mousemove', mouseMove, true);
     document.removeEventListener('mouseup', mouseUp, true);
-  }  
+  } 
   function mouseUp (me){
     moveKnob (me);
     doneMoving();
@@ -16993,13 +16993,13 @@ function DoUnsafeWindow(func, execute_by_embed) {
         scr.innerHTML=func;
         document.body.appendChild(scr);
     } else {
-        try {  
+        try { 
             eval("unsafeWindow."+func);
         } catch (error) {
             logit("A javascript error has occurred when executing a function via DoUnsafeWindow. Error description: "+error.description);
         }
     }
-}    
+}   
 
 function GetDisplayName(){
     var DisplayName = document.getElementById('topnavDisplayName');
@@ -17056,7 +17056,7 @@ function DrawLevelIcons() {
             if (onclickM && onclickM[7]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1]+owner+'<br />Might:'+addCommas(might);
             else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
         }
-        else {  
+        else { 
             if (onclickM && onclickM[7]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1];
             else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
         }
@@ -17071,20 +17071,20 @@ function AjaxRequest2 (url, opts){
         'X-Prototype-Version': '1.6.1',
         'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
     };
-    var ajax = null;   
+    var ajax = null;  
     if (window.XMLHttpRequest)
       ajax=new XMLHttpRequest();
     else
-      ajax=new ActiveXObject("Microsoft.XMLHTTP");   
+      ajax=new ActiveXObject("Microsoft.XMLHTTP");  
     if (opts.method==null || opts.method=='')
       method = 'GET';
     else
-      method = opts.method.toUpperCase();    
+      method = opts.method.toUpperCase();   
     if (method == 'POST'){
         headers['Content-type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     } else if (method == 'GET'){
         addUrlArgs (url, opts.parameters);
-    }    
+    }   
     ajax.onreadystatechange = function(){
         // ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete']; states 0-4
         if (ajax.readyState==4) {
@@ -17095,7 +17095,7 @@ function AjaxRequest2 (url, opts){
             } else {
                 if (opts.onChange) opts.onChange (ajax);
             }
-    }    
+    }   
     ajax.open(method, url, true); // always async!
     for (var k in headers)
       ajax.setRequestHeader (k, headers[k]);
@@ -17328,7 +17328,7 @@ var DeleteThrone = {
             return;
         };
 //        alert(t.deleting);
-        if (t.deleting == true) 
+        if (t.deleting == true)
             return;
         t.deleting = true;
         t.deltitems = [];
@@ -17336,7 +17336,7 @@ var DeleteThrone = {
         for (k in unsafeWindow.kocThroneItems) {
             var throne_item = unsafeWindow.kocThroneItems[k];
             countItem++;
-            var rangeIndex1 = 0;    
+            var rangeIndex1 = 0;   
             if (Options.RangeSaveModeSetting == 0)
                 rangeIndex1 = -999;
             for (var z = 0; z < rangeNum.length; z++) {
@@ -17361,7 +17361,7 @@ var DeleteThrone = {
     },
     
     dodelete : function(){
-        var t = DeleteThrone;    
+        var t = DeleteThrone;   
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'salvage';
@@ -17596,7 +17596,7 @@ Tabs.Apothecary = {
     params.apothecary = true;
     var time = unsafeWindow.cm.RevivalModel.getRevivalStats(unitId, num).time;
 
-    var profiler = new cm.Profiler("ResponseTime", "train.php");
+    var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "train.php");
     new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
         method: "post",
         parameters: params,
@@ -17672,7 +17672,7 @@ Tabs.Combat = {
     e_research : function(side){
         var t = Tabs.Combat;
         t.pop = new pbPopup ('pbcombatresearch', 0, 0, 270, 250, true, function(){t.c_ratio(); t.pop.destroy();});
-        t.pop.centerMe (mainPop.getMainDiv()); 
+        t.pop.centerMe (mainPop.getMainDiv());
         t.pop.getTopDiv().innerHTML = '<CENTER><B>Research Levels</b>: '+ (side?'Attacker':'Defender') +'</center>';
         var m = '<DIV><TABLE>';
         for(var k in CombatOptions.research[side]){
@@ -17685,7 +17685,7 @@ Tabs.Combat = {
               </td></tr>';
         m += '<TR><TD colspan=2><CENTER><button id=pbcombatresearchsave>Save</button></CENTER></td></tr></table></div>';
         t.pop.getMainDiv().innerHTML = m;
-        t.pop.centerMe (mainPop.getMainDiv());  
+        t.pop.centerMe (mainPop.getMainDiv()); 
         t.pop.show (true);
         for(var k in CombatOptions.research[side]){
             t.e_saveresearch('pbcombat_'+k, k, side);
@@ -18043,13 +18043,13 @@ var cityBuildingNames = {
 	};
 var fieldBuildingNames = {
 	Farm:"Farm",Mine:"Mine",Sawmill:"Mill",Quarry:"Quarry",
-	}; 
+	};
 var layoutOptions = {
 	pos1:"Wall",pos2:"Barracks",pos3:"Cottage",pos4:"RelStation",pos5:"Barracks",pos6:"Barracks",pos7:"Barracks",pos8:"Stable",pos9:"KnightsHall",pos10:"RallyPoint",pos11:"Barracks",pos12:"Barracks",pos13:"Barracks",pos14:"Cottage",pos15:"FeySpire",pos16:"Apothecary",pos17:"Blacksmith",pos18:"Workshop",pos19:"AlcLab",pos20:"Barracks",pos21:"Barracks",pos22:"Barracks",pos23:"Embassy",pos24:"Cottage",pos25:"Barracks",pos26:"Barracks",pos27:"Barracks",pos28:"Cottage",pos29:"Cottage",pos30:"Barracks",pos31:"Barracks",pos32:"Cottage"
 	};
 var fieldlayoutOptions = {
 	pos100:"Farm",pos101:"Sawmill",pos104:"Quarry",pos105:"Mine",pos102:"Mine",pos103:"Mine",pos106:"Mine",pos107:"Mine",pos108:"Mine",pos109:"Mine",pos110:"Mine",pos111:"Mine",pos112:"Mine",pos113:"Mine",pos114:"Mine",pos115:"Mine",pos116:"Mine",pos117:"Mine",pos118:"Mine",pos119:"Mine",pos120:"Mine",pos121:"Mine",pos122:"Mine",pos123:"Mine",pos124:"Mine",pos125:"Mine",pos126:"Mine",pos127:"Mine",pos128:"Mine",pos129:"Mine",pos130:"Mine",pos131:"Mine",pos132:"Mine",pos133:"Mine",pos134:"Mine",pos135:"Mine",pos136:"Mine",pos137:"Mine",pos138:"Mine",pos139:"Mine",pos142:"Mine"
-	};	
+	};  
 
 Tabs.startup = {
 	tabOrder : 99999,
@@ -18066,10 +18066,10 @@ Tabs.startup = {
 	    var m = '<DIV id=pbStartupDiv class=pbStat>New Domain Tools</div><TABLE id=pbNewDomain width=100% height=0% class=pbTab><TR align="center">';
 		m += '<DIV id=pblvlcity align=center></div><DIv><INPUT id=addToBuildQueue type=submit value="Add to build queue"></div>';
 	    m += '<INPUT id=toggleFieldLayout type=submit value="Show Field Layout"><INPUT id=toggleCityLayout type=submit value="Show City Layout"><INPUT id=hideGrids type=submit value="Hide Layouts">';
-	    m += '<DIV id=mainTitles></div>';  	
+	    m += '<DIV id=mainTitles></div>';    
 	    m += '<DIV id=gridPicture></div>';
    	    m += '<DIV id=layoutBoxes></div>';
-   	    
+   	   
 	    t.myDiv.innerHTML = m;
 		t.city = new CdispCityPicker ('pblvlcity', document.getElementById('pblvlcity'), true, t.ClickCitySelect, 0);
 
@@ -18083,7 +18083,7 @@ Tabs.startup = {
 	    		Options.lvl2WorkshopDone = "false";
 	    		saveOptions();
 	    });*/
-		
+	  
 
 		document.getElementById('toggleFieldLayout').addEventListener('click', function () {
 	    		t.paintFieldGrid();
@@ -18152,11 +18152,11 @@ Tabs.startup = {
 						var buildingMult = result[0];
 						var buildingTime = result[1];
 						var buildingId = buildingIDs[document.getElementById('tileID' + pos).value];
-						Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);	
-						}	    			
+						Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);  
+						}	    		  
 		    		}
 	    	}
-	},	
+	},  
 	buildExtraLevels:function(rslt,buildItem){
 		logit('lvl5FarmDone = ' + Options.lvl5FarmDone + ' lvl3MineDone = ' + Options.lvl3MineDone + ' lvl2BarracksDone = ' + Options.lvl2BarracksDone + ' lvl3WallDone = ' + Options.lvl3WallDone + ' lvl2WorkshopDone = ' + Options.lvl2WorkshopDone + ' lvl5CastleDone = ' + Options.lvl5CastleDone + ' buildingType =' + buildItem.buildingType)
 		if (Options.lvl5FarmDone == "false" && buildItem.buildingType == "1") {
@@ -18322,11 +18322,11 @@ Tabs.startup = {
 						var buildingMult = result[0];
 						var buildingTime = result[1];
 						var buildingId = buildingIDs[document.getElementById('tileID' + pos).value];
-						Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);		    			
+						Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);		    		  
 		    			}
 		    	}
 	    	}
-	},	
+	},  
 
 	paintCityGrid:function(cityDiv){
 		var t = Tabs.startup;
@@ -18360,7 +18360,7 @@ Tabs.startup = {
 	    			logit("POS = " + pos + ' ' + buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
 	    		}
 	    	}
-	    
+	   
 	    document.getElementById('showDefaults').addEventListener('click', function(){
 	    	for (pos=1;pos<=32;pos++){
 	    		//logit(document.getElementById('tileID' + i).value)
@@ -18412,7 +18412,7 @@ Tabs.startup = {
 	    			document.getElementById('tileID' + pos).disabled = true;
 	    		}
 	    	}
-	
+  
 	document.getElementById('showFieldDefaults').addEventListener('click', function(){
 	    	for (pos=100;pos<=max;pos++){
 	    		//logit(document.getElementById('tileID' + i).value)
@@ -18433,11 +18433,11 @@ Tabs.startup = {
 	    	savefieldlayoutOptions();
 	});
 	},
-	
-	
+  
+  
 	show : function(){},
 	hide : function(){},
-}	
+}  
 /*********************************  Cresting Tab ***********************************/
  Tabs.Crest = {
   tabOrder : 70,
@@ -18446,12 +18446,12 @@ Tabs.startup = {
   error_code: 0,
   knt:{},
 
-/** window display **/  
+/** window display **/ 
   init : function (div){
     var t = Tabs.Crest;
     Options.crestMarchError = 0;
 
-    setInterval(t.sendCrestReport, 1*60*1000);    
+    setInterval(t.sendCrestReport, 1*60*1000);   
     t.timer = setTimeout(function(){ t.Rounds(1,0,0);}, CrestOptions.interval*1000);
 
 
@@ -18728,7 +18728,7 @@ Tabs.startup = {
     helpText += '<TR><TD>10</td><TD>1199 MM + 1Cat</td><TD>35000 archers + 2500 Cat</td><TD>1st Wave + 6 Archer + 50 Cat</td><TD>10</td></tr></table>';
     
     var pop = new pbPopup ('giftHelp', 0, 0, 650, 385, true);
-    pop.centerMe (mainPop.getMainDiv()); 
+    pop.centerMe (mainPop.getMainDiv());
     pop.getMainDiv().innerHTML = helpText;
     pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help: Cresting</b></center>';
     pop.show (true);
@@ -18756,7 +18756,7 @@ Tabs.startup = {
         var t = Tabs.Crest;
         var popCrestTargets = null;
         t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
-        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';       
+        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';      
         t.popCrestTargets.getMainDiv().innerHTML = '</table></div>' + m;
         t.popCrestTargets.getTopDiv().innerHTML = '<TD><CENTER><B>Crest Targets</center></td>';
         t.paintCrestTargets();
@@ -18840,7 +18840,7 @@ Tabs.startup = {
         for (var o in Seed.buildings[cityId]){
             var buildingType = parseInt(Seed.buildings[cityId][o][0]);
             var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-            if (buildingType == 12) 
+            if (buildingType == 12)
                 t.rallypointlevel=parseInt(buildingLevel);
         }
     },
@@ -18879,10 +18879,10 @@ Tabs.startup = {
 				now = now.toFixed(0);
 				CrestData[CrestDataNum].lastRoundTwo = now;
 				saveCrestData();
-				setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));    
+				setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));   
 				return;
 			} else { //onFailure
-				setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000)); 
+				setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));
 			}
 		});
     },
@@ -18890,7 +18890,7 @@ Tabs.startup = {
 
     
     abandonWilderness: function(tid,x,y,cid,callback,retry, CrestDataNum){
-        var t = Tabs.Crest;        
+        var t = Tabs.Crest;       
         if (!Options.crestRunning) return;
         
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -18899,7 +18899,7 @@ Tabs.startup = {
         params.tid=tid;
         params.cid=cid;
         params.x=x;
-          params.y=y;                   
+          params.y=y;                  
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/abandonWilderness.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
               parameters: params,
@@ -18907,7 +18907,7 @@ Tabs.startup = {
               onSuccess:function(transport){
                 var rslt=eval("("+transport.responseText+")");
                 if (rslt.ok) {
-                    t.error_code = 0;    
+                    t.error_code = 0;   
                     if (rslt.returningMarches) {
                         var cities = Object.keys(rslt.returningMarches);
                         for (var i = 0; i < cities.length; i++) {
@@ -18936,7 +18936,7 @@ Tabs.startup = {
                     if (rslt.error_code != 401) {
                         t.error_code = rslt.error_code;
                        }
-                  }                
+                  }               
               },
               onFailure: function () {}
           });
@@ -19019,7 +19019,7 @@ Tabs.startup = {
         if  (t.knt.toSource() == "[]") {
             t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
             return;
-        } 
+        }
         var kid = t.knt[0].ID;
         if (CrestData[CrestDataNum].R1ST == 0 && CrestData[CrestDataNum].R1MM == 0 && CrestData[CrestDataNum].R1Scout == 0 && CrestData[CrestDataNum].R1Pike == 0 && CrestData[CrestDataNum].R1Sword == 0 && CrestData[CrestDataNum].R1Arch == 0 && CrestData[CrestDataNum].R1LC == 0 && CrestData[CrestDataNum].R1HC == 0 && CrestData[CrestDataNum].R1SW == 0 && CrestData[CrestDataNum].R1Ball == 0 && CrestData[CrestDataNum].R1Ram == 0 && CrestData[CrestDataNum].R1Cat == 0) {
            r=2;
@@ -19043,12 +19043,12 @@ Tabs.startup = {
                 params.kid        =     kid;
                 params.xcoord     =     CrestData[CrestDataNum].X;
                 params.ycoord     =     CrestData[CrestDataNum].Y;
-                if (now < (parseInt(CrestData[CrestDataNum].lastRoundTwo) + 300)) { 
+                if (now < (parseInt(CrestData[CrestDataNum].lastRoundTwo) + 300)) {
                 
                     params.u2     =     (CrestData[CrestDataNum].R1MM / 10);
                     params.u2     =     params.u2.toFixed(0);
                     
-                    if (params.u2 < (CrestData[CrestDataNum].R1MM / 10)) 
+                    if (params.u2 < (CrestData[CrestDataNum].R1MM / 10))
                         params.u2++;
                 } else {
                     params.u2    =     CrestData[CrestDataNum].R1MM;
@@ -19120,14 +19120,14 @@ Tabs.startup = {
     },
     
     sendCrestReport: function(){
-        if(!Options.crestreport || !CrestOptions.Running) 
+        if(!Options.crestreport || !CrestOptions.Running)
             return;
             
         var t = Tabs.Crest;
         var now = new Date().getTime()/1000.0;
         now = now.toFixed(0);
         
-        if (now < (parseInt(Options.LastCrestReport)+(Options.CrestMsgInterval*60*60))) 
+        if (now < (parseInt(Options.LastCrestReport)+(Options.CrestMsgInterval*60*60)))
             return;
 
         var total = 0;
@@ -19137,19 +19137,19 @@ Tabs.startup = {
             case '10':
                 wildtype = unsafeWindow.g_js_strings.commonstr.grassland;
                 break;
-            case '11': 
+            case '11':
                 wildtype = unsafeWindow.g_js_strings.commonstr.lake;
                 break;
-            case '20': 
+            case '20':
                 wildtype = unsafeWindow.g_js_strings.commonstr.woods;
                 break;
-            case '30': 
+            case '30':
                 wildtype = unsafeWindow.g_js_strings.commonstr.hills;
                 break;
-            case '40': 
+            case '40':
                 wildtype = unsafeWindow.g_js_strings.commonstr.mountain;
                 break;
-            case '50': 
+            case '50':
                 wildtype = unsafeWindow.g_js_strings.commonstr.plain;
                 break;
         }
@@ -19159,11 +19159,11 @@ Tabs.startup = {
 
         for (crest in Options.Creststatus) {
             owned = Seed.items['i'+crest];
-            if (owned == undefined) 
+            if (owned == undefined)
                 owned =    0;
-            if ((owned - Options.Creststatus[crest]) > 0) 
+            if ((owned - Options.Creststatus[crest]) > 0)
                 message    +=     '<DIV><B>' + unsafeWindow.itemlist['i'+crest]['name'] +': '+ (owned - Options.Creststatus[crest]) +'%0A </b></div>';
-            else 
+            else
                 message    +=     unsafeWindow.itemlist['i'+crest]['name'] +': '+ (owned - Options.Creststatus[crest]) +'%0A';
                 
             total += (owned - Options.Creststatus[crest]);
@@ -19190,14 +19190,14 @@ Tabs.startup = {
                 var rslt = eval("(" + message.responseText + ")");
                 if (rslt.ok) {
                     Options.LastCrestReport = now;
-                } 
+                }
             },
             onFailure: function () {
             },
         });
 
         saveOptions();
-    },    
+    },   
 
 
     hide : function (){
@@ -19218,7 +19218,7 @@ var March = {
 	queue : [],
 	lastattack : null,
 	timer : null,
-	
+  
 	//March queue system
 	addMarch : function (params, callback){
 		var t = this;
@@ -19241,12 +19241,12 @@ var March = {
 		return t.queue.length;
 	},
 	//End march queue
-	
+  
 	sendMarch : function (params, callback){
 		var t = this;
 		t.profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
 		t.currentrequests++;
-		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {    
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {   
             method: "post",
             parameters: params,
             loading: true,
@@ -19267,7 +19267,7 @@ var March = {
 
                     var currentcityid = params.cid;
                     unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-					
+				  
                     unsafeWindow.update_seed(rslt.updateSeed);
                     if (rslt.updateSeed) {
                         unsafeWindow.update_seed(rslt.updateSeed);
@@ -19304,7 +19304,7 @@ var March = {
 						t.captchawin.getMainDiv().innerHTML = m;
 						t.captchawin.getTopDiv().innerHTML = "<CENTER><b>KOC Power Bot - March Captcha</b></center>";
 						t.captchawin.show(true);
-						
+					  
 						unsafeWindow.Recaptcha.create("6LcT7cQSAAAAAG4whvbBz60hGjJg0ON1wRIRv_iD", "pbmarch_captchaform", {
 							callback: function(){
 								unsafeWindow.Recaptcha.focus_response_field();
@@ -19334,7 +19334,7 @@ var March = {
 					callback({ok:false}); //return all onFailure as {ok:false} so as to trigger remarch
 				t.loop(); //Always check for the next queued march after a request
             }
-          });  
+          }); 
 	}
 }
 
