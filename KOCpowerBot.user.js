@@ -7081,7 +7081,7 @@ Tabs.transport = {
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.doTrades(Count,rslt.tt);}, wait*1000);
+                        setTimeout (function(){t.doTrades(count,rslt.tt);}, wait*1000);
                         return;
 					  };
                   actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
