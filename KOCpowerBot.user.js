@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120924a
+// @version        20120925a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120924a';
+var Version = '20120925a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7076,6 +7076,7 @@ Tabs.transport = {
 					  unsafeWindow.update_seed(rslt.updateSeed)
 					  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
+					  var t = Tabs.transport;
 					    if (rslt.user_action == "backOffWaitTime") {
 						logit('backoffwaittime '+rslt.wait_time);
                         var wait = 1;
