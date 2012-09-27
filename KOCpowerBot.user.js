@@ -3959,166 +3959,215 @@ Tabs.build = {
           }
         setTimeout(t.e_autoBuild, 10000); //should be at least 10
     },  
-    doOne : function (bQi){
-        var t = Tabs.build;
-        var currentcityid = parseInt(bQi.cityId);
-        var cityName = t.getCityNameById(currentcityid);
-        var time = parseInt(bQi.buildingTime);
-        var mult = parseInt(bQi.buildingMult);
-        var attempt = parseInt(bQi.buildingAttempt);
-
-        
-        //mat/KOC Power Bot: 49 @ 19:41:45.274: Pos: 6 Type: 13 Level: 8 Id: 1523749
-        
-        var mode = bQi.buildingMode;
-        //  var mode = "build"; //FOR DEBUG
-        
-        var citpos = parseInt(bQi.buildingPos);
-        //  var citpos = 6; //FOR DEBUG
-        
-        if (Seed.buildings['city' + currentcityid]["pos" + citpos] != undefined && Seed.buildings['city' + currentcityid]["pos" + citpos][0] != undefined) {    
-            var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
-            var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
-            //  var bdgid = 13; //FOR DEBUG
-            
-            var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
-            var curlvl = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
-            //  var curlvl = 8; //FOR DEBUG
-
-            var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
-            var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
-            //  var bid = 1523749; //FOR DEBUG
-                                    
-            if (curlvl > 8 && mode == 'build') {
-                t.cancelQueueElement(0, currentcityid, time, false);
-                actionLog(translate("Queue item deleted: Building level equals 9 or higher!!!"));
-                return;
-            };
-            if (isNaN(curlvl)) {
-                t.cancelQueueElement(0, currentcityid, time, false);
-                actionLog(translate("Found no correct value for current building!!!!"));
-                return;
-            }
-            if (l_bdgid != bdgid) {
-                t.cancelQueueElement(0, currentcityid, time, false);
-                actionLog(translate("Building Type does not match!!!!"));
-                return;
-            }
-            if (l_bid != bid) {
-                t.cancelQueueElement(0, currentcityid, time, false);
-                actionLog(translate("Building ID does not match!!!!"));
-                return;
-            }
-            if (l_curlvl < curlvl) {
+    doOne: function (bQi) {
+    var t = Tabs.build;
+    var currentcityid = parseInt(bQi.cityId);
+    var cityName = t.getCityNameById(currentcityid);
+    var time = parseInt(bQi.buildingTime);
+    var mult = parseInt(bQi.buildingMult);
+    var attempt = parseInt(bQi.buildingAttempt);
+    //mat/KOC Power Bot: 49 @ 19:41:45.274: Pos: 6 Type: 13 Level: 8 Id: 1523749
+    var mode = bQi.buildingMode;
+    //  var mode = "build"; //FOR DEBUG
+    var citpos = parseInt(bQi.buildingPos);
+    //  var citpos = 6; //FOR DEBUG
+    if (bQi.buildingLevel == 0) {
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.cid = parseInt(bQi.cityId);
+        params.bid = "";
+        params.pos = parseInt(bQi.buildingPos);
+        params.lv = 1;
+        params.type = parseInt(bQi.buildingType);
+        params.permission = 0;
+        bdgid = parseInt(bQi.buildingType);
+        new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function (rslt) {
+                if (rslt.ok) {
+                    logit('building the level 1')
+                    unsafeWindow.update_seed(rslt.updateSeed);
+                    actionLog(translate("Building") + " " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);
+                    Tabs.startup.buildExtraLevels(rslt, bQi);
+                    Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
+                    Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
+                    Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
+                    Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
+                    Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
+                    Seed.queue_con["city" + currentcityid].push([bdgid, "1", parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
+                    t.bot_gethelp(rslt.buildingId, currentcityid);
+                    Seed.buildings["city" + currentcityid]["pos" + citpos] = [bdgid, 1, params.pos, rslt.buildingId];
+                    unsafeWindow.update_bdg();
+                    unsafeWindow.queue_changetab_building();
+                    unsafeWindow.modal_build_show_state();
                     t.cancelQueueElement(0, currentcityid, time, false);
-                    actionLog(translate("Queue item deleted: Building level is equal or higher!!!"));
-                    return;
+                } else {
+                    var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
+                    logit('IN SEED.BUILDINGS CHECK ( MISSED LEVEL) level = ' + bQi.buildingLevel + 'mode = ' + mode + ' citpos = ' + citpos + ' bqiType = ' + bQi.buildingType + ' bdgid ' + bQi.buildingType)
+                    if (rslt.error_code == 103) { // building has already the target level => just  delete
+                        t.cancelQueueElement(0, currentcityid, time, false);
+                        actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
+                        document.getElementById('pbbuildError')
+                            .innerHTML = rslt.msg + 'Item Deleted';
+                    } else if (rslt.error_code == 102) {
+                        t.cancelQueueElement(0, currentcityid, time, false);
+                        actionLog(translate("Another building already exists at that location"));
+                        document.getElementById('pbbuildError')
+                            .innerHTML = rslt.msg + 'Item Deleted';
+                    } else if (rslt.error_code) {
+                        logit(errmsg);
+                        t.requeueQueueElement(bQi);
+                        document.getElementById('pbbuildError')
+                            .innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
+                    }
+                    logit(errmsg.toSource());
+                }
+            },
+            onFailure: function () {
+                document.getElementById('pbbuildError')
+                    .innerHTML = translate("Connection Error while building! Please try later again");
             }
-            if (l_curlvl > curlvl && mode == 'build') {
-                    t.requeueQueueElement(bQi);
-                    return;
+        });
+    } else if (Seed.buildings['city' + currentcityid]["pos" + citpos] != undefined && Seed.buildings['city' + currentcityid]["pos" + citpos][0] != undefined) {
+        var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
+        var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
+        //  var bdgid = 13; //FOR DEBUG
+        var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
+        var curlvl = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
+        //  var curlvl = 8; //FOR DEBUG
+        var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
+        var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
+        //  var bid = 1523749; //FOR DEBUG
+        if (curlvl > 8 && mode == 'build') {
+            t.cancelQueueElement(0, currentcityid, time, false);
+            actionLog(translate("Queue item deleted: Building level equals 9 or higher!!!"));
+            return;
+        };
+        if (isNaN(curlvl)) {
+            t.cancelQueueElement(0, currentcityid, time, false);
+            actionLog(translate("Found no correct value for current building!!!!"));
+            return;
+        }
+        if (l_bdgid != bdgid) {
+            t.cancelQueueElement(0, currentcityid, time, false);
+            actionLog(translate("Building Type does not match!!!!"));
+            return;
+        }
+        if (l_bid != bid) {
+            t.cancelQueueElement(0, currentcityid, time, false);
+            actionLog(translate("Building ID does not match!!!!"));
+            return;
+        }
+        if (l_curlvl < curlvl) {
+            t.cancelQueueElement(0, currentcityid, time, false);
+            actionLog(translate("Queue item deleted: Building level is equal or higher!!!"));
+            return;
+        }
+        if (l_curlvl > curlvl && mode == 'build') {
+            t.requeueQueueElement(bQi);
+            return;
+        }
+        if (mode == 'destruct') {
+            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+            params.cid = currentcityid;
+            params.bid = "";
+            params.pos = citpos;
+            params.lv = curlvl - 1;
+            if (curlvl >= 1) {
+                params.bid = bid;
             }
-
-            if (mode == 'destruct') {
+            params.type = bdgid;
+            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/destruct.php" + unsafeWindow.g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                onSuccess: function (rslt) {
+                    if (rslt.ok) {
+                        actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
+                        Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
+                        if (params.cid == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+                        if (document.getElementById('pbHelpRequest')
+                            .checked == true) t.bot_gethelp(params.bid, currentcityid);
+                        t.cancelQueueElement(0, currentcityid, time, false);
+                    } else {
+                        var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
+                        t.requeueQueueElement(bQi);
+                        document.getElementById('pbbuildError')
+                            .innerHTML = errmsg;
+                        logit(errmsg);
+                    }
+                },
+                onFailure: function () {
+                    document.getElementById('pbbuildError')
+                        .innerHTML = translate("Connection Error while destructing! Please try later again");
+                }
+            })
+        }
+        if (mode == 'build') {
+            var invalid = false;
+            var chk = unsafeWindow.checkreq("bdg", bdgid, curlvl); //check if all requirements are met
+            for (var c = 0; c < chk[3].length; c++) {
+                if (chk[3][c] == 0) {
+                    invalid = true;
+                }
+            }
+            if (invalid == false) {
                 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
                 params.cid = currentcityid;
                 params.bid = "";
                 params.pos = citpos;
-                params.lv = curlvl - 1;
-                if (curlvl >= 1) {
+                params.lv = curlvl + 1;
+                if (params.lv > 9) { //make sure that no level 10+ is built
+                    t.cancelQueueElement(0, currentcityid, time, false);
+                    actionLog(translate("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!"));
+                    return;
+                }
+                if (params.lv > 1) {
                     params.bid = bid;
                 }
                 params.type = bdgid;
-                new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/destruct.php" + unsafeWindow.g_ajaxsuffix, {
+                new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
                     method: "post",
                     parameters: params,
-                    onSuccess: function(rslt){
+                    onSuccess: function (rslt) {
                         if (rslt.ok) {
-                            actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
-                            Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
-                            if (params.cid == unsafeWindow.currentcityid)
-                                unsafeWindow.update_bdg();
-                            if (document.getElementById('pbHelpRequest').checked == true)
-                                t.bot_gethelp(params.bid, currentcityid);
+                            actionLog(translate("Building") + " " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);
+                            Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
+                            Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
+                            Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
+                            Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
+                            Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
+                            Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
+                            if (params.cid == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+                            if (document.getElementById('pbHelpRequest')
+                                .checked == true) t.bot_gethelp(params.bid, currentcityid);
                             t.cancelQueueElement(0, currentcityid, time, false);
                         } else {
                             var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-                            t.requeueQueueElement(bQi);
-                            document.getElementById('pbbuildError').innerHTML = errmsg;
+                            if (rslt.error_code == 103) { // building has already the target level => just  delete
+                                t.cancelQueueElement(0, currentcityid, time, false);
+                                actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
+                            } else {
+                                t.requeueQueueElement(bQi);
+                                document.getElementById('pbbuildError')
+                                    .innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
+                            }
                             logit(errmsg);
                         }
                     },
-                    onFailure: function(){
-                        document.getElementById('pbbuildError').innerHTML = translate("Connection Error while destructing! Please try later again");
+                    onFailure: function () {
+                        document.getElementById('pbbuildError')
+                            .innerHTML = translate("Connection Error while building! Please try later again");
                     }
-                })
+                });
+            } else {
+                t.requeueQueueElement(bQi); // requeue item if check is invalid
             }
-            if (mode == 'build') {
-                var invalid = false;
-                var chk = unsafeWindow.checkreq("bdg", bdgid, curlvl); //check if all requirements are met
-                for (var c = 0; c < chk[3].length; c++) {
-                    if (chk[3][c] == 0) {
-                        invalid = true;
-                    }
-                }
-                if (invalid == false) {                            
-                    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-                    params.cid = currentcityid;
-                    params.bid = "";
-                    params.pos = citpos;
-                    params.lv = curlvl + 1;
-                    if (params.lv > 9){ //make sure that no level 10+ is built
-                        t.cancelQueueElement(0, currentcityid, time, false);
-                        actionLog(translate("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!"));
-                        return;
-                    }
-                    if (params.lv > 1) {
-                        params.bid = bid;
-                    }
-                    params.type = bdgid;
-                    
-                    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
-                        method: "post",
-                        parameters: params,
-                        onSuccess: function(rslt){
-                            if (rslt.ok) {
-                                actionLog(translate("Building")+" " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);                                
-                                Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
-                                Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
-                                Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
-                                Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
-                                Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
-                                Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(),  unsafeWindow.unixtime() + time, 0, time, citpos]);                        
-                                if (params.cid == unsafeWindow.currentcityid)
-                                    unsafeWindow.update_bdg();
-                                if (document.getElementById('pbHelpRequest').checked == true)
-                                    t.bot_gethelp(params.bid, currentcityid);
-                                t.cancelQueueElement(0, currentcityid, time, false);
-                            } else {
-                                var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-                                if (rslt.error_code == 103) { // building has already the target level => just  delete
-                                    t.cancelQueueElement(0, currentcityid, time, false);
-                                    actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
-                                } else {
-                                    t.requeueQueueElement(bQi);
-                                    document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name +': '+ errmsg + translate(" Item was requeued. Check for retry count.");
-                                }
-                                logit(errmsg);
-                            }
-                    },
-                        onFailure: function(){
-                            document.getElementById('pbbuildError').innerHTML = translate("Connection Error while building! Please try later again");
-                        }
-                    });
-                } else {
-                    t.requeueQueueElement(bQi); // requeue item if check is invalid
-                }
-            }
-        } else {
-            t.cancelQueueElement(0, currentcityid, time, false);
-            actionLog(translate("Queue item deleted: Building does not exist!!!"));
         }
-    },
+    } else {
+        t.cancelQueueElement(0, currentcityid, time, false);
+        actionLog(translate("Queue item deleted: Building does not exist!!!"));
+    }
+},
     requeueQueueElement: function (bQi) {
         var t = Tabs.build;
         var cityId = bQi.cityId;
