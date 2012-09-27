@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120926a
+// @version        20120925a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120926a';
+var Version = '20120925a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -122,7 +122,7 @@ var Options = {
   MapShowExtra : false,
   RaidRunning  : false,
   RaidReset    : 0,
-  DeleteMsg       : false,
+  DeleteMsg	   : false,
   DeleteMsgs0  : false,
   DeleteMsgs1  : false,
   DeleteMsgs2  : false,
@@ -162,80 +162,80 @@ var GlobalOptions = {
 };
 
 var CrestOptions = {
-  Running       :     false,
-  CrestCity     :     0,
-  RoundOne      :     false,
-  RoundTwo      :     true,
-  lastRoundTwo     :     0,
-  X                :    0,
-  Y                :    0,
-  R1ST            :    0,
-  R1MM            :    0,
-  R1Scout        :    0,
-  R1Pike        :    0,
-  R1Sword        :    0,
-  R1Arch        :    0,
-  R1LC            :    0,
-  R1HC            :    0,
-  R1SW            :    0,
-  R1Ball        :    0,
-  R1Ram            :    0,
-  R1Cat            :    0,
-  R2ST            :    0,
-  R2MM            :    0,
-  R2Scout        :    0,
-  R2Pike        :    0,
-  R2Sword        :    0,
-  R2Arch        :    0,
-  R2LC            :    0,
-  R2HC            :    0,
-  R2SW            :    0,
-  R2Ball        :    0,
-  R2Ram            :    0,
-  R2Cat            :    0,
+  Running   	: 	false,
+  CrestCity 	: 	0,
+  RoundOne  	: 	false,
+  RoundTwo  	: 	true,
+  lastRoundTwo 	: 	0,
+  X				:	0,
+  Y				:	0,
+  R1ST			:	0,
+  R1MM			:	0,
+  R1Scout		:	0,
+  R1Pike		:	0,
+  R1Sword		:	0,
+  R1Arch		:	0,
+  R1LC			:	0,
+  R1HC			:	0,
+  R1SW			:	0,
+  R1Ball		:	0,
+  R1Ram			:	0,
+  R1Cat			:	0,
+  R2ST			:	0,
+  R2MM			:	0,
+  R2Scout		:	0,
+  R2Pike		:	0,
+  R2Sword		:	0,
+  R2Arch		:	0,
+  R2LC			:	0,
+  R2HC			:	0,
+  R2SW			:	0,
+  R2Ball		:	0,
+  R2Ram			:	0,
+  R2Cat			:	0,
 };
 
 
 var CrestData = new Array();
 
-    function CrestFunc (Arr) {
-    
-        if (Arr == undefined)
-            Arr = CrestOptions;
+	function CrestFunc (Arr) {
+	
+		if (Arr == undefined)
+			Arr = CrestOptions;
 
-        this.Running         =      true;
-          this.CrestCity         =     Arr.CrestCity;
-        this.RoundOne         =     Arr.RoundOne;
-        this.RoundTwo         =     true;
-        this.lastRoundTwo     =     0;
-        this.X                 =     Arr.X;
-        this.Y                 =     Arr.Y;
-        this.R1ST             =     Arr.R1ST;
-        this.R1MM             =     Arr.R1MM;
-        this.R1Scout         =     Arr.R1Scout;
-        this.R1Pike         =     Arr.R1Pike;
-        this.R1Sword         =     Arr.R1Sword;
-        this.R1Arch         =     Arr.R1Arch;
-        this.R1LC             =     Arr.R1LC;
-        this.R1HC             =     Arr.R1HC;
-        this.R1SW             =     Arr.R1SW;
-        this.R1Ball         =     Arr.R1Ball;
-        this.R1Ram             =     Arr.R1Ram;
-        this.R1Cat             =     Arr.R1Cat;
-        this.R2ST             =     Arr.R2ST;
-        this.R2MM             =     Arr.R2MM;
-        this.R2Scout         =     Arr.R2Scout;
-        this.R2Pike         =     Arr.R2Pike;
-        this.R2Sword         =     Arr.R2Sword;
-        this.R2Arch         =     Arr.R2Arch;
-        this.R2LC             =     Arr.R2LC;
-        this.R2HC             =     Arr.R2HC;
-        this.R2SW             =     Arr.R2SW;
-        this.R2Ball         =     Arr.R2Ball;
-        this.R2Ram             =     Arr.R2Ram;
-        this.R2Cat             =     Arr.R2Cat;
-        
-    };
+		this.Running 		=  	true;
+  		this.CrestCity 		= 	Arr.CrestCity;
+		this.RoundOne 		= 	Arr.RoundOne;
+		this.RoundTwo 		= 	true;
+		this.lastRoundTwo 	= 	0;
+		this.X 				= 	Arr.X;
+		this.Y 				= 	Arr.Y;
+		this.R1ST 			= 	Arr.R1ST;
+		this.R1MM 			= 	Arr.R1MM;
+		this.R1Scout 		= 	Arr.R1Scout;
+		this.R1Pike 		= 	Arr.R1Pike;
+		this.R1Sword 		= 	Arr.R1Sword;
+		this.R1Arch 		= 	Arr.R1Arch;
+		this.R1LC 			= 	Arr.R1LC;
+		this.R1HC 			= 	Arr.R1HC;
+		this.R1SW 			= 	Arr.R1SW;
+		this.R1Ball 		= 	Arr.R1Ball;
+		this.R1Ram 			= 	Arr.R1Ram;
+		this.R1Cat 			= 	Arr.R1Cat;
+		this.R2ST 			= 	Arr.R2ST;
+		this.R2MM 			= 	Arr.R2MM;
+		this.R2Scout 		= 	Arr.R2Scout;
+		this.R2Pike 		= 	Arr.R2Pike;
+		this.R2Sword 		= 	Arr.R2Sword;
+		this.R2Arch 		= 	Arr.R2Arch;
+		this.R2LC 			= 	Arr.R2LC;
+		this.R2HC 			= 	Arr.R2HC;
+		this.R2SW 			= 	Arr.R2SW;
+		this.R2Ball 		= 	Arr.R2Ball;
+		this.R2Ram 			= 	Arr.R2Ram;
+		this.R2Cat 			= 	Arr.R2Cat;
+		
+	};
 
 var TrainOptions = {
   Running    : false,
@@ -247,13 +247,13 @@ var TrainOptions = {
   Item       : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   Keep       : {1:{Food:0,Wood:0,Stone:0,Ore:0},
                 2:{Food:0,Wood:0,Stone:0,Ore:0},
-                3:{Food:0,Wood:0,Stone:0,Ore:0},
-                4:{Food:0,Wood:0,Stone:0,Ore:0},
-                5:{Food:0,Wood:0,Stone:0,Ore:0},
-                6:{Food:0,Wood:0,Stone:0,Ore:0},
-                7:{Food:0,Wood:0,Stone:0,Ore:0},
-                8:{Food:0,Wood:0,Stone:0,Ore:0}
-               },
+				3:{Food:0,Wood:0,Stone:0,Ore:0},
+				4:{Food:0,Wood:0,Stone:0,Ore:0},
+				5:{Food:0,Wood:0,Stone:0,Ore:0},
+				6:{Food:0,Wood:0,Stone:0,Ore:0},
+				7:{Food:0,Wood:0,Stone:0,Ore:0},
+				8:{Food:0,Wood:0,Stone:0,Ore:0}
+			   },
   Enabled    : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
   SelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
   Resource   : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true},
@@ -262,11 +262,11 @@ var TrainOptions = {
   CraftIntervallMin : 3,
   CraftingActif : {3000:false,3001:false,3002:false,3003:false,3004:false,3005:false,3006:false,3007:false,3008:false,3009:false,3010:false,3011:false},
   CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0},
-  tr    :    false,
-  trset    :    0,
+  tr	:	false,
+  trset	:	0,
 };
 var FarmOptions = {
-    RallyClip: 0,
+	RallyClip: 0,
     Running: false,
     MinMight: 0,
     MaxMight: 999999999,
@@ -274,65 +274,65 @@ var FarmOptions = {
     SendInterval: 10,
     MaxDistance: 20,
     Inactive:30,
-    DeleteReports:false,
-    Troops: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,10: 0,11: 0,12: 0},
-    FarmNumber: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0},
+	DeleteReports:false,
+	Troops: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,10: 0,11: 0,12: 0},
+	FarmNumber: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0},
     CityEnable: {1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true},
     CityLevel: {0: true,1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true,9: true,10: true,11: true,12: true},
     Diplomacy: {friendly: true,hostile: true,friendlyToThem: true,friendlyToYou: true,neutral:true,unallied:true},
     FarmMarches: [],
     farmMarches: {},
     Attacks:0,
-    Checks:0,
+	Checks:0,
 };
 var ThroneOptions = {
     Active:false,
     Interval:30,
     RepairTime:0,
-    Tries:0,
+	Tries:0,
     minStones : 100000,
-    Good:0,
-    Bad:0,
-    Items: [],
-    Salvage:{Attack:true,Defense:true,Life:true,Speed:true,Accuracy:true,Range:true,Load:true,MarchSize:true,MarchSpeed:true,CombatSkill:true,IntelligenceSkill:true,PoliticsSkill:true,ResourcefulnessSkill:true,TrainingSpeed:true,ConstructionSpeed:true,ResearchSpeed:true,CraftingSpeed:true,Upkeep:true,ResourceProduction:true,ResourceCap:true,Storehouse:true,Morale:true,ItemDrop:true},
-    SalvageQuality:0,
-    saveXitems:0,
-    thronekeep:1,
+	Good:0,
+	Bad:0,
+	Items: [],
+	Salvage:{Attack:true,Defense:true,Life:true,Speed:true,Accuracy:true,Range:true,Load:true,MarchSize:true,MarchSpeed:true,CombatSkill:true,IntelligenceSkill:true,PoliticsSkill:true,ResourcefulnessSkill:true,TrainingSpeed:true,ConstructionSpeed:true,ResearchSpeed:true,CraftingSpeed:true,Upkeep:true,ResourceProduction:true,ResourceCap:true,Storehouse:true,Morale:true,ItemDrop:true},
+	SalvageQuality:0,
+	saveXitems:0,
+	thronekeep:1,
     SingleStat:false,
     Cityrand:false,
 };
 var AttackOptions = {
-  LastReport            : 0,
-  MsgEnabled              : true,
-  MsgInterval              : 30,
-  Method                : "distance",
-  SendInterval            : 8,
+  LastReport    		: 0,
+  MsgEnabled          	: true,
+  MsgInterval	      	: 30,
+  Method			    : "distance",
+  SendInterval			: 8,
   MaxDistance           : 40,
-  RallyClip                : 0,
-  Running               : false,
-  BarbsFailedKnight        : 0,
-  BarbsFailedRP         : 0,
-  BarbsFailedTraffic       : 0,
-  BarbsFailedVaria        : 0,
+  RallyClip				: 0,
+  Running       		: false,
+  BarbsFailedKnight		: 0,
+  BarbsFailedRP 		: 0,
+  BarbsFailedTraffic   	: 0,
+  BarbsFailedVaria		: 0,
   BarbsFailedBog        : 0,
-  BarbsTried            : 0,
+  BarbsTried    		: 0,
   DeleteMsg             : true,
-  DeleteMsgs0            : false,
-  Foodstatus            : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  MsgLevel                : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
-  BarbsDone             : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  BarbNumber            : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  Levels                : {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},8:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
-  Troops                : {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
-  MinDistance            : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
+  DeleteMsgs0			: false,
+  Foodstatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  MsgLevel			    : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
+  BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  BarbNumber    		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  Levels    			: {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},8:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
+  Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
+  MinDistance			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
   Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750},
   Update                : {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0],6:[0,0],7:[0,0],8:[0,0]},
   UpdateEnabled         : true,
-  UpdateInterval        : 30,
+  UpdateInterval	    : 30,
   stopsearch            : 1,
   knightselector        : 0,
-  barbMinKnight            : 56,
-  barbMaxKnight            : 250,
+  barbMinKnight			: 56,
+  barbMaxKnight			: 250,
 };
 
 var ResetAll=false;
@@ -347,18 +347,18 @@ var ChatOptions = {
 };
 
 var ApothecaryOptions = {
-    Active : false,
-    goldkeep : 0,
-    city : {0:[],1:[],2:[],3:[],4:[],5:[],6:[],7:[]},
+	Active : false,
+	goldkeep : 0,
+	city : {0:[],1:[],2:[],3:[],4:[],5:[],6:[],7:[]},
 };
 
 var CombatOptions = {
-    research : [{tch8:0,tch9:0,tch13:0,tch15:0}, //Poison Edge, Metal Alloys, Fletching, Healing Potions
-                {tch8:0,tch9:0,tch13:0,tch15:0}],
-    knt      : [50,50],
-    guardian : [['wood',0],['ore',0]],
-    ratio    : [{unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}},
-                {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
+	research : [{tch8:0,tch9:0,tch13:0,tch15:0}, //Poison Edge, Metal Alloys, Fletching, Healing Potions
+	            {tch8:0,tch9:0,tch13:0,tch15:0}],
+	knt      : [50,50],
+	guardian : [['wood',0],['ore',0]],
+	ratio    : [{unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}},
+	            {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
 }
 
 // Get element by id shortform with parent node option
@@ -366,46 +366,46 @@ function $(ID,root) {return (root||document).getElementById(ID);}
 
 var nHtml={
   FindByXPath:function(obj,xpath,nodetype) {
-    if(!nodetype){
-        nodetype = XPathResult.FIRST_ORDERED_NODE_TYPE;
-    }
-    try {
-        var q=document.evaluate(xpath,obj,null,nodetype,null);
-    } catch(e) {
-        GM_log('bad xpath:'+xpath);
-    }
-    if(nodetype == XPathResult.FIRST_ORDERED_NODE_TYPE){
-        if(q && q.singleNodeValue) { return q.singleNodeValue; }
-    }else{
-        if(q){
-            return q;
-        }
-    }
-    return null;
+	if(!nodetype){
+		nodetype = XPathResult.FIRST_ORDERED_NODE_TYPE;
+	}
+	try {
+		var q=document.evaluate(xpath,obj,null,nodetype,null);
+	} catch(e) {
+		GM_log('bad xpath:'+xpath);
+	}
+	if(nodetype == XPathResult.FIRST_ORDERED_NODE_TYPE){
+		if(q && q.singleNodeValue) { return q.singleNodeValue; }
+	}else{
+		if(q){
+			return q;
+		}
+	}
+	return null;
   },
   
   ClickWin:function(win,obj,evtName) {
-    var evt = win.document.createEvent("MouseEvents");
-    evt.initMouseEvent(evtName, true, true, win,
-        0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    return !obj.dispatchEvent(evt);
+	var evt = win.document.createEvent("MouseEvents");
+	evt.initMouseEvent(evtName, true, true, win,
+		0, 0, 0, 0, 0, false, false, false, false, 0, null);
+	return !obj.dispatchEvent(evt);
   },
 
   Click:function(obj) {
-    return this.ClickWin(window,obj,'click');
+	return this.ClickWin(window,obj,'click');
   },
   
   ClickTimeout:function(obj,millisec) {
-    window.setTimeout(function() {
-        return nHtml.ClickWin(window,obj,'click');
-    },millisec+Math.floor(Math.random()*500));
+	window.setTimeout(function() {
+		return nHtml.ClickWin(window,obj,'click');
+	},millisec+Math.floor(Math.random()*500));
   },
 
   SetSelect:function(obj,v) {
-    for(var o=0; o<obj.options.length; o++) {
-        if(v==obj.options[o].value) { obj.options[o].selected=true; return true; }
-    }
-    return false;
+	for(var o=0; o<obj.options.length; o++) {
+		if(v==obj.options[o].value) { obj.options[o].selected=true; return true; }
+	}
+	return false;
   },
 
 }
@@ -422,12 +422,12 @@ if (document.URL.search(/kabam.com\/kingdoms-of-camelot\/play/i) >= 0){
 }
 
 if (document.URL.search(/facebook.com/i) >= 0){
-    if(document.URL.search(/connect\/uiserver.php/i) >= 0 ||
-       document.URL.search(/serverfbml/i) >= 0 ||
-       document.URL.search(/dialog\/stream.publish/i) >= 0 ||
-       document.URL.search(/dialog\/apprequests/i) >= 0 ||
-       document.URL.search(/dialog\/feed/i) >= 0)
-        HandlePublishPopup ();
+	if(document.URL.search(/connect\/uiserver.php/i) >= 0 ||
+	   document.URL.search(/serverfbml/i) >= 0 ||
+	   document.URL.search(/dialog\/stream.publish/i) >= 0 ||
+	   document.URL.search(/dialog\/apprequests/i) >= 0 ||
+	   document.URL.search(/dialog\/feed/i) >= 0)
+		HandlePublishPopup ();
   return;
 }
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
@@ -436,19 +436,19 @@ if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
 
 function kocWideScreen(){
   function setWideFb (){
-    var kocFrame = parent.document.getElementById('kocIframes1');
-    if (!kocFrame){
-      setTimeout (setWideFb, 1000);
-      return;
-    }
-    kocFrame.style.width = '100%';
-    var style = document.createElement('style')
-    style.innerHTML = 'body {margin:0; width:100%; !important;}';
-    kocFrame.parentNode.appendChild(style);
+	var kocFrame = parent.document.getElementById('kocIframes1');
+	if (!kocFrame){
+	  setTimeout (setWideFb, 1000);
+	  return;
+	}
+	kocFrame.style.width = '100%';
+	var style = document.createElement('style')
+	style.innerHTML = 'body {margin:0; width:100%; !important;}';
+	kocFrame.parentNode.appendChild(style);
   }
   kocWatchdog ();
   if (GlobalOptions.pbWideScreen)
-        setWideFb();
+		setWideFb();
 }
     var aj2 = function(c, d, b, a)
     {
@@ -468,17 +468,17 @@ function kocWideScreen(){
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
   function setWide (){
-    var iFrame = document.getElementById('iframe_canvas');
-    if (!iFrame){
-      setTimeout (setWide, 1000);
-      return;
-    }
-    iFrame.style.width = '100%';
+	var iFrame = document.getElementById('iframe_canvas');
+	if (!iFrame){
+	  setTimeout (setWide, 1000);
+	  return;
+	}
+	iFrame.style.width = '100%';
 
-    while ( (iFrame=iFrame.parentNode) != null)
-      if (iFrame.tagName=='DIV')
-        iFrame.style.width = '100%';
-    document.getElementById('globalContainer').style.left = '0px';
+	while ( (iFrame=iFrame.parentNode) != null)
+	  if (iFrame.tagName=='DIV')
+		iFrame.style.width = '100%';
+	document.getElementById('globalContainer').style.left = '0px';
     try{    
       document.getElementById('rightCol').parentNode.removeChild(document.getElementById('rightCol'));
       document.getElementById('leftColContainer').parentNode.removeChild(document.getElementById('leftColContainer'));
@@ -486,27 +486,27 @@ function facebookInstance (){
       // toolkit may have removed them already!
     }
     var e = document.getElementById('mainContainer');
-    if(e){
-        if (GlobalOptions.pbWideScreenStyle=="normal") e.parentNode.style.minWidth = '100%';
-        if (GlobalOptions.pbWideScreenStyle=="wide") e.parentNode.style.width = '1520px';
-        if (GlobalOptions.pbWideScreenStyle=="ultra") e.parentNode.style.width = '1900px';
-        for(i=0; i<e.childNodes.length; i++){
-            if(e.childNodes[i].id == 'contentCol'){
-                e.childNodes[i].style.margin = '0px';
-                e.childNodes[i].style.paddingTop = '5px';
-                break;
-            }
-        }
-    }
-    var e = document.getElementById('pageHead');
-    if(e){
-        e.style.width = '80%';
-        e.style.margin = '0 10%';
-    }
-    var e = document.getElementById('bottomContent');
-    if(e){
-        e.style.padding = "0px 0px 12px 0px";
-    }
+	if(e){
+		if (GlobalOptions.pbWideScreenStyle=="normal") e.parentNode.style.minWidth = '100%';
+		if (GlobalOptions.pbWideScreenStyle=="wide") e.parentNode.style.width = '1520px';
+		if (GlobalOptions.pbWideScreenStyle=="ultra") e.parentNode.style.width = '1900px';
+		for(i=0; i<e.childNodes.length; i++){
+			if(e.childNodes[i].id == 'contentCol'){
+				e.childNodes[i].style.margin = '0px';
+				e.childNodes[i].style.paddingTop = '5px';
+				break;
+			}
+		}
+	}
+	var e = document.getElementById('pageHead');
+	if(e){
+		e.style.width = '80%';
+		e.style.margin = '0 10%';
+	}
+	var e = document.getElementById('bottomContent');
+	if(e){
+		e.style.padding = "0px 0px 12px 0px";
+	}
     
   }
   facebookWatchdog();
@@ -516,63 +516,63 @@ function facebookInstance (){
 
 function kabamStandAlone (){
   function setWide (){
-    var iFrames = $('game_frame');
-    if (!iFrames){
-      setTimeout (setWide, 1000);
-      return;
-    }
-    iFrames.style.width = '100%';
-    while ( (iFrames=iFrames.parentNode) != null)
-      if (iFrames.tagName=='DIV')
-        iFrames.style.width = '100%';
+	var iFrames = $('game_frame');
+	if (!iFrames){
+	  setTimeout (setWide, 1000);
+	  return;
+	}
+	iFrames.style.width = '100%';
+	while ( (iFrames=iFrames.parentNode) != null)
+	  if (iFrames.tagName=='DIV')
+		iFrames.style.width = '100%';
   }
 
   function sendmeaway (){
-    var serverID = /s=([0-9]+)/im.exec (document.location.href);
-    var sr = /signed_request" value="(.*?)"/im.exec ($("post_form").innerHTML);
-    var goto = $("post_form").action+(serverID?"?s="+serverID[1]:'');
-    var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxxpbutExplode type=submit value=RELOAD><INPUT type=hidden name=signed_request value="'+ sr[1] +'" /><INPUT type=hidden name=platform_req value=A /></form>';
-    var e = document.createElement ('div');
-    e.innerHTML = t;
-    document.body.appendChild (e);
-    setTimeout (function (){document.getElementById('xxxpbutExplode').click();}, 0);
+	var serverID = /s=([0-9]+)/im.exec (document.location.href);
+	var sr = /signed_request" value="(.*?)"/im.exec ($("post_form").innerHTML);
+	var goto = $("post_form").action+(serverID?"?s="+serverID[1]:'');
+	var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxxpbutExplode type=submit value=RELOAD><INPUT type=hidden name=signed_request value="'+ sr[1] +'" /><INPUT type=hidden name=platform_req value=A /></form>';
+	var e = document.createElement ('div');
+	e.innerHTML = t;
+	document.body.appendChild (e);
+	setTimeout (function (){document.getElementById('xxxpbutExplode').click();}, 0);
   }
   if (GlobalOptions.pbWideScreen)
-    setWide();
+	setWide();
   if(GlobalOptions.pbNoMoreKabam)
-    sendmeaway();
+	sendmeaway();
   }
 
 function HandlePublishPopup() {
-    if(GlobalOptions.autoPublishGamePopups){
-        // Check the app id (we only want to handle the popup for kingdoms of camelot)
-        var FBInputForm = document.getElementById('uiserver_form');
-        logit("FBInputForm "+FBInputForm);
-        if(FBInputForm){
-            var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
-            logit("channel_input "+channel_input);
-            if(channel_input){
-                var current_channel_url = channel_input.value;
-                logit("current_channel_url "+current_channel_url);
-                if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {
-                    var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
-                    var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
-                    logit("publish_button "+publish_button);
-                    logit("privacy_setting "+privacy_setting);
-                    if(publish_button && privacy_setting){
-                        // 80: Everyone
-                        // 50: Friends of Friends
-                        // 40: Friends Only
-                        // 10: Only Me
-                        privacy_setting.innerHTML = '<option value="'+ GlobalOptions.autoPublishPrivacySetting +'"></option>';
-                        privacy_setting.selectedIndex = 0;
-                        nHtml.Click(publish_button);
-                    }
-                }
-            }        
-        }
-        setTimeout(HandlePublishPopup, 1000);
-    }
+	if(GlobalOptions.autoPublishGamePopups){
+		// Check the app id (we only want to handle the popup for kingdoms of camelot)
+		var FBInputForm = document.getElementById('uiserver_form');
+		logit("FBInputForm "+FBInputForm);
+		if(FBInputForm){
+			var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
+			logit("channel_input "+channel_input);
+			if(channel_input){
+				var current_channel_url = channel_input.value;
+				logit("current_channel_url "+current_channel_url);
+				if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {
+					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
+					var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
+					logit("publish_button "+publish_button);
+					logit("privacy_setting "+privacy_setting);
+					if(publish_button && privacy_setting){
+						// 80: Everyone
+						// 50: Friends of Friends
+						// 40: Friends Only
+						// 10: Only Me
+						privacy_setting.innerHTML = '<option value="'+ GlobalOptions.autoPublishPrivacySetting +'"></option>';
+						privacy_setting.selectedIndex = 0;
+						nHtml.Click(publish_button);
+					}
+				}
+			}		
+		}
+		setTimeout(HandlePublishPopup, 1000);
+	}
 }
 
 var Cities = {};
@@ -1932,7 +1932,7 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
          var row = document.getElementById('ShowQueue').insertRow(0);
          row.vAlign = 'top';
          row.style.color = "black";    
-         row.style.background = "rgb(246,243,236)";    
+	     row.style.background = "rgb(246,243,236)";	
          if (active) row.style.color = "green";     
          row.insertCell(0).innerHTML = id+1;
          row.insertCell(1).innerHTML = name;
@@ -1965,7 +1965,7 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
          var row = document.getElementById('ShowQueue').insertRow(0);
          row.vAlign = 'top';
          row.style.color = "black";
-         row.style.background = "rgb(246,243,236)";    
+	     row.style.background = "rgb(246,243,236)";	
          row.insertCell(0).innerHTML = "Id";
          row.insertCell(1).innerHTML = "Name";
          row.insertCell(2).innerHTML = "Quality";
@@ -2506,26 +2506,26 @@ PaintSalvageHistory : function() {
 
   repairTimerUpdate :function (){
         var t = Tabs.Throne;
-        try {
-            if (ThroneOptions.Items.length == 0) return;
-            var now = new Date().getTime()/1000.0;
-            var diff = 0;
-            if (Seed.queue_throne.end == undefined) return;
-            else diff = Seed.queue_throne.end - now;
-            if (diff <0){
-                clearInterval(t.setRepairTimer);
-                if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
-                else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
-                unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
-                Seed.queue_throne = "";
-                return;
-            } else {
-                  document.getElementById('ShowStatus').innerHTML = "Repairing on: " + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name + "<br/>Time left: " + timestr(diff)+ " ("+ timestr(Seed.queue_throne.end - Seed.queue_throne.start) + ")";
-                  document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
-            }
-        } catch (e){
-            //do nothing
-        }
+		try {
+			if (ThroneOptions.Items.length == 0) return;
+			var now = new Date().getTime()/1000.0;
+			var diff = 0;
+			if (Seed.queue_throne.end == undefined) return;
+			else diff = Seed.queue_throne.end - now;
+			if (diff <0){
+				clearInterval(t.setRepairTimer);
+				if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
+				else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+				unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
+				Seed.queue_throne = "";
+				return;
+			} else {
+				  document.getElementById('ShowStatus').innerHTML = "Repairing on: " + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name + "<br/>Time left: " + timestr(diff)+ " ("+ timestr(Seed.queue_throne.end - Seed.queue_throne.start) + ")";
+				  document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
+			}
+		} catch (e){
+			//do nothing
+		}
   },
 
   paintInfo : function (){
@@ -2662,23 +2662,23 @@ salvageCheck : function (){
                         for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++){
                             type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];
                             if (ThroneOptions.Salvage[type]) {
-                                if(ThroneOptions.SingleStat) {
-                                    ThroneOptions.Salvage[type]++
-                                } else {
-                                    number++;
-                                }
-                            }
+								if(ThroneOptions.SingleStat) {
+									ThroneOptions.Salvage[type]++
+								} else {
+									number++;
+								}
+							}
                         }
                     }
                     if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
                     if(ThroneOptions.SingleStat) {
-                        for (h in ThroneOptions.Salvage) {
-                            if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep)
-                                number = parseInt(ThroneOptions.Salvage[h] - 1);
-                            if(ThroneOptions.Salvage[h])
-                                ThroneOptions.Salvage[h] = true;
-                        }
-                    }
+						for (h in ThroneOptions.Salvage) {
+							if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep)
+								number = parseInt(ThroneOptions.Salvage[h] - 1);
+							if(ThroneOptions.Salvage[h])
+								ThroneOptions.Salvage[h] = true;
+						}
+					}
                     // logit(y.name+' '+number);
                     if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
                         t.SalvageArray.push(y.id);
@@ -2699,23 +2699,23 @@ doSalvage : function(){
         for (var k in Cities.byID) {
             if (Seed.resources["city"+k]["rec5"][0] < 1000000)
             {
-                var a = getCityBuilding(k,20);
-                if (a.count == 1)
-                    spirecities.push(k);
-                cities.push(k);
+				var a = getCityBuilding(k,20);
+				if (a.count == 1)
+					spirecities.push(k);
+				cities.push(k);
             }
         }
-        if(ThroneOptions.CitySpire){
-            if (spirecities.toSource != "[]")
-                cities = spirecities;
-        }
-        if (cities.toSource() != "[]"){
-            if (ThroneOptions.Cityrand) {
-                cityid = cities[Math.floor(Math.random()*cities.length)];
-            }else{
-                cityid = cities[0];
-            }
-        }
+		if(ThroneOptions.CitySpire){
+			if (spirecities.toSource != "[]")
+				cities = spirecities;
+		}
+		if (cities.toSource() != "[]"){
+			if (ThroneOptions.Cityrand) {
+				cityid = cities[Math.floor(Math.random()*cities.length)];
+			}else{
+				cityid = cities[0];
+			}
+		}
         if (cityid == 0) cityid = Seed.cities[0][0]; //If all else failss default to city 1
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
@@ -6305,21 +6305,21 @@ Tabs.transport = {
       document.getElementById('FillInMax').addEventListener('click', function(){document.getElementById('TroopsToSend').value = t.TroopsNeeded;}, false);
       
       document.getElementById('MaxTroops').addEventListener('click', function(){
-            var rallypointlevel = t.getRallypoint('city' + t.tcp.city.id);
-            if (rallypointlevel == 11) rallypointlevel = 15;
-            if (rallypointlevel == 12) rallypointlevel = 20;
-            var max = t.Troops;
-            var maxCalced = 0;
-            if (t.Troops > (rallypointlevel*10000) ) max = (rallypointlevel*10000);
-            total = t.calcTRBoosts(66);
+			var rallypointlevel = t.getRallypoint('city' + t.tcp.city.id);
+			if (rallypointlevel == 11) rallypointlevel = 15;
+			if (rallypointlevel == 12) rallypointlevel = 20;
+			var max = t.Troops;
+			var maxCalced = 0;
+			if (t.Troops > (rallypointlevel*10000) ) max = (rallypointlevel*10000);
+			total = t.calcTRBoosts(66);
 
-            if (total > 0) {
-                maxCalced = max + (max * (total/100))
-                document.getElementById('TroopsToSend').value = maxCalced;
-            }else{
-                document.getElementById('TroopsToSend').value = max;
-            }    
-      }, false);
+			if (total > 0) {
+				maxCalced = max + (max * (total/100))
+				document.getElementById('TroopsToSend').value = maxCalced;
+			}else{
+				document.getElementById('TroopsToSend').value = max;
+			}	
+	  }, false);
       document.getElementById('MaxFood').addEventListener('click', function(){
               t.Food = 0;
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
@@ -6450,24 +6450,24 @@ Tabs.transport = {
       window.addEventListener('unload', t.onUnload, false);
     },
      calcTRBoosts : function (StatID){
-        var equipped = Seed.throne.slotEquip[1];
-        var total = 0;
-        for(var k = 0; k<equipped.length; k++){
-            var item_id = equipped[k];
-            var item = unsafeWindow.kocThroneItems[item_id];
-            for(var i = 1; i<=item.quality; i++){
-                var id = item['effects']['slot'+i]['id'];
-                if(id == StatID){
-                    var tier = parseInt(item["effects"]["slot"+i]["tier"]);
-                    var level = item["level"];
-                    var p = unsafeWindow.cm.thronestats.tiers[id][tier];
-                    var Percent = p.base + ((level * level + level) * p.growth * 0.5);
-                    total += Percent;
-                }
-            }
-        }
-        return total;
-    },
+		var equipped = Seed.throne.slotEquip[1];
+		var total = 0;
+		for(var k = 0; k<equipped.length; k++){
+			var item_id = equipped[k];
+			var item = unsafeWindow.kocThroneItems[item_id];
+			for(var i = 1; i<=item.quality; i++){
+				var id = item['effects']['slot'+i]['id'];
+				if(id == StatID){
+					var tier = parseInt(item["effects"]["slot"+i]["tier"]);
+					var level = item["level"];
+					var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+					var Percent = p.base + ((level * level + level) * p.growth * 0.5);
+					total += Percent;
+				}
+			}
+		}
+		return total;
+	},
     updateResources : function (){
         var t = Tabs.transport;
         var ToCity = null;
@@ -6776,10 +6776,10 @@ Tabs.transport = {
                 t.tradeRoutes[k] = route[k];
         }
         try{
-            t.checkcitymoved();
-        } catch (e) {
-            //Do nothing
-        }
+			t.checkcitymoved();
+		} catch (e) {
+			//Do nothing
+		}
     },
     checkcitymoved: function(){
         var t = Tabs.transport;
@@ -7054,37 +7054,37 @@ Tabs.transport = {
                   parameters: params,
                   loading: true,
                   onSuccess: function (transport) {
-                      profiler.stop();
+					  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
-                      actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
-                      var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                      var ut = unsafeWindow.unixtime();
-                      var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                      for(i = 0; i <= unitsarr.length; i++){
-                          if(params["u"+i]){
-                          unitsarr[i] = params["u"+i];
-                          }
-                      }
-                      var resources=new Array();
-                      resources[0] = params.gold;
-                      for(i=1; i<=5; i++){
-                          resources[i] = params["r"+i];
-                      }
-                      var currentcityid = city;
-                      unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                      unsafeWindow.update_seed(rslt.updateSeed)
-                      if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+					  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
+					  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+					  var ut = unsafeWindow.unixtime();
+					  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+					  for(i = 0; i <= unitsarr.length; i++){
+						  if(params["u"+i]){
+						  unitsarr[i] = params["u"+i];
+						  }
+					  }
+					  var resources=new Array();
+					  resources[0] = params.gold;
+					  for(i=1; i<=5; i++){
+						  resources[i] = params["r"+i];
+					  }
+					  var currentcityid = city;
+					  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+					  unsafeWindow.update_seed(rslt.updateSeed)
+					  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
-                      var t = Tabs.transport;
-                        if (rslt.user_action == "backOffWaitTime") {
-                        logit('backoffwaittime '+rslt.wait_time);
+					  var t = Tabs.transport;
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime '+rslt.wait_time);
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
                         setTimeout (function(){t.doTrades(count,rslt.tt);}, wait*1000);
                         return;
-                      };
+					  };
                   actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
                   }
                   },
@@ -7130,8 +7130,8 @@ Tabs.transport = {
       case 'unt11': params.u11 = parseInt(document.getElementById ('TroopsToSend').value);break;
       case 'unt12': params.u12 = parseInt(document.getElementById ('TroopsToSend').value);break;
     }
-    if (tt)
-    params.tt = tt;
+	if (tt)
+	params.tt = tt;
     if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
                  
         var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
@@ -7140,7 +7140,7 @@ Tabs.transport = {
                   parameters: params,
                   loading: true,
                   onSuccess: function (transport) {
-                      profiler.stop();
+					  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {                  
                           var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -7168,8 +7168,8 @@ Tabs.transport = {
                           document.getElementById ('pbtradeamountGold').value = 0;
                           document.getElementById ('TroopsToSend').value = 0;
                   } else {
-                        if (rslt.user_action == "backOffWaitTime") {
-                        logit('backoffwaittime '+rslt.wait_time);
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
                         var tt = rslt.tt;
                         var wait = 1;
@@ -7178,7 +7178,7 @@ Tabs.transport = {
                         setTimeout (function(){t.ManualTransport(tt);}, wait*1000);
                         document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + 'kabam making us wait for '+wait+' seconds then retry march' +'</font>';
                         return;
-                      };
+					  };
                           var errorcode =  'err_' + rslt.error_code;
                           if (rslt.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
                           else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + rslt.msg +'</font>';
@@ -9228,24 +9228,24 @@ Tabs.AutoCraft = {
      var tableau = [];
      for(var d in TrainOptions.CraftingNb) {
            if (parseInt(TrainOptions.CraftingNb[d])>0) {
-            if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
-            if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(getCityBuilding(cityId,20).maxLevel))
-            if(t.craftinfo[d].inputItems == "") {
-                tableau.push (d);
-            } else {
-                for(var i in t.craftinfo[d].inputItems) {
-                    if(parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
-                        break;
-                }    
-                if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
-                        tableau.push (d);
-            }
+			if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
+			if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(getCityBuilding(cityId,20).maxLevel))
+			if(t.craftinfo[d].inputItems == "") {
+				tableau.push (d);
+			} else {
+				for(var i in t.craftinfo[d].inputItems) {
+					if(parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
+						break;
+				}	
+				if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
+						tableau.push (d);
+			}
            }
      }
      if (tableau == []) {
-        t.Start();
-        return;
-     }
+		t.Start();
+		return;
+	 }
      var itemId = tableau[Math.floor(Math.random()*tableau.length)];
      var recipeId = t.craftinfo[itemId].recipe_id;
      var category = t.craftinfo[itemId].category;
@@ -9256,7 +9256,7 @@ Tabs.AutoCraft = {
            var now = unixTime();
           totTime = q.craftingEtaUnixTime - now;
           if (totTime > 0) {
-              t.Start();
+			  t.Start();
            return;
           }
      }
@@ -9276,13 +9276,13 @@ Tabs.AutoCraft = {
           onSuccess: function (transport) {
               var o=eval("("+transport.responseText+")");
               if(o.ok===true){
-                  //alert(inspect(o));
+				  //alert(inspect(o));
                if (o.status=="error") {
-                if (o.errorCode == 2)
-                    t.numcity--;
-                t.retrycount++;
-                if(t.retrycount > 10)
-                    return;
+				if (o.errorCode == 2)
+					t.numcity--;
+				t.retrycount++;
+				if(t.retrycount > 10)
+					return;
                 t.Start();
                 return;
                } else if(o.status=="failure"){
@@ -9290,7 +9290,7 @@ Tabs.AutoCraft = {
                  t.CraftingItem(currentcity,  itemId, recipeId);
                 }, 5000);
                 } else if (o.status=="success"){
-                    t.retrycount == 0;
+					t.retrycount == 0;
                 //actionLog ('<b>'+culang.auto+' '+culang.crafting+'</b>:  <span class=boldGreen>OK</span> #'+ (TrainOptions.CraftingNb[itemId] -1)+' ');
                  TrainOptions.CraftingNb[itemId] =  TrainOptions.CraftingNb[itemId] -1;
                  saveTrainOptions();
@@ -9867,7 +9867,7 @@ Tabs.Barb = {
                    parameters: params,
                    loading: true,
                    onSuccess: function (transport) {
-                       profiler.stop();
+					   profiler.stop();
                    var rslt = eval("(" + transport.responseText + ")");
                    if (rslt.ok) {
                      var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -9898,8 +9898,8 @@ Tabs.Barb = {
                      GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                      saveAttackOptions();
                    } else {
-                        if (rslt.user_action == "backOffWaitTime") {
-                        logit('backoffwaittime '+rslt.wait_time);
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
                         var tt = rslt.tt;
                         var wait = 1;
@@ -9907,7 +9907,7 @@ Tabs.Barb = {
                         wait = rslt.wait_time;
                         setTimeout (function(){t.doBarb(cityID,counter,xcoord,ycoord,level,kid,trps,tt);}, wait*1000);
                         return;
-                        };
+						};
                      //logit( inspect(rslt,3,1));
                      if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
                      if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
@@ -10282,369 +10282,369 @@ Tabs.Options = {
 
 /*********************************** Export Tab ***********************************/
 Tabs.Export = {
-    tabOrder: 800,
-    tabLabel: 'Export',
-    myDiv : null,
+	tabOrder: 800,
+	tabLabel: 'Export',
+	myDiv : null,
 
-    init : function (div){
-        var t = Tabs.Export;
-        t.myDiv = div;
-        var m = '<div class="pbStat">OPTIONS EXPORT TOOL FOR DOMAIN MERGER</div>\
-                 <table>\
-                    <tr><td>Move from: <input type="text" value="'+getServerId()+'" id="pbexport_from" /></td>\
-                        <td>To: <input type="text" id="pbexport_to" /></td>\
-                        <td><input type="submit" value="Copy" id="pbexport_submit" /></td>\
-                        <td><input type="checkbox" id="pbexport_overwrite" /> Force overwrite</td>\
-                    </tr>\
-                 </table>\
-                 <div class="pbStat" id="pbexport_status" >SELECT OPTIONS TO MOVE</div>\
-                 <table>\
-                    <tr><td><input type="checkbox" id="pbexport_general" /></td><td>General Options (Tower/Raid)</td>\
-                        <td><input type="checkbox" id="pbexport_throne" /></td><td>Throne Options</td></tr>\
-                    <tr><td><input type="checkbox" id="pbexport_crest" /></td><td>Crest Options</td>\
-                        <td><input type="checkbox" id="pbexport_train" /></td><td>Train/Craft Options</td></tr>\
-                    <tr><td><input type="checkbox" id="pbexport_reassign" /></td><td>Reassign Options</td>\
-                        <td><input type="checkbox" id="pbexport_tower" DISABLED /></td><td>Tower Options</td></tr>\
-                    <tr><td><input type="checkbox" id="pbexport_build" /></td><td>Build Options</td>\
-                        <td><input type="checkbox" id="pbexport_craft" DISABLED /></td><td>Craft Options</td></tr>\
-                    <tr><td><input type="checkbox" id="pbexport_transport" /></td><td>Transport Options</td>\
-                        <td><input type="checkbox" id="pbexport_raid" /></td><td>Saved Raid Routes</td></tr>\
-                    <tr><td><input type="checkbox" id="pbexport_df" /></td><td>DF Options</td>\
-                        <td><input type="checkbox" id="pbexport_log" /></td><td>Logs</td></tr>\
-                    <tr><td><input type="checkbox" id="pbexport_chat" /></td><td>Chat Options</td>\
-                        <td><input type="checkbox" id="pbexport_apothecary" /></td><td>Apothecary Options</td></tr>\
-                    <tr><td><input type="checkbox" id="pbexport_farm" /></td><td>Farm Options</td>\
-                    <tr><td><input type="checkbox" id="pbexport_thronehistory" /></td><td>Throne Upgrade/Enhance History</td>\
-                        <td><input type="checkbox" id="pbexport_thronesalvagehistory" /></td><td>Throne Salvage History</td></tr>\
-                 </table>';
-        t.myDiv.innerHTML = m;
-        $('pbexport_submit').addEventListener('click', function(){
-            t.checkexport();
-        }, false);
-    },
-    
-    checkexport : function (){
-        var t = Tabs.Export;
-        var rslt = t.check();
-        if(!rslt.ok){
-            if(rslt.err){
-                var msg = 'The following options already have previously saved data. Continue? <br \>';
-                for(var k in rslt.err){
-                    switch(rslt.err[k]){
-                        case 'general':
-                            msg += "General Options, ";
-                            break;
-                        case 'throne':
-                            msg += "Throne Options, ";
-                            break;
-                        case 'crest':
-                            msg += "Crest Options, ";
-                            break;
-                        case 'train':
-                            msg += "Train Options, ";
-                            break;
-                        case 'reassign':
-                            msg += "Reassign Options, ";
-                            break;
-                        case 'build':
-                            msg += "Build Options, ";
-                            break;
-                        case 'transport':
-                            msg += "Transport Options, ";
-                            break;
-                        case 'raid':
-                            msg += "Raid Options, ";
-                            break;
-                        case 'df':
-                            msg += "DF Options, ";
-                            break;
-                        case 'log':
-                            msg += "Logs, ";
-                            break;
-                        case 'chat':
-                            msg += "Chat Options, ";
-                            break;
-                        case 'apothecary':
-                            msg += "Apothecary Options, ";
-                            break;
-                        case 'Farm':
-                            msg += "Farm Options, ";
-                            break;
-                        case 'thronesalvage':
-                            msg += "Throne Salvage History, ";
-                            break;
-                        case 'thronehistory':
-                            msg += "Throne Upgrade/Enhance History, ";
-                            break;
-                    }
-                }
-                new CdialogConfirm ('<SPAN class=boldRed>'+msg+'</span>', t.startexport, null, mainPop.getMainDiv);
-            } else if (rslt.errMsg) {
-                new CdialogCancelContinue('<SPAN class=boldRed>ERROR! <br />'+rslt.errMsg+'</span>', null, null, mainPop.getMainDiv);
-            } else {
-                alert('Something went wrong! Please contact the developer immediately');
-            }
-        } else {
-            t.startexport();
-        }
-    },
-    
-    startexport : function(obj){
-        var t = Tabs.Export;
-        if(obj){
-            if(obj.id == 'pbcancel'){
-                return;
-            }
-        }
-        var serverFrom = parseIntNan($('pbexport_from').value);
-        var serverID = parseIntNan($('pbexport_to').value);
-        if(serverID === 0 || serverFrom === 0){
-            $('pbexport_status').style.background = '#FF0000';
-            setTimeout(function(){$('pbexport_status').style.background = '';},1000);
-            return {ok:false,errMsg:"Invalid destination server"};
-        }
-        if($('pbexport_overwrite').checked == false){
-            if($('pbexport_general').checked){
-                s = GM_getValue ('Options_'+serverFrom);
-                if (s != null){
-                    GM_setValue('Options_'+serverID, s);
-                }
-            }
-            if($('pbexport_throne').checked){
-                s = GM_getValue('ThroneOptions_' + serverFrom);
-                if (s != null){
-                    GM_setValue('ThroneOptions_'+serverID, s);
-                }
-            }
-            if($('pbexport_crest').checked){
-                s = GM_getValue ('CrestData_' + Seed.player['name'] + '_' +serverFrom);
-                if (s != null){
-                    GM_setValue('CrestData_'+ Seed.player['name'] +'_'+serverID, s);
-                }
-            }
-            if($('pbexport_train').checked){
-                s = GM_getValue ('TrainOptions_' + Seed.player['name'] + '_' +serverFrom);
-                if (s != null){
-                    GM_setValue('TrainOptions_'+ Seed.player['name'] +'_'+serverID, s);
-                }
-            }
-            if($('pbexport_reassign').checked){
-                s = GM_getValue('reassignRoutes_' + serverFrom);
-                if (s != null){
-                    GM_setValue('reassignRoutes_'+serverID, s);
-                }
-            }
-            if($('pbexport_build').checked){
-                s = GM_getValue('buildStates_' + serverFrom);
-                if (s != null){
-                    GM_setValue('buildStates_'+serverID, s);
-                }
-                /****
-                for (var i = 0; i < Cities.cities.length; i++) {
-                t["bQ_" + Cities.cities[i].id] = JSON2.parse(GM_getValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, '[]'));
-                if (typeof t["bQ_" + Cities.cities[i].id] == 'undefined' || (t["bQ_" + Cities.cities[i].id]) == "") {
-                    t["bQ_" + Cities.cities[i].id] = [];
-                }
-            }
-            *****/
-            }
-            if($('pbexport_transport').checked){
-                s = GM_getValue('tradeRoutes_' + serverFrom);
-                if (s != null){
-                    GM_setValue('tradeRoutes_'+serverID, s);
-                }
-            }
-            if($('pbexport_raid').checked){
-                s = GM_getValue ('SavedRaids_'+serverFrom);
-                if (s != null){
-                    GM_setValue('SavedRaids_'+serverID, s);
-                }
-            }
-            if($('pbexport_df').checked){
-                s = GM_getValue ('AttackOptions_'+serverFrom);
-                if (s != null){
-                    GM_setValue('AttackOptions_'+serverID, s);
-                }
-            }
-            if($('pbexport_log').checked){
-                s = GM_getValue ('log_'+serverFrom);
-                if (s != null){
-                    GM_setValue('log_'+serverID, s);
-                }
-            }
-            if($('pbexport_chat').checked){
-                s = GM_getValue ('ChatOptions_'+serverFrom);
-                if (s != null){
-                    GM_setValue('ChatOptions_'+serverID, s);
-                }
-            }
-            if($('pbexport_apothecary').checked){
-                s = GM_getValue ('ApothecaryOptions_'+Seed.player['name']+'_'+serverFrom);
-                if (s != null){
-                    GM_setValue('ApothecaryOptions_'+ Seed.player['name'] +'_'+serverID, s);
-                }
-            }
-            if($('pbexport_farm').checked){
-                s = GM_getValue('FarmOptions_' + serverFrom);
-                if (s != null){
-                    GM_setValue('FarmOptions_'+serverID, s);
-                }
-            }
-            if($('pbexport_thronesalvagehistory').checked){
-                s = GM_getValue('ThroneSalvageHistory_' + serverFrom);
-                if (s != null){
-                    GM_setValue('ThroneSalvageHistory_'+serverID, s);
-                }
-            }
-            if($('pbexport_thronehistory').checked){
-                s = GM_getValue('ThroneHistory_' + serverFrom);
-                if (s != null){
-                    GM_setValue('ThroneHistory_'+serverID, s);
-                }
-            }
-        }
-        $('pbexport_status').style.background = '#99FF99';
-        setTimeout(function(){$('pbexport_status').style.background = '';},1000);
-        return {ok:true};
-        
-    },
-    
-    check : function (){
-        var t = Tabs.Export;
-        var flag = {ok:true};
-        var serverID = parseIntNan($('pbexport_to').value);
-        if(serverID === 0){
-            return {ok:false,errMsg:"Invalid destination server"};
-        }
-        if($('pbexport_overwrite').checked == false){
-            if($('pbexport_general').checked){
-                s = GM_getValue ('Options_'+serverID);
-                if (s != null){
-                    flag.general = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_throne').checked){
-                s = GM_getValue('ThroneOptions_' + serverID);
-                if (s != null){
-                    flag.throne = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_crest').checked){
-                s = GM_getValue ('CrestData_' + Seed.player['name'] + '_' +serverID);
-                if (s != null){
-                    flag.crest = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_train').checked){
-                s = GM_getValue ('TrainOptions_' + Seed.player['name'] + '_' +serverID);
-                if (s != null){
-                    flag.train = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_reassign').checked){
-                s = GM_getValue('reassignRoutes_' + serverID);
-                if (s != null){
-                    flag.reassign = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_build').checked){
-                s = GM_getValue('buildStates_' + serverID);
-                if (s != null){
-                    flag.build = true;
-                    flag.ok = false;
-                }
-                /****
-                for (var i = 0; i < Cities.cities.length; i++) {
-                t["bQ_" + Cities.cities[i].id] = JSON2.parse(GM_getValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, '[]'));
-                if (typeof t["bQ_" + Cities.cities[i].id] == 'undefined' || (t["bQ_" + Cities.cities[i].id]) == "") {
-                    t["bQ_" + Cities.cities[i].id] = [];
-                }
-            }
-            *****/
-            }
-            if($('pbexport_transport').checked){
-                s = GM_getValue('tradeRoutes_' + serverID);
-                if (s != null){
-                    flag.transport = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_raid').checked){
-                s = GM_getValue ('SavedRaids_'+serverID);
-                if (s != null){
-                    flag.raid = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_df').checked){
-                s = GM_getValue ('AttackOptions_'+serverID);
-                if (s != null){
-                    flag.df = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_log').checked){
-                s = GM_getValue ('log_'+serverID);
-                if (s != null){
-                    flag.log = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_chat').checked){
-                s = GM_getValue ('ChatOptions_'+serverID);
-                if (s != null){
-                    flag.chat = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_apothecary').checked){
-                s = GM_getValue ('ApothecaryOptions_'+Seed.player['name']+'_'+serverID);
-                if (s != null){
-                    flag.apothecary = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_farm').checked){
-                s = GM_getValue('FarmOptions_' + serverID);
-                if (s != null){
-                    flag.farm = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_thronesalvagehistory').checked){
-                s = GM_getValue('ThroneSalvageHistory_' + serverID);
-                if (s != null){
-                    flag.thronesalvage = true;
-                    flag.ok = false;
-                }
-            }
-            if($('pbexport_thronehistory').checked){
-                s = GM_getValue('ThroneHistory_' + serverID);
-                if (s != null){
-                    flag.thronehistory = true;
-                    flag.ok = false;
-                }
-            }
-        }
-        if(flag.ok){
-            return {ok:true};
-        } else {
-            return {ok:false,err:flag};
-        }
-    },
-    
-    show: function (){
-    
-    },
-    
-    hide : function (){
-    
-    }
+	init : function (div){
+		var t = Tabs.Export;
+		t.myDiv = div;
+		var m = '<div class="pbStat">OPTIONS EXPORT TOOL FOR DOMAIN MERGER</div>\
+				 <table>\
+					<tr><td>Move from: <input type="text" value="'+getServerId()+'" id="pbexport_from" /></td>\
+						<td>To: <input type="text" id="pbexport_to" /></td>\
+						<td><input type="submit" value="Copy" id="pbexport_submit" /></td>\
+						<td><input type="checkbox" id="pbexport_overwrite" /> Force overwrite</td>\
+					</tr>\
+				 </table>\
+				 <div class="pbStat" id="pbexport_status" >SELECT OPTIONS TO MOVE</div>\
+				 <table>\
+					<tr><td><input type="checkbox" id="pbexport_general" /></td><td>General Options (Tower/Raid)</td>\
+						<td><input type="checkbox" id="pbexport_throne" /></td><td>Throne Options</td></tr>\
+					<tr><td><input type="checkbox" id="pbexport_crest" /></td><td>Crest Options</td>\
+						<td><input type="checkbox" id="pbexport_train" /></td><td>Train/Craft Options</td></tr>\
+					<tr><td><input type="checkbox" id="pbexport_reassign" /></td><td>Reassign Options</td>\
+						<td><input type="checkbox" id="pbexport_tower" DISABLED /></td><td>Tower Options</td></tr>\
+					<tr><td><input type="checkbox" id="pbexport_build" /></td><td>Build Options</td>\
+						<td><input type="checkbox" id="pbexport_craft" DISABLED /></td><td>Craft Options</td></tr>\
+					<tr><td><input type="checkbox" id="pbexport_transport" /></td><td>Transport Options</td>\
+						<td><input type="checkbox" id="pbexport_raid" /></td><td>Saved Raid Routes</td></tr>\
+					<tr><td><input type="checkbox" id="pbexport_df" /></td><td>DF Options</td>\
+						<td><input type="checkbox" id="pbexport_log" /></td><td>Logs</td></tr>\
+					<tr><td><input type="checkbox" id="pbexport_chat" /></td><td>Chat Options</td>\
+						<td><input type="checkbox" id="pbexport_apothecary" /></td><td>Apothecary Options</td></tr>\
+					<tr><td><input type="checkbox" id="pbexport_farm" /></td><td>Farm Options</td>\
+					<tr><td><input type="checkbox" id="pbexport_thronehistory" /></td><td>Throne Upgrade/Enhance History</td>\
+						<td><input type="checkbox" id="pbexport_thronesalvagehistory" /></td><td>Throne Salvage History</td></tr>\
+				 </table>';
+		t.myDiv.innerHTML = m;
+		$('pbexport_submit').addEventListener('click', function(){
+			t.checkexport();
+		}, false);
+	},
+	
+	checkexport : function (){
+		var t = Tabs.Export;
+		var rslt = t.check();
+		if(!rslt.ok){
+			if(rslt.err){
+				var msg = 'The following options already have previously saved data. Continue? <br \>';
+				for(var k in rslt.err){
+					switch(rslt.err[k]){
+						case 'general':
+							msg += "General Options, ";
+							break;
+						case 'throne':
+							msg += "Throne Options, ";
+							break;
+						case 'crest':
+							msg += "Crest Options, ";
+							break;
+						case 'train':
+							msg += "Train Options, ";
+							break;
+						case 'reassign':
+							msg += "Reassign Options, ";
+							break;
+						case 'build':
+							msg += "Build Options, ";
+							break;
+						case 'transport':
+							msg += "Transport Options, ";
+							break;
+						case 'raid':
+							msg += "Raid Options, ";
+							break;
+						case 'df':
+							msg += "DF Options, ";
+							break;
+						case 'log':
+							msg += "Logs, ";
+							break;
+						case 'chat':
+							msg += "Chat Options, ";
+							break;
+						case 'apothecary':
+							msg += "Apothecary Options, ";
+							break;
+						case 'Farm':
+							msg += "Farm Options, ";
+							break;
+						case 'thronesalvage':
+							msg += "Throne Salvage History, ";
+							break;
+						case 'thronehistory':
+							msg += "Throne Upgrade/Enhance History, ";
+							break;
+					}
+				}
+				new CdialogConfirm ('<SPAN class=boldRed>'+msg+'</span>', t.startexport, null, mainPop.getMainDiv);
+			} else if (rslt.errMsg) {
+				new CdialogCancelContinue('<SPAN class=boldRed>ERROR! <br />'+rslt.errMsg+'</span>', null, null, mainPop.getMainDiv);
+			} else {
+				alert('Something went wrong! Please contact the developer immediately');
+			}
+		} else {
+			t.startexport();
+		}
+	},
+	
+	startexport : function(obj){
+		var t = Tabs.Export;
+		if(obj){
+			if(obj.id == 'pbcancel'){
+				return;
+			}
+		}
+		var serverFrom = parseIntNan($('pbexport_from').value);
+		var serverID = parseIntNan($('pbexport_to').value);
+		if(serverID === 0 || serverFrom === 0){
+			$('pbexport_status').style.background = '#FF0000';
+			setTimeout(function(){$('pbexport_status').style.background = '';},1000);
+			return {ok:false,errMsg:"Invalid destination server"};
+		}
+		if($('pbexport_overwrite').checked == false){
+			if($('pbexport_general').checked){
+				s = GM_getValue ('Options_'+serverFrom);
+				if (s != null){
+					GM_setValue('Options_'+serverID, s);
+				}
+			}
+			if($('pbexport_throne').checked){
+				s = GM_getValue('ThroneOptions_' + serverFrom);
+				if (s != null){
+					GM_setValue('ThroneOptions_'+serverID, s);
+				}
+			}
+			if($('pbexport_crest').checked){
+				s = GM_getValue ('CrestData_' + Seed.player['name'] + '_' +serverFrom);
+				if (s != null){
+					GM_setValue('CrestData_'+ Seed.player['name'] +'_'+serverID, s);
+				}
+			}
+			if($('pbexport_train').checked){
+				s = GM_getValue ('TrainOptions_' + Seed.player['name'] + '_' +serverFrom);
+				if (s != null){
+					GM_setValue('TrainOptions_'+ Seed.player['name'] +'_'+serverID, s);
+				}
+			}
+			if($('pbexport_reassign').checked){
+				s = GM_getValue('reassignRoutes_' + serverFrom);
+				if (s != null){
+					GM_setValue('reassignRoutes_'+serverID, s);
+				}
+			}
+			if($('pbexport_build').checked){
+				s = GM_getValue('buildStates_' + serverFrom);
+				if (s != null){
+					GM_setValue('buildStates_'+serverID, s);
+				}
+				/****
+				for (var i = 0; i < Cities.cities.length; i++) {
+				t["bQ_" + Cities.cities[i].id] = JSON2.parse(GM_getValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, '[]'));
+				if (typeof t["bQ_" + Cities.cities[i].id] == 'undefined' || (t["bQ_" + Cities.cities[i].id]) == "") {
+					t["bQ_" + Cities.cities[i].id] = [];
+				}
+			}
+			*****/
+			}
+			if($('pbexport_transport').checked){
+				s = GM_getValue('tradeRoutes_' + serverFrom);
+				if (s != null){
+					GM_setValue('tradeRoutes_'+serverID, s);
+				}
+			}
+			if($('pbexport_raid').checked){
+				s = GM_getValue ('SavedRaids_'+serverFrom);
+				if (s != null){
+					GM_setValue('SavedRaids_'+serverID, s);
+				}
+			}
+			if($('pbexport_df').checked){
+				s = GM_getValue ('AttackOptions_'+serverFrom);
+				if (s != null){
+					GM_setValue('AttackOptions_'+serverID, s);
+				}
+			}
+			if($('pbexport_log').checked){
+				s = GM_getValue ('log_'+serverFrom);
+				if (s != null){
+					GM_setValue('log_'+serverID, s);
+				}
+			}
+			if($('pbexport_chat').checked){
+				s = GM_getValue ('ChatOptions_'+serverFrom);
+				if (s != null){
+					GM_setValue('ChatOptions_'+serverID, s);
+				}
+			}
+			if($('pbexport_apothecary').checked){
+				s = GM_getValue ('ApothecaryOptions_'+Seed.player['name']+'_'+serverFrom);
+				if (s != null){
+					GM_setValue('ApothecaryOptions_'+ Seed.player['name'] +'_'+serverID, s);
+				}
+			}
+			if($('pbexport_farm').checked){
+				s = GM_getValue('FarmOptions_' + serverFrom);
+				if (s != null){
+					GM_setValue('FarmOptions_'+serverID, s);
+				}
+			}
+			if($('pbexport_thronesalvagehistory').checked){
+				s = GM_getValue('ThroneSalvageHistory_' + serverFrom);
+				if (s != null){
+					GM_setValue('ThroneSalvageHistory_'+serverID, s);
+				}
+			}
+			if($('pbexport_thronehistory').checked){
+				s = GM_getValue('ThroneHistory_' + serverFrom);
+				if (s != null){
+					GM_setValue('ThroneHistory_'+serverID, s);
+				}
+			}
+		}
+		$('pbexport_status').style.background = '#99FF99';
+		setTimeout(function(){$('pbexport_status').style.background = '';},1000);
+		return {ok:true};
+		
+	},
+	
+	check : function (){
+		var t = Tabs.Export;
+		var flag = {ok:true};
+		var serverID = parseIntNan($('pbexport_to').value);
+		if(serverID === 0){
+			return {ok:false,errMsg:"Invalid destination server"};
+		}
+		if($('pbexport_overwrite').checked == false){
+			if($('pbexport_general').checked){
+				s = GM_getValue ('Options_'+serverID);
+				if (s != null){
+					flag.general = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_throne').checked){
+				s = GM_getValue('ThroneOptions_' + serverID);
+				if (s != null){
+					flag.throne = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_crest').checked){
+				s = GM_getValue ('CrestData_' + Seed.player['name'] + '_' +serverID);
+				if (s != null){
+					flag.crest = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_train').checked){
+				s = GM_getValue ('TrainOptions_' + Seed.player['name'] + '_' +serverID);
+				if (s != null){
+					flag.train = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_reassign').checked){
+				s = GM_getValue('reassignRoutes_' + serverID);
+				if (s != null){
+					flag.reassign = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_build').checked){
+				s = GM_getValue('buildStates_' + serverID);
+				if (s != null){
+					flag.build = true;
+					flag.ok = false;
+				}
+				/****
+				for (var i = 0; i < Cities.cities.length; i++) {
+				t["bQ_" + Cities.cities[i].id] = JSON2.parse(GM_getValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, '[]'));
+				if (typeof t["bQ_" + Cities.cities[i].id] == 'undefined' || (t["bQ_" + Cities.cities[i].id]) == "") {
+					t["bQ_" + Cities.cities[i].id] = [];
+				}
+			}
+			*****/
+			}
+			if($('pbexport_transport').checked){
+				s = GM_getValue('tradeRoutes_' + serverID);
+				if (s != null){
+					flag.transport = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_raid').checked){
+				s = GM_getValue ('SavedRaids_'+serverID);
+				if (s != null){
+					flag.raid = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_df').checked){
+				s = GM_getValue ('AttackOptions_'+serverID);
+				if (s != null){
+					flag.df = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_log').checked){
+				s = GM_getValue ('log_'+serverID);
+				if (s != null){
+					flag.log = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_chat').checked){
+				s = GM_getValue ('ChatOptions_'+serverID);
+				if (s != null){
+					flag.chat = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_apothecary').checked){
+				s = GM_getValue ('ApothecaryOptions_'+Seed.player['name']+'_'+serverID);
+				if (s != null){
+					flag.apothecary = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_farm').checked){
+				s = GM_getValue('FarmOptions_' + serverID);
+				if (s != null){
+					flag.farm = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_thronesalvagehistory').checked){
+				s = GM_getValue('ThroneSalvageHistory_' + serverID);
+				if (s != null){
+					flag.thronesalvage = true;
+					flag.ok = false;
+				}
+			}
+			if($('pbexport_thronehistory').checked){
+				s = GM_getValue('ThroneHistory_' + serverID);
+				if (s != null){
+					flag.thronehistory = true;
+					flag.ok = false;
+				}
+			}
+		}
+		if(flag.ok){
+			return {ok:true};
+		} else {
+			return {ok:false,err:flag};
+		}
+	},
+	
+	show: function (){
+	
+	},
+	
+	hide : function (){
+	
+	}
 }
 
 /****************************  Reassign Implementation  *******************************/
@@ -10782,9 +10782,9 @@ Tabs.Reassign = {
       }, false);
       
       document.getElementById('pbreassigninterval').addEventListener('keyup', function(){
-        if (isNaN(document.getElementById('pbreassigninterval').value)){ document.getElementById('pbreassigninterval').value=0 ;}
-        Options.reassigninterval = document.getElementById('pbreassigninterval').value;
-        saveOptions();
+		if (isNaN(document.getElementById('pbreassigninterval').value)){ document.getElementById('pbreassigninterval').value=0 ;}
+		Options.reassigninterval = document.getElementById('pbreassigninterval').value;
+		saveOptions();
       }, false);
       
       document.getElementById('pbtargetSupplyTroops').addEventListener('keyup', function(){
@@ -11170,16 +11170,16 @@ Tabs.Reassign = {
             for (k in route)
                 t.reassignRoutes[k] = route[k];
         }
-        try{
-            t.checkcitymoved();
-        } catch (e) {
-            //Do nothing
-        }
+		try{
+			t.checkcitymoved();
+		} catch (e) {
+			//Do nothing
+		}
     },
     checkcitymoved: function(){
         var t = Tabs.Reassign;
         for(var i=0; i < t.reassignRoutes.length; i++){
-            logit(Cities.byID[t.reassignRoutes[i].target_city]);
+			logit(Cities.byID[t.reassignRoutes[i].target_city]);
             if(t.reassignRoutes[i].target_city == 'undefined')
                 break;
             if(t.reassignRoutes[i].target_x != Cities.byID[t.reassignRoutes[i].target_city].x)
@@ -11323,7 +11323,7 @@ Tabs.Reassign = {
                   parameters: params,
                   loading: true,
                   onSuccess: function (transport) {
-                      profiler.stop();
+					  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
                   actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
@@ -11340,9 +11340,9 @@ Tabs.Reassign = {
                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
                   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
-                        if (rslt.user_action == "backOffWaitTime") {
+					    if (rslt.user_action == "backOffWaitTime") {
         var t = Tabs.Reassign;// doesn't work if not here.. no idea
-                        logit('backoffwaittime '+rslt.wait_time);
+						logit('backoffwaittime '+rslt.wait_time);
                         var tt = null;
                         if(rslt.tt)
                         tt = rslt.tt;
@@ -12172,28 +12172,28 @@ Tabs.AutoTrain = {
         m+='<TD><B>'+ Seed.cities[i][1] +'</b></td>';
         m+='<TD width=150px><SELECT class='+city+' id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
             for (y in unsafeWindow.unitcost) {
-                var faux = 0;
-                var uc = unsafeWindow.unitcost[y];
-                if (matTypeof(uc[8]) == 'object'){
-                    for (k in uc[8]){
-                        var b = getCityBuilding (Seed.cities[i][0], k.substr(1));
-                        if (b.maxLevel < uc[8][k][1]){
-                            faux = 1;
-                            break;
-                        }
-                    }
-                }
-                if (matTypeof(uc[9]) == 'object'){
-                    for (k in uc[9]){
-                        if (parseInt(Seed.tech['tch'+k.substr(1)]) < uc[9][k][1]){
-                            faux = 1;
-                            break;
-                        }
-                    }
-                }
-                if (faux==0)
-                    m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
-            }
+				var faux = 0;
+				var uc = unsafeWindow.unitcost[y];
+				if (matTypeof(uc[8]) == 'object'){
+					for (k in uc[8]){
+						var b = getCityBuilding (Seed.cities[i][0], k.substr(1));
+						if (b.maxLevel < uc[8][k][1]){
+							faux = 1;
+							break;
+						}
+					}
+				}
+				if (matTypeof(uc[9]) == 'object'){
+					for (k in uc[9]){
+						if (parseInt(Seed.tech['tch'+k.substr(1)]) < uc[9][k][1]){
+							faux = 1;
+							break;
+						}
+					}
+				}
+				if (faux==0)
+					m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
+			}
         m+='</select></td>';
         m+='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=4 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
         m+='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=max'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
@@ -12254,14 +12254,14 @@ Tabs.AutoTrain = {
         t.toggleAutoTrainState(this);
     }, false);
 
-    document.getElementById('pbatTR').addEventListener ('change', function() {
-        TrainOptions.tr = this.checked;
-        saveTrainOptions();
-        }, false);
+	document.getElementById('pbatTR').addEventListener ('change', function() {
+		TrainOptions.tr = this.checked;
+		saveTrainOptions();
+		}, false);
     document.getElementById('pbatTRset').addEventListener ('change', function() {
-        TrainOptions.trset = this.value;
-        saveTrainOptions();
-        }, false);
+		TrainOptions.trset = this.value;
+		saveTrainOptions();
+		}, false);
 
     for(var k=1; k<=Seed.cities.length; k++){
          document.getElementById('treshold'+k).addEventListener('change', function(e){
@@ -12306,7 +12306,7 @@ Tabs.AutoTrain = {
             saveTrainOptions();
           }, false);
           document.getElementById('TroopsCity'+k).addEventListener('change', function(e){
-            t.AF_TU_Change(e.target['className'],e.target.value);
+			t.AF_TU_Change(e.target['className'],e.target.value);
             TrainOptions.Troops[e.target['className']] = e.target.value;
               TrainOptions.Max[e.target['className']] = document.getElementById('max'+e.target['className']).value;
             saveTrainOptions();
@@ -12371,19 +12371,19 @@ Tabs.AutoTrain = {
   hide: function(){
     var t = Tabs.AutoTrain;
   },
-      AF_TU_Change: function(numcity,unit) {
-        var t = Tabs.AutoTrain;
-        var cityId = Cities.cities[numcity-1].id
-        var coutenpop= unsafeWindow.unitcost['unt'+unit][6];
-        var X = Seed.citystats['city'+cityId].pop[1];
-        var Y = unsafeWindow.seed.citystats["city"+cityId].pop[3];
-        var Q= coutenpop;
-        var Z = document.getElementById('workers'+numcity).value/100;
-        if (Z == 0)
-        document.getElementById("max"+numcity).value=parseIntNan((X-Y)/Q);
-        else
-        document.getElementById("max"+numcity).value = parseIntNan(X/Q*Z);
-    },
+  	AF_TU_Change: function(numcity,unit) {
+		var t = Tabs.AutoTrain;
+		var cityId = Cities.cities[numcity-1].id
+		var coutenpop= unsafeWindow.unitcost['unt'+unit][6];
+		var X = Seed.citystats['city'+cityId].pop[1];
+		var Y = unsafeWindow.seed.citystats["city"+cityId].pop[3];
+		var Q= coutenpop;
+		var Z = document.getElementById('workers'+numcity).value/100;
+		if (Z == 0)
+		document.getElementById("max"+numcity).value=parseIntNan((X-Y)/Q);
+		else
+		document.getElementById("max"+numcity).value = parseIntNan(X/Q*Z);
+	},
   checkidlepopulation : function(cityId){
     var t = Tabs.AutoTrain;
     if(TrainOptions.Workers[t.city] == 0)
@@ -12432,10 +12432,10 @@ Tabs.AutoTrain = {
     var t = Tabs.AutoTrain;
     if (!TrainOptions.Running) return;
     if (TrainOptions.tr && TrainOptions.trset != 0) {
-        if (Seed.throne.activeSlot != TrainOptions.trset) {
-            return;
-            };
-        };
+		if (Seed.throne.activeSlot != TrainOptions.trset) {
+			return;
+			};
+		};
     t.city++;
     if(t.city > Seed.cities.length) t.city = 1;
     var cityId = Seed.cities[t.city-1][0];
@@ -12466,7 +12466,7 @@ Tabs.AutoTrain = {
         method: "post",
         parameters: params,
         onSuccess: function(rslt) {
-            profiler.stop();
+			profiler.stop();
           if (rslt.ok) {
             for (var i = 1; i < 5; i++) {
                 var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
@@ -13985,8 +13985,8 @@ function AjaxRequest (url, opts){
   ajax.onreadystatechange = function(){
 //  ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete']; states 0-4
     if (ajax.readyState==4) {
-     if (ajax.status == 500)
-        if (opts.onFailure) opts.onFailure(ajax);
+	 if (ajax.status == 500)
+		if (opts.onFailure) opts.onFailure(ajax);
       if (ajax.status >= 200 && ajax.status < 305)
         if (opts.onSuccess) opts.onSuccess(ajax);
       else
@@ -14155,8 +14155,8 @@ function logit (msg){
   GM_log (getServerId() +' @ '+ now.toTimeString().substring (0,8) +'.' + now.getMilliseconds() +': '+  msg);
 }
 function saveLayoutOptions (){
-    var serverID = getServerId();
-    setTimeout (function (){GM_setValue ('LayoutOptions_'+serverID,JSON2.stringify(layoutOptions));},0);
+	var serverID = getServerId();
+	setTimeout (function (){GM_setValue ('LayoutOptions_'+serverID,JSON2.stringify(layoutOptions));},0);
 }
 
 function saveOptions (){
@@ -14205,14 +14205,14 @@ function readUpgradeData (){
   }
 }
 function readLayoutOptions (){
-    var serverID = getServerId();
-     s = GM_getValue ('LayoutOptions_'+serverID, '[]');
-      if (s != null){
-        opts = JSON2.parse (s);
-        for (k in opts){
-              if (matTypeof(opts[k]) == 'object')
-                for (kk in opts[k])
-                      layoutOptions[k][kk] = opts[k][kk];
+	var serverID = getServerId();
+ 	s = GM_getValue ('LayoutOptions_'+serverID, '[]');
+  	if (s != null){
+    	opts = JSON2.parse (s);
+    	for (k in opts){
+      		if (matTypeof(opts[k]) == 'object')
+        		for (kk in opts[k])
+          			layoutOptions[k][kk] = opts[k][kk];
     else
         layoutOptions[k] = opts[k];
     }
@@ -16801,7 +16801,7 @@ function hexDump (dat){
   }
   function hexDig (d){
     hexdigs = '0123456789ABCDEF';
-    return hexdigs.charAt(d&15);    
+    return hexdigs.charAt(d&15);     
   }
 }
  
@@ -16819,12 +16819,12 @@ function SliderBar (container, width, height, value, classPrefix, margin){
   if (classPrefix == null){
     classPrefix = 'slider';
     var noClass = true;
-  }    
-  var sliderHeight = parseInt(height/2);
+  }     
+  var sliderHeight = parseInt(height/2); 
   var sliderTop = parseInt(height/4);
   this.sliderWidth = width - (margin*2);
     
-  this.div = document.createElement ('div');
+  this.div = document.createElement ('div'); 
   this.div.style.height = height +'px';
   this.div.style.width = width +'px';
   this.div.className = classPrefix +'Cont';
@@ -16886,14 +16886,14 @@ function SliderBar (container, width, height, value, classPrefix, margin){
       relX = self.sliderWidth;
     self.knob.style.left = (relX - (self.knob.clientWidth/2) ) +'px';   // - half knob width !?!?
     self.sliderL.style.width = relX + 'px';
-    self.value =  relX / self.sliderWidth; 
+    self.value =  relX / self.sliderWidth;  
     if (self.listener)
       self.listener(self.value);
   }
   function doneMoving (){
     self.div.removeEventListener('mousemove', mouseMove, true);
     document.removeEventListener('mouseup', mouseUp, true);
-  }
+  } 
   function mouseUp (me){
     moveKnob (me);
     doneMoving();
@@ -16993,13 +16993,13 @@ function DoUnsafeWindow(func, execute_by_embed) {
         scr.innerHTML=func;
         document.body.appendChild(scr);
     } else {
-        try {
+        try { 
             eval("unsafeWindow."+func);
         } catch (error) {
             logit("A javascript error has occurred when executing a function via DoUnsafeWindow. Error description: "+error.description);
         }
     }
-}  
+}   
 
 function GetDisplayName(){
     var DisplayName = document.getElementById('topnavDisplayName');
@@ -17056,7 +17056,7 @@ function DrawLevelIcons() {
             if (onclickM && onclickM[7]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1]+owner+'<br />Might:'+addCommas(might);
             else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
         }
-        else {
+        else { 
             if (onclickM && onclickM[7]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1];
             else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
         }
@@ -17071,20 +17071,20 @@ function AjaxRequest2 (url, opts){
         'X-Prototype-Version': '1.6.1',
         'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
     };
-    var ajax = null; 
+    var ajax = null;  
     if (window.XMLHttpRequest)
       ajax=new XMLHttpRequest();
     else
-      ajax=new ActiveXObject("Microsoft.XMLHTTP"); 
+      ajax=new ActiveXObject("Microsoft.XMLHTTP");  
     if (opts.method==null || opts.method=='')
       method = 'GET';
     else
-      method = opts.method.toUpperCase();  
+      method = opts.method.toUpperCase();   
     if (method == 'POST'){
         headers['Content-type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     } else if (method == 'GET'){
         addUrlArgs (url, opts.parameters);
-    }  
+    }   
     ajax.onreadystatechange = function(){
         // ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete']; states 0-4
         if (ajax.readyState==4) {
@@ -17095,7 +17095,7 @@ function AjaxRequest2 (url, opts){
             } else {
                 if (opts.onChange) opts.onChange (ajax);
             }
-    }  
+    }   
     ajax.open(method, url, true); // always async!
     for (var k in headers)
       ajax.setRequestHeader (k, headers[k]);
@@ -17336,7 +17336,7 @@ var DeleteThrone = {
         for (k in unsafeWindow.kocThroneItems) {
             var throne_item = unsafeWindow.kocThroneItems[k];
             countItem++;
-            var rangeIndex1 = 0;  
+            var rangeIndex1 = 0;   
             if (Options.RangeSaveModeSetting == 0)
                 rangeIndex1 = -999;
             for (var z = 0; z < rangeNum.length; z++) {
@@ -17361,7 +17361,7 @@ var DeleteThrone = {
     },
     
     dodelete : function(){
-        var t = DeleteThrone;  
+        var t = DeleteThrone;   
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'salvage';
@@ -17601,7 +17601,7 @@ Tabs.Apothecary = {
         method: "post",
         parameters: params,
         onSuccess: function(rslt) {
-            profiler.stop();
+			profiler.stop();
           if (rslt.ok) {
             for (var i = 1; i < 5; i++) {
                 var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
@@ -17685,7 +17685,7 @@ Tabs.Combat = {
               </td></tr>';
         m += '<TR><TD colspan=2><CENTER><button id=pbcombatresearchsave>Save</button></CENTER></td></tr></table></div>';
         t.pop.getMainDiv().innerHTML = m;
-        t.pop.centerMe (mainPop.getMainDiv());
+        t.pop.centerMe (mainPop.getMainDiv()); 
         t.pop.show (true);
         for(var k in CombatOptions.research[side]){
             t.e_saveresearch('pbcombat_'+k, k, side);
@@ -18033,411 +18033,411 @@ Tabs.Combat = {
 /**************************** Start Up Tab ******************************************/
 
 var buildingIDs = {
-    Farm:1,Mine:4,Quarry:3,Sawmill:2,Castle:0,Wall:19,Barracks:13,Cottage:5,RelStat:18,Stable:17,Blacksmith:15,KnightsHall:7,Workshop:16,FeySpire:20,Apothecary:21,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,Wall:19
-    };
+	Farm:1,Mine:4,Quarry:3,Sawmill:2,Castle:0,Wall:19,Barracks:13,Cottage:5,RelStat:18,Stable:17,Blacksmith:15,KnightsHall:7,Workshop:16,FeySpire:20,Apothecary:21,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,Wall:19
+	};
 var buildingTypes = {
-    type5:"Cottage",type6:"",type7:"KnightsHall",type8:"Embassy",type9:"",type10:"",type11:"AlcLab",type12:"RallyPoint",type13:"Barracks",type14:"WatchTower",type15:"Blacksmith",type16:"Workshop",type17:"Stable",type18:"RelStation",type19:"Wall",type20:"FeySpire",type21:"Apothecary",
+	type5:"Cottage",type6:"",type7:"KnightsHall",type8:"Embassy",type9:"",type10:"",type11:"AlcLab",type12:"RallyPoint",type13:"Barracks",type14:"WatchTower",type15:"Blacksmith",type16:"Workshop",type17:"Stable",type18:"RelStation",type19:"Wall",type20:"FeySpire",type21:"Apothecary",
 };
 var cityBuildingNames = {
-    Wall:"Wall",Cottage:"Cottage",Barracks:"Barracks",Blacksmith:"Blacksmith",Stable:"Stable",Apothecary:"Apothecary",Workshop:"Workshop",FeySpire:"Fey Spire",Embassy:"Embassy",RelStation:"Relief Station",AlcLab:"Alchemy Lab",WatchTower:"Watch Tower",KnightsHall:"Knights Hall",RallyPoint:"Rally Point",
-    };
+	Wall:"Wall",Cottage:"Cottage",Barracks:"Barracks",Blacksmith:"Blacksmith",Stable:"Stable",Apothecary:"Apothecary",Workshop:"Workshop",FeySpire:"Fey Spire",Embassy:"Embassy",RelStation:"Relief Station",AlcLab:"Alchemy Lab",WatchTower:"Watch Tower",KnightsHall:"Knights Hall",RallyPoint:"Rally Point",
+	};
 var fieldBuildingNames = {
-    Farm:"Farm",Mine:"Mine",Sawmill:"Mill",Quarry:"Quarry",
-    };
+	Farm:"Farm",Mine:"Mine",Sawmill:"Mill",Quarry:"Quarry",
+	};
 var layoutOptions = {
-    pos1:"Wall",pos2:"Barracks",pos3:"Cottage",pos4:"RelStation",pos5:"Barracks",pos6:"Barracks",pos7:"Barracks",pos8:"Stable",pos9:"KnightsHall",pos10:"RallyPoint",pos11:"Barracks",pos12:"Barracks",pos13:"Barracks",pos14:"Cottage",pos15:"FeySpire",pos16:"Apothecary",pos17:"Blacksmith",pos18:"Workshop",pos19:"AlcLab",pos20:"Barracks",pos21:"Barracks",pos22:"Barracks",pos23:"Embassy",pos24:"Cottage",pos25:"Barracks",pos26:"Barracks",pos27:"Barracks",pos28:"Cottage",pos29:"Cottage",pos30:"Barracks",pos31:"Barracks",pos32:"Cottage"
-    };
+	pos1:"Wall",pos2:"Barracks",pos3:"Cottage",pos4:"RelStation",pos5:"Barracks",pos6:"Barracks",pos7:"Barracks",pos8:"Stable",pos9:"KnightsHall",pos10:"RallyPoint",pos11:"Barracks",pos12:"Barracks",pos13:"Barracks",pos14:"Cottage",pos15:"FeySpire",pos16:"Apothecary",pos17:"Blacksmith",pos18:"Workshop",pos19:"AlcLab",pos20:"Barracks",pos21:"Barracks",pos22:"Barracks",pos23:"Embassy",pos24:"Cottage",pos25:"Barracks",pos26:"Barracks",pos27:"Barracks",pos28:"Cottage",pos29:"Cottage",pos30:"Barracks",pos31:"Barracks",pos32:"Cottage"
+	};
 var fieldlayoutOptions = {
-    pos100:"Farm",pos101:"Sawmill",pos104:"Quarry",pos105:"Mine",pos102:"Mine",pos103:"Mine",pos106:"Mine",pos107:"Mine",pos108:"Mine",pos109:"Mine",pos110:"Mine",pos111:"Mine",pos112:"Mine",pos113:"Mine",pos114:"Mine",pos115:"Mine",pos116:"Mine",pos117:"Mine",pos118:"Mine",pos119:"Mine",pos120:"Mine",pos121:"Mine",pos122:"Mine",pos123:"Mine",pos124:"Mine",pos125:"Mine",pos126:"Mine",pos127:"Mine",pos128:"Mine",pos129:"Mine",pos130:"Mine",pos131:"Mine",pos132:"Mine",pos133:"Mine",pos134:"Mine",pos135:"Mine",pos136:"Mine",pos137:"Mine",pos138:"Mine",pos139:"Mine",pos142:"Mine"
-    };  
+	pos100:"Farm",pos101:"Sawmill",pos104:"Quarry",pos105:"Mine",pos102:"Mine",pos103:"Mine",pos106:"Mine",pos107:"Mine",pos108:"Mine",pos109:"Mine",pos110:"Mine",pos111:"Mine",pos112:"Mine",pos113:"Mine",pos114:"Mine",pos115:"Mine",pos116:"Mine",pos117:"Mine",pos118:"Mine",pos119:"Mine",pos120:"Mine",pos121:"Mine",pos122:"Mine",pos123:"Mine",pos124:"Mine",pos125:"Mine",pos126:"Mine",pos127:"Mine",pos128:"Mine",pos129:"Mine",pos130:"Mine",pos131:"Mine",pos132:"Mine",pos133:"Mine",pos134:"Mine",pos135:"Mine",pos136:"Mine",pos137:"Mine",pos138:"Mine",pos139:"Mine",pos142:"Mine"
+	};  
 
 Tabs.startup = {
-    tabOrder : 99999,
-    tabDisabled : false,
-    tabLabel : 'StartUp',
-    myDiv : null,
-    where: 'City', //Initialize to city by default
+	tabOrder : 99999,
+	tabDisabled : false,
+	tabLabel : 'StartUp',
+	myDiv : null,
+	where: 'City', //Initialize to city by default
 
 
-    init : function (div){
-        var t = Tabs.startup;
-        t.myDiv= div;
-        var counter=0;
-        var m = '<DIV id=pbStartupDiv class=pbStat>New Domain Tools</div><TABLE id=pbNewDomain width=100% height=0% class=pbTab><TR align="center">';
-        m += '<DIV id=pblvlcity align=center></div><DIv><INPUT id=addToBuildQueue type=submit value="Add to build queue"></div>';
-        m += '<INPUT id=toggleFieldLayout type=submit value="Show Field Layout"><INPUT id=toggleCityLayout type=submit value="Show City Layout"><INPUT id=hideGrids type=submit value="Hide Layouts">';
-        m += '<DIV id=mainTitles></div>';    
-        m += '<DIV id=gridPicture></div>';
-           m += '<DIV id=layoutBoxes></div>';
-          
-        t.myDiv.innerHTML = m;
-        t.city = new CdispCityPicker ('pblvlcity', document.getElementById('pblvlcity'), true, t.ClickCitySelect, 0);
+	init : function (div){
+		var t = Tabs.startup;
+		t.myDiv= div;
+		var counter=0;
+	    var m = '<DIV id=pbStartupDiv class=pbStat>New Domain Tools</div><TABLE id=pbNewDomain width=100% height=0% class=pbTab><TR align="center">';
+		m += '<DIV id=pblvlcity align=center></div><DIv><INPUT id=addToBuildQueue type=submit value="Add to build queue"></div>';
+	    m += '<INPUT id=toggleFieldLayout type=submit value="Show Field Layout"><INPUT id=toggleCityLayout type=submit value="Show City Layout"><INPUT id=hideGrids type=submit value="Hide Layouts">';
+	    m += '<DIV id=mainTitles></div>';    
+	    m += '<DIV id=gridPicture></div>';
+   	    m += '<DIV id=layoutBoxes></div>';
+   	   
+	    t.myDiv.innerHTML = m;
+		t.city = new CdispCityPicker ('pblvlcity', document.getElementById('pblvlcity'), true, t.ClickCitySelect, 0);
 
-        /*
-        document.getElementById('test').addEventListener('click', function () {
-                Options.lvl5FarmDone = "false";
-                Options.lvl3MineDone = "false";
-                Options.lvl2BarracksDone = "false";
-                Options.lvl3WallDone = "false";
-                Options.lvl5CastleDone = "false";
-                Options.lvl2WorkshopDone = "false";
-                saveOptions();
-        });*/
-      
+		/*
+		document.getElementById('test').addEventListener('click', function () {
+	    		Options.lvl5FarmDone = "false";
+	    		Options.lvl3MineDone = "false";
+	    		Options.lvl2BarracksDone = "false";
+	    		Options.lvl3WallDone = "false";
+	    		Options.lvl5CastleDone = "false";
+	    		Options.lvl2WorkshopDone = "false";
+	    		saveOptions();
+	    });*/
+	  
 
-        document.getElementById('toggleFieldLayout').addEventListener('click', function () {
-                t.paintFieldGrid();
-        });
-        document.getElementById('toggleCityLayout').addEventListener('click', function () {
-                t.paintCityGrid();
-        });
-        document.getElementById('hideGrids').addEventListener('click', function () {
-                document.getElementById('mainTitles').innerHTML = "";
-                document.getElementById('gridPicture').innerHTML = "";
-                document.getElementById('layoutBoxes').innerHTML = "";
+		document.getElementById('toggleFieldLayout').addEventListener('click', function () {
+	    		t.paintFieldGrid();
+	    });
+	    document.getElementById('toggleCityLayout').addEventListener('click', function () {
+	    		t.paintCityGrid();
+	    });
+		document.getElementById('hideGrids').addEventListener('click', function () {
+	    		document.getElementById('mainTitles').innerHTML = "";
+	    		document.getElementById('gridPicture').innerHTML = "";
+	    		document.getElementById('layoutBoxes').innerHTML = "";
 
-        });
-        document.getElementById('addToBuildQueue').addEventListener('click', function () {
-            if (t.where == "City") t.addCityToQueue();
-            if (t.where == "Field") t.addFieldToQueue();
-        });
-    },
-    ClickCitySelect : function(){ //Call this function when users switch to another city
-        var t = Tabs.startup;
-        switch(t.where){
-            case 'City':
-                t.paintCityGrid();
-                break;
-            case 'Field':
-                t.paintFieldGrid();
-                break;
-            default : //If somehow something goes wrong then paint city view by default
-                t.paintCityGrid();
-                break;
-        }
-    },
-    getCastleLevel:function(){
-        var t = Tabs.startup
-    var castle = Seed.buildings["city" + t.city.city.id]["pos0"][1];
-        switch(castle){
-                case "1":fields = 13;break;
-                case "2":fields = 16;break;
-                case "3":fields = 19;break;
-                case "4":fields = 22;break;
-                case "5":fields = 25;break;
-                case "6":fields = 28;break;
-                case "7":fields = 31;break;
-                case "8":fields = 34;break;
-                case "9":fields = 37;break;
-                case "10":fields = 40;break;
-                case "11":fields = 41;break;
-                case "12":fields = 42;break;
-        }
-        max = (fields-1) + 100;
-        return(max)
-    },
+	    });
+	    document.getElementById('addToBuildQueue').addEventListener('click', function () {
+	    	if (t.where == "City") t.addCityToQueue();
+	    	if (t.where == "Field") t.addFieldToQueue();
+	    });
+	},
+	ClickCitySelect : function(){ //Call this function when users switch to another city
+		var t = Tabs.startup;
+		switch(t.where){
+			case 'City':
+				t.paintCityGrid();
+				break;
+			case 'Field':
+				t.paintFieldGrid();
+				break;
+			default : //If somehow something goes wrong then paint city view by default
+				t.paintCityGrid();
+				break;
+		}
+	},
+	getCastleLevel:function(){
+		var t = Tabs.startup
+	var castle = Seed.buildings["city" + t.city.city.id]["pos0"][1];
+	    switch(castle){
+				case "1":fields = 13;break;
+				case "2":fields = 16;break;
+				case "3":fields = 19;break;
+				case "4":fields = 22;break;
+				case "5":fields = 25;break;
+				case "6":fields = 28;break;
+				case "7":fields = 31;break;
+				case "8":fields = 34;break;
+				case "9":fields = 37;break;
+				case "10":fields = 40;break;
+				case "11":fields = 41;break;
+				case "12":fields = 42;break;
+		}
+		max = (fields-1) + 100;
+		return(max)
+	},
 
-    addCityToQueue:function(){
-        var t = Tabs.startup;
-            for (pos=1;pos<=32;pos++){
-                      if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
-                          if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
-                        var buildingMode = "build";
-                        var cityId =  t.city.city.id;
-                        var buildingPos = pos;
-                        var buildingType = buildingIDs[document.getElementById('tileID' + pos).value];
-                        var buildingLevel = 0;
-                        var buildingAttempts = 0;
-                        var result = Tabs.build.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
-                        var buildingMult = result[0];
-                        var buildingTime = result[1];
-                        var buildingId = buildingIDs[document.getElementById('tileID' + pos).value];
-                        Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);  
-                        }                  
-                    }
-            }
-    },  
-    buildExtraLevels:function(rslt,buildItem){
-        logit('lvl5FarmDone = ' + Options.lvl5FarmDone + ' lvl3MineDone = ' + Options.lvl3MineDone + ' lvl2BarracksDone = ' + Options.lvl2BarracksDone + ' lvl3WallDone = ' + Options.lvl3WallDone + ' lvl2WorkshopDone = ' + Options.lvl2WorkshopDone + ' lvl5CastleDone = ' + Options.lvl5CastleDone + ' buildingType =' + buildItem.buildingType)
-        if (Options.lvl5FarmDone == "false" && buildItem.buildingType == "1") {
-            var buildingMode = "build"
-               var cityId = buildItem.cityId
-               var time = parseInt(buildItem.buildingTime);
-            var mult = parseInt(buildItem.buildingMult);
-            var attempt = parseInt(buildItem.buildingAttempt);
-            var buildingPos   = parseInt(buildItem.buildingPos);
-            var buildingType  = 1;
-            var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
-            var buildingId    = rslt.buildingId;
-            var buildingAttempts = 0;
-            for (var bL = 1; bL <5; bL++) {
-                var queueId = Tabs.build.loaded_bQ.length;
-                var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
-                var buildingMult = result[0];
-                var buildingTime = result[1];
-                queueId = queueId ;
-                Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
-                Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
-               }
-               Options.lvl5FarmDone = "true";
-               saveOptions();
-        }
-        if (Options.lvl3MineDone == "false" && buildItem.buildingType == "4") {
-            var buildingMode = "build"
-               var cityId = buildItem.cityId
-               var time = parseInt(buildItem.buildingTime);
-            var mult = parseInt(buildItem.buildingMult);
-            var attempt = parseInt(buildItem.buildingAttempt);
-            var buildingPos   = parseInt(buildItem.buildingPos);
-            var buildingType  = 4;
-            var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
-            var buildingId    = rslt.buildingId;
-            var buildingAttempts = 0;
-            for (var bL = 1; bL <3; bL++) {
-                var queueId = Tabs.build.loaded_bQ.length;
-                var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
-                var buildingMult = result[0];
-                var buildingTime = result[1];
-                queueId = queueId ;
-                Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
-                Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
-               }
-               Options.lvl3MineDone = "true";
-               saveOptions();
-        }
-        if (Options.lvl2BarracksDone == "false" && buildItem.buildingType == "13") {
-            var buildingMode = "build"
-               var cityId = buildItem.cityId
-               var time = parseInt(buildItem.buildingTime);
-            var mult = parseInt(buildItem.buildingMult);
-            var attempt = parseInt(buildItem.buildingAttempt);
-            var buildingPos   = parseInt(buildItem.buildingPos);
-            var buildingType  = 13;
-            var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
-            var buildingId    = rslt.buildingId;
-            var buildingAttempts = 0;
-            for (var bL = 1; bL <2; bL++) {
-                var queueId = Tabs.build.loaded_bQ.length;
-                var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
-                var buildingMult = result[0];
-                var buildingTime = result[1];
-                queueId = queueId ;
-                Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
-                Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
-               }
-               Options.lvl2BarracksDone = "true";
-               saveOptions();
-        }
-        if (Options.lvl3WallDone == "false" && buildItem.buildingType == "19") { //WALL
-            var buildingMode = "build"
-               var cityId = buildItem.cityId
-               var time = parseInt(buildItem.buildingTime);
-            var mult = parseInt(buildItem.buildingMult);
-            var attempt = parseInt(buildItem.buildingAttempt);
-            var buildingPos   = parseInt(buildItem.buildingPos);
-            var buildingType  = 19;
-            var buildingLevel = 1;
-            var buildingId    = rslt.buildingId;
-            var buildingAttempts = 0;
-            for (var bL = 1; bL <3; bL++) {
-                var queueId = Tabs.build.loaded_bQ.length;
-                var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
-                var buildingMult = result[0];
-                var buildingTime = result[1];
-                queueId = queueId ;
-                Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
-                Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
-               }
-               Options.lvl3WallDone = "true";
-               saveOptions();
-        }
-        if (Options.lvl2WorkshopDone == "false" && buildItem.buildingType == "16") { //workshop
-            var buildingMode = "build"
-               var cityId = buildItem.cityId
-               var time = parseInt(buildItem.buildingTime);
-            var mult = parseInt(buildItem.buildingMult);
-            var attempt = parseInt(buildItem.buildingAttempt);
-            var buildingPos   = parseInt(buildItem.buildingPos);
-            var buildingType  = 16;
-            var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
-            var buildingId    = rslt.buildingId;
-            var buildingAttempts = 0;
-            for (var bL = 1; bL <=2; bL++) {
-                var queueId = Tabs.build.loaded_bQ.length;
-                var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
-                var buildingMult = result[0];
-                var buildingTime = result[1];
-                queueId = queueId ;
-                Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
-                Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
-               }
-               Options.lvl2WorkshopDone = "true";
-               saveOptions();
-        }
-        /*if (Options.lvl5CastleDone == "false" && buildItem.buildingType == "") {
-            var buildingMode = "build"
-               var cityId = buildItem.cityId
-               var time = parseInt(buildItem.buildingTime);
-            var mult = parseInt(buildItem.buildingMult);
-            var attempt = parseInt(buildItem.buildingAttempt);
-            var buildingPos   = parseInt(buildItem.buildingPos);
-            var buildingType  = //;
-            var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
-            var buildingId    = Seed.buildings["city" + cityId]["pos0"][3]
-            var buildingAttempts = 0;
-            for (var bL = 1; bL <5; bL++) {
-                var queueId = Tabs.build.loaded_bQ.length;
-                var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
-                var buildingMult = result[0];
-                var buildingTime = result[1];
-                queueId = queueId ;
-                Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
-                Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
-               }
-               Options.lvl2BarracksDone = "true";
-               saveOptions();
-        }*/
+	addCityToQueue:function(){
+		var t = Tabs.startup;
+			for (pos=1;pos<=32;pos++){
+			  		if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
+			  			if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+		    			var buildingMode = "build";
+						var cityId =  t.city.city.id;
+						var buildingPos = pos;
+						var buildingType = buildingIDs[document.getElementById('tileID' + pos).value];
+						var buildingLevel = 0;
+						var buildingAttempts = 0;
+						var result = Tabs.build.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
+						var buildingMult = result[0];
+						var buildingTime = result[1];
+						var buildingId = buildingIDs[document.getElementById('tileID' + pos).value];
+						Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);  
+						}	    		  
+		    		}
+	    	}
+	},  
+	buildExtraLevels:function(rslt,buildItem){
+		logit('lvl5FarmDone = ' + Options.lvl5FarmDone + ' lvl3MineDone = ' + Options.lvl3MineDone + ' lvl2BarracksDone = ' + Options.lvl2BarracksDone + ' lvl3WallDone = ' + Options.lvl3WallDone + ' lvl2WorkshopDone = ' + Options.lvl2WorkshopDone + ' lvl5CastleDone = ' + Options.lvl5CastleDone + ' buildingType =' + buildItem.buildingType)
+		if (Options.lvl5FarmDone == "false" && buildItem.buildingType == "1") {
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 1;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <5; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl5FarmDone = "true";
+		   	saveOptions();
+		}
+		if (Options.lvl3MineDone == "false" && buildItem.buildingType == "4") {
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 4;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <3; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl3MineDone = "true";
+		   	saveOptions();
+		}
+		if (Options.lvl2BarracksDone == "false" && buildItem.buildingType == "13") {
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 13;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <2; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl2BarracksDone = "true";
+		   	saveOptions();
+		}
+		if (Options.lvl3WallDone == "false" && buildItem.buildingType == "19") { //WALL
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 19;
+        	var buildingLevel = 1;
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <3; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl3WallDone = "true";
+		   	saveOptions();
+		}
+		if (Options.lvl2WorkshopDone == "false" && buildItem.buildingType == "16") { //workshop
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = 16;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = rslt.buildingId;
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <=2; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl2WorkshopDone = "true";
+		   	saveOptions();
+		}
+		/*if (Options.lvl5CastleDone == "false" && buildItem.buildingType == "") {
+			var buildingMode = "build"
+		   	var cityId = buildItem.cityId
+		   	var time = parseInt(buildItem.buildingTime);
+			var mult = parseInt(buildItem.buildingMult);
+			var attempt = parseInt(buildItem.buildingAttempt);
+        	var buildingPos   = parseInt(buildItem.buildingPos);
+        	var buildingType  = //;
+        	var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId    = Seed.buildings["city" + cityId]["pos0"][3]
+			var buildingAttempts = 0;
+			for (var bL = 1; bL <5; bL++) {
+				var queueId = Tabs.build.loaded_bQ.length;
+				var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
+				var buildingMult = result[0];
+				var buildingTime = result[1];
+				queueId = queueId ;
+				Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
+				Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
+		   	}
+		   	Options.lvl2BarracksDone = "true";
+		   	saveOptions();
+		}*/
 
-    },
+	},
 
-    addFieldToQueue:function(){
-        var t = Tabs.startup;
-        var max = t.getCastleLevel();
-        Options.lvl5FarmDone = "false"
-        //var skipMain = false;
-        //1=5
-        //4=3
-        //lvl5FarmDone: "false",
-          //lvl3MineDone: "false",
-            for (pos=100;pos<=max;pos++){
-                    if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
-                        if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
-                        var buildingMode = "build";
-                        var cityId =  t.city.city.id;
-                        var buildingPos = pos;
-                        var buildingType = buildingIDs[document.getElementById('tileID' + pos).value];
-                        var buildingLevel = 0;
-                        var buildingAttempts = 0;
-                        var result = Tabs.build.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
-                        var buildingMult = result[0];
-                        var buildingTime = result[1];
-                        var buildingId = buildingIDs[document.getElementById('tileID' + pos).value];
-                        Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);                      
-                        }
-                }
-            }
-    },  
+	addFieldToQueue:function(){
+		var t = Tabs.startup;
+		var max = t.getCastleLevel();
+		Options.lvl5FarmDone = "false"
+		//var skipMain = false;
+		//1=5
+		//4=3
+		//lvl5FarmDone: "false",
+ 		 //lvl3MineDone: "false",
+			for (pos=100;pos<=max;pos++){
+		    		if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
+		    			if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+		    			var buildingMode = "build";
+						var cityId =  t.city.city.id;
+						var buildingPos = pos;
+						var buildingType = buildingIDs[document.getElementById('tileID' + pos).value];
+						var buildingLevel = 0;
+						var buildingAttempts = 0;
+						var result = Tabs.build.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
+						var buildingMult = result[0];
+						var buildingTime = result[1];
+						var buildingId = buildingIDs[document.getElementById('tileID' + pos).value];
+						Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);		    		  
+		    			}
+		    	}
+	    	}
+	},  
 
-    paintCityGrid:function(cityDiv){
-        var t = Tabs.startup;
-        t.myDiv = cityDiv;
-        t.where = "City";
-        var counter = 0;
-        var cityGrid = '<img src="https://dl.dropbox.com/u/66837575/grid/CityTileIDs.jpg">';
-        document.getElementById('gridPicture').innerHTML = "";
-        document.getElementById('gridPicture').innerHTML = cityGrid;
-        var message='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showDefaults type=submit value="Load Defaults"><INPUT id=setDefaults type=submit value="Set Defaults">';
+	paintCityGrid:function(cityDiv){
+		var t = Tabs.startup;
+		t.myDiv = cityDiv;
+		t.where = "City";
+		var counter = 0;
+		var cityGrid = '<img src="https://dl.dropbox.com/u/66837575/grid/CityTileIDs.jpg">';
+		document.getElementById('gridPicture').innerHTML = "";
+    	document.getElementById('gridPicture').innerHTML = cityGrid;
+    	var message='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showDefaults type=submit value="Load Defaults"><INPUT id=setDefaults type=submit value="Set Defaults">';
 
-        for (k=1;k<=32;k++){
-            if (k==1){
-                counter++
-                message += '<TD>Tile1<SELECT id=tileID1><OPTION value="Wall">Wall</option>'
-            }else{
-            counter++;
-            message += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
-                  for (kk in cityBuildingNames){
-                      message += '<OPTION value='+kk+'>'+cityBuildingNames[kk]+'</option>';
-                }
-            message += '</options>';
-        if (counter % 4 == 0)message+='</tr>';
-        }
-        }
-        document.getElementById('layoutBoxes').innerHTML = message;
-            for (pos=1;pos<=32;pos++){
-                if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
-                    document.getElementById('tileID' + pos).value = buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
-                    document.getElementById('tileID' + pos).disabled = true;
-                    logit("POS = " + pos + ' ' + buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
-                }
-            }
-       
-        document.getElementById('showDefaults').addEventListener('click', function(){
-            for (pos=1;pos<=32;pos++){
-                //logit(document.getElementById('tileID' + i).value)
-                if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
-                    document.getElementById('tileID' + pos).value = layoutOptions['pos' +pos];
-                }else{
-                    //logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0]);
+		for (k=1;k<=32;k++){
+			if (k==1){
+				counter++
+				message += '<TD>Tile1<SELECT id=tileID1><OPTION value="Wall">Wall</option>'
+			}else{
+			counter++;
+    	    message += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
+    		  	for (kk in cityBuildingNames){
+    		  		message += '<OPTION value='+kk+'>'+cityBuildingNames[kk]+'</option>';
+    	        }
+    	    message += '</options>';
+		if (counter % 4 == 0)message+='</tr>';
+	    }
+		}
+	    document.getElementById('layoutBoxes').innerHTML = message;
+	    	for (pos=1;pos<=32;pos++){
+	    		if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
+	    			document.getElementById('tileID' + pos).value = buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
+	    			document.getElementById('tileID' + pos).disabled = true;
+	    			logit("POS = " + pos + ' ' + buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
+	    		}
+	    	}
+	   
+	    document.getElementById('showDefaults').addEventListener('click', function(){
+	    	for (pos=1;pos<=32;pos++){
+	    		//logit(document.getElementById('tileID' + i).value)
+	    		if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+	    			document.getElementById('tileID' + pos).value = layoutOptions['pos' +pos];
+	    		}else{
+	    			//logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0]);
 
-                    document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
-                    document.getElementById('tileID' + pos).disabled = true;
-                }
-               }
-        });
-        document.getElementById('setDefaults').addEventListener('click', function(){
-            for (pos=1;pos<=32;pos++){
-                layoutOptions['pos'+pos] = document.getElementById('tileID' + pos).value
+	    			document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
+	    			document.getElementById('tileID' + pos).disabled = true;
+	    		}
+	       	}
+	    });
+	    document.getElementById('setDefaults').addEventListener('click', function(){
+	    	for (pos=1;pos<=32;pos++){
+	    		layoutOptions['pos'+pos] = document.getElementById('tileID' + pos).value
 
-            }
-            saveLayoutOptions();
-        });
-        //code for set buttons
-    },
-    paintFieldGrid:function(fieldsDiv){
-        var t = Tabs.startup;
-        t.myDiv = fieldsDiv;
-        t.where = "Field";
-        var counter = 0;
-        var fields = 13;
-        var max = t.getCastleLevel();
-        var fieldGrid = '<img src="https://dl.dropbox.com/u/66837575/grid/FieldsTileIDs.jpg">';
-        document.getElementById('gridPicture').innerHTML = "";
-        document.getElementById('gridPicture').innerHTML = fieldGrid;
-        var mess='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showFieldDefaults type=submit value="Load Defaults"><INPUT id=setFieldDefaults type=submit value="Set Defaults">';
-        for (k=100;k<=max;k++){
-            if (k != 140 && k != 141){
-                counter++
-                mess += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
-                      for (kk in fieldBuildingNames){
-                          mess += '<OPTION value='+kk+'>'+ fieldBuildingNames[kk]+'</option>';
-                    }
-                mess += '</options>';
-            if (counter % 4 == 0)mess+='<tr>';
-            }
-        }
-        document.getElementById('layoutBoxes').innerHTML = mess;
-        for (pos=100;pos<=max;pos++){
-                if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
-                    document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
-                    document.getElementById('tileID' + pos).disabled = true;
-                }
-            }
+	    	}
+	    	saveLayoutOptions();
+	    });
+	    //code for set buttons
+	},
+	paintFieldGrid:function(fieldsDiv){
+		var t = Tabs.startup;
+		t.myDiv = fieldsDiv;
+		t.where = "Field";
+		var counter = 0;
+		var fields = 13;
+		var max = t.getCastleLevel();
+		var fieldGrid = '<img src="https://dl.dropbox.com/u/66837575/grid/FieldsTileIDs.jpg">';
+		document.getElementById('gridPicture').innerHTML = "";
+    	document.getElementById('gridPicture').innerHTML = fieldGrid;
+    	var mess='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showFieldDefaults type=submit value="Load Defaults"><INPUT id=setFieldDefaults type=submit value="Set Defaults">';
+		for (k=100;k<=max;k++){
+			if (k != 140 && k != 141){
+				counter++
+    	    	mess += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
+    		  		for (kk in fieldBuildingNames){
+    		  			mess += '<OPTION value='+kk+'>'+ fieldBuildingNames[kk]+'</option>';
+    	        	}
+    	    	mess += '</options>';
+			if (counter % 4 == 0)mess+='<tr>';
+	    	}
+	    }
+	    document.getElementById('layoutBoxes').innerHTML = mess;
+	    for (pos=100;pos<=max;pos++){
+	    		if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
+	    			document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
+	    			document.getElementById('tileID' + pos).disabled = true;
+	    		}
+	    	}
   
-    document.getElementById('showFieldDefaults').addEventListener('click', function(){
-            for (pos=100;pos<=max;pos++){
-                //logit(document.getElementById('tileID' + i).value)
-                if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
-                    document.getElementById('tileID' + pos).value = fieldlayoutOptions['pos' +pos];
-                }else{
-                    //logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0]);
-                    //logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0])
-                    document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
-                    document.getElementById('tileID' + pos).disabled = true;
-                }
-               }
-    });
-    document.getElementById('setFieldDefaults').addEventListener('click', function(){
-            for (pos=100;pos<=max;pos++){
-                fieldlayoutOptions['pos'+pos] = document.getElementById('tileID' + pos).value;
-            }
-            savefieldlayoutOptions();
-    });
-    },
+	document.getElementById('showFieldDefaults').addEventListener('click', function(){
+	    	for (pos=100;pos<=max;pos++){
+	    		//logit(document.getElementById('tileID' + i).value)
+	    		if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+	    			document.getElementById('tileID' + pos).value = fieldlayoutOptions['pos' +pos];
+	    		}else{
+	    			//logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0]);
+					//logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0])
+	    			document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
+	    			document.getElementById('tileID' + pos).disabled = true;
+	    		}
+	       	}
+	});
+	document.getElementById('setFieldDefaults').addEventListener('click', function(){
+	    	for (pos=100;pos<=max;pos++){
+	    		fieldlayoutOptions['pos'+pos] = document.getElementById('tileID' + pos).value;
+	    	}
+	    	savefieldlayoutOptions();
+	});
+	},
   
   
-    show : function(){},
-    hide : function(){},
-} 
+	show : function(){},
+	hide : function(){},
+}  
 /*********************************  Cresting Tab ***********************************/
  Tabs.Crest = {
   tabOrder : 70,
@@ -18446,12 +18446,12 @@ Tabs.startup = {
   error_code: 0,
   knt:{},
 
-/** window display **/
+/** window display **/ 
   init : function (div){
     var t = Tabs.Crest;
     Options.crestMarchError = 0;
 
-    setInterval(t.sendCrestReport, 1*60*1000);  
+    setInterval(t.sendCrestReport, 1*60*1000);   
     t.timer = setTimeout(function(){ t.Rounds(1,0,0);}, CrestOptions.interval*1000);
 
 
@@ -18756,7 +18756,7 @@ Tabs.startup = {
         var t = Tabs.Crest;
         var popCrestTargets = null;
         t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
-        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';     
+        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';      
         t.popCrestTargets.getMainDiv().innerHTML = '</table></div>' + m;
         t.popCrestTargets.getTopDiv().innerHTML = '<TD><CENTER><B>Crest Targets</center></td>';
         t.paintCrestTargets();
@@ -18866,30 +18866,30 @@ Tabs.startup = {
    
      sendMarch: function(p,callback,r,retry, CrestDataNum){
         var t = Tabs.Crest;
-        March.addMarch(p, function(rslt){
-            if(rslt.ok){
+		March.addMarch(p, function(rslt){
+			if(rslt.ok){
                 if(r==1){
                     Options.Crest1Count++;
                     r = 2;
-                var now = new Date().getTime()/1000.0;
-                now = now.toFixed(0);
-                CrestData[CrestDataNum].lastRoundTwo = now;//is actually lastround1 and must be here to work properly
+				var now = new Date().getTime()/1000.0;
+				now = now.toFixed(0);
+				CrestData[CrestDataNum].lastRoundTwo = now;//is actually lastround1 and must be here to work properly
                 } else {
                     Options.Crest2Count++;
                 }
-                saveCrestData();
-                setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));   
-                return;
-            } else { //onFailure
-                setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));
-            }
-        });
+				saveCrestData();
+				setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));   
+				return;
+			} else { //onFailure
+				setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));
+			}
+		});
     },
     
 
     
     abandonWilderness: function(tid,x,y,cid,callback,retry, CrestDataNum){
-        var t = Tabs.Crest;      
+        var t = Tabs.Crest;       
         if (!Options.crestRunning) return;
         
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -18898,7 +18898,7 @@ Tabs.startup = {
         params.tid=tid;
         params.cid=cid;
         params.x=x;
-          params.y=y;                 
+          params.y=y;                  
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/abandonWilderness.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
               parameters: params,
@@ -18906,7 +18906,7 @@ Tabs.startup = {
               onSuccess:function(transport){
                 var rslt=eval("("+transport.responseText+")");
                 if (rslt.ok) {
-                    t.error_code = 0;  
+                    t.error_code = 0;   
                     if (rslt.returningMarches) {
                         var cities = Object.keys(rslt.returningMarches);
                         for (var i = 0; i < cities.length; i++) {
@@ -18935,7 +18935,7 @@ Tabs.startup = {
                     if (rslt.error_code != 401) {
                         t.error_code = rslt.error_code;
                        }
-                  }              
+                  }               
               },
               onFailure: function () {}
           });
@@ -19027,7 +19027,7 @@ Tabs.startup = {
                 r=1;
             }
         }
-                saveCrestData();
+				saveCrestData();
         switch(r) {
             case 1:
                 if ((t.rallypointlevel-slots) < 2) {
@@ -19194,7 +19194,7 @@ Tabs.startup = {
         });
 
         saveOptions();
-    },  
+    },   
 
 
     hide : function (){
@@ -19209,47 +19209,47 @@ Tabs.startup = {
 /****** Global march function ****/
 
 var March = {
-    tt : null,
-    profiler : null,
-    currentrequests : 0,
-    queue : [],
-    lastattack : null,
-    timer : null,
+	tt : null,
+	profiler : null,
+	currentrequests : 0,
+	queue : [],
+	lastattack : null,
+	timer : null,
   
-    //March queue system
-    addMarch : function (params, callback){
-        var t = this;
-        var opts = {params:params, callback:callback};
-        if(t.currentrequests < 5){
-            t.sendMarch(opts.params, opts.callback);
-        } else {
-            t.queue.push(opts);
-            setTimeout(t.loop, 2000);
-        }
-    },
-    loop : function (){
-        if(t.currentrequests < 5){
-            var opts = t.queue.shift();
-            t.sendMarch(opts.params, opts.callback);
-        }
-    },
-    getQueueLength : function (){
-        var t = this;
-        return t.queue.length;
-    },
-    //End march queue
+	//March queue system
+	addMarch : function (params, callback){
+		var t = this;
+		var opts = {params:params, callback:callback};
+		if(t.currentrequests < 5){
+			t.sendMarch(opts.params, opts.callback);
+		} else {
+			t.queue.push(opts);
+			setTimeout(t.loop, 2000);
+		}
+	},
+	loop : function (){
+		if(t.currentrequests < 5){
+			var opts = t.queue.shift();
+			t.sendMarch(opts.params, opts.callback);
+		}
+	},
+	getQueueLength : function (){
+		var t = this;
+		return t.queue.length;
+	},
+	//End march queue
   
-    sendMarch : function (params, callback){
-        var t = this;
-        t.profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
-        t.currentrequests++;
-        new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {   
+	sendMarch : function (params, callback){
+		var t = this;
+		t.profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
+		t.currentrequests++;
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {   
             method: "post",
             parameters: params,
             loading: true,
             onSuccess: function (transport) {
-                t.profiler.stop();
-                --t.currentrequests;
+				t.profiler.stop();
+				--t.currentrequests;
                 var rslt = eval("(" + transport.responseText + ")");
                 if (rslt.ok) {
                     var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -19264,679 +19264,75 @@ var March = {
 
                     var currentcityid = params.cid;
                     unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                  
+				  
                     unsafeWindow.update_seed(rslt.updateSeed);
                     if (rslt.updateSeed) {
                         unsafeWindow.update_seed(rslt.updateSeed);
                     }
-                    if(callback)
-                        callback(rslt);
+					if(callback)
+						callback(rslt);
                 } else {
-                    if (rslt.user_action == "backOffWaitTime") {
-                        logit('backoffwaittime '+rslt.wait_time);
+					if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
-                            params.tt = rslt.tt;
+							params.tt = rslt.tt;
                         var wait = 1;
                         if(rslt.wait_time)
-                            wait = rslt.wait_time;
+							wait = rslt.wait_time;
                         setTimeout (function(){t.sendMarch(params,callback);}, wait*1000);
                         return;
                     }
-                    if (rslt.user_action == "marchWarning") {
-                        logit('marchWarning');
-                        params.marchWarning = 1;
+					if (rslt.user_action == "marchWarning") {
+						logit('marchWarning');
+						params.marchWarning = 1;
                         setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
-                        return;
-                    }
-                    if (rslt.user_action == "marchCaptcha") {
-                        logit('captcha');
-                        if(!unsafeWindow.Recaptcha){
-                            setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
-                            return;
-                        }
-                        t.captchawin = new pbPopup ('pbmarch_captcha', 0, 0, 300, 200, true);
-                        t.captchawin.centerMe (mainPop.getMainDiv);
-                        var m = "<CENTER><SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span></center><br \>";
-                        m += "<CENTER><div class=\"captcha_container\"><form id=pbmarch_captchaform ></form></div></center>";
-                        t.captchawin.getMainDiv().innerHTML = m;
-                        t.captchawin.getTopDiv().innerHTML = "<CENTER><b>KOC Power Bot - March Captcha</b></center>";
-                        t.captchawin.show(true);
-                      
-                        unsafeWindow.Recaptcha.create("6LcT7cQSAAAAAG4whvbBz60hGjJg0ON1wRIRv_iD", "pbmarch_captchaform", {
-                            callback: function(){
-                                unsafeWindow.Recaptcha.focus_response_field();
-                                $("pbmarch_captchaform").addEventListener("submit", function(e){
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    params.marchWarning = 1;
-                                    params.marchCaptcha_challenge = unsafeWindow.Recaptcha.get_challenge();
-                                    params.marchCaptcha_response = unsafeWindow.Recaptcha.get_response();
-                                    setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
-                                    t.captchawin.destroy();
-                                }, false);
-                            },
-                            theme: "white"
-                        });
-                        return;
-                    }
-                    setTimeout (function(){callback(rslt)}, 5*1000); //return all sever excess traffic error to original function to handle
+						return;
+					}
+					if (rslt.user_action == "marchCaptcha") {
+						logit('captcha');
+						if(!unsafeWindow.Recaptcha){
+							setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
+							return;
+						}
+						t.captchawin = new pbPopup ('pbmarch_captcha', 0, 0, 300, 200, true);
+						t.captchawin.centerMe (mainPop.getMainDiv);
+						var m = "<CENTER><SPAN class=boldRed>CAPTCHA ALERT! You have been sending too many attacks!</span></center><br \>";
+						m += "<CENTER><div class=\"captcha_container\"><form id=pbmarch_captchaform ></form></div></center>";
+						t.captchawin.getMainDiv().innerHTML = m;
+						t.captchawin.getTopDiv().innerHTML = "<CENTER><b>KOC Power Bot - March Captcha</b></center>";
+						t.captchawin.show(true);
+					  
+						unsafeWindow.Recaptcha.create("6LcT7cQSAAAAAG4whvbBz60hGjJg0ON1wRIRv_iD", "pbmarch_captchaform", {
+							callback: function(){
+								unsafeWindow.Recaptcha.focus_response_field();
+								$("pbmarch_captchaform").addEventListener("submit", function(e){
+									e.preventDefault();
+									e.stopPropagation();
+									params.marchWarning = 1;
+									params.marchCaptcha_challenge = unsafeWindow.Recaptcha.get_challenge();
+									params.marchCaptcha_response = unsafeWindow.Recaptcha.get_response();
+									setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
+									t.captchawin.destroy();
+								}, false);
+							},
+							theme: "white"
+						});
+						return;
+					}
+					setTimeout (function(){callback(rslt)}, 5*1000); //return all sever excess traffic error to original function to handle
                     return;
                 }
-                t.loop();
+				t.loop();
             },
             onFailure: function (transport) {
-                t.profiler.stop();
-                --t.currentrequests;
-                if(callback)
-                    callback({ok:false}); //return all onFailure as {ok:false} so as to trigger remarch
-                t.loop(); //Always check for the next queued march after a request
+				t.profiler.stop();
+				--t.currentrequests;
+				if(callback)
+					callback({ok:false}); //return all onFailure as {ok:false} so as to trigger remarch
+				t.loop(); //Always check for the next queued march after a request
             }
-          });
-    }
-};
-
-/****************************  Population Control Tab  ******************************/
-Tabs.popcontrol = {
-  tabOrder : 850,
-  tabDisabled : false,
-  tabLabel : 'Pop Control',
-  myDiv : null,
-  timer : null,
-  timer_del : null,
-  timer_cycle : null,
-	del_count : 0,
-	cycle_running : false,
-	busy : false,
-	cycle_step : 0,
-
-  logtable : null,
-  logmaxEntries: 300,
-  loglast99 : [],
-
-  init : function (div)
-  	{
-		var t = Tabs.popcontrol;
-		t.myDiv = div;
-		var selbut=0;
-		
-		var m = '<DIV class=pbStat>Population Control</div>';
-
-		m += '<table border=0 width="100%">';	
-		m += '<tr align=center>';
-		m += '<td align=left><input type=submit id=pophelp_button value="HELP!"></td>';
-		m += '<td align=center>Pick City:<span id=popcity></span></td>';
-		m += '<td align=center>Population Gain per cycle: <span id=poptab_cycle_pop></span></td>';
-		m += '</tr>';
-		m += '</table>';
-		
-		m += '<DIV class=pbStat>City Requirements:</div>';
-		m += '<table border="0" width="100%">';		
-		m += '<tr>';
-		m += '<td>Current Food: &nbsp<span id=poptab_cur_food></span></td>';
-		m += '<td>Current Wood: &nbsp<span id=poptab_cur_wood></span></td>';
-		m += '<td>Current Ore: &nbsp&nbsp<span id=poptab_cur_ore></span></td>';
-		m += '<td>Current MM: <span id=poptab_cur_mm></span></td>';
-		m += '</tr>';
-		m += '<tr>';
-		m += '<td>Needed Food: &nbsp<span id=poptab_needed_food></span></td>';
-		m += '<td>Needed Wood: &nbsp<span id=poptab_needed_wood></span></td>';
-		m += '<td>Needed Ore: &nbsp&nbsp<span id=poptab_needed_ore></span></td>';
-		m += '<td>Needed MM: <span id=poptab_needed_mm></span></td>';
-		m += '</tr>';
-		m += '</table>';
-
-		m += '<DIV class=pbStat>City Status:</div>';
-		m += '<table border="0" width="100%">';	
-		m += '<tr align=center>';
-		m += '<td>Maximum Idle Population: <span id=poptab_max_idle_pop></span></td>';
-		m += '<td># Slots Used: <span id=poptab_slots_used></span><br></td>';
-		m += '<td># of barracks: <span id=poptab_barracks></span></td>';
-		//m += '<td> </td>';
-		m += '</tr>';
-		m += '<tr align=center>';
-		m += '<td>Current Idle Population: <span id=poptab_cur_idle_pop></span></td>';
-		m += '<td># Slots Free: <span id=poptab_slots_free></span></td>';
-		m += '<td># of cottages: <span id=poptab_cottages></span></td>';
-		//m += '<td> </td>';
-		m += '</tr>';		
-		m += '</table>';
-
-		m += '<DIV class=pbStat>Commands:</div>';
-		m += '<table border="0" width="100%">';	
-		m += '<tr align=center>';
-		m += '<td><input type="submit" id="poptab_dismiss_mm" value="Dismiss MM" disabled></td>';
-		m += '<td><input type="submit" id="poptab_queue_st" value="Queue Supply Troops" disabled></td>';
-		m += '<td><input type="submit" id="poptab_del_queues" value="Delete All Queues" disabled></td>';
-		m += '<td><input type="submit" id="poptab_run_cycle" value="Run cycle" disabled></td>';
-		//m += '<td><input type="submit" id="poptab_test" value="Test"></td>';
-		m += '</tr>';		
-		m += '</table>';
-	
-		m += '<DIV class=pbStat>Action Log:</div>';
-
-		m += '<DIV style="height:250px; max-height:250px; overflow-y:auto">';
-		m += '<TABLE cellpadding=0 cellspacing=0 id=poptab_log class=pbTabLined>';
-		m += '<TR><TD></td><TD width=95%></td>';
-		m += '</table></div>';
-
-		t.myDiv.innerHTML = m;
-
-		t.logtable = document.getElementById('poptab_log');  
-		var a = JSON2.parse(GM_getValue ('poptab_log_'+getServerId(), '[]'));
-		if (matTypeof(a) == 'array')
-			{
-			t.loglast99 = a;
-			for (var i=0; i<t.loglast99.length; i++)		t.addlogrow (t.loglast99[i].msg, t.loglast99[i].ts);
-			}
-		window.addEventListener('unload', t.onUnload, false);
-
-		t.tcp = new CdispCityPicker ('popcityselect', document.getElementById('popcity'), true, null, selbut);
-		
-		document.getElementById('pophelp_button').addEventListener		('click', function(){	t.helpPop(this);							} , false);
-		document.getElementById('popcity').addEventListener						('click', function(){	t.show_city	(t.tcp.city.id);	} , false);
-		document.getElementById('poptab_dismiss_mm').addEventListener	('click', function(){	t.dismiss_mm(t.tcp.city.id);	} , false);
-		document.getElementById('poptab_queue_st').addEventListener		('click', function(){	t.queue_st	(t.tcp.city.id);	} , false);
-		document.getElementById('poptab_del_queues').addEventListener	('click', function(){	t.del_queues_start(t.tcp.city.id);	} , false);
-		document.getElementById('poptab_run_cycle').addEventListener	('click', function(){	t.run_cycle	(t.tcp.city.id);	} , false);
-		//document.getElementById('poptab_test').addEventListener	('click', function(){	t.btest	();	} , false);
-  
-  	},
-
-	disable_btns : function ()
-		{
-		var t = Tabs.popcontrol;
-		t.busy = true;
-		document.getElementById('poptab_del_queues'	).disabled = true;
-		document.getElementById('poptab_queue_st').disabled = true;
-		document.getElementById('poptab_dismiss_mm').disabled = true;
-		document.getElementById('poptab_run_cycle').disabled = true; 
-		},
-
-	onUnload : function ()
-		{
-		var t = Tabs.popcontrol;
-		//if (!ResetAll) GM_setValue ('log_'+getServerId(), JSON2.stringify(t.last50));
-		GM_setValue ('poptab_log_'+getServerId(), JSON2.stringify(t.loglast99));
-		},
-    
-	addlogrow : function (msg, ts)
-		{
-		var t = Tabs.popcontrol;
-		if (t.logtable.rows.length >= t.maxEntries)	t.logtable.deleteRow(t.maxEntries-1);
-		var row = t.logtable.insertRow(0);
-		row.vAlign = 'top';
-		row.insertCell(0).innerHTML = ts;
-		row.insertCell(1).innerHTML = msg;
-		},
-  
-	log : function (msg)
-		{
-		var t = Tabs.popcontrol;
-		var ts = new Date().toTimeString().substring (0,8);
-		for (postcity in Seed.cities) if (Seed.cities[postcity][0] == t.tcp.city.id) logcity = Seed.cities[postcity][1];
-		msg = logcity + ": " + msg;
-		t.addlogrow (msg, ts);
-		while (t.loglast99.length >= 99)
-		t.loglast99.shift();
-		t.loglast99.push ({msg:msg, ts:ts});
-		},
-
-  hide : function (){         // called whenever the main window is hidden, or another tab is selected
-    var t = Tabs.popcontrol;
-    clearTimeout (t.timer);
-  },
-  
-  show : function (){         // called whenever this tab is shown
-    var t = Tabs.popcontrol;
-    clearTimeout (t.timer);
-    t.timer = setTimeout (t.show, 2000);
-		t.show_city(t.tcp.city.id);
-  },
-
-	helpPop : function ()
-		{
-		var helpText = "";
-		
-		helpText += '<p>** This is a work in progress... If it gets stuck, refresh. By ADABman / Lurkin **';
-		helpText += 'Probably a good idea to temporarily turn off auto transport, auto reassign, and auto train, when using this.';
-		
-		helpText += '<p>POPULATION CONTROL tab will help you convert your excess/useless millitiamen ';
-		helpText += 'into massive amounts of idle population. Massive idle population is very useful ';
-		helpText += 'to have before a might tournament starts, or if you want to do a massive siege ';
-		helpText += 'build with a Merlins tutelage.';
-		helpText += '</p>';
-		
-		helpText += '<p>The CITY REQUIREMENTS area displays the amount of resouces and Militiamen ';
-		helpText += 'required for a \'full cycle\' of building massive idle population. If any of these ';
-		helpText += 'requirements are not met, they will be displayed in red.';
-		helpText += '</p>';
-		
-		helpText += '<p>The CITY STATUS area displays the maximum amount of population your cottages ';
-		helpText += 'provide, and the current amount of idle population in your city. This area also ';
-		helpText += 'shows the number of training queue slots total and in use.';
-		helpText += '</p>';
-		
-		helpText += '<p>The COMMANDS area displays the buttons that automate this process:';
-		helpText += '</p>';
-
-		helpText += '<UL>';
-		
-		helpText += 'DISMISS MM BUTTON<BR><li>' + dismissBtn_help1 + '</li>';
-		helpText += '<li>' + dismissBtn_help2 + '</li><BR>';
-		
-		helpText += 'QUEUE SUPPLY TROOP BUTTON<BR><li>' + queueBtn_help1 + '</li>';
-		helpText += '<li>' + queueBtn_help2 + '</li><BR>';
-		
-		helpText += 'DELETE QUEUE BUTTON<BR><li>' + deleteBtn_help1 + '</li>';
-		helpText += '<li>' + deleteBtn_help2 + '</li>';
-		helpText += '<li>' + deleteBtn_help3 + '</li><BR>';
-		
-		helpText += 'RUN CYCLE BUTTON<BR><li>' + runcycleBtn_help1 + '</li>';
-		helpText += '<li>' + runcycleBtn_help2 + '</li>';
-		helpText += '<li>' + runcycleBtn_help3 + '</li><BR>';
-	
-		helpText += '</UL><BR>';
-		
-		//function CPopup (prefix, x, y, width, height, enableDrag, onClose)
-		var pop = new pbPopup ('popcontrol_Help', 0, 0, 740, 600, true);
-		pop.centerMe (mainPop.getMainDiv());  
-		pop.getMainDiv().innerHTML = helpText;
-		pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help</b>:  Population Control</center>';
-		pop.show (true);
-		},
-
-	show_city : function (cityId)
-		{
-		var t = Tabs.popcontrol;
-
-		t.st_food = 50;
-		t.st_wood = 150;
-		//t.st_stone = 0;
-		t.st_ore = 10;
-		
-		var green = '#03F003';
-		var red =   '#F0303';
-
-		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
-		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-		document.getElementById('poptab_max_idle_pop').innerHTML	= t.max_idle_pop;
-		document.getElementById('poptab_cur_idle_pop').innerHTML	= t.cur_idle_pop;
-
-		t.barracks = parseInt(getCityBuilding(cityId, 13).count);
-		t.cottages = parseInt(getCityBuilding(cityId, 5).count);
-		t.slots_used = parseInt(Seed.queue_unt['city'+cityId].length);
-		t.slots_free = parseInt(t.barracks - t.slots_used);
-		document.getElementById('poptab_barracks').innerHTML = t.barracks;
-		document.getElementById('poptab_cottages').innerHTML = t.cottages;
-		document.getElementById('poptab_slots_used').innerHTML = t.slots_used;
-		document.getElementById('poptab_slots_free').innerHTML = t.slots_free;
-
-		t.cycle_pop = (parseInt(t.barracks) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
-		document.getElementById('poptab_cycle_pop').innerHTML	= addCommas( t.cycle_pop / 2 );
-
-		t.cur_food = parseInt(Seed.resources['city'+cityId].rec1[0]/3600);
-		t.cur_wood = parseInt(Seed.resources['city'+cityId].rec2[0]/3600);
-		//t.cur_stone = parseInt(Seed.resources['city'+cityId].rec3[0]/3600);
-		t.cur_ore = parseInt(Seed.resources['city'+cityId].rec4[0]/3600);
-		
-		document.getElementById('poptab_cur_food').innerHTML = addCommas (t.cur_food);
-		document.getElementById('poptab_cur_wood').innerHTML = addCommas (t.cur_wood);
-		//document.getElementById('poptab_cur_stone').innerHTML = addCommas (t.cur_stone);
-		document.getElementById('poptab_cur_ore').innerHTML = addCommas (t.cur_ore);
-		
-		t.needed_food = parseInt(t.cycle_pop) * parseInt(t.st_food);
-		t.needed_wood = parseInt(t.cycle_pop) * parseInt(t.st_wood);
-		//t.needed_stone = 0;//parseInt(t.cycle_pop) * parseInt(t.st_Stone);
-		t.needed_ore = parseInt(t.cycle_pop) * parseInt(t.st_ore);
-		
-		document.getElementById('poptab_needed_food').innerHTML = addCommas (t.needed_food);
-		document.getElementById('poptab_needed_wood').innerHTML = addCommas (t.needed_wood);
-		//document.getElementById('poptab_needed_stone').innerHTML = addCommas (t.needed_stone);
-		document.getElementById('poptab_needed_ore').innerHTML = addCommas (t.needed_ore);
-		
-		document.getElementById('poptab_needed_food').style.color = (t.needed_food  > t.cur_food?'red':'green');
-		document.getElementById('poptab_cur_food').style.color = (t.needed_food  > t.cur_food?'red':'green');
-		document.getElementById('poptab_needed_wood').style.color  = (t.needed_wood  > t.cur_wood?'red':'green');
-		document.getElementById('poptab_cur_wood').style.color = (t.needed_wood  > t.cur_wood?'red':'green');
-		//document.getElementById('poptab_needed_stone').style.color = (t.needed_stone > t.cur_stone?'red':'green');
-		//document.getElementById('poptab_cur_stone').style.color = (t.needed_stone > t.cur_stone?'red':'green');
-		document.getElementById('poptab_needed_ore').style.color = (t.needed_ore  > t.cur_ore?'red':'green');
-		document.getElementById('poptab_cur_ore').style.color = (t.needed_ore  > t.cur_ore?'red':'green');
-
-		t.needed_mm = t.cycle_pop;
-		t.cur_mm = parseInt(Seed.units['city'+cityId]['unt2']);
-		document.getElementById('poptab_needed_mm').innerHTML = addCommas(t.needed_mm);
-		document.getElementById('poptab_cur_mm').innerHTML = addCommas(t.cur_mm);
-		
-		document.getElementById('poptab_needed_mm').style.color = (t.needed_mm  > t.cur_mm?'red':'green')
-		document.getElementById('poptab_cur_mm').style.color = (t.needed_mm  > t.cur_mm?'red':'green')
-		
-		dismissBtn_help1 = "This button is used to quickly get your city to its maximum idle population allowed by dismissing just the right amount of militiamen.";
-		dismissBtn_help2 = "This button will only light up when when your city is not at its maximum population, and then only if you have enough MM in your city to dismiss.";
-		need_to_dismiss = parseInt(t.max_idle_pop - t.cur_idle_pop);
-		dismissBtn = document.getElementById('poptab_dismiss_mm');
-		if(parseInt(need_to_dismiss) > 0 && parseInt(need_to_dismiss) <= parseInt(t.cur_mm) && !t.busy && !t.cycle_running)
-			{
-			dismissBtn.disabled = false;
-			dismissBtn.value = "Dismiss " + addCommas(need_to_dismiss) + " MM";
-			}
-		else
-			{
-			dismissBtn.disabled = true;
-			dismissBtn.value = "Dismiss MM";
-			}
-
-		queueBtn_help1 = "This button is used to train all the idle population into Supply Troops.";
-		queueBtn_help2 = "This button will only light up when your city is at full idle population, and then only if you have enough resources to train all those Supply Troops and at least 1 free training slot.";
-		unitId = 1;	
-		var res_ok = 0;
-		for (var i = 1; i < 5; i++)
-			{
-			var res_need = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(t.cur_idle_pop);
-			var res_have = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]);
-			if(parseInt(res_need) > parseInt(res_have))	{	res_ok++;	}
-			}
-		queueBtn = document.getElementById('poptab_queue_st');
-		if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
-			{
-			queueBtn.disabled = false;
-			queueBtn.value = "Queue " + addCommas(t.cur_idle_pop) + " Supply Troops";
-			}
-		else
-			{
-			queueBtn.disabled = true;
-			queueBtn.value = "Queue Supply Troops";
-			}
-
-		deleteBtn_help1 = "This button is used to quickly delete all those queued up Supply Troops, returning 1/2 the used population (and resources?).";
-		deleteBtn_help2 = "This button will only light up when there is at least 1 training queue slot used.";
-		//deleteBtn_help3 = "** Due to a bug, you should refresh your game before using this button! **";
-		deleteBtn_help3 = "If you have any problems with this button, refresh and try again.";
-		deletebtn = document.getElementById('poptab_del_queues'	);
-		if(Seed.queue_unt['city'+cityId].length > 0 && !t.busy && !t.cycle_running)
-			{
-			deletebtn.disabled = false;
-			deletebtn.value = " Delete " + Seed.queue_unt['city'+cityId].length + " Queues";
-			}
-		else
-			{
-			deletebtn.disabled = true;
-			deletebtn.value = "Delete All Queues";
-			}
-
-		runcycleBtn_help1 = "This button is used to automate the entire process of repeatedly dismissing Militiamen then queueing Supply Troops, and then finally delete all of those queues.";
-		runcycleBtn_help2 = "This button will only light up when your city has the required amount of resources and Militiamen";
-		//runcycleBtn_help3 = "------ This button is disabled for now. -----";
-		runcycleBtn_help3 = "If the queue slots wont delete, refresh and hit the 'Delete All Queues' button.";
-		res_ok = 0;
-		t.cycle_pop_continue = (parseInt(t.slots_free) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
-		for (var i = 1; i < 5; i++)
-			{
-			var res_need = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(t.cycle_pop_continue);
-			var res_have = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]);
-			if(parseInt(res_need) > parseInt(res_have))	{	res_ok++;	}
-			}
-		runcycleBtn = document.getElementById('poptab_run_cycle');
-		//if(parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
-		t.needed_mm_continue = t.cycle_pop_continue;
-		if(parseInt(t.needed_mm) <= parseInt(t.cur_mm) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
-			{
-			runcycleBtn.disabled = false;
-			}
-		else
-			{
-			runcycleBtn.disabled = true; 
-			}
-		
-		},
-
-	run_cycle : function (cityId)
-		{
-		// Temp disable auto train for this city & auto reassign & auto transport & auto refresh
-		// log all that
-		
-		var t = Tabs.popcontrol;
-		clearTimeout (t.timer);
-		clearTimeout (t.timer_cycle);
-		t.disable_btns();
-		if(!t.cycle_running)
-			{
-			t.log("Starting population build cycle. Population at start: " + t.cur_idle_pop);
-			t.cycle_running = true;
-			t.cycle_step = 1;
-			}
-		
-		//t.actionlog("1");
-		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
-		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-		//num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
-		if(parseInt(t.cur_idle_pop) < parseInt(t.max_idle_pop))	// Need to Dismiss MM
-			{
-			if (t.cycle_running)	t.dismiss_mm(cityId);
-			
-			//t.actionlog("2");
-			}
-		else if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop)) // Need to queue supply troops
-			{
-			if (t.cycle_running)	t.queue_st(cityId);
-			//t.actionlog("3");
-			}
-		else if(parseInt(t.slots_free) == 0)	// Delete all the queues
-			{
-			//t.actionlog("4");
-			t.cycle_running = false;
-			setTimeout(unsafeWindow.update_seed_ajax, 250);
-			t.del_queues_start(t.tcp.city.id);
-			t.timer = setTimeout (t.show, 1000);
-			return;
-			}
-		else
-			{
-			t.log("Waiting...");	// Wait
-			}
-		//t.actionlog("5");
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 3000);
-		},
-
-	dismiss_mm : function (cityId)
-		{
-		var t = Tabs.popcontrol;
-		t.disable_btns();
-		
-		unitId = 2;
-
-		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
-		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-		num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
-		//t.log(num);
-		
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.cid = cityId;
-		params.type = unitId;
-		params.quant = num;
-
-		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/dismissUnits.php" + unsafeWindow.g_ajaxsuffix,
-			{
-			method: "post",
-			parameters: params,
-			onSuccess: function(rslt)
-				{
-				if (rslt.ok) 
-					{
- 					//t.log("Dismissed "+ addCommas(num) +" "+ troops[unitId]);
-					t.log("Dismissed "+ addCommas(num) +" Militiamen");
-					Seed.units['city'+cityId]['unt'+unitId] -= num;
-					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-					//setTimeout(unsafeWindow.update_seed_ajax, 250);
-					t.busy = false;
-					t.show_city(cityId);
-					
-					// Dismiss gets back 1/2 res ?
-					//for (var i = 1; i < 5; i++)
-					//	{
-					//	var resourceGain = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num) / 2;
-					//	unsafeWindow.seed.resources["city" + cityId]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]) + resourceGain;
-					//	}
-					}
-				else
-					{
-					//t.log("FAILED to dismiss "+ addCommas(num) +" "+ troops[unitId] + " :(");
-					t.log("FAILED to dismiss "+ addCommas(num) +" Militiamen :(");
-					t.busy = false;
-					}
-				},
-			});		
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		},
-
-	queue_st : function (cityId)
-		{
-		var t = Tabs.popcontrol;
-		t.disable_btns();
-
-		unitId = 1;
-		num = t.cur_idle_pop;
-		//num = 15;
-		
-		var time = unsafeWindow.modal_barracks_traintime(unitId, num);
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.cid = cityId;
-		params.type = unitId;
-		params.quant = num;
-		params.gambleId = 0;
-
-		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix,
-			{
-			method: "post",
-			parameters: params,
-			onSuccess: function(rslt)
-				{
-				if (rslt.ok) 
-					{
-					//t.log("Trained "+ addCommas(num) +" "+ troops[unitId]);
-					t.log("Trained "+ addCommas(num) +" Supply Troops");
-					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-					for (var i = 1; i < 5; i++)
-						{
-						var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
-						if(rslt.gamble) resourceLost = resourceLost*rslt.gamble[i];
-						unsafeWindow.seed.resources["city" + cityId]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]) - resourceLost;
-						}
-					unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
-					unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(num);
-					//unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
-					unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, rslt.ticksNeeded, null]);
-					t.busy = false;
-					t.show_city(cityId);
-					}
-				else
-					{
-					//t.log("FAILED to train "+ addCommas(num) +" "+ troops[unitId] + " :(");
-					t.log("FAILED to train "+ addCommas(num) +" Supply Troops :(");
-					t.busy = false;
-					}
-				},
-			});
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		},
-
-
-	del_queues_start : function (cityId)
-		{
-		var t = Tabs.popcontrol;
-		t.disable_btns();
-
-		t.del_count = Seed.queue_unt['city'+cityId].length;
-		t.log("Attempting to delete " + t.del_count + " Queue slots...");
-		t.del_queues(cityId);
-		},
-
- 	del_queues : function (cityId)
-		{
-		var t = Tabs.popcontrol;
-		clearTimeout (t.timer_del);
-
-		var q = Seed.queue_unt['city'+cityId];
-		var qs = q.toString();
-
-		if(q.length > 0 || t.del_count > 0)
-			{
-			t.del_count -= 1;
-			typetrn =		q[0][0];
-			numtrptrn =	q[0][1];
-			trnTmp =		q[0][2];
-			trnETA = 		q[0][3];
-			trnNeeded =	q[0][5];
-			trainingId = 0;
-
-			t.delete_queue_slot(typetrn, numtrptrn, trnTmp, trnETA, trnNeeded, cityId, trainingId)
-			t.delete_queue_slot(typetrn, numtrptrn, trnTmp, parseInt(trnETA)-1, trnNeeded, cityId, trainingId)	//?!
-						}
-		else
-			{
-			t.log("No more queue slots to delete.");
-			t.del_count = 0;
-			t.busy = false;
-			return;
-			}
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		t.timer_del = setTimeout (function() {t.del_queues(cityId)}, 1500);
-		},
-
-	delete_queue_slot : function (typetrn, numtrptrn, trnTmp, trnETA, trnNeeded, cityId, trainingId)
-		{
-		var t = Tabs.popcontrol;
-		var uW = unsafeWindow;
-		var params = uW.Object.clone(uW.g_ajaxparams);
-		params.pf =0;
-		params.requestType = "CANCEL_TRAINING";
-		params.cityId = cityId;
-		params.typetrn = typetrn;
-		params.numtrptrn = numtrptrn;
-		params.trnETA = trnETA;
-		params.trnTmp = trnTmp;
-		params.trnNeeded = trnNeeded;
-
-		new AjaxRequest(uW.g_ajaxpath + "ajax/cancelTraining.php" + uW.g_ajaxsuffix,
-			{
-			method: "post",
-			parameters: params,
-			onSuccess: function (message)
-				{
-				var rslt=eval("("+message.responseText+")");
-				if (rslt.ok)
-					{
-					t.log("Deleted queue of "+ addCommas(numtrptrn) +" "+ troops[typetrn]);
-					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-					var k=0;
-					for(var j=0;j<Seed.queue_unt["city"+cityId].length;j++)
-						{
-						if(j>trainingId)
-							{
-							Seed.queue_unt["city"+cityId][j][2]=parseInt(rslt.dateTraining[k]["start"]);
-							Seed.queue_unt["city"+cityId][j][3]=parseInt(rslt.dateTraining[k]["end"]);
-							k++;
-							}
-						}
-					Seed.queue_unt["city"+cityId].splice(trainingId,1);
-					for(var i=1;i<5;i++)
-						{
-						var totalReturn=parseInt(uW.unitcost["unt"+typetrn][i])*parseInt(numtrptrn)*3600/2;
-						Seed.resources["city"+cityId]["rec"+i][0]=parseInt(Seed.resources["city"+cityId]["rec"+i][0])+totalReturn;
-						}
-					}
-				else
-					{
-					}
-				},
-			onFailure: function ()
-				{
-				},
-			});
-		},
-
-
+          }); 
+	}
 }
 
 pbStartup ();
