@@ -18382,7 +18382,7 @@ Tabs.startup = {
         t.myDiv = cityDiv;
         t.where = "City";
         var counter = 0;
-        var cityGrid = '<img src="https://dl.dropbox.com/u/66837575/grid/CityTileIDs.jpg">';
+        var cityGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/CityTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
         document.getElementById('gridPicture').innerHTML = cityGrid;
         var message='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showDefaults type=submit value="Load Defaults"><INPUT id=setDefaults type=submit value="Set Defaults">';
@@ -18439,7 +18439,7 @@ Tabs.startup = {
         var counter = 0;
         var fields = 13;
         var max = t.getCastleLevel();
-        var fieldGrid = '<img src="https://dl.dropbox.com/u/66837575/grid/FieldsTileIDs.jpg">';
+        var fieldGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/FieldsTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
         document.getElementById('gridPicture').innerHTML = fieldGrid;
         var mess='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showFieldDefaults type=submit value="Load Defaults"><INPUT id=setFieldDefaults type=submit value="Set Defaults">';
