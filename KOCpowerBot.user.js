@@ -6232,282 +6232,378 @@ Tabs.Test = {
 
  /****************************  Transport Implementation  *******************************/
 Tabs.transport = {
-  tabOrder: 101,
-  tabLabel: 'Transport',
-  myDiv: null,
-  timer: null,
-  traderState: [],
-  lTR: [],
-  tradeRoutes: [],
-  checkdotradetimeout: null,
-  count:0,
-  check:false,
-
-    init: function(div){
+    tabOrder: 101,
+    tabLabel: 'Transport',
+    myDiv: null,
+    timer: null,
+    traderState: [],
+    lTR: [],
+    tradeRoutes: [],
+    checkdotradetimeout: null,
+    count: 0,
+    check: false,
+    init: function (div) {
         var t = Tabs.transport;
         t.myDiv = div;
-        t.traderState = {running: false,};
+        t.traderState = {
+            running: false,
+        };
         t.readTraderState();
-      t.readTradeRoutes();
-      t.e_tradeRoutes();
-
-      var m = '<DIV id=pbTowrtDivF class=pbStat>'+translate("AUTOMATED TRANSPORT FUNCTION")+'</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
-      if (t.traderState.running == false) {
-          m += '<TD><INPUT id=pbTraderState type=submit value="Transport = OFF"></td>';
-      } else {
-          m += '<TD><INPUT id=pbTraderState type=submit value="Transport = ON"></td>';
-      }
-      m += '<TD><INPUT id=pbShowRoutes type=submit value="'+translate("Show Routes")+'"></td>';
-      m += '</tr></table></div>';
-      m += '<DIV id=pbTraderDivDRoute class=pbStat>'+translate("TRADE ROUTE OPTIONS")+'</div>';
-      m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center"><TR align="left">';
-        m += '<TD colspan=4>'+translate("Check transport every:")+' <INPUT id=pbtransportinterval type=text size=2 value="'+Options.transportinterval+'"\> '+translate("minutes")+'</td></tr></table>';
-      m += '<TD colspan=4>'+translate("Do not send transport out if less than")+' <INPUT id=pbminwagons type=text size=2 value="'+Options.minwagons+'"\> '+translate("troops are needed. (Needless transports are skipped this way)")+'</td></tr></table>';
-      m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...")+'</div></table>';
-    
-      
-      m += '<DIV id=pbTraderDivDRoute class=pbStat>'+translate("TRANSPORTS")+'</div>';
-      m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TR align="left"><TD>'+translate("From City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
-
-      m += '<TR align="left">';
-      m += '<TD>'+translate("To City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptcityTo></span></div></td>';
-      m += '<TD>'+translate("OR")+'</td>';
-      m += '<TD>X:<INPUT id=ptcityX type=text size=3\></td>';
-      m += '<TD>Y:<INPUT id=ptcityY type=text size=3\></td></tr>';
-      m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="left">';
-      m += '<TD width=75px>TroopType:</td><TD width=150px><SELECT id="TransportTroop">';
-      for (y in unsafeWindow.unitcost) m+='<option value="'+y+'">'+unsafeWindow.unitcost[y][0]+'</option>';
-      m+='</select></td><TD width=75px>'+translate("Troops Available:")+'&nbsp;</td><TD id=TroopAmount align=left width=75px></td>';
-      m+='<TD width=75px>'+translate("Global Carry Amount:")+'&nbsp;</td><TD id=CarryAmount align=left width=75px></td>';
-      m += '<TR><TD >'+translate("Troops:")+' </td><TD><INPUT id=TroopsToSend type=text size=6 maxlength=6 value="0">&nbsp;&nbsp;<INPUT id=MaxTroops type=submit value="Max"></td>';
-      m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
-      m +='<TD id=Calc colspan=3></td></tr>';
-      m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="center">';
-      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
-      m += '<TD id=TransRec1 align=right width=110px></td>';
-      m += '<TD id=HaveRec1 align=right width=110px></td>';
-      m += '<TD width=55px align=right><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px  align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountFood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
-      m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
-      m += '<TR align="center">';
-      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
-      m += '<TD id=TransRec2 align=right width=110px></td>';
-      m += '<TD id=HaveRec2 align=right width=110px></td>';
-      m += '<TD width=55px align=right><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountWood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
-      m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
-      m += '<TR align="center">';
-      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
-      m += '<TD id=TransRec3 align=right width=110px></td>';
-      m += '<TD id=HaveRec3 align=right width=110px></td>';
-      m += '<TD width=55px align=right><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountStone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
-      m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
-      m += '<TR align="center">';
-      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
-      m += '<TD id=TransRec4 align=right width=110px></td>';
-      m += '<TD id=HaveRec4 align=right width=110px></td>';
-      m += '<TD width=55px align=right><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountOre type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
-      m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
-      m += '<TR align="center">';
-      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td>';
-      m += '<TD id=TransRec5 align=right width=110px></td>';
-      m += '<TD id=HaveRec5 align=right width=110px></td>';
-      m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountAstone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
-      m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
-      m += '<TR align="center">';
-      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td>';
-      m += '<TD id=TransGold align=right width=110px></td>';
-      m += '<TD id=HaveGold align=right width=110px></td>';
-      m += '<TD width=55px align=right><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
-      m += '<TD width=180px align=left>'+translate("Keep:")+' <INPUT id=pbtargetamountGold type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-      m += '<TD width=100px>'+translate("Trade:")+' <INPUT id=pbtradeamountGold type=text size=11 maxlength=20 value="0"\></td>';
-      m += '<TD width=50px><INPUT id=MaxGold type=submit value="Max"></td></tr>';
-
-      m += '</table>';
-
-      m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRoute type=submit value="'+translate("Add Route")+'"><INPUT id=pbManualSend type=submit value="'+translate("Manual Transport")+'"></div>';
-      m += '<DIV id=errorSpace></div>'
-      
-      t.myDiv.innerHTML = m;
-      
-      document.getElementById('TransportTroop').value = 'unt9';
-      
-      t.tcp = new CdispCityPicker ('pttrader', document.getElementById('ptrescity'), true, t.updateResources, 0);
-      t.tcpto = new CdispCityPicker ('pttraderTo', document.getElementById('ptcityTo'), true, t.clickCitySelect);
-      t.tcpto.bindToXYboxes(document.getElementById ('ptcityX'), document.getElementById ('ptcityY'));
-      
-      
-      document.getElementById('TransportTroop').addEventListener('change', function(){t.updateTroops();}, false);
-      document.getElementById('pbTraderState').addEventListener('click', function(){t.toggleTraderState(this);}, false);
-      document.getElementById('pbSaveRoute').addEventListener('click', function(){t.addTradeRoute();}, false);
-      document.getElementById('pbManualSend').addEventListener('click', function(){t.ManualTransport();}, false);
-      document.getElementById('pbShowRoutes').addEventListener('click', function(){t.showTradeRoutes();}, false);
-      document.getElementById('FillInMax').addEventListener('click', function(){document.getElementById('TroopsToSend').value = t.TroopsNeeded;}, false);
-      
-      document.getElementById('MaxTroops').addEventListener('click', function(){
+        t.readTradeRoutes();
+        t.e_tradeRoutes();
+        var m = '<DIV id=pbTowrtDivF class=pbStat>' + translate("AUTOMATED TRANSPORT FUNCTION") + '</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
+        if (t.traderState.running == false) {
+            m += '<TD><INPUT id=pbTraderState type=submit value="Transport = OFF"></td>';
+        } else {
+            m += '<TD><INPUT id=pbTraderState type=submit value="Transport = ON"></td>';
+        }
+        m += '<TD><INPUT id=pbShowRoutes type=submit value="' + translate("Show Routes") + '"></td>';
+        m += '</tr></table></div>';
+        m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRADE ROUTE OPTIONS") + '</div>';
+        m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center"><TR align="left">';
+        m += '<TD colspan=4>' + translate("Check transport every:") + ' <INPUT id=pbtransportinterval type=text size=2 value="' + Options.transportinterval + '"\> ' + translate("minutes") + '</td></tr></table>';
+        m += '<TD colspan=4>' + translate("Do not send transport out if less than") + ' <INPUT id=pbminwagons type=text size=2 value="' + Options.minwagons + '"\> ' + translate("troops are needed. (Needless transports are skipped this way)") + '</td></tr></table>';
+        m += '<DIV style="margin-top:10px;margin-bottom:5px;">' + translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...") + '</div></table>';
+        m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRANSPORTS") + '</div>';
+        m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
+        m += '<TR align="left"><TD>' + translate("From City:") + '</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
+        m += '<TR align="left">';
+        m += '<TD>' + translate("To City:") + '</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptcityTo></span></div></td>';
+        m += '<TD>' + translate("OR") + '</td>';
+        m += '<TD>X:<INPUT id=ptcityX type=text size=3\></td>';
+        m += '<TD>Y:<INPUT id=ptcityY type=text size=3\></td></tr>';
+        m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="left">';
+        m += '<TD width=75px>TroopType:</td><TD width=150px><SELECT id="TransportTroop">';
+        for (y in unsafeWindow.unitcost) m += '<option value="' + y + '">' + unsafeWindow.unitcost[y][0] + '</option>';
+        m += '</select></td><TD width=75px>' + translate("Troops Available:") + '&nbsp;</td><TD id=TroopAmount align=left width=75px></td>';
+        m += '<TD width=75px>' + translate("Global Carry Amount:") + '&nbsp;</td><TD id=CarryAmount align=left width=75px></td>';
+        m += '<TR><TD >' + translate("Troops:") + ' </td><TD><INPUT id=TroopsToSend type=text size=6 maxlength=6 value="0">&nbsp;&nbsp;<INPUT id=MaxTroops type=submit value="Max"></td>';
+        m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
+        m += '<TD id=Calc colspan=3></td></tr>';
+        m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="center">';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
+        m += '<TD id=TransRec1 align=right width=110px></td>';
+        m += '<TD id=HaveRec1 align=right width=110px></td>';
+        m += '<TD width=55px align=right><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
+        m += '<TD width=180px  align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountFood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+        m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
+        m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
+        m += '<TR align="center">';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
+        m += '<TD id=TransRec2 align=right width=110px></td>';
+        m += '<TD id=HaveRec2 align=right width=110px></td>';
+        m += '<TD width=55px align=right><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
+        m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountWood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+        m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
+        m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
+        m += '<TR align="center">';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
+        m += '<TD id=TransRec3 align=right width=110px></td>';
+        m += '<TD id=HaveRec3 align=right width=110px></td>';
+        m += '<TD width=55px align=right><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
+        m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountStone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+        m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
+        m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
+        m += '<TR align="center">';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
+        m += '<TD id=TransRec4 align=right width=110px></td>';
+        m += '<TD id=HaveRec4 align=right width=110px></td>';
+        m += '<TD width=55px align=right><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
+        m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountOre type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+        m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
+        m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
+        m += '<TR align="center">';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td>';
+        m += '<TD id=TransRec5 align=right width=110px></td>';
+        m += '<TD id=HaveRec5 align=right width=110px></td>';
+        m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
+        m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountAstone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+        m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
+        m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
+        m += '<TR align="center">';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td>';
+        m += '<TD id=TransGold align=right width=110px></td>';
+        m += '<TD id=HaveGold align=right width=110px></td>';
+        m += '<TD width=55px align=right><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
+        m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountGold type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+        m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountGold type=text size=11 maxlength=20 value="0"\></td>';
+        m += '<TD width=50px><INPUT id=MaxGold type=submit value="Max"></td></tr>';
+        m += '</table>';
+        m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRoute type=submit value="' + translate("Add Route") + '"><INPUT id=pbManualSend type=submit value="' + translate("Manual Transport") + '"></div>';
+        m += '<DIV id=errorSpace></div>'
+        t.myDiv.innerHTML = m;
+        document.getElementById('TransportTroop')
+            .value = 'unt9';
+        t.tcp = new CdispCityPicker('pttrader', document.getElementById('ptrescity'), true, t.updateResources, 0);
+        t.tcpto = new CdispCityPicker('pttraderTo', document.getElementById('ptcityTo'), true, t.clickCitySelect);
+        t.tcpto.bindToXYboxes(document.getElementById('ptcityX'), document.getElementById('ptcityY'));
+        document.getElementById('TransportTroop')
+            .addEventListener('change', function () {
+            t.updateTroops();
+        }, false);
+        document.getElementById('pbTraderState')
+            .addEventListener('click', function () {
+            t.toggleTraderState(this);
+        }, false);
+        document.getElementById('pbSaveRoute')
+            .addEventListener('click', function () {
+            t.addTradeRoute();
+        }, false);
+        document.getElementById('pbManualSend')
+            .addEventListener('click', function () {
+            t.ManualTransport();
+        }, false);
+        document.getElementById('pbShowRoutes')
+            .addEventListener('click', function () {
+            t.showTradeRoutes();
+        }, false);
+        document.getElementById('FillInMax')
+            .addEventListener('click', function () {
+            document.getElementById('TroopsToSend')
+                .value = t.TroopsNeeded;
+        }, false);
+        document.getElementById('MaxTroops')
+            .addEventListener('click', function () {
             var rallypointlevel = t.getRallypoint('city' + t.tcp.city.id);
             if (rallypointlevel == 11) rallypointlevel = 15;
             if (rallypointlevel == 12) rallypointlevel = 20;
             var max = t.Troops;
             var maxCalced = 0;
-            if (t.Troops > (rallypointlevel*10000) ) max = (rallypointlevel*10000);
+            if (t.Troops > (rallypointlevel * 10000)) max = (rallypointlevel * 10000);
             total = t.calcTRBoosts(66);
-
             if (total > 0) {
-                maxCalced = max + (max * (total/100))
-                document.getElementById('TroopsToSend').value = maxCalced;
-            }else{
-                document.getElementById('TroopsToSend').value = max;
-            }    
-      }, false);
-      document.getElementById('MaxFood').addEventListener('click', function(){
-              t.Food = 0;
+                maxCalced = max + (max * (total / 100))
+                document.getElementById('TroopsToSend')
+                    .value = maxCalced;
+            } else {
+                document.getElementById('TroopsToSend')
+                    .value = max;
+            }
+        }, false);
+        document.getElementById('MaxFood')
+            .addEventListener('click', function () {
+            t.Food = 0;
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
-              document.getElementById('pbtradeamountFood').value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec1').innerHTML))?input:parseIntCommas(document.getElementById('TransRec1').innerHTML);
-      }, false);
-      document.getElementById('MaxWood').addEventListener('click', function(){
-              t.Wood = 0;
+            document.getElementById('pbtradeamountFood')
+                .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec1')
+                .innerHTML)) ? input : parseIntCommas(document.getElementById('TransRec1')
+                .innerHTML);
+        }, false);
+        document.getElementById('MaxWood')
+            .addEventListener('click', function () {
+            t.Wood = 0;
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
-              document.getElementById('pbtradeamountWood').value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec2').innerHTML))?input:parseIntCommas(document.getElementById('TransRec2').innerHTML);
-      }, false);
-      document.getElementById('MaxStone').addEventListener('click', function(){
-              t.Stone = 0;
+            document.getElementById('pbtradeamountWood')
+                .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec2')
+                .innerHTML)) ? input : parseIntCommas(document.getElementById('TransRec2')
+                .innerHTML);
+        }, false);
+        document.getElementById('MaxStone')
+            .addEventListener('click', function () {
+            t.Stone = 0;
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
-              document.getElementById('pbtradeamountStone').value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec3').innerHTML))?input:parseIntCommas(document.getElementById('TransRec3').innerHTML);
-      }, false);
-      document.getElementById('MaxOre').addEventListener('click', function(){
-              t.Ore = 0;
+            document.getElementById('pbtradeamountStone')
+                .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec3')
+                .innerHTML)) ? input : parseIntCommas(document.getElementById('TransRec3')
+                .innerHTML);
+        }, false);
+        document.getElementById('MaxOre')
+            .addEventListener('click', function () {
+            t.Ore = 0;
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
-              document.getElementById('pbtradeamountOre').value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec4').innerHTML))?input:parseIntCommas(document.getElementById('TransRec4').innerHTML);
-      }, false);
-      document.getElementById('MaxGold').addEventListener('click', function(){
+            document.getElementById('pbtradeamountOre')
+                .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec4')
+                .innerHTML)) ? input : parseIntCommas(document.getElementById('TransRec4')
+                .innerHTML);
+        }, false);
+        document.getElementById('MaxGold')
+            .addEventListener('click', function () {
             t.Gold = 0;
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
-              document.getElementById('pbtradeamountGold').value = (parseInt(input) <= parseIntCommas(document.getElementById('TransGold').innerHTML))?input:parseIntCommas(document.getElementById('TransGold').innerHTML);
-      }, false);
-       document.getElementById('MaxAstone').addEventListener('click', function(){
-              t.Astone = 0;
+            document.getElementById('pbtradeamountGold')
+                .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransGold')
+                .innerHTML)) ? input : parseIntCommas(document.getElementById('TransGold')
+                .innerHTML);
+        }, false);
+        document.getElementById('MaxAstone')
+            .addEventListener('click', function () {
+            t.Astone = 0;
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
-              document.getElementById('pbtradeamountAstone').value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec5').innerHTML))?input:parseIntCommas(document.getElementById('TransRec5').innerHTML);
-      }, false);
-      
-      document.getElementById('pbtransportinterval').addEventListener('keyup', function(){
-        if (isNaN(document.getElementById('pbtransportinterval').value)){ document.getElementById('pbtransportinterval').value=60 ;}
-        Options.transportinterval = document.getElementById('pbtransportinterval').value;
-        saveOptions();
-      }, false);
-      
-      document.getElementById('pbtargetamountFood').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtargetamountFood').value)) document.getElementById('pbtargetamountFood').value=0 ;
-      }, false);
-      document.getElementById('pbtargetamountWood').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtargetamountWood').value)) document.getElementById('pbtargetamountWood').value=0 ;
-      }, false);
-      document.getElementById('pbtargetamountStone').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtargetamountStone').value)) document.getElementById('pbtargetamountStone').value=0 ;
-      }, false);
-      document.getElementById('pbtargetamountOre').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtargetamountOre').value)) document.getElementById('pbtargetamountOre').value=0 ;
-      }, false);
-      document.getElementById('pbtargetamountAstone').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtargetamountAstone').value)) document.getElementById('pbtargetamountAstone').value=0 ;
-      }, false);
-      document.getElementById('pbtargetamountGold').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtargetamountGold').value)) document.getElementById('pbtargetamountGold').value=0 ;
-      }, false);
-      document.getElementById('pbtradeamountFood').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtradeamountFood').value)) document.getElementById('pbtradeamountFood').value=0 ;
-      }, false);
-      document.getElementById('pbtradeamountWood').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtradeamountWood').value)) document.getElementById('pbtradeamountWood').value=0 ;
-      }, false);
-      document.getElementById('pbtradeamountStone').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtradeamountStone').value)) document.getElementById('pbtradeamountStone').value=0 ;
-      }, false);
-      document.getElementById('pbtradeamountOre').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtradeamountOre').value)) document.getElementById('pbtradeamountOre').value=0 ;
-      }, false);
-      document.getElementById('pbtradeamountAstone').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtradeamountAstone').value)) document.getElementById('pbtradeamountAstone').value=0 ;
-      }, false);
-      document.getElementById('pbtradeamountGold').addEventListener('change', function(){
-          if (isNaNCommas(document.getElementById('pbtradeamountGold').value)) document.getElementById('pbtradeamountGold').value=0 ;
-      }, false);
-     document.getElementById('pbminwagons').addEventListener('keyup', function(){
-         if (isNaN(document.getElementById('pbminwagons').value)) document.getElementById('pbminwagons').value=100 ;
-         Options.minwagons = parseInt(document.getElementById('pbminwagons').value);
-         saveOptions();
-     }, false)
-      
-      document.getElementById('pbshipFood').addEventListener('click', function(){
-          if (document.getElementById('pbshipFood').checked==false) {
-              document.getElementById('pbtargetamountFood').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetamountFood').disabled = false;
-          }
-      },false);
-      document.getElementById('pbshipWood').addEventListener('click', function(){
-          if (document.getElementById('pbshipWood').checked==false) {
-              document.getElementById('pbtargetamountWood').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetamountWood').disabled = false;
-          }
-      },false);
-      document.getElementById('pbshipStone').addEventListener('click', function(){
-          if (document.getElementById('pbshipStone').checked==false) {
-              document.getElementById('pbtargetamountStone').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetamountStone').disabled = false;
-          }
-      },false);
-      document.getElementById('pbshipOre').addEventListener('click', function(){
-          if (document.getElementById('pbshipOre').checked==false) {
-              document.getElementById('pbtargetamountOre').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetamountOre').disabled = false;
-          }
-      },false);
-       document.getElementById('pbshipAstone').addEventListener('click', function(){
-          if (document.getElementById('pbshipAstone').checked==false) {
-              document.getElementById('pbtargetamountAstone').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetamountAstone').disabled = false;
-          }
-      },false);
-       document.getElementById('pbshipGold').addEventListener('click', function(){
-          if (document.getElementById('pbshipGold').checked==false) {
-              document.getElementById('pbtargetamountGold').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetamountGold').disabled = false;
-          }
-      },false);
-      window.addEventListener('unload', t.onUnload, false);
+            document.getElementById('pbtradeamountAstone')
+                .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec5')
+                .innerHTML)) ? input : parseIntCommas(document.getElementById('TransRec5')
+                .innerHTML);
+        }, false);
+        document.getElementById('pbtransportinterval')
+            .addEventListener('keyup', function () {
+            if (isNaN(document.getElementById('pbtransportinterval')
+                .value)) {
+                document.getElementById('pbtransportinterval')
+                    .value = 60;
+            }
+            Options.transportinterval = document.getElementById('pbtransportinterval')
+                .value;
+            saveOptions();
+        }, false);
+        document.getElementById('pbtargetamountFood')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtargetamountFood')
+                .value)) document.getElementById('pbtargetamountFood')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtargetamountWood')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtargetamountWood')
+                .value)) document.getElementById('pbtargetamountWood')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtargetamountStone')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtargetamountStone')
+                .value)) document.getElementById('pbtargetamountStone')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtargetamountOre')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtargetamountOre')
+                .value)) document.getElementById('pbtargetamountOre')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtargetamountAstone')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtargetamountAstone')
+                .value)) document.getElementById('pbtargetamountAstone')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtargetamountGold')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtargetamountGold')
+                .value)) document.getElementById('pbtargetamountGold')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtradeamountFood')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtradeamountFood')
+                .value)) document.getElementById('pbtradeamountFood')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtradeamountWood')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtradeamountWood')
+                .value)) document.getElementById('pbtradeamountWood')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtradeamountStone')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtradeamountStone')
+                .value)) document.getElementById('pbtradeamountStone')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtradeamountOre')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtradeamountOre')
+                .value)) document.getElementById('pbtradeamountOre')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtradeamountAstone')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtradeamountAstone')
+                .value)) document.getElementById('pbtradeamountAstone')
+                .value = 0;
+        }, false);
+        document.getElementById('pbtradeamountGold')
+            .addEventListener('change', function () {
+            if (isNaNCommas(document.getElementById('pbtradeamountGold')
+                .value)) document.getElementById('pbtradeamountGold')
+                .value = 0;
+        }, false);
+        document.getElementById('pbminwagons')
+            .addEventListener('keyup', function () {
+            if (isNaN(document.getElementById('pbminwagons')
+                .value)) document.getElementById('pbminwagons')
+                .value = 100;
+            Options.minwagons = parseInt(document.getElementById('pbminwagons')
+                .value);
+            saveOptions();
+        }, false)
+        document.getElementById('pbshipFood')
+            .addEventListener('click', function () {
+            if (document.getElementById('pbshipFood')
+                .checked == false) {
+                document.getElementById('pbtargetamountFood')
+                    .disabled = true;
+            } else {
+                document.getElementById('pbtargetamountFood')
+                    .disabled = false;
+            }
+        }, false);
+        document.getElementById('pbshipWood')
+            .addEventListener('click', function () {
+            if (document.getElementById('pbshipWood')
+                .checked == false) {
+                document.getElementById('pbtargetamountWood')
+                    .disabled = true;
+            } else {
+                document.getElementById('pbtargetamountWood')
+                    .disabled = false;
+            }
+        }, false);
+        document.getElementById('pbshipStone')
+            .addEventListener('click', function () {
+            if (document.getElementById('pbshipStone')
+                .checked == false) {
+                document.getElementById('pbtargetamountStone')
+                    .disabled = true;
+            } else {
+                document.getElementById('pbtargetamountStone')
+                    .disabled = false;
+            }
+        }, false);
+        document.getElementById('pbshipOre')
+            .addEventListener('click', function () {
+            if (document.getElementById('pbshipOre')
+                .checked == false) {
+                document.getElementById('pbtargetamountOre')
+                    .disabled = true;
+            } else {
+                document.getElementById('pbtargetamountOre')
+                    .disabled = false;
+            }
+        }, false);
+        document.getElementById('pbshipAstone')
+            .addEventListener('click', function () {
+            if (document.getElementById('pbshipAstone')
+                .checked == false) {
+                document.getElementById('pbtargetamountAstone')
+                    .disabled = true;
+            } else {
+                document.getElementById('pbtargetamountAstone')
+                    .disabled = false;
+            }
+        }, false);
+        document.getElementById('pbshipGold')
+            .addEventListener('click', function () {
+            if (document.getElementById('pbshipGold')
+                .checked == false) {
+                document.getElementById('pbtargetamountGold')
+                    .disabled = true;
+            } else {
+                document.getElementById('pbtargetamountGold')
+                    .disabled = false;
+            }
+        }, false);
+        window.addEventListener('unload', t.onUnload, false);
     },
-     calcTRBoosts : function (StatID){
+    calcTRBoosts: function (StatID) {
         var equipped = Seed.throne.slotEquip[1];
         var total = 0;
-        for(var k = 0; k<equipped.length; k++){
+        for (var k = 0; k < equipped.length; k++) {
             var item_id = equipped[k];
             var item = unsafeWindow.kocThroneItems[item_id];
-            for(var i = 1; i<=item.quality; i++){
-                var id = item['effects']['slot'+i]['id'];
-                if(id == StatID){
-                    var tier = parseInt(item["effects"]["slot"+i]["tier"]);
+            for (var i = 1; i <= item.quality; i++) {
+                var id = item['effects']['slot' + i]['id'];
+                if (id == StatID) {
+                    var tier = parseInt(item["effects"]["slot" + i]["tier"]);
                     var level = item["level"];
                     var p = unsafeWindow.cm.thronestats.tiers[id][tier];
                     var Percent = p.base + ((level * level + level) * p.growth * 0.5);
@@ -6517,398 +6613,469 @@ Tabs.transport = {
         }
         return total;
     },
-    updateResources : function (){
+    updateResources: function () {
         var t = Tabs.transport;
         var ToCity = null;
-        for (var i=1;i<=5;i++)
-            if(i==5)
-               document.getElementById('TransRec'+i).innerHTML = addCommas ( parseInt(Seed.resources["city" + t.tcp.city.id]['rec'+i][0]) );
-            else
-               document.getElementById('TransRec'+i).innerHTML = addCommas ( parseInt(Seed.resources["city" + t.tcp.city.id]['rec'+i][0]/3600) );
-        document.getElementById('TransGold').innerHTML = addCommas ( parseInt(Seed.citystats["city" + t.tcp.city.id]['gold'][0]) );
+        for (var i = 1; i <= 5; i++)
+        if (i == 5) document.getElementById('TransRec' + i)
+            .innerHTML = addCommas(parseInt(Seed.resources["city" + t.tcp.city.id]['rec' + i][0]));
+        else document.getElementById('TransRec' + i)
+            .innerHTML = addCommas(parseInt(Seed.resources["city" + t.tcp.city.id]['rec' + i][0] / 3600));
+        document.getElementById('TransGold')
+            .innerHTML = addCommas(parseInt(Seed.citystats["city" + t.tcp.city.id]['gold'][0]));
         for (ii in Seed.cities)
-        if (Seed.cities[ii][2] == document.getElementById ('ptcityX').value && Seed.cities[ii][3] == document.getElementById ('ptcityY').value)
-          ToCity = Seed.cities[ii][0];
-      for (var i=1;i<=5;i++)
-          if (ToCity != null)
-            if(i==5)
-               document.getElementById('HaveRec'+i).innerHTML = addCommas ( parseInt(Seed.resources["city" + ToCity]['rec'+i][0]) );
-            else
-               document.getElementById('HaveRec'+i).innerHTML = addCommas ( parseInt(Seed.resources["city" + ToCity]['rec'+i][0]/3600) );
-          else document.getElementById('HaveRec'+i).innerHTML = "----";
-      if (ToCity != null) document.getElementById('HaveGold').innerHTML = addCommas ( parseInt(Seed.citystats["city" + ToCity]['gold'][0]) );
-      else  document.getElementById('HaveGold').innerHTML =  "----";   
+        if (Seed.cities[ii][2] == document.getElementById('ptcityX')
+            .value && Seed.cities[ii][3] == document.getElementById('ptcityY')
+            .value) ToCity = Seed.cities[ii][0];
+        for (var i = 1; i <= 5; i++)
+        if (ToCity != null) if (i == 5) document.getElementById('HaveRec' + i)
+            .innerHTML = addCommas(parseInt(Seed.resources["city" + ToCity]['rec' + i][0]));
+        else document.getElementById('HaveRec' + i)
+            .innerHTML = addCommas(parseInt(Seed.resources["city" + ToCity]['rec' + i][0] / 3600));
+        else document.getElementById('HaveRec' + i)
+            .innerHTML = "----";
+        if (ToCity != null) document.getElementById('HaveGold')
+            .innerHTML = addCommas(parseInt(Seed.citystats["city" + ToCity]['gold'][0]));
+        else document.getElementById('HaveGold')
+            .innerHTML = "----";
     },
-    
-    updateTroops : function (city){
+    updateTroops: function (city) {
         var t = Tabs.transport;
         var fontcolor = 'black';
-        t.Food = parseIntCommas(document.getElementById('pbtradeamountFood').value);
-          t.Wood = parseIntCommas(document.getElementById('pbtradeamountWood').value);
-          t.Stone = parseIntCommas(document.getElementById('pbtradeamountStone').value);
-          t.Ore = parseIntCommas(document.getElementById('pbtradeamountOre').value);
-          t.Gold = parseIntCommas(document.getElementById('pbtradeamountGold').value);
-        t.Astone = parseIntCommas(document.getElementById('pbtradeamountAstone').value)*5;
-        var unit = document.getElementById('TransportTroop').value;
+        t.Food = parseIntCommas(document.getElementById('pbtradeamountFood')
+            .value);
+        t.Wood = parseIntCommas(document.getElementById('pbtradeamountWood')
+            .value);
+        t.Stone = parseIntCommas(document.getElementById('pbtradeamountStone')
+            .value);
+        t.Ore = parseIntCommas(document.getElementById('pbtradeamountOre')
+            .value);
+        t.Gold = parseIntCommas(document.getElementById('pbtradeamountGold')
+            .value);
+        t.Astone = parseIntCommas(document.getElementById('pbtradeamountAstone')
+            .value) * 5;
+        var unit = document.getElementById('TransportTroop')
+            .value;
         t.Troops = parseInt(Seed.units['city' + t.tcp.city.id][unit]);
         var featherweight = parseInt(Seed.tech.tch10);
         var Load = parseInt(unsafeWindow.unitstats[unit]['5'])
-        var LoadUnit = (featherweight * ((Load/100)*10)) + Load;
+        var LoadUnit = (featherweight * ((Load / 100) * 10)) + Load;
         var GlobalMaxLoad = t.Troops * LoadUnit;
-        t.MaxLoad = parseInt(document.getElementById('TroopsToSend').value) * LoadUnit;
-         t.TroopsNeeded = (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit;
-         t.TroopsNeeded = t.TroopsNeeded.toFixed(0);    
-        if (t.TroopsNeeded < ((t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit)) t.TroopsNeeded++;    
-        
-        if ( t.TroopsNeeded > t.Troops) fontcolor = 'red';
-        if (t.Troops > 0 ) document.getElementById('TroopAmount').innerHTML = '<FONT color='+fontcolor+'>' + addCommas(t.Troops) + '</font>';
-        else document.getElementById('TroopAmount').innerHTML = 0;
-        if (GlobalMaxLoad > 0) document.getElementById('CarryAmount').innerHTML = addCommas(GlobalMaxLoad);
-        else  document.getElementById('CarryAmount').innerHTML = 0;
-        
-        document.getElementById('Calc').innerHTML = ''+translate("Resources:")+' ' +  addCommas(t.Food + t.Wood + t.Stone + t.Ore + t.Gold  + t.Astone) + ' / ' + addCommas(t.MaxLoad) + '&nbsp;&nbsp;('+translate("Troops Needed:")+' <FONT color='+fontcolor+'>' + addCommas(t.TroopsNeeded) + '</font> )' ;
-        
-    },    
-    
-    getRallypoint: function(cityId){
-      var t = Tabs.transport;
-      for (var o in Seed.buildings[cityId]){
-        var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-        var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-        if (buildingType == 12){
-            return parseInt(buildingLevel);
-            break;
-        }
-       }
-      return 0;
+        t.MaxLoad = parseInt(document.getElementById('TroopsToSend')
+            .value) * LoadUnit;
+        t.TroopsNeeded = (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit;
+        t.TroopsNeeded = t.TroopsNeeded.toFixed(0);
+        if (t.TroopsNeeded < ((t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit)) t.TroopsNeeded++;
+        if (t.TroopsNeeded > t.Troops) fontcolor = 'red';
+        if (t.Troops > 0) document.getElementById('TroopAmount')
+            .innerHTML = '<FONT color=' + fontcolor + '>' + addCommas(t.Troops) + '</font>';
+        else document.getElementById('TroopAmount')
+            .innerHTML = 0;
+        if (GlobalMaxLoad > 0) document.getElementById('CarryAmount')
+            .innerHTML = addCommas(GlobalMaxLoad);
+        else document.getElementById('CarryAmount')
+            .innerHTML = 0;
+        document.getElementById('Calc')
+            .innerHTML = '' + translate("Resources:") + ' ' + addCommas(t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) + ' / ' + addCommas(t.MaxLoad) + '&nbsp;&nbsp;(' + translate("Troops Needed:") + ' <FONT color=' + fontcolor + '>' + addCommas(t.TroopsNeeded) + '</font> )';
     },
-            
-
- e_tradeRoutes: function(){
-      var t = Tabs.transport;
-      clearTimeout(t.timer);
-      var now = new Date();
-      if (t.traderState.running == true)    {
-          var now = new Date().getTime()/1000.0;
-          now = now.toFixed(0);
-          var last = Options.lasttransport;
-               if ( now > (parseInt(last) + (Options.transportinterval*60))){
-                  t.checkdoTrades();
-              }
-      }
-      t.timer = setTimeout(function(){ t.e_tradeRoutes();}, Options.transportinterval*1000);
-      
-    },
-        
-    delTradeRoutes: function() {
-        var t = Tabs.transport;    
-        t.tradeRoutes= [];
-    },
-    
-    checkcoords : function (obj){
+    getRallypoint: function (cityId) {
         var t = Tabs.transport;
-        if(obj.id == 'pbok'){
+        for (var o in Seed.buildings[cityId]) {
+            var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+            var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+            if (buildingType == 12) {
+                return parseInt(buildingLevel);
+                break;
+            }
+        }
+        return 0;
+    },
+    e_tradeRoutes: function () {
+        var t = Tabs.transport;
+        clearTimeout(t.timer);
+        var now = new Date();
+        if (t.traderState.running == true) {
+            var now = new Date()
+                .getTime() / 1000.0;
+            now = now.toFixed(0);
+            var last = Options.lasttransport;
+            if (now > (parseInt(last) + (Options.transportinterval * 60))) {
+                t.checkdoTrades();
+            }
+        }
+        t.timer = setTimeout(function () {
+            t.e_tradeRoutes();
+        }, Options.transportinterval * 1000);
+    },
+    delTradeRoutes: function () {
+        var t = Tabs.transport;
+        t.tradeRoutes = [];
+    },
+    checkcoords: function (obj) {
+        var t = Tabs.transport;
+        if (obj.id == 'pbok') {
             t.check = true;
             t.addTradeRoute();
         }
-        return;            
+        return;
     },
-    
     addTradeRoute: function () {
         var valid = true;
         var t = Tabs.transport;
         var city = t.tcp.city.id;
-        if (document.getElementById('ptcityX').value==0 && document.getElementById('ptcityY').value ==0 && !t.check)
-        {
-            new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv);
+        if (document.getElementById('ptcityX')
+            .value == 0 && document.getElementById('ptcityY')
+            .value == 0 && !t.check) {
+            new CdialogConfirm('<SPAN class=boldRed>' + translate("You are about to set a route to location 0,0!") + '</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv);
             return;
         }
-        var ship_Food = document.getElementById('pbshipFood').checked;
-        var ship_Wood = document.getElementById('pbshipWood').checked;
-        var ship_Stone = document.getElementById('pbshipStone').checked;
-        var ship_Ore = document.getElementById('pbshipOre').checked;
-        var ship_Astone = document.getElementById('pbshipAstone').checked;
-        var ship_Gold = document.getElementById('pbshipGold').checked;
-        var target_Food = parseIntCommas(document.getElementById('pbtargetamountFood').value);
-        var target_Wood = parseIntCommas(document.getElementById('pbtargetamountWood').value);
-        var target_Stone = parseIntCommas(document.getElementById('pbtargetamountStone').value);
-        var target_Ore = parseIntCommas(document.getElementById('pbtargetamountOre').value);
-        var target_Astone = parseIntCommas(document.getElementById('pbtargetamountAstone').value);
-        var target_Gold = parseIntCommas(document.getElementById('pbtargetamountGold').value);
-        var trade_Food = parseIntCommas(document.getElementById('pbtradeamountFood').value);
-        var trade_Wood = parseIntCommas(document.getElementById('pbtradeamountWood').value);
-        var trade_Stone = parseIntCommas(document.getElementById('pbtradeamountStone').value);
-        var trade_Ore = parseIntCommas(document.getElementById('pbtradeamountOre').value);
-        var trade_Astone = parseIntCommas(document.getElementById('pbtradeamountAstone').value);
-        var trade_Gold = parseIntCommas(document.getElementById('pbtradeamountGold').value);
-        var target_x = document.getElementById('ptcityX').value;
-        var target_y = document.getElementById('ptcityY').value;
+        var ship_Food = document.getElementById('pbshipFood')
+            .checked;
+        var ship_Wood = document.getElementById('pbshipWood')
+            .checked;
+        var ship_Stone = document.getElementById('pbshipStone')
+            .checked;
+        var ship_Ore = document.getElementById('pbshipOre')
+            .checked;
+        var ship_Astone = document.getElementById('pbshipAstone')
+            .checked;
+        var ship_Gold = document.getElementById('pbshipGold')
+            .checked;
+        var target_Food = parseIntCommas(document.getElementById('pbtargetamountFood')
+            .value);
+        var target_Wood = parseIntCommas(document.getElementById('pbtargetamountWood')
+            .value);
+        var target_Stone = parseIntCommas(document.getElementById('pbtargetamountStone')
+            .value);
+        var target_Ore = parseIntCommas(document.getElementById('pbtargetamountOre')
+            .value);
+        var target_Astone = parseIntCommas(document.getElementById('pbtargetamountAstone')
+            .value);
+        var target_Gold = parseIntCommas(document.getElementById('pbtargetamountGold')
+            .value);
+        var trade_Food = parseIntCommas(document.getElementById('pbtradeamountFood')
+            .value);
+        var trade_Wood = parseIntCommas(document.getElementById('pbtradeamountWood')
+            .value);
+        var trade_Stone = parseIntCommas(document.getElementById('pbtradeamountStone')
+            .value);
+        var trade_Ore = parseIntCommas(document.getElementById('pbtradeamountOre')
+            .value);
+        var trade_Astone = parseIntCommas(document.getElementById('pbtradeamountAstone')
+            .value);
+        var trade_Gold = parseIntCommas(document.getElementById('pbtradeamountGold')
+            .value);
+        var target_x = document.getElementById('ptcityX')
+            .value;
+        var target_y = document.getElementById('ptcityY')
+            .value;
         var target_city = 0;
-        var TroopType = document.getElementById('TransportTroop').value;
+        var TroopType = document.getElementById('TransportTroop')
+            .value;
         var route_state = true;
-        if(t.tcpto.city)
-            if(t.tcpto.city.x == target_x && t.tcpto.city.y == target_y)
-                target_city = t.tcpto.city.id;
-            
+        if (t.tcpto.city) if (t.tcpto.city.x == target_x && t.tcpto.city.y == target_y) target_city = t.tcpto.city.id;
         if (valid == true) {
             var lTR = t.tradeRoutes;
             lTR.push({
-                city:                city,
-                ship_Food:            ship_Food,
-                target_Food:        target_Food,
-                trade_Food:         trade_Food,
-                ship_Wood:            ship_Wood,
-                target_Wood:        target_Wood,
-                trade_Wood:         trade_Wood,
-                ship_Stone:            ship_Stone,
-                target_Stone:        target_Stone,
-                trade_Stone:         trade_Stone,
-                ship_Ore:            ship_Ore,
-                target_Ore:            target_Ore,
-                trade_Ore:             trade_Ore,
-                ship_Astone:        ship_Astone,
-                target_Astone:        target_Astone,
-                trade_Astone:         trade_Astone,
-                ship_Gold:            ship_Gold,
-                target_Gold:        target_Gold,
-                trade_Gold:         trade_Gold,
-                target_x:             target_x,
-                target_y:             target_y,
-                target_city:        target_city,
-                TroopType:          TroopType,
-                route_state:         "true"
+                city: city,
+                ship_Food: ship_Food,
+                target_Food: target_Food,
+                trade_Food: trade_Food,
+                ship_Wood: ship_Wood,
+                target_Wood: target_Wood,
+                trade_Wood: trade_Wood,
+                ship_Stone: ship_Stone,
+                target_Stone: target_Stone,
+                trade_Stone: trade_Stone,
+                ship_Ore: ship_Ore,
+                target_Ore: target_Ore,
+                trade_Ore: trade_Ore,
+                ship_Astone: ship_Astone,
+                target_Astone: target_Astone,
+                trade_Astone: trade_Astone,
+                ship_Gold: ship_Gold,
+                target_Gold: target_Gold,
+                trade_Gold: trade_Gold,
+                target_x: target_x,
+                target_y: target_y,
+                target_city: target_city,
+                TroopType: TroopType,
+                route_state: "true"
             });
         }
-        document.getElementById('pbTraderDivDRoute').style.background ='#99FF99';
-        setTimeout(function(){ (document.getElementById('pbTraderDivDRoute').style.background =''); }, 1000);
+        document.getElementById('pbTraderDivDRoute')
+            .style.background = '#99FF99';
+        setTimeout(function () {
+            (document.getElementById('pbTraderDivDRoute')
+                .style.background = '');
+        }, 1000);
     },
     showTradeRoutes: function () {
         var t = Tabs.transport;
         var popTradeRoutes = null;
-        t.popTradeRoutes = new pbPopup('pbShowTrade', 0, 0, 750, 485, true, function() {clearTimeout (1000);});
-        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pbRoutesQueue">';       
-        t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-        t.popTradeRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Transport routes")+'</b></center></td>';
+        t.popTradeRoutes = new pbPopup('pbShowTrade', 0, 0, 750, 485, true, function () {
+            clearTimeout(1000);
+        });
+        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pbRoutesQueue">';
+        t.popTradeRoutes.getMainDiv()
+            .innerHTML = '</table></div>' + m;
+        t.popTradeRoutes.getTopDiv()
+            .innerHTML = '<TD><CENTER><B>' + translate("Transport routes") + '</b></center></td>';
         t.paintTradeRoutes();
-        t.popTradeRoutes.show(true)    ;
+        t.popTradeRoutes.show(true);
     },
-    paintTradeRoutes: function(){
-            var t = Tabs.transport;
-            var r = t.tradeRoutes;
-            var cityname;
-        var m= '<TABLE id=paintRoutes class=pbTab>';
-            for (var i=0;i<(r.length);i++) {
-                var queueId = i;
-                var cityname = (Cities.byID[r[queueId].city] ? Cities.byID[r[queueId].city].name : "null");
-                var citynameTo = null, TO, status, unit;
-                if(typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0 && Cities.byID[r[queueId].target_city] != 'undefined')
-                    citynameTo = (Cities.byID[r[queueId].target_city] ? Cities.byID[r[queueId].target_city].name : "null");      
-                else if (citynameTo == null) TO = r[i].target_x +','+ r[i].target_y;
-                    else TO = citynameTo;
-                if (r[i].route_state) status = '<FONT color=green>'+translate("Enabled")+'</font>';
-                    else status = '<FONT color=red>'+translate("Disabled")+'</font>';
-                if (r[i].TroopType == undefined) unit = 'unt9';
-                    else unit = r[i].TroopType;
-                m += '<TR><TD TD width=12px>&nbsp;&nbsp;</td></tr>';
-        m +='<TR><TD width=20px>'+(i+1)+'</td><TD width=175px>'+translate("From:")+'&nbsp;&nbsp;'+ cityname +'</TD><TD width=175px>'+translate("To:")+'&nbsp;&nbsp;'+ TO +'</td><TD width=175px>'+status+'</td>';
-        m +='<TD width=60px><A onclick="traceEdit('+queueId+')">'+translate("Edit")+'</a></td><TD width=60px><A onclick="traceDelete('+queueId+')">Delete</a></td></tr>';
-        m += '<TR><TD></td><TD>Troops:&nbsp;&nbsp;'+unsafeWindow.unitcost[unit][0]+'</td></tr>';
-        if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Food) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Food)+'</td>';
-                if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Wood) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Wood)+'</td>';
-                if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Stone) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Stone)+'</td>';
-                if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Ore) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Ore)+'</td>';
-                if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Astone) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Astone)+'</td>';
-                if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td><TD>'+translate("Target:")+' '+ addCommas(r[i].target_Gold) +'</td><TD>'+translate("Trade:")+' '+ addCommas(r[i].trade_Gold)+'</td>';
-       }
-         m +='</table>';
-         document.getElementById('pbRoutesQueue').innerHTML= m;
-       unsafeWindow.traceEdit = t.editQueueElement;
-       unsafeWindow.traceDelete = t.cancelQueueElement;
-        },
-      
-     cancelQueueElement: function(queueId){
-         var t = Tabs.transport;
-         var queueId = parseInt(queueId);
-         t.tradeRoutes.splice(queueId, 1);
-         t.showTradeRoutes();
-     },
-     
-     editQueueElement: function(queueId){
-         var t = Tabs.transport;
-         var r = t.tradeRoutes;
-         var queueId = parseInt(queueId);
-         var cityname = Cities.byID[r[queueId].city].name;
-         var citynameTo, TO;
-         if(typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0 && Cities.byID[r[queueId].target_city] != 'undefined')
-            citynameTo = Cities.byID[r[queueId].target_city].name;
-         var Types = ['food','wood','stone','iron','aetherstone','gold'];
-         if (citynameTo == null) TO = r[queueId].target_x +','+ r[queueId].target_y;
-             else TO = citynameTo;
-         var n = '<TABLE id=editRoutes class=pbTab>';
-         n +='<TD>'+translate("From:")+'&nbsp;'+ cityname +'</td><TD>'+translate("To:")+'&nbsp;'+ TO +'</td>';
-         n +='<TD><INPUT id=TradeStatus type=checkbox>&nbsp;Enable Route</td>';
-         n += '<TD width=150px>'+translate("Troop Type:")+'<SELECT id="pbbTransportTroop">';
-         for (y in unsafeWindow.unitcost) n+='<option value="'+y+'">'+unsafeWindow.unitcost[y][0]+'</option>';
-         n+='</select></td></table><BR><TABLE  id=editRoutes class=pbTab>';
-         for (var i=0;i<Types.length;i++){
-             var icon = Types[i];
-             n += '<TR><TD width=50px align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/'+icon+'_30.png"></td>';
-             n += '<TD width=50px align=center><INPUT id=pbbship'+icon+' type=checkbox></td>';
-             n += '<TD width=125px>'+translate("Keep:")+' <INPUT id=pbbtargetamount'+icon+' type=text size=11 maxlength=11 value="0"></td>';
-             n += '<TD width=125px>'+translate("Trade:")+' <INPUT id=pbbtradeamount'+icon+' type=text size=11 maxlength=11 value="0"\></td></tr>';
-         }
-       n+='</table><BR><TABLE id=editRoutes class=pbTab><TR><TD><a class="button20" id="Cancel"><span>'+translate("Cancel")+'</span></a></td>';
-       n+='<TD><a class="button20" id="Save"><span>'+translate("Save")+'</span></a></td></tr>';
-       n +='</table>';
-       
-       document.getElementById('pbRoutesQueue').innerHTML= n;
-       document.getElementById('TradeStatus').checked = r[queueId].route_state;
-       if (r[queueId].TroopType == undefined) var unit = 'unt9';
-       else var unit = r[queueId].TroopType;
-       document.getElementById('pbbTransportTroop').value = unit;
-       document.getElementById('pbbshipfood').checked = r[queueId].ship_Food;
-       document.getElementById('pbbshipwood').checked = r[queueId].ship_Wood;
-       document.getElementById('pbbshipstone').checked = r[queueId].ship_Stone;
-       document.getElementById('pbbshipiron').checked = r[queueId].ship_Ore;
-       document.getElementById('pbbshipaetherstone').checked = r[queueId].ship_Astone;
-       document.getElementById('pbbshipgold').checked = r[queueId].ship_Gold;
-       document.getElementById('pbbtargetamountfood').value = r[queueId].target_Food;
-       document.getElementById('pbbtargetamountwood').value = r[queueId].target_Wood;
-       document.getElementById('pbbtargetamountstone').value = r[queueId].target_Stone;
-       document.getElementById('pbbtargetamountiron').value = r[queueId].target_Ore;
-       document.getElementById('pbbtargetamountaetherstone').value = r[queueId].target_Astone;
-       document.getElementById('pbbtargetamountgold').value = r[queueId].target_Gold;
-       document.getElementById('pbbtradeamountfood').value = r[queueId].trade_Food;
-       document.getElementById('pbbtradeamountwood').value = r[queueId].trade_Wood;
-       document.getElementById('pbbtradeamountstone').value = r[queueId].trade_Stone;
-       document.getElementById('pbbtradeamountiron').value = r[queueId].trade_Ore;
-       document.getElementById('pbbtradeamountaetherstone').value = r[queueId].trade_Astone;
-       document.getElementById('pbbtradeamountgold').value = r[queueId].trade_Gold;
-       document.getElementById('Cancel').addEventListener('click', function(){t.showTradeRoutes();}, false);
-       document.getElementById('Save').addEventListener('click', function(){
-            r[queueId].route_state = document.getElementById('TradeStatus').checked;
-            r[queueId].TroopType = document.getElementById('pbbTransportTroop').value;
-            r[queueId].ship_Food = (document.getElementById('pbbshipfood').checked);
-            r[queueId].ship_Wood = (document.getElementById('pbbshipwood').checked);
-            r[queueId].ship_Stone = (document.getElementById('pbbshipstone').checked);
-            r[queueId].ship_Ore = (document.getElementById('pbbshipiron').checked);
-            r[queueId].ship_Astone = (document.getElementById('pbbshipaetherstone').checked);
-            r[queueId].ship_Gold = (document.getElementById('pbbshipgold').checked);
-            r[queueId].target_Food = parseIntCommas(document.getElementById('pbbtargetamountfood').value);
-            r[queueId].target_Wood = parseIntCommas(document.getElementById('pbbtargetamountwood').value);
-            r[queueId].target_Stone = parseIntCommas(document.getElementById('pbbtargetamountstone').value);
-            r[queueId].target_Ore = parseIntCommas(document.getElementById('pbbtargetamountiron').value);
-            r[queueId].target_Astone = parseIntCommas(document.getElementById('pbbtargetamountaetherstone').value);
-            r[queueId].target_Gold = parseIntCommas(document.getElementById('pbbtargetamountgold').value);
-            r[queueId].trade_Food = parseIntCommas(document.getElementById('pbbtradeamountfood').value);
-            r[queueId].trade_Wood = parseIntCommas(document.getElementById('pbbtradeamountwood').value);
-            r[queueId].trade_Stone = parseIntCommas(document.getElementById('pbbtradeamountstone').value);
-            r[queueId].trade_Ore = parseIntCommas(document.getElementById('pbbtradeamountiron').value);
-            r[queueId].trade_Astone = parseIntCommas(document.getElementById('pbbtradeamountaetherstone').value);
-            r[queueId].trade_Gold = parseIntCommas(document.getElementById('pbbtradeamountgold').value);
+    paintTradeRoutes: function () {
+        var t = Tabs.transport;
+        var r = t.tradeRoutes;
+        var cityname;
+        var m = '<TABLE id=paintRoutes class=pbTab>';
+        for (var i = 0; i < (r.length); i++) {
+            var queueId = i;
+            var cityname = (Cities.byID[r[queueId].city] ? Cities.byID[r[queueId].city].name : "null");
+            var citynameTo = null,
+                TO, status, unit;
+            if (typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0) citynameTo = Cities.byID[r[queueId].target_city].name;
+            if (citynameTo == null) TO = r[i].target_x + ',' + r[i].target_y;
+            else TO = citynameTo;
+            if (r[i].route_state) status = '<FONT color=green>' + translate("Enabled") + '</font>';
+            else status = '<FONT color=red>' + translate("Disabled") + '</font>';
+            if (r[i].TroopType == undefined) unit = 'unt9';
+            else unit = r[i].TroopType;
+            m += '<TR><TD TD width=12px>&nbsp;&nbsp;</td></tr>';
+            m += '<TR><TD width=20px>' + (i + 1) + '</td><TD width=175px>' + translate("From:") + '&nbsp;&nbsp;' + cityname + '</TD><TD width=175px>' + translate("To:") + '&nbsp;&nbsp;' + TO + '</td><TD width=175px>' + status + '</td>';
+            m += '<TD width=60px><A onclick="traceEdit(' + queueId + ')">' + translate("Edit") + '</a></td><TD width=60px><A onclick="traceDelete(' + queueId + ')">Delete</a></td></tr>';
+            m += '<TR><TD></td><TD>Troops:&nbsp;&nbsp;' + unsafeWindow.unitcost[unit][0] + '</td></tr>';
+            if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Food) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Food) + '</td>';
+            if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Wood) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Wood) + '</td>';
+            if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Stone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Stone) + '</td>';
+            if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Ore) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Ore) + '</td>';
+            if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Astone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Astone) + '</td>';
+            if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Gold) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Gold) + '</td>';
+        }
+        m += '</table>';
+        document.getElementById('pbRoutesQueue')
+            .innerHTML = m;
+        unsafeWindow.traceEdit = t.editQueueElement;
+        unsafeWindow.traceDelete = t.cancelQueueElement;
+    },
+    cancelQueueElement: function (queueId) {
+        var t = Tabs.transport;
+        var queueId = parseInt(queueId);
+        t.tradeRoutes.splice(queueId, 1);
+        t.showTradeRoutes();
+    },
+    editQueueElement: function (queueId) {
+        var t = Tabs.transport;
+        var r = t.tradeRoutes;
+        var queueId = parseInt(queueId);
+        var cityname = Cities.byID[r[queueId].city].name;
+        var citynameTo, TO;
+        if (typeof r[queueId].target_city != 'undefined' || parseInt(r[queueId].target_city) > 0) citynameTo = Cities.byID[r[queueId].target_city].name;
+        var Types = ['food', 'wood', 'stone', 'iron', 'aetherstone', 'gold'];
+        if (citynameTo == null) TO = r[queueId].target_x + ',' + r[queueId].target_y;
+        else TO = citynameTo;
+        var n = '<TABLE id=editRoutes class=pbTab>';
+        n += '<TD>' + translate("From:") + '&nbsp;' + cityname + '</td><TD>' + translate("To:") + '&nbsp;' + TO + '</td>';
+        n += '<TD><INPUT id=TradeStatus type=checkbox>&nbsp;Enable Route</td>';
+        n += '<TD width=150px>' + translate("Troop Type:") + '<SELECT id="pbbTransportTroop">';
+        for (y in unsafeWindow.unitcost) n += '<option value="' + y + '">' + unsafeWindow.unitcost[y][0] + '</option>';
+        n += '</select></td></table><BR><TABLE  id=editRoutes class=pbTab>';
+        for (var i = 0; i < Types.length; i++) {
+            var icon = Types[i];
+            n += '<TR><TD width=50px align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/' + icon + '_30.png"></td>';
+            n += '<TD width=50px align=center><INPUT id=pbbship' + icon + ' type=checkbox></td>';
+            n += '<TD width=125px>' + translate("Keep:") + ' <INPUT id=pbbtargetamount' + icon + ' type=text size=11 maxlength=11 value="0"></td>';
+            n += '<TD width=125px>' + translate("Trade:") + ' <INPUT id=pbbtradeamount' + icon + ' type=text size=11 maxlength=11 value="0"\></td></tr>';
+        }
+        n += '</table><BR><TABLE id=editRoutes class=pbTab><TR><TD><a class="button20" id="Cancel"><span>' + translate("Cancel") + '</span></a></td>';
+        n += '<TD><a class="button20" id="Save"><span>' + translate("Save") + '</span></a></td></tr>';
+        n += '</table>';
+        document.getElementById('pbRoutesQueue')
+            .innerHTML = n;
+        document.getElementById('TradeStatus')
+            .checked = r[queueId].route_state;
+        if (r[queueId].TroopType == undefined) var unit = 'unt9';
+        else var unit = r[queueId].TroopType;
+        document.getElementById('pbbTransportTroop')
+            .value = unit;
+        document.getElementById('pbbshipfood')
+            .checked = r[queueId].ship_Food;
+        document.getElementById('pbbshipwood')
+            .checked = r[queueId].ship_Wood;
+        document.getElementById('pbbshipstone')
+            .checked = r[queueId].ship_Stone;
+        document.getElementById('pbbshipiron')
+            .checked = r[queueId].ship_Ore;
+        document.getElementById('pbbshipaetherstone')
+            .checked = r[queueId].ship_Astone;
+        document.getElementById('pbbshipgold')
+            .checked = r[queueId].ship_Gold;
+        document.getElementById('pbbtargetamountfood')
+            .value = r[queueId].target_Food;
+        document.getElementById('pbbtargetamountwood')
+            .value = r[queueId].target_Wood;
+        document.getElementById('pbbtargetamountstone')
+            .value = r[queueId].target_Stone;
+        document.getElementById('pbbtargetamountiron')
+            .value = r[queueId].target_Ore;
+        document.getElementById('pbbtargetamountaetherstone')
+            .value = r[queueId].target_Astone;
+        document.getElementById('pbbtargetamountgold')
+            .value = r[queueId].target_Gold;
+        document.getElementById('pbbtradeamountfood')
+            .value = r[queueId].trade_Food;
+        document.getElementById('pbbtradeamountwood')
+            .value = r[queueId].trade_Wood;
+        document.getElementById('pbbtradeamountstone')
+            .value = r[queueId].trade_Stone;
+        document.getElementById('pbbtradeamountiron')
+            .value = r[queueId].trade_Ore;
+        document.getElementById('pbbtradeamountaetherstone')
+            .value = r[queueId].trade_Astone;
+        document.getElementById('pbbtradeamountgold')
+            .value = r[queueId].trade_Gold;
+        document.getElementById('Cancel')
+            .addEventListener('click', function () {
             t.showTradeRoutes();
         }, false);
-     },
-       
-    saveTradeRoutes: function(){
+        document.getElementById('Save')
+            .addEventListener('click', function () {
+            r[queueId].route_state = document.getElementById('TradeStatus')
+                .checked;
+            r[queueId].TroopType = document.getElementById('pbbTransportTroop')
+                .value;
+            r[queueId].ship_Food = (document.getElementById('pbbshipfood')
+                .checked);
+            r[queueId].ship_Wood = (document.getElementById('pbbshipwood')
+                .checked);
+            r[queueId].ship_Stone = (document.getElementById('pbbshipstone')
+                .checked);
+            r[queueId].ship_Ore = (document.getElementById('pbbshipiron')
+                .checked);
+            r[queueId].ship_Astone = (document.getElementById('pbbshipaetherstone')
+                .checked);
+            r[queueId].ship_Gold = (document.getElementById('pbbshipgold')
+                .checked);
+            r[queueId].target_Food = parseIntCommas(document.getElementById('pbbtargetamountfood')
+                .value);
+            r[queueId].target_Wood = parseIntCommas(document.getElementById('pbbtargetamountwood')
+                .value);
+            r[queueId].target_Stone = parseIntCommas(document.getElementById('pbbtargetamountstone')
+                .value);
+            r[queueId].target_Ore = parseIntCommas(document.getElementById('pbbtargetamountiron')
+                .value);
+            r[queueId].target_Astone = parseIntCommas(document.getElementById('pbbtargetamountaetherstone')
+                .value);
+            r[queueId].target_Gold = parseIntCommas(document.getElementById('pbbtargetamountgold')
+                .value);
+            r[queueId].trade_Food = parseIntCommas(document.getElementById('pbbtradeamountfood')
+                .value);
+            r[queueId].trade_Wood = parseIntCommas(document.getElementById('pbbtradeamountwood')
+                .value);
+            r[queueId].trade_Stone = parseIntCommas(document.getElementById('pbbtradeamountstone')
+                .value);
+            r[queueId].trade_Ore = parseIntCommas(document.getElementById('pbbtradeamountiron')
+                .value);
+            r[queueId].trade_Astone = parseIntCommas(document.getElementById('pbbtradeamountaetherstone')
+                .value);
+            r[queueId].trade_Gold = parseIntCommas(document.getElementById('pbbtradeamountgold')
+                .value);
+            t.showTradeRoutes();
+        }, false);
+    },
+    saveTradeRoutes: function () {
         var t = Tabs.transport;
         var serverID = getServerId();
         GM_setValue('tradeRoutes_' + serverID, JSON2.stringify(t.tradeRoutes));
     },
-  readTradeRoutes: function(){
+    readTradeRoutes: function () {
         var t = Tabs.transport;
         var serverID = getServerId();
         s = GM_getValue('tradeRoutes_' + serverID);
         if (s != null) {
             route = JSON2.parse(s);
             for (k in route)
-                t.tradeRoutes[k] = route[k];
+            t.tradeRoutes[k] = route[k];
         }
-        try{
+        try {
             t.checkcitymoved();
         } catch (e) {
             //Do nothing
         }
     },
-    checkcitymoved: function(){
+    checkcitymoved: function () {
         var t = Tabs.transport;
-        for(var i=0; i < t.tradeRoutes.length; i++){
-            if(typeof t.tradeRoutes[i].target_city == 'undefined' || parseIntNan(t.tradeRoutes[i].target_city) == 0 || Cities.byID[t.tradeRoutes[i].target_city] == 'undefined')
-                continue;
-            if(t.tradeRoutes[i].target_x != Cities.byID[t.tradeRoutes[i].target_city].x)
-                t.tradeRoutes[i].target_x = Cities.byID[t.tradeRoutes[i].target_city].x;
-            if(t.tradeRoutes[i].target_y != Cities.byID[t.tradeRoutes[i].target_city].y)
-                t.tradeRoutes[i].target_y = Cities.byID[t.tradeRoutes[i].target_city].y;
+        for (var i = 0; i < t.tradeRoutes.length; i++) {
+            if (typeof t.tradeRoutes[i].target_city == 'undefined' || parseIntNan(t.tradeRoutes[i].target_city) == 0 || Cities.byID[t.tradeRoutes[i].target_city] == 'undefined') continue;
+            if (t.tradeRoutes[i].target_x != Cities.byID[t.tradeRoutes[i].target_city].x) t.tradeRoutes[i].target_x = Cities.byID[t.tradeRoutes[i].target_city].x;
+            if (t.tradeRoutes[i].target_y != Cities.byID[t.tradeRoutes[i].target_city].y) t.tradeRoutes[i].target_y = Cities.byID[t.tradeRoutes[i].target_city].y;
         }
     },
-    saveTraderState: function(){
+    saveTraderState: function () {
         var t = Tabs.transport;
         var serverID = getServerId();
         GM_setValue('traderState_' + serverID, JSON2.stringify(t.traderState));
     },
-    readTraderState: function(){
+    readTraderState: function () {
         var t = Tabs.transport;
         var serverID = getServerId();
         s = GM_getValue('traderState_' + serverID);
         if (s != null) {
             state = JSON2.parse(s);
             for (k in state)
-                t.traderState[k] = state[k];
+            t.traderState[k] = state[k];
         }
     },
-    toggleTraderState: function(obj){
+    toggleTraderState: function (obj) {
         var t = Tabs.transport;
         if (t.traderState.running == true) {
             t.traderState.running = false;
             obj.value = "Transport = OFF";
             clearTimeout(t.checkdotradetimeout);
             t.count = 0;
-        }
-        else {
+        } else {
             t.traderState.running = true;
             obj.value = "Transport = ON";
             t.e_tradeRoutes();
         }
     },
-    
-    checkdoTrades: function(){
-    var t = Tabs.transport;
-    if(t.tradeRoutes.length==0) return;
-    t.doTrades(t.count);
-    t.count++;
-    if(t.count < t.tradeRoutes.length){
-              t.checkdotradetimeout = setTimeout(function() { t.checkdoTrades();}, 5000);
-            } else {
-              var now = new Date().getTime()/1000.0;
-              now = now.toFixed(0);
-              Options.lasttransport = now;
-              saveOptions();    
-              t.count = 0;
-            }
+    checkdoTrades: function () {
+        var t = Tabs.transport;
+        if (t.tradeRoutes.length == 0) return;
+        t.doTrades(t.count);
+        t.count++;
+        if (t.count < t.tradeRoutes.length) {
+            t.checkdotradetimeout = setTimeout(function () {
+                t.checkdoTrades();
+            }, 5000);
+        } else {
+            var now = new Date()
+                .getTime() / 1000.0;
+            now = now.toFixed(0);
+            Options.lasttransport = now;
+            saveOptions();
+            t.count = 0;
+        }
     },
-    
-  doTrades: function(count,tt){
-    var t = Tabs.transport;
-       if(t.tradeRoutes.length==0) return;
-       if(!t.tradeRoutes[count]["route_state"]) return;
-       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        params.gold =0;
-        params.r1 =0;
-        params.r2 =0;
-        params.r3 =0;
-        params.r4 =0 ;
-        params.r5 =0 ;
+    doTrades: function (count, tt) {
+        var t = Tabs.transport;
+        if (t.tradeRoutes.length == 0) return;
+        if (!t.tradeRoutes[count]["route_state"]) return;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.gold = 0;
+        params.r1 = 0;
+        params.r2 = 0;
+        params.r3 = 0;
+        params.r4 = 0;
+        params.r5 = 0;
         params.kid = 0;
-        
-        var carry_amount= 0;
-        var wagons_needed=0;
+        var carry_amount = 0;
+        var wagons_needed = 0;
         var citymax = 0;
         var city = t.tradeRoutes[count]["city"];
         var cityID = 'city' + city;
-        
-        if(!Cities.byID[city]) return;
-        
-            var xcoord = t.tradeRoutes[count]["target_x"];
+        if (!Cities.byID[city]) return;
+        var xcoord = t.tradeRoutes[count]["target_x"];
         var ycoord = t.tradeRoutes[count]["target_y"];
         var trade_Food = t.tradeRoutes[count]["trade_Food"];
         var trade_Wood = t.tradeRoutes[count]["trade_Wood"];
@@ -6940,48 +7107,47 @@ Tabs.transport = {
         var carry_Ore = parseIntNan(citymax_Ore - target_Ore);
         var carry_Astone = parseIntNan(citymax_Astone - target_Astone);
         var carry_Gold = 0;
-        if (carry_Food < 0 || ship_Food==false) carry_Food = 0;
-        if (carry_Wood < 0 || ship_Wood==false) carry_Wood = 0;
-        if (carry_Stone < 0 || ship_Stone==false) carry_Stone = 0;
-        if (carry_Ore < 0 || ship_Ore==false) carry_Ore = 0;
-        if (carry_Astone < 0 || ship_Astone==false) carry_Astone = 0;
+        if (carry_Food < 0 || ship_Food == false) carry_Food = 0;
+        if (carry_Wood < 0 || ship_Wood == false) carry_Wood = 0;
+        if (carry_Stone < 0 || ship_Stone == false) carry_Stone = 0;
+        if (carry_Ore < 0 || ship_Ore == false) carry_Ore = 0;
+        if (carry_Astone < 0 || ship_Astone == false) carry_Astone = 0;
         if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseIntNan(trade_Food);
         if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseIntNan(trade_Wood);
         if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseIntNan(trade_Stone);
         if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseIntNan(trade_Ore);
         if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
         carry_Astone *= 5; //Multiply by 5 to account for 5 times less carrying capacity
-      
-      if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]);
-      else var wagons =  parseInt(Seed.units[cityID][t.tradeRoutes[count]['TroopType']]);
-      var rallypointlevel = t.getRallypoint(cityID);    
-          if (rallypointlevel == 11) rallypointlevel = 15;
-          if (rallypointlevel == 12) rallypointlevel = 20;
-        if (parseInt(wagons) > parseInt(rallypointlevel*10000)){ wagons = (rallypointlevel*10000); }
-        
-      if (t.tradeRoutes[count]['TroopType'] == undefined) var unit = 'unt9';
-      else var unit = t.tradeRoutes[count]['TroopType'];
-      var Troops = parseInt(Seed.units[cityID][unit]);
-      if(parseInt(Troops)>parseInt(wagons)) Troops = wagons;
-      var featherweight = parseInt(Seed.tech.tch10);
+        if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt' + 9]);
+        else var wagons = parseInt(Seed.units[cityID][t.tradeRoutes[count]['TroopType']]);
+        var rallypointlevel = t.getRallypoint(cityID);
+        if (rallypointlevel == 11) rallypointlevel = 15;
+        if (rallypointlevel == 12) rallypointlevel = 20;
+        if (parseInt(wagons) > parseInt(rallypointlevel * 10000)) {
+            wagons = (rallypointlevel * 10000);
+        }
+        if (t.tradeRoutes[count]['TroopType'] == undefined) var unit = 'unt9';
+        else var unit = t.tradeRoutes[count]['TroopType'];
+        var Troops = parseInt(Seed.units[cityID][unit]);
+        if (parseInt(Troops) > parseInt(wagons)) Troops = wagons;
+        var featherweight = parseInt(Seed.tech.tch10);
         var Load = parseInt(unsafeWindow.unitstats[unit]['5'])
-      var maxloadperwagon = (featherweight * ((Load/100)*10)) + Load;
-          var maxload = (maxloadperwagon * Troops);
-          if(wagons <= 0) {return; }
-
-           for (var t=0; t< Seed.cities.length;t++) {
-               if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
-          }                     
-        
-          var shift_Food = parseIntNan(maxload / 9); //Total of 9 portions
-          var shift_Wood = parseIntNan(maxload / 9);
-          var shift_Stone = parseIntNan(maxload / 9);
-          var shift_Ore = parseIntNan(maxload / 9);
-          var shift_Astone = parseIntNan(maxload / 9 * 5); //Aetherstone takes 5 of 9 portions    
-          if ((maxload - carry_Food - carry_Wood - carry_Stone - carry_Ore - carry_Astone) < 0){
-             var shift_num=0;
-             var shift_spare=0;
-            
+        var maxloadperwagon = (featherweight * ((Load / 100) * 10)) + Load;
+        var maxload = (maxloadperwagon * Troops);
+        if (wagons <= 0) {
+            return;
+        }
+        for (var t = 0; t < Seed.cities.length; t++) {
+            if (parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
+        }
+        var shift_Food = parseIntNan(maxload / 9); //Total of 9 portions
+        var shift_Wood = parseIntNan(maxload / 9);
+        var shift_Stone = parseIntNan(maxload / 9);
+        var shift_Ore = parseIntNan(maxload / 9);
+        var shift_Astone = parseIntNan(maxload / 9 * 5); //Aetherstone takes 5 of 9 portions    
+        if ((maxload - carry_Food - carry_Wood - carry_Stone - carry_Ore - carry_Astone) < 0) {
+            var shift_num = 0;
+            var shift_spare = 0;
             // Check: See if load/4 is to big for some resources...
             if (carry_Food < shift_Food) {
                 shift_spare += (shift_Food - carry_Food);
@@ -6989,7 +7155,7 @@ Tabs.transport = {
             }
             if (carry_Wood < shift_Wood) {
                 shift_spare += (shift_Wood - carry_Wood);
-                shift_Wood = carry_Wood;    
+                shift_Wood = carry_Wood;
             }
             if (carry_Stone < shift_Stone) {
                 shift_spare += (shift_Stone - carry_Stone);
@@ -7002,73 +7168,65 @@ Tabs.transport = {
             if (carry_Astone < shift_Astone) {
                 shift_spare += (shift_Astone - carry_Astone);
                 shift_Astone = carry_Astone;
-            }                        
-             
-          while (shift_spare >1) {
-                 if (carry_Food < (shift_Food + shift_spare)){
+            }
+            while (shift_spare > 1) {
+                if (carry_Food < (shift_Food + shift_spare)) {
                     shift_spare = shift_spare - carry_Food;;
                     shift_Food = carry_Food;
-                 }
-                 else{
-                  shift_Food = (shift_Food + shift_spare);
-                  shift_spare = shift_spare- shift_spare;
+                } else {
+                    shift_Food = (shift_Food + shift_spare);
+                    shift_spare = shift_spare - shift_spare;
                 }
-                 if (carry_Wood < (shift_Wood + shift_spare)){
+                if (carry_Wood < (shift_Wood + shift_spare)) {
                     shift_spare = shift_spare - carry_Wood;;
                     shift_Wood = carry_Wood;
-                 }
-                 else{
-                  shift_Wood = shift_Wood + shift_spare;
-                  shift_spare = shift_spare- shift_spare;
+                } else {
+                    shift_Wood = shift_Wood + shift_spare;
+                    shift_spare = shift_spare - shift_spare;
                 }
-                if (carry_Stone < (shift_Stone + shift_spare)){
+                if (carry_Stone < (shift_Stone + shift_spare)) {
                     shift_spare = shift_spare - carry_Stone;
                     shift_Stone = carry_Stone;
-                 }
-                 else{
-                  shift_Stone = shift_Stone + shift_spare;
-                  shift_spare = shift_spare- shift_spare;
+                } else {
+                    shift_Stone = shift_Stone + shift_spare;
+                    shift_spare = shift_spare - shift_spare;
                 }
-                 if (carry_Ore < (shift_Ore + shift_spare)){
+                if (carry_Ore < (shift_Ore + shift_spare)) {
                     shift_spare = shift_spare - carry_Ore;
                     shift_Ore = carry_Ore;
-                 }
-                 else{
-                  shift_Ore = shift_Ore + shift_spare;
-                  shift_spare = shift_spare- shift_spare;
+                } else {
+                    shift_Ore = shift_Ore + shift_spare;
+                    shift_spare = shift_spare - shift_spare;
                 }
-                if (carry_Astone < (shift_Astone + shift_spare)){
+                if (carry_Astone < (shift_Astone + shift_spare)) {
                     shift_spare = shift_spare - carry_Astone;
                     shift_Astone = carry_Astone;
-                 }
-                 else{
-                  shift_Astone = shift_Astone + shift_spare;
-                  shift_spare = shift_spare- shift_spare;
+                } else {
+                    shift_Astone = shift_Astone + shift_spare;
+                    shift_spare = shift_spare - shift_spare;
                 }
-             }
-
-        carry_Food = shift_Food;
-        carry_Wood = shift_Wood;
-        carry_Stone = shift_Stone;
-        carry_Ore = shift_Ore;
-        carry_Astone = shift_Astone;
+            }
+            carry_Food = shift_Food;
+            carry_Wood = shift_Wood;
+            carry_Stone = shift_Stone;
+            carry_Ore = shift_Ore;
+            carry_Astone = shift_Astone;
         }
-        
-        if (maxload > (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone) && ship_Gold==true) {
-            if ((maxload-(carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (citymax_Gold - target_Gold)){
-                  carry_Gold = (citymax_Gold - target_Gold);
-                  if (carry_Gold < 0 ) carry_Gold = 0;
-               }
-            else carry_Gold = (maxload-(carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
+        if (maxload > (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone) && ship_Gold == true) {
+            if ((maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (citymax_Gold - target_Gold)) {
+                carry_Gold = (citymax_Gold - target_Gold);
+                if (carry_Gold < 0) carry_Gold = 0;
+            } else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
             if (trade_Gold > 0 && (carry_Gold > trade_Gold)) carry_Gold = parseInt(trade_Gold);
         }
-        
         wagons_needed = ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon);
-        wagons_needed = wagons_needed.toFixed(0);    
-        if (wagons_needed < ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon)) wagons_needed++;    
-        if ( wagons_needed < Options.minwagons ) { if(DEBUG_TRACE) logit('Small transport skipped'); return; }
-        
-        params.cid= city;
+        wagons_needed = wagons_needed.toFixed(0);
+        if (wagons_needed < ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon)) wagons_needed++;
+        if (wagons_needed < Options.minwagons) {
+            if (DEBUG_TRACE) logit('Small transport skipped');
+            return;
+        }
+        params.cid = city;
         params.type = "1";
         params.xcoord = xcoord;
         params.ycoord = ycoord;
@@ -7076,184 +7234,266 @@ Tabs.transport = {
         params.r2 = carry_Wood;
         params.r3 = carry_Stone;
         params.r4 = carry_Ore;
-        params.r5 = parseInt(carry_Astone/5);
+        params.r5 = parseInt(carry_Astone / 5);
         params.gold = carry_Gold;
-        
-        switch (unit){
-      case 'unt1': params.u1 = wagons_needed;break;
-      case 'unt2': params.u2 = wagons_needed;break;
-      case 'unt3': params.u3 = wagons_needed;break;
-      case 'unt4': params.u4 = wagons_needed;break;
-      case 'unt5': params.u5 = wagons_needed;break;
-      case 'unt6': params.u6 = wagons_needed;break;
-      case 'unt7': params.u7 = wagons_needed;break;
-      case 'unt8': params.u8 = wagons_needed;break;
-      case 'unt9': params.u9 = wagons_needed;break;
-      case 'unt10': params.u10 = wagons_needed;break;
-      case 'unt11': params.u11 = wagons_needed;break;
-      case 'unt12': params.u12 = wagons_needed;break;
-    }
-        
-           if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
-        if(tt)
-        params.tt = tt;    
-        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");     
-         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-                  method: "post",
-                  parameters: params,
-                  loading: true,
-                  onSuccess: function (transport) {
-                      profiler.stop();
-                  var rslt = eval("(" + transport.responseText + ")");
-                  if (rslt.ok) {
-                      actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
-                      var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                      var ut = unsafeWindow.unixtime();
-                      var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                      for(i = 0; i <= unitsarr.length; i++){
-                          if(params["u"+i]){
-                          unitsarr[i] = params["u"+i];
-                          }
-                      }
-                      var resources=new Array();
-                      resources[0] = params.gold;
-                      for(i=1; i<=5; i++){
-                          resources[i] = params["r"+i];
-                      }
-                      var currentcityid = city;
-                      unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                      unsafeWindow.update_seed(rslt.updateSeed)
-                      if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-                  } else {
-                      var t = Tabs.transport;
+        switch (unit) {
+        case 'unt1':
+            params.u1 = wagons_needed;
+            break;
+        case 'unt2':
+            params.u2 = wagons_needed;
+            break;
+        case 'unt3':
+            params.u3 = wagons_needed;
+            break;
+        case 'unt4':
+            params.u4 = wagons_needed;
+            break;
+        case 'unt5':
+            params.u5 = wagons_needed;
+            break;
+        case 'unt6':
+            params.u6 = wagons_needed;
+            break;
+        case 'unt7':
+            params.u7 = wagons_needed;
+            break;
+        case 'unt8':
+            params.u8 = wagons_needed;
+            break;
+        case 'unt9':
+            params.u9 = wagons_needed;
+            break;
+        case 'unt10':
+            params.u10 = wagons_needed;
+            break;
+        case 'unt11':
+            params.u11 = wagons_needed;
+            break;
+        case 'unt12':
+            params.u12 = wagons_needed;
+            break;
+        }
+        if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
+            if (tt) params.tt = tt;
+            var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
+            new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                loading: true,
+                onSuccess: function (transport) {
+                    profiler.stop();
+                    var rslt = eval("(" + transport.responseText + ")");
+                    if (rslt.ok) {
+                        actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   " + unsafeWindow.unitcost[unit][0] + ": " + wagons_needed);
+                        var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+                        var ut = unsafeWindow.unixtime();
+                        var unitsarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                        for (i = 0; i <= unitsarr.length; i++) {
+                            if (params["u" + i]) {
+                                unitsarr[i] = params["u" + i];
+                            }
+                        }
+                        var resources = new Array();
+                        resources[0] = params.gold;
+                        for (i = 1; i <= 5; i++) {
+                            resources[i] = params["r" + i];
+                        }
+                        var currentcityid = city;
+                        unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+                        unsafeWindow.update_seed(rslt.updateSeed)
+                        if (rslt.updateSeed) {
+                            unsafeWindow.update_seed(rslt.updateSeed)
+                        };
+                    } else {
+                        var t = Tabs.transport;
                         if (rslt.user_action == "backOffWaitTime") {
-                        logit('backoffwaittime '+rslt.wait_time);
-                        var wait = 1;
-                        if(rslt.wait_time)
-                        wait = rslt.wait_time;
-                        setTimeout (function(){t.doTrades(count,rslt.tt);}, wait*1000);
-                        return;
-                      };
-                  actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
-                  }
-                  },
-                  onFailure: function () {profiler.stop();}
-          });
+                            logit('backoffwaittime ' + rslt.wait_time);
+                            var wait = 1;
+                            if (rslt.wait_time) wait = rslt.wait_time;
+                            setTimeout(function () {
+                                t.doTrades(count, rslt.tt);
+                            }, wait * 1000);
+                            return;
+                        };
+                        actionLog('' + translate("TRANSPORT FAIL:") + ' ' + cityname + ' -> ' + rslt.msg);
+                    }
+                },
+                onFailure: function () {
+                    profiler.stop();
+                }
+            });
         }
     },
-    
-    ManualTransport: function(tt){
-    var t = Tabs.transport;
-       if (document.getElementById ('ptcityX').value == "" || document.getElementById ('ptcityY').value == "") return;
-    if ( t.TroopsNeeded > t.Troops) return;
-    
-       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-    var unitType = document.getElementById('TransportTroop').value;
-    var LoadUnit = (parseInt(Seed.tech.tch10) * ((parseInt(unsafeWindow.unitstats[unitType]['5'])/100)*10)) + parseInt(unsafeWindow.unitstats[unitType]['5']);
-    var MaxLoad =  parseInt(Seed.units['city' + t.tcp.city.id][unitType]) * LoadUnit;
-    document.getElementById ('errorSpace').innerHTML = '';
-          
-    params.kid = 0;
-    params.cid=  t.tcp.city.id;
-    params.type = "1";
-    params.xcoord = parseInt(document.getElementById ('ptcityX').value);
-    params.ycoord = parseInt(document.getElementById ('ptcityY').value);
-    params.r1 = parseInt(document.getElementById ('pbtradeamountFood').value);
-    params.r2 = parseInt(document.getElementById ('pbtradeamountWood').value);
-    params.r3 = parseInt(document.getElementById ('pbtradeamountStone').value);
-    params.r4 = parseInt(document.getElementById ('pbtradeamountOre').value);
-    params.r5 = parseInt(document.getElementById ('pbtradeamountAstone').value);
-    params.gold = parseInt(document.getElementById ('pbtradeamountGold').value);
-        
-    switch (unitType){
-      case 'unt1': params.u1 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt2': params.u2 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt3': params.u3 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt4': params.u4 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt5': params.u5 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt6': params.u6 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt7': params.u7 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt8': params.u8 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt9': params.u9 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt10': params.u10 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt11': params.u11 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt12': params.u12 = parseInt(document.getElementById ('TroopsToSend').value);break;
-    }
-    if (tt)
-    params.tt = tt;
-    if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
-                 
-        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
-         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-                  method: "post",
-                  parameters: params,
-                  loading: true,
-                  onSuccess: function (transport) {
-                      profiler.stop();
-                  var rslt = eval("(" + transport.responseText + ")");
-                  if (rslt.ok) {                  
-                          var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                          var ut = unixTime();
-                          var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                          for(i = 0; i <= unitsarr.length; i++){
-                              if(params["u"+i]){
-                              unitsarr[i] = params["u"+i];
-                              }
-                          }
-                          var resources=new Array();
-                          resources[0] = params.gold;
-                          for(i=1; i<=5; i++){
-                              resources[i] = params["r"+i];
-                          }
-                          var currentcityid = t.tcp.city.id;
-                          unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                          if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-                          document.getElementById ('errorSpace').innerHTML = 'Send: ' + addCommas(params.r1+params.r2+params.r3+params.r4+params.r5+params.gold) + ' Resources with ' + addCommas(parseInt(document.getElementById ('TroopsToSend').value)) + ' ' + unsafeWindow.unitcost[unitType][0];
-                          document.getElementById ('pbtradeamountFood').value = 0;
-                          document.getElementById ('pbtradeamountWood').value = 0;
-                          document.getElementById ('pbtradeamountStone').value = 0;
-                          document.getElementById ('pbtradeamountOre').value = 0;
-                          document.getElementById ('pbtradeamountAstone').value = 0;
-                          document.getElementById ('pbtradeamountGold').value = 0;
-                          document.getElementById ('TroopsToSend').value = 0;
-                  } else {
-                        if (rslt.user_action == "backOffWaitTime") {
-                        logit('backoffwaittime '+rslt.wait_time);
-                        if(rslt.tt)
-                        var tt = rslt.tt;
-                        var wait = 1;
-                        if(rslt.wait_time)
-                        wait = rslt.wait_time;
-                        setTimeout (function(){t.ManualTransport(tt);}, wait*1000);
-                        document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + 'kabam making us wait for '+wait+' seconds then retry march' +'</font>';
-                        return;
-                      };
-                          var errorcode =  'err_' + rslt.error_code;
-                          if (rslt.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
-                          else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + rslt.msg +'</font>';
-                  }
-                  },
-                  onFailure: function () {profiler.stop();}
-          });
-        }
-    },
-    
-    show: function(){
+    ManualTransport: function (tt) {
         var t = Tabs.transport;
-        clearTimeout (t.timer);
+        if (document.getElementById('ptcityX')
+            .value == "" || document.getElementById('ptcityY')
+            .value == "") return;
+        if (t.TroopsNeeded > t.Troops) return;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        var unitType = document.getElementById('TransportTroop')
+            .value;
+        var LoadUnit = (parseInt(Seed.tech.tch10) * ((parseInt(unsafeWindow.unitstats[unitType]['5']) / 100) * 10)) + parseInt(unsafeWindow.unitstats[unitType]['5']);
+        var MaxLoad = parseInt(Seed.units['city' + t.tcp.city.id][unitType]) * LoadUnit;
+        document.getElementById('errorSpace')
+            .innerHTML = '';
+        params.kid = 0;
+        params.cid = t.tcp.city.id;
+        params.type = "1";
+        params.xcoord = parseInt(document.getElementById('ptcityX')
+            .value);
+        params.ycoord = parseInt(document.getElementById('ptcityY')
+            .value);
+        params.r1 = parseInt(document.getElementById('pbtradeamountFood')
+            .value);
+        params.r2 = parseInt(document.getElementById('pbtradeamountWood')
+            .value);
+        params.r3 = parseInt(document.getElementById('pbtradeamountStone')
+            .value);
+        params.r4 = parseInt(document.getElementById('pbtradeamountOre')
+            .value);
+        params.r5 = parseInt(document.getElementById('pbtradeamountAstone')
+            .value);
+        params.gold = parseInt(document.getElementById('pbtradeamountGold')
+            .value);
+        switch (unitType) {
+        case 'unt1':
+            params.u1 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt2':
+            params.u2 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt3':
+            params.u3 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt4':
+            params.u4 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt5':
+            params.u5 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt6':
+            params.u6 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt7':
+            params.u7 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt8':
+            params.u8 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt9':
+            params.u9 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt10':
+            params.u10 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt11':
+            params.u11 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        case 'unt12':
+            params.u12 = parseInt(document.getElementById('TroopsToSend')
+                .value);
+            break;
+        }
+        if (tt) params.tt = tt;
+        if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
+            var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
+            new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                loading: true,
+                onSuccess: function (transport) {
+                    profiler.stop();
+                    var rslt = eval("(" + transport.responseText + ")");
+                    if (rslt.ok) {
+                        var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+                        var ut = unixTime();
+                        var unitsarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                        for (i = 0; i <= unitsarr.length; i++) {
+                            if (params["u" + i]) {
+                                unitsarr[i] = params["u" + i];
+                            }
+                        }
+                        var resources = new Array();
+                        resources[0] = params.gold;
+                        for (i = 1; i <= 5; i++) {
+                            resources[i] = params["r" + i];
+                        }
+                        var currentcityid = t.tcp.city.id;
+                        unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+                        if (rslt.updateSeed) {
+                            unsafeWindow.update_seed(rslt.updateSeed)
+                        };
+                        document.getElementById('errorSpace')
+                            .innerHTML = 'Send: ' + addCommas(params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) + ' Resources with ' + addCommas(parseInt(document.getElementById('TroopsToSend')
+                            .value)) + ' ' + unsafeWindow.unitcost[unitType][0];
+                        document.getElementById('pbtradeamountFood')
+                            .value = 0;
+                        document.getElementById('pbtradeamountWood')
+                            .value = 0;
+                        document.getElementById('pbtradeamountStone')
+                            .value = 0;
+                        document.getElementById('pbtradeamountOre')
+                            .value = 0;
+                        document.getElementById('pbtradeamountAstone')
+                            .value = 0;
+                        document.getElementById('pbtradeamountGold')
+                            .value = 0;
+                        document.getElementById('TroopsToSend')
+                            .value = 0;
+                    } else {
+                        if (rslt.user_action == "backOffWaitTime") {
+                            logit('backoffwaittime ' + rslt.wait_time);
+                            if (rslt.tt) var tt = rslt.tt;
+                            var wait = 1;
+                            if (rslt.wait_time) wait = rslt.wait_time;
+                            setTimeout(function () {
+                                t.ManualTransport(tt);
+                            }, wait * 1000);
+                            document.getElementById('errorSpace')
+                                .innerHTML = '<HR><FONT COLOR=red>' + translate("Error:") + ' ' + 'kabam making us wait for ' + wait + ' seconds then retry march' + '</font>';
+                            return;
+                        };
+                        var errorcode = 'err_' + rslt.error_code;
+                        if (rslt.msg == undefined) document.getElementById('errorSpace')
+                            .innerHTML = '<HR><FONT COLOR=red>' + translate("Error:") + ' ' + unsafeWindow.g_js_strings.errorcode[errorcode] + '</font>';
+                        else document.getElementById('errorSpace')
+                            .innerHTML = '<HR><FONT COLOR=red>' + translate("Error:") + ' ' + rslt.msg + '</font>';
+                    }
+                },
+                onFailure: function () {
+                    profiler.stop();
+                }
+            });
+        }
+    },
+    show: function () {
+        var t = Tabs.transport;
+        clearTimeout(t.timer);
         t.updateTroops();
-        t.updateResources();  
-        t.timer = setTimeout (t.show, 1000);
+        t.updateResources();
+        t.timer = setTimeout(t.show, 1000);
     },
-    hide: function(){
+    hide: function () {
         var t = Tabs.transport;
-        clearTimeout (t.timer);
+        clearTimeout(t.timer);
     },
-    onUnload: function(){
+    onUnload: function () {
         var t = Tabs.transport;
         if (!ResetAll) t.saveTradeRoutes();
         if (!ResetAll) t.saveTraderState();
-        
     },
 }
 
