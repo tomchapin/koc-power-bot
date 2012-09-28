@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120926a
+// @version        20120928a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120926a';
+var Version = '20120928a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -122,7 +122,7 @@ var Options = {
   MapShowExtra : false,
   RaidRunning  : false,
   RaidReset    : 0,
-  DeleteMsg       : false,
+  DeleteMsg	   : false,
   DeleteMsgs0  : false,
   DeleteMsgs1  : false,
   DeleteMsgs2  : false,
@@ -162,80 +162,80 @@ var GlobalOptions = {
 };
 
 var CrestOptions = {
-  Running       :     false,
-  CrestCity     :     0,
-  RoundOne      :     false,
-  RoundTwo      :     true,
-  lastRoundTwo     :     0,
-  X                :    0,
-  Y                :    0,
-  R1ST            :    0,
-  R1MM            :    0,
-  R1Scout        :    0,
-  R1Pike        :    0,
-  R1Sword        :    0,
-  R1Arch        :    0,
-  R1LC            :    0,
-  R1HC            :    0,
-  R1SW            :    0,
-  R1Ball        :    0,
-  R1Ram            :    0,
-  R1Cat            :    0,
-  R2ST            :    0,
-  R2MM            :    0,
-  R2Scout        :    0,
-  R2Pike        :    0,
-  R2Sword        :    0,
-  R2Arch        :    0,
-  R2LC            :    0,
-  R2HC            :    0,
-  R2SW            :    0,
-  R2Ball        :    0,
-  R2Ram            :    0,
-  R2Cat            :    0,
+  Running   	: 	false,
+  CrestCity 	: 	0,
+  RoundOne  	: 	false,
+  RoundTwo  	: 	true,
+  lastRoundTwo 	: 	0,
+  X				:	0,
+  Y				:	0,
+  R1ST			:	0,
+  R1MM			:	0,
+  R1Scout		:	0,
+  R1Pike		:	0,
+  R1Sword		:	0,
+  R1Arch		:	0,
+  R1LC			:	0,
+  R1HC			:	0,
+  R1SW			:	0,
+  R1Ball		:	0,
+  R1Ram			:	0,
+  R1Cat			:	0,
+  R2ST			:	0,
+  R2MM			:	0,
+  R2Scout		:	0,
+  R2Pike		:	0,
+  R2Sword		:	0,
+  R2Arch		:	0,
+  R2LC			:	0,
+  R2HC			:	0,
+  R2SW			:	0,
+  R2Ball		:	0,
+  R2Ram			:	0,
+  R2Cat			:	0,
 };
 
 
 var CrestData = new Array();
 
-    function CrestFunc (Arr) {
-    
-        if (Arr == undefined)
-            Arr = CrestOptions;
+	function CrestFunc (Arr) {
+	
+		if (Arr == undefined)
+			Arr = CrestOptions;
 
-        this.Running         =      true;
-          this.CrestCity         =     Arr.CrestCity;
-        this.RoundOne         =     Arr.RoundOne;
-        this.RoundTwo         =     true;
-        this.lastRoundTwo     =     0;
-        this.X                 =     Arr.X;
-        this.Y                 =     Arr.Y;
-        this.R1ST             =     Arr.R1ST;
-        this.R1MM             =     Arr.R1MM;
-        this.R1Scout         =     Arr.R1Scout;
-        this.R1Pike         =     Arr.R1Pike;
-        this.R1Sword         =     Arr.R1Sword;
-        this.R1Arch         =     Arr.R1Arch;
-        this.R1LC             =     Arr.R1LC;
-        this.R1HC             =     Arr.R1HC;
-        this.R1SW             =     Arr.R1SW;
-        this.R1Ball         =     Arr.R1Ball;
-        this.R1Ram             =     Arr.R1Ram;
-        this.R1Cat             =     Arr.R1Cat;
-        this.R2ST             =     Arr.R2ST;
-        this.R2MM             =     Arr.R2MM;
-        this.R2Scout         =     Arr.R2Scout;
-        this.R2Pike         =     Arr.R2Pike;
-        this.R2Sword         =     Arr.R2Sword;
-        this.R2Arch         =     Arr.R2Arch;
-        this.R2LC             =     Arr.R2LC;
-        this.R2HC             =     Arr.R2HC;
-        this.R2SW             =     Arr.R2SW;
-        this.R2Ball         =     Arr.R2Ball;
-        this.R2Ram             =     Arr.R2Ram;
-        this.R2Cat             =     Arr.R2Cat;
-        
-    };
+		this.Running 		=  	true;
+  		this.CrestCity 		= 	Arr.CrestCity;
+		this.RoundOne 		= 	Arr.RoundOne;
+		this.RoundTwo 		= 	true;
+		this.lastRoundTwo 	= 	0;
+		this.X 				= 	Arr.X;
+		this.Y 				= 	Arr.Y;
+		this.R1ST 			= 	Arr.R1ST;
+		this.R1MM 			= 	Arr.R1MM;
+		this.R1Scout 		= 	Arr.R1Scout;
+		this.R1Pike 		= 	Arr.R1Pike;
+		this.R1Sword 		= 	Arr.R1Sword;
+		this.R1Arch 		= 	Arr.R1Arch;
+		this.R1LC 			= 	Arr.R1LC;
+		this.R1HC 			= 	Arr.R1HC;
+		this.R1SW 			= 	Arr.R1SW;
+		this.R1Ball 		= 	Arr.R1Ball;
+		this.R1Ram 			= 	Arr.R1Ram;
+		this.R1Cat 			= 	Arr.R1Cat;
+		this.R2ST 			= 	Arr.R2ST;
+		this.R2MM 			= 	Arr.R2MM;
+		this.R2Scout 		= 	Arr.R2Scout;
+		this.R2Pike 		= 	Arr.R2Pike;
+		this.R2Sword 		= 	Arr.R2Sword;
+		this.R2Arch 		= 	Arr.R2Arch;
+		this.R2LC 			= 	Arr.R2LC;
+		this.R2HC 			= 	Arr.R2HC;
+		this.R2SW 			= 	Arr.R2SW;
+		this.R2Ball 		= 	Arr.R2Ball;
+		this.R2Ram 			= 	Arr.R2Ram;
+		this.R2Cat 			= 	Arr.R2Cat;
+		
+	};
 
 var TrainOptions = {
   Running    : false,
@@ -247,13 +247,13 @@ var TrainOptions = {
   Item       : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   Keep       : {1:{Food:0,Wood:0,Stone:0,Ore:0},
                 2:{Food:0,Wood:0,Stone:0,Ore:0},
-                3:{Food:0,Wood:0,Stone:0,Ore:0},
-                4:{Food:0,Wood:0,Stone:0,Ore:0},
-                5:{Food:0,Wood:0,Stone:0,Ore:0},
-                6:{Food:0,Wood:0,Stone:0,Ore:0},
-                7:{Food:0,Wood:0,Stone:0,Ore:0},
-                8:{Food:0,Wood:0,Stone:0,Ore:0}
-               },
+				3:{Food:0,Wood:0,Stone:0,Ore:0},
+				4:{Food:0,Wood:0,Stone:0,Ore:0},
+				5:{Food:0,Wood:0,Stone:0,Ore:0},
+				6:{Food:0,Wood:0,Stone:0,Ore:0},
+				7:{Food:0,Wood:0,Stone:0,Ore:0},
+				8:{Food:0,Wood:0,Stone:0,Ore:0}
+			   },
   Enabled    : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
   SelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
   Resource   : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true},
@@ -262,11 +262,11 @@ var TrainOptions = {
   CraftIntervallMin : 3,
   CraftingActif : {3000:false,3001:false,3002:false,3003:false,3004:false,3005:false,3006:false,3007:false,3008:false,3009:false,3010:false,3011:false},
   CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0},
-  tr    :    false,
-  trset    :    0,
+  tr	:	false,
+  trset	:	0,
 };
 var FarmOptions = {
-    RallyClip: 0,
+	RallyClip: 0,
     Running: false,
     MinMight: 0,
     MaxMight: 999999999,
@@ -274,65 +274,65 @@ var FarmOptions = {
     SendInterval: 10,
     MaxDistance: 20,
     Inactive:30,
-    DeleteReports:false,
-    Troops: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,10: 0,11: 0,12: 0},
-    FarmNumber: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0},
+	DeleteReports:false,
+	Troops: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,10: 0,11: 0,12: 0},
+	FarmNumber: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0},
     CityEnable: {1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true},
     CityLevel: {0: true,1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true,9: true,10: true,11: true,12: true},
     Diplomacy: {friendly: true,hostile: true,friendlyToThem: true,friendlyToYou: true,neutral:true,unallied:true},
     FarmMarches: [],
     farmMarches: {},
     Attacks:0,
-    Checks:0,
+	Checks:0,
 };
 var ThroneOptions = {
     Active:false,
     Interval:30,
     RepairTime:0,
-    Tries:0,
+	Tries:0,
     minStones : 100000,
-    Good:0,
-    Bad:0,
-    Items: [],
+	Good:0,
+	Bad:0,
+	Items: [],
     Salvage:{Attack:true,Defense:true,Life:true,Speed:true,Accuracy:true,Range:true,Load:true,MarchSize:true,MarchSpeed:true,CombatSkill:true,IntelligenceSkill:true,PoliticsSkill:true,ResourcefulnessSkill:true,TrainingSpeed:true,ConstructionSpeed:true,ResearchSpeed:true,CraftingSpeed:true,Upkeep:true,ResourceProduction:true,ResourceCap:true,Storehouse:true,Morale:true,ItemDrop:true},
-    SalvageQuality:0,
-    saveXitems:0,
-    thronekeep:1,
+	SalvageQuality:0,
+	saveXitems:0,
+	thronekeep:1,
     SingleStat:false,
     Cityrand:false,
 };
 var AttackOptions = {
-  LastReport            : 0,
-  MsgEnabled              : true,
-  MsgInterval              : 30,
-  Method                : "distance",
-  SendInterval            : 8,
+  LastReport    		: 0,
+  MsgEnabled          	: true,
+  MsgInterval	      	: 30,
+  Method			    : "distance",
+  SendInterval			: 8,
   MaxDistance           : 40,
-  RallyClip                : 0,
-  Running               : false,
-  BarbsFailedKnight        : 0,
-  BarbsFailedRP         : 0,
-  BarbsFailedTraffic       : 0,
-  BarbsFailedVaria        : 0,
+  RallyClip				: 0,
+  Running       		: false,
+  BarbsFailedKnight		: 0,
+  BarbsFailedRP 		: 0,
+  BarbsFailedTraffic   	: 0,
+  BarbsFailedVaria		: 0,
   BarbsFailedBog        : 0,
-  BarbsTried            : 0,
+  BarbsTried    		: 0,
   DeleteMsg             : true,
-  DeleteMsgs0            : false,
-  Foodstatus            : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  MsgLevel                : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
-  BarbsDone             : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  BarbNumber            : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  Levels                : {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},8:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
-  Troops                : {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
-  MinDistance            : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
+  DeleteMsgs0			: false,
+  Foodstatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  MsgLevel			    : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
+  BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  BarbNumber    		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  Levels    			: {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},8:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
+  Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
+  MinDistance			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
   Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750},
   Update                : {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0],6:[0,0],7:[0,0],8:[0,0]},
   UpdateEnabled         : true,
-  UpdateInterval        : 30,
+  UpdateInterval	    : 30,
   stopsearch            : 1,
   knightselector        : 0,
-  barbMinKnight            : 56,
-  barbMaxKnight            : 250,
+  barbMinKnight			: 56,
+  barbMaxKnight			: 250,
 };
 
 var ResetAll=false;
@@ -347,18 +347,18 @@ var ChatOptions = {
 };
 
 var ApothecaryOptions = {
-    Active : false,
-    goldkeep : 0,
-    city : {0:[],1:[],2:[],3:[],4:[],5:[],6:[],7:[]},
+	Active : false,
+	goldkeep : 0,
+	city : {0:[],1:[],2:[],3:[],4:[],5:[],6:[],7:[]},
 };
 
 var CombatOptions = {
-    research : [{tch8:0,tch9:0,tch13:0,tch15:0}, //Poison Edge, Metal Alloys, Fletching, Healing Potions
-                {tch8:0,tch9:0,tch13:0,tch15:0}],
-    knt      : [50,50],
-    guardian : [['wood',0],['ore',0]],
-    ratio    : [{unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}},
-                {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
+	research : [{tch8:0,tch9:0,tch13:0,tch15:0}, //Poison Edge, Metal Alloys, Fletching, Healing Potions
+	            {tch8:0,tch9:0,tch13:0,tch15:0}],
+	knt      : [50,50],
+	guardian : [['wood',0],['ore',0]],
+	ratio    : [{unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}},
+	            {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
 }
 
 // Get element by id shortform with parent node option
@@ -366,46 +366,46 @@ function $(ID,root) {return (root||document).getElementById(ID);}
 
 var nHtml={
   FindByXPath:function(obj,xpath,nodetype) {
-    if(!nodetype){
-        nodetype = XPathResult.FIRST_ORDERED_NODE_TYPE;
-    }
-    try {
-        var q=document.evaluate(xpath,obj,null,nodetype,null);
-    } catch(e) {
-        GM_log('bad xpath:'+xpath);
-    }
-    if(nodetype == XPathResult.FIRST_ORDERED_NODE_TYPE){
-        if(q && q.singleNodeValue) { return q.singleNodeValue; }
-    }else{
-        if(q){
-            return q;
-        }
-    }
-    return null;
+	if(!nodetype){
+		nodetype = XPathResult.FIRST_ORDERED_NODE_TYPE;
+	}
+	try {
+		var q=document.evaluate(xpath,obj,null,nodetype,null);
+	} catch(e) {
+		GM_log('bad xpath:'+xpath);
+	}
+	if(nodetype == XPathResult.FIRST_ORDERED_NODE_TYPE){
+		if(q && q.singleNodeValue) { return q.singleNodeValue; }
+	}else{
+		if(q){
+			return q;
+		}
+	}
+	return null;
   },
   
   ClickWin:function(win,obj,evtName) {
-    var evt = win.document.createEvent("MouseEvents");
-    evt.initMouseEvent(evtName, true, true, win,
-        0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    return !obj.dispatchEvent(evt);
+	var evt = win.document.createEvent("MouseEvents");
+	evt.initMouseEvent(evtName, true, true, win,
+		0, 0, 0, 0, 0, false, false, false, false, 0, null);
+	return !obj.dispatchEvent(evt);
   },
 
   Click:function(obj) {
-    return this.ClickWin(window,obj,'click');
+	return this.ClickWin(window,obj,'click');
   },
   
   ClickTimeout:function(obj,millisec) {
-    window.setTimeout(function() {
-        return nHtml.ClickWin(window,obj,'click');
-    },millisec+Math.floor(Math.random()*500));
+	window.setTimeout(function() {
+		return nHtml.ClickWin(window,obj,'click');
+	},millisec+Math.floor(Math.random()*500));
   },
 
   SetSelect:function(obj,v) {
-    for(var o=0; o<obj.options.length; o++) {
-        if(v==obj.options[o].value) { obj.options[o].selected=true; return true; }
-    }
-    return false;
+	for(var o=0; o<obj.options.length; o++) {
+		if(v==obj.options[o].value) { obj.options[o].selected=true; return true; }
+	}
+	return false;
   },
 
 }
@@ -422,12 +422,12 @@ if (document.URL.search(/kabam.com\/kingdoms-of-camelot\/play/i) >= 0){
 }
 
 if (document.URL.search(/facebook.com/i) >= 0){
-    if(document.URL.search(/connect\/uiserver.php/i) >= 0 ||
-       document.URL.search(/serverfbml/i) >= 0 ||
-       document.URL.search(/dialog\/stream.publish/i) >= 0 ||
-       document.URL.search(/dialog\/apprequests/i) >= 0 ||
-       document.URL.search(/dialog\/feed/i) >= 0)
-        HandlePublishPopup ();
+	if(document.URL.search(/connect\/uiserver.php/i) >= 0 ||
+	   document.URL.search(/serverfbml/i) >= 0 ||
+	   document.URL.search(/dialog\/stream.publish/i) >= 0 ||
+	   document.URL.search(/dialog\/apprequests/i) >= 0 ||
+	   document.URL.search(/dialog\/feed/i) >= 0)
+		HandlePublishPopup ();
   return;
 }
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
@@ -436,19 +436,19 @@ if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
 
 function kocWideScreen(){
   function setWideFb (){
-    var kocFrame = parent.document.getElementById('kocIframes1');
-    if (!kocFrame){
-      setTimeout (setWideFb, 1000);
-      return;
-    }
-    kocFrame.style.width = '100%';
-    var style = document.createElement('style')
-    style.innerHTML = 'body {margin:0; width:100%; !important;}';
-    kocFrame.parentNode.appendChild(style);
+	var kocFrame = parent.document.getElementById('kocIframes1');
+	if (!kocFrame){
+	  setTimeout (setWideFb, 1000);
+	  return;
+	}
+	kocFrame.style.width = '100%';
+	var style = document.createElement('style')
+	style.innerHTML = 'body {margin:0; width:100%; !important;}';
+	kocFrame.parentNode.appendChild(style);
   }
   kocWatchdog ();
   if (GlobalOptions.pbWideScreen)
-        setWideFb();
+		setWideFb();
 }
     var aj2 = function(c, d, b, a)
     {
@@ -468,17 +468,17 @@ function kocWideScreen(){
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
   function setWide (){
-    var iFrame = document.getElementById('iframe_canvas');
-    if (!iFrame){
-      setTimeout (setWide, 1000);
-      return;
-    }
-    iFrame.style.width = '100%';
+	var iFrame = document.getElementById('iframe_canvas');
+	if (!iFrame){
+	  setTimeout (setWide, 1000);
+	  return;
+	}
+	iFrame.style.width = '100%';
 
-    while ( (iFrame=iFrame.parentNode) != null)
-      if (iFrame.tagName=='DIV')
-        iFrame.style.width = '100%';
-    document.getElementById('globalContainer').style.left = '0px';
+	while ( (iFrame=iFrame.parentNode) != null)
+	  if (iFrame.tagName=='DIV')
+		iFrame.style.width = '100%';
+	document.getElementById('globalContainer').style.left = '0px';
     try{    
       document.getElementById('rightCol').parentNode.removeChild(document.getElementById('rightCol'));
       document.getElementById('leftColContainer').parentNode.removeChild(document.getElementById('leftColContainer'));
@@ -486,27 +486,27 @@ function facebookInstance (){
       // toolkit may have removed them already!
     }
     var e = document.getElementById('mainContainer');
-    if(e){
-        if (GlobalOptions.pbWideScreenStyle=="normal") e.parentNode.style.minWidth = '100%';
-        if (GlobalOptions.pbWideScreenStyle=="wide") e.parentNode.style.width = '1520px';
-        if (GlobalOptions.pbWideScreenStyle=="ultra") e.parentNode.style.width = '1900px';
-        for(i=0; i<e.childNodes.length; i++){
-            if(e.childNodes[i].id == 'contentCol'){
-                e.childNodes[i].style.margin = '0px';
-                e.childNodes[i].style.paddingTop = '5px';
-                break;
-            }
-        }
-    }
-    var e = document.getElementById('pageHead');
-    if(e){
-        e.style.width = '80%';
-        e.style.margin = '0 10%';
-    }
-    var e = document.getElementById('bottomContent');
-    if(e){
-        e.style.padding = "0px 0px 12px 0px";
-    }
+	if(e){
+		if (GlobalOptions.pbWideScreenStyle=="normal") e.parentNode.style.minWidth = '100%';
+		if (GlobalOptions.pbWideScreenStyle=="wide") e.parentNode.style.width = '1520px';
+		if (GlobalOptions.pbWideScreenStyle=="ultra") e.parentNode.style.width = '1900px';
+		for(i=0; i<e.childNodes.length; i++){
+			if(e.childNodes[i].id == 'contentCol'){
+				e.childNodes[i].style.margin = '0px';
+				e.childNodes[i].style.paddingTop = '5px';
+				break;
+			}
+		}
+	}
+	var e = document.getElementById('pageHead');
+	if(e){
+		e.style.width = '80%';
+		e.style.margin = '0 10%';
+	}
+	var e = document.getElementById('bottomContent');
+	if(e){
+		e.style.padding = "0px 0px 12px 0px";
+	}
     
   }
   facebookWatchdog();
@@ -516,63 +516,63 @@ function facebookInstance (){
 
 function kabamStandAlone (){
   function setWide (){
-    var iFrames = $('game_frame');
-    if (!iFrames){
-      setTimeout (setWide, 1000);
-      return;
-    }
-    iFrames.style.width = '100%';
-    while ( (iFrames=iFrames.parentNode) != null)
-      if (iFrames.tagName=='DIV')
-        iFrames.style.width = '100%';
+	var iFrames = $('game_frame');
+	if (!iFrames){
+	  setTimeout (setWide, 1000);
+	  return;
+	}
+	iFrames.style.width = '100%';
+	while ( (iFrames=iFrames.parentNode) != null)
+	  if (iFrames.tagName=='DIV')
+		iFrames.style.width = '100%';
   }
 
   function sendmeaway (){
-    var serverID = /s=([0-9]+)/im.exec (document.location.href);
-    var sr = /signed_request" value="(.*?)"/im.exec ($("post_form").innerHTML);
-    var goto = $("post_form").action+(serverID?"?s="+serverID[1]:'');
-    var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxxpbutExplode type=submit value=RELOAD><INPUT type=hidden name=signed_request value="'+ sr[1] +'" /><INPUT type=hidden name=platform_req value=A /></form>';
-    var e = document.createElement ('div');
-    e.innerHTML = t;
-    document.body.appendChild (e);
-    setTimeout (function (){document.getElementById('xxxpbutExplode').click();}, 0);
+	var serverID = /s=([0-9]+)/im.exec (document.location.href);
+	var sr = /signed_request" value="(.*?)"/im.exec ($("post_form").innerHTML);
+	var goto = $("post_form").action+(serverID?"?s="+serverID[1]:'');
+	var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxxpbutExplode type=submit value=RELOAD><INPUT type=hidden name=signed_request value="'+ sr[1] +'" /><INPUT type=hidden name=platform_req value=A /></form>';
+	var e = document.createElement ('div');
+	e.innerHTML = t;
+	document.body.appendChild (e);
+	setTimeout (function (){document.getElementById('xxxpbutExplode').click();}, 0);
   }
   if (GlobalOptions.pbWideScreen)
-    setWide();
+	setWide();
   if(GlobalOptions.pbNoMoreKabam)
-    sendmeaway();
+	sendmeaway();
   }
 
 function HandlePublishPopup() {
-    if(GlobalOptions.autoPublishGamePopups){
-        // Check the app id (we only want to handle the popup for kingdoms of camelot)
-        var FBInputForm = document.getElementById('uiserver_form');
-        logit("FBInputForm "+FBInputForm);
-        if(FBInputForm){
-            var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
-            logit("channel_input "+channel_input);
-            if(channel_input){
-                var current_channel_url = channel_input.value;
-                logit("current_channel_url "+current_channel_url);
-                if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {
-                    var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
-                    var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
-                    logit("publish_button "+publish_button);
-                    logit("privacy_setting "+privacy_setting);
-                    if(publish_button && privacy_setting){
-                        // 80: Everyone
-                        // 50: Friends of Friends
-                        // 40: Friends Only
-                        // 10: Only Me
-                        privacy_setting.innerHTML = '<option value="'+ GlobalOptions.autoPublishPrivacySetting +'"></option>';
-                        privacy_setting.selectedIndex = 0;
-                        nHtml.Click(publish_button);
-                    }
-                }
-            }        
-        }
-        setTimeout(HandlePublishPopup, 1000);
-    }
+	if(GlobalOptions.autoPublishGamePopups){
+		// Check the app id (we only want to handle the popup for kingdoms of camelot)
+		var FBInputForm = document.getElementById('uiserver_form');
+		logit("FBInputForm "+FBInputForm);
+		if(FBInputForm){
+			var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
+			logit("channel_input "+channel_input);
+			if(channel_input){
+				var current_channel_url = channel_input.value;
+				logit("current_channel_url "+current_channel_url);
+				if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {
+					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
+					var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
+					logit("publish_button "+publish_button);
+					logit("privacy_setting "+privacy_setting);
+					if(publish_button && privacy_setting){
+						// 80: Everyone
+						// 50: Friends of Friends
+						// 40: Friends Only
+						// 10: Only Me
+						privacy_setting.innerHTML = '<option value="'+ GlobalOptions.autoPublishPrivacySetting +'"></option>';
+						privacy_setting.selectedIndex = 0;
+						nHtml.Click(publish_button);
+					}
+				}
+			}		
+		}
+		setTimeout(HandlePublishPopup, 1000);
+	}
 }
 
 var Cities = {};
@@ -603,6 +603,10 @@ function pbStartup (){
   var styles = '.xtab {padding-right: 5px; border:none; background:none; white-space:nowrap;}\
     .xtabBR {padding-right: 5px; border:none; background:none;}\
     table.pbTab tr td {border:none; background:none; white-space:nowrap; padding:0px}\
+    table.Throne {background-color:#FFFFE3; white-space:nowrap; padding:0px; border-style:solid; border-color:darkgrey; width:250px; max-width:250px; text-wrap:normal;word-wrap:break-word}\
+    table.Throne tr td {background:none; white-space:nowrap; padding:0px; border-style:none;}\
+    table.ThroneEQ {background-color:#FFFFE3; white-space:nowrap; padding:0px; border-style:solid; border-color:lightred; width:250px; max-width:250px; text-wrap:normal;word-wrap:break-word}\
+    table.ThroneEQ tr td {background:none; white-space:nowrap; padding:0px; border-style:none}\
     .hostile td { background:red; }.friendly td{background:lightgreen; }.ally td{background:lightblue; }\
     table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
     table.pbTabBR tr td {border:none; background:none;}\
@@ -1639,7 +1643,7 @@ Tabs.Throne = {
     
     document.getElementById('ptmrchSubSal').addEventListener('click', e_butSubtab, false);
     document.getElementById('ptmrchSubUE').addEventListener('click', e_butSubtab, false);
-    document.getElementById('ptmrchSubEQ').addEventListener('click', e_butSubtab, false);
+	document.getElementById('ptmrchSubEQ').addEventListener('click', e_butSubtab, false);
     
 
     changeSubtab (document.getElementById('ptmrchSubUE'));
@@ -1663,7 +1667,7 @@ Tabs.Throne = {
     }
     t.checkUpgradeInfo(true);
     if (ThroneOptions.Active) t.setActionTimer = setInterval(t.doAction,10000);
-    setInterval(t.salvageCheck,1*60*1000);
+    setInterval(t.salvageCheck,2*60*1000);
  },
     
  Salvage : function (){
@@ -3959,215 +3963,182 @@ Tabs.build = {
           }
         setTimeout(t.e_autoBuild, 10000); //should be at least 10
     },  
-    doOne: function (bQi) {
-    var t = Tabs.build;
-    var currentcityid = parseInt(bQi.cityId);
-    var cityName = t.getCityNameById(currentcityid);
-    var time = parseInt(bQi.buildingTime);
-    var mult = parseInt(bQi.buildingMult);
-    var attempt = parseInt(bQi.buildingAttempt);
-    //mat/KOC Power Bot: 49 @ 19:41:45.274: Pos: 6 Type: 13 Level: 8 Id: 1523749
-    var mode = bQi.buildingMode;
-    //  var mode = "build"; //FOR DEBUG
-    var citpos = parseInt(bQi.buildingPos);
-    //  var citpos = 6; //FOR DEBUG
-    if (bQi.buildingLevel == 0) {
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        params.cid = parseInt(bQi.cityId);
-        params.bid = "";
-        params.pos = parseInt(bQi.buildingPos);
-        params.lv = 1;
-        params.type = parseInt(bQi.buildingType);
-        params.permission = 0;
-        bdgid = parseInt(bQi.buildingType);
-        new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
-            method: "post",
-            parameters: params,
-            onSuccess: function (rslt) {
-                if (rslt.ok) {
-                    logit('building the level 1')
-                    unsafeWindow.update_seed(rslt.updateSeed);
-                    actionLog(translate("Building") + " " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);
-                    Tabs.startup.buildExtraLevels(rslt, bQi);
-                    Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
-                    Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
-                    Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
-                    Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
-                    Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
-                    Seed.queue_con["city" + currentcityid].push([bdgid, "1", parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
-                    t.bot_gethelp(rslt.buildingId, currentcityid);
-                    Seed.buildings["city" + currentcityid]["pos" + citpos] = [bdgid, 1, params.pos, rslt.buildingId];
-                    unsafeWindow.update_bdg();
-                    unsafeWindow.queue_changetab_building();
-                    unsafeWindow.modal_build_show_state();
-                    t.cancelQueueElement(0, currentcityid, time, false);
-                } else {
-                    var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-                    logit('IN SEED.BUILDINGS CHECK ( MISSED LEVEL) level = ' + bQi.buildingLevel + 'mode = ' + mode + ' citpos = ' + citpos + ' bqiType = ' + bQi.buildingType + ' bdgid ' + bQi.buildingType)
-                    if (rslt.error_code == 103) { // building has already the target level => just  delete
-                        t.cancelQueueElement(0, currentcityid, time, false);
-                        actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
-                        document.getElementById('pbbuildError')
-                            .innerHTML = rslt.msg + 'Item Deleted';
-                    } else if (rslt.error_code == 102) {
-                        t.cancelQueueElement(0, currentcityid, time, false);
-                        actionLog(translate("Another building already exists at that location"));
-                        document.getElementById('pbbuildError')
-                            .innerHTML = rslt.msg + 'Item Deleted';
-                    } else if (rslt.error_code) {
-                        logit(errmsg);
-                        t.requeueQueueElement(bQi);
-                        document.getElementById('pbbuildError')
-                            .innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
-                    }
-                    logit(errmsg.toSource());
-                }
-            },
-            onFailure: function () {
-                document.getElementById('pbbuildError')
-                    .innerHTML = translate("Connection Error while building! Please try later again");
-            }
-        });
-    } else if (Seed.buildings['city' + currentcityid]["pos" + citpos] != undefined && Seed.buildings['city' + currentcityid]["pos" + citpos][0] != undefined) {
-        var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
-        var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
-        //  var bdgid = 13; //FOR DEBUG
-        var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
-        var curlvl = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
-        //  var curlvl = 8; //FOR DEBUG
-        var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
-        var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
-        //  var bid = 1523749; //FOR DEBUG
-        if (curlvl > 8 && mode == 'build') {
-            t.cancelQueueElement(0, currentcityid, time, false);
-            actionLog(translate("Queue item deleted: Building level equals 9 or higher!!!"));
-            return;
-        };
-        if (isNaN(curlvl)) {
-            t.cancelQueueElement(0, currentcityid, time, false);
-            actionLog(translate("Found no correct value for current building!!!!"));
-            return;
-        }
-        if (l_bdgid != bdgid) {
-            t.cancelQueueElement(0, currentcityid, time, false);
-            actionLog(translate("Building Type does not match!!!!"));
-            return;
-        }
-        if (l_bid != bid) {
-            t.cancelQueueElement(0, currentcityid, time, false);
-            actionLog(translate("Building ID does not match!!!!"));
-            return;
-        }
-        if (l_curlvl < curlvl) {
-            t.cancelQueueElement(0, currentcityid, time, false);
-            actionLog(translate("Queue item deleted: Building level is equal or higher!!!"));
-            return;
-        }
-        if (l_curlvl > curlvl && mode == 'build') {
-            t.requeueQueueElement(bQi);
-            return;
-        }
-        if (mode == 'destruct') {
-            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-            params.cid = currentcityid;
-            params.bid = "";
-            params.pos = citpos;
-            params.lv = curlvl - 1;
-            if (curlvl >= 1) {
-                params.bid = bid;
-            }
-            params.type = bdgid;
-            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/destruct.php" + unsafeWindow.g_ajaxsuffix, {
-                method: "post",
-                parameters: params,
-                onSuccess: function (rslt) {
-                    if (rslt.ok) {
-                        actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
-                        Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
-                        if (params.cid == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
-                        if (document.getElementById('pbHelpRequest')
-                            .checked == true) t.bot_gethelp(params.bid, currentcityid);
-                        t.cancelQueueElement(0, currentcityid, time, false);
-                    } else {
-                        var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-                        t.requeueQueueElement(bQi);
-                        document.getElementById('pbbuildError')
-                            .innerHTML = errmsg;
-                        logit(errmsg);
-                    }
-                },
-                onFailure: function () {
-                    document.getElementById('pbbuildError')
-                        .innerHTML = translate("Connection Error while destructing! Please try later again");
-                }
-            })
-        }
-        if (mode == 'build') {
-            var invalid = false;
-            var chk = unsafeWindow.checkreq("bdg", bdgid, curlvl); //check if all requirements are met
-            for (var c = 0; c < chk[3].length; c++) {
-                if (chk[3][c] == 0) {
-                    invalid = true;
-                }
-            }
-            if (invalid == false) {
+    doOne : function (bQi){
+        var t = Tabs.build;
+        var currentcityid = parseInt(bQi.cityId);
+        var cityName = t.getCityNameById(currentcityid);
+        var time = parseInt(bQi.buildingTime);
+        var mult = parseInt(bQi.buildingMult);
+        var attempt = parseInt(bQi.buildingAttempt);
+		var bypasscheck = false;
+
+        
+        //mat/KOC Power Bot: 49 @ 19:41:45.274: Pos: 6 Type: 13 Level: 8 Id: 1523749
+        
+        var mode = bQi.buildingMode;
+        //  var mode = "build"; //FOR DEBUG
+        
+        var citpos = parseInt(bQi.buildingPos);
+        //  var citpos = 6; //FOR DEBUG
+        
+        if ((Seed.buildings['city' + currentcityid]["pos" + citpos] == undefined))
+			bypasscheck = true;
+			
+			if(!bypasscheck) {
+				var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
+				var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
+				//  var bdgid = 13; //FOR DEBUG
+				
+				var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
+				var curlvl = parseIntNan(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
+				//  var curlvl = 8; //FOR DEBUG
+
+				var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
+				var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
+				//  var bid = 1523749; //FOR DEBUG
+            
+				if (curlvl > 8 && mode == 'build') {
+					t.cancelQueueElement(0, currentcityid, time, false);
+					actionLog(translate("Queue item deleted: Building level equals 9 or higher!!!"));
+					return;
+				};
+				if (isNaN(curlvl)) {
+					t.cancelQueueElement(0, currentcityid, time, false);
+					actionLog(translate("Found no correct value for current building!!!!"));
+					return;
+				}
+				if (l_bdgid != bdgid) {
+					t.cancelQueueElement(0, currentcityid, time, false);
+					actionLog(translate("Building Type does not match!!!!"));
+					return;
+				}
+				if (l_bid != bid) {
+					t.cancelQueueElement(0, currentcityid, time, false);
+					actionLog(translate("Building ID does not match!!!!"));
+					return;
+				}
+				if (l_curlvl < curlvl) {
+						t.cancelQueueElement(0, currentcityid, time, false);
+						actionLog(translate("Queue item deleted: Building level is equal or higher!!!"));
+						return;
+				}
+				if (l_curlvl > curlvl && mode == 'build') {
+						t.requeueQueueElement(bQi);
+						return;
+				}
+			} else {
+				var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
+				var bdgid = l_bdgid;
+				//  var bdgid = 13; //FOR DEBUG
+				
+				var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
+				var curlvl = l_curlvl;
+				//  var curlvl = 8; //FOR DEBUG
+
+				var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
+				var bid = l_bid;
+			}
+
+            if (mode == 'destruct') {
                 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
                 params.cid = currentcityid;
                 params.bid = "";
                 params.pos = citpos;
-                params.lv = curlvl + 1;
-                if (params.lv > 9) { //make sure that no level 10+ is built
-                    t.cancelQueueElement(0, currentcityid, time, false);
-                    actionLog(translate("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!"));
-                    return;
-                }
-                if (params.lv > 1) {
+                params.lv = curlvl - 1;
+                if (curlvl >= 1) {
                     params.bid = bid;
                 }
                 params.type = bdgid;
-                new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
+                new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/destruct.php" + unsafeWindow.g_ajaxsuffix, {
                     method: "post",
                     parameters: params,
-                    onSuccess: function (rslt) {
+                    onSuccess: function(rslt){
                         if (rslt.ok) {
-                            actionLog(translate("Building") + " " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);
-                            Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
-                            Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
-                            Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
-                            Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
-                            Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
-                            Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
-                            if (params.cid == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
-                            if (document.getElementById('pbHelpRequest')
-                                .checked == true) t.bot_gethelp(params.bid, currentcityid);
+                            actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
+                            Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
+                            if (params.cid == unsafeWindow.currentcityid)
+                                unsafeWindow.update_bdg();
+                            if (document.getElementById('pbHelpRequest').checked == true)
+                                t.bot_gethelp(params.bid, currentcityid);
                             t.cancelQueueElement(0, currentcityid, time, false);
                         } else {
                             var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-                            if (rslt.error_code == 103) { // building has already the target level => just  delete
-                                t.cancelQueueElement(0, currentcityid, time, false);
-                                actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
-                            } else {
-                                t.requeueQueueElement(bQi);
-                                document.getElementById('pbbuildError')
-                                    .innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
-                            }
+                            t.requeueQueueElement(bQi);
+                            document.getElementById('pbbuildError').innerHTML = errmsg;
                             logit(errmsg);
                         }
                     },
-                    onFailure: function () {
-                        document.getElementById('pbbuildError')
-                            .innerHTML = translate("Connection Error while building! Please try later again");
+                    onFailure: function(){
+                        document.getElementById('pbbuildError').innerHTML = translate("Connection Error while destructing! Please try later again");
                     }
-                });
-            } else {
-                t.requeueQueueElement(bQi); // requeue item if check is invalid
+                })
             }
-        }
-    } else {
-        t.cancelQueueElement(0, currentcityid, time, false);
-        actionLog(translate("Queue item deleted: Building does not exist!!!"));
-    }
-},
+            if (mode == 'build') {
+                var invalid = false;
+                var chk = unsafeWindow.checkreq("bdg", bdgid, curlvl); //check if all requirements are met
+                for (var c = 0; c < chk[3].length; c++) {
+                    if (chk[3][c] == 0) {
+                        invalid = true;
+                    }
+                }
+                if (invalid == false) {                            
+                    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+                    params.cid = currentcityid;
+                    params.bid = "";
+                    params.pos = citpos;
+                    params.lv = curlvl + 1;
+                    if (params.lv > 9){ //make sure that no level 10+ is built
+                        t.cancelQueueElement(0, currentcityid, time, false);
+                        actionLog(translate("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!"));
+                        return;
+                    }
+                    if (params.lv > 1) {
+                        params.bid = bid;
+                    }
+                    params.type = bdgid;
+                    
+                    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
+                        method: "post",
+                        parameters: params,
+                        onSuccess: function(rslt){
+                            if (rslt.ok) {
+                                actionLog(translate("Building")+" " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);                                
+                                Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
+                                Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
+                                Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
+                                Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
+                                Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
+                                Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(),  unsafeWindow.unixtime() + time, 0, time, citpos]);                        
+                                if (params.cid == unsafeWindow.currentcityid)
+                                    unsafeWindow.update_bdg();
+                                if (document.getElementById('pbHelpRequest').checked == true)
+                                    t.bot_gethelp(params.bid, currentcityid);
+                                t.cancelQueueElement(0, currentcityid, time, false);
+                            } else {
+                                var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
+                                if (rslt.error_code == 103) { // building has already the target level => just  delete
+                                    t.cancelQueueElement(0, currentcityid, time, false);
+                                    actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
+                                } else {
+                                    t.requeueQueueElement(bQi);
+                                    document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name +': '+ errmsg + translate(" Item was requeued. Check for retry count.");
+                                }
+                                logit(errmsg);
+                            }
+                    },
+                        onFailure: function(){
+                            document.getElementById('pbbuildError').innerHTML = translate("Connection Error while building! Please try later again");
+                        }
+                    });
+                } else {
+                    t.requeueQueueElement(bQi); // requeue item if check is invalid
+                }
+            }
+        // } else {
+            // t.cancelQueueElement(0, currentcityid, time, false);
+            // actionLog(translate("Queue item deleted: Building does not exist!!!"));
+        // }
+    },
     requeueQueueElement: function (bQi) {
         var t = Tabs.build;
         var cityId = bQi.cityId;
@@ -6245,9 +6216,7 @@ Tabs.transport = {
     init: function (div) {
         var t = Tabs.transport;
         t.myDiv = div;
-        t.traderState = {
-            running: false,
-        };
+        t.traderState = {running: false,};
         t.readTraderState();
         t.readTradeRoutes();
         t.e_tradeRoutes();
@@ -7039,42 +7008,43 @@ Tabs.transport = {
             t.e_tradeRoutes();
         }
     },
-    checkdoTrades: function () {
-        var t = Tabs.transport;
-        if (t.tradeRoutes.length == 0) return;
-        t.doTrades(t.count);
-        t.count++;
-        if (t.count < t.tradeRoutes.length) {
-            t.checkdotradetimeout = setTimeout(function () {
-                t.checkdoTrades();
-            }, 5000);
-        } else {
-            var now = new Date()
-                .getTime() / 1000.0;
-            now = now.toFixed(0);
-            Options.lasttransport = now;
-            saveOptions();
-            t.count = 0;
-        }
+    
+    checkdoTrades: function(){
+    var t = Tabs.transport;
+    if(t.tradeRoutes.length==0) return;
+    t.doTrades(t.count);
+    t.count++;
+    if(t.count < t.tradeRoutes.length){
+              t.checkdotradetimeout = setTimeout(function() { t.checkdoTrades();}, 5000);
+            } else {
+              var now = new Date().getTime()/1000.0;
+              now = now.toFixed(0);
+              Options.lasttransport = now;
+              saveOptions();    
+              t.count = 0;
+            }
     },
-    doTrades: function (count, tt) {
-        var t = Tabs.transport;
-        if (t.tradeRoutes.length == 0) return;
-        if (!t.tradeRoutes[count]["route_state"]) return;
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        params.gold = 0;
-        params.r1 = 0;
-        params.r2 = 0;
-        params.r3 = 0;
-        params.r4 = 0;
-        params.r5 = 0;
+    
+  doTrades: function(count,tt){
+    var t = Tabs.transport;
+       if(t.tradeRoutes.length==0) return;
+       if(!t.tradeRoutes[count]["route_state"]) return;
+       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.gold =0;
+        params.r1 =0;
+        params.r2 =0;
+        params.r3 =0;
+        params.r4 =0 ;
+        params.r5 =0 ;
         params.kid = 0;
-        var carry_amount = 0;
-        var wagons_needed = 0;
+        
+        var carry_amount= 0;
+        var wagons_needed=0;
         var citymax = 0;
         var city = t.tradeRoutes[count]["city"];
         var cityID = 'city' + city;
-        if (!Cities.byID[city]) return;
+        if(!Cities.byID[city]) return;
+        
         var xcoord = t.tradeRoutes[count]["target_x"];
         var ycoord = t.tradeRoutes[count]["target_y"];
         var trade_Food = t.tradeRoutes[count]["trade_Food"];
@@ -7118,36 +7088,37 @@ Tabs.transport = {
         if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseIntNan(trade_Ore);
         if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
         carry_Astone *= 5; //Multiply by 5 to account for 5 times less carrying capacity
-        if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt' + 9]);
-        else var wagons = parseInt(Seed.units[cityID][t.tradeRoutes[count]['TroopType']]);
-        var rallypointlevel = t.getRallypoint(cityID);
-        if (rallypointlevel == 11) rallypointlevel = 15;
-        if (rallypointlevel == 12) rallypointlevel = 20;
-        if (parseInt(wagons) > parseInt(rallypointlevel * 10000)) {
-            wagons = (rallypointlevel * 10000);
-        }
-        if (t.tradeRoutes[count]['TroopType'] == undefined) var unit = 'unt9';
-        else var unit = t.tradeRoutes[count]['TroopType'];
-        var Troops = parseInt(Seed.units[cityID][unit]);
-        if (parseInt(Troops) > parseInt(wagons)) Troops = wagons;
-        var featherweight = parseInt(Seed.tech.tch10);
+      
+      if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]);
+      else var wagons =  parseInt(Seed.units[cityID][t.tradeRoutes[count]['TroopType']]);
+      var rallypointlevel = t.getRallypoint(cityID);    
+          if (rallypointlevel == 11) rallypointlevel = 15;
+          if (rallypointlevel == 12) rallypointlevel = 20;
+        if (parseInt(wagons) > parseInt(rallypointlevel*10000)){ wagons = (rallypointlevel*10000); }
+        
+      if (t.tradeRoutes[count]['TroopType'] == undefined) var unit = 'unt9';
+      else var unit = t.tradeRoutes[count]['TroopType'];
+      var Troops = parseInt(Seed.units[cityID][unit]);
+      if(parseInt(Troops)>parseInt(wagons)) Troops = wagons;
+      var featherweight = parseInt(Seed.tech.tch10);
         var Load = parseInt(unsafeWindow.unitstats[unit]['5'])
-        var maxloadperwagon = (featherweight * ((Load / 100) * 10)) + Load;
-        var maxload = (maxloadperwagon * Troops);
-        if (wagons <= 0) {
-            return;
-        }
-        for (var t = 0; t < Seed.cities.length; t++) {
-            if (parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
-        }
-        var shift_Food = parseIntNan(maxload / 9); //Total of 9 portions
-        var shift_Wood = parseIntNan(maxload / 9);
-        var shift_Stone = parseIntNan(maxload / 9);
-        var shift_Ore = parseIntNan(maxload / 9);
-        var shift_Astone = parseIntNan(maxload / 9 * 5); //Aetherstone takes 5 of 9 portions    
-        if ((maxload - carry_Food - carry_Wood - carry_Stone - carry_Ore - carry_Astone) < 0) {
-            var shift_num = 0;
-            var shift_spare = 0;
+      var maxloadperwagon = (featherweight * ((Load/100)*10)) + Load;
+          var maxload = (maxloadperwagon * Troops);
+          if(wagons <= 0) {return; }
+
+           for (var t=0; t< Seed.cities.length;t++) {
+               if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
+          }                     
+        
+          var shift_Food = parseIntNan(maxload / 9); //Total of 9 portions
+          var shift_Wood = parseIntNan(maxload / 9);
+          var shift_Stone = parseIntNan(maxload / 9);
+          var shift_Ore = parseIntNan(maxload / 9);
+          var shift_Astone = parseIntNan(maxload / 9 * 5); //Aetherstone takes 5 of 9 portions    
+          if ((maxload - carry_Food - carry_Wood - carry_Stone - carry_Ore - carry_Astone) < 0){
+             var shift_num=0;
+             var shift_spare=0;
+            
             // Check: See if load/4 is to big for some resources...
             if (carry_Food < shift_Food) {
                 shift_spare += (shift_Food - carry_Food);
@@ -7168,23 +7139,25 @@ Tabs.transport = {
             if (carry_Astone < shift_Astone) {
                 shift_spare += (shift_Astone - carry_Astone);
                 shift_Astone = carry_Astone;
-            }
-            while (shift_spare > 1) {
-                if (carry_Food < (shift_Food + shift_spare)) {
+            }                        
+             
+          while (shift_spare >1) {
+                 if (carry_Food < (shift_Food + shift_spare)){
                     shift_spare = shift_spare - carry_Food;;
                     shift_Food = carry_Food;
-                } else {
-                    shift_Food = (shift_Food + shift_spare);
-                    shift_spare = shift_spare - shift_spare;
+                 }
+                 else{
+                  shift_Food = (shift_Food + shift_spare);
+                  shift_spare = shift_spare- shift_spare;
                 }
-                if (carry_Wood < (shift_Wood + shift_spare)) {
+                 if (carry_Wood < (shift_Wood + shift_spare)){
                     shift_spare = shift_spare - carry_Wood;;
                     shift_Wood = carry_Wood;
                 } else {
                     shift_Wood = shift_Wood + shift_spare;
                     shift_spare = shift_spare - shift_spare;
                 }
-                if (carry_Stone < (shift_Stone + shift_spare)) {
+                if (carry_Stone < (shift_Stone + shift_spare)){
                     shift_spare = shift_spare - carry_Stone;
                     shift_Stone = carry_Stone;
                 } else {
@@ -7234,250 +7207,165 @@ Tabs.transport = {
         params.r2 = carry_Wood;
         params.r3 = carry_Stone;
         params.r4 = carry_Ore;
-        params.r5 = parseInt(carry_Astone / 5);
+        params.r5 = parseInt(carry_Astone/5);
         params.gold = carry_Gold;
-        switch (unit) {
-        case 'unt1':
-            params.u1 = wagons_needed;
-            break;
-        case 'unt2':
-            params.u2 = wagons_needed;
-            break;
-        case 'unt3':
-            params.u3 = wagons_needed;
-            break;
-        case 'unt4':
-            params.u4 = wagons_needed;
-            break;
-        case 'unt5':
-            params.u5 = wagons_needed;
-            break;
-        case 'unt6':
-            params.u6 = wagons_needed;
-            break;
-        case 'unt7':
-            params.u7 = wagons_needed;
-            break;
-        case 'unt8':
-            params.u8 = wagons_needed;
-            break;
-        case 'unt9':
-            params.u9 = wagons_needed;
-            break;
-        case 'unt10':
-            params.u10 = wagons_needed;
-            break;
-        case 'unt11':
-            params.u11 = wagons_needed;
-            break;
-        case 'unt12':
-            params.u12 = wagons_needed;
-            break;
-        }
-        if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
-            if (tt) params.tt = tt;
-            var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
-            new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-                method: "post",
-                parameters: params,
-                loading: true,
-                onSuccess: function (transport) {
-                    profiler.stop();
-                    var rslt = eval("(" + transport.responseText + ")");
-                    if (rslt.ok) {
-                        actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   " + unsafeWindow.unitcost[unit][0] + ": " + wagons_needed);
-                        var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                        var ut = unsafeWindow.unixtime();
-                        var unitsarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                        for (i = 0; i <= unitsarr.length; i++) {
-                            if (params["u" + i]) {
-                                unitsarr[i] = params["u" + i];
-                            }
-                        }
-                        var resources = new Array();
-                        resources[0] = params.gold;
-                        for (i = 1; i <= 5; i++) {
-                            resources[i] = params["r" + i];
-                        }
-                        var currentcityid = city;
-                        unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                        unsafeWindow.update_seed(rslt.updateSeed)
-                        if (rslt.updateSeed) {
-                            unsafeWindow.update_seed(rslt.updateSeed)
-                        };
-                    } else {
-                        var t = Tabs.transport;
-                        if (rslt.user_action == "backOffWaitTime") {
-                            logit('backoffwaittime ' + rslt.wait_time);
-                            var wait = 1;
-                            if (rslt.wait_time) wait = rslt.wait_time;
-                            setTimeout(function () {
-                                t.doTrades(count, rslt.tt);
-                            }, wait * 1000);
-                            return;
-                        };
-                        actionLog('' + translate("TRANSPORT FAIL:") + ' ' + cityname + ' -> ' + rslt.msg);
-                    }
-                },
-                onFailure: function () {
-                    profiler.stop();
-                }
-            });
+        
+        switch (unit){
+      case 'unt1': params.u1 = wagons_needed;break;
+      case 'unt2': params.u2 = wagons_needed;break;
+      case 'unt3': params.u3 = wagons_needed;break;
+      case 'unt4': params.u4 = wagons_needed;break;
+      case 'unt5': params.u5 = wagons_needed;break;
+      case 'unt6': params.u6 = wagons_needed;break;
+      case 'unt7': params.u7 = wagons_needed;break;
+      case 'unt8': params.u8 = wagons_needed;break;
+      case 'unt9': params.u9 = wagons_needed;break;
+      case 'unt10': params.u10 = wagons_needed;break;
+      case 'unt11': params.u11 = wagons_needed;break;
+      case 'unt12': params.u12 = wagons_needed;break;
+    }
+        
+           if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
+        if(tt)
+        params.tt = tt;    
+        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");     
+         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+                  method: "post",
+                  parameters: params,
+                  loading: true,
+                  onSuccess: function (transport) {
+					  profiler.stop();
+                  var rslt = eval("(" + transport.responseText + ")");
+                  if (rslt.ok) {
+					  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
+					  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+					  var ut = unsafeWindow.unixtime();
+					  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+					  for(i = 0; i <= unitsarr.length; i++){
+						  if(params["u"+i]){
+						  unitsarr[i] = params["u"+i];
+						  }
+					  }
+					  var resources=new Array();
+					  resources[0] = params.gold;
+					  for(i=1; i<=5; i++){
+						  resources[i] = params["r"+i];
+					  }
+					  var currentcityid = city;
+					  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+					  unsafeWindow.update_seed(rslt.updateSeed)
+					  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+                  } else {
+					  var t = Tabs.transport;
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime '+rslt.wait_time);
+                        var wait = 1;
+                        if(rslt.wait_time)
+                        wait = rslt.wait_time;
+                        setTimeout (function(){t.doTrades(count,rslt.tt);}, wait*1000);
+                        return;
+					  };
+                  actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
+                  }
+                  },
+                  onFailure: function () {profiler.stop();}
+          });
         }
     },
     
-    ManualTransport: function (tt) {
-        var t = Tabs.transport;
-        if (document.getElementById('ptcityX')
-            .value == "" || document.getElementById('ptcityY')
-            .value == "") return;
-        if (t.TroopsNeeded > t.Troops) return;
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        var unitType = document.getElementById('TransportTroop')
-            .value;
-        var LoadUnit = (parseInt(Seed.tech.tch10) * ((parseInt(unsafeWindow.unitstats[unitType]['5']) / 100) * 10)) + parseInt(unsafeWindow.unitstats[unitType]['5']);
-        var MaxLoad = parseInt(Seed.units['city' + t.tcp.city.id][unitType]) * LoadUnit;
-        document.getElementById('errorSpace')
-            .innerHTML = '';
-        params.kid = 0;
-        params.cid = t.tcp.city.id;
-        params.type = "1";
-        params.xcoord = parseInt(document.getElementById('ptcityX')
-            .value);
-        params.ycoord = parseInt(document.getElementById('ptcityY')
-            .value);
-        params.r1 = parseInt(document.getElementById('pbtradeamountFood')
-            .value);
-        params.r2 = parseInt(document.getElementById('pbtradeamountWood')
-            .value);
-        params.r3 = parseInt(document.getElementById('pbtradeamountStone')
-            .value);
-        params.r4 = parseInt(document.getElementById('pbtradeamountOre')
-            .value);
-        params.r5 = parseInt(document.getElementById('pbtradeamountAstone')
-            .value);
-        params.gold = parseInt(document.getElementById('pbtradeamountGold')
-            .value);
-        switch (unitType) {
-        case 'unt1':
-            params.u1 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt2':
-            params.u2 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt3':
-            params.u3 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt4':
-            params.u4 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt5':
-            params.u5 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt6':
-            params.u6 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt7':
-            params.u7 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt8':
-            params.u8 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt9':
-            params.u9 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt10':
-            params.u10 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt11':
-            params.u11 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        case 'unt12':
-            params.u12 = parseInt(document.getElementById('TroopsToSend')
-                .value);
-            break;
-        }
-        if (tt) params.tt = tt;
-        if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
-            var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
-            new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-                method: "post",
-                parameters: params,
-                loading: true,
-                onSuccess: function (transport) {
-                    profiler.stop();
-                    var rslt = eval("(" + transport.responseText + ")");
-                    if (rslt.ok) {
-                        var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                        var ut = unixTime();
-                        var unitsarr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-                        for (i = 0; i <= unitsarr.length; i++) {
-                            if (params["u" + i]) {
-                                unitsarr[i] = params["u" + i];
-                            }
-                        }
-                        var resources = new Array();
-                        resources[0] = params.gold;
-                        for (i = 1; i <= 5; i++) {
-                            resources[i] = params["r" + i];
-                        }
-                        var currentcityid = t.tcp.city.id;
-                        unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                        if (rslt.updateSeed) {
-                            unsafeWindow.update_seed(rslt.updateSeed)
-                        };
-                        document.getElementById('errorSpace')
-                            .innerHTML = 'Send: ' + addCommas(params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) + ' Resources with ' + addCommas(parseInt(document.getElementById('TroopsToSend')
-                            .value)) + ' ' + unsafeWindow.unitcost[unitType][0];
-                        document.getElementById('pbtradeamountFood')
-                            .value = 0;
-                        document.getElementById('pbtradeamountWood')
-                            .value = 0;
-                        document.getElementById('pbtradeamountStone')
-                            .value = 0;
-                        document.getElementById('pbtradeamountOre')
-                            .value = 0;
-                        document.getElementById('pbtradeamountAstone')
-                            .value = 0;
-                        document.getElementById('pbtradeamountGold')
-                            .value = 0;
-                        document.getElementById('TroopsToSend')
-                            .value = 0;
-                    } else {
-                        if (rslt.user_action == "backOffWaitTime") {
-                            logit('backoffwaittime ' + rslt.wait_time);
-                            if (rslt.tt) var tt = rslt.tt;
-                            var wait = 1;
-                            if (rslt.wait_time) wait = rslt.wait_time;
-                            setTimeout(function () {
-                                t.ManualTransport(tt);
-                            }, wait * 1000);
-                            document.getElementById('errorSpace')
-                                .innerHTML = '<HR><FONT COLOR=red>' + translate("Error:") + ' ' + 'kabam making us wait for ' + wait + ' seconds then retry march' + '</font>';
-                            return;
-                        };
-                        var errorcode = 'err_' + rslt.error_code;
-                        if (rslt.msg == undefined) document.getElementById('errorSpace')
-                            .innerHTML = '<HR><FONT COLOR=red>' + translate("Error:") + ' ' + unsafeWindow.g_js_strings.errorcode[errorcode] + '</font>';
-                        else document.getElementById('errorSpace')
-                            .innerHTML = '<HR><FONT COLOR=red>' + translate("Error:") + ' ' + rslt.msg + '</font>';
-                    }
-                },
-                onFailure: function () {
-                    profiler.stop();
-                }
-            });
+    ManualTransport: function(tt){
+    var t = Tabs.transport;
+       if (document.getElementById ('ptcityX').value == "" || document.getElementById ('ptcityY').value == "") return;
+    if ( t.TroopsNeeded > t.Troops) return;
+    
+       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    var unitType = document.getElementById('TransportTroop').value;
+    var LoadUnit = (parseInt(Seed.tech.tch10) * ((parseInt(unsafeWindow.unitstats[unitType]['5'])/100)*10)) + parseInt(unsafeWindow.unitstats[unitType]['5']);
+    var MaxLoad =  parseInt(Seed.units['city' + t.tcp.city.id][unitType]) * LoadUnit;
+    document.getElementById ('errorSpace').innerHTML = '';
+          
+    params.kid = 0;
+    params.cid=  t.tcp.city.id;
+    params.type = "1";
+    params.xcoord = parseInt(document.getElementById ('ptcityX').value);
+    params.ycoord = parseInt(document.getElementById ('ptcityY').value);
+    params.r1 = parseInt(document.getElementById ('pbtradeamountFood').value);
+    params.r2 = parseInt(document.getElementById ('pbtradeamountWood').value);
+    params.r3 = parseInt(document.getElementById ('pbtradeamountStone').value);
+    params.r4 = parseInt(document.getElementById ('pbtradeamountOre').value);
+    params.r5 = parseInt(document.getElementById ('pbtradeamountAstone').value);
+    params.gold = parseInt(document.getElementById ('pbtradeamountGold').value);
+        
+    switch (unitType){
+      case 'unt1': params.u1 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt2': params.u2 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt3': params.u3 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt4': params.u4 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt5': params.u5 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt6': params.u6 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt7': params.u7 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt8': params.u8 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt9': params.u9 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt10': params.u10 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt11': params.u11 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt12': params.u12 = parseInt(document.getElementById ('TroopsToSend').value);break;
+    }
+	if (tt)
+	params.tt = tt;
+    if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
+                 
+        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
+         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+                  method: "post",
+                  parameters: params,
+                  loading: true,
+                  onSuccess: function (transport) {
+					  profiler.stop();
+                  var rslt = eval("(" + transport.responseText + ")");
+                  if (rslt.ok) {                  
+                          var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+                          var ut = unixTime();
+                          var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                          for(i = 0; i <= unitsarr.length; i++){
+                              if(params["u"+i]){
+                              unitsarr[i] = params["u"+i];
+                              }
+                          }
+                          var resources=new Array();
+                          resources[0] = params.gold;
+                          for(i=1; i<=5; i++){
+                              resources[i] = params["r"+i];
+                          }
+                          var currentcityid = t.tcp.city.id;
+                          unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+                          if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+                          document.getElementById ('errorSpace').innerHTML = 'Send: ' + addCommas(params.r1+params.r2+params.r3+params.r4+params.r5+params.gold) + ' Resources with ' + addCommas(parseInt(document.getElementById ('TroopsToSend').value)) + ' ' + unsafeWindow.unitcost[unitType][0];
+                          document.getElementById ('pbtradeamountFood').value = 0;
+                          document.getElementById ('pbtradeamountWood').value = 0;
+                          document.getElementById ('pbtradeamountStone').value = 0;
+                          document.getElementById ('pbtradeamountOre').value = 0;
+                          document.getElementById ('pbtradeamountAstone').value = 0;
+                          document.getElementById ('pbtradeamountGold').value = 0;
+                          document.getElementById ('TroopsToSend').value = 0;
+                  } else {
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime '+rslt.wait_time);
+                        if(rslt.tt)
+                        var tt = rslt.tt;
+                        var wait = 1;
+                        if(rslt.wait_time)
+                        wait = rslt.wait_time;
+                        setTimeout (function(){t.ManualTransport(tt);}, wait*1000);
+                        document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + 'kabam making us wait for '+wait+' seconds then retry march' +'</font>';
+                        return;
+					  };
+                          var errorcode =  'err_' + rslt.error_code;
+                          if (rslt.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
+                          else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + rslt.msg +'</font>';
+                  }
+                  },
+                  onFailure: function () {profiler.stop();}
+          });
         }
     },
     show: function () {
@@ -9518,24 +9406,24 @@ Tabs.AutoCraft = {
      var tableau = [];
      for(var d in TrainOptions.CraftingNb) {
            if (parseInt(TrainOptions.CraftingNb[d])>0) {
-            if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
-            if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(getCityBuilding(cityId,20).maxLevel))
-            if(t.craftinfo[d].inputItems == "") {
-                tableau.push (d);
-            } else {
-                for(var i in t.craftinfo[d].inputItems) {
-                    if(parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
-                        break;
-                }    
-                if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
-                        tableau.push (d);
-            }
+			if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
+			if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(getCityBuilding(cityId,20).maxLevel))
+			if(t.craftinfo[d].inputItems == "") {
+				tableau.push (d);
+			} else {
+				for(var i in t.craftinfo[d].inputItems) {
+					if(parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
+						break;
+				}	
+				if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
+						tableau.push (d);
+			}
            }
      }
      if (tableau == []) {
-        t.Start();
-        return;
-     }
+		t.Start();
+		return;
+	 }
      var itemId = tableau[Math.floor(Math.random()*tableau.length)];
      var recipeId = t.craftinfo[itemId].recipe_id;
      var category = t.craftinfo[itemId].category;
@@ -9546,7 +9434,7 @@ Tabs.AutoCraft = {
            var now = unixTime();
           totTime = q.craftingEtaUnixTime - now;
           if (totTime > 0) {
-              t.Start();
+			  t.Start();
            return;
           }
      }
@@ -9566,13 +9454,13 @@ Tabs.AutoCraft = {
           onSuccess: function (transport) {
               var o=eval("("+transport.responseText+")");
               if(o.ok===true){
-                  //alert(inspect(o));
+				  //alert(inspect(o));
                if (o.status=="error") {
-                if (o.errorCode == 2)
-                    t.numcity--;
-                t.retrycount++;
-                if(t.retrycount > 10)
-                    return;
+				if (o.errorCode == 2)
+					t.numcity--;
+				t.retrycount++;
+				if(t.retrycount > 10)
+					return;
                 t.Start();
                 return;
                } else if(o.status=="failure"){
@@ -9580,7 +9468,7 @@ Tabs.AutoCraft = {
                  t.CraftingItem(currentcity,  itemId, recipeId);
                 }, 5000);
                 } else if (o.status=="success"){
-                    t.retrycount == 0;
+					t.retrycount == 0;
                 //actionLog ('<b>'+culang.auto+' '+culang.crafting+'</b>:  <span class=boldGreen>OK</span> #'+ (TrainOptions.CraftingNb[itemId] -1)+' ');
                  TrainOptions.CraftingNb[itemId] =  TrainOptions.CraftingNb[itemId] -1;
                  saveTrainOptions();
@@ -10157,7 +10045,7 @@ Tabs.Barb = {
                    parameters: params,
                    loading: true,
                    onSuccess: function (transport) {
-                       profiler.stop();
+					   profiler.stop();
                    var rslt = eval("(" + transport.responseText + ")");
                    if (rslt.ok) {
                      var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -10188,8 +10076,8 @@ Tabs.Barb = {
                      GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                      saveAttackOptions();
                    } else {
-                        if (rslt.user_action == "backOffWaitTime") {
-                        logit('backoffwaittime '+rslt.wait_time);
+					    if (rslt.user_action == "backOffWaitTime") {
+						logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
                         var tt = rslt.tt;
                         var wait = 1;
@@ -10197,7 +10085,7 @@ Tabs.Barb = {
                         wait = rslt.wait_time;
                         setTimeout (function(){t.doBarb(cityID,counter,xcoord,ycoord,level,kid,trps,tt);}, wait*1000);
                         return;
-                        };
+						};
                      //logit( inspect(rslt,3,1));
                      if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
                      if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
