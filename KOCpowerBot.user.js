@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20120929a
+// @version        20120929b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20120929a';
+var Version = '20120929b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12420,8 +12420,8 @@ Tabs.AutoTrain = {
         m += '<table><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> Only train when throne room set <INPUT id=pbatTRset type=text size=2 maxlength=1 value="'+ TrainOptions.trset +'">  is equiped</td>';
         m += '</tr></table></div>';
         m += '<DIV class=pbStat>TRAIN OPTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
-
     for (i=0;i<Seed.cities.length;i++){
+		var citynum = Seed.cities[i][0];
         city = i+1;
           m += '<TABLE width=100% height=0% class=pbTab><TR align="left">';
           m+='<TR><TD width=30px><INPUT type=checkbox class='+city+' id="SelectCity'+city+'"></td>';
@@ -12431,6 +12431,7 @@ Tabs.AutoTrain = {
             for (y in unsafeWindow.unitcost) {
                 var faux = 0;
                 var uc = unsafeWindow.unitcost[y];
+                if(!Seed.cityData.city[citynum].isPrestigeCity)
                 if (matTypeof(uc[8]) == 'object'){
                     for (k in uc[8]){
                         var b = getCityBuilding (Seed.cities[i][0], k.substr(1));
@@ -12448,6 +12449,9 @@ Tabs.AutoTrain = {
                         }
                     }
                 }
+                if(y == "unt13")
+                if(Seed.cityData.city[citynum].prestigeInfo.blessings != 11)
+                faux = 1;
                 if (faux==0)
                     m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
             }
