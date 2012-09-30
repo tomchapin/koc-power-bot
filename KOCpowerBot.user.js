@@ -12450,8 +12450,10 @@ Tabs.AutoTrain = {
                     }
                 }
                 if(y == "unt13")
-                if(Seed.cityData.city[citynum].prestigeInfo.blessings != 11)
-                faux = 1;
+                if(Seed.cityData.city[citynum].prestigeInfo.blessings) {
+					if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(11) == -1)
+					faux = 1;
+				} else faux = 1;
                 if (faux==0)
                     m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
             }
