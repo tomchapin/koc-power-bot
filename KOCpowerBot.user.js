@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121001a
+// @version        20121001b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121001a';
+var Version = '20121001b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12431,8 +12431,8 @@ Tabs.AutoTrain = {
             for (y in unsafeWindow.unitcost) {
                 var faux = 0;
                 var uc = unsafeWindow.unitcost[y];
-                if(!Seed.cityData.city[citynum].isPrestigeCity) {
-					if (matTypeof(uc[8]) == 'object'){
+				if (matTypeof(uc[8]) == 'object'){
+					if(!Seed.cityData.city[citynum].isPrestigeCity) {
 						for (k in uc[8]){
 							var b = getCityBuilding (Seed.cities[i][0], k.substr(1));
 							if (b.maxLevel < uc[8][k][1]){
@@ -12440,15 +12440,15 @@ Tabs.AutoTrain = {
 								break;
 							}
 						}
-					}
-				}else {
-					if(uc[8]['b13']) {
-						var b = getCityBuilding (Seed.cities[i][0], 13);
+					}else {
+						if(uc[8]['b13']) {
+							var b = getCityBuilding (Seed.cities[i][0], 13);
 							if (b.maxLevel < uc[8]['b13'][1]){
 								faux = 1;
 							}
 						}
-					};
+					}	
+				}
                 if (matTypeof(uc[9]) == 'object'){
                     for (k in uc[9]){
                         if (parseInt(Seed.tech['tch'+k.substr(1)]) < uc[9][k][1]){
