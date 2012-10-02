@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121002a
+// @version        20121002b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121002a';
+var Version = '20121002b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4039,7 +4039,7 @@ Tabs.build = {
               }           
             }
           }
-        setTimeout(t.e_autoBuild, 10000); //should be at least 10
+        setTimeout(t.e_autoBuild, 30*1000); //should be at least 10
     },  
     doOne : function (bQi){
         var t = Tabs.build;
@@ -4136,8 +4136,6 @@ Tabs.build = {
                             Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
                             if (params.cid == unsafeWindow.currentcityid)
                                 unsafeWindow.update_bdg();
-                            if (document.getElementById('pbHelpRequest').checked == true)
-                                t.bot_gethelp(params.bid, currentcityid);
                             t.cancelQueueElement(0, currentcityid, time, false);
                         } else {
                             var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
@@ -4189,7 +4187,10 @@ Tabs.build = {
                                 Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(),  unsafeWindow.unixtime() + time, 0, time, citpos]);                        
                                 if (params.cid == unsafeWindow.currentcityid)
                                     unsafeWindow.update_bdg();
-                                if (document.getElementById('pbHelpRequest').checked == true)
+                                	unsafeWindow.Modal.hideModalAll();
+                    				unsafeWindow.queue_changetab_building();
+                    				unsafeWindow.modal_build_show_state();
+                                if (document.getElementById('pbHelpRequest').checked == true && time > 59)
                                     t.bot_gethelp(params.bid, currentcityid);
                                 t.cancelQueueElement(0, currentcityid, time, false);
                             } else {
@@ -4309,6 +4310,7 @@ Tabs.build = {
     calculateQueueValues: function (cityId, buildingLevel, buildingType, buildingMode) {
         var t = Tabs.build;
         var now = unixTime();
+        var constructionBoost = unsafeWindow.cm.ThroneController.effectBonus(78);        
         if (buildingMode == 'build') {
             var buildingMult = Math.pow(2, buildingLevel);
         }
@@ -4338,6 +4340,7 @@ Tabs.build = {
         }
         if (buildingMode == 'build') {
             buildingTime = parseInt(buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16)));
+            if (constructionBoost>0)buildingTime = Math.round(buildingTime / (1 + (constructionBoost / 100)));
         }
         if (buildingMode == 'destruct') {
             buildingTime = buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16));
@@ -4423,49 +4426,6 @@ Tabs.build = {
             t._addTab(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode);
         }
 
-    },
-    calculateQueueValues: function (cityId, buildingLevel, buildingType, buildingMode) {
-        var t = Tabs.build;
-        var now = unixTime();
-        if (buildingMode == 'build') {
-            var buildingMult = Math.pow(2, buildingLevel);
-        }
-        if (buildingMode == 'destruct') {
-            var buildingMult = Math.pow(2, buildingLevel - 2);
-        }
-                
-        var knights = Seed.knights["city" + cityId];
-        if (knights) {
-            var polKniId = parseInt(Seed.leaders['city' + cityId].politicsKnightId);
-            if (polKniId) {
-                var polValue = parseInt(Seed.knights['city' + cityId]['knt' + polKniId].politics);
-                var polBoost = parseInt(Seed.knights['city' + cityId]['knt' + polKniId].politicsBoostExpireUnixtime);
-                if ((polBoost - now) > 0) {
-                    polValue = parseInt(polValue * 1.25);
-                }
-            } else {
-                polValue = 0;
-            }
-        } else {
-            polValue = 0;
-        }
-        
-        var buildingTime = unsafeWindow.buildingcost["bdg" + buildingType][7] * buildingMult;
-        if (parseInt(buildingType) < 6 && parseInt(buildingType) > 0 && buildingMult == 1) {
-            buildingTime = 15;
-        }
-        if (buildingMode == 'build') {
-            buildingTime = parseInt(buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16)));
-        }
-        if (buildingMode == 'destruct') {
-            buildingTime = buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16));
-            if (buildingTime % 1 > 0) {
-                buildingTime = parseInt(buildingTime);
-            }
-        }
-        
-        var result = new Array(buildingMult, buildingTime);
-        return result;
     },
     bot_gethelp: function (f, currentcityid) {
         var t = Tabs.build;
