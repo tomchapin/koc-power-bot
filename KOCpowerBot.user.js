@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121001b
+// @version        20121002a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121001b';
+var Version = '20121002a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1661,11 +1661,11 @@ Tabs.Throne = {
       if (but == t.curTabBut)
         return;
       if (t.curTabBut){
-        t.curTabBut.className='pbSubtab'; 
+        t.curTabBut.className='pbSubtab';
         t.curTabBut.disabled=false;
       }
       t.curTabBut = but;
-      but.className='pbSubtab pbSubtabSel'; 
+      but.className='pbSubtab pbSubtabSel';
       but.disabled=true;
       t.curTabName = but.id.substr(9);
       t.show ();
@@ -1683,8 +1683,8 @@ Tabs.Throne = {
 		saveThroneOptions();
    },
     
- Salvage : function (){ 
-    var t = Tabs.Throne; 
+ Salvage : function (){
+    var t = Tabs.Throne;
     try {      
       m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
 	  m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
@@ -1954,7 +1954,6 @@ Compare :function (){
       t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }
 },
-
 
 togOpt : function (checkboxId, optionName, callOnChange){
     var t = Tabs.Throne;
@@ -6690,20 +6689,13 @@ Tabs.transport = {
     updateTroops: function (city) {
         var t = Tabs.transport;
         var fontcolor = 'black';
-        t.Food = parseIntCommas(document.getElementById('pbtradeamountFood')
-            .value);
-        t.Wood = parseIntCommas(document.getElementById('pbtradeamountWood')
-            .value);
-        t.Stone = parseIntCommas(document.getElementById('pbtradeamountStone')
-            .value);
-        t.Ore = parseIntCommas(document.getElementById('pbtradeamountOre')
-            .value);
-        t.Gold = parseIntCommas(document.getElementById('pbtradeamountGold')
-            .value);
-        t.Astone = parseIntCommas(document.getElementById('pbtradeamountAstone')
-            .value) * 5;
-        var unit = document.getElementById('TransportTroop')
-            .value;
+        t.Food = parseIntCommas(document.getElementById('pbtradeamountFood').value);
+          t.Wood = parseIntCommas(document.getElementById('pbtradeamountWood').value);
+          t.Stone = parseIntCommas(document.getElementById('pbtradeamountStone').value);
+          t.Ore = parseIntCommas(document.getElementById('pbtradeamountOre').value);
+          t.Gold = parseIntCommas(document.getElementById('pbtradeamountGold').value);
+        t.Astone = parseIntCommas(document.getElementById('pbtradeamountAstone').value)*5;
+        var unit = document.getElementById('TransportTroop').value;
         t.Troops = parseInt(Seed.units['city' + t.tcp.city.id][unit]);
         var featherweight = parseInt(Seed.tech.tch10);
         var Load = parseInt(unsafeWindow.unitstats[unit]['5'])
@@ -6818,8 +6810,7 @@ Tabs.transport = {
         var target_y = document.getElementById('ptcityY')
             .value;
         var target_city = 0;
-        var TroopType = document.getElementById('TransportTroop')
-            .value;
+        var TroopType = document.getElementById('TransportTroop').value;
         var route_state = true;
         if (t.tcpto.city) if (t.tcpto.city.x == target_x && t.tcpto.city.y == target_y) target_city = t.tcpto.city.id;
         if (valid == true) {
@@ -19294,7 +19285,7 @@ Tabs.startup = {
        }else {
             var now = new Date().getTime()/1000.0;
             now = now.toFixed(0);
-            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + Options.Crestinterval+30)) {
+            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + (Options.Crestinterval*2) + 20)) {
                 r=1;
             }
         }
