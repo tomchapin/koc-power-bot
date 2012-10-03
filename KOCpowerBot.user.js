@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121003a
+// @version        20121003b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121003a';
+var Version = '20121003b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1626,7 +1626,11 @@ Tabs.Throne = {
   SalvageArray:[],
   SalvageRunning:false,
   LastDeleted:0,
-  EquipType: ["Advisor","Banner","Chair","Table","Windows"],
+  MaxRows:30,
+  CompPos:0,
+  CardTypes:["ALL","Attack","Defense","Life","Speed","Accuracy","Range","Load","MarchSize","MarchSpeed","CombatSkill","IntelligenceSkill","PoliticsSkill","ResourcefulnessSkill","TrainingSpeed","ConstructionSpeed","ResearchSpeed","CraftingSpeed","Upkeep","ResourceProduction","ResourceCap","Storehouse","Morale","ItemDrop"],
+  EquipType: ["ALL","Advisor","Banner","Chair","Table","Trophy","Windows"],
+  Faction: ["ALL","Briton","Fey","Druid"],
 
   init : function (div){
     var t = Tabs.Throne;
@@ -1640,7 +1644,7 @@ Tabs.Throne = {
 
     var main = '<TABLE align=center><TR><TD><INPUT class=pbSubtab ID=ptmrchSubSal type=submit value="Salvage"></td>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubUE type=submit value="Upgrade/Enhance"></td>';
-    main +='<TD><INPUT class=pbSubtab ID=ptmrchSubEQ type=submit value="Equip"></td></tr></table><HR class=ptThin>';
+    main +='<TD><INPUT class=pbSubtab ID=ptmrchSubEQ type=submit value="Compare"></td></tr></table><HR class=ptThin>';
     main +='<DIV id=ThroneOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
 
     t.cont.innerHTML = main;
@@ -1826,47 +1830,97 @@ Upgrade_Enhance :function (){
     }
 setInterval(t.paintStones,30000);
 },
-  
-Equip :function (){
+ 
+Compare :function (){
     var t = Tabs.Throne;  
+    var amount = 0;
+    var AdvisorCount =0;
+    var BannerCount = 0;
+    var ChairCount = 0;
+    var TableCount = 0;
+    var TrophyCount = 0;
+    var WindowCount = 0;
+    var counter = 0;
+    ActiveItems = parseInt(Seed.throne.rowNum)*5;
+
+    for (k in unsafeWindow.kocThroneItems){
+		counter++;
+		if (counter > ActiveItems) break;
+		z = unsafeWindow.kocThroneItems[k];
+		if (z.type=="advisor") AdvisorCount++;
+		if (z.type=="banner") BannerCount++;
+		if (z.type=="chair") ChairCount++;
+		if (z.type=="trophy") TrophyCount++;
+		if (z.type=="table") TableCount++;
+		if (z.type=="window") WindowCount++;
+	}	
+
+
     try {   
-     var m = '<DIV id=pbTowrtDivF class=pbStat>EQUIP THRONE ITEMS</div><br>';
-     m+='<DIV align=center>Preset: <SELECT id=preset type=list></select></div><br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab>';
-     for (k in t.EquipType){
-         var y = t.EquipType[k];
-         if (typeof(y) == "string") {
-             what = y.toLowerCase();
-             if (y == "Windows") y = "Window";
-             m+='<TR><TD>'+ y +':</td><TD></td><TD><SELECT id='+ what +' type=list></select></td><TD><INPUT id="Equip'+ what +'" type=submit value="Equip"></td><TD><INPUT id="Unequip'+ what +'" type=submit value="Unequip"></td><TD><div id="info'+ what +'"</td></tr><TR><TD>&nbsp;</td></tr><TR><TD>&nbsp;</td></tr>';
-         }
+     var m = '<DIV id=pbTowrtDivF class=pbStat>Compare Throne Items</div><br><TABLE id=pbCompareStats width=100% height=0% class=pbTab>';
+
+     m+='<TD>Advisor: ' + AdvisorCount + '</td><TD>Banner: ' + BannerCount+ '</td><TD>Throne :' + ChairCount+ '</td><TD>Table: '+ TableCount+'</td><TD>Trophy: ' + TrophyCount + '</td><TD>Window: ' + WindowCount + '</td></table><br>';
+
+     m+= '<DIV id=pbThroneMain class=pbStat>Compare Throne Items</div><br>';
+     m+='<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=type type=list></select></td><TD>Card Family: <SELECT id=family type=list></select></td><TD>Effect: <SELECT id=effect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=keyword size=10></td></tr></table>';
+
+     m+='<br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR>';
+
+     for (i=1;i<=ActiveItems;i++){
+     	 m+='<TD><DIV id=DIV'+ i +'></div></td>';
+     	 if (i%3==0) m+='</tr><TR></tr><TR>';
      }
-     m+="</table>"
+
+     m+="</tr></table>"
+
     t.Overv.innerHTML = m;
-    document.getElementById("preset").options.length=0;
-    for (i=1;i<=Seed.throne.slotNum;i++){
-        var o = document.createElement("option");            
-        o.text = i;
-        o.value = i;
-        document.getElementById("preset").options.add(o);
-    }    
-    document.getElementById("advisor").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("advisor").value,"advisor")},false);
-    document.getElementById("banner").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("banner").value,"banner")},false);
-    document.getElementById("chair").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("chair").value,"chair")},false);
-    document.getElementById("table").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("table").value,"table")},false);
-    document.getElementById("windows").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("windows").value,"windows")},false);
-    document.getElementById("Equipadvisor").addEventListener ('click', function (){t.doEquip(document.getElementById("advisor").value)},false);
-    document.getElementById("Equipbanner").addEventListener ('click', function (){t.doEquip(document.getElementById("banner").value)},false);
-    document.getElementById("Equipchair").addEventListener ('click', function (){t.doEquip(document.getElementById("chair").value)},false);
-    document.getElementById("Equiptable").addEventListener ('click', function (){t.doEquip(document.getElementById("table").value)},false);
-    document.getElementById("Equipwindows").addEventListener ('click', function (){t.doEquip(document.getElementById("windows").value)},false);
-    document.getElementById("Unequipadvisor").addEventListener ('click', function (){t.doUnequip(document.getElementById("advisor").value)},false);
-    document.getElementById("Unequipbanner").addEventListener ('click', function (){t.doUnequip(document.getElementById("banner").value)},false);
-    document.getElementById("Unequipchair").addEventListener ('click', function (){t.doUnequip(document.getElementById("chair").value)},false);
-    document.getElementById("Unequiptable").addEventListener ('click', function (){t.doUnequip(document.getElementById("table").value)},false);
-    document.getElementById("Unequipwindows").addEventListener ('click', function (){t.doUnequip(document.getElementById("windows").value)},false);
-    document.getElementById("preset").addEventListener ('change', function (){t.doPreset(document.getElementById("preset").value)},false);
-    document.getElementById("preset").value = Seed.throne.activeSlot;    
-    t.FillEquipCheckboxes();
+
+	document.getElementById("type").options.length=0;
+	for (k in t.EquipType){
+		var y = t.EquipType[k];
+		if (typeof(y) == "string") {
+			if (y == "Windows") y = "Window";
+			what = y.toLowerCase();
+			if (y == "Chair") y = "Throne";
+			var o = document.createElement("option");			
+			o.text = y;
+			o.value = what;
+			document.getElementById("type").options.add(o);
+		}		
+	}	
+	document.getElementById("family").options.length=0;
+	for (k in t.CardTypes){
+		var y = t.CardTypes[k];
+		if (typeof(y) == "string") {
+			var o = document.createElement("option");			
+			o.text = y;
+			o.value = y;
+			document.getElementById("family").options.add(o);
+		}		
+	}	
+	document.getElementById("effect").options.length=0;
+	var o = document.createElement("option");			
+	o.text = "ALL";
+	o.value = "ALL";
+	document.getElementById("effect").options.add(o);
+	for (k in unsafeWindow.cm.thronestats.effects){
+		var y = unsafeWindow.cm.thronestats.effects[k][1];
+		if (typeof(y) == "string") {
+			var o = document.createElement("option");			
+			o.text = unsafeWindow.cm.thronestats.effects[k][1];
+			o.value = k;
+			document.getElementById("effect").options.add(o);
+		}		
+	}	
+
+	document.getElementById("type").addEventListener ('change', t.FillEquipCheckboxes,false);
+	document.getElementById("family").addEventListener ('change', t.FillEquipCheckboxes,false);
+	document.getElementById("effect").addEventListener ('change', t.FillEquipCheckboxes,false);
+	document.getElementById("keyword").addEventListener ('change', t.FillEquipCheckboxes,false);
+	document.getElementById('keyword').addEventListener('keyup', t.FillEquipCheckboxes, false)
+      
+
+	t.FillEquipCheckboxes();
     } catch (e) {
       t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }
@@ -1986,117 +2040,102 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
 
 
 FillEquipCheckboxes: function(){
-    var t = Tabs.Throne;
-    for (k in t.EquipType) {
-        var y = t.EquipType[k];
-        var itemEquiped = 0;
-        var count = 0;
-        if (typeof(y) == "string") {
-            what = y.toLowerCase();
-            document.getElementById(what).options.length=0;
-            for (l in unsafeWindow.kocThroneItems) {
-                z = unsafeWindow.kocThroneItems[l];
-                check = what;
-                if (check == "windows") check = "window";
-                count++;
-                if (count<=(parseInt(Seed.throne.rowNum)*5)){
-                    if (z.type == check) {    
-                        var o = document.createElement("option");            
-                        o.text = z.name;
-                        o.value = l;
-                        document.getElementById(what).options.add(o);
-                        if (z.isEquipped) itemEquiped = l;
-                    }
-                }    
+	var t = Tabs.Throne;
+	var familyCheck=false;
+	var typeCheck=false;
+	var effectCheck=false;
+	var keywordCheck=false;  
+	ActiveItems = parseInt(Seed.throne.rowNum)*5;
+	for(i=1;i<=ActiveItems;i++) document.getElementById("DIV"+i).innerHTML="";
+	counter = 0;
+	t.CompPos=0;
+	for (k in unsafeWindow.kocThroneItems){
+		counter++;
+		if (counter > ActiveItems) break;
+		z = unsafeWindow.kocThroneItems[k];
+		familyCheck=false;
+		typeCheck=false;
+		effectCheck=false;
+		keywordCheck=false;
+		y = z.effects;
+		if (z.type==document.getElementById("type").value || "all" == document.getElementById("type").value) typeCheck=true;
 
-            }
-            if (document.getElementById(what).options.length == 0){
-                    var o = document.createElement("option");    
-                    o.text = "No " + check + " item available :(";
-                    o.value = 1;
-                    document.getElementById(what).options.add(o);
-                    itemEquiped = 1;
-            } else if (itemEquiped == 0) {
-                var o = document.createElement("option");            
-                o.text = "No " + check + " item equiped !!!";
-                o.value = 2;
-                document.getElementById(what).options.add(o);
-                document.getElementById('info'+what).innerHTML = "";
-                itemEquiped = 2;
-            }
-            logit(what + ' / ' + itemEquiped);
-            document.getElementById(what).value = itemEquiped;    
-        }
-        switch(itemEquiped){
-            case 0:
-                break;
-            case 1:
-                document.getElementById("Equip"+what).disabled = true;
-                document.getElementById("Unequip"+what).disabled = true;
-                break;
-            case 2:
-                document.getElementById("Equip"+what).disabled = false;
-                document.getElementById("Unequip"+what).disabled = true;
-                break;
-            default:
-                document.getElementById("Equip"+what).disabled = true;
-                document.getElementById("Unequip"+what).disabled = false;
-                t.paintEquipInfo(document.getElementById(what).value,what);
-                break;
-        }
-        
-    }
+		for (i=1;i<=5;i++){
+				effect = unsafeWindow.cm.thronestats['effects'][y['slot'+i].id][2];
+				if (effect == document.getElementById("family").value || "ALL" == document.getElementById("family").value) familyCheck = true;
+				if (y['slot'+i].id == document.getElementById("effect").value || "ALL" == document.getElementById("effect").value) effectCheck = true;
+				var str = String(unsafeWindow.cm.thronestats['effects'][y['slot'+i].id][1]);
+				if (str.search(new RegExp(String(document.getElementById("keyword").value), "i")) != -1 || document.getElementById("keyword").value=="") keywordCheck=true;
+		}
+
+		if (typeCheck && familyCheck && effectCheck && keywordCheck){
+			t.CompPos++;
+			t.paintEquipInfo(z.id,t.CompPos);
+		}
+	}	
 },
 
 doPreset : function (preset){
-    var t = Tabs.Throne;
-    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-    params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
-    params.action = 'setPreset';
-    params.presetId = preset;
-                
-      new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-        method: "post",
-        parameters: params,
-        loading: true,
-        onSuccess: function (transport) {
-            var rslt = eval("(" + transport.responseText + ")");
-                if(rslt.ok){
-                    button = '<li id="throneInventoryPreset' + preset + '" class="active">'+preset+'</li>';
-                    unsafeWindow.cm.ThroneView.clickActivePreset(button);
-                    t.FillEquipCheckboxes();
-               }
-        },
-        onFailure: function () {
-           return;
-        },
-    });
-        
+	var t = Tabs.Throne;
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+	params.action = 'setPreset';
+	params.presetId = preset;
+				
+  	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+		method: "post",
+		parameters: params,
+		loading: true,
+		onSuccess: function (transport) {
+			var rslt = eval("(" + transport.responseText + ")");
+				if(rslt.ok){
+					button = '<li id="throneInventoryPreset' + preset + '" class="active">'+preset+'</li>';
+					unsafeWindow.cm.ThroneView.clickActivePreset(button);
+					t.FillEquipCheckboxes();
+			   } 
+		},
+		onFailure: function () {
+		   return;
+		},
+	});
+		
 },
 
 paintEquipInfo : function (z,what){
-        var t = Tabs.Throne;
-        var m="";
-        if (typeof(unsafeWindow.kocThroneItems[z]) == 'object') {
-                var y = unsafeWindow.kocThroneItems[z];
-        } else return;
-          var id =0;
-          var tier=0;
-          var Current=0;
-          m="<TABLE width=80% height=0% align='center' class=pbTab>";
-          for (i=1;i<=5;i++) {
-               id = y["effects"]["slot"+i]["id"];
-               tier = parseInt(y["effects"]["slot"+i]["tier"]);
-               level = y["level"];
-               p = unsafeWindow.cm.thronestats.tiers[id][tier];
-               Current = p.base + ((level * level + level) * p.growth * 0.5);
-               var quality = parseInt(y["quality"]);
-                if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
-                else m+='<TR><TD><FONT color=red>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
-        }
-        m+="</table>"
+		var t = Tabs.Throne;
+		var m="";
+		var color = "black";
+		if (typeof(unsafeWindow.kocThroneItems[z]) == 'object') var y = unsafeWindow.kocThroneItems[z];
+		else return;
+		  var id =0;
+		  var tier=0;
+		  var Current=0;
+		  var icon = 'http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type +'_normal_1_'+ y.quality+'.png';
+		  if (y.isEquipped) m='<TABLE width=80% height=0% align="center" class=ThroneEQ style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
+		  else m='<TABLE width=80% height=0% align="center" class=Throne style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
+		  switch(parseInt(y["quality"])){
+			case 1:color="grey";break;
+			case 2:color="white";break;
+			case 3:color="green";break;
+			case 4:color="blue";break;
+			case 5:color="purple";break;
+			default:break;
+		  }
 
-        document.getElementById('info'+what).innerHTML = m;
+   		 m+='<TR><TD style="background-color:#D5C795"><FONT color='+ color +'><B>' + y.name + '</b></font></td>';
+		  m+= '<TD><A onclick="Savlage('+ y.id +')"><img src="data:image/png;base64,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"/></td></tr>';
+		  for (i=1;i<=5;i++) {
+			   id = y["effects"]["slot"+i]["id"];
+			   tier = parseInt(y["effects"]["slot"+i]["tier"]);
+			   level = y["level"];
+			   p = unsafeWindow.cm.thronestats.tiers[id][tier];
+			   Current = p.base + ((level * level + level) * p.growth * 0.5);
+			   var quality = parseInt(y["quality"]);
+				if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+				else m+='<TR><TD><FONT color=grey>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+		}
+		m+="</table>"
+		document.getElementById('DIV'+what).innerHTML = m;
 },
 
 
@@ -2766,22 +2805,14 @@ hide : function (){
 
 show : function (){
     var t = Tabs.Throne;
-    if (t.curTabName == 'Sal')
-        t.Salvage();
+    if (t.curTabName == 'Sal') 
+    	t.Salvage();
     else if (t.curTabName == 'UE')
-        t.Upgrade_Enhance();
-    else if (t.curTabName == 'EQ'){
-        t.Equip();
-        for (k in t.EquipType) {
-        var y = t.EquipType[k];
-            if (typeof(y) == "string") {
-                what = y.toLowerCase();
-                t.paintEquipInfo(document.getElementById(what).value,what)
-            }
-        }
-    }
-  },
-  
+    	t.Upgrade_Enhance();
+	else if (t.curTabName == 'EQ'){
+    	t.Compare();
+	}
+  }, 
 }
 
 
