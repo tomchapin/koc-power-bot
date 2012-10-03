@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121002b
+// @version        20121003a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121002b';
+var Version = '20121003a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -294,12 +294,18 @@ var ThroneOptions = {
 	Good:0,
 	Bad:0,
 	Items: [],
+    Salvage:{Attack:true,Defense:true,Life:true,Speed:true,Accuracy:true,Range:true,Load:true,MarchSize:true,MarchSpeed:true,CombatSkill:true,IntelligenceSkill:true,PoliticsSkill:true,ResourcefulnessSkill:true,TrainingSpeed:true,ConstructionSpeed:true,ResearchSpeed:true,CraftingSpeed:true,Upkeep:true,ResourceProduction:true,ResourceCap:true,Storehouse:true,Morale:true,ItemDrop:true},
 	SalvageQuality:0,
 	saveXitems:0,
 	thronekeep:1,
 	Salvage:{},
 	Salvage_fav:{},
+    SingleStat:false,
+    Cityrand:false,
 };
+
+
+
 var AttackOptions = {
   LastReport    		: 0,
   MsgEnabled          	: true,
@@ -2860,1024 +2866,1177 @@ show : function (){
 
 
 /****************************  Tower Tab  ******************************/
-Tabs.tower = {
-  tabOrder: 10,
-  tabLabel: 'Tower',
-  myDiv: null,
-  generateIncomingFunc : null,
-  fixTargetEnabled : false,
-  secondTimer : null,
-  soundPlaying : false,
-  defMode : {},  
-  soundRepeatTimer : null,
-  soundStopTimer : null,
-  towerMarches: [],
-  Providers : {
-        0: { 'country': "--Country--", 'provider': "--Provider--" },
-        1: { 'country': "AUSTRALIA", 'provider': "T-Mobile" },
-        2: { 'country': "AUSTRALIA", 'provider': "Optus Zoo" },
-        3: { 'country': "AUSTRIA", 'provider': "T-Mobile" },
-        4: { 'country': "BULGARIA", 'provider': "Mtel" },
-        5: { 'country': "BULGARIA", 'provider': "Globul" },
-        6: { 'country': "CANADA", 'provider': "Aliant" },
-        7: { 'country': "CANADA", 'provider': "Bell Mobility" },
-        8: { 'country': "CANADA", 'provider': "Fido" },
-        9: { 'country': "CANADA", 'provider': "MTS Mobility" },
-        10: { 'country': "CANADA", 'provider': "Rogers Wireless" },
-        11: { 'country': "CANADA", 'provider': "Sasktel Mobility" },
-        12: { 'country': "CANADA", 'provider': "Telus" },
-        13: { 'country': "CANADA", 'provider': "Virgin Mobile" },
-        14: { 'country': "CANADA", 'provider': "Presidents Choice" },
-        15: { 'country': "GERMANY", 'provider': "T-Mobile" },
-        16: { 'country': "GERMANY", 'provider': "Vodafone" },
-        17: { 'country': "GERMANY", 'provider': "O2" },
-        18: { 'country': "GERMANY", 'provider': "E-Plus" },
-        19: { 'country': "ICELAND", 'provider': "OgVodafone" },
-        20: { 'country': "ICELAND", 'provider': "Siminn" },
-        21: { 'country': "INDIA", 'provider': "Andhra Pradesh AirTel" },
-        22: { 'country': "INDIA", 'provider': "Andhra Pradesh Idea Cellular" },
-        23: { 'country': "INDIA", 'provider': "Chennal Skycell Airtel" },
-        24: { 'country': "INDIA", 'provider': "Chennel RPG Cellular" },
-        25: { 'country': "INDIA", 'provider': "Delhi Airtel" },
-        26: { 'country': "INDIA", 'provider': "Delhi Hutch" },
-        27: { 'country': "INDIA", 'provider': "Gujarat Idea Cellular" },
-        28: { 'country': "INDIA", 'provider': "Gujaret Airtel" },
-        29: { 'country': "INDIA", 'provider': "Gujaret Celforce" },
-        30: { 'country': "INDIA", 'provider': "Goa Airtel" },
-        32: { 'country': "INDIA", 'provider': "Goa Idea Cellular" },
-        33: { 'country': "INDIA", 'provider': "Haryana Airtel" },
-        34: { 'country': "INDIA", 'provider': "Haryana Escotel" },
-        35: { 'country': "INDIA", 'provider': "Himachal Pradesh Airtel" },
-        36: { 'country': "INDIA", 'provider': "Karnataka Airtel" },
-        37: { 'country': "INDIA", 'provider': "Kerala Airtel" },
-        38: { 'country': "INDIA", 'provider': "Kerala Escotel" },
-        39: { 'country': "INDIA", 'provider': "Kerala BPL Mobile" },
-        40: { 'country': "INDIA", 'provider': "Kolkata Airtel" },
-        41: { 'country': "INDIA", 'provider': "Madhya Pradesh Airtel" },
-        42: { 'country': "INDIA", 'provider': "Maharashtra Airtel" },
-        43: { 'country': "INDIA", 'provider': "Maharashtra BPL Mobile" },
-        44: { 'country': "INDIA", 'provider': "Maharashtra Idea Cellular" },
-        45: { 'country': "INDIA", 'provider': "Mumbai Airtel" },
-        46: { 'country': "INDIA", 'provider': "Mumbai BPL Mobile" },
-        47: { 'country': "INDIA", 'provider': "Punjab Airtel" },
-        48: { 'country': "INDIA", 'provider': "Pondicherry BPL Mobile" },
-        49: { 'country': "INDIA", 'provider': "Tamil Nadu Airtel" },
-        50: { 'country': "INDIA", 'provider': "Tamil Nadu BPL Mobile" },
-        51: { 'country': "INDIA", 'provider': "Tamil Nadu Aircel" },
-        52: { 'country': "INDIA", 'provider': "Uttar Pradesh West Escotel" },
-        53: { 'country': "IRELAND", 'provider': "Meteor" },
-        54: { 'country': "IRELAND", 'provider': "Meteor MMS" },
-        55: { 'country': "ITALY", 'provider': "TIM" },
-        56: { 'country': "ITALY", 'provider': "Vodafone" },
-        57: { 'country': "JAPAN", 'provider': "AU by KDDI" },
-        58: { 'country': "JAPAN", 'provider': "NTT DoCoMo" },
-        59: { 'country': "JAPAN", 'provider': "Vodafone Chuugoku/Western" },
-        60: { 'country': "JAPAN", 'provider': "Vodafone Hokkaido" },
-        61: { 'country': "JAPAN", 'provider': "Vodafone Hokuriko/Central North" },
-        62: { 'country': "JAPAN", 'provider': "Vodafone Kansai/West, including Osaka" },
-        63: { 'country': "JAPAN", 'provider': "Vodafone Kanto/Koushin/East including Tokyo" },
-        64: { 'country': "JAPAN", 'provider': "Vodafone Kyuushu/Okinawa" },
-        65: { 'country': "JAPAN", 'provider': "Vodafone Shikoku" },
-        66: { 'country': "JAPAN", 'provider': "Vodafone Touhoku/Niigata/North" },
-        67: { 'country': "JAPAN", 'provider': "Vodafone Toukai/Central" },
-        68: { 'country': "JAPAN", 'provider': "Willcom" },
-        69: { 'country': "JAPAN", 'provider': "Willcom di" },
-        70: { 'country': "JAPAN", 'provider': "Willcom dj" },
-        71: { 'country': "JAPAN", 'provider': "Willcom dk" },
-        72: { 'country': "NETHERLANDS", 'provider': "T-Mobile" },
-        73: { 'country': "NETHERLANDS", 'provider': "Orange" },
-        74: { 'country': "SINGAPORE", 'provider': "M1" },
-        75: { 'country': "SOUTH AFRICA", 'provider': "Vodacom" },
-        76: { 'country': "SPAIN", 'provider': "Telefonica Movistar" },
-        77: { 'country': "SPAIN", 'provider': "Vodafone" },
-        78: { 'country': "SWEDEN", 'provider': "Tele2" },
-        79: { 'country': "UNITED STATES", 'provider': "Teleflip" },
-        80: { 'country': "UNITED STATES", 'provider': "Alltel" },
-        81: { 'country': "UNITED STATES", 'provider': "Ameritech" },
-        82: { 'country': "UNITED STATES", 'provider': "ATT Wireless" },
-        83: { 'country': "UNITED STATES", 'provider': "Bellsouth" },
-        84: { 'country': "UNITED STATES", 'provider': "Boost" },
-        85: { 'country': "UNITED STATES", 'provider': "CellularOne" },
-        86: { 'country': "UNITED STATES", 'provider': "CellularOne MMS" },
-        87: { 'country': "UNITED STATES", 'provider': "Cingular" },
-        88: { 'country': "UNITED STATES", 'provider': "Edge Wireless" },
-        90: { 'country': "UNITED STATES", 'provider': "T-Mobile" },
-        91: { 'country': "UNITED STATES", 'provider': "Metro PCS" },
-        92: { 'country': "UNITED STATES", 'provider': "Nextel" },
-        93: { 'country': "UNITED STATES", 'provider': "O2" },
-        94: { 'country': "UNITED STATES", 'provider': "Orange" },
-        95: { 'country': "UNITED STATES", 'provider': "Qwest" },
-        96: { 'country': "UNITED STATES", 'provider': "Rogers Wireless" },
-        97: { 'country': "UNITED STATES", 'provider': "Telus Mobility" },
-        98: { 'country': "UNITED STATES", 'provider': "US Cellular" },
-        99: { 'country': "UNITED STATES", 'provider': "Verizon" },
-        100: { 'country': "UNITED STATES", 'provider': "Virgin Mobile" },
-        101: { 'country': "UNITED KINGDOM", 'provider': "O2 1" },
-        102: { 'country': "UNITED KINGDOM", 'provider': "O2 2" },
-        103: { 'country': "UNITED KINGDOM", 'provider': "Orange" },
-        104: { 'country': "UNITED KINGDOM", 'provider': "T-Mobile" },
-        105: { 'country': "UNITED KINGDOM", 'provider': "Virgin Mobile" },
-        106: { 'country': "UNITED KINGDOM", 'provider': "Vodafone" },
-        107: { 'country': "BELGIUM", 'provider': "mobistar" },
-        108: { 'country': "GERMANY", 'provider': "1und1" },
-        109: { 'country': "UNITED STATES", 'provider': "MyCricket" },
-        110: { 'country': "Philippines", 'provider': "Smart" },
-        111: { 'country': "UNITED STATES", 'provider': "CellularSouth" },
-        112: { 'country': "UNITED STATES", 'provider': "Viaero" },
-        113: { 'country': "CANADA", 'provider': "Wind Mobile" }
-    },
 
-  init: function(div){
-    var t = Tabs.tower;
-    t.myDiv = div;
-    if (GM_getValue ('towerMarches_'+getServerId()) != null)
-      GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
-    // t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
-    // unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
- 
-    var m = '<DIV class=pbStat>TOWER ALERTS</div><TABLE class=pbTab><TR align=center>';
+Tabs.Throne = {
+  tabOrder : 590,
+  tabLabel : 'Throne',
+  cont : null,
+  curTabBut : null,
+  curTabName : null,
+  SelId:null,
+  log:[],
+  SalvageLog:[],
+  setRepairTimer:null,
+  setActionTimer:null,
+  SalvageArray:[],
+  SalvageRunning:false,
+  LastDeleted:0,
+  EquipType: ["Advisor","Banner","Chair","Table","Windows"],
 
-      for (var i=0; i<Cities.cities.length; i++)
-      m += '<TD width=95><SPAN id=pbtacity_'+ i +'>' + Cities.cities[i].name + '</span></td>';
-    m += '</tr><TR align=center>';
-      for (var cityId in Cities.byID)
-        m += '<TD><INPUT type=submit id=pbtabut_'+ cityId +' value=""></td>';
-    m += '</tr><TR align=center>';
-      for (var cityId in Cities.byID)
-       m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
-    m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="'+translate("Stop Sound Alert")+'"></center></div><DIV id=pbSwfPlayer></div>';
-    m += '<BR><DIV class=pbStat>'+translate("SETUP")+'</div><TABLE class=pbTab>\
-    <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
-    <td align=left>'+translate("Text message incoming attack to")+': <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-&nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold"><sup>*'+translate("Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>\
-    <TD align=left>'+translate("Country")+': <select id="pbfrmcountry">';
-    for (var i in t.Providers) {
-       var ret=m.indexOf(t.Providers[i].country);
-       if (ret==-1) {
-         if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
-           m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
-         }
-         else {
-           m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
-         }
-       }
-    }
+  init : function (div){
+    var t = Tabs.Throne;
+    t.cont = div;
     
-    m += '</select>\
-    <select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--'+translate("Provider")+'--</option>';
-    for (var i in t.Providers) {
- if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
-        if(Options.celltext.provider == i)
-            m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
-        else
-           m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+    var a = JSON2.parse(GM_getValue ('ThroneHistory_'+getServerId(), '[]'));
+    if (matTypeof(a) == 'array') t.log = a;
+    var a = JSON2.parse(GM_getValue ('ThroneSalvageHistory_'+getServerId(), '[]'));
+    if (matTypeof(a) == 'array') t.SalvageLog = a;
+
+
+    var main = '<TABLE align=center><TR><TD><INPUT class=pbSubtab ID=ptmrchSubSal type=submit value="Salvage"></td>';
+    main +='<TD><INPUT class=pbSubtab ID=ptmrchSubUE type=submit value="Upgrade/Enhance"></td>';
+    main +='<TD><INPUT class=pbSubtab ID=ptmrchSubEQ type=submit value="Equip"></td></tr></table><HR class=ptThin>';
+    main +='<DIV id=ThroneOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
+
+    t.cont.innerHTML = main;
+    t.Overv = document.getElementById('ThroneOutput');
+    
+    document.getElementById('ptmrchSubSal').addEventListener('click', e_butSubtab, false);
+    document.getElementById('ptmrchSubUE').addEventListener('click', e_butSubtab, false);
+	document.getElementById('ptmrchSubEQ').addEventListener('click', e_butSubtab, false);
+    
+
+    changeSubtab (document.getElementById('ptmrchSubUE'));
+    
+    function e_butSubtab (evt){            
+      changeSubtab (evt.target);   
     }
 
-    m += '</select></td></tr>';
-    m += '<TR><td align=center>-</td><TD align=left>'+translate("Minimum # of troops to trigger tower options")+':<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> <span style="color:#800; font-weight:bold"><sup>*NEW! Controls All Tower Options</sup></span></td></tr>';
-
-    m += '<TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
-        <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
-            <TR><TD align=right>'+translate("Message Prefix")+': &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
-            <TR><TD align=right>'+translate("Alert on scouting")+': &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>'+translate("Alert on wild attack")+': &nbsp; </td><TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>'+translate("Display defend status")+': &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
-            </table></td></tr>\
-        <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>'+translate("Stop raids on impending")+'.</td></tr>\
-    <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=1 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending")+'</td></tr>\
-        <TR><TD><BR></td></tr>\
-        <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
-        <TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
-            <TR><TD align=right>'+translate("Sound file")+': &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=40 maxlength=1000 value="'+ Options.alertSound.soundUrl +'" \>\
-             &nbsp; </td><TD><INPUT id=pbSoundLoad type=submit value='+translate("Load")+' ><INPUT id=pbSoundDefault type=submit value='+translate("Default")+' ></td></tr>\
-            <TR><TD align=right>'+translate("Volume")+': &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td><TD align=center><SPAN id=pbLoadStat>xx</span></td></tr>\
-            <TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> '+translate("Repeat every")+' <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> '+translate("minutes")+'</td></tr>\
-            <TR><TD></td><TD>Play for <INPUT id=pbSoundLength type=text size=3 maxlength=5 value="'+ Options.alertSound.playLength +'"> '+translate("seconds")+'</td></tr>\
-            <TR><TD></td><TD><INPUT type=submit value="'+translate("Play Now")+'" id=pbPlayNow></td></tr></table></div></td></tr>\
-        </table><BR>';
-      t.myDiv.innerHTML = m;
-
-
-//   t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y');
-    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n');
-    //t.mss.swfDebug = function (m){ logit ('SWF: '+ m)};
-    t.mss.swfPlayComplete = t.e_soundFinished;
-    t.mss.swfLoadComplete = t.e_soundFileLoaded;
-    unsafeWindow.matSimpleSound01 = t.mss;   // let swf find it
-
-    t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
-    t.volSlider.setChangeListener(t.e_volChanged);
-    document.getElementById('pbPlayNow').addEventListener ('click', function (){t.playSound(false)}, false);
-    document.getElementById('pbSoundStop').addEventListener ('click', t.stopSoundAlerts, false);
-    document.getElementById('pbSoundRepeat').addEventListener ('change', function (e){Options.alertSound.repeat = e.target.checked}, false);
-    document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
-    document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
-    document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
-    document.getElementById('pbcellenable').addEventListener ('change', function (e){Options.celltext.atext = e.target.checked;}, false);
-    document.getElementById('pbSoundStop').disabled = true;
-    document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertScout').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertDefend').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
-    document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
-    document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
-    document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
-    document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
-    document.getElementById('pbalertraid').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertTR').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertTRset').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbsoundFile').addEventListener ('change', function (){
-        Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
-        t.loadUrl (Options.alertSound.soundUrl);
-      }, false);
-    document.getElementById('pbSoundDefault').addEventListener ('click', function (){
-        document.getElementById('pbsoundFile').value = DEFAULT_ALERT_SOUND_URL;
-        Options.alertSound.soundUrl = DEFAULT_ALERT_SOUND_URL;
-        t.loadUrl (DEFAULT_ALERT_SOUND_URL);
-      }, false);
-
-    for (var cityId in Cities.byID){
-        var but = document.getElementById ('pbtabut_'+ cityId);
-        addListener (but, cityId);
-        t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
-        t.displayDefMode (cityId);
-      var btnNameT = 'pbattackqueue_' + cityId;
-      addTowerEventListener(cityId, btnNameT);
+    function changeSubtab (but){
+      if (but == t.curTabBut)
+        return;
+      if (t.curTabBut){
+        t.curTabBut.className='pbSubtab';
+        t.curTabBut.disabled=false;
       }
-    function addListener (but, i){
-      but.addEventListener ('click', function (){t.butToggleDefMode(i)}, false);
+      t.curTabBut = but;
+      but.className='pbSubtab pbSubtabSel';
+      but.disabled=true;
+      t.curTabName = but.id.substr(9);
+      t.show ();
     }
-    function addTowerEventListener(cityId, name){
-        document.getElementById(name).addEventListener('click', function(){
-            t.showTowerIncoming(cityId);
-        }, false);
-    }    
-    setInterval (t.eachSecond, 2000);
-  },      
-
-  show : function (){
-  },
-  
-  hide : function (){
-  },
- 
-  loadUrl : function (url){
-    var t = Tabs.tower;
-    t.mss.load (1, url, true);
-    document.getElementById('pbLoadStat').innerHTML = translate('Loading');
-  },
-  phonenum : function() {
-   Options.celltext.num1 = document.getElementById('pbnum1').value;
-   Options.celltext.num2 = document.getElementById('pbnum2').value;
-   Options.celltext.num3 = document.getElementById('pbnum3').value;
-   saveOptions();
-  },
-
-  setCountry : function(){
-    var t = Tabs.tower;
-    var myselect=document.getElementById("pbfrmprovider");
-    myselect.innerHTML = '<option value=0 >--'+translate("Provider")+'--</option>';
-    myselect.disabled = true;
-    for (var i in t.Providers) {
-     if (t.Providers[i].country == document.getElementById("pbfrmcountry").value){
-        var addoption = document.createElement('option');
-        addoption.value = i;
-        addoption.text = t.Providers[i].provider;
-      myselect.add(addoption, null) //add new option to end of "Providers"
-     }
-    }
-    myselect.disabled = false;
-   },
-
-  setProvider : function(){
-    var ddProvider = document.getElementById("pbfrmprovider").wrappedJSObject;
-     Options.celltext.provider=ddProvider.options[ddProvider.selectedIndex].value;
-    if(ddProvider.selectedIndex > 0){
-        document.getElementById("pbnum1").disabled = false;
-        document.getElementById("pbnum2").disabled = false;
-        document.getElementById("pbnum3").disabled = false;
-    } else {
-        document.getElementById("pbnum1").disabled = true;
-        document.getElementById("pbnum2").disabled = true;
-        document.getElementById("pbnum3").disabled = true;
-    }
-    //alert(Options.celltext.provider);
-   },
-
-  e_swfLoaded : function (){
-    var t = Tabs.tower;
-    document.getElementById('pbLoadingSwf').style.display = 'none';
-    document.getElementById('pbSoundOpts').style.display = 'inline';
-    t.volSlider.setValue (Options.alertSound.volume/100);
-    t.loadUrl (Options.alertSound.soundUrl);
-    setTimeout (function (){t.mss.setVolume (1, Options.alertSound.volume);}, 500);
-    if (Options.alertSound.alarmActive && Options.alertSound.expireTime>unixTime())   
-      t.soundTheAlert();
-  },
-  
-  e_alertOptChanged : function (){
-    var t = Tabs.tower;
-    Options.alertConfig.aChat = document.getElementById('pbalertEnable').checked;
-    Options.alertConfig.aPrefix=document.getElementById('pbalertPrefix').value;      
-    Options.alertConfig.scouting=document.getElementById('pbalertScout').checked;      
-    Options.alertConfig.wilds=document.getElementById('pbalertWild').checked;
-    Options.alertConfig.defend=document.getElementById('pbalertDefend').checked;
-    Options.alertConfig.raid=document.getElementById('pbalertraid').checked;
-    Options.alertConfig.alertTR=document.getElementById('pbalertTR').checked;
-    var trset = parseInt(document.getElementById('pbalertTRset').value);
-    Options.alertConfig.alertTRset = trset;
-    var mt = parseInt(document.getElementById('pbalertTroops').value);
-    if (mt<1 || mt>120000){
-      document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
-      document.getElementById('pbalerterr').innerHTML = '<font color=#600000><B>'+translate("INVALID")+'</b></font>';
-      setTimeout (function (){document.getElementById('pbalerterr').innerHTML =''}, 2000);
-      return;
-    }
-    Options.alertConfig.minTroops = mt;
-    saveOptions();
-  },
-  
-  e_volChanged : function (val){
-    var t = Tabs.tower;
-    document.getElementById('pbVolOut').innerHTML = parseInt(val*100);
-    Options.alertSound.volume = parseInt(val*100);
-    t.mss.setVolume (1, Options.alertSound.volume);
-  },
-  
-  butToggleDefMode : function (cityId){
-    var t = Tabs.tower;
-    var mode = 1;
-    if (Seed.citystats["city" + cityId].gate != 0)
-      mode = 0;
-    t.ajaxSetDefMode (cityId, mode, function (newMode){
-        t.defMode[cityId] = newMode;
-        t.displayDefMode (cityId);
-      });
-  },
+    t.checkUpgradeInfo(true);
+    if (ThroneOptions.Active) t.setActionTimer = setInterval(t.doAction,10000);
+    setInterval(t.salvageCheck,2*60*1000);
+ },
+    
+ Salvage : function (){
+    var t = Tabs.Throne;
+    try {      
+      m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
+      m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
+      m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wondrous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
+      m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>.</font></td>';
+      m+='<TR><TD colspan=3><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Keep one checked attribute per card (salvage mixed cards)</TD></TR>';
+      m+='<TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all cities for crafing purposes)</TD></TR></table>';
+      m+='<TR><TD colspan=3><INPUT id=pbsalvage_cityspire type=checkbox '+ (ThroneOptions.CitySpire?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in cities with Fey Spire first before other cities</TD></TR></table>';
+      m+='<TABLE id=pbbarbingfunctions width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Defense type=checkbox '+ (ThroneOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Life type=checkbox '+ (ThroneOptions.Salvage.Life?'CHECKED ':'') +'/>&nbsp;Life</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Speed type=checkbox '+ (ThroneOptions.Salvage.Speed?'CHECKED ':'') +'/>&nbsp;Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Accuracy type=checkbox '+ (ThroneOptions.Salvage.Accuracy?'CHECKED ':'') +'/>&nbsp;Accuracy</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Range type=checkbox '+ (ThroneOptions.Salvage.Range?'CHECKED ':'') +'/>&nbsp;Range</td></tr>';
+      m+='<TR></tr><TR><TD><B>March:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Load type=checkbox '+ (ThroneOptions.Salvage.Load?'CHECKED ':'') +'/>&nbsp;Load</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=MarchSize type=checkbox '+ (ThroneOptions.Salvage.MarchSize?'CHECKED ':'') +'/>&nbsp;March Size</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=MarchSpeed type=checkbox '+ (ThroneOptions.Salvage.MarchSpeed?'CHECKED ':'') +'/>&nbsp;March Speed</td></tr>';
+      m+='<TR></tr><TR><TD><B>Skills:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=CombatSkill type=checkbox '+ (ThroneOptions.Salvage.CombatSkill?'CHECKED ':'') +'/>&nbsp;Combat Skill</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=IntelligenceSkill type=checkbox '+ (ThroneOptions.Salvage.IntelligenceSkill?'CHECKED ':'') +'/>&nbsp;Intelligence Skill</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=PoliticsSkill type=checkbox '+ (ThroneOptions.Salvage.PoliticsSkill?'CHECKED ':'') +'/>&nbsp;Politics Skill</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourcefulnessSkill type=checkbox '+ (ThroneOptions.Salvage.ResourcefulnessSkill?'CHECKED ':'') +'/>&nbsp;Resourcefulness Skill</td></tr>';
+       m+='<TR></tr><TR><TD><B>Speed:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=TrainingSpeed type=checkbox '+ (ThroneOptions.Salvage.TrainingSpeed?'CHECKED ':'') +'/>&nbsp;Training Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ConstructionSpeed type=checkbox '+ (ThroneOptions.Salvage.ConstructionSpeed?'CHECKED ':'') +'/>&nbsp;Construction Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResearchSpeed type=checkbox '+ (ThroneOptions.Salvage.ResearchSpeed?'CHECKED ':'') +'/>&nbsp;Research Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=CraftingSpeed type=checkbox '+ (ThroneOptions.Salvage.CraftingSpeed?'CHECKED ':'') +'/>&nbsp;Crafting Speed</td></tr>';
+      m+='<TR></tr><TR><TD><B>Recources:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Upkeep type=checkbox '+ (ThroneOptions.Salvage.Upkeep?'CHECKED ':'') +'/>&nbsp;Upkeep</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourceProduction type=checkbox '+ (ThroneOptions.Salvage.ResourceProduction?'CHECKED ':'') +'/>&nbsp;Resource Production</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourceCap type=checkbox '+ (ThroneOptions.Salvage.ResourceCap?'CHECKED ':'') +'/>&nbsp;Resource Cap</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Storehouse type=checkbox '+ (ThroneOptions.Salvage.Storehouse?'CHECKED ':'') +'/>&nbsp;Storehouse</td></tr>';
+      m+='<TR></tr><TR><TD><B>Varia:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Morale type=checkbox '+ (ThroneOptions.Salvage.Morale?'CHECKED ':'') +'/>&nbsp;Morale</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ItemDrop type=checkbox '+ (ThroneOptions.Salvage.ItemDrop?'CHECKED ':'') +'/>&nbsp;ItemDrop</td></tr></table>';
       
-  displayDefMode : function (cityId){
-    var t = Tabs.tower;
-    var but = document.getElementById('pbtabut_'+ cityId);
-    if (t.defMode[cityId]){
-      but.className = 'pbDefButOn';
-      but.value = 'Def = ON';  
+      t.Overv.innerHTML = m;
+      
+      $("pbsalvage_run").addEventListener('click', function(e){
+          if(Options.ThroneDeleteItems){
+            e.target.value = "Auto Salvage = OFF";
+            Options.ThroneDeleteItems = false;
+            saveOptions();
+          } else {
+            e.target.value = "Auto Salvage = ON";
+            Options.ThroneDeleteItems = true;
+            saveOptions();
+          }
+      },false);
+      document.getElementById('SingleStat').addEventListener ('change', function(){ThroneOptions.SingleStat = document.getElementById('SingleStat').checked;saveThroneOptions();},false);
+      document.getElementById('Cityrand').addEventListener ('change', function(){ThroneOptions.Cityrand = this.checked;saveThroneOptions();},false);
+      document.getElementById('pbsalvage_cityspire').addEventListener ('change', function(){ThroneOptions.CitySpire = this.checked;saveThroneOptions();},false);
+      document.getElementById('Attack').addEventListener ('change', function(){ThroneOptions.Salvage.Attack = document.getElementById('Attack').checked;saveThroneOptions();},false);
+      document.getElementById('Defense').addEventListener ('change', function(){ThroneOptions.Salvage.Defense = document.getElementById('Defense').checked;saveThroneOptions();},false);
+      document.getElementById('Life').addEventListener ('change', function(){ThroneOptions.Salvage.Life = document.getElementById('Life').checked;saveThroneOptions();},false);
+      document.getElementById('Speed').addEventListener ('change', function(){ThroneOptions.Salvage.Speed = document.getElementById('Speed').checked;saveThroneOptions();},false);
+      document.getElementById('Accuracy').addEventListener ('change', function(){ThroneOptions.Salvage.Accuracy = document.getElementById('Accuracy').checked;saveThroneOptions();},false);
+      document.getElementById('Range').addEventListener ('change', function(){ThroneOptions.Salvage.Range = document.getElementById('Range').checked;saveThroneOptions();},false);
+      document.getElementById('Load').addEventListener ('change', function(){ThroneOptions.Salvage.Load = document.getElementById('Load').checked;saveThroneOptions();},false);
+      document.getElementById('MarchSize').addEventListener ('change', function(){ThroneOptions.Salvage.MarchSize = document.getElementById('MarchSize').checked;saveThroneOptions();},false);
+      document.getElementById('MarchSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.MarchSpeed = document.getElementById('MarchSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('CombatSkill').addEventListener ('change', function(){ThroneOptions.Salvage.CombatSkill = document.getElementById('CombatSkill').checked;saveThroneOptions();},false);
+      document.getElementById('IntelligenceSkill').addEventListener ('change', function(){ThroneOptions.Salvage.IntelligenceSkill = document.getElementById('IntelligenceSkill').checked;saveThroneOptions();},false);
+      document.getElementById('PoliticsSkill').addEventListener ('change', function(){ThroneOptions.Salvage.PoliticsSkill = document.getElementById('PoliticsSkill').checked;saveThroneOptions();},false);
+      document.getElementById('ResourcefulnessSkill').addEventListener ('change', function(){ThroneOptions.Salvage.ResourcefulnessSkill = document.getElementById('ResourcefulnessSkill').checked;saveThroneOptions();},false);
+      document.getElementById('TrainingSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.TrainingSpeed = document.getElementById('TrainingSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('ConstructionSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.ConstructionSpeed = document.getElementById('ConstructionSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('ResearchSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.ResearchSpeed = document.getElementById('ResearchSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('CraftingSpeed').addEventListener ('change', function(){ThroneOptions.Salvage.CraftingSpeed = document.getElementById('CraftingSpeed').checked;saveThroneOptions();},false);
+      document.getElementById('Upkeep').addEventListener ('change', function(){ThroneOptions.Salvage.Upkeep = document.getElementById('Upkeep').checked;saveThroneOptions();},false);
+      document.getElementById('ResourceProduction').addEventListener ('change', function(){ThroneOptions.Salvage.ResourceProduction = document.getElementById('ResourceProduction').checked;saveThroneOptions();},false);
+      document.getElementById('ResourceCap').addEventListener ('change', function(){ThroneOptions.Salvage.ResourceCap = document.getElementById('ResourceCap').checked;saveThroneOptions();},false);
+      document.getElementById('Storehouse').addEventListener ('change', function(){ThroneOptions.Salvage.Storehouse = document.getElementById('Storehouse').checked;saveThroneOptions();},false);
+      document.getElementById('Morale').addEventListener ('change', function(){ThroneOptions.Salvage.Morale = document.getElementById('Morale').checked;saveThroneOptions();},false);
+      document.getElementById('ItemDrop').addEventListener ('change', function(){ThroneOptions.Salvage.ItemDrop = document.getElementById('ItemDrop').checked;saveThroneOptions();},false);
+      document.getElementById('pbthrone_keep').addEventListener ('change', function(){ThroneOptions.thronekeep = parseInt(document.getElementById('pbthrone_keep').value);saveThroneOptions();},false);
+
+      document.getElementById('Quality').addEventListener  ('change', function(){ThroneOptions.SalvageQuality = this.value;saveThroneOptions();},false);
+      document.getElementById('saveXitems').addEventListener('change', function(){ThroneOptions.saveXitems = document.getElementById('saveXitems').value;saveThroneOptions();} , false);
+      document.getElementById('ShowSalvageHistory').addEventListener('click', function(){t.PaintSalvageHistory()} , false);
+
+      
+    } catch (e) {
+      t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
+    }
+  },
+  
+Upgrade_Enhance :function (){
+    var t = Tabs.Throne;  
+    try {      
+      var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED UPGRADE/ENHANCE/REPAIR FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
+           if (ThroneOptions.Active == false) {
+                 m += '<TD><INPUT id=Enable type=submit value="Queue = OFF"></td>';
+           } else {
+                m += '<TD><INPUT id=Enable type=submit value="Queue = ON"></td>';
+          }
+      m += '<TD><INPUT id=ShowHistory type=submit value="History"></td>';
+      m+= '</table><DIV id=pbTowrtDivF class=pbStat>ADD UPGRADE OR ENHANCE TO QUEUE</div><TABLE class=ptTab><br/>';
+      m+='<TR><TD>Throne items:</td><TD><SELECT id=ThroneItems type=list></select></td>';
+      m+='<TD><INPUT id=addEnhance type=submit value="Enhance"></td>';
+      m+='<TD><INPUT id=addUpgrade type=submit value="Upgrade"></td>';
+      m+='<TD><DIV id=ShowHoover></div></td>';
+      m+='</tr></table><br/>';
+      m+= '<DIV id=pbTowrtDivF class=pbStat>STATUS</div>';
+      m+= '<br/><DIV id=ShowStatus></div></p>';
+      m+= '<DIV id=ShowTries></div><br/>';
+      m+= '<DIV id=ShowStones></div><br/>';
+      m+= '<DIV id=pbTowrtDivF class=pbStat>UPGRADE INFO</div>';
+      m+= '<br/><DIV id=ShowInfo></div><br/>';
+      m+= '<DIV id=pbTowrtDivF class=pbStat>QUEUE</div>';
+      m+= '<br/><DIV id=ShowQueueDiv></div>';
+      t.Overv.innerHTML = m;
+      
+    document.getElementById('ThroneItems').options.length=0;
+    for (i in unsafeWindow.kocThroneItems){
+        var o = document.createElement("option");
+        o.text = unsafeWindow.kocThroneItems[i]["name"];
+        o.value = unsafeWindow.kocThroneItems[i]["id"];
+        document.getElementById("ThroneItems").options.add(o);
+    }
+    document.getElementById('addEnhance').addEventListener ('click', function (){t.addToQueue(document.getElementById('ThroneItems').value,"Enhance");},false);
+    document.getElementById('addUpgrade').addEventListener ('click', function (){t.addToQueue(document.getElementById('ThroneItems').value,"Upgrade");},false);
+
+    document.getElementById('ThroneItems').addEventListener ('change', function (){t.paintHoover();},false);
+      
+      document.getElementById('Enable').addEventListener('click', function(){t.toggleThroneState()} , false);
+      document.getElementById('ShowHistory').addEventListener('click', function(){t.PaintHistory()} , false);
+  
+    if (ThroneOptions.Items.length ==0) document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
+    else {
+      if (ThroneOptions.Active && Seed.queue_throne.end == undefined) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
+      if (ThroneOptions.Active && Seed.queue_throne.end != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+      if (!ThroneOptions.Active && Seed.queue_throne.end != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+      if (!ThroneOptions.Active && Seed.queue_throne.end == undefined) document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+    }
+      
+  
+    if (ThroneOptions.Tries > 0) document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
+        else document.getElementById('ShowTries').innerHTML = "Tries: --";
+       
+    if (ThroneOptions.Items.length>0) {t.paintInfo();t.paintStones();t.PaintQueue();}
+    
+  } catch (e) {
+      t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
+    }
+setInterval(t.paintStones,30000);
+},
+  
+Equip :function (){
+    var t = Tabs.Throne;  
+    try {   
+     var m = '<DIV id=pbTowrtDivF class=pbStat>EQUIP THRONE ITEMS</div><br>';
+     m+='<DIV align=center>Preset: <SELECT id=preset type=list></select></div><br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab>';
+     for (k in t.EquipType){
+         var y = t.EquipType[k];
+         if (typeof(y) == "string") {
+             what = y.toLowerCase();
+             if (y == "Windows") y = "Window";
+             m+='<TR><TD>'+ y +':</td><TD></td><TD><SELECT id='+ what +' type=list></select></td><TD><INPUT id="Equip'+ what +'" type=submit value="Equip"></td><TD><INPUT id="Unequip'+ what +'" type=submit value="Unequip"></td><TD><div id="info'+ what +'"</td></tr><TR><TD>&nbsp;</td></tr><TR><TD>&nbsp;</td></tr>';
+         }
+     }
+     m+="</table>"
+    t.Overv.innerHTML = m;
+    document.getElementById("preset").options.length=0;
+    for (i=1;i<=Seed.throne.slotNum;i++){
+        var o = document.createElement("option");            
+        o.text = i;
+        o.value = i;
+        document.getElementById("preset").options.add(o);
+    }    
+    document.getElementById("advisor").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("advisor").value,"advisor")},false);
+    document.getElementById("banner").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("banner").value,"banner")},false);
+    document.getElementById("chair").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("chair").value,"chair")},false);
+    document.getElementById("table").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("table").value,"table")},false);
+    document.getElementById("windows").addEventListener ('change', function (){t.paintEquipInfo(document.getElementById("windows").value,"windows")},false);
+    document.getElementById("Equipadvisor").addEventListener ('click', function (){t.doEquip(document.getElementById("advisor").value)},false);
+    document.getElementById("Equipbanner").addEventListener ('click', function (){t.doEquip(document.getElementById("banner").value)},false);
+    document.getElementById("Equipchair").addEventListener ('click', function (){t.doEquip(document.getElementById("chair").value)},false);
+    document.getElementById("Equiptable").addEventListener ('click', function (){t.doEquip(document.getElementById("table").value)},false);
+    document.getElementById("Equipwindows").addEventListener ('click', function (){t.doEquip(document.getElementById("windows").value)},false);
+    document.getElementById("Unequipadvisor").addEventListener ('click', function (){t.doUnequip(document.getElementById("advisor").value)},false);
+    document.getElementById("Unequipbanner").addEventListener ('click', function (){t.doUnequip(document.getElementById("banner").value)},false);
+    document.getElementById("Unequipchair").addEventListener ('click', function (){t.doUnequip(document.getElementById("chair").value)},false);
+    document.getElementById("Unequiptable").addEventListener ('click', function (){t.doUnequip(document.getElementById("table").value)},false);
+    document.getElementById("Unequipwindows").addEventListener ('click', function (){t.doUnequip(document.getElementById("windows").value)},false);
+    document.getElementById("preset").addEventListener ('change', function (){t.doPreset(document.getElementById("preset").value)},false);
+    document.getElementById("preset").value = Seed.throne.activeSlot;    
+    t.FillEquipCheckboxes();
+    } catch (e) {
+      t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
+    }
+},
+
+togOpt : function (checkboxId, optionName, callOnChange){
+    var t = Tabs.Throne;
+    var checkbox = document.getElementById(checkboxId);
+    if (Options[optionName])
+      checkbox.checked = true;
+    checkbox.addEventListener ('change', eventHandler, false);
+    function eventHandler (){
+      Options[optionName] = this.checked;
+      saveOptions();
+      if (callOnChange)
+        callOnChange (this.checked);
+    }
+},
+
+changeOpt : function (valueId, optionName, callOnChange){
+    var t = Tabs.Throne;
+    var e = document.getElementById(valueId);
+    e.value = Options[optionName];
+    e.addEventListener ('change', eventHandler, false);
+    function eventHandler (){
+      Options[optionName] = this.value;
+      saveOptions();
+      if (callOnChange)
+        callOnChange (this.value);
+    }
+},
+  
+toggleThroneState: function(){
+    var t = Tabs.Throne;
+    if (ThroneOptions.Active == true) {
+            ThroneOptions.Active = false;
+            document.getElementById('Enable').value = "Queue = OFF";
+            saveThroneOptions();
+            clearTimeout(t.setActionTimer);
+            if (Seed.queue_throne.end == undefined) document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
     } else {
-      but.className = 'pbDefButOff';
-      but.value = 'Def = OFF';  
-    }  
+            ThroneOptions.Active = true;
+            document.getElementById('Enable').value = "Queue = ON";
+            saveThroneOptions();
+            t.setActionTimer = setInterval(t.doAction,10000);
+            document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
+    }
+},
+
+_addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,cost){
+         var t = Tabs.Throne;
+        var a="";
+        var b="";
+        switch (qualityfrom) {
+                case 0:a = unsafeWindow.g_js_strings.throneRoom.simple;break;
+                case 1:a = unsafeWindow.g_js_strings.throneRoom.common;break;
+                case 2:a = unsafeWindow.g_js_strings.throneRoom.uncommon;break;
+                    case 3:a = unsafeWindow.g_js_strings.throneRoom.rare;break;
+                case 4:a = unsafeWindow.g_js_strings.throneRoom.epic;break;
+                case 5:a = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+                default:a = unsafeWindow.g_js_strings.throneRoom.simple;break;
+        }
+        switch (qualityto) {
+                case 0:b = unsafeWindow.g_js_strings.throneRoom.simple;break;
+                case 1:b = unsafeWindow.g_js_strings.throneRoom.common;break;
+                case 2:b = unsafeWindow.g_js_strings.throneRoom.uncommon;break;
+                   case 3:b = unsafeWindow.g_js_strings.throneRoom.rare;break;
+                   case 4:b = unsafeWindow.g_js_strings.throneRoom.epic;break;
+                case 5:b = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+                default:b = unsafeWindow.g_js_strings.throneRoom.simple;break;
+        }
+         var row = document.getElementById('ShowQueue').insertRow(0);
+         row.vAlign = 'top';
+         row.style.color = "black";    
+         row.style.background = "rgb(246,243,236)";    
+         if (active) row.style.color = "green";     
+         row.insertCell(0).innerHTML = id+1;
+         row.insertCell(1).innerHTML = name;
+         if (action == "Enhance") {
+                row.insertCell(2).innerHTML = a + " -> " + b;
+                    row.insertCell(3).innerHTML = levelfrom;
+         }
+         if (action == "Upgrade") {
+                row.insertCell(2).innerHTML = a;
+                    row.insertCell(3).innerHTML = levelfrom + " -> " + levelto;
+         }
+         row.insertCell(4).innerHTML = action;
+         row.insertCell(5).innerHTML = cost;
+         row.insertCell(6).innerHTML = '<a class="button20" id="queueDelete_' + id + '"><span>Delete</span></a>';
+         document.getElementById('queueDelete_' + id).addEventListener('click', function(){
+            if (ThroneOptions.Items[id].active ==true) ThroneOptions.Tries=0;
+            if (ThroneOptions.Items.length ==0 && ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
+            if (!ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+            ThroneOptions.Items.splice (id,1);
+            saveThroneOptions();
+            t.checkUpgradeInfo(false);
+              t.PaintQueue();
+              if (ThroneOptions.Items.length>0) t.paintInfo();
+                else document.getElementById('ShowInfo').innerHTML = "";
+        }, false);
+},
+    
+     _addTabHeader: function() {
+     var t = Tabs.Throne;
+         var row = document.getElementById('ShowQueue').insertRow(0);
+         row.vAlign = 'top';
+         row.style.color = "black";
+         row.style.background = "rgb(246,243,236)";    
+         row.insertCell(0).innerHTML = "Id";
+         row.insertCell(1).innerHTML = "Name";
+         row.insertCell(2).innerHTML = "Quality";
+         row.insertCell(3).innerHTML = "Level";
+         row.insertCell(4).innerHTML = "Action";
+         row.insertCell(5).innerHTML = "Cost";
+         row.insertCell(6).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+       },
+
+
+FillEquipCheckboxes: function(){
+    var t = Tabs.Throne;
+    for (k in t.EquipType) {
+        var y = t.EquipType[k];
+        var itemEquiped = 0;
+        var count = 0;
+        if (typeof(y) == "string") {
+            what = y.toLowerCase();
+            document.getElementById(what).options.length=0;
+            for (l in unsafeWindow.kocThroneItems) {
+                z = unsafeWindow.kocThroneItems[l];
+                check = what;
+                if (check == "windows") check = "window";
+                count++;
+                if (count<=(parseInt(Seed.throne.rowNum)*5)){
+                    if (z.type == check) {    
+                        var o = document.createElement("option");            
+                        o.text = z.name;
+                        o.value = l;
+                        document.getElementById(what).options.add(o);
+                        if (z.isEquipped) itemEquiped = l;
+                    }
+                }    
+
+            }
+            if (document.getElementById(what).options.length == 0){
+                    var o = document.createElement("option");    
+                    o.text = "No " + check + " item available :(";
+                    o.value = 1;
+                    document.getElementById(what).options.add(o);
+                    itemEquiped = 1;
+            } else if (itemEquiped == 0) {
+                var o = document.createElement("option");            
+                o.text = "No " + check + " item equiped !!!";
+                o.value = 2;
+                document.getElementById(what).options.add(o);
+                document.getElementById('info'+what).innerHTML = "";
+                itemEquiped = 2;
+            }
+            logit(what + ' / ' + itemEquiped);
+            document.getElementById(what).value = itemEquiped;    
+        }
+        switch(itemEquiped){
+            case 0:
+                break;
+            case 1:
+                document.getElementById("Equip"+what).disabled = true;
+                document.getElementById("Unequip"+what).disabled = true;
+                break;
+            case 2:
+                document.getElementById("Equip"+what).disabled = false;
+                document.getElementById("Unequip"+what).disabled = true;
+                break;
+            default:
+                document.getElementById("Equip"+what).disabled = true;
+                document.getElementById("Unequip"+what).disabled = false;
+                t.paintEquipInfo(document.getElementById(what).value,what);
+                break;
+        }
+        
+    }
+},
+
+doPreset : function (preset){
+    var t = Tabs.Throne;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+    params.action = 'setPreset';
+    params.presetId = preset;
+                
+      new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+        method: "post",
+        parameters: params,
+        loading: true,
+        onSuccess: function (transport) {
+            var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+                    button = '<li id="throneInventoryPreset' + preset + '" class="active">'+preset+'</li>';
+                    unsafeWindow.cm.ThroneView.clickActivePreset(button);
+                    t.FillEquipCheckboxes();
+               }
+        },
+        onFailure: function () {
+           return;
+        },
+    });
+        
+},
+
+paintEquipInfo : function (z,what){
+        var t = Tabs.Throne;
+        var m="";
+        if (typeof(unsafeWindow.kocThroneItems[z]) == 'object') {
+                var y = unsafeWindow.kocThroneItems[z];
+        } else return;
+          var id =0;
+          var tier=0;
+          var Current=0;
+          m="<TABLE width=80% height=0% align='center' class=pbTab>";
+          for (i=1;i<=5;i++) {
+               id = y["effects"]["slot"+i]["id"];
+               tier = parseInt(y["effects"]["slot"+i]["tier"]);
+               level = y["level"];
+               p = unsafeWindow.cm.thronestats.tiers[id][tier];
+               Current = p.base + ((level * level + level) * p.growth * 0.5);
+               var quality = parseInt(y["quality"]);
+                if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+                else m+='<TR><TD><FONT color=red>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+        }
+        m+="</table>"
+
+        document.getElementById('info'+what).innerHTML = m;
+},
+
+
+PaintHistory : function() {
+    var t = Tabs.Throne;
+    var popHistory = null;
+    popHistory = new pbPopup('pbShowHistory', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+    var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbBars">';       
+    popHistory.getMainDiv().innerHTML = '</table></div>' + m;
+    popHistory.getTopDiv().innerHTML = '<TD><B>Succesfull Upgrade/Enhance list:</td>';
+    for (i=0;i<t.log.length;i++){
+        var row = document.getElementById('pbBars').insertRow(0);
+        row.vAlign = 'top';
+        row.style.color = "black";
+        row.insertCell(0).innerHTML = t.log[i].time;
+        row.insertCell(1).innerHTML = t.log[i].name;
+        row.insertCell(2).innerHTML = t.log[i].action;
+        row.insertCell(3).innerHTML = t.log[i].tries;
+        row.insertCell(4).innerHTML = t.log[i].good;
+        row.insertCell(5).innerHTML = t.log[i].bad;
+    }
+    var row = document.getElementById('pbBars').insertRow(0);
+    row.vAlign = 'top';
+    row.style.color = "black";
+    row.insertCell(0).innerHTML = "Time";
+    row.insertCell(1).innerHTML = "Name";
+    row.insertCell(2).innerHTML = "Action";
+    row.insertCell(3).innerHTML = "Tries";
+    row.insertCell(4).innerHTML = "Good Req.";
+    row.insertCell(5).innerHTML = "Bad Req.";
+    popHistory.show(true)    ;
+},
+
+
+PaintSalvageHistory : function() {
+    var t = Tabs.Throne;
+    var popHistory = null;
+    popHistory = new pbPopup('pbSalvageShowHistory', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+    var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbBars">';       
+    popHistory.getMainDiv().innerHTML = '</table></div>' + m;
+    popHistory.getTopDiv().innerHTML = '<TD><B>Throne room Salvage list:</td>';
+    for (i=0;i<t.SalvageLog.length;i++){
+        var row = document.getElementById('pbBars').insertRow(0);
+        row.vAlign = 'top';
+        row.style.color = "black";
+        row.insertCell(0).innerHTML = t.SalvageLog[i].time;
+        row.insertCell(1).innerHTML = t.SalvageLog[i].stones;
+        row.insertCell(2).innerHTML = t.SalvageLog[i].msg;
+    }
+    var row = document.getElementById('pbBars').insertRow(0);
+    row.vAlign = 'top';
+    row.style.color = "black";
+    row.insertCell(0).innerHTML = "Time";
+    row.insertCell(1).innerHTML = "Aetherstones";
+    row.insertCell(2).innerHTML = "Action";
+    popHistory.show(true)    ;
+},
+
+     addToQueue : function (id,action){
+        var t= Tabs.Throne;
+        document.getElementById('ShowHoover').innerHTML = "";
+         ThroneOptions.Items.push ({id:id,action:action,name:unsafeWindow.kocThroneItems[id]["name"],qualityfrom:0,qualityto:0,levelfrom:0,levelto:0,cost:0,active:false});
+        saveThroneOptions();
+        t.checkUpgradeInfo(false);
+        t.PaintQueue();
+        t.paintInfo();
+        if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Starting Next Queue item..."
+         else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+  },
+
+  checkUpgradeInfo : function (firstRun){
+    var t= Tabs.Throne;
+    var countUpgrade = 0;
+    var countEnhance = 0;
+    var levelfrom = 0;
+    var levelto =0;
+    var qualityfrom = 0;
+    var qualityto = 0;
+    if (ThroneOptions.Items.length == 0) return;
+    for (k=0;k<ThroneOptions.Items.length;k++){
+        countUpgrade = 0;
+        countEnhance = 0;
+        if (unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]] != undefined) {
+                if (k>0) for (l=0;l<k;l++) {
+                      if (ThroneOptions.Items[l]["id"] == ThroneOptions.Items[k]["id"] && ThroneOptions.Items[l]["action"] == "Upgrade") {countUpgrade++;}
+                    if (ThroneOptions.Items[l]["id"] == ThroneOptions.Items[k]["id"] && ThroneOptions.Items[l]["action"] == "Enhance") {countEnhance++;}
+                  }
+                if (ThroneOptions.Items[k]["action"] == "Upgrade") {
+                    ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
+                    ThroneOptions.Items[k]["levelto"] = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
+                        ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
+                    if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {ThroneOptions.Items.splice (k,1);alert("You can't upgrade higher then level 10!");return;}
+                }
+                if (ThroneOptions.Items[k]["action"] == "Enhance") {
+                    ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
+                    ThroneOptions.Items[k]["qualityto"] = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
+                     ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
+                    if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {ThroneOptions.Items.splice (k,1);alert("You can't upgrade higher then quality 5!");return;}
+                }
+                if (ThroneOptions.Items[k]["action"] == "Enhance") var lvl = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
+                if (ThroneOptions.Items[k]["action"] == "Upgrade") var lvl = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
+                costAction = ThroneOptions.Items[k]["action"].toLowerCase();
+                if (unsafeWindow.cm.thronestats[costAction][lvl] != undefined) ThroneOptions.Items[k]["cost"] = unsafeWindow.cm.thronestats[costAction][lvl].Stones;
+                else ThroneOptions.Items.splice (k,1);
+        } else ThroneOptions.Items.splice (k,1);
+    }
+    saveThroneOptions();
   },
     
-  eachSecond : function (){
-    var t = Tabs.tower;
-    for (var cityId in Cities.byID){
-      if (Seed.citystats["city" + cityId].gate != t.defMode[cityId]){     // user changed def mode
-        t.defMode[cityId] = Seed.citystats["city"+ cityId].gate;
-        t.displayDefMode (cityId);
-      }
-      Options.alertConfig.raidautoswitch[cityId] = false;
-    }
-      var now = unixTime();
-    var incomming = false;
-    if (matTypeof(Seed.queue_atkinc) != 'array'){
-      for (var k in Seed.queue_atkinc){   // check each incoming march
-        var m = Seed.queue_atkinc[k];
-        if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
-          if (m.departureTime > Options.alertConfig.lastAttack){
-            Options.alertConfig.lastAttack = m.departureTime;  
-            t.newIncoming (m);
-          }
-          incomming = true;
-          if (Options.alertConfig.raid){
-            Options.alertConfig.raidautoswitch[m.toCityId] = true;
-          }
+    
+    PaintQueue : function (){
+        var t= Tabs.Throne;
+        document.getElementById('ShowQueueDiv').innerHTML = '<TABLE id=ShowQueue class=pbStat align="center" width=90%></table>';
+        for (k=(ThroneOptions.Items.length-1);k>=0;k--){
+            if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]) == 'object') t._addTab(k,ThroneOptions.Items[k]["name"],ThroneOptions.Items[k]["qualityfrom"],ThroneOptions.Items[k]["qualityto"],ThroneOptions.Items[k]["levelfrom"],ThroneOptions.Items[k]["levelto"],ThroneOptions.Items[k]["action"],ThroneOptions.Items[k]["active"],ThroneOptions.Items[k]["cost"]);
+            else ThroneOptions.Items.splice (k,1);
         }
-      }
-    }
-    if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime))
-      t.stopSoundAlerts();
-
-        t.towerMarches = [];
-        for (var i = 0; i < Cities.cities.length; i++) {
-            var cId = Cities.cities[i].id;
-            t['attackCount_' + cId] = 0;
-            t['scoutCount_' + cId] = 0;
+        t._addTabHeader();
+  },
+  
+  doAction : function (){
+        var t= Tabs.Throne;
+        var now = new Date().getTime()/1000.0;
+        if (!ThroneOptions.Active) return;
+        if (ThroneOptions.Items.length ==0) {
+                 document.getElementById('ShowStatus').innerHTML = "No items in queue!!"
+                 return;
         }
-        if (matTypeof(Seed.queue_atkinc) != 'array') {
-            for (var k in Seed.queue_atkinc) {
-                var m = Seed.queue_atkinc[k];
-                if ((m.marchType == 3 || m.marchType == 4) && parseIntNan(m.arrivalTime) > now) {
-                    t.handleTowerData(m);
-
-                }
+        ThroneOptions.Items["0"]["active"] = true;
+        t.PaintQueue();
+        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true && Seed.queue_throne.end == undefined){
+                  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
+                  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
+                    setTimeout(t.doRepair,5000);
+                  clearTimeout(t.setActionTimer);
+                  t.setActionTimer = setInterval(t.doAction,10000);
+                return;
+        }
+        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == false && Seed.queue_throne.end == undefined){
+                  document.getElementById('ShowStatus').innerHTML = "Doing " + ThroneOptions.Items["0"]["action"] + "...";
+            if (ThroneOptions.Items["0"]["action"] == "Upgrade") setTimeout(t.doUpgrade,5000);
+            if (ThroneOptions.Items["0"]["action"] == "Enhance") setTimeout(t.doEnhance,5000);
+            clearTimeout(t.setActionTimer);
+            t.setActionTimer = setInterval(t.doAction,10000);
+        }
+  },
+  
+  
+  doEnhance : function() {
+        var t = Tabs.Throne;
+        if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]) == 'object') {
+                var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
+        } else return;
+        var cityid = 0;
+        for (var k in Cities.byID) {
+            if ( Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])))
+            {
+               cityid = k;
             }
         }
-        for (var i = 0; i < Cities.cities.length; i++) {
-            var cId = Cities.cities[i].id;
-            document.getElementById('pbattackqueue_' + cId).value = 'A ' + t['attackCount_' + cId] + ' | S ' + t['scoutCount_' + cId];
-        }    
-  },   
-  
-  e_soundFinished : function (chan){ // called by SWF when sound finishes playing
-    var t = Tabs.tower;
-    if (chan != 1)
-      return;
-    if (!Options.alertSound.alarmActive){
-      document.getElementById('pbSoundStop').disabled = true;
-    }
-  },
-
-  e_soundFileLoaded : function (chan, isError){ // called by SWF when sound file finishes loading
-    if (chan != 1)
-      return;
-    if (isError)  
-      document.getElementById('pbLoadStat').innerHTML = translate("Error")+"!";
-    else
-      document.getElementById('pbLoadStat').innerHTML = translate("Loaded");
-  },  
-  
-  playSound : function (doRepeats){
-    var t = Tabs.tower;
-    document.getElementById('pbSoundStop').disabled = false;
-    clearTimeout (t.soundStopTimer);
-    clearTimeout (t.soundRepeatTimer);
-    t.mss.play (1, 0);
-    t.soundStopTimer = setTimeout (function(){t.mss.stop(1); t.e_soundFinished(1)}, Options.alertSound.playLength*1000);
-    if (doRepeats && Options.alertSound.repeat)
-      t.soundRepeatTimer = setTimeout (function (){t.playSound(true)}, Options.alertSound.repeatDelay*60000);
-    else
-      Options.alertSound.alarmActive = false;
-  },
-        
-  soundTheAlert : function (){
-    var t = Tabs.tower;
-    Options.alertSound.alarmActive = true;
-    t.playSound(true);
-  },
-     
-  stopSoundAlerts : function (){
-    var t = Tabs.tower;
-    t.mss.stop (1);
-    clearTimeout (t.soundStopTimer);
-    clearTimeout (t.soundRepeatTimer);
-    document.getElementById('pbSoundStop').disabled = true;
-    Options.alertSound.alarmActive = false;
-    Options.alertSound.expireTime = 0;
-  },
-
-  newIncoming : function (m){
-    var t = Tabs.tower;
-    var totTroops = 0;
-    for (k in m.unts){
-      totTroops += m.unts[k];
-    }
-    if (totTroops < Options.alertConfig.minTroops){
-      return;
-    }
-    t.towerPreset (m);
-  },
-
-  towerPreset : function (m){
-    var t = Tabs.tower;
-    if (Options.alertConfig.alertTR){
-    var currentset = Seed.throne.activeSlot
-    if (Options.alertConfig.alertTRset != currentset){
-            var preset = Options.alertConfig.alertTRset
-            Tabs.Throne.doPreset(preset);
-    }
-    }  
-    t.postToChat (m);
-  },    
-  
-  sendalert : function (m){
-    var t = Tabs.tower;
-    var now = unixTime();
-    if (Options.celltext.atext)
-      t.postToCell (m);
-    if (Options.alertSound.enabled){
-      t.soundTheAlert(m);
-      if (m.arrivalTime > Options.alertSound.expireTime)
-        Options.alertSound.expireTime = m.arrivalTime;
-    }
-    if (Options.alertConfig.raid){
-        Tabs.Raid.StopCityRaids(m.toCityId);
-        Options.alertConfig.raidautoswitch[m.toCityId] = true;
-    }  
-  },
-
-
-  ajaxSetDefMode : function (cityId, state, notify){
+        if(cityid == 0){
+           document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
+           return;    
+        }
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        params.cid = cityId;
-        params.state = state;
-        new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/gate.php" + unsafeWindow.g_ajaxsuffix, {
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'upgradeQuality';
+        params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
+        params.buffItemId = 0;
+        params.payment = "aetherstone";
+        params.cityId = cityid;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
             parameters: params,
-            onSuccess: function (rslt) {
-                if (rslt.ok) {
-                    Seed.citystats["city" + cityId].gate = state;
-                    notify (state);
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+                    if (rslt.gems > 0)
+                    {
+                        document.getElementById('ShowStatus').innerHTML = 'Upgrader accidentally spent gems!  Turning upgrader off!!';
+                        ThroneOptions.Active = false;
+                        saveThroneData();
+                    }
+                    Seed.resources["city" + cityid]["rec5"][0] -= rslt.aetherstones;
+                      y.level = rslt.item.level;
+                    y.quality = rslt.item.quality
+                    y.status = rslt.item.status;
+                    if (rslt.success)
+                    {                    
+                       y.name = y.createName();
+                       t.addToLog(ThroneOptions.Items["0"]["id"],ThroneOptions.Items["0"]["action"],ThroneOptions.Tries,ThroneOptions.Good,ThroneOptions.Bad);
+                       ThroneOptions.Tries = 0;
+                       hroneOptions.Good = 0;
+                       ThroneOptions.Bad = 0;
+                       saveThroneOptions();
+                       document.getElementById('ShowTries').innerHTML = "Tries: --";
+                        ThroneOptions.Items.splice (0,1);
+                    }
+                    else
+                    {
+                       y.isBroken = true;
+                       y.brokenType = "quality";
+                       y.name = y.createName();
+                       ThroneOptions.Tries++;
+                       document.getElementById('ShowStatus').innerHTML = 'Enhance failed :( <br />Item: ' + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
+                       document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
+                    }
+                    unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+            
+                    t.checkUpgradeInfo(false);
+                      t.PaintQueue();
+                    ThroneOptions.Good++;
+                    saveThroneOptions();
+                } else {
+                    ThroneOptions.Bad++;
+                    saveThroneOptions();
+                }
+                return;    
+            },
+            onFailure: function () {
+               return;
+            },
+        });
+    },
+       
+    doUpgrade : function() {
+        var t = Tabs.Throne;
+        if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]) == 'object') {
+                var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
+        } else return;
+        var cityid = 0;
+        for (var k in Cities.byID) {
+            if ( Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])))
+            {
+               cityid = k;
+               break;
+            }
+        }
+        if(cityid == 0){
+           document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
+           return;    
+        }
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'upgradeLevel';
+        params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
+        params.buffItemId = 0;
+        params.payment = "aetherstone";
+        params.cityId = cityid;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+                    if (rslt.gems > 0)
+                    {
+                        document.getElementById('ShowStatus').innerHTML = 'Upgrader accidentally spent gems!  Turning upgrader off!!';
+                        ThroneOptions.Active = false;
+                        saveThroneData();
+                    }
+                    Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
+                    if (rslt.success)
+                    {
+                       y.level = rslt.item.level;
+                       y.quality = rslt.item.quality;
+                       y.name = y.createName();
+                       t.addToLog(ThroneOptions.Items["0"]["id"],ThroneOptions.Items["0"]["action"],ThroneOptions.Tries,ThroneOptions.Good,ThroneOptions.Bad);
+                       ThroneOptions.Tries = 0;
+                       ThroneOptions.Good = 0;
+                       ThroneOptions.Bad = 0;
+                        ThroneOptions.Items.splice (0,1);
+                       saveThroneOptions();
+                       document.getElementById('ShowTries').innerHTML = "Tries: --";
+                    }
+                    else
+                    {
+                       y.isBroken = true;
+                       y.brokenType = "level";
+                       y.status = rslt.item.status;
+                       y.name = y.createName();
+                       ThroneOptions.Tries++;
+                       saveThroneOptions();
+                       document.getElementById('ShowStatus').innerHTML = 'Upgrade failed :( <br />Item: ' + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
+                       document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
+                    }
+                    unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+                
+                        t.checkUpgradeInfo(false);
+                          t.PaintQueue();
+                        ThroneOptions.Good++;
+                        saveThroneOptions();
+                } else {
+                    ThroneOptions.Bad++;
+                    saveThroneOptions();
+                }
+                return;
+            },
+            onFailure: function () {
+               return;
+            },
+        });   
+    },
+        
+     doRepair : function() {
+        var t = Tabs.Throne;
+        var cityid = 0;
+        for (var k in Cities.byID) {
+            if ( Seed.resources["city"+k]["rec5"][0] > ThroneOptions.minStones)
+            {
+               cityid = k;
+            }
+        }
+        if(cityid == 0){
+           document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance";
+           return;    
+        }
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'timeRepair';
+        params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
+        params.cityId = cityid;
+                    
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                    if(rslt.ok){
+                              ThroneOptions.RepairEnd = rslt.eta;
+                              Seed.queue_throne.itemId= ThroneOptions.Items["0"]["id"];
+                             Seed.queue_throne.start=unixTime();
+                             Seed.queue_throne.end= rslt.eta;
+                             t.repairId = ThroneOptions.Items["0"]["id"];
+                             t.repairEnd = rslt.eta;
+                             unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+                             var x = rslt.eta - unixTime();
+                            ThroneOptions.Good++;
+                            saveThroneOptions();
+                   } else {    
+                           ThroneOptions.Good++;
+                        saveThroneOptions();
+                   }        
+                   return;
+            },
+            onFailure: function () {
+               return;
+            },
+        });
+    },
+
+
+    doEquip : function(n,preset) {
+        var t = Tabs.Throne;
+        if (typeof(unsafeWindow.kocThroneItems[n]) == 'object') {
+                var y = unsafeWindow.kocThroneItems[n];
+        } else return;
+
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        logit(n.toSource());
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'equipItem';
+        params.itemId = y.id;
+        params.presetId = document.getElementById("preset").value;
+                    
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                    if(rslt.ok){
+                            unsafeWindow.cm.ThroneView.clickItemEquip(y);
+                            t.FillEquipCheckboxes();
+                   }
+            },
+            onFailure: function () {
+               return;
+            },
+        });
+    },
+  
+  doUnequip : function(n,preset) {
+        var t = Tabs.Throne;
+        if (typeof(unsafeWindow.kocThroneItems[n]) == 'object') {
+                var y = unsafeWindow.kocThroneItems[n];
+        } else return;
+
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        logit(n.toSource());
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'unequipItem';
+        params.itemId = y.id;
+        params.presetId = document.getElementById("preset").value;
+                    
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                    if(rslt.ok){
+                            unsafeWindow.cm.ThroneView.clickItemUnequip(y);
+                            t.FillEquipCheckboxes();
+                   }
+            },
+            onFailure: function () {
+               return;
+            },
+        });
+    },
+  
+
+  repairTimerUpdate :function (){
+        var t = Tabs.Throne;
+        try {
+            if (ThroneOptions.Items.length == 0) return;
+            var now = new Date().getTime()/1000.0;
+            var diff = 0;
+            if (Seed.queue_throne.end == undefined) return;
+            else diff = Seed.queue_throne.end - now;
+            if (diff <0){
+                clearInterval(t.setRepairTimer);
+                if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
+                else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+                unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
+                Seed.queue_throne = "";
+                return;
+            } else {
+                  document.getElementById('ShowStatus').innerHTML = "Repairing on: " + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name + "<br/>Time left: " + timestr(diff)+ " ("+ timestr(Seed.queue_throne.end - Seed.queue_throne.start) + ")";
+                  document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
+            }
+        } catch (e){
+            //do nothing
+        }
+  },
+
+  paintInfo : function (){
+        var t = Tabs.Throne;
+        if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]) == 'number') {
+                var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
+        } else return;
+          var id =0;
+          var tier=0;
+          var Current=0;
+          var Next=0;
+          m="<TABLE width=80% height=0% align='center' class=pbTab><TR><TD><B>Current</b></td><TD><B>Next</b></td>";
+          for (i=1;i<=5;i++) {
+               id = y["effects"]["slot"+i]["id"];
+               tier = parseInt(y["effects"]["slot"+i]["tier"]);
+               level = y["level"];
+               p = unsafeWindow.cm.thronestats.tiers[id][tier];
+               Current = p.base + ((level * level + level) * p.growth * 0.5);
+               level++;
+               Next = p.base + ((level * level + level) * p.growth * 0.5);;
+               var quality = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]["quality"]);
+               if (ThroneOptions.Items["0"]["action"] == "Enhance") {
+                       if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td>';
+                       else m+='<TR><TD><FONT color=red>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td>';
+                       if (i<=(quality+1)) m+='<TD><FONT color=green>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+                       else m+='<TD><FONT color=red>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+               }
+               if (ThroneOptions.Items["0"]["action"] == "Upgrade") {
+                       if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td>';
+                       else m+='<TR><TD><FONT color=red>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td>';
+                       if (i<=quality) m+='<TD><FONT color=green>' + Next + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+                       else m+='<TD><FONT color=red>' + Next + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+             }    
+        }
+        m+="</table>"
+        document.getElementById('ShowInfo').innerHTML = m;    
+
+  },
+
+paintHoover : function (){
+    var t = Tabs.Throne;
+    var z = document.getElementById('ThroneItems').value;
+      var y = unsafeWindow.kocThroneItems[z];
+    var id =0;
+    var tier=0;
+    var Current=0;
+    m="<TABLE width=80% height=0% align='center' class=pbTab>";
+    for (i=1;i<=5;i++) {
+        id = y["effects"]["slot"+i]["id"];
+        tier = parseInt(y["effects"]["slot"+i]["tier"]);
+        level = y["level"];
+        p = unsafeWindow.cm.thronestats.tiers[id][tier];
+        Current = p.base + ((level * level + level) * p.growth * 0.5);
+        var quality = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]["quality"]);
+        if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+        else m+='<TR><TD><FONT color=red>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
+    }
+    m+="</table>"
+    document.getElementById('ShowHoover').innerHTML = m;    
+
+},
+
+paintStones : function (){
+    var t = Tabs.Throne;
+    m="<TABLE width=90% height=0% class=pbTab><TR><TD>Aetherstones: </td>";
+    for (i=0;i<Seed.cities.length;i++) m+='<TD>' + Seed.cities[i]["1"] + '</td>';
+    m+="</tr><TR><TD></td>"
+    for (i=0;i<Seed.cities.length;i++) m+='<TD>' + addCommas(Seed.resources["city"+Seed.cities[i]["0"]]["rec5"][0]) + '</td>';
+    m+="</tr></table>"
+    document.getElementById('ShowStones').innerHTML = m;    
+},
+
+addToLog : function (id,action,tries,good,bad){
+    var t = Tabs.Throne;
+    var now = new Date();
+    var time = now.getDate() +"/"+ (now.getMonth()+1) +"/"+ now.getFullYear() +"  "+ now.getUTCHours() + ":" + now.getMinutes();
+    var name = unsafeWindow.kocThroneItems[id]["name"];
+    t.log.push ({time:time,name:name,action:action,tries:tries,good:good,bad:bad});
+    if (t.log.length > 50) t.log.splice(0,1);
+    GM_setValue ('ThroneHistory_'+getServerId(), JSON2.stringify(t.log));
+},
+
+
+addToSalvageLog : function (msg,stones){
+    var t = Tabs.Throne;
+    var now = new Date();
+    D = t.addZero(now.getDate());
+    M = t.addZero(now.getMonth()+1);
+    Y = t.addZero(now.getFullYear());
+    h = t.addZero(now.getHours());
+    m = t.addZero(now.getMinutes());
+    var time =  D +"/"+ M +"/"+ Y +"  "+ h + ":" + m;
+    t.SalvageLog.push ({time:time,stones:stones,msg:msg});
+    if (t.SalvageLog.length > 100) t.SalvageLog.splice(0,1);
+    GM_setValue ('ThroneSalvageHistory_'+getServerId(), JSON2.stringify(t.SalvageLog));
+},
+
+addZero : function (i){
+if (i<10)
+  {
+  i="0" + i;
+  }
+return i;
+},
+
+
+salvageCheck : function (){
+    var t = Tabs.Throne;
+    var del = false; //false by default
+    var level = false;
+    var type ="";
+    var NotUpgrading = true;
+    var number = 0;
+    var count=0;
+    if(!Options.ThroneDeleteItems) return;
+    if (t.SalvageRunning == true) return;
+    t.SalvageRunning = true;
+    for (m in unsafeWindow.kocThroneItems) {
+        y = unsafeWindow.kocThroneItems[m];
+        level = false;
+        type = "";
+        NotUpgrading = true;
+        number = 0;
+        count++;
+        if (typeof(y.id) == 'number') {
+            NotUpgrading = true;
+            for (k in ThroneOptions.Items) {if (ThroneOptions.Items[k]["id"] == y.id) NotUpgrading = false;}
+            if (count<=(parseInt(Seed.throne.rowNum)*5) && count>ThroneOptions.saveXitems) {
+                    //del = true;
+                    level = false;
+                    if (y.quality > ThroneOptions.SalvageQuality) level=true;
+                    if (ThroneOptions.SalvageQuality == 0) level=true;
+                    for (i=1;i<=5;i++){
+                        for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++){
+                            type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];
+                            if (ThroneOptions.Salvage[type]) {
+                                if(ThroneOptions.SingleStat) {
+                                    ThroneOptions.Salvage[type]++
+                                } else {
+                                    number++;
+                                }
+                            }
+                        }
+                    }
+                    if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
+                    if(ThroneOptions.SingleStat) {
+                        for (h in ThroneOptions.Salvage) {
+                            if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep)
+                                number = parseInt(ThroneOptions.Salvage[h] - 1);
+                            if(ThroneOptions.Salvage[h])
+                                ThroneOptions.Salvage[h] = true;
+                        }
+                    }
+                    // logit(y.name+' '+number);
+                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id) {
+                        t.SalvageArray.push(y.id);
+                    }                     
+            }
+        }
+    }
+    if (t.SalvageArray.length == 0) {
+        t.SalvageRunning = false;        
+    } else setTimeout(t.doSalvage, 6000);        
+},    
+
+doSalvage : function(){
+        var t = Tabs.Throne;    
+        var cityid = 0;
+        var cities = [];
+        var spirecities = [];
+        for (var k in Cities.byID) {
+            if (Seed.resources["city"+k]["rec5"][0] < 1000000)
+            {
+                var a = getCityBuilding(k,20);
+                if (a.count == 1)
+                    spirecities.push(k);
+                cities.push(k);
+            }
+        }
+        if(ThroneOptions.CitySpire){
+            if (spirecities.toSource != "[]")
+                cities = spirecities;
+        }
+        if (cities.toSource() != "[]"){
+            if (ThroneOptions.Cityrand) {
+                cityid = cities[Math.floor(Math.random()*cities.length)];
+            }else{
+                cityid = cities[0];
+            }
+        }
+        if (cityid == 0) cityid = Seed.cities[0][0]; //If all else failss default to city 1
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'salvage';
+        params.itemId = t.SalvageArray[0];
+        params.cityId = cityid;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+                    y =  unsafeWindow.kocThroneItems[params.itemId];
+                    z = unsafeWindow.cm.thronestats.effects;
+                    var msg = (y.name + " (" + z[y.effects["slot1"].id]["2"] + "/"+ z[y.effects["slot2"].id]["2"]+ "/"+ z[y.effects["slot3"].id]["2"]+ "/"+ z[y.effects["slot4"].id]["2"]+ "/"+ z[y.effects["slot5"].id]["2"] +")");
+                    t.addToSalvageLog(msg,rslt.aetherstones);
+                    unsafeWindow.kocThroneItems[params.itemId].salvage();
+                }
+                else {
+                    t.addToSalvageLog("Salvage Failed :(","");
                 }
             },
             onFailure: function () {
-            }
-        })
-  },
-  
-  onUnload : function (){
-  },
-
-
-
-  postToCell : function (m){
-    var t = Tabs.tower;
-    var data = {};
-    if (m.marchType == null)      // bogus march (returning scouts)
-      return;
-    if (m.marchType == 3){
-      if (!Options.alertConfig.scouting)
-        return;
-      data.atkType = 'scout';
-    } else if (m.marchType == 4){
-      data.atkType = 'atk';
-    } else {
-      return;
-    }
-    var city = Cities.byID[m.toCityId];
-    if ( city.tileId == m.toTileId )
-      data.target = 'city ('+ city.x +','+ city.y+')';
-    else {
-      if (!Options.alertConfig.wilds)
-        return;
-      data.target = 'wild';
-      for (k in Seed.wilderness['city'+m.toCityId]){
-        if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
-          data.target += Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord;
-          break;
-        }
-      }
-    }
-    if (Seed.players['u'+m.pid])
-      data.who = Seed.players['u'+m.pid].n;
-    else if (m.players && m.players['u'+m.pid])
-      data.who = m.players['u'+m.pid].n;
-    else
-      data.who = 'Unknown';
-  
-    if (m.fromXCoord)
-      data.who += m.fromXCoord +','+ m.fromYCoord;
-     data.arrival = unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime()));
-
-
-    if ( city.tileId == m.toTileId ){
-      var emb = getCityBuilding(m.toCityId, 8);
-      if (emb.count > 0){
-        var availSlots = emb.maxLevel;
-        for (k in Seed.queue_atkinc){
-          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){
-            --availSlots;
-          }
-        }
-        data.embassy = 'EMB '+ availSlots +'of'+ emb.maxLevel;
-        if (t.defMode[m.toCityId] == 0 && Options.alertConfig.defend==true)
-        {
-            data.stat = 'HIDING';
-        }
-        if (t.defMode[m.toCityId] == 1 && Options.alertConfig.defend==true)
-        {
-            data.stat = 'DEFENDING';
-        }
-      }
-    }
-    data.provider = Options.celltext.provider;
-    data.num1 = Options.celltext.num1;
-    data.num2 = Options.celltext.num2;
-    data.num3 = Options.celltext.num3;
-    data.serverId = getServerId();
-    data.player = Seed.player['name'];
-    data.city = city.name;
-
-  GM_xmlhttpRequest({
-    method: 'POST',
-    url: 'http://hs151.digitalweb.net/index.php',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-    },
-    data: implodeUrlArgs(data),
-
-    })
-  },
-  
-  postToChat : function (m){
-    var t = Tabs.tower;
-    if (DEBUG_TRACE) logit ("checkTower(): INCOMING at "+ unixTime()  +": \n"+ inspect (m, 8, 1));
-    if (m.marchType == null)      // bogus march (returning scouts)
-      return;
-    if (ENABLE_TEST_TAB) Tabs.Test.addDiv (translate("Incoming")+"!<BR><PRE style='margin:0px;'>" + inspect (m, 8, 1) +'</pre>');
-    var target, atkType, who;
-    if (m.marchType == 3){
-      if (!Options.alertConfig.scouting)
-        return;
-      atkType = translate('scouted');
-    } else if (m.marchType == 4){
-      atkType = translate("attacked");
-    } else {
-      return;
-    }
-    var city = Cities.byID[m.toCityId];
-    if ( city.tileId == m.toTileId )
-      target = translate('city at')+' ('+ city.x +','+ city.y + ')';
-    else {
-      if (!Options.alertConfig.wilds)
-        return;
-      target = translate('wilderness');
-      for (k in Seed.wilderness['city'+m.toCityId]){
-        if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
-          target += ' at ('+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord + ')';
-          break;
-        }
-      }
-    }
-    if (Seed.players['u'+m.pid])
-      who = Seed.players['u'+m.pid].n;
-    else if (m.players && m.players['u'+m.pid])
-      who = m.players['u'+m.pid].n;
-    else
-      who = translate('Unknown');
-  
-    if (m.fromXCoord)
-      who += ' at ('+ m.fromXCoord +','+ m.fromYCoord + ')';
-    who += ' ('+getDiplomacy(m.aid)+')';
-    
-    var msg = Options.alertConfig.aPrefix +' ';
-    if(m.marchStatus == 9)
-        msg += 'The '+ atkType +' on my '+ target +' by '+ who +' has been recalled.';
-    else
-        msg += 'My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
-    for (k in m.unts){
-      var uid = parseInt(k.substr (1));
-      msg += m.unts[k] +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
-    }
-    msg = msg.slice (0, -2);
-    msg += '.';
-    if ( city.tileId == m.toTileId ){
-      var emb = getCityBuilding(m.toCityId, 8);
-      if (emb.count == 0)
-      msg += translate("My embassy has not been constructed in this kingdom.  Do not attempt to reinforce.");
-      else {
-        var availSlots = emb.maxLevel;
-        for (k in Seed.queue_atkinc){
-          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){
-            --availSlots;
-          }
-        }
-        msg += ' My embassy has '+ availSlots +' of '+ emb.maxLevel +' slots available.';
-        if (t.defMode[m.toCityId] == 0 && Options.alertConfig.defend==true)
-        {
-            msg+= ' My troops are HIDING!';
-        }
-        if (t.defMode[m.toCityId] == 1 && Options.alertConfig.defend==true)
-        {
-            msg+= ' My troops are DEFENDING!';
-        }
-            msg+= ' My technology levels are: Fl Lv' + parseInt(Seed.tech.tch13)
-             + ', HP Lv'+ parseInt(Seed.tech.tch15)
-             + ', PE Lv'+ parseInt(Seed.tech.tch8)
-             + ', MA Lv'+ parseInt(Seed.tech.tch9)
-             + ', MM Lv'+ parseInt(Seed.tech.tch11)
-             + ', AH Lv'+ parseInt(Seed.tech.tch12);
-      }
-    }
-    t.sendalert(m);
-    if (!Options.alertConfig.aChat) return;
-    if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
-    if (SEND_ALERT_AS_WHISPER)
-      sendChat ("/"+ Seed.player.name +' '+ msg);    // Whisper to myself
-    else
-      sendChat ("/a "+  msg);                        // Alliance chat
-  },
-      handleTowerData: function(m){
-        var t = Tabs.tower;
-        var now = unixTime();
-        var target, atkType, who, attackermight, allianceId, allianceName, diplomacy;
-        var city = Cities.byID[m.toCityId];
-        
-        if (DEBUG_TRACE)
-            logit("checkTower(): INCOMING at " + unixTime() + ": \n" + inspect(m, 8, 1));
-        
-        //ATKTYPE
-        if (m.marchType == 3) {
-            atkType = 'scouted';
-            t['scoutCount_' + m.toCityId]++;
-        }
-        else
-            if (m.marchType == 4) {
-                atkType = 'attacked';
-                t['attackCount_' + m.toCityId]++;
-            }
-            else {
-                return;
-            }
-        //TARGET
-        if (city.tileId == m.toTileId)
-            target = 'City at ' + city.x + ',' + city.y;
-        else {
-            target = 'Wilderness';
-            for (k in Seed.wilderness['city' + m.toCityId]) {
-                if (Seed.wilderness['city' + m.toCityId][k].tileId == m.toTileId) {
-                    target += ' at ' + Seed.wilderness['city' + m.toCityId][k].xCoord + ',' + Seed.wilderness['city' + m.toCityId][k].yCoord;
-                    break;
-                }
-            }
-        }
-        //CITYNAME
-        var cityName = Cities.byID[m.toCityId].name;
-        
-        //TROOPS
-        var units = [];
-        for (i = 0; i < 13; i++)
-            units[i] = 0;
-        for (k in m.unts) {
-            var uid = parseInt(k.substr(1));
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Supply Troop')
-                units[1] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Militiaman')
-                units[2] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Scout')
-                units[3] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Pikeman')
-                units[4] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Swordsman')
-                units[5] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Archer')
-                units[6] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Cavalry')
-                units[7] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Heavy Cavalry')
-                units[8] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Supply Wagon')
-                units[9] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Ballista')
-                units[10] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Battering Ram')
-                units[11] = m.unts[k];
-            if (unsafeWindow.unitcost['unt' + uid][0] == 'Catapult')
-                units[12] = m.unts[k];
-        }
-        //ATTACKERS INFORMATION
-        if (Seed.players['u' + m.pid]) {
-            who = Seed.players['u' + m.pid].n;
-            attackermight = Seed.players['u' + m.pid].m;
-            allianceId = Seed.players['u' + m.pid].a;
-            allianceName = Seed.allianceNames[allianceId];
-            diplomacy = getDiplomacy(allianceId);
-        }
-        else
-            if (m.players && m.players['u' + m.pid]) {
-                who = m.players['u' + m.pid].n;
-                attackermight = parseInt(m.players['u' + m.pid].m);
-                allianceId = 'a' + m.players['u' + m.pid].a;
-                allianceName = Seed.allianceNames[allianceId];
-                diplomacy = getDiplomacy(allianceId);
-            }
-            else {
-                who = 'n.A.';
-                attackermight = 'n.A.';
-                allianceId = 'n.A.';
-                allianceName = 'n.A.';
-                diplomacy = 'n.A.';
-            }
-        //SOURCE
-        if (m.fromXCoord)
-            var source = m.fromXCoord + ',' + m.fromYCoord;
-        else
-            var source = 'n.A.';
-        
-        var arrivingDatetime = new Date();
-        arrivingDatetime.setTime(m.arrivalTime * 1000);
-        var count = t.towerMarches.length + 1;
-        t.towerMarches[count] = {
-            added: now,
-            cityId: m.toCityId,
-            target: target,
-            arrival: parseIntNan(m.arrivalTime),
-            atkType: atkType,
-            who: who,
-            attackermight: attackermight,
-            allianceName: allianceName,
-            diplomacy: diplomacy,
-            rtime: unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())),
-            arrivingDatetime: arrivingDatetime,
-            source:source,
-            units: units,
-        };
-    },
-    showTowerIncoming: function(cityId){
-        var t = Tabs.tower;
-        var popTowerIncoming = null;
-        var cityName = Tabs.build.getCityNameById(cityId);
-        
-        if (t.popTowerIncoming == null) {
-            t.popTowerIncoming = new pbPopup('pbtower_' + cityId, 0, 0, 820, 500, true, function() {clearTimeout (t.timer);});
-        }
-        t.popTowerIncoming.show(false);
-        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityTowerContent">';
-        t.popTowerIncoming.getMainDiv().innerHTML = '</table></div>' + m;
-        t.popTowerIncoming.getTopDiv().innerHTML = '<TD width="200px"><B>'+translate("Tower Report of")+' ' + cityName + '</b></td></td>';
-        t.addCityData2Pop(cityId);
-        t.popTowerIncoming.show(true);
-        clearTimeout (t.timer);
-        t.timer = setTimeout (function() {t.showTowerIncoming(cityId)}, 5000);        
-    },
-    addCityData2Pop: function(cityId){
-        var t = Tabs.tower;
-        var rownum = 0;
-        var names = ['Supply', 'Mil', 'Scout', 'Pike', 'Sword', 'Archer', 'Cav', 'Heavy', 'Wagon', 'Balli', 'Ram', 'Cat'];
-        enc = {};
-        numSlots = 0;
-        var row = document.getElementById('pbCityTowerContent').innerHTML = "";
-        if (matTypeof(Seed.queue_atkinc) != 'array') {
-            for (k in Seed.queue_atkinc) {
-                march = Seed.queue_atkinc[k];
-                if (march.marchType == 2) {
-                    ++numSlots;
-                    city = march.toCityId;
-                    from = march.fromPlayerId;
-                    if (!enc[city])
-                        enc[city] = {};
-                    if (!enc[city][from])
-                        enc[city][from] = [];
-                    k = [];
-                    k[0] = parseInt(march.knightCombat);
-                    for (i = 1; i < 13; i++) {
-                        if (Options.encRemaining)
-                            k[i] = parseInt(march['unit' + i + 'Return']);
-                        else
-                            k[i] = parseInt(march['unit' + i + 'Count']);
-                    }
-                    k[14] = parseInt(march.marchStatus);
-                    var now = unixTime();
-                    k[15] = parseInt(march.destinationUnixTime) - now;
-                    enc[city][from].push(k);
-                }
-            }
-        }
-        var s1 = '';
-        var s2 = '';
-        var s3 = '';
-        var tot = [];
-        var atk = [];
-        for (i = 0; i < 13; i++) {
-            tot[i] = 0;
-            atk[i] = 0;
-        }
-
-            s1 += '<STYLE> .tot{background:#f0e0f8;} .city{background:#ffffaa;} .attack{background:#FF9999;} .own{background:#66FF66;}</style>';
-            s1 += '<TABLE cellspacing=0 width=100%><TR align=right><TD align=center width=16%></td>';
-            
-            for (k = 0; k < names.length; k++)
-                s1 += '<TD width=7%><B>' + names[k] + '</b></td>';
-            s1 += '</tr>';
-            dest = cityId;
-            if (enc[dest]) {
-                for (p in enc[dest]) {
-                    try {
-                        player = Seed.players['u' + p].n;
-                    }
-                    catch (err) {
-                        player = '???';
-                    }
-                    for (m = 0; m < enc[dest][p].length; m++) {
-                        /*knight = '';
-                        if (enc[dest][p][m][0] > 0)
-                            knight = ' (' + enc[dest][p][m][0] + ')';
-                        */
-                        status = '';
-                        if (enc[dest][p][m][14] == 1) {
-                            status = ' (' + timestr(enc[dest][p][m][15]) + ')';    
-                            if (enc[dest][p][m][15] < 0)
-                                status = ' (enc)';    
-                            else
-                                 status = ' (' + timestr(enc[dest][p][m][15]) + ')';    
-                        }
-                        if (enc[dest][p][m][14] == 2) {
-                            status = ' (enc)';    
-                        }
-
-                        s1 += '<TR align=right><TD align=left class="city">' + player + status +'</td>'
-                        for (i = 1; i < 13; i++) {
-                            num = enc[dest][p][m][i];
-                            s1 += '<TD class="city">' + num + '</td>';
-                            tot[i] += num;
-                        }
-                        //s1 += '<TD><INPUT id=sendhome_' + numSlots + ' type=submit value="Home" style="border:1px solid black; background-color:red;"></td></tr>';
-                    }
-                }
-            } else {
-                s1 += '<TR align=right><TD align=left class="city"><B>'+translate("Reinforcment")+':</b></td>'
-                for (i = 1; i < 13; i++) {
-                    s1 += '<TD class="city">0</td>';
-                }
-                
-            }
-            s1 += '<TR align=right><TD colspan=14><BR></tr>';
-            s1 += '<TR align=right><TD class="own" align=left><B>'+translate("Own Troops")+':</b></td>';
-            //OWNTROOPS
-            var ownTroops = "";
-            for (r = 1; r < 13; r++) {
-                cityString = 'city' + cityId;
-                num = parseInt(Seed.units[cityString]['unt' + r]);
-                s1 += '<TD class="own">' + num + '</td>';
-                tot[r] += num;
-            }
-            s1 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>'+translate("Defenders")+':</b></td>';
-            for (i = 1; i < 13; i++)
-                s1 += '<TD class="tot">' + tot[i] + '</td>';      
-            s3 += '</tr></table>';
-        
-        s3 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>'+translate("Incoming Attacks")+':</b></td>';
-        
-        var names = ['Supply', 'Mil', 'Scout', 'Pike', 'Sword', 'Archer', 'Cav', 'Heavy', 'Wagon', 'Balli', 'Ram', 'Cat'];
-        if (t.towerMarches.length > 0) {
-            for (k in t.towerMarches) {
-                if (typeof t.towerMarches[k].atkType != 'undefined') {
-                    if (t.towerMarches[k].cityId == cityId) {
-                        s3 += '<TABLE cellspacing=0 width=100%><TR>';
-                        
-                        if (t.towerMarches[k].atkType == 'attacked') {
-                            s3 += '<TD rowspan=2 width=5%><B><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.jpg?6545"></b></td>';
-                        }
-                        else
-                            if (t.towerMarches[k].atkType == 'scouted') {
-                                s3 += '<TD rowspan=2 width=5%><B><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.jpg?6545"></b></td>';
-                            }
-                        s3 += '<TD width=15%><B>'+translate("Location")+'</b></td>';
-                        s3 += '<TD width=15%><B>'+translate("Name")+'</b></td>';
-                        s3 += '<TD width=10%><B>'+translate("Source")+': </b></td><TD width=10%>' + t.towerMarches[k].source + '</td>';
-                        s3 += '<TD width=10%><B>'+translate("Might")+': </b></td><TD width=10%>' + t.towerMarches[k].attackermight + '</td>';
-                        s3 += '<TD width=10%><B>'+translate("Alliance")+': </b></td><TD width=10%>' + t.towerMarches[k].allianceName + '</td>';
-                        s3 += '<TD width=10%><B>'+translate("State")+': </b></td><TD width=10%>' + t.towerMarches[k].diplomacy + '</td></tr>';
-                        s3 += '<TR><TD width=10%  >' + t.towerMarches[k].target + '</td>';
-                        s3 += '<TD  >' + t.towerMarches[k].who + '</td>';
-                        s3 += '<TD><B>'+translate("Remaining")+': </b></td><TD width=10%>' + t.towerMarches[k].rtime + '</td>';
-                        s3 += '<TD><B>'+translate("Arrival")+': </b></td><TD  colspan=5 width=10%>' + t.towerMarches[k].arrivingDatetime + '</td></tr>';
-                        s3 += '</tr></table>';
-                        s3 += '<TABLE cellspacing=0 width=100%><TR align=right><TD align=left width=16%></td>';
-                        for (n = 0; n < names.length; n++)
-                            s3 += '<TD width=7%><B>' + names[n] + '</b></td>';
-                        s3 += '</tr><TR align=right><TD class="attack" align=left><B>Units:</td>';
-                        for (u = 1; u < 13; u++) {
-                            num = t.towerMarches[k].units[u];
-                            s3 += '<TD class="attack">' + num + '</td>';
-                            atk[u] += parseInt(num);
-                        }
-                        s3 += '</tr></table>';
-                    }
-                }
-                
-            }
-        }
-        s2 += '<TR><TD colspan=14><BR></td></tr><TR align=right><TD class="attack" align=left><B>'+translate("Attackers")+':</b></td>';
-        for (a = 1; a < 13; a++)
-            s2 += '<TD class="attack" width=7%>' + atk[a] + '</td>';
-        var html = s1 + s2 + s3;
-        document.getElementById('pbCityTowerContent').innerHTML = html;
-
-    },
-    sendReinforcmentHome: function(){ //FUNCTION NOT IN USE YET BUT SOON :-)
-        //mid, cid, fromUid, fromCid, upkeep
-        var params = Object.clone(g_ajaxparams);
-        params.mid = mid;
-        params.cid = cid;
-        params.fromUid = fromUid;
-        params.fromCid = fromCid;
-        new Ajax.Request(g_ajaxpath + "ajax/kickoutReinforcements.php" + g_ajaxsuffix, {
-            method: "post",
-            parameters: params,
-            onSuccess: function(transport){
-                var rslt = eval("(" + transport.responseText + ")");
-                if (rslt.ok) {
-                    Modal.showAlert(g_js_strings.kickout_allies.troopshome);
-                    seed.resources["city" + currentcityid].rec1[3] = parseInt(seed.resources["city" + currentcityid].rec1[3]) - upkeep;
-                    if (parseInt(fromUid) == parseInt(tvuid)) {
-                        var curmarch = seed.queue_atkp["city" + fromCid]["m" + mid];
-                        var marchtime = Math.abs(parseInt(curmarch.destinationUnixTime) - parseInt(curmarch.eventUnixTime));
-                        curmarch.returnUnixTime = unixTime() + marchtime;
-                        curmarch.marchStatus = 8
-                    }
-                    delete seed.queue_atkinc["m" + mid]
-                }
-                else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
-                }
+                    return;
             },
-            onFailure: function(){
+        });
+        t.SalvageArray.splice(0,1);
+        t.LastDeleted = params.itemId;
+        if (t.SalvageArray.length > 0) setTimeout(t.doSalvage, 6000);
+        else {
+            t.SalvageRunning = false;
+            t.salvageCheck();
+        }
+},
+
+hide : function (){
+},
+
+show : function (){
+    var t = Tabs.Throne;
+    if (t.curTabName == 'Sal')
+        t.Salvage();
+    else if (t.curTabName == 'UE')
+        t.Upgrade_Enhance();
+    else if (t.curTabName == 'EQ'){
+        t.Equip();
+        for (k in t.EquipType) {
+        var y = t.EquipType[k];
+            if (typeof(y) == "string") {
+                what = y.toLowerCase();
+                t.paintEquipInfo(document.getElementById(what).value,what)
             }
-        })
-    },
+        }
+    }
+  },
+  
 }
 
 
