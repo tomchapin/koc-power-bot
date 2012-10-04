@@ -4018,8 +4018,7 @@ Tabs.build = {
     paintBusyDivs:function(){
     	var t = Tabs.build;
     	var now = unixTime();
-    	if (t.buildStates.running == true) {
-          	for (var i = 0; i < Cities.cities.length; i++) {
+    	   	for (var i = 0; i < Cities.cities.length; i++) {
             	var cityId = Cities.cities[i].id;
                 var isBusy = false;
                 var qcon = Seed.queue_con["city" + cityId];
@@ -4043,7 +4042,6 @@ Tabs.build = {
 	          		document.getElementById('divTimeLeftCity_' + cityId).innerHTML = '';
                 }
             }           
-        }
     },
     doOne : function (bQi){
         var t = Tabs.build;
