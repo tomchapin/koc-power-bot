@@ -3847,6 +3847,8 @@ Tabs.tower = {
      <span class="leveltag" style="left:60px;">10</span>
      more todos within the code
  */
+ var buildTabTypes = {type1:"Farm",type2:"Sawmill",type3:"Quarry",type4:"Mine",type5:"Cottage",type7:"Knights Hall",type8:"Embassy",type11:"Alchemy Lab",type12:"Rally Point",type13:"Barracks",type15:"Blacksmith",type16:"Workshop",type17:"Stable",type18:"Relief Station",type19:"Wall",type20:"FeySpire",type21:"Apothecary",type0:"Castle"};
+ 
 Tabs.build = {
     tabOrder: 20,
     tabLabel: 'Build',
@@ -3905,7 +3907,18 @@ Tabs.build = {
             m += '<TD colspan=2><CENTER><INPUT id=pbCancelAll_' + Cities.cities[i].id + ' type=submit value="'+translate("Cancel All")+'"></center></td>';
         }
         m += '</tr><TR>';
-        
+        for (var i = 0; i < Cities.cities.length; i++) {
+        	m += '<TD colspan=2><CENTER><DIV id=divBuildingCity_' +Cities.cities[i].id + '></div></center></td>';
+        }
+        m += '</tr><TR>';
+        for (var i = 0; i < Cities.cities.length; i++) {
+        	m += '<TD colspan=2><CENTER><DIV id=divCurrentBuildCity_' +Cities.cities[i].id + '></div></center></td>';
+        }
+        m += '</tr><TR>';
+        for (var i = 0; i < Cities.cities.length; i++) {
+        	m += '<TD colspan=2><CENTER><DIV id=divTimeLeftCity_' +Cities.cities[i].id + '></div></center></td>';
+        }
+        m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
             m += '<TD>Qc:</td><TD id=pbbuildcount_' + Cities.cities[i].id + '>' + t["bQ_" + Cities.cities[i].id].length + '</td>';
         }
@@ -3923,7 +3936,7 @@ Tabs.build = {
         }
         m += '</tr></table><SPAN class=boldRed id=pbbuildError></span>';
         t.myDiv.innerHTML = m;
-        
+        setInterval(t.paintBusyDivs,1*1000)
         for (var i = 0; i < Cities.cities.length; i++) {
             var cityId = Cities.cities[i].id;
             var btnName = 'pbbuild_' + cityId;
@@ -3934,6 +3947,7 @@ Tabs.build = {
         }
 
         t.e_autoBuild(); //start checking if we can build someting
+
         
         document.getElementById('pbBuildType').addEventListener('change', function(){t.setBuildMode(this.value);}, false);
         document.getElementById('pbBuildRunning').addEventListener('click', function(){
@@ -3988,7 +4002,7 @@ Tabs.build = {
               }              
               //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
               if (isBusy) {
-                  //TODO add info of remaining build time and queue infos
+	            //TODO add info of remaining build time and queue infos
               } else {
                  if (t["bQ_" + cityId].length > 0) { // something to do?
                       var bQi = t["bQ_" + cityId][0];   //take first queue item to build
@@ -4001,6 +4015,36 @@ Tabs.build = {
           }
         setTimeout(t.e_autoBuild, 30*1000); //should be at least 10
     },  
+    paintBusyDivs:function(){
+    	var t = Tabs.build;
+    	var now = unixTime();
+    	if (t.buildStates.running == true) {
+          	for (var i = 0; i < Cities.cities.length; i++) {
+            	var cityId = Cities.cities[i].id;
+                var isBusy = false;
+                var qcon = Seed.queue_con["city" + cityId];
+                if (matTypeof(qcon)=='array' && qcon.length>0) {
+                	if (parseInt(qcon[0][4]) > now){
+                  		isBusy = true;
+                    }              
+                }
+            	if (isBusy) {
+            		var timeLeft = Seed.queue_con["city" + cityId][0][4] - now 
+            		if (Seed.queue_con["city" + cityId][0][1] == 0) {
+            			document.getElementById('divBuildingCity_' + cityId).innerHTML = 'Destructing...';	
+            		}else{
+            			document.getElementById('divBuildingCity_' + cityId).innerHTML = 'Building...';
+	          		}
+	          		document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = buildTabTypes['type' + Seed.queue_con["city" + cityId][0][0] ] + ' Lvl ' + Seed.queue_con["city" + cityId][0][1];
+	          		document.getElementById('divTimeLeftCity_' + cityId).innerHTML = timestr(timeLeft);
+                }else{
+                	document.getElementById('divBuildingCity_' + cityId).innerHTML = '';
+	          		document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = '';
+	          		document.getElementById('divTimeLeftCity_' + cityId).innerHTML = '';
+                }
+            }           
+        }
+    },
     doOne : function (bQi){
         var t = Tabs.build;
         var currentcityid = parseInt(bQi.cityId);
@@ -4145,11 +4189,11 @@ Tabs.build = {
                                 Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
                                 Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
                                 Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(),  unsafeWindow.unixtime() + time, 0, time, citpos]);                        
+                                unsafeWindow.Modal.hideModalAll();
+                    			unsafeWindow.queue_changetab_building();
+                    			unsafeWindow.modal_build_show_state();
                                 if (params.cid == unsafeWindow.currentcityid)
                                     unsafeWindow.update_bdg();
-                                	unsafeWindow.Modal.hideModalAll();
-                    				unsafeWindow.queue_changetab_building();
-                    				unsafeWindow.modal_build_show_state();
                                 if (document.getElementById('pbHelpRequest').checked == true && time > 59)
                                     t.bot_gethelp(params.bid, currentcityid);
                                 t.cancelQueueElement(0, currentcityid, time, false);
