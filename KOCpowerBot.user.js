@@ -154,6 +154,7 @@ var GlobalOptions = {
   pbWideScreen : true,
   pbWideScreenStyle : 'normal',
   autoPublishGamePopups : false,
+  autoCancelGamePopups : false,
   autoPublishPrivacySetting : 80,
   pbupdate : true,
   pbupdatebeta : 0,
@@ -549,21 +550,22 @@ function kabamStandAlone (){
   }
 
 function HandlePublishPopup() {
-	if(GlobalOptions.autoPublishGamePopups){
-		// Check the app id (we only want to handle the popup for kingdoms of camelot)
+	// Check the app id (we only want to handle the popup for kingdoms of camelot)
 		var FBInputForm = document.getElementById('uiserver_form');
-		logit("FBInputForm "+FBInputForm);
+		//logit("FBInputForm "+FBInputForm);
 		if(FBInputForm){
 			var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
-			logit("channel_input "+channel_input);
+			//logit("channel_input "+channel_input);
 			if(channel_input){
 				var current_channel_url = channel_input.value;
-				logit("current_channel_url "+current_channel_url);
+				//logit("current_channel_url "+current_channel_url);
 				if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {
 					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
+					var cancel_publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'cancel')]");
 					var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
-					logit("publish_button "+publish_button);
-					logit("privacy_setting "+privacy_setting);
+					//logit("publish_button "+publish_button);
+					//logit("privacy_setting "+privacy_setting);
+					//logit("cancel_button " + cancel_publish_button);
 					if(publish_button && privacy_setting){
 						// 80: Everyone
 						// 50: Friends of Friends
@@ -571,13 +573,17 @@ function HandlePublishPopup() {
 						// 10: Only Me
 						privacy_setting.innerHTML = '<option value="'+ GlobalOptions.autoPublishPrivacySetting +'"></option>';
 						privacy_setting.selectedIndex = 0;
-						nHtml.Click(publish_button);
+						if (GlobalOptions.autoPublishGamePopups && !GlobalOptions.autoCancelGamePopups){
+							nHtml.Click(publish_button);
+						}else if (GlobalOptions.autoCancelGamePopups && !GlobalOptions.autoPublishGamePopups){
+							nHtml.Click(cancel_publish_button);
+							logit('canceling')
+						}
 					}
 				}
 			}		
 		}
 		setTimeout(HandlePublishPopup, 1000);
-	}
 }
 
 var Cities = {};
@@ -10362,7 +10368,8 @@ Tabs.Options = {
         <TR><TD colspan=2><BR><B>'+translate("Extra Features")+':</b></td></tr>\
         <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>'+translate("Help alliance build/research posts")+'</td></tr>\
         <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>'+translate("Hide alliance requests in chat")+'</td></tr>\
-        <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>'+translate("Auto publish Facebook posts for")+' '+ htmlSelector({0:'----', 80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' '+translate("(For all domains)")+'</td>\
+        <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>'+translate("Auto publish Facebook posts for")+' '+ htmlSelector({0:'----', 80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' '+translate("(For all domains)")+'<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
+        <TR><TD><INPUT id=cancelReq type=checkbox '+ (GlobalOptions.autoCancelGamePopups?'CHECKED ':'') + '/></td><TD>'+translate("Auto cancel Facebook posts")+'<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
         <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>'+translate("Show Player & Might in map")+'.</td></tr>\
         <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> '+translate("Auto delete barb/transport reports from you")+'</td></tr>\
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> '+translate("Auto delete transport reports to you")+'</td></tr>\
@@ -10385,6 +10392,10 @@ Tabs.Options = {
               GlobalOptions.autoPublishGamePopups = document.getElementById('PubReq').checked;
             GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);    
+      document.getElementById('cancelReq').addEventListener ('change', function(){
+      		GlobalOptions.autoCancelGamePopups = document.getElementById('cancelReq').checked;
+			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);	
       document.getElementById('pbupdatebeta').addEventListener ('change', function(){
               GlobalOptions.pbupdatebeta = document.getElementById('pbupdatebeta').value;
             AutoUpdater_101052.beta = GlobalOptions.pbupdatebeta;
