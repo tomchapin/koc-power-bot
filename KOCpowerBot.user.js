@@ -20189,6 +20189,8 @@ Tabs.ascension = {
 		for (i=0;i<Cities.cities.length;i++){
 			var cityPrestige      = Seed.cityData.city[Cities.cities[i].id].cityValue;
 			var cityPrestigeLevel = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeLevel;
+			var isPrestigeCity    = Seed.cityData.city[Cities.cities[i].id].isPrestigeCity;
+			//alert('city - ' + Cities.cities[i].id + ' prestige= ' + isPrestigeCity )
 			var currentGemPrice = null;
 			
 			var fullPrestige  = 1200;
@@ -20198,29 +20200,35 @@ Tabs.ascension = {
 			var gemFullPrice  = 1250;
 			m += '<TD>City '+ Cities.cities[i].name +' - </td>';
 	    	m += '<TR><TD style="width:378px; height:25px; background-color:#C2A380">';
-	    	if (cityPrestigeLevel < 3){
-	    		m += '<DIV><img src="https://koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width='+progressWidth + '% height=25></div></td><TD align=center>'+progressWidth+'%</td><TD><INPUT id=pbAscendBtn_'+Cities.cities[i].id +' type=submit value="Ascend"></td><TD align=center>' + cityPrestigeLevel + '/3</td><TD align=center><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD></td>';
+	    	if (isPrestigeCity){
+	    		if (cityPrestigeLevel < 3){
+	    			m += '<DIV><img src="https://koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width='+progressWidth + '% height=25></div></td><TD align=center>'+progressWidth+'%</td><TD><INPUT id=pbAscendBtn_'+Cities.cities[i].id +' type=submit value="Ascend"></td><TD align=center>' + cityPrestigeLevel + '/3</td><TD align=center><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD></td>';
+	    		}else{
+	    			m += '<DIV><CENTER><B>C O M P L E T E</b> (for now)</center></div></td><TD align=center>N/A</td><TD><INPUT id=pbAscendBtn_'+Cities.cities[i].id +' type=submit value="Status"></td><TD align=center>COMPLETE</td><TD><CENTRE><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></centrer></td><TD></td>';
+	    		}
+	    		m += '<TR>';
 	    	}else{
-	    		m += '<DIV><CENTER><B>C O M P L E T E</b> (for now)</center></div></td><TD align=center>N/A</td><TD><INPUT id=pbAscendBtn_'+Cities.cities[i].id +' type=submit value="Status"></td><TD align=center>COMPLETE</td><TD><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD></td>';
-	    	}
-	    	m += '<TR>';
+	   			m += '<DIV><CENTER><B>C I T Y &nbsp;&nbsp;&nbsp; N O T  &nbsp;&nbsp;&nbsp; A S C E N D E D &nbsp;&nbsp;&nbsp; Y E T</center></div></td><TD align=center>N/A</td><TD><INPUT id=pbAscendBtn_'+Cities.cities[i].id +' type=submit value="Ascend"></td><TD align=center>0/3</td><TD><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD align=center></td><TD></td><TR>';
+			}
 	    	
 		}
 	    div.innerHTML = m;
     	for (i=0;i<Cities.cities.length;i++){
-	    	document.getElementById('pbAscendBtn_'+Cities.cities[i].id).addEventListener('click', function(){
+    		document.getElementById('pbAscendBtn_'+Cities.cities[i].id).addEventListener('click', function(){
 	    		var t = Tabs.ascension
 	    		var what = this.id.substr(12); // strip first 12 char's -> pbAscendBtn_
 	    		t.clickCitySelect(what);
 	    	});
-	    	
-	    	t.getGemCost(Cities.cities[i].id,function(cid,cost,origCost){
-	    		if (cost < 0){
-	    			document.getElementById('pbGemCost_'+cid).innerHTML = '<CENTER>N/A</center>';
-	    		}else{
-	    			document.getElementById('pbGemCost_'+cid).innerHTML = cost + '/' + origCost;
-	    		}	 
-			})
+
+    		if (isPrestigeCity){
+	    		t.getGemCost(Cities.cities[i].id,function(cid,cost,origCost){
+	    			if (cost < 0){
+		   				document.getElementById('pbGemCost_'+cid).innerHTML = '<CENTER>N/A</center>';
+	    			}else{
+			    		document.getElementById('pbGemCost_'+cid).innerHTML = '<CENTER>'+cost + '/' + origCost+'</center>';
+	    			} 
+				})
+	    	}
 		}
 	},
 	clickCitySelect : function (city){
