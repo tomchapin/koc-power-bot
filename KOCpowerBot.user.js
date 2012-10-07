@@ -18568,9 +18568,15 @@ Tabs.startup = {
         t.myDiv = cityDiv;
         t.where = "City";
         var counter = 0;
+	var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
         var cityGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/CityTileIDs.jpg">';
+	var asccityGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/AscCityTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
-        document.getElementById('gridPicture').innerHTML = cityGrid;
+	if(AscCityInd == true) {
+		document.getElementById('gridPicture').innerHTML = asccityGrid;
+	} else {
+		document.getElementById('gridPicture').innerHTML = cityGrid;
+	}
         var message='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showDefaults type=submit value="Load Defaults"><INPUT id=setDefaults type=submit value="Set Defaults">';
 
         for (k=1;k<=32;k++){
@@ -18618,6 +18624,8 @@ Tabs.startup = {
         });
         //code for set buttons
     },
+
+
     paintFieldGrid:function(fieldsDiv){
         var t = Tabs.startup;
         t.myDiv = fieldsDiv;
