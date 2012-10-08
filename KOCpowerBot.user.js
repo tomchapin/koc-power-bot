@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121008c
+// @version        20121008d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121008c';
+var Version = '20121008d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18288,6 +18288,15 @@ var layoutOptions = {
 var fieldlayoutOptions = {
     pos100:"Farm",pos101:"Sawmill",pos104:"Quarry",pos105:"Mine",pos102:"Mine",pos103:"Mine",pos106:"Mine",pos107:"Mine",pos108:"Mine",pos109:"Mine",pos110:"Mine",pos111:"Mine",pos112:"Mine",pos113:"Mine",pos114:"Mine",pos115:"Mine",pos116:"Mine",pos117:"Mine",pos118:"Mine",pos119:"Mine",pos120:"Mine",pos121:"Mine",pos122:"Mine",pos123:"Mine",pos124:"Mine",pos125:"Mine",pos126:"Mine",pos127:"Mine",pos128:"Mine",pos129:"Mine",pos130:"Mine",pos131:"Mine",pos132:"Mine",pos133:"Mine",pos134:"Mine",pos135:"Mine",pos136:"Mine",pos137:"Mine",pos138:"Mine",pos139:"Mine",pos142:"Mine"
     };  
+var AscbuildingIDs = {
+    Castle:0,Wall:19,Barracks:13,Cottage:5,KnightsHall:7,FeySpire:20,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,Wall:19,Market:10
+    };
+var AscbuildingTypes = {
+    type5:"Cottage",type6:"",type7:"KnightsHall",type8:"Embassy",type9:"",type10:"Market",type11:"AlcLab",type12:"RallyPoint",type13:"Barracks",type14:"WatchTower",type19:"Wall",type20:"FeySpire"
+};
+var AsccityBuildingNames = {
+    Wall:"Wall",Cottage:"Cottage",Barracks:"Barracks",Apothecary:"Apothecary",FeySpire:"Fey Spire",Embassy:"Embassy",AlcLab:"Alchemy Lab",WatchTower:"Watch Tower",KnightsHall:"Knights Hall",RallyPoint:"Rally Point",Market:"Market"
+    };
 
 Tabs.startup = {
     tabOrder : 99999,
@@ -18377,8 +18386,26 @@ Tabs.startup = {
 
     addCityToQueue:function(){
         var t = Tabs.startup;
+	var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
             for (pos=1;pos<=32;pos++){
-                      if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
+		if(AscCityInd == true) {
+                      if  (AscbuildingIDs[document.getElementById('tileID' + pos).value] >0) {
+                          if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+                        var buildingMode = "build";
+                        var cityId =  t.city.city.id;
+                        var buildingPos = pos;
+                        var buildingType = AscbuildingIDs[document.getElementById('tileID' + pos).value];
+                        var buildingLevel = 0;
+                        var buildingAttempts = 0;
+                        var result = Tabs.build.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
+                        var buildingMult = result[0];
+                        var buildingTime = result[1];
+                        var buildingId = AscbuildingIDs[document.getElementById('tileID' + pos).value];
+                        Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);  
+                        }                  
+                    }
+		} else {
+			if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
                           if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
                         var buildingMode = "build";
                         var cityId =  t.city.city.id;
@@ -18390,9 +18417,10 @@ Tabs.startup = {
                         var buildingMult = result[0];
                         var buildingTime = result[1];
                         var buildingId = buildingIDs[document.getElementById('tileID' + pos).value];
-                        Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);  
+                        Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode); 
                         }                  
                     }
+		} 
             }
     },  
     buildExtraLevels:function(rslt,buildItem){
@@ -18587,22 +18615,36 @@ Tabs.startup = {
                 counter++
                 message += '<TD>Tile1<SELECT id=tileID1><OPTION value="Wall">Wall</option>'
             }else{
-            counter++;
-            message += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
-                  for (kk in cityBuildingNames){
-                      message += '<OPTION value='+kk+'>'+cityBuildingNames[kk]+'</option>';
-                }
-            message += '</options>';
-        if (counter % 4 == 0)message+='</tr>';
-        }
+            	counter++;
+            	message += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
+		if(AscCityInd == true) {
+			for (kk in AsccityBuildingNames){
+                      		message += '<OPTION value='+kk+'>'+AsccityBuildingNames[kk]+'</option>';
+                	}
+		} else {
+			for (kk in cityBuildingNames){
+                      		message += '<OPTION value='+kk+'>'+cityBuildingNames[kk]+'</option>';
+			}
+		}
+            	message += '</options>';
+        	if (counter % 4 == 0)message+='</tr>';
+        	}
         }
         document.getElementById('layoutBoxes').innerHTML = message;
             for (pos=1;pos<=32;pos++){
-                if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
-                    document.getElementById('tileID' + pos).value = buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
-                    document.getElementById('tileID' + pos).disabled = true;
-                    logit("POS = " + pos + ' ' + buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
-                }
+		if(AscCityInd == true) {
+                	if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
+                    	document.getElementById('tileID' + pos).value = AscbuildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
+                   	 document.getElementById('tileID' + pos).disabled = true;
+                    	logit("POS = " + pos + ' ' + AscbuildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
+                	}
+		} else {
+                	if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
+                    	document.getElementById('tileID' + pos).value = buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
+                   	 document.getElementById('tileID' + pos).disabled = true;
+                    	logit("POS = " + pos + ' ' + buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
+                	}
+		}
             }
        
         document.getElementById('showDefaults').addEventListener('click', function(){
