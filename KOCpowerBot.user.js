@@ -1696,7 +1696,7 @@ Tabs.Throne = {
       m+='<TR><TD colspan=3><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Keep one checked attribute per card (salvage mixed cards)</TD></TR>';
       m+='<table><TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_cityspire type=checkbox '+ (ThroneOptions.CitySpire?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in cities with Fey Spire first before other cities</TD></TR>';
-      m+='<TR><TD clospan=3>Ignore checked attributes above ' + htmlSelector({1:'none', 2:'Slot 2 (WARNING Set keep items to 4 or less)', 3:'Slot 3 (WARNING Set keep items to 3 or less)', 4:'Slot 4 (WARNING Set keep items to 2 or less)', 5:'Slot 5 (WARNING Set keep items to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR></table>';
+      m+='<TR><TD clospan=3>Salvage checked attributes above ' + htmlSelector({1:'none', 2:'Slot 2 (WARNING Set keep items to 4 or less)', 3:'Slot 3 (WARNING Set keep items to 3 or less)', 4:'Slot 4 (WARNING Set keep items to 2 or less)', 5:'Slot 5 (WARNING Set keep items to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR></table>';
       m+='<TABLE id=pbbarbingfunctions width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Defense type=checkbox '+ (ThroneOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td></tr>';
