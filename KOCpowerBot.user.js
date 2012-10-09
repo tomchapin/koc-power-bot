@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121008e
+// @version        20121009a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121008e';
+var Version = '20121009a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7567,10 +7567,7 @@ cm.MARCH_TYPES = {
     t.raidtimer = setTimeout(t.checkRaids, 30000);
     setInterval(t.lookup, 2500);
     setInterval(t.sendreport, 1*60*1000);
-    
-    AddSubTabLink('Stop Raids', t.StopAllRaids, 'pbraidtab');
-    AddSubTabLink('Resume Raids', t.ResumeAllRaids, 'pbraidtabRes');
-    AddSubTabLink('Delete Raids', t.DeleteAllRaids, 'pbraidtabDel');
+  
     
     
     var m = '<DIV class=pbStat>RAID FUNCTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
@@ -7621,18 +7618,6 @@ cm.MARCH_TYPES = {
                    }
            }
            //logit(t.stopcount);    
-           if (t.resuming == false && t.stopping == false && t.deleting == false && t.activecount != 0)
-            document.getElementById('pbraidtab').innerHTML = '<span style="color: #ff6">Stop Raids ('+ t.activecount + ')</span>'
-           else if (t.resuming == false && t.stopping == false && t.deleting == false)
-            document.getElementById('pbraidtab').innerHTML = '<span style="color: #CCC">Stop Raids ('+ t.activecount + ')</span>'
-           if (t.resuming == false && t.resuming == false && t.deleting == false && t.stopcount !=0)
-            document.getElementById('pbraidtabRes').innerHTML = '<span style="color: #ff6">Resume Raids ('+ t.stopcount + ')</span>'
-           else if (t.resuming == false && t.stopping == false && t.deleting == false)
-            document.getElementById('pbraidtabRes').innerHTML = '<span style="color: #CCC">Resume Raids ('+ t.stopcount + ')</span>'
-           if (t.resuming == false && t.stopping == false && t.deleting == false && t.stopcount !=0)
-            document.getElementById('pbraidtabDel').innerHTML = '<span style="color: #ff6">Delete Raids ('+ t.stopcount + ')</span>'
-           else if (t.resuming == false && t.stopping == false && t.deleting == false)
-            document.getElementById('pbraidtabDel').innerHTML = '<span style="color: #CCC">Delete Raids ('+ t.stopcount + ')</span>'
   },
    
        
@@ -9230,7 +9215,7 @@ Tabs.AutoCraft = {
                 t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
         }
         m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr>';
-        m += '<tr><td align=left><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only train when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=1 value="'+ TrainOptions.actrset +'">  is equiped</td></table></div>';
+        m += '<tr><td align=left><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=1 value="'+ TrainOptions.actrset +'">  is equiped</td></table></div>';
         m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
 
         m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>";
@@ -18763,11 +18748,14 @@ Tabs.startup = {
 
     t.myDiv = div;
     var selbut=0;
+    AddSubTabLink('Crest',t.toggleCrestState, 'CrestToggleTab');
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (Options.crestRunning == false) {
            m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = OFF"></td>';
+	   document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
        } else {
            m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = ON"></td>';
+	   document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
        }
 
 
@@ -19401,10 +19389,12 @@ Tabs.startup = {
             if (Options.crestRunning == true) {
                 Options.crestRunning = false;
                 obj.value = "Crest = OFF";
+	   	document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
                 saveOptions();
             } else {
                 Options.crestRunning = true;
                 obj.value = "Crest = ON";
+		document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
                 for (crest in Options.Creststatus) {
                     owned = Seed.items['i'+crest];
                     if (owned == undefined) {
