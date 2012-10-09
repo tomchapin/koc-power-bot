@@ -3217,17 +3217,23 @@ Tabs.tower = {
         if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
           if (m.departureTime > Options.alertConfig.lastAttack){
             Options.alertConfig.lastAttack = m.departureTime;  
+		AddSubTabLink('!Silence Alarm!',t.stopSoundAlerts, 'towersirentab');
+		document.getElementById('towersirentab').innerHTML = '<span style="color: red">Silence Alarm!</span>'
             t.newIncoming (m);
           }
           incomming = true;
+
           if (Options.alertConfig.raid){
             Options.alertConfig.raidautoswitch[m.toCityId] = true;
           }
         }
       }
     }
-    if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime))
-      t.stopSoundAlerts();
+    if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime)){
+	var element = document.getElementById('towersirentab');
+  	element.parentNode.removeChild(element);
+	t.stopSoundAlerts();
+	}
 
         t.towerMarches = [];
         for (var i = 0; i < Cities.cities.length; i++) {
@@ -3290,11 +3296,14 @@ Tabs.tower = {
   stopSoundAlerts : function (){
     var t = Tabs.tower;
     t.mss.stop (1);
+    var element = document.getElementById('towersirentab');
+    element.parentNode.removeChild(element);
     clearTimeout (t.soundStopTimer);
     clearTimeout (t.soundRepeatTimer);
     document.getElementById('pbSoundStop').disabled = true;
     Options.alertSound.alarmActive = false;
     Options.alertSound.expireTime = 0;
+
   },
 
   newIncoming : function (m){
@@ -9555,6 +9564,7 @@ Tabs.AutoCraft = {
            t.saveCraftState();
     },
 };
+
 
  
   
