@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121008d
+// @version        20121008e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121008d';
+var Version = '20121008e';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -9220,7 +9220,8 @@ Tabs.AutoCraft = {
                 m += '<TD width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = ON"></td>';
                 t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
         }
-        m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr></table></div>';
+        m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr>';
+        m += '<tr><td align=left><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only train when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=1 value="'+ TrainOptions.actrset +'">  is equiped</td></table></div>';
         m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
 
         m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>";
@@ -9267,6 +9268,8 @@ Tabs.AutoCraft = {
     document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
     document.getElementById("pbCraftRunning").addEventListener ('click', function (){t.toggleStateRunning(this)}, false);     
     t.changeCraft ('pbCraftIntervall', 'CraftIntervallMin')
+    document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;saveTrainOptions();}, false);
+    document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;saveTrainOptions();}, false);
   },
       changeCraft : function (valueId, optionName, callOnChange){
     var t = Tabs.AutoCraft;
@@ -9423,6 +9426,11 @@ Tabs.AutoCraft = {
     Start: function() {
      var t = Tabs.AutoCraft;
      if(!TrainOptions.CraftingRunning) {
+    	if (TrainOptions.actr && TrainOptions.actrset != 0) {
+        	if (Seed.throne.activeSlot != TrainOptions.trset) {
+           		return;
+            	};
+        };
       clearInterval(t.timer);
       return;
      }
