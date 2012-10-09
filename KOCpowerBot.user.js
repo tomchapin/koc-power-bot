@@ -9420,14 +9420,14 @@ Tabs.AutoCraft = {
     Start: function() {
      var t = Tabs.AutoCraft;
      if(!TrainOptions.CraftingRunning) {
-    	if (TrainOptions.actr && TrainOptions.actrset != 0) {
-        	if (Seed.throne.activeSlot != TrainOptions.trset) {
-           		return;
-            	};
-        };
       clearInterval(t.timer);
       return;
      }
+     if (TrainOptions.actr && TrainOptions.actrset != 0) {
+        if (Seed.throne.activeSlot != TrainOptions.trset) {
+           	return;
+        };
+     };
      if (t.numcity<Cities.numCities-1) {
            t.numcity++;
          } else {
