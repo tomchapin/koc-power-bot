@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121009a
+// @version        20121010a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121009a';
+var Version = '20121010a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2984,10 +2984,11 @@ Tabs.tower = {
     for (var i in t.Providers) {
        var ret=m.indexOf(t.Providers[i].country);
        if (ret==-1) {
-         if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
-           m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
-         }
-         else {
+         if(t.Providers[Options.celltext.provider]){
+			 if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
+			   m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
+			 }
+         } else {
            m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
          }
        }
@@ -2996,11 +2997,13 @@ Tabs.tower = {
     m += '</select>\
     <select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--'+translate("Provider")+'--</option>';
     for (var i in t.Providers) {
- if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
-        if(Options.celltext.provider == i)
-            m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
-        else
-           m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+         if(t.Providers[Options.celltext.provider]){
+			if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
+				if(Options.celltext.provider == i)
+					m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
+		 } else {
+		   m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+		 }
     }
 
     m += '</select></td></tr>';
@@ -3303,7 +3306,6 @@ Tabs.tower = {
     document.getElementById('pbSoundStop').disabled = true;
     Options.alertSound.alarmActive = false;
     Options.alertSound.expireTime = 0;
-
   },
 
   newIncoming : function (m){
@@ -3965,7 +3967,6 @@ Tabs.build = {
         }
 
         t.e_autoBuild(); //start checking if we can build someting
-
         
         document.getElementById('pbBuildType').addEventListener('change', function(){t.setBuildMode(this.value);}, false);
         document.getElementById('pbBuildRunning').addEventListener('click', function(){
@@ -9549,7 +9550,6 @@ Tabs.AutoCraft = {
            t.saveCraftState();
     },
 };
-
 
  
   
