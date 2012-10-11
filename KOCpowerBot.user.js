@@ -12656,13 +12656,13 @@ Tabs.AutoTrain = {
     if(!unitId || unitId<1) return false;
     var cost = unsafeWindow.Object.clone(unsafeWindow.unitcost['unt'+ unitId]);
     var gamble = (parseInt(TrainOptions.Gamble[t.city])>0)?t.gamble[TrainOptions.Gamble[t.city]].cost:1;
-    t.amt = (t.idle/cost[6]).toFixed(0);
+    t.amt = Math.floor(t.idle/cost[6]);
     for(var rs=1; rs<5; rs++)
         cost[rs] *= gamble;
-    if ((t.food/cost[1]) < t.amt) t.amt = (t.food/cost[1]).toFixed(0);
-    if ((t.wood/cost[2]) < t.amt) t.amt = (t.wood/cost[2]).toFixed(0);
-    if ((t.stone/cost[3]) < t.amt) t.amt = (t.stone/cost[3]).toFixed(0);
-    if ((t.ore/cost[4]) < t.amt) t.amt = (t.ore/cost[4]).toFixed(0);
+    if ((t.food/cost[1]) < t.amt) t.amt = Math.floor(t.food/cost[1]);
+    if ((t.wood/cost[2]) < t.amt) t.amt = Math.floor(t.wood/cost[2]);
+    if ((t.stone/cost[3]) < t.amt) t.amt = Math.floor(t.stone/cost[3]);
+    if ((t.ore/cost[4]) < t.amt) t.amt = Math.floor(t.ore/cost[4]);
     if(TrainOptions.SelectMax[t.city]){
         if(parseInt(t.amt) > parseInt(TrainOptions.Max[t.city])) t.amt = TrainOptions.Max[t.city];
     }
