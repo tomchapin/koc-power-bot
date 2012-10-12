@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121012a
+// @version        20121012b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121012a';
+var Version = '20121012b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2888,11 +2888,7 @@ show : function (){
   }, 
 }
 
-
-
 /****************************  Tower Tab  ******************************/
-
-
 Tabs.tower = {
   tabOrder: 10,
   tabLabel: 'Tower',
@@ -3051,6 +3047,8 @@ Tabs.tower = {
          if(t.Providers[Options.celltext.provider]){
 			 if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
 			   m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
+			 } else {
+			   m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
 			 }
          } else {
            m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
@@ -3065,6 +3063,9 @@ Tabs.tower = {
 			if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
 				if(Options.celltext.provider == i)
 					m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
+				else {
+				   m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+				}
 		 } else {
 		   m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
 		 }
@@ -3289,7 +3290,6 @@ Tabs.tower = {
             t.newIncoming (m);
           }
           incomming = true;
-
           if (Options.alertConfig.raid){
             Options.alertConfig.raidautoswitch[m.toCityId] = true;
           }
