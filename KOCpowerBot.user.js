@@ -3931,8 +3931,26 @@ Tabs.tower = {
      <span class="leveltag" style="left:60px;">10</span>
      more todos within the code
  */
- var buildTabTypes = {type1:"Farm",type2:"Sawmill",type3:"Quarry",type4:"Mine",type5:"Cottage",type7:"Knights Hall",type8:"Embassy",type11:"Alchemy Lab",type12:"Rally Point",type13:"Barracks",type15:"Blacksmith",type16:"Workshop",type17:"Stable",type18:"Relief Station",type19:"Wall",type20:"FeySpire",type21:"Apothecary",type0:"Castle"};
- 
+var buildTabTypes = {
+    type1: "Farm",
+    type2: "Sawmill",
+    type3: "Quarry",
+    type4: "Mine",
+    type5: "Cottage",
+    type7: "Knights Hall",
+    type8: "Embassy",
+    type11: "Alchemy Lab",
+    type12: "Rally Point",
+    type13: "Barracks",
+    type15: "Blacksmith",
+    type16: "Workshop",
+    type17: "Stable",
+    type18: "Relief Station",
+    type19: "Wall",
+    type20: "FeySpire",
+    type21: "Apothecary",
+    type0: "Castle"
+};
 Tabs.build = {
     tabOrder: 20,
     tabLabel: 'Build',
@@ -3944,8 +3962,9 @@ Tabs.build = {
     buildStates: [],
     loaded_bQ: [],
     lbQ: [],
+    toolsMode: null,
 
-    init: function(div){
+    init: function (div) {
         var t = Tabs.build;
         t.myDiv = div;
         t.koc_buildslot = unsafeWindow.buildslot; //save original koc function
@@ -3955,52 +3974,59 @@ Tabs.build = {
             help: false,
         };
         t.readBuildStates();
-        
         for (var i = 0; i < Cities.cities.length; i++) {
             t["bQ_" + Cities.cities[i].id] = JSON2.parse(GM_getValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, '[]'));
             if (typeof t["bQ_" + Cities.cities[i].id] == 'undefined' || (t["bQ_" + Cities.cities[i].id]) == "") {
                 t["bQ_" + Cities.cities[i].id] = [];
             }
         }
-        
-        var m = '<DIV id=pbBuildDivF class=pbStat>'+translate("BUILD FUNCTIONS")+'</div><TABLE id=pbbuildfunctions width=100% height=0% class=pbTab><TR>';
+        var m = '<DIV id=pbBuildDivF class=pbStat>' + translate("BUILD FUNCTIONS") + '</div><TABLE id=pbbuildfunctions width=100% height=0% class=pbTab><TR>';
         if (t.buildStates.running == false) {
-            m += '<TD><INPUT id=pbBuildRunning type=submit value="'+translate("Auto Build = OFF")+'"></td>';
+            m += '<TD><INPUT id=pbBuildRunning type=submit value="' + translate("Auto Build = OFF") + '"></td>';
+        } else {
+            m += '<TD><INPUT id=pbBuildRunning type=submit value="' + translate("Auto Build = ON") + '"></td>';
         }
-        else {
-            m += '<TD><INPUT id=pbBuildRunning type=submit value="'+translate("Auto Build = ON")+'"></td>';
+        m += '<TD><INPUT id=pbBuildMode type=submit value="' + translate("Build Mode = OFF") + '"></td>';
+        m += '<TD>' + translate("Build Type") + ': <SELECT id="pbBuildType">\
+				<OPTION value=build>' + translate("level up") + '</option>\
+				<OPTION value=max>' + translate("level max") + '</option>\
+				<OPTION value=destruct>' + translate("destruct") + '</option>\
+				</select></td>';
+        m += '<TD><INPUT id=pbHelpRequest type=checkbox ' + (t.buildStates.help ? ' CHECKED' : '') + '\></td><TD>' + translate("Ask for help") + '?</td></table>';
+        m += '<DIV id=pbBuildDivF class=pbStat>' + translate("QUICK ADD") + '</div>'
+        m += '<TABLE id=pbbuildtools width=100% height=0% class=pbTab><TR>';
+        m += '<DIV id=cityBuild></div>';
+        m += '<TD>Queue ALL buildings to level &nbsp;<SELECT id=addAllTo>'
+        for (a = 2; a <= 9; a++) {
+            m += '<OPTION value=toLvl' + a + '>' + a + '</option>';
         }
-        m += '<TD><INPUT id=pbBuildMode type=submit value="'+translate("Build Mode = OFF")+'"></td>';
-        m += '<TD>'+translate("Build Type")+': <SELECT id="pbBuildType">\
-                <OPTION value=build>'+translate("level up")+'</option>\
-                <OPTION value=max>'+translate("level max")+'</option>\
-                <OPTION value=destruct>'+translate("deconstruct")+'</option>\
-                </select></td>';
-        m += '<TD><INPUT id=pbHelpRequest type=checkbox '+ (t.buildStates.help?' CHECKED':'') +'\></td><TD>'+translate("Ask for help")+'?</td>';
-        m += '</tr></table></div>';
-        m += '<DIV id=pbBuildDivQ class=pbStat>'+translate("BUILD QUEUES")+'</div><TABLE id=pbbuildqueues width=100% height=0% class=pbentry><TR>';
+        m += '</select>';
+        m += '<INPUT id=doAllBuildsTo type=submit value=ADD></td>';
+
+        m += '</table>';
+        m += '<DIV id=pbBuildDivQ class=pbStat>' + translate("BUILD QUEUES") + '</div><TABLE id=pbbuildqueues width=100% height=0% class=pbentry><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
             m += '<TD colspan=2><CENTER><B>' + Cities.cities[i].name + '</b></center></td>';
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
-            m += '<TD colspan=2><CENTER><INPUT id=pbbuild_' + Cities.cities[i].id + ' type=submit value="'+translate("Show")+'"></center></td>';
+            m += '<TD colspan=2><CENTER><INPUT id=pbbuild_' + Cities.cities[i].id + ' type=submit value="' + translate("Show") + '"></center></td>';
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
-            m += '<TD colspan=2><CENTER><INPUT id=pbCancelAll_' + Cities.cities[i].id + ' type=submit value="'+translate("Cancel All")+'"></center></td>';
+            m += '<TD colspan=2><CENTER><INPUT id=pbCancelAll_' + Cities.cities[i].id + ' type=submit value="' + translate("Cancel All") + '"></center></td>';
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
-        	m += '<TD colspan=2><CENTER><DIV id=divBuildingCity_' +Cities.cities[i].id + '></div></center></td>';
+            m += '<TD colspan=2><CENTER><DIV id=divBuildingCity_' + Cities.cities[i].id + '></div></center></td>';
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
-        	m += '<TD colspan=2><CENTER><DIV id=divCurrentBuildCity_' +Cities.cities[i].id + '></div></center></td>';
+            m += '<TD colspan=2><CENTER><DIV id=divCurrentBuildCity_' + Cities.cities[i].id + '></div></center></td>';
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
-        	m += '<TD colspan=2><CENTER><DIV id=divTimeLeftCity_' +Cities.cities[i].id + '></div></center></td>';
+            m += '<TD colspan=2><CENTER><DIV id=divTimeLeftCity_' + Cities.cities[i].id + '></div></center></td>';
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
@@ -4020,7 +4046,8 @@ Tabs.build = {
         }
         m += '</tr></table><SPAN class=boldRed id=pbbuildError></span>';
         t.myDiv.innerHTML = m;
-        setInterval(t.paintBusyDivs,1*1000)
+        new CdispCityPicker ('cityBuildpicker', document.getElementById('cityBuild'), true, t.ClickCitySelect, 0);
+        setInterval(t.paintBusyDivs, 1 * 1000)
         for (var i = 0; i < Cities.cities.length; i++) {
             var cityId = Cities.cities[i].id;
             var btnName = 'pbbuild_' + cityId;
@@ -4029,278 +4056,318 @@ Tabs.build = {
             CancelAllEventListener(cityId, btn2Name);
             t.showBuildQueue(cityId, false);
         }
-
         t.e_autoBuild(); //start checking if we can build someting
-        
-        document.getElementById('pbBuildType').addEventListener('change', function(){t.setBuildMode(this.value);}, false);
-        document.getElementById('pbBuildRunning').addEventListener('click', function(){
+        document.getElementById('pbBuildType').addEventListener('change', function () {
+            t.setBuildMode(this.value);
+        }, false);
+        document.getElementById('pbBuildRunning').addEventListener('click', function () {
             t.toggleStateRunning(this);
         }, false);
-        document.getElementById('pbBuildMode').addEventListener('click', function(){
+        document.getElementById('pbBuildMode').addEventListener('click', function () {
             t.toggleStateMode(this);
         }, false);
-        document.getElementById('pbHelpRequest').addEventListener ('change', function (){
-        t.buildStates.help = (document.getElementById('pbHelpRequest').checked);
-        t.saveBuildStates();
+        document.getElementById('pbHelpRequest').addEventListener('change', function () {
+            t.buildStates.help = (document.getElementById('pbHelpRequest').checked);
+            t.saveBuildStates();
         }, false);
-           
+        document.getElementById('doAllBuildsTo').addEventListener('click', function () {
+            t.toolsMode = 'allBuildsTo'
+            t.allBuildsTo();
+        });
         window.addEventListener('unload', t.onUnload, false);
-        
-        function addQueueEventListener(cityId, name){
-            document.getElementById(name).addEventListener('click', function(){
+
+        function addQueueEventListener(cityId, name) {
+            document.getElementById(name).addEventListener('click', function () {
                 t.showBuildQueue(cityId, true);
             }, false);
         }
-        
-        function CancelAllEventListener(cityId, name){
-            document.getElementById(name).addEventListener('click', function(){
+
+        function CancelAllEventListener(cityId, name) {
+            document.getElementById(name).addEventListener('click', function () {
                 t["bQ_" + cityId] = [];
                 t['totalTime_' + cityId] = 0;
                 document.getElementById('pbbuildcount_' + cityId).innerHTML = 0;
                 document.getElementById('pbbuildtotal_' + cityId).innerHTML = timestr(0);
             }, false);
         }
-        
-        
+
+
+    },
+    ClickCitySelect:function(city){
+    	//logit(city.toSource());
+    	var t = Tabs.build;
+		t.currentCity = city.id
+	},
+    allBuildsTo: function () {
+        //logit(document.getElementById('addAllTo').value.substr(5));
+        var t = Tabs.build;
+        var cityId = t.currentCity
+        var builds = Seed.buildings
+        var toLevel = document.getElementById('addAllTo').value.substr(5)
+        //alert('1'+cityId)
+
+            for (pos in builds['city'+cityId]) {
+            	//alert('2'+builds['city'+cityId])
+                if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][1] != 0) {
+                    var item = builds['city'+cityId][pos]
+                //logit(builds['city'+cityId][pos])
+                    if (item[1] < 9) {
+                        //var cityId = city.substr(4);
+                        var buildingType = item[0];
+                        var currentLevel = item[1];
+                        var position = item[2];
+                        if (item[3] != undefined) {
+                            var buildingId = item[3];
+                        } else {
+                            var buildingId = "unknown";
+                        }
+                        t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel) //
+                        //logit(city.substr(4) + ' ' + builds[city][pos][0] + ' ' + builds[city][pos][1] + ' ' + builds[city][pos][2] + ' ' + builds[city][pos][3]);
+                    }
+                }
+            }
+        t.toolsMode = null
     },
     setBuildMode: function (type) {
         var t = Tabs.build;
         t.currentBuildMode = type;
-    },    
-    e_autoBuild: function(){
-      var t = Tabs.build;
+    },
+    doExtraTools: function (cityId, pos, buildingId, buildingType, currentLevel) { //
+        //logit(cityId+ ' ' +pos + ' ' + buildingId);	//, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode
+        var startLevel = currentLevel
+        var t = Tabs.build;
+	    var toLevel = document.getElementById('addAllTo').value.substr(5);
+        for (k = startLevel; k < toLevel; k++) {
+            var buildingMode = "build";
+            var cityId = parseInt(cityId);
+            var buildingPos = parseInt(pos);
+            var buildingType = parseInt(buildingType);
+            var buildingLevel = parseInt(currentLevel);
+            var buildingAttempts = parseInt(0);
+            var result = t.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
+            var buildingMult = result[0];
+            var buildingTime = result[1];
+            var buildingId = parseInt(buildingId);
+            t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);
+            currentLevel++
+        }
+
+    },
+    e_autoBuild: function () {
+        var t = Tabs.build;
         document.getElementById('pbbuildError').innerHTML = '';
-      if (t.buildStates.running == true) {
-          var now = unixTime();
-          //logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
-          for (var i = 0; i < Cities.cities.length; i++) {
-              var cityId = Cities.cities[i].id;
-              var isBusy = false;
-              var qcon = Seed.queue_con["city" + cityId];
-              if (matTypeof(qcon)=='array' && qcon.length>0) {
-                if (parseInt(qcon[0][4]) > now)
-                  isBusy = true;
-                else
-                  qcon.shift();   // remove expired build from queue        
-              }              
-              //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
-              if (isBusy) {
-	            //TODO add info of remaining build time and queue infos
-              } else {
-                 if (t["bQ_" + cityId].length > 0) { // something to do?
-                      var bQi = t["bQ_" + cityId][0];   //take first queue item to build
-                     t.doOne(bQi);;
-                     //setTimeout(t.e_autoBuild, 10000); //should be at least 10
-                     //return; // we need to make sure that there is enough time for each ajax request to not overwrite the vaule that are needed by the next run
-                 }
-              }           
-            }
-          }
-        setTimeout(t.e_autoBuild, 30*1000); //should be at least 10
-    },  
-    paintBusyDivs:function(){
-    	var t = Tabs.build;
-    	var now = unixTime();
-    	   	for (var i = 0; i < Cities.cities.length; i++) {
-            	var cityId = Cities.cities[i].id;
+        if (t.buildStates.running == true) {
+            var now = unixTime();
+            //logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
+            for (var i = 0; i < Cities.cities.length; i++) {
+                var cityId = Cities.cities[i].id;
                 var isBusy = false;
                 var qcon = Seed.queue_con["city" + cityId];
-                if (matTypeof(qcon)=='array' && qcon.length>0) {
-                	if (parseInt(qcon[0][4]) > now){
-                  		isBusy = true;
-                    }              
+                if (matTypeof(qcon) == 'array' && qcon.length > 0) {
+                    if (parseInt(qcon[0][4]) > now) isBusy = true;
+                    else qcon.shift(); // remove expired build from queue        
                 }
-            	if (isBusy) {
-            		var timeLeft = Seed.queue_con["city" + cityId][0][4] - now 
-            		if (Seed.queue_con["city" + cityId][0][1] == 0) {
-            			document.getElementById('divBuildingCity_' + cityId).innerHTML = 'Destructing...';	
-            		}else{
-            			document.getElementById('divBuildingCity_' + cityId).innerHTML = 'Building...';
-	          		}
-	          		document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = buildTabTypes['type' + Seed.queue_con["city" + cityId][0][0] ] + ' Lvl ' + Seed.queue_con["city" + cityId][0][1];
-	          		document.getElementById('divTimeLeftCity_' + cityId).innerHTML = timestr(timeLeft);
-                }else{
-                	document.getElementById('divBuildingCity_' + cityId).innerHTML = '';
-	          		document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = '';
-	          		document.getElementById('divTimeLeftCity_' + cityId).innerHTML = '';
+                //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
+                if (isBusy) {
+                    //TODO add info of remaining build time and queue infos
+                } else {
+                    if (t["bQ_" + cityId].length > 0) { // something to do?
+                        var bQi = t["bQ_" + cityId][0]; //take first queue item to build
+                        t.doOne(bQi);;
+                        //setTimeout(t.e_autoBuild, 10000); //should be at least 10
+                        //return; // we need to make sure that there is enough time for each ajax request to not overwrite the vaule that are needed by the next run
+                    }
                 }
-            }           
+            }
+        }
+        setTimeout(t.e_autoBuild, 45 * 1000); //should be at least 10
     },
-    doOne : function (bQi){
+    paintBusyDivs: function () {
+        var t = Tabs.build;
+        var now = unixTime();
+        for (var i = 0; i < Cities.cities.length; i++) {
+            var cityId = Cities.cities[i].id;
+            var isBusy = false;
+            var qcon = Seed.queue_con["city" + cityId];
+            if (matTypeof(qcon) == 'array' && qcon.length > 0) {
+                if (parseInt(qcon[0][4]) > now) {
+                    isBusy = true;
+                }
+            }
+            if (isBusy) {
+                var timeLeft = Seed.queue_con["city" + cityId][0][4] - now
+                if (Seed.queue_con["city" + cityId][0][1] == 0) {
+                    document.getElementById('divBuildingCity_' + cityId).innerHTML = 'Destructing...';
+                } else {
+                    document.getElementById('divBuildingCity_' + cityId).innerHTML = 'Building...';
+                }
+                document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = buildTabTypes['type' + Seed.queue_con["city" + cityId][0][0]] + ' Lvl ' + Seed.queue_con["city" + cityId][0][1];
+                document.getElementById('divTimeLeftCity_' + cityId).innerHTML = timestr(timeLeft);
+            } else {
+                document.getElementById('divBuildingCity_' + cityId).innerHTML = '';
+                document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = '';
+                document.getElementById('divTimeLeftCity_' + cityId).innerHTML = '';
+            }
+        }
+    },
+    doOne: function (bQi) {
         var t = Tabs.build;
         var currentcityid = parseInt(bQi.cityId);
         var cityName = t.getCityNameById(currentcityid);
         var time = parseInt(bQi.buildingTime);
         var mult = parseInt(bQi.buildingMult);
         var attempt = parseInt(bQi.buildingAttempt);
-		var bypasscheck = false;
-
-        
+        var bypasscheck = false;
         //mat/KOC Power Bot: 49 @ 19:41:45.274: Pos: 6 Type: 13 Level: 8 Id: 1523749
-        
         var mode = bQi.buildingMode;
         //  var mode = "build"; //FOR DEBUG
-        
         var citpos = parseInt(bQi.buildingPos);
         //  var citpos = 6; //FOR DEBUG
-        
-        if ((Seed.buildings['city' + currentcityid]["pos" + citpos] == undefined))
-			bypasscheck = true;
-			
-			if(!bypasscheck) {
-				var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
-				var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
-				//  var bdgid = 13; //FOR DEBUG
-				
-				var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
-				var curlvl = parseIntNan(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
-				//  var curlvl = 8; //FOR DEBUG
-
-				var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
-				var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
-				//  var bid = 1523749; //FOR DEBUG
-            
-				if (curlvl > 8 && mode == 'build') {
-					t.cancelQueueElement(0, currentcityid, time, false);
-					actionLog(translate("Queue item deleted: Building level equals 9 or higher!!!"));
-					return;
-				};
-				if (isNaN(curlvl)) {
-					t.cancelQueueElement(0, currentcityid, time, false);
-					actionLog(translate("Found no correct value for current building!!!!"));
-					return;
-				}
-				if (l_bdgid != bdgid) {
-					t.cancelQueueElement(0, currentcityid, time, false);
-					actionLog(translate("Building Type does not match!!!!"));
-					return;
-				}
-				if (l_bid != bid) {
-					t.cancelQueueElement(0, currentcityid, time, false);
-					actionLog(translate("Building ID does not match!!!!"));
-					return;
-				}
-				if (l_curlvl < curlvl) {
-						t.cancelQueueElement(0, currentcityid, time, false);
-						actionLog(translate("Queue item deleted: Building level is equal or higher!!!"));
-						return;
-				}
-				if (l_curlvl > curlvl && mode == 'build') {
-						t.requeueQueueElement(bQi);
-						return;
-				}
-			} else {
-				var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
-				var bdgid = l_bdgid;
-				//  var bdgid = 13; //FOR DEBUG
-				
-				var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
-				var curlvl = l_curlvl;
-				//  var curlvl = 8; //FOR DEBUG
-
-				var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
-				var bid = l_bid;
-			}
-
-            if (mode == 'destruct') {
+        if ((Seed.buildings['city' + currentcityid]["pos" + citpos] == undefined)) bypasscheck = true;
+        if (!bypasscheck) {
+            var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
+            var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
+            //  var bdgid = 13; //FOR DEBUG
+            var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
+            var curlvl = parseIntNan(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
+            //  var curlvl = 8; //FOR DEBUG
+            var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
+            var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
+            //  var bid = 1523749; //FOR DEBUG
+            if (curlvl > 8 && mode == 'build') {
+                t.cancelQueueElement(0, currentcityid, time, false);
+                actionLog(translate("Queue item deleted: Building level equals 9 or higher!!!"));
+                return;
+            };
+            if (isNaN(curlvl)) {
+                t.cancelQueueElement(0, currentcityid, time, false);
+                actionLog(translate("Found no correct value for current building!!!!"));
+                return;
+            }
+            if (l_bdgid != bdgid) {
+                t.cancelQueueElement(0, currentcityid, time, false);
+                actionLog(translate("Building Type does not match!!!!"));
+                return;
+            }
+            if (l_bid != bid) {
+                t.cancelQueueElement(0, currentcityid, time, false);
+                actionLog(translate("Building ID does not match!!!!"));
+                return;
+            }
+            if (l_curlvl < curlvl) {
+                t.cancelQueueElement(0, currentcityid, time, false);
+                actionLog(translate("Queue item deleted: Building level is equal or higher!!!"));
+                return;
+            }
+            if (l_curlvl > curlvl && mode == 'build') {
+                t.requeueQueueElement(bQi);
+                return;
+            }
+        } else {
+            var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
+            var bdgid = l_bdgid;
+            //  var bdgid = 13; //FOR DEBUG
+            var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
+            var curlvl = l_curlvl;
+            //  var curlvl = 8; //FOR DEBUG
+            var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
+            var bid = l_bid;
+        }
+        if (mode == 'destruct') {
+            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+            params.cid = currentcityid;
+            params.bid = "";
+            params.pos = citpos;
+            params.lv = curlvl - 1;
+            if (curlvl >= 1) {
+                params.bid = bid;
+            }
+            params.type = bdgid;
+            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/destruct.php" + unsafeWindow.g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                onSuccess: function (rslt) {
+                    if (rslt.ok) {
+                        actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
+                        Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
+                        if (params.cid == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+                        t.cancelQueueElement(0, currentcityid, time, false);
+                    } else {
+                        var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
+                        t.requeueQueueElement(bQi);
+                        document.getElementById('pbbuildError').innerHTML = errmsg;
+                        logit(errmsg);
+                    }
+                },
+                onFailure: function () {
+                    document.getElementById('pbbuildError').innerHTML = translate("Connection Error while destructing! Please try later again");
+                }
+            })
+        }
+        if (mode == 'build') {
+            var invalid = false;
+            var chk = unsafeWindow.checkreq("bdg", bdgid, curlvl); //check if all requirements are met
+            for (var c = 0; c < chk[3].length; c++) {
+                if (chk[3][c] == 0) {
+                    invalid = true;
+                }
+            }
+            if (invalid == false) {
                 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
                 params.cid = currentcityid;
                 params.bid = "";
                 params.pos = citpos;
-                params.lv = curlvl - 1;
-                if (curlvl >= 1) {
+                params.lv = curlvl + 1;
+                if (params.lv > 9) { //make sure that no level 10+ is built
+                    t.cancelQueueElement(0, currentcityid, time, false);
+                    actionLog(translate("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!"));
+                    return;
+                }
+                if (params.lv > 1) {
                     params.bid = bid;
                 }
                 params.type = bdgid;
-                new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/destruct.php" + unsafeWindow.g_ajaxsuffix, {
+                new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
                     method: "post",
                     parameters: params,
-                    onSuccess: function(rslt){
+                    onSuccess: function (rslt) {
                         if (rslt.ok) {
-                            actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
-                            Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
-                            if (params.cid == unsafeWindow.currentcityid)
-                                unsafeWindow.update_bdg();
+                            actionLog(translate("Building") + " " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);
+                            Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
+                            Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
+                            Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
+                            Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
+                            Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
+                            Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
+                            unsafeWindow.Modal.hideModalAll();
+                            unsafeWindow.queue_changetab_building();
+                            unsafeWindow.modal_build_show_state();
+                            if (params.cid == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+                            if (document.getElementById('pbHelpRequest').checked == true && time > 59) t.bot_gethelp(params.bid, currentcityid);
                             t.cancelQueueElement(0, currentcityid, time, false);
                         } else {
                             var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-                            t.requeueQueueElement(bQi);
-                            document.getElementById('pbbuildError').innerHTML = errmsg;
+                            if (rslt.error_code == 103) { // building has already the target level => just  delete
+                                t.cancelQueueElement(0, currentcityid, time, false);
+                                actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
+                            } else {
+                                t.requeueQueueElement(bQi);
+                                document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
+                            }
                             logit(errmsg);
                         }
                     },
-                    onFailure: function(){
-                        document.getElementById('pbbuildError').innerHTML = translate("Connection Error while destructing! Please try later again");
+                    onFailure: function () {
+                        document.getElementById('pbbuildError').innerHTML = translate("Connection Error while building! Please try later again");
                     }
-                })
+                });
+            } else {
+                t.requeueQueueElement(bQi); // requeue item if check is invalid
             }
-            if (mode == 'build') {
-                var invalid = false;
-                var chk = unsafeWindow.checkreq("bdg", bdgid, curlvl); //check if all requirements are met
-                for (var c = 0; c < chk[3].length; c++) {
-                    if (chk[3][c] == 0) {
-                        invalid = true;
-                    }
-                }
-                if (invalid == false) {                            
-                    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-                    params.cid = currentcityid;
-                    params.bid = "";
-                    params.pos = citpos;
-                    params.lv = curlvl + 1;
-                    if (params.lv > 9){ //make sure that no level 10+ is built
-                        t.cancelQueueElement(0, currentcityid, time, false);
-                        actionLog(translate("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!"));
-                        return;
-                    }
-                    if (params.lv > 1) {
-                        params.bid = bid;
-                    }
-                    params.type = bdgid;
-                    
-                    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
-                        method: "post",
-                        parameters: params,
-                        onSuccess: function(rslt){
-                            if (rslt.ok) {
-                                actionLog(translate("Building")+" " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);                                
-                                Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
-                                Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
-                                Seed.resources["city" + currentcityid].rec3[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][3]) * mult * 3600;
-                                Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
-                                Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
-                                Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(),  unsafeWindow.unixtime() + time, 0, time, citpos]);                        
-                                unsafeWindow.Modal.hideModalAll();
-                    			unsafeWindow.queue_changetab_building();
-                    			unsafeWindow.modal_build_show_state();
-                                if (params.cid == unsafeWindow.currentcityid)
-                                    unsafeWindow.update_bdg();
-                                if (document.getElementById('pbHelpRequest').checked == true && time > 59)
-                                    t.bot_gethelp(params.bid, currentcityid);
-                                t.cancelQueueElement(0, currentcityid, time, false);
-                            } else {
-                                var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-                                if (rslt.error_code == 103) { // building has already the target level => just  delete
-                                    t.cancelQueueElement(0, currentcityid, time, false);
-                                    actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
-                                } else {
-                                    t.requeueQueueElement(bQi);
-                                    document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name +': '+ errmsg + translate(" Item was requeued. Check for retry count.");
-                                }
-                                logit(errmsg);
-                            }
-                    },
-                        onFailure: function(){
-                            document.getElementById('pbbuildError').innerHTML = translate("Connection Error while building! Please try later again");
-                        }
-                    });
-                } else {
-                    t.requeueQueueElement(bQi); // requeue item if check is invalid
-                }
-            }
+        }
         // } else {
-            // t.cancelQueueElement(0, currentcityid, time, false);
-            // actionLog(translate("Queue item deleted: Building does not exist!!!"));
+        // t.cancelQueueElement(0, currentcityid, time, false);
+        // actionLog(translate("Queue item deleted: Building does not exist!!!"));
         // }
     },
     requeueQueueElement: function (bQi) {
@@ -4314,29 +4381,28 @@ Tabs.build = {
         var buildingMult = parseInt(bQi.buildingMult);
         var buildingAttempts = parseInt(bQi.buildingAttempts);
         var buildingMode = bQi.buildingMode;
-        
         t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts + 1, buildingMult, buildingMode); // requeue item
         t.cancelQueueElement(0, cityId, buildingTime, false); // delete Queue Item
     },
-    show: function(){
+    show: function () {
         var t = Tabs.build;
     },
-    bot_buildslot: function(c, a){
+    bot_buildslot: function (c, a) {
         var t = Tabs.build;
         var cityId = t.getCurrentCityId();
-        var buildingPos   = c.id.split("_")[1];
-        var buildingType  = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][0]);
+        var buildingPos = c.id.split("_")[1];
+        var buildingType = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][0]);
         var buildingLevel = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
-        var buildingId    = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][3]);
+        var buildingId = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][3]);
         if (DEBUG_TRACE) logit("Pos: " + buildingPos + " Type: " + buildingType + " Level: " + buildingLevel + " Id: " + buildingId);
-          var buildingAttempts = 0;
+        var buildingAttempts = 0;
         var loaded_bQ = t["bQ_" + cityId];
         if (typeof Seed.queue_con['city' + cityId][0] != 'undefined') {
             var current_construction_pos = Seed.queue_con['city' + cityId][0][2];
         } else {
             var current_construction_pos = "";
         }
-        if (loaded_bQ.length == 0 && current_construction_pos != "" ) { //check anyway if there is currently build in progess for this specific building
+        if (loaded_bQ.length == 0 && current_construction_pos != "") { //check anyway if there is currently build in progess for this specific building
             if (current_construction_pos != 'NaN' && current_construction_pos == buildingId) {
                 buildingLevel += 1;
             }
@@ -4371,12 +4437,12 @@ Tabs.build = {
         }
         if (t.currentBuildMode == "max") {
             var buildingMode = "build";
-            for (var bL = buildingLevel; bL <9; bL++) {
+            for (var bL = buildingLevel; bL < 9; bL++) {
                 var queueId = loaded_bQ.length;
                 var result = t.calculateQueueValues(cityId, bL, buildingType, buildingMode);
                 var buildingMult = result[0];
                 var buildingTime = result[1];
-                queueId = queueId ;
+                queueId = queueId;
                 t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult, buildingMode);
                 t._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
             }
@@ -4390,19 +4456,17 @@ Tabs.build = {
             t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);
             t._addTab(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode);
         }
-
     },
     calculateQueueValues: function (cityId, buildingLevel, buildingType, buildingMode) {
         var t = Tabs.build;
         var now = unixTime();
-        var constructionBoost = unsafeWindow.cm.ThroneController.effectBonus(78);        
+        var constructionBoost = unsafeWindow.cm.ThroneController.effectBonus(78);
         if (buildingMode == 'build') {
             var buildingMult = Math.pow(2, buildingLevel);
         }
         if (buildingMode == 'destruct') {
             var buildingMult = Math.pow(2, buildingLevel - 2);
         }
-                
         var knights = Seed.knights["city" + cityId];
         if (knights) {
             var polKniId = parseInt(Seed.leaders['city' + cityId].politicsKnightId);
@@ -4418,14 +4482,13 @@ Tabs.build = {
         } else {
             polValue = 0;
         }
-        
         var buildingTime = unsafeWindow.buildingcost["bdg" + buildingType][7] * buildingMult;
         if (parseInt(buildingType) < 6 && parseInt(buildingType) > 0 && buildingMult == 1) {
             buildingTime = 15;
         }
         if (buildingMode == 'build') {
             buildingTime = parseInt(buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16)));
-            if (constructionBoost>0)buildingTime = Math.round(buildingTime / (1 + (constructionBoost / 100)));
+            if (constructionBoost > 0) buildingTime = Math.round(buildingTime / (1 + (constructionBoost / 100)));
         }
         if (buildingMode == 'destruct') {
             buildingTime = buildingTime / (1 + 0.005 * polValue + 0.1 * parseInt(Seed.tech.tch16));
@@ -4433,30 +4496,29 @@ Tabs.build = {
                 buildingTime = parseInt(buildingTime);
             }
         }
-        
         var result = new Array(buildingMult, buildingTime);
         return result;
     },
-    bot_buildguardian: function(c, a){
+    bot_buildguardian: function (c, a) {
         var t = Tabs.build;
         var cityId = t.getCurrentCityId();
-        var buildingType  = 50;
-        for(i=0; i < Cities.numCities; i++){
-            if(Seed.guardian[i].cityId == cityId){
+        var buildingType = 50;
+        for (i = 0; i < Cities.numCities; i++) {
+            if (Seed.guardian[i].cityId == cityId) {
                 var buildingLevel = Seed.guardian[i].level;
                 break;
             }
         }
-        var buildingId    = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][3]);
+        var buildingId = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][3]);
         if (DEBUG_TRACE) logit("Pos: " + buildingPos + " Type: " + buildingType + " Level: " + buildingLevel + " Id: " + buildingId);
-          var buildingAttempts = 0;
+        var buildingAttempts = 0;
         var loaded_bQ = t["bQ_" + cityId];
         if (typeof Seed.queue_con['city' + cityId][0] != 'undefined') {
             var current_construction_pos = Seed.queue_con['city' + cityId][0][2];
         } else {
             var current_construction_pos = "";
         }
-        if (loaded_bQ.length == 0 && current_construction_pos != "" ) { //check anyway if there is currently build in progess for this specific building
+        if (loaded_bQ.length == 0 && current_construction_pos != "") { //check anyway if there is currently build in progess for this specific building
             if (current_construction_pos != 'NaN' && current_construction_pos == buildingId) {
                 buildingLevel += 1;
             }
@@ -4491,12 +4553,12 @@ Tabs.build = {
         }
         if (t.currentBuildMode == "max") {
             var buildingMode = "build";
-            for (var bL = buildingLevel; bL <9; bL++) {
+            for (var bL = buildingLevel; bL < 9; bL++) {
                 var queueId = loaded_bQ.length;
                 var result = t.calculateQueueValues(cityId, bL, buildingType, buildingMode);
                 var buildingMult = result[0];
                 var buildingTime = result[1];
-                queueId = queueId ;
+                queueId = queueId;
                 t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult, buildingMode);
                 t._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
             }
@@ -4510,71 +4572,69 @@ Tabs.build = {
             t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);
             t._addTab(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode);
         }
-
     },
     bot_gethelp: function (f, currentcityid) {
         var t = Tabs.build;
         var city = t.getCityNameById(currentcityid);
-      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-      params.bid = f;
-      params.ctrl = 'AskForHelp';
-      params.action = 'getHelpData';
-      new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
-          method: "post",
-          parameters: params,
-          onSuccess: function (rslt) {
-            unsafeWindow.handleHelpCallback (rslt.data);
-          },
-          onFailure: function (rslt) {
-            t.bot_gethelp (f, currentcityid);
-            return;
-          },
-          });
-
-      var a = Seed.queue_con["city" + currentcityid];
-      var e = 0;
-      var d = 0;
-      for (var c = 0; c < a.length; c++) {
-        if (parseInt(a[c][2]) == parseInt(f)) {
-          e = parseInt(a[c][0]);
-          d = parseInt(a[c][1]);
-          break
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.bid = f;
+        params.ctrl = 'AskForHelp';
+        params.action = 'getHelpData';
+        new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function (rslt) {
+                unsafeWindow.handleHelpCallback(rslt.data);
+            },
+            onFailure: function (rslt) {
+                t.bot_gethelp(f, currentcityid);
+                return;
+            },
+        });
+        var a = Seed.queue_con["city" + currentcityid];
+        var e = 0;
+        var d = 0;
+        for (var c = 0; c < a.length; c++) {
+            if (parseInt(a[c][2]) == parseInt(f)) {
+                e = parseInt(a[c][0]);
+                d = parseInt(a[c][1]);
+                break
+            }
         }
-      }
-      var b = new Array();
-      b.push(["REPLACE_LeVeLbUiLdInG", d]);
-      b.push(["REPLACE_BuIlDiNgNaMe", unsafeWindow.buildingcost["bdg" + e][0]]);
-      b.push(["REPLACE_LeVeLiD", d]);
-      b.push(["REPLACE_AsSeTiD", f]);
-      var g = function(h, i) {
-        unsafeWindow.continuation_95(h, i);
-        if (!h) {
-          var j = d > 1 ? unsafeWindow.cm.SpeedUpType.upgrade : unsafeWindow.cm.SpeedUpType.build;
-          unsafeWindow.cm.ClientSideCookieManager.setCookie(j, false)
-        }
-      };
-      unsafeWindow.common_postToProfile("95", unsafeWindow.Object.cloneFeed(unsafeWindow.template_data_95), unsafeWindow.Object.cloneFeed(unsafeWindow.actionlink_data_95), g, b)
+        var b = new Array();
+        b.push(["REPLACE_LeVeLbUiLdInG", d]);
+        b.push(["REPLACE_BuIlDiNgNaMe", unsafeWindow.buildingcost["bdg" + e][0]]);
+        b.push(["REPLACE_LeVeLiD", d]);
+        b.push(["REPLACE_AsSeTiD", f]);
+        var g = function (h, i) {
+            unsafeWindow.continuation_95(h, i);
+            if (!h) {
+                var j = d > 1 ? unsafeWindow.cm.SpeedUpType.upgrade : unsafeWindow.cm.SpeedUpType.build;
+                unsafeWindow.cm.ClientSideCookieManager.setCookie(j, false)
+            }
+        };
+        unsafeWindow.common_postToProfile("95", unsafeWindow.Object.cloneFeed(unsafeWindow.template_data_95), unsafeWindow.Object.cloneFeed(unsafeWindow.actionlink_data_95), g, b)
     },
     addQueueItem: function (cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode) {
-    var t = Tabs.build;
+        var t = Tabs.build;
         var lbQ = t["bQ_" + cityId];
         lbQ.push({
-            cityId:             cityId,
-            buildingPos:        buildingPos,
-            buildingType:         buildingType,
-            buildingId:         buildingId,
-            buildingTime:         buildingTime,
-            buildingLevel:         buildingLevel,
-            buildingAttempts:     buildingAttempts,
-            buildingMult:         buildingMult,
-            buildingMode:         buildingMode
+            cityId: cityId,
+            buildingPos: buildingPos,
+            buildingType: buildingType,
+            buildingId: buildingId,
+            buildingTime: buildingTime,
+            buildingLevel: buildingLevel,
+            buildingAttempts: buildingAttempts,
+            buildingMult: buildingMult,
+            buildingMode: buildingMode
         });
         t.modifyTotalTime(cityId, 'increase', buildingTime); //adjust total Time
     },
-    modalmessage: function(message){
+    modalmessage: function (message) {
         var t = Tabs.build;
         var timeout = 10000;
-        var content = translate("autoclose after 10sec")+"...<br><br>"
+        var content = translate("autoclose after 10sec") + "...<br><br>"
         content += message;
         unsafeWindow.Modal.showAlert(content);
         window.setTimeout('unsafeWindow.Modal.hideModal();', timeout);
@@ -4594,11 +4654,11 @@ Tabs.build = {
         element.innerHTML = currentCount;
         document.getElementById('pbbuildtotal_' + cityId).innerHTML = timestr(t['totalTime_' + cityId]);
     },
-    hide: function(){
+    hide: function () {
         var t = Tabs.build;
         //unsafeWindow.buildslot = t.koc_buildslot; // restore original koc function
     },
-    onUnload: function(){
+    onUnload: function () {
         var t = Tabs.build;
         for (var i = 0; i < Cities.cities.length; i++) {
             //t["bQ_" + Cities.cities[i].id] = []; //clean up if needed
@@ -4606,15 +4666,14 @@ Tabs.build = {
         }
         t.saveBuildStates();
     },
-    _addTab: function(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode){
+    _addTab: function (queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode) {
         var t = Tabs.build;
         var row = document.getElementById('pbCityQueueContent').insertRow(0);
         row.vAlign = 'top';
         row.insertCell(0).innerHTML = queueId;
         if (buildingMode == "destruct") {
             row.insertCell(1).innerHTML = '<img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/bonus_att.png">';
-        }
-        else {
+        } else {
             row.insertCell(1).innerHTML = '<img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/bonus_prod.png">';
         }
         row.insertCell(2).innerHTML = unsafeWindow.buildingcost['bdg' + buildingType][0];
@@ -4626,42 +4685,49 @@ Tabs.build = {
         }
         row.insertCell(5).innerHTML = buildingAttempts;
         row.insertCell(6).innerHTML = '<a class="button20" id="queuecancel_' + queueId + '"><span>Cancel</span></a>';
-        document.getElementById('queuecancel_' + queueId).addEventListener('click', function(){
+        document.getElementById('queuecancel_' + queueId).addEventListener('click', function () {
             t.cancelQueueElement(queueId, cityId, buildingTime, true);
         }, false);
     },
-    cancelQueueElement: function(queueId, cityId, buildingTime, showQueue){
+    cancelQueueElement: function (queueId, cityId, buildingTime, showQueue) {
         var t = Tabs.build;
         var queueId = parseInt(queueId);
         t["bQ_" + cityId].splice(queueId, 1);
         t.modifyTotalTime(cityId, 'decrease', buildingTime); //adjust total Time    
-        
         if (showQueue == true) {
             t.showBuildQueue(cityId, false);
         }
     },
-    showBuildQueue: function(cityId, focus){
+    showBuildQueue: function (cityId, focus) {
         var t = Tabs.build;
-        clearTimeout (t.timer);
+        clearTimeout(t.timer);
         var popBuildQueue = null;
         var cityName = t.getCityNameById(cityId);
         if (t.popBuildQueue == null) {
-            t.popBuildQueue = new pbPopup('pbbuild_' + cityId, 0, 0, 350, 500, true, function() {clearTimeout (t.timer);});
+            t.popBuildQueue = new pbPopup('pbbuild_' + cityId, 0, 0, 350, 500, true, function () {
+                clearTimeout(t.timer);
+            });
         }
-        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityQueueContent">';       
+        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityQueueContent">';
         t.popBuildQueue.getMainDiv().innerHTML = '</table></div>' + m;
-        t.popBuildQueue.getTopDiv().innerHTML = '<TD width="200px"><B>'+translate("Build Queue of")+' ' + cityName + '</b></td><TD><INPUT id=pbOptimizeByTime type=submit value="'+translate("Optimize by Time")+'"></td>';
+        t.popBuildQueue.getTopDiv().innerHTML = '<TD width="200px"><B>' + translate("Build Queue of") + ' ' + cityName + '</b></td><TD><INPUT id=pbOptimizeByTime type=submit value="' + translate("Optimize by Time") + '"></td>';
         t.paintBuildQueue(cityId);
-        if (focus)
-          t.popBuildQueue.show(true);
-        document.getElementById('pbOptimizeByTime').addEventListener('click', function(){t.clearBuildQueue();t.paintBuildQueue(cityId, true);}, false);
-        t.timer = setTimeout (function() {t.showBuildQueue(cityId, false)}, 45000);  
+        if (focus) t.popBuildQueue.show(true);
+        document.getElementById('pbOptimizeByTime').addEventListener('click', function () {
+            t.clearBuildQueue();
+            t.paintBuildQueue(cityId, true);
+        }, false);
+        t.timer = setTimeout(function () {
+            t.showBuildQueue(cityId, false)
+        }, 45000);
     },
-    paintBuildQueue: function(cityId, optimize){
+    paintBuildQueue: function (cityId, optimize) {
         var t = Tabs.build;
         var lbQ = t["bQ_" + cityId];
         if (optimize == true) {
-            lbQ.sort(function(a,b){return a.buildingTime - b.buildingTime});
+            lbQ.sort(function (a, b) {
+                return a.buildingTime - b.buildingTime
+            });
         }
         t["bQ_" + cityId] = lbQ;
         for (var i = 0; i < lbQ.length; i++) {
@@ -4669,68 +4735,62 @@ Tabs.build = {
             t._addTab(queueId, lbQ[i].cityId, lbQ[i].buildingType, lbQ[i].buildingTime, lbQ[i].buildingLevel, lbQ[i].buildingAttempts, lbQ[i].buildingMode);
         }
     },
-    clearBuildQueue: function() {
+    clearBuildQueue: function () {
         var t = Tabs.build;
         var table = document.getElementById('pbCityQueueContent');
         var rows = table.rows;
-        while(rows.length)
-            table.deleteRow(rows.length-1);
+        while (rows.length)
+        table.deleteRow(rows.length - 1);
     },
-    getCurrentCityId: function(){ // TODO maybe move as global function to the core application
-        if (!unsafeWindow.currentcityid)
-            return null;
+    getCurrentCityId: function () { // TODO maybe move as global function to the core application
+        if (!unsafeWindow.currentcityid) return null;
         return unsafeWindow.currentcityid;
     },
-    saveBuildStates: function(){
+    saveBuildStates: function () {
         var t = Tabs.build;
         var serverID = getServerId();
         GM_setValue('buildStates_' + serverID, JSON2.stringify(t.buildStates));
     },
-    readBuildStates: function(){
+    readBuildStates: function () {
         var t = Tabs.build;
         var serverID = getServerId();
         s = GM_getValue('buildStates_' + serverID);
         if (s != null) {
             states = JSON2.parse(s);
             for (k in states)
-                t.buildStates[k] = states[k];
+            t.buildStates[k] = states[k];
         }
     },
-    toggleStateRunning: function(obj){
+    toggleStateRunning: function (obj) {
         var t = Tabs.build;
         if (t.buildStates.running == true) {
             t.buildStates.running = false;
             t.saveBuildStates();
             obj.value = translate("Auto Build = OFF");
-        }
-        else {
+        } else {
             t.buildStates.running = true;
             t.saveBuildStates();
             obj.value = translate("Auto Build = ON");
         }
     },
-    toggleStateMode: function(obj){
+    toggleStateMode: function (obj) {
         var t = Tabs.build;
         if (obj.value == translate('Build Mode = OFF')) {
             unsafeWindow.buildslot = t.bot_buildslot; // overwrite original koc function
             var guardian = document.getElementById('citymap').getElementsByClassName('bldg_guardian_0');
-            if(guardian.length >0)
-                guardian[0].addEventListener('click', t.bot_buildguardian, false);
+            if (guardian.length > 0) guardian[0].addEventListener('click', t.bot_buildguardian, false);
             obj.value = translate("Build Mode = ON");
-        }
-        else {
+        } else {
             unsafeWindow.buildslot = t.koc_buildslot; // restore original koc function
             var guardian = document.getElementById('citymap').getElementsByClassName('bldg_guardian_0');
-            if(guardian.length >0)
-                guardian[0].removeEventListener('click', t.bot_buildguardian, false);
+            if (guardian.length > 0) guardian[0].removeEventListener('click', t.bot_buildguardian, false);
             obj.value = translate("Build Mode = OFF");
         }
     },
     getCityNameById: function (cityId) {
-    return Cities.byID[cityId].name;      
+        return Cities.byID[cityId].name;
     },
 }
-
 
 /********************************* Search Tab *************************************/
 
