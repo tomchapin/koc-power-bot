@@ -3996,12 +3996,29 @@ Tabs.build = {
         m += '<DIV id=pbBuildDivF class=pbStat>' + translate("QUICK ADD") + '</div>'
         m += '<TABLE id=pbbuildtools width=100% height=0% class=pbTab><TR>';
         m += '<DIV id=cityBuild></div>';
+
         m += '<TD>Queue ALL buildings to level &nbsp;<SELECT id=addAllTo>'
         for (a = 2; a <= 9; a++) {
             m += '<OPTION value=toLvl' + a + '>' + a + '</option>';
         }
         m += '</select>';
         m += '<INPUT id=doAllBuildsTo type=submit value=ADD></td>';
+
+        m += '<TD>Queue ALL cottages to level &nbsp;<SELECT id=addCottagesTo>'
+        for (a = 2; a <= 9; a++) {
+            m += '<OPTION value=CotToLvl' + a + '>' + a + '</option>';
+        }
+        m += '</select>';
+        m += '<INPUT id=doAllCotsTo type=submit value=ADD></td>';
+        m += '</tr><TR>';
+
+        m += '<TD>Queue ALL barracks to level &nbsp;&nbsp;&nbsp;<SELECT id=addBarracksTo>'
+        for (a = 2; a <= 9; a++) {
+            m += '<OPTION value=BarToLvl' + a + '>' + a + '</option>';
+        }
+        m += '</select>';
+        m += '<INPUT id=doAllBarracksTo type=submit value=ADD></td>';
+
 
         m += '</table>';
         m += '<DIV id=pbBuildDivQ class=pbStat>' + translate("BUILD QUEUES") + '</div><TABLE id=pbbuildqueues width=100% height=0% class=pbentry><TR>';
@@ -4071,8 +4088,23 @@ Tabs.build = {
             t.saveBuildStates();
         }, false);
         document.getElementById('doAllBuildsTo').addEventListener('click', function () {
-            t.toolsMode = 'allBuildsTo'
-            t.allBuildsTo();
+        	toLevel = document.getElementById('addAllTo').value.substr(5);
+            t.allBuildsTo(toLevel);
+            toLevel = null;
+        });
+
+        document.getElementById('doAllCotsTo').addEventListener('click', function () {
+        	toLevel = document.getElementById('addCottagesTo').value.substr(8);
+        	logit(toLevel)
+            t.allCotsTo(toLevel);
+            toLevel = null;
+        });
+
+        document.getElementById('doAllBarracksTo').addEventListener('click', function () {
+        	toLevel = document.getElementById('addBarracksTo').value.substr(8);
+        	logit(toLevel)
+            t.allBarracksTo(toLevel);
+            toLevel = null;
         });
         window.addEventListener('unload', t.onUnload, false);
 
@@ -4098,12 +4130,10 @@ Tabs.build = {
     	var t = Tabs.build;
 		t.currentCity = city.id
 	},
-    allBuildsTo: function () {
-        //logit(document.getElementById('addAllTo').value.substr(5));
+    allBuildsTo: function (toLevel) {
         var t = Tabs.build;
         var cityId = t.currentCity
         var builds = Seed.buildings
-        var toLevel = document.getElementById('addAllTo').value.substr(5)
         //alert('1'+cityId)
 
             for (pos in builds['city'+cityId]) {
@@ -4121,22 +4151,64 @@ Tabs.build = {
                         } else {
                             var buildingId = "unknown";
                         }
-                        t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel) //
+                        t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel) //
                         //logit(city.substr(4) + ' ' + builds[city][pos][0] + ' ' + builds[city][pos][1] + ' ' + builds[city][pos][2] + ' ' + builds[city][pos][3]);
                     }
                 }
             }
-        t.toolsMode = null
+    },
+    allCotsTo: function (toLevel) {
+        var t = Tabs.build;
+        var cityId = t.currentCity
+        var builds = Seed.buildings
+        for (pos in builds['city'+cityId]) {
+            if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][0] == 5 && builds['city'+cityId][pos][1] != 0) {
+                var item = builds['city'+cityId][pos]
+                if (item[1] < 9) {
+                    var buildingType = item[0];
+                    var currentLevel = item[1];
+                    var position = item[2];
+                    if (item[3] != undefined) {
+                        var buildingId = item[3];
+                    } else {
+                        var buildingId = "unknown";
+                    }
+                    t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel) //
+                        //logit(city.substr(4) + ' ' + builds[city][pos][0] + ' ' + builds[city][pos][1] + ' ' + builds[city][pos][2] + ' ' + builds[city][pos][3]);
+                }
+            }
+        }
+    },
+    allBarracksTo: function (toLevel) {
+        var t = Tabs.build;
+        var cityId = t.currentCity
+        var builds = Seed.buildings
+        for (pos in builds['city'+cityId]) {
+            if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][0] == 13 && builds['city'+cityId][pos][1] != 0) {
+                var item = builds['city'+cityId][pos]
+                if (item[1] < 9) {
+                    var buildingType = item[0];
+                    var currentLevel = item[1];
+                    var position = item[2];
+                    if (item[3] != undefined) {
+                        var buildingId = item[3];
+                    } else {
+                        var buildingId = "unknown";
+                    }
+                    t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel) //
+                        //logit(city.substr(4) + ' ' + builds[city][pos][0] + ' ' + builds[city][pos][1] + ' ' + builds[city][pos][2] + ' ' + builds[city][pos][3]);
+                }
+            }
+        }
     },
     setBuildMode: function (type) {
         var t = Tabs.build;
         t.currentBuildMode = type;
     },
-    doExtraTools: function (cityId, pos, buildingId, buildingType, currentLevel) { //
+    doExtraTools: function (cityId, pos, buildingId, buildingType, currentLevel,toLevel) { //
         //logit(cityId+ ' ' +pos + ' ' + buildingId);	//, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode
         var startLevel = currentLevel
         var t = Tabs.build;
-	    var toLevel = document.getElementById('addAllTo').value.substr(5);
         for (k = startLevel; k < toLevel; k++) {
             var buildingMode = "build";
             var cityId = parseInt(cityId);
