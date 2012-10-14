@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121013d
+// @version        20121014a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121013d';
+var Version = '20121014a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -104,7 +104,7 @@ var Options = {
   pbChatOnRight: false,
   pbWideMap    : false,
   pbFoodAlert  : false,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRset2:1, alertTRsetwaittime:60,RecentActivity:false},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -760,7 +760,7 @@ var FoodAlerts = {
 /*********************************  Farm Tab ***********************************/
 
 Tabs.farm = {
-  tabLabel: 'Auto Farm',
+  tabLabel: 'Farm',
   tabOrder : 612,
   myDiv : null,
   MapAjax : new CMapAjax(),
@@ -2890,7 +2890,7 @@ show : function (){
 
 /****************************  Tower Tab  ******************************/
 Tabs.tower = {
-  tabOrder: 10,
+  tabOrder: 1,
   tabLabel: 'Tower',
   myDiv: null,
   generateIncomingFunc : null,
@@ -3083,7 +3083,8 @@ Tabs.tower = {
             </table></td></tr>\
         <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>'+translate("Stop raids on impending")+'.</td></tr>\
     <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=1 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending")+'</td></tr>\
-        <TR><TD><BR></td></tr>\
+    <TR><TD align=right><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset2 type=text size=2 maxlength=1 value="'+ Options.alertConfig.alertTRset2 +'"> '+translate("after")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>\
+       <TR><TD><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
             <TR><TD align=right>'+translate("Sound file")+': &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=40 maxlength=1000 value="'+ Options.alertSound.soundUrl +'" \>\
@@ -3127,6 +3128,9 @@ Tabs.tower = {
     document.getElementById('pbalertraid').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTR').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRset').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertTR2').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertTRset2').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertTRsetmin').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
         t.loadUrl (Options.alertSound.soundUrl);
@@ -3225,8 +3229,13 @@ Tabs.tower = {
     Options.alertConfig.defend=document.getElementById('pbalertDefend').checked;
     Options.alertConfig.raid=document.getElementById('pbalertraid').checked;
     Options.alertConfig.alertTR=document.getElementById('pbalertTR').checked;
+    Options.alertConfig.alertTR2=document.getElementById('pbalertTR2').checked;
     var trset = parseInt(document.getElementById('pbalertTRset').value);
     Options.alertConfig.alertTRset = trset;
+    var trset2 = parseInt(document.getElementById('pbalertTRset2').value);
+    Options.alertConfig.alertTRset2 = trset2;
+    var trsetwait = parseInt(document.getElementById('pbalertTRsetmin').value);
+    Options.alertConfig.alertTRsetwaittime = trsetwait;
     var mt = parseInt(document.getElementById('pbalertTroops').value);
     if (mt<1 || mt>120000){
       document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
@@ -3294,6 +3303,22 @@ Tabs.tower = {
         }
       }
     }
+    if(Options.alertConfig.RecentActivity) {
+		if(Options.alertConfig.alertTR2) {
+			if(!incomming) {
+				var switchtime = parseInt(Options.alertConfig.lastAttack)+Options.alertConfig.alertTRsetwaittime*60;
+				if (switchtime < now) {
+					var currentset = Seed.throne.activeSlot
+					if (Options.alertConfig.alertTRset2 != currentset){
+						var preset = Options.alertConfig.alertTRset2
+						Tabs.Throne.doPreset(preset);
+					}
+					Options.alertConfig.RecentActivity = false;
+					saveOptions();
+				}
+			}
+		}
+	}
 	if (incomming && !document.getElementById("towersirentab") && Options.alertSound.enabled){
 		AddSubTabLink('!Silence Alarm!',t.stopSoundAlerts, 'towersirentab');
 		document.getElementById('towersirentab').innerHTML = '<span style="color: red">Silence Alarm!</span>';
@@ -3389,14 +3414,18 @@ Tabs.tower = {
   towerPreset : function (m){
     var t = Tabs.tower;
     if (Options.alertConfig.alertTR){
-    var currentset = Seed.throne.activeSlot
-    if (Options.alertConfig.alertTRset != currentset){
+		var currentset = Seed.throne.activeSlot
+		if (Options.alertConfig.alertTRset != currentset){
             var preset = Options.alertConfig.alertTRset
             Tabs.Throne.doPreset(preset);
-    }
+		}
     }  
+	if(Options.alertConfig.alertTR2) {
+		Options.alertConfig.RecentActivity = true;
+		saveOptions();
+	}
     t.postToChat (m);
-  },    
+  },   
   
   sendalert : function (m){
     var t = Tabs.tower;
@@ -9403,7 +9432,7 @@ cm.MARCH_TYPES = {
 /*************************** Auto Craft Tab *************************************/
 Tabs.AutoCraft = {
     tabOrder: 20, //CHECKTHIS ?
-    tabLabel: "Auto Craft",
+    tabLabel: "Craft",
     myDiv: null,
     timer: null,
     craftIntervall  : TrainOptions.CraftIntervallMin,
@@ -12586,7 +12615,7 @@ Tabs.Reinforce = {
 /************************  AutoTrain Tab ************************/
 Tabs.AutoTrain = {
   tabOrder: 120,
-  tabLabel: 'AutoTrain',
+  tabLabel: 'Train',
   myDiv: null,
   city:0,
   gamble : {"1":{"min":"5","max":"15","cost":"2"},"2":{"min":"10","max":"25","cost":"4"}},
@@ -20450,7 +20479,7 @@ Tabs.popcontrol = {
 /***** Ascension Tab ******/
 Tabs.ascension = {
     tabLabel: 'Ascension',
-    tabOrder: 1,
+    tabOrder: 300,
     myDiv: null,
     init: function (div) {
         var t = Tabs.ascension;
