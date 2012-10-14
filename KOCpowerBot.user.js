@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121013c
+// @version        20121013d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121013c';
+var Version = '20121013d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3294,7 +3294,7 @@ Tabs.tower = {
         }
       }
     }
-	if (incomming && !document.getElementById("towersirentab")){
+	if (incomming && !document.getElementById("towersirentab") && Options.alertSound.enabled){
 		AddSubTabLink('!Silence Alarm!',t.stopSoundAlerts, 'towersirentab');
 		document.getElementById('towersirentab').innerHTML = '<span style="color: red">Silence Alarm!</span>';
 	}
