@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121013a
+// @version        20121013b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121013a';
+var Version = '20121013b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7765,6 +7765,9 @@ cm.MARCH_TYPES = {
     setInterval(t.lookup, 2500);
     setInterval(t.sendreport, 1*60*1000);
   
+    AddSubTabLink('Stop Raids', t.StopAllRaids, 'pbraidtab');
+    AddSubTabLink('Resume Raids', t.ResumeAllRaids, 'pbraidtabRes');
+    AddSubTabLink('Delete Raids', t.DeleteAllRaids, 'pbraidtabDel');
     
     
     var m = '<DIV class=pbStat>RAID FUNCTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
@@ -7815,6 +7818,18 @@ cm.MARCH_TYPES = {
                    }
            }
            //logit(t.stopcount);    
+           if (t.resuming == false && t.stopping == false && t.deleting == false && t.activecount != 0)
+            document.getElementById('pbraidtab').innerHTML = '<span style="color: #ff6">Stop Raids ('+ t.activecount + ')</span>'
+           else if (t.resuming == false && t.stopping == false && t.deleting == false)
+            document.getElementById('pbraidtab').innerHTML = '<span style="color: #CCC">Stop Raids ('+ t.activecount + ')</span>'
+           if (t.resuming == false && t.resuming == false && t.deleting == false && t.stopcount !=0)
+            document.getElementById('pbraidtabRes').innerHTML = '<span style="color: #ff6">Resume Raids ('+ t.stopcount + ')</span>'
+           else if (t.resuming == false && t.stopping == false && t.deleting == false)
+            document.getElementById('pbraidtabRes').innerHTML = '<span style="color: #CCC">Resume Raids ('+ t.stopcount + ')</span>'
+           if (t.resuming == false && t.stopping == false && t.deleting == false && t.stopcount !=0)
+            document.getElementById('pbraidtabDel').innerHTML = '<span style="color: #ff6">Delete Raids ('+ t.stopcount + ')</span>'
+           else if (t.resuming == false && t.stopping == false && t.deleting == false)
+            document.getElementById('pbraidtabDel').innerHTML = '<span style="color: #CCC">Delete Raids ('+ t.stopcount + ')</span>'
   },
    
        
