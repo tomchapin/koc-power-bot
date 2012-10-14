@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121013b
+// @version        20121013c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121013b';
+var Version = '20121013c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3284,9 +3284,7 @@ Tabs.tower = {
         var m = Seed.queue_atkinc[k];
         if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
           if (m.departureTime > Options.alertConfig.lastAttack){
-            Options.alertConfig.lastAttack = m.departureTime;  
-		AddSubTabLink('!Silence Alarm!',t.stopSoundAlerts, 'towersirentab');
-		document.getElementById('towersirentab').innerHTML = '<span style="color: red">Silence Alarm!</span>'
+            Options.alertConfig.lastAttack = m.departureTime;
             t.newIncoming (m);
           }
           incomming = true;
@@ -3296,6 +3294,10 @@ Tabs.tower = {
         }
       }
     }
+	if (incomming && !document.getElementById("towersirentab")){
+		AddSubTabLink('!Silence Alarm!',t.stopSoundAlerts, 'towersirentab');
+		document.getElementById('towersirentab').innerHTML = '<span style="color: red">Silence Alarm!</span>';
+	}
     if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime)){
 	var element = document.getElementById('towersirentab');
   	element.parentNode.removeChild(element);
