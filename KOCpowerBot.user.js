@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121014a';
+var Version = '20121014b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3962,6 +3962,11 @@ Tabs.tower = {
      <span class="leveltag" style="left:60px;">10</span>
      more todos within the code
  */
+var quickAddBuildings = {
+	all:"All",
+	barracks:"Barracks",
+	cottages:"Cottages",
+}
 var buildTabTypes = {
     type1: "Farm",
     type2: "Sawmill",
@@ -3994,6 +3999,7 @@ Tabs.build = {
     loaded_bQ: [],
     lbQ: [],
     toolsMode: null,
+    buildingSelect:'all',
 
     init: function (div) {
         var t = Tabs.build;
@@ -4028,27 +4034,21 @@ Tabs.build = {
         m += '<TABLE id=pbbuildtools width=100% height=0% class=pbTab><TR>';
         m += '<DIV id=cityBuild></div>';
 
-        m += '<TD>Queue ALL buildings to level &nbsp;<SELECT id=addAllTo>'
+
+
+        m += '<TD>Queue ALL<SELECT id=whichBuilding>';
+        	for (k in quickAddBuildings){
+        		m += '<OPTION value='+k+'>'+quickAddBuildings[k]+'</option>';
+        	}
+        m += '</select>';
+
+        m += ' to level &nbsp;<SELECT id=addAllTo>'
         for (a = 2; a <= 9; a++) {
             m += '<OPTION value=toLvl' + a + '>' + a + '</option>';
         }
         m += '</select>';
-        m += '<INPUT id=doAllBuildsTo type=submit value=ADD></td>';
+        m += '<INPUT id=doXbuildingToX type=submit value=ADD></td>';
 
-        m += '<TD>Queue ALL cottages to level &nbsp;<SELECT id=addCottagesTo>'
-        for (a = 2; a <= 9; a++) {
-            m += '<OPTION value=CotToLvl' + a + '>' + a + '</option>';
-        }
-        m += '</select>';
-        m += '<INPUT id=doAllCotsTo type=submit value=ADD></td>';
-        m += '</tr><TR>';
-
-        m += '<TD>Queue ALL barracks to level &nbsp;&nbsp;&nbsp;<SELECT id=addBarracksTo>'
-        for (a = 2; a <= 9; a++) {
-            m += '<OPTION value=BarToLvl' + a + '>' + a + '</option>';
-        }
-        m += '</select>';
-        m += '<INPUT id=doAllBarracksTo type=submit value=ADD></td>';
 
 
         m += '</table>';
@@ -4118,23 +4118,20 @@ Tabs.build = {
             t.buildStates.help = (document.getElementById('pbHelpRequest').checked);
             t.saveBuildStates();
         }, false);
-        document.getElementById('doAllBuildsTo').addEventListener('click', function () {
+        document.getElementById('whichBuilding').addEventListener('change',function(){
+        	t.buildingSelect = document.getElementById('whichBuilding').value
+        });
+        document.getElementById('doXbuildingToX').addEventListener('click', function () {
         	toLevel = document.getElementById('addAllTo').value.substr(5);
-            t.allBuildsTo(toLevel);
-            toLevel = null;
-        });
-
-        document.getElementById('doAllCotsTo').addEventListener('click', function () {
-        	toLevel = document.getElementById('addCottagesTo').value.substr(8);
-        	logit(toLevel)
-            t.allCotsTo(toLevel);
-            toLevel = null;
-        });
-
-        document.getElementById('doAllBarracksTo').addEventListener('click', function () {
-        	toLevel = document.getElementById('addBarracksTo').value.substr(8);
-        	logit(toLevel)
-            t.allBarracksTo(toLevel);
+            if (t.buildingSelect == 'all'){
+            	t.allBuildsTo(toLevel);
+            }
+            if (t.buildingSelect == 'barracks'){
+            	t.allBarracksTo(toLevel);
+            }
+            if (t.buildingSelect == 'cottages'){
+            	t.allCotsTo(toLevel);
+            }
             toLevel = null;
         });
         window.addEventListener('unload', t.onUnload, false);
