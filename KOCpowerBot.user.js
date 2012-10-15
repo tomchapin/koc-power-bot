@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121014d
+// @version        20121014e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121014d';
+var Version = '20121014e';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1836,7 +1836,6 @@ setSalvageFAV :function (what){
 
 setSalvageItem :function (what){
 	var t = Tabs.Throne;  
-	logit('is defined?'+what+ 'how about '+unsafeWindow.kocThroneItems[what]);
 	if(!unsafeWindow.kocThroneItems[what]) {
 			t.FillEquipCheckboxes();
 		alert('Item has already been deleted');
@@ -2905,6 +2904,8 @@ doSalvage : function(){
                     var msg = (y.name + " (" + z[y.effects["slot1"].id]["2"] + "/"+ z[y.effects["slot2"].id]["2"]+ "/"+ z[y.effects["slot3"].id]["2"]+ "/"+ z[y.effects["slot4"].id]["2"]+ "/"+ z[y.effects["slot5"].id]["2"] +")");
                     t.addToSalvageLog(msg,rslt.aetherstones);
                     unsafeWindow.kocThroneItems[params.itemId].salvage();
+                    if(t.curTabName == 'EQ')
+						t.FillEquipCheckboxes();
                 }
                 else {
                     t.addToSalvageLog("Salvage Failed :(","");
