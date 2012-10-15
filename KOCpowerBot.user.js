@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121014c
+// @version        20121014d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121014c';
+var Version = '20121014d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2382,6 +2382,7 @@ PaintSalvageHistory : function() {
                 return;
         }
         if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == false && Seed.queue_throne.end == undefined){
+			if(document.getElementById('ShowStatus'))
                   document.getElementById('ShowStatus').innerHTML = "Doing " + ThroneOptions.Items["0"]["action"] + "...";
             if (ThroneOptions.Items["0"]["action"] == "Upgrade") setTimeout(t.doUpgrade,5000);
             if (ThroneOptions.Items["0"]["action"] == "Enhance") setTimeout(t.doEnhance,5000);
@@ -2528,8 +2529,10 @@ PaintSalvageHistory : function() {
                        y.name = y.createName();
                        ThroneOptions.Tries++;
                        saveThroneOptions();
-                       document.getElementById('ShowStatus').innerHTML = 'Upgrade failed :( <br />Item: ' + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
-                       document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
+                       if(document.getElementById('ShowStatus'))
+							document.getElementById('ShowStatus').innerHTML = 'Upgrade failed :( <br />Item: ' + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
+						if(document.getElementById('ShowTries'))
+							document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
                     }
                     unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
                 
