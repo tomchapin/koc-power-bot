@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121014a
+// @version        20121014c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121014b';
+var Version = '20121014c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1642,6 +1642,7 @@ Tabs.Throne = {
     var t = Tabs.Throne;
     t.cont = div;
     unsafeWindow.setFAV = t.setSalvageFAV;
+    unsafeWindow.Savlage = t.setSalvageItem;
     
     var a = JSON2.parse(GM_getValue ('ThroneHistory_'+getServerId(), '[]'));
     if (matTypeof(a) == 'array') t.log = a;
@@ -1831,6 +1832,42 @@ setSalvageFAV :function (what){
 					else document.getElementById('SalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAADAFBMVEX////4+Pj7+/v39/f5+fn6+vr29vby8vL09PTz8/P+/v78/Pzd3d3Nzc3v7++tra3r6+v9/f3n5+fs7Ozt7e24uLjQ0NDx8fHV1dXo6OjJycnl5eXc3NyoqKje3t7Hx8fS0tK+vr66urrZ2dnw8PDMzMzq6urFxcW5ubnk5OTj4+Pi4uLR0dGwsLDBwcG1tbXb29vLy8vu7u7Dw8P19fXKysrY2Ni3t7ekpKSrq6u0tLTh4eHm5ubW1tanp6eenp7p6emsrKyurq7a2trCwsLPz8/AwMC9vb28vLzf39+zs7PT09PX19f///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUISnwAAABI0lEQVR4nG2Rh26DMBCGzzmwCXuHBLL33t1tujfv/zqFhjhRyydZ8t0n6+6XIeZEXXIsYuA3R+1sc8UWQC3lCLcGQJY5okIBoM3+CT15AIDaH7Exb0kqICxLB+FMvtof9kqEPcXe9VPg1+QY5r2sJ8tyJgt65TuGxzIqaduyFMWyUqcIrK7F0BzYlAgFjkBIyb80Y6Bv5zeUiKf9F2OcboWv8+GGiBmIumaM9usKM+8ehQzKGsbwkEPwIiQZaHrhMWBfJYg0ARHd1knylk2o9AsltG+dCFcqJrDkSOibXMjNFWP6aLJcOIyxoMGFXmGdUDM+B9WZ6rLonYvF89ifTrsl8cyrrtXA4KK8qz7UnbQiwdXdRZMLRavbh/+RGuvj8Fx+AKn1YdcNFlXFAAAAAElFTkSuQmCC" />';
 	}
 	t.saveSalvageOptions();
+},
+
+setSalvageItem :function (what){
+	var t = Tabs.Throne;  
+	var answer = confirm ("Are you sure you want to delete: " + unsafeWindow.kocThroneItems[what].name);
+	if (answer) {
+		var cityid = 0;
+		for (var k in Cities.byID) {
+				if (Seed.resources["city"+k]["rec5"][0] < 1000000)
+				{
+				   cityid = k;
+				   break;
+				}
+		}
+		if (cityid == 0) cityid = Seed.cities[0][0];
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+		params.action = 'salvage';
+		params.itemId = what;
+		params.cityId = cityid;
+	      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+				method: "post",
+				parameters: params,
+				loading: true,
+				onSuccess: function (transport) {
+					var rslt = eval("(" + transport.responseText + ")");
+					if(rslt.ok) {
+						unsafeWindow.kocThroneItems[params.itemId].salvage();
+						t.FillEquipCheckboxes();
+					}
+				},
+				onFailure: function () {
+						return;
+				},
+			});
+	}
 },
 Upgrade_Enhance :function (){
     var t = Tabs.Throne;  
