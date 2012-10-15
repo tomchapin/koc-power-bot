@@ -1836,6 +1836,12 @@ setSalvageFAV :function (what){
 
 setSalvageItem :function (what){
 	var t = Tabs.Throne;  
+	logit('is defined?'+what+ 'how about '+unsafeWindow.kocThroneItems[what]);
+	if(!unsafeWindow.kocThroneItems[what]) {
+			t.FillEquipCheckboxes();
+		alert('Item has already been deleted');
+			return;
+	}
 	var answer = confirm ("Are you sure you want to delete: " + unsafeWindow.kocThroneItems[what].name);
 	if (answer) {
 		var cityid = 0;
@@ -2347,12 +2353,14 @@ PaintSalvageHistory : function() {
     
     PaintQueue : function (){
         var t= Tabs.Throne;
+        if(document.getElementById('ShowQueueDiv')) {
         document.getElementById('ShowQueueDiv').innerHTML = '<TABLE id=ShowQueue class=pbStat align="center" width=90%></table>';
         for (k=(ThroneOptions.Items.length-1);k>=0;k--){
             if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]) == 'object') t._addTab(k,ThroneOptions.Items[k]["name"],ThroneOptions.Items[k]["qualityfrom"],ThroneOptions.Items[k]["qualityto"],ThroneOptions.Items[k]["levelfrom"],ThroneOptions.Items[k]["levelto"],ThroneOptions.Items[k]["action"],ThroneOptions.Items[k]["active"],ThroneOptions.Items[k]["cost"]);
             else ThroneOptions.Items.splice (k,1);
         }
         t._addTabHeader();
+	}
   },
   
   doAction : function (){
@@ -2737,12 +2745,14 @@ paintHoover : function (){
 
 paintStones : function (){
     var t = Tabs.Throne;
+    if(document.getElementById('ShowStones')) {
     m="<TABLE width=90% height=0% class=pbTab><TR><TD>Aetherstones: </td>";
     for (i=0;i<Seed.cities.length;i++) m+='<TD>' + Seed.cities[i]["1"] + '</td>';
     m+="</tr><TR><TD></td>"
     for (i=0;i<Seed.cities.length;i++) m+='<TD>' + addCommas(Seed.resources["city"+Seed.cities[i]["0"]]["rec5"][0]) + '</td>';
     m+="</tr></table>"
-    document.getElementById('ShowStones').innerHTML = m;    
+    document.getElementById('ShowStones').innerHTML = m;  
+}  
 },
 
 addToLog : function (id,action,tries,good,bad){
