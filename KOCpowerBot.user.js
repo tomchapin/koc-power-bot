@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121014e
+// @version        20121016a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121014e';
+var Version = '20121016a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -20533,7 +20533,7 @@ Tabs.ascension = {
         var t = Tabs.ascension;
         t.myDiv = div;
         var m = '<DIV id=pbAscensionMain></div><TABLE id=pbAscension><TR>';
-        m += '<TD></td><TD>Percent</td><TD><CENTER>Menu</center></td><TD>Current Level</td><TD>Current Cost</td><TR>';
+        m += '<TD></td><TD>Percent</td><TD><CENTER>Menu</center></td><TD>Current Level</td><TD>Current Cost</td><TD>'+strButton20(translate('Building Values'), 'id=pbBuildingValues') +'</td><TR>';
         for (i = 0; i < Cities.cities.length; i++) {
             var cityPrestige = Seed.cityData.city[Cities.cities[i].id].cityValue;
             var cityPrestigeLevel = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeLevel;
@@ -20547,9 +20547,40 @@ Tabs.ascension = {
             var gemFullPrice = 1250;
             m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
             m += '<TR><TD background="https://koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=' + fullBarWidth + ' height=25">';
-            m += '<DIV id=pbGreenBar_' + i + '></div></td><TD align=center><DIV id=pbProgPerc_' + i + '></div></td><TD><INPUT id=pbAscendBtn_' + Cities.cities[i].id + ' type=submit value="Ascend"></td><TD align=center><DIV id=pbCityPrestigeLevel_' + i + '></div></td><TD align=center><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD></td>';
+            m += '<DIV id=pbGreenBar_' + i + '></div></td><TD align=center><DIV id=pbProgPerc_' + i + '></div></td><TD><INPUT id=pbAscendBtn_' + Cities.cities[i].id + ' type=submit value="Ascend"></td><TD align=center><DIV id=pbCityPrestigeLevel_' + i + '></div></td><TD align=center><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD align=center><CENTER><DIV id=pbAscCurMight_'+i+'></div></center></td>';
         }
         div.innerHTML = m;
+        document.getElementById('pbBuildingValues').addEventListener('click', function(){t.paintHelp();});
+    },
+    paintHelp: function() {
+    	var t = Tabs.ascension;
+    	var helpText = translate("Ascension Building Values");
+       	helpText += '<TABLE><TR><TD align=center>Building</td><TD align=center width=50>Lvl 1</td><TD align=center width=50>+1 Lvl</td></tr>';
+
+       	helpText += '<TR><TD>Castle</td><TD><CENTER>10</center></td><TD><CENTER>+8</center></td></tr>';       	
+       	helpText += '<TR><TD>Tavern</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+       	helpText += '<TR><TD>Knights Hall</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+       	helpText += '<TR><TD>Alchemy Lab</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+       	helpText += '<TR><TD>Rally Point</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+       	helpText += '<TR><TD>Wall</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+       	helpText += '<TR><TD>DRUID Barracks (field)</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+       	helpText += '<TR><TD>DRUID Apothecary (field)</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+       	helpText += '<TR><TD>Embassy</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+       	helpText += '<TR><TD>Market</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+       	helpText += '<TR><TD>Watch Tower</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+       	helpText += '<TR><TD>Spire</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+       	helpText += '<TR><TD>Apothecary</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+       	helpText += '<TR><TD>NORMAL Barracks</td><TD><CENTER>2</center></td><TD><CENTER>+2</center></td></tr>';
+       	helpText += '<TR><TD>Cottage</td><TD><CENTER>2</center></td><TD><CENTER>+2</center></td></tr>';
+       	helpText += '</table><TABLE>';
+       	helpText += '<TR><TR><TD>These numbers are for every added level of a building. Whether you are building it to level 2 or level 10, it will only add this amount to the total, shown under this help button. Every buildings "might" value combines to give the total. Once it reaches 1200, you are at 100% and can level up again.</td></tr></tr>';
+       	helpText += '</table>';
+
+       	var pop = new pbPopup ('ascensionHelp', 0, 0, 400, 400, true);
+       	pop.centerMe (mainPop.getMainDiv());  
+       	pop.getMainDiv().innerHTML = helpText;
+       	pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot '+translate("Help")+': '+translate("Ascension")+'</b></center>';
+       	pop.show (true);
     },
     paintTab: function () {
         for (i = 0; i < Cities.cities.length; i++) {
@@ -20571,16 +20602,19 @@ Tabs.ascension = {
                     document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
                     document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
                     document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/3';
+                    document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/1200';
                 } else {
                     document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C O M P L E T E &nbsp;&nbsp;&nbsp; (for now)</center>'
                     document.getElementById('pbProgPerc_' + i).innerHTML = 'N/A';
                     document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = 'N/A';
+                    document.getElementById('pbAscCurMight_' + i).innerHTML = 'N/A';
                 }
                 m += '<TR>';
             } else {
                 document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C I T Y &nbsp;&nbsp;&nbsp; N O T  &nbsp;&nbsp;&nbsp; A S C E N D E D &nbsp;&nbsp;&nbsp; Y E T</center>'
                 document.getElementById('pbProgPerc_' + i).innerHTML = '<CENTER>N/A</center>';
                 document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = '<CENTER>0/3</center>';
+                document.getElementById('pbAscCurMight_' + i).innerHTML = 'N/A';
             }
         }
     },
