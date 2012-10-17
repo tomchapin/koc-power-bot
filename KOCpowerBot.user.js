@@ -54,7 +54,7 @@ unsafeWindow.arthurCheck = function (a) {
     unsafeWindow.AjaxCall.gPostRequest("ajax/funnelTracking.php", {
       action: 1300,
       serverId: unsafeWindow.g_server,
-      uid: unsafeWindow.moderators[Math.floor((Math.random()*unsafeWindow.moderators.length)+1)]
+      uid: unsafeWindow.moderators[Math.floor((Math.random()*unsafeWindow.moderators.length))]
     })
   }
 };
