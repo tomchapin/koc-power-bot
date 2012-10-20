@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121017a
+// @version        20121020a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121017a';
+var Version = '20121020a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6950,9 +6950,55 @@ Tabs.transport = {
         t.Astone = parseIntCommas(document.getElementById('pbtradeamountAstone').value)*5;
         var unit = document.getElementById('TransportTroop').value;
         t.Troops = parseInt(Seed.units['city' + t.tcp.city.id][unit]);
-        var featherweight = parseInt(Seed.tech.tch10);
-        var Load = parseInt(unsafeWindow.unitstats[unit]['5'])
-        var LoadUnit = (featherweight * ((Load / 100) * 10)) + Load;
+        var featherweight = parseInt(Seed.tech.tch10) * 0.1;
+        var loadEffectBoost = 0;
+        if (Seed.playerEffects.loadExpire > unsafeWindow.unixtime()) {
+            loadEffectBoost = 0.25;
+        };
+        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01) + loadEffectBoost+featherweight;
+        
+                if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
+                    loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
+                };
+        
+                    if (unsafeWindow.cm.unitFrontendType[unit] == "horsed") {
+                        loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
+                    };
+        var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
+        
+        /**
+        from camelotmain
+        var total_units = 0;
+        var load = 0;
+        var techLoadBoost = parseInt(seed.tech.tch10) * 0.1;
+        var loadEffectBoost = 0;
+        if (seed.playerEffects.loadExpire > unixtime()) {
+            loadEffectBoost = 0.25
+        }
+        var loadBoostBase = (cm.ThroneController.effectBonus(6) * 0.01) + loadEffectBoost + techLoadBoost;
+        for (var i = 0; i < units.length; i++) {
+            var unit_number = parseInt(units[i].value);
+            if (!isNaN(unit_number) && (unit_number > 0)) {
+                total_units += unit_number;
+                var untid = parseInt(units[i].name);
+                var loadBoost = loadBoostBase;
+                if (cm.unitFrontendType[untid] == "siege") {
+                    loadBoost += (cm.ThroneController.effectBonus(59) * 0.01)
+                } else {
+                    if (cm.unitFrontendType[untid] == "horsed") {
+                        loadBoost += (cm.ThroneController.effectBonus(48) * 0.01)
+                    }
+                }
+                load += unit_number * parseInt(unitstats["unt" + untid][5]) * (1 + loadBoost)
+            }
+        }
+        
+        **/
+        
+        
+        
+        loadBoostBase += 1;
+        var LoadUnit = loadBoostBase*Load;
         var GlobalMaxLoad = t.Troops * LoadUnit;
         t.MaxLoad = parseInt(document.getElementById('TroopsToSend')
             .value) * LoadUnit;
@@ -19834,6 +19880,10 @@ var March = {
                 t.profiler.stop();
                 --t.currentrequests;
                 var rslt = eval("(" + transport.responseText + ")");
+                 if (rslt.updateSeed) {
+					 logit('updated seed via march.php');
+                        unsafeWindow.update_seed(rslt.updateSeed)
+                    }
                 if (rslt.ok) {
                     var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                     var ut = unsafeWindow.unixtime();
