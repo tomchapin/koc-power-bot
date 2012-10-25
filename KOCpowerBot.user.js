@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121020a
+// @version        20121025a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121020a';
+var Version = '20121025a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -5431,7 +5431,7 @@ Tabs.Search = {
       document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20(translate('Export Results'), 'id=pbSrcDoExp') +'</center>';
       document.getElementById ('pbSrcDoExp').addEventListener ('click', t.exportKOCattack, false);
     }
-    if (t.opt.searchType==2){
+    if (t.opt.searchType==2||t.opt.searchType==1){
       document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20(translate('Generate Scout List'), 'id=pbSrcDoScout') +'</center>';
       document.getElementById ('pbSrcDoScout').addEventListener ('click', t.generateScoutList, false);
     }
@@ -5456,6 +5456,12 @@ Tabs.Search = {
     var t = Tabs.Search;
     var bulkScout = [];
     for (i=0; i<t.mapDat.length; i++){
+	if(t.opt.searchType==1)
+		if (t.mapDat[i][3] == Options.wildType || Options.wildType==0)
+		if (t.mapDat[i][4]>=Options.srcMinLevel && t.mapDat[i][4]<=Options.srcMaxLevel)
+		if ((Options.unownedOnly && t.mapDat[i][5] == false) || (!Options.unownedOnly))
+            bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
+     if(t.opt.searchType==2) 
       if (t.mapDat[i][3] == 7){
         if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5]){
         if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
@@ -5491,6 +5497,7 @@ Tabs.Search = {
             m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck id="pbsrcScoutCheck_'+coordlist[i].x+'_'+coordlist[i].y+'" value="'+coordlist[i].x+'_'+coordlist[i].y+'" /></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td></tr>';
       }
         m += '</table></div>';
+        m += '<BR><input type=checkbox id="pbskip">Skip targets when errors occur';
         m += '<BR><CENTER>'+ strButton20(translate('Start Scout'), 'id=pbSrcStartScout') +'</center>';
         m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
     popScout.getMainDiv().innerHTML = m;
@@ -5595,9 +5602,15 @@ Tabs.Search = {
              if (notify)
               setTimeout(function(){ notify(count+1); }, 1000);
          } else {
+			 if(document.getElementById('pbskip').checked) {
+             document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Moving on')+'....<BR>';
+             if (notify)
+              setTimeout(function(){ notify(count+1); }, 1000);
+			 } else {
              document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Retrying')+'....<BR>';
              if (notify)
               setTimeout(function(){ notify(count); }, 1000);
+		  }
           }
         },
         onFailure: function () {}
