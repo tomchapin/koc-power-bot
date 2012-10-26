@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121025c
+// @version        20121025d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121025c';
+var Version = '20121025d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2409,9 +2409,9 @@ PaintSalvageHistory : function() {
         }
         var buffItem = 0;
         if(ThroneOptions.UseTokens) {
-			if(unsafeWindow.seed.items['i20001'])//lesser protection stone
+			if(parseInt(unsafeWindow.seed.items['i20001']))//lesser protection stone
 				buffItem = 20001;
-			if(unsafeWindow.seed.items['i20002'])//protection stone
+			if(parseInt(unsafeWindow.seed.items['i20002']))//protection stone
 				buffItem = 20002;
 		};
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -2497,9 +2497,9 @@ PaintSalvageHistory : function() {
         }
         var buffItem = 0;
         if(ThroneOptions.UseTokens) {
-			if(unsafeWindow.seed.items['i20005'])//lesser lucky token
+			if(parseInt(unsafeWindow.seed.items['i20005']))//lesser lucky token
 				buffItem = 20005;
-			if(unsafeWindow.seed.items['i20006'])//lucky token
+			if(parseInt(unsafeWindow.seed.items['i20006']))//lucky token
 				buffItem = 20006;
 		};
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
