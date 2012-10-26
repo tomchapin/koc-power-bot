@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121025d
+// @version        20121026a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121025d';
+var Version = '20121026a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2413,6 +2413,8 @@ PaintSalvageHistory : function() {
 				buffItem = 20001;
 			if(parseInt(unsafeWindow.seed.items['i20002']))//protection stone
 				buffItem = 20002;
+			if(buffItem)
+				unsafeWindow.cm.InventoryView.removeItemFromInventory(buffItem);
 		};
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
@@ -2501,6 +2503,8 @@ PaintSalvageHistory : function() {
 				buffItem = 20005;
 			if(parseInt(unsafeWindow.seed.items['i20006']))//lucky token
 				buffItem = 20006;
+			if(buffItem)
+				unsafeWindow.cm.InventoryView.removeItemFromInventory(buffItem);
 		};
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
