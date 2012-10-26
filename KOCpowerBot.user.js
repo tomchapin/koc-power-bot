@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121025a
+// @version        20121025b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121025a';
+var Version = '20121025b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -300,10 +300,9 @@ var ThroneOptions = {
     SingleStat:false,
     Cityrand:false,
     SalvageLevel:1,
+    UseTokens:false,
 };
 
-
-//alert(inspect(ThroneOptions.Salvage));
 var AttackOptions = {
   LastReport    		: 0,
   MsgEnabled          	: true,
@@ -1880,8 +1879,12 @@ Upgrade_Enhance :function (){
            } else {
                 m += '<TD><INPUT id=Enable type=submit value="Queue = ON"></td>';
           }
-      m += '<TD><INPUT id=ShowHistory type=submit value="History"></td>';
-      m+= '</table><DIV id=pbTowrtDivF class=pbStat>ADD UPGRADE OR ENHANCE TO QUEUE</div><TABLE class=ptTab><br/>';
+      m += '<TD><INPUT id=ShowHistory type=submit value="History"></td></table>';
+      m += '<table><tr><INPUT id=pbUseTokens type=checkbox '+ (ThroneOptions.UseTokens?'CHECKED ':'') +'/>&nbsp;Use Tokens/Stones when available</tr>';
+      m += '<tr><br>Will use Protection Stone/Lesser Protection stone for Enhance</tr>';
+      m += '<tr><br>Will use Lucky Token/Lesser Lucky Token for Upgrade</tr>';
+      m += '</table>';
+	  m+= '<DIV id=pbTowrtDivF class=pbStat>ADD UPGRADE OR ENHANCE TO QUEUE</div><TABLE class=ptTab><br/>';
       m+='<TR><TD>Throne items:</td><TD><SELECT id=ThroneItems type=list></select></td>';
       m+='<TD><INPUT id=addEnhance type=submit value="Enhance"></td>';
       m+='<TD><INPUT id=addUpgrade type=submit value="Upgrade"></td>';
@@ -1908,7 +1911,7 @@ Upgrade_Enhance :function (){
     document.getElementById('addUpgrade').addEventListener ('click', function (){t.addToQueue(document.getElementById('ThroneItems').value,"Upgrade");},false);
 
     document.getElementById('ThroneItems').addEventListener ('change', function (){t.paintHoover();},false);
-      
+      document.getElementById('pbUseTokens').addEventListener('change', function(){ThroneOptions.UseTokens = document.getElementById('pbUseTokens').checked;saveThroneOptions();} , false);
       document.getElementById('Enable').addEventListener('click', function(){t.toggleThroneState()} , false);
       document.getElementById('ShowHistory').addEventListener('click', function(){t.PaintHistory()} , false);
   
@@ -2328,13 +2331,13 @@ PaintSalvageHistory : function() {
                     ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
                     ThroneOptions.Items[k]["levelto"] = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
                         ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
-                    if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {ThroneOptions.Items.splice (k,1);alert("You can't upgrade higher then level 10!");return;}
+                    if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {ThroneOptions.Items.splice (k,1);return;}
                 }
                 if (ThroneOptions.Items[k]["action"] == "Enhance") {
                     ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
                     ThroneOptions.Items[k]["qualityto"] = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
                      ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
-                    if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {ThroneOptions.Items.splice (k,1);alert("You can't upgrade higher then quality 5!");return;}
+                    if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {ThroneOptions.Items.splice (k,1);return;}
                 }
                 if (ThroneOptions.Items[k]["action"] == "Enhance") var lvl = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
                 if (ThroneOptions.Items[k]["action"] == "Upgrade") var lvl = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
@@ -2364,7 +2367,7 @@ PaintSalvageHistory : function() {
         var now = new Date().getTime()/1000.0;
         if (!ThroneOptions.Active) return;
         if (ThroneOptions.Items.length ==0) {
-                 document.getElementById('ShowStatus').innerHTML = "No items in queue!!"
+                 document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
                  return;
         }
         ThroneOptions.Items["0"]["active"] = true;
@@ -2404,11 +2407,18 @@ PaintSalvageHistory : function() {
            document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
            return;    
         }
+        var buffItem = 0;
+        if(ThroneOptions.UseTokens) {
+			if(unsafeWindow.seed.items['i20001'])//lesser protection stone
+				buffItem = 20001;
+			if(unsafeWindow.seed.items['i20002'])//protection stone
+				buffItem = 20002;
+		};
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'upgradeQuality';
         params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
-        params.buffItemId = 0;
+        params.buffItemId = buffItem;
         params.payment = "aetherstone";
         params.cityId = cityid;
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
@@ -2441,9 +2451,11 @@ PaintSalvageHistory : function() {
                     }
                     else
                     {
-                       y.isBroken = true;
-                       y.brokenType = "quality";
-                       y.name = y.createName();
+					if(!params.buffItemId) {
+						y.isBroken = true;
+						y.brokenType = "quality";
+						y.name = y.createName();
+					}
                        ThroneOptions.Tries++;
                        document.getElementById('ShowStatus').innerHTML = 'Enhance failed :( <br />Item: ' + unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
                        document.getElementById('ShowTries').innerHTML = "Tries: " + ThroneOptions.Tries + "<br />Good requests: " + ThroneOptions.Good + "   Bad requests: " + ThroneOptions.Bad;
@@ -2483,11 +2495,18 @@ PaintSalvageHistory : function() {
            document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
            return;    
         }
+        var buffItem = 0;
+        if(ThroneOptions.UseTokens) {
+			if(unsafeWindow.seed.items['i20005'])//lesser lucky token
+				buffItem = 20005;
+			if(unsafeWindow.seed.items['i20006'])//lucky token
+				buffItem = 20006;
+		};
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'upgradeLevel';
         params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
-        params.buffItemId = 0;
+        params.buffItemId = buffItem;
         params.payment = "aetherstone";
         params.cityId = cityid;
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
@@ -2519,10 +2538,12 @@ PaintSalvageHistory : function() {
                     }
                     else
                     {
+					if(!params.buffItemId) {
                        y.isBroken = true;
                        y.brokenType = "level";
                        y.status = rslt.item.status;
                        y.name = y.createName();
+					}
                        ThroneOptions.Tries++;
                        saveThroneOptions();
                        if(document.getElementById('ShowStatus'))
