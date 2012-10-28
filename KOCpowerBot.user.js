@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121027a
+// @version        20121027b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121027a';
+var Version = '20121027b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -17664,7 +17664,10 @@ function DrawLevelIcons() {
         if (tileinfo.type!="city" &&  tileinfo.tileuserid!="null") sp[0].style.color='#FF9900';
         if (tileinfo.type!="city" &&  tileinfo.tileuserid=="null") sp[0].style.color='#CC0033';
         if (Options.MapShowExtra) {
-            if (tileinfo.username!="null") sp[0].innerHTML= owner+'<br />Might:'+addCommas(might)+'<br />Alliance:'+tileinfo.alliance;
+            if (tileinfo.username!="null")
+				sp[0].innerHTML = tileinfo.type+': '+ tileinfo.level +'<br />'+owner+'<br />Might:'+addCommas(might); //+'<br />Alliance:'+tileinfo.alliance
+			else
+				sp[0].innerHTML = tileinfo.type+': '+ tileinfo.level;
         }
         else {
             // if (onclickM && onclickM[7]!='"null"' ) sp[0].innerHTML='&nbsp;';
