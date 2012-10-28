@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121026a
+// @version        20121027a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121026a';
+var Version = '20121027a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -17632,45 +17632,43 @@ function DrawLevelIcons() {
     var maptileRe = /modal_maptile.([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)/;
     var mapwindow=document.getElementById('mapwindow');
     if(!mapwindow) return;
-    var levelIcons=document.getElementById('LevelIcons');
+    var levelIcons=document.getElementById('levelIcons');
     if(levelIcons) return;
 
     var ss=document.evaluate(".//a[contains(@class,'slot')]",mapwindow,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
-    var lvRe=/_([0-9]+)/;
     var idDone=false;
     for(var s=0; s<ss.snapshotLength; s++) {
         var a=ss.snapshotItem(s);
-        var onclick=a.getAttribute('onclick');
+        var onclick=a.getAttribute('id');
         //alert(onclick);
         var owner='';
         if(onclick) {
-            var onclickM=maptileRe.exec(onclick);
-            if(onclickM && onclickM[7]!='"null"') {
-                var might=onclickM[8].StripQuotes();
-                var alliance=onclickM[16].StripQuotes();
-                var dip=getDiplomacy(alliance);
-                owner=" "+onclickM[7].StripQuotes();
+			// logit(onclick);
+			var tileinfo = unsafeWindow.g_mapObject.model.getTileActions(onclick)["tileClick"];
+			// logit(inspect(tileinfo));
+            if(tileinfo) {
+                var might = parseInt(tileinfo.might);
+                var alliance = parseIntNan(tileinfo.allianceId);
+                var dip = getDiplomacy(alliance);
+                owner = tileinfo.username;
             }
         }
-        var m=lvRe.exec(a.className);
-        if(!m) continue;
         var sp=a.getElementsByTagName('span');
         if(sp.length==0) continue;
 
         if(!idDone) { a.id='levelIcons'; idDone=true; }
         sp[0].style.color='#cc0';
         
-        if (alliance == 'null' && onclickM[13]=='"city"') sp[0].style.color='#33CCFF';
-        if (dip == 'hostile' && onclickM[13]=='"city"') sp[0].style.color='#FF0000';
-        if (onclickM[13]!='"city"' &&  onclickM[7]!='"null"') sp[0].style.color='#FF9900';
-        if (onclickM[13]!='"city"' &&  onclickM[6]=='"null"' && onclickM[7]=='"null"' && onclickM[8]=='"null"' && onclickM[9]=='"null"' && onclickM[16]=='"null"' && onclickM[11]=='"null"') sp[0].style.color='#CC0033';
+        if (alliance == 'null' && tileinfo.type=="city") sp[0].style.color='#33CCFF';
+        if (dip == 'hostile' && tileinfo.type=="city") sp[0].style.color='#FF0000';
+        if (tileinfo.type!="city" &&  tileinfo.tileuserid!="null") sp[0].style.color='#FF9900';
+        if (tileinfo.type!="city" &&  tileinfo.tileuserid=="null") sp[0].style.color='#CC0033';
         if (Options.MapShowExtra) {
-            if (onclickM && onclickM[7]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1]+owner+'<br />Might:'+addCommas(might);
-            else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
+            if (tileinfo.username!="null") sp[0].innerHTML= owner+'<br />Might:'+addCommas(might)+'<br />Alliance:'+tileinfo.alliance;
         }
         else {
-            if (onclickM && onclickM[7]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1];
-            else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
+            // if (onclickM && onclickM[7]!='"null"' ) sp[0].innerHTML='&nbsp;';
+            // else sp[0].innerHTML='&nbsp;'+addCommas(owner);
         }
         
     }
