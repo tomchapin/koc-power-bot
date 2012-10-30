@@ -2199,6 +2199,12 @@ g_js_strings.throneRoom.unique_chair30217 = "Dominance";
 g_js_strings.throneRoom.unique_advisor30218 = "Kay";
 g_js_strings.throneRoom.unique_advisor30219 = "Wynn";
 g_js_strings.throneRoom.unique_advisor30220 = "Mordred";
+g_js_strings.throneRoom.unique_chair30231 = "Hallowed Throne";
+g_js_strings.throneRoom.unique_chair30241 = "Hallowed Throne";
+g_js_strings.throneRoom.unique_chair30251 = "Hallowed Throne";
+g_js_strings.throneRoom.unique_table30230 = "Dark Master Jack";
+g_js_strings.throneRoom.unique_table30240 = "Dark Master Jack";
+g_js_strings.throneRoom.unique_table30250 = "Dark Master Jack";
 g_js_strings.throneRoom.might1 = "Throne Room Might";
 g_js_strings.mass_salvage = {};
 g_js_strings.mass_salvage.title = "Mass Salvage";
@@ -7386,6 +7392,54 @@ var itemlist = {
     },
     i30220: {
         name: "Advisor Mordred",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30230: {
+        name: "Dark Master Jack",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30231: {
+        name: "Hallowed Throne",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30240: {
+        name: "Dark Master Jack",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30241: {
+        name: "Hallowed Throne",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30250: {
+        name: "Dark Master Jack",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30251: {
+        name: "Hallowed Throne",
         description: "",
         price: null,
         tradable: null,
