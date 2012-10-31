@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121029a
+// @version        20121031a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121029a';
+var Version = '20121031a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7633,8 +7633,8 @@ Tabs.transport = {
     }
         
            if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
-        //if(tt)
-        //params.tt = tt;    
+        if(tt)
+        params.tt = tt;    
         var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");     
          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
                   method: "post",
@@ -7717,8 +7717,8 @@ Tabs.transport = {
       case 'unt11': params.u11 = parseInt(document.getElementById ('TroopsToSend').value);break;
       case 'unt12': params.u12 = parseInt(document.getElementById ('TroopsToSend').value);break;
     }
-	//if (tt)
-	//params.tt = tt;
+	if (tt)
+	params.tt = tt;
     if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
                  
         var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
@@ -10440,8 +10440,8 @@ Tabs.Barb = {
           var t = Tabs.Barb;
           
           var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-          //if(tt)
-          //params.tt = tt;
+          if(tt)
+          params.tt = tt;
           params.cid=cityID;
           params.type=4;
           params.kid=kid;
@@ -10493,8 +10493,8 @@ Tabs.Barb = {
                    } else {
 					    if (rslt.user_action == "backOffWaitTime") {
 						logit('backoffwaittime '+rslt.wait_time);
-                        //if(rslt.tt)
-                        //var tt = rslt.tt;
+                        if(rslt.tt)
+                        var tt = rslt.tt;
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
@@ -11851,8 +11851,8 @@ Tabs.Reassign = {
         params.u11 = 0;
         params.u12 = 0;    
                 
-           //if(tt)
-           //params.tt = tt;
+           if(tt)
+           params.tt = tt;
             var city = t.reassignRoutes[count]["city"];
             var xcoord = t.reassignRoutes[count]["target_x"];
             var ycoord = t.reassignRoutes[count]["target_y"];
@@ -19946,8 +19946,8 @@ var March = {
                 } else {
                     if (rslt.user_action == "backOffWaitTime") {
                         logit('backoffwaittime '+rslt.wait_time);
-                        //if(rslt.tt)
-                        //    params.tt = rslt.tt;
+                        if(rslt.tt)
+                            params.tt = rslt.tt;
                         var wait = 1;
                         if(rslt.wait_time)
                             wait = rslt.wait_time;
