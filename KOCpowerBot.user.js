@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121031a
+// @version        20121101a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121031a';
+var Version = '20121101a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2401,12 +2401,14 @@ PaintSalvageHistory : function() {
             if ( Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])))
             {
                cityid = k;
+               break;
             }
         }
         if(cityid == 0){
            document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
            return;    
         }
+      Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ThroneOptions.Items["0"]["cost"]));
         var buffItem = 0;
         if(ThroneOptions.UseTokens) {
 			if(parseInt(unsafeWindow.seed.items['i20001']))//lesser protection stone
@@ -2429,6 +2431,8 @@ PaintSalvageHistory : function() {
             loading: true,
             onSuccess: function (transport) {
                 var rslt = eval("(" + transport.responseText + ")");
+                 if (rslt.updateSeed)
+					unsafeWindow.update_seed(rslt.updateSeed);
                 if(rslt.ok){
                     if (rslt.gems > 0)
                     {
@@ -2497,6 +2501,7 @@ PaintSalvageHistory : function() {
            document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
            return;    
         }
+      Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ThroneOptions.Items["0"]["cost"]));
         var buffItem = 0;
         if(ThroneOptions.UseTokens) {
 			if(parseInt(unsafeWindow.seed.items['i20005']))//lesser lucky token
@@ -2520,6 +2525,8 @@ PaintSalvageHistory : function() {
             onSuccess: function (transport) {
                 var rslt = eval("(" + transport.responseText + ")");
                 if(rslt.ok){
+					 if (rslt.updateSeed)
+						unsafeWindow.update_seed(rslt.updateSeed);
                     if (rslt.gems > 0)
                     {
                         document.getElementById('ShowStatus').innerHTML = 'Upgrader accidentally spent gems!  Turning upgrader off!!';
@@ -9857,6 +9864,7 @@ Tabs.AutoCraft = {
     },
     CraftingItem: function (currentcity, itemId, recipeId, category) {
       var t = Tabs.AutoCraft;
+      Seed.resources['city'+currentcity].rec5[0]=parseInt(Seed.resources['city'+currentcity].rec5[0] - t.craftinfo[itemId].astone[1]);
       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
           params.action="craft";
           params.ctrl="Crafting";
@@ -9868,6 +9876,8 @@ Tabs.AutoCraft = {
       new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, { method: "post", parameters: params,loading: true,
           onSuccess: function (transport) {
               var o=eval("("+transport.responseText+")");
+      if (o.updateSeed)
+        unsafeWindow.update_seed(o.updateSeed);
               if(o.ok===true){
 				  //alert(inspect(o));
                if (o.status=="error") {
