@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121101a
+// @version        20121102a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121101a';
+var Version = '20121102a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2398,7 +2398,7 @@ PaintSalvageHistory : function() {
         } else return;
         var cityid = 0;
         for (var k in Cities.byID) {
-            if ( Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])))
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))//added more than 50k to stop spending gems by accident
             {
                cityid = k;
                break;
@@ -2491,7 +2491,7 @@ PaintSalvageHistory : function() {
         } else return;
         var cityid = 0;
         for (var k in Cities.byID) {
-            if ( Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])))
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))//added more than 50k to stop spending gems by accident
             {
                cityid = k;
                break;
