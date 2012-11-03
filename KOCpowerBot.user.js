@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121102a
+// @version        20121103a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121102a';
+var Version = '20121103a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -20783,4 +20783,27 @@ Tabs.ascension = {
         clearInterval(t.Timer)
     },
 }
+//override for kabams SUPER ANNOYING word filter...   deSCRIPTion
+//The point is to not enable rude/bad words but simply curb some of the excessive filtering
+document.getElementById('mod_comm_input').addEventListener ('keypress', function() {
+	this.value = this.value.replace(/Fa/g,"F­a");
+	this.value = this.value.replace(/fA/g,"f­A");
+	this.value = this.value.replace(/FA/g,"F­A");
+	this.value = this.value.replace(/fa/g,"f­a");
+	
+	this.value = this.value.replace(/Gr/g,"G­r");
+	this.value = this.value.replace(/gR/g,"g­R");
+	this.value = this.value.replace(/GR/g,"G­R");
+	this.value = this.value.replace(/gr/g,"g­r");
+	
+	this.value = this.value.replace(/Ri/g,"R­i");
+	this.value = this.value.replace(/rI/g,"r­I");
+	this.value = this.value.replace(/RI/g,"R­I");
+	this.value = this.value.replace(/ri/g,"r­i");
+	
+	this.value = this.value.replace(/Na/g,"N­a");
+	this.value = this.value.replace(/nA/g,"n­A");
+	this.value = this.value.replace(/NA/g,"N­A");
+	this.value = this.value.replace(/na/g,"n­a");
+}, false);
 pbStartup ();
