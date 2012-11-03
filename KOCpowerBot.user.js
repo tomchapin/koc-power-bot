@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121103a
+// @version        20121103b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121103a';
+var Version = '20121103b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -20785,7 +20785,9 @@ Tabs.ascension = {
 }
 //override for kabams SUPER ANNOYING word filter...   deSCRIPTion
 //The point is to not enable rude/bad words but simply curb some of the excessive filtering
-document.getElementById('mod_comm_input').addEventListener ('keypress', function() {
+document.getElementById('mod_comm_input').addEventListener ('keypress', function(e) {
+	if(e.which != 13)
+	return;
 	this.value = this.value.replace(/Fa/g,"F­a");
 	this.value = this.value.replace(/fA/g,"f­A");
 	this.value = this.value.replace(/FA/g,"F­A");
