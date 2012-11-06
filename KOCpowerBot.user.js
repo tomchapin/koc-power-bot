@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121106c
+// @version        20121106d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121106c';
+var Version = '20121106d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -515,6 +515,7 @@ function facebookInstance (){
   facebookWatchdog();
   if (GlobalOptions.pbWideScreen)
     setWide();
+    
 }
 
 function kabamStandAlone (){
@@ -675,6 +676,7 @@ function pbStartup (){
     Options.pbWinPos.x = c.x+4;
     Options.pbWinPos.y = c.y+c.height;
     saveOptions ();
+    
   }
 
   // Reset window xPos if the widescreen option is disabled
@@ -716,6 +718,7 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
+  killbox();
 }
 
 /************************ Food Alerts *************************/
@@ -20862,4 +20865,15 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 	this.value = this.value.replace(/NA/g,"N­A");
 	this.value = this.value.replace(/na/g,"n­a");
 }, false);
+function killbox () {
+	if (Number(unsafeWindow.seed.items.i599) == 0)
+		return;
+	if(!document.getElementById('modalBox1')) 
+		setTimeout(killbox,100);
+	else {
+		document.getElementById('modalBox1').hidden = true;
+		document.getElementById('modalCurtain1').outerHTML= 'Modal.hideModal();';
+	};
+};
+
 pbStartup ();
