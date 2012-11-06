@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121106a
+// @version        20121106b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121106a';
+var Version = '20121106b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6492,7 +6492,6 @@ Tabs.News = {
 		var t = Tabs.News;
 		t.myDiv = div;
 	div.innerHTML = '<DIV class=pbStat>Breaking News!</div><br>';
- 
 		GM_xmlhttpRequest({
 			method: 'GET',
 			url: 'http://koc-power-bot.googlecode.com/svn/trunk/BreakingNews.txt',
@@ -6500,7 +6499,15 @@ Tabs.News = {
 				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 			},
 			onload: function (news) {
-				div.innerHTML += news.responseText;
+				if(news.status != 200) {
+					div.innerHTML += '<center><div style="background-color:#DEDEDE; width:600px; height:200px; text-align:left; overflow-y:auto;"><b>Unable to fetch news <br>Error: '+news.status+'</b></div></center>';
+					return;
+				}
+				var m = '<center>';
+				m += '<div style="background-color:#DEDEDE; width:600px; height:200px; text-align:left; overflow-y:auto;">';
+				m += '<b>'+news.responseText.replace(/\n/g,"<br>")+'</b>';
+				m += '</div></center>';
+				div.innerHTML += m;
 				var first = Number(news.responseHeaders.indexOf("Last-Modified"))+15;
 				var last = news.responseHeaders.indexOf("\n",first);
 				var lastmodified = news.responseHeaders.slice(first,last);

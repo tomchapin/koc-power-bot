@@ -1,0 +1,7 @@
+Or, more precisely.... News of What's Broken !!!!!
+
+Want to know why something in this script has suddenly gone haywire? Did a change in the game code affect something in Bot? Is there a problem with the Bot script that's being sorted out?
+
+Here is where we will let you know what has changed and what is being done to fix it.
+
+This information will be updated each time you load the game, you will not need to update Bot to be informed.
