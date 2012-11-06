@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121106b
+// @version        20121106c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121106b';
+var Version = '20121106c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6505,6 +6505,7 @@ Tabs.News = {
 				}
 				var m = '<center>';
 				m += '<div style="background-color:#DEDEDE; width:600px; height:200px; text-align:left; overflow-y:auto;">';
+				m += '<div id=newsdate></div>'
 				m += '<b>'+news.responseText.replace(/\n/g,"<br>")+'</b>';
 				m += '</div></center>';
 				div.innerHTML += m;
@@ -6516,6 +6517,7 @@ Tabs.News = {
 					saveOptions();
 					alert('Breaking news update, check News tab');
 				}
+				document.getElementById('newsdate').innerHTML = '<p style="text-align: right;">'+Options.BreakingNews+'</p>';
 			},
 		});
 	},
