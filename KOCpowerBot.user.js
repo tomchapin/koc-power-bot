@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121106d
+// @version        20121106e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121106d';
+var Version = '20121106e';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -3409,7 +3409,8 @@ Tabs.tower = {
 	}
     if (Options.alertSound.alarmActive && (now > Options.alertSound.expireTime)){
 	var element = document.getElementById('towersirentab');
-  	element.parentNode.removeChild(element);
+	if(element)
+		element.parentNode.removeChild(element);
 	t.stopSoundAlerts();
 	}
 
@@ -3475,7 +3476,8 @@ Tabs.tower = {
     var t = Tabs.tower;
     t.mss.stop (1);
     var element = document.getElementById('towersirentab');
-    element.parentNode.removeChild(element);
+	if(element)
+		element.parentNode.removeChild(element);
     clearTimeout (t.soundStopTimer);
     clearTimeout (t.soundRepeatTimer);
     document.getElementById('pbSoundStop').disabled = true;
