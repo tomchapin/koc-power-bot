@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121105a
+// @version        20121106a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121105a';
+var Version = '20121106a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -143,6 +143,7 @@ var Options = {
   Opacity : 0.9,
   language : 'en',
   curMarchTab : "transport",
+  BreakingNews : 0,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -6478,6 +6479,49 @@ DebugTimer.display ('Time to GM_getValue() '+ totTargets +' targets for all citi
     t.writeDiv ('Scanning @ '+ x +','+ y +'<BR>');
   },
 }
+
+
+/*********************************** News TAB ***********************************/
+Tabs.News = {
+	tabOrder: 301,
+  tabDisabled : false,
+  tabLabel : 'News',
+  myDiv : null,
+  
+	init : function (div){
+		var t = Tabs.News;
+		t.myDiv = div;
+	div.innerHTML = '<DIV class=pbStat>Breaking News!</div><br>';
+ 
+		GM_xmlhttpRequest({
+			method: 'GET',
+			url: 'http://koc-power-bot.googlecode.com/svn/trunk/BreakingNews.txt',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+			},
+			onload: function (news) {
+				div.innerHTML += news.responseText;
+				var first = Number(news.responseHeaders.indexOf("Last-Modified"))+15;
+				var last = news.responseHeaders.indexOf("\n",first);
+				var lastmodified = news.responseHeaders.slice(first,last);
+				if (Options.BreakingNews != lastmodified) {
+					Options.BreakingNews=lastmodified;
+					saveOptions();
+					alert('Breaking news update, check News tab');
+				}
+			},
+		});
+	},
+  hide : function (){
+    var t = Tabs.News;
+  },
+
+  show : function (){
+    var t = Tabs.News;
+  },
+
+}
+
 
 
 /*********************************** Test TAB ***********************************/
