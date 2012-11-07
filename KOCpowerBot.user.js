@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121106e
+// @version        20121107a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121106e';
+var Version = '20121107a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -13258,6 +13258,7 @@ var RefreshEvery  = {
     }
     t.box = document.createElement('div');
     t.target.appendChild(t.box);
+    t.box.addEventListener('click', t.setEnable, false);
   },
   
   setEnable : function (tf){
@@ -13302,7 +13303,6 @@ var RefreshEvery  = {
      else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white id=SuperTimer>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
 
      t.box.innerHTML = text;
-  document.getElementById('SuperTimer').addEventListener('click', t.setEnable, false);
      t.timer = setTimeout (t.Paint, 1000);
   },
 }
