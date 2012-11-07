@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121107a
+// @version        20121107b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121107a';
+var Version = '20121107b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -13299,14 +13299,13 @@ var RefreshEvery  = {
         Left = 0;
         t.doit();
      }
-     if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white id=SuperTimer>'+translate("Next refresh in")+': </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
-     else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white id=SuperTimer>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
+     if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
+     else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
 
      t.box.innerHTML = text;
      t.timer = setTimeout (t.Paint, 1000);
   },
 }
-//herehere
 /************************ Fairie Killer ************************/
 var FairieKiller  = {
   saveFunc : null,
