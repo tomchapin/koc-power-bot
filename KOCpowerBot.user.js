@@ -20899,7 +20899,7 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 function killbox () {
 	if (Number(unsafeWindow.seed.items.i599) == 0)
 		return;
-	if(!document.getElementById('modalBox1')) 
+	if(!document.getElementById('modal_mmb')) 
 		setTimeout(killbox,100);
 	else {
 		document.getElementById('modalBox1').hidden = true;
