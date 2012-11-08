@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121107b
+// @version        20121107c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121107b';
+var Version = '20121107c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -10465,7 +10465,7 @@ Tabs.Barb = {
     
     if(AttackOptions.Levels[city][0]){
         t.barbing();
-        t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+AttackOptions.SendInterval)*1000);
+        t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3)+AttackOptions.SendInterval)*1000);
     } else {
         t.getnextCity();
     }
