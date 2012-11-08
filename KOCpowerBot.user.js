@@ -20908,7 +20908,7 @@ function killbox () {
 		return;
 	if (Number(unsafeWindow.seed.items.i599) == 0)
 		return;
-	if(!document.getElementById('modalBox1')) 
+	if(!document.getElementById('modal_mmb'))
 		setTimeout(killbox,100);
 	else {
 		document.getElementById('modalBox1').hidden = true;
