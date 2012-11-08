@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121107c
+// @version        20121108a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121107c';
+var Version = '20121108a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -144,6 +144,7 @@ var Options = {
   language : 'en',
   curMarchTab : "transport",
   BreakingNews : 0,
+  ScripterTab : false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -414,7 +415,7 @@ var nHtml={
 }
 
 readGlobalOptions ();
-
+readOptions();
 if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
   return;
@@ -6535,7 +6536,32 @@ Tabs.News = {
   },
 
 }
+Tabs.Scripter = {
+	tabOrder: 99000,
+	tabDisabled : !Options.ScripterTab,
+	tabLabel : 'Scripter',
+	myDiv : null,
+	
+	init : function (div) {
+		var t = Tabs.Scripter
+		t.myDiv = div;
+		var m = '<DIV class=pbStat>Scripter</div><br>';
+		m += '<center><INPUT id=SCode type=text size=70 maxlength=120 value="" \></center>'
+		div.innerHTML = m;
+		
+		document.getElementById('SCode').addEventListener ('keypress', function (e){
+		if(e.which == 13)
+			eval(this.value);
+		}, false);
+	},
+  hide : function (){
+    var t = Tabs.Scripter;
+  },
 
+  show : function (){
+    var t = Tabs.Scripter;
+  },	
+}
 
 
 /*********************************** Test TAB ***********************************/
@@ -6635,7 +6661,7 @@ Tabs.Test = {
 }
 
 
- /****************************  Transport Implementation  *******************************/
+ /****************************  Transport Tab  *******************************/
 Tabs.transport = {
     tabOrder: 101,
     tabLabel: 'Transport',
@@ -7052,13 +7078,13 @@ Tabs.transport = {
           t.Gold = parseIntCommas(document.getElementById('pbtradeamountGold').value);
         t.Astone = parseIntCommas(document.getElementById('pbtradeamountAstone').value)*5;
         var unit = document.getElementById('TransportTroop').value;
-        t.Troops = parseInt(Seed.units['city' + t.tcp.city.id][unit]);
+        t.Troops = Number(Seed.units['city' + t.tcp.city.id][unit]);
         var featherweight = parseInt(Seed.tech.tch10) * 0.1;
         var loadEffectBoost = 0;
         if (Seed.playerEffects.loadExpire > unsafeWindow.unixtime()) {
             loadEffectBoost = 0.25;
         };
-        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01) + loadEffectBoost+featherweight;
+        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01);
         
                 if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
                     loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
@@ -7067,7 +7093,7 @@ Tabs.transport = {
                     if (unsafeWindow.cm.unitFrontendType[unit] == "horsed") {
                         loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
                     };
-        var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
+        var Load = Number(unsafeWindow.unitstats[unit]['5']);
         
         /**
         from camelotmain
@@ -7098,10 +7124,12 @@ Tabs.transport = {
         
         **/
         
-        
+        if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100))
+        loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
         
         loadBoostBase += 1;
-        var LoadUnit = loadBoostBase*Load;
+        loadBoostBase += loadEffectBoost+featherweight;
+        var LoadUnit = Math.floor(loadBoostBase*Load);
         var GlobalMaxLoad = t.Troops * LoadUnit;
         t.MaxLoad = parseInt(document.getElementById('TroopsToSend')
             .value) * LoadUnit;
@@ -10820,6 +10848,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> '+translate("Auto delete transport reports to you")+'</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> '+translate("Auto delete wild reports")+'</td></tr>\
         <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest reports regardless of target type")+'</td></tr>\
+        <TR><TD><INPUT id=advanced type=checkbox /></td><TD> '+translate("Scripters tab")+'</td></tr>\
         </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
         m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
       div.innerHTML = m;
@@ -10887,7 +10916,8 @@ Tabs.Options = {
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
       t.togOpt ('deletes1toggle', 'DeleteMsgs1');
-      t.togOpt ('deletes2toggle', 'DeleteMsgs2');          
+      t.togOpt ('deletes2toggle', 'DeleteMsgs2');      
+      t.togOpt ('advanced', 'ScripterTab');          
 
       
     } catch (e) {
