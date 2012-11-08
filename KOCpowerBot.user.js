@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121108a
+// @version        20121108b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121108a';
+var Version = '20121108b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -145,6 +145,7 @@ var Options = {
   curMarchTab : "transport",
   BreakingNews : 0,
   ScripterTab : false,
+  KMagicBox : false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -719,7 +720,7 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
-  killbox();
+	killbox();
 }
 
 /************************ Food Alerts *************************/
@@ -10849,6 +10850,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> '+translate("Auto delete wild reports")+'</td></tr>\
         <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest reports regardless of target type")+'</td></tr>\
         <TR><TD><INPUT id=advanced type=checkbox /></td><TD> '+translate("Scripters tab")+'</td></tr>\
+        <TR><TD><INPUT id=MAgicBOx type=checkbox /></td><TD> '+translate("Kill merlins magic box's on startup")+'</td></tr>\
         </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
         m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
       div.innerHTML = m;
@@ -10916,8 +10918,9 @@ Tabs.Options = {
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
       t.togOpt ('deletes1toggle', 'DeleteMsgs1');
-      t.togOpt ('deletes2toggle', 'DeleteMsgs2');      
-      t.togOpt ('advanced', 'ScripterTab');          
+      t.togOpt ('deletes2toggle', 'DeleteMsgs2');
+      t.togOpt ('advanced', 'ScripterTab');
+      t.togOpt ('MAgicBOx', 'KMagicBox');
 
       
     } catch (e) {
@@ -20896,10 +20899,16 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 	this.value = this.value.replace(/NA/g,"N­A");
 	this.value = this.value.replace(/na/g,"n­a");
 }, false);
+var kboxtime = 1;
 function killbox () {
+	kboxtime += 1;
+	if(!Options.KMagicBox)
+		return;
+	if (kboxtime > 50)
+		return;
 	if (Number(unsafeWindow.seed.items.i599) == 0)
 		return;
-	if(!document.getElementById('modal_mmb')) 
+	if(!document.getElementById('modalBox1')) 
 		setTimeout(killbox,100);
 	else {
 		document.getElementById('modalBox1').hidden = true;
