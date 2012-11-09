@@ -6799,13 +6799,7 @@ Tabs.transport = {
             var max = t.Troops;
             var maxCalced = 0;
             if (t.Troops > (rallypointlevel)) max = (rallypointlevel);
-            if (total > 0) {
-                document.getElementById('TroopsToSend')
-                    .value = maxCalced;
-            } else {
-                document.getElementById('TroopsToSend')
-                    .value = max;
-            }
+            document.getElementById('TroopsToSend').value = max;
         }, false);
         document.getElementById('MaxFood')
             .addEventListener('click', function () {
