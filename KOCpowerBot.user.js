@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121109b
+// @version        20121109c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121109b';
+var Version = '20121109c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -15282,6 +15282,7 @@ var ChatPane = {
   HandleChatPane : function() {
     var DisplayName = GetDisplayName();
     var AllianceChatBox=document.getElementById('mod_comm_list2');
+    var GlobalChatBox=document.getElementById('mod_comm_list1');
     
     if(AllianceChatBox){
         var chatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", AllianceChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
@@ -15337,6 +15338,20 @@ var ChatPane = {
             }    
         }    
     }
+	if(Options.DeleteRequest) {
+		var gchatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", GlobalChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+			if(gchatPosts)
+				for (var i = 0; i < gchatPosts.snapshotLength; i++) {
+					var gthisPost = gchatPosts.snapshotItem(i);
+                    var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", gthisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+                    if(helpAllianceLinks){
+                        for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+                            thisLink = helpAllianceLinks.snapshotItem(j);
+                            thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
+                        }
+                    }
+				}
+	}
   },
 
 }
