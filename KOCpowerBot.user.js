@@ -550,6 +550,7 @@ function kabamStandAlone (){
   }
 
 function HandlePublishPopup() {
+	if(GlobalOptions.autoPublishGamePopups){
 	// Check the app id (we only want to handle the popup for kingdoms of camelot)
 		var FBInputForm = document.getElementById('uiserver_form');
 		//logit("FBInputForm "+FBInputForm);
@@ -584,6 +585,7 @@ function HandlePublishPopup() {
 			}		
 		}
 		setTimeout(HandlePublishPopup, 1000);
+	}
 }
 
 var Cities = {};
@@ -678,7 +680,6 @@ function pbStartup (){
     Options.pbWinPos.x = c.x+4;
     Options.pbWinPos.y = c.y+c.height;
     saveOptions ();
-    
   }
 
   // Reset window xPos if the widescreen option is disabled
@@ -6794,15 +6795,11 @@ Tabs.transport = {
         }, false);
         document.getElementById('MaxTroops')
             .addEventListener('click', function () {
-            var rallypointlevel = t.getRallypoint('city' + t.tcp.city.id);
-            if (rallypointlevel == 11) rallypointlevel = 15;
-            if (rallypointlevel == 12) rallypointlevel = 20;
+            var rallypointlevel = March.getMaxSize(t.tcp.city.id);
             var max = t.Troops;
             var maxCalced = 0;
-            if (t.Troops > (rallypointlevel * 10000)) max = (rallypointlevel * 10000);
-            total = t.calcTRBoosts(66);
+            if (t.Troops > (rallypointlevel)) max = (rallypointlevel);
             if (total > 0) {
-                maxCalced = max + (max * (total / 100))
                 document.getElementById('TroopsToSend')
                     .value = maxCalced;
             } else {
@@ -7079,13 +7076,13 @@ Tabs.transport = {
           t.Gold = parseIntCommas(document.getElementById('pbtradeamountGold').value);
         t.Astone = parseIntCommas(document.getElementById('pbtradeamountAstone').value)*5;
         var unit = document.getElementById('TransportTroop').value;
-        t.Troops = Number(Seed.units['city' + t.tcp.city.id][unit]);
+        t.Troops = parseInt(Seed.units['city' + t.tcp.city.id][unit]);
         var featherweight = parseInt(Seed.tech.tch10) * 0.1;
         var loadEffectBoost = 0;
         if (Seed.playerEffects.loadExpire > unsafeWindow.unixtime()) {
             loadEffectBoost = 0.25;
         };
-        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01);
+        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01) + loadEffectBoost+featherweight;
         
                 if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
                     loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
@@ -7094,7 +7091,7 @@ Tabs.transport = {
                     if (unsafeWindow.cm.unitFrontendType[unit] == "horsed") {
                         loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
                     };
-        var Load = Number(unsafeWindow.unitstats[unit]['5']);
+        var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
         
         /**
         from camelotmain
@@ -7592,10 +7589,8 @@ Tabs.transport = {
       
       if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]);
       else var wagons =  parseInt(Seed.units[cityID][t.tradeRoutes[count]['TroopType']]);
-      var rallypointlevel = t.getRallypoint(cityID);    
-          if (rallypointlevel == 11) rallypointlevel = 15;
-          if (rallypointlevel == 12) rallypointlevel = 20;
-        if (parseInt(wagons) > parseInt(rallypointlevel*10000)){ wagons = (rallypointlevel*10000); }
+      var rallypointlevel = March.getMaxSize(city);
+        if (parseInt(wagons) > parseInt(rallypointlevel)){ wagons = (rallypointlevel); }
         
       if (t.tradeRoutes[count]['TroopType'] == undefined) var unit = 'unt9';
       else var unit = t.tradeRoutes[count]['TroopType'];
@@ -14840,12 +14835,12 @@ function distance (d, f, c, e) {
 function getCityBuilding (cityId, buildingId){
   var b = Seed.buildings['city'+cityId];
   var ret = {count:0, maxLevel:0};
-  for (var i=1; i<33; i++){
-    if (b['pos'+i] && b['pos'+i][0] == buildingId){
-      ++ret.count;
-      if (parseInt(b['pos'+i][1]) > ret.maxLevel)
-        ret.maxLevel = parseInt(b['pos'+i][1]);
-    }
+  for( var k in b){
+	if(b[k] && b[k][0] == buildingId){
+		++ret.count;
+		if(parseInt(b[k][1]) > ret.maxLevel)
+			ret.maxLevel = parseInt(b[k][1]);
+	}
   }
   return ret;
 }
@@ -18157,13 +18152,9 @@ Tabs.Apothecary = {
     for (var cid in Cities.byID){
         var city = 'city'+cid;
         var x = Cities.byID[cid].idx;
-        t.cities[x] = true;
-        for (var y in Seed.buildings[city]) {
-            if (Seed.buildings[city][y][0] == 21){
-                t.cities[x] = false;
-                continue;
-            }
-        }
+        t.cities[x] = (getCityBuilding(cid, 21).count>0)?false: true;
+		if(t.cities[x])
+			t.cities[x] = (getCityBuilding(cid, 23).count>0)?false: true;
     }
     t.citysel = new CdispCityPicker ('pbapo_sel', document.getElementById("pbapothecary_citysel"), true, null, 0, t.cities);
     t.timer = setTimeout(t.loop,5000);
@@ -19993,13 +19984,15 @@ var March = {
             t.sendMarch(opts.params, opts.callback);
         } else {
             t.queue.push(opts);
-            setTimeout(t.loop, 2000);
+            //setTimeout(t.loop, 2000);
         }
     },
     loop : function (){
+        var t = this;
         if(t.currentrequests < 5){
             var opts = t.queue.shift();
-            t.sendMarch(opts.params, opts.callback);
+			if(opts)
+				t.sendMarch(opts.params, opts.callback);
         }
     },
     getQueueLength : function (){
@@ -20007,6 +20000,136 @@ var March = {
         return t.queue.length;
     },
     //End march queue
+	
+	//Call March.RallyPoint(cityId) to get all values
+	RallyPoint : function (cityId){
+		var t = this;
+		var ret = {};
+		ret.level = t.getRallyPointLevel(cityId);
+		ret.maxSlots = t.getTotalSlots(cityId);
+		ret.marching = t.getMarchSlots(cityId);
+		ret.emptySlots = t.getEmptySlots(cityId);
+		ret.maxSize = t.getMaxSize(cityId);
+		return ret;
+	},
+	
+	//Rallypoint
+	getRallypointLevel : function (cityId){
+        var t = this;
+		cityId = "city"+cityId;
+		rallypointlevel = 0;
+		for (var o in Seed.buildings[cityId]){
+			var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+			var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+			if (buildingType == 12) rallypointlevel=parseInt(buildingLevel);
+		}
+	},
+	getTotalSlots : function (cityId){
+        var t = this;
+		var ascended = t.getAscendedStats(cityId);
+		var rallypointlevel = t.getRallypointLevel(cityId);
+		var slots = rallypointlevel; //Set default number of slots to rallypointlevel
+		if(ascended.isPrestigeCity){
+			switch(ascended.prestigeLevel){
+				case 1:
+					slots += 1;
+					break;
+				case 2:
+					slots += 2;
+					break;
+				case 3:
+					slots += 3;
+					break;
+				default:
+					//Do nothing
+					break;
+			}
+		}
+		return slots;
+	},
+	getMarchSlots : function (cityId){
+        var t = this;
+		cityId = "city"+cityId;
+		var slots=0;
+		if (Seed.queue_atkp[cityId] != undefined){
+			for(var k in Seed.queue_atkp[cityId]){
+				var m = Seed.queue_atkp[cityId][k];
+				if(m.marchType == 9){
+					if(m.botMarchStatus != 3 || m.botState != 3){ //If raid is stopped take it as empty slot
+						slots++;
+					}
+				} else {
+					slots++;				
+				}
+			}
+			if(Seed.queue_atkp[cityId].toSource() == "[]")
+				slots = 0;
+		} else {
+            slots=0;
+		}
+		return slots;
+	},
+	getEmptySlots : function (cityId){
+        var t = this;
+		var slots = t.getTotalSlots(cityId);
+		slots -= t.getMarchSlots(cityId);
+		if(slots < 0) //For the odd chance more waves get sent out than allowed
+			slots = 0;
+		return slots;
+	},
+	getMaxSize : function (cityId){
+		var t = this;
+		var rallypointlevel = getCityBuilding(cityId, 12).maxLevel;
+		var ascended = t.getAscendedStats(cityId);
+		var buff = 1;
+		var max = 0;
+		var now = unixTime();
+		if (Seed.playerEffects.aurasExpire) {
+			if (Seed.playerEffects.aurasExpire > now) {
+				buff = 1.15
+			}
+		}
+		if (Seed.playerEffects.auras2Expire) {
+			if (Seed.playerEffects.auras2Expire > now) {
+				buff = 1.3
+			}
+		}
+		var tr = equippedthronestats(66);
+		if(ascended.isPrestigeCity){
+			var b = ascended.prestigeLevel;
+			var r = unsafeWindow.cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST"),
+                m = JSON.parse(r),
+                u = m.values[b - 1][1],
+                k = parseFloat(u);
+            buff *= k
+		}
+		switch(rallypointlevel){
+			case 11:
+				max = 150000 * buff;
+				break;
+			case 12:
+				max = 200000 * buff;
+				break;
+			default:
+				max = (rallypointlevel * 100000) * buff;
+				break;
+		}
+		return max;
+	},
+	getAscendedStats : function (cityId){
+		var t = this;
+		var ret = {};
+		if(Seed.cityData.city[cityId].isPrestigeCity){
+			ret.isPrestigeCity = true;
+			ret.prestigeLevel = parseInt(Seed.cityData.city[cityId].prestigeInfo.prestigeLevel);
+			ret.prestigeType = parseInt(Seed.cityData.city[cityId].prestigeInfo.prestigeType);
+			ret.blessings = parseInt(Seed.cityData.city[cityId].prestigeInfo.blessings);
+		} else {
+			ret.isPrestigeCity = false;
+		}
+		return ret;
+	},
+	//End Rallypoint
   
     sendMarch : function (params, callback){
         var t = this;
@@ -20021,7 +20144,6 @@ var March = {
                 --t.currentrequests;
                 var rslt = eval("(" + transport.responseText + ")");
                  if (rslt.updateSeed) {
-					 logit('updated seed via march.php');
                         unsafeWindow.update_seed(rslt.updateSeed)
                     }
                 if (rslt.ok) {
@@ -20915,5 +21037,26 @@ function killbox () {
 		document.getElementById('modalCurtain1').outerHTML= 'Modal.hideModal();';
 	};
 };
+
+function equippedthronestats (stat_id){
+	var current_slot = Seed.throne.activeSlot;
+	var equip_items = Seed.throne.slotEquip[current_slot];
+	var total = 0;
+	for(var k = 0; k<equip_items.length; k++){
+		var item_id = equip_items[k];
+		var item = unsafeWindow.kocThroneItems[item_id];
+		for(var i = 1; i<=item.quality; i++){
+			var id = item["effects"]["slot"+i]["id"];
+			if(id == stat_id){
+				var tier = parseInt(item["effects"]["slot"+i]["tier"]);
+				var level = item["level"];
+				var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+				var Percent = p.base + ((level * level + level) * p.growth * 0.5);
+				total += Percent;
+			}
+		}
+	}
+	return total;
+}
 
 pbStartup ();
