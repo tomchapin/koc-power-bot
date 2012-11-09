@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121109a
+// @version        20121109b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121109a';
+var Version = '20121109b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18736,6 +18736,275 @@ Tabs.Combat = {
     
     },
 }
+
+/**************************** Inventory Tab ****************************************/
+Tabs.Inventory = {
+	myDiv: null,
+	general: [],
+	combat: [],
+	resources: [],
+	chest: [],
+	court: [],
+	type: null,
+	queue:[],
+	isBusy:false,
+	counter:0,
+	max:0,
+	
+	init: function(div){
+		var t = Tabs.Inventory;
+		t.myDiv = div;
+		
+		var m = "<DIV class=pbStat>Inventory Tab</div>\
+				<CENTER><span class=boldRed>***Use at own risk***</span></center>\
+				<TABLE width=100% ><TR>\
+				<TD width=50%><input type=submit id=pbinventory_general value='General' />\
+					<input type=submit id=pbinventory_combat value='Combat' />\
+					<input type=submit id=pbinventory_resources value='Resources' />\
+					<input type=submit id=pbinventory_chest value='Chest' />\
+					<input type=submit id=pbinventory_court value='Court' /></td>\
+				<TD width=50% align=center ><input type=submit id=pbinventory_start value='Start' /></td>\
+					</tr></table>\
+				<DIV class=pbStat>Items</div>\
+				<DIV id=pbinventory></div>\
+				<DIV id=pbinventory_info></div>";
+		t.myDiv.innerHTML = m;
+		t.sort_Items();
+		
+		$("pbinventory_general").addEventListener('click', t.display_general, false);
+		$("pbinventory_combat").addEventListener('click', t.display_combat, false);
+		$("pbinventory_resources").addEventListener('click', t.display_resources, false);
+		$("pbinventory_chest").addEventListener('click', t.display_chest, false);
+		$("pbinventory_court").addEventListener('click', t.display_court, false);
+		$("pbinventory_start").addEventListener('click', t.start, false);
+		
+		$("pbinventory_general").click();
+	},
+	
+	sort_Items : function (){
+		var t = Tabs.Inventory;
+		for(var k in unsafeWindow.ksoItems){
+			var item = unsafeWindow.ksoItems[k];
+			if(item.count > 0 && item.usable){
+				if(item.category == 1){
+					t.general.push(item);
+				}
+				if(item.category == 3){
+					t.combat.push(item);
+				}
+				if(item.category == 4){
+					t.resources.push(item);
+				}
+				if(item.category == 5){
+					t.chest.push(item);
+				}
+				if(item.category == 6){
+					t.court.push(item);
+				}
+				
+			}
+		}
+	},
+	
+	display_general : function (){
+		var t = Tabs.Inventory;
+		t.type = "general";
+		var div = document.getElementById("pbinventory");
+		var count = 0;
+		var m = "<TABLE>";
+		m += "<TR><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='10px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='20px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td></tr><TR>";
+		for (var k in t.general){
+			var item = t.general[k];
+			if(!item.name) continue;
+			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
+			m += "<TD><input type=checkbox class='pbinv_general' data-ft='"+JSON.stringify(item)+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
+			m += "<TD><input type=text size=3 id='pb_inv_general_"+item.id+"' /></td>";
+			m += "<TD>"+item.count+"</td>";
+			m += (count%3 == 2)?"</tr>":"";
+			count++;
+		}
+		m += "</table>";
+		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+	},
+	display_combat : function (){
+		var t = Tabs.Inventory;
+		t.type = "combat";
+		var div = document.getElementById("pbinventory");
+		var count = 0;
+		var m = "<TABLE>";
+		m += "<TR><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='10px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='20px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td></tr><TR>";
+		for (var k in t.combat){
+			var item = t.combat[k];
+			if(!item.name) continue;
+			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
+			m += "<TD><input type=checkbox class='pbinv_combat' data-ft='"+JSON.stringify(item)+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
+			m += "<TD><input type=text size=3 id='pb_inv_combat_"+item.id+"' /></td>";
+			m += "<TD>"+item.count+"</td>";
+			m += (count%3 == 2)?"</tr>":"";
+			count++;
+		}
+		m += "</table>";
+		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+	},
+	display_resources : function (){
+		var t = Tabs.Inventory;
+		t.type = "resources";
+		var div = document.getElementById("pbinventory");
+		var count = 0;
+		var m = "<TABLE>";
+		m += "<TR><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='10px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='20px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td></tr><TR>";
+		for (var k in t.resources){
+			var item = t.resources[k];
+			if(!item.name) continue;
+			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
+			m += "<TD><input type=checkbox class='pbinv_resources' data-ft='"+JSON.stringify(item)+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
+			m += "<TD><input type=text size=3 id='pb_inv_resources_"+item.id+"' /></td>";
+			m += "<TD>"+item.count+"</td>";
+			m += (count%3 == 2)?"</tr>":"";
+			count++;
+		}
+		m += "</table>";
+		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+	},
+	display_chest : function (){
+		var t = Tabs.Inventory;
+		t.type = "chest";
+		var div = document.getElementById("pbinventory");
+		var count = 0;
+		var m = "<TABLE>";
+		m += "<TR><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='10px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='20px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td></tr><TR>";
+		for (var k in t.chest){
+			var item = t.chest[k];
+			if(!item.name) continue;
+			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
+			m += "<TD><input type=checkbox class='pbinv_chest' data-ft='"+JSON.stringify(item)+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
+			m += "<TD><input type=text size=3 id='pb_inv_chest_"+item.id+"' /></td>";
+			m += "<TD>"+item.count+"</td>";
+			m += (count%3 == 2)?"</tr>":"";
+			count++;
+		}
+		m += "</table>";
+		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+	},
+	display_court : function (){
+		var t = Tabs.Inventory;
+		t.type = "court";
+		var div = document.getElementById("pbinventory");
+		var count = 0;
+		var m = "<TABLE>";
+		m += "<TR><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='10px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='20px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td></tr><TR>";
+		for (var k in t.court){
+			var item = t.court[k];
+			if(!item.name) continue;
+			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
+			m += "<TD><input type=checkbox class='pbinv_court' data-ft='"+JSON.stringify(item)+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
+			m += "<TD><input type=text size=3 id='pb_inv_court_"+item.id+"' /></td>";
+			m += "<TD>"+item.count+"</td>";
+			m += (count%3 == 2)?"</tr>":"";
+			count++;
+		}
+		m += "</table>";
+		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+	},
+	
+	start : function (){
+		var t = Tabs.Inventory;
+		if(t.isBusy){
+			t.isBusy = false;
+			$("pbinventory_start").value = "Start";
+		} else {
+			t.isBusy = true;
+			$("pbinventory_start").value = "Stop";
+			t.queue = [];
+			$("pbinventory_info").innerHTML = "";
+			var nodes = document.getElementsByClassName("pbinv_"+t.type);
+			for(var i = 0; i < nodes.length; i++){
+				if(nodes[i].checked){
+					try{
+						t.queue.push(JSON.parse(nodes[i].getAttribute("data-ft")));
+					} catch (e){
+						logit(inspect(e,7,1));
+					}
+				}
+			}
+			if(t.queue.length > 0)
+				t.nextqueue();
+		}
+	},
+	
+	nextqueue : function (){
+		var t = Tabs.Inventory;
+		if(!t.isBusy)
+			return;
+		var div = $("pbinventory_info");
+		var m = document.createElement('span');
+		if(t.queue.length > 0){
+			var item = t.queue[0];
+			t.counter = 0;
+			t.max = parseIntNan($("pb_inv_"+t.type+"_"+item.id).value);
+			m.innerHTML = "<span id='pb_inv_info_"+item.id+"'>Using item "+item.name+" <span id='pb_inv_info_count_"+item.id+"'>1</span> of <span id='pb_inv_info_max_"+item.id+"'>"+t.max+"</span>. Left <span id='pb_inv_info_left_"+item.id+"'>"+(t.max-t.counter)+"</span> <span id='pb_inv_info_extra_"+item.id+"'> </span></span><br />";
+		} else {
+			m.innerHTML = "Completed! \n";
+			t.isBusy = false;
+			$("pbinventory_start").value = "Start";
+		}
+		if(div.firstChild){
+			div.insertBefore(m, div.firstChild);
+		} else {
+			div.appendChild(m);
+		}
+		t.useitem();
+	},
+	
+	useitem : function (){
+		var t = Tabs.Inventory;
+		if(!t.isBusy)
+			return;
+		var item = t.queue[0];
+		unsafeWindow.cm.ItemController.use(item.id);
+		setTimeout(t.wait, 250, 0);
+	},
+	
+	wait : function (retries){
+		var t = Tabs.Inventory;
+		if(!t.isBusy)
+			return;
+		var item = t.queue[0];
+		if(unsafeWindow.ksoItems[item.id].count == item.count && retries < 15){
+			$("pb_inv_info_extra_"+item.id).innerHTML = "Waiting.....";
+			retries++;
+			setTimeout(t.wait, 250, retries);
+			return;
+		}
+		item = unsafeWindow.ksoItems[item.id];
+		t.queue[0] = item;
+		t.counter++;
+		$("pb_inv_info_count_"+item.id).innerHTML = t.counter;
+		$("pb_inv_info_left_"+item.id).innerHTML = (t.max-t.counter);
+		if(t.counter >= t.max){
+			$("pb_inv_info_extra_"+item.id).innerHTML = "All done";
+			t.queue.shift();
+			t.nextqueue();
+			return;
+		}
+		$("pb_inv_info_extra_"+item.id).innerHTML = "Done. Wait for 1 second..";
+		setTimeout(t.useitem, 1000);
+	},
+	
+	show: function (){
+	
+	},
+	hide: function (){
+	
+	}
+}
+
+
 /**************************** Start Up Tab ******************************************/
 
 var buildingIDs = {
