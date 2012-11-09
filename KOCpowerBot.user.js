@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121109c
+// @version        20121109d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121109c';
+var Version = '20121109d';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7120,7 +7120,7 @@ Tabs.transport = {
         loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
         
         loadBoostBase += 1;
-        loadBoostBase += loadEffectBoost+featherweight;
+        //loadBoostBase += loadEffectBoost+featherweight; //Already added above
         var LoadUnit = Math.floor(loadBoostBase*Load);
         var GlobalMaxLoad = t.Troops * LoadUnit;
         t.MaxLoad = parseInt(document.getElementById('TroopsToSend')
@@ -7590,9 +7590,30 @@ Tabs.transport = {
       else var unit = t.tradeRoutes[count]['TroopType'];
       var Troops = parseInt(Seed.units[cityID][unit]);
       if(parseInt(Troops)>parseInt(wagons)) Troops = wagons;
-      var featherweight = parseInt(Seed.tech.tch10);
-        var Load = parseInt(unsafeWindow.unitstats[unit]['5'])
-      var maxloadperwagon = (featherweight * ((Load/100)*10)) + Load;
+		
+		var featherweight = parseInt(Seed.tech.tch10) * 0.1;
+        var loadEffectBoost = 0;
+        if (Seed.playerEffects.loadExpire > unsafeWindow.unixtime()) {
+            loadEffectBoost = 0.25;
+        };
+        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01) + loadEffectBoost+featherweight;
+        
+                if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
+                    loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
+                };
+        
+                    if (unsafeWindow.cm.unitFrontendType[unit] == "horsed") {
+                        loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
+                    };
+        var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
+        
+        if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100))
+        loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
+        
+        loadBoostBase += 1;
+        //loadBoostBase += loadEffectBoost+featherweight; //Already added above
+        var LoadUnit = Math.floor(loadBoostBase*Load);
+        var maxloadperwagon = LoadUnit;
           var maxload = (maxloadperwagon * Troops);
           if(wagons <= 0) {return; }
 
