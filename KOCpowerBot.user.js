@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121108b
+// @version        20121109a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121108b';
+var Version = '20121109a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -721,7 +721,7 @@ function pbStartup (){
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
-	killbox();
+  killbox();
 }
 
 /************************ Food Alerts *************************/
@@ -10913,8 +10913,8 @@ Tabs.Options = {
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
       t.togOpt ('deletes1toggle', 'DeleteMsgs1');
-      t.togOpt ('deletes2toggle', 'DeleteMsgs2');
-      t.togOpt ('advanced', 'ScripterTab');
+      t.togOpt ('deletes2toggle', 'DeleteMsgs2');      
+      t.togOpt ('advanced', 'ScripterTab');          
       t.togOpt ('MAgicBOx', 'KMagicBox');
 
       
@@ -17890,8 +17890,9 @@ function readThroneOptions() {
     if (s != null) {
         opts = JSON2.parse(s);
         for (k in opts) {
-            if (matTypeof(opts[k]) == 'object') for (kk in opts[k])
-            ThroneOptions[k][kk] = opts[k][kk];
+            if (matTypeof(opts[k]) == 'object')
+				for (kk in opts[k])
+					ThroneOptions[k][kk] = opts[k][kk];
             else ThroneOptions[k] = opts[k];
         }
     }
