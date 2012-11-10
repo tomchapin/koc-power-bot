@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121110a
+// @version        20121109h
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121110a';
+var Version = '20121109h';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7078,7 +7078,7 @@ Tabs.transport = {
         if (Seed.playerEffects.loadExpire > unsafeWindow.unixtime()) {
             loadEffectBoost = 0.25;
         };
-        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01) + loadEffectBoost+featherweight;
+        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01);
         
                 if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
                     loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
@@ -7121,8 +7121,8 @@ Tabs.transport = {
         if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100))
         loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
         
+        loadBoostBase += loadEffectBoost+featherweight; //should be applied after throne room max setting checked?
         loadBoostBase += 1;
-        //loadBoostBase += loadEffectBoost+featherweight; //Already added above
         var LoadUnit = Math.floor(loadBoostBase*Load);
         var GlobalMaxLoad = t.Troops * LoadUnit;
         t.MaxLoad = parseInt(document.getElementById('TroopsToSend')
