@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121110b
+// @version        20121110c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -12,12 +12,11 @@
 // @include        *facebook.com/dialog/feed*
 // @include        *facebook.com/dialog/stream.publish*
 // @include        *facebook.com/dialog/apprequests*
-// @include        *kabam1-a.akamaihd.net/kingdomsofcamelot/*
 // @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
 
 
-var Version = '20121110b';
+var Version = '20121110c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -20077,21 +20076,16 @@ Tabs.startup = {
         if  (Seed.queue_atkp[cityID].toSource() == "[]")
             slots=0;
         
-        t.getRallypointLevel(cityID);
-        switch (t.rallypointlevel) {
-            case 12:
-                t.rallypointlevel = t.rallypointlevel - 1;
-            default:
-                if (t.rallypointlevel <= slots) {
-                    if (CrestData.length == 1) {
-                        t.timer = setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
-                    } else {
-                        t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+        var march_slots = March.getEmptySlots(cityID.split("city")[1]);
+        if (march_slots < 1) {
+           if (CrestData.length == 1) {
+            t.timer = setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
+         } else {
+            t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
                     }
-                    return;
-                    break;
-                }
-        }
+          return;
+    
+    }
 
         if  (t.knt.toSource() == "[]") {
             t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
@@ -20103,14 +20097,14 @@ Tabs.startup = {
        }else {
             var now = new Date().getTime()/1000.0;
             now = now.toFixed(0);
-            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + (Options.Crestinterval*2) + 20)) {
+            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + (Options.Crestinterval*2) + 2)) {
                 r=1;
             }
         }
                 saveCrestData();
         switch(r) {
             case 1:
-                if ((t.rallypointlevel-slots) < 2) {
+                if ((march_slots) < 2) {
                     t.timer = setTimeout(function(){ t.Rounds(1,retry,CrestDataNum+1);},Options.Crestinterval*1000);
                     return;
                 }
@@ -20345,6 +20339,7 @@ var March = {
 			var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
 			if (buildingType == 12) rallypointlevel=parseInt(buildingLevel);
 		}
+		return rallypointlevel;
 	},
 	getTotalSlots : function (cityId){
         var t = this;
