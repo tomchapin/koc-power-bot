@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121109f
+// @version        20121109g
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121109f';
+var Version = '20121109g';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -15297,7 +15297,6 @@ var ChatPane = {
   HandleChatPane : function() {
     var DisplayName = GetDisplayName();
     var AllianceChatBox=document.getElementById('mod_comm_list2');
-    var GlobalChatBox=document.getElementById('mod_comm_list1');
     
     if(AllianceChatBox){
         var chatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", AllianceChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
@@ -15353,20 +15352,6 @@ var ChatPane = {
             }    
         }    
     }
-	if(Options.DeleteRequest) {
-		var gchatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", GlobalChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-			if(gchatPosts)
-				for (var i = 0; i < gchatPosts.snapshotLength; i++) {
-					var gthisPost = gchatPosts.snapshotItem(i);
-                    var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", gthisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-                    if(helpAllianceLinks){
-                        for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
-                            thisLink = helpAllianceLinks.snapshotItem(j);
-                            thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
-                        }
-                    }
-				}
-	}
   },
 
 }
@@ -21346,13 +21331,15 @@ function equippedthronestats (stat_id){
 		var item_id = equip_items[k];
 		var item = unsafeWindow.kocThroneItems[item_id];
 		for(var i = 1; i<=item.quality; i++){
-			var id = item["effects"]["slot"+i]["id"];
-			if(id == stat_id){
-				var tier = parseInt(item["effects"]["slot"+i]["tier"]);
-				var level = item["level"];
-				var p = unsafeWindow.cm.thronestats.tiers[id][tier];
-				var Percent = p.base + ((level * level + level) * p.growth * 0.5);
-				total += Percent;
+			if(item["effects"]["slot"+i]){
+				var id = item["effects"]["slot"+i]["id"];
+				if(id == stat_id){
+					var tier = parseInt(item["effects"]["slot"+i]["tier"]);
+					var level = item["level"];
+					var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+					var Percent = p.base + ((level * level + level) * p.growth * 0.5);
+					total += Percent;
+				}
 			}
 		}
 	}
