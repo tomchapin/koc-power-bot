@@ -123,6 +123,8 @@ var Options = {
   DeleteMsgs0  : false,
   DeleteMsgs1  : false,
   DeleteMsgs2  : false,
+  DeleteMsgs3  : false,
+  DeleteMsgsA  : null,
   Foodstatus   : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   Creststatus  : {1101:0,1102:0,1103:0,1104:0,1105:0,1106:0,1107:0,1108:0,1109:0,1110:0,1111:0,1112:0,1113:0,1114:0,1115:0},
   LastReport   : 0,
@@ -10859,6 +10861,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> '+translate("Auto delete transport reports to you")+'</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> '+translate("Auto delete wild reports")+'</td></tr>\
         <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest reports regardless of target type")+'</td></tr>\
+        <TR><TD><INPUT id=deletes3toggle type=checkbox /></td><TD> '+translate("Auto delete incoming attack reports from alliances I'm friendly to")+'</td></tr>\
         <TR><TD><INPUT id=advanced type=checkbox /></td><TD> '+translate("Scripters tab")+'</td></tr>\
         <TR><TD><INPUT id=MAgicBOx type=checkbox /></td><TD> '+translate("Kill merlins magic box's on startup")+'</td></tr>\
         </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
@@ -10928,7 +10931,8 @@ Tabs.Options = {
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
       t.togOpt ('deletes1toggle', 'DeleteMsgs1');
-      t.togOpt ('deletes2toggle', 'DeleteMsgs2');      
+      t.togOpt ('deletes2toggle', 'DeleteMsgs2');    
+      t.togOpt ('deletes3toggle', 'DeleteMsgs3');      
       t.togOpt ('advanced', 'ScripterTab');          
       t.togOpt ('MAgicBOx', 'KMagicBox');
 
@@ -15297,6 +15301,7 @@ var ChatPane = {
   HandleChatPane : function() {
     var DisplayName = GetDisplayName();
     var AllianceChatBox=document.getElementById('mod_comm_list2');
+    var GlobalChatBox=document.getElementById('mod_comm_list1');
     
     if(AllianceChatBox){
         var chatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", AllianceChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
@@ -15352,6 +15357,20 @@ var ChatPane = {
             }    
         }    
     }
+	if(Options.DeleteRequest) {
+		var gchatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", GlobalChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+			if(gchatPosts)
+				for (var i = 0; i < gchatPosts.snapshotLength; i++) {
+					var gthisPost = gchatPosts.snapshotItem(i);
+                    var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", gthisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+                    if(helpAllianceLinks){
+                        for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+                            thisLink = helpAllianceLinks.snapshotItem(j);
+                            thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
+                        }
+                    }
+				}
+	}
   },
 
 }
@@ -17925,7 +17944,7 @@ var DeleteReports = {
     
     startdeletereports : function(){
         var t = DeleteReports;
-          if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2)){
+          if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2 || Options.DeleteMsgs3)){
               t.deleting = true;
               t.fetchreport(0, t.checkreports);
           }
@@ -17989,6 +18008,16 @@ var DeleteReports = {
                 }
 
             }
+            if (Options.DeleteMsgs3){
+				//alert(inspect(unsafeWindow.seed.allianceDiplomacies.friendlyToThem.a99.allianceId));
+				//alert(inspect(reports[k]));
+                for(i in CrestData) {
+					for (l in unsafeWindow.seed.allianceDiplomacies.friendlyToThem) {
+						if(reports[k].side1AllianceId == unsafeWindow.seed.allianceDiplomacies.friendlyToThem[l].allianceId)
+                        deletes1.push(k.substr(2));
+					}
+                }
+			}            
         }
         if(deletes1.length > 0 || deletes0.length > 0){
             t.deleteCheckedReports(deletes1, deletes0);
@@ -21331,15 +21360,13 @@ function equippedthronestats (stat_id){
 		var item_id = equip_items[k];
 		var item = unsafeWindow.kocThroneItems[item_id];
 		for(var i = 1; i<=item.quality; i++){
-			if(item["effects"]["slot"+i]){
-				var id = item["effects"]["slot"+i]["id"];
-				if(id == stat_id){
-					var tier = parseInt(item["effects"]["slot"+i]["tier"]);
-					var level = item["level"];
-					var p = unsafeWindow.cm.thronestats.tiers[id][tier];
-					var Percent = p.base + ((level * level + level) * p.growth * 0.5);
-					total += Percent;
-				}
+			var id = item["effects"]["slot"+i]["id"];
+			if(id == stat_id){
+				var tier = parseInt(item["effects"]["slot"+i]["tier"]);
+				var level = item["level"];
+				var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+				var Percent = p.base + ((level * level + level) * p.growth * 0.5);
+				total += Percent;
 			}
 		}
 	}
