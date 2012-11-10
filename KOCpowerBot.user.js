@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121109g
+// @version        20121109h
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121109g';
+var Version = '20121109h';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -124,7 +124,6 @@ var Options = {
   DeleteMsgs1  : false,
   DeleteMsgs2  : false,
   DeleteMsgs3  : false,
-  DeleteMsgsA  : null,
   Foodstatus   : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   Creststatus  : {1101:0,1102:0,1103:0,1104:0,1105:0,1106:0,1107:0,1108:0,1109:0,1110:0,1111:0,1112:0,1113:0,1114:0,1115:0},
   LastReport   : 0,
@@ -21360,13 +21359,15 @@ function equippedthronestats (stat_id){
 		var item_id = equip_items[k];
 		var item = unsafeWindow.kocThroneItems[item_id];
 		for(var i = 1; i<=item.quality; i++){
-			var id = item["effects"]["slot"+i]["id"];
-			if(id == stat_id){
-				var tier = parseInt(item["effects"]["slot"+i]["tier"]);
-				var level = item["level"];
-				var p = unsafeWindow.cm.thronestats.tiers[id][tier];
-				var Percent = p.base + ((level * level + level) * p.growth * 0.5);
-				total += Percent;
+			if(item["effects"]["slot"+i]){
+				var id = item["effects"]["slot"+i]["id"];
+				if(id == stat_id){
+					var tier = parseInt(item["effects"]["slot"+i]["tier"]);
+					var level = item["level"];
+					var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+					var Percent = p.base + ((level * level + level) * p.growth * 0.5);
+					total += Percent;
+				}
 			}
 		}
 	}
