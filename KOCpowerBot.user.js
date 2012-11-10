@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121109e
+// @version        20121109f
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121109e';
+var Version = '20121109f';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -19005,12 +19005,12 @@ Tabs.Inventory = {
 		if(!t.isBusy)
 			return;
 		var item = t.queue[0];
-		if(unsafeWindow.ksoItems[item.id].count == item.count && retries < 4){
-			$("pb_inv_info_extra_"+item.id).innerHTML = "Waiting.....";
-			retries++;
-			setTimeout(t.wait, 250, retries);
-			return;
-		}
+		// if(unsafeWindow.ksoItems[item.id].count == item.count && retries < 4){
+			// $("pb_inv_info_extra_"+item.id).innerHTML = "Waiting.....";
+			// retries++;
+			// setTimeout(t.wait, 250, retries);
+			// return;
+		// }
 		item = unsafeWindow.ksoItems[item.id];
 		t.queue[0] = item;
 		t.counter++;
@@ -19023,7 +19023,7 @@ Tabs.Inventory = {
 			return;
 		}
 		$("pb_inv_info_extra_"+item.id).innerHTML = "Done. Wait for 1 second..";
-		setTimeout(t.useitem, 1000);
+		setTimeout(t.useitem, 150);
 	},
 	
 	show: function (){
