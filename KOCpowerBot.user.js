@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121109h
+// @version        20121110a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -17,7 +17,7 @@
 // ==/UserScript==
 
 
-var Version = '20121109h';
+var Version = '20121110a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -116,6 +116,7 @@ var Options = {
   lastreassign : 0,
   HelpRequest  : false,
   DeleteRequest: false,
+  DeletegAl    : false,
   MapShowExtra : false,
   RaidRunning  : false,
   RaidReset    : 0,
@@ -10853,6 +10854,7 @@ Tabs.Options = {
         <TR><TD colspan=2><BR><B>'+translate("Extra Features")+':</b></td></tr>\
         <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>'+translate("Help alliance build/research posts")+'</td></tr>\
         <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>'+translate("Hide alliance requests in chat")+'</td></tr>\
+        <TR><TD><INPUT id=DelAC type=checkbox /></td><TD>'+translate("Hide alliance chat from global chat")+'</td></tr>\
         <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>'+translate("Auto publish Facebook posts for")+' '+ htmlSelector({0:'----', 80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' '+translate("(For all domains)")+'<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
         <TR><TD><INPUT id=cancelReq type=checkbox '+ (GlobalOptions.autoCancelGamePopups?'CHECKED ':'') + '/></td><TD>'+translate("Auto cancel Facebook posts")+'<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
         <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>'+translate("Show Player & Might in map")+'.</td></tr>\
@@ -10926,6 +10928,7 @@ Tabs.Options = {
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
       t.togOpt ('HelReq', 'HelpRequest');
       t.togOpt ('DelReq', 'DeleteRequest');
+      t.togOpt ('DelAC', 'DeletegAl');
       t.togOpt ('MapExtra', 'MapShowExtra');
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
@@ -15356,18 +15359,24 @@ var ChatPane = {
             }    
         }    
     }
-	if(Options.DeleteRequest) {
+	if(Options.DeleteRequest || Options.DeletegAl) {
 		var gchatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", GlobalChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
 			if(gchatPosts)
 				for (var i = 0; i < gchatPosts.snapshotLength; i++) {
 					var gthisPost = gchatPosts.snapshotItem(i);
-                    var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", gthisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-                    if(helpAllianceLinks){
-                        for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
-                            thisLink = helpAllianceLinks.snapshotItem(j);
-                            thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
-                        }
-                    }
+					if(Options.DeletegAl) {
+						var myregexp1 = /\> says to the alliance\:\<\/b\>/i;
+						if (gthisPost.innerHTML.match(myregexp1))
+							gthisPost.parentNode.removeChild(gthisPost);
+					} else {
+						var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", gthisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+						if(helpAllianceLinks){
+							for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+								thisLink = helpAllianceLinks.snapshotItem(j);
+								thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
+							}
+						}
+					}
 				}
 	}
   },
