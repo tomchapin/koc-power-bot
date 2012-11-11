@@ -1,5 +1,20 @@
 REVISION HISTORY:
 ----------------
+20121110c
+   *Disable koc's script checker
+   *Add scripter tab
+   *Add breaking news tab
+   *Updated throne tab
+   *Updated tower tab
+   *Quick add for build tab
+   *Error checking for search tab
+   *Transport tab update for ascension and throne room
+   *Update craft tab
+   *Export tab
+   *Auto train tab update for ascension
+   *Inventory tab
+   *Startup tab
+   *Crest tab fix (or tried to)
 
 20120516b
    *Added throne tab
