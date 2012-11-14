@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121110c
+// @version        20121114a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20121110c';
+var Version = '20121114a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2864,13 +2864,12 @@ salvageCheck : function (){
 						if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;}
                         for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++){
                             type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];
-                            type2 = ThroneOptions.Salvage[y.effects["slot"+i].id];
-                            if (ThroneOptions.Salvage[type] || ThroneOptions.Salvage[type2]) {
+                            if (ThroneOptions.Salvage[type] || ThroneOptions.Salvage[y.effects["slot"+i].id]) {
                                 if(ThroneOptions.SingleStat) {
                                     if(ThroneOptions.Salvage[type]) 
                                     ThroneOptions.Salvage[type]++
-                                    if(ThroneOptions.Salvage[type2])
-                                    ThroneOptions.Salvage[type2]++
+                                    if(ThroneOptions.Salvage[y.effects["slot"+i].id])
+                                    ThroneOptions.Salvage[y.effects["slot"+i].id]++
                                 } else {
                                     number++;
                                 }
@@ -2882,8 +2881,9 @@ salvageCheck : function (){
                         for (h in ThroneOptions.Salvage) {
                             if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep)
                                 number = parseInt(ThroneOptions.Salvage[h] - 1);
-                            if(ThroneOptions.Salvage[h])
-                                ThroneOptions.Salvage[h] = true;
+                            if(ThroneOptions.Salvage[h]) {
+                            logit('salvage '+h+' is '+ThroneOptions.Salvage[h])
+                                ThroneOptions.Salvage[h] = true;};
                         }
                     }
                     // logit(y.name+' '+number);
