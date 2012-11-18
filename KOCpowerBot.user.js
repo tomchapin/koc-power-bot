@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121118a
+// @version        20121118b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20121118a';
+var Version = '20121118b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -29,7 +29,7 @@ var ENABLE_GM_AJAX_TRACE = false;
 var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
-var MAP_DELAY = 1200;
+var MAP_DELAY = 4000;
 
 var DEFAULT_ALERT_SOUND_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
 var SWF_PLAYER_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
@@ -147,6 +147,7 @@ var Options = {
   BreakingNews : 0,
   ScripterTab : false,
   KMagicBox : false,
+  filter : false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -10867,6 +10868,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletes3toggle type=checkbox /></td><TD> '+translate("Auto delete incoming attack reports from alliances I'm friendly to")+'</td></tr>\
         <TR><TD><INPUT id=advanced type=checkbox /></td><TD> '+translate("Scripters tab")+'</td></tr>\
         <TR><TD><INPUT id=MAgicBOx type=checkbox /></td><TD> '+translate("Kill merlins magic box's on startup")+'</td></tr>\
+        <TR><TD><INPUT id=CFilter type=checkbox /></td><TD> '+translate("Defeat kabam chat filter so some words can be said.  ex \'deSCRIPTion\'")+'</td></tr>\
         </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
         m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
       div.innerHTML = m;
@@ -10938,9 +10940,8 @@ Tabs.Options = {
       t.togOpt ('deletes2toggle', 'DeleteMsgs2');    
       t.togOpt ('deletes3toggle', 'DeleteMsgs3');      
       t.togOpt ('advanced', 'ScripterTab');          
-      t.togOpt ('MAgicBOx', 'KMagicBox');
-
-      
+      t.togOpt ('MAgicBOx', 'KMagicBox');       
+      t.togOpt ('CFilter', 'filter');
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }      
@@ -14757,7 +14758,7 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
   var wasSuccess = o.onSuccess;
   var wasFailure = o.onFailure;
   var retry = 0;
-  var delay = 15;
+  var delay = 20;
   var show = true;
   var noRetry = noRetry===true?true:false;
   var silentTimer;
@@ -21318,6 +21319,7 @@ Tabs.ascension = {
 }
 //override for kabams SUPER ANNOYING word filter...   deSCRIPTion
 //The point is to not enable rude/bad words but simply curb some of the excessive filtering
+if(Options.filter)
 document.getElementById('mod_comm_input').addEventListener ('keypress', function(e) {
 	if(e.which != 13)
 	return;
