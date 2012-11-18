@@ -5,3 +5,19 @@ Want to know why something in this script has suddenly gone haywire? Did a chang
 Here is where we will let you know what has changed and what is being done to fix it.
 
 This information will be updated each time you load the game, you will not need to update Bot to be informed.
+
+
+Nov 18, 2012
+
+  I am now becoming familiar with the code state and in doing so have found some small things that will be addressed in the next release:
+  
+  DF tab didnt account for prestige rally point boost
+  Build tab had 45 seconds delay between checks. Down to 10 now.
+  
+  Adding a throttle to DF tab so you can leave it on and it wont waste Aetherstone by sending out marches when the city has an abundent amount. Right now its set to 750K. I'll make this configurable in the future. Note this wont totally prevent you from overflow if you hit level 8 and DFs on auto, but it does a pretty good job at it. I hit 1-8 and it rarely goes over 1M, usually because it dips just below 750K and then sends out a few waves to 8's.
+  
+  Finally....Hello! I am honored to be of service and am officially assisting with maintenance of this code base.
+  
+  Happy Holidays!
+  
+  Unixwizard
