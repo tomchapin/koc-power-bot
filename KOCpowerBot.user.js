@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121114a
+// @version        20121118a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20121114a';
+var Version = '20121118a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -14751,13 +14751,13 @@ function AjaxRequest (url, opts){
 }   
 
 
-function MyAjaxRequest (url, o, noRetryX){
+function MyAjaxRequest (url, o, noRetry){
 if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
   var opts = unsafeWindow.Object.clone(o);
   var wasSuccess = o.onSuccess;
   var wasFailure = o.onFailure;
   var retry = 0;
-  var delay = 3;
+  var delay = 15;
   var show = true;
   var noRetry = noRetry===true?true:false;
   var silentTimer;
@@ -14784,7 +14784,7 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
         rslt = JSON2.parse(msg.responseText);
     } catch(e) {
         //alert(unescape(msg.responseText));
-        if (retry<2) {
+        if (retry<5) {
             rslt = {"ok":false,"error_code":9,"errorMsg":"Failed due to invalid json"}
         } else {
             rslt = {"ok":true,"error_code":9,"data":[]};
@@ -14807,7 +14807,7 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
     if (!noRetry && (rslt.error_code==0 || rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
       dialogRetry (inspect(rslt.errorMsg), delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
     } else if (!noRetry && rslt.error_code==9) {
-        silentTimer = setTimeout(silentRetry, delay*100);
+        silentTimer = setTimeout(silentRetry, delay*1000);
     } else {
       wasSuccess (rslt);
     }
