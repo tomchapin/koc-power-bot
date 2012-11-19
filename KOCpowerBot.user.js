@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121118b
+// @version        20121118c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20121118b';
+var Version = '20121118c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2407,13 +2407,15 @@ PaintSalvageHistory : function() {
                 var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
         } else return;
         var cityid = 0;
+        var cidarray = [];
         for (var k in Cities.byID) {
-            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))//added more than 50k to stop spending gems by accident
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"]+50000)) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))//added more than 50k to stop spending gems by accident
             {
-               cityid = k;
-               break;
+				cidarray.push(k);
             }
         }
+        if(cidarray != [])
+        cityid = cidarray[Math.floor(Math.random() * cidarray.length)];
         if(cityid == 0){
            document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
            return;    
@@ -2500,13 +2502,15 @@ PaintSalvageHistory : function() {
                 var y = unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]];
         } else return;
         var cityid = 0;
+        var cidarray = [];
         for (var k in Cities.byID) {
-            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"])) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))//added more than 50k to stop spending gems by accident
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"]+50000)) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))//added more than 50k to stop spending gems by accident
             {
-               cityid = k;
-               break;
+				cidarray.push(k);
             }
         }
+        if(cidarray != [])
+        cityid = cidarray[Math.floor(Math.random() * cidarray.length)];
         if(cityid == 0){
            document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
            return;    
