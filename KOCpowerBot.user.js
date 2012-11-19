@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121119b
+// @version        20121119c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20121119b';
+var Version = '20121119c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -13388,6 +13388,7 @@ var FairieKiller  = {
 
 /********** facebook watchdog: runs only in 'http://apps.facebook.com/kingdomsofcamelot/*' instance!  ******/
 function facebookWatchdog (){
+	return;//dissabled until we can fix
   var INTERVAL = 50000; // wait 50 seconds minute before checking DOM
   if (!GlobalOptions.pbWatchdog)
     return;
