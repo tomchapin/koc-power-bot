@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121119a
+// @version        20121119b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20121119a';
+var Version = '20121119b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12926,6 +12926,12 @@ Tabs.AutoTrain = {
 					if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(11) == -1)
 					faux = 1;
 				} else faux = 1;
+				if(y == "unt14")
+                if(Seed.cityData.city[citynum].prestigeInfo.blessings) {
+					if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(21) == -1)
+					faux = 1;
+				} else faux = 1;
+				
                 if (faux==0)
                     m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
             }
