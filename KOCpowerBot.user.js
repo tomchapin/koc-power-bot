@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121118c
+// @version        20121119a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20121118c';
+var Version = '20121119a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12864,7 +12864,7 @@ Tabs.Reinforce = {
     },
 }
 
-/************************  AutoTrain Tab ************************/
+/************************  Train Tab ************************/
 Tabs.AutoTrain = {
   tabOrder: 120,
   tabLabel: 'Train',
@@ -13110,14 +13110,16 @@ Tabs.AutoTrain = {
         var t = Tabs.AutoTrain;
         var cityId = Cities.cities[numcity-1].id
         var coutenpop= unsafeWindow.unitcost['unt'+unit][6];
-        var X = Seed.citystats['city'+cityId].pop[1];
-        var Y = unsafeWindow.seed.citystats["city"+cityId].pop[3];
+        var X = Seed.citystats['city'+cityId].pop[1];//max pop
+        var Y = unsafeWindow.seed.citystats["city"+cityId].pop[3];//workers
         var Q= coutenpop;
         var Z = document.getElementById('workers'+numcity).value/100;
         if (Z == 0)
         document.getElementById("max"+numcity).value=parseIntNan((X-Y)/Q);
+        else if (Z == 1)
+        document.getElementById("max"+numcity).value=parseIntNan(X/Q);
         else
-        document.getElementById("max"+numcity).value = parseIntNan(X/Q*Z);
+        document.getElementById("max"+numcity).value = parseIntNan((X-(Y*Z))/Q);
     },
   checkidlepopulation : function(cityId){
     var t = Tabs.AutoTrain;
