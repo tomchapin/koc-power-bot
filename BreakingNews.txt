@@ -1,11 +1,14 @@
 Or, more precisely.... News of What's Broken !!!!!
 
-Want to know why something in this script has suddenly gone haywire? Did a change in the game code affect something in Bot? Is there a problem with the Bot script that's being sorted out?
-
-Here is where we will let you know what has changed and what is being done to fix it.
-
-This information will be updated each time you load the game, you will not need to update Bot to be informed.
-
+Nov 19, 2012
+  "Script is out of date" notice.
+  
+  Just FYI if you get this notice do not fret. The message is not referring to any of the scripts that you are using, eg. Powerbot, powertools, kocattack, etc...
+  Rather it's a system implemented by kabam to ensure that any changes they make to the game will propagate across all players at the same time. The "script" it is referring to is the camelotmain-xxx.js script that runs the game (KOC is a javascript game mostly that's why it's easier to write scripts for).
+  
+  So if you get the message just refresh the game to rid of it. It might take a few refreshes or you can even leave it alone and let powerbot refresh the game on it's own. No biggie.
+  
+  jontey
 
 Nov 18, 2012
 
