@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121119c
+// @version        20121120a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -16,7 +16,7 @@
 // ==/UserScript==
 
 
-var Version = '20121119c';
+var Version = '20121120a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -7511,6 +7511,7 @@ Tabs.transport = {
     
     checkdoTrades: function(){
     var t = Tabs.transport;
+    if(!t.traderState.running) return;
     if(t.tradeRoutes.length==0) return;
     t.doTrades(t.count);
     t.count++;
@@ -7527,6 +7528,7 @@ Tabs.transport = {
     
   doTrades: function(count,tt){
     var t = Tabs.transport;
+    if(!t.traderState.running) return;
        if(t.tradeRoutes.length==0) return;
        if(!t.tradeRoutes[count]["route_state"]) return;
        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -7544,7 +7546,6 @@ Tabs.transport = {
         var city = t.tradeRoutes[count]["city"];
         var cityID = 'city' + city;
         if(!Cities.byID[city]) return;
-        
         var xcoord = t.tradeRoutes[count]["target_x"];
         var ycoord = t.tradeRoutes[count]["target_y"];
         var trade_Food = t.tradeRoutes[count]["trade_Food"];
@@ -20444,7 +20445,7 @@ var March = {
 				max = 200000 * buff;
 				break;
 			default:
-				max = (rallypointlevel * 100000) * buff;
+				max = (rallypointlevel * 10000) * buff;
 				break;
 		}
 		return max;
