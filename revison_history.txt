@@ -1,5 +1,16 @@
 REVISION HISTORY:
 ----------------
+20121121a
+   *Updated to accomodate new @grant for Greasemonkey 1.0+
+   *Fix constant refresh issue
+   *Changed map search delay
+   *Add option to disable chat filter fix
+   *Changed TR upgrader min aetherstone to upgrade/enhance
+   *News tab add last modified string to alert box
+   *Removed unnecessary code
+   *Auto train tab update for Fey city
+   *Removed gift tab
+
 20121110c
    *Disable koc's script checker
    *Add scripter tab

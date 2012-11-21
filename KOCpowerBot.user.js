@@ -10,8 +10,8 @@
 // @include        *facebook.com/dialog/feed*
 
 // @grant       GM_getValue
-// @grant		unsafeWindow
-// @grant		GM_deleteValue
+// @grant       unsafeWindow
+// @grant       GM_deleteValue
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_listValues
@@ -20033,7 +20033,7 @@ function killbox () {
 		setTimeout(killbox,100);
 	else {
 		document.getElementById('modalBox1').hidden = true;
-		//document.getElementById('modalCurtain1').outerHTML= 'Modal.hideModal();';
+		document.getElementById('modalCurtain1').outerHTML= 'Modal.hideModal();';
 	};
 };
 
