@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121121a
+// @version        20121121b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -30,7 +30,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121121a';
+var Version = '20121121b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -534,7 +534,6 @@ function facebookInstance (){
   facebookWatchdog();
   if (GlobalOptions.pbWideScreen)
     setWide();
-    
 }
 
 function kabamStandAlone (){
