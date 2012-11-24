@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121121b
+// @version        20121124a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -30,7 +30,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121121b';
+var Version = '20121124a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -19999,25 +19999,23 @@ if(Options.filter)
 document.getElementById('mod_comm_input').addEventListener ('keypress', function(e) {
 	if(e.which != 13)
 	return;
-	this.value = this.value.replace(/Fa/g,"F­a");
-	this.value = this.value.replace(/fA/g,"f­A");
-	this.value = this.value.replace(/FA/g,"F­A");
-	this.value = this.value.replace(/fa/g,"f­a");
+	var whisper = "";
+	var firstindex = 0;
+	if(this.value.charAt(0) == "/" || this.value.charAt(0) == "@") {
+	firstindex = this.value.indexOf(" ");
+	whisper = this.value.slice(0,firstindex);
+	};
+	var m = this.value.substr(firstindex,this.value.length);
 	
-	this.value = this.value.replace(/Gr/g,"G­r");
-	this.value = this.value.replace(/gR/g,"g­R");
-	this.value = this.value.replace(/GR/g,"G­R");
-	this.value = this.value.replace(/gr/g,"g­r");
+	m = m.replace(/Fa/g,"F­a").replace(/fA/g,"f­A").replace(/FA/g,"F­A").replace(/fa/g,"f­a");
 	
-	this.value = this.value.replace(/Ri/g,"R­i");
-	this.value = this.value.replace(/rI/g,"r­I");
-	this.value = this.value.replace(/RI/g,"R­I");
-	this.value = this.value.replace(/ri/g,"r­i");
+	m = m.replace(/Gr/g,"G­r").replace(/gR/g,"g­R").replace(/GR/g,"G­R").replace(/gr/g,"g­r");
 	
-	this.value = this.value.replace(/Na/g,"N­a");
-	this.value = this.value.replace(/nA/g,"n­A");
-	this.value = this.value.replace(/NA/g,"N­A");
-	this.value = this.value.replace(/na/g,"n­a");
+	m = m.replace(/Ri/g,"R­i").replace(/rI/g,"r­I").replace(/RI/g,"R­I").replace(/ri/g,"r­i");
+	
+	m = m.replace(/Na/g,"N­a").replace(/nA/g,"n­A").replace(/NA/g,"N­A").replace(/na/g,"n­a");
+	
+	this.value = whisper+m;
 }, false);
 var kboxtime = 1;
 function killbox () {
