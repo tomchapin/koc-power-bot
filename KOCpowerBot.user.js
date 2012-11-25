@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121124a
+// @version        20121124b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -30,7 +30,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121124a';
+var Version = '20121124b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -281,6 +281,10 @@ var TrainOptions = {
   CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0},
   tr	:	false,
   trset	:	0,
+  AsTroops     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  AsEnabled  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
+  AsSelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
+  AsMax        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
 };
 var FarmOptions = {
 	RallyClip: 0,
@@ -12285,16 +12289,9 @@ Tabs.AutoTrain = {
                         }
                     }
                 }
-                if(y == "unt13")
-                if(Seed.cityData.city[citynum].prestigeInfo.blessings) {
-					if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(11) == -1)
-					faux = 1;
-				} else faux = 1;
-				if(y == "unt14")
-                if(Seed.cityData.city[citynum].prestigeInfo.blessings) {
-					if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(21) == -1)
-					faux = 1;
-				} else faux = 1;
+                if(y == "unt13") faux = 1;
+				if(y == "unt14") faux = 1;
+				if(y == "unt15") faux = 1;
 				
                 if (faux==0)
                     m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
@@ -12332,9 +12329,16 @@ Tabs.AutoTrain = {
         <option value=0><CENTER>--- '+unsafeWindow.g_js_strings.commonstr.speedup+' ---</center></option>\
         <option value=1>'+ t.gamble[1].cost+'x res ('+ t.gamble[1].min+' - '+t.gamble[1].max+'%)</option>\
         <option value=2>'+ t.gamble[2].cost+'x res ('+ t.gamble[2].min+' - '+t.gamble[2].max+'%)</option></select>';
-        m+='</td></tr></table>';        
+        m+='</td></tr></table>';       
+        if(Seed.cityData.city[citynum].prestigeInfo.blessings) {
+        if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(11) != -1) {
+			m += '<tr><td></td><td align=left><INPUT id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt13'][0]+' '+translate("Min")+'.: <INPUT id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+		};
+		if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(21) != -1) {
+			m += '<tr><td></td><td align=left><INPUT id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt14'][0]+' '+translate("Min")+'.: <INPUT id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+		};
+	}; 
         m+='</td></tr></table>';
-             
     }
       
         t.myDiv.innerHTML = m;
@@ -12349,6 +12353,15 @@ Tabs.AutoTrain = {
         document.getElementById('TrainSpeed_'+city).value = TrainOptions.Gamble[city];
         document.getElementById('TrainSpeedItem_'+city).value = TrainOptions.Item[city];
         if (!TrainOptions.SelectMax[city]) document.getElementById('max'+city).disabled=true;
+        if(document.getElementById('AsEnabled'+city)) {
+			document.getElementById('AsEnabled'+city).checked = TrainOptions.AsEnabled[city];
+			document.getElementById('AsTroops'+city).value = TrainOptions.AsTroops[city];
+			document.getElementById('AsSelectMax'+city).checked = TrainOptions.AsSelectMax[city];
+			if (!TrainOptions.AsSelectMax[city]) document.getElementById('Asmax'+city).disabled=true;
+		};
+        
+        
+        
     }
        
     document.getElementById('pbShowTrainHelp').addEventListener('click', function(){
@@ -12436,6 +12449,36 @@ Tabs.AutoTrain = {
             TrainOptions.Keep[e.target['className']]['Ore'] = e.target.value;
             saveTrainOptions();
           }, false);
+           if(document.getElementById('AsEnabled'+k)) {  
+        document.getElementById('AsEnabled'+k).addEventListener('change', function(e){
+            TrainOptions.AsEnabled[e.target['className']] = e.target.checked;
+            
+            saveTrainOptions();
+          }, false);
+         document.getElementById('AsTroops'+k).addEventListener('change', function(e){
+             if (isNaN(e.target.value)) e.target.value=0 ;
+            TrainOptions.AsTroops[e.target['className']] = e.target.value;
+             saveTrainOptions();
+         }, false);
+                 document.getElementById('Asmax'+k).addEventListener('change', function(e){
+              TrainOptions.AsMax[e.target['className']] = e.target.value;
+              saveTrainOptions();
+          }, false);
+            document.getElementById('AsSelectMax'+k).addEventListener('change', function(e){
+             TrainOptions.AsSelectMax[e.target['className']] = e.target.checked;
+             if (!TrainOptions.AsSelectMax[e.target['className']]){
+                document.getElementById('Asmax'+e.target['className']).value = 0;
+                document.getElementById('Asmax'+e.target['className']).disabled=true;
+            } else {
+                document.getElementById('Asmax'+e.target['className']).disabled=false;
+            }
+            saveTrainOptions();
+         }, false);
+		};
+               
+          
+          
+          
     }
   },
   
@@ -12555,6 +12598,12 @@ Tabs.AutoTrain = {
         return;
     }
     t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity, TrainOptions.Item[t.city]);
+    
+    
+    
+    
+    
+    
   },
   doTrain : function (cityId, unitId, num, notify, tut){
     var t = Tabs.AutoTrain;
