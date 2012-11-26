@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121124b
+// @version        20121125a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -30,7 +30,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121124b';
+var Version = '20121125a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -4501,6 +4501,8 @@ Tabs.build = {
                 method: "post",
                 parameters: params,
                 onSuccess: function (rslt) {
+                 if (rslt.updateSeed)
+					unsafeWindow.update_seed(rslt.updateSeed);
                     if (rslt.ok) {
                         actionLog("Destructing " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " at " + cityName);
                         Seed.queue_con["city" + currentcityid].push([bdgid, 0, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
@@ -4545,6 +4547,8 @@ Tabs.build = {
                     method: "post",
                     parameters: params,
                     onSuccess: function (rslt) {
+                 if (rslt.updateSeed)
+					unsafeWindow.update_seed(rslt.updateSeed);
                         if (rslt.ok) {
                             actionLog(translate("Building") + " " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);
                             Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
@@ -4798,6 +4802,9 @@ Tabs.build = {
             method: "post",
             parameters: params,
             onSuccess: function (rslt) {
+				
+                 if (rslt.updateSeed)
+					unsafeWindow.update_seed(rslt.updateSeed);
                 unsafeWindow.handleHelpCallback(rslt.data);
             },
             onFailure: function (rslt) {
