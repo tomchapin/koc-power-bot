@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121125a
+// @version        20121126a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -25,12 +25,16 @@
 
 //Fixed weird bug with koc game
 if(window.self.location != window.top.location){
-	if(window.self.location.href == window.parent.location.href){
-		return; //If iframe source is same as the parent don't load script
+	try{
+		if(window.self.location.href == window.parent.location.href){
+			return; //If iframe source is same as the parent don't load script
+		}
+	} catch (e){
+		//logit(inspect(e,2,1));
 	}
 }
 
-var Version = '20121125a';
+var Version = '20121126a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -570,7 +574,7 @@ function kabamStandAlone (){
   }
 
 function HandlePublishPopup() {
-	if(GlobalOptions.autoPublishGamePopups){
+	if(GlobalOptions.autoPublishGamePopups || GlobalOptions.autoCancelGamePopups){
 	// Check the app id (we only want to handle the popup for kingdoms of camelot)
 		var FBInputForm = document.getElementById('uiserver_form');
 		//logit("FBInputForm "+FBInputForm);
@@ -598,7 +602,6 @@ function HandlePublishPopup() {
 							nHtml.Click(publish_button);
 						}else if (GlobalOptions.autoCancelGamePopups && !GlobalOptions.autoPublishGamePopups){
 							nHtml.Click(cancel_publish_button);
-							logit('canceling')
 						}
 					}
 				}
@@ -12605,12 +12608,6 @@ Tabs.AutoTrain = {
         return;
     }
     t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity, TrainOptions.Item[t.city]);
-    
-    
-    
-    
-    
-    
   },
   doTrain : function (cityId, unitId, num, notify, tut){
     var t = Tabs.AutoTrain;
