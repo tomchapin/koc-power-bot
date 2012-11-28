@@ -47,7 +47,7 @@ var ENABLE_GM_AJAX_TRACE = false;
 var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
-var MAP_DELAY = 4000;
+var MAP_DELAY = 1200;
 
 var DEFAULT_ALERT_SOUND_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
 var SWF_PLAYER_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
