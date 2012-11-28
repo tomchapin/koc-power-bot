@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121126a
+// @version        20121128a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121126a';
+var Version = '20121128a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -12342,10 +12342,10 @@ Tabs.AutoTrain = {
         m+='</td></tr></table>';       
         if(Seed.cityData.city[citynum].prestigeInfo.blessings) {
         if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(11) != -1) {
-			m += '<tr><td></td><td align=left><INPUT id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt13'][0]+' '+translate("Min")+'.: <INPUT id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+			m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt13'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
 		};
 		if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(21) != -1) {
-			m += '<tr><td></td><td align=left><INPUT id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt14'][0]+' '+translate("Min")+'.: <INPUT id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+			m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt14'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
 		};
 	}; 
         m+='</td></tr></table>';
@@ -12462,7 +12462,6 @@ Tabs.AutoTrain = {
            if(document.getElementById('AsEnabled'+k)) {  
         document.getElementById('AsEnabled'+k).addEventListener('change', function(e){
             TrainOptions.AsEnabled[e.target['className']] = e.target.checked;
-            
             saveTrainOptions();
           }, false);
          document.getElementById('AsTroops'+k).addEventListener('change', function(e){
@@ -12552,12 +12551,25 @@ Tabs.AutoTrain = {
         t.idle = ((TrainOptions.Workers[t.city]/100)*parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
     return t.idle>0?true:false;
   },
-  checktrainslots : function(cityId){
+  checktrainslots : function(cityId,prest){
     var t = Tabs.AutoTrain;
+    if(!prest) {
     t.barracks = getCityBuilding(cityId, 13).count;
-    t.slots = parseIntNan(Seed.queue_unt['city'+cityId].length);
+    t.slots = 0;
+    for (k in Seed.queue_unt['city'+cityId])
+    if(Seed.queue_unt['city'+cityId][k][7] == false)
+    t.slots += 1;
     t.empty = parseInt(t.barracks - t.slots);
     return t.empty>0?true:false;
+} else {
+	t.barracks = Number(getCityBuilding(cityId, 22).count + getCityBuilding(cityId, 24).count);//24 fey barracks, 22 druid barracks
+    t.slots = 0;
+    for (k in Seed.queue_unt['city'+cityId])
+    if(Seed.queue_unt['city'+cityId][k][7] == true)
+    t.slots += 1;
+    t.empty = parseInt(t.barracks - t.slots);
+    return t.empty>0?true:false;
+}
   },
   checkresources : function(cityId){
     var t = Tabs.AutoTrain;
@@ -12582,12 +12594,21 @@ Tabs.AutoTrain = {
     if ((t.wood/cost[2]) < t.amt) t.amt = Math.floor(t.wood/cost[2]);
     if ((t.stone/cost[3]) < t.amt) t.amt = Math.floor(t.stone/cost[3]);
     if ((t.ore/cost[4]) < t.amt) t.amt = Math.floor(t.ore/cost[4]);
+    if (unitId < 13) {
     if(TrainOptions.SelectMax[t.city]){
         if(parseInt(t.amt) > parseInt(TrainOptions.Max[t.city])) t.amt = TrainOptions.Max[t.city];
     }
     if(parseInt(t.amt) < parseInt(TrainOptions.Threshold[t.city])) t.amt = 0;
+	} else {
+		if(TrainOptions.AsSelectMax[t.city])
+        if(parseInt(t.amt) > parseInt(TrainOptions.AsMax[t.city])) t.amt = TrainOptions.AsMax[t.city];
+		
+		if(parseInt(t.amt) < parseInt(TrainOptions.AsTroops[t.city])) t.amt = 0;
+	}
+    
     return t.amt>0?true:false;
   },
+  
   nextcity : function(){
     var t = Tabs.AutoTrain;
     if (!TrainOptions.Running) return;
@@ -12596,13 +12617,29 @@ Tabs.AutoTrain = {
             return;
             };
         };
-    t.city++;
+     t.city++;
     if(t.city > Seed.cities.length) t.city = 1;
     var cityId = Seed.cities[t.city-1][0];
     var idle = t.checkidlepopulation(cityId);
-    var trainslots = t.checktrainslots(cityId);
     var resources = t.checkresources(cityId);
+	if(Seed.cityData.city[cityId].isPrestigeCity) {
+		var ptrainslots = t.checktrainslots(cityId,true);
+		var punit = false;
+		if(getCityBuilding(cityId, 22).count)
+			punit = 13;
+		if(getCityBuilding(cityId, 24).count)
+			punit = 14;
+		if(punit)	
+			var ptrain = t.trainamt(cityId, punit);
+		if(TrainOptions.AsEnabled[t.city] && idle && ptrainslots && resources && ptrain) {
+				t.doTrain(cityId, punit, t.amt, t.nextcity, TrainOptions.Item[t.city]);
+				t.city--;
+				return;
+		};
+	};
+    var trainslots = t.checktrainslots(cityId);
     var train = t.trainamt(cityId, TrainOptions['Troops'][t.city]);
+    
     if(!TrainOptions.Enabled[t.city] || TrainOptions['Troops'][t.city]==0 || !idle || !trainslots || !resources || !train){
         setTimeout(t.nextcity, 5000);
         return;
@@ -12620,12 +12657,16 @@ Tabs.AutoTrain = {
         params.items = tut;
     if(parseInt(TrainOptions.Gamble[t.city]) > 0)
         params.gambleId = TrainOptions.Gamble[t.city];
-
+	if(params.type < 13)
+		var inPrestige = false;
+	else var inPrestige = true;
     var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "train.php");
     new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
         method: "post",
         parameters: params,
         onSuccess: function(rslt) {
+      if (rslt.updateSeed)
+        unsafeWindow.update_seed(rslt.updateSeed);
             profiler.stop();
           if (rslt.ok) {
             for (var i = 1; i < 5; i++) {
@@ -12635,8 +12676,8 @@ Tabs.AutoTrain = {
             }
             unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
             unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(num);
-            unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
-            setTimeout (notify, 10000);
+            unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null,inPrestige]);
+           setTimeout (notify, 10000);
             for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
             actionLog(logcity  + ' Train ' + num + ':  ' + troops[unitId] );
           } else {
