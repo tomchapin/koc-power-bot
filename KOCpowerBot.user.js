@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121128a
+// @version        20121202a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121128a';
+var Version = '20121202a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -47,7 +47,7 @@ var ENABLE_GM_AJAX_TRACE = false;
 var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
-var MAP_DELAY = 1200;
+var MAP_DELAY = 4000;
 
 var DEFAULT_ALERT_SOUND_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
 var SWF_PLAYER_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
@@ -214,6 +214,7 @@ var CrestOptions = {
   R2Ball		:	0,
   R2Ram			:	0,
   R2Cat			:	0,
+  isWild		:	false,
 };
 
 
@@ -255,6 +256,7 @@ var CrestData = new Array();
 		this.R2Ball 		= 	Arr.R2Ball;
 		this.R2Ram 			= 	Arr.R2Ram;
 		this.R2Cat 			= 	Arr.R2Cat;
+		this.isWild			=	Arr.isWild;
 		
 	};
 
@@ -6728,7 +6730,7 @@ Tabs.transport = {
         m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRADE ROUTE OPTIONS") + '</div>';
         m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center"><TR align="left">';
         m += '<TD colspan=4>' + translate("Check transport every:") + ' <INPUT id=pbtransportinterval type=text size=2 value="' + Options.transportinterval + '"\> ' + translate("minutes") + '</td></tr></table>';
-        m += '<TD colspan=4>' + translate("Do not send transport out if less than") + ' <INPUT id=pbminwagons type=text size=2 value="' + Options.minwagons + '"\> ' + translate("troops are needed. (Needless transports are skipped this way)") + '</td></tr></table>';
+        m += '<TD colspan=4>' + translate("Do not send transport out if less than") + ' <INPUT id=pbminwagons type=text size=8 value="' + Options.minwagons + '"\> ' + translate("troops are needed. (Needless transports are skipped this way)") + '</td></tr></table>';
         m += '<DIV style="margin-top:10px;margin-bottom:5px;">' + translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...") + '</div></table>';
         m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRANSPORTS") + '</div>';
         m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
@@ -18294,7 +18296,7 @@ Tabs.startup = {
     show : function(){},
     hide : function(){},
 } 
-/*********************************  Cresting Tab ***********************************/
+/*********************************  Crest Tab ***********************************/
  Tabs.Crest = {
   tabOrder : 70,
   myDiv : null,
@@ -18533,6 +18535,9 @@ Tabs.startup = {
           if (isNaN(document.getElementById('R2Cat').value)) document.getElementById('R2Cat').value=0 ;
       }, false);
          
+         
+         
+    document.getElementById('pbcrest_iswild').addEventListener('click', function(){CrestOptions.isWild = this.checked;} , false);
     document.getElementById('crestcity').addEventListener('click', function(){CrestOptions.CrestCity = t.tcp.city.id;} , false);
     document.getElementById('Cresttoggle').addEventListener('click', function(){t.toggleCrestState(this)} , false);
     document.getElementById('pbcrestx').addEventListener('change', function(){CrestOptions.X = document.getElementById('pbcrestx').value;;} , false);
@@ -18817,7 +18822,6 @@ Tabs.startup = {
 
         cityID = 'city' + CrestData[CrestDataNum].CrestCity;
         retry++;
-        
         if(CrestData[CrestDataNum].isWild){
             for (var k in Seed.wilderness[cityID] ){
                 if (Seed.wilderness[cityID][k]['xCoord']==CrestData[CrestDataNum].X && Seed.wilderness[cityID][k]['yCoord']==CrestData[CrestDataNum].Y && t.error_code!=401) {
@@ -18826,7 +18830,6 @@ Tabs.startup = {
                 }
             }
         }
-
         switch (retry) {
             case 10:
                 setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
