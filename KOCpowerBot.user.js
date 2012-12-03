@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121202b
+// @version        20121203a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121202b';
+var Version = '20121203a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -20126,8 +20126,9 @@ function killbox () {
 	if(!document.getElementById('modal_mmb'))
 		setTimeout(killbox,100);
 	else {
-		document.getElementById('modalBox1').hidden = true;
-		document.getElementById('modalCurtain1').outerHTML= 'Modal.hideModal();';
+		unsafeWindow.Modal.hideModal();
+		//document.getElementById('modalBox1').hidden = true;
+		//document.getElementById('modalCurtain1').outerHTML= 'Modal.hideModal();';
 	};
 };
 
