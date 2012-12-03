@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121203a
+// @version        20121203b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121203a';
+var Version = '20121203b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -166,6 +166,7 @@ var Options = {
   ScripterTab : false,
   KMagicBox : false,
   filter : false,
+  mklag	:	false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -747,6 +748,7 @@ function pbStartup (){
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
   killbox();
+  if(Options.mklag)  setInterval(fixkabamlag,1000*60);
 }
 
 /************************ Food Alerts *************************/
@@ -10252,6 +10254,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=advanced type=checkbox /></td><TD> '+translate("Scripters tab")+'</td></tr>\
         <TR><TD><INPUT id=MAgicBOx type=checkbox /></td><TD> '+translate("Kill merlins magic box's on startup")+'</td></tr>\
         <TR><TD><INPUT id=CFilter type=checkbox /></td><TD> '+translate("Defeat kabam chat filter so some words can be said.  ex \'deSCRIPTion\'")+'</td></tr>\
+       <TR><TD><INPUT id=MKLag type=checkbox /></td><TD> '+translate("Fix stalled marches and missing knights.  EXPERIMENTAL")+'</td></tr>\
         </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
         m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
       div.innerHTML = m;
@@ -10325,6 +10328,7 @@ Tabs.Options = {
       t.togOpt ('advanced', 'ScripterTab');          
       t.togOpt ('MAgicBOx', 'KMagicBox');
       t.togOpt ('CFilter', 'filter');
+      t.togOpt ('MKLag', 'mklag');
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }      
@@ -20155,4 +20159,29 @@ function equippedthronestats (stat_id){
 	return total;
 }
 
+function fixkabamlag () {
+	var kfutime = unsafeWindow.unixtime();
+	for (city in Seed.queue_atkp) {
+		var kabamhashX = [];
+		if(k)
+		for (march in Seed.queue_atkp[city]) {
+			if(Seed.queue_atkp[city][march].marchType)
+				if(Seed.queue_atkp[city][march].marchType != 9) {
+					if (Seed.queue_atkp[city][march].returnUnixTime < kfutime) {
+						logit('fixing march from '+city+' with id '+h);
+						Seed.queue_atkp[city][march].hasUpdated = true;
+						Seed.queue_atkp[city][march].marchStatus = 8;
+					} else kabamhashX.push(Seed.queue_atkp[city][march].knightId);
+				} else kabamhashX.push(Seed.queue_atkp[city][march].knightId);
+		}
+		for (knight in Seed.knights[city]) {
+			if(Seed.knights[city][knight].knightStatus != 1)
+				if(kabamhashX.indexOf(Seed.knights[city][knight].knightId) == -1) {
+					Seed.knights[city][knight].knightStatus = 1;
+					logit('march '+city+' fixing knight '+knight);
+				}
+		}
+	}
+}
+ 
 pbStartup ();
