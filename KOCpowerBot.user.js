@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121202a
+// @version        20121202b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121202a';
+var Version = '20121202b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -18880,7 +18880,7 @@ Tabs.startup = {
        }else {
             var now = new Date().getTime()/1000.0;
             now = now.toFixed(0);
-            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + (Options.Crestinterval*2) + 2)) {
+            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + (Options.Crestinterval*2) + 60)) {
                 r=1;
             }
         }
@@ -18897,7 +18897,7 @@ Tabs.startup = {
                 params.kid        =     kid;
                 params.xcoord     =     CrestData[CrestDataNum].X;
                 params.ycoord     =     CrestData[CrestDataNum].Y;
-                if (now < (parseInt(CrestData[CrestDataNum].lastRoundTwo) + 300)) {
+                if (now < (parseInt(CrestData[CrestDataNum].lastRoundTwo) + 240) && CrestData[CrestDataNum].isWild) {
                 
                     params.u2     =     (CrestData[CrestDataNum].R1MM / 10);
                     params.u2     =     params.u2.toFixed(0);
@@ -18908,7 +18908,7 @@ Tabs.startup = {
                     params.u2    =     CrestData[CrestDataNum].R1MM;
                 }
                 params.u1         =     CrestData[CrestDataNum].R1ST;
-                params.u2         =     CrestData[CrestDataNum].R1MM;
+                //params.u2         =     CrestData[CrestDataNum].R1MM;
                 params.u3         =     CrestData[CrestDataNum].R1Scout;
                 params.u4         =     CrestData[CrestDataNum].R1Pike;
                 params.u5         =     CrestData[CrestDataNum].R1Sword;
