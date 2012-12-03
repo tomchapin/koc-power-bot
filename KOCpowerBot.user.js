@@ -20163,7 +20163,7 @@ function fixkabamlag () {
 	var kfutime = unsafeWindow.unixtime();
 	for (city in Seed.queue_atkp) {
 		var kabamhashX = [];
-		if(city)
+		if(Seed.queue_atkp[city] != "")
 		for (march in Seed.queue_atkp[city]) {
 			if(Seed.queue_atkp[city][march].marchType)
 				if(Seed.queue_atkp[city][march].botMarchStatus == undefined) {
