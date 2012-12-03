@@ -1,26 +1,6 @@
-Or, more precisely.... News of What's Broken !!!!!
+Fey Altars are somehow auto sacrificing troops as they come out of the training queues in some cases.  
+We suggest contacting support  if you have expirienced this. <a href="https://kabam.secure.force.com/PKB/pkb_contactUs?game=Kingdoms_of_Camelot&lang=en_US&l=en_US">kabam support</a>
+There have been no additions to the bot/tools script to use the fey altar.  
+As far as we can tell, this is a kabam issue.
 
-Nov 19, 2012
-  "Script is out of date" notice.
-  
-  Just FYI if you get this notice do not fret. The message is not referring to any of the scripts that you are using, eg. Powerbot, powertools, kocattack, etc...
-  Rather it's a system implemented by kabam to ensure that any changes they make to the game will propagate across all players at the same time. The "script" it is referring to is the camelotmain-xxx.js script that runs the game (KOC is a javascript game mostly that's why it's easier to write scripts for).
-  
-  So if you get the message just refresh the game to rid of it. It might take a few refreshes or you can even leave it alone and let powerbot refresh the game on it's own. No biggie.
-  
-  jontey
-
-Nov 18, 2012
-
-  I am now becoming familiar with the code state and in doing so have found some small things that will be addressed in the next release:
-  
-  DF tab didnt account for prestige rally point boost
-  Build tab had 45 seconds delay between checks. Down to 10 now.
-  
-  Adding a throttle to DF tab so you can leave it on and it wont waste Aetherstone by sending out marches when the city has an abundent amount. Right now its set to 750K. I'll make this configurable in the future. Note this wont totally prevent you from overflow if you hit level 8 and DFs on auto, but it does a pretty good job at it. I hit 1-8 and it rarely goes over 1M, usually because it dips just below 750K and then sends out a few waves to 8's.
-  
-  Finally....Hello! I am honored to be of service and am officially assisting with maintenance of this code base.
-  
-  Happy Holidays!
-  
-  Unixwizard
+-Baos
