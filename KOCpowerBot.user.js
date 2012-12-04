@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121203f
+// @version        20121203g
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121203f';
+var Version = '20121203g';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -20166,7 +20166,7 @@ function fixkabamlag () {
 		if(Seed.queue_atkp[city] != "")
 		for (march in Seed.queue_atkp[city]) {
 			if(Seed.queue_atkp[city][march].marchType)
-				if(Seed.queue_atkp[city][march].botMarchStatus == undefined && eed.queue_atkp[city][march].marchStatus == 5) {
+				if(Seed.queue_atkp[city][march].botMarchStatus == undefined && Seed.queue_atkp[city][march].marchStatus == 5) {
 					if (Seed.queue_atkp[city][march].returnUnixTime < kfutime) {
 						logit('fixing march from '+city+' with id '+march);
 						Seed.queue_atkp[city][march].hasUpdated = true;
