@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121203g
+// @version        20121204a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121203g';
+var Version = '20121204a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -364,7 +364,7 @@ var AttackOptions = {
   stopsearch            : 1,
   knightselector        : 0,
   barbMinKnight			: 56,
-  barbMaxKnight			: 250,
+  barbMaxKnight			: 255,
 };
 
 var ResetAll=false;
