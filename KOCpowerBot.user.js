@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121204a
+// @version        20121205a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121204a';
+var Version = '20121205a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -2527,15 +2527,16 @@ PaintSalvageHistory : function() {
         } else return;
         var cityid = 0;
         var cidarray = [];
-        for (var k in Cities.byID) {
-            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"]+50000)) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))//added more than 50k to stop spending gems by accident
+        for (var k in Cities.byID) {//added more than 50k to stop spending gems by accident
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"]+50000)) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))
             {
 				cidarray.push(k);
             }
         }
-        if(cidarray != [])
+        if(cidarray.length > 0)
         cityid = cidarray[Math.floor(Math.random() * cidarray.length)];
         if(cityid == 0){
+			if(document.getElementById('ShowStatus'))
            document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
            return;    
         }
