@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121205a
+// @version        20121209a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121205a';
+var Version = '20121209a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -1396,10 +1396,12 @@ Tabs.farm = {
       else slots=0;
        
        var element2 = 'pddataFarmarray'+(city-1);
-       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
+	   var numMarches = t.rallypointlevel;
+	   if (Seed.cityData.city[citynumber].isPrestigeCity && (numMarches > 0)) numMarches+=3;
+       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + numMarches +')';
        
        if (!FarmOptions.CityEnable[city]) return;
-       if ((t.rallypointlevel-FarmOptions.RallyClip) <= slots) return;
+       if ((numMarches-FarmOptions.RallyClip) <= slots) return;
        if (t.knt.toSource() == "[]") return;
         if (u1 > parseInt(Seed.units[cityID]['unt1']) || u2 > parseInt(Seed.units[cityID]['unt2']) || u3 > parseInt(Seed.units[cityID]['unt3']) || u4 > parseInt(Seed.units[cityID]['unt4']) || u5 > parseInt(Seed.units[cityID]['unt5']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u11 > parseInt(Seed.units[cityID]['unt11']) || u12 > parseInt(Seed.units[cityID]['unt12'])) return;
         if (FarmOptions.FarmNumber[city]>=t.FarmArray[city].length) FarmOptions.FarmNumber[city]=0;
@@ -1436,7 +1438,7 @@ Tabs.farm = {
         var ycoord = t.FarmArray[city][FarmOptions.FarmNumber[city]]['y'];
         var uid = t.FarmArray[city][FarmOptions.FarmNumber[city]]['UserId'];
         saveFarmOptions();
-           if ((t.rallypointlevel - FarmOptions.RallyClip) > slots) t.checkInactives(citynumber,city,FarmOptions.FarmNumber[city],xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+           if ((numMarches - FarmOptions.RallyClip) > slots) t.checkInactives(citynumber,city,FarmOptions.FarmNumber[city],xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
   },
   
   getnextCity: function(){
@@ -4377,7 +4379,9 @@ Tabs.build = {
     },
     e_autoBuild: function () {
         var t = Tabs.build;
+		var buildInterval = 2 * 1000; // 2 seconds between checks by default
         document.getElementById('pbbuildError').innerHTML = '';
+		
         if (t.buildStates.running == true) {
             var now = unixTime();
             //logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
@@ -4395,14 +4399,16 @@ Tabs.build = {
                 } else {
                     if (t["bQ_" + cityId].length > 0) { // something to do?
                         var bQi = t["bQ_" + cityId][0]; //take first queue item to build
-                        t.doOne(bQi);;
+
+                        t.doOne(bQi);
+						buildInterval = 10 * 1000; // we tried to build so use longer interval
                         //setTimeout(t.e_autoBuild, 10000); //should be at least 10
                         //return; // we need to make sure that there is enough time for each ajax request to not overwrite the vaule that are needed by the next run
                     }
                 }
             }
         }
-        setTimeout(t.e_autoBuild, 45 * 1000); //should be at least 10
+        setTimeout(t.e_autoBuild, buildInterval); //should be at least 10
     },
     paintBusyDivs: function () {
         var t = Tabs.build;
@@ -4569,7 +4575,7 @@ Tabs.build = {
                             unsafeWindow.queue_changetab_building();
                             unsafeWindow.modal_build_show_state();
                             if (params.cid == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
-                            if (document.getElementById('pbHelpRequest').checked == true && time > 59) t.bot_gethelp(params.bid, currentcityid);
+                            if (document.getElementById('pbHelpRequest').checked == true && time > 59) t.bot_gethelp(params.bid, currentcityid, time, 1);
                             t.cancelQueueElement(0, currentcityid, time, false);
                         } else {
                             var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
@@ -4799,10 +4805,11 @@ Tabs.build = {
             t._addTab(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode);
         }
     },
-    bot_gethelp: function (f, currentcityid) {
+    bot_gethelp: function (f, currentcityid, time, retry) {
         var t = Tabs.build;
         var city = t.getCityNameById(currentcityid);
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        if (retry>3) return;  //dont want to get stuck in a loop of failures
         params.bid = f;
         params.ctrl = 'AskForHelp';
         params.action = 'getHelpData';
@@ -4816,33 +4823,43 @@ Tabs.build = {
                 unsafeWindow.handleHelpCallback(rslt.data);
             },
             onFailure: function (rslt) {
-                t.bot_gethelp(f, currentcityid);
+                logit('Build help request failure, retry '+retry);
+				t.bot_gethelp(f, currentcityid, time, retry+1);
                 return;
             },
         });
-        var a = Seed.queue_con["city" + currentcityid];
-        var e = 0;
-        var d = 0;
-        for (var c = 0; c < a.length; c++) {
-            if (parseInt(a[c][2]) == parseInt(f)) {
-                e = parseInt(a[c][0]);
-                d = parseInt(a[c][1]);
-                break
-            }
-        }
-        var b = new Array();
-        b.push(["REPLACE_LeVeLbUiLdInG", d]);
-        b.push(["REPLACE_BuIlDiNgNaMe", unsafeWindow.buildingcost["bdg" + e][0]]);
-        b.push(["REPLACE_LeVeLiD", d]);
-        b.push(["REPLACE_AsSeTiD", f]);
-        var g = function (h, i) {
-            unsafeWindow.continuation_95(h, i);
-            if (!h) {
-                var j = d > 1 ? unsafeWindow.cm.SpeedUpType.upgrade : unsafeWindow.cm.SpeedUpType.build;
-                unsafeWindow.cm.ClientSideCookieManager.setCookie(j, false)
-            }
-        };
-        unsafeWindow.common_postToProfile("95", unsafeWindow.Object.cloneFeed(unsafeWindow.template_data_95), unsafeWindow.Object.cloneFeed(unsafeWindow.actionlink_data_95), g, b)
+		//only post build to FB if they take at least an hour
+        if (time > 3600) {
+			var a = Seed.queue_con["city" + currentcityid];
+			var e = 0;
+			var d = 0;
+			for (var c = 0; c < a.length; c++) {
+				if (parseInt(a[c][2]) == parseInt(f)) {
+					e = parseInt(a[c][0]);
+					d = parseInt(a[c][1]);
+
+
+
+					break
+				}
+			}
+			var b = new Array();
+			b.push(["REPLACE_LeVeLbUiLdInG", d]);
+			b.push(["REPLACE_BuIlDiNgNaMe", unsafeWindow.buildingcost["bdg" + e][0]]);
+			b.push(["REPLACE_LeVeLiD", d]);
+			b.push(["REPLACE_AsSeTiD", f]);
+			var g = function (h, i) {
+				unsafeWindow.continuation_95(h, i);
+
+				if (!h) {
+					var j = d > 1 ? unsafeWindow.cm.SpeedUpType.upgrade : unsafeWindow.cm.SpeedUpType.build;
+					unsafeWindow.cm.ClientSideCookieManager.setCookie(j, false)
+
+
+				}
+			};		
+			unsafeWindow.common_postToProfile("95", unsafeWindow.Object.cloneFeed(unsafeWindow.template_data_95), unsafeWindow.Object.cloneFeed(unsafeWindow.actionlink_data_95), g, b);
+		}
     },
     addQueueItem: function (cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode) {
         var t = Tabs.build;
@@ -9812,6 +9829,8 @@ Tabs.Barb = {
        t.getAtkKnight(cityID);
        t.getRallypointLevel(cityID);
        if (t.rallypointlevel > 11 ) t.rallypointlevel = 11;
+	   if (Seed.cityData.city[citynumber].isPrestigeCity && (t.rallypointlevel > 0)) t.rallypointlevel+=3;
+	   
        var slots=0;
        if (Seed.queue_atkp[cityID] != undefined){
            for(var k in Seed.queue_atkp[cityID])
@@ -9821,6 +9840,10 @@ Tabs.Barb = {
         } else
             slots=0;
        
+	   //Only send DF if city is not over 750K astone
+		if (Seed.resources[cityID]["rec5"][0] > 750000) {
+			return;
+		}
        var element1 = 'pddatacity'+(city-1);
        document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
        var element2 = 'pddataarray'+(city-1);
@@ -12249,7 +12272,7 @@ Tabs.Reinforce = {
     },
 }
 
-/************************  Train Tab ************************/
+/************************  AutoTrain Tab ************************/
 Tabs.AutoTrain = {
   tabOrder: 120,
   tabLabel: 'Train',
@@ -12625,7 +12648,7 @@ Tabs.AutoTrain = {
             };
         };
      t.city++;
-    if(t.city > Seed.cities.length) t.city = 1;
+   if(t.city > Seed.cities.length) t.city = 1;
     var cityId = Seed.cities[t.city-1][0];
     var idle = t.checkidlepopulation(cityId);
     var resources = t.checkresources(cityId);
@@ -12647,6 +12670,7 @@ Tabs.AutoTrain = {
     var trainslots = t.checktrainslots(cityId);
     var train = t.trainamt(cityId, TrainOptions['Troops'][t.city]);
     
+
     if(!TrainOptions.Enabled[t.city] || TrainOptions['Troops'][t.city]==0 || !idle || !trainslots || !resources || !train){
         setTimeout(t.nextcity, 5000);
         return;
@@ -12684,7 +12708,7 @@ Tabs.AutoTrain = {
             unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
             unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(num);
             unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null,inPrestige]);
-           setTimeout (notify, 10000);
+            setTimeout (notify, 10000);
             for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
             actionLog(logcity  + ' Train ' + num + ':  ' + troops[unitId] );
           } else {
@@ -16991,6 +17015,7 @@ var DeleteReports = {
     },
 }
 
+/******************* Apothecary Tab **********************/
 Tabs.Apothecary = {
   tabOrder : 591,                    // order to place tab in top bar
   tabDisabled : false, // if true, tab will not be added or initialized
