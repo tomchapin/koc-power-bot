@@ -6586,7 +6586,7 @@ Tabs.News = {
 				if (Options.BreakingNews != lastmodified) {
 					Options.BreakingNews=lastmodified;
 					saveOptions();
-					alert('Breaking news update, '+lastmodified+' check News tab');
+					//alert('Breaking news update, '+lastmodified+' check News tab');
 				}
 				document.getElementById('newsdate').innerHTML = '<p style="text-align: right;">'+Options.BreakingNews+'</p>';
 			},
