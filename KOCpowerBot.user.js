@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121209b
+// @version        20121209c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121209b';
+var Version = '20121209c';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -16975,11 +16975,13 @@ var DeleteReports = {
 
             }
             if (Options.DeleteMsgs3){
-				//alert(inspect(unsafeWindow.seed.allianceDiplomacies.friendlyToThem.a99.allianceId));
-				//alert(inspect(reports[k]));
                 for(i in CrestData) {
 					for (l in unsafeWindow.seed.allianceDiplomacies.friendlyToThem) {
 						if(reports[k].side1AllianceId == unsafeWindow.seed.allianceDiplomacies.friendlyToThem[l].allianceId)
+                        deletes1.push(k.substr(2));
+					}
+					for (l in unsafeWindow.seed.allianceDiplomacies.friendly) {
+						if(reports[k].side1AllianceId == unsafeWindow.seed.allianceDiplomacies.friendly[l].allianceId)
                         deletes1.push(k.substr(2));
 					}
                 }
