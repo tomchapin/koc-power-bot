@@ -6,7 +6,7 @@
 // @include        *.kingdomsofcamelot.com/*main_src.php*
 // @include        *.kingdomsofcamelot.com/*platforms/kabam*
 // @include        *apps.facebook.com/kingdomsofcamelot/*
-// @include        *kabam.com/kingdoms-of-camelot/play*
+// @include        *kabam.com/games/kingdoms-of-camelot/play*
 // @include        *facebook.com/dialog/feed*
 
 // @grant       GM_getValue
@@ -448,7 +448,7 @@ if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
   return;
 }
-if (document.URL.search(/kabam.com\/kingdoms-of-camelot\/play/i) >= 0){
+if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
   kabamStandAlone ();
   return;
 }
@@ -558,11 +558,17 @@ function kabamStandAlone (){
 	while ( (iFrames=iFrames.parentNode) != null)
 	  if (iFrames.tagName=='DIV')
 		iFrames.style.width = '100%';
+
+	try{    
+      document.getElementById('promo-sidebar').parentNode.removeChild(document.getElementById('promo-sidebar'));
+    } catch (e){
+      // toolkit may have removed them already!
+    }
   }
 
   function sendmeaway (){
 	var serverID = /s=([0-9]+)/im.exec (document.location.href);
-	var sr = /signed_request" value="(.*?)"/im.exec ($("post_form").innerHTML);
+	var sr = /value="(.*?)"/im.exec ($("post_form").innerHTML);
 	var goto = $("post_form").action+(serverID?"?s="+serverID[1]:'');
 	var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxxpbutExplode type=submit value=RELOAD><INPUT type=hidden name=signed_request value="'+ sr[1] +'" /><INPUT type=hidden name=platform_req value=A /></form>';
 	var e = document.createElement ('div');
@@ -19377,6 +19383,9 @@ Tabs.popcontrol = {
   logtable : null,
   logmaxEntries: 300,
   loglast99 : [],
+  poptab_troop_dismiss : 1,
+  last_ran : 'train',
+
 
   init : function (div)
   	{
@@ -19391,6 +19400,7 @@ Tabs.popcontrol = {
 		m += '<td align=left><input type=submit id=pophelp_button value="HELP!"></td>';
 		m += '<td align=center>Pick City:<span id=popcity></span></td>';
 		m += '<td align=center>Population Gain per cycle: <span id=poptab_cycle_pop></span></td>';
+		m += '<td align=center> Troops to dismiss: <select id=poptab_troop_dismiss><option value=1>ST</option><option value=2>MM</option><option value=3>Scout</option><option value=4>Pike</option><option value=5>Sword</option><option value=6>Archer</option></select>';
 		m += '</tr>';
 		m += '</table>';
 		
@@ -19400,13 +19410,13 @@ Tabs.popcontrol = {
 		m += '<td>Current Food: &nbsp<span id=poptab_cur_food></span></td>';
 		m += '<td>Current Wood: &nbsp<span id=poptab_cur_wood></span></td>';
 		m += '<td>Current Ore: &nbsp&nbsp<span id=poptab_cur_ore></span></td>';
-		m += '<td>Current MM: <span id=poptab_cur_mm></span></td>';
+		m += '<td>Current dismissable troops: <span id=poptab_cur_mm></span></td>';
 		m += '</tr>';
 		m += '<tr>';
 		m += '<td>Needed Food: &nbsp<span id=poptab_needed_food></span></td>';
 		m += '<td>Needed Wood: &nbsp<span id=poptab_needed_wood></span></td>';
 		m += '<td>Needed Ore: &nbsp&nbsp<span id=poptab_needed_ore></span></td>';
-		m += '<td>Needed MM: <span id=poptab_needed_mm></span></td>';
+		m += '<td>Needed dismissable troops: <span id=poptab_needed_mm></span></td>';
 		m += '</tr>';
 		m += '</table>';
 
@@ -19429,7 +19439,7 @@ Tabs.popcontrol = {
 		m += '<DIV class=pbStat>Commands:</div>';
 		m += '<table border="0" width="100%">';	
 		m += '<tr align=center>';
-		m += '<td><input type="submit" id="poptab_dismiss_mm" value="Dismiss MM" disabled></td>';
+		m += '<td><input type="submit" id="poptab_dismiss_mm" value="Dismiss troops" disabled></td>';
 		m += '<td><input type="submit" id="poptab_queue_st" value="Queue Supply Troops" disabled></td>';
 		m += '<td><input type="submit" id="poptab_del_queues" value="Delete All Queues" disabled></td>';
 		m += '<td><input type="submit" id="poptab_run_cycle" value="Run cycle" disabled></td>';
@@ -19464,6 +19474,7 @@ Tabs.popcontrol = {
 		document.getElementById('poptab_del_queues').addEventListener	('click', function(){	t.del_queues_start(t.tcp.city.id);	} , false);
 		document.getElementById('poptab_run_cycle').addEventListener	('click', function(){	t.run_cycle	(t.tcp.city.id);	} , false);
 		//document.getElementById('poptab_test').addEventListener	('click', function(){	t.btest	();	} , false);
+ 	    	document.getElementById('poptab_troop_dismiss').addEventListener('change', function(){t.poptab_troop_dismiss = document.getElementById('poptab_troop_dismiss').value;} , false);
   
   	},
 
@@ -19629,7 +19640,7 @@ Tabs.popcontrol = {
 		document.getElementById('poptab_cur_ore').style.color = (t.needed_ore  > t.cur_ore?'red':'green');
 
 		t.needed_mm = t.cycle_pop;
-		t.cur_mm = parseInt(Seed.units['city'+cityId]['unt2']);
+		t.cur_mm = parseInt(Seed.units['city'+cityId]['unt' + t.poptab_troop_dismiss]);
 		document.getElementById('poptab_needed_mm').innerHTML = addCommas(t.needed_mm);
 		document.getElementById('poptab_cur_mm').innerHTML = addCommas(t.cur_mm);
 		
@@ -19643,12 +19654,12 @@ Tabs.popcontrol = {
 		if(parseInt(need_to_dismiss) > 0 && parseInt(need_to_dismiss) <= parseInt(t.cur_mm) && !t.busy && !t.cycle_running)
 			{
 			dismissBtn.disabled = false;
-			dismissBtn.value = "Dismiss " + addCommas(need_to_dismiss) + " MM";
+			dismissBtn.value = "Dismiss " + addCommas(need_to_dismiss) + " Troops";
 			}
 		else
 			{
 			dismissBtn.disabled = true;
-			dismissBtn.value = "Dismiss MM";
+			dismissBtn.value = "Dismiss Troops";
 			}
 
 		queueBtn_help1 = "This button is used to train all the idle population into Supply Troops.";
@@ -19737,13 +19748,22 @@ Tabs.popcontrol = {
 		//num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
 		if(parseInt(t.cur_idle_pop) < parseInt(t.max_idle_pop))	// Need to Dismiss MM
 			{
-			if (t.cycle_running)	t.dismiss_mm(cityId);
+			if (t.cycle_running && t.last_ran == 'train') {
+				t.dismiss_mm(cityId);
+				t.last_ran = 'dismiss';
+			} else {
+				t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 1500);
+			}
+				
 			
 			//t.actionlog("2");
 			}
 		else if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop)) // Need to queue supply troops
 			{
-			if (t.cycle_running)	t.queue_st(cityId);
+			if (t.cycle_running)	{
+				t.queue_st(cityId);
+				t.last_ran = 'train';
+			}
 			//t.actionlog("3");
 			}
 		else if(parseInt(t.slots_free) == 0)	// Delete all the queues
@@ -19761,7 +19781,7 @@ Tabs.popcontrol = {
 			}
 		//t.actionlog("5");
 		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 3000);
+		t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 1500);
 		},
 
 	dismiss_mm : function (cityId)
@@ -19769,7 +19789,7 @@ Tabs.popcontrol = {
 		var t = Tabs.popcontrol;
 		t.disable_btns();
 		
-		unitId = 2;
+		unitId = t.poptab_troop_dismiss;
 
 		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
 		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
@@ -19790,7 +19810,7 @@ Tabs.popcontrol = {
 				if (rslt.ok) 
 					{
  					//t.log("Dismissed "+ addCommas(num) +" "+ troops[unitId]);
-					t.log("Dismissed "+ addCommas(num) +" Militiamen");
+					t.log("Dismissed "+ addCommas(num) +" Troops");
 					Seed.units['city'+cityId]['unt'+unitId] -= num;
 					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
 					//setTimeout(unsafeWindow.update_seed_ajax, 250);
