@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121209a
+// @version        20121209b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121209a';
+var Version = '20121209b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -6551,7 +6551,6 @@ DebugTimer.display ('Time to GM_getValue() '+ totTargets +' targets for all citi
   },
 }
 
-
 /*********************************** News TAB ***********************************/
 Tabs.News = {
 	tabOrder: 301,
@@ -6579,6 +6578,7 @@ Tabs.News = {
 				m += '<div id=newsdate></div>'
 				m += '<b>'+news.responseText.replace(/\n/g,"<br>")+'</b>';
 				m += '</div></center>';
+				m += '<div><font color = red>&nbsp&nbsp&nbsp&nbspIntended to only be used for extremely urgent of news updates.  <br>&nbsp&nbsp&nbsp&nbspex: kabam adds backoffwaittime and then asks the community why they think the game is lagging.  Answer they generated fake lag</div>';
 				div.innerHTML += m;
 				var first = Number(news.responseHeaders.indexOf("Last-Modified"))+15;
 				var last = news.responseHeaders.indexOf("\n",first);
@@ -6586,7 +6586,7 @@ Tabs.News = {
 				if (Options.BreakingNews != lastmodified) {
 					Options.BreakingNews=lastmodified;
 					saveOptions();
-					//alert('Breaking news update, '+lastmodified+' check News tab');
+					setTimeout(t.notify,60*1000);
 				}
 				document.getElementById('newsdate').innerHTML = '<p style="text-align: right;">'+Options.BreakingNews+'</p>';
 			},
@@ -6599,8 +6599,13 @@ Tabs.News = {
   show : function (){
     var t = Tabs.News;
   },
+  notify : function() {
+	var t = Tabs.News;
+	  alert('Breaking news update, '+Options.BreakingNews+' check News tab');
+  },
 
 }
+
 Tabs.Scripter = {
 	tabOrder: 99000,
 	tabDisabled : !Options.ScripterTab,
