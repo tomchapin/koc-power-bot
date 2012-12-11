@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20121211a
+// @version        20121211b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121211a';
+var Version = '20121211b';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -19019,7 +19019,7 @@ Tabs.startup = {
     },
     
     sendCrestReport: function(){
-        if(!Options.crestreport || !CrestOptions.Running)
+        if(!Options.crestreport || !Options.crestRunning)
             return;
             
         var t = Tabs.Crest;
@@ -20161,13 +20161,13 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 	};
 	var m = this.value.substr(firstindex,this.value.length);
 	
-	m = m.replace(/Fa/g,"F­a").replace(/fA/g,"f­A").replace(/FA/g,"F­A").replace(/fa/g,"f­a");
+	m = m.replace(/Fa/g,"FÂ­a").replace(/fA/g,"fÂ­A").replace(/FA/g,"FÂ­A").replace(/fa/g,"fÂ­a");
 	
-	m = m.replace(/Gr/g,"G­r").replace(/gR/g,"g­R").replace(/GR/g,"G­R").replace(/gr/g,"g­r");
+	m = m.replace(/Gr/g,"GÂ­r").replace(/gR/g,"gÂ­R").replace(/GR/g,"GÂ­R").replace(/gr/g,"gÂ­r");
 	
-	m = m.replace(/Ri/g,"R­i").replace(/rI/g,"r­I").replace(/RI/g,"R­I").replace(/ri/g,"r­i");
+	m = m.replace(/Ri/g,"RÂ­i").replace(/rI/g,"rÂ­I").replace(/RI/g,"RÂ­I").replace(/ri/g,"rÂ­i");
 	
-	m = m.replace(/Na/g,"N­a").replace(/nA/g,"n­A").replace(/NA/g,"N­A").replace(/na/g,"n­a");
+	m = m.replace(/Na/g,"NÂ­a").replace(/nA/g,"nÂ­A").replace(/NA/g,"NÂ­A").replace(/na/g,"nÂ­a");
 	
 	this.value = whisper+m;
 }, false);
