@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121209c
+// @version        20121211a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121209c';
+var Version = '20121211a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -20222,6 +20222,14 @@ function fixkabamlag () {
 				if(Seed.queue_atkp[city][march].botMarchStatus == undefined && Seed.queue_atkp[city][march].marchStatus == 5) {
 					if (Seed.queue_atkp[city][march].returnUnixTime < kfutime) {
 						logit('fixing march from '+city+' with id '+march);
+						
+						//the following code will be a future option?  to return all troops or forget them until updateseed? or refresh
+						for (var i=0;i<17;i++) {
+							if (Seed.queue_atkp[city][march]['unit'+i+'Count'] > 0)
+							if(Seed.queue_atkp[city][march]['unit'+i+'Return'] == 0 || Seed.queue_atkp[city][march]['unit'+i+'Return'] == undefined)
+							Seed.queue_atkp[city][march]['unit'+i+'Return'] = Seed.queue_atkp[city][march]['unit'+i+'Count'];
+						};
+						
 						Seed.queue_atkp[city][march].hasUpdated = true;
 						Seed.queue_atkp[city][march].marchStatus = 8;
 					} else kabamhashX.push(Seed.queue_atkp[city][march].knightId);
