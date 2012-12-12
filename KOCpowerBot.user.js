@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20121211b
+// @version        20121212a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121211b';
+var Version = '20121212a';
 
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
@@ -468,7 +468,14 @@ if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
 
 function kocWideScreen(){
   function setWideFb (){
-	var kocFrame = parent.document.getElementById('kocIframes1');
+	//logit(document.getElementById("kocIframes1"));
+	var kocFrame = '';
+	try{
+		kocFrame = parent.document.getElementById('kocIframes1');
+	} catch (e){
+		logit("kocWideScreen "+e);
+		kocFame = document.getElementById("kocIframes1");
+	}
 	if (!kocFrame){
 	  setTimeout (setWideFb, 1000);
 	  return;
@@ -555,14 +562,14 @@ function kabamStandAlone (){
 	  return;
 	}
 	iFrames.style.width = '100%';
-	while ( (iFrames=iFrames.parentNode) != null)
-	  if (iFrames.tagName=='DIV')
+	while ( (iFrames=iFrames.parentNode) != null && iFrames.tagName !== "BODY")
+	  //if (iFrames.tagName=='DIV')
 		iFrames.style.width = '100%';
 
 	try{    
       document.getElementById('promo-sidebar').parentNode.removeChild(document.getElementById('promo-sidebar'));
     } catch (e){
-      // toolkit may have removed them already!
+      logit("Failed to remove sidebar "+e);
     }
   }
 
