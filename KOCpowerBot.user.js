@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121216a
+// @version        20121216b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,8 +34,15 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121216a';
+var Version = '20121216b';
 
+
+//bandaid to stop loading in advertisements containing the @include urls
+if(document.URL.indexOf('sharethis') != -1) {
+	GM_log('sharethis:'+document.URL);
+	return;
+
+};
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
 var DEBUG_SEARCH = false;
@@ -14235,6 +14242,16 @@ function addUrlArgs (url, args){
 
 // emulate protoype's Ajax.Request ...
 function AjaxRequest (url, opts){
+	
+	//move to march when fully migrated.  for now it's a great catch-all
+	if(url == 'ajax/march.php')
+	for (i in unsafeWindow.unitcost) {
+	var f = i.replace(/nt/,"");
+	if(opts.parameters[f] == undefined || opts.parameters[f] == 0)
+	delete opts.parameters[f];
+	};
+	//move to march when fully migrated.  for now it's a great catch-all
+
   var headers = {
     'X-Requested-With': 'XMLHttpRequest',
     'X-Prototype-Version': '1.6.1',
@@ -19324,6 +19341,7 @@ var March = {
         var t = this;
         t.profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
         t.currentrequests++;
+        //alert(inspect(params));
         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {   
             method: "post",
             parameters: params,
