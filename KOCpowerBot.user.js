@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121217a
+// @version        20121218a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121217a';
+var Version = '20121218a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -295,6 +295,8 @@ var TrainOptions = {
   CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0},
   tr	:	false,
   trset	:	0,
+  actr:     false,
+  actrset : 0,
   AsTroops     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   AsEnabled  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
   AsSelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
@@ -9379,7 +9381,7 @@ Tabs.AutoCraft = {
           return;
        }
        if (TrainOptions.actr && TrainOptions.actrset != 0) {
-          if (Seed.throne.activeSlot != TrainOptions.trset) {
+          if (Seed.throne.activeSlot != TrainOptions.actrset) {
              // wrong TR equipped
              return;
           };
