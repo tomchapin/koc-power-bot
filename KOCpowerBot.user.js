@@ -12677,9 +12677,8 @@ Tabs.AutoTrain = {
         t.barracks = getCityBuilding(cityId, 13).count;
         t.slots = 0;
         for (k in Seed.queue_unt['city'+cityId])
-           //   right now this is taking a normal and a special barrack
-           //if(Seed.queue_unt['city'+cityId][k][7] == false)
-           t.slots += 1;
+           if(Seed.queue_unt['city'+cityId][k][7] == false)
+              t.slots += 1;
         t.empty = parseInt(t.barracks - t.slots);
         return t.empty>0?true:false;
      } else {
