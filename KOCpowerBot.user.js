@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121219a
+// @version        20121218a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121219a';
+var Version = '20121218a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -1576,12 +1576,7 @@ Tabs.farm = {
                  if (rslt.ok) {
                    var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                    var ut = unsafeWindow.unixtime();
-                   
-	                   var unitsarr2 = '';
-	                   for (j in unsafeWindow.unitcost)
-						   unitsarr2 += '0,';
-	                   var unitsarr = '['+unitsarr2+'0]';
-//	                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                    var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                    for(i = 0; i <= unitsarr.length; i++){
                        if(params["u"+i]){
@@ -5753,12 +5748,7 @@ Tabs.Search = {
          if (rslt.ok) {
              var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
              var ut = unixTime();
-             
-	                   var unitsarr2 = '';
-	                   for (j in unsafeWindow.unitcost)
-						   unitsarr2 += '0,';
-	                   var unitsarr = '['+unitsarr2+'0]';
-//	                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+             var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
              var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
              for(i = 0; i <= unitsarr.length; i++){
                 if(params["u"+i]){
@@ -7886,12 +7876,7 @@ Tabs.transport = {
 					  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
 					  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
 					  var ut = unsafeWindow.unixtime();
-					  
-	                   var unitsarr2 = '';
-	                   for (j in unsafeWindow.unitcost)
-						   unitsarr2 += '0,';
-	                   var unitsarr = '['+unitsarr2+'0]';
-//	                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+					  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
 					  for(i = 0; i <= unitsarr.length; i++){
 						  if(params["u"+i]){
 						  unitsarr[i] = params["u"+i];
@@ -7976,12 +7961,7 @@ Tabs.transport = {
                   if (rslt.ok) {                  
                           var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                           var ut = unixTime();
-                          
-	                   var unitsarr2 = '';
-	                   for (j in unsafeWindow.unitcost)
-						   unitsarr2 += '0,';
-	                   var unitsarr = '['+unitsarr2+'0]';
-//	                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                          var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                           for(i = 0; i <= unitsarr.length; i++){
                               if(params["u"+i]){
                               unitsarr[i] = params["u"+i];
@@ -10098,12 +10078,7 @@ Tabs.Barb = {
                    if (rslt.ok) {
                      var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                      var ut = unsafeWindow.unixtime();
-                     
-	                   var unitsarr2 = '';
-	                   for (j in unsafeWindow.unitcost)
-						   unitsarr2 += '0,';
-	                   var unitsarr = '['+unitsarr2+'0]';
-//	                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                     var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                      var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                      for(i = 0; i <= unitsarr.length; i++){
                         if(params["u"+i]){
@@ -11575,12 +11550,7 @@ Tabs.Reassign = {
                   actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unixTime();
-                  
-	                   var unitsarr2 = '';
-	                   for (j in unsafeWindow.unitcost)
-						   unitsarr2 += '0,';
-	                   var unitsarr = '['+unitsarr2+'0]';
-//	                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                                       for(i = 0; i <= unitsarr.length; i++){
                                           if(params["u"+i]){
                                                   unitsarr[i] = params["u"+i];
@@ -12353,12 +12323,7 @@ Tabs.Reinforce = {
                   if (rslt.ok) {
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unixTime();
-                  
-	                   var unitsarr2 = '';
-	                   for (j in unsafeWindow.unitcost)
-						   unitsarr2 += '0,';
-	                   var unitsarr = '['+unitsarr2+'0]';
-//	                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                   for(i = 0; i <= unitsarr.length; i++){
                       if(params["u"+i]){
                       unitsarr[i] = params["u"+i];
@@ -19432,12 +19397,7 @@ var March = {
                 if (rslt.ok) {
                     var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                     var ut = unsafeWindow.unixtime();
-                    
-	                   var unitsarr2 = '';
-	                   for (j in unsafeWindow.unitcost)
-						   unitsarr2 += '0,';
-	                   var unitsarr = '['+unitsarr2+'0]';
-//	                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+                    var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                     var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                     for(i = 0; i <= unitsarr.length; i++){
                         if(params["u"+i]){
