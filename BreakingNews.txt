@@ -1,1 +1,13 @@
-TWITTER FOLLOWERS. As per the in game message, please follow KoC on twitter. They want to get to 20k followers and reward us with several stuff. <a href="https://twitter.com/kingdomscamelot">TWITTER LINK</a> - Lets get the 20k and reap the rewards. - tonyboy
+REGARDING TOOLS PLAYER SEARCH....
+
+To clarify...
+
+This is not a tools issue. This is a kabam problem. If you click your leaderboard at the bottom of the game, and then 'view' a player, nothing happens. 
+
+This is NOT domain related. For some it works on one domain, and for others on exactly the same domain it does not work.
+
+It does not seem to be browser/tools/system/anything else related, IT IS A KABAM ERROR.
+
+It will work for some and not for others.
+
+We have made kabam aware.
