@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121218a
+// @version        20121221a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121218a';
+var Version = '20121221a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -12469,6 +12469,9 @@ Tabs.AutoTrain = {
 		if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(21) != -1) {
 			m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt14'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
 		};
+		if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(31) != -1) {
+			m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt15'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+		};
 	}; 
         m+='</td></tr></table>';
     }
@@ -12684,7 +12687,7 @@ Tabs.AutoTrain = {
         t.empty = parseInt(t.barracks - t.slots);
         return t.empty>0?true:false;
      } else {
-        t.barracks = Number(getCityBuilding(cityId, 22).count + getCityBuilding(cityId, 24).count);//24 fey barracks, 22 druid barracks
+        t.barracks = Number(getCityBuilding(cityId, 22).count + getCityBuilding(cityId, 24).count + getCityBuilding(cityId, 26).count);//24 fey barracks, 22 druid barracks 26 briton barracks
         t.slots = 0;
         for (k in Seed.queue_unt['city'+cityId])
            if(Seed.queue_unt['city'+cityId][k][7] == true)
@@ -12751,6 +12754,8 @@ Tabs.AutoTrain = {
 			punit = 13;
 		if(getCityBuilding(cityId, 24).count)
 			punit = 14;
+		if(getCityBuilding(cityId, 26).count)
+			punit = 15;
 		if(punit)	
 			var ptrain = t.trainamt(cityId, punit);
 		if(TrainOptions.AsEnabled[t.city] && idle && ptrainslots && resources && ptrain) {
