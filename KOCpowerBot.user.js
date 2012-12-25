@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121221a
+// @version        20121225a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121221a';
+var Version = '20121225a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -332,6 +332,7 @@ var ThroneOptions = {
 	Bad:0,
 	Items: [],
     Salvage:{Attack:true,Defense:true,Life:true,Speed:true,Accuracy:true,Range:true,Load:true,MarchSize:true,MarchSpeed:true,CombatSkill:true,IntelligenceSkill:true,PoliticsSkill:true,ResourcefulnessSkill:true,TrainingSpeed:true,ConstructionSpeed:true,ResearchSpeed:true,CraftingSpeed:true,Upkeep:true,ResourceProduction:true,ResourceCap:true,Storehouse:true,Morale:true,ItemDrop:true},
+   SalvageA:{Attack:{},Defense:{},Life:{},Speed:{},Accuracy:{},Range:{},Load:{},MarchSize:{},MarchSpeed:{},CombatSkill:{},IntelligenceSkill:{},PoliticsSkill:{},ResourcefulnessSkill:{},TrainingSpeed:{},ConstructionSpeed:{},ResearchSpeed:{},CraftingSpeed:{},Upkeep:{},ResourceProduction:{},ResourceCap:{},Storehouse:{},Morale:{},ItemDrop:{}},
 	SalvageQuality:0,
 	saveXitems:0,
 	thronekeep:1,
@@ -1778,12 +1779,16 @@ Tabs.Throne = {
     }
     t.checkUpgradeInfo(true);
     if (ThroneOptions.Active) t.setActionTimer = setInterval(t.doAction,10000);
+    logit('loaded');
+    setTimeout(t.salvageCheck, 16000);
     setInterval(t.salvageCheck,2*60*1000);
  },
      saveSalvageOptions : function(){
 			for (k in unsafeWindow.cm.thronestats.effects) {
 				var ele = document.getElementById('pbThroneItems'+k);
+				var ele2 = document.getElementById(k+'Min');
 				ThroneOptions.Salvage[k]=ele.checked;
+				ThroneOptions.SalvageA[k].Min=ele2.value;
 			}		
 		saveThroneOptions();
    },
@@ -1794,40 +1799,41 @@ Tabs.Throne = {
       m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
       m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wondrous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
       m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td></table>';
-      m+='<TR><TD colspan=3><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Keep one checked attribute per card (salvage mixed cards)</TD></TR>';
+      m+='<TR><TD colspan=3><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Keep one checked attribute per card (salvage mixed cards)(Required for "Min number of lines")</TD></TR>';
       m+='<table><TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_cityspire type=checkbox '+ (ThroneOptions.CitySpire?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in cities with Fey Spire first before other cities</TD></TR>';
-      m+='<TR><TD clospan=3>Salvage checked attributes above ' + htmlSelector({1:'none', 2:'Slot 2 (WARNING Set keep items to 4 or less)', 3:'Slot 3 (WARNING Set keep items to 3 or less)', 4:'Slot 4 (WARNING Set keep items to 2 or less)', 5:'Slot 5 (WARNING Set keep items to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR></table>';
+      m+='<TR><TD clospan=3>Salvage checked attributes above ' + htmlSelector({1:'none', 2:'Slot 2 (WARNING Set keep items to 4 or less)', 3:'Slot 3 (WARNING Set keep items to 3 or less)', 4:'Slot 4 (WARNING Set keep items to 2 or less)', 5:'Slot 5 (WARNING Set keep items to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'Warning Min lines must also be set for less.</TD></TR></table>';
+      m+='<TD><FONT color=red>Min number of lines will override your Keep items setting and can keep cards with a lesser value</font><br></td>';
       m+='<TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td>';
       m+='<TABLE width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Defense type=checkbox '+ (ThroneOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Life type=checkbox '+ (ThroneOptions.Salvage.Life?'CHECKED ':'') +'/>&nbsp;Life</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Speed type=checkbox '+ (ThroneOptions.Salvage.Speed?'CHECKED ':'') +'/>&nbsp;Speed</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Accuracy type=checkbox '+ (ThroneOptions.Salvage.Accuracy?'CHECKED ':'') +'/>&nbsp;Accuracy</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Range type=checkbox '+ (ThroneOptions.Salvage.Range?'CHECKED ':'') +'/>&nbsp;Range</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Attack.Min,'id=AttackMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Defense type=checkbox '+ (ThroneOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Defense.Min,'id=DefenseMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Life type=checkbox '+ (ThroneOptions.Salvage.Life?'CHECKED ':'') +'/>&nbsp;Life</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Life.Min,'id=LifeMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Speed type=checkbox '+ (ThroneOptions.Salvage.Speed?'CHECKED ':'') +'/>&nbsp;Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Speed.Min,'id=SpeedMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Accuracy type=checkbox '+ (ThroneOptions.Salvage.Accuracy?'CHECKED ':'') +'/>&nbsp;Accuracy</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Accuracy.Min,'id=AccuracyMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Range type=checkbox '+ (ThroneOptions.Salvage.Range?'CHECKED ':'') +'/>&nbsp;Range</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Range.Min,'id=RangeMin')+'</td></tr>';
       m+='<TR></tr><TR><TD><B>March:</b></td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Load type=checkbox '+ (ThroneOptions.Salvage.Load?'CHECKED ':'') +'/>&nbsp;Load</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=MarchSize type=checkbox '+ (ThroneOptions.Salvage.MarchSize?'CHECKED ':'') +'/>&nbsp;March Size</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=MarchSpeed type=checkbox '+ (ThroneOptions.Salvage.MarchSpeed?'CHECKED ':'') +'/>&nbsp;March Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Load type=checkbox '+ (ThroneOptions.Salvage.Load?'CHECKED ':'') +'/>&nbsp;Load</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Load.Min,'id=LoadMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=MarchSize type=checkbox '+ (ThroneOptions.Salvage.MarchSize?'CHECKED ':'') +'/>&nbsp;March Size</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.MarchSize.Min,'id=MarchSizeMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=MarchSpeed type=checkbox '+ (ThroneOptions.Salvage.MarchSpeed?'CHECKED ':'') +'/>&nbsp;March Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.MarchSpeed.Min,'id=MarchSpeedMin')+'</td></tr>';
       m+='<TR></tr><TR><TD><B>Skills:</b></td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=CombatSkill type=checkbox '+ (ThroneOptions.Salvage.CombatSkill?'CHECKED ':'') +'/>&nbsp;Combat Skill</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=IntelligenceSkill type=checkbox '+ (ThroneOptions.Salvage.IntelligenceSkill?'CHECKED ':'') +'/>&nbsp;Intelligence Skill</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=PoliticsSkill type=checkbox '+ (ThroneOptions.Salvage.PoliticsSkill?'CHECKED ':'') +'/>&nbsp;Politics Skill</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=ResourcefulnessSkill type=checkbox '+ (ThroneOptions.Salvage.ResourcefulnessSkill?'CHECKED ':'') +'/>&nbsp;Resourcefulness Skill</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=CombatSkill type=checkbox '+ (ThroneOptions.Salvage.CombatSkill?'CHECKED ':'') +'/>&nbsp;Combat Skill</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.CombatSkill.Min,'id=CombatSkillMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=IntelligenceSkill type=checkbox '+ (ThroneOptions.Salvage.IntelligenceSkill?'CHECKED ':'') +'/>&nbsp;Intelligence Skill</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.IntelligenceSkill.Min,'id=IntelligenceSkillMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=PoliticsSkill type=checkbox '+ (ThroneOptions.Salvage.PoliticsSkill?'CHECKED ':'') +'/>&nbsp;Politics Skill</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.PoliticsSkill.Min,'id=PoliticsSkillMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourcefulnessSkill type=checkbox '+ (ThroneOptions.Salvage.ResourcefulnessSkill?'CHECKED ':'') +'/>&nbsp;Resourcefulness Skill</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ResourcefulnessSkill.Min,'id=ResourcefulnessSkillMin')+'</td></tr>';
        m+='<TR></tr><TR><TD><B>Speed:</b></td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=TrainingSpeed type=checkbox '+ (ThroneOptions.Salvage.TrainingSpeed?'CHECKED ':'') +'/>&nbsp;Training Speed</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=ConstructionSpeed type=checkbox '+ (ThroneOptions.Salvage.ConstructionSpeed?'CHECKED ':'') +'/>&nbsp;Construction Speed</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=ResearchSpeed type=checkbox '+ (ThroneOptions.Salvage.ResearchSpeed?'CHECKED ':'') +'/>&nbsp;Research Speed</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=CraftingSpeed type=checkbox '+ (ThroneOptions.Salvage.CraftingSpeed?'CHECKED ':'') +'/>&nbsp;Crafting Speed</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=TrainingSpeed type=checkbox '+ (ThroneOptions.Salvage.TrainingSpeed?'CHECKED ':'') +'/>&nbsp;Training Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.TrainingSpeed.Min,'id=TrainingSpeedMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ConstructionSpeed type=checkbox '+ (ThroneOptions.Salvage.ConstructionSpeed?'CHECKED ':'') +'/>&nbsp;Construction Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ConstructionSpeed.Min,'id=ConstructionSpeedMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResearchSpeed type=checkbox '+ (ThroneOptions.Salvage.ResearchSpeed?'CHECKED ':'') +'/>&nbsp;Research Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ResearchSpeed.Min,'id=ResearchSpeedMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=CraftingSpeed type=checkbox '+ (ThroneOptions.Salvage.CraftingSpeed?'CHECKED ':'') +'/>&nbsp;Crafting Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.CraftingSpeed.Min,'id=CraftingSpeedMin')+'</td></tr>';
       m+='<TR></tr><TR><TD><B>Recources:</b></td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Upkeep type=checkbox '+ (ThroneOptions.Salvage.Upkeep?'CHECKED ':'') +'/>&nbsp;Upkeep</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=ResourceProduction type=checkbox '+ (ThroneOptions.Salvage.ResourceProduction?'CHECKED ':'') +'/>&nbsp;Resource Production</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=ResourceCap type=checkbox '+ (ThroneOptions.Salvage.ResourceCap?'CHECKED ':'') +'/>&nbsp;Resource Cap</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Storehouse type=checkbox '+ (ThroneOptions.Salvage.Storehouse?'CHECKED ':'') +'/>&nbsp;Storehouse</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Upkeep type=checkbox '+ (ThroneOptions.Salvage.Upkeep?'CHECKED ':'') +'/>&nbsp;Upkeep</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Upkeep.Min,'id=UpkeepMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourceProduction type=checkbox '+ (ThroneOptions.Salvage.ResourceProduction?'CHECKED ':'') +'/>&nbsp;Resource Production</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ResourceProduction.Min,'id=ResourceProductionMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ResourceCap type=checkbox '+ (ThroneOptions.Salvage.ResourceCap?'CHECKED ':'') +'/>&nbsp;Resource Cap</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ResourceCap.Min,'id=ResourceCapMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Storehouse type=checkbox '+ (ThroneOptions.Salvage.Storehouse?'CHECKED ':'') +'/>&nbsp;Storehouse</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Storehouse.Min,'id=StorehouseMin')+'</td></tr>';
       m+='<TR></tr><TR><TD><B>Varia:</b></td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=Morale type=checkbox '+ (ThroneOptions.Salvage.Morale?'CHECKED ':'') +'/>&nbsp;Morale</td></tr>';
-      m+='<TR><TD></td><TD><INPUT id=ItemDrop type=checkbox '+ (ThroneOptions.Salvage.ItemDrop?'CHECKED ':'') +'/>&nbsp;ItemDrop</td></tr></table>';
+      m+='<TR><TD></td><TD><INPUT id=Morale type=checkbox '+ (ThroneOptions.Salvage.Morale?'CHECKED ':'') +'/>&nbsp;Morale</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Morale.Min,'id=MoraleMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=ItemDrop type=checkbox '+ (ThroneOptions.Salvage.ItemDrop?'CHECKED ':'') +'/>&nbsp;ItemDrop</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ItemDrop.Min,'id=ItemDropMin')+'</td></tr></table>';
       
       
 
@@ -1835,8 +1841,9 @@ Tabs.Throne = {
       	
       m+='<TABLE width=80% class=pbTab>';
       for (k in unsafeWindow.cm.thronestats.effects) {
+		  if(!ThroneOptions.SalvageA[k]) ThroneOptions.SalvageA[k] = {};
       	m += '<TR><TD><A onclick="setFAV('+ k +')"><DIV class=pbSalvage_fav id=SalvageFAV'+k+'></div></td>';
-      	m += '<TD class=pbThrone><INPUT id=pbThroneItems'+k+' type=checkbox checked='+ (ThroneOptions.Salvage[k]?'CHECKED ':'') +'>'+ unsafeWindow.cm.thronestats.effects[k][1] +'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][3]+'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][2]+'</td></tr>';
+      	m += '<TD class=pbThrone><INPUT id=pbThroneItems'+k+' type=checkbox checked='+ (ThroneOptions.Salvage[k]?'CHECKED ':'') +'>'+ unsafeWindow.cm.thronestats.effects[k][1] +'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][3]+'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][2]+'</td><td class=pbThroneS>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA[k].Min,'id='+k+'Min')+'</td></tr>';
       }	
       m+= '</table>';
 
@@ -1879,6 +1886,33 @@ Tabs.Throne = {
       document.getElementById('Storehouse').addEventListener ('change', function(){ThroneOptions.Salvage.Storehouse = document.getElementById('Storehouse').checked;saveThroneOptions();},false);
       document.getElementById('Morale').addEventListener ('change', function(){ThroneOptions.Salvage.Morale = document.getElementById('Morale').checked;saveThroneOptions();},false);
       document.getElementById('ItemDrop').addEventListener ('change', function(){ThroneOptions.Salvage.ItemDrop = document.getElementById('ItemDrop').checked;saveThroneOptions();},false);
+      
+	  document.getElementById('AttackMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Attack.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('DefenseMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Defense.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('LifeMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Life.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('SpeedMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Speed.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('AccuracyMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Accuracy.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('RangeMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Range.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('LoadMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Load.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('MarchSizeMin').addEventListener ('change', function(){ThroneOptions.SalvageA.MarchSize.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('MarchSpeedMin').addEventListener ('change', function(){ThroneOptions.SalvageA.MarchSpeed.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('CombatSkillMin').addEventListener ('change', function(){ThroneOptions.SalvageA.CombatSkill.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('IntelligenceSkillMin').addEventListener ('change', function(){ThroneOptions.SalvageA.IntelligenceSkill.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('PoliticsSkillMin').addEventListener ('change', function(){ThroneOptions.SalvageA.PoliticsSkill.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('ResourcefulnessSkillMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ResourcefulnessSkill.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('TrainingSpeedMin').addEventListener ('change', function(){ThroneOptions.SalvageA.TrainingSpeed.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('ConstructionSpeedMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ConstructionSpeed.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('ResearchSpeedMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ResearchSpeed.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('CraftingSpeedMin').addEventListener ('change', function(){ThroneOptions.SalvageA.CraftingSpeed.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('UpkeepMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Upkeep.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('ResourceProductionMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ResourceProduction.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('ResourceCapMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ResourceCap.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('StorehouseMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Storehouse.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('MoraleMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Morale.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('ItemDropMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ItemDrop.Min = this.value;saveThroneOptions();},false);
+      
+      
+      
       document.getElementById('pbthrone_keep').addEventListener ('change', function(){ThroneOptions.thronekeep = parseInt(document.getElementById('pbthrone_keep').value);saveThroneOptions();},false);
 
       document.getElementById('Quality').addEventListener  ('change', function(){ThroneOptions.SalvageQuality = this.value;saveThroneOptions();},false);
@@ -1890,7 +1924,7 @@ Tabs.Throne = {
 
       //if (ThroneOptions.Salvage[1] != undefined){
 		  for (k in unsafeWindow.cm.thronestats.effects){
-				document.getElementById('pbThroneItems'+k).checked = ThroneOptions.Salvage[k]; 
+				document.getElementById('pbThroneItems'+k).checked = ThroneOptions.Salvage[k];
 			}
 	  //}
 	  if (ThroneOptions.Salvage_fav[1] == undefined){
@@ -1906,8 +1940,10 @@ Tabs.Throne = {
 			}
 	  }
     var element_class = document.getElementsByClassName('pbThrone');
+    var element_classTS = document.getElementsByClassName('pbThroneS');
     for (k=0;k<element_class.length;k++){
     	element_class[k].addEventListener('click', t.saveSalvageOptions , false);
+    	element_classTS[k].addEventListener ('change', t.saveSalvageOptions , false);
     }
 
     t.saveSalvageOptions();
@@ -2931,6 +2967,7 @@ salvageCheck : function (){
     var type2 ="";
     var NotUpgrading = true;
 	var NotFavorite = true;
+	var MinReq = false;
     var number = 0;
     var count=0;
     if(!Options.ThroneDeleteItems) return;
@@ -2943,6 +2980,7 @@ salvageCheck : function (){
         type2 = "";
         NotUpgrading = true;
 		NotFavorite = true;
+		MinReq = false;
         number = 0;
         count++;
         if (typeof(y.id) == 'number') {
@@ -2952,6 +2990,7 @@ salvageCheck : function (){
             if (count<=(parseInt(Seed.throne.rowNum)*5) && count>ThroneOptions.saveXitems) {
                     //del = true;
                     level = false;
+					MinReq = false;
                     if (y.quality > ThroneOptions.SalvageQuality) level=true;
                     if(y.level > 0) level = true;
                     if (ThroneOptions.SalvageQuality == 0) level=true;
@@ -2963,8 +3002,10 @@ salvageCheck : function (){
                                 if(ThroneOptions.SingleStat) {
                                     if(ThroneOptions.Salvage[type]) 
                                     ThroneOptions.Salvage[type]++
+                                    
                                     if(ThroneOptions.Salvage[y.effects["slot"+i].id])
                                     ThroneOptions.Salvage[y.effects["slot"+i].id]++
+                                    
                                 } else {
                                     number++;
                                 }
@@ -2974,13 +3015,16 @@ salvageCheck : function (){
                     if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
                     if(ThroneOptions.SingleStat) {
                         for (h in ThroneOptions.Salvage) {
+								if(ThroneOptions.Salvage[h] && ThroneOptions.SalvageA[h].Min > 0 && parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.SalvageA[h].Min) {
+										MinReq = true;
+									};	
                             if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep)
                                 number = parseInt(ThroneOptions.Salvage[h] - 1);
                             if(ThroneOptions.Salvage[h]) {
                                 ThroneOptions.Salvage[h] = true;};
                         }
                     }
-                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite) {
+                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq) {
                         t.SalvageArray.push(y.id);
                     }                     
             }
