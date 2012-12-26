@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121225a
+// @version        20121225b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121225a';
+var Version = '20121225b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -1710,7 +1710,6 @@ Tabs.farm = {
 };
 
 
-
 /*********************************** Throne Tab ***********************************/
 
 Tabs.Throne = {
@@ -3000,12 +2999,16 @@ salvageCheck : function (){
                             type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];
                             if (ThroneOptions.Salvage[type] || ThroneOptions.Salvage[y.effects["slot"+i].id]) {
                                 if(ThroneOptions.SingleStat) {
-                                    if(ThroneOptions.Salvage[type]) 
-                                    ThroneOptions.Salvage[type]++
-                                    
-                                    if(ThroneOptions.Salvage[y.effects["slot"+i].id])
-                                    ThroneOptions.Salvage[y.effects["slot"+i].id]++
-                                    
+                                if(ThroneOptions.Salvage[type]){
+                                    //ThroneOptions.Salvage[type]++
+									if(!ThroneOptions.SalvageA[type].cur)ThroneOptions.SalvageA[type].cur = 0;
+									ThroneOptions.SalvageA[type].cur++
+								};
+                                if(ThroneOptions.Salvage[y.effects["slot"+i].id]){
+                                    //ThroneOptions.Salvage[y.effects["slot"+i].id]++
+                                    if(!ThroneOptions.SalvageA[y.effects["slot"+i].id].cur)ThroneOptions.SalvageA[y.effects["slot"+i].id].cur = 0;
+									ThroneOptions.SalvageA[y.effects["slot"+i].id].cur++
+								};
                                 } else {
                                     number++;
                                 }
@@ -3015,16 +3018,17 @@ salvageCheck : function (){
                     if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
                     if(ThroneOptions.SingleStat) {
                         for (h in ThroneOptions.Salvage) {
-								if(ThroneOptions.Salvage[h] && ThroneOptions.SalvageA[h].Min > 0 && parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.SalvageA[h].Min) {
+								if(ThroneOptions.Salvage[h] && ThroneOptions.SalvageA[h].Min > 0 && ThroneOptions.SalvageA[h].cur >= ThroneOptions.SalvageA[h].Min) {
 										MinReq = true;
 									};	
-                            if(parseInt(ThroneOptions.Salvage[h] - 1) >= ThroneOptions.thronekeep)
-                                number = parseInt(ThroneOptions.Salvage[h] - 1);
-                            if(ThroneOptions.Salvage[h]) {
-                                ThroneOptions.Salvage[h] = true;};
+                            if(ThroneOptions.SalvageA[h].cur >= ThroneOptions.thronekeep)
+                                number = ThroneOptions.SalvageA[h].cur;
+                            if(ThroneOptions.SalvageA[h].cur) {
+                                ThroneOptions.SalvageA[h].cur = 0;};
                         }
                     }
                     if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq) {
+						//logit(y.name);
                         t.SalvageArray.push(y.id);
                     }                     
             }
