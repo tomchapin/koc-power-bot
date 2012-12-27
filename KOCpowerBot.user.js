@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121225b
+// @version        20121226a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121225b';
+var Version = '20121226a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -1577,13 +1577,13 @@ Tabs.farm = {
                  if (rslt.ok) {
                    var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                    var ut = unsafeWindow.unixtime();
-                   var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+				var unitsarr = [];
+				for (j in unsafeWindow.unitcost)
+					unitsarr.push(0);
+				for(i = 0; i <= unitsarr.length; i++)
+					if(params["u"+i])
+						unitsarr[i] = params["u"+i];
                    var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                   for(i = 0; i <= unitsarr.length; i++){
-                       if(params["u"+i]){
-                       unitsarr[i] = params["u"+i];
-                       }
-                   }
                    var currentcityid = params.cid;
                    unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
@@ -5796,13 +5796,13 @@ Tabs.Search = {
          if (rslt.ok) {
              var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
              var ut = unixTime();
-             var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+				var unitsarr = [];
+				for (j in unsafeWindow.unitcost)
+					unitsarr.push(0);
+				for(i = 0; i <= unitsarr.length; i++)
+					if(params["u"+i])
+						unitsarr[i] = params["u"+i];
              var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-             for(i = 0; i <= unitsarr.length; i++){
-                if(params["u"+i]){
-                unitsarr[i] = params["u"+i];
-                }
-             }
              var currentcityid = params.cid;
              unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
              if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
@@ -7924,12 +7924,12 @@ Tabs.transport = {
 					  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
 					  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
 					  var ut = unsafeWindow.unixtime();
-					  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-					  for(i = 0; i <= unitsarr.length; i++){
-						  if(params["u"+i]){
-						  unitsarr[i] = params["u"+i];
-						  }
-					  }
+				var unitsarr = [];
+				for (j in unsafeWindow.unitcost)
+					unitsarr.push(0);
+				for(i = 0; i <= unitsarr.length; i++)
+					if(params["u"+i])
+						unitsarr[i] = params["u"+i];
 					  var resources=new Array();
 					  resources[0] = params.gold;
 					  for(i=1; i<=5; i++){
@@ -8009,12 +8009,12 @@ Tabs.transport = {
                   if (rslt.ok) {                  
                           var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                           var ut = unixTime();
-                          var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                          for(i = 0; i <= unitsarr.length; i++){
-                              if(params["u"+i]){
-                              unitsarr[i] = params["u"+i];
-                              }
-                          }
+				var unitsarr = [];
+				for (j in unsafeWindow.unitcost)
+					unitsarr.push(0);
+				for(i = 0; i <= unitsarr.length; i++)
+					if(params["u"+i])
+						unitsarr[i] = params["u"+i];
                           var resources=new Array();
                           resources[0] = params.gold;
                           for(i=1; i<=5; i++){
@@ -10126,13 +10126,13 @@ Tabs.Barb = {
                    if (rslt.ok) {
                      var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                      var ut = unsafeWindow.unixtime();
-                     var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+				var unitsarr = [];
+				for (j in unsafeWindow.unitcost)
+					unitsarr.push(0);
+				for(i = 0; i <= unitsarr.length; i++)
+					if(params["u"+i])
+						unitsarr[i] = params["u"+i];
                      var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                     for(i = 0; i <= unitsarr.length; i++){
-                        if(params["u"+i]){
-                        unitsarr[i] = params["u"+i];
-                        }
-                     }
                      var currentcityid = params.cid;
                      unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
                      unsafeWindow.update_seed(rslt.updateSeed)
@@ -11598,12 +11598,12 @@ Tabs.Reassign = {
                   actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unixTime();
-                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                                      for(i = 0; i <= unitsarr.length; i++){
-                                          if(params["u"+i]){
-                                                  unitsarr[i] = params["u"+i];
-                                          }
-                                      }
+				var unitsarr = [];
+				for (j in unsafeWindow.unitcost)
+					unitsarr.push(0);
+				for(i = 0; i <= unitsarr.length; i++)
+					if(params["u"+i])
+						unitsarr[i] = params["u"+i];
                   var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                   var currentcityid = city;
                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
@@ -12371,12 +12371,12 @@ Tabs.Reinforce = {
                   if (rslt.ok) {
                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                   var ut = unixTime();
-                  var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                  for(i = 0; i <= unitsarr.length; i++){
-                      if(params["u"+i]){
-                      unitsarr[i] = params["u"+i];
-                      }
-                  }
+				var unitsarr = [];
+				for (j in unsafeWindow.unitcost)
+					unitsarr.push(0);
+				for(i = 0; i <= unitsarr.length; i++)
+					if(params["u"+i])
+						unitsarr[i] = params["u"+i];
                   var resources=new Array();
                   resources[0] = params.gold;
                   for(i=1; i<=4; i++){
@@ -19450,13 +19450,14 @@ var March = {
                 if (rslt.ok) {
                     var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                     var ut = unsafeWindow.unixtime();
-                    var unitsarr=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+				var unitsarr = [];
+				for (j in unsafeWindow.unitcost)
+					unitsarr.push(0);
+				for(i = 0; i <= unitsarr.length; i++)
+					if(params["u"+i])
+						unitsarr[i] = params["u"+i];
                     var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                    for(i = 0; i <= unitsarr.length; i++){
-                        if(params["u"+i]){
-                            unitsarr[i] = params["u"+i];
-                        }
-                    }
+
 
                     var currentcityid = params.cid;
                     unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
