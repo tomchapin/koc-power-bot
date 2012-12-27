@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121226a
+// @version        20121226b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121226a';
+var Version = '20121226b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -192,9 +192,11 @@ var GlobalOptions = {
 
 var CrestOptions = {
   Running   	: 	false,
+  curRound		:	1,
   CrestCity 	: 	0,
   RoundOne  	: 	false,
   RoundTwo  	: 	true,
+  lastRoundOne 	: 	0,
   lastRoundTwo 	: 	0,
   X				:	0,
   Y				:	0,
@@ -234,9 +236,11 @@ var CrestData = new Array();
 			Arr = CrestOptions;
 
 		this.Running 		=  	true;
+		this.curRound		=	1,
   		this.CrestCity 		= 	Arr.CrestCity;
 		this.RoundOne 		= 	Arr.RoundOne;
 		this.RoundTwo 		= 	true;
+		this.lastRoundOne 	= 	0;
 		this.lastRoundTwo 	= 	0;
 		this.X 				= 	Arr.X;
 		this.Y 				= 	Arr.Y;
@@ -18922,9 +18926,10 @@ Tabs.startup = {
                 if(r==1){
                     Options.Crest1Count++;
                     r = 2;
+                    CrestData[CrestDataNum].curRound = 2;
                 var now = new Date().getTime()/1000.0;
                 now = now.toFixed(0);
-                CrestData[CrestDataNum].lastRoundTwo = now;//is actually lastround1 and must be here to work properly
+                CrestData[CrestDataNum].lastRoundOne = now;
                 } else {
                     Options.Crest2Count++;
                 }
@@ -18999,13 +19004,12 @@ Tabs.startup = {
         clearTimeout(t.timer);
         //r = (typeof r === 'undefined') ? 0 : r;
         //retry = (typeof retry === 'undefined') ? 0 : retry;
-        //CrestDataNum = (typeof CrestDataNum === 'undefined') ? 0 : CrestDataNum;
-
         if (!Options.crestRunning) return;
         if (CrestData.length == 0)
             return;
         if (CrestDataNum >= CrestData.length)
             CrestDataNum = 0;
+        r = (typeof CrestData[CrestDataNum].curRound === 'undefined') ? 1 : CrestData[CrestDataNum].curRound;
 
         cityID = 'city' + CrestData[CrestDataNum].CrestCity;
         retry++;
@@ -19077,13 +19081,21 @@ Tabs.startup = {
         var kid = t.knt[0].ID;
         if (CrestData[CrestDataNum].R1ST == 0 && CrestData[CrestDataNum].R1MM == 0 && CrestData[CrestDataNum].R1Scout == 0 && CrestData[CrestDataNum].R1Pike == 0 && CrestData[CrestDataNum].R1Sword == 0 && CrestData[CrestDataNum].R1Arch == 0 && CrestData[CrestDataNum].R1LC == 0 && CrestData[CrestDataNum].R1HC == 0 && CrestData[CrestDataNum].R1SW == 0 && CrestData[CrestDataNum].R1Ball == 0 && CrestData[CrestDataNum].R1Ram == 0 && CrestData[CrestDataNum].R1Cat == 0) {
            r=2;
+           CrestData[CrestDataNum].curRound = 2;
        }else {
             var now = new Date().getTime()/1000.0;
             now = now.toFixed(0);
-            if (now > (parseInt(CrestData[CrestDataNum].lastRoundTwo) + (Options.Crestinterval*2) + 60)) {
+            if (now > (parseInt(CrestData[CrestDataNum].lastRoundOne) + 90)) {
+			if(CrestData[CrestDataNum].isWild)
+			if (now < (parseInt(CrestData[CrestDataNum].lastRoundTwo) + 70)) {
+            t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+				return;
+			}
                 r=1;
+                CrestData[CrestDataNum].curRound =1;
             }
         }
+        if(r == 2)CrestData[CrestDataNum].lastRoundTwo = now;
                 saveCrestData();
         switch(r) {
             case 1:
@@ -19097,7 +19109,7 @@ Tabs.startup = {
                 params.kid        =     kid;
                 params.xcoord     =     CrestData[CrestDataNum].X;
                 params.ycoord     =     CrestData[CrestDataNum].Y;
-                if (now < (parseInt(CrestData[CrestDataNum].lastRoundTwo) + 240) && CrestData[CrestDataNum].isWild) {
+                if (now < (parseInt(CrestData[CrestDataNum].lastRoundOne) + 240) && CrestData[CrestDataNum].isWild) {
                 
                     params.u2     =     (CrestData[CrestDataNum].R1MM / 10);
                     params.u2     =     params.u2.toFixed(0);
