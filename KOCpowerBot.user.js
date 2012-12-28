@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121227b
+// @version        20121227c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121227b';
+var Version = '20121227c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -813,47 +813,6 @@ var FoodAlerts = {
   f.minuteTimer = setTimeout (f.e_eachMinute, 1800000);
   },
 }
-/*************************************** Throne caps tab *****************************************/
-
-Tabs.Caps = {
-tabOrder : 99999,
-tabLabel: 'TR Caps',
-myDiv: null,
-
-init : function (div){
-	var t = Tabs.Caps;
-	t.myDiv = div;
-    m =  '<DIV class=ptstat><b>Throne Room Caps</b></div><TABLE border=2px align=center>';
-    m += '<TR><TD width="150px"><B>Boost Name</b></td><TD width="50px"><B>Max</b></td><TD><B>Min</b></td><TD style="border:0;width:50px"></td><TD width="150px"><B>Boost Name</b></td><TD width="50px"><B>Max</b></td><TD width="50px"><B>Min</b></td></tr><TR>';
-    var counter =0;
-    for (k in unsafeWindow.cm.thronestats.boosts){
-    	counter++
-    	var boost = unsafeWindow.cm.thronestats.boosts[k]
-    	m += '<TD>'+ boost.BoostName + '</td><TD>'+ boost.Max +'<SPAN id=maxPerc_'+k+'></div></td><TD>' + boost.Min + '<SPAN id=minPerc_'+k+'></div>';
-
-    	if (counter % 2 == 0){
-    		m += '<TR>';
-    	}else {
-    		m += '</td><TD style="border:0">';
-    	}
-    }
-    t.myDiv.innerHTML = m;
-    for (k in unsafeWindow.cm.thronestats.boosts){
-    	var boost = unsafeWindow.cm.thronestats.boosts[k]
-    	if (boost.CapType == "percent"){
-	   		document.getElementById('maxPerc_'+k).innerHTML = '%'
-    		if (boost.Min != "none"){
-    			document.getElementById('minPerc_'+k).innerHTML = '%'
-    		}
-    	}
-    }
-},
-
-show: function (){},
-hide: function(){},
-};
-
-/*************************************** End throne caps tab *************************************/
 
 /*********************************  Farm Tab ***********************************/
 
@@ -1752,7 +1711,9 @@ Tabs.Throne = {
 
     var main = '<TABLE align=center><TR><TD><INPUT class=pbSubtab ID=ptmrchSubSal type=submit value="Salvage"></td>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubUE type=submit value="Upgrade/Enhance"></td>';
-    main +='<TD><INPUT class=pbSubtab ID=ptmrchSubEQ type=submit value="Compare"></td></tr></table><HR class=ptThin>';
+    main +='<TD><INPUT class=pbSubtab ID=ptmrchSubEQ type=submit value="Compare"></td>';
+    main +='<TD><input class=pbSubtab ID=ptmrchSubTC type=submit value="Caps"></TD>';
+    main += '</tr></table><HR class=ptThin>';
     main +='<DIV id=ThroneOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
 
     t.cont.innerHTML = main;
@@ -1761,6 +1722,7 @@ Tabs.Throne = {
     document.getElementById('ptmrchSubSal').addEventListener('click', e_butSubtab, false);
     document.getElementById('ptmrchSubUE').addEventListener('click', e_butSubtab, false);
 	document.getElementById('ptmrchSubEQ').addEventListener('click', e_butSubtab, false);
+	document.getElementById('ptmrchSubTC').addEventListener('click', e_butSubtab, false);
     
 
     changeSubtab (document.getElementById('ptmrchSubUE'));
@@ -1796,6 +1758,35 @@ Tabs.Throne = {
 				ThroneOptions.SalvageA[k].Min=ele2.value;
 			}		
 		saveThroneOptions();
+   },
+   
+   Caps : function (){
+	   var t =Tabs.Throne;
+    m =  '<DIV class=ptstat><b>Throne Room Caps</b></div><TABLE border=2px align=center>';
+    m += '<TR><TD width="150px"><B>Boost Name</b></td><TD width="50px"><B>Max</b></td><TD><B>Min</b></td><TD style="border:0;width:50px"></td><TD width="150px"><B>Boost Name</b></td><TD width="50px"><B>Max</b></td><TD width="50px"><B>Min</b></td></tr><TR>';
+    var counter =0;
+    for (k in unsafeWindow.cm.thronestats.boosts){
+    	counter++
+    	var boost = unsafeWindow.cm.thronestats.boosts[k]
+    	m += '<TD>'+ boost.BoostName + '</td><TD>'+ boost.Max +'<SPAN id=maxPerc_'+k+'></div></td><TD>' + boost.Min + '<SPAN id=minPerc_'+k+'></div>';
+
+    	if (counter % 2 == 0){
+    		m += '<TR>';
+    	}else {
+    		m += '</td><TD style="border:0">';
+    	}
+    }
+		t.Overv.innerHTML = m;
+    for (k in unsafeWindow.cm.thronestats.boosts){
+    	var boost = unsafeWindow.cm.thronestats.boosts[k]
+    	if (boost.CapType == "percent"){
+	   		document.getElementById('maxPerc_'+k).innerHTML = '%'
+    		if (boost.Min != "none"){
+    			document.getElementById('minPerc_'+k).innerHTML = '%'
+    		}
+    	}
+    }
+	   
    },
  Salvage : function (){
     var t = Tabs.Throne;
@@ -3117,9 +3108,10 @@ show : function (){
     	t.Salvage();
     else if (t.curTabName == 'UE')
     	t.Upgrade_Enhance();
-	else if (t.curTabName == 'EQ'){
+	else if (t.curTabName == 'EQ')
     	t.Compare();
-	}
+    else if (t.curTabName == 'TC')
+		t.Caps();
   }, 
 }
 
