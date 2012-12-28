@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121226b
+// @version        20121227a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121226b';
+var Version = '20121227a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -379,6 +379,7 @@ var AttackOptions = {
   knightselector        : 0,
   barbMinKnight			: 56,
   barbMaxKnight			: 255,
+  threshold				: 750000,
 };
 
 var ResetAll=false;
@@ -9754,6 +9755,7 @@ Tabs.Barb = {
      y +='<TR><TD>Knight priority : </td><td>'+htmlSelector({0:'Lowest combat skill', 1:'Highest combat skill'}, AttackOptions.knightselector, 'id=barbknight')+'</td></tr>';
      y +='<tr><td>Minimum knight Combat level to send: </td><td><input id=barbMinKnight type=text size=3 value='+AttackOptions.barbMinKnight+' \></td></tr>';
      y +='<tr><td>Maximum knight Combat level to send: </td><td><input id=barbMaxKnight type=text size=3 value='+AttackOptions.barbMaxKnight+' \></td></tr>';
+     y +='<tr><td>Stop hitting Dark forests when Aetherstone in city is more than: </td><td><INPUT id=pbaothreshold type=text size=7 maxlength=7 value='+ AttackOptions.threshold +' \></td></tr>';
      y+='</table></td></tr></table>';
        t.barboptions.getMainDiv().innerHTML = y;
        t.barboptions.show(true);
@@ -9811,6 +9813,10 @@ Tabs.Barb = {
     },false);
     document.getElementById('barbMaxKnight').addEventListener('change', function(){
         AttackOptions.barbMaxKnight=parseInt(document.getElementById('barbMaxKnight').value);
+        saveAttackOptions();
+    },false);
+    document.getElementById('pbaothreshold').addEventListener('change', function(){
+        AttackOptions.threshold=parseInt(document.getElementById('pbaothreshold').value);
         saveAttackOptions();
     },false);
     document.getElementById('barbstopsearch').addEventListener('change', function(){
@@ -9983,9 +9989,8 @@ Tabs.Barb = {
             slots = 0;
         } else
             slots=0;
-       
-	   //Only send DF if city is not over 750K astone
-		if (Seed.resources[cityID]["rec5"][0] > 750000) {
+	   //Only send DF if city is not over 750K astone:: rewritten I want df's to farm items and level knights.. who cares about aetherstone?  -baos
+		if (Seed.resources[cityID]["rec5"][0] > Number(AttackOptions.threshold)) {
 			return;
 		}
        var element1 = 'pddatacity'+(city-1);
@@ -19109,7 +19114,7 @@ Tabs.startup = {
                 params.kid        =     kid;
                 params.xcoord     =     CrestData[CrestDataNum].X;
                 params.ycoord     =     CrestData[CrestDataNum].Y;
-                if (now < (parseInt(CrestData[CrestDataNum].lastRoundOne) + 240) && CrestData[CrestDataNum].isWild) {
+                if (now < (parseInt(CrestData[CrestDataNum].lastRoundOne) + 500) && CrestData[CrestDataNum].isWild) {
                 
                     params.u2     =     (CrestData[CrestDataNum].R1MM / 10);
                     params.u2     =     params.u2.toFixed(0);
