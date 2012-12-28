@@ -1713,6 +1713,7 @@ Tabs.Throne = {
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubUE type=submit value="Upgrade/Enhance"></td>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubEQ type=submit value="Compare"></td>';
     main +='<TD><input class=pbSubtab ID=ptmrchSubTC type=submit value="Caps"></TD>';
+    main +='<TD><input class=pbSubtab ID=ptmrchSubTR type=submit value="Throne"></TD>';
     main += '</tr></table><HR class=ptThin>';
     main +='<DIV id=ThroneOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
 
@@ -1723,9 +1724,10 @@ Tabs.Throne = {
     document.getElementById('ptmrchSubUE').addEventListener('click', e_butSubtab, false);
 	document.getElementById('ptmrchSubEQ').addEventListener('click', e_butSubtab, false);
 	document.getElementById('ptmrchSubTC').addEventListener('click', e_butSubtab, false);
+	document.getElementById('ptmrchSubTR').addEventListener('click', e_butSubtab, false);
     
 
-    changeSubtab (document.getElementById('ptmrchSubUE'));
+    changeSubtab (document.getElementById('ptmrchSubTR'));
     
     function e_butSubtab (evt){            
       changeSubtab (evt.target);   
@@ -3098,7 +3100,23 @@ doSalvage : function(){
             t.salvageCheck();
         }
 },
+ThroneT : function (){
+        var t = Tabs.Throne;    
+     var m = '<DIV  class=pbStat>Throne room toggle - not functioning</div><center><TABLE height=0% class=pbTab><TR align="center">';
+				for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
+                 m += '<TD><INPUT id=tra'+k+' type=submit value='+k+'></td>';
+				m += '</table><br>';
+				m+='<table><TD><DIV id=ThroneTRS></div></td></table>';
+				t.Overv.innerHTML = m;
+				for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
+				document.getElementById('tra'+k).addEventListener ('click', function(e){t.TTpaint(e.target.value)}, false);
+},
+TTpaint : function(room) {
+	logit(room);
+			m += '<DIV  class=pbStat>Throne slot '+room+' is equiped</div>';
 
+          document.getElementById('ThroneTRS').innerHTML = m;  
+},
 hide : function (){
 },
 
@@ -3112,6 +3130,8 @@ show : function (){
     	t.Compare();
     else if (t.curTabName == 'TC')
 		t.Caps();
+    else if (t.curTabName == 'TR')
+		t.ThroneT();
   }, 
 }
 
