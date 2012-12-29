@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121228b
+// @version        20121228c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121228b';
+var Version = '20121228c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -3117,6 +3117,7 @@ ThroneT : function (){
 				for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
 				document.getElementById('tra'+k).addEventListener ('click', function(e){t.ThroneTC(e.target.value)}, false);
 				t.TTpaint(unsafeWindow.seed.throne.activeSlot);
+				document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = true;
 },
 TTpaint : function(room) {
         var t = Tabs.Throne;
@@ -3129,6 +3130,7 @@ TTpaint : function(room) {
 },
 
 ThroneTC : function (room) {
+		document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
         var t = Tabs.Throne;    
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
@@ -3141,6 +3143,7 @@ ThroneTC : function (room) {
             onSuccess: function (transport) {
                 var rslt = eval("(" + transport.responseText + ")");
                 if(rslt.ok){
+					document.getElementById('tra'+params.presetId).disabled = true;
 					t.TTpaint(params.presetId);
 					unsafeWindow.seed.throne.activeSlot=params.presetId;
 					document.getElementById('throneInventoryPreset'+params.presetId).click();//yes, not functioning but will stop newbies from getting confused having both throne windows open
