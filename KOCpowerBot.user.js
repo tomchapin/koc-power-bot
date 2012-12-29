@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121228a
+// @version        20121228b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121228a';
+var Version = '20121228b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -345,6 +345,7 @@ var ThroneOptions = {
     Cityrand:false,
     SalvageLevel:1,
     UseTokens:false,
+    SaveUnique:true,
 };
 
 var AttackOptions = {
@@ -1800,6 +1801,7 @@ Tabs.Throne = {
       m+='<TR><TD colspan=3><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Keep one checked attribute per card (salvage mixed cards)(Required for "Min number of lines")</TD></TR>';
       m+='<table><TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_cityspire type=checkbox '+ (ThroneOptions.CitySpire?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in cities with Fey Spire first before other cities</TD></TR>';
+      m+='<TR><TD colspan=3><INPUT id=pbsalvage_unique type=checkbox '+ (ThroneOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
       m+='<TR><TD clospan=3>Salvage checked attributes above ' + htmlSelector({1:'none', 2:'Slot 2 (WARNING Set keep items to 4 or less)', 3:'Slot 3 (WARNING Set keep items to 3 or less)', 4:'Slot 4 (WARNING Set keep items to 2 or less)', 5:'Slot 5 (WARNING Set keep items to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'Warning Min lines must also be set for less.</TD></TR></table>';
       m+='<TD><FONT color=red>Min number of lines will override your Keep items setting and can keep cards with a lesser value</font><br></td>';
       m+='<TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td>';
@@ -1908,6 +1910,7 @@ Tabs.Throne = {
       document.getElementById('StorehouseMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Storehouse.Min = this.value;saveThroneOptions();},false);
       document.getElementById('MoraleMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Morale.Min = this.value;saveThroneOptions();},false);
       document.getElementById('ItemDropMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ItemDrop.Min = this.value;saveThroneOptions();},false);
+      document.getElementById('pbsalvage_unique').addEventListener ('change', function(){ThroneOptions.SaveUnique = this.checked;saveThroneOptions();},false);
       
       
       
@@ -2968,6 +2971,7 @@ salvageCheck : function (){
 	var MinReq = false;
     var number = 0;
     var count=0;
+    var IsUnique = false;
     if(!Options.ThroneDeleteItems) return;
     if (t.SalvageRunning == true) return;
     t.SalvageRunning = true;
@@ -2989,8 +2993,10 @@ salvageCheck : function (){
                     //del = true;
                     level = false;
 					MinReq = false;
+					IsUnique = false;
                     if (y.quality > ThroneOptions.SalvageQuality) level=true;
                     if(y.level > 0) level = true;
+                    if(ThroneOptions.SaveUnique) if(y.unique > 0) IsUnique = true;
                     if (ThroneOptions.SalvageQuality == 0) level=true;
                     for (i=ThroneOptions.SalvageLevel;i<=5;i++){
 						if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;}
@@ -3026,7 +3032,7 @@ salvageCheck : function (){
                                 ThroneOptions.SalvageA[h].cur = 0;};
                         }
                     }
-                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq) {
+                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique) {
 						//logit(y.name);
                         t.SalvageArray.push(y.id);
                     }                     
@@ -3102,7 +3108,7 @@ doSalvage : function(){
 },
 ThroneT : function (){
         var t = Tabs.Throne;    
-     var m = '<DIV  class=pbStat>Throne room toggle - not functioning</div><center><TABLE height=0% class=pbTab><TR align="center">';
+     var m = '<DIV  class=pbStat>Throne room toggle</div><center><TABLE height=0% class=pbTab><TR align="center">';
 				for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
                  m += '<TD><INPUT id=tra'+k+' type=submit value='+k+'></td>';
 				m += '</table><br>';
