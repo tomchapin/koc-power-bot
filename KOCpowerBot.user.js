@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121227c
+// @version        20121228a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121227c';
+var Version = '20121228a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -3109,13 +3109,45 @@ ThroneT : function (){
 				m+='<table><TD><DIV id=ThroneTRS></div></td></table>';
 				t.Overv.innerHTML = m;
 				for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
-				document.getElementById('tra'+k).addEventListener ('click', function(e){t.TTpaint(e.target.value)}, false);
+				document.getElementById('tra'+k).addEventListener ('click', function(e){t.ThroneTC(e.target.value)}, false);
+				t.TTpaint(unsafeWindow.seed.throne.activeSlot);
 },
 TTpaint : function(room) {
-	logit(room);
-			m += '<DIV  class=pbStat>Throne slot '+room+' is equiped</div>';
-
+        var t = Tabs.Throne;
+			m = '<table><td><DIV  class=pbStat>Throne slot '+room+' is equiped</div></td></table><br>';
+				for (var k=0;k<unsafeWindow.seed.throne.slotEquip[room].length;k++) {
+					var item = unsafeWindow.seed.throne.slotEquip[room][k];
+					m += '<li>'+unsafeWindow.kocThroneItems[item].name;
+				};
           document.getElementById('ThroneTRS').innerHTML = m;  
+},
+
+ThroneTC : function (room) {
+        var t = Tabs.Throne;    
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'setPreset';
+        params.presetId = room;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+					t.TTpaint(params.presetId);
+					unsafeWindow.seed.throne.activeSlot=params.presetId;
+					document.getElementById('throneInventoryPreset'+params.presetId).click();//yes, not functioning but will stop newbies from getting confused having both throne windows open
+                }
+                else {
+                    document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room</font>";
+                }
+            },
+            onFailure: function () {
+                    document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room</font>";
+            },
+        });
+
 },
 hide : function (){
 },
