@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121230b
+// @version        20121231a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121230b';
+var Version = '20121231a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -19473,15 +19473,18 @@ var March = {
 		var now = unixTime();
 		if (Seed.playerEffects.aurasExpire) {
 			if (Seed.playerEffects.aurasExpire > now) {
-				buff = 1.15
+				buff += 1.15
 			}
 		}
 		if (Seed.playerEffects.auras2Expire) {
 			if (Seed.playerEffects.auras2Expire > now) {
-				buff = 1.3
+				buff += 1.3
 			}
 		}
-		var tr = equippedthronestats(66);
+		var tr = Math.floor(equippedthronestats(66));
+		if (tr>unsafeWindow.cm.thronestats.boosts.MarchSize.Max)tr=unsafeWindow.cm.thronestats.boosts.MarchSize.Max;
+		if(tr > 0)buff+=(tr/100);
+		
 		if(ascended.isPrestigeCity){
 			var b = ascended.prestigeLevel;
 			var r = unsafeWindow.cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST"),
@@ -19489,6 +19492,7 @@ var March = {
                 u = m.values[b - 1][1],
                 k = parseFloat(u);
             buff *= k
+            if(unsafeWindow.seed.cityData.city[cityId].prestigeInfo.blessings.indexOf(207) != -1)buff *= 1.1;
 		}
 		switch(rallypointlevel){
 			case 11:
@@ -19501,6 +19505,7 @@ var March = {
 				max = (rallypointlevel * 10000) * buff;
 				break;
 		}
+		logit('max is '+max);
 		return max;
 	},
 	getAscendedStats : function (cityId){
