@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121228c
+// @version        20121230a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121228c';
+var Version = '20121230a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -174,6 +174,8 @@ var Options = {
   KMagicBox : false,
   filter : false,
   mklag	:	false,
+  amain	:	false,
+  smain	:	0,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -778,6 +780,7 @@ function pbStartup (){
   setInterval (DrawLevelIcons,1250);
   killbox();
   if(Options.mklag)  setInterval(fixkabamlag,1000*60);
+  if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
 }
 
 /************************ Food Alerts *************************/
@@ -10465,8 +10468,18 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>'+translate("Put chat on right (requires wide screen)")+'</td></tr>\
         <TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>'+translate("Use WideMap (requires wide screen)")+'</td></tr>\
         <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>'+translate("Auto collect gold when happiness reaches")+' <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
-        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>'+translate("Enable Food Alert (on less than 6 Hours of food. Checked every hour)")+'</td></tr>\
-        <TR><TD colspan=2><BR><B>'+translate("Extra Features")+':</b></td></tr>\
+        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>'+translate("Enable Food Alert (on less than 6 Hours of food. Checked every hour)")+'</td></tr>';
+        m += '<TR><TD><INPUT id=pbmaintoggle type=checkbox /></td><TD>'+translate("auto select city on startup");
+         m+='<select id=pbwhichcity>';
+         for(h =0;h < unsafeWindow.seed.cities.length;h++) {
+			 if(h == Options.smain) 
+			 m+='<option value='+h+' selected="selected">'+unsafeWindow.seed.cities[h][1]+'</option>';
+			 else
+			 m+='<option value='+h+'>'+unsafeWindow.seed.cities[h][1]+'</option>';
+		 }
+		m+='</select>'+'</td></tr>';
+
+        m += '<TR><TD colspan=2><BR><B>'+translate("Extra Features")+':</b></td></tr>\
         <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>'+translate("Help alliance build/research posts")+'</td></tr>\
         <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>'+translate("Hide alliance requests in chat")+'</td></tr>\
         <TR><TD><INPUT id=DelAC type=checkbox /></td><TD>'+translate("Hide alliance chat from global chat")+'</td></tr>\
@@ -10556,6 +10569,8 @@ Tabs.Options = {
       t.togOpt ('MAgicBOx', 'KMagicBox');
       t.togOpt ('CFilter', 'filter');
       t.togOpt ('MKLag', 'mklag');
+      t.togOpt ('pbmaintoggle', 'amain');
+      t.changeOpt ('pbwhichcity', 'smain');
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }      
