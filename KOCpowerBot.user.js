@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121231b
+// @version        20121231c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121231b';
+var Version = '20121231c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -2317,31 +2317,42 @@ FillEquipCheckboxes: function(){
 		}
 	}	
 },
-
-doPreset : function (preset){
-	var t = Tabs.Throne;
-	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-	params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
-	params.action = 'setPreset';
-	params.presetId = preset;
-				
-  	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-		method: "post",
-		parameters: params,
-		loading: true,
-		onSuccess: function (transport) {
-			var rslt = eval("(" + transport.responseText + ")");
-				if(rslt.ok){
-					button = '<li id="throneInventoryPreset' + preset + '" class="active">'+preset+'</li>';
+doPreset : function (room, retry) {
+	if(isNaN(retry))retry=0;
+	if(retry > 15) {if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Giving Up</font>";return;};
+		if(document.getElementById('ThroneTRS'))
+		document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
+        var t = Tabs.Throne;    
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'setPreset';
+        params.presetId = room;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+					document.getElementById('tra'+params.presetId).disabled = true;
+					t.TTpaint(params.presetId);
+					if(document.getElementById('throneInventoryPreset'+params.presetId))
+						button = document.getElementById('throneInventoryPreset'+params.presetId);
+					else
+						button = '<li id="throneInventoryPreset' + params.presetId + '" class="selected">'+params.presetId+'</li>';
 					unsafeWindow.cm.ThroneView.clickActivePreset(button);
-					t.FillEquipCheckboxes();
-			   } 
-		},
-		onFailure: function () {
-		   return;
-		},
-	});
-		
+                }
+                else {
+                    if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
+                    setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
+                }
+            },
+            onFailure: function () {
+                    if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
+					setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
+            },
+        });
+
 },
 
 paintEquipInfo : function (z,what){
@@ -3119,7 +3130,7 @@ ThroneT : function (){
 				m+='<table><TD><DIV id=ThroneTRS></div></td></table>';
 				t.Overv.innerHTML = m;
 				for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
-				document.getElementById('tra'+k).addEventListener ('click', function(e){t.ThroneTC(e.target.value)}, false);
+				document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
 				t.TTpaint(unsafeWindow.seed.throne.activeSlot);
 				document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = true;
 },
@@ -3133,35 +3144,7 @@ TTpaint : function(room) {
           document.getElementById('ThroneTRS').innerHTML = m;  
 },
 
-ThroneTC : function (room) {
-		document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
-        var t = Tabs.Throne;    
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
-        params.action = 'setPreset';
-        params.presetId = room;
-          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-            method: "post",
-            parameters: params,
-            loading: true,
-            onSuccess: function (transport) {
-                var rslt = eval("(" + transport.responseText + ")");
-                if(rslt.ok){
-					document.getElementById('tra'+params.presetId).disabled = true;
-					t.TTpaint(params.presetId);
-					unsafeWindow.seed.throne.activeSlot=params.presetId;
-					document.getElementById('throneInventoryPreset'+params.presetId).click();//yes, not functioning but will stop newbies from getting confused having both throne windows open
-                }
-                else {
-                    document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room</font>";
-                }
-            },
-            onFailure: function () {
-                    document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room</font>";
-            },
-        });
 
-},
 hide : function (){
 },
 
