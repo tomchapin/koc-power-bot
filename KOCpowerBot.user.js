@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121231a
+// @version        20121231b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121231a';
+var Version = '20121231b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -12866,6 +12866,7 @@ Tabs.AutoTrain = {
     if (!TrainOptions.Running) return;
     if (TrainOptions.tr && TrainOptions.trset != 0) {
         if (Seed.throne.activeSlot != TrainOptions.trset) {
+	        setTimeout(t.nextcity, 60000);
             return;
             };
         };
