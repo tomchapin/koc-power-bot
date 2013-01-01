@@ -1,5 +1,20 @@
 REVISION HISTORY:
 ----------------
+20130101b
+   Fix for new kabam game url
+   Fix kabam widescreen
+   Fix auto cancelling facebook post
+   Add headquarters function from multilang
+   Fix farm tab recursive error
+   Throne tab adds (Caps and Presets)
+   Add options to salvage TR tab
+   Fix news tab holding up refreshes
+   Fix crafting tab
+   Auto train update for Fey and Briton cities
+   Reassign tab update for Fey and Briton cities
+   Crest tab fixes
+   Population tab update for different troops
+   Black screen fix on startup
 20121121a
    *Updated to accomodate new @grant for Greasemonkey 1.0+
    *Fix constant refresh issue
