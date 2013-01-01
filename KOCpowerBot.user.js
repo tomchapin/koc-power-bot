@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20121231c
+// @version        20130101a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20121231c';
+var Version = '20130101a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -3141,9 +3141,23 @@ TTpaint : function(room) {
 					var item = unsafeWindow.seed.throne.slotEquip[room][k];
 					m += '<li>'+unsafeWindow.kocThroneItems[item].name;
 				};
+
+          document.getElementById('ThroneTRS').innerHTML = m;  
+          setTimeout(t.TTpaintstats,300);
+},
+TTpaintstats : function () {
+	if(document.getElementById('ThroneTRS').innerHTML.indexOf('The below values are alpha and may not be accurate') != -1)return;
+	         m= document.getElementById('ThroneTRS').innerHTML;
+			m+='<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via http://userscripts.org/scripts/discuss/101052</font>';
+			for(i in unsafeWindow.cm.thronestats.effects) {
+				var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
+				if(z != 0) {
+				m+='<tr><td>'+unsafeWindow.cm.thronestats.effects[i][1]+'</td><td>'+z+'</td></tr>';
+			}
+			};
+			m+='</table></div>';
           document.getElementById('ThroneTRS').innerHTML = m;  
 },
-
 
 hide : function (){
 },
