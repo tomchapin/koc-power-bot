@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130101a
+// @version        20130101b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130101a';
+var Version = '20130101b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -9533,7 +9533,7 @@ Tabs.AutoCraft = {
                    }
           }
        }
-       if (tableau == []) {
+       if (tableau.length == 0) {
           // nothing to craft
           t.Start();
           return;
