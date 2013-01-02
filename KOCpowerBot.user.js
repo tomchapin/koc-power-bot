@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130101b
+// @version        20130101c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130101b';
+var Version = '20130101c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -176,6 +176,8 @@ var Options = {
   mklag	:	false,
   amain	:	false,
   smain	:	0,
+  giftdb :	[],
+  agift	:	false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -10442,7 +10444,7 @@ function actionLog (msg){
 
 /*********************************** Options Tab ***********************************/
 Tabs.Options = {
-  tabOrder: 699,
+  tabOrder: 2,
   myDiv : null,
   fixAvailable : {},
 
@@ -20233,6 +20235,92 @@ Tabs.popcontrol = {
 
 
 }
+
+/****** Gifts Tab ********/
+Tabs.gifts = {
+	tabLabel: 'Gifts',
+	tabOrder: 30001,
+	myDiv:	null,
+	tabDisabled: true,
+	init: function (div) {
+        var t = Tabs.gifts;
+        t.myDiv = div;
+        if(!Options.giftdb.giftitems)t.populategifts();
+        var m = '<DIV class=pbStat>Gifts</div>';
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.ctrl = 'allianceGifting\\AllianceGiftingServiceAjax';
+		params.action = 'getRecipients';
+	      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+				method: "post",
+				parameters: params,
+				loading: true,
+				onSuccess: function (transport) {
+					var rslt = eval("(" + transport.responseText + ")");
+					if(rslt.ok) {
+						for(i in rslt.recipients) {
+							switch(rslt.recipients[i].playerSex)
+								{
+								case "M":
+								var sex = 'Lord';
+								break;
+								case "F":
+								var sex = 'Lady';
+								break;
+								default:
+								var sex = 'Lorady';
+								}
+							m += '<br>'+sex+' '+rslt.recipients[i].displayName+'  UserId '+rslt.recipients[i].userId; 
+							m+= '<select class="giftstosend" id="'+rslt.recipients[i].userId+'">';
+							m+='<option value="0">None</option>';
+							for(i =0;i < Options.giftdb.giftitems.length;i++) {
+								if(Options.giftdb[rslt.recipients[i].userId] && Options.giftdb[rslt.recipients[i].userId] == Options.giftdb.giftitems[i].itemId)
+							m+='<option value="'+Options.giftdb.giftitems[i].itemId+'" selected="selected">'+Options.giftdb.giftitems[i].name+'</option>';
+							else
+							m+='<option value="'+Options.giftdb.giftitems[i].itemId+'">'+Options.giftdb.giftitems[i].name+'</option>';
+						}
+							m+= '</select>';
+						}
+						
+        div.innerHTML = m;
+				var element_class = document.getElementsByClassName('giftstosend');
+				logit('the length is '+element_class.length);
+                   for (c = 0; c < element_class.length; c++) {
+                        //element_class[c].checked = t.FarmArray[citynumber][c].enabled;
+                        element_class[c].addEventListener('change', function(e){
+							if(e.target.value != null){
+							Options.giftdb[e.target.id] = e.target.value;
+							saveOptions;
+						};
+							}, false);
+                    }
+					}
+				},
+				onFailure: function () {
+						return;
+				},
+			});
+
+	},
+	populategifts : function (){
+        var c = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        c.ctrl = "GiftItems";
+        c.action = "getGiftItems";
+       	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: c,
+            onSuccess: function (h) {
+					var rslt = eval("(" + h.responseText + ")");
+					Options.giftdb.giftitems = rslt.giftItems;
+					saveOptions;
+            },
+            onFailure: function () {}
+        });
+	},
+	show:	function (){},
+	hide:	function (){},
+	
+}
+
 /***** Ascension Tab ******/
 Tabs.ascension = {
     tabLabel: 'Ascension',
