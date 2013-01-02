@@ -1,13 +1,8 @@
-REGARDING TOOLS PLAYER SEARCH....
+help the enemy toggled my throne room!
 
-To clarify...
+It's not a practice of the enemy toggling your throne room to whatever they want.  
+It's that when you clicked the button the kabam server rejected your request to toggle to throne room set whatever and still showed you that it has toggled.  
+To verify this you can go to web developer /web console in firefox.  filter for dispatch53 and right click on the console to check log request and response bodies.  
+Now toggle your throne room back and forth and eventually you will get "{"ok":false,"error_code":0}" as the response but it will still show that your throne room has changed.  
 
-This is not a tools issue. This is a kabam problem. If you click your leaderboard at the bottom of the game, and then 'view' a player, nothing happens. 
-
-This is NOT domain related. For some it works on one domain, and for others on exactly the same domain it does not work.
-
-It does not seem to be browser/tools/system/anything else related, IT IS A KABAM ERROR.
-
-It will work for some and not for others.
-
-We have made kabam aware.
+In response to this issue we scripters have made you a throne room toggle in bot under throne subtab throne which is still very much in development.
