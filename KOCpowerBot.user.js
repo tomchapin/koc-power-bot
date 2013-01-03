@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130103c
+// @version        20130103d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130103c';
+var Version = '20130103d';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -20259,12 +20259,12 @@ Tabs.gifts = {
         t.populategifts();
         var m = '<DIV class=pbStat>Gifts</div>';
         m += '<DIV><INPUT id=giftssend type=submit value="Send Gifts">';
-		m+= ' Change All: <select id="AllRecipients">';
+		m+= ' | Change All: <select id="AllRecipients">';
 		m+='<option value="0">None</option>';
 		for(g =0;g < GiftDB.giftitems.length;g++) {
 			m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 		};
-        m+='</select></DIV>';
+        m+='</select> | <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available</DIV>';
         m += '<DIV class=pbStat></DIV>';
         m += '<DIV style="height:250px; max-height:250px; overflow-y:auto" id=GiftsTAB></DIV>';
         div.innerHTML = m;
@@ -20281,6 +20281,12 @@ Tabs.gifts = {
 				t.saveGiftsdb();
 			};
 		}, false);
+		document.getElementById('pbaugift').addEventListener('change', function(){
+			GiftDB.agift = this.checked;
+			t.saveGiftsdb();
+		}, false);
+		if(GiftDB.agift)
+		setTimeout(t.sendgifts,10000)
 	},
 	populatepeople : function () {
         var t = Tabs.gifts;
