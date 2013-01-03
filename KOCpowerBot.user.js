@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130102a
+// @version        20130103a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130102a';
+var Version = '20130103a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -177,8 +177,6 @@ var Options = {
   mklag	:	false,
   amain	:	false,
   smain	:	0,
-  giftdb :	[],
-  agift	:	false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -231,7 +229,11 @@ var CrestOptions = {
   R2Cat			:	0,
   isWild		:	true,
 };
-
+var GiftDB = {
+  people :	{},
+  giftitems	:	[],
+  agift	:	false,
+};
 
 var CrestData = new Array();
 
@@ -732,6 +734,7 @@ function pbStartup (){
   readThroneOptions();
   readLayoutOptions();
   readApothecaryOptions();
+Tabs.gifts.readGiftsdb();
   setCities();
 
 // TODO: Make sure WinPos is visible on-screen ?
@@ -20248,12 +20251,20 @@ Tabs.gifts = {
 	tabOrder: 30001,
 	myDiv:	null,
 	tabDisabled: true,
+	curava	:	new Array(),
 	init: function (div) {
         var t = Tabs.gifts;
         t.myDiv = div;
-        if(!Options.giftdb.giftitems)t.populategifts();
+        //if(!GiftDB.giftitems)
+        t.populategifts();
         var m = '<DIV class=pbStat>Gifts</div>';
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        m += '<DIV id=GiftsTAB></DIV>';
+        div.innerHTML = m;
+		t.populatepeople();
+	},
+	populatepeople : function () {
+        var t = Tabs.gifts;
+		        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.ctrl = 'allianceGifting\\AllianceGiftingServiceAjax';
 		params.action = 'getRecipients';
 	      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
@@ -20263,7 +20274,9 @@ Tabs.gifts = {
 				onSuccess: function (transport) {
 					var rslt = eval("(" + transport.responseText + ")");
 					if(rslt.ok) {
+						m='';
 						for(i in rslt.recipients) {
+							t.curava.push(rslt.recipients[i].userId);
 							switch(rslt.recipients[i].playerSex)
 								{
 								case "M":
@@ -20278,26 +20291,25 @@ Tabs.gifts = {
 							m += '<br>'+sex+' '+rslt.recipients[i].displayName+'  UserId '+rslt.recipients[i].userId; 
 							m+= '<select class="giftstosend" id="'+rslt.recipients[i].userId+'">';
 							m+='<option value="0">None</option>';
-							for(i =0;i < Options.giftdb.giftitems.length;i++) {
-								if(Options.giftdb[rslt.recipients[i].userId] && Options.giftdb[rslt.recipients[i].userId] == Options.giftdb.giftitems[i].itemId)
-							m+='<option value="'+Options.giftdb.giftitems[i].itemId+'" selected="selected">'+Options.giftdb.giftitems[i].name+'</option>';
-							else
-							m+='<option value="'+Options.giftdb.giftitems[i].itemId+'">'+Options.giftdb.giftitems[i].name+'</option>';
+							for(g =0;g < GiftDB.giftitems.length;g++) {
+						if(GiftDB.people[Number(rslt.recipients[i].userId)] && GiftDB.people[Number(rslt.recipients[i].userId)] == Number(GiftDB.giftitems[g].itemId))
+							m+='<option value="'+GiftDB.giftitems[g].itemId+'" selected="selected">'+GiftDB.giftitems[g].name+'</option>';
+						else
+							m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 						}
 							m+= '</select>';
 						}
-						
-        div.innerHTML = m;
-				var element_class = document.getElementsByClassName('giftstosend');
-				logit('the length is '+element_class.length);
+						document.getElementById('GiftsTAB').innerHTML = m;
+				var element_class = document.getElementById('GiftsTAB').getElementsByClassName('giftstosend');
                    for (c = 0; c < element_class.length; c++) {
-                        //element_class[c].checked = t.FarmArray[citynumber][c].enabled;
+                        if(element_class[c])
                         element_class[c].addEventListener('change', function(e){
-							if(e.target.value != null){
-							Options.giftdb[e.target.id] = e.target.value;
-							saveOptions;
-						};
-							}, false);
+					   logit('id is '+e.target.id);
+					   logit('values is '+e.target.value);
+					   if(e.target.id && e.target.value)
+							GiftDB.people[Number(e.target.id)] = Number(e.target.value);
+							t.saveGiftsdb();
+						} , false);
                     }
 					}
 				},
@@ -20305,9 +20317,52 @@ Tabs.gifts = {
 						return;
 				},
 			});
-
+	},
+	sendgifts : function () {
+			var t = Tabs.gifts;
+			var x = 1;
+		for(g in GiftDB.giftitems) {
+			var ItemId = Number(GiftDB.giftitems[g].itemId);
+			var j = new Array();
+			for(i in GiftDB.people) {
+				if(Number(GiftDB.people[i]) == ItemId)
+				if(t.curava.indexOf(i) != -1)
+					j.push(i);
+			}
+			if(j.length){
+			x+=1;
+			logit('j is '+j);
+			//setTimeout(function(){
+				t.sendgift(ItemId,j)
+				//},x*3000);
+		};
+	}
+	},
+	sendgift : function (giftId, recipients) {
+			var t = Tabs.gifts;
+			logit('giftId is '+giftId+' recipients is '+recipients);
+		        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.ctrl = 'allianceGifting\\AllianceGiftingServiceAjax';
+		params.action = 'sendGift';
+		params.recipients = String(recipients).replace(/,/g,"|");
+		params.itemId = giftId;
+	      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+				method: "post",
+				parameters: params,
+				loading: true,
+				onSuccess: function (transport) {
+					var rslt = eval("(" + transport.responseText + ")");
+					if(rslt.ok) {
+	//{"succeedRecipients":[1514227],"ok":true}{"succeedRecipients":[796535,927599,984914],"ok":true}
+					}
+				},
+				onFailure: function () {
+				},
+			});
 	},
 	populategifts : function (){
+		logit('populategiftstriggered');
+        var t = Tabs.gifts;
         var c = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         c.ctrl = "GiftItems";
         c.action = "getGiftItems";
@@ -20316,13 +20371,36 @@ Tabs.gifts = {
             parameters: c,
             onSuccess: function (h) {
 					var rslt = eval("(" + h.responseText + ")");
-					Options.giftdb.giftitems = rslt.giftItems;
-					saveOptions;
+					if(rslt.ok) {
+						GiftDB.giftitems = rslt.giftItems;
+						t.saveGiftsdb();
+					};
             },
             onFailure: function () {}
         });
 	},
-	show:	function (){},
+	saveGiftsdb : function (){
+        var t = Tabs.gifts;
+		  var serverID = getServerId();
+			setTimeout (function (){GM_setValue ('GiftsDB_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(GiftDB));}, 0);
+	},
+	readGiftsdb	: function() {
+        var t = Tabs.gifts;
+		  var serverID = getServerId();
+			s = GM_getValue ('GiftsDB_' + Seed.player['name'] + '_' +serverID);
+			if (s != null){
+				opts = JSON2.parse (s);
+				for (k in opts){
+					if (matTypeof(opts[k]) == 'object')
+						for (kk in opts[k])
+							GiftDB[k][kk] = opts[k][kk];
+					else
+						GiftDB[k] = opts[k];
+				}
+			}
+	},
+	show:	function (){
+		},
 	hide:	function (){},
 	
 }
