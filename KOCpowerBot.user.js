@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130101c
+// @version        20130102a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130101c';
+var Version = '20130102a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -170,6 +170,7 @@ var Options = {
   language : 'en',
   curMarchTab : "transport",
   BreakingNews : 0,
+  BreakingNewsV : false,
   ScripterTab : false,
   KMagicBox : false,
   filter : false,
@@ -6751,9 +6752,11 @@ Tabs.News = {
 				var lastmodified = news.responseHeaders.slice(first,last);
 				if (Options.BreakingNews != lastmodified) {
 					Options.BreakingNews=lastmodified;
+					Options.BreakingNewsV = false;
 					saveOptions();
-					setTimeout(t.notify,60*1000);
 				}
+				if(Options.BreakingNewsV == false)
+				setTimeout(t.notify,10000);
 				document.getElementById('newsdate').innerHTML = '<p style="text-align: right;">'+Options.BreakingNews+'</p>';
 			},
 		});
@@ -6764,10 +6767,13 @@ Tabs.News = {
 
   show : function (){
     var t = Tabs.News;
+    Options.BreakingNewsV = true;
+    saveOptions();
   },
   notify : function() {
 	var t = Tabs.News;
-	  alert('Breaking news update, '+Options.BreakingNews+' check News tab');
+	var elem = document.getElementById("pbtcNews");
+elem.setAttribute("style","background: -moz-linear-gradient(center top , #ff0000, #b10000) repeat scroll 0 0 transparent;");
   },
 
 }
