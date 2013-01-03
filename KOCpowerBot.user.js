@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130103b
+// @version        20130103c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130103b';
+var Version = '20130103c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -20250,7 +20250,7 @@ Tabs.gifts = {
 	tabLabel: 'Gifts',
 	tabOrder: 30001,
 	myDiv:	null,
-	tabDisabled: true,
+	tabDisabled: false,
 	curava	:	new Array(),
 	init: function (div) {
         var t = Tabs.gifts;
@@ -20258,9 +20258,29 @@ Tabs.gifts = {
         //if(!GiftDB.giftitems)
         t.populategifts();
         var m = '<DIV class=pbStat>Gifts</div>';
-        m += '<DIV id=GiftsTAB></DIV>';
+        m += '<DIV><INPUT id=giftssend type=submit value="Send Gifts">';
+		m+= ' Change All: <select id="AllRecipients">';
+		m+='<option value="0">None</option>';
+		for(g =0;g < GiftDB.giftitems.length;g++) {
+			m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
+		};
+        m+='</select></DIV>';
+        m += '<DIV class=pbStat></DIV>';
+        m += '<DIV style="height:250px; max-height:250px; overflow-y:auto" id=GiftsTAB></DIV>';
         div.innerHTML = m;
 		t.populatepeople();
+		document.getElementById('giftssend').addEventListener('click', function(){
+			t.sendgifts();
+			setTimeout(t.populatepeople,1000);
+						} , false);
+		document.getElementById('AllRecipients').addEventListener('change', function(e){
+			var element_class = document.getElementById('GiftsTAB').getElementsByClassName('giftstosend');
+            for (c = 0; c < element_class.length; c++) {
+				element_class[c].value = e.target.value;
+				GiftDB.people[Number(element_class[c].id)] = Number(e.target.value);
+				t.saveGiftsdb();
+			};
+		}, false);
 	},
 	populatepeople : function () {
         var t = Tabs.gifts;
@@ -20274,8 +20294,8 @@ Tabs.gifts = {
 				onSuccess: function (transport) {
 					var rslt = eval("(" + transport.responseText + ")");
 					if(rslt.ok) {
-						m='';
-						for(i in rslt.recipients) {
+						var m='<center><table>';
+						for(i =0;i<rslt.recipients.length;i++) {
 							t.curava.push(rslt.recipients[i].userId);
 							switch(rslt.recipients[i].playerSex)
 								{
@@ -20288,8 +20308,8 @@ Tabs.gifts = {
 								default:
 								var sex = 'Lorady';
 								}
-							m += '<br>'+sex+' '+rslt.recipients[i].displayName+'  UserId '+rslt.recipients[i].userId; 
-							m+= '<select class="giftstosend" id="'+rslt.recipients[i].userId+'">';
+							m += '<tr><td>'+sex+' '+rslt.recipients[i].displayName+'</td>'; 
+							m+= '<td><select class="giftstosend" id="'+rslt.recipients[i].userId+'">';
 							m+='<option value="0">None</option>';
 							for(g =0;g < GiftDB.giftitems.length;g++) {
 						if(GiftDB.people[Number(rslt.recipients[i].userId)] && GiftDB.people[Number(rslt.recipients[i].userId)] == Number(GiftDB.giftitems[g].itemId))
@@ -20297,10 +20317,11 @@ Tabs.gifts = {
 						else
 							m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 						}
-							m+= '</select>';
+							m+= '</select></td></tr>';
 						}
+						m+='</table></center>';
 						document.getElementById('GiftsTAB').innerHTML = m;
-				var element_class = document.getElementById('GiftsTAB').getElementsByClassName('giftstosend');
+					var element_class = document.getElementById('GiftsTAB').getElementsByClassName('giftstosend');
                    for (c = 0; c < element_class.length; c++) {
                         if(element_class[c])
                         element_class[c].addEventListener('change', function(e){
@@ -20331,7 +20352,6 @@ Tabs.gifts = {
 			}
 			if(j.length){
 			x+=1;
-			logit('j is '+j);
 			//setTimeout(function(){
 				t.sendgift(ItemId,j)
 				//},x*3000);
