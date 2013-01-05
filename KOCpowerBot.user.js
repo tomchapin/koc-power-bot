@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130103d
+// @version        20130105a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130103d';
+var Version = '20130105a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -734,7 +734,7 @@ function pbStartup (){
   readThroneOptions();
   readLayoutOptions();
   readApothecaryOptions();
-Tabs.gifts.readGiftsdb();
+  Tabs.gifts.readGiftsdb();
   setCities();
 
 // TODO: Make sure WinPos is visible on-screen ?
@@ -20258,13 +20258,13 @@ Tabs.gifts = {
         //if(!GiftDB.giftitems)
         t.populategifts();
         var m = '<DIV class=pbStat>Gifts</div>';
-        m += '<DIV><INPUT id=giftssend type=submit value="Send Gifts">';
-		m+= ' | Change All: <select id="AllRecipients">';
+        m += '<DIV><table><tr><td><INPUT id=giftssend type=submit value="Send Gifts">';
+		m+= ' </td><td> Change All: <select id="AllRecipients">';
 		m+='<option value="0">None</option>';
 		for(g =0;g < GiftDB.giftitems.length;g++) {
 			m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 		};
-        m+='</select> | <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available</DIV>';
+        m+='</select> </td><td> <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available </td><td> Total sent:</td><td id=giftnumber></td></tr></table></DIV>';
         m += '<DIV class=pbStat></DIV>';
         m += '<DIV style="height:250px; max-height:250px; overflow-y:auto" id=GiftsTAB></DIV>';
         div.innerHTML = m;
@@ -20277,19 +20277,29 @@ Tabs.gifts = {
 			var element_class = document.getElementById('GiftsTAB').getElementsByClassName('giftstosend');
             for (c = 0; c < element_class.length; c++) {
 				element_class[c].value = e.target.value;
-				GiftDB.people[Number(element_class[c].id)] = Number(e.target.value);
-				t.saveGiftsdb();
-			};
+				if(!GiftDB.people[Number(element_class[c].id)])
+				GiftDB.people[Number(element_class[c].id)] = [Number(e.target.value),0];
+				else GiftDB.people[Number(element_class[c].id)][0] = Number(e.target.value);
+			};t.saveGiftsdb();
 		}, false);
 		document.getElementById('pbaugift').addEventListener('change', function(){
 			GiftDB.agift = this.checked;
 			t.saveGiftsdb();
 		}, false);
+		t.giftstats();
 		if(GiftDB.agift)
 		setTimeout(t.sendgifts,10000)
 	},
 	populatepeople : function () {
         var t = Tabs.gifts;
+        //convert old variable
+        for(b in GiftDB.people) {
+			if(typeof GiftDB.people[b] == 'number'){
+			var x = GiftDB.people[b];
+			GiftDB.people[b] = [x,0];
+		};
+		};
+        //convert old variable
 		        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.ctrl = 'allianceGifting\\AllianceGiftingServiceAjax';
 		params.action = 'getRecipients';
@@ -20314,11 +20324,11 @@ Tabs.gifts = {
 								default:
 								var sex = 'Lorady';
 								}
-							m += '<tr><td>'+sex+' '+rslt.recipients[i].displayName+'</td>'; 
+							m += '<tr><td>'+sex+' '+rslt.recipients[i].displayName+'<td/><td>Total sent: '+GiftDB.people[rslt.recipients[i].userId][1]+'</td>'; 
 							m+= '<td><select class="giftstosend" id="'+rslt.recipients[i].userId+'">';
 							m+='<option value="0">None</option>';
 							for(g =0;g < GiftDB.giftitems.length;g++) {
-						if(GiftDB.people[Number(rslt.recipients[i].userId)] && GiftDB.people[Number(rslt.recipients[i].userId)] == Number(GiftDB.giftitems[g].itemId))
+						if(GiftDB.people[Number(rslt.recipients[i].userId)] && GiftDB.people[Number(rslt.recipients[i].userId)][0] == Number(GiftDB.giftitems[g].itemId))
 							m+='<option value="'+GiftDB.giftitems[g].itemId+'" selected="selected">'+GiftDB.giftitems[g].name+'</option>';
 						else
 							m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
@@ -20334,14 +20344,15 @@ Tabs.gifts = {
 					   logit('id is '+e.target.id);
 					   logit('values is '+e.target.value);
 					   if(e.target.id && e.target.value)
-							GiftDB.people[Number(e.target.id)] = Number(e.target.value);
+					   if(!GiftDB.people[Number(e.target.id)])
+							GiftDB.people[Number(e.target.id)] = [Number(e.target.value),0];
+							else GiftDB.people[Number(e.target.id)][0] =Number(e.target.value);
 							t.saveGiftsdb();
 						} , false);
                     }
 					}
 				},
 				onFailure: function () {
-						return;
 				},
 			});
 	},
@@ -20349,17 +20360,25 @@ Tabs.gifts = {
 			var t = Tabs.gifts;
 			var x = 1;
 		for(g in GiftDB.giftitems) {
+			logit(g);
 			var ItemId = Number(GiftDB.giftitems[g].itemId);
 			var j = new Array();
 			for(i in GiftDB.people) {
-				if(Number(GiftDB.people[i]) == ItemId)
+				if(Number(GiftDB.people[i][0]) == ItemId)
 				if(t.curava.indexOf(i) != -1)
 					j.push(i);
 			}
 			if(j.length){
-			x+=1;
-			//setTimeout(function(){
-				t.sendgift(ItemId,j)
+				x+=1;
+				//AS per http://osric.com/chris/accidental-developer/2012/07/javascript-array-sort-random-ordering/ sort was not used, this is used instead to get true random results.
+				var n = j.length;
+				var tempArr = [];
+				for ( q = 0; q < n-1; q++ )
+					tempArr.push(j.splice(Math.floor(Math.random()*j.length),1)[0]);
+				tempArr.push(j[0]);
+				j=tempArr;
+				//setTimeout(function(){
+				t.sendgift(ItemId,j);
 				//},x*3000);
 		};
 	}
@@ -20367,6 +20386,7 @@ Tabs.gifts = {
 	sendgift : function (giftId, recipients) {
 			var t = Tabs.gifts;
 			logit('giftId is '+giftId+' recipients is '+recipients);
+			//alert(recipients);
 		        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.ctrl = 'allianceGifting\\AllianceGiftingServiceAjax';
 		params.action = 'sendGift';
@@ -20379,8 +20399,12 @@ Tabs.gifts = {
 				onSuccess: function (transport) {
 					var rslt = eval("(" + transport.responseText + ")");
 					if(rslt.ok) {
+						for(i = 0;i < rslt.succeedRecipients.length;i++)
+						rslt.succeedRecipients[i][1]++;
+						t.saveGiftsdb();
+						t.giftstats();
 	//{"succeedRecipients":[1514227],"ok":true}{"succeedRecipients":[796535,927599,984914],"ok":true}
-					}
+					};
 				},
 				onFailure: function () {
 				},
@@ -20424,6 +20448,13 @@ Tabs.gifts = {
 						GiftDB[k] = opts[k];
 				}
 			}
+	},
+	giftstats :	function() {
+		var sentgifts = 0;
+        for(h in GiftDB.people){
+		sentgifts += GiftDB.people[h][1];
+		};
+		document.getElementById('giftnumber').innerHTML=sentgifts;
 	},
 	show:	function (){
 		},
