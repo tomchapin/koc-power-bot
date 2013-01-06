@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130105c
+// @version        20130105d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130105c';
+var Version = '20130105d';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -20294,6 +20294,7 @@ Tabs.gifts = {
 	},
 	populatepeople : function () {
         var t = Tabs.gifts;
+		t.curava = new Array();
         //convert old variable
         for(b in GiftDB.people) {
 			if(typeof GiftDB.people[b] == 'number'){
@@ -20426,11 +20427,14 @@ Tabs.gifts = {
 				onSuccess: function (transport) {
 					var rslt = eval("(" + transport.responseText + ")");
 					if(rslt.ok) {
-						for(i = 0;i < rslt.succeedRecipients.length;i++)
-						rslt.succeedRecipients[i][1]++;
+						for(i = 0;i<Number(rslt.succeedRecipients.length+1);i++) {
+						var z = rslt.succeedRecipients[i];
+						GiftDB.people[Number(z)][1]++;
+							//logit('i is '+i+'length is '+rslt.succeedRecipients.length+'z is '+z+'Giftdb is '+GiftDB.people[Number(z)]);
+						
+					};
 						t.saveGiftsdb();
 						t.giftstats();
-	//{"succeedRecipients":[1514227],"ok":true}{"succeedRecipients":[796535,927599,984914],"ok":true}
 					};
 				},
 				onFailure: function () {
