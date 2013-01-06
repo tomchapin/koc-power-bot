@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130105b
+// @version        20130105c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130105b';
+var Version = '20130105c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -20312,6 +20312,7 @@ Tabs.gifts = {
 				onSuccess: function (transport) {
 					var rslt = eval("(" + transport.responseText + ")");
 					if(rslt.ok) {
+						logit(inspect(rslt.recipients[0]));
 						var m='<center><table>';
 						for(i =0;i<rslt.recipients.length;i++) {
 							t.curava.push(rslt.recipients[i].userId);
@@ -20327,7 +20328,9 @@ Tabs.gifts = {
 								var sex = 'Lorady';
 								}
 								var name = sex+' '+rslt.recipients[i].displayName;
-							m += '<tr><td></td><td>'+name+'<td/><td>Total sent: '+GiftDB.people[rslt.recipients[i].userId][1]+'</td>'; 
+								var sent=0;
+								if(GiftDB.people[rslt.recipients[i].userId])sent = GiftDB.people[rslt.recipients[i].userId][1];
+							m += '<tr><td></td><td>'+name+'<td/><td>Total sent: '+sent+'</td>'; 
 							m+= '<td><select class="giftstosend" id="'+rslt.recipients[i].userId+'" name="'+name+'">';
 							m+='<option value="0">None</option>';
 							for(g =0;g < GiftDB.giftitems.length;g++) {
