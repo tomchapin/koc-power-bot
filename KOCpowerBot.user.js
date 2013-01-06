@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130105a
+// @version        20130105b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130105a';
+var Version = '20130105b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -20277,9 +20277,11 @@ Tabs.gifts = {
 			var element_class = document.getElementById('GiftsTAB').getElementsByClassName('giftstosend');
             for (c = 0; c < element_class.length; c++) {
 				element_class[c].value = e.target.value;
+				if(e.target.value == 0) {delete GiftDB.people[Number(element_class[c].id)];continue;};
 				if(!GiftDB.people[Number(element_class[c].id)])
 				GiftDB.people[Number(element_class[c].id)] = [Number(e.target.value),0];
 				else GiftDB.people[Number(element_class[c].id)][0] = Number(e.target.value);
+				GiftDB.people[Number(element_class[c].id)][2] = element_class[c].name;
 			};t.saveGiftsdb();
 		}, false);
 		document.getElementById('pbaugift').addEventListener('change', function(){
@@ -20324,8 +20326,9 @@ Tabs.gifts = {
 								default:
 								var sex = 'Lorady';
 								}
-							m += '<tr><td>'+sex+' '+rslt.recipients[i].displayName+'<td/><td>Total sent: '+GiftDB.people[rslt.recipients[i].userId][1]+'</td>'; 
-							m+= '<td><select class="giftstosend" id="'+rslt.recipients[i].userId+'">';
+								var name = sex+' '+rslt.recipients[i].displayName;
+							m += '<tr><td></td><td>'+name+'<td/><td>Total sent: '+GiftDB.people[rslt.recipients[i].userId][1]+'</td>'; 
+							m+= '<td><select class="giftstosend" id="'+rslt.recipients[i].userId+'" name="'+name+'">';
 							m+='<option value="0">None</option>';
 							for(g =0;g < GiftDB.giftitems.length;g++) {
 						if(GiftDB.people[Number(rslt.recipients[i].userId)] && GiftDB.people[Number(rslt.recipients[i].userId)][0] == Number(GiftDB.giftitems[g].itemId))
@@ -20335,6 +20338,21 @@ Tabs.gifts = {
 						}
 							m+= '</select></td></tr>';
 						}
+						for(h in GiftDB.people) {
+							if(t.curava.indexOf(h) != -1)continue;
+							var name = GiftDB.people[h][2];
+							m += '<tr><td>Not Available: </td><td>'+name+'<td/><td>Total sent: '+GiftDB.people[h][1]+'</td>'; 
+							m+= '<td><select class="giftstosend" id="'+h+'" name="'+name+'">';
+							m+='<option value="0">None</option>';
+							for(g =0;g < GiftDB.giftitems.length;g++) {
+						if(GiftDB.people[Number(h)] && GiftDB.people[Number(h)][0] == Number(GiftDB.giftitems[g].itemId))
+							m+='<option value="'+GiftDB.giftitems[g].itemId+'" selected="selected">'+GiftDB.giftitems[g].name+'</option>';
+						else
+							m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
+						}
+							m+= '</select></td></tr>';
+							
+						};
 						m+='</table></center>';
 						document.getElementById('GiftsTAB').innerHTML = m;
 					var element_class = document.getElementById('GiftsTAB').getElementsByClassName('giftstosend');
@@ -20343,11 +20361,16 @@ Tabs.gifts = {
                         element_class[c].addEventListener('change', function(e){
 					   logit('id is '+e.target.id);
 					   logit('values is '+e.target.value);
-					   if(e.target.id && e.target.value)
+					   logit('name is '+e.target.name);
+					   if(e.target.value != 0) {
 					   if(!GiftDB.people[Number(e.target.id)])
 							GiftDB.people[Number(e.target.id)] = [Number(e.target.value),0];
 							else GiftDB.people[Number(e.target.id)][0] =Number(e.target.value);
-							t.saveGiftsdb();
+							GiftDB.people[Number(e.target.id)][2] = e.target.name;
+						}else {
+							delete GiftDB.people[Number(e.target.id)];
+						};
+						t.saveGiftsdb();
 						} , false);
                     }
 					}
@@ -20359,8 +20382,7 @@ Tabs.gifts = {
 	sendgifts : function () {
 			var t = Tabs.gifts;
 			var x = 1;
-		for(g in GiftDB.giftitems) {
-			logit(g);
+		for(g =0;g<GiftDB.giftitems.length;g++) {
 			var ItemId = Number(GiftDB.giftitems[g].itemId);
 			var j = new Array();
 			for(i in GiftDB.people) {
@@ -20368,8 +20390,9 @@ Tabs.gifts = {
 				if(t.curava.indexOf(i) != -1)
 					j.push(i);
 			}
-			if(j.length){
+			if(j.length) {
 				x+=1;
+			if(j.length > 2){
 				//AS per http://osric.com/chris/accidental-developer/2012/07/javascript-array-sort-random-ordering/ sort was not used, this is used instead to get true random results.
 				var n = j.length;
 				var tempArr = [];
@@ -20380,13 +20403,14 @@ Tabs.gifts = {
 				//setTimeout(function(){
 				t.sendgift(ItemId,j);
 				//},x*3000);
-		};
+				} else {
+					t.sendgift(ItemId,j);
+			}};
 	}
 	},
 	sendgift : function (giftId, recipients) {
 			var t = Tabs.gifts;
 			logit('giftId is '+giftId+' recipients is '+recipients);
-			//alert(recipients);
 		        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.ctrl = 'allianceGifting\\AllianceGiftingServiceAjax';
 		params.action = 'sendGift';
@@ -20411,7 +20435,6 @@ Tabs.gifts = {
 			});
 	},
 	populategifts : function (){
-		logit('populategiftstriggered');
         var t = Tabs.gifts;
         var c = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         c.ctrl = "GiftItems";
