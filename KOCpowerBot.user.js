@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130107c
+// @version        20130107d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130107c';
+var Version = '20130107d';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -1814,9 +1814,10 @@ Tabs.Throne = {
       m+='<TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all / Fey Spire cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_unique type=checkbox '+ (ThroneOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
       m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR></table>';
-      m+='<TR><TD><FONT color=red>Min number of lines will override your Keep items and ignore attributes setting, and can keep cards with lesser/larger min requirement</font></td></TR>';
-      m+='<TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
+      m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep items" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
+      m+='<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
       m+='<TABLE width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
+      
       m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Attack.Min,'id=AttackMin')+'</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Defense type=checkbox '+ (ThroneOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Defense.Min,'id=DefenseMin')+'</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Life type=checkbox '+ (ThroneOptions.Salvage.Life?'CHECKED ':'') +'/>&nbsp;Life</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Life.Min,'id=LifeMin')+'</td></tr>';
