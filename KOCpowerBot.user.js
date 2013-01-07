@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130107b
+// @version        20130107c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130107b';
+var Version = '20130107c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -1805,16 +1805,17 @@ Tabs.Throne = {
     var t = Tabs.Throne;
     try {      
       m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
-      m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD>Keep items with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> stats checked.</td></tr>';
+      m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD><b>Keep cards</b> with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> attributes</td></tr>';
       m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wondrous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
-      m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> items.</td></table>';
-      m+='<TR><TD colspan=3><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; Keep one checked attribute per card (salvage mixed cards)(Required for "Min number of lines")</TD></TR>';
-      m+='<table><TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all cities for crafing purposes)</TD></TR>';
+      m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> cards.</td></table>';
+      
+      m+='<table><TR><TD colspan=3><INPUT id=SingleStat type=checkbox '+ (ThroneOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; No mixed, Single Attribute cards only(required for min number of lines)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_cityspire type=checkbox '+ (ThroneOptions.CitySpire?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in cities with Fey Spire first before other cities</TD></TR>';
+      m+='<TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all / Fey Spire cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_unique type=checkbox '+ (ThroneOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
-      m+='<TR><TD clospan=3>Salvage checked attributes above ' + htmlSelector({1:'none', 2:'Slot 2 (WARNING Set keep items to 4 or less)', 3:'Slot 3 (WARNING Set keep items to 3 or less)', 4:'Slot 4 (WARNING Set keep items to 2 or less)', 5:'Slot 5 (WARNING Set keep items to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'Warning Min lines must also be set for less.</TD></TR></table>';
-      m+='<TD><FONT color=red>Min number of lines will override your Keep items setting and can keep cards with a lesser value</font><br></td>';
-      m+='<TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td>';
+      m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR></table>';
+      m+='<TR><TD><FONT color=red>Min number of lines will override your Keep items and ignore attributes setting, and can keep cards with lesser/larger min requirement</font></td></TR>';
+      m+='<TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
       m+='<TABLE width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Attack type=checkbox '+ (ThroneOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Attack.Min,'id=AttackMin')+'</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Defense type=checkbox '+ (ThroneOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Defense.Min,'id=DefenseMin')+'</td></tr>';
@@ -3019,31 +3020,31 @@ salvageCheck : function (){
                     if(y.level > 0) level = true;
                     if(ThroneOptions.SaveUnique) if(y.unique > 0) IsUnique = true;
                     if (ThroneOptions.SalvageQuality == 0) level=true;
-                    for (i=ThroneOptions.SalvageLevel;i<=5;i++){
-						if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;}
-						
-						for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++) {
-							type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];			
-							if(ThroneOptions.Salvage[type]){
+                    
+                    for (i=1;i<=5;i++){
+						if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;};
+							for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++) {
+								type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];			
+								if(ThroneOptions.Salvage[type]){
+									if(!ThroneOptions.SingleStat)number++
+									else {
+										if(i>=ThroneOptions.SalvageLevel || ThroneOptions.SalvageA[type].Min > ThroneOptions.SalvageLevel) {
+											if(!ThroneOptions.SalvageA[type].cur)ThroneOptions.SalvageA[type].cur = 0;
+											ThroneOptions.SalvageA[type].cur++;
+										};
+									};
+								};
+							};
+							if(ThroneOptions.Salvage[y.effects["slot"+i].id]){
 								if(!ThroneOptions.SingleStat)number++
 								else {
-									if(!ThroneOptions.SalvageA[type].cur)ThroneOptions.SalvageA[type].cur = 0;
-									ThroneOptions.SalvageA[type].cur++
+									if(i>=ThroneOptions.SalvageLevel || ThroneOptions.SalvageA[y.effects["slot"+i].id].Min > ThroneOptions.SalvageLevel) {
+										if(!ThroneOptions.SalvageA[y.effects["slot"+i].id].cur)ThroneOptions.SalvageA[y.effects["slot"+i].id].cur = 0;
+										ThroneOptions.SalvageA[y.effects["slot"+i].id].cur++;
+									};
 								};
 							};
 						};
-						
-								
-						if(ThroneOptions.Salvage[y.effects["slot"+i].id]){
-							if(!ThroneOptions.SingleStat)number++
-							else {
-								if(!ThroneOptions.SalvageA[y.effects["slot"+i].id].cur)ThroneOptions.SalvageA[y.effects["slot"+i].id].cur = 0;
-								ThroneOptions.SalvageA[y.effects["slot"+i].id].cur++
-							};
-						};
-								
-						
-                    };
                     if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
                     if(ThroneOptions.SingleStat) {
                         for (h in ThroneOptions.Salvage) {
@@ -3052,6 +3053,7 @@ salvageCheck : function (){
 										MinReq = true;
 									};	
                             if(ThroneOptions.SalvageA[h].cur >= ThroneOptions.thronekeep)
+                            if(ThroneOptions.SalvageA[h].Min = 0)
                                 number = ThroneOptions.SalvageA[h].cur;
                             if(ThroneOptions.SalvageA[h].cur) {
                                 ThroneOptions.SalvageA[h].cur = 0;};
