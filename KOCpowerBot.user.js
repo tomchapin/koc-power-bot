@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130106a
+// @version        20130107a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130106a';
+var Version = '20130107a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -3021,30 +3021,34 @@ salvageCheck : function (){
                     if (ThroneOptions.SalvageQuality == 0) level=true;
                     for (i=ThroneOptions.SalvageLevel;i<=5;i++){
 						if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;}
-                        for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++){
-                            type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];
-                            if (ThroneOptions.Salvage[type] || ThroneOptions.Salvage[y.effects["slot"+i].id]) {
-                                if(ThroneOptions.SingleStat) {
-                                if(ThroneOptions.Salvage[type]){
-                                    //ThroneOptions.Salvage[type]++
+						
+						for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++) {
+							type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];			
+							if(ThroneOptions.Salvage[type]){
+								if(ThroneOptions.SingleStat)number++
+								else {
 									if(!ThroneOptions.SalvageA[type].cur)ThroneOptions.SalvageA[type].cur = 0;
 									ThroneOptions.SalvageA[type].cur++
 								};
-                                if(ThroneOptions.Salvage[y.effects["slot"+i].id]){
-                                    //ThroneOptions.Salvage[y.effects["slot"+i].id]++
-                                    if(!ThroneOptions.SalvageA[y.effects["slot"+i].id].cur)ThroneOptions.SalvageA[y.effects["slot"+i].id].cur = 0;
-									ThroneOptions.SalvageA[y.effects["slot"+i].id].cur++
-								};
-                                } else {
-                                    number++;
-                                }
-                            } 
-						}
-                    }
+							};
+						};
+						
+								
+						if(ThroneOptions.Salvage[y.effects["slot"+i].id]){
+							if(ThroneOptions.SingleStat)number++
+							else {
+								if(!ThroneOptions.SalvageA[y.effects["slot"+i].id].cur)ThroneOptions.SalvageA[y.effects["slot"+i].id].cur = 0;
+								ThroneOptions.SalvageA[y.effects["slot"+i].id].cur++
+							};
+						};
+								
+						
+                    };
                     if(ThroneOptions.thronekeep < 1) ThroneOptions.thronekeep = 1;
                     if(ThroneOptions.SingleStat) {
                         for (h in ThroneOptions.Salvage) {
 								if(ThroneOptions.Salvage[h] && ThroneOptions.SalvageA[h].Min > 0 && ThroneOptions.SalvageA[h].cur >= ThroneOptions.SalvageA[h].Min) {
+									//logit(''+ThroneOptions.Salvage[h]+' && '+ThroneOptions.SalvageA[h].Min+' > 0 && '+ThroneOptions.SalvageA[h].cur+' >= '+ThroneOptions.SalvageA[h].Min);
 										MinReq = true;
 									};	
                             if(ThroneOptions.SalvageA[h].cur >= ThroneOptions.thronekeep)
@@ -3053,8 +3057,9 @@ salvageCheck : function (){
                                 ThroneOptions.SalvageA[h].cur = 0;};
                         }
                     }
+                    //logit('y.name '+y.name+' level '+level+' number '+number+' ThroneOptions.thronekeep '+ThroneOptions.thronekeep+' NotUpgrading '+NotUpgrading+' isEquiped '+y.isEquipped+' y.isbroken '+y.isBroken+' y.id '+y.id+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+MinReq+' is unique '+IsUnique);
                     if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique) {
-						//logit(y.name);
+						logit(y.name);
                         t.SalvageArray.push(y.id);
                     }                     
             }
