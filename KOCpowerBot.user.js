@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130107a
+// @version        20130107b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130107a';
+var Version = '20130107b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -3025,7 +3025,7 @@ salvageCheck : function (){
 						for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++) {
 							type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];			
 							if(ThroneOptions.Salvage[type]){
-								if(ThroneOptions.SingleStat)number++
+								if(!ThroneOptions.SingleStat)number++
 								else {
 									if(!ThroneOptions.SalvageA[type].cur)ThroneOptions.SalvageA[type].cur = 0;
 									ThroneOptions.SalvageA[type].cur++
@@ -3035,7 +3035,7 @@ salvageCheck : function (){
 						
 								
 						if(ThroneOptions.Salvage[y.effects["slot"+i].id]){
-							if(ThroneOptions.SingleStat)number++
+							if(!ThroneOptions.SingleStat)number++
 							else {
 								if(!ThroneOptions.SalvageA[y.effects["slot"+i].id].cur)ThroneOptions.SalvageA[y.effects["slot"+i].id].cur = 0;
 								ThroneOptions.SalvageA[y.effects["slot"+i].id].cur++
