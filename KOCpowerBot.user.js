@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130105d
+// @version        20130106a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130105d';
+var Version = '20130106a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -20266,6 +20266,8 @@ Tabs.gifts = {
 		};
         m+='</select> </td><td> <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available </td><td> Total sent:</td><td id=giftnumber></td></tr></table></DIV>';
         m += '<DIV class=pbStat></DIV>';
+        m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.  You may update us on working scenarios <a href=http://userscripts.org/scripts/discuss/101052>here</a></DIV>';
+        m += '<DIV class=pbStat></DIV>';
         m += '<DIV style="height:250px; max-height:250px; overflow-y:auto" id=GiftsTAB></DIV>';
         div.innerHTML = m;
 		t.populatepeople();
@@ -20313,7 +20315,6 @@ Tabs.gifts = {
 				onSuccess: function (transport) {
 					var rslt = eval("(" + transport.responseText + ")");
 					if(rslt.ok) {
-						logit(inspect(rslt.recipients[0]));
 						var m='<center><table>';
 						for(i =0;i<rslt.recipients.length;i++) {
 							t.curava.push(rslt.recipients[i].userId);
@@ -20363,9 +20364,6 @@ Tabs.gifts = {
                    for (c = 0; c < element_class.length; c++) {
                         if(element_class[c])
                         element_class[c].addEventListener('change', function(e){
-					   logit('id is '+e.target.id);
-					   logit('values is '+e.target.value);
-					   logit('name is '+e.target.name);
 					   if(e.target.value != 0) {
 					   if(!GiftDB.people[Number(e.target.id)])
 							GiftDB.people[Number(e.target.id)] = [Number(e.target.value),0];
@@ -20414,6 +20412,7 @@ Tabs.gifts = {
 	},
 	sendgift : function (giftId, recipients) {
 			var t = Tabs.gifts;
+			//for reasons unknown the server picks and chooses who you get to send a gift to and who you don't. for this reason I have left the logits in place.
 			logit('giftId is '+giftId+' recipients is '+recipients);
 		        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.ctrl = 'allianceGifting\\AllianceGiftingServiceAjax';
@@ -20427,10 +20426,11 @@ Tabs.gifts = {
 				onSuccess: function (transport) {
 					var rslt = eval("(" + transport.responseText + ")");
 					if(rslt.ok) {
-						for(i = 0;i<Number(rslt.succeedRecipients.length+1);i++) {
+						logit('rslt.succ is '+rslt.succeedRecipients);
+						for(i = 0;i<rslt.succeedRecipients.length;i++) {
 						var z = rslt.succeedRecipients[i];
 						GiftDB.people[Number(z)][1]++;
-							//logit('i is '+i+'length is '+rslt.succeedRecipients.length+'z is '+z+'Giftdb is '+GiftDB.people[Number(z)]);
+							//logit('i is '+i+' length is '+rslt.succeedRecipients.length+' z is '+z+' Giftdb is '+GiftDB.people[Number(z)]);
 						
 					};
 						t.saveGiftsdb();
