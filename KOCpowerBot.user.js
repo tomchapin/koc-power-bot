@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130107d
+// @version        20130108a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130107d';
+var Version = '20130108a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -2524,6 +2524,7 @@ PaintSalvageHistory : function() {
         var t= Tabs.Throne;
         var now = new Date().getTime()/1000.0;
         if (!ThroneOptions.Active) return;
+        t.checkUpgradeInfo();
         if (ThroneOptions.Items.length ==0) {
                  document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
                  return;
