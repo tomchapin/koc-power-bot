@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130109c
+// @version        20130109D
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130109c';
+var Version = '20130109d';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -10196,7 +10196,7 @@ Tabs.Barb = {
           params.kid=kid;
           params.xcoord = xcoord;
           params.ycoord = ycoord;
-        for (ii=1; ii<t.troopDef.length; ii++) {
+        for (ii=1; ii<parseInt(t.troopDef.length+1); ii++) {
             if(parseInt(trps[ii]) > 0)
                 params['u'+ii]=trps[ii];
         }
