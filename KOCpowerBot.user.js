@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130108a
+// @version        20130109a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130108a';
+var Version = '20130109a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -9683,7 +9683,23 @@ Tabs.Barb = {
   lookup:1,
   city:0,
   deleting:false,
-  
+  troopDef : [
+      ['Supply', 1],
+      ['Miltia', 2],
+      ['Scout', 3],
+      ['Pikes', 4],
+      ['Swords', 5],
+      ['Archers', 6],
+      ['Cavalry', 7],
+      ['Heavies', 8],
+      ['Wagons', 9],
+      ['Balls', 10],
+      ['Rams', 11],
+      ['Cats', 12],
+      ['BThorn', 13],
+      ['EXec', 14],
+      ['Tower', 15],
+     ],
     
   init : function (div){
     var t = Tabs.Barb;
@@ -9774,20 +9790,7 @@ Tabs.Barb = {
    
   troopOptions: function(){
        var t = Tabs.Barb;
-     var troopDef = [
-      ['Supply', 1],
-      ['Miltia', 2],
-      ['Scout', 3],
-      ['Pikes', 4],
-      ['Swords', 5],
-      ['Archers', 6],
-      ['Cavalry', 7],
-      ['Heavies', 8],
-      ['Wagons', 9],
-      ['Ballista', 10],
-      ['Rams', 11],
-      ['Cats', 12],
-     ];
+      var troopDef = t.troopDef;
        if(t.troopselect == null)    
         t.troopselect = new pbPopup ('pbtroopselect', 0, 0, 850, 450, true, function(){t.saveTroops();});
        t.troopselect.centerMe (mainPop.getMainDiv());  
@@ -9799,7 +9802,7 @@ Tabs.Barb = {
      for(i=0;i<10;i++){
          z += '<TR><TD>Level '+(i+1)+': </td>';
          for(var j=0; j<troopDef.length; j++){
-             z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=4 maxlength=6 value="'+AttackOptions.Troops[i+1][j+1]+'" /></td>';
+             z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=4 maxlength=6 value="'+(AttackOptions.Troops[i+1][j+1]?AttackOptions.Troops[i+1][j+1]:0)+'" /></td>';
          }
         z+='<TD align=left><INPUT id=Mindist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.MinDistance[i+1]+'"</td>';
          z+='<TD align=right><INPUT id=dist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[i+1]+'"</td>';
@@ -9974,8 +9977,9 @@ Tabs.Barb = {
   },  
   
   saveTroops: function(){
+      var t = Tabs.Barb;
     for(i=0;i<10;i++){
-           for (w=0;w<12;w++){
+           for (w=0;w<t.troopDef.length;w++){
                AttackOptions.Troops[i+1][w+1] = parseIntNan(document.getElementById('level'+i+'troop'+w).value);
            }
         if(parseIntNan(document.getElementById('dist'+i).value) > AttackOptions.MaxDistance)
