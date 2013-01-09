@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130109a
+// @version        20130109b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130109a';
+var Version = '20130109b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -10196,7 +10196,7 @@ Tabs.Barb = {
           params.kid=kid;
           params.xcoord = xcoord;
           params.ycoord = ycoord;
-        for (ii=1; ii<13; ii++) {
+        for (ii=1; ii<t.troopDef.length; ii++) {
             if(parseInt(trps[ii]) > 0)
                 params['u'+ii]=trps[ii];
         }
@@ -10318,9 +10318,6 @@ Tabs.Barb = {
     
     t.opt.maxDistance = parseInt(AttackOptions.MaxDistance);
     t.opt.searchDistance = (t.opt.maxDistance*2);
-    if(t.opt.maxDistance > 40){
-        t.opt.searchDistance = 40;
-    }
     t.opt.searchShape = 'circle';
     t.mapDat = [];
     t.firstX =  t.opt.startX - t.opt.maxDistance;
