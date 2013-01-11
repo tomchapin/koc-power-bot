@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130111a
+// @version        20130111b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130111a';
+var Version = '20130111b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -3077,9 +3077,10 @@ salvageCheck : function (){
 									//logit(''+ThroneOptions.Salvage[h]+' && '+ThroneOptions.SalvageA[h].Min+' > 0 && '+ThroneOptions.SalvageA[h].cur+' >= '+ThroneOptions.SalvageA[h].Min);
 										MinReq = true;
 									};	
-								if(ThroneOptions.Salvage[h][y.type] && ThroneOptions.SalvageA[h][y.type] > 0 && ThroneOptions.SalvageA[h].cur >= ThroneOptions.SalvageA[h][y.type]) {
+								if(ThroneOptions.Salvage[h] && ThroneOptions.SalvageA[h][y.type] && ThroneOptions.SalvageA[h][y.type] > 0 && ThroneOptions.SalvageA[h].cur >= ThroneOptions.SalvageA[h][y.type]) {
 									//logit(''+ThroneOptions.Salvage[h]+' && '+ThroneOptions.SalvageA[h].Min+' > 0 && '+ThroneOptions.SalvageA[h].cur+' >= '+ThroneOptions.SalvageA[h].Min);
 										MinReq = true;
+										//logit('saving '+y.name+' due to '+y.type+' and '+h);
 									};	
                             if(ThroneOptions.SalvageA[h].cur >= ThroneOptions.thronekeep)
                             if(ThroneOptions.SalvageA[h].Min = 0)
