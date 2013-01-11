@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130109D
+// @version        20130111a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130109d';
+var Version = '20130111a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -1705,7 +1705,7 @@ Tabs.Throne = {
   MaxRows:30,
   CompPos:0,
   CardTypes:["ALL","Attack","Defense","Life","Speed","Accuracy","Range","Load","MarchSize","MarchSpeed","CombatSkill","IntelligenceSkill","PoliticsSkill","ResourcefulnessSkill","TrainingSpeed","ConstructionSpeed","ResearchSpeed","CraftingSpeed","Upkeep","ResourceProduction","ResourceCap","Storehouse","Morale","ItemDrop"],
-  EquipType: ["ALL","Advisor","Banner","Chair","Table","Trophy","Windows"],
+  EquipType: ["ALL","advisor","banner","chair","table","trophy","window","candelabrum"],//case sensitive for the moment.
   Faction: ["ALL","Briton","Fey","Druid"],
 
   init : function (div){
@@ -1766,9 +1766,9 @@ Tabs.Throne = {
      saveSalvageOptions : function(){
 			for (k in unsafeWindow.cm.thronestats.effects) {
 				var ele = document.getElementById('pbThroneItems'+k);
-				var ele2 = document.getElementById(k+'Min');
+				//var ele2 = document.getElementById(k+'Min');
 				ThroneOptions.Salvage[k]=ele.checked;
-				ThroneOptions.SalvageA[k].Min=ele2.value;
+				//ThroneOptions.SalvageA[k].Min=ele2.value;
 			}		
 		saveThroneOptions();
    },
@@ -1814,7 +1814,7 @@ Tabs.Throne = {
       m+='<TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all / Fey Spire cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_unique type=checkbox '+ (ThroneOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
       m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR></table>';
-      m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep items" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
+      m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
       m+='<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
       m+='<TABLE width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
       
@@ -1855,7 +1855,14 @@ Tabs.Throne = {
       for (k in unsafeWindow.cm.thronestats.effects) {
 		  if(!ThroneOptions.SalvageA[k]) ThroneOptions.SalvageA[k] = {};
       	m += '<TR><TD><A onclick="setFAV('+ k +')"><DIV class=pbSalvage_fav id=SalvageFAV'+k+'></div></td>';
-      	m += '<TD class=pbThrone><INPUT id=pbThroneItems'+k+' type=checkbox checked='+ (ThroneOptions.Salvage[k]?'CHECKED ':'') +'>'+ unsafeWindow.cm.thronestats.effects[k][1] +'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][3]+'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][2]+'</td><td class=pbThroneS>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA[k].Min,'id='+k+'Min')+'</td></tr>';
+      	m += '<TD class=pbThrone><INPUT id=pbThroneItems'+k+' type=checkbox checked='+ (ThroneOptions.Salvage[k]?'CHECKED ':'') +'>'+ unsafeWindow.cm.thronestats.effects[k][1] +'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][3]+'</td><TD width="4">'+ unsafeWindow.cm.thronestats.effects[k][2]+'</td>\
+      	<td></td><td class=pbThroneST><select id='+k+'>';
+      	for(g = 0;g<t.EquipType.length;g++)
+      	m+='<option value="'+t.EquipType[g]+'">'+t.EquipType[g]+'</option>'
+		m+='</select></td>';
+      	
+      	
+      	m+='<td class=pbThroneS>Min lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA[k].Min,'id='+k+'Min')+'</td></tr>';
       }	
       m+= '</table>';
 
@@ -1954,9 +1961,24 @@ Tabs.Throne = {
 	  }
     var element_class = document.getElementsByClassName('pbThrone');
     var element_classTS = document.getElementsByClassName('pbThroneS');
+    var element_classST = document.getElementsByClassName('pbThroneST');
     for (k=0;k<element_class.length;k++){
     	element_class[k].addEventListener('click', t.saveSalvageOptions , false);
-    	element_classTS[k].addEventListener ('change', t.saveSalvageOptions , false);
+    	element_classTS[k].addEventListener ('change', function(e){
+			var idnum = parseInt(String(e.target.id).replace("Min",""));
+			var type = document.getElementById(idnum).value;
+			if (type == 'All')
+			ThroneOptions.SalvageA[idnum].Min = e.target.value
+			else
+			ThroneOptions.SalvageA[idnum][type] = e.target.value;
+			saveThroneOptions();
+			} , false);
+    	element_classST[k].addEventListener ('change', function(e){
+			if(ThroneOptions.SalvageA[e.target.id][e.target.value])
+			document.getElementById(e.target.id+'Min').value=ThroneOptions.SalvageA[e.target.id][e.target.value];
+			else document.getElementById(e.target.id+'Min').value=0;
+			saveThroneOptions();
+			} , false);
     }
 
     t.saveSalvageOptions();
@@ -3025,6 +3047,7 @@ salvageCheck : function (){
                     
                     for (i=1;i<=5;i++){
 						if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;};
+						
 							for (l=0;l<unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"].length;l++) {
 								type = unsafeWindow.cm.thronestats.effects[y.effects["slot"+i].id]["2"][l];			
 								if(ThroneOptions.Salvage[type]){
@@ -3040,7 +3063,7 @@ salvageCheck : function (){
 							if(ThroneOptions.Salvage[y.effects["slot"+i].id]){
 								if(!ThroneOptions.SingleStat)number++
 								else {
-									if(i>=ThroneOptions.SalvageLevel || ThroneOptions.SalvageA[y.effects["slot"+i].id].Min > ThroneOptions.SalvageLevel) {
+									if(i>=ThroneOptions.SalvageLevel || ThroneOptions.SalvageA[y.effects["slot"+i].id].Min > ThroneOptions.SalvageLevel || ThroneOptions.SalvageA[y.effects["slot"+i].id][y.type] > ThroneOptions.SalvageLevel) {
 										if(!ThroneOptions.SalvageA[y.effects["slot"+i].id].cur)ThroneOptions.SalvageA[y.effects["slot"+i].id].cur = 0;
 										ThroneOptions.SalvageA[y.effects["slot"+i].id].cur++;
 									};
@@ -3051,6 +3074,10 @@ salvageCheck : function (){
                     if(ThroneOptions.SingleStat) {
                         for (h in ThroneOptions.Salvage) {
 								if(ThroneOptions.Salvage[h] && ThroneOptions.SalvageA[h].Min > 0 && ThroneOptions.SalvageA[h].cur >= ThroneOptions.SalvageA[h].Min) {
+									//logit(''+ThroneOptions.Salvage[h]+' && '+ThroneOptions.SalvageA[h].Min+' > 0 && '+ThroneOptions.SalvageA[h].cur+' >= '+ThroneOptions.SalvageA[h].Min);
+										MinReq = true;
+									};	
+								if(ThroneOptions.Salvage[h][y.type] && ThroneOptions.SalvageA[h][y.type] > 0 && ThroneOptions.SalvageA[h].cur >= ThroneOptions.SalvageA[h][y.type]) {
 									//logit(''+ThroneOptions.Salvage[h]+' && '+ThroneOptions.SalvageA[h].Min+' > 0 && '+ThroneOptions.SalvageA[h].cur+' >= '+ThroneOptions.SalvageA[h].Min);
 										MinReq = true;
 									};	
