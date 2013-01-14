@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130113a
+// @version        20130114a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130113a';
+var Version = '20130114a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -1426,7 +1426,7 @@ Tabs.farm = {
        cityID = 'city' + citynumber;
        
        t.getAtkKnight(cityID);
-       t.getRallypointLevel(cityID);
+       t.rallypointlevel = March.getRallypointLevel(cityID);
        var slots=0;
        if (Seed.queue_atkp[cityID] != undefined){
            for(var k in Seed.queue_atkp[cityID])
@@ -1494,19 +1494,10 @@ Tabs.farm = {
     t.barbing();
   },
   
-  getRallypointLevel: function(cityId){
-    var t = Tabs.farm;
-    for (var o in Seed.buildings[cityId]){
-      var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-      var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-      if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
-     }
-  },
-  
   getAtkKnight : function(cityID){
      var t = Tabs.farm;
      t.knt = new Array();
-     t.getRallypointLevel(cityID);
+       t.rallypointlevel = March.getRallypointLevel(cityID);
      for (k in Seed.knights[cityID]){
              if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
                  t.knt.push ({
@@ -5859,8 +5850,7 @@ Tabs.Search = {
         t.clickedStartScout();
         return;
     }
-    var rallypointlevel = t.getRallypoint(city.id);
-    if(rallypointlevel == 12) rallypointlevel = 11;
+    var rallypointlevel = March.getRallypointLevel(city.id);
     var slots = 0;
        for (z in Seed.queue_atkp['city'+city.id]){
              slots++;
@@ -10046,7 +10036,7 @@ Tabs.Barb = {
             if(parseInt(AttackOptions.Update[t.lookup][1]) >= parseInt(AttackOptions.stopsearch)) continue; //Skip if search results are empty more than X times
             t.searchRunning = true;
               t.opt.startX = parseInt(Seed.cities[(i-1)][2]);
-              t.opt.startY = parseInt(Seed.cities[(i-1)][3]);  
+              t.opt.startY = parseInt(Seed.cities[(i-1)][3]);
               t.clickedSearch();
             break;
           }
@@ -10081,23 +10071,11 @@ Tabs.Barb = {
   barbing : function(){
          var t = Tabs.Barb;
        var city = t.city;
-       
        citynumber = Seed.cities[city-1][0];
        cityID = 'city' + citynumber;
-       
        t.getAtkKnight(cityID);
-       t.getRallypointLevel(cityID);
-       if (t.rallypointlevel > 11 ) t.rallypointlevel = 11;
-	   if (Seed.cityData.city[citynumber].isPrestigeCity && (t.rallypointlevel > 0)) t.rallypointlevel+=3;
-	   
-       var slots=0;
-       if (Seed.queue_atkp[cityID] != undefined){
-           for(var k in Seed.queue_atkp[cityID])
-            slots++;
-           if(Seed.queue_atkp[cityID].toSource() == "[]")
-            slots = 0;
-        } else
-            slots=0;
+       var slots = March.getMarchSlots(citynumber);
+            
 	   //Only send DF if city is not over 750K astone:: rewritten I want df's to farm items and level knights.. who cares about aetherstone?  -baos
 		if (Seed.resources[cityID]["rec5"][0] > Number(AttackOptions.threshold)) {
 			return;
@@ -10105,9 +10083,9 @@ Tabs.Barb = {
        var element1 = 'pddatacity'+(city-1);
        document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
        var element2 = 'pddataarray'+(city-1);
-       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
+       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + March.getTotalSlots(citynumber) +')';
        
-       if ((t.rallypointlevel-AttackOptions.RallyClip) <= slots) return;
+       if ((slots-AttackOptions.RallyClip) <= 0) return;
        if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
        
@@ -10183,19 +10161,9 @@ Tabs.Barb = {
         
   },
   
-  getRallypointLevel: function(cityId){
-    var t = Tabs.Barb;
-    for (var o in Seed.buildings[cityId]){
-      var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-      var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-      if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
-     }
-  },
-  
   getAtkKnight : function(cityID){
      var t = Tabs.Barb;
      t.knt = new Array();
-     t.getRallypointLevel(cityID);
      for (k in Seed.knights[cityID]){
              if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.knights[cityID][k]["combat"] >= AttackOptions.barbMinKnight && Seed.knights[cityID][k]["combat"] <= AttackOptions.barbMaxKnight){
                  t.knt.push ({
@@ -10206,21 +10174,18 @@ Tabs.Barb = {
              }
      }
      t.knt = t.knt.sort(function sort(a,b) {
-                            a = parseInt(a['Combat']);
-                            b = parseInt(b['Combat']);
-                            if(parseInt(AttackOptions.knightselector) > 0)
-                                return a == b ? 0 : (a > b ? -1 : 1);
-                            else
-                                return a == b ? 0 : (a < b ? -1 : 1);
-                            });
+		a = parseInt(a['Combat']);
+        b = parseInt(b['Combat']);
+        if(parseInt(AttackOptions.knightselector) > 0)
+           return a == b ? 0 : (a > b ? -1 : 1);
+        else
+           return a == b ? 0 : (a < b ? -1 : 1);
+        });
   },
     
-  doBarb: function(cityID,counter,xcoord,ycoord,level,kid,trps,tt){
+  doBarb: function(cityID,counter,xcoord,ycoord,level,kid,trps){
           var t = Tabs.Barb;
-          
           var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-          if(tt)
-          params.tt = tt;
           params.cid=cityID;
           params.type=4;
           params.kid=kid;
@@ -10233,53 +10198,17 @@ Tabs.Barb = {
           
           AttackOptions.BarbsTried++;
           document.getElementById('pberror1').innerHTML = 'Tries:'+ AttackOptions.BarbsTried;
-        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
-          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-                   method: "post",
-                   parameters: params,
-                   loading: true,
-                   onSuccess: function (transport) {
-					   profiler.stop();
-                   var rslt = eval("(" + transport.responseText + ")");
-                   if (rslt.ok) {
-                     var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                     var ut = unsafeWindow.unixtime();
-				var unitsarr = [];
-				for (j in unsafeWindow.unitcost)
-					unitsarr.push(0);
-				for(i = 0; i <= unitsarr.length; i++)
-					if(params["u"+i])
-						unitsarr[i] = params["u"+i];
-                     var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                     var currentcityid = params.cid;
-                     unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                     unsafeWindow.update_seed(rslt.updateSeed)
-                     if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-                     var slots=0;
-                     for(var k in Seed.queue_atkp['city'+cityID])
-                      slots++;
-                     if(Seed.queue_atkp['city'+cityID].toSource() == "[]")
-                      slots = 0;
-                     AttackOptions.BarbsDone[counter]++;
-                     var element1 = 'pddatacity'+(counter-1);
+          
+          March.addMarch(params, function(rslt){
+			  if(rslt.ok) {
+					AttackOptions.BarbsDone[counter]++;
+                  var element1 = 'pddatacity'+(counter-1);
                      document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[counter];
                      var element2 = 'pddataarray'+(counter-1);
-                     document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
-                     var now = new Date().getTime()/1000.0;
-                     now = now.toFixed(0);
+					document.getElementById(element2).innerHTML =  'RP: (' + March.getMarchSlots(cityID) + '/' + March.getTotalSlots(cityID) +')';
                      GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                      saveAttackOptions();
                    } else {
-					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime '+rslt.wait_time);
-                        if(rslt.tt)
-                        var tt = rslt.tt;
-                        var wait = 1;
-                        if(rslt.wait_time)
-                        wait = rslt.wait_time;
-                        setTimeout (function(){t.doBarb(cityID,counter,xcoord,ycoord,level,kid,trps,tt);}, wait*1000);
-                        return;
-						};
                      //logit( inspect(rslt,3,1));
                      if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
                      if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
@@ -10296,11 +10225,11 @@ Tabs.Barb = {
                      document.getElementById('pberror5').innerHTML = 'Other errors:' + AttackOptions.BarbsFailedVaria;
                      document.getElementById('pberror6').innerHTML = 'Bog errors:' + AttackOptions.BarbsFailedBog;
                      //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
-                     }
-                   },
-                   onFailure: function () {profiler.stop();}
-           });
-       saveAttackOptions();
+                   }
+			  
+			  
+		  });
+       //saveAttackOptions();
   },
   
   sendreport: function(){
@@ -10373,10 +10302,7 @@ Tabs.Barb = {
     var t = Tabs.Barb;
     if (!t.searchRunning)
       return;
-    if (!rslt.ok){
-      t.stopSearch ('ERROR: '+ rslt.errorMsg);
-      return;
-    }
+    if (rslt.ok){
     map = rslt.data;
     
     for (k in map){
@@ -10401,9 +10327,17 @@ Tabs.Barb = {
     }
     var x = t.MapAjax.normalize(t.curX);
     var y = t.MapAjax.normalize(t.curY);
+    
+	var element0 = 'pdtotalcity'+(t.lookup-1);
+    if (t.mapDat.length < 1) document.getElementById(element).innerHTML = 'No Data';
+        else document.getElementById(element0).innerHTML =  'Forests:' + t.mapDat.length;
     var element = 'pddatacity'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
     setTimeout (function(){t.MapAjax.request (x, y, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
+	} else {
+		setTimeout (function(){t.MapAjax.request (left, top, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
+	}
+    
   },
   
   stopSearch : function (msg){
@@ -19170,7 +19104,6 @@ Tabs.startup = {
         if(r==1)
         if (parseInt(Seed.units[cityID]['unt1']) < CrestData[CrestDataNum].R1ST || parseInt(Seed.units[cityID]['unt2']) < CrestData[CrestDataNum].R1MM || parseInt(Seed.units[cityID]['unt3']) < CrestData[CrestDataNum].R1Scout || parseInt(Seed.units[cityID]['unt4']) < CrestData[CrestDataNum].R1Pike || parseInt(Seed.units[cityID]['unt5']) < CrestData[CrestDataNum].R1Sword || parseInt(Seed.units[cityID]['unt6']) < CrestData[CrestDataNum].R1Arch || parseInt(Seed.units[cityID]['unt7']) < CrestData[CrestDataNum].R1LC || parseInt(Seed.units[cityID]['unt8']) < CrestData[CrestDataNum].R1HC || parseInt(Seed.units[cityID]['unt9']) < CrestData[CrestDataNum].R1SW || parseInt(Seed.units[cityID]['unt10']) < CrestData[CrestDataNum].R1Ball || parseInt(Seed.units[cityID]['unt11']) < CrestData[CrestDataNum].R1Ram || parseInt(Seed.units[cityID]['unt12']) < CrestData[CrestDataNum].R1Cat || parseInt(Seed.units[cityID]['unt1']) < CrestData[CrestDataNum].R2ST || parseInt(Seed.units[cityID]['unt2']) < CrestData[CrestDataNum].R2MM || parseInt(Seed.units[cityID]['unt3']) < CrestData[CrestDataNum].R2Scout || parseInt(Seed.units[cityID]['unt4']) < CrestData[CrestDataNum].R2Pike || parseInt(Seed.units[cityID]['unt5']) < CrestData[CrestDataNum].R2Sword || parseInt(Seed.units[cityID]['unt6']) < CrestData[CrestDataNum].R2Arch || parseInt(Seed.units[cityID]['unt7']) < CrestData[CrestDataNum].R2LC || parseInt(Seed.units[cityID]['unt8']) < CrestData[CrestDataNum].R2HC || parseInt(Seed.units[cityID]['unt9']) < CrestData[CrestDataNum].R2SW || parseInt(Seed.units[cityID]['unt10']) < CrestData[CrestDataNum].R2Ball || parseInt(Seed.units[cityID]['unt11']) < CrestData[CrestDataNum].R2Ram || parseInt(Seed.units[cityID]['unt12']) < CrestData[CrestDataNum].R2Cat) {
             if (CrestData.length == 1) {
-				logit(inspect(CrestData[0]));
                 t.timer = setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
                 return;
              } else
@@ -19473,6 +19406,7 @@ var March = {
 		var ascended = t.getAscendedStats(cityId);
 		var rallypointlevel = t.getRallypointLevel(cityId);
 		var slots = rallypointlevel; //Set default number of slots to rallypointlevel
+		if(slots == 12)slots = 11;// a level 12 rallypoint only allows for 11 marches.  the bonus from 11 to 12 is increased army size.
 		if(ascended.isPrestigeCity){
 			switch(ascended.prestigeLevel){
 				case 1:
@@ -19562,7 +19496,6 @@ var March = {
 				max = (rallypointlevel * 10000) * buff;
 				break;
 		}
-		logit('max is '+max);
 		return max;
 	},
 	getAscendedStats : function (cityId){
