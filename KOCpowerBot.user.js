@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130114b
+// @version        20130114c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130114b';
+var Version = '20130114c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -10084,8 +10084,7 @@ Tabs.Barb = {
        document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
        var element2 = 'pddataarray'+(city-1);
        document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + March.getTotalSlots(citynumber) +')';
-       
-       if ((slots-AttackOptions.RallyClip) <= 0) return;
+       if (Number(Number(slots)-Number(March.getTotalSlots(citynumber))) <= Number(AttackOptions.RallyClip)) return;
        if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
        
