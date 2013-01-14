@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130111b
+// @version        20130113a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130111b';
+var Version = '20130113a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -177,6 +177,7 @@ var Options = {
   mklag	:	false,
   amain	:	false,
   smain	:	0,
+  MAP_DELAY :	4000,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -467,6 +468,7 @@ var nHtml={
 
 readGlobalOptions ();
 readOptions();
+MAP_DELAY = Options.MAP_DELAY;
 if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
   return;
@@ -10511,7 +10513,10 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away from Kabam!")+'</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
         <TR><TD>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
-        <TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
+        <TR><td>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Throttle Map Requests:")+' '+ htmlSelector({1200:translate('Fast'), 4000:translate('Normal'), 8000:translate('Slow'), 12000:translate('Extra Slow')},Options.MAP_DELAY,'id=pbMAP_DELAY')+'</td></tr>';
+
+        
+        m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
         <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>'+translate("Refresh if KOC not loaded within 1 minute (all domains)")+'</td></tr>\
         <TR><TD><INPUT id=pbEveryEnable type=checkbox /></td><TD>'+translate("Refresh KOC every")+' <INPUT id=pbeverymins type=text size=2 maxlength=3 \> '+translate("minutes")+'</td></tr>\
@@ -10519,6 +10524,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>'+translate("Use WideMap (requires wide screen)")+'</td></tr>\
         <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>'+translate("Auto collect gold when happiness reaches")+' <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
         <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>'+translate("Enable Food Alert (on less than 6 Hours of food. Checked every hour)")+'</td></tr>';
+ 
         m += '<TR><TD><INPUT id=pbmaintoggle type=checkbox /></td><TD>'+translate("auto select city on startup");
          m+='<select id=pbwhichcity>';
          for(h =0;h < unsafeWindow.seed.cities.length;h++) {
@@ -10621,6 +10627,7 @@ Tabs.Options = {
       t.togOpt ('MKLag', 'mklag');
       t.togOpt ('pbmaintoggle', 'amain');
       t.changeOpt ('pbwhichcity', 'smain');
+      t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }      
