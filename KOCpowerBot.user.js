@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130114a
+// @version        20130114b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130114a';
+var Version = '20130114b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -10294,6 +10294,8 @@ Tabs.Barb = {
     var yyy = t.MapAjax.normalize(t.curY);
     var element = 'pddatacity'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ xxx +','+ yyy;
+	var element2 = 'pddataarray'+(t.lookup-1);
+	document.getElementById(element2).innerHTML == '';
    
     setTimeout (function(){t.MapAjax.request (xxx, yyy, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
   },
