@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130114c
+// @version        20130114d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130114c';
+var Version = '20130114d';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -2625,7 +2625,7 @@ PaintSalvageHistory : function() {
                        y.name = y.createName();
                        t.addToLog(ThroneOptions.Items["0"]["id"],ThroneOptions.Items["0"]["action"],ThroneOptions.Tries,ThroneOptions.Good,ThroneOptions.Bad);
                        ThroneOptions.Tries = 0;
-                       hroneOptions.Good = 0;
+                       ThroneOptions.Good = 0;
                        ThroneOptions.Bad = 0;
                        saveThroneOptions();
                        document.getElementById('ShowTries').innerHTML = "Tries: --";
@@ -10084,7 +10084,7 @@ Tabs.Barb = {
        document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
        var element2 = 'pddataarray'+(city-1);
        document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + March.getTotalSlots(citynumber) +')';
-       if (Number(Number(slots)-Number(March.getTotalSlots(citynumber))) <= Number(AttackOptions.RallyClip)) return;
+       if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(AttackOptions.RallyClip)) return;
        if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
        
