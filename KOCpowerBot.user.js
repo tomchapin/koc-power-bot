@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130114d
+// @version        20130114e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130114d';
+var Version = '20130114e';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -10295,7 +10295,6 @@ Tabs.Barb = {
     document.getElementById(element).innerHTML = 'Searching at '+ xxx +','+ yyy;
 	var element2 = 'pddataarray'+(t.lookup-1);
 	document.getElementById(element2).innerHTML == '';
-   
     setTimeout (function(){t.MapAjax.request (xxx, yyy, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
   },
   
@@ -10315,6 +10314,7 @@ Tabs.Barb = {
       }
     }
     
+    
     t.tilesSearched += (t.opt.searchDistance*t.opt.searchDistance);
 
     t.curX += t.opt.searchDistance;
@@ -10329,13 +10329,17 @@ Tabs.Barb = {
     var x = t.MapAjax.normalize(t.curX);
     var y = t.MapAjax.normalize(t.curY);
     
+    
 	var element0 = 'pdtotalcity'+(t.lookup-1);
-    if (t.mapDat.length < 1) document.getElementById(element).innerHTML = 'No Data';
+	
+    if (t.mapDat.length < 1) document.getElementById(element0).innerHTML = 'No Data';
         else document.getElementById(element0).innerHTML =  'Forests:' + t.mapDat.length;
     var element = 'pddatacity'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
+    
     setTimeout (function(){t.MapAjax.request (x, y, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
 	} else {
+		
 		setTimeout (function(){t.MapAjax.request (left, top, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
 	}
     
