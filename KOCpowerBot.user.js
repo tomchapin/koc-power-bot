@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130114f
+// @version        20130115a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130114f';
+var Version = '20130115a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -10304,13 +10304,21 @@ Tabs.Barb = {
       return;
     if (rslt.ok){
     map = rslt.data;
-    
+
+    var cityID = 'city' + Seed.cities[t.lookup-1][0];
+	var tiles = [];
+    for(x in Seed.queue_atkp[cityID]) {
+		tiles.push(Seed.queue_atkp[cityID][x].toTileId);
+	}
+	
     for (k in map){
       if (map[k].tileType==54 && AttackOptions.Levels[t.lookup][map[k].tileLevel]){
          var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
          if(dist <= parseInt(AttackOptions.MaxDistance))
             if(dist <= parseInt(AttackOptions.Distance[map[k].tileLevel]))
+            if(tiles.indexOf(map[k].tileId) == -1)
                 t.mapDat.push ({time:0,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel});
+             //else logit('skipping '+map[k].xCoord+','+map[k].yCoord);
       }
     }
     
