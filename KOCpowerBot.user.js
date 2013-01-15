@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130114e
+// @version        20130114f
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130114e';
+var Version = '20130114f';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -11002,7 +11002,11 @@ var troops = {1:'SupplyTroops',
               9:'SupplyWagon',
               10:'Ballista',
               11:'BatteringRam',
-              12:'Catapult'};  
+              12:'Catapult',
+              13:'BloodThorn',
+              14:'Executioner',
+              15:'SiegeTower'
+              };  
 Tabs.Reassign = {
   tabOrder: 30,
   tabLabel: 'Reassign',
@@ -11083,12 +11087,15 @@ Tabs.Reassign = {
       
       m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
       m += '<TD>'+translate("Supply Wagon")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50_s34.jpg?6545"></td>'
       m += '<TD>'+translate("Ballista")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
       m += '<TD>'+translate("Battering Ram")+'</td>'
       m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
       m += '<TD>'+translate("Catapult")+'</td></tr>'
+      
+      //http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_13_30_s34.jpg
+      
       m += '<TR><TD><INPUT id=pbSupplyWagon type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyWagon disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbBallista type=checkbox unchecked=true\>';
@@ -11096,7 +11103,24 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbBatteringRam type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetBatteringRam disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbCatapult type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr></table>';
+      m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+      
+	  m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_13_50_s34.jpg?6545"></td>';
+      m += '<TD>'+translate("BloodThorn")+'</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Executioner")+'</td>'
+      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_15_50_s34.jpg?6545?6545"></td>'
+      m += '<TD>'+translate("Siege Tower")+'</td></tr>'
+
+      m += '<TR><TD><INPUT id=pbBloodThorn type=checkbox unchecked=true\>';
+      m += '<INPUT id=pbtargetBloodThorn disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+      m += '<TD><INPUT id=pbExecutioner type=checkbox unchecked=true\>';
+      m += '<INPUT id=pbtargetExecutioner disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+      m += '<TD><INPUT id=pbSiegeTower type=checkbox unchecked=true\>';
+      m += '<INPUT id=pbtargetSiegeTower disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+   
+      
+      m+='</table>';
       
       m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteReassign type=submit value="'+translate("Add Route")+'"></div>';
       
@@ -11256,6 +11280,7 @@ Tabs.Reassign = {
             document.getElementById('pbtargetBatteringRam').disabled = false;
           }
       },false);
+      
       document.getElementById('pbCatapult').addEventListener('click', function(){
           if (document.getElementById('pbCatapult').checked==false) {
               document.getElementById('pbtargetCatapult').disabled = true;
@@ -11263,7 +11288,34 @@ Tabs.Reassign = {
           else {
             document.getElementById('pbtargetCatapult').disabled = false;
           }
+      },false);      
+      document.getElementById('pbBloodThorn').addEventListener('click', function(){
+          if (document.getElementById('pbBloodThorn').checked==false) {
+              document.getElementById('pbtargetBloodThorn').disabled = true;
+          }
+          else {
+            document.getElementById('pbtargetBloodThorn').disabled = false;
+          }
+      },false);      
+      document.getElementById('pbExecutioner').addEventListener('click', function(){
+          if (document.getElementById('pbExecutioner').checked==false) {
+              document.getElementById('pbtargetExecutioner').disabled = true;
+          }
+          else {
+            document.getElementById('pbtargetExecutioner').disabled = false;
+          }
+      },false);      
+      document.getElementById('pbSiegeTower').addEventListener('click', function(){
+          if (document.getElementById('pbSiegeTower').checked==false) {
+              document.getElementById('pbtargetSiegeTower').disabled = true;
+          }
+          else {
+            document.getElementById('pbtargetSiegeTower').disabled = false;
+          }
       },false);
+      
+      
+      
       
       
       window.addEventListener('unload', t.onUnload, false);
@@ -11340,6 +11392,9 @@ Tabs.Reassign = {
         var SendBallista = document.getElementById('pbBallista').checked;
         var SendBatteringRam = document.getElementById('pbBatteringRam').checked;
         var SendCatapult = document.getElementById('pbCatapult').checked;
+        var SendBloodThorn = document.getElementById('pbBloodThorn').checked;
+        var SendExecutioner = document.getElementById('pbExecutioner').checked;
+        var SendSiegeTower = document.getElementById('pbSiegeTower').checked;
         var SupplyTroop = document.getElementById('pbtargetSupplyTroops').value;
         var Militiaman = document.getElementById('pbtargetMilitiaman').value;
         var Scout = document.getElementById('pbtargetScout').value;
@@ -11352,6 +11407,9 @@ Tabs.Reassign = {
         var Ballista = document.getElementById('pbtargetBallista').value;
         var BatteringRam = document.getElementById('pbtargetBatteringRam').value;
         var Catapult = document.getElementById('pbtargetCatapult').value;
+        var BloodThorn = document.getElementById('pbtargetBloodThorn').value;
+        var Executioner = document.getElementById('pbtargetExecutioner').value;
+        var SiegeTower = document.getElementById('pbtargetSiegeTower').value;
         var target_x = t.tcpto.city.x;
         var target_y = t.tcpto.city.y;
         var target_city = t.tcpto.city.id;
@@ -11386,6 +11444,12 @@ Tabs.Reassign = {
                 BatteringRam:        BatteringRam,
                 SendCatapult:        SendCatapult,
                 Catapult:            Catapult,
+                SendBloodThorn:        SendBloodThorn,
+                BloodThorn:            BloodThorn,
+                SendExecutioner:        SendExecutioner,
+                Executioner:            Executioner,
+                SendSiegeTower:        SendSiegeTower,
+                SiegeTower:            SiegeTower,
             });
         document.getElementById('pbReassignDivD').style.background ='#99FF99';
         setTimeout(function(){ (document.getElementById('pbReassignDivD').style.background =''); }, 1000);
@@ -11410,11 +11474,11 @@ Tabs.Reassign = {
                     if ( parseInt(Seed.cities[y][0]) == r[i].city) var cityname = Seed.cities[y][1];
                 }    
                 var queueId = i;
-                t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArchers, r[i].Archers, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagons, r[i].SupplyWagons, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult);
+                t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArchers, r[i].Archers, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagons, r[i].SupplyWagons, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower);
             }
         },
       
-     _addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArchers,Archers,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagons,SupplyWagons,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult){
+     _addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArchers,Archers,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagons,SupplyWagons,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult,SendBloodThorn,BloodThorn,SendExecutioner,Executioner,SendSiegeTower,SiegeTower){
          var t = Tabs.Reassign;
         var To = target_x+','+target_y;
         for (var y=0; y< Seed.cities.length;y++) {
@@ -11452,7 +11516,13 @@ Tabs.Reassign = {
           row.insertCell(24).innerHTML = addCommas(BatteringRam);
           row.insertCell(25).innerHTML = SendCatapult;
           row.insertCell(26).innerHTML = addCommas(Catapult);
-         row.insertCell(27).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
+          row.insertCell(27).innerHTML = SendBloodThorn;
+          row.insertCell(28).innerHTML = addCommas(BloodThorn);
+          row.insertCell(29).innerHTML = SendExecutioner;
+          row.insertCell(30).innerHTML = addCommas(Executioner);
+          row.insertCell(31).innerHTML = SendSiegeTower;
+          row.insertCell(32).innerHTML = addCommas(SiegeTower);
+         row.insertCell(33).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
          document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
             t.cancelQueueElement(queueId);
          }, false);
@@ -11489,7 +11559,13 @@ Tabs.Reassign = {
          row.insertCell(24).innerHTML = "";
          row.insertCell(25).innerHTML = translate("Catapults");
          row.insertCell(26).innerHTML = "";
-         row.insertCell(27).innerHTML = translate("Delete");
+         row.insertCell(27).innerHTML = translate("BloodThorn");
+         row.insertCell(28).innerHTML = "";
+         row.insertCell(29).innerHTML = translate("Executioner");
+         row.insertCell(30).innerHTML = "";
+         row.insertCell(31).innerHTML = translate("SiegeTower");
+         row.insertCell(32).innerHTML = "";
+         row.insertCell(33).innerHTML = translate("Delete");
        },   
        
      cancelQueueElement: function(queueId){
@@ -11576,13 +11652,17 @@ Tabs.Reassign = {
         }
     },
     
-    doReassign: function(count,tt){
+    doReassign: function(count){
         var t = Tabs.Reassign;
            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
            if(t.reassignRoutes.length==0) return;
            var send=[];
            var citytotal=0;
            var totalsend=0;
+            var city = t.reassignRoutes[count]["city"];
+			var cityID = 'city' + city;
+            var xcoord = t.reassignRoutes[count]["target_x"];
+            var ycoord = t.reassignRoutes[count]["target_y"];
         params.u1 = 0;
         params.u2 = 0;
         params.u3 = 0;
@@ -11595,23 +11675,20 @@ Tabs.Reassign = {
         params.u10 = 0;
         params.u11 = 0;
         params.u12 = 0;    
-                
-           if(tt)
-           params.tt = tt;
-            var city = t.reassignRoutes[count]["city"];
-            var xcoord = t.reassignRoutes[count]["target_x"];
-            var ycoord = t.reassignRoutes[count]["target_y"];
-        
-        var cityID = 'city' + city;
+        if(Seed.cityData.city[city].isPrestigeCity){
+			params.u13 = 0;
+			params.u14 = 0;
+			params.u15 = 0;
+		}
         if(!Cities.byID[city]) return;
         var marching = getMarchInfo(cityID);
-        t.getRallypoint(cityID);
-        if(t.rallypointlevel == 11) t.rallypointlevel = 15;
-        else if(t.rallypointlevel == 12) t.rallypointlevel = 20;
-        var maxsend = (t.rallypointlevel * 10000);
+        
+        var maxsend = March.getMaxSize(city);
         totalsend=0;
         
-        var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult"];
+        if(Seed.cityData.city[city].isPrestigeCity)
+        var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","BloodThorn","Executioner","SiegeTower"];
+        else var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult"];
         for (k=0; k<troopsselect.length; k++) {
             var citytroops = Seed.units[cityID]['unt'+(parseInt(k)+1)];
             var marchtroops = marching.marchUnits[parseInt(k)+1];
@@ -11635,11 +11712,9 @@ Tabs.Reassign = {
                 break;
             }
            }
-        
         for (var t=0; t< Seed.cities.length;t++) {
             if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
         }
-        
           params.cid= city;
         params.type = "5";
         params.kid=0;
@@ -11657,49 +11732,19 @@ Tabs.Reassign = {
         params.u10 = send[10];
         params.u11 = send[11];
         params.u12 = send[12];    
-        
+        if(Seed.cityData.city[city].isPrestigeCity){
+			params.u13 = send[13];
+			params.u14 = send[14];
+			params.u15 = send[15];
+		}
            if (totalsend >0) {
-           
-        var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
-              new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-                  method: "post",
-                  parameters: params,
-                  loading: true,
-                  onSuccess: function (transport) {
-                      profiler.stop();
-                  var rslt = eval("(" + transport.responseText + ")");
-                  if (rslt.ok) {
-                  actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
-                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                  var ut = unixTime();
-				var unitsarr = [];
-				for (j in unsafeWindow.unitcost)
-					unitsarr.push(0);
-				for(i = 0; i <= unitsarr.length; i++)
-					if(params["u"+i])
-						unitsarr[i] = params["u"+i];
-                  var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                  var currentcityid = city;
-                  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-                  } else {
-                        if (rslt.user_action == "backOffWaitTime") {
-        var t = Tabs.Reassign;// doesn't work if not here.. no idea
-                        logit('backoffwaittime '+rslt.wait_time);
-                        var tt = null;
-                        if(rslt.tt)
-                        tt = rslt.tt;
-                        var wait = 1;
-                        if(rslt.wait_time)
-                        wait = rslt.wait_time;
-                        setTimeout (function(){t.doReassign(count,tt);}, wait*1000);
-                        return;
-                    };
-                  actionLog('REASSIGN FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
-                  }
-                  },
-                  onFailure: function () {profiler.stop();}
-          });
+			March.addMarch(params, function(rslt){
+				if(rslt.ok){
+					  actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
+				} else { //onFailure
+					actionLog('REASSIGN FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
+				}
+			});
         }      
     },
     
@@ -15375,7 +15420,7 @@ function getMarchInfo (cityID){
   ret.marchUnits = [];
   ret.returnUnits = [];
   ret.resources = [];
-  for (i=0; i<13; i++){
+  for (i=0; i<16; i++){
     ret.marchUnits[i] = 0;
     ret.returnUnits[i] = 0;
   }
@@ -15387,7 +15432,7 @@ function getMarchInfo (cityID){
       march = Seed.queue_atkp[cityID][k];
       if(march.marchType != 5){
           if (typeof (march) == 'object'){
-            for (ii=0; ii<13; ii++){
+            for (ii=0; ii<16; ii++){
               ret.marchUnits[ii] += parseInt (march['unit'+ ii +'Count']);
               ret.returnUnits[ii] += parseInt (march['unit'+ ii +'Return']);
             }
