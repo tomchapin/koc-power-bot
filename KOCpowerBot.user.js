@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130115a
+// @version        20130116a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130115a';
+var Version = '20130116a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -354,6 +354,7 @@ var ThroneOptions = {
     SalvageLevel:1,
     UseTokens:false,
     SaveUnique:true,
+    heatup:true,
 };
 
 var AttackOptions = {
@@ -1806,6 +1807,7 @@ Tabs.Throne = {
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_cityspire type=checkbox '+ (ThroneOptions.CitySpire?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in cities with Fey Spire first before other cities</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all / Fey Spire cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_unique type=checkbox '+ (ThroneOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
+      m+='<TR><TD colspan=3><INPUT id=pbheatup type=checkbox '+(ThroneOptions.heatup?'CHECKED ':'')+'/>&nbsp; Upgrade cards before salvaging to increase aetherstone and heat up modifier</TD></TR>';
       m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR></table>';
       m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
       m+='<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
@@ -1923,6 +1925,7 @@ Tabs.Throne = {
       document.getElementById('MoraleMin').addEventListener ('change', function(){ThroneOptions.SalvageA.Morale.Min = this.value;saveThroneOptions();},false);
       document.getElementById('ItemDropMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ItemDrop.Min = this.value;saveThroneOptions();},false);
       document.getElementById('pbsalvage_unique').addEventListener ('change', function(){ThroneOptions.SaveUnique = this.checked;saveThroneOptions();},false);
+      document.getElementById('pbheatup').addEventListener ('change', function(){ThroneOptions.heatup = this.checked;saveThroneOptions();},false);
       
       
       
@@ -2759,6 +2762,60 @@ PaintSalvageHistory : function() {
         });   
     },
         
+      
+    doUpgradesimple : function(item) {
+        var t = Tabs.Throne;
+        var cityid = 0;
+        var cidarray = [];
+        for (var k in Cities.byID) {//added more than 50k to stop spending gems by accident
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"]+50000)) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))
+            {
+				cidarray.push(k);
+            }
+        }
+        if(cidarray.length > 0)
+        cityid = cidarray[Math.floor(Math.random() * cidarray.length)];
+        if(cityid == 0){
+           return;    
+        }
+      Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ThroneOptions.Items["0"]["cost"]));
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'upgradeLevel';
+        params.throneRoomItemId = item;
+        params.buffItemId = 0;
+        params.payment = "aetherstone";
+        params.cityId = cityid;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+					 if (rslt.updateSeed)
+						unsafeWindow.update_seed(rslt.updateSeed);
+                    if (rslt.gems > 0)
+                    {
+                        document.getElementById('ShowStatus').innerHTML = 'UpgraderB accidentally spent gems!  Turning upgrader off!!';
+                        ThroneOptions.Active = false;
+                        saveThroneData();
+                    }
+                    Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
+                    //if (rslt.success)
+                    //{
+                    //}
+                    unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+
+                } 
+                return;
+            },
+            onFailure: function () {
+               return;
+            },
+        });   
+    },
+        
      doRepair : function() {
         var t = Tabs.Throne;
         var cityid = 0;
@@ -3121,6 +3178,7 @@ doSalvage : function(){
             }
         }
         if (cityid == 0) cityid = Seed.cities[0][0]; //If all else failss default to city 1
+        if(ThroneOptions.heatup)t.doUpgradesimple(t.SalvageArray[0]);
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'salvage';
