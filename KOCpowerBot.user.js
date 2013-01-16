@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130116a
+// @version        20130116b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130116a';
+var Version = '20130116b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -7019,6 +7019,7 @@ Tabs.transport = {
             m += '<TD><INPUT id=pbTraderState type=submit value="Transport = ON"></td>';
         }
         m += '<TD><INPUT id=pbShowRoutes type=submit value="' + translate("Show Routes") + '"></td>';
+        m += '<TD><INPUT id=pbTradeReset type=submit value="' + translate("Delete Routes") + '"></td>';
         m += '</tr></table></div>';
         m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRADE ROUTE OPTIONS") + '</div>';
         m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center"><TR align="left">';
@@ -7105,6 +7106,13 @@ Tabs.transport = {
         document.getElementById('pbTraderState')
             .addEventListener('click', function () {
             t.toggleTraderState(this);
+        }, false);
+        
+        
+        
+        document.getElementById('pbTradeReset')
+            .addEventListener('click', function () {
+				t.tradeRoutes=[];t.saveTradeRoutes();
         }, false);
         document.getElementById('pbSaveRoute')
             .addEventListener('click', function () {
