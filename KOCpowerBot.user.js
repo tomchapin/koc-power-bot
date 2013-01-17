@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130116d
+// @version        20130117a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130116d';
+var Version = '20130117a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -20368,6 +20368,7 @@ Tabs.gifts = {
 		for(g =0;g < GiftDB.giftitems.length;g++) {
 			m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 		};
+		m+='<option value="-1">Delete</option>';
         m+='</select> </td><td> <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available </td><td> Total sent:</td><td id=giftnumber></td></tr></table></DIV>';
         m += '<DIV class=pbStat></DIV>';
         m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.  You may update us on working scenarios <a href=http://userscripts.org/scripts/discuss/101052>here</a></DIV>';
@@ -20383,7 +20384,7 @@ Tabs.gifts = {
 			var element_class = document.getElementById('GiftsTAB').getElementsByClassName('giftstosend');
             for (c = 0; c < element_class.length; c++) {
 				element_class[c].value = e.target.value;
-				if(e.target.value == 0) {delete GiftDB.people[Number(element_class[c].id)];continue;};
+				if(e.target.value == -1) {delete GiftDB.people[Number(element_class[c].id)];continue;};
 				if(!GiftDB.people[Number(element_class[c].id)])
 				GiftDB.people[Number(element_class[c].id)] = [Number(e.target.value),0];
 				else GiftDB.people[Number(element_class[c].id)][0] = Number(e.target.value);
@@ -20445,6 +20446,7 @@ Tabs.gifts = {
 						else
 							m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 						}
+							m+='<option value="-1">Delete</option>';
 							m+= '</select></td></tr>';
 						}
 						for(h in GiftDB.people) {
@@ -20459,6 +20461,7 @@ Tabs.gifts = {
 						else
 							m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 						}
+							m+='<option value="-1">Delete</option>';
 							m+= '</select></td></tr>';
 							
 						};
@@ -20468,7 +20471,7 @@ Tabs.gifts = {
                    for (c = 0; c < element_class.length; c++) {
                         if(element_class[c])
                         element_class[c].addEventListener('change', function(e){
-					   if(e.target.value != 0) {
+					   if(e.target.value != -1) {
 					   if(!GiftDB.people[Number(e.target.id)])
 							GiftDB.people[Number(e.target.id)] = [Number(e.target.value),0];
 							else GiftDB.people[Number(e.target.id)][0] =Number(e.target.value);
