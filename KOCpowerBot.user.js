@@ -20516,6 +20516,7 @@ Tabs.gifts = {
 					t.sendgift(ItemId,j);
 			}};
 	}
+	t.populatepeople();
 	},
 	sendgift : function (giftId, recipients) {
 			var t = Tabs.gifts;
