@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130116b
+// @version        20130116c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130116b';
+var Version = '20130116c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -9387,8 +9387,8 @@ Tabs.AutoCraft = {
        m += '<tr><td align=left><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=1 value="'+ TrainOptions.actrset +'">  is equiped</td></table></div>';
        m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
 
-       m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>";
-       m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventar</b></center></td><td><b>Amount</b></td>";
+       m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td>";
+       m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td>";
        m += "</tr><tr>";
        var count = 0;
        for(var i=0; i < unsafeWindow.recipelist[1].length; i++){
@@ -9420,8 +9420,8 @@ Tabs.AutoCraft = {
           count++;
        }
 
-       m+="</table><b>Note:</b> If you complete more than one Item, the creation will be done randomly. <BR> <b>Important: Min. 50 000 Aethestones and Refresh to Update the Inventar!</b> ";
-       m += '<DIV id=pbCraftingStats class=pbStat>AEHTERSTONES AND CRAFTING TIME</div><span id="CraftStat"></span>';
+       m+="</table><b>Note:</b> If you complete more than one Item, the creation will be done randomly. <BR> <b>Important: Min. 50 000 Aethestones and Refresh to Update the Inventory!</b> ";
+       m += '<DIV id=pbCraftingStats class=pbStat>AETHERSTONES AND CRAFTING TIME</div><span id="CraftStat"></span>';
 
        t.myDiv.innerHTML = m;
 
@@ -10059,7 +10059,7 @@ Tabs.Barb = {
       GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId())
       t.checkBarbData();
       t.showBarbs(citynumber,cityname);
-      reloadKOC();
+      //reloadKOC();
   },  
   
   saveTroops: function(){
@@ -10081,7 +10081,7 @@ Tabs.Barb = {
         AttackOptions.Update[i][1] = 0;
         GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId())
     }
-    reloadKOC();
+    //reloadKOC();
    },
 
   checkBarbData: function(){
