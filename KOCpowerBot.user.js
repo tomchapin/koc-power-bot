@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130116c
+// @version        20130116d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130116c';
+var Version = '20130116d';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -1427,7 +1427,8 @@ Tabs.farm = {
        cityID = 'city' + citynumber;
        
        t.getAtkKnight(cityID);
-       t.rallypointlevel = March.getRallypointLevel(cityID);
+       t.rallypointlevel = March.getTotalSlots(citynumber);
+       numMarches = t.rallypointlevel;
        var slots=0;
        if (Seed.queue_atkp[cityID] != undefined){
            for(var k in Seed.queue_atkp[cityID])
@@ -1438,12 +1439,10 @@ Tabs.farm = {
       else slots=0;
        
        var element2 = 'pddataFarmarray'+(city-1);
-	   var numMarches = t.rallypointlevel;
-	   if (Seed.cityData.city[citynumber].isPrestigeCity && (numMarches > 0)) numMarches+=3;
        document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + numMarches +')';
        
        if (!FarmOptions.CityEnable[city]) return;
-       if ((numMarches-FarmOptions.RallyClip) <= slots) return;
+      if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(FarmOptions.RallyClip)) return;
        if (t.knt.toSource() == "[]") return;
         if (u1 > parseInt(Seed.units[cityID]['unt1']) || u2 > parseInt(Seed.units[cityID]['unt2']) || u3 > parseInt(Seed.units[cityID]['unt3']) || u4 > parseInt(Seed.units[cityID]['unt4']) || u5 > parseInt(Seed.units[cityID]['unt5']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u11 > parseInt(Seed.units[cityID]['unt11']) || u12 > parseInt(Seed.units[cityID]['unt12'])) return;
         if (FarmOptions.FarmNumber[city]>=t.FarmArray[city].length) FarmOptions.FarmNumber[city]=0;
