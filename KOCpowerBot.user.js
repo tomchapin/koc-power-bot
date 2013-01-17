@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130117a
+// @version        20130117b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130117a';
+var Version = '20130117b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -2589,9 +2589,9 @@ PaintSalvageHistory : function() {
       Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ThroneOptions.Items["0"]["cost"]));
         var buffItem = 0;
         if(ThroneOptions.UseTokens) {
-			if(parseInt(unsafeWindow.seed.items['i20002']))//protection stone
+			if(parseInt(unsafeWindow.seed.items['i20002'])>0)//protection stone
 				buffItem = 20002;
-			if(parseInt(unsafeWindow.seed.items['i20001']))//lesser protection stone
+			if(parseInt(unsafeWindow.seed.items['i20001'])>0)//lesser protection stone
 				buffItem = 20001;
 			if(buffItem)
 				unsafeWindow.cm.InventoryView.removeItemFromInventory(buffItem);
@@ -2685,9 +2685,9 @@ PaintSalvageHistory : function() {
       Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ThroneOptions.Items["0"]["cost"]));
         var buffItem = 0;
         if(ThroneOptions.UseTokens) {
-			if(parseInt(unsafeWindow.seed.items['i20006']))//lucky token
+			if(parseInt(unsafeWindow.seed.items['i20006'])>0)//lucky token
 				buffItem = 20006;
-			if(parseInt(unsafeWindow.seed.items['i20005']))//lesser lucky token
+			if(parseInt(unsafeWindow.seed.items['i20005'])>0)//lesser lucky token
 				buffItem = 20005;
 			if(buffItem)
 				unsafeWindow.cm.InventoryView.removeItemFromInventory(buffItem);
