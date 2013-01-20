@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130120a
+// @version        20130120b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130120a';
+var Version = '20130120b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -96,6 +96,13 @@ var upgradeData = {
   upgradetype : 0,
 };
 
+//just add your character here and everything else will auto populate
+var Filter = {
+	Null:"­",
+	Period:".",
+	Space:" ",
+	UnicodeLS:"&#8232;",
+};
 
 var Options = {
   srcSortBy    : 'level',
@@ -179,6 +186,7 @@ var Options = {
   amain	:	false,
   smain	:	0,
   MAP_DELAY :	4000,
+  fchar:	"Null",
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -3985,8 +3993,9 @@ Tabs.tower = {
         msg += 'My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
     for (k in m.unts){
       var uid = parseInt(k.substr (1));
-      var UNITtype = String(String(m.unts[k]).split("")).replace(/,/g,'­')// sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
-      msg += UNITtype +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
+      var fchar = Filter[Options.fchar];
+      var UNTCOUNT = String(String(m.unts[k]).split("")).replace(/,/g,fchar)// forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
+      msg += UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
     }
     msg = msg.slice (0, -2);
     msg += '.';
@@ -10593,7 +10602,14 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletes3toggle type=checkbox /></td><TD> '+translate("Auto delete incoming attack reports from alliances I'm friendly to")+'</td></tr>\
         <TR><TD><INPUT id=advanced type=checkbox /></td><TD> '+translate("Scripters tab")+'</td></tr>\
         <TR><TD><INPUT id=MAgicBOx type=checkbox /></td><TD> '+translate("Kill merlins magic box's on startup")+'</td></tr>\
-        <TR><TD><INPUT id=CFilter type=checkbox /></td><TD> '+translate("Defeat kabam chat filter so some words can be said.  ex \'deSCRIPTion\'")+'</td></tr>\
+        <TR><TD><INPUT id=CFilter type=checkbox /></td><TD><select id=pbfilter>';
+        for(c in Filter) {
+			if(c == Options.fchar)
+				m+='<option value='+c+' selected="selected">'+c+': '+Filter[c]+'</option>';
+			else 
+				m+='<option value='+c+'>'+c+': '+Filter[c]+'</option>';
+		};
+        m+='</select>'+translate("Defeat kabam chat filter so some words can be said.  ex \'deSCRIPTion\'")+'</td></tr>\
        <TR><TD><INPUT id=MKLag type=checkbox /></td><TD> '+translate("Fix stalled marches and missing knights.  EXPERIMENTAL")+'</td></tr>\
         </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
         m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
@@ -10673,6 +10689,7 @@ Tabs.Options = {
       t.togOpt ('pbmaintoggle', 'amain');
       t.changeOpt ('pbwhichcity', 'smain');
       t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
+      t.changeOpt ('pbfilter','fchar');
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }      
@@ -20843,7 +20860,7 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 	whisper = this.value.slice(0,firstindex);
 	};
 	var m = this.value.substr(firstindex,this.value.length);
-	var x = '­';
+	var x = Filter[Options.fchar];
 	m = m.replace(/Fa/g,'F'+x+'a').replace(/fA/g,'f'+x+'A').replace(/FA/g,'F'+x+'A').replace(/fa/g,'f'+x+'a');
 	
 	m = m.replace(/Gr/g,'G'+x+'r').replace(/gR/g,'g'+x+'R').replace(/GR/g,'G'+x+'R').replace(/gr/g,'g'+x+'r');
