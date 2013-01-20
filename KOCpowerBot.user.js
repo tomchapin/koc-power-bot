@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130117e
+// @version        20130120a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130117e';
+var Version = '20130120a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -149,6 +149,7 @@ var Options = {
   DeleteMsgs1  : false,
   DeleteMsgs2  : false,
   DeleteMsgs3  : false,
+  DeleteMsgsdf  : false,
   Foodstatus   : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   Creststatus  : {1101:0,1102:0,1103:0,1104:0,1105:0,1106:0,1107:0,1108:0,1109:0,1110:0,1111:0,1112:0,1113:0,1114:0,1115:0},
   LastReport   : 0,
@@ -391,6 +392,7 @@ var AttackOptions = {
   barbMinKnight			: 56,
   barbMaxKnight			: 255,
   threshold				: 750000,
+  ItemsFound			: [],
 };
 
 var ResetAll=false;
@@ -3983,7 +3985,8 @@ Tabs.tower = {
         msg += 'My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
     for (k in m.unts){
       var uid = parseInt(k.substr (1));
-      msg += m.unts[k] +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
+      var UNITtype = String(String(m.unts[k]).split("")).replace(/,/g,'­')// sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
+      msg += UNITtype +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
     }
     msg = msg.slice (0, -2);
     msg += '.';
@@ -6873,7 +6876,7 @@ Tabs.Scripter = {
 		var t = Tabs.Scripter
 		t.myDiv = div;
 		var m = '<DIV class=pbStat>Scripter</div><br>';
-		m += '<center><INPUT id=SCode type=text size=70 maxlength=120 value="" \></center>'
+		m += '<center><INPUT id=SCode type=text size=70 maxlength=9999 value="" \></center>'
 		div.innerHTML = m;
 		
 		document.getElementById('SCode').addEventListener ('keypress', function (e){
@@ -8095,7 +8098,6 @@ Tabs.transport = {
 					  }
 					  var currentcityid = city;
 					  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-					  unsafeWindow.update_seed(rslt.updateSeed)
 					  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
 					  var t = Tabs.transport;
@@ -10325,6 +10327,10 @@ Tabs.Barb = {
         AttackOptions.AetherStatus[q] = parseInt(Seed.resources[cityID]['rec5'][0] );
     }
     message += '%0A Total Aetherstone gain : '+addCommas(total)+'%0A';
+    if(AttackOptions.ItemsFound != [])
+		for (z =0;z < AttackOptions.ItemsFound.length;z++){
+			message += '%0A'+'Found '+AttackOptions.ItemsFound[z]+' of '+z;
+		}
     message += '%0A'+ 'Excess traffic errors: ' + AttackOptions.BarbsFailedTraffic +'%0A';
     message += 'Rallypoint errors: ' + AttackOptions.BarbsFailedRP +'%0A';
     message += 'Knight errors: ' + AttackOptions.BarbsFailedKnight +'%0A';
@@ -10348,6 +10354,7 @@ Tabs.Barb = {
             	AttackOptions.BarbsFailedBog = 0;
             	AttackOptions.BarbsFailedVaria = 0;
             	AttackOptions.BarbsTried = 0;
+            	AttackOptions.ItemsFound = [];
             	for (q=1; q<=Seed.cities.length;q++){
             		AttackOptions.BarbsDone[q] = 0;
             	}
@@ -10581,6 +10588,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> '+translate("Auto delete barb/transport reports from you")+'</td></tr>\
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> '+translate("Auto delete transport reports to you")+'</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> '+translate("Auto delete wild reports")+'</td></tr>\
+        <TR><TD><INPUT id=deletesDFtoggle type=checkbox /></td><TD> '+translate("Auto delete DarkForest reports(and log items for DF report)")+'</td></tr>\
         <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest reports regardless of target type")+'</td></tr>\
         <TR><TD><INPUT id=deletes3toggle type=checkbox /></td><TD> '+translate("Auto delete incoming attack reports from alliances I'm friendly to")+'</td></tr>\
         <TR><TD><INPUT id=advanced type=checkbox /></td><TD> '+translate("Scripters tab")+'</td></tr>\
@@ -10656,7 +10664,8 @@ Tabs.Options = {
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
       t.togOpt ('deletes1toggle', 'DeleteMsgs1');
       t.togOpt ('deletes2toggle', 'DeleteMsgs2');    
-      t.togOpt ('deletes3toggle', 'DeleteMsgs3');      
+      t.togOpt ('deletes3toggle', 'DeleteMsgs3');    
+      t.togOpt ('deletesDFtoggle', 'DeleteMsgsdf');      
       t.togOpt ('advanced', 'ScripterTab');          
       t.togOpt ('MAgicBOx', 'KMagicBox');       
       t.togOpt ('CFilter', 'filter');
@@ -17321,9 +17330,15 @@ var DeleteReports = {
                     deletes0.push(k.substr(2));
             }
             if (Options.DeleteMsgs1){
-                if((reports[k].side0TileType <= 50 || reports[k].side0TileType==54)&& reports[k].side0PlayerId==0)
+                if(reports[k].side0TileType <= 50 && reports[k].side0PlayerId==0)
                     deletes1.push(k.substr(2));
 
+            } 
+            if (Options.DeleteMsgsdf){
+                if(reports[k].side0TileType==54 && reports[k].side0PlayerId==0) {
+					t.checkreportforitems(k.substr(2));
+                    deletes1.push(k.substr(2));
+				}
             }
             if (Options.DeleteMsgs2){
                 for(i in CrestData) {
@@ -17385,6 +17400,34 @@ var DeleteReports = {
             return false;
         return false;
     },
+    
+    
+    checkreportforitems: function(rpId) {
+        var t = DeleteReports;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.rid=rpId;
+			new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/fetchReport.php" + unsafeWindow.g_ajaxsuffix, {
+				method: "post",
+				parameters: params,
+				onSuccess: function (rslt) {
+					if(rslt.loot) {
+						var loot = rslt.loot[6];
+						if(rslt.loot[6] != [])
+						for (z in loot) {
+							if(AttackOptions.ItemsFound[z])
+								AttackOptions.ItemsFound[z] += loot[z];
+							else AttackOptions.ItemsFound[z] = loot[z];
+						}
+					};
+				},
+				onFailure: function (rslt) {
+					
+				},
+			}, false);
+	
+	},
+    
+    
 }
 
 /******************* Apothecary Tab **********************/
@@ -19690,10 +19733,11 @@ var March = {
                     var currentcityid = params.cid;
                     unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
                   
-                    unsafeWindow.update_seed(rslt.updateSeed);
                     if (rslt.updateSeed) {
                         unsafeWindow.update_seed(rslt.updateSeed);
                     }
+                    if(rslt.update_march) alert(inspect(rslt.update_march));
+                    if(rslt.gloryWonItem) alert('glorywonitem '+rslt.gloryWonItem);
                     if(callback)
                         callback(rslt);
                 } else {
