@@ -19753,8 +19753,8 @@ var March = {
                     if (rslt.updateSeed) {
                         unsafeWindow.update_seed(rslt.updateSeed);
                     }
-                    if(rslt.update_march) alert(inspect(rslt.update_march));
-                    if(rslt.gloryWonItem) alert('glorywonitem '+rslt.gloryWonItem);
+                    //if(rslt.update_march) alert(inspect(rslt.update_march));
+                    //if(rslt.gloryWonItem) alert('glorywonitem '+rslt.gloryWonItem);
                     if(callback)
                         callback(rslt);
                 } else {
