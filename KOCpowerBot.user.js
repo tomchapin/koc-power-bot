@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130120b
+// @version        20130120c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130120b';
+var Version = '20130120c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -400,7 +400,7 @@ var AttackOptions = {
   barbMinKnight			: 56,
   barbMaxKnight			: 255,
   threshold				: 750000,
-  ItemsFound			: [],
+  ItemsFound			: {},
 };
 
 var ResetAll=false;
@@ -3688,6 +3688,7 @@ Tabs.tower = {
     if (matTypeof(Seed.queue_atkinc) != 'array'){
       for (var k in Seed.queue_atkinc){   // check each incoming march
         var m = Seed.queue_atkinc[k];
+        //if(m.marchStatus == 9)
         if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
           if (m.departureTime > Options.alertConfig.lastAttack){
             Options.alertConfig.lastAttack = m.departureTime;
@@ -10336,9 +10337,9 @@ Tabs.Barb = {
         AttackOptions.AetherStatus[q] = parseInt(Seed.resources[cityID]['rec5'][0] );
     }
     message += '%0A Total Aetherstone gain : '+addCommas(total)+'%0A';
-    if(AttackOptions.ItemsFound != [])
-		for (z =0;z < AttackOptions.ItemsFound.length;z++){
-			message += '%0A'+'Found '+AttackOptions.ItemsFound[z]+' of '+z;
+    if(AttackOptions.ItemsFound != {})
+		for (z in AttackOptions.ItemsFound){
+			message += '%0A'+unsafeWindow.g_js_strings.commonstr.found+' '+AttackOptions.ItemsFound[z]+' x '+unsafeWindow.ksoItems[z].name;
 		}
     message += '%0A'+ 'Excess traffic errors: ' + AttackOptions.BarbsFailedTraffic +'%0A';
     message += 'Rallypoint errors: ' + AttackOptions.BarbsFailedRP +'%0A';
@@ -10363,7 +10364,7 @@ Tabs.Barb = {
             	AttackOptions.BarbsFailedBog = 0;
             	AttackOptions.BarbsFailedVaria = 0;
             	AttackOptions.BarbsTried = 0;
-            	AttackOptions.ItemsFound = [];
+            	AttackOptions.ItemsFound = {};
             	for (q=1; q<=Seed.cities.length;q++){
             		AttackOptions.BarbsDone[q] = 0;
             	}
@@ -17427,14 +17428,15 @@ var DeleteReports = {
 				method: "post",
 				parameters: params,
 				onSuccess: function (rslt) {
-					if(rslt.loot) {
-						var loot = rslt.loot[6];
-						if(rslt.loot[6] != [])
+					if(rslt.detail.loot[5]) {
+						var loot = rslt.detail.loot[5];
+					if (matTypeof(loot) == 'object')
 						for (z in loot) {
 							if(AttackOptions.ItemsFound[z])
 								AttackOptions.ItemsFound[z] += loot[z];
 							else AttackOptions.ItemsFound[z] = loot[z];
 						}
+						saveAttackOptions();
 					};
 				},
 				onFailure: function (rslt) {
