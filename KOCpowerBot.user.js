@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130120c
+// @version        20130120d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130120c';
+var Version = '20130120d';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -10337,11 +10337,10 @@ Tabs.Barb = {
         AttackOptions.AetherStatus[q] = parseInt(Seed.resources[cityID]['rec5'][0] );
     }
     message += '%0A Total Aetherstone gain : '+addCommas(total)+'%0A';
-    if(AttackOptions.ItemsFound != {})
-		for (z in AttackOptions.ItemsFound){
-			message += '%0A'+unsafeWindow.g_js_strings.commonstr.found+' '+AttackOptions.ItemsFound[z]+' x '+unsafeWindow.ksoItems[z].name;
-		}
-    message += '%0A'+ 'Excess traffic errors: ' + AttackOptions.BarbsFailedTraffic +'%0A';
+	for (z in AttackOptions.ItemsFound){
+		message += '%0A'+unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFound[z];
+	}
+    message += '%0A'+'%0A'+ 'Excess traffic errors: ' + AttackOptions.BarbsFailedTraffic +'%0A';
     message += 'Rallypoint errors: ' + AttackOptions.BarbsFailedRP +'%0A';
     message += 'Knight errors: ' + AttackOptions.BarbsFailedKnight +'%0A';
     message += 'Bog errors: ' + AttackOptions.BarbsFailedBog +'%0A';
