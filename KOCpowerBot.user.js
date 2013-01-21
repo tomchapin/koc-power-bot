@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130121a
+// @version        20130121b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130121a';
+var Version = '20130121b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -4025,9 +4025,9 @@ Tabs.tower = {
     who += ' ('+getDiplomacy(m.aid)+')';
     
     if(m.marchStatus == 9)
-        msg = '.::.'+scoutingat+' '+target +' || '+attacker+' '+ who +' || '+attackrecalled+' || '+troops+': ';
+        msg = '.::.'+scoutingat+' '+target+' ||| '+attacker+' '+ who +' || '+attackrecalled+' || '+troops+': ';
     else
-        msg = '..:.'+Options.alertConfig.aPrefix +' ||| '+scoutingat+' '+target +' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
+        msg = '..:.'+Options.alertConfig.aPrefix +' ||| '+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
         //msg = Options.alertConfig.aPrefix +' My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';        
         
     for (k in m.unts){
