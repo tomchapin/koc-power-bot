@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130120f
+// @version        20130120g
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130120f';
+var Version = '20130120g';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -3976,9 +3976,9 @@ Tabs.tower = {
       return;
     if (ENABLE_TEST_TAB) Tabs.Test.addDiv (translate("Incoming")+"!<BR><PRE style='margin:0px;'>" + inspect (m, 8, 1) +'</pre>');
     var target, atkType, who;
-    var attackedby = unsafeWindow.g_js_strings.modal_messages_viewreports.attackedby;
+    var attacker = unsafeWindow.g_js_strings.commonstr.attacker;
     var scoutingat = '';
-    var attack = unsafeWindow.g_js_strings.commonstr.attack;
+    var attack = unsafeWindow.g_js_strings.commonstr.attacker;
     var attackrecalled = unsafeWindow.g_js_strings.incomingattack.attackrecalled;
     var troops = unsafeWindow.g_js_strings.commonstr.troops;
     var wilderness = unsafeWindow.g_js_strings.commonstr.wilderness;
@@ -4002,11 +4002,11 @@ Tabs.tower = {
     
     var city = Cities.byID[m.toCityId];
     if ( city.tileId == m.toTileId )
-      target = ' | '+unsafeWindow.g_js_strings.commonstr.city+ ' '+city.name+' ('+ city.x +','+ city.y + ')';
+      target = unsafeWindow.g_js_strings.commonstr.city+ ' '+city.name+' ('+ city.x +','+ city.y + ')';
     else {
       if (!Options.alertConfig.wilds)
         return;
-      target = ' | '+wilderness;
+      target = wilderness;
       for (k in Seed.wilderness['city'+m.toCityId]){
         if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
           target += '('+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord + ')';
@@ -4026,9 +4026,9 @@ Tabs.tower = {
     who += ' ('+getDiplomacy(m.aid)+')';
     
     if(m.marchStatus == 9)
-        msg = '.::.'+scoutingat+' '+target +' || '+attackedby+' '+ who +' || '+attackrecalled+' || '+troops+': ';
+        msg = '.::.'+scoutingat+' '+target +' || '+attacker+' '+ who +' || '+attackrecalled+' || '+troops+': ';
     else
-        msg = '..:.'+Options.alertConfig.aPrefix +' || '+scoutingat+' '+target +' || '+attackedby+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
+        msg = '..:.'+Options.alertConfig.aPrefix +' ||| '+scoutingat+' '+target +' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
         //msg = Options.alertConfig.aPrefix +' My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';        
         
     for (k in m.unts){
