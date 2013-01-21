@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130120e
+// @version        20130120f
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130120e';
+var Version = '20130120f';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -3257,7 +3257,7 @@ TTpaintstats : function () {
 			for(i in unsafeWindow.cm.thronestats.effects) {
 				var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
 				if(z != 0) {
-				m+='<tr><td>'+unsafeWindow.cm.thronestats.effects[i][1]+'</td><td>'+z+'</td></tr>';
+				m+='<tr><td>'+unsafeWindow.cm.thronestats.effects[i][1]+'</td><td>'+z+'%</td></tr>';
                 }
 			};
 			m+='</table></div>';
@@ -4002,11 +4002,11 @@ Tabs.tower = {
     
     var city = Cities.byID[m.toCityId];
     if ( city.tileId == m.toTileId )
-      target = unsafeWindow.g_js_strings.commonstr.city+ ' '+city.name+' ('+ city.x +','+ city.y + ')';
+      target = ' | '+unsafeWindow.g_js_strings.commonstr.city+ ' '+city.name+' ('+ city.x +','+ city.y + ')';
     else {
       if (!Options.alertConfig.wilds)
         return;
-      target = wilderness;
+      target = ' | '+wilderness;
       for (k in Seed.wilderness['city'+m.toCityId]){
         if (Seed.wilderness['city'+m.toCityId][k].tileId == m.toTileId){
           target += '('+ Seed.wilderness['city'+m.toCityId][k].xCoord +','+ Seed.wilderness['city'+m.toCityId][k].yCoord + ')';
@@ -4026,24 +4026,24 @@ Tabs.tower = {
     who += ' ('+getDiplomacy(m.aid)+')';
     
     if(m.marchStatus == 9)
-        msg = ' '+scoutingat+' '+target +' '+attackedby+' '+ who +' '+attackrecalled+' '+troops+': ';
+        msg = '.::.'+scoutingat+' '+target +' || '+attackedby+' '+ who +' || '+attackrecalled+' || '+troops+': ';
     else
-        msg = Options.alertConfig.aPrefix +' '+scoutingat+' '+target +' '+attackedby+' '+ who +' '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +')  '+troops+': ';        
+        msg = '..:.'+Options.alertConfig.aPrefix +' || '+scoutingat+' '+target +' || '+attackedby+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
         //msg = Options.alertConfig.aPrefix +' My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';        
         
     for (k in m.unts){
       var uid = parseInt(k.substr (1));
       var fchar = Filter[Options.fchar];
       var UNTCOUNT = String(String(m.unts[k]).split("")).replace(/,/g,fchar)// forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
-      msg += UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
+      msg += '|'+UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
     }
     msg = msg.slice (0, -2);
-    msg += '   ';
+    //msg += '  || ';
     if(m.marchStatus != 9) {
 		if ( city.tileId == m.toTileId ){
 		  var emb = getCityBuilding(m.toCityId, 8);
 		  if (emb.count == 0)
-		  msg += translate("My embassy has not been constructed in this kingdom.  Do not attempt to reinforce.");
+		  msg += '||'+translate("My embassy has not been constructed in this kingdom.  Do not attempt to reinforce.");
 		  else {
 			var availSlots = 0;
 			for (k in Seed.queue_atkinc){
@@ -4051,16 +4051,16 @@ Tabs.tower = {
 				availSlots++;
 			  }
 			}
-			msg += encampall+' '+ availSlots +'/'+ emb.maxLevel +' ';
+			msg += ' || '+encampall+' '+ availSlots +'/'+ emb.maxLevel +' ';
 			if (t.defMode[m.toCityId] == 0 && Options.alertConfig.defend==true)
 			{
-				msg+= status+': '+hidesanct;
+				msg+= '||'+status+': '+hidesanct;
 			}
 			if (t.defMode[m.toCityId] == 1 && Options.alertConfig.defend==true)
 			{
-				msg+= status+': '+orderdefend;
+				msg+= '||'+status+': '+orderdefend;
 			}
-				msg+= technology+ ' ' + parseInt(Seed.tech.tch13)
+				msg+= '||'+technology+ ' ' + parseInt(Seed.tech.tch13)
 				 + ', HP Lv'+ parseInt(Seed.tech.tch15)
 				 + ', PE Lv'+ parseInt(Seed.tech.tch8)
 				 + ', MA Lv'+ parseInt(Seed.tech.tch9)
