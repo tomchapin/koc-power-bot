@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130122b
+// @version        20130122c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -35,7 +35,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130122b';
+var Version = '20130122c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -6909,8 +6909,7 @@ Tabs.News = {
 				m += '<div style="background-color:#DEDEDE; width:600px; height:200px; text-align:left; overflow-y:auto;">';
 				m += '<div id=newsdate></div>'
 				m += '<b>'+news.responseText.replace(/\n/g,"<br>")+'</b>';
-				m += '</div></center>';
-				m += '<div><font color = red>&nbsp&nbsp&nbsp&nbspIntended to only be used for extremely urgent of news updates.  <br>&nbsp&nbsp&nbsp&nbspex: kabam adds backoffwaittime and then asks the community why they think the game is lagging.  Answer they generated fake lag</div>';
+				m += '</div></center><br>';
 				div.innerHTML += m;
 				var first = Number(news.responseHeaders.indexOf("Last-Modified"))+15;
 				var last = news.responseHeaders.indexOf("\n",first);
