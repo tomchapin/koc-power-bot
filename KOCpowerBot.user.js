@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130121c
+// @version        20130121d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -19,6 +19,7 @@
 // @grant       GM_xmlhttpRequest
 // @grant       GM_log
 // @grant       GM_registerMenuCommand
+// @grant       GM_xmlhttpRequest
 
 // @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
@@ -34,7 +35,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130121c';
+var Version = '20130121d';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -132,7 +133,7 @@ var Options = {
   pbChatOnRight: false,
   pbWideMap    : false,
   pbFoodAlert  : false,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRset2:1, alertTRsetwaittime:60,RecentActivity:false},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRset2:1, alertTRsetwaittime:60,RecentActivity:false,email:false},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -3494,7 +3495,8 @@ Tabs.tower = {
     m += '</select></td></tr>';
     m += '<TR><td align=center>-</td><TD align=left>'+translate("Minimum # of troops to trigger tower options")+':<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> <span style="color:#800; font-weight:bold"><sup>*NEW! Controls All Tower Options</sup></span></td></tr>';
 
-    m += '<TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
+    m += '<TR><TD><INPUT id=pbalertemail type=checkbox '+ (Options.alertConfig.email?'CHECKED ':'') +'/></td><TD>'+translate("e-mail on incoming attack")+'<INPUT id=pbathemail type=submit value='+translate("Authenticate")+' >.</td></tr>\
+		<TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
         <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
             <TR><TD align=right>'+translate("Message Prefix")+': &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
             <TR><TD align=right>'+translate("Alert on scouting")+': &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
@@ -3527,6 +3529,7 @@ Tabs.tower = {
     t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
     t.volSlider.setChangeListener(t.e_volChanged);
     document.getElementById('pbPlayNow').addEventListener ('click', function (){t.playSound(false)}, false);
+    document.getElementById('pbathemail').addEventListener ('click', t.e_authenticate, false);
     document.getElementById('pbSoundStop').addEventListener ('click', t.stopSoundAlerts, false);
     document.getElementById('pbSoundRepeat').addEventListener ('change', function (e){Options.alertSound.repeat = e.target.checked}, false);
     document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
@@ -3534,6 +3537,7 @@ Tabs.tower = {
     document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
     document.getElementById('pbcellenable').addEventListener ('change', function (e){Options.celltext.atext = e.target.checked;}, false);
     document.getElementById('pbSoundStop').disabled = true;
+    document.getElementById('pbalertemail').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertScout').addEventListener ('change', t.e_alertOptChanged, false);
@@ -3639,9 +3643,13 @@ Tabs.tower = {
     if (Options.alertSound.alarmActive && Options.alertSound.expireTime>unixTime())   
       t.soundTheAlert();
   },
-  
+  e_authenticate: function (){
+	  unsafeWindow.top.location="http://hs151.digitalweb.net/kocalert/index.php";
+	  
+  },
   e_alertOptChanged : function (){
     var t = Tabs.tower;
+    Options.alertConfig.email = document.getElementById('pbalertemail').checked;
     Options.alertConfig.aChat = document.getElementById('pbalertEnable').checked;
     Options.alertConfig.aPrefix=document.getElementById('pbalertPrefix').value;      
     Options.alertConfig.scouting=document.getElementById('pbalertScout').checked;      
@@ -4030,9 +4038,9 @@ Tabs.tower = {
         msg = '..:.'+Options.alertConfig.aPrefix +' ||| '+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
         //msg = Options.alertConfig.aPrefix +' My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';        
         
+	var fchar = Filter[Options.fchar];
     for (k in m.unts){
       var uid = parseInt(k.substr (1));
-      var fchar = Filter[Options.fchar];
       var UNTCOUNT = String(String(m.unts[k]).split("")).replace(/,/g,fchar)// forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
       msg += '|'+UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
     }
@@ -4068,7 +4076,24 @@ Tabs.tower = {
 		  }
 		}
     }
-    t.sendalert(m);
+    t.sendalert(m); 
+   if(Options.alertConfig.email) {
+     var data = {};
+      data.Subject ='kocalaert'+getServerId()+' ';
+      if(m.marchStatus == 9) data.Subject += attackrecalled;
+      data.Subject += scoutingat+' '+target;
+      data.Message = msg.replace(eval('/'+fchar+'/g'),'');
+		GM_xmlhttpRequest({
+			method: 'POST',
+			url: 'http://hs151.digitalweb.net/kocalert/index.php',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+			},
+		data: implodeUrlArgs(data),
+//	onload: function (response) {logit(inspect(data));
+//	},
+		});
+	};
     if (!Options.alertConfig.aChat) return;
     if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
     if (SEND_ALERT_AS_WHISPER)
