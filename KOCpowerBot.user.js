@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130122c
+// @version        20130123a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -35,7 +35,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130122c';
+var Version = '20130123a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -119,6 +119,7 @@ var Options = {
   srcAll       : true,  
   srcScoutAmt  : 1,
   minmight     : 1,
+  maxmight     : 99999999,
   srcdisttype  : 'square',
   pbWinIsOpen  : false,
   pbWinDrag    : true,
@@ -187,6 +188,8 @@ var Options = {
   smain	:	0,
   MAP_DELAY :	4000,
   fchar:	"Null",
+  toprank:	0,
+  botrank:	0,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -5390,6 +5393,7 @@ Tabs.Search = {
   MAX_SHOW_WHILE_RUNNING : 250,
   popFirst : true,
   SearchList : [],
+  IgAlly : [],
   
   init : function (div){
     var t = Tabs.Search;
@@ -5623,9 +5627,15 @@ Tabs.Search = {
           <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>'+translate("Might")+'</option>\
              <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>'+translate("Distance")+'</option>\
         </select></td></tr>\
-        <TR><TD class=xtab align=right>'+translate("Min")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=paminmight size=6 value='+ Options.minmight +'>\
+        <TR><TD class=xtab align=right>'+translate("Min")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=paminmight size=8 value='+ Options.minmight +'>\
+        <TR><TD class=xtab align=right>'+translate("Max")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=pamaxmight size=8 value='+ Options.maxmight +'>\
+        <TR><TD class=xtab align=right>Ignore alliances ranked</td><TD class=xtab><INPUT type=text id=patopra size=4 value='+ Options.toprank +'> - <INPUT type=text id=pabotra size=4 value='+ Options.botrank +'></td>\
         <TR><TD class=xtab align=right>'+translate("Coordinates only")+':</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
+        FetchTopAlliances(Options.toprank,Options.botrank,function (e) {
+			t.IgAlly = e;
+			//t.dispMapTable(); required here?
+		});
     
     }
     document.getElementById('padivOutOpts').innerHTML = m;
@@ -5727,6 +5737,27 @@ Tabs.Search = {
         saveOptions();
         t.dispMapTable ();
         }, false);
+            document.getElementById('pamaxmight').addEventListener ('change', function (){
+        Options.maxmight = parseIntNan(this.value);
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+            document.getElementById('pabotra').addEventListener ('change', function (){
+        Options.botrank = this.value;
+        saveOptions();
+        FetchTopAlliances(Options.toprank,Options.botrank,function (e) {
+			t.IgAlly = e;
+			t.dispMapTable();
+			});
+        }, false);
+            document.getElementById('patopra').addEventListener ('change', function (){
+        Options.toprank = this.value;
+        saveOptions();
+        FetchTopAlliances(Options.toprank,Options.botrank,function (e) {
+			t.IgAlly = e;
+			t.dispMapTable();
+			});
+        }, false);
     
     }
     
@@ -5780,8 +5811,8 @@ Tabs.Search = {
       lvl = parseInt (t.mapDat[i][4]);
       type = t.mapDat[i][3];
       if (t.opt.searchType==2 && type==7 ) {
-        if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5])
-        //if(lvl >= 12)
+        if((t.mapDat[i][10] >= Options.minmight && t.mapDat[i][10] <= Options.maxmight) || t.mapDat[i][5])
+        if(t.mapDat[i][14] == false || t.IgAlly.indexOf(Number(t.mapDat[i][14])) == -1)
         if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
            (Options.mistedOnly && t.mapDat[i][5]===true) ||
            (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
@@ -5897,9 +5928,10 @@ Tabs.Search = {
 		if (t.mapDat[i][4]>=Options.srcMinLevel && t.mapDat[i][4]<=Options.srcMaxLevel)
 		if ((Options.unownedOnly && t.mapDat[i][5] == false) || (!Options.unownedOnly))
             bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
-     if(t.opt.searchType==2) 
+     if(t.opt.searchType==2)
       if (t.mapDat[i][3] == 7){
-        if(t.mapDat[i][10] >= Options.minmight || t.mapDat[i][5]){
+        if((t.mapDat[i][10] >= Options.minmight && t.mapDat[i][10] <= Options.maxmight) || t.mapDat[i][5]){
+        if(t.mapDat[i][14] == false || t.IgAlly.indexOf(Number(t.mapDat[i][14])) == -1)
         if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
            (Options.mistedOnly && t.mapDat[i][5]===true) ||
            (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
@@ -6131,13 +6163,17 @@ Tabs.Search = {
                   var nameU = '';
                   var mightU = '';
                   var aU = '';
+                  var aID = false;
                 if (!isMisted && userInfo[uu]) {
                     nameU = userInfo[uu].n;   // can error, must check if (userInfo[uu])
                     mightU = userInfo[uu].m;
-                    if (alliance['a'+userInfo[uu].a])
+                    if (alliance['a'+userInfo[uu].a]) {
                         aU = alliance['a'+userInfo[uu].a];
-                    else
+                        aID = userInfo[uu].a
+                    } else {
                       aU = '----';
+                      aID = false;
+				   }
                     aD = '';
                     if (Dip.friendly && Dip.friendly['a'+userInfo[uu].a]) aD = 'f';
                     if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) aD = 'h';
@@ -6147,10 +6183,10 @@ Tabs.Search = {
                     
                 }
 // TODO: save memory, remove city name ?               
-          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD, uList.data[map[k].tileUserId]?1:0]);
+          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD, uList.data[map[k].tileUserId]?1:0,aID]);
         } else {
           isOwned = map[k].tileUserId>0 || map[k].misted;
-          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned, (map[k].tileUserId>0? map[k].tileUserId : 0), uList.data[map[k].tileUserId]?1:0]);
+          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned, (map[k].tileUserId>0? map[k].tileUserId : 0), uList.data[map[k].tileUserId]?1:0,aID]);
         }
         ++t.tilesFound;
       }
@@ -20978,6 +21014,29 @@ function equippedthronestats (stat_id){
 	return total;
 }
 
+function FetchTopAlliances(first,last,callback,page,prop){
+	if(!first || !last) return;
+	if(matTypeof(page) == 'undefined')page = Math.floor(Number(first/10))?Math.floor(Number(first/10)):1;
+	if(matTypeof(prop) == 'undefined')prop = [];
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.pageNo = page;
+    params.cityId = unsafeWindow.currentcityid;
+    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/allianceGetOtherInfo.php" + unsafeWindow.g_ajaxsuffix, {
+      method: "post",
+      parameters: params,
+      onSuccess: function (rslt) {
+		  var oa = rslt.otherAlliances;
+		  for (i =0;i<oa.length;i++) {
+			  if (oa[i].ranking >= first && oa[i].ranking <= last)
+			  prop.push(oa[i].allianceId)
+		  }
+		  if(oa[Number(i-1)].ranking < last) {
+			  page++;
+			  FetchTopAlliances(first,last,callback,page,prop);
+		  } else callback(prop);
+      },
+    });
+}
 function fixkabamlag () {
 	var kfutime = Number(unsafeWindow.unixtime()+30);
 	for (city in Seed.queue_atkp) {
