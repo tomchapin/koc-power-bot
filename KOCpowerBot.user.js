@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130123b
+// @version        20130124a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -35,7 +35,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130123b';
+var Version = '20130124a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3325,7 +3325,7 @@ if(unsafeWindow.update_march) {
                 if(s == 9) {
 					var m = Seed.queue_atkinc[C[Q]];
 					m.marchStatus = s;
-					Tabs.tower.postToChat(m);
+					Tabs.tower.newIncoming(m);
 				}
                 
 			}}}
@@ -3861,11 +3861,8 @@ Tabs.tower = {
     if (totTroops < Options.alertConfig.minTroops){
       return;
     }
-    t.towerPreset (m);
-  },
-
-  towerPreset : function (m){
-    var t = Tabs.tower;
+    t.postToChat (m);
+    if(m.marchStatus == 9)return;
     if (Options.alertConfig.alertTR){
 		var currentset = Seed.throne.activeSlot
 		if (Options.alertConfig.alertTRset != currentset){
@@ -3877,8 +3874,7 @@ Tabs.tower = {
 		Options.alertConfig.RecentActivity = true;
 		saveOptions();
 	}
-    t.postToChat (m);
-  },   
+  },
   
   sendalert : function (m){
     var t = Tabs.tower;
