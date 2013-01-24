@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130123a
+// @version        20130123b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -35,7 +35,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130123a';
+var Version = '20130123b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3174,15 +3174,33 @@ doSalvage : function(){
         var cityid = 0;
         var cities = [];
         var spirecities = [];
-        for (var k in Cities.byID) {
-            if (Seed.resources["city"+k]["rec5"][0] < 1000000)
-            {
-                var a = getCityBuilding(k,20);
-                if (a.count == 1)
-                    spirecities.push(k);
-                cities.push(k);
-            }
-        }
+        if(ThroneOptions.Cityrand)
+        for (g = 50000;g < 1150001;g+=50000) {
+			for (var k in Cities.byID) {
+				if (Seed.resources["city"+k]["rec5"][0] < g)
+				{
+					var a = getCityBuilding(k,20);
+					if (a.count == 1)
+						spirecities.push(k);
+					cities.push(k);
+				}
+			}
+			 if(ThroneOptions.CitySpire && spirecities.length)
+				break;
+			 if(!ThroneOptions.CitySpire && cities.length)
+				break;
+        } else
+			for (var k in Cities.byID) {
+				if (Seed.resources["city"+k]["rec5"][0] < 1000000)
+				{
+					var a = getCityBuilding(k,20);
+					if (a.count == 1)
+						spirecities.push(k);
+					cities.push(k);
+				}
+			}
+        
+        //logit('g is '+g);
         if(ThroneOptions.CitySpire){
             if (spirecities.toSource != "[]")
                 cities = spirecities;
@@ -3195,6 +3213,7 @@ doSalvage : function(){
             }
         }
         if (cityid == 0) cityid = Seed.cities[0][0]; //If all else failss default to city 1
+        //logit('cityid '+cityid+' res'+Seed.resources["city"+cityid]["rec5"][0])
         if(ThroneOptions.heatup)t.doUpgradesimple(t.SalvageArray[0]);
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
@@ -21037,6 +21056,18 @@ function FetchTopAlliances(first,last,callback,page,prop){
       },
     });
 }
+function testsomething () {
+	var i = +(cm.WorldSettings.getSetting("DARK_FOREST_AETHERSTONE_CAP")) || 0;
+    var d = cm.ThroneController.effectBonus(88);
+    i = i + (i * (d / 100));
+    cm.ThroneController.hasFactionBonus
+    if (v.hazBonus && v.faction === "fey") {
+            d = cm.ThroneController.effectBonus(95);
+            i = i + (i * (d / 100))
+        }
+}
+
+
 function fixkabamlag () {
 	var kfutime = Number(unsafeWindow.unixtime()+30);
 	for (city in Seed.queue_atkp) {
