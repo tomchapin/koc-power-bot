@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130125d
+// @version        20130125e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130125d';
+var Version = '20130125e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -15519,99 +15519,198 @@ if (typeof(GM_xmlhttpRequest) !== 'undefined' && typeof(GM_updatingEnabled) === 
 }
 /********* End updater code *************/
 
-/**********************************************************************************/
+//****************************
+//This is a new implementation of the CalterUwFunc class to modify a function of the 'unsafewWindow' object.
+//For reverse compatibility this implementation operates like the original, but multiple CalterUwFunc objects can be created for the same function.
+//Each CalterUwFunc can be enabled or diabled independently.  (Of course, the repalcement strings must be compatibile with each other to work
+//simulataneously).
+
+//The implementation uses a worker class CalterFuncModifier.  One and only one CalterFuncModifier is created for each uw function modified.
+//CalterFuncModifier allows multiple modifier string pairs to be applied.  For individual control of specific mods, access the 'modIndex'
+//member to determine the index of the first mod and then directly call the operations of the 'funcModifier' member.
+
+//This implementation creates/uses a registry of CalterFuncModifier's that is added to the unsafeWindow object so that changes
+//to the same function in different scripts is possible.
+
+//****************************
+
+
 var CalterUwFunc = function (funcName, findReplace) {
-  var t = this;
-  this.isEnabled = false;
-  this.isAvailable = isAvailable;
-  this.setEnable = setEnable;
-  this.funcName = funcName;
-  this.funcOld = unsafeWindow[funcName];  
-  this.funcNew = null;
-  try {
-    var funcText = unsafeWindow[funcName].toString();
-    var rt = funcText.replace ('function '+ funcName, 'function');
-    for (var i=0; i<findReplace.length; i++){
-      x = rt.replace(findReplace[i][0], findReplace[i][1]);
-      if (x == rt)
-        return false;
-      rt = x;
-    }
-    this.funcNew = rt;
-  } catch (err) {
-  }
-      
-  function setEnable (tf){
-    if (t.funcNew == null)
-      return;
-    if (t.isEnabled != tf){
-      if (tf){
-          var scr=document.createElement('script');
-          scr.innerHTML = funcName +' = '+ t.funcNew;
-          document.body.appendChild(scr);
-        setTimeout ( function (){document.body.removeChild(scr);}, 0);
-          t.isEnabled = true;
-      } else {
-        unsafeWindow[t.funcName] = t.funcOld;
-        t.isEnabled = false;
-      }
-    }
-  }
-  function isAvailable (){
-    if (t.funcNew == null)
-      return false;
-    return true;
-  }
-};
 
-var CalterUwVar = function (funcName, findReplace) {
-  var t = this;
-  this.isEnabled = false;
-  this.isAvailable = isAvailable;
-  this.setEnable = setEnable;
-  this.funcName = funcName;
-  this.funcOld = unsafeWindow[funcName];  
-  this.funcNew = null;
-  try {
-    var funcText = null;
-    funcName = funcName.split('.');
-    funcText = unsafeWindow[funcName[0]];
-    for(var i=1; i<funcName.length; i++)
-        funcText = funcText[funcName[i]];
+   this.isAvailable = isAvailable;
+   this.setEnable = setEnable;
 
-    var rt = funcText.toString();
-    for (var i=0; i<findReplace.length; i++){
-      x = rt.replace(findReplace[i][0], findReplace[i][1]);
-      if (x == rt)
-        return false;
-      rt = x;
-    }
-    this.funcNew = rt;
-  } catch (err) {
-    GM_log(err);
-  }
-  
-  function setEnable (tf){
-    if (t.funcNew == null)
-      return;
-    if (t.isEnabled != tf){
-      if (tf){
-          var scr=document.createElement('script');
-          scr.innerHTML = funcName +' = '+ t.funcNew;
-          document.body.appendChild(scr);
-        setTimeout ( function (){document.body.removeChild(scr);}, 0);
-          t.isEnabled = true;
-      } else {
-        unsafeWindow[t.funcName] = t.funcOld;
-        t.isEnabled = false;
+   this.funcName = funcName;
+   this.funcModifier = null;
+   this.modIndex = 0;
+   this.numberMods = 0;
+
+   // find an existing CalterUwFunc if it already exists
+   if (!unsafeWindow.calterRegistry) unsafeWindow.calterRegistry = {};
+   var calterF = null;
+
+   if (unsafeWindow.calterRegistry[funcName]) {
+      // use the existing function modifier
+      calterF = unsafeWindow.calterRegistry[funcName];
+      for (i=0; i< findReplace.length; i++) {
+         calterF.addModifier(findReplace[i]);
       }
-    }
-  }
-  function isAvailable (){
-    if (t.funcNew == null)
+   } else {
+      // create and register the new calter
+      calterF = new CalterFuncModifier(funcName, findReplace);
+      unsafeWindow.calterRegistry[funcName] = calterF;
+   }
+   this.funcModifier = calterF;
+
+   if (findReplace != null)
+   {
+      this.numberMods = findReplace.length;
+      this.modIndex = this.funcModifier.numModifiers()- this.numberMods;
+   }
+
+   function isAvailable() {
+      // check if any of the replace strings matched the original function
+      var avail = false;
+      for (i= this.modIndex; i < this.modIndex + this.numberMods; i++ )
+      {
+         if (this.funcModifier.testModifier(i)) avail= true;
+      }
+      return avail;
+   }
+
+   function setEnable(tf) {
+      this.funcModifier.enableModifier(this.modIndex, tf, this.numberMods);
+   }
+}
+
+var CalterFuncModifier = function (funcName, findReplace) {
+   // (second argument is now optional )
+
+   this.applyModifiers = applyModifiers;
+   this.addModifier = addModifier;
+   this.enableModifier = enableModifier;
+   this.testModifier = testModifier;
+   this.modEnabled = modEnabled;
+   this.numModifiers = numModifiers;
+
+   this.funcName = funcName;
+   this.funcOld = null;  
+   this.funcOldString = null;
+   this.funcNew = null;
+   this.modifiers = [];
+   this.modsActive = [];
+
+   try {
+      var x = this.funcName.split('.');
+      var f = unsafeWindow;
+      for (var i=0; i<x.length; i++)
+         f = f[x[i]];
+      ft = f.toString();
+      this.funcOld = f;
+      this.funcOldString = ft.replace ('function '+ this.funcName, 'function');
+
+      if (findReplace) {
+         this.modifiers  = findReplace;
+         this.modsActive = new Array(findReplace.length);
+         for (var i=0; i<findReplace.length; i++){
+            this.modsActive[i] = false;
+         }
+      }
+   } catch (err) {
+      logit("CalterFuncModifier "+ this.funcName+" "+err);
+   }
+
+   // test if this modifier works on the original function.
+   //    true = match found / replace possible
+   //    false = does not match
+   function testModifier(modNumber) {
+      x = this.funcOldString.replace(this.modifiers[modNumber][0], this.modifiers[modNumber][1]);
+      if (x != this.funcOldString)
+      {
+         return true;
+      }
       return false;
-    return true;
-  }
+   }
+
+   // use the active modifiers to create/apply a new function
+   function applyModifiers() {
+      try {
+         var rt = this.funcOldString;
+         var active = false;
+
+         for (var i=0; i< this.modifiers.length; i++){
+            if ( !this.modsActive[i]) continue;
+
+            x = rt.replace(this.modifiers[i][0], this.modifiers[i][1]);
+            if (x == rt)  // if not found
+            {
+               // print out an error message when the match fails.
+               // These messages get lost on a refresh, so wait a few seconds to put it in the error log.
+               setTimeout( function (fname, repStr, ftstr) {
+                  return function () {
+                     logit("Unable to replace string in function " + fname);
+                     logit("Replacment string:" + repStr );
+                     logit("Function listing: " + ftstr);
+                     return;
+                  }
+               }(this.funcName, this.modifiers[i][0], ft), 3000);
+            }
+            else {
+
+            }
+
+            rt = x;
+            active = true;
+         }
+
+         this.funcNew = rt;
+         if (active) {
+            // apply the new function
+            unsafeWindow.uwuwuwFunc(this.funcName +' = '+ this.funcNew);
+         } else {
+            // set to the original function
+            var x1 = this.funcName.split('.');
+            var f1 = unsafeWindow;
+            for (var i=0; i<x1.length-1; i++)
+               f1 = f1[x1[i]];
+            f1[x1[x1.length-1]] = this.funcOld;
+         }
+      } catch (err) {
+         logit("CalterFuncModifier "+ this.funcName+" "+err);
+      }
+   }
+
+   // add additional modifiers.  The index of the modifier is returned so the caller can enable/disable it specificially
+   function addModifier(fr) {
+      this.modifiers.push(fr);
+      this.modsActive.push(false);
+      // return the index of the newly added modifier
+      return this.modifiers.length-1;
+   }
+
+   // turn on/off some of the modifiers.
+   // 'len' allows setting consectutive modifiers to the same value.
+   //   If len is null, 1 is used
+   function enableModifier(modNumber, value, len) {
+
+      if (len == null) len = 1;
+      for (i = modNumber; i < modNumber + len; i++) {
+         if ( i < this.modsActive.length) {
+            this.modsActive[i] = value;
+         }
+      }
+      this.applyModifiers();
+   }
+
+   function modEnabled(modNumber) {
+      if ( modNumber < this.modsActive.length)
+         return this.modsActive[modNumber];
+   }
+
+   function numModifiers() {
+      return this.modifiers.length;
+   }
+
 };
 
 function getMarchInfo (cityID){
@@ -18171,6 +18270,7 @@ Tabs.Inventory = {
 	isBusy:false,
 	counter:0,
 	max:0,
+	city_holder : 0,
 	
 	init: function(div){
 		var t = Tabs.Inventory;
@@ -18185,12 +18285,17 @@ Tabs.Inventory = {
 					<input type=submit id=pbinventory_chest value='Chest' />\
 					<input type=submit id=pbinventory_court value='Court' /></td>\
 				<TD width=50% align=center ><input type=submit id=pbinventory_start value='Start' /></td>\
+					</tr>\
+				<TD><span id='pbinventory_cityselect'></span></td>\
+				<TD><input type=checkbox id=pbinventory_useall />Use all by default</td>\
 					</tr></table>\
 				<DIV class=pbStat>Items</div>\
 				<DIV id=pbinventory></div>\
 				<DIV id=pbinventory_info></div>";
 		t.myDiv.innerHTML = m;
 		t.sort_Items();
+		
+		t.city = new CdispCityPicker ('pbinventory_city', document.getElementById('pbinventory_cityselect'), true, null);
 		
 		$("pbinventory_general").addEventListener('click', t.display_general, false);
 		$("pbinventory_combat").addEventListener('click', t.display_combat, false);
@@ -18200,6 +18305,10 @@ Tabs.Inventory = {
 		$("pbinventory_start").addEventListener('click', t.start, false);
 		
 		$("pbinventory_general").click();
+		
+		//Hack for ItemController
+		t.ItemController = new CalterUwFunc("cm.MultiBuyUse.getNumberUsed", [[/(.|\n)*/i,'function (e) {return ItemController_hook();}']]);
+		unsafeWindow.ItemController_hook = t.e_total;
 	},
 	
 	sort_Items : function (){
@@ -18239,14 +18348,27 @@ Tabs.Inventory = {
 			if(!item.name) continue;
 			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
 			m += "<TD><input type=checkbox class='pbinv_general' data-ft='"+JSON.stringify(item)+"' /></td>";
-			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
-			m += "<TD><input type=text size=3 id='pb_inv_general_"+item.id+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+			m += "<TD><input type=text size=2 id='pb_inv_general_"+item.id+"' /></td>";
 			m += "<TD>"+item.count+"</td>";
 			m += (count%3 == 2)?"</tr>":"";
 			count++;
 		}
 		m += "</table>";
 		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+		
+		var nodes = document.getElementsByClassName("pbinv_"+t.type);
+		if(nodes.length > 0){
+			for(var i=0; i<nodes.length; i++){
+				nodes[i].addEventListener('click', function(e){
+					var item = JSON.parse(e.target.getAttribute("data-ft"));
+					if(e.target.checked)
+						$("pb_inv_"+t.type+"_"+item.id).value = $("pbinventory_useall").checked?item.count:1;
+					else
+						$("pb_inv_"+t.type+"_"+item.id).value = '';
+				},false);
+			}
+		}
 	},
 	display_combat : function (){
 		var t = Tabs.Inventory;
@@ -18260,14 +18382,27 @@ Tabs.Inventory = {
 			if(!item.name) continue;
 			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
 			m += "<TD><input type=checkbox class='pbinv_combat' data-ft='"+JSON.stringify(item)+"' /></td>";
-			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
-			m += "<TD><input type=text size=3 id='pb_inv_combat_"+item.id+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+			m += "<TD><input type=text size=2 id='pb_inv_combat_"+item.id+"' /></td>";
 			m += "<TD>"+item.count+"</td>";
 			m += (count%3 == 2)?"</tr>":"";
 			count++;
 		}
 		m += "</table>";
 		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+		
+		var nodes = document.getElementsByClassName("pbinv_"+t.type);
+		if(nodes.length > 0){
+			for(var i=0; i<nodes.length; i++){
+				nodes[i].addEventListener('click', function(e){
+					var item = JSON.parse(e.target.getAttribute("data-ft"));
+					if(e.target.checked)
+						$("pb_inv_"+t.type+"_"+item.id).value = $("pbinventory_useall").checked?item.count:1;
+					else
+						$("pb_inv_"+t.type+"_"+item.id).value = '';
+				},false);
+			}
+		}
 	},
 	display_resources : function (){
 		var t = Tabs.Inventory;
@@ -18281,14 +18416,27 @@ Tabs.Inventory = {
 			if(!item.name) continue;
 			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
 			m += "<TD><input type=checkbox class='pbinv_resources' data-ft='"+JSON.stringify(item)+"' /></td>";
-			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
-			m += "<TD><input type=text size=3 id='pb_inv_resources_"+item.id+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+			m += "<TD><input type=text size=2 id='pb_inv_resources_"+item.id+"' /></td>";
 			m += "<TD>"+item.count+"</td>";
 			m += (count%3 == 2)?"</tr>":"";
 			count++;
 		}
 		m += "</table>";
 		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+		
+		var nodes = document.getElementsByClassName("pbinv_"+t.type);
+		if(nodes.length > 0){
+			for(var i=0; i<nodes.length; i++){
+				nodes[i].addEventListener('click', function(e){
+					var item = JSON.parse(e.target.getAttribute("data-ft"));
+					if(e.target.checked)
+						$("pb_inv_"+t.type+"_"+item.id).value = $("pbinventory_useall").checked?item.count:1;
+					else
+						$("pb_inv_"+t.type+"_"+item.id).value = '';
+				},false);
+			}
+		}
 	},
 	display_chest : function (){
 		var t = Tabs.Inventory;
@@ -18302,14 +18450,27 @@ Tabs.Inventory = {
 			if(!item.name) continue;
 			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
 			m += "<TD><input type=checkbox class='pbinv_chest' data-ft='"+JSON.stringify(item)+"' /></td>";
-			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
-			m += "<TD><input type=text size=3 id='pb_inv_chest_"+item.id+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+			m += "<TD><input type=text size=2 id='pb_inv_chest_"+item.id+"' /></td>";
 			m += "<TD>"+item.count+"</td>";
 			m += (count%3 == 2)?"</tr>":"";
 			count++;
 		}
 		m += "</table>";
 		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+		
+		var nodes = document.getElementsByClassName("pbinv_"+t.type);
+		if(nodes.length > 0){
+			for(var i=0; i<nodes.length; i++){
+				nodes[i].addEventListener('click', function(e){
+					var item = JSON.parse(e.target.getAttribute("data-ft"));
+					if(e.target.checked)
+						$("pb_inv_"+t.type+"_"+item.id).value = $("pbinventory_useall").checked?item.count:1;
+					else
+						$("pb_inv_"+t.type+"_"+item.id).value = '';
+				},false);
+			}
+		}
 	},
 	display_court : function (){
 		var t = Tabs.Inventory;
@@ -18323,16 +18484,33 @@ Tabs.Inventory = {
 			if(!item.name) continue;
 			m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
 			m += "<TD><input type=checkbox class='pbinv_court' data-ft='"+JSON.stringify(item)+"' /></td>";
-			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name+"</td>";
-			m += "<TD><input type=text size=3 id='pb_inv_court_"+item.id+"' /></td>";
+			m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+			m += "<TD><input type=text size=2 id='pb_inv_court_"+item.id+"' /></td>";
 			m += "<TD>"+item.count+"</td>";
 			m += (count%3 == 2)?"</tr>":"";
 			count++;
 		}
 		m += "</table>";
 		div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+		
+		var nodes = document.getElementsByClassName("pbinv_"+t.type);
+		if(nodes.length > 0){
+			for(var i=0; i<nodes.length; i++){
+				nodes[i].addEventListener('click', function(e){
+					var item = JSON.parse(e.target.getAttribute("data-ft"));
+					if(e.target.checked)
+						$("pb_inv_"+t.type+"_"+item.id).value = $("pbinventory_useall").checked?item.count:1;
+					else
+						$("pb_inv_"+t.type+"_"+item.id).value = '';
+				},false);
+			}
+		}
 	},
 	
+	e_total : function (){
+		var t = Tabs.Inventory;
+		return t.max;
+	},
 	start : function (){
 		var t = Tabs.Inventory;
 		if(t.isBusy){
@@ -18379,7 +18557,42 @@ Tabs.Inventory = {
 		} else {
 			div.appendChild(m);
 		}
-		t.useitem();
+		if(t.ItemController.isAvailable)
+			t.useitem_new();
+		else
+			t.useitem();
+	},
+	
+	useitem_new : function (){
+		var t = Tabs.Inventory;
+		if(!t.isBusy)
+			return;
+		t.ItemController.setEnable(true); //Set to use current value specified
+		if(t.city.city.id){ //Set to use city specified
+			t.city_holder = unsafeWindow.currentcityid;
+			unsafeWindow.currentcityid = t.city.city.id;
+		}
+		var item = t.queue[0];
+		$("pb_inv_info_left_"+item.id).innerHTML = 0;
+		$("pb_inv_info_count_"+item.id).innerHTML = t.max;
+		unsafeWindow.cm.ItemController.use(item.id);
+		setTimeout(t.wait_new, 250, 0);
+	},
+	
+	wait_new : function (){
+		var t = Tabs.Inventory;
+		if(!t.isBusy)
+			return;
+		var item = t.queue[0];
+		item = unsafeWindow.ksoItems[item.id];
+		t.queue[0] = item;
+		$("pb_inv_info_extra_"+item.id).innerHTML = "All done";
+		t.queue.shift();
+		t.ItemController.setEnable(false); //Switch off value fixed
+		if(t.city.city.id){ //Set currentcity to old value
+			unsafeWindow.currentcityid = t.city_holder;
+		}
+		t.nextqueue();
 	},
 	
 	useitem : function (){
