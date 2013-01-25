@@ -19,7 +19,6 @@
 // @grant       GM_xmlhttpRequest
 // @grant       GM_log
 // @grant       GM_registerMenuCommand
-// @grant       GM_xmlhttpRequest
 
 // @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
@@ -27,9 +26,9 @@
 //Fixed weird bug with koc game
 if(window.self.location != window.top.location){
 	try{
-	if(window.self.location.href == window.parent.location.href){
-		return; //If iframe source is same as the parent don't load script
-	}
+		if(window.self.location.href == window.parent.location.href){
+			return; //If iframe source is same as the parent don't load script
+		}
 	} catch (e){
 		//logit(inspect(e,2,1));
 	}
@@ -496,15 +495,10 @@ if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
 }
 
 if (document.URL.search(/facebook.com/i) >= 0){
-	if(document.URL.search(/connect\/uiserver.php/i) >= 0 ||
-	   document.URL.search(/serverfbml/i) >= 0 ||
-	   document.URL.search(/dialog\/stream.publish/i) >= 0 ||
-	   document.URL.search(/dialog\/apprequests/i) >= 0 ||
-	   document.URL.search(/dialog\/feed/i) >= 0)
+	if(document.URL.search(/dialog\/feed/i) >= 0)
 		HandlePublishPopup ();
   return;
 }
-
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
   kocWideScreen ();
 }
@@ -643,30 +637,30 @@ function HandlePublishPopup() {
 			if(channel_input){
 				var current_channel_url = channel_input.value;
 				//logit("current_channel_url "+current_channel_url);
-				if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {				
+				if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {
 					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
 					var cancel_publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'cancel')]");
-							var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
+					var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
 					//logit("publish_button "+publish_button);
 					//logit("privacy_setting "+privacy_setting);
 					//logit("cancel_button " + cancel_publish_button);
-							if(publish_button && privacy_setting){
-								// 80: Everyone
-								// 50: Friends of Friends
-								// 40: Friends Only
-								// 10: Only Me
-								privacy_setting.innerHTML = '<option value="'+ GlobalOptions.autoPublishPrivacySetting +'"></option>';
-								privacy_setting.selectedIndex = 0;
+					if(publish_button && privacy_setting){
+						// 80: Everyone
+						// 50: Friends of Friends
+						// 40: Friends Only
+						// 10: Only Me
+						privacy_setting.innerHTML = '<option value="'+ GlobalOptions.autoPublishPrivacySetting +'"></option>';
+						privacy_setting.selectedIndex = 0;
 						if (GlobalOptions.autoPublishGamePopups && !GlobalOptions.autoCancelGamePopups){
-								nHtml.Click(publish_button);
+							nHtml.Click(publish_button);
 						}else if (GlobalOptions.autoCancelGamePopups && !GlobalOptions.autoPublishGamePopups){
 							nHtml.Click(cancel_publish_button);
-							}
 						}
+					}
 				}
 			}		
 		}
-	 	setTimeout(HandlePublishPopup, 1000);
+		setTimeout(HandlePublishPopup, 1000);
 	}
 }
 
@@ -1696,8 +1690,6 @@ Tabs.farm = {
 
 };
 
-
-
 /*********************************** Throne Tab ***********************************/
 
 Tabs.Throne = {
@@ -1725,6 +1717,7 @@ Tabs.Throne = {
     t.cont = div;
     unsafeWindow.setFAV = t.setSalvageFAV;
     unsafeWindow.Savlage = t.setSalvageItem;
+    unsafeWindow.ActionPopup = t.ActionPopup;
     
     var a = JSON2.parse(GM_getValue ('ThroneHistory_'+getServerId(), '[]'));
     if (matTypeof(a) == 'array') t.log = a;
@@ -1811,7 +1804,6 @@ Tabs.Throne = {
     		}
     	}
     }
-	   
    },
  Salvage : function (){
     var t = Tabs.Throne;
@@ -1846,7 +1838,7 @@ Tabs.Throne = {
       m+='<TR><TD></td><TD><INPUT id=IntelligenceSkill type=checkbox '+ (ThroneOptions.Salvage.IntelligenceSkill?'CHECKED ':'') +'/>&nbsp;Intelligence Skill</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.IntelligenceSkill.Min,'id=IntelligenceSkillMin')+'</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=PoliticsSkill type=checkbox '+ (ThroneOptions.Salvage.PoliticsSkill?'CHECKED ':'') +'/>&nbsp;Politics Skill</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.PoliticsSkill.Min,'id=PoliticsSkillMin')+'</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=ResourcefulnessSkill type=checkbox '+ (ThroneOptions.Salvage.ResourcefulnessSkill?'CHECKED ':'') +'/>&nbsp;Resourcefulness Skill</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ResourcefulnessSkill.Min,'id=ResourcefulnessSkillMin')+'</td></tr>';
-       m+='<TR></tr><TR><TD><B>Speed:</b></td></tr>';
+      m+='<TR></tr><TR><TD><B>Speed:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=TrainingSpeed type=checkbox '+ (ThroneOptions.Salvage.TrainingSpeed?'CHECKED ':'') +'/>&nbsp;Training Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.TrainingSpeed.Min,'id=TrainingSpeedMin')+'</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=ConstructionSpeed type=checkbox '+ (ThroneOptions.Salvage.ConstructionSpeed?'CHECKED ':'') +'/>&nbsp;Construction Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ConstructionSpeed.Min,'id=ConstructionSpeedMin')+'</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=ResearchSpeed type=checkbox '+ (ThroneOptions.Salvage.ResearchSpeed?'CHECKED ':'') +'/>&nbsp;Research Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ResearchSpeed.Min,'id=ResearchSpeedMin')+'</td></tr>';
@@ -1859,10 +1851,8 @@ Tabs.Throne = {
       m+='<TR></tr><TR><TD><B>Varia:</b></td></tr>';
       m+='<TR><TD></td><TD><INPUT id=Morale type=checkbox '+ (ThroneOptions.Salvage.Morale?'CHECKED ':'') +'/>&nbsp;Morale</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.Morale.Min,'id=MoraleMin')+'</td></tr>';
       m+='<TR><TD></td><TD><INPUT id=ItemDrop type=checkbox '+ (ThroneOptions.Salvage.ItemDrop?'CHECKED ':'') +'/>&nbsp;ItemDrop</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA.ItemDrop.Min,'id=ItemDropMin')+'</td></tr></table>';
-      
-      
 
-      	m+='<table><tr><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>. by name</font></td></tr></table>';
+      m+='<table><tr><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>. by name</font></td></tr></table>';
       	
       m+='<TABLE width=80% class=pbTab>';
       for (k in unsafeWindow.cm.thronestats.effects) {
@@ -1873,8 +1863,6 @@ Tabs.Throne = {
       	for(g = 0;g<t.EquipType.length;g++)
       	m+='<option value="'+t.EquipType[g]+'">'+t.EquipType[g]+'</option>'
 		m+='</select></td>';
-      	
-      	
       	m+='<td class=pbThroneS>Min lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ThroneOptions.SalvageA[k].Min,'id='+k+'Min')+'</td></tr>';
       }	
       m+= '</table>';
@@ -1944,9 +1932,7 @@ Tabs.Throne = {
       document.getElementById('ItemDropMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ItemDrop.Min = this.value;saveThroneOptions();},false);
       document.getElementById('pbsalvage_unique').addEventListener ('change', function(){ThroneOptions.SaveUnique = this.checked;saveThroneOptions();},false);
       document.getElementById('pbheatup').addEventListener ('change', function(){ThroneOptions.heatup = this.checked;saveThroneOptions();},false);
-      
-      
-      
+
       document.getElementById('pbthrone_keep').addEventListener ('change', function(){ThroneOptions.thronekeep = parseInt(document.getElementById('pbthrone_keep').value);saveThroneOptions();},false);
 
       document.getElementById('Quality').addEventListener  ('change', function(){ThroneOptions.SalvageQuality = this.value;saveThroneOptions();},false);
@@ -1954,11 +1940,9 @@ Tabs.Throne = {
       document.getElementById('saveXitems').addEventListener('change', function(){ThroneOptions.saveXitems = document.getElementById('saveXitems').value;saveThroneOptions();} , false);
       document.getElementById('ShowSalvageHistory').addEventListener('click', function(){t.PaintSalvageHistory()} , false);
 
-
-
       //if (ThroneOptions.Salvage[1] != undefined){
 		  for (k in unsafeWindow.cm.thronestats.effects){
-				document.getElementById('pbThroneItems'+k).checked = ThroneOptions.Salvage[k]; 
+				document.getElementById('pbThroneItems'+k).checked = ThroneOptions.Salvage[k];
 			}
 	  //}
 	  if (ThroneOptions.Salvage_fav[1] == undefined){
@@ -2366,18 +2350,18 @@ doPreset : function (room, retry) {
 	if(retry > 15) {if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Giving Up</font>";return;};
 		if(document.getElementById('ThroneTRS'))
 		document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
-	var t = Tabs.Throne;
-	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-	params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
-	params.action = 'setPreset';
+        var t = Tabs.Throne;    
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'setPreset';
         params.presetId = room;
-  	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-		method: "post",
-		parameters: params,
-		loading: true,
-		onSuccess: function (transport) {
-			var rslt = eval("(" + transport.responseText + ")");
-				if(rslt.ok){
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
 					document.getElementById('tra'+params.presetId).disabled = true;
 					t.TTpaint(params.presetId);
 					if(document.getElementById('throneInventoryPreset'+params.presetId))
@@ -2389,14 +2373,14 @@ doPreset : function (room, retry) {
                 else {
                     if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
                     setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
-			   } 
-		},
-		onFailure: function () {
+                }
+            },
+            onFailure: function () {
                     if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
 					setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
-		},
-	});
-		
+            },
+        });
+
 },
 
 paintEquipInfo : function (z,what){
@@ -3315,7 +3299,6 @@ if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) { var serverID = getSer
 
 
 /****************************  Tower Tab  ******************************/
-
 Tabs.tower = {
   tabOrder: 1,
   tabLabel: 'Tower',
@@ -4009,9 +3992,6 @@ Tabs.tower = {
     } else {
       return;
     }
-    
-    
-    
     var city = Cities.byID[m.toCityId];
     if ( city.tileId == m.toTileId )
       target = unsafeWindow.g_js_strings.commonstr.city+ ' '+city.name+' ('+ city.x +','+ city.y + ')';
@@ -6353,8 +6333,6 @@ Tabs.Search = {
     
     pop.show (true);
   },
-  
-  
   getKnights : function(){
          var t = Tabs.Search;
          var knt = new Array();
@@ -6383,7 +6361,6 @@ Tabs.Search = {
                   }
           }
       },
-  
   
   
   gotPlayerLeaderboard : function (rslt, span){
@@ -6918,7 +6895,6 @@ DebugTimer.display ('Time to GM_getValue() '+ totTargets +' targets for all citi
     t.writeDiv ('Scanning @ '+ x +','+ y +'<BR>');
   },
 }
-
 
 /*********************************** News TAB ***********************************/
 Tabs.News = {
@@ -9473,11 +9449,11 @@ Tabs.AutoCraft = {
     retrycount : 0,
 
     init: function(div){
-        var t = Tabs.AutoCraft;
-        t.myDiv = div;   
-        t.crafting = {
-                running: TrainOptions.CraftingRunning,
-        };
+       var t = Tabs.AutoCraft;
+       t.myDiv = div;   
+       t.crafting = {
+             running: TrainOptions.CraftingRunning,
+       };
         
         // set this after TrainOptions has been read in
         t.craftIntervall =TrainOptions.CraftIntervallMin;
@@ -19428,7 +19404,6 @@ Tabs.startup = {
             return;
         }
         
-
         t.getAtkKnight(cityID);
         slots=0;
         
