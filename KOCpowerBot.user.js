@@ -3834,7 +3834,6 @@ Tabs.tower = {
   },
 
   newIncoming : function (m){
-	  logit(inspect(m));
     var t = Tabs.tower;
     var totTroops = 0;
     for (k in m.unts){
