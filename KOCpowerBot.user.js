@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130124c
+// @version        20130125a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -35,7 +35,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130124c';
+var Version = '20130125a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3311,28 +3311,6 @@ if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) { var serverID = getSer
 
 
 /****************************  Tower Tab  ******************************/
-if(unsafeWindow.update_march) {
-	var update_march2 = unsafeWindow.update_march;
-	unsafeWindow.update_march = function (f) {
-		var Z = Seed.queue_atkinc;
-		var F = Object.keys(f);
-		for (var R = 0; R < F.length; R++) {
-			var C = Object.keys(f[F[R]]);
-			for (var Q = 0; Q < C.length; Q++) {
-				var O = f[F[R]][C[Q]];
-				for (var G = 0; G < O.length; G++) {
-					var D = f[F[R]][C[Q]][G];
-					var s = parseInt(D.marchStatus);
-					if(s == 9) {
-						var m = Z[C[Q]];
-						logit('march type is '+m.marchType);
-						m.marchStatus = s;
-						Tabs.tower.newIncoming(m);
-					}
-		}}};
-		update_march2(f);
-	}
-}
 
 Tabs.tower = {
   tabOrder: 1,
@@ -3346,6 +3324,7 @@ Tabs.tower = {
   soundRepeatTimer : null,
   soundStopTimer : null,
   towerMarches: [],
+  updatemarchfunc : null,
   Providers : {
         0: { 'country': "--Country--", 'provider': "--Provider--" },
         1: { 'country': "AUSTRALIA", 'provider': "T-Mobile" },
@@ -3460,14 +3439,15 @@ Tabs.tower = {
         112: { 'country': "UNITED STATES", 'provider': "Viaero" },
         113: { 'country': "CANADA", 'provider': "Wind Mobile" }
     },
-
   init: function(div){
-    var t = Tabs.tower;
+    if(unsafeWindow.update_march) {
+		t.updatemarchfunc = new CalterUwFunc ('update_march', [[/var\s*w\s*=\s*cm.IncomingAttackManager.getAllAttacks/i,'var Dar = seed.queue_atkinc\[o\];Dar.marchStatus = D.marchStatus;RecIncT\(Dar\);var w = cm.IncomingAttackManager.getAllAttacks']]);
+		unsafeWindow.RecIncT = Tabs.tower.newIncoming;
+		t.updatemarchfunc.setEnable(true);
+	};
     t.myDiv = div;
     if (GM_getValue ('towerMarches_'+getServerId()) != null)
       GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
-    // t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
-    // unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
  
     var m = '<DIV class=pbStat>TOWER ALERTS</div><TABLE class=pbTab><TR align=center>';
 
@@ -3854,6 +3834,7 @@ Tabs.tower = {
   },
 
   newIncoming : function (m){
+	  logit(inspect(m));
     var t = Tabs.tower;
     var totTroops = 0;
     for (k in m.unts){
@@ -4116,10 +4097,10 @@ Tabs.tower = {
 	};
     if (!Options.alertConfig.aChat) return;
     if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
-    if (SEND_ALERT_AS_WHISPER)
+    //if (SEND_ALERT_AS_WHISPER)
       sendChat ("/"+ Seed.player.name +' '+ msg);    // Whisper to myself
-    else
-      sendChat ("/a "+  msg);                        // Alliance chat
+    //else
+    //  sendChat ("/a "+  msg);                        // Alliance chat
   },
       handleTowerData: function(m){
         var t = Tabs.tower;
@@ -21052,16 +21033,6 @@ function FetchTopAlliances(first,last,callback,page,prop){
 		  } else callback(prop);
       },
     });
-}
-function testsomething () {
-	var i = +(cm.WorldSettings.getSetting("DARK_FOREST_AETHERSTONE_CAP")) || 0;
-    var d = cm.ThroneController.effectBonus(88);
-    i = i + (i * (d / 100));
-    cm.ThroneController.hasFactionBonus
-    if (v.hazBonus && v.faction === "fey") {
-            d = cm.ThroneController.effectBonus(95);
-            i = i + (i * (d / 100))
-        }
 }
 function fixkabamlag () {
 	var kfutime = Number(unsafeWindow.unixtime()+30);
