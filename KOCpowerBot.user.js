@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130125a
+// @version        20130125b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -35,7 +35,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130125a';
+var Version = '20130125b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -367,6 +367,7 @@ var ThroneOptions = {
     UseTokens:false,
     SaveUnique:true,
     heatup:true,
+    ibrokeitems:[],
 };
 
 var AttackOptions = {
@@ -2566,6 +2567,7 @@ PaintSalvageHistory : function() {
         }
         ThroneOptions.Items["0"]["active"] = true;
         t.PaintQueue();
+        // need to update for doupgradesimple and ibrokeitems.
         if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true && Seed.queue_throne.end == undefined){
                   unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
                   unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
@@ -2819,7 +2821,7 @@ PaintSalvageHistory : function() {
                         saveThroneData();
                     }
                     Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
-                    //if (rslt.success)
+                    if (!rslt.success && ThroneOptions.Active)ThroneOptions.ibrokeitems.push(params.throneRoomItemId);
                     //{
                     //}
                     unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
@@ -2849,7 +2851,8 @@ PaintSalvageHistory : function() {
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'timeRepair';
-        params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
+        if(ThroneOptions.ibrokeitems.length)params.throneRoomItemId = ThroneOptions.ibrokeitems[0];
+        else params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
         params.cityId = cityid;
                     
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
@@ -2859,17 +2862,18 @@ PaintSalvageHistory : function() {
             onSuccess: function (transport) {
                 var rslt = eval("(" + transport.responseText + ")");
                     if(rslt.ok){
-                              ThroneOptions.RepairEnd = rslt.eta;
-                              Seed.queue_throne.itemId= ThroneOptions.Items["0"]["id"];
-                             Seed.queue_throne.start=unixTime();
-                             Seed.queue_throne.end= rslt.eta;
-                             t.repairId = ThroneOptions.Items["0"]["id"];
-                             t.repairEnd = rslt.eta;
-                             unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
-                             var x = rslt.eta - unixTime();
-                            ThroneOptions.Good++;
-                            saveThroneOptions();
-                   } else {    
+						ThroneOptions.RepairEnd = rslt.eta;
+						if(params.throneRoomItemId != ThroneOptions.Items["0"]["id"]) ThroneOptions.ibrokeitems.shift();
+						else t.repairId = ThroneOptions.Items["0"]["id"];
+						Seed.queue_throne.itemId= params.throneRoomItemId;
+						Seed.queue_throne.start=unixTime();
+						Seed.queue_throne.end= rslt.eta;
+						t.repairEnd = rslt.eta;
+						unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+						var x = rslt.eta - unixTime();
+						ThroneOptions.Good++;
+						saveThroneOptions();
+					} else {    
                            ThroneOptions.Good++;
                         saveThroneOptions();
                    }        
@@ -2955,7 +2959,7 @@ PaintSalvageHistory : function() {
                 clearInterval(t.setRepairTimer);
                 if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
                 else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
-                unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
+                //unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
                 Seed.queue_throne = "";
                 return;
             } else {
