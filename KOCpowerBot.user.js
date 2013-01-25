@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130125c
+// @version        20130125d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130125c';
+var Version = '20130125d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -245,6 +245,7 @@ var GiftDB = {
   people :	{},
   giftitems	:	[],
   agift	:	false,
+  adgift	:	false,
 };
 
 var CrestData = new Array();
@@ -20510,7 +20511,6 @@ Tabs.popcontrol = {
 
 
 }
-
 /****** Gifts Tab ********/
 Tabs.gifts = {
 	tabLabel: 'Gifts',
@@ -20531,7 +20531,7 @@ Tabs.gifts = {
 			m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 		};
 		m+='<option value="-1">Delete</option>';
-        m+='</select> </td><td> <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available </td><td> Total sent:</td><td id=giftnumber></td></tr></table></DIV>';
+        m+='</select> </td><td> <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available </td><td> <INPUT id=pbadgift type=checkbox '+ (GiftDB.adgift?' CHECKED':'') +'\> Scan and delete gift messages</td><td> Total sent:</td><td id=giftnumber></td></tr></table></DIV>';
         m += '<DIV class=pbStat></DIV>';
         m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.  You may update us on working scenarios <a href=http://userscripts.org/scripts/discuss/101052>here</a></DIV>';
         m += '<DIV class=pbStat></DIV>';
@@ -20553,13 +20553,20 @@ Tabs.gifts = {
 				GiftDB.people[Number(element_class[c].id)][2] = element_class[c].name;
 			};t.saveGiftsdb();
 		}, false);
+		document.getElementById('pbadgift').addEventListener('change', function(){
+			GiftDB.adgift = this.checked;
+			t.saveGiftsdb();
+			if(GiftDB.adgift)t.scangifts(4);
+		}, false);
 		document.getElementById('pbaugift').addEventListener('change', function(){
 			GiftDB.agift = this.checked;
 			t.saveGiftsdb();
 		}, false);
 		t.giftstats();
 		if(GiftDB.agift)
-		setTimeout(t.sendgifts,10000)
+			setTimeout(t.sendgifts,10000);
+		if(GiftDB.adgift)
+			setTimeout(t.scangifts,7*60*1000);
 	},
 	populatepeople : function () {
         var t = Tabs.gifts;
@@ -20602,7 +20609,7 @@ Tabs.gifts = {
 								var sent=0;
 								if(GiftDB.people[rslt.recipients[i].userId]) {
 									sent = GiftDB.people[rslt.recipients[i].userId][1];
-									GiftDB.people[rslt.recipients[i].userId][2] = name;//annoying people change their name.  lets update.
+									GiftDB.people[Number(rslt.recipients[i].userId)][2] = name;//annoying people change their name.  lets update.
 								};
 							m += '<tr><td></td><td>'+name+'<td/><td>Total sent: '+sent+'</td>'; 
 							m+= '<td><select class="giftstosend" id="'+rslt.recipients[i].userId+'" name="'+name+'">';
@@ -20614,7 +20621,9 @@ Tabs.gifts = {
 							m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 						}
 							m+='<option value="-1">Delete</option>';
-							m+= '</select> Received '+GiftDB.people[Number(h)][3]+'</td></tr>';
+							if(GiftDB.people[Number(rslt.recipients[i].userId)]) var recgifts = GiftDB.people[Number(rslt.recipients[i].userId)][3];
+							else var recgifts = 0;
+							m+= '</select> Received '+recgifts+'</td></tr>';
 						}
 						for(h in GiftDB.people) {
 							if(t.curava.indexOf(h) != -1)continue;
@@ -20705,7 +20714,7 @@ Tabs.gifts = {
 						logit('rslt.succ is '+rslt.succeedRecipients);
 						for(i = 0;i<rslt.succeedRecipients.length;i++) {
 						var z = rslt.succeedRecipients[i];
-						GiftDB.people[Number(z)][1]++;
+						GiftDB.people[Number(z)][1];
 							//logit('i is '+i+' length is '+rslt.succeedRecipients.length+' z is '+z+' Giftdb is '+GiftDB.people[Number(z)]);
 						
 					};
@@ -20763,81 +20772,81 @@ Tabs.gifts = {
 		};
 		document.getElementById('giftnumber').innerHTML=sentgifts;
 	},
-	scangifts : function() {
-        var t = Tabs.gifts;
-		//requestType=GET_MESSAGE_HEADERS_FOR_USER_INBOX&boxType=inbox&pageNo=4
-    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-    params.requestType = "GET_MESSAGE_HEADERS_FOR_USER_INBOX";
-    params.boxType="inbox";
-    params.pageNo=1;
-    new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
-        method: "post",
-        parameters: params,
-        onSuccess: function (message) {
-            var rslt = eval("(" + message.responseText + ")");
-            if (rslt.ok) {
-				for(i in rslt.message){
-					logit('0 '+(rslt.message[i].fromUserId == "0"));
-					logit(' new gift '+(rslt.message[i].subject == "New Gift Received!"));
-					if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "¡Nuevo regalo recibido!")){
-
-	var params2 = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-    params2.messageId=i;
-    params2.requestType = "GET_MESSAGE_FOR_ID";
-    new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
-        method: "post",
-        parameters: params2,
-        onSuccess: function (message) {
-            var rslt2 = eval("(" + message.responseText + ")");
-            if (rslt2.ok) {
-				logit(rslt2.messageBody);
-				var name = rslt2.messageBody.split(" ")[0]+" "+rslt2.messageBody.split(" ")[1];
-				for(x in GiftDB.people) {
-					if(GiftDB.people[x][2] == name) {
-						GiftDB.people[x][3] = GiftDB.people[x][3]?(GiftDB.people[x][3]+1):1;
-						logit("Found "+name);
-					}
-					
-				}
-				
-				
-			}
-			
-		},
-	});
-					
-					
-					
-					
-					
-					
-					
-				};
-					
-				};
-				
-				
-				
-				
-				
-            } else {
-            }
-        },
-        onFailure: function () {
-        },
-    });
+	
+	scangifts : function(page) {
+		var t = Tabs.gifts;
+		page = Number(page);
+		if(!GiftDB.adgift)return;
+		if(page <= 0)return;
+		logit('page is '+page);
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.requestType = "GET_MESSAGE_HEADERS_FOR_USER_INBOX";
+		params.boxType="inbox";
+		params.pageNo=page;
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params,
+			onSuccess: function (message) {
+				var rslt = eval("(" + message.responseText + ")");
+				if (rslt.ok) {
+					for(i in rslt.message){
+						if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "¡Nuevo regalo recibido!")){
+							t.foundgift(i);
+						};
+					};
+					setTimeout(function() {t.scangifts(parseInt(page-1))},5000);
+				} else return;
+			},
+			onFailure: function () {
+				return;
+			},
+		});
 		
 	},
 	
+	deletemsgs : function (msgs) {
+		var t = Tabs.gifts;
+		var params4 = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params4.requestType="ACTION_ON_MESSAGES";
+		params4.selectedAction="delete";
+		params4.selectedMessageIds=msgs;
+		params4.boxType="inbox";
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params4,
+		});	
+	},
 	
-	
+	foundgift : function (id) {
+		var t = Tabs.gifts;
+		var params2 = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params2.messageId=id;
+		params2.requestType = "GET_MESSAGE_FOR_ID";
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+			method: "post",
+			parameters: params2,
+			onSuccess: function (message) {
+				var rslt2 = eval("(" + message.responseText + ")");
+				if (rslt2.ok) {
+					var name = rslt2.messageBody.split(" ")[0]+" "+rslt2.messageBody.split(" ")[1];
+					var todel = [];
+					for(x in GiftDB.people) {
+						if(GiftDB.people[x][2] == name) {
+							GiftDB.people[x][3] += 1;
+							t.saveGiftsdb();
+							t.deletemsgs(id);
+						};
+					};
+				}
+			},
+		});
+	},
 	
 	show:	function (){
 		},
 	hide:	function (){},
 	
 }
-
 /***** Ascension Tab ******/
 Tabs.ascension = {
     tabLabel: 'Ascension',
