@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130125b
+// @version        20130125c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -35,7 +35,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130125b';
+var Version = '20130125c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3444,6 +3444,7 @@ Tabs.tower = {
         113: { 'country': "CANADA", 'provider': "Wind Mobile" }
     },
   init: function(div){
+	  var t = Tabs.tower;
     if(unsafeWindow.update_march) {
 		t.updatemarchfunc = new CalterUwFunc ('update_march', [[/var\s*w\s*=\s*cm.IncomingAttackManager.getAllAttacks/i,'var Dar = seed.queue_atkinc\[o\];Dar.marchStatus = D.marchStatus;RecIncT\(Dar\);var w = cm.IncomingAttackManager.getAllAttacks']]);
 		unsafeWindow.RecIncT = Tabs.tower.newIncoming;
@@ -20593,7 +20594,9 @@ Tabs.gifts = {
 			if(typeof GiftDB.people[b] == 'number'){
 			var x = GiftDB.people[b];
 			GiftDB.people[b] = [x,0];
-		};
+			};
+			if(!GiftDB.people[b][3])GiftDB.people[b][3] = 0;//time limited fix for older variable
+		
 		};
         //convert old variable
 		        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -20622,7 +20625,10 @@ Tabs.gifts = {
 								}
 								var name = sex+' '+rslt.recipients[i].displayName;
 								var sent=0;
-								if(GiftDB.people[rslt.recipients[i].userId])sent = GiftDB.people[rslt.recipients[i].userId][1];
+								if(GiftDB.people[rslt.recipients[i].userId]) {
+									sent = GiftDB.people[rslt.recipients[i].userId][1];
+									GiftDB.people[rslt.recipients[i].userId][2] = name;//annoying people change their name.  lets update.
+								};
 							m += '<tr><td></td><td>'+name+'<td/><td>Total sent: '+sent+'</td>'; 
 							m+= '<td><select class="giftstosend" id="'+rslt.recipients[i].userId+'" name="'+name+'">';
 							m+='<option value="0">None</option>';
@@ -20633,7 +20639,7 @@ Tabs.gifts = {
 							m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 						}
 							m+='<option value="-1">Delete</option>';
-							m+= '</select></td></tr>';
+							m+= '</select> Received '+GiftDB.people[Number(h)][3]+'</td></tr>';
 						}
 						for(h in GiftDB.people) {
 							if(t.curava.indexOf(h) != -1)continue;
@@ -20648,7 +20654,7 @@ Tabs.gifts = {
 							m+='<option value="'+GiftDB.giftitems[g].itemId+'">'+GiftDB.giftitems[g].name+'</option>';
 						}
 							m+='<option value="-1">Delete</option>';
-							m+= '</select></td></tr>';
+							m+= '</select> Received '+GiftDB.people[Number(h)][3]+'</td></tr>';
 							
 						};
 						m+='</table></center>';
@@ -20662,6 +20668,7 @@ Tabs.gifts = {
 							GiftDB.people[Number(e.target.id)] = [Number(e.target.value),0];
 							else GiftDB.people[Number(e.target.id)][0] =Number(e.target.value);
 							GiftDB.people[Number(e.target.id)][2] = e.target.name;
+							GiftDB.people[Number(e.target.id)][3] = 0;
 						}else {
 							delete GiftDB.people[Number(e.target.id)];
 						};
@@ -20774,12 +20781,82 @@ Tabs.gifts = {
 			}
 	},
 	giftstats :	function() {
+        var t = Tabs.gifts;
 		var sentgifts = 0;
         for(h in GiftDB.people){
 		sentgifts += GiftDB.people[h][1];
 		};
 		document.getElementById('giftnumber').innerHTML=sentgifts;
 	},
+	scangifts : function() {
+        var t = Tabs.gifts;
+		//requestType=GET_MESSAGE_HEADERS_FOR_USER_INBOX&boxType=inbox&pageNo=4
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.requestType = "GET_MESSAGE_HEADERS_FOR_USER_INBOX";
+    params.boxType="inbox";
+    params.pageNo=1;
+    new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+        method: "post",
+        parameters: params,
+        onSuccess: function (message) {
+            var rslt = eval("(" + message.responseText + ")");
+            if (rslt.ok) {
+				for(i in rslt.message){
+					logit('0 '+(rslt.message[i].fromUserId == "0"));
+					logit(' new gift '+(rslt.message[i].subject == "New Gift Received!"));
+					if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "¡Nuevo regalo recibido!")){
+
+	var params2 = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params2.messageId=i;
+    params2.requestType = "GET_MESSAGE_FOR_ID";
+    new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+        method: "post",
+        parameters: params2,
+        onSuccess: function (message) {
+            var rslt2 = eval("(" + message.responseText + ")");
+            if (rslt2.ok) {
+				logit(rslt2.messageBody);
+				var name = rslt2.messageBody.split(" ")[0]+" "+rslt2.messageBody.split(" ")[1];
+				for(x in GiftDB.people) {
+					if(GiftDB.people[x][2] == name) {
+						GiftDB.people[x][3] = GiftDB.people[x][3]?(GiftDB.people[x][3]+1):1;
+						logit("Found "+name);
+					}
+					
+				}
+				
+				
+			}
+			
+		},
+	});
+					
+					
+					
+					
+					
+					
+					
+				};
+					
+				};
+				
+				
+				
+				
+				
+            } else {
+            }
+        },
+        onFailure: function () {
+        },
+    });
+		
+	},
+	
+	
+	
+	
 	show:	function (){
 		},
 	hide:	function (){},
