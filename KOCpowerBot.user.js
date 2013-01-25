@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130124a
+// @version        20130124b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -35,7 +35,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130124a';
+var Version = '20130124b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3314,22 +3314,22 @@ if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) { var serverID = getSer
 if(unsafeWindow.update_march) {
 	var update_march2 = unsafeWindow.update_march;
 	unsafeWindow.update_march = function (f) {
-    var F = Object.keys(f);
-		    for (var R = 0; R < F.length; R++) {
-        var C = Object.keys(f[F[R]]);
-        for (var Q = 0; Q < C.length; Q++) {
-            var O = f[F[R]][C[Q]];
-            for (var G = 0; G < O.length; G++) {
-                var D = f[F[R]][C[Q]][G];
-                var s = parseInt(D.marchStatus);
-                if(s == 9) {
-					var m = Seed.queue_atkinc[C[Q]];
-					m.marchStatus = s;
-					Tabs.tower.newIncoming(m);
-				}
-                
-			}}}
+		var Z = Seed.queue_atkinc;
 		update_march2(f);
+		var F = Object.keys(f);
+		for (var R = 0; R < F.length; R++) {
+			var C = Object.keys(f[F[R]]);
+			for (var Q = 0; Q < C.length; Q++) {
+				var O = f[F[R]][C[Q]];
+				for (var G = 0; G < O.length; G++) {
+					var D = f[F[R]][C[Q]][G];
+					var s = parseInt(D.marchStatus);
+					if(s == 9) {
+						var m = Z[C[Q]];
+						m.marchStatus = s;
+						Tabs.tower.newIncoming(m);
+					}
+		}}}
 	}
 }
 
@@ -21062,8 +21062,6 @@ function testsomething () {
             i = i + (i * (d / 100))
         }
 }
-
-
 function fixkabamlag () {
 	var kfutime = Number(unsafeWindow.unixtime()+30);
 	for (city in Seed.queue_atkp) {
