@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130125f
+// @version        20130125g
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130125f';
+var Version = '20130125g';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21244,6 +21244,8 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 	m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'R­'+x+'I').replace(/ri/g,'r'+x+'i');
 	
 	m = m.replace(/Na/g,'N'+x+'a').replace(/nA/g,'n'+x+'A').replace(/NA/g,'N'+x+'A').replace(/na/g,'n'+x+'a');
+	
+	m = m.replace(/885/g,'8'+x+'8'+x+'5').replace(/80085/g,'8'+x+'0'+x+'0'+x+'8'+'5');
 	
 	this.value = whisper+m;
 }, false);
