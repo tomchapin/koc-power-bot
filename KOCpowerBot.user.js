@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130125g
+// @version        20130126b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130125g';
+var Version = '20130126b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -843,7 +843,7 @@ var FoodAlerts = {
 /*********************************  Farm Tab ***********************************/
 
 Tabs.farm = {
-  tabLabel: 'Farm',
+  tabLabel: unsafeWindow.g_js_strings.grove.farms,
   tabOrder : 612,
   myDiv : null,
   MapAjax : new CMapAjax(),
@@ -1695,7 +1695,7 @@ Tabs.farm = {
 
 Tabs.Throne = {
   tabOrder : 590,
-  tabLabel : 'Throne',
+  tabLabel : unsafeWindow.g_js_strings.throneRoom.chair,
   cont : null,
   curTabBut : null,
   curTabName : null,
@@ -4442,7 +4442,7 @@ var buildTabTypes = {
 };
 Tabs.build = {
     tabOrder: 20,
-    tabLabel: 'Build',
+    tabLabel: unsafeWindow.g_js_strings.commonstr.build,
     myDiv: null,
     timer: null,
     buildTab: null,
@@ -7083,7 +7083,7 @@ Tabs.Test = {
  /****************************  Transport Tab  *******************************/
 Tabs.transport = {
     tabOrder: 101,
-    tabLabel: 'Transport',
+    tabLabel: unsafeWindow.g_js_strings.commonstr.transport,
     myDiv: null,
     timer: null,
     traderState: [],
@@ -8429,6 +8429,7 @@ cm.MARCH_TYPES = {
   tabDisabled : false,
   tabOrder : 110,
   myDiv : null,
+  tabLabel : unsafeWindow.g_js_strings.commonstr.raid,
   rallypointlevel:null,
   knt:{},
   Troops:{},
@@ -9437,7 +9438,7 @@ cm.MARCH_TYPES = {
 /*************************** Auto Craft Tab *************************************/
 Tabs.AutoCraft = {
     tabOrder: 20, //CHECKTHIS ?
-    tabLabel: "Craft",
+    tabLabel: unsafeWindow.g_js_strings.commonstr.craft,
     myDiv: null,
     timer: null,
     craftIntervall  : TrainOptions.CraftIntervallMin,
@@ -9829,7 +9830,7 @@ Tabs.AutoCraft = {
   
  /*********************************  Barbing Tab - now the Dark Forest Tab ***********************************/
 Tabs.Barb = {
-  tabLabel: 'AutoDF',
+  tabLabel: unsafeWindow.g_js_strings.commonstr.darkForest,
   tabOrder : 125,
   myDiv : null,
   MapAjax : new CMapAjax(),
@@ -11211,7 +11212,7 @@ var troops = {1:'SupplyTroops',
               };  
 Tabs.Reassign = {
   tabOrder: 30,
-  tabLabel: 'Reassign',
+  tabLabel: unsafeWindow.g_js_strings.commonstr.reassign,
   myDiv: null,
   timer: null,
   reassignState: [],
@@ -11968,7 +11969,7 @@ Tabs.Reassign = {
 /************************  Reinforce Tab ************************/
 Tabs.Reinforce = {
   tabOrder: 40,
-  tabLabel: 'Reinforce',
+  tabLabel: unsafeWindow.g_js_strings.commonstr.reinforce,
   myDiv: null,
   cityID: null,
   rallypointlevel:null,
@@ -12736,7 +12737,7 @@ Tabs.Reinforce = {
 /************************  AutoTrain Tab ************************/
 Tabs.AutoTrain = {
   tabOrder: 120,
-  tabLabel: 'Train',
+  tabLabel: unsafeWindow.g_js_strings.commonstr.train,
   myDiv: null,
   city:0,
   gamble : {"1":{"min":"5","max":"15","cost":"2"},"2":{"min":"10","max":"25","cost":"4"}},
@@ -13468,9 +13469,8 @@ var WideScreen = {
 
 /*******************   Chat tab ****************/
 Tabs.Chat = {
-  tabOrder : 300,                    // order to place tab in top bar
-  //tabDisabled : !ENABLE_SAMPLE_TAB, // if true, tab will not be added or initialized
-  //tabLabel : 'Click Me',            // label to show in main window tabs
+  tabOrder : 300,
+  tabLabel : unsafeWindow.g_js_strings.commonstr.chat,
   myDiv : null,
   timer : null,  
   
@@ -16723,6 +16723,7 @@ Tabs.Resources = {
   resource : {1:'Food', 2:'Wood', 3:'Stone', 4:'Ore'},
   users : [],
   myDiv : null,
+  tabLabel : unsafeWindow.g_js_strings.commonstr.resources,
   doList : [], // list of gifts to accept
   accepting : false,
   city : null,
@@ -17863,6 +17864,7 @@ Tabs.Apothecary = {
 Tabs.Combat = {
     myDiv: null,
     tabOrder: 400,
+    tabLabel : unsafeWindow.g_js_strings.commonstr.combat,
     troops: [{},{}], //Array[Defender, Attacker]
     active: [{},{}],
     lost: [{},{}],
@@ -18262,6 +18264,7 @@ Tabs.Inventory = {
 	myDiv: null,
 	general: [],
 	combat: [],
+	tabLabel: unsafeWindow.g_js_strings.commonstr.inventory,
 	resources: [],
 	chest: [],
 	court: [],
@@ -19054,6 +19057,7 @@ Tabs.startup = {
 /*********************************  Crest Tab ***********************************/
  Tabs.Crest = {
   tabOrder : 70,
+  tabLabel : unsafeWindow.g_js_strings.commonstr.crest,
   myDiv : null,
   rallypointlevel:null,
   error_code: 0,
@@ -20117,7 +20121,7 @@ var March = {
 Tabs.popcontrol = {
   tabOrder : 850,
   tabDisabled : false,
-  tabLabel : 'Pop Control',
+  tabLabel : unsafeWindow.g_js_strings.commonstr.population,
   myDiv : null,
   timer : null,
   timer_del : null,
@@ -20726,7 +20730,7 @@ Tabs.popcontrol = {
 }
 /****** Gifts Tab ********/
 Tabs.gifts = {
-	tabLabel: 'Gifts',
+	tabLabel: unsafeWindow.g_js_strings.commonstr.gift,
 	tabOrder: 30001,
 	myDiv:	null,
 	tabDisabled: false,
