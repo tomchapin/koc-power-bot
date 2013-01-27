@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130126e
+// @version        20130127a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130126e';
+var Version = '20130127a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2772,7 +2772,7 @@ PaintSalvageHistory : function() {
         var cityid = 0;
         var cidarray = [];
         for (var k in Cities.byID) {//added more than 50k to stop spending gems by accident
-            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ThroneOptions.Items["0"]["cost"]+50000)) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt(50000))
             {
 				cidarray.push(k);
             }
@@ -2782,7 +2782,6 @@ PaintSalvageHistory : function() {
         if(cityid == 0){
            return;    
         }
-      Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ThroneOptions.Items["0"]["cost"]));
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'upgradeLevel';
