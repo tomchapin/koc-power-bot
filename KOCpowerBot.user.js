@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130126c
+// @version        20130126d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130126c';
+var Version = '20130126d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -20995,7 +20995,6 @@ Tabs.gifts = {
 		page = Number(page);
 		if(!GiftDB.adgift)return;
 		if(page <= 0)return;
-		logit('page is '+page);
 		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.requestType = "GET_MESSAGE_HEADERS_FOR_USER_INBOX";
 		params.boxType="inbox";
@@ -21326,15 +21325,13 @@ function fixkabamlag () {
 			if(Seed.queue_atkp[city][march].marchType)
 				if(Seed.queue_atkp[city][march].botMarchStatus == undefined && Seed.queue_atkp[city][march].marchStatus == 5) {
 					if (Seed.queue_atkp[city][march].returnUnixTime < kfutime) {
-						logit('fixing march from '+city+' with id '+march);
-						
+						logit('fixing march from '+Cities.byID[String(city).replace(/city/,'')].name+' with id '+march);
 						//the following code will be a future option?  to return all troops or forget them until updateseed? or refresh
 						for (var i=0;i<17;i++) {
 							if (Seed.queue_atkp[city][march]['unit'+i+'Count'] > 0)
 							if(Seed.queue_atkp[city][march]['unit'+i+'Return'] == 0 || Seed.queue_atkp[city][march]['unit'+i+'Return'] == undefined)
 							Seed.queue_atkp[city][march]['unit'+i+'Return'] = Seed.queue_atkp[city][march]['unit'+i+'Count'];
 						};
-						
 						Seed.queue_atkp[city][march].hasUpdated = true;
 						Seed.queue_atkp[city][march].marchStatus = 8;
 					} else kabamhashX.push(Seed.queue_atkp[city][march].knightId);
@@ -21344,7 +21341,7 @@ function fixkabamlag () {
 			if(Seed.knights[city][knight].knightStatus != 1)
 				if(kabamhashX.indexOf(Seed.knights[city][knight].knightId) == -1) {
 					Seed.knights[city][knight].knightStatus = 1;
-					logit('march '+city+' fixing knight '+knight);
+					logit('march '+Cities.byID[String(city).replace(/city/,'')].name+' fixing knight '+Seed.knights[city][knight].knightName);
 				}
 		}
 	}
