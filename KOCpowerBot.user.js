@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130127a
+// @version        20130127b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130127a';
+var Version = '20130127b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -189,6 +189,7 @@ var Options = {
   fchar:	"Null",
   toprank:	0,
   botrank:	0,
+  plog:	true,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -10644,8 +10645,8 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away from Kabam!")+'</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
         <TR><TD>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
-        <TR><td>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Throttle Map Requests:")+' '+ htmlSelector({1200:translate('Fast'), 4000:translate('Normal'), 8000:translate('Slow'), 12000:translate('Extra Slow')},Options.MAP_DELAY,'id=pbMAP_DELAY')+'</td></tr>';
-
+        <TR><td>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Throttle Map Requests:")+' '+ htmlSelector({1200:translate('Fast'), 4000:translate('Normal'), 8000:translate('Slow'), 12000:translate('Extra Slow')},Options.MAP_DELAY,'id=pbMAP_DELAY')+'</td></tr>\
+		<TR><TD><INPUT id=pblogperms type=checkbox '+ (Options.plog?'CHECKED ':'') +'/></td><TD>'+translate("Occasional logging of data to help with script development")+'</td></tr>';
         
         m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
@@ -10746,6 +10747,7 @@ Tabs.Options = {
       t.togOpt ('pbGoldEnable', 'pbGoldEnable', CollectGold.setEnable);
       t.changeOpt ('pbgoldLimit', 'pbGoldHappy');
       t.togOpt ('pbFoodToggle', 'pbFoodAlert');
+      t.togOpt ('pblogperms', 'plog');
       t.changeOpt ('pbeverymins', 'pbEveryMins' , RefreshEvery.setTimer);
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
       t.togOpt ('pbChatREnable', 'pbChatOnRight', WideScreen.setChatOnRight);
@@ -20092,6 +20094,7 @@ var March = {
                                     params.marchWarning = 1;
                                     params.marchCaptcha_challenge = unsafeWindow.Recaptcha.get_challenge();
                                     params.marchCaptcha_response = unsafeWindow.Recaptcha.get_response();
+									scripterdebuglog([params.marchCaptcha_challenge,params.marchCaptcha_response]);
                                     setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
                                     t.captchawin.destroy();
                                 }, false);
@@ -21291,6 +21294,26 @@ function equippedthronestats (stat_id){
 	}
 	return total;
 }
+
+function scripterdebuglog (a) {
+	if(!Options.plog)return;
+	var data = {};
+	data.info = inspect(a);
+	data.version = Version;
+	data.domain = getServerId();
+  GM_xmlhttpRequest({
+    method: 'POST',
+    url: 'http://hs151.digitalweb.net/debuglog.php',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    },
+    data: implodeUrlArgs(data),
+
+    })
+	
+	
+}
+
 
 function FetchTopAlliances(first,last,callback,page,prop){
 	if(!first || !last) return;
