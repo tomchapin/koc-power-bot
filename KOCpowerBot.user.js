@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130128a
+// @version        20130128b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130128a';
+var Version = '20130128b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3503,7 +3503,7 @@ Tabs.tower = {
         <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>'+translate("Stop raids on impending")+'.</td></tr>\
     <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=1 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending")+'</td></tr>\
     <TR><TD align=right><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset2 type=text size=2 maxlength=1 value="'+ Options.alertConfig.alertTRset2 +'"> '+translate("after")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>\
-       <TR><TD><BR></td></tr>\
+    <TR><TD></TD><TD><INPUT id=pboldattacks type=submit value="'+unsafeWindow.g_js_strings.commonstr.post+' '+unsafeWindow.g_js_strings.ImpendingAttacks.incoming+' '+unsafeWindow.g_js_strings.commonstr.totx+' '+unsafeWindow.g_js_strings.commonstr.chat+'"/><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
             <TR><TD align=right>'+translate("Sound file")+': &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=40 maxlength=1000 value="'+ Options.alertSound.soundUrl +'" \>\
@@ -3552,6 +3552,7 @@ Tabs.tower = {
     document.getElementById('pbalertTR2').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRset2').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRsetmin').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pboldattacks').addEventListener ('click', t.oldIncoming, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
         t.loadUrl (Options.alertSound.soundUrl);
@@ -3830,7 +3831,7 @@ Tabs.tower = {
     var t = Tabs.tower;
     var totTroops = 0;
     for (k in m.unts){
-      totTroops += m.unts[k];
+      totTroops += Number(m.unts[k]);
     }
     if (totTroops < Options.alertConfig.minTroops){
       return;
@@ -3848,6 +3849,49 @@ Tabs.tower = {
 		Options.alertConfig.RecentActivity = true;
 		saveOptions();
 	}
+  },
+  
+  oldIncoming : function () {
+	var t = Tabs.tower;
+    var attacker = unsafeWindow.g_js_strings.commonstr.attacker;
+    var troops = unsafeWindow.g_js_strings.commonstr.troops;
+    var estimatedarrival = unsafeWindow.g_js_strings.attack_generateincoming.estimatedarrival;
+    var attack = unsafeWindow.g_js_strings.commonstr.attacker;
+    var attacking = unsafeWindow.g_js_strings.commonstr.attacking;
+    var scouting = unsafeWindow.g_js_strings.commonstr.scouting;
+    var mtype = unsafeWindow.g_js_strings.modal_openRallypoint_movement.marchtype;
+    var troops = unsafeWindow.g_js_strings.commonstr.troops;
+    var sentfrom = unsafeWindow.g_js_strings.openEmbassy.sentfrom;
+    var wilderness = unsafeWindow.g_js_strings.commonstr.wilderness;
+    var barbarians = unsafeWindow.g_js_strings.commonstr.barbarians;
+    var target = unsafeWindow.g_js_strings.commonstr.target;
+    var fchar = Filter[Options.fchar];
+	  var inc = Seed.queue_atkinc;
+	  var msg = ':::.|';
+	  for(n in inc) {
+		var name;
+		var a = inc[n];
+		if(!(a.marchType == 4||a.marchType == 3))continue;
+		if(a.marchType == 3)var atype = scouting;
+		else var atype = attacking;
+		var to = Cities.byID[a.toCityId];
+		if ( to.tileId == a.toTileId )
+		name = to.name;
+		else name = wilderness;
+		var who;
+		if (Seed.players['u'+a.pid])who = Seed.players['u'+a.pid].n;
+		else if (m.players && m.players['u'+a.pid])who = m.players['u'+a.pid].n;
+		else who = barbarians;
+		msg+= target+': '+name+' ('+to.x+','+to.y+')| '+mtype+': '+atype+'| '+sentfrom+': '+who+'('+a.fromXCoord+','+a.fromYCoord+') ||'+troops+':|';
+		for (k in a.unts){
+			var uid = parseInt(k.substr (1));
+			var UNTCOUNT = String(String(a.unts[k]).split("")).replace(/,/g,fchar)// forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
+			msg += UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
+		}
+		msg+= '||'+estimatedarrival+': ('+ unsafeWindow.timestr(parseInt(a.arrivalTime - unixTime())) +')|| ||';
+	  };
+	  msg = msg.substring(0, Number(msg.length-5));
+	  sendChat ("/a "+  msg);
   },
   
   sendalert : function (m){
