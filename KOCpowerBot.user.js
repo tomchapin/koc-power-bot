@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130128c
+// @version        20130128d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130128c';
+var Version = '20130128d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -97,12 +97,11 @@ var upgradeData = {
 
 //just add your character here and everything else will auto populate
 var Filter = {
-	Null:"­",
+	Null:atob('rQ=='),
 	Period:".",
 	Space:" ",
 	UnicodeLS:"&#8232;",
 };
-
 var Options = {
   srcSortBy    : 'level',
   srcMinLevel  : 1,
