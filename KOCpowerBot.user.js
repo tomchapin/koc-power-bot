@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130128b
+// @version        20130128c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130128b';
+var Version = '20130128c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -19530,15 +19530,6 @@ Tabs.startup = {
     
     
 
-    getRallypointLevel: function(cityId){
-        var t = Tabs.Crest;
-        for (var o in Seed.buildings[cityId]){
-            var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-            var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-            if (buildingType == 12)
-                t.rallypointlevel=parseInt(buildingLevel);
-        }
-    },
   
  
 
@@ -19574,10 +19565,10 @@ Tabs.startup = {
                     Options.Crest2Count++;
                 }
                 saveCrestData();
-                setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));   
+                setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Options.Crestinterval*1000));   
                 return;
             } else { //onFailure
-                setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*10*1000)+(Options.Crestinterval*1000));
+                setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*1000)+(Options.Crestinterval*1000));
             }
         });
     },
@@ -19646,11 +19637,10 @@ Tabs.startup = {
         //retry = (typeof retry === 'undefined') ? 0 : retry;
         if (!Options.crestRunning) return;
         if (CrestData.length == 0)
-            return;
+            {logit('length was 0');return;};
         if (CrestDataNum >= CrestData.length)
             CrestDataNum = 0;
         r = (typeof CrestData[CrestDataNum].curRound === 'undefined') ? 1 : CrestData[CrestDataNum].curRound;
-
         cityID = 'city' + CrestData[CrestDataNum].CrestCity;
         retry++;
         if(CrestData[CrestDataNum].isWild){
@@ -19693,16 +19683,9 @@ Tabs.startup = {
                 t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
             return;
         }
-        
         t.getAtkKnight(cityID);
-        slots=0;
-        
-        for (z in Seed.queue_atkp[cityID]) {
-            slots++;
-        }
-        if  (Seed.queue_atkp[cityID].toSource() == "[]")
-            slots=0;
-        var march_slots = March.getEmptySlots(cityID.split("city")[1]);
+
+        var march_slots = Number(March.getEmptySlots(cityID.split("city")[1]));
         if (march_slots < 1) {
            if (CrestData.length == 1) {
             t.timer = setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
@@ -19710,9 +19693,7 @@ Tabs.startup = {
             t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
                     }
           return;
-    
-    }
-
+		};
         if  (t.knt.toSource() == "[]") {
             t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
             return;
