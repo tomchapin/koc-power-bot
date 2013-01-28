@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130127b
+// @version        20130127d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130127b';
+var Version = '20130127d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -190,6 +190,7 @@ var Options = {
   toprank:	0,
   botrank:	0,
   plog:	true,
+  raidbtns:	false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -8452,10 +8453,11 @@ cm.MARCH_TYPES = {
     setInterval(t.lookup, 2500);
     setInterval(t.sendreport, 1*60*1000);
   
-    AddSubTabLink('Stop Raids', t.StopAllRaids, 'pbraidtab');
-    AddSubTabLink('Resume Raids', t.ResumeAllRaids, 'pbraidtabRes');
-    AddSubTabLink('Delete Raids', t.DeleteAllRaids, 'pbraidtabDel');
-    
+	if(Options.raidbtns) {
+		AddSubTabLink('Stop Raids', t.StopAllRaids, 'pbraidtab');
+		AddSubTabLink('Resume Raids', t.ResumeAllRaids, 'pbraidtabRes');
+		AddSubTabLink('Delete Raids', t.DeleteAllRaids, 'pbraidtabDel');
+	};
     
     var m = '<DIV class=pbStat>RAID FUNCTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
         m += '<TD><INPUT id=pbRaidStart type=submit value="Auto Reset = '+ (Options.RaidRunning?'ON':'OFF') +'" ></td>';
@@ -10646,7 +10648,8 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
         <TR><TD>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
         <TR><td>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Throttle Map Requests:")+' '+ htmlSelector({1200:translate('Fast'), 4000:translate('Normal'), 8000:translate('Slow'), 12000:translate('Extra Slow')},Options.MAP_DELAY,'id=pbMAP_DELAY')+'</td></tr>\
-		<TR><TD><INPUT id=pblogperms type=checkbox '+ (Options.plog?'CHECKED ':'') +'/></td><TD>'+translate("Occasional logging of data to help with script development")+'</td></tr>';
+		<TR><TD><INPUT id=pblogperms type=checkbox '+ (Options.plog?'CHECKED ':'') +'/></td><TD>'+translate("Occasional logging of data to help with script development")+'</td></tr>\
+        <TR><TD><INPUT id=pbRaidBut type=checkbox '+ (Options.raidbtns?'CHECKED ':'') +'/></td><TD>'+translate("Raids buttons on top of screen")+'</td></tr>';
         
         m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
@@ -10756,6 +10759,7 @@ Tabs.Options = {
       t.togOpt ('HelReq', 'HelpRequest');
       t.togOpt ('DelReq', 'DeleteRequest');
       t.togOpt ('DelAC', 'DeletegAl');
+      t.togOpt ('pbRaidBut', 'raidbtns');
       t.togOpt ('MapExtra', 'MapShowExtra');
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
@@ -21301,6 +21305,7 @@ function scripterdebuglog (a) {
 	data.info = inspect(a);
 	data.version = Version;
 	data.domain = getServerId();
+	logit('sending debug data '+data.info);
   GM_xmlhttpRequest({
     method: 'POST',
     url: 'http://hs151.digitalweb.net/debuglog.php',
