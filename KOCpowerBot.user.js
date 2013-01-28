@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130127d
+// @version        20130128a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130127d';
+var Version = '20130128a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -191,6 +191,9 @@ var Options = {
   botrank:	0,
   plog:	true,
   raidbtns:	false,
+  transbtns: false,
+  reassgnbtns: false,
+  crestbtns: false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -7095,6 +7098,7 @@ Tabs.transport = {
     check: false,
     init: function (div) {
         var t = Tabs.transport;
+        if(Options.transbtns)AddSubTabLink('Transport',t.toggleTraderState, 'TransToggleTab');
         t.myDiv = div;
         t.traderState = {running: false,};
         t.readTraderState();
@@ -7103,8 +7107,10 @@ Tabs.transport = {
         var m = '<DIV id=pbTowrtDivF class=pbStat>' + translate("AUTOMATED TRANSPORT FUNCTION") + '</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
         if (t.traderState.running == false) {
             m += '<TD><INPUT id=pbTraderState type=submit value="Transport = OFF"></td>';
+			if(document.getElementById('TransToggleTab'))document.getElementById('TransToggleTab').innerHTML = '<span style="color: #CCC">Transport: Off</span>';
         } else {
             m += '<TD><INPUT id=pbTraderState type=submit value="Transport = ON"></td>';
+            if(document.getElementById('TransToggleTab'))document.getElementById('TransToggleTab').innerHTML = '<span style="color: #FFFF00">Transport: On</span>';
         }
         m += '<TD><INPUT id=pbShowRoutes type=submit value="' + translate("Show Routes") + '"></td>';
         m += '<TD><INPUT id=pbTradeReset type=submit value="' + translate("Delete Routes") + '"></td>';
@@ -7911,15 +7917,18 @@ Tabs.transport = {
         }
     },
     toggleTraderState: function (obj) {
+		obj =  document.getElementById('pbTraderState');
         var t = Tabs.transport;
         if (t.traderState.running == true) {
             t.traderState.running = false;
             obj.value = "Transport = OFF";
+            if(document.getElementById('TransToggleTab'))document.getElementById('TransToggleTab').innerHTML = '<span style="color: #CCC">Transport: Off</span>';
             clearTimeout(t.checkdotradetimeout);
             t.count = 0;
         } else {
             t.traderState.running = true;
             obj.value = "Transport = ON";
+            if(document.getElementById('TransToggleTab'))document.getElementById('TransToggleTab').innerHTML = '<span style="color: #FFFF00">Transport: On</span>';
             t.e_tradeRoutes();
         }
     },
@@ -8506,7 +8515,8 @@ cm.MARCH_TYPES = {
                        //alert(MarchType +'/'+  MarchStatus);
                    }
            }
-           //logit(t.stopcount);    
+           //logit(t.stopcount);   
+           if(!Options.raidbtns)return; 
            if (t.resuming == false && t.stopping == false && t.deleting == false && t.activecount != 0)
             document.getElementById('pbraidtab').innerHTML = '<span style="color: #ff6">Stop Raids ('+ t.activecount + ')</span>'
            else if (t.resuming == false && t.stopping == false && t.deleting == false)
@@ -10649,7 +10659,10 @@ Tabs.Options = {
         <TR><TD>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
         <TR><td>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Throttle Map Requests:")+' '+ htmlSelector({1200:translate('Fast'), 4000:translate('Normal'), 8000:translate('Slow'), 12000:translate('Extra Slow')},Options.MAP_DELAY,'id=pbMAP_DELAY')+'</td></tr>\
 		<TR><TD><INPUT id=pblogperms type=checkbox '+ (Options.plog?'CHECKED ':'') +'/></td><TD>'+translate("Occasional logging of data to help with script development")+'</td></tr>\
-        <TR><TD><INPUT id=pbRaidBut type=checkbox '+ (Options.raidbtns?'CHECKED ':'') +'/></td><TD>'+translate("Raids buttons on top of screen")+'</td></tr>';
+        <TR><TD><INPUT id=pbRaidBut type=checkbox '+ (Options.raidbtns?'CHECKED ':'') +'/></td><TD>'+translate("Raid toggle buttons on top of screen")+'</td></tr>\
+        <TR><TD><INPUT id=pbTransBut type=checkbox '+ (Options.transbtns?'CHECKED ':'') +'/></td><TD>'+translate("Transport toggle button on top of screen")+'</td></tr>\
+        <TR><TD><INPUT id=pbReassignBut type=checkbox '+ (Options.reassgnbtns?'CHECKED ':'') +'/></td><TD>'+translate("Reassign toggle button on top of screen")+'</td></tr>\
+        <TR><TD><INPUT id=pbCrestBut type=checkbox '+ (Options.crestbtns?'CHECKED ':'') +'/></td><TD>'+translate("Crest toggle button on top of screen")+'</td></tr>';
         
         m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
@@ -10772,6 +10785,9 @@ Tabs.Options = {
       t.togOpt ('CFilter', 'filter');
       t.togOpt ('MKLag', 'mklag');
       t.togOpt ('pbmaintoggle', 'amain');
+      t.togOpt ('pbTransBut', 'transbtns');
+      t.togOpt ('pbReassignBut', 'reassgnbtns');
+      t.togOpt ('pbCrestBut', 'crestbtns');
       t.changeOpt ('pbwhichcity', 'smain');
       t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
       t.changeOpt ('pbfilter','fchar');
@@ -11233,6 +11249,7 @@ Tabs.Reassign = {
         t.reassignState = {
             running: false,
         };
+        if(Options.reassgnbtns)AddSubTabLink('Reassign',t.toggleReassignState, 'ReasignToggleTab');
         t.readReassignState();
         t.readReassignRoutes();
         t.e_reassignRoutes();
@@ -11240,8 +11257,10 @@ Tabs.Reassign = {
       var m = '<DIV id=pbReMainDivF class=pbStat>'+translate("AUTOMATED REASSIGN FUNCTION")+'</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
       if (t.reassignState.running == false) {
           m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = OFF"></td>';
+			if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #CCC">Reassign: Off</span>';
       } else {
           m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = ON"></td>';
+			if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #FFFF00">Reassign: On</span>';
       }
       m += '<TD><INPUT id=pbReassShowRoutes type=submit value="Show Routes"></td>';
       m += '</tr></table></div>';
@@ -11831,16 +11850,20 @@ Tabs.Reassign = {
         }
     },
     toggleReassignState: function(obj){
+		obj =  document.getElementById('pbReassignState');
+		if(!obj)obj = document.getElementById('pbReassignState');
         var t = Tabs.Reassign;
         if (t.reassignState.running == true) {
             t.reassignState.running = false;
             obj.value = "Reassign = OFF";
+            if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #CCC">Reassign: Off</span>';
             t.checkdoreassigntimeout = null;
             t.count = 0;
         }
         else {
             t.reassignState.running = true;
             obj.value = "Reassign = ON";
+            if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #FFFF00">Reassign: On</span>';
             t.e_reassignRoutes();
         }
     },
@@ -19079,14 +19102,14 @@ Tabs.startup = {
 
     t.myDiv = div;
     var selbut=0;
-    AddSubTabLink('Crest',t.toggleCrestState, 'CrestToggleTab');
+    if(Options.crestbtns)AddSubTabLink('Crest',t.toggleCrestState, 'CrestToggleTab');
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (Options.crestRunning == false) {
            m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = OFF"></td>';
-	   document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
+	   if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
        } else {
            m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = ON"></td>';
-	   document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
+	   if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
        }
 
 
@@ -19733,15 +19756,16 @@ Tabs.startup = {
 
     toggleCrestState: function(obj) {
         var t = Tabs.Crest;
+        obj=document.getElementById('Cresttoggle');
             if (Options.crestRunning == true) {
                 Options.crestRunning = false;
                 obj.value = "Crest = OFF";
-	   	document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
+	   	if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
                 saveOptions();
             } else {
                 Options.crestRunning = true;
                 obj.value = "Crest = ON";
-		document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
+		if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
                 for (crest in Options.Creststatus) {
                     owned = Seed.items['i'+crest];
                     if (owned == undefined) {
