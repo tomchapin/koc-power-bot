@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130128d
+// @version        20130129a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130128d';
+var Version = '20130129a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -7276,6 +7276,10 @@ Tabs.transport = {
         document.getElementById('MaxFood')
             .addEventListener('click', function () {
             t.Food = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountFood')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec1')
@@ -7285,6 +7289,10 @@ Tabs.transport = {
         document.getElementById('MaxWood')
             .addEventListener('click', function () {
             t.Wood = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountWood')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec2')
@@ -7294,6 +7302,10 @@ Tabs.transport = {
         document.getElementById('MaxStone')
             .addEventListener('click', function () {
             t.Stone = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountStone')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec3')
@@ -7303,6 +7315,10 @@ Tabs.transport = {
         document.getElementById('MaxOre')
             .addEventListener('click', function () {
             t.Ore = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountOre')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec4')
@@ -7312,15 +7328,24 @@ Tabs.transport = {
         document.getElementById('MaxGold')
             .addEventListener('click', function () {
             t.Gold = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountGold')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransGold')
                 .innerHTML)) ? input : parseIntCommas(document.getElementById('TransGold')
                 .innerHTML);
         }, false);
+        //hereherehere
         document.getElementById('MaxAstone')
             .addEventListener('click', function () {
             t.Astone = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountAstone')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec5')
