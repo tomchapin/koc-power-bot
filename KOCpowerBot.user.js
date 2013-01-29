@@ -21288,24 +21288,50 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 	return;
 	var whisper = "";
 	var firstindex = 0;
-	if(this.value.charAt(0) == "/" || this.value.charAt(0) == "@") {
-	firstindex = this.value.indexOf(" ");
-	whisper = this.value.slice(0,firstindex);
+	var enctype = 0;
+	
+	if(this.value.charAt(0) == "\\") {
+		this.value = String(this.value).slice(1);
+		enctype = 1;
 	};
+	
+	if(this.value.charAt(0) == "/" || this.value.charAt(0) == "@") {
+		firstindex = this.value.indexOf(" ");
+		whisper = this.value.slice(0,firstindex);
+	};
+	
 	var m = this.value.substr(firstindex,this.value.length);
-	var x = Filter[Options.fchar];
-	m = m.replace(/Fa/g,'F'+x+'a').replace(/fA/g,'f'+x+'A').replace(/FA/g,'F'+x+'A').replace(/fa/g,'f'+x+'a');
 	
-	m = m.replace(/Gr/g,'G'+x+'r').replace(/gR/g,'g'+x+'R').replace(/GR/g,'G'+x+'R').replace(/gr/g,'g'+x+'r');
+	if(enctype == 1) {
+	  var unicodeString = '';
+	  for (var i=0; i < m.length; i++) {
+		var theUnicode = m.charCodeAt(i);;;
+		theUnicode = '&#' + theUnicode+';';
+		unicodeString += theUnicode;
+	  }
+	  m = ' '+unicodeString;
+	};
 	
-	m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'R­'+x+'I').replace(/ri/g,'r'+x+'i');
-	
-	m = m.replace(/Na/g,'N'+x+'a').replace(/nA/g,'n'+x+'A').replace(/NA/g,'N'+x+'A').replace(/na/g,'n'+x+'a');
-	
-	m = m.replace(/885/g,'8'+x+'8'+x+'5').replace(/80085/g,'8'+x+'0'+x+'0'+x+'8'+'5');
-	
+	if(enctype == 0) {
+		var m = this.value.substr(firstindex,this.value.length);
+		var x = Filter[Options.fchar];
+		m = m.replace(/Fa/g,'F'+x+'a').replace(/fA/g,'f'+x+'A').replace(/FA/g,'F'+x+'A').replace(/fa/g,'f'+x+'a');
+		
+		m = m.replace(/Gr/g,'G'+x+'r').replace(/gR/g,'g'+x+'R').replace(/GR/g,'G'+x+'R').replace(/gr/g,'g'+x+'r');
+		
+		m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'R­'+x+'I').replace(/ri/g,'r'+x+'i');
+		
+		m = m.replace(/Na/g,'N'+x+'a').replace(/nA/g,'n'+x+'A').replace(/NA/g,'N'+x+'A').replace(/na/g,'n'+x+'a');
+		
+		m = m.replace(/885/g,'8'+x+'8'+x+'5').replace(/80085/g,'8'+x+'0'+x+'0'+x+'8'+'5');
+	};
 	this.value = whisper+m;
+	logit(this.value);
 }, false);
+
+
+
+
 var kboxtime = 1;
 function killbox () {
 	kboxtime += 1;
