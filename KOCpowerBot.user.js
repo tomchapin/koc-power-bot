@@ -21326,7 +21326,6 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 		m = m.replace(/885/g,'8'+x+'8'+x+'5').replace(/80085/g,'8'+x+'0'+x+'0'+x+'8'+'5');
 	};
 	this.value = whisper+m;
-	logit(this.value);
 }, false);
 
 
