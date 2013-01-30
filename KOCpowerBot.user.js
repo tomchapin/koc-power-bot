@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130129b
+// @version        20130129c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130129b';
+var Version = '20130129c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13917,7 +13917,7 @@ latestChats : [],
         'question':function(chatObj,info) {
             // This is dangerous and in alpha. chat processor is screwy and password isnt working with parameters but I need broader testing so restricting this for now
 			// If you are reading this and know what you are doing you can enable it, but its at your own risk until this gets sorted. Dont enable globally yet.
-			if(!chatObj.notProcessed || (Seed.allianceDiplomacies.allianceId!='245')) { return; }
+			if(!chatObj.notProcessed || (Seed.allianceDiplomacies.allianceId!='245') || chatObj.fromMe) { return; }
             var t=ChatStuff;
 			var preset=parseInt(info) || 0;
 			if (preset>0 && preset<=Seed.throne.slotNum) {
@@ -14002,6 +14002,7 @@ latestChats : [],
 
         if(cArr[2]=='?') {
             question=true;
+			var info=cArr[3];
             if(ChatOptions.Chatpassenable){
                 var password=cArr[3];
             }
@@ -21140,7 +21141,7 @@ Tabs.gifts = {
 				var rslt = eval("(" + message.responseText + ")");
 				if (rslt.ok) {
 					for(i in rslt.message){
-						if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "¡Nuevo regalo recibido!")){
+						if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Â¡Nuevo regalo recibido!")){
 							t.foundgift(i);
 						};
 					};
@@ -21399,7 +21400,7 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 		
 		m = m.replace(/Gr/g,'G'+x+'r').replace(/gR/g,'g'+x+'R').replace(/GR/g,'G'+x+'R').replace(/gr/g,'g'+x+'r');
 		
-		m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'R­'+x+'I').replace(/ri/g,'r'+x+'i');
+		m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÂ­'+x+'I').replace(/ri/g,'r'+x+'i');
 		
 		m = m.replace(/Na/g,'N'+x+'a').replace(/nA/g,'n'+x+'A').replace(/NA/g,'N'+x+'A').replace(/na/g,'n'+x+'a');
 		
