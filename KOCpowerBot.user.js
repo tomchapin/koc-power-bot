@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130128d
+// @version        20130129b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130128d';
+var Version = '20130129b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -7276,6 +7276,10 @@ Tabs.transport = {
         document.getElementById('MaxFood')
             .addEventListener('click', function () {
             t.Food = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountFood')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec1')
@@ -7285,6 +7289,10 @@ Tabs.transport = {
         document.getElementById('MaxWood')
             .addEventListener('click', function () {
             t.Wood = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountWood')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec2')
@@ -7294,6 +7302,10 @@ Tabs.transport = {
         document.getElementById('MaxStone')
             .addEventListener('click', function () {
             t.Stone = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountStone')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec3')
@@ -7303,6 +7315,10 @@ Tabs.transport = {
         document.getElementById('MaxOre')
             .addEventListener('click', function () {
             t.Ore = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountOre')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec4')
@@ -7312,15 +7328,24 @@ Tabs.transport = {
         document.getElementById('MaxGold')
             .addEventListener('click', function () {
             t.Gold = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountGold')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransGold')
                 .innerHTML)) ? input : parseIntCommas(document.getElementById('TransGold')
                 .innerHTML);
         }, false);
+        //hereherehere
         document.getElementById('MaxAstone')
             .addEventListener('click', function () {
             t.Astone = 0;
+            if(t.MaxLoad == 0) {
+				t.MaxLoad = March.getMaxSize(t.tcp.city.id);
+				setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+			};
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountAstone')
                 .value = (parseInt(input) <= parseIntCommas(document.getElementById('TransRec5')
@@ -13887,7 +13912,62 @@ latestChats : [],
             div.appendChild(table);
             chatObj.textObj.appendChild(div);
         },
-    }
+    },
+	'tr':{
+        'question':function(chatObj,info) {
+            // This is dangerous and in alpha. chat processor is screwy and password isnt working with parameters but I need broader testing so restricting this for now
+			// If you are reading this and know what you are doing you can enable it, but its at your own risk until this gets sorted. Dont enable globally yet.
+			if(!chatObj.notProcessed || (Seed.allianceDiplomacies.allianceId!='245')) { return; }
+            var t=ChatStuff;
+			var preset=parseInt(info) || 0;
+			if (preset>0 && preset<=Seed.throne.slotNum) {
+				Tabs.Throne.doPreset(preset,0);
+				t.SendChat(chatObj.shortName,'Throne Room changed to preset '+preset+' per request.\r\n');
+			}
+			else {
+				Tabs.Throne.doPreset('1',0);
+				t.SendChat(chatObj.shortName,'Throne Room changed to preset 1 by default.\r\n');
+			}
+        },
+        'answer':function(chatObj,info) {
+            if(!chatObj.notProcessed) { return; }
+        },
+    },
+	'sac':{
+		'question':function(chatObj,info){
+		if(!chatObj.notProcessed) { return; }
+		GM_log("Start sac Question \r\n"+info);
+		// This is going to be even more dangerous, so not even uncommenting it yet.
+		//var params = Object.clone(g_ajaxparams);
+        //params.cid = currentcityid;
+        //params.type = unitid;
+        //params.quant = numUnits;
+        //var profiler = new cm.Profiler("ResponseTime", "train.php");
+        //new Ajax.Request(g_ajaxpath + "ajax/sacrifice.php" + g_ajaxsuffix, {
+        //    method: "post",
+        //    parameters: params,
+        //    onSuccess: function (transport) {
+        //        profiler.stop();
+        //        var response = eval("(" + transport.responseText + ")");
+        //        if (response.ok) {
+        //            seed.queue_sacr["city" + currentcityid].push(response.queue_sacr);
+        //            seed.units["city" + currentcityid] = response.units;
+        //            seed.cityData.city[currentcityid].population = response.cityData_city.population;
+        //            seed.cityData.city[currentcityid].populationCap = response.cityData_city.populationCap;
+        //            queue_changetab_train();
+        //            changeBarracksModalTabs(1);
+        //            Modal.hideModal()
+        //        } else {
+        //            Modal.showAlert(response.feedback)
+        //        }
+        //    }
+        //}
+		},
+		'answer':function(chatObj,info){
+			if(!chatObj.notProcessed) { return; }
+			GM_log("End sac Question \r\n"+info);
+		},
+	}
   },
 
   allowUsersHash:null,
