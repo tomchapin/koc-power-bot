@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130129c
+// @version        20130130a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130129c';
+var Version = '20130130a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4066,9 +4066,9 @@ Tabs.tower = {
     who += ' ('+getDiplomacy(m.aid)+')';
     
     if(m.marchStatus == 9)
-        msg = '.::.'+scoutingat+' '+target+' ||| '+attacker+' '+ who +' || '+attackrecalled+' || '+troops+': ';
+        msg = '.::.|'+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+attackrecalled+' || '+troops+': ';
     else
-        msg = '..:.'+Options.alertConfig.aPrefix +' ||| '+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
+        msg = '..:.|'+Options.alertConfig.aPrefix +' || '+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
         //msg = Options.alertConfig.aPrefix +' My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';        
         
 	var fchar = Filter[Options.fchar];
@@ -21378,7 +21378,7 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 	
 	if(this.value.charAt(0) == "/" || this.value.charAt(0) == "@") {
 		firstindex = this.value.indexOf(" ");
-		whisper = this.value.slice(0,firstindex);
+		whisper = this.value.slice(0,firstindex)+' ';
 	};
 	
 	var m = this.value.substr(firstindex,this.value.length);
@@ -21390,7 +21390,7 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
 		theUnicode = '&#' + theUnicode+';';
 		unicodeString += theUnicode;
 	  }
-	  m = ' '+unicodeString;
+	  m = unicodeString;
 	};
 	
 	if(enctype == 0) {
