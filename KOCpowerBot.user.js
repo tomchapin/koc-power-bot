@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130130a
+// @version        20130131a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130130a';
+var Version = '20130131a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13580,7 +13580,7 @@ Tabs.Chat = {
                         <TD width=10px>&nbsp;</td><TD><input type=checkbox id=pbautoblacklist />'+translate("Auto blacklist players if 1st attempt fails")+'</td></tr>\
                         <TR><TD></td><TD valign=top>'+translate("Allowed Players:")+' <br><textarea cols=30 rows=1 id=allowUserBox></textarea></td>\
                         <TD width=10px>&nbsp;</td><TD> '+translate("Blacklisted Players")+' <br><textarea cols=30 rows=1 id=blacklistUserBox ></textarea></td></tr>\
-                        <TR><TD colspan=3>'+translate("Type \"/[Player] units?\" to get a unit count <br> Type \"/[Player] attacks? to get impending attacks")+' <br> '+translate("Player name is cAsE-SeNsItIvE")+' </td></tr></table>';
+                        <TR><TD colspan=3>'+translate("Type \"/[Player] units? [password]\" to get a unit count <br> Type \"/[Player] attacks? [password]\" to get impending attacks")+' <br> '+translate("Type \"/[Player] tr? [password] [preset]\" to switch to a specific TR preset.")+'<br>' +translate("Player name is cAsE-SeNsItIvE")+' </td></tr></table>';
     t.togtext('allowUserBox', 'AllowUsersRemoteControl');
     t.togtext('blacklistUserBox', 'BlacklistUsersRemoteControl');
     t.togOpt('pbchatqaenable', 'Chatenable', ChatStuff.init);
@@ -13903,7 +13903,7 @@ latestChats : [],
                     AddCell(tr).innerHTML = names['u'+marchObj.pid]?names['u'+marchObj.pid].n.substring(0,10):(marchObj.players['u'+marchObj.pid]?marchObj.players['u'+marchObj.pid].n.substring(0,10):'Undefined');
                     AddCell(tr).innerHTML = (alliance['a'+marchObj.fromAllianceId]?alliance['a'+marchObj.fromAllianceId].substring(0,10):'Undefined')+' ('+getDiplomacy(marchObj.fromAllianceId)+')';
                     var troops = [];
-                    for(var t = 1; t<13; t++){
+                    for(var t = 1; t<15; t++){
                         troops.push(parseInt(marchObj.unts['u'+t]));
                     }
                     AddCell(tr).innerHTML = '<a onclick=pbviewtroops('+ troops.join(',') +')>'+translate("View troops")+'</a>';
@@ -14004,7 +14004,8 @@ latestChats : [],
             question=true;
 			var info=cArr[3];
             if(ChatOptions.Chatpassenable){
-                var password=cArr[3];
+                var password=cArr[3].split(" ")[1];
+				info=cArr[3].split(" ").slice(2);
             }
         } else {
             var info=cArr[3];
@@ -14024,7 +14025,7 @@ latestChats : [],
         // }
         var done=0;
 
-        if(cmdInfo) {
+        if(cmdInfo && (!chatObj.fromMe)) {
             window.setTimeout(function() {
                 if(question && chatObj.notProcessed) {
                     var permission = false;
