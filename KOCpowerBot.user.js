@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130131a
+// @version        20130202a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130131a';
+var Version = '20130202a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -756,6 +756,7 @@ function pbStartup (){
   Tabs.gifts.readGiftsdb();
   setCities();
 if(unsafeWindow.g_ajaxparams.lang == "en")unsafeWindow.g_js_strings.getChat.nobadlang = "No bad language. No personal attacks. No links. Use /username to whisper to another player. Respect the mods, the scripters, and each other and most importantly, have fun!";
+if(unsafeWindow.g_js_strings)unsafeWindow.g_js_strings.commonstr.yourScriptVersionIsOut = unsafeWindow.g_js_strings.checkoutofdate.reloadconfirm;
 
 // TODO: Make sure WinPos is visible on-screen ?
   if (Options.pbWinPos==null || Options.pbWinPos.x==null|| Options.pbWinPos.x=='' || isNaN(Options.pbWinPos.x)){
