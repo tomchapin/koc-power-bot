@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130202a
+// @version        20130202b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130202a';
+var Version = '20130202b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3224,7 +3224,9 @@ doSalvage : function(){
                     z = unsafeWindow.cm.thronestats.effects;
                     var msg = (y.name + " (" + z[y.effects["slot1"].id]["2"] + "/"+ z[y.effects["slot2"].id]["2"]+ "/"+ z[y.effects["slot3"].id]["2"]+ "/"+ z[y.effects["slot4"].id]["2"]+ "/"+ z[y.effects["slot5"].id]["2"] +")");
                     t.addToSalvageLog(msg,rslt.aetherstones);
-                    unsafeWindow.kocThroneItems[params.itemId].salvage();
+					delete unsafeWindow.kocThroneItems[params.itemId];
+					unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+                    //unsafeWindow.kocThroneItems[params.itemId].salvage();
                     if(t.curTabName == 'EQ')
 						t.FillEquipCheckboxes();
                 }
