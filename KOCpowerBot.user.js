@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130202b
+// @version        20130204a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130202b';
+var Version = '20130204a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -131,7 +131,7 @@ var Options = {
   pbChatOnRight: false,
   pbWideMap    : false,
   pbFoodAlert  : false,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRset2:1, alertTRsetwaittime:60,RecentActivity:false,email:false},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -193,6 +193,7 @@ var Options = {
   transbtns: false,
   reassgnbtns: false,
   crestbtns: false,
+  SaveState: {},
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -3504,7 +3505,8 @@ Tabs.tower = {
             </table></td></tr>\
         <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>'+translate("Stop raids on impending")+'.</td></tr>\
     <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=1 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending")+'</td></tr>\
-    <TR><TD align=right><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset2 type=text size=2 maxlength=1 value="'+ Options.alertConfig.alertTRset2 +'"> '+translate("after")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>\
+    <TR><TD><INPUT id=pbalerttoff type=checkbox '+ (Options.alertConfig.alertTRtoff?'CHECKED ':'') +'/></td><td>'+translate("Stop auto outgoing marches on impending")+'</td></tr>\
+    <TR><TD align=right><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Toggle TR and marches back after: ")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>\
     <TR><TD></TD><TD><INPUT id=pboldattacks type=submit value="'+unsafeWindow.g_js_strings.commonstr.post+' '+unsafeWindow.g_js_strings.ImpendingAttacks.incoming+' '+unsafeWindow.g_js_strings.commonstr.totx+' '+unsafeWindow.g_js_strings.commonstr.chat+'"/><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
@@ -3552,7 +3554,7 @@ Tabs.tower = {
     document.getElementById('pbalertTR').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRset').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTR2').addEventListener ('change', t.e_alertOptChanged, false);
-    document.getElementById('pbalertTRset2').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalerttoff').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRsetmin').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pboldattacks').addEventListener ('click', t.oldIncoming, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
@@ -3658,10 +3660,9 @@ Tabs.tower = {
     Options.alertConfig.raid=document.getElementById('pbalertraid').checked;
     Options.alertConfig.alertTR=document.getElementById('pbalertTR').checked;
     Options.alertConfig.alertTR2=document.getElementById('pbalertTR2').checked;
+    Options.alertConfig.alertTRtoff=document.getElementById('alertTRtoff').checked;
     var trset = parseInt(document.getElementById('pbalertTRset').value);
     Options.alertConfig.alertTRset = trset;
-    var trset2 = parseInt(document.getElementById('pbalertTRset2').value);
-    Options.alertConfig.alertTRset2 = trset2;
     var trsetwait = parseInt(document.getElementById('pbalertTRsetmin').value);
     Options.alertConfig.alertTRsetwaittime = trsetwait;
     var mt = parseInt(document.getElementById('pbalertTroops').value);
@@ -3736,11 +3737,14 @@ Tabs.tower = {
 			if(!incomming) {
 				var switchtime = parseInt(Options.alertConfig.lastAttack)+Options.alertConfig.alertTRsetwaittime*60;
 				if (switchtime < now) {
-					var currentset = Seed.throne.activeSlot
-					if (Options.alertConfig.alertTRset2 != currentset){
-						var preset = Options.alertConfig.alertTRset2
-						Tabs.Throne.doPreset(preset);
-					}
+					if(Options.alertConfig.alertTRtoff) {
+						if(Options.SaveState.transport)Tabs.transport.toggleTraderState();
+						if(Options.SaveState.farm)Tabs.farm.toggleBarbState();
+						if(Options.SaveState.darkforest)Tabs.Barb.toggleBarbState();
+						if(Options.SaveState.crest)Tabs.Crest.toggleCrestState();
+					};
+					if (Options.SaveState.trset != Seed.throne.activeSlot)
+						Tabs.Throne.doPreset(Options.SaveState.trset);
 					Options.alertConfig.RecentActivity = false;
 					saveOptions();
 				}
@@ -3841,15 +3845,28 @@ Tabs.tower = {
     t.postToChat (m);
     if(m.marchStatus == 9)return;
     if (Options.alertConfig.alertTR){
-		var currentset = Seed.throne.activeSlot
+		if(Options.alertConfig.alertTR2) {
+			if(Options.alertConfig.RecentActivity == false) {
+				if(Options.alertConfig.alertTRtoff) {
+					Options.SaveState.transport = Tabs.transport.traderState.running;
+					if(Options.SaveState.transport)Tabs.transport.toggleTraderState();
+					Options.SaveState.farm = FarmOptions.Running;
+					if(Options.SaveState.farm)Tabs.farm.toggleBarbState();
+					Options.SaveState.darkforest = AttackOptions.Running;
+					if(Options.SaveState.darkforest)Tabs.Barb.toggleBarbState();
+					Options.SaveState.crest = Options.crestRunning;
+					if(Options.SaveState.crest)Tabs.Crest.toggleCrestState();
+				};
+				Options.SaveState.trset = Seed.throne.activeSlot;
+			};
+			Options.alertConfig.RecentActivity = true;
+			saveOptions();
+		};
+		var currentset = Seed.throne.activeSlot;
 		if (Options.alertConfig.alertTRset != currentset){
             var preset = Options.alertConfig.alertTRset
             Tabs.Throne.doPreset(preset);
 		}
-    }  
-	if(Options.alertConfig.alertTR2) {
-		Options.alertConfig.RecentActivity = true;
-		saveOptions();
 	}
   },
   
@@ -21530,6 +21547,46 @@ function fixkabamlag () {
 				}
 		}
 	}
+}
+function SaveStatus () {
+	//if(Tabs.transport.traderState.running)
+	Options.SaveState.snapshot = true;
+	Options.SaveState.transport = Tabs.transport.traderState.running;
+	Options.SaveState.farm = FarmOptions.Running;
+	Options.SaveState.darkforest = AttackOptions.Running;
+	Options.SaveState.crest = Options.crestRunning;
+	Options.SaveState.trset = Seed.throne.activeSlot;
+	saveOptions();
+	
+	/***
+transport
+Tabs.transport
+t.traderState.running
+toggleTraderState
+
+
+farm
+Tabs.farm
+FarmOptions.Running
+toggleBarbState
+
+darkforest
+Tabs.Barb
+AttackOptions.Running
+toggleBarbState
+
+crest
+ Tabs.Crest
+Options.crestRunning
+toggleCrestState
+
+
+
+Options.SaveState
+	 * 
+	 * 
+	 * ***/
+	
 }
  
 pbStartup ();
