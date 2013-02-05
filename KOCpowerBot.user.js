@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130204a
+// @version        20130204b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130204a';
+var Version = '20130204b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -192,6 +192,7 @@ var Options = {
   raidbtns:	false,
   transbtns: false,
   reassgnbtns: false,
+  dfbtns: false,
   crestbtns: false,
   SaveState: {},
 };
@@ -9972,16 +9973,17 @@ Tabs.Barb = {
     
   init : function (div){
     var t = Tabs.Barb;
+    if(Options.dfbtns)AddSubTabLink(unsafeWindow.g_js_strings.commonstr.darkForest,t.toggleBarbState, 'DFToggleTab');
     t.myDiv = div;
     setInterval(t.sendreport, 1*60*1000);
  
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED FOREST FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (AttackOptions.Running == false) {
            m += '<TD><INPUT id=AttSearch type=submit value="Attack = OFF"></td>';
-           //updatebotbutton("BOT");
+           if(document.getElementById('DFToggleTab'))document.getElementById('DFToggleTab').innerHTML = '<span style="color: #CCC">'+unsafeWindow.g_js_strings.commonstr.darkForest+': Off</span>';
        } else {
            m += '<TD><INPUT id=AttSearch type=submit value="Attack = ON"></td>';
-           //updatebotbutton("BOT (AA)");
+            if(document.getElementById('DFToggleTab'))document.getElementById('DFToggleTab').innerHTML = '<span style="color: #FFFF00">'+unsafeWindow.g_js_strings.commonstr.darkForest+': On</span>';
        }
       m += '<TD><INPUT id=troopselect type=submit value="Select troops"></td>';
       m += '<TD><INPUT id=Options type=submit value="Options"></td>';
@@ -10313,15 +10315,18 @@ Tabs.Barb = {
   },
   
   toggleBarbState: function(obj){
+	  obj = document.getElementById('AttSearch');
     var t = Tabs.Barb;
     if (AttackOptions.Running == true) {
         AttackOptions.Running = false;
         obj.value = "Attack = OFF";
+        if(document.getElementById('DFToggleTab'))document.getElementById('DFToggleTab').innerHTML = '<span style="color: #CCC">'+unsafeWindow.g_js_strings.commonstr.darkForest+': Off</span>';
         saveAttackOptions();
         t.nextattack = null;
     } else {
         AttackOptions.Running = true;
         obj.value = "Attack = ON";
+        if(document.getElementById('DFToggleTab'))document.getElementById('DFToggleTab').innerHTML = '<span style="color: #FFFF00">'+unsafeWindow.g_js_strings.commonstr.darkForest+': On</span>';
         saveAttackOptions();
         t.checkBarbData();
         t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+2000));
@@ -10750,6 +10755,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbRaidBut type=checkbox '+ (Options.raidbtns?'CHECKED ':'') +'/></td><TD>'+translate("Raid toggle buttons on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbTransBut type=checkbox '+ (Options.transbtns?'CHECKED ':'') +'/></td><TD>'+translate("Transport toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbReassignBut type=checkbox '+ (Options.reassgnbtns?'CHECKED ':'') +'/></td><TD>'+translate("Reassign toggle button on top of screen")+'</td></tr>\
+        <TR><TD><INPUT id=pbDFBut type=checkbox '+ (Options.dfbtns?'CHECKED ':'') +'/></td><TD>'+translate("Dark Forest toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbCrestBut type=checkbox '+ (Options.crestbtns?'CHECKED ':'') +'/></td><TD>'+translate("Crest toggle button on top of screen")+'</td></tr>';
         
         m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
@@ -10875,6 +10881,7 @@ Tabs.Options = {
       t.togOpt ('pbmaintoggle', 'amain');
       t.togOpt ('pbTransBut', 'transbtns');
       t.togOpt ('pbReassignBut', 'reassgnbtns');
+      t.togOpt ('pbDFBut', 'dfbtns');
       t.togOpt ('pbCrestBut', 'crestbtns');
       t.changeOpt ('pbwhichcity', 'smain');
       t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
