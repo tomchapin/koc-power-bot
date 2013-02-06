@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130204b
+// @version        20130205a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130204b';
+var Version = '20130205a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -194,6 +194,7 @@ var Options = {
   reassgnbtns: false,
   dfbtns: false,
   crestbtns: false,
+  Farmbtns:	false,
   SaveState: {},
 };
 //unsafeWindow.pt_Options=Options;
@@ -881,12 +882,14 @@ Tabs.farm = {
   init : function (div){
     var t = Tabs.farm;
     t.myDiv = div;
-
+  if(Options.Farmbtns)AddSubTabLink(unsafeWindow.g_js_strings.grove.farms,t.toggleBarbState, 'FarmToggleTab');
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED FARMING FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (FarmOptions.Running == false) {
            m += '<TD><INPUT id=FarmAttSearch type=submit value="Farming = OFF"></td>';
+           if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #CCC">'+unsafeWindow.g_js_strings.grove.farms+': Off</span>';
        } else {
            m += '<TD><INPUT id=FarmAttSearch type=submit value="Farming = ON"></td>';
+           if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #FFFF00">'+unsafeWindow.g_js_strings.grove.farms+': On</span>';
        }
       m +='<TD><INPUT id=pbpaintFarms type=submit value="Show Farms">';
       m += '<SELECT id=pbFarmcity type=list></td></tr></table>';
@@ -1411,15 +1414,18 @@ Tabs.farm = {
   
   toggleBarbState: function(obj){
     var t = Tabs.farm;
+    obj = document.getElementById('FarmAttSearch');
     if (FarmOptions.Running == true) {
         FarmOptions.Running = false;
         obj.value = "Farm = OFF";
+        if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #CCC">'+unsafeWindow.g_js_strings.grove.farms+': Off</span>';
         saveFarmOptions();
         t.nextattack = null;
     t.updateSeedTimer = null;
     } else {
         FarmOptions.Running = true;
         obj.value = "Farm = ON";
+		if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #FFFF00">'+unsafeWindow.g_js_strings.grove.farms+': On</span>';
         saveFarmOptions();
         t.checkFarmData();
         t.nextattack = setInterval(t.getnextCity,(FarmOptions.SendInterval*1000));
@@ -3661,7 +3667,7 @@ Tabs.tower = {
     Options.alertConfig.raid=document.getElementById('pbalertraid').checked;
     Options.alertConfig.alertTR=document.getElementById('pbalertTR').checked;
     Options.alertConfig.alertTR2=document.getElementById('pbalertTR2').checked;
-    Options.alertConfig.alertTRtoff=document.getElementById('alertTRtoff').checked;
+    Options.alertConfig.alertTRtoff=document.getElementById('pbalerttoff').checked;
     var trset = parseInt(document.getElementById('pbalertTRset').value);
     Options.alertConfig.alertTRset = trset;
     var trsetwait = parseInt(document.getElementById('pbalertTRsetmin').value);
@@ -3739,10 +3745,10 @@ Tabs.tower = {
 				var switchtime = parseInt(Options.alertConfig.lastAttack)+Options.alertConfig.alertTRsetwaittime*60;
 				if (switchtime < now) {
 					if(Options.alertConfig.alertTRtoff) {
-						if(Options.SaveState.transport)Tabs.transport.toggleTraderState();
-						if(Options.SaveState.farm)Tabs.farm.toggleBarbState();
-						if(Options.SaveState.darkforest)Tabs.Barb.toggleBarbState();
-						if(Options.SaveState.crest)Tabs.Crest.toggleCrestState();
+						if(Options.SaveState.transport && !Tabs.transport.traderState.running)Tabs.transport.toggleTraderState();
+						if(Options.SaveState.farm && !FarmOptions.Running)Tabs.farm.toggleBarbState();
+						if(Options.SaveState.darkforest && !AttackOptions.Running)Tabs.Barb.toggleBarbState();
+						if(Options.SaveState.crest && !Options.crestRunning)Tabs.Crest.toggleCrestState();
 					};
 					if (Options.SaveState.trset != Seed.throne.activeSlot)
 						Tabs.Throne.doPreset(Options.SaveState.trset);
@@ -10756,7 +10762,8 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbTransBut type=checkbox '+ (Options.transbtns?'CHECKED ':'') +'/></td><TD>'+translate("Transport toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbReassignBut type=checkbox '+ (Options.reassgnbtns?'CHECKED ':'') +'/></td><TD>'+translate("Reassign toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbDFBut type=checkbox '+ (Options.dfbtns?'CHECKED ':'') +'/></td><TD>'+translate("Dark Forest toggle button on top of screen")+'</td></tr>\
-        <TR><TD><INPUT id=pbCrestBut type=checkbox '+ (Options.crestbtns?'CHECKED ':'') +'/></td><TD>'+translate("Crest toggle button on top of screen")+'</td></tr>';
+        <TR><TD><INPUT id=pbCrestBut type=checkbox '+ (Options.crestbtns?'CHECKED ':'') +'/></td><TD>'+translate("Crest toggle button on top of screen")+'</td></tr>\
+        <TR><TD><INPUT id=pbFarmBut type=checkbox '+ (Options.Farmbtns?'CHECKED ':'') +'/></td><TD>'+translate("Farm toggle button on top of screen")+'</td></tr>';
         
         m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
@@ -10883,6 +10890,7 @@ Tabs.Options = {
       t.togOpt ('pbReassignBut', 'reassgnbtns');
       t.togOpt ('pbDFBut', 'dfbtns');
       t.togOpt ('pbCrestBut', 'crestbtns');
+      t.togOpt ('pbFarmBut', 'Farmbtns');
       t.changeOpt ('pbwhichcity', 'smain');
       t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
       t.changeOpt ('pbfilter','fchar');
