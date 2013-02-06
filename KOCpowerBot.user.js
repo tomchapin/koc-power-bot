@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130205a
+// @version        20130206a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130205a';
+var Version = '20130206a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -20104,10 +20104,8 @@ var March = {
 		if (Seed.queue_atkp[cityId] != undefined){
 			for(var k in Seed.queue_atkp[cityId]){
 				var m = Seed.queue_atkp[cityId][k];
-				if(m.marchType == 9){
-					if(m.botMarchStatus != 3 || m.botState != 3){ //If raid is stopped take it as empty slot
-						slots++;
-					}
+				if(m.marchType == 9) {
+					if(m.botMarchStatus > 2 && m.botMarchStatus < 10)slots++; //If raid is stopped take it as empty slot
 				} else {
 					slots++;				
 				}
