@@ -1,4 +1,4 @@
-﻿if (!g_js_strings) {
+if (!g_js_strings) {
     var g_js_strings = new Object()
 }
 g_js_strings.errorcode = new Object();
@@ -66,6 +66,7 @@ g_js_strings.errorcode.err_252 = "Match info does not match";
 g_js_strings.errorcode.err_301 = "Cannot abandon last City!";
 g_js_strings.errorcode.err_311 = "Cannot have Troops still on a March";
 g_js_strings.errorcode.err_312 = "Cannot have outstanding Market transactions";
+g_js_strings.errorcode.err_313 = "Cannot abandon city. There should be at least one Embassy in your other cities since you are in Alliance.";
 g_js_strings.errorcode.err_320 = "You may not build more than 10 Cities at this time";
 g_js_strings.errorcode.err_330 = "You may not increase a Knight's loyalty above 100";
 g_js_strings.errorcode.err_401 = "Tile info does not match";
@@ -200,6 +201,7 @@ g_js_strings.commonstr.feyCity = "Fey City";
 g_js_strings.commonstr.first = "First";
 g_js_strings.commonstr.food = "Food";
 g_js_strings.commonstr.fortx = "For";
+g_js_strings.commonstr.fortxl = "for";
 g_js_strings.commonstr.forward = "Forward";
 g_js_strings.commonstr.foreman = "Foreman";
 g_js_strings.commonstr.fortification = "Fortification";
@@ -559,6 +561,7 @@ g_js_strings.sacrifice_popup.unitdesc11 = "Increase Battering Rams base stats by
 g_js_strings.sacrifice_popup.unitdesc12 = "Increase Catapults base stats by %1$s% by Sacrificing Catapults!";
 g_js_strings.sacrifice_popup.unitdesc13 = "Increase Bloodthorns base stats by %1$s% by Sacrificing Bloodthorns!";
 g_js_strings.sacrifice_popup.unitdesc14 = "Increase Executioners base stats by %1$s% by Sacrificing Executioners!";
+g_js_strings.sacrifice_popup.unitdesc15 = "Increase Siege Walls base stats by %1$s% by Sacrificing Siege Walls!";
 g_js_strings.sacrifice_tooltip = new Object();
 g_js_strings.sacrifice_tooltip.unitdesc1 = "Supply Troops Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc2 = "Militiamen Empowered by %1$s%";
@@ -574,6 +577,7 @@ g_js_strings.sacrifice_tooltip.unitdesc11 = "Battering Rams Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc12 = "Catapults Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc13 = "Bloodthorns Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc14 = "Executioners Empowered by %1$s%";
+g_js_strings.sacrifice_tooltip.unitdesc15 = "Siege Walls Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.active_rituals = "Active Rituals:";
 g_js_strings.sacrifice_tooltip.duration_left = "%1$s left.";
 g_js_strings.modal_barracks_trainingtab = new Object();
@@ -1221,6 +1225,8 @@ g_js_strings.modal_myitems.ownnospeedup = "You own no Speedup Items. These items
 g_js_strings.modal_myitems.ownnoprod = "You own no Resource Items. These items will help increase your resource production rate.";
 g_js_strings.modal_myitems.ownnochest = "You own no Chest Items. These items are packages of items that help you in the game.";
 g_js_strings.modal_myitems.ownnocourt = "You own no Court Items. These items are for your court and guests to enjoy.";
+g_js_strings.modal_myitems.ownnoincantations = "Opening a Cursed Chest requires: %1$sx %2$s";
+g_js_strings.modal_myitems.requiresincantations = "You Need: %1$sx %2$s to open a Cursed Chest ";
 g_js_strings.modal_myitems.myitems = "My Items";
 g_js_strings.modal_myitems_use_teleportprovince = new Object();
 g_js_strings.modal_myitems_use_teleportprovince.yourcurrentprov = "Your Current Province";
@@ -1260,6 +1266,7 @@ g_js_strings.modal_shop_buy_banner.banner_britoncitycomingsoon = "Briton City Co
 g_js_strings.modal_shop_buy_banner.banner_exclusiveitemsonkabam = "Buy new and exclusive items on Kabam.com!";
 g_js_strings.modal_shop_buy = new Object();
 g_js_strings.modal_shop_buy.purchasealert = "1 %1$s Purchased!";
+g_js_strings.modal_shop_buy.purchasealertn = " %1$s Purchased!";
 g_js_strings.modal_shop_buy.nolongersale = "You just missed the sale! Continue to buy for %1$s?";
 g_js_strings.modal_shop_buy_notenough = new Object();
 g_js_strings.modal_shop_buy_notenough.notenoughgems = "You don&#39;t have enough gems to get that.";
@@ -2189,6 +2196,7 @@ g_js_strings.throneRoom.banner = "Banner";
 g_js_strings.throneRoom.table = "Table";
 g_js_strings.throneRoom.window = "Window";
 g_js_strings.throneRoom.trophy = "Trophy";
+g_js_strings.throneRoom.candelabrum = "Candelabrum";
 g_js_strings.throneRoom.title_throneRoom = "Throne Room";
 g_js_strings.throneRoom.button_enhance = "Enhance";
 g_js_strings.throneRoom.button_upgrade = "Upgrade";
@@ -2204,6 +2212,7 @@ g_js_strings.throneRoom.description_window = "A lord must survey his kingdom; ho
 g_js_strings.throneRoom.description_banner = "Tapestries chronicles great legends of the past and mighty deeds of the present.";
 g_js_strings.throneRoom.description_table = "The reliquary stand is where the rarest, most powerful, and holiest artifacts and relics are put on display.";
 g_js_strings.throneRoom.description_trophy = "This is a Trophy";
+g_js_strings.throneRoom.description_candelabrum = "This is a Candelabrum";
 g_js_strings.throneRoom.buff_none = "No items";
 g_js_strings.throneRoom.buff_lesserProtectionRune = "Lesser Protection Stone";
 g_js_strings.throneRoom.buff_protectionRune = "Protection Stone";
@@ -2243,8 +2252,19 @@ g_js_strings.throneRoom.unique_chair30251 = "Hallowed Throne";
 g_js_strings.throneRoom.unique_table30230 = "Dark Master Jack";
 g_js_strings.throneRoom.unique_table30240 = "Dark Master Jack";
 g_js_strings.throneRoom.unique_table30250 = "Dark Master Jack";
+g_js_strings.throneRoom.unique_candelabrum30261 = "Merry Chandelier";
+g_js_strings.throneRoom.unique_candelabrum30263 = "Merry Chandelier";
+g_js_strings.throneRoom.unique_candelabrum30265 = "Merry Chandelier";
+g_js_strings.throneRoom.unique_advisor30262 = "Father Winter";
+g_js_strings.throneRoom.unique_advisor30264 = "Father Winter";
+g_js_strings.throneRoom.unique_advisor30266 = "Father Winter";
 g_js_strings.throneRoom.unique_banner30260 = "Relief Banner";
-g_js_strings.throneRoom.might1 = "Throne Room Might";
+g_js_strings.throneRoom.unique_candelabrum30270 = "Chandelier of the Green Knight";
+g_js_strings.throneRoom.unique_banner30271 = "Pendragon's Banner";
+g_js_strings.throneRoom.unique_window30272 = "Window of Shalott";
+g_js_strings.throneRoom.might1 = "TR Might";
+g_js_strings.throneRoom.statCapNear = "You are approaching the capacity for this stat.";
+g_js_strings.throneRoom.statCapLimit = "You have reached the capacity for this stat.";
 g_js_strings.mass_salvage = {};
 g_js_strings.mass_salvage.title = "Mass Salvage";
 g_js_strings.mass_salvage.instructions = " Select which Quality of items to Salvage.  ALL items of the selected Qualities will be Salvaged when the Salvge button is clicked";
@@ -2446,9 +2466,9 @@ g_js_strings.knights = new Object();
 g_js_strings.knights.promptName = "Name your Knight";
 g_js_strings.playerGuide = new Object();
 g_js_strings.playerGuide.throneroom_0_button = "Throne Room Item Basics";
-g_js_strings.playerGuide.throneroom_1_p = "Throne Room Items are items that can be won in battle that provide bonuses to your Kingdom. There are over 300 different bonuses ranging in potency and effect so players are able to use different items to customize their Throne Rooms. Each Throne Room Item is comprised of 5 important pieces of information: Type, Quality, Suffix, Upgrade, and Effects.";
+g_js_strings.playerGuide.throneroom_1_p = "Throne Room Items are items that can be won in battle that provide bonuses to your Kingdom. There are over 300 different bonuses ranging in potency and effect so players are able to use different items to customize their Throne Rooms. Each Throne Room Item is comprised of 5 important pieces of information: Type, Quality, Suffix, Upgrade, and Effects.";
 g_js_strings.playerGuide.throneroom_2_h = "Item Type";
-g_js_strings.playerGuide.throneroom_3_p = "There are 6 different types of Throne Room Items: Chair, Window, Tapestry, Relic, Seneschal, and Trophy. Item type is included in the item name and can be seen in the item icon.";
+g_js_strings.playerGuide.throneroom_3_p = "There are 7 different types of Throne Room Items: Candelabrum, Chair, Window, Tapestry, Relic, Seneschal, and Trophy. Item type is included in the item name and can be seen in the item icon.";
 g_js_strings.playerGuide.throneroom_4_h = "Item Effects";
 g_js_strings.playerGuide.throneroom_5_p = "Item Effects are the Buffs and Debuffs that a Throne Room Item provides to your Kingdom. These Effects can increase the strength of your Troops, decrease the strength of an enemy's Troops, increase resource production, and much more. You can view all the available Buffs and Debuffs here: ";
 g_js_strings.playerGuide.throneroom_6_a = '<a href="http://community.kabam.com/forums/showthread.php?64944-Item-Effects-Definitions-(Buffs-and-Debuffs)&p=389480#post389480" target="_blank">Throne Room Effects Explained</a>';
@@ -2492,9 +2512,9 @@ g_js_strings.playerGuide.throneroom_43_p = "The Inventory tab is where you can v
 g_js_strings.playerGuide.throneroom_44_a = '<a href="#" onclick="jQuery(jQuery(\'.navList li\')[3]).click(); return false;">Equipping Items</a>.';
 g_js_strings.playerGuide.throneroom_45_p = "A player is given three Inventory Rows to start with, each of which can contain 5 Throne Room items. A player can choose to purchase additional rows for Gems by clicking on the Green + on the top Greyed out inventory rows.";
 g_js_strings.playerGuide.throneroom_46_p = "Items will be added to the Inventory in the order they are acquired and they cannot be moved around in the inventory. Items will continue to accumulate and can even reside in rows that have not been purchased. If there is an item in a row that has not been purchased it cannot be equipped. If a player wants to use that item, they will either need to purchase the row(s) necessary to access the item, or Salvage enough items to shift the remaining items into a row purchased by that player.";
-g_js_strings.playerGuide.throneroom_47_p = "Only one of each item type can be equipped at a time. This means if a player has a fully equipped Throne Room, it would have one Chair, one Window, one Tapestry, one Relic, one Advisor, and one Trophy. When a player wants to change the Effects of his Throne Room, he can swap out items by equipping and unequipping items from the Inventory tab.";
+g_js_strings.playerGuide.throneroom_47_p = "Only one of each item type can be equipped at a time. This means if a player has a fully equipped Throne Room, it would have one Candelabrum, one Chair, one Window, one Tapestry, one Relic, one Advisor, and one Trophy. When a player wants to change the Effects of his Throne Room, he can swap out items by equipping and unequipping items from the Inventory tab.";
 g_js_strings.playerGuide.throneroom_48_h = "Stats Tab and Pre-sets";
-g_js_strings.playerGuide.throneroom_49_p = "The Stats Tab is where players can view the active effects of their equipped items. This is also where a player can set up Pre-Sets. To avoid swapping out individual items, players can create a pre-set, which is a group of equipped items that are saved for later use. Players start out with 2 Pre-Sets for free, but you can buy additional presets for a total of 8. This means that players can save eight configurations of items (again x1 Chair, x1Window, x1 Tapestry, x1 Relic, x1 Advisor). This will also be a time saver for players. Equipping an item will require a 5 second cool down (similar to swapping Guardians). A Pre-Set, however, only requires that a player wait 5 seconds a single time instead of equipping and waiting for each item.";
+g_js_strings.playerGuide.throneroom_49_p = "The Stats Tab is where players can view the active effects of their equipped items. This is also where a player can set up Pre-Sets. To avoid swapping out individual items, players can create a pre-set, which is a group of equipped items that are saved for later use. Players start out with 2 Pre-Sets for free, but you can buy additional presets for a total of 8. This means that players can save eight configurations of items (again x1 Candelabrum, x1 Chair, x1 Window, x1 Tapestry, x1 Relic, x1 Advisor). This will also be a time saver for players. Equipping an item will require a 5 second cool down (similar to swapping Guardians). A Pre-Set, however, only requires that a player wait 5 seconds a single time instead of equipping and waiting for each item.";
 g_js_strings.playerGuide.throneroom_50_button = "Equipping, Unequipping, and Salvaging Items";
 g_js_strings.playerGuide.throneroom_51_h = "Equipping an Item";
 g_js_strings.playerGuide.throneroom_52_p = 'Click on the "Inventory" tab to view your inventory. This is where all of your acquired Throne Room Items are being stored. Hovering over an item will show you the item tool tip. Click on the item and you will be given the option to equip or salvage the item. Equipping an item, will add the item to your Throne Room, and the item\'s effects will be applied to your Kingdom. There is a 5 second cool down after you equip an item (see pre-sets section for more information).';
@@ -2898,6 +2918,10 @@ g_js_strings.factory = new Object();
 g_js_strings.factory.blurb = "The Blood of the Empire";
 g_js_strings.factory.blurbText = "All great Cities need a steady source of resource production. The Factory allows you to choose your City&rsquo;s resource production.";
 g_js_strings.factory.title = "The Factory";
+g_js_strings.countryside = new Object();
+g_js_strings.countryside.blurb = "The Pride of the Kingdom";
+g_js_strings.countryside.blurbText = "All great Cities need a steady source of resource production. The Countryside allows you to choose your City's resource production.";
+g_js_strings.countryside.title = "The Countryside";
 g_js_strings.prestige = new Object();
 g_js_strings.prestige.cityCenterThe = "The City Center";
 g_js_strings.prestige.cityCenterTitle = "City Center";
@@ -2916,6 +2940,8 @@ g_js_strings.prestige.druid_tagline = "Ancient Protectors of the Forest";
 g_js_strings.prestige.druid_description = "The Druid faction has long kept balance in Camelot and their healing magic is unrivaled.";
 g_js_strings.prestige.fey_tagline = "Summoners of the Dark Forest";
 g_js_strings.prestige.fey_description = "The Fey have long prioritized power over all else. Sacrificing anything to become stronger.";
+g_js_strings.prestige.briton_tagline = "Protectors of Camelot";
+g_js_strings.prestige.briton_description = "The Briton have created advanced siege technology to ensure safety throughout the realm.";
 g_js_strings.prestige.generic_feature_newUnits = "New Units";
 g_js_strings.prestige.generic_feature_customizeCity = "Customize your City";
 g_js_strings.prestige.druid_detail_newUnits = "Train the new Bloodthorn and Enchantress Units";
@@ -2924,6 +2950,9 @@ g_js_strings.prestige.druid_detail_1 = "Use the Druid's healing knowledge to rev
 g_js_strings.prestige.fey_detail_newUnits = "Train the new Executioner Unit in the Fey Barracks";
 g_js_strings.prestige.fey_feature_1 = "Fey Altar";
 g_js_strings.prestige.fey_detail_1 = "Use Fey Rituals to increase the power of your Troops";
+g_js_strings.prestige.briton_detail_newUnits = "Train the new Siege Wall Unit in the Briton Barracks";
+g_js_strings.prestige.briton_feature_1 = "Briton Workshop";
+g_js_strings.prestige.briton_detail_1 = "Use the Briton Workshop to improve your troops through new technologies";
 g_js_strings.prestige.blessingsDescription = "Blessings boost your city, and special unit stats and abilities. You are granted a new blessing every time you ascend your city. Click on your blessing slot below to see all of the different blessings.";
 g_js_strings.prestige.yourCityIsNow = "Congratulations on your %1$s City!";
 g_js_strings.prestige.allocateYourResources = "Build your new city to even greater heights";
@@ -3002,6 +3031,26 @@ g_js_strings.blessingSystem.blessing_name_208 = "Blood Lust";
 g_js_strings.blessingSystem.blessing_description_208 = "Increases Attack and Speed by 50% for all Infantry troops while decreasing HP by 25% and Accuracy by 10%";
 g_js_strings.blessingSystem.blessing_name_209 = "Empowered Iron";
 g_js_strings.blessingSystem.blessing_description_209 = "Increases the bonuses given by the Ore Guardian by 15%";
+g_js_strings.blessingSystem.blessing_name_31 = "Heavy Armor";
+g_js_strings.blessingSystem.blessing_description_31 = "Unlock the ability to train Siege Wall units in the Briton Barracks";
+g_js_strings.blessingSystem.blessing_name_301 = "Enchanced Horseshoes";
+g_js_strings.blessingSystem.blessing_description_301 = "Increases your horseback and siege weapon troops marching speed by 10%";
+g_js_strings.blessingSystem.blessing_name_302 = "Reduce Fatigue";
+g_js_strings.blessingSystem.blessing_description_302 = " Increase March speed by 15%";
+g_js_strings.blessingSystem.blessing_name_303 = "Archaeological Studies";
+g_js_strings.blessingSystem.blessing_description_303 = "Increase Briton Throne Room item find by 10%";
+g_js_strings.blessingSystem.blessing_name_304 = "Scientific Methodologies";
+g_js_strings.blessingSystem.blessing_description_304 = "Reduce Briton Laboratories research times by 10%";
+g_js_strings.blessingSystem.blessing_name_305 = "Gnomish Quarry Foreman";
+g_js_strings.blessingSystem.blessing_description_305 = "Increases the production boost gained from Hills by 50%";
+g_js_strings.blessingSystem.blessing_name_306 = "To the Front Lines";
+g_js_strings.blessingSystem.blessing_description_306 = "Reduce the training time of Siege Wall units by 20%";
+g_js_strings.blessingSystem.blessing_name_307 = "Heightened Security";
+g_js_strings.blessingSystem.blessing_description_307 = "Increases space for Field and Wall defenses by 15%";
+g_js_strings.blessingSystem.blessing_name_308 = "Prioritized Construction";
+g_js_strings.blessingSystem.blessing_description_308 = "Increases the speed of construction on Supply Wagon, Ballista, Battering Ram, and Catapult by 10%";
+g_js_strings.blessingSystem.blessing_name_309 = "Empowered Stone";
+g_js_strings.blessingSystem.blessing_description_309 = "Increases the bonuses given by the Stone Guardian by 15%";
 g_js_strings.blessingSystem.choose_major_title = "Choose a Major Blessing";
 g_js_strings.blessingSystem.choose_minor_title = "Choose a Minor Blessing";
 g_js_strings.blessingSystem.major_blessings = "Major Blessings";
@@ -3014,6 +3063,15 @@ g_js_strings.prestige_bonus.rally0 = "Increase maximum number of Marches by ";
 g_js_strings.prestige_bonus.rally0b = " for every Rally Point level.";
 g_js_strings.prestige_bonus.rally1 = "Increase March size cap by ";
 g_js_strings.prestige_bonus.asc = "Ascension Upgrades";
+g_js_strings.multi = new Object();
+g_js_strings.multi.pur = "Purchase Confirmation";
+g_js_strings.multi.desc = "You are about to purchase";
+g_js_strings.multi.would = "Would you like to continue?";
+g_js_strings.multi.zero = "Can not buy 0 items.";
+g_js_strings.multi.one_or_more = "Item count must be 1 or more.";
+g_js_strings.multi.dh0 = "You don't have ";
+g_js_strings.multi.dh1 = " of those items.  You have ";
+g_js_strings.multi.item_error = "Item count must be 1 or more.";
 var buildingcost = {
     bdg0: ["Castle", 0, 0, 0, 0, 0, 0, 0, {
         b19: [0, -2]
@@ -3085,83 +3143,107 @@ var buildingcost = {
     bdg24: ["Fey Barracks", 0, 0, 0, 0, 0, 0, 0, [],
         [], "Train your troops in the Barracks. Stronger troops require a higher level of Barracks. Building more Barracks will speed up Training."],
     bdg25: ["Fey Altar", 0, 0, 0, 0, 0, 0, 0, [],
-        [], "Using a Dark Ritual, sacrifice troops to receive increased power. Stronger troops require a higher level of Fey Altar. Building a second Fey Altar will increase the benefit provided by the Sacrificial Rituals."]
+        [], "Using a Dark Ritual, sacrifice troops to receive increased power. Stronger troops require a higher level of Fey Altar. Building a second Fey Altar will increase the benefit provided by the Sacrificial Rituals."],
+    bdg26: ["Briton Barracks", 0, 0, 0, 0, 0, 0, 0, [],
+        [], "Train your troops in the Barracks. Stronger troops require a higher level of Barracks. Building more Barracks will speed up Training."],
+    bdg27: ["Briton Workshop", 0, 0, 0, 0, 0, 0, 0, [],
+        [], "The Briton Workshop is where Siege Mechanics research new and better Technologies. Upgrading the Briton Workshop allows your Siege Mechanics to engage in more complicated research."]
 };
 var techcost = {
     tch1: ["Fertilizer", 500, 0, 0, 100, 1000, 0, 400, {
         b11: [1, 1],
         b1: [0, 0]
-    }, [], "Each upgrade increases your Food production by 10%\r\n"],
+    }, [], "Each upgrade increases your Food production by 10%"],
     tch2: ["Logging", 0, 500, 0, 100, 1200, 0, 500, {
         b11: [1, 1],
         b2: [0, 0]
-    }, [], "Each upgrade increases your Wood production by 10%\r\n"],
+    }, [], "Each upgrade increases your Wood production by 10%"],
     tch3: ["Stoneworking", 0, 0, 500, 200, 1500, 0, 600, {
         b11: [1, 1],
         b3: [0, 0]
-    }, [], "Each upgrade increases your Stone production by 10%\r\n"],
+    }, [], "Each upgrade increases your Stone production by 10%"],
     tch4: ["Mining", 0, 0, 0, 800, 2000, 0, 700, {
         b11: [1, 1],
         b4: [0, 0]
-    }, [], "Each upgrade increases your Ore production by 10%\r\n"],
+    }, [], "Each upgrade increases your Ore production by 10%"],
     tch5: ["Geometry", 0, 500, 0, 500, 5000, 0, 900, {
         b11: [1, 3],
         b16: [0, 0]
     }, {
         t3: [1, 2]
-    }, "Each upgrade increases the speed of construction on Siege Weapons by 10%\r\n"],
+    }, "Each upgrade increases the speed of construction on Siege Weapons by 10%"],
     tch6: ["Eagle Eyes", 300, 0, 0, 0, 2000, 0, 300, {
         b11: [1, 3]
-    }, [], "Higher levels give you more detailed information when scouting\r\n"],
+    }, [], "Higher levels give you more detailed information when scouting"],
     tch8: ["Poisoned Edge", 800, 120, 200, 3000, 3000, 0, 1200, {
         b11: [1, 2],
         b13: [1, 2]
-    }, [], "Each upgrade increases your troops&#39; attack by 5%\r\n"],
+    }, [], "Each upgrade increases your troops&#39; attack by 5%"],
     tch9: ["Metal Alloys", 700, 150, 0, 300, 3500, 0, 1500, {
         b11: [1, 3],
         b15: [0, 0]
     }, {
         t4: [0, 0]
-    }, "Each upgrade increases your troops&#39; defense by 5%\r\n"],
+    }, "Each upgrade increases your troops&#39; defense by 5%"],
     tch10: ["Featherweight Powder", 500, 0, 200, 0, 3000, 0, 1600, {
         b11: [1, 4]
-    }, [], "Each upgrade increases your troops&#39; load by 10%\r\n"],
+    }, [], "Each upgrade increases your troops&#39; load by 10%"],
     tch11: ["Magical Mapping", 600, 0, 0, 0, 3000, 0, 1800, {
         b11: [1, 4]
-    }, [], "Each upgrade increases your infantry troops&#39; marching speed by 10%\r\n"],
+    }, [], "Each upgrade increases your infantry troops&#39; marching speed by 10%"],
     tch12: ["Alloy Horseshoes", 1000, 0, 0, 1000, 6000, 0, 2000, {
         b11: [1, 5],
         b17: [0, 0]
     }, {
         t9: [0, 0]
-    }, "Each upgrade increases your horseback and siege weapon troops marching speed by 5%\r\n"],
+    }, "Each upgrade increases your horseback and siege weapon troops marching speed by 5%"],
     tch13: ["Fletching", 0, 800, 500, 600, 5000, 0, 2400, {
         b11: [1, 4]
     }, {
         t2: [1, 4]
-    }, "Each upgrade increases your projectiles&#39; range by 5%\r\n"],
+    }, "Each upgrade increases your projectiles&#39; range by 5%"],
     tch14: ["Shrinking Powder", 0, 1200, 1000, 800, 2000, 0, 900, {
         b11: [1, 6],
         b9: [0, 0]
     }, {
         t2: [1, 3]
-    }, "Each upgrade increases your Storehouse capacity by 10%\r\n"],
+    }, "Each upgrade increases your Storehouse capacity by 10%"],
     tch15: ["Healing Potions", 1500, 0, 0, 0, 3600, 0, 1800, {
         b11: [1, 6]
     }, {
         t10: [1, 3]
-    }, "Each upgrade increases your troops&#39; health by 5%\r\n"],
+    }, "Each upgrade increases your troops&#39; health by 5%"],
     tch16: ["Giant&#39;s Strength", 0, 2000, 2000, 2000, 5000, 0, 1800, {
         b11: [1, 5]
     }, {
         t2: [1, 5],
         t5: [1, 2]
-    }, "Each upgrade increases your construction speed by 10%\r\n"],
+    }, "Each upgrade increases your construction speed by 10%"],
     tch17: ["Forgemaster&#39;s Resolve", 2000, 0, 0, 200, 1000, 0, 150, {
         b11: [1, 1],
         b15: [0, 0],
         b16: [0, 0]
     }, [], "Each upgrade increases your Throne Room Upgrade and Enhance success by 1%"]
+};
+var techcost2 = {
+    tch1: ["Improved Cartography", 1200, 0, 0, 100, 4000, 0, 1800, {
+        b27: [1, 1]
+    }, [], "Each upgrade increases your infantry troops&#39; marching speed by 5%"],
+    tch2: ["Into the Wild", 6000, 0, 0, 0, 5000, 0, 1800, {
+        b27: [1, 2]
+    }, [], "Each upgrade increases your chance to find crests while marching by 1% per level"],
+    tch3: ["Siege Master&#39;s Training", 0, 4000, 4000, 40, 1500, 0, 900, {
+        b27: [1, 4]
+    }, [], "Each upgrade increases your construction speed for wall defenses by 5%"],
+    tch4: ["Improved Defenses", 4000, 1200, 2000, 3000, 3000, 0, 1200, {
+        b27: [1, 6]
+    }, [], "Increase attack for all Field and Wall defenses by 5% per level"],
+    tch5: ["Strengthen Ranks", 4000, 1200, 2000, 3000, 3000, 0, 1200, {
+        b27: [1, 8]
+    }, [], "Each upgrade increases Ballista and Battering Ram attack by 2% per level"],
+    tch6: ["Improved Fletching", 0, 4000, 2500, 3000, 5000, 0, 2400, {
+        b27: [1, 10]
+    }, [], "Each upgrade increases your projectiles&#39; range by 2%"]
 };
 var unitnamedesctranslated = {
     unt1: ["Supply Troop", "Supply Troops are not very good at fighting, but can carry resources to your other cities or friends, or carry loot back when you plunder enemy cities."],
@@ -3177,7 +3259,8 @@ var unitnamedesctranslated = {
     unt11: ["Battering Ram", "A Battering Ram is a large log-like object, used for knocking down the enemy"],
     unt12: ["Catapult", "Catapults throw large rocks from a huge distance. They are most effective against the enemy"],
     unt13: ["Bloodthorn", "Born of the wilderness, the Bloodthorn unit is an elite warrior that specializes in dealing quick, deadly blows to their enemies."],
-    unt14: ["Executioner", "Born of Ice and Steel, the Executioner is an elite unit that specializes in overwhelming their enemies with massive force."]
+    unt14: ["Executioner", "Born of Ice and Steel, the Executioner is an elite unit that specializes in overwhelming their enemies with massive force."],
+    unt15: ["Siege Wall", "The Siege Wall guarantees advancement on the battlefield for its army."]
 };
 var fortcost = {
     frt53: ["Wall-Mounted Crossbows", 250, 2000, 750, 500, 0, 0, 180, {
@@ -6182,7 +6265,7 @@ var itemlist = {
     },
     i10026: {
         name: "Chest of Charity",
-        description: "Help those in need. 100% of proceeds will be donated to the Child\u2019s Play charity.  Contains x2 Merlin's Magical Token, x1 40,000 Ore, x1 Young Volunteers",
+        description: "Help those in need. 100% of proceeds will be donated to the Child’s Play charity.  Contains x2 Merlin's Magical Token, x1 40,000 Ore, x1 Young Volunteers",
         price: 30,
         tradable: null,
         category: 5,
@@ -6831,7 +6914,7 @@ var itemlist = {
     i10111: {
         name: "Super Portal Chest",
         description: "Contains 10 Portal of Orders for a great price!",
-        price: null,
+        price: 700,
         tradable: null,
         category: 5,
         subCategory: 100
@@ -7277,7 +7360,7 @@ var itemlist = {
         subCategory: 0
     },
     i25001: {
-        name: "Mercenaries Cursed Chest",
+        name: "Mercenaries Cursed Chest N",
         description: "Contains some of Camelots most powerful items. Each Cursed Chest requires a Merlin's Incantation to open.",
         price: null,
         tradable: null,
@@ -7596,6 +7679,14 @@ var itemlist = {
         category: 1,
         subCategory: 1
     },
+    i30107: {
+        name: "Mystery Candelabrum",
+        description: "Use this item to receive a random Throne Room Candelabrum of any quality and faction.  Must have space in Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 1
+    },
     i30201: {
         name: "Mystery Common",
         description: "Use this item to receive a random Throne Room Item of Common quality of higher.  Must have space in Throne Room Inventory to successfully use this item.",
@@ -7823,6 +7914,78 @@ var itemlist = {
     i30260: {
         name: "Relief Banner",
         description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30261: {
+        name: "Merry Chandelier",
+        description: "Use this item to add the Merry Chandelier to your Throne Room.  Must have space in your Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30262: {
+        name: "Father Winter",
+        description: "Use this item to add Father Winter to your Throne Room.  Must have space in your Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30263: {
+        name: "Merry Chandelier",
+        description: "Use this item to add the Merry Chandelier to your Throne Room.  Must have space in your Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30264: {
+        name: "Father Winter",
+        description: "Use this item to add Father Winter to your Throne Room.  Must have space in your Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30265: {
+        name: "Merry Chandelier",
+        description: "Use this item to add the Merry Chandelier to your Throne Room.  Must have space in your Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30266: {
+        name: "Father Winter",
+        description: "Use this item to add Father Winter to your Throne Room.  Must have space in your Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30270: {
+        name: "Chandelier of the Green Knight",
+        description: "Use this item to receive the Chandelier of the Green Knight.  Must have space in your Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30271: {
+        name: "Pendragon's Banner",
+        description: "Use this item to receive Pendragon's Banner.  Must have space in your Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30272: {
+        name: "Window of Shalott",
+        description: "Use this item to receive the Window of Shalott.  Must have space in your Throne Room Inventory to successfully use this item.",
         price: null,
         tradable: null,
         category: 0,
@@ -13345,8 +13508,10 @@ var buildingmight = {
     "21": [120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720, 61440],
     "22": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360],
     "23": [120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720, 61440],
-    "24": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360],
-    "25": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360]
+    "24": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
+    "25": [120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720, 61440],
+    "26": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360],
+    "27": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360]
 };
 var buildingmaxlvl = {
     "0": 12,
@@ -13378,7 +13543,9 @@ var buildingmaxlvl = {
     "22": 10,
     "23": 10,
     "24": 10,
-    "25": 10
+    "25": 10,
+    "26": 10,
+    "27": 10
 };
 var buildingupgradedesc = {
     "0": ["Control one Wilderness and build Level 2 Cottages", "Control two Wildernesses, build Level 3 Cottages, and gain 3 more Resource Fields", "Control three Wildernesses, build Level 4 Cottages, and gain 3 more Resource Fields", "Control four Wildernesses, build Level 5 Cottages, and gain 3 more Resource Fields", "Control five Wildernesses, build Level 6 Cottages, and gain 3 more Resource Fields", "Control six Wildernesses, build Level 7 Cottages, and gain 3 more Resource Fields", "Control seven Wildernesses, build Level 8 Cottages, and gain 3 more Resource Fields", "Control eight Wildernesses, build Level 9 Cottages, and gain 3 more Resource Fields", "Control nine Wildernesses, build Level 10 Cottages, and gain 3 more Resource Fields", "Control ten Wildernesses, build Level 10 Cottages, and gain 3 more Resource Fields", "Control twelve Wildernesses and build Level 11 Buildings", "Control fourteen Wildernesses and build Level 12 Buildings"],
@@ -13410,7 +13577,9 @@ var buildingupgradedesc = {
     "22": ["Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units"],
     "23": ["Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle."],
     "24": ["Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units."],
-    "25": ["Sacrifice Supply Troops and Militiamen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Scouts and Pikeman. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Swordsmen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Supply Wagons. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Heavy Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Ballista. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Battering Rams. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Catapults, Executioners, and Bloodthorn. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours."]
+    "25": ["Sacrifice Supply Troops and Militiamen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Scouts and Pikeman. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Swordsmen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Supply Wagons. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Heavy Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Ballista. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Battering Rams. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Catapults, Executioners, Bloodthorn, and Siege Walls. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours."],
+    "26": ["Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units"],
+    "27": ["Research Improved Cartography and raise research cap to Level 1", "Research Into the Wild and raise research cap to Level 2", "Raise research cap to Level 3", "Research Siege Master&#39;s Training and raise research cap to Level 4", "Raise research cap to Level 5", "Research improved Defenses and raise research cap to Level 6", "Raise research cap to Level 7", "Research Strengthen Ranks and raise research cap to Level 8", "Raise research cap to Level 9", "Research Improved Fletching and raise research cap to Level 10"]
 };
 var provincenames = {
     p1: "Tintagel",
@@ -13492,8 +13661,8 @@ cm.FETemplates = {
     },
     Inventory: {
         inventoryModal: "<div id='inventoryModalContainer'><div id='inventoryModalHeader'><a class='button20' onclick='Modal.hideModalAll(); cm.ShopView.openShop();'><span> #{getmoreitemsString} </span></a><div id='gemsContainer'><span class='label'> #{gemsString} </span><span id='inventoryGemQuantity' class='gemsQuantity'> </span><img src='img/gem.png' /><a class='buttonGreen20' onclick='cm.ConversionTracker.track(\"payments\", \"MORE_GEMS_MY_ITEMS\", \"\"); modal_getgems();return false;'><span> + #{getmoregemsString} </span></a></div></div><div id='inventoryModalBody'><div id='inventoryTabs'><ul><li id='inventoryTab1' class='selected'><a onclick='cm.InventoryView.openTab(1);'> #{generalString} </a></li><li id='inventoryTab2'><a onclick='cm.InventoryView.openTab(2);'> #{speedupString} </a></li><li id='inventoryTab3'><a onclick='cm.InventoryView.openTab(3);'> #{combatString} </a></li><li id='inventoryTab4'><a onclick='cm.InventoryView.openTab(4);'> #{resourcesString} </a></li><li id='inventoryTab5'><a onclick='cm.InventoryView.openTab(5);'> #{chestString} </a></li><li id='inventoryTab6'><a onclick='cm.InventoryView.openTab(6);'> #{courtString} </a></li></ul></div><div id='inventoryMessage'></div><div id='inventoryBanner'></div><div id='inventoryItemsContainer'><a id='inventoryPrevPageButton' onclick='cm.InventoryView.goPrevPage();'></a><a id='inventoryNextPageButton' onclick='cm.InventoryView.goNextPage();'></a><ul id='inventoryItemsContainerList'></ul></div></div></div>",
-        itemButton: "<a class='button20' onclick='cm.ItemController.use(#{id});'><span id='item#{id}ButtonText'> #{actionString} </span></a>",
-        itemContainer: "<li><div id='item#{id}' class='item' name=\"#{description}\" onmouseover='cm.InventoryView.showItemTooltip(this, event);' onmouseout='removeTooltip();'><div class='name'>#{name}</div><div class='info'><img src='#{imageSource}' />#{actionbutton}<div class='ownedContainer'><span class='label'> #{ownedString}:</span><span id='item#{id}Count'>#{count}</span></div></div></div></li>",
+        itemButton: "<a class='button20' onclick='cm.ItemController.use(#{id});'><span id='item#{id}ButtonText'> #{actionString} </span></a><input type='text' class='quantity #{hideInput}' value='1'/>",
+        itemContainer: "<li><div id='item#{id}' class='item' name=\"#{description}\" onmouseover='cm.InventoryView.showItemTooltip(this, event);' onmouseout='removeTooltip();'><div class='name'>#{name}</div><div class='info'><img src='#{imageSource}' /><div class=\"action\">#{actionbutton}</div><div class='ownedContainer'><span class='label'> #{ownedString}:</span><span id='item#{id}Count'>#{count}</span></div></div></div></li>",
         itemsInChestModal: "<div id='itemsInChestContainer'><div class='title'> #{itemsGainedString} </div><ul id='itemsInChestContainerList'></ul><a class='button20' onclick='Modal.hideModal();'><span> #{okString} </span></a></div>",
         itemsInChestContainer: "<li><img src='img/items/70/#{id}.jpg'/><span class='name'>#{name}</span><span class='count'>#{count}</span></li>",
         portalOfRefugeModal: "<div id='portalOfRefugeContainer'><div id='provinceContainer'><div id='currentProvinceContainer'><span class='label'>#{currentProvString}</span> - <span id='currentProvinceName' class='name'></span></div><div id='newProvinceContainer'><span class='label'>#{newProvString}</span> <select id='provinceNamesList'> </select></div><div id='teleportError' style='display: none;'></div></div><div class='buttonContainer'><a class='button20' onclick='cm.ItemController.usePortalOfRefuge(911);'><span>#{submitString}</span></a><a onclick='Modal.hideModal();'>#{cancelString}</a></div></div>",
@@ -13536,7 +13705,7 @@ cm.FETemplates = {
         "reinforced_troops[*]": '<ul class="troopsRow"><li class="typeColumn"><img src="{stimgurl}img/units/unit_{$.unitid}_30_s34.jpg" /> {$.unitname}</li><li class="numberColume">{$.reinforced}</li></ul>'
     },
     Grove: {
-        grove: "<!--groveHeader--><div class=\"gemContainer\"><span class=\"amount\">#{gem}</span><a class=\"buttonv2 green h20\" onclick=\"modal_getgems();\">#{getMore}</a></div><span>#{primaryTitle}</span><!--/groveHeader--><!--groveMain--><div class='groveModal'><div class='grove'><div class='blurbTitle'>#{primaryTitle}</div><div class='blurbAbout'>#{blurb}</div><div class='blurbText'>#{blurbText}</div></div><div class='fieldresource'><div class='fieldTitle'>#{fieldResource}</div><div class='grovedescription'>#{groveDescription}</div><div class='allocation'><div class='item rescourceTitle'><div class='resourcePoint itemcolumn'>#{pointsAvailable}</div><div class='pointsTitle itemcolumn'>#{resourcePointsAvailable}</div><span id=\"groveResetPrice\" style=\"margin:0 0 0 56px;\">#{resetPrice}</span><a id=\"groveResetButton\" class=\"buttonv2 green h20\" style=\"line-height:24px;\">#{resetButton}</a></div><div class='item'><a id='woodSub' class='subtract'><span>-</span></a><div id='woodState' class='pointstates itemcolumn'>#{wood}</div><a id='woodAdd' class='add'><span>+</span></a><div class='title itemcolumn'>#{sawmill}</div><div class='stat_wood itemcolumn'></div><div class='productionpoint itemcolumn'>#{woodGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item'><a id='ironSub' class='subtract'><span>-</span></a><div id='ironState' class='pointstates itemcolumn'>#{ore}</div><div id='ironAdd' class='add'>+</div><div class='title itemcolumn'>#{mines}</div><div class='stat_iron itemcolumn'></div><div class='productionpoint itemcolumn'>#{oreGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item'><a id='foodSub' class='subtract'><span>-</span></a><div id='foodState' class='pointstates itemcolumn'>#{food}</div><a id='foodAdd' class='add'><span>+</span></a><div class='title itemcolumn'>#{farms}</div><div class='stat_food itemcolumn'></div><div class='productionpoint itemcolumn'>#{foodGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item'><a id='stoneSub'class='subtract'><span>-</span></a><div id='stoneState' class='pointstates itemcolumn'>#{stone}</div><a id='stoneAdd' class='add'><span>+</span></a><div class='title itemcolumn'>#{quarries}</div><div class='stat_stone itemcolumn'></div><div class='productionpoint itemcolumn'>#{stoneGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item button'><a id=\"groveApplyButton\" class='gemButtonv2 gray'>#{apply}</a></div></div></div></div><!--/groveMain-->"
+        grove: "<!--groveHeader--><div class=\"gemContainer\"><span class=\"amount\">#{gem}</span><a class=\"buttonv2 green h20\" onclick=\"modal_getgems();\">#{getMore}</a></div><span>#{primaryTitle}</span><!--/groveHeader--><!--groveMain--><div class='groveModal'><div class='grove'><div class='blurbTitle'>#{primaryTitle}</div><div class='blurbAbout'>#{blurb}</div><div class='blurbText'>#{blurbText}</div></div><div class='fieldresource'><div class='fieldTitle'>#{fieldResource}</div><div class='grovedescription'>#{groveDescription}</div><div class='allocation'><div class='item rescourceTitle'><div class='resourcePoint itemcolumn'>#{pointsAvailable}</div><div class='pointsTitle itemcolumn'>#{resourcePointsAvailable}</div><span id=\"groveResetPrice\" style=\"margin:0 0 0 56px;\">#{resetPrice}</span><a id=\"groveResetButton\" class=\"buttonv2 green h20\" style=\"line-height:24px;\">#{resetButton}</a></div><div class='item'><a id='foodSub' class='subtract'><span>-</span></a><div id='foodState' class='pointstates itemcolumn'>#{food}</div><a id='foodAdd' class='add'><span>+</span></a><div class='title itemcolumn'>#{farms}</div><div class='stat_food itemcolumn'></div><div class='productionpoint itemcolumn'>#{foodGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item'><a id='woodSub' class='subtract'><span>-</span></a><div id='woodState' class='pointstates itemcolumn'>#{wood}</div><a id='woodAdd' class='add'><span>+</span></a><div class='title itemcolumn'>#{sawmill}</div><div class='stat_wood itemcolumn'></div><div class='productionpoint itemcolumn'>#{woodGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item'><a id='stoneSub'class='subtract'><span>-</span></a><div id='stoneState' class='pointstates itemcolumn'>#{stone}</div><a id='stoneAdd' class='add'><span>+</span></a><div class='title itemcolumn'>#{quarries}</div><div class='stat_stone itemcolumn'></div><div class='productionpoint itemcolumn'>#{stoneGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item'><a id='ironSub' class='subtract'><span>-</span></a><div id='ironState' class='pointstates itemcolumn'>#{ore}</div><div id='ironAdd' class='add'>+</div><div class='title itemcolumn'>#{mines}</div><div class='stat_iron itemcolumn'></div><div class='productionpoint itemcolumn'>#{oreGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item button'><a id=\"groveApplyButton\" class='gemButtonv2 gray'>#{apply}</a></div></div></div></div><!--/groveMain-->"
     },
     Building: {
         openBuilding: '<div class="buildingFrame"><div class="titleContainer"><span class="title"> #{title} </span><a id="buildingCloseButton" class="close"> close </a></div><div class="buildingContainer"><div class="buildingInfoContainer"><div class="imageContainer"><div class="image b#{buildingId}"></div></div><div class="actionContainer"><div class="destroyContainer">#{buttons}</div><p class="buildingDescription"> #{buildingDescription} </p>#{buildContainer}</div><div class="upgradeContainer"><div class="requirementContainer"><span class="">#{requirementLabel}</span><div class="requirementTableContainer"><span class="top"></span><div class="body"><table><tr><th>Resource</th><th>Required</th><th>You Own</th></tr>#{requirementRows}</table></div><span class="bottom"></span></div></div>#{benefitsContainerHTML}</div></div><div class="requirementInfoContainer">#{craft}</div></div></div>',
@@ -13567,6 +13736,7 @@ cm.FETemplates = {
         prestigeConfirm: '<!-- CUONG --><div class="confirm clearfix"><div class="details"><div class="last_blessing">#{lastBlessing}</div><h2 class="chosen_text">#{youChoseBlessingText}</h2><h3 class="feature_header">#{youAlsoGetText}</h3></div><p class="disclaimer">#{disclaimer}</p><div class=\'gem_amount\'>#{gems}<div class=\'little_gem\'></div></div>#{button}</div>',
         congrats: '<div class="#{action}congrats #{faction} clearfix"><h2>#{headline}</h2><div class="content"><h3>#{contentHeader}</h3><p>#{contentDescription}</p></div></div>',
         refactionInfo: '<div class="refactionInfo clearfix"><h2>#{description}</h2><ul>#{bulletPoints}</ul><a class="buttonv2 h20 blue">#{buttonText}</a></div>',
+        multiBuy: '<div class="inner_stone_block refactionInfo clearfix"><h2>#{description}</h2><ul>#{bulletPoints}</ul><a class="buttonv2 h20 green">#{buttonText}</a></div>',
         refactionDuplicate: '<div class="refactionDuplicate clearfix"><h2>#{areYouSure}</h2><div class="actions"><a class="buttonv2 h20 blue yes">#{yesLabel}</a><a class="buttonv2 h20 blue cancel">#{cancelLabel}</a></div></div>'
     },
     AutoAttackReportsView: {
@@ -13587,7 +13757,7 @@ cm.FETemplates = {
     },
     Shop: {
         openShop: "<div id='shopModalContainer'><div id='shopModalHeader'><a class='button20' onclick='Modal.hideModalAll(); cm.InventoryView.openInventory();'><span> #{getmoreitemsString} </span></a><div id='gemsContainer'><span class='label'> #{gemsString} </span><span id='shopGemQuantity' class='gemsQuantity'> #{gemsAmount} </span><img src='img/gem.png' /><a class='buttonGreen20' onclick='cm.ConversionTracker.track(\"payments\", \"MORE_GEMS_MY_ITEMS\", \"\"); modal_getgems();return false;'><span> + #{getmoregemsString} </span></a></div></div><div id='shopModalBody'><div id='shopTabs'><ul><li id='shopTab0'><a onclick='cm.ShopView.openTab(0); return false;'> #{featuredString} </a></li><li id='shopTab1'><a onclick='cm.ShopView.openTab(1); return false;'> #{generalString} </a></li><li id='shopTab2'><a onclick='cm.ShopView.openTab(2); return false;'> #{speedupString} </a></li><li id='shopTab3'><a onclick='cm.ShopView.openTab(3); return false;'> #{combatString} </a></li><li id='shopTab4'><a onclick='cm.ShopView.openTab(4); return false;'> #{resourcesString} </a></li><li id='shopTab5'><a onclick='cm.ShopView.openTab(5); return false;'> #{chestString} </a></li><li id='shopTab6'><a onclick='cm.ShopView.openTab(6); return false;'> #{courtString} </a></li></ul></div><div id='shopMessage'></div><div id='shopBanner' class='#{className}'>#{bannerHTML}</div><div id='shopItemsContainer'><a id='shopPrevPageButton' onclick='cm.ShopView.goPrevPage();'></a><a id='shopNextPageButton' onclick='cm.ShopView.goNextPage();'></a><ul id='shopItemsContainerList'></ul></div></div></div>",
-        shopItem: "<li><div id='item#{id}' class='item #{className}' name=\"#{description}\" onmouseover='cm.ShopView.showItemTooltip(this, event);' onmouseout='removeTooltip();'><div class='name'>#{name}</div><div class='info'><img src='#{img}' /><div class='costContainer'>#{costContent}</div><div class='ownedContainer'><span class='label'>#{ownedString}:</span><span id='item#{id}Count'>#{count}</span></div><a class='buttonGreen20' onclick='cm.ShopController.buy(#{id});'><span id='item#{id}ButtonText'>#{buyString}</span></a></div></div></li>",
+        shopItem: "<li><div id='item#{id}' class='item #{className}' name=\"#{description}\" onmouseover='cm.ShopView.showItemTooltip(this, event);' onmouseout='removeTooltip();'><div class='name'>#{name}</div><div class='info'><img src='#{img}' /><div class='costContainer'>#{costContent}</div><div class='ownedContainer'><span class='label'>#{ownedString}:</span><span id='item#{id}Count'>#{count}</span></div><a class='buttonGreen20' onclick='cm.ShopController.buy(#{id});'><span id='item#{id}ButtonText'>#{buyString}</span></a><input type='text' class='quantity #{hideInput}' value='1'/></div></div></li>",
         getMoreGems: '<div id="getGemsModalContainer"><p>#{content1}</p><p>#{content2}</p><div class="buttonContainer"><a class="buttonGreen20" onclick="Modal.hideModal(); modal_getgems(); return false;"><span>#{getMoreGemsString}</span></a></div></div>'
     },
     AllocationResetConfirm: {
@@ -14185,6 +14355,10 @@ cm.BUILDING_TYPES = {
     STABLE: 17,
     RELIEF_STATION: 18,
     WALL: 19
+};
+cm.RESEARCH_TYPES = {
+    ALCHEMY_LAB: 0,
+    WORKSHOP: 1
 };
 cm.SERVER_TYPES = {
     CLASSIC: 0,
@@ -16515,23 +16689,33 @@ cm.AnimationCreation = function (d) {
         d("#guardianContainer").bind("mouseleave", function () {})
     };
     var e = function () {};
-    var b = function (j, f, h, i, g) {
-        if (a[g]) {
-            clearInterval(a[g]);
-            a[g] = null
+    var b = function (k, f, i, j, h) {
+        if (a[h]) {
+            clearInterval(a[h]);
+            a[h] = null
         }
-        a[g] = setInterval(function () {
-            var m = j.css("backgroundPosition"),
-                l, n, k;
-            l = parseInt(m ? m.split(" ")[0] : 0, 10);
-            n = parseInt(m ? m.split(" ")[1] : 0, 10);
-            l = l - f;
-            if (l <= -(h - f)) {
-                l = 0
+        if (!(k && f && i && j)) {
+            return
+        }
+        var g = d.browser;
+        ieVersion = (g.msie) ? +g.version : undefined;
+        a[h] = setInterval(function () {
+            var n, m, l;
+            if (ieVersion && (ieVersion < 9)) {
+                n = k.css("backgroundPositionX");
+                n = (n === "left") ? 0 : n;
+                m = parseInt(n, 10)
+            } else {
+                n = k.css("backgroundPosition");
+                m = parseInt(n ? n.split(" ")[0] : 0, 10)
             }
-            k = l + "px 0px";
-            d(j).css("backgroundPosition", k)
-        }, i)
+            m = m - f;
+            if (m <= -(i - f)) {
+                m = 0
+            }
+            l = m + "px 0px";
+            d(k).css("backgroundPosition", l)
+        }, j)
     };
     return {
         init: e,
@@ -16775,14 +16959,14 @@ cm.ApothecaryView = function (e) {
     }
 }(jQuery);
 
-function modal_attack(f, l, o, q) {
-    var p = f;
-    q = q || {};
+function modal_attack(f, l, p, r) {
+    var q = f;
+    r = r || {};
     if (f == cm.MARCH_TYPES.MARCH_TYPE_BARBARIAN) {
         f = cm.MARCH_TYPES.MARCH_TYPE_ATTACK
     }
     var n = [];
-    var y = 100;
+    var z = 100;
     n.push("<div id='modal_attack'>");
     n.push('<ul class="marchTypeTabs">');
     n.push('<li id="modal_attack_tab_' + cm.MARCH_TYPES.MARCH_TYPE_ATTACK + '">' + g_js_strings.commonstr.attack + "</li>");
@@ -16794,15 +16978,15 @@ function modal_attack(f, l, o, q) {
     n.push("<div class='marchtype' style='display:none;'>");
     n.push(g_js_strings.modal_attack.marchtype);
     n.push("<select id='modal_attack_atktype'>");
-    for (var v in cm.MARCH_TYPES) {
-        if (cm.MARCH_TYPES[v] < cm.MARCH_TYPES.MARCH_TYPE_TRANSPORT || cm.MARCH_TYPES[v] > cm.MARCH_TYPES.MARCH_TYPE_REASSIGN) {
+    for (var w in cm.MARCH_TYPES) {
+        if (cm.MARCH_TYPES[w] < cm.MARCH_TYPES.MARCH_TYPE_TRANSPORT || cm.MARCH_TYPES[w] > cm.MARCH_TYPES.MARCH_TYPE_REASSIGN) {
             continue
         }
-        n.push("<option value='" + cm.MARCH_TYPES[v] + "'");
-        if (f == cm.MARCH_TYPES[v]) {
+        n.push("<option value='" + cm.MARCH_TYPES[w] + "'");
+        if (f == cm.MARCH_TYPES[w]) {
             n.push(" selected")
         }
-        n.push(">" + cm.MARCH_TYPES[v] + "</option>")
+        n.push(">" + cm.MARCH_TYPES[w] + "</option>")
     }
     n.push("</select>");
     n.push("</div>");
@@ -16811,87 +16995,95 @@ function modal_attack(f, l, o, q) {
     n.push("<div class='available_troops'>" + g_js_strings.modal_attack.availabletroops + "</div>");
     if ("on" == cm.features.AUTO_ATTACK) {
         n.push("<div class='raidfilter' id='modal_attack_raidfilter'><input type='checkbox' id='modal_attack_raidfilter_checkbox' tabindex='");
-        n.push(y++);
-        n.push("' " + ((p == cm.MARCH_TYPES.MARCH_TYPE_BARBARIAN) ? "checked " : " "));
+        n.push(z++);
+        n.push("' " + ((q == cm.MARCH_TYPES.MARCH_TYPE_BARBARIAN) ? "checked " : " "));
         n.push((seed.player.title >= cm.AutoAttackLevelLock) ? " " : "disabled ");
         n.push('/><a onclick="cm.MarchModal.onAutoAttackHelpClick();return false;">');
         n.push(g_js_strings.modal_attack.thisisabarbarianraid);
         n.push("</a></div>")
     }
     n.push("<div class='unitfilter' id='modal_attack_supplyfilter'><input type='checkbox' id='modal_attack_supplyfilter_checkbox' tabindex='");
-    n.push(y++);
+    n.push(z++);
     n.push("' />");
     n.push(g_js_strings.modal_attack.displaysupplyonly);
     n.push("</div>");
     n.push("</div>");
     n.push("<div class='' id='modal_attack_unitlist'>");
     var c = seed.units["city" + currentcityid];
-    var x = Object.keys(c);
-    for (var v = 0; v < x.length; v++) {
-        var j = x[v].split("unt")[1];
-        var g = c[x[v]];
-        if (!cm.BarracksUnitsTypeMap.canCityHaveUnit(j)) {
+    var y = Object.keys(c);
+    for (var w = 0; w < y.length; w++) {
+        var j = y[w].split("unt")[1];
+        var g = c[y[w]];
+        if (j && !cm.BarracksUnitsTypeMap.canCityHaveUnit(j)) {
             continue
         }
-        n.push("<div class='unit' name='");
-        n.push(j);
-        n.push("'><img src='");
-        n.push(stimgUrl);
-        n.push("img/units/unit_");
-        n.push(j);
-        n.push("_50_s34.jpg'/><div class='unitinfo'><div class='unitname'>");
-        n.push(unitcost[x[v]][0]);
-        n.push("</div><div><span class='unitnum'>");
-        n.push(g);
-        n.push("</span></div><div class='numbox'><input type='text' id='modal_attack_unit_ipt");
-        n.push(j);
-        n.push("' value='0' onfocus='this.select();' onkeyup='modal_attack_update_num(this);' onkeyDown='cm.KeyFilter.allowOnlyNumbers(event)' onblur='modal_attack_normalize_number(this)' name='");
-        n.push(j);
-        n.push("' tabindex='");
-        n.push(y++);
-        n.push("' /><a id='maxButton" + j + "'	class='button14'");
-        n.push("><span>" + g_js_strings.commonstr.max + "</span></a></div></div></div>")
+        if (unitcost[y[w]]) {
+            n.push("<div class='unit' name='");
+            n.push(j);
+            n.push("'><img src='");
+            n.push(stimgUrl);
+            n.push("img/units/unit_");
+            n.push(j);
+            n.push("_50_s34.jpg'/><div class='unitinfo'><div class='unitname'>");
+            n.push(unitcost[y[w]][0]);
+            n.push("</div><div><span class='unitnum'>");
+            n.push(g);
+            n.push("</span></div><div class='numbox'><input type='text' id='modal_attack_unit_ipt");
+            n.push(j);
+            n.push("' value='0' onfocus='this.select();' onkeyup='modal_attack_update_num(this);' onkeyDown='cm.KeyFilter.allowOnlyNumbers(event)' onblur='modal_attack_normalize_number(this)' name='");
+            n.push(j);
+            n.push("' tabindex='");
+            n.push(z++);
+            n.push("' /><a id='maxButton" + j + "'	class='button14'");
+            n.push("><span>" + g_js_strings.commonstr.max + "</span></a></div></div></div>")
+        } else {
+            cm.log.l("unitkeys has an invalid unit type.  Most likely it came from an item buy or item usage error.")
+        }
     }
     n.push("</div>");
     n.push("<div class='unitarmy'>");
     n.push(g_js_strings.modal_attack.selectedtroops + ":");
     n.push(" <span id='modal_attack_selnum'>0</span> / <span id='modal_attack_maxunt'>");
-    var z = getBuildingLevel(12),
-        t = 1,
+    var A = getBuildingLevel(12),
+        u = 1,
         a = unixtime();
     if (seed.playerEffects.aurasExpire) {
         if (seed.playerEffects.aurasExpire > a) {
-            t = 1.15
+            u = 1.15
         }
     }
     if (seed.playerEffects.auras2Expire) {
         if (seed.playerEffects.auras2Expire > a) {
-            t = 1.3
+            u = 1.3
         }
     }
-    var w = cm.ThroneController.effectBonus(66);
+    var o = 150;
+    if (cm.thronestats.boosts.MarchSize) {
+        o = +cm.thronestats.boosts.MarchSize.Max
+    }
+    var x = Math.min(cm.ThroneController.effectBonus(66), o);
     var e = 0;
     if (cm.PrestigeModel.isPrestige(currentcityid)) {
         var b = cm.PrestigeModel.getPrestigeLevel(currentcityid);
         if (b > 0) {
-            var r = cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST"),
-                m = JSON.parse(r),
-                u = m.values[b - 1][1],
-                k = parseFloat(u);
-            t *= k
+            var s = cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST"),
+                m = JSON.parse(s),
+                v = m.values[b - 1][1],
+                k = parseFloat(v);
+            u *= k
         }
     }
-    if (z === 11) {
-        e = (Math.round(150000 * t))
+    if (A === 11) {
+        e = (Math.round(150000 * u))
     } else {
-        if (z === 12) {
-            e = (Math.round(200000 * t))
+        if (A === 12) {
+            e = (Math.round(200000 * u))
         } else {
-            e = (Math.round((z * 10000) * t))
+            e = (Math.round((A * 10000) * u))
         }
     }
-    if (p != 6) {
-        e = Math.round(e * (1 + w / 100))
+    if (q != 6) {
+        e = Math.round(e * (1 + x / 100))
     }
     e = Math.round(e * cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().FILL_THE_RANKS, currentcityid, {
         marchsize: true
@@ -16916,17 +17108,17 @@ function modal_attack(f, l, o, q) {
     }
     n.push("</option>");
     if (h) {
-        var s = Object.keys(h);
-        s.sort(cm.MarchModal.sortKnights);
-        for (var v = 0; v < s.length; v++) {
-            var d = parseInt(s[v].split("knt")[1]);
+        var t = Object.keys(h);
+        t.sort(cm.MarchModal.sortKnights);
+        for (var w = 0; w < t.length; w++) {
+            var d = parseInt(t[w].split("knt")[1]);
             if (parseInt(h["knt" + d].knightStatus) == 1 && d != parseInt(seed.leaders["city" + currentcityid].resourcefulnessKnightId) && d != parseInt(seed.leaders["city" + currentcityid].intelligenceKnightId) && d != parseInt(seed.leaders["city" + currentcityid].combatKnightId) && d != parseInt(seed.leaders["city" + currentcityid].politicsKnightId)) {
                 n.push("<option value='");
-                n.push(h[s[v]].knightId);
+                n.push(h[t[w]].knightId);
                 n.push("'>");
-                n.push(h[s[v]].knightName);
+                n.push(h[t[w]].knightName);
                 n.push(" (" + g_js_strings.commonstr.atk + ":");
-                n.push(h[s[v]].combat);
+                n.push(h[t[w]].combat);
                 n.push(")</option>")
             }
         }
@@ -16938,7 +17130,7 @@ function modal_attack(f, l, o, q) {
     n.push("<div class='section_title'>" + g_js_strings.modal_attack.marchto + "</div>");
     n.push("<div class='section_content'>");
     n.push("<span id='modal_attack_target_dropdown'");
-    if (l > -1 && o > -1) {
+    if (l > -1 && p > -1) {
         n.push(" style='display:none;'")
     }
     n.push("><span id='savedCoordinatesDropdown'></span> ");
@@ -16947,18 +17139,18 @@ function modal_attack(f, l, o, q) {
     n.push(g_js_strings.modal_attack.inpcoor);
     n.push("</a></span>");
     n.push("<span id='modal_attack_target_coords'");
-    if (!(l > -1) || !(o > -1)) {
+    if (!(l > -1) || !(p > -1)) {
         n.push(" style='display:none;'")
     }
     n.push(">X=<input type='text' class='coordipt' id='modal_attack_target_coords_x' onkeyup='modal_attack_update_time();' maxlength='3'");
-    if (l > -1 && o > -1) {
+    if (l > -1 && p > -1) {
         n.push(" value='" + l + "'")
     } else {
         n.push(" value='0'")
     }
     n.push(" tabindex='151' /> Y=<input type='text' class='coordipt' id='modal_attack_target_coords_y' onkeyup='modal_attack_update_time();' maxlength='3'");
-    if (l > -1 && o > -1) {
-        n.push(" value='" + o + "'")
+    if (l > -1 && p > -1) {
+        n.push(" value='" + p + "'")
     } else {
         n.push(" value='0'")
     }
@@ -16991,8 +17183,8 @@ function modal_attack(f, l, o, q) {
     Modal.showModal(740, 400, 10, 10, g_js_strings.modaltitles.marchtroops, n.join(""), undefined, undefined, undefined, {
         additionalClass: "nodecoration"
     });
-    cm.MarchModal.bind(q);
-    cm.MarchModal.changeMarchType(f, p);
+    cm.MarchModal.bind(r);
+    cm.MarchModal.changeMarchType(f, q);
     attack_checkOverMarch()
 }
 function modal_attack_rec_vacancy(h) {
@@ -18293,14 +18485,24 @@ cm.MarchModal = function ($) {
                 continue
             }
             total_troops += troop_number;
-            var troop_speed = parseInt(unitstats["unt" + troop_type][3]) * (1 + 0.1 * parseInt(seed.tech.tch11));
-            if (troop_type > 6) {
+            var troop_speed = parseInt(unitstats["unt" + troop_type][3]);
+            troop_speed *= (1 + 0.1 * parseInt(seed.tech.tch11));
+            if (cm.unitHorsedBenefit[troop_type]) {
                 troop_speed = troop_speed * (1 + 0.05 * parseInt(seed.tech.tch12))
+            } else {
+                troop_speed *= (1 + 0.05 * (parseInt(seed.tech2.tch1) || 0));
+                troop_speed *= cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().BLOOD_LUST, currentcityid, {
+                    speed: true
+                })
             }
             if (troop_speed < speed) {
                 speed = troop_speed
             }
         }
+        speed *= cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().FILL_THE_RANKS, currentcityid, {
+            marchspeed: true
+        });
+        speed *= cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().REDUCE_FATIGUE, currentcityid, {});
         var barbarian_raid = $("#modal_attack_raidfilter_checkbox").attr("checked");
         var attack_selected = $("#modal_attack_tab_4").hasClass("selected");
         var throne67 = cm.ThroneController.effectBonus(67);
@@ -18354,7 +18556,9 @@ cm.MarchModal = function ($) {
                 time = parseInt(time * 0.75)
             }
         }
-        time += 30;
+        if (g_env !== "dev") {
+            time += 30
+        }
         if (seed.playerEffects.returnExpire > unixtime()) {
             time = parseInt(time * 0.75)
         }
@@ -21993,27 +22197,31 @@ cm.BarracksUnitsTypeMap = (function (h) {
         } catch (i) {}
         return ""
     };
-    var g = function (m, l) {
-        m = +m;
-        var j = [13, 14],
-            n = [13, 14],
-            k = [13, 14],
+    var g = function (n, m) {
+        n = +n;
+        var j = [13, 14, 15],
+            o = [13, 14, 15],
+            l = [13, 14, 15],
+            k = [13, 14, 15],
             i = false;
-        switch (l) {
+        switch (m) {
             case "infantry":
             case "ranged":
             case "horsed":
             case "siege":
-                i = (cm.unitFrontendType[m] === l);
+                i = (cm.unitFrontendType[n] === m);
                 break;
             case "prestige":
-                i = h.inArray(m, j) > -1;
+                i = h.inArray(n, j) > -1;
                 break;
             case "druid":
-                i = h.inArray(m, n) > -1;
+                i = h.inArray(n, o) > -1;
                 break;
             case "fey":
-                i = h.inArray(m, k) > -1;
+                i = h.inArray(n, l) > -1;
+                break;
+            case "briton":
+                i = h.inArray(n, k) > -1;
                 break
         }
         return i
@@ -22073,7 +22281,7 @@ function modal_openBarracks() {
     for (var f = 0; f < d.length; f++) {
         var c = +d[f].split("unt")[1];
         threshold = 12;
-        if (cm.ApothecaryView.isOpen() || cm.AltarView.isOpen() || (!cm.PrestigeModel.isPrestige() && c <= threshold) || ((cm.cityViewActive == true && c <= threshold) || (cm.cityViewActive != true && c == 13 && parseInt(cm.PrestigeModel.getPrestigeFaction(), 10) === 1) || (cm.cityViewActive != true && c == 14 && parseInt(cm.PrestigeModel.getPrestigeFaction(), 10) === 2))) {
+        if (cm.ApothecaryView.isOpen() || cm.AltarView.isOpen() || (!cm.PrestigeModel.isPrestige() && c <= threshold) || ((cm.cityViewActive == true && c <= threshold) || (cm.cityViewActive != true && c == 13 && parseInt(cm.PrestigeModel.getPrestigeFaction(), 10) === 1) || (cm.cityViewActive != true && c == 14 && parseInt(cm.PrestigeModel.getPrestigeFaction(), 10) === 2) || (cm.cityViewActive != true && c == 15 && parseInt(cm.PrestigeModel.getPrestigeFaction(), 10) === 3))) {
             if ((cm.ApothecaryView.isOpen() || cm.AltarView.isOpen()) && !cm.BarracksUnitsTypeMap.canCityHaveUnit(c)) {
                 continue
             }
@@ -22153,7 +22361,7 @@ function modal_barracks_dismiss(b) {
     a.push(b);
     a.push("_50_s34.jpg'/>");
     a.push("<div class='nm'>" + unitcost["unt" + b][0] + "</div>");
-    a.push("<div class='count'>" + addCommas(parseInt(seed.units["city" + currentcityid]["unt" + b])) + "</div>");
+    a.push("<div class='count'>" + addCommas(seed.units["city" + currentcityid]["unt" + b]) + "</div>");
     a.push("</div>");
     a.push("<div class='unit_ipt clearfix'><input type='text' id='barracks_dismiss_ipt' onkeyup='modal_barracks_dismiss_keyup(");
     a.push(seed.units["city" + currentcityid]["unt" + b]);
@@ -22179,7 +22387,7 @@ function modal_barracks_dismiss_confirm(b) {
     a.push("<div class='cfrmhd'>");
     a.push(g_js_strings.modal_barracks_dismiss_confirm.areyousure);
     a.push(" ");
-    a.push(addCommas(parseInt(get_barracks_dismiss_input())));
+    a.push(addCommas(get_barracks_dismiss_input()));
     a.push(" ");
     a.push(unitcost["unt" + b][0]);
     a.push("</div>");
@@ -22464,9 +22672,9 @@ function modal_barracks_traintime(n, p) {
     jQuery.each(g, function (u, t) {
         t.id = +(t[0]);
         t.level = +(t[1]);
-        var s = (parseInt(n) == 13 || parseInt(n) == 14);
+        var s = (parseInt(n) == 13 || parseInt(n) == 14 || parseInt(n) == 15);
         t.isPrestige = (parseInt(t[2]) >= 100 && parseInt(t[2]) <= 105);
-        if ((t.id === 13 || t.id === 22 || t.id === 24) && t.level > 0) {
+        if ((t.id === 13 || t.id === 22 || t.id === 24 || t.id === 26) && t.level > 0) {
             if ((s && t.isPrestige) || (!s && !t.isPrestige)) {
                 f.barracks += (t.level + 9)
             }
@@ -22522,6 +22730,12 @@ function modal_barracks_traintime(n, p) {
     h = Math.ceil(h - (h * cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().EXPEDITED_SENTENCING, currentcityid, {
         traintime: true,
         unitid: n
+    })));
+    h = Math.ceil(h - (h * cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().TO_THE_FRONT_LINES, currentcityid, {
+        unitid: n
+    })));
+    h = Math.ceil(h - (h * cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().PRIORITIZED_CONSTRUCTION, currentcityid, {
+        unittype: n
     })));
     return h
 }
@@ -22937,15 +23151,15 @@ function trainingButton(b, e, d, c) {
     }
 }
 function modal_barracks_trainingtab() {
+    if (cm.AltarView.isOpen()) {
+        cm.SacrificeQueue.trainTab();
+        return
+    }
     var c = !cm.cityViewActive,
         n = [],
         h = seed.queue_unt;
     if (cm.ApothecaryView.isOpen()) {
         h = seed.queue_revive
-    }
-    if (cm.AltarView.isOpen()) {
-        cm.SacrificeQueue.trainTab();
-        return
     }
     if (!cm.ApothecaryView.isOpen() && !cm.AltarView.isOpen()) {
         for (var g = 0; g < h["city" + currentcityid].length; g++) {
@@ -23345,7 +23559,17 @@ cm.BlessingSystemModel = function (x) {
         CHANNELED_SUFFERING: 206,
         FILL_THE_RANKS: 207,
         BLOOD_LUST: 208,
-        EMPOWERED_IRON: 209
+        EMPOWERED_IRON: 209,
+        HEAVY_ARMOR: 31,
+        ENHANCED_HORSESHOES: 301,
+        REDUCE_FATIGUE: 302,
+        ARCHAEOLOGICAL_STUDIES: 303,
+        SCIENTIFIC_METHODOLOGIES: 304,
+        GNOMISH_QUARRY_FOREMAN: 305,
+        TO_THE_FRONT_LINES: 306,
+        HEIGHTENED_SECURITY: 307,
+        PRIORITIZED_CONSTRUCTION: 308,
+        EMPOWERED_STONE: 309
     };
     var F = {};
     F[y.FIGHTING_SPIRIT] = {
@@ -23544,10 +23768,80 @@ cm.BlessingSystemModel = function (x) {
         css: "b9",
         faction: "fey"
     };
+    F[y.HEAVY_ARMOR] = {
+        level: [1],
+        name: g_js_strings.blessingSystem.blessing_name_31,
+        description: g_js_strings.blessingSystem.blessing_description_31,
+        css: "b1",
+        faction: "briton"
+    };
+    F[y.ENHANCED_HORSESHOES] = {
+        level: [2, 3, 5, 6, 8, 9],
+        name: g_js_strings.blessingSystem.blessing_name_301,
+        description: g_js_strings.blessingSystem.blessing_description_301,
+        css: "b1",
+        faction: "briton"
+    };
+    F[y.REDUCE_FATIGUE] = {
+        level: [2, 3, 5, 6, 8, 9],
+        name: g_js_strings.blessingSystem.blessing_name_302,
+        description: g_js_strings.blessingSystem.blessing_description_302,
+        css: "b2",
+        faction: "briton"
+    };
+    F[y.ARCHAEOLOGICAL_STUDIES] = {
+        level: [2, 3, 5, 6, 8, 9],
+        name: g_js_strings.blessingSystem.blessing_name_303,
+        description: g_js_strings.blessingSystem.blessing_description_303,
+        css: "b3",
+        faction: "briton"
+    };
+    F[y.SCIENTIFIC_METHODOLOGIES] = {
+        level: [2, 3, 5, 6, 8, 9],
+        name: g_js_strings.blessingSystem.blessing_name_304,
+        description: g_js_strings.blessingSystem.blessing_description_304,
+        css: "b4",
+        faction: "briton"
+    };
+    F[y.GNOMISH_QUARRY_FOREMAN] = {
+        level: [2, 3, 5, 6, 8, 9],
+        name: g_js_strings.blessingSystem.blessing_name_305,
+        description: g_js_strings.blessingSystem.blessing_description_305,
+        css: "b5",
+        faction: "briton"
+    };
+    F[y.TO_THE_FRONT_LINES] = {
+        level: [2, 3, 5, 6, 8, 9],
+        name: g_js_strings.blessingSystem.blessing_name_306,
+        description: g_js_strings.blessingSystem.blessing_description_306,
+        css: "b6",
+        faction: "briton"
+    };
+    F[y.HEIGHTENED_SECURITY] = {
+        level: [2, 3, 5, 6, 8, 9],
+        name: g_js_strings.blessingSystem.blessing_name_307,
+        description: g_js_strings.blessingSystem.blessing_description_307,
+        css: "b7",
+        faction: "briton"
+    };
+    F[y.PRIORITIZED_CONSTRUCTION] = {
+        level: [2, 3, 5, 6, 8, 9],
+        name: g_js_strings.blessingSystem.blessing_name_308,
+        description: g_js_strings.blessingSystem.blessing_description_308,
+        css: "b8",
+        faction: "briton"
+    };
+    F[y.EMPOWERED_STONE] = {
+        level: [2, 3, 5, 6, 8, 9],
+        name: g_js_strings.blessingSystem.blessing_name_309,
+        description: g_js_strings.blessingSystem.blessing_description_309,
+        css: "b9",
+        faction: "briton"
+    };
     var K = {};
     K[J.DRUID] = [y.FIGHTING_SPIRIT, y.SURROUNDED_BY_NATURE, y.MORE_WITH_LESS, y.EYE_FOR_GEMS, y.SPLENDID_OPULENCE, y.ANCIENT_HEALING, y.NATURAL_TREASURES, y.NATURE_GIFTS, y.PICK_ME_UP, y.DEATH_FROM_AFAR];
     K[J.FEY] = [y.SUMMON_DEATH, y.REINFORCED_WALLS, y.EXPEDITED_SENTENCING, y.DARK_RITUAL, y.REALLOCATED_LABOR, y.RELIC_HUNTER, y.CHANNELED_SUFFERING, y.FILL_THE_RANKS, y.BLOOD_LUST, y.EMPOWERED_IRON];
-    K[J.BRITON] = [];
+    K[J.BRITON] = [y.HEAVY_ARMOR, y.ENHANCED_HORSESHOES, y.REDUCE_FATIGUE, y.ARCHAEOLOGICAL_STUDIES, y.SCIENTIFIC_METHODOLOGIES, y.GNOMISH_QUARRY_FOREMAN, y.TO_THE_FRONT_LINES, y.HEIGHTENED_SECURITY, y.PRIORITIZED_CONSTRUCTION, y.EMPOWERED_STONE];
     var U = {
         major: {
             level: [1, 4, 7, 10],
@@ -23701,6 +23995,72 @@ cm.BlessingSystemModel = function (x) {
     };
     w[y.EMPOWERED_IRON] = function (W, V) {
         if (p(y.EMPOWERED_IRON, W)) {
+            return 1.5
+        } else {
+            return 0
+        }
+    };
+    w[y.HEAVY_ARMOR] = function (W, V) {
+        if (p(y.HEAVY_ARMOR, W)) {
+            return true
+        } else {
+            return false
+        }
+    };
+    w[y.ENHANCED_HORSESHOES] = function (W, V) {
+        if (p(y.ENHANCED_HORSESHOES, W)) {
+            return 1.1
+        } else {
+            return 1
+        }
+    };
+    w[y.REDUCE_FATIGUE] = function (W, V) {
+        if (p(y.REDUCE_FATIGUE, W)) {
+            return 1.15
+        } else {
+            return 1
+        }
+    };
+    w[y.SCIENTIFIC_METHODOLOGIES] = function (W, V) {
+        if (p(y.SCIENTIFIC_METHODOLOGIES, W)) {
+            return 0.9
+        } else {
+            return 1
+        }
+    };
+    w[y.GNOMISH_QUARRY_FOREMAN] = function (W, V) {
+        if (p(y.GNOMISH_QUARRY_FOREMAN, W)) {
+            if (V.type == 3) {
+                return 1.5
+            }
+            return 1
+        } else {
+            return 1
+        }
+    };
+    w[y.TO_THE_FRONT_LINES] = function (W, V) {
+        if (p(y.TO_THE_FRONT_LINES, W) && V.unitid == 15) {
+            return 0.2
+        } else {
+            return 0
+        }
+    };
+    w[y.HEIGHTENED_SECURITY] = function (W, V) {
+        if (p(y.HEIGHTENED_SECURITY, W)) {
+            return 1.15
+        } else {
+            return 1
+        }
+    };
+    w[y.PRIORITIZED_CONSTRUCTION] = function (W, V) {
+        if (p(y.PRIORITIZED_CONSTRUCTION, W) && (V.unittype == cm.UNIT_TYPES.UNIT_TYPE_TRANSPORTER || V.unittype == cm.UNIT_TYPES.UNIT_TYPE_CATAPULT || V.unittype == cm.UNIT_TYPES.UNIT_TYPE_BALLISTA || V.unittype == cm.UNIT_TYPES.UNIT_TYPE_BATTERINGRAM)) {
+            return 0.1
+        } else {
+            return 0
+        }
+    };
+    w[y.EMPOWERED_STONE] = function (W, V) {
+        if (p(y.EMPOWERED_STONE, W)) {
             return 1.5
         } else {
             return 0
@@ -25518,7 +25878,7 @@ function modal_build(u, r) {
                     }
                 }
                 if (parseInt(ao[1][H]) > 0) {
-                    d.push(addCommas(parseInt(ao[1][H])))
+                    d.push(addCommas(ao[1][H]))
                 } else {
                     if (ab >= 10 && parseInt(y, 10) === 0) {
                         d.push(g_js_strings.commonstr.lv + ab + " " + buildingcost.bdg19[0])
@@ -25529,7 +25889,7 @@ function modal_build(u, r) {
                 d.push("</div>");
                 h.push("<div>");
                 if (parseInt(ao[2][H]) > 0) {
-                    h.push(addCommas(parseInt(ao[2][H])))
+                    h.push(addCommas(ao[2][H]))
                 } else {
                     h.push(ao[2][H])
                 }
@@ -25877,7 +26237,7 @@ function modal_build(u, r) {
                             }
                         })
                     } else {
-                        if (parseInt(y, 10) === 13 || parseInt(y, 10) === 21 || parseInt(y, 10) === 22 || parseInt(y, 10) === 23 || parseInt(y, 10) === 24 || parseInt(y, 10) === 25) {
+                        if (parseInt(y, 10) === 13 || parseInt(y, 10) === 21 || parseInt(y, 10) === 22 || parseInt(y, 10) === 23 || parseInt(y, 10) === 24 || parseInt(y, 10) === 25 || parseInt(y, 10) === 26) {
                             Modal.showModal(740, 400, 10, 10, p, X.join(""), function () {
                                 if (ab > 0) {
                                     modal_openBarracks();
@@ -25909,204 +26269,150 @@ function modal_build(u, r) {
                                             }
                                         })
                                     } else {
-                                        if (~~ (1 * y) == 20) {
-                                            if (c == null) {
-                                                var N = ~~ (1 * u);
-                                                ai = seed.buildings["city" + currentcityid]["pos" + u], buildingId = r, currentLevel = 0, nextLevel = 1, buildingTitle = g_js_strings.modal_build.newbuilding + " - " + buildingcost["bdg" + y][0] + " " + g_js_strings.commonstr.lv + "1", buildingImageLevel = 1
-                                            } else {
-                                                var N = ~~ (1 * u);
-                                                ai = seed.buildings["city" + currentcityid]["pos" + u], buildingId = c[0], currentLevel = ~~ (1 * c[1]), nextLevel = currentLevel + 1, buildingTitle = buildingcost["bdg" + buildingId][0] + " " + g_js_strings.commonstr.lv + currentLevel, buildingImageLevel = (nextLevel > 5) ? 5 : 1
-                                            }
-                                            var ac = cm.TutorialManager.inTutorialMode(),
-                                                aq = checkreq("bdg", buildingId, nextLevel),
-                                                az = [],
-                                                aA = [],
-                                                a = false,
-                                                m = true,
-                                                aw;
-                                            if (currentLevel > 0 && N != 0 && N != 1 && !ac) {
-                                                aA.push("<div class='button'>");
-                                                aA.push("<a class='deconstruct' onclick='deconstructBuilding(" + ai[3] + "," + N + ");'>");
-                                                aA.push("<span>" + g_js_strings.commonstr.decontruct + "</span>");
-                                                aA.push("</a>");
-                                                aA.push("</div>");
-                                                if (currentLevel > 1) {
+                                        if (parseInt(y, 10) === 27) {
+                                            Modal.showModal(740, 400, 10, 10, p, X.join(""), function () {
+                                                if (ab > 0) {
+                                                    modal_openBritonWorkshop();
+                                                    buildtutorial(y, ab)
+                                                }
+                                            })
+                                        } else {
+                                            if (~~ (1 * y) == 20) {
+                                                if (c == null) {
+                                                    var N = ~~ (1 * u);
+                                                    ai = seed.buildings["city" + currentcityid]["pos" + u], buildingId = r, currentLevel = 0, nextLevel = 1, buildingTitle = g_js_strings.modal_build.newbuilding + " - " + buildingcost["bdg" + y][0] + " " + g_js_strings.commonstr.lv + "1", buildingImageLevel = 1
+                                                } else {
+                                                    var N = ~~ (1 * u);
+                                                    ai = seed.buildings["city" + currentcityid]["pos" + u], buildingId = c[0], currentLevel = ~~ (1 * c[1]), nextLevel = currentLevel + 1, buildingTitle = buildingcost["bdg" + buildingId][0] + " " + g_js_strings.commonstr.lv + currentLevel, buildingImageLevel = (nextLevel > 5) ? 5 : 1
+                                                }
+                                                var ac = cm.TutorialManager.inTutorialMode(),
+                                                    aq = checkreq("bdg", buildingId, nextLevel),
+                                                    az = [],
+                                                    aA = [],
+                                                    a = false,
+                                                    m = true,
+                                                    aw;
+                                                if (currentLevel > 0 && N != 0 && N != 1 && !ac) {
                                                     aA.push("<div class='button'>");
-                                                    aA.push("<a class='destroy' onclick='destructBuilding(" + ai[3] + "," + N + ");'>");
-                                                    aA.push("<span>" + g_js_strings.commonstr.destroy + "</span>");
+                                                    aA.push("<a class='deconstruct' onclick='deconstructBuilding(" + ai[3] + "," + N + ");'>");
+                                                    aA.push("<span>" + g_js_strings.commonstr.decontruct + "</span>");
                                                     aA.push("</a>");
-                                                    aA.push("</div>")
+                                                    aA.push("</div>");
+                                                    if (currentLevel > 1) {
+                                                        aA.push("<div class='button'>");
+                                                        aA.push("<a class='destroy' onclick='destructBuilding(" + ai[3] + "," + N + ");'>");
+                                                        aA.push("<span>" + g_js_strings.commonstr.destroy + "</span>");
+                                                        aA.push("</a>");
+                                                        aA.push("</div>")
+                                                    }
+                                                } else {
+                                                    if (N == 0 && seed.cities.length > 1) {
+                                                        aA.push("<div class='button'>");
+                                                        aA.push("<a class='abandon' onclick='cityaction_abandonprompt();'> <span>" + g_js_strings.modal_build.abandoncity + "</span></a>");
+                                                        aA.push("<p>(" + g_js_strings.modal_build.usedragon + ")</p>");
+                                                        aA.push("</div>")
+                                                    }
                                                 }
-                                            } else {
-                                                if (N == 0 && seed.cities.length > 1) {
-                                                    aA.push("<div class='button'>");
-                                                    aA.push("<a class='abandon' onclick='cityaction_abandonprompt();'> <span>" + g_js_strings.modal_build.abandoncity + "</span></a>");
-                                                    aA.push("<p>(" + g_js_strings.modal_build.usedragon + ")</p>");
-                                                    aA.push("</div>")
-                                                }
-                                            }
-                                            for (var I = 0, Z = aq[0].length; I < Z; ++I) {
-                                                if (typeof aq[1][I] != "string" || aq[1][I].indexOf("Lv.0") == -1) {
-                                                    if (aq[3][I] == 0) {
-                                                        a = false;
-                                                        m = false
-                                                    } else {
-                                                        if (H == 0 && currentLevel >= 10 && buildingId == 0) {
-                                                            if (getBuildingLevel(19) >= currentLevel) {
-                                                                a = true
+                                                for (var I = 0, Z = aq[0].length; I < Z; ++I) {
+                                                    if (typeof aq[1][I] != "string" || aq[1][I].indexOf("Lv.0") == -1) {
+                                                        if (aq[3][I] == 0) {
+                                                            a = false;
+                                                            m = false
+                                                        } else {
+                                                            if (H == 0 && currentLevel >= 10 && buildingId == 0) {
+                                                                if (getBuildingLevel(19) >= currentLevel) {
+                                                                    a = true
+                                                                } else {
+                                                                    a = false;
+                                                                    m = false
+                                                                }
                                                             } else {
-                                                                a = false;
-                                                                m = false
+                                                                a = true
                                                             }
+                                                        }
+                                                        if (I % 2 == 0) {
+                                                            aw = "even"
                                                         } else {
-                                                            a = true
+                                                            aw = "odd"
+                                                        }
+                                                        az.push(" <tr class='" + aw + "'> ");
+                                                        az.push(" <td> " + aq[0][I] + " </td> ");
+                                                        if (a) {
+                                                            az.push(" <td class='met'> ")
+                                                        } else {
+                                                            az.push(" <td class='unmet'> ")
+                                                        }
+                                                        if (aq[1][I] > 0) {
+                                                            az.push(addCommas(aq[1][I]))
+                                                        } else {
+                                                            if (currentLevel >= 10 && buildingId == 0) {
+                                                                az.push(_js_strings.commonstr.lv + currentLevel + " " + buildingcost.bdg19[0])
+                                                            } else {
+                                                                az.push(aq[1][I])
+                                                            }
+                                                        }
+                                                        az.push(" <td> ");
+                                                        if (aq[2][I] > 0) {
+                                                            az.push(addCommas(aq[2][I]))
+                                                        } else {
+                                                            az.push(aq[2][I])
+                                                        }
+                                                        az.push(" </td> ");
+                                                        az.push(" </tr> ")
+                                                    }
+                                                }
+                                                if (currentLevel >= 9) {
+                                                    var W = 401;
+                                                    if (buildingId == 0) {
+                                                        if (currentLevel == 10) {
+                                                            W = 402
+                                                        } else {
+                                                            if (currentLevel == 11) {
+                                                                W = 404
+                                                            }
+                                                        }
+                                                    } else {
+                                                        if (currentLevel > 10) {
+                                                            W = 403
                                                         }
                                                     }
-                                                    if (I % 2 == 0) {
-                                                        aw = "even"
+                                                    if (aw == "even") {
+                                                        az.push(" <tr class='odd'> ")
                                                     } else {
-                                                        aw = "odd"
+                                                        az.push(" <tr class='even'> ")
                                                     }
-                                                    az.push(" <tr class='" + aw + "'> ");
-                                                    az.push(" <td> " + aq[0][I] + " </td> ");
-                                                    if (a) {
-                                                        az.push(" <td class='met'> ")
+                                                    az.push(" <td> " + itemlist["i" + W].name + " </td> ");
+                                                    if (ksoItems[W].count > 0) {
+                                                        az.push(" <td class='met'> 1 </td> ")
                                                     } else {
-                                                        az.push(" <td class='unmet'> ")
+                                                        az.push(" <td class='unmet'> 1 </td> ")
                                                     }
-                                                    if (aq[1][I] > 0) {
-                                                        az.push(addCommas(aq[1][I]))
-                                                    } else {
-                                                        if (currentLevel >= 10 && buildingId == 0) {
-                                                            az.push(_js_strings.commonstr.lv + currentLevel + " " + buildingcost.bdg19[0])
-                                                        } else {
-                                                            az.push(aq[1][I])
-                                                        }
-                                                    }
-                                                    az.push(" <td> ");
-                                                    if (aq[2][I] > 0) {
-                                                        az.push(addCommas(aq[2][I]))
-                                                    } else {
-                                                        az.push(aq[2][I])
-                                                    }
-                                                    az.push(" </td> ");
+                                                    az.push(" <td> " + addCommas(ksoItems[W].count) + " </td> ");
                                                     az.push(" </tr> ")
                                                 }
-                                            }
-                                            if (currentLevel >= 9) {
-                                                var W = 401;
-                                                if (buildingId == 0) {
-                                                    if (currentLevel == 10) {
-                                                        W = 402
-                                                    } else {
-                                                        if (currentLevel == 11) {
-                                                            W = 404
-                                                        }
-                                                    }
-                                                } else {
-                                                    if (currentLevel > 10) {
-                                                        W = 403
-                                                    }
-                                                }
-                                                if (aw == "even") {
-                                                    az.push(" <tr class='odd'> ")
-                                                } else {
-                                                    az.push(" <tr class='even'> ")
-                                                }
-                                                az.push(" <td> " + itemlist["i" + W].name + " </td> ");
-                                                if (ksoItems[W].count > 0) {
-                                                    az.push(" <td class='met'> 1 </td> ")
-                                                } else {
-                                                    az.push(" <td class='unmet'> 1 </td> ")
-                                                }
-                                                az.push(" <td> " + addCommas(ksoItems[W].count) + " </td> ");
-                                                az.push(" </tr> ")
-                                            }
-                                            var l = seed.queue_con["city" + currentcityid],
-                                                al = 0,
-                                                E = 0,
-                                                R = 0,
-                                                ak = [],
-                                                af = [],
-                                                U, G, v = seed.knights["city" + currentcityid],
-                                                T, f = 0,
-                                                ap, x, b = Math.pow(2, currentLevel),
-                                                ax, ae, Q, ag;
-                                            var U, G;
-                                            if (l.length > 0) {
-                                                al = 1;
-                                                for (var I = 0, Z = l.length; I < Z; ++I) {
-                                                    if (N == parseInt(l[I][7])) {
-                                                        al = 2;
-                                                        E = parseInt(av[I][4]) - parseInt(av[I][3]);
-                                                        R = l[I][2];
-                                                        break
-                                                    }
-                                                }
-                                            }
-                                            if (al == 0) {
-                                                if (currentLevel > 0) {
-                                                    U = g_js_strings.commonstr.upgrade;
-                                                    G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
-                                                } else {
-                                                    U = g_js_strings.commonstr.build;
-                                                    G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
-                                                }
-                                                if (v) {
-                                                    ap = seed.leaders["city" + currentcityid].politicsKnightId;
-                                                    T = v[ap];
-                                                    if (T) {
-                                                        f = ~~ (1 * T.politics);
-                                                        x = ~~ (1 * T.politicsBoostExpireUnixtime);
-                                                        if ((x - unixtime()) > 0) {
-                                                            f = f * 1.25
+                                                var l = seed.queue_con["city" + currentcityid],
+                                                    al = 0,
+                                                    E = 0,
+                                                    R = 0,
+                                                    ak = [],
+                                                    af = [],
+                                                    U, G, v = seed.knights["city" + currentcityid],
+                                                    T, f = 0,
+                                                    ap, x, b = Math.pow(2, currentLevel),
+                                                    ax, ae, Q, ag;
+                                                var U, G;
+                                                if (l.length > 0) {
+                                                    al = 1;
+                                                    for (var I = 0, Z = l.length; I < Z; ++I) {
+                                                        if (N == parseInt(l[I][7])) {
+                                                            al = 2;
+                                                            E = parseInt(av[I][4]) - parseInt(av[I][3]);
+                                                            R = l[I][2];
+                                                            break
                                                         }
                                                     }
                                                 }
-                                                ax = buildingcost["bdg" + buildingId][7] * b;
-                                                if (buildingId < 6 && buildingId > 0 && b == 1) {
-                                                    ax = 15
-                                                }
-                                                ag = ~~ (1 * seed.tech.tch16);
-                                                ax = parseInt(ax / (1 + 0.005 * f + 0.1 * ag));
-                                                ae = Math.max(600, ax * 0.1);
-                                                Q = (ax - ae) < 0 ? 0 : (ax - ae);
-                                                if (a) {
-                                                    info = "<div class='timeLeftContainer'>";
-                                                    info += "<span class='label'>" + g_js_strings.commonstr.time + ":</span>";
-                                                    info += "<span id='buildTimeText' class='time'>" + timestr(ax) + "</span>";
-                                                    info += "</div>"
-                                                } else {
-                                                    info = "<p class='notmet'>" + g_js_strings.modal_build.reqnotmet + "</p>"
-                                                }
-                                                if (ab < parseInt(buildingmaxlvl[y])) {
-                                                    if (cm.WorldSettings.isOn("DARK_FOREST_CRAFTING_KILLSWITCH")) {
-                                                        if (!m) {
-                                                            var q = cm.Template.renderTemplate("Building", "buildContainer0", {
-                                                                info: info,
-                                                                shareContent: G,
-                                                                buttonLabel: U,
-                                                                buttonClass: "gray"
-                                                            })
-                                                        } else {
-                                                            var q = cm.Template.renderTemplate("Building", "buildContainer0", {
-                                                                info: info,
-                                                                shareContent: G,
-                                                                buttonLabel: U,
-                                                                buttonClass: "blue"
-                                                            })
-                                                        }
-                                                    } else {
-                                                        var q = cm.Template.renderTemplate("Building", "buildContainer0", {
-                                                            info: info,
-                                                            shareContent: G,
-                                                            buttonLabel: U,
-                                                            buttonClass: "gray"
-                                                        })
-                                                    }
-                                                }
-                                            } else {
-                                                if (al == 1) {
+                                                if (al == 0) {
                                                     if (currentLevel > 0) {
                                                         U = g_js_strings.commonstr.upgrade;
                                                         G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
@@ -26114,212 +26420,275 @@ function modal_build(u, r) {
                                                         U = g_js_strings.commonstr.build;
                                                         G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
                                                     }
+                                                    if (v) {
+                                                        ap = seed.leaders["city" + currentcityid].politicsKnightId;
+                                                        T = v[ap];
+                                                        if (T) {
+                                                            f = ~~ (1 * T.politics);
+                                                            x = ~~ (1 * T.politicsBoostExpireUnixtime);
+                                                            if ((x - unixtime()) > 0) {
+                                                                f = f * 1.25
+                                                            }
+                                                        }
+                                                    }
+                                                    ax = buildingcost["bdg" + buildingId][7] * b;
+                                                    if (buildingId < 6 && buildingId > 0 && b == 1) {
+                                                        ax = 15
+                                                    }
+                                                    ag = ~~ (1 * seed.tech.tch16);
+                                                    ax = parseInt(ax / (1 + 0.005 * f + 0.1 * ag));
+                                                    ae = Math.max(600, ax * 0.1);
+                                                    Q = (ax - ae) < 0 ? 0 : (ax - ae);
+                                                    if (a) {
+                                                        info = "<div class='timeLeftContainer'>";
+                                                        info += "<span class='label'>" + g_js_strings.commonstr.time + ":</span>";
+                                                        info += "<span id='buildTimeText' class='time'>" + timestr(ax) + "</span>";
+                                                        info += "</div>"
+                                                    } else {
+                                                        info = "<p class='notmet'>" + g_js_strings.modal_build.reqnotmet + "</p>"
+                                                    }
                                                     if (ab < parseInt(buildingmaxlvl[y])) {
-                                                        var q = cm.Template.renderTemplate("Building", "buildContainer1", {
-                                                            warning: g_js_strings.modal_build.buildoneattime,
-                                                            shareContent: G,
-                                                            buttonLabel: U,
-                                                            buttonClass: "gray",
-                                                            curlv: currentLevel,
-                                                            slotid: N
-                                                        })
+                                                        if (cm.WorldSettings.isOn("DARK_FOREST_CRAFTING_KILLSWITCH")) {
+                                                            if (!m) {
+                                                                var q = cm.Template.renderTemplate("Building", "buildContainer0", {
+                                                                    info: info,
+                                                                    shareContent: G,
+                                                                    buttonLabel: U,
+                                                                    buttonClass: "gray"
+                                                                })
+                                                            } else {
+                                                                var q = cm.Template.renderTemplate("Building", "buildContainer0", {
+                                                                    info: info,
+                                                                    shareContent: G,
+                                                                    buttonLabel: U,
+                                                                    buttonClass: "blue"
+                                                                })
+                                                            }
+                                                        } else {
+                                                            var q = cm.Template.renderTemplate("Building", "buildContainer0", {
+                                                                info: info,
+                                                                shareContent: G,
+                                                                buttonLabel: U,
+                                                                buttonClass: "gray"
+                                                            })
+                                                        }
                                                     }
                                                 } else {
-                                                    if (al == 2) {
+                                                    if (al == 1) {
+                                                        if (currentLevel > 0) {
+                                                            U = g_js_strings.commonstr.upgrade;
+                                                            G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
+                                                        } else {
+                                                            U = g_js_strings.commonstr.build;
+                                                            G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
+                                                        }
                                                         if (ab < parseInt(buildingmaxlvl[y])) {
-                                                            var q = cm.Template.renderTemplate("Building", "buildContainer2", {
-                                                                timeLabel: g_js_strings.guardian.upgradeStr,
-                                                                cancelLabel: g_js_strings.commonstr.cancel,
-                                                                speedLabel: g_js_strings.commonstr.speedup,
-                                                                askLabel: g_js_strings.modal_quests.askhelp,
+                                                            var q = cm.Template.renderTemplate("Building", "buildContainer1", {
+                                                                warning: g_js_strings.modal_build.buildoneattime,
+                                                                shareContent: G,
+                                                                buttonLabel: U,
+                                                                buttonClass: "gray",
                                                                 curlv: currentLevel,
                                                                 slotid: N
                                                             })
                                                         }
+                                                    } else {
+                                                        if (al == 2) {
+                                                            if (ab < parseInt(buildingmaxlvl[y])) {
+                                                                var q = cm.Template.renderTemplate("Building", "buildContainer2", {
+                                                                    timeLabel: g_js_strings.guardian.upgradeStr,
+                                                                    cancelLabel: g_js_strings.commonstr.cancel,
+                                                                    speedLabel: g_js_strings.commonstr.speedup,
+                                                                    askLabel: g_js_strings.modal_quests.askhelp,
+                                                                    curlv: currentLevel,
+                                                                    slotid: N
+                                                                })
+                                                            }
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            if (ab < parseInt(buildingmaxlvl[y])) {
-                                                var o = cm.Template.renderTemplate("Building", "benefitsContainer", {
-                                                    benefitLabel: g_js_strings.commonstr.upgrade + " " + g_js_strings.commonstr.benefits,
-                                                    currentLevelLabel: g_js_strings.commonstr.ccurrent + " " + g_js_strings.commonstr.level,
-                                                    currentLevelValue: currentLevel,
-                                                    currentLevelHint: g_js_strings.crafting.currentLevelHint.replace("%1$s", currentLevel),
-                                                    nextLevelLabel: g_js_strings.commonstr.next + " " + g_js_strings.commonstr.level,
-                                                    nextLevelValue: nextLevel,
-                                                    nextLevelHint: g_js_strings.crafting.nextLevelHint.replace("%1$s", nextLevel)
-                                                })
-                                            } else {
-                                                var o = cm.Template.renderTemplate("Building", "benefitsContainerMax", {
-                                                    benefitLabel: g_js_strings.commonstr.upgrade + " " + g_js_strings.commonstr.benefits,
-                                                    currentLevelLabel: g_js_strings.commonstr.ccurrent + " " + g_js_strings.commonstr.level,
-                                                    currentLevelValue: currentLevel,
-                                                    currentLevelHint: g_js_strings.crafting.currentLevelHint.replace("%1$s", currentLevel)
-                                                })
-                                            }
-                                            var F = cm.Template.renderTemplate("Building", "openBuilding", {
-                                                title: buildingcost["bdg" + buildingId][0],
-                                                buildingId: buildingId,
-                                                buttons: aA.join(""),
-                                                buildingDescription: buildingcost["bdg" + buildingId][10],
-                                                buildContainer: q,
-                                                requirementLabel: g_js_strings.commonstr.upgrade + " " + g_js_strings.commonstr.requirements,
-                                                requirementRows: az.join(""),
-                                                benefitsContainerHTML: o,
-                                                craft: cm.CraftingView.openCrafting()
-                                            });
-                                            Modal.showModal(780, 400, 10, 10, "", F, function () {
-                                                var aI = false,
-                                                    aF = ~~ (1 * seed.player.warStatus);
-                                                jQuery("#buildingCloseButton").click(function () {
-                                                    Modal.hideModal()
-                                                });
-                                                if (cm.PrestigeModel.isPrestige()) {
-                                                    jQuery(".buildingFrame").addClass("Prestige").addClass(cm.PrestigeModel.getPrestigeFactionClass())
-                                                }
-                                                var aE = kocRecipes[1],
-                                                    aG = kocRecipes[1][0],
-                                                    i = cm.CraftingView.feySpire,
-                                                    aC = (i) ? ~~ (1 * cm.CraftingView.feySpireLevel) : 0,
-                                                    aH = ~~ (1 * aG.requirements.building),
-                                                    aD = ksoItems[aG.output].name,
-                                                    aJ = (aG.consolation) ? ksoItems[aG.consolation].name : null,
-                                                    aB;
-                                                jQuery.each(seed.buildings["city" + currentcityid], function (aL, aK) {
-                                                    if (aK[0] == "20" || aK[0] == 20) {
-                                                        cm.CraftingView.feySpire = aK;
-                                                        cm.CraftingView.feySpireLevel = aK[1];
-                                                        return false
-                                                    } else {
-                                                        cm.CraftingView.feySpire = null;
-                                                        cm.CraftingView.feySpireLevel = 0
-                                                    }
-                                                });
-                                                if (cm.WorldSettings.isOn("DARK_FOREST_CRAFTING_KILLSWITCH")) {
-                                                    if (aC >= aH) {
-                                                        jQuery("#recipeCraftButton").bind("click", function () {
-                                                            cm.RecipeController.craft(aG)
-                                                        })
-                                                    } else {
-                                                        jQuery("#recipeCraftButton").unbind("click")
-                                                    }
+                                                if (ab < parseInt(buildingmaxlvl[y])) {
+                                                    var o = cm.Template.renderTemplate("Building", "benefitsContainer", {
+                                                        benefitLabel: g_js_strings.commonstr.upgrade + " " + g_js_strings.commonstr.benefits,
+                                                        currentLevelLabel: g_js_strings.commonstr.ccurrent + " " + g_js_strings.commonstr.level,
+                                                        currentLevelValue: currentLevel,
+                                                        currentLevelHint: g_js_strings.crafting.currentLevelHint.replace("%1$s", currentLevel),
+                                                        nextLevelLabel: g_js_strings.commonstr.next + " " + g_js_strings.commonstr.level,
+                                                        nextLevelValue: nextLevel,
+                                                        nextLevelHint: g_js_strings.crafting.nextLevelHint.replace("%1$s", nextLevel)
+                                                    })
                                                 } else {
-                                                    jQuery("#recipeCraftButton").bind("mouseover", function (aK) {
-                                                        Tooltip.show(aK, g_js_strings.crafting.craftingDisabled, [-100, 50])
-                                                    });
-                                                    jQuery("#recipeCraftButton").bind("mouseout", function () {
-                                                        Tooltip.hide()
+                                                    var o = cm.Template.renderTemplate("Building", "benefitsContainerMax", {
+                                                        benefitLabel: g_js_strings.commonstr.upgrade + " " + g_js_strings.commonstr.benefits,
+                                                        currentLevelLabel: g_js_strings.commonstr.ccurrent + " " + g_js_strings.commonstr.level,
+                                                        currentLevelValue: currentLevel,
+                                                        currentLevelHint: g_js_strings.crafting.currentLevelHint.replace("%1$s", currentLevel)
                                                     })
                                                 }
-                                                if (al == 0) {
-                                                    if (cm.WorldSettings.isOn("DARK_FOREST_CRAFTING_KILLSWITCH") || m) {
-                                                        if (m) {
-                                                            jQuery("#buildingBuildButton").click(function () {
-                                                                var aK = jQuery("#askHelpCheckbox:checked");
-                                                                if (aK.length >= 1) {
-                                                                    aI = true
-                                                                }
-                                                                if (buildingId == 0 && N == 0 && currentLevel == 4 && aF == 2) {
-                                                                    protect_off_confirm(buildingId, currentLevel, N, aI)
-                                                                } else {
-                                                                    build(buildingId, currentLevel, N, aI)
-                                                                }
+                                                var F = cm.Template.renderTemplate("Building", "openBuilding", {
+                                                    title: buildingcost["bdg" + buildingId][0],
+                                                    buildingId: buildingId,
+                                                    buttons: aA.join(""),
+                                                    buildingDescription: buildingcost["bdg" + buildingId][10],
+                                                    buildContainer: q,
+                                                    requirementLabel: g_js_strings.commonstr.upgrade + " " + g_js_strings.commonstr.requirements,
+                                                    requirementRows: az.join(""),
+                                                    benefitsContainerHTML: o,
+                                                    craft: cm.CraftingView.openCrafting()
+                                                });
+                                                Modal.showModal(780, 400, 10, 10, "", F, function () {
+                                                    var aI = false,
+                                                        aF = ~~ (1 * seed.player.warStatus);
+                                                    jQuery("#buildingCloseButton").click(function () {
+                                                        Modal.hideModal()
+                                                    });
+                                                    if (cm.PrestigeModel.isPrestige()) {
+                                                        jQuery(".buildingFrame").addClass("Prestige").addClass(cm.PrestigeModel.getPrestigeFactionClass())
+                                                    }
+                                                    var aE = kocRecipes[1],
+                                                        aG = kocRecipes[1][0],
+                                                        i = cm.CraftingView.feySpire,
+                                                        aC = (i) ? ~~ (1 * cm.CraftingView.feySpireLevel) : 0,
+                                                        aH = ~~ (1 * aG.requirements.building),
+                                                        aD = ksoItems[aG.output].name,
+                                                        aJ = (aG.consolation) ? ksoItems[aG.consolation].name : null,
+                                                        aB;
+                                                    jQuery.each(seed.buildings["city" + currentcityid], function (aL, aK) {
+                                                        if (aK[0] == "20" || aK[0] == 20) {
+                                                            cm.CraftingView.feySpire = aK;
+                                                            cm.CraftingView.feySpireLevel = aK[1];
+                                                            return false
+                                                        } else {
+                                                            cm.CraftingView.feySpire = null;
+                                                            cm.CraftingView.feySpireLevel = 0
+                                                        }
+                                                    });
+                                                    if (cm.WorldSettings.isOn("DARK_FOREST_CRAFTING_KILLSWITCH")) {
+                                                        if (aC >= aH) {
+                                                            jQuery("#recipeCraftButton").bind("click", function () {
+                                                                cm.RecipeController.craft(aG)
                                                             })
+                                                        } else {
+                                                            jQuery("#recipeCraftButton").unbind("click")
                                                         }
                                                     } else {
-                                                        jQuery("#buildingBuildButton").bind("mouseover", function (aK) {
+                                                        jQuery("#recipeCraftButton").bind("mouseover", function (aK) {
                                                             Tooltip.show(aK, g_js_strings.crafting.craftingDisabled, [-100, 50])
                                                         });
-                                                        jQuery("#buildingBuildButton").bind("mouseout", function () {
+                                                        jQuery("#recipeCraftButton").bind("mouseout", function () {
                                                             Tooltip.hide()
                                                         })
                                                     }
-                                                } else {
-                                                    if (al == 2) {
-                                                        jQuery("#buildingCancelButton").click(function () {
-                                                            cancelConstruction(currentLevel, u, currentLevel)
-                                                        });
-                                                        jQuery("#buildingSpeedButton").click(function () {
-                                                            modal_speedup("bdg", R, u)
-                                                        });
-                                                        jQuery("#buildingAskButton").click(function () {
-                                                            build_gethelp(R)
-                                                        });
-                                                        var j = seed.queue_con["city" + currentcityid][0][4] - unixtime();
-                                                        CountDown.addCountDown("upgradeTimeLeft", j, function () {
-                                                            Modal.hideModal();
-                                                            modal_build(u)
-                                                        })
-                                                    }
-                                                }
-                                                jQuery("#itemFrame").bind("mouseover", function (aK) {
-                                                    aB = g_js_strings.crafting.hoverOutputMessage.replace("%1$s", aD);
-                                                    Tooltip.show(aK, aB, [-50, 0])
-                                                });
-                                                jQuery("#itemFrame").bind("mouseout", function () {
-                                                    Tooltip.hide()
-                                                });
-                                                jQuery("#recipeConsolationItem").bind("mouseover", function (aK) {
-                                                    if (aJ != null) {
-                                                        aB = g_js_strings.crafting.hoverConsolationMessage.replace("%1$s", aJ)
+                                                    if (al == 0) {
+                                                        if (cm.WorldSettings.isOn("DARK_FOREST_CRAFTING_KILLSWITCH") || m) {
+                                                            if (m) {
+                                                                jQuery("#buildingBuildButton").click(function () {
+                                                                    var aK = jQuery("#askHelpCheckbox:checked");
+                                                                    if (aK.length >= 1) {
+                                                                        aI = true
+                                                                    }
+                                                                    if (buildingId == 0 && N == 0 && currentLevel == 4 && aF == 2) {
+                                                                        protect_off_confirm(buildingId, currentLevel, N, aI)
+                                                                    } else {
+                                                                        build(buildingId, currentLevel, N, aI)
+                                                                    }
+                                                                })
+                                                            }
+                                                        } else {
+                                                            jQuery("#buildingBuildButton").bind("mouseover", function (aK) {
+                                                                Tooltip.show(aK, g_js_strings.crafting.craftingDisabled, [-100, 50])
+                                                            });
+                                                            jQuery("#buildingBuildButton").bind("mouseout", function () {
+                                                                Tooltip.hide()
+                                                            })
+                                                        }
                                                     } else {
-                                                        aB = g_js_strings.crafting.hoverConsolationMessage2
+                                                        if (al == 2) {
+                                                            jQuery("#buildingCancelButton").click(function () {
+                                                                cancelConstruction(currentLevel, u, currentLevel)
+                                                            });
+                                                            jQuery("#buildingSpeedButton").click(function () {
+                                                                modal_speedup("bdg", R, u)
+                                                            });
+                                                            jQuery("#buildingAskButton").click(function () {
+                                                                build_gethelp(R)
+                                                            });
+                                                            var j = seed.queue_con["city" + currentcityid][0][4] - unixtime();
+                                                            CountDown.addCountDown("upgradeTimeLeft", j, function () {
+                                                                Modal.hideModal();
+                                                                modal_build(u)
+                                                            })
+                                                        }
                                                     }
-                                                    Tooltip.show(aK, aB, [-10, 5])
+                                                    jQuery("#itemFrame").bind("mouseover", function (aK) {
+                                                        aB = g_js_strings.crafting.hoverOutputMessage.replace("%1$s", aD);
+                                                        Tooltip.show(aK, aB, [-50, 0])
+                                                    });
+                                                    jQuery("#itemFrame").bind("mouseout", function () {
+                                                        Tooltip.hide()
+                                                    });
+                                                    jQuery("#recipeConsolationItem").bind("mouseover", function (aK) {
+                                                        if (aJ != null) {
+                                                            aB = g_js_strings.crafting.hoverConsolationMessage.replace("%1$s", aJ)
+                                                        } else {
+                                                            aB = g_js_strings.crafting.hoverConsolationMessage2
+                                                        }
+                                                        Tooltip.show(aK, aB, [-10, 5])
+                                                    });
+                                                    jQuery("#recipeConsolationItem").bind("mouseout", function () {
+                                                        Tooltip.hide()
+                                                    });
+                                                    jQuery("#askHelpCheckbox").bind("click", function (aK) {
+                                                        buildingController.askHelpCheckboxChanged(aK)
+                                                    })
+                                                }, null, null, {
+                                                    additionalClass: "feySpire"
                                                 });
-                                                jQuery("#recipeConsolationItem").bind("mouseout", function () {
-                                                    Tooltip.hide()
-                                                });
-                                                jQuery("#askHelpCheckbox").bind("click", function (aK) {
-                                                    buildingController.askHelpCheckboxChanged(aK)
-                                                })
-                                            }, null, null, {
-                                                additionalClass: "feySpire"
-                                            });
-                                            jQuery(".modalInner .title").html(g_js_strings.prestige.spire)
-                                        } else {
-                                            if (y == cm.BUILDING_TYPES.WATCH_TOWER) {
-                                                var Y = ab > 0;
-                                                if (Y) {
-                                                    Modal.onCloseCallback = function () {
-                                                        am.remove()
-                                                    }
-                                                }
-                                                Modal.showModal(740, 400, 10, 10, p, X.join(""), function () {
-                                                    if (ab > 0) {
-                                                        buildtutorial(y, ab)
-                                                    }
-                                                });
-                                                if (Y) {
-                                                    var ah = document.createElement("div");
-                                                    ah.className = "modal_build_content";
-                                                    ah.innerHTML = '<div class="tabsbar"><a class="tab selected" style="width:auto;font:bold 11px Georgia"><span style="padding:0px 20px">' + g_js_strings.modaltitles.impatks + "</span></a></div>";
-                                                    var J = document.createElement("div");
-                                                    J.className = "modal_tab_content";
-                                                    ah.appendChild(J);
-                                                    var at = $("modal_build_foot");
-                                                    at.parentNode.insertBefore(ah, at);
-                                                    var P = {
-                                                        text: {
-                                                            impendingAttacks: "Impending Attacks",
-                                                            marchType: "March Type",
-                                                            target: "Target",
-                                                            timeRemaining: "Time Remaining",
-                                                            status: "Status"
-                                                        },
-                                                        attacks: cm.IncomingAttackManager.getAllAttacks(),
-                                                        recalledAttacks: cm.IncomingAttackManager.getRecalledAttacks(),
-                                                        parentElement: J
-                                                    };
-                                                    var am = new cm.ImpendingAttackReport(P);
-                                                    am.show()
-                                                }
+                                                jQuery(".modalInner .title").html(g_js_strings.prestige.spire)
                                             } else {
-                                                Modal.showModal(740, 400, 10, 10, p, X.join(""), function () {
-                                                    if (ab > 0) {
-                                                        buildtutorial(y, ab)
+                                                if (y == cm.BUILDING_TYPES.WATCH_TOWER) {
+                                                    var Y = ab > 0;
+                                                    if (Y) {
+                                                        Modal.onCloseCallback = function () {
+                                                            am.remove()
+                                                        }
                                                     }
-                                                })
+                                                    Modal.showModal(740, 400, 10, 10, p, X.join(""), function () {
+                                                        if (ab > 0) {
+                                                            buildtutorial(y, ab)
+                                                        }
+                                                    });
+                                                    if (Y) {
+                                                        var ah = document.createElement("div");
+                                                        ah.className = "modal_build_content";
+                                                        ah.innerHTML = '<div class="tabsbar"><a class="tab selected" style="width:auto;font:bold 11px Georgia"><span style="padding:0px 20px">' + g_js_strings.modaltitles.impatks + "</span></a></div>";
+                                                        var J = document.createElement("div");
+                                                        J.className = "modal_tab_content";
+                                                        ah.appendChild(J);
+                                                        var at = $("modal_build_foot");
+                                                        at.parentNode.insertBefore(ah, at);
+                                                        var P = {
+                                                            text: {
+                                                                impendingAttacks: "Impending Attacks",
+                                                                marchType: "March Type",
+                                                                target: "Target",
+                                                                timeRemaining: "Time Remaining",
+                                                                status: "Status"
+                                                            },
+                                                            attacks: cm.IncomingAttackManager.getAllAttacks(),
+                                                            recalledAttacks: cm.IncomingAttackManager.getRecalledAttacks(),
+                                                            parentElement: J
+                                                        };
+                                                        var am = new cm.ImpendingAttackReport(P);
+                                                        am.show()
+                                                    }
+                                                } else {
+                                                    Modal.showModal(740, 400, 10, 10, p, X.join(""), function () {
+                                                        if (ab > 0) {
+                                                            buildtutorial(y, ab)
+                                                        }
+                                                    })
+                                                }
                                             }
                                         }
                                     }
@@ -26357,7 +26726,7 @@ function cancelConstruction(f, g) {
                     var h = new Array();
                     h.push("<td class='recdesc'>" + i[0][c] + "</td>");
                     if (parseInt(i[1][c]) > 0) {
-                        h.push("<td class='rec'>" + addCommas(parseInt(i[1][c])) + "</td>")
+                        h.push("<td class='rec'>" + addCommas(i[1][c]) + "</td>")
                     } else {
                         h.push("<td class='rec'>" + i[1][c] + "</td>")
                     }
@@ -26491,7 +26860,7 @@ function deconstructBuilding(a, h) {
                     var l = new Array();
                     l.push("<td class='recdesc'>" + m[0][e] + "</td>");
                     if (parseInt(m[1][e]) > 0) {
-                        l.push("<td class='rec'>" + addCommas(parseInt(m[1][e])) + "</td>")
+                        l.push("<td class='rec'>" + addCommas(m[1][e]) + "</td>")
                     } else {
                         l.push("<td class='rec'>" + m[1][e] + "</td>")
                     }
@@ -26939,27 +27308,27 @@ function getModalResourceBar() {
     a.push("</div>");
     a.push("<div class='resbox resgold'>");
     a.push("<span id='modal_stat_gold_bar'>");
-    a.push(addCommas(parseInt(seed.citystats["city" + currentcityid].gold[0])));
+    a.push(addCommas(seed.citystats["city" + currentcityid].gold[0]));
     a.push("</span>");
     a.push("</div>");
     a.push("<div class='resbox resfood'>");
     a.push("<span id='modal_stat_rec1_bar_num'>");
-    a.push(addCommas(parseInt(seed.resources["city" + currentcityid].rec1[0] / 3600)));
+    a.push(addCommas(seed.resources["city" + currentcityid].rec1[0] / 3600));
     a.push("</span>");
     a.push("</div>");
     a.push("<div class='resbox reswood'>");
     a.push("<span id='modal_stat_rec2_bar_num'>");
-    a.push(addCommas(parseInt(seed.resources["city" + currentcityid].rec2[0] / 3600)));
+    a.push(addCommas(seed.resources["city" + currentcityid].rec2[0] / 3600));
     a.push("</span>");
     a.push("</div>");
     a.push("<div class='resbox resstone'>");
     a.push("<span id='modal_stat_rec3_bar_num'>");
-    a.push(addCommas(parseInt(seed.resources["city" + currentcityid].rec3[0] / 3600)));
+    a.push(addCommas(seed.resources["city" + currentcityid].rec3[0] / 3600));
     a.push("</span>");
     a.push("</div>");
     a.push("<div class='resbox resore'>");
     a.push("<span id='modal_stat_rec4_bar_num'>");
-    a.push(addCommas(parseInt(seed.resources["city" + currentcityid].rec4[0] / 3600)));
+    a.push(addCommas(seed.resources["city" + currentcityid].rec4[0] / 3600));
     a.push("</span>");
     a.push("</div>");
     a.push("</div>");
@@ -27205,7 +27574,7 @@ function raiseGold() {
         b.push("<div class='castlemessagewrap'>");
         b.push("<div class='castlemessage'>");
         b.push("<div class='desc'>" + g_js_strings.raiseGold.collectgolddesc + "</div>");
-        b.push("<div class='stats'>" + g_js_strings.raiseGold.goldcollected + ": <span>" + addCommas(parseInt(seed.citystats["city" + currentcityid].pop[0]) * 10) + "</span></div>");
+        b.push("<div class='stats'>" + g_js_strings.raiseGold.goldcollected + ": <span>" + addCommas(seed.citystats["city" + currentcityid].pop[0] * 10) + "</span></div>");
         b.push("<div class='stats'>" + g_js_strings.raiseGold.happdecreased + ": <span>20</span></div>");
         b.push("</div>");
         b.push("<div class='btnlink clearfix'>");
@@ -27304,19 +27673,24 @@ function modal_increase_happiness_confirm() {
     a.push("</div>");
     Modal.showModal(500, 500, 10, 10, g_js_strings.modaltitles.inchapp, a.join(""))
 }
+function getWildernessLimit() {
+    var a = 0;
+    if (getBuildingLevel(0) === 11) {
+        a = 12
+    } else {
+        if (getBuildingLevel(0) === 12) {
+            a = 14
+        } else {
+            a = parseInt(seed.buildings["city" + currentcityid]["pos0"][1], 10)
+        }
+    }
+    return a
+}
 function showMyWilderness() {
     var a = new Array();
     a.push("<div class='prodtablewrap'>");
     a.push("<div class='prodtableheader'>" + g_js_strings.showMyWilderness.conqueredwild + "<div class='right'>" + g_js_strings.commonstr.limit + ": ");
-    if (getBuildingLevel(0) === 11) {
-        a.push("12")
-    } else {
-        if (getBuildingLevel(0) === 12) {
-            a.push("14")
-        } else {
-            a.push(seed.buildings["city" + currentcityid]["pos0"][1])
-        }
-    }
+    a.push(getWildernessLimit());
     a.push("</div></div>");
     a.push("<table class='prodtable wild' border='0' cellspacing='0' cellpadding='0'>");
     a.push("<thead>");
@@ -28552,9 +28926,14 @@ Chat.Methods = {
             d.bname = techcost["tch" + d.helpId][0];
             k = 2
         } else {
-            if (d.helpType == "building") {
-                d.bname = buildingcost["bdg" + d.helpId][0];
-                k = 1
+            if (d.helpType == "tech2") {
+                d.bname = techcost2["tch" + d.helpId][0];
+                k = 12
+            } else {
+                if (d.helpType == "building") {
+                    d.bname = buildingcost["bdg" + d.helpId][0];
+                    k = 1
+                }
             }
         }
         var c = g_js_strings.postToAllianceChat.helpmebuild.replace("%1$s", d.lvl).replace("%2$s", d.bname);
@@ -28655,8 +29034,10 @@ cm.chestItemUsage = function ($) {
     }
     function open(iid, keyId) {
         var params = Object.clone(g_ajaxparams),
-            usingKey = false;
+            usingKey = false,
+            quantity = cm.MultiBuyUse.getNumberUsed(iid);
         params.chestId = parseInt(iid);
+        params.quantity = quantity;
         if (typeof keyId !== "undefined") {
             params.keyId = parseInt(keyId);
             usingKey = true
@@ -28669,7 +29050,7 @@ cm.chestItemUsage = function ($) {
                 if (rslt.ok) {
                     cm.InventoryView.removeItemFromInventory(iid);
                     if (usingKey) {
-                        cm.InventoryView.removeItemFromInventory(keyId)
+                        cm.InventoryView.removeItemFromInventory(keyId, quantity)
                     }
                     cm.makeAnimatedChest.modal(rslt);
                     addItemsToSeed(rslt.items);
@@ -29496,7 +29877,7 @@ function showResourceTooltip(t, o, k) {
     } else {
         n = Math.round(u[0] / 3600);
         w = Math.round(u[1] / 3600);
-        g = Math.round(u[3]);
+        g = cm.Resources.getUpkeep(q, currentcityid);
         y = b["r" + q].persec;
         j = Math.floor(y + g);
         e.push("<div>" + g_js_strings.commonstr.youown + ": " + n + "</div>");
@@ -29646,7 +30027,7 @@ function cityinfo_army() {
     var a = false;
     for (var c = 0; c < b.length; c++) {
         var d = b[c].split("unt")[1];
-        if (!cm.BarracksUnitsTypeMap.canCityHaveUnit(d)) {
+        if (!cm.BarracksUnitsTypeMap.canCityHaveUnit(d) || !unitcost[b[c]]) {
             continue
         }
         if (c % 2 == 0) {
@@ -29947,232 +30328,238 @@ function update_friendlist() {
         onFailure: function () {}
     })
 }
-function checkreq(f, v, u) {
-    var k = u;
-    if (f == "tch" && v != 17) {
-        k = Math.min(u, 11)
-    }
-    var g = Math.pow(2, (k - 1));
-    var n = new Array();
-    for (var z = 0; z < 5; z++) {
-        n[z] = new Array()
-    }
-    var m = new Array();
-    if (f == "tch") {
-        var q = techcost["tch" + v][8]
+function checkreq(L, A, n, E) {
+    var z;
+    if (E === 2) {
+        z = techcost2
     } else {
-        if (f == "bdg") {
-            var q = buildingcost["bdg" + v][8]
+        z = techcost
+    }
+    var F = n;
+    if (L == "tch" && A != 17) {
+        F = Math.min(n, 11)
+    }
+    var x = Math.pow(2, (F - 1));
+    var l = new Array();
+    for (var G = 0; G < 5; G++) {
+        l[G] = new Array()
+    }
+    var u = new Array();
+    if (L == "tch") {
+        var D = z["tch" + A][8]
+    } else {
+        if (L == "bdg") {
+            var D = buildingcost["bdg" + A][8]
         } else {
-            if (f == "unt") {
-                var q = unitcost["unt" + v][8]
+            if (L == "unt") {
+                var D = unitcost["unt" + A][8]
             } else {
-                if (f == "frt") {
-                    var q = fortcost["frt" + v][8]
+                if (L == "frt") {
+                    var D = fortcost["frt" + A][8]
                 }
             }
         }
     }
-    if (f == "bdg" && parseInt(u) > 10 && (parseInt(v) === 19 || parseInt(v) === 12 || parseInt(v) === 16 || parseInt(v) === 15 || parseInt(v) === 17 || parseInt(v) === 11 || parseInt(v) === 18 || parseInt(v) === 8 || parseInt(v) === 9 || parseInt(v) === 1 || parseInt(v) === 2 || parseInt(v) === 3 || parseInt(v) === 4)) {
-        var w = getBuildingLevel(0);
-        n[0].push(g_js_strings.commonstr.construction);
-        n[1].push(g_js_strings.commonstr.lv + u + " " + buildingcost.bdg0[0]);
-        n[2].push(g_js_strings.commonstr.lv + w + " " + buildingcost.bdg0[0]);
-        if (w >= parseInt(u)) {
-            n[3].push(1)
+    if (L == "bdg" && parseInt(n) > 10 && (parseInt(A) === 19 || parseInt(A) === 12 || parseInt(A) === 16 || parseInt(A) === 15 || parseInt(A) === 17 || parseInt(A) === 11 || parseInt(A) === 18 || parseInt(A) === 8 || parseInt(A) === 9 || parseInt(A) === 1 || parseInt(A) === 2 || parseInt(A) === 3 || parseInt(A) === 4)) {
+        var y = getBuildingLevel(0);
+        l[0].push(g_js_strings.commonstr.construction);
+        l[1].push(g_js_strings.commonstr.lv + n + " " + buildingcost.bdg0[0]);
+        l[2].push(g_js_strings.commonstr.lv + y + " " + buildingcost.bdg0[0]);
+        if (y >= parseInt(n)) {
+            l[3].push(1)
         } else {
-            n[3].push(0)
+            l[3].push(0)
         }
     }
-    if (q.length == null) {
-        var b = Object.keys(q);
-        var A = new Array();
-        var y = Object.keys(seed.buildings["city" + currentcityid]);
-        for (var z = 0; z < y.length; z++) {
-            var j = seed.buildings["city" + currentcityid][y[z]];
-            if (A["b" + j[0]] == null) {
-                A["b" + j[0]] = parseInt(j[1])
+    if (D.length == null) {
+        var e = Object.keys(D);
+        var J = new Array();
+        var v = Object.keys(seed.buildings["city" + currentcityid]);
+        for (var G = 0; G < v.length; G++) {
+            var p = seed.buildings["city" + currentcityid][v[G]];
+            if (J["b" + p[0]] == null) {
+                J["b" + p[0]] = parseInt(p[1])
             } else {
-                A["b" + j[0]] = (j[1] > A["b" + j[0]]) ? j[1] : A["b" + j[0]]
+                J["b" + p[0]] = (p[1] > J["b" + p[0]]) ? p[1] : J["b" + p[0]]
             }
         }
-        for (var z = 0; z < b.length; z++) {
-            n[0].push(g_js_strings.commonstr.construction);
-            var G = b[z].split("b")[1];
+        for (var G = 0; G < e.length; G++) {
+            l[0].push(g_js_strings.commonstr.construction);
+            var K = e[G].split("b")[1];
+            var d = 0;
+            var s = (parseInt(J[e[G]]) > 0) ? (parseInt(J[e[G]])) : 0;
+            var g = buildingcost["bdg" + K][0];
+            if (parseInt(D[e[G]][0]) == 1) {
+                d = parseInt(D[e[G]][1])
+            } else {
+                d = Math.min(buildingmaxlvl[K], n + parseInt(D[e[G]][1]))
+            }
+            if (L == "tch") {
+                var t = [9, 15, 16, 17],
+                    H = [5, 9, 12, 14];
+                if (H.indexOf(parseInt(A)) != -1 && t.indexOf(parseInt(K)) != -1 && parseInt(n) == 11) {
+                    d--
+                } else {
+                    if (parseInt(K) == 11) {
+                        d = Math.max(d, n)
+                    }
+                }
+            }
+            l[1].push(g_js_strings.commonstr.lv + d + " " + g);
+            l[2].push(g_js_strings.commonstr.lv + s + " " + g);
+            if (s < d) {
+                l[3].push(0)
+            } else {
+                l[3].push(1)
+            }
+            l[4].push(null)
+        }
+    }
+    var I = new Array();
+    if (L == "tch") {
+        var a = z["tch" + A][9]
+    } else {
+        if (L == "bdg") {
+            var a = buildingcost["bdg" + A][9]
+        } else {
+            if (L == "unt") {
+                var a = unitcost["unt" + A][9]
+            } else {
+                if (L == "frt") {
+                    var a = fortcost["frt" + A][9]
+                }
+            }
+        }
+    }
+    var j = Object.keys(a);
+    if (a.length == null) {
+        for (var G = 0; G < j.length; G++) {
+            l[0].push(g_js_strings.commonstr.research);
+            var o = j[G].split("t")[1];
             var c = 0;
-            var e = (parseInt(A[b[z]]) > 0) ? (parseInt(A[b[z]])) : 0;
-            var p = buildingcost["bdg" + G][0];
-            if (parseInt(q[b[z]][0]) == 1) {
-                c = parseInt(q[b[z]][1])
+            var r = parseInt(seed.tech["tch" + o]);
+            var B = z["tch" + o][0];
+            if (parseInt(a[j[G]][0]) == 1) {
+                c = parseInt(a[j[G]][1])
             } else {
-                c = Math.min(buildingmaxlvl[G], u + parseInt(q[b[z]][1]))
+                c = n + parseInt(a[j[G]][1])
             }
-            if (f == "tch") {
-                var D = [9, 15, 16, 17],
-                    C = [5, 9, 12, 14];
-                if (C.indexOf(parseInt(v)) != -1 && D.indexOf(parseInt(G)) != -1 && parseInt(u) == 11) {
-                    c--
-                } else {
-                    if (parseInt(G) == 11) {
-                        c = Math.max(c, u)
-                    }
-                }
+            if (L == "bdg" && getBuildingLevel(A) === 10 && parseInt(A, 10) !== 18) {
+                c = 10
             }
-            n[1].push(g_js_strings.commonstr.lv + c + " " + p);
-            n[2].push(g_js_strings.commonstr.lv + e + " " + p);
-            if (e < c) {
-                n[3].push(0)
+            l[1].push(g_js_strings.commonstr.lv + c + " " + B);
+            l[2].push(g_js_strings.commonstr.lv + r + " " + B);
+            if (r < c) {
+                l[3].push(0)
             } else {
-                n[3].push(1)
+                l[3].push(1)
             }
-            n[4].push(null)
+            l[4].push(null)
         }
     }
-    var s = new Array();
-    if (f == "tch") {
-        var J = techcost["tch" + v][9]
+    if (L == "tch") {
+        var w = parseInt(z["tch" + A][5]) * x
     } else {
-        if (f == "bdg") {
-            var J = buildingcost["bdg" + v][9]
+        if (L == "bdg") {
+            var w = parseInt(buildingcost["bdg" + A][5]) * x
         } else {
-            if (f == "unt") {
-                var J = unitcost["unt" + v][9]
+            if (L == "unt") {
+                var w = parseInt(unitcost["unt" + A][5]) * x
             } else {
-                if (f == "frt") {
-                    var J = fortcost["frt" + v][9]
+                if (L == "frt") {
+                    var w = parseInt(fortcost["frt" + A][5]) * x
                 }
             }
         }
     }
-    var l = Object.keys(J);
-    if (J.length == null) {
-        for (var z = 0; z < l.length; z++) {
-            n[0].push(g_js_strings.commonstr.research);
-            var o = l[z].split("t")[1];
-            var E = 0;
-            var I = parseInt(seed.tech["tch" + o]);
-            var H = techcost["tch" + o][0];
-            if (parseInt(J[l[z]][0]) == 1) {
-                E = parseInt(J[l[z]][1])
-            } else {
-                E = u + parseInt(J[l[z]][1])
-            }
-            if (f == "bdg" && getBuildingLevel(v) === 10 && parseInt(v, 10) !== 18) {
-                E = 10
-            }
-            n[1].push(g_js_strings.commonstr.lv + E + " " + H);
-            n[2].push(g_js_strings.commonstr.lv + I + " " + H);
-            if (I < E) {
-                n[3].push(0)
-            } else {
-                n[3].push(1)
-            }
-            n[4].push(null)
-        }
-    }
-    if (f == "tch") {
-        var a = parseInt(techcost["tch" + v][5]) * g
-    } else {
-        if (f == "bdg") {
-            var a = parseInt(buildingcost["bdg" + v][5]) * g
+    if (w > 0) {
+        l[0].push(resourceinfo.rec0);
+        var k = parseInt(seed.citystats["city" + currentcityid].gold[0]);
+        l[1].push(w);
+        l[2].push(k);
+        if (k < w) {
+            l[3].push(0)
         } else {
-            if (f == "unt") {
-                var a = parseInt(unitcost["unt" + v][5]) * g
-            } else {
-                if (f == "frt") {
-                    var a = parseInt(fortcost["frt" + v][5]) * g
-                }
-            }
+            l[3].push(1)
         }
+        l[4].push(null)
     }
-    if (a > 0) {
-        n[0].push(resourceinfo.rec0);
-        var x = parseInt(seed.citystats["city" + currentcityid].gold[0]);
-        n[1].push(a);
-        n[2].push(x);
-        if (x < a) {
-            n[3].push(0)
+    for (var G = 1; G < 5; G++) {
+        if (L == "tch") {
+            var m = parseInt(z["tch" + A][G]) * x * 3600
         } else {
-            n[3].push(1)
-        }
-        n[4].push(null)
-    }
-    for (var z = 1; z < 5; z++) {
-        if (f == "tch") {
-            var d = parseInt(techcost["tch" + v][z]) * g * 3600
-        } else {
-            if (f == "bdg") {
-                var d = parseInt(buildingcost["bdg" + v][z]) * g * 3600
+            if (L == "bdg") {
+                var m = parseInt(buildingcost["bdg" + A][G]) * x * 3600
             } else {
-                if (f == "unt") {
+                if (L == "unt") {
                     var h = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().MORE_WITH_LESS, currentcityid, {
-                        unitid: v
+                        unitid: A
                     });
-                    var d = Math.ceil(parseInt(unitcost["unt" + v][z]) * h) * g * 3600
+                    var m = Math.ceil(parseInt(unitcost["unt" + A][G]) * h) * x * 3600
                 } else {
-                    if (f == "frt") {
-                        var d = parseInt(fortcost["frt" + v][z]) * g * 3600
+                    if (L == "frt") {
+                        var m = parseInt(fortcost["frt" + A][G]) * x * 3600
                     }
                 }
             }
         }
-        if (d > 0) {
-            n[0].push(resourceinfo["rec" + z]);
-            var B = parseInt(seed.resources["city" + currentcityid]["rec" + z][0]);
-            n[1].push(parseInt(parseInt(d) / 3600));
-            n[2].push(parseInt(parseInt(B) / 3600));
-            if (B < d) {
-                n[3].push(0)
+        if (m > 0) {
+            l[0].push(resourceinfo["rec" + G]);
+            var f = parseInt(seed.resources["city" + currentcityid]["rec" + G][0]);
+            l[1].push(parseInt(parseInt(m) / 3600));
+            l[2].push(parseInt(parseInt(f) / 3600));
+            if (f < m) {
+                l[3].push(0)
             } else {
-                n[3].push(1)
+                l[3].push(1)
             }
-            switch (z) {
+            switch (G) {
                 case 1:
-                    n[4].push("Food");
+                    l[4].push("Food");
                     break;
                 case 2:
-                    n[4].push("Wood");
+                    l[4].push("Wood");
                     break;
                 case 3:
-                    n[4].push("Stone");
+                    l[4].push("Stone");
                     break;
                 case 4:
-                    n[4].push("Ore");
+                    l[4].push("Ore");
                     break
             }
         }
     }
-    if (f == "tch") {
-        var F = parseInt(techcost["tch" + v][6]) * g
+    if (L == "tch") {
+        var b = parseInt(z["tch" + A][6]) * x
     } else {
-        if (f == "bdg") {
-            var F = parseInt(buildingcost["bdg" + v][6]) * g
+        if (L == "bdg") {
+            var b = parseInt(buildingcost["bdg" + A][6]) * x
         } else {
-            if (f == "unt") {
-                var r = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().MORE_WITH_LESS, currentcityid, {
-                    unitid: v
+            if (L == "unt") {
+                var q = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().MORE_WITH_LESS, currentcityid, {
+                    unitid: A
                 });
-                var F = Math.ceil(parseInt(unitcost["unt" + v][6]) * r) * g
+                var b = Math.ceil(parseInt(unitcost["unt" + A][6]) * q) * x
             } else {
-                if (f == "frt") {
-                    var F = parseInt(fortcost["frt" + v][6]) * g
+                if (L == "frt") {
+                    var b = parseInt(fortcost["frt" + A][6]) * x
                 }
             }
         }
     }
-    if (F > 0) {
-        n[0].push(g_js_strings.commonstr.population);
-        var t = parseInt(seed.citystats["city" + currentcityid].pop[0]) - parseInt(seed.citystats["city" + currentcityid].pop[3]);
-        n[1].push(F);
-        n[2].push(t);
-        if (t < F) {
-            n[3].push(0)
+    if (b > 0) {
+        l[0].push(g_js_strings.commonstr.population);
+        var C = parseInt(seed.citystats["city" + currentcityid].pop[0]) - parseInt(seed.citystats["city" + currentcityid].pop[3]);
+        l[1].push(b);
+        l[2].push(C);
+        if (C < b) {
+            l[3].push(0)
         } else {
-            n[3].push(1)
+            l[3].push(1)
         }
-        n[4].push("Population")
+        l[4].push("Population")
     }
-    return n
+    return l
 }
 function modal_guide() {
     var a = new Array();
@@ -30542,14 +30929,27 @@ function postToAllianceChat(j, a) {
                 }
             }
         } else {
-            k = Object.keys(seed.queue_con);
-            for (var e = 0; e < k.length; e++) {
-                if (seed.queue_con[k[e]][0] && (seed.queue_con[k[e]][0][2] == a)) {
-                    m = seed.queue_con[k[e]][0][1];
-                    l = k[e].split("city")[1];
-                    g = "building";
-                    h = seed.queue_con[k[e]][0][0];
-                    break
+            if (j == 2) {
+                k = Object.keys(seed.queue_tch2);
+                for (var e = 0; e < k.length; e++) {
+                    if (seed.queue_tch2[k[e]][0] && (seed.queue_tch2[k[e]][0][0] == a)) {
+                        m = seed.queue_tch2[k[e]][0][1];
+                        l = k[e].split("city")[1];
+                        g = "tech2";
+                        h = seed.queue_tch2[k[e]][0][0];
+                        break
+                    }
+                }
+            } else {
+                k = Object.keys(seed.queue_con);
+                for (var e = 0; e < k.length; e++) {
+                    if (seed.queue_con[k[e]][0] && (seed.queue_con[k[e]][0][2] == a)) {
+                        m = seed.queue_con[k[e]][0][1];
+                        l = k[e].split("city")[1];
+                        g = "building";
+                        h = seed.queue_con[k[e]][0][0];
+                        break
+                    }
                 }
             }
         }
@@ -30637,6 +31037,23 @@ function handleHelpCallback(a) {
                 }
             }
             postToAllianceChat(1, e)
+        } else {
+            if (a[f].w) {
+                var e = a[f].w;
+                var d = Object.keys(seed.queue_tch2);
+                for (var c = 0; c < d.length; c++) {
+                    if (seed.queue_tch2[d[c]].length > 0) {
+                        if (seed.queue_tch2[d[c]][0][0] == e) {
+                            if (Object.isArray(seed.updateHelpResearch2)) {
+                                seed.updateHelpResearch2 = {}
+                            }
+                            seed.updateHelpResearch2[d[c]] = a;
+                            break
+                        }
+                    }
+                }
+                postToAllianceChat(2, e)
+            }
         }
     }
 }
@@ -30651,12 +31068,25 @@ function getBuildHelpEligible(c, e) {
     }
     return false
 }
-function getTechHelpEligible(d, e) {
-    var c = unixtime();
+function getTechHelpEligible(f, g, b) {
+    var e = unixtime();
     var a = 60 * 60 * 12;
-    var b = seed.queue_tch["city" + e][0][1];
-    if (!Object.isArray(seed.updateHelpResearch) && seed.updateHelpResearch["city" + e] && seed.updateHelpResearch["city" + e]["t" + d]) {
-        if (b == seed.updateHelpResearch["city" + e]["t" + d].l && ((parseInt(seed.updateHelpResearch["city" + e]["t" + d].time) + a) > c)) {
+    var c = null,
+        d = null;
+    if (typeof b !== "undefined") {
+        if (b === 2) {
+            c = seed.queue_tch2["city" + g][0][1];
+            d = seed.updateHelpResearch2
+        } else {
+            c = seed.queue_tch["city" + g][0][1];
+            d = seed.updateHelpResearch
+        }
+    } else {
+        c = seed.queue_tch["city" + g][0][1];
+        d = seed.updateHelpResearch
+    }
+    if (!Object.isArray(d) && d["city" + g] && d["city" + g]["t" + f]) {
+        if (c == d["city" + g]["t" + f].l && ((parseInt(d["city" + g]["t" + f].time) + a) > e)) {
             return true
         }
     }
@@ -30666,6 +31096,16 @@ function fteConversionTracker(a) {
     cm.MixPanelTracker.track(a, {
         last_fbuid_digit: lastFbuidDigit,
         distinct_id: user_id
+    })
+}
+function iframe_modal(c, b) {
+    var a = new Element("div");
+    a.addClassName("con_ifr");
+    a.update("<div class='iframe_body' id='iframe_body'><iframe src='" + c + "' id='iframe_win' class='" + (b ? "fit_win" : "") + "'></iframe></div><div class='close_iframe' id='close_iframe'></div>");
+    $("mainbody").insert(a);
+    jQuery(".close_iframe").unbind("click").bind("click", function () {
+        jQuery(".iframe_body").remove();
+        jQuery(".close_iframe").remove()
     })
 }
 function tpDotDServer() {
@@ -30680,16 +31120,6 @@ function tpDotDServer() {
 }
 function fUp(a) {
     return a.substr(0, 1).toUpperCase() + a.substr(1)
-}
-function iframe_modal(c, b) {
-    var a = new Element("div");
-    a.addClassName("con_ifr");
-    a.update("<div class='iframe_body' id='iframe_body'><iframe src='" + c + "' id='iframe_win' class='" + (b ? "fit_win" : "") + "'></iframe></div><div class='close_iframe' id='close_iframe'></div>");
-    $("mainbody").insert(a);
-    jQuery(".close_iframe").unbind("click").bind("click", function () {
-        jQuery(".iframe_body").remove();
-        jQuery(".close_iframe").remove()
-    })
 };
 cm.ComSat = function (f) {
     var g = "TaS_MoC",
@@ -31581,6 +32011,7 @@ cm.ContextualMenuController = function (g) {
                 k = g("#maparea_city");
                 break;
             case "throne":
+            case "throneRow":
                 k = g("#maparea_city");
             default:
                 break
@@ -31603,6 +32034,10 @@ cm.ContextualMenuController = function (g) {
         o = ContextMenuOffset[p.vertical + p.horizontal];
         n.top = n.top + o.top;
         n.left = n.left + o.left;
+        if (l.type === "throneRow") {
+            n.top += 4;
+            n.left += 10
+        }
         return n
     };
     var c = function (i, j) {
@@ -31618,6 +32053,7 @@ cm.ContextualMenuController = function (g) {
                 k = e(j);
                 break;
             case "throne":
+            case "throneRow":
                 k = cm.ContextualMenuThrone.calcItemMenu(j);
             default:
                 break
@@ -31907,7 +32343,7 @@ cm.ContextualMenuThrone = function (e) {
         k.title = n;
         k.body = i;
         k.menu = m;
-        k.type = "throne";
+        k.type = e(l).attr("id").indexOf("Row") > -1 ? "throneRow" : "throne";
         cm.ContextualMenuView.renderMenu(l, k)
     };
     var g = function (k, j) {
@@ -34843,7 +35279,15 @@ cm.FactionSelectionView = function (b) {
             }, {
                 main: f.generic_feature_customizeCity
             }],
-            briton: null
+            briton: [{
+                main: f.generic_feature_newUnits,
+                detail: f.briton_detail_newUnits
+            }, {
+                main: f.briton_feature_1,
+                detail: f.briton_detail_1
+            }, {
+                main: f.generic_feature_customizeCity
+            }]
         };
     var g = function (k, m, j) {
         var l = "";
@@ -35807,6 +36251,14 @@ cm.GroveController = function (e) {
         e("#groveCommitButton").unbind("click").click(function () {
             b(function (m) {
                 if (m.ok) {
+                    if (m.baseProd) {
+                        for (var n = 1; n < 5; n++) {
+                            seed.resources["city" + currentcityid]["rec" + n][2] = parseInt(m.baseProd["rec" + n])
+                        }
+                    }
+                    if (m.laborNeeded) {
+                        seed.citystats["city" + currentcityid]["pop"][3] = parseInt(m.laborNeeded)
+                    }
                     cm.ModalManager.close();
                     cm.GroveController.open();
                     e("#groveResetPrice").html(i("food") + i("wood") + i("stone") + i("iron"))
@@ -35838,8 +36290,12 @@ cm.GroveController = function (e) {
             estimatedCost: i("food") + i("wood") + i("stone") + i("iron")
         }, function (n) {
             if (n.ok) {
+                for (var o = 1; o < 5; o++) {
+                    seed.resources["city" + currentcityid]["rec" + o][2] = 0
+                }
+                seed.citystats["city" + currentcityid]["pop"][3] = 0;
                 var m = i("food") + i("wood") + i("stone") + i("iron"),
-                    o = +e(".amount").html();
+                    p = +e(".amount").html();
                 h = true;
                 f("food", 0);
                 f("wood", 0);
@@ -35847,9 +36303,9 @@ cm.GroveController = function (e) {
                 f("iron", 0);
                 f("total", c);
                 e("#groveResetPrice").html("0");
-                e(".productionpoint").html("0");
+                e(".productionpoint").html("100");
                 cm.Gems.spend(m);
-                e(".amount").html(o - m);
+                e(".amount").html(p - m);
                 cm.ModalManager.close()
             } else {
                 cm.ModalManager.close();
@@ -39468,54 +39924,60 @@ cm.InventoryView = function (t) {
                 O = G;
                 break
         }
-        q(O.length);
-        w(O.length);
         if (j < 0) {
             j = 1
         }
+        q(O.length);
+        w(O.length);
         P = (j - 1) * x;
         L = j * x;
         O = O.slice(P, L);
         t("#inventoryItemsContainerList").empty();
         if (O.length > 0) {
-            t.each(O, function (V, W) {
-                var X = "",
-                    U = "";
-                if (W.usable) {
-                    X = g_js_strings.commonstr.use
+            t.each(O, function (W, X) {
+                var Y = "",
+                    V = "";
+                if (X.usable) {
+                    Y = g_js_strings.commonstr.use
                 } else {
-                    if (W.equippable) {
-                        if (W.isEquipped) {
-                            X = g_js_strings.commonstr.unequip
+                    if (X.equippable) {
+                        if (X.isEquipped) {
+                            Y = g_js_strings.commonstr.unequip
                         } else {
-                            X = g_js_strings.commonstr.equip
+                            Y = g_js_strings.commonstr.equip
                         }
                     }
                 }
-                if (X !== "") {
-                    U = cm.Template.renderTemplate("Inventory", "itemButton", {
-                        id: W.id,
-                        actionString: X
+                var U = {
+                    521: 1,
+                    522: 1,
+                    523: 1
+                };
+                if (Y !== "") {
+                    V = cm.Template.renderTemplate("Inventory", "itemButton", {
+                        id: X.id,
+                        actionString: Y,
+                        hideInput: (cm.ItemIdentifier.canUseMultiple(X) ? "" : "none")
                     })
                 }
-                if (W.subCategory == 50) {
-                    K = W.name.split("_")[1];
+                if (X.subCategory == 50) {
+                    K = X.name.split("_")[1];
                     T = g_js_strings.mysteryChest["name_" + K];
-                    R = stimgUrl + "img/items/70/" + W.info.image + ".jpg";
-                    N = g_js_strings.mysteryChest["description_" + W.info.description]
+                    R = stimgUrl + "img/items/70/" + X.info.image + ".jpg";
+                    N = g_js_strings.mysteryChest["description_" + X.info.description]
                 } else {
-                    T = W.name;
-                    R = stimgUrl + "img/items/70/" + W.id + ".jpg";
-                    N = W.description
+                    T = X.name;
+                    R = stimgUrl + "img/items/70/" + X.id + ".jpg";
+                    N = X.description
                 }
                 t(cm.Template.renderTemplate("Inventory", "itemContainer", {
-                    id: W.id,
-                    name: W.name,
-                    actionbutton: U,
+                    id: X.id,
+                    name: X.name,
+                    actionbutton: V,
                     ownedString: g_js_strings.commonstr.owned,
                     imageSource: R,
-                    count: W.count,
-                    description: W.description
+                    count: X.count,
+                    description: X.description
                 })).appendTo("#inventoryItemsContainerList")
             })
         } else {
@@ -39630,29 +40092,34 @@ cm.InventoryView = function (t) {
         description = M.getAttribute("name"), tooltipContent = "<b>" + L + "</b><br /><br />" + description;
         showTooltip(tooltipContent, M, K, "inventoryItemsContainer")
     };
-    var r = function (N) {
-        seed.items["i" + N] = Number(seed.items["i" + N]) - 1;
-        ksoItems[N].subtract();
-        var L = seed.items["i" + N],
-            M = ksoItems[N].count,
-            K = "";
-        if (L === 0 && M === 0) {
-            t("#item" + N).remove()
+    var r = function (O, M) {
+        M = +M || cm.MultiBuyUse.getNumberUsed(O);
+        if (M >= 1) {
+            seed.items["i" + O] = Number(seed.items["i" + O]) - M;
+            ksoItems[O].subtract(M);
+            var L = seed.items["i" + O],
+                N = ksoItems[O].count,
+                K = "";
+            if (L === 0 && N === 0) {
+                t("#item" + O).remove()
+            } else {
+                t("#item" + O + "Count").text(seed.items["i" + O].toString());
+                t("#item" + O + "Count").text(ksoItems[O].count.toString())
+            }
+            if (t(".item").length === 0) {
+                J()
+            } else {
+                a();
+                b()
+            }
+            K = M + "  <span class='afterCount'>" + g_js_strings.modal_myitems_use.uused.replace("%1$s", ksoItems[O].name) + "</span>";
+            t("#inventoryMessage").html(K);
+            t("#inventoryMessage").show();
+            if (t("#tooltip")) {
+                t("#tooltip").remove()
+            }
         } else {
-            t("#item" + N + "Count").text(seed.items["i" + N].toString());
-            t("#item" + N + "Count").text(ksoItems[N].count.toString())
-        }
-        if (t(".item").length === 0) {
-            J()
-        } else {
-            a();
-            b()
-        }
-        K = g_js_strings.modal_myitems_use.uused.replace("%1$s", ksoItems[N].name);
-        t("#inventoryMessage").text(K);
-        t("#inventoryMessage").show();
-        if (t("#tooltip")) {
-            t("#tooltip").remove()
+            cm.ModalManager.alert(g_js_strings.multi.one_or_more)
         }
     };
     var z = function (K) {
@@ -39841,6 +40308,331 @@ cm.InventoryView = function (t) {
         injectItems: b
     }
 }(jQuery);
+cm.ItemIdentifier = function () {
+    var a = function (e) {
+        id = parseInt(e.id);
+        var c = e.name.toLowerCase();
+        var d = [];
+        for (var b in d) {
+            if (d[b] == id) {
+                return true
+            }
+        }
+        if ((id > 1300 && id < 1500) || (id > 521 && id < 524)) {
+            return true
+        }
+        if (cm.ItemIdentifier.isChest(id) || cm.ItemIdentifier.isBox(id)) {
+            return true
+        }
+        if (id > 1000 && id < 1050) {
+            return true
+        }
+        return false
+    };
+    return {
+        isChest: function (b) {
+            return cm.ItemIdentifier.CHESTS[b]
+        },
+        isBox: function (b) {
+            return cm.ItemIdentifier.BOX[b]
+        },
+        canUseMultiple: a
+    }
+}();
+cm.ItemIdentifier.CHESTS = {
+    10009: 1,
+    10011: 1,
+    10027: 1,
+    10515: 1,
+    10600: 1,
+    10204: 1,
+    10203: 1,
+    27001: 1,
+    10023: 1,
+    941: 1,
+    942: 1,
+    10007: 1,
+    10008: 1,
+    10010: 1,
+    501: 1,
+    502: 1,
+    503: 1,
+    504: 1,
+    505: 1,
+    10012: 1,
+    10013: 1,
+    10014: 1,
+    10020: 1,
+    10022: 1,
+    10026: 1,
+    10029: 1,
+    10031: 1,
+    10038: 1,
+    10047: 1,
+    10081: 1,
+    10085: 1,
+    10086: 1,
+    10087: 1,
+    10088: 1,
+    10089: 1,
+    10090: 1,
+    10091: 1,
+    10092: 1,
+    10093: 1,
+    10094: 1,
+    10095: 1,
+    10096: 1,
+    10097: 1,
+    10098: 1,
+    10099: 1,
+    10100: 1,
+    10101: 1,
+    10102: 1,
+    10103: 1,
+    10104: 1,
+    10105: 1,
+    10106: 1,
+    10107: 1,
+    10108: 1,
+    10109: 1,
+    10111: 1,
+    10515: 1,
+    25001: 1,
+    25002: 1,
+    25003: 1,
+    25004: 1,
+    25005: 1,
+    25006: 1,
+    30258: 1,
+    30305: 1,
+    30306: 1,
+    30307: 1,
+    30308: 1,
+    30309: 1,
+    30310: 1,
+    30311: 1,
+    30312: 1,
+    30313: 1,
+    30314: 1,
+    30315: 1,
+    30316: 1,
+    30317: 1,
+    30318: 1,
+    30319: 1,
+    30320: 1,
+    30321: 1,
+    30322: 1,
+    30323: 1,
+    30326: 1,
+    30327: 1,
+    30328: 1,
+    30329: 1,
+    30330: 1,
+    30331: 1,
+    30332: 1,
+    30333: 1,
+    30334: 1,
+    30335: 1,
+    30336: 1,
+    30337: 1,
+    30338: 1,
+    30339: 1,
+    30340: 1,
+    30343: 1,
+    30344: 1,
+    30345: 1,
+    30346: 1,
+    30347: 1,
+    30348: 1,
+    30349: 1,
+    30350: 1,
+    30351: 1,
+    531: 1,
+    10030: 1,
+    10032: 1,
+    10033: 1,
+    10034: 1,
+    10035: 1,
+    10036: 1,
+    10037: 1,
+    10132: 1,
+    30206: 1,
+    30207: 1,
+    30208: 1,
+    30209: 1,
+    30210: 1,
+    30211: 1,
+    30212: 1,
+    30213: 1,
+    20214: 1
+};
+cm.ItemIdentifier.BOX = {
+    403: 1,
+    1390: 1,
+    1422: 1,
+    1477: 1,
+    10043: 1,
+    10044: 1,
+    10045: 1,
+    10046: 1,
+    10048: 1,
+    10049: 1,
+    10050: 1,
+    10051: 1,
+    10052: 1,
+    10053: 1,
+    10054: 1,
+    10055: 1,
+    10056: 1,
+    10057: 1,
+    10058: 1,
+    10059: 1,
+    10060: 1,
+    10061: 1,
+    10062: 1,
+    10063: 1,
+    10064: 1,
+    10065: 1,
+    10066: 1,
+    10067: 1,
+    10068: 1,
+    10069: 1,
+    10070: 1,
+    10071: 1,
+    10072: 1,
+    10073: 1,
+    10074: 1,
+    10075: 1,
+    10076: 1,
+    10077: 1,
+    10078: 1,
+    10079: 1,
+    10080: 1,
+    10082: 1,
+    10083: 1,
+    10084: 1,
+    10112: 1,
+    10113: 1,
+    10114: 1,
+    10115: 1,
+    10116: 1,
+    10117: 1,
+    10118: 1,
+    10119: 1,
+    10120: 1,
+    10121: 1,
+    10122: 1,
+    10123: 1,
+    10124: 1,
+    10125: 1,
+    10126: 1,
+    10127: 1,
+    10128: 1,
+    10129: 1,
+    10130: 1,
+    10131: 1,
+    10203: 1,
+    10204: 1,
+    30205: 1,
+    30259: 1,
+    30301: 1,
+    30302: 1,
+    30303: 1,
+    30304: 1,
+    30324: 1,
+    30325: 1,
+    30341: 1,
+    30342: 1,
+    30352: 1,
+    30353: 1,
+    30354: 1,
+    30355: 1,
+    30356: 1,
+    30357: 1,
+    30358: 1,
+    30359: 1,
+    30360: 1,
+    30361: 1,
+    30362: 1,
+    30363: 1,
+    30364: 1,
+    30365: 1,
+    30366: 1,
+    30367: 1,
+    30368: 1,
+    30369: 1,
+    30370: 1,
+    30371: 1,
+    30372: 1,
+    30373: 1,
+    30374: 1,
+    30375: 1,
+    30376: 1,
+    30377: 1,
+    30378: 1,
+    30379: 1,
+    30380: 1,
+    30381: 1,
+    30382: 1,
+    30383: 1,
+    30384: 1,
+    30385: 1,
+    30386: 1,
+    30387: 1,
+    30388: 1,
+    30389: 1,
+    30390: 1,
+    30391: 1,
+    30392: 1,
+    30393: 1,
+    30394: 1,
+    30395: 1,
+    30396: 1,
+    30397: 1,
+    30398: 1,
+    30399: 1,
+    30400: 1,
+    30401: 1,
+    30402: 1,
+    30403: 1,
+    30404: 1,
+    30405: 1,
+    30406: 1,
+    30407: 1,
+    30408: 1,
+    30409: 1,
+    30410: 1,
+    30411: 1,
+    30412: 1,
+    30413: 1,
+    30414: 1,
+    30415: 1,
+    30416: 1,
+    30417: 1,
+    30418: 1,
+    30419: 1,
+    30420: 1,
+    30421: 1,
+    30422: 1,
+    30423: 1,
+    30424: 1,
+    30425: 1,
+    30426: 1,
+    30427: 1,
+    30428: 1,
+    30429: 1,
+    30430: 1,
+    30431: 1,
+    30432: 1,
+    30433: 1,
+    30434: 1,
+    30435: 1,
+    30436: 1,
+    30437: 1,
+    30438: 1,
+    30439: 1,
+    30214: 1
+};
 var cm = cm || {};
 cm.InviteTypes = {
     INVITE_TYPE_GENERAL: 1,
@@ -39892,6 +40684,15 @@ cm.ItemController = function ($) {
     var init_ = function () {};
     var use = function (itemId) {
         itemId = Number(itemId);
+        var count = cm.MultiBuyUse.getNumberUsed(itemId);
+        if (count > seed.items["i" + itemId]) {
+            cm.ModalManager.alert(g_js_strings.multi.dh0 + count + g_js_strings.multi.dh1 + seed.items["i" + itemId]);
+            return false
+        }
+        if (count < 1) {
+            cm.ModalManager.alert(g_js_strings.multi.item_error);
+            return false
+        }
         if ([101, 102, 111, 112, 121, 122, 131, 132, 141, 142].include(itemId)) {
             useProductionBoost(itemId)
         } else {
@@ -40229,6 +41030,7 @@ cm.ItemController = function ($) {
         var params = Object.clone(g_ajaxparams);
         params.itemId = iid;
         params.cid = currentcityid;
+        params.quantity = cm.MultiBuyUse.getNumberUsed(iid);
         new Ajax.Request(g_ajaxpath + "ajax/medals.php" + g_ajaxsuffix, {
             method: "post",
             parameters: params,
@@ -40248,6 +41050,7 @@ cm.ItemController = function ($) {
         var params = Object.clone(g_ajaxparams);
         params.cid = currentcityid;
         params.iid = iid;
+        params.quantity = cm.MultiBuyUse.getNumberUsed(iid);
         new Ajax.Request(g_ajaxpath + "ajax/volunteee.php" + g_ajaxsuffix, {
             method: "post",
             parameters: params,
@@ -40275,6 +41078,7 @@ cm.ItemController = function ($) {
         var params = Object.clone(g_ajaxparams);
         params.iid = iid;
         params.cid = currentcityid;
+        params.quantity = cm.MultiBuyUse.getNumberUsed(iid);
         new Ajax.Request(g_ajaxpath + "ajax/resourceCrate.php" + g_ajaxsuffix, {
             method: "post",
             parameters: params,
@@ -40296,6 +41100,7 @@ cm.ItemController = function ($) {
     var useItemChest = function (iid) {
         var items = {}, item, params = Object.clone(g_ajaxparams);
         params.iid = iid;
+        params.quantity = cm.MultiBuyUse.getNumberUsed(iid);
         new Ajax.Request(g_ajaxpath + "ajax/itemChest.php" + g_ajaxsuffix, {
             method: "post",
             parameters: params,
@@ -40317,6 +41122,7 @@ cm.ItemController = function ($) {
     };
     var useCursedChest = function (itemId) {
         var cursedChest = ksoItems[itemId],
+            quantity = cm.MultiBuyUse.getNumberUsed(itemId),
             incantationId = +soil.chestkeys[itemId],
             incantation = ksoItems[incantationId],
             incantationName = incantation.name;
@@ -40324,19 +41130,20 @@ cm.ItemController = function ($) {
             hasIncantation() ? openConfirmUse() : openInsufficient()
         };
         var hasIncantation = function () {
+            var incantationsNeeded = quantity || 1;
             if (!incantationId) {
                 cm.log.l("incantationId not defined")
             }
             if (!ksoItems[incantationId]) {
                 cm.log.l("incantationId " + incantationId + " does not exist")
             }
-            return Boolean(incantation && incantation.count > 0)
+            return Boolean(incantation && incantation.count >= incantationsNeeded)
         };
         var openConfirmUse = function () {
             var useButton = renderButton(commonStr_.use, "blue"),
                 cancelButton = renderButton(commonStr_.cancel, "cancel");
             openModal({
-                youNeed: commonStr_.youneed + ": 1x " + incantationName + " to open a Cursed Chest",
+                youNeed: g_js_strings.modal_myitems.requiresincantations.replace("%1$s", quantity).replace("%2$s", incantationName),
                 buttons: useButton + " " + cancelButton
             });
             bindButton(".itemDependency .buttonv2", function () {
@@ -40347,7 +41154,7 @@ cm.ItemController = function ($) {
         var openInsufficient = function () {
             var shopButton = renderButton(g_js_strings.salesPromotion.goToShop, "green");
             openModal({
-                youNeed: "Opening a Cursed Chest requires: 1x " + incantationName,
+                youNeed: g_js_strings.modal_myitems.ownnoincantations.replace("%1$s", quantity).replace("%2$s", incantationName),
                 buttons: shopButton
             });
             bindButton(".itemDependency .buttonv2", function () {
@@ -40400,8 +41207,7 @@ cm.ItemController = function ($) {
             }, function (rslt) {
                 if (rslt.ok === true) {
                     cm.InventoryView.removeItemFromInventory(itemId);
-                    var item = new cm.ThroneItemModel(rslt.item.id, rslt.item);
-                    kocThroneItems[item.id] = item
+                    cm.ThroneController.addItem(rslt.item)
                 } else {
                     cm.ModalManager.alert({
                         button_text: commonStr_.ok,
@@ -40430,6 +41236,7 @@ cm.ItemController = function ($) {
         var items = {}, params = Object.clone(g_ajaxparams);
         params.chestId = itemId;
         params.cid = currentcityid;
+        params.quantity = cm.MultiBuyUse.getNumberUsed(itemId);
         new Ajax.Request(g_ajaxpath + "ajax/useMysteryChest.php" + g_ajaxsuffix, {
             method: "post",
             parameters: params,
@@ -41934,6 +42741,7 @@ function unpackFountainPack() {
     var singleiid = 941;
     var params = Object.clone(g_ajaxparams);
     params.iid = iid;
+    params.quantity = cm.MultiBuyUse.getNumberUsed(iid);
     new Ajax.Request(g_ajaxpath + "ajax/itemChest.php" + g_ajaxsuffix, {
         method: "post",
         parameters: params,
@@ -42216,6 +43024,7 @@ function modal_volunteer(iid) {
 function modal_chest_itemusage(iid) {
     var params = Object.clone(g_ajaxparams);
     params.iid = iid;
+    params.quantity = cm.MultiBuyUse.getNumberUsed(iid);
     new Ajax.Request(g_ajaxpath + "ajax/itemChest.php" + g_ajaxsuffix, {
         method: "post",
         parameters: params,
@@ -46007,6 +46816,8 @@ function getUserSearch() {
     }
 }
 function modal_leaderboard_profile(uid) {
+    cm.ProfileController.open(uid);
+    return;
     var params = Object.clone(g_ajaxparams);
     params.userId = uid;
     new Ajax.Request(g_ajaxpath + "ajax/getUserLeaderboard.php" + g_ajaxsuffix, {
@@ -46395,104 +47206,127 @@ function changecity(f) {
     $("stat_happy_num").innerHTML = c + "%";
     update_bdg()
 }
-function upg_tch(n, g, a) {
+function is_workshop_open() {
+    var a = jQuery(".buildinginfo .building");
+    var b = a.attr("class");
+    return b && b.indexOf("b27") > -1
+}
+function upg_tch(q, g, a) {
+    var p = is_workshop_open();
     var d = Math.pow(2, parseInt(g) - 1);
-    var j = checkreq("tch", n, g)[3];
-    var h = false;
-    for (var e = 0; e < j.length; e++) {
-        if (j[e] == 0) {
-            h = true;
+    var l = checkreq("tch", q, g, p ? 2 : undefined)[3];
+    var j = false;
+    var h = p ? techcost2 : window.techcost;
+    for (var e = 0; e < l.length; e++) {
+        if (l[e] == 0) {
+            j = true;
             break
         }
     }
-    if (seed.queue_tch["city" + currentcityid].length > 0) {
-        h = true
-    }
-    if (h) {
+    if (j) {
         Modal.showAlert(g_js_strings.upg_tch.unableres);
         return false
-    } else {
-        seed.resources["city" + currentcityid].rec1[0] -= parseInt(techcost["tch" + n][1]) * d * 3600;
-        seed.resources["city" + currentcityid].rec2[0] -= parseInt(techcost["tch" + n][2]) * d * 3600;
-        seed.resources["city" + currentcityid].rec3[0] -= parseInt(techcost["tch" + n][3]) * d * 3600;
-        seed.resources["city" + currentcityid].rec4[0] -= parseInt(techcost["tch" + n][4]) * d * 3600;
-        seed.citystats["city" + currentcityid].gold[0] -= parseInt(techcost["tch" + n][5]) * d;
-        var f = 0;
-        var m = seed.knights["city" + currentcityid];
-        if (m) {
-            m = m["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
-            if (m) {
-                f = parseInt(m.intelligence);
-                f = ((parseInt(m.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (f * 1.25) : f
-            }
-        }
-        var b = parseInt(techcost["tch" + n][7] * d * (1 / (1 + 0.005 * f)));
-        var l = cm.ThroneController.effectBonus(80);
-        b = b / (1 + (l / 100));
-        var c = Object.clone(g_ajaxparams);
-        c.cid = currentcityid;
-        c.lv = g;
-        c.tid = n;
-        new Ajax.Request(g_ajaxpath + "ajax/research.php" + g_ajaxsuffix, {
-            method: "post",
-            parameters: c,
-            onSuccess: function (p) {
-                var i = ("(" + p.responseText + ")").evalJSON();
-                if (i.ok) {
-                    b = i.timeNeeded;
-                    cm.sounds.play("started_research");
-                    seed.queue_tch["city" + currentcityid].push([n, g, unixtime(), unixtime() + b, 0, b]);
-                    var o = "no";
-                    if (a == 1) {
-                        o = "yes";
-                        tch_gethelp(n)
-                    }
-                    queue_changetab_building();
-                    Modal.hideModalAll();
-                    if (i.updateSeed) {
-                        update_seed(i.updateSeed)
-                    }
-                    UserEngagement.popViralModalUEP(1)
-                } else {
-                    Modal.showAlert(printLocalError((i.error_code || null), (i.msg || null), (i.feedback || null)))
-                }
-            },
-            onFailure: function () {}
-        })
     }
+    seed.resources["city" + currentcityid].rec1[0] -= parseInt(h["tch" + q][1]) * d * 3600;
+    seed.resources["city" + currentcityid].rec2[0] -= parseInt(h["tch" + q][2]) * d * 3600;
+    seed.resources["city" + currentcityid].rec3[0] -= parseInt(h["tch" + q][3]) * d * 3600;
+    seed.resources["city" + currentcityid].rec4[0] -= parseInt(h["tch" + q][4]) * d * 3600;
+    seed.citystats["city" + currentcityid].gold[0] -= parseInt(h["tch" + q][5]) * d;
+    var f = 0;
+    var o = seed.knights["city" + currentcityid];
+    if (o) {
+        o = o["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
+        if (o) {
+            f = parseInt(o.intelligence);
+            f = ((parseInt(o.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (f * 1.25) : f
+        }
+    }
+    var b = parseInt(h["tch" + q][7] * d * (1 / (1 + 0.005 * f)));
+    var m = cm.ThroneController.effectBonus(80);
+    b = b / (1 + (m / 100));
+    var c = Object.clone(g_ajaxparams);
+    c.cid = currentcityid;
+    c.lv = g;
+    c.tid = q;
+    var n = p ? "researchWorkshop" : "research";
+    new Ajax.Request(g_ajaxpath + "ajax/" + n + ".php" + g_ajaxsuffix, {
+        method: "post",
+        parameters: c,
+        onSuccess: function (t) {
+            var r = ("(" + t.responseText + ")").evalJSON();
+            if (r.ok) {
+                b = r.timeNeeded;
+                cm.sounds.play("started_research");
+                var i = p ? seed.queue_tch2 : seed.queue_tch;
+                i["city" + currentcityid].push([q, g, unixtime(), unixtime() + b, 0, b]);
+                var s = "no";
+                if (a == 1) {
+                    s = "yes";
+                    tch_gethelp(q, p ? 1 : 0)
+                }
+                queue_changetab_building();
+                Modal.hideModalAll();
+                if (r.updateSeed) {
+                    update_seed(r.updateSeed)
+                }
+                UserEngagement.popViralModalUEP(1)
+            } else {
+                Modal.showAlert(printLocalError((r.error_code || null), (r.msg || null), (r.feedback || null)))
+            }
+        },
+        onFailure: function () {}
+    })
 }
-function tch_gethelp(b) {
+function tch_gethelp(a, b) {
     Modal.hideModalAll();
-    var c = parseInt(seed.tech["tch" + b]) + 1;
-    var d = Object.clone(g_ajaxparams);
-    d.rid = b;
-    d.ctrl = "AskForHelp";
-    d.action = "getHelpData";
+    switch (b) {
+        case cm.RESEARCH_TYPES.WORKSHOP:
+            var d = parseInt(seed.tech2["tch" + a]) + 1;
+            break;
+        case cm.RESEARCH_TYPES.ALCHEMY_LAB:
+        default:
+            var d = parseInt(seed.tech["tch" + a]) + 1;
+            break
+    }
+    var e = Object.clone(g_ajaxparams);
+    e.rid = a;
+    e.rtype = b;
+    e.ctrl = "AskForHelp";
+    e.action = "getHelpData";
     ajax.Request(g_ajaxpath + "ajax/_dispatch.php" + g_ajaxsuffix, {
         method: "post",
-        parameters: d,
-        onSuccess: function (g) {
-            var f = ("(" + g.responseText + ")").evalJSON();
-            if (f.ok && f.data) {
-                handleHelpCallback(f.data)
+        parameters: e,
+        onSuccess: function (h) {
+            var g = ("(" + h.responseText + ")").evalJSON();
+            if (g.ok && g.data) {
+                handleHelpCallback(g.data)
             } else {
-                Modal.showAlert(printLocalError((f.error_code || null), (f.msg || null), (f.feedback || null)))
+                Modal.showAlert(printLocalError((g.error_code || null), (g.msg || null), (g.feedback || null)))
             }
         },
         onFailure: function () {}
     });
-    var a = new Array();
-    a.push(["REPLACE_TeChNaMe", techcost["tch" + b][0]]);
-    a.push(["REPLACE_LeVeLiD", c]);
-    a.push(["REPLACE_AsSeTiD", b]);
-    var e = function (f, g) {
-        continuation_107(f, g);
-        if (!f) {
-            var h = cm.SpeedUpType.research;
-            cm.ClientSideCookieManager.setCookie(h, false)
+    var c = new Array();
+    var f = function (g, h) {
+        continuation_107(g, h);
+        if (!g) {
+            var i = cm.SpeedUpType.research;
+            cm.ClientSideCookieManager.setCookie(i, false)
         }
     };
-    common_postToProfile("107", Object.cloneFeed(template_data_107), Object.cloneFeed(actionlink_data_107), e, a)
+    c.push(["REPLACE_LeVeLiD", d]);
+    c.push(["REPLACE_AsSeTiD", a]);
+    switch (b) {
+        case cm.RESEARCH_TYPES.WORKSHOP:
+            c.push(["REPLACE_TeChNaMe", techcost2["tch" + a][0]]);
+            common_postToProfile("400", Object.cloneFeed(template_data_400), Object.cloneFeed(actionlink_data_400), f, c);
+            break;
+        case cm.RESEARCH_TYPES.ALCHEMY_LAB:
+        default:
+            c.push(["REPLACE_TeChNaMe", techcost["tch" + a][0]]);
+            common_postToProfile("107", Object.cloneFeed(template_data_107), Object.cloneFeed(actionlink_data_107), f, c);
+            break
+    }
 }
 var g_ajaxpath = "";
 var g_ajaxsuffix = "";
@@ -46845,8 +47679,8 @@ var update_citylist = (function () {
 function update_queue() {
     var t = false;
     var A = false;
-    var ah = $("queue_building").visible();
-    if (ah) {
+    var aj = $("queue_building").visible();
+    if (aj) {
         var R = new Array()
     }
     var F = seed.queue_con["city" + currentcityid];
@@ -46855,16 +47689,16 @@ function update_queue() {
     var p = 228;
     for (var K = 0; K < F.length; K++) {
         var E = unixtime();
-        var aj = parseInt(F[K][4]) - E;
-        if (aj > 0) {
-            cm.speedUpModalTimer.update("bdg", cm.log.convertToHMS(aj, false), aj);
-            cm.guardianModalModel.update(aj);
+        var al = parseInt(F[K][4]) - E;
+        if (al > 0) {
+            cm.speedUpModalTimer.update("bdg", cm.log.convertToHMS(al, false), al);
+            cm.guardianModalModel.update(al);
             t = true;
             A = true;
-            if (ah) {
+            if (aj) {
                 var e = cm.guardianModalModel.upgrading() ? fUp(cm.guardianModalModel.getType()) + " Guardian" : buildingcost["bdg" + F[K][0]][0];
                 var s = F[K][5] / F[K][6] + ((E - F[K][3]) / (F[K][4] - F[K][3])) * ((F[K][6] - F[K][5]) / F[K][6]);
-                var ay = parseInt(p * s);
+                var aA = parseInt(p * s);
                 R.push('<div class="queue_item">');
                 R.push('<div class="info"><div class="stat"><span class="item">');
                 R.push(e);
@@ -46878,15 +47712,15 @@ function update_queue() {
                     f += " (" + g_js_strings.commonstr.destroy + ")"
                 }
                 R.push('</span><span class="time">');
-                R.push(timestr(aj));
+                R.push(timestr(al));
                 R.push('</span><div class="speedup"><a class="inlineButton red14" name="' + F[K][2] + '" onclick="cm.BuildingSpeedupController.queueClick(event, &quot;' + f + '&quot;);">');
                 R.push("<span>" + g_js_strings.commonstr.speedup + '</span></a></div></div><div class="bar" style="width:');
-                R.push(ay);
+                R.push(aA);
                 R.push('px;">&nbsp;</div></div>');
                 R.push('<div class="stats">');
                 R.push('<span class="friends">' + g_js_strings.update_queue.frhelp + ": <span>");
-                var aA = seed.updateHelpConstruct["city" + currentcityid];
-                if (aA) {
+                var aC = seed.updateHelpConstruct["city" + currentcityid];
+                if (aC) {
                     var D = seed.updateHelpConstruct["city" + currentcityid]["b" + F[K][2]];
                     if (D && parseInt(D.n) > 0) {
                         R.push(D.n)
@@ -46898,7 +47732,7 @@ function update_queue() {
                 }
                 R.push("</span></span>");
                 R.push('<span class="allis">' + g_js_strings.update_queue.allihelp + ": <span>");
-                if (aA) {
+                if (aC) {
                     var D = seed.updateHelpConstruct["city" + currentcityid]["b" + F[K][2]];
                     if (D && parseInt(D.a) > 0) {
                         R.push(D.a)
@@ -46912,22 +47746,22 @@ function update_queue() {
                 R.push("</div>");
                 R.push("</div>");
                 if ($("modal_build_timeremaining")) {
-                    $("modal_build_timeremaining").innerHTML = timestr(aj)
+                    $("modal_build_timeremaining").innerHTML = timestr(al)
                 }
             }
         } else {
             cm.sounds.play("finished_building");
             cm.speedUpModalTimer.endSpeedUpModal("bdg");
             var a = parseInt(F[K][1]);
-            var az = F[K][7];
+            var aB = F[K][7];
             if (a == 0) {
                 M = parseInt(F[K][0]);
-                bdgOriginalLvl = parseInt(seed.buildings["city" + currentcityid]["pos" + az][1]);
-                if (!seed.buildings["city" + currentcityid]["pos" + az]) {
+                bdgOriginalLvl = parseInt(seed.buildings["city" + currentcityid]["pos" + aB][1]);
+                if (!seed.buildings["city" + currentcityid]["pos" + aB]) {
                     return false
                 }
-                bdgType = parseInt(seed.buildings["city" + currentcityid]["pos" + az][0]);
-                removeCityFromView(az);
+                bdgType = parseInt(seed.buildings["city" + currentcityid]["pos" + aB][0]);
+                removeCityFromView(aB);
                 if (bdgOriginalLvl > 1) {
                     mult = Math.pow(2, bdgOriginalLvl - 2);
                     seed.resources["city" + currentcityid].rec1[0] += parseInt(buildingcost["bdg" + bdgType][1]) * mult * 3600;
@@ -46937,22 +47771,22 @@ function update_queue() {
                     seed.citystats["city" + currentcityid].gold[0] += parseInt(buildingcost["bdg" + bdgType][5]) * mult
                 }
                 if (bdgType > 0 && bdgType < 5) {
-                    var ak = parseInt(seed.citystats["city" + currentcityid]["pop"][3]);
+                    var am = parseInt(seed.citystats["city" + currentcityid]["pop"][3]);
                     for (k = bdgOriginalLvl; k > 0; k--) {
-                        ak -= k * 10
+                        am -= k * 10
                     }
-                    seed.citystats["city" + currentcityid]["pop"][3] = ak
+                    seed.citystats["city" + currentcityid]["pop"][3] = am
                 } else {
                     if (bdgType == 5) {
                         var d = seed.citystats["city" + currentcityid]["pop"][1];
-                        var ap = seed.citystats["city" + currentcityid]["pop"][0];
+                        var ar = seed.citystats["city" + currentcityid]["pop"][0];
                         for (k = bdgOriginalLvl; k > 0; k--) {
                             d -= k * 100
                         }
                         if (d < 51) {
                             d = 50
                         }
-                        if (ap > d) {
+                        if (ar > d) {
                             seed.citystats["city" + currentcityid]["pop"][0] = d
                         }
                         seed.citystats["city" + currentcityid]["pop"][1] = d
@@ -46977,10 +47811,10 @@ function update_queue() {
                 update_pop()
             } else {
                 seed.con_hlp["b" + F[K][2]] = 0;
-                if (!seed.buildings["city" + currentcityid]["pos" + az]) {
+                if (!seed.buildings["city" + currentcityid]["pos" + aB]) {
                     return false
                 }
-                seed.buildings["city" + currentcityid]["pos" + az] = [F[K][0], F[K][1], az, seed.buildings["city" + currentcityid]["pos" + az][3]];
+                seed.buildings["city" + currentcityid]["pos" + aB] = [F[K][0], F[K][1], aB, seed.buildings["city" + currentcityid]["pos" + aB][3]];
                 M = parseInt(F[K][0]);
                 seed.queue_con["city" + currentcityid].splice(K, 1);
                 K--;
@@ -47013,11 +47847,11 @@ function update_queue() {
                             if (N) {
                                 N.setLevel(a)
                             } else {
-                                buildingId = seed.buildings["city" + currentcityid]["pos" + az][3];
+                                buildingId = seed.buildings["city" + currentcityid]["pos" + aB][3];
                                 watchTowerInfo = {
                                     buildingId: buildingId,
                                     cityId: currentcityid.toString(),
-                                    slot: az,
+                                    slot: aB,
                                     level: a
                                 };
                                 var N = new cm.WatchTower(watchTowerInfo);
@@ -47039,31 +47873,31 @@ function update_queue() {
         quest_allcompleted(y.valid);
         modal_quests_generate(y.valid, y.recommended, 0)
     }
-    var ag = seed.queue_tch["city" + currentcityid];
-    for (var K = 0; K < ag.length; K++) {
+    var ai = seed.queue_tch["city" + currentcityid];
+    for (var K = 0; K < ai.length; K++) {
         var E = unixtime();
-        var aj = parseInt(ag[K][3]) - E;
-        if (aj > 0) {
-            cm.speedUpModalTimer.update("tch", cm.log.convertToHMS(aj, false), aj);
+        var al = parseInt(ai[K][3]) - E;
+        if (al > 0) {
+            cm.speedUpModalTimer.update("tch", cm.log.convertToHMS(al, false), al);
             t = true;
             A = true;
-            if (ah) {
-                var s = parseInt(ag[K][4]) / parseInt(ag[K][5]) + ((E - parseInt(ag[K][2])) / (parseInt(ag[K][3]) - parseInt(ag[K][2]))) * ((parseInt(ag[K][5]) - parseInt(ag[K][4])) / parseInt(ag[K][5]));
-                var ay = parseInt(p * s);
+            if (aj) {
+                var s = parseInt(ai[K][4]) / parseInt(ai[K][5]) + ((E - parseInt(ai[K][2])) / (parseInt(ai[K][3]) - parseInt(ai[K][2]))) * ((parseInt(ai[K][5]) - parseInt(ai[K][4])) / parseInt(ai[K][5]));
+                var aA = parseInt(p * s);
                 R.push('<div class="queue_item">');
                 R.push('<div class="info"><div class="stat"><span class="item" >');
-                R.push(techcost["tch" + ag[K][0]][0] + " (" + g_js_strings.commonstr.lv + ag[K][1]);
+                R.push(techcost["tch" + ai[K][0]][0] + " (" + g_js_strings.commonstr.lv + ai[K][1]);
                 R.push(')</span><span class="time">');
-                R.push(timestr(aj));
-                R.push('</span><div class="speedup"><a class="inlineButton red14" name="' + ag[K][0] + '" onclick="cm.ResearchSpeedupController.queueClick(event);">');
+                R.push(timestr(al));
+                R.push('</span><div class="speedup"><a class="inlineButton red14" name="' + ai[K][0] + '" onclick=\'cm.ResearchSpeedupController.queueClick(event, "tch");\'>');
                 R.push("<span>" + g_js_strings.commonstr.speedup + '</span></a></div></div><div class="bar" style="width:');
-                R.push(ay);
+                R.push(aA);
                 R.push('px;">&nbsp;</div></div>');
                 R.push('<div class="stats">');
                 R.push('<span class="friends">' + g_js_strings.update_queue.frhelp + ": <span>");
                 if (seed.updateHelpResearch["city" + currentcityid]) {
-                    if (parseInt(seed.updateHelpResearch["city" + currentcityid]["t" + ag[K][0]].n) > 0) {
-                        R.push(seed.updateHelpResearch["city" + currentcityid]["t" + ag[K][0]].n)
+                    if (parseInt(seed.updateHelpResearch["city" + currentcityid]["t" + ai[K][0]].n) > 0) {
+                        R.push(seed.updateHelpResearch["city" + currentcityid]["t" + ai[K][0]].n)
                     } else {
                         R.push("0")
                     }
@@ -47073,8 +47907,8 @@ function update_queue() {
                 R.push("</span></span>");
                 R.push('<span class="allis">' + g_js_strings.update_queue.allihelp + ": <span>");
                 if (seed.updateHelpResearch["city" + currentcityid]) {
-                    if (parseInt(seed.updateHelpResearch["city" + currentcityid]["t" + ag[K][0]].a) > 0) {
-                        R.push(seed.updateHelpResearch["city" + currentcityid]["t" + ag[K][0]].a)
+                    if (parseInt(seed.updateHelpResearch["city" + currentcityid]["t" + ai[K][0]].a) > 0) {
+                        R.push(seed.updateHelpResearch["city" + currentcityid]["t" + ai[K][0]].a)
                     } else {
                         R.push("0")
                     }
@@ -47084,14 +47918,14 @@ function update_queue() {
                 R.push("</span></span>");
                 R.push("</div>");
                 R.push("</div>");
-                if ($("alchemymodal")) {
-                    $("alchemymodal_tch" + ag[K][0] + "_queue_timeleft").innerHTML = timestr(aj)
+                if ($("alchemymodal") && $("alchemymodal_tch" + ai[K][0] + "_queue_timeleft")) {
+                    $("alchemymodal_tch" + ai[K][0] + "_queue_timeleft").innerHTML = timestr(al)
                 }
             }
         } else {
             cm.sounds.play("finished_research");
-            seed.tech["tch" + ag[K][0]] = parseInt(ag[K][1]);
-            seed.tch_hlp["t" + ag[K][0]] = 0;
+            seed.tech["tch" + ai[K][0]] = parseInt(ai[K][1]);
+            seed.tch_hlp["t" + ai[K][0]] = 0;
             seed.queue_tch["city" + currentcityid].splice(K, 1);
             if ($("alchemymodal")) {
                 modal_openAlchemy()
@@ -47099,47 +47933,110 @@ function update_queue() {
             cm.speedUpModalTimer.endSpeedUpModal("tch")
         }
     }
+    if (seed.queue_tch2) {
+        var ai = seed.queue_tch2["city" + currentcityid];
+        for (var K = 0; K < ai.length; K++) {
+            var E = unixtime();
+            var al = parseInt(ai[K][3]) - E;
+            if (al > 0) {
+                cm.speedUpModalTimer.update("wks", cm.log.convertToHMS(al, false), al);
+                t = true;
+                A = true;
+                if (aj) {
+                    var s = parseInt(ai[K][4]) / parseInt(ai[K][5]) + ((E - parseInt(ai[K][2])) / (parseInt(ai[K][3]) - parseInt(ai[K][2]))) * ((parseInt(ai[K][5]) - parseInt(ai[K][4])) / parseInt(ai[K][5]));
+                    var aA = parseInt(p * s);
+                    R.push('<div class="queue_item">');
+                    R.push('<div class="info"><div class="stat"><span class="item" >');
+                    R.push(techcost2["tch" + ai[K][0]][0] + " (" + g_js_strings.commonstr.lv + ai[K][1]);
+                    R.push(')</span><span class="time">');
+                    R.push(timestr(al));
+                    R.push('</span><div class="speedup"><a class="inlineButton red14" name="' + ai[K][0] + '" onclick=\'cm.ResearchSpeedupController.queueClick(event, "wks" );\'>');
+                    R.push("<span>" + g_js_strings.commonstr.speedup + '</span></a></div></div><div class="bar" style="width:');
+                    R.push(aA);
+                    R.push('px;">&nbsp;</div></div>');
+                    R.push('<div class="stats">');
+                    R.push('<span class="friends">' + g_js_strings.update_queue.frhelp + ": <span>");
+                    if (seed.updateHelpResearch2["city" + currentcityid]) {
+                        if (parseInt(seed.updateHelpResearch2["city" + currentcityid]["t" + ai[K][0]].n) > 0) {
+                            R.push(seed.updateHelpResearch2["city" + currentcityid]["t" + ai[K][0]].n)
+                        } else {
+                            R.push("0")
+                        }
+                    } else {
+                        R.push("0")
+                    }
+                    R.push("</span></span>");
+                    R.push('<span class="allis">' + g_js_strings.update_queue.allihelp + ": <span>");
+                    if (seed.updateHelpResearch2["city" + currentcityid]) {
+                        if (parseInt(seed.updateHelpResearch2["city" + currentcityid]["t" + ai[K][0]].a) > 0) {
+                            R.push(seed.updateHelpResearch2["city" + currentcityid]["t" + ai[K][0]].a)
+                        } else {
+                            R.push("0")
+                        }
+                    } else {
+                        R.push("0")
+                    }
+                    R.push("</span></span>");
+                    R.push("</div>");
+                    R.push("</div>");
+                    var ah = $("alchemymodal_tch" + ai[K][0] + "_queue_timeleft");
+                    if ($("alchemymodal") && ah) {
+                        ah.innerHTML = timestr(al)
+                    }
+                }
+            } else {
+                cm.sounds.play("finished_research");
+                seed.tech2["tch" + ai[K][0]] = parseInt(ai[K][1]);
+                seed.tch_hlp2["t" + ai[K][0]] = 0;
+                seed.queue_tch2["city" + currentcityid].splice(K, 1);
+                if (is_workshop_open()) {
+                    modal_openBritonWorkshop()
+                }
+                cm.speedUpModalTimer.endSpeedUpModal("wks")
+            }
+        }
+    }
     var b = seed.queue_craft["city" + currentcityid],
-        aq, af, ao, P, I, U, g, ac, O, V, h;
+        at, ag, aq, Q, I, U, g, ad, P, V, h;
     if (b) {
         if (b.length > 0) {}
     } else {
         b = []
     }
     for (var L = 0, Y = b.length; L < Y; ++L) {
-        aq = unixtime();
-        af = Number(b[L].craftingUnixTime);
-        ao = Number(b[L].craftingEtaUnixTime);
-        P = ao - aq;
+        at = unixtime();
+        ag = Number(b[L].craftingUnixTime);
+        aq = Number(b[L].craftingEtaUnixTime);
+        Q = aq - at;
         V = Number(b[L].craftingId);
         if (!b[L].categoryId || !b[L].recipeIndex) {
             jQuery.each(recipelist, function (c, i) {
                 jQuery.each(i, function (m, j) {
                     if (Number(j.recipe_id) == Number(b[L].recipeId)) {
                         g = j.name;
-                        O = Number(c);
-                        seed.queue_craft["city" + currentcityid][L].categoryId = O;
+                        P = Number(c);
+                        seed.queue_craft["city" + currentcityid][L].categoryId = P;
                         seed.queue_craft["city" + currentcityid][L].recipeIndex = m;
-                        b[L].categoryId = O;
+                        b[L].categoryId = P;
                         b[L].recipeIndex = m;
                         return false
                     }
                 })
             })
         }
-        if (P > 0) {
+        if (Q > 0) {
             t = true;
             A = true;
-            cm.speedUpModalTimer.update("craft", cm.log.convertToHMS(P, false), P);
-            if (ah) {
-                I = (aq - af) / (ao - af);
+            cm.speedUpModalTimer.update("craft", cm.log.convertToHMS(Q, false), Q);
+            if (aj) {
+                I = (at - ag) / (aq - ag);
                 U = p * I;
                 g = recipelist[Number(b[L].categoryId)][Number(b[L].recipeIndex)].name;
                 R.push("<div class='queue_item'>");
                 R.push("<div class='info'>");
                 R.push("<div class='stat'>");
                 R.push("<span class='item'>" + g + "</span>");
-                R.push("<span class='time'>" + timestr(P) + "</span>");
+                R.push("<span class='time'>" + timestr(Q) + "</span>");
                 R.push("<div class='speedup'>");
                 R.push("<a class='inlineButton red14' onclick='modal_speedup(\"craft\", " + V + ', null, "' + g + "\" );' name=''>");
                 R.push("<span>" + g_js_strings.commonstr.speedup + "</span>");
@@ -47156,95 +48053,95 @@ function update_queue() {
             }
         } else {
             cm.sounds.play("player_completes_a_craft");
-            var aw = seed.queue_craft["city" + currentcityid][0].categoryId,
+            var ay = seed.queue_craft["city" + currentcityid][0].categoryId,
                 W = seed.queue_craft["city" + currentcityid][0].recipeIndex,
-                B = recipelist[aw][W];
+                B = recipelist[ay][W];
             seed.queue_craft["city" + currentcityid].splice(K, 1);
             cm.speedUpModalTimer.endSpeedUpModal("craft");
             update_seed_ajax()
         }
     }
     var S = unixtime();
-    var ae = +(seed.queue_throne.start);
-    var ar = +(seed.queue_throne.end);
-    var n = ar - S;
-    var ai = seed.queue_throne.itemId;
+    var af = +(seed.queue_throne.start);
+    var au = +(seed.queue_throne.end);
+    var n = au - S;
+    var ak = seed.queue_throne.itemId;
     if (n > 0) {
         cm.speedUpModalTimer.update("throne", cm.log.convertToHMS(n, false), n)
     } else {
-        if (ai != undefined) {
-            kocThroneItems[ai].status = 1
+        if (ak != undefined) {
+            kocThroneItems[ak].status = 1
         }
         cm.speedUpModalTimer.endSpeedUpModal("throne");
         seed.queue_throne = {}
     }
-    var au;
-    var ax = $("queue_train").visible();
+    var aw;
+    var az = $("queue_train").visible();
     var l = false;
-    if (ax) {
-        au = new Array()
+    if (az) {
+        aw = new Array()
     }
     var v = -1;
     var F = seed.queue_unt["city" + currentcityid];
     var u = Math.min(F.length, 1);
-    var am = false;
+    var ao = false;
     var C = 0;
-    var at = 0;
+    var av = 0;
     for (var K = 0; K < F.length; K++) {
         if (F[K][7]) {
-            at++
+            av++
         } else {
             C++
         }
     }
-    if (at > 0) {
-        at--
+    if (av > 0) {
+        av--
     }
     if (C > 0) {
         C--
     }
     for (var K = 0; K < F.length; K++) {
         var E = unixtime();
-        var aj = parseInt(F[K][3]) - E;
-        if (aj > 0 && (K === 0 || (K > 0 && am !== F[K][7]))) {
+        var al = parseInt(F[K][3]) - E;
+        if (al > 0 && (K === 0 || (K > 0 && ao !== F[K][7]))) {
             if (F[K][7] === cm.speedUpModalTimer.prestigeQueueSelected) {
-                cm.speedUpModalTimer.update("trn", cm.log.convertToHMS(aj, false), aj)
+                cm.speedUpModalTimer.update("trn", cm.log.convertToHMS(al, false), al)
             }
             t = true;
             l = true;
-            if (ax) {
+            if (az) {
                 var s = parseInt(F[K][4]) / parseInt(F[K][5]) + ((E - parseInt(F[K][2])) / (parseInt(F[K][3]) - parseInt(F[K][2]))) * ((parseInt(F[K][5]) - parseInt(F[K][4])) / parseInt(F[K][5]));
-                var ay = parseInt(p * s);
-                au.push('<div class="queue_item">');
-                au.push('<div class="info"><div class="stat"><span class="item">');
+                var aA = parseInt(p * s);
+                aw.push('<div class="queue_item">');
+                aw.push('<div class="info"><div class="stat"><span class="item">');
                 var o = unitcost["unt" + F[K][0]][0];
-                au.push(o);
-                au.push('</span><span class="time">');
-                au.push(timestr(aj));
-                au.push("</span>");
-                au.push('<div class="speedup"><a class="inlineButton red14" name="" onclick="cm.speedUpModalTimer.prestigeQueueSelected=' + F[K][7] + ";modal_speedup( 'trn'," + F[K][0] + ", 2, '" + o + "', 0" + K + ');">');
-                au.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div>");
-                au.push('</div><div class="bar" style="width:');
-                au.push(ay);
-                au.push('px;">&nbsp;</div></div>');
-                au.push('<div class="stats">' + g_js_strings.commonstr.amt + ": ");
-                au.push(F[K][1]);
+                aw.push(o);
+                aw.push('</span><span class="time">');
+                aw.push(timestr(al));
+                aw.push("</span>");
+                aw.push('<div class="speedup"><a class="inlineButton red14" name="" onclick="cm.speedUpModalTimer.prestigeQueueSelected=' + F[K][7] + ";modal_speedup( 'trn'," + F[K][0] + ", 2, '" + o + "', 0" + K + ');">');
+                aw.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div>");
+                aw.push('</div><div class="bar" style="width:');
+                aw.push(aA);
+                aw.push('px;">&nbsp;</div></div>');
+                aw.push('<div class="stats">' + g_js_strings.commonstr.amt + ": ");
+                aw.push(F[K][1]);
                 if (seed.queue_unt["city" + currentcityid].length > 0) {
-                    au.push('<span class="troop_queue">' + g_js_strings.update_queue.troopqueue + ": " + (F[K][7] ? at : C) + "</span>")
+                    aw.push('<span class="troop_queue">' + g_js_strings.update_queue.troopqueue + ": " + (F[K][7] ? av : C) + "</span>")
                 }
-                au.push("</div>");
-                au.push("</div>")
+                aw.push("</div>");
+                aw.push("</div>")
             }
         } else {
-            if (aj <= 0) {
+            if (al <= 0) {
                 cm.sounds.play("finished_training");
                 cm.speedUpModalTimer.endSpeedUpModal("trn");
                 seed.units["city" + currentcityid]["unt" + F[K][0]] = parseInt(seed.units["city" + currentcityid]["unt" + F[K][0]]) + parseInt(F[K][1]);
-                for (var al = K + 1; al < F.length; al++) {
-                    if (F[al][7] === F[K][7]) {
-                        var av = E - parseInt(F[al][2]);
-                        F[al][2] = E;
-                        F[al][3] = parseInt(F[al][3]) + av;
+                for (var an = K + 1; an < F.length; an++) {
+                    if (F[an][7] === F[K][7]) {
+                        var ax = E - parseInt(F[an][2]);
+                        F[an][2] = E;
+                        F[an][3] = parseInt(F[an][3]) + ax;
                         break
                     }
                 }
@@ -47253,113 +48150,113 @@ function update_queue() {
                 G = true
             }
         }
-        if (K > 0 && am !== F[K][7]) {
+        if (K > 0 && ao !== F[K][7]) {
             break
         }
-        am = F[K][7]
+        ao = F[K][7]
     }
     var F = seed.queue_fort["city" + currentcityid];
     for (var K = 0; K < Math.min(F.length, 1); K++) {
         var E = unixtime();
-        var aj = parseInt(F[K][3]) - E;
-        if (aj > 0) {
-            cm.speedUpModalTimer.update("frt", cm.log.convertToHMS(aj, false), aj);
+        var al = parseInt(F[K][3]) - E;
+        if (al > 0) {
+            cm.speedUpModalTimer.update("frt", cm.log.convertToHMS(al, false), al);
             t = true;
             l = true;
-            if (ax) {
+            if (az) {
                 var s = parseInt(F[K][4]) / parseInt(F[K][5]) + ((E - parseInt(F[K][2])) / (parseInt(F[K][3]) - parseInt(F[K][2]))) * ((parseInt(F[K][5]) - parseInt(F[K][4])) / parseInt(F[K][5]));
-                var ay = parseInt(p * s);
-                au.push('<div class="queue_item">');
-                au.push('<div class="info"><div class="stat"><span class="item">');
-                au.push(fortcost["frt" + F[K][0]][0]);
-                au.push('</span><span class="time">');
-                au.push(timestr(aj));
-                au.push("</span>");
-                au.push('<div class="speedup"><a class="inlineButton red14" onclick="modal_speedup(');
-                au.push(["'frt'", F[K][0], 0, "'" + g_js_strings.commonstr.fortification + "'", F[K][2]].join(","));
-                au.push(');return false;"><span>' + g_js_strings.commonstr.speedup + "</span></a></div>");
-                au.push('</div><div class="bar" style="width:');
-                au.push(ay);
-                au.push('px;">&nbsp;</div>');
-                au.push('</div><div class="stats">' + g_js_strings.commonstr.amt + ": ");
-                au.push(F[K][1]);
-                au.push("</div>");
-                au.push("</div>")
+                var aA = parseInt(p * s);
+                aw.push('<div class="queue_item">');
+                aw.push('<div class="info"><div class="stat"><span class="item">');
+                aw.push(fortcost["frt" + F[K][0]][0]);
+                aw.push('</span><span class="time">');
+                aw.push(timestr(al));
+                aw.push("</span>");
+                aw.push('<div class="speedup"><a class="inlineButton red14" onclick="modal_speedup(');
+                aw.push(["'frt'", F[K][0], 0, "'" + g_js_strings.commonstr.fortification + "'", F[K][2]].join(","));
+                aw.push(');return false;"><span>' + g_js_strings.commonstr.speedup + "</span></a></div>");
+                aw.push('</div><div class="bar" style="width:');
+                aw.push(aA);
+                aw.push('px;">&nbsp;</div>');
+                aw.push('</div><div class="stats">' + g_js_strings.commonstr.amt + ": ");
+                aw.push(F[K][1]);
+                aw.push("</div>");
+                aw.push("</div>")
             }
         } else {
             cm.speedUpModalTimer.endSpeedUpModal("frt");
             seed.fortifications["city" + currentcityid]["fort" + F[K][0]] = parseInt(seed.fortifications["city" + currentcityid]["fort" + F[K][0]]) + parseInt(F[K][1]);
             cityinfo_defenses();
             if ((K + 1) < F.length) {
-                var av = E - parseInt(F[K + 1][2]);
+                var ax = E - parseInt(F[K + 1][2]);
                 F[K + 1][2] = E;
-                F[K + 1][3] = parseInt(F[K + 1][3]) + av
+                F[K + 1][3] = parseInt(F[K + 1][3]) + ax
             }
             seed.queue_fort["city" + currentcityid].splice(K, 1);
             K--;
             G = true
         }
     }
-    var ax = $("queue_train").visible();
-    cm.RevivalQueue.perSecond(ax, 228, au, G);
+    var az = $("queue_train").visible();
+    cm.RevivalQueue.perSecond(az, 228, aw, G);
     cm.SacrificeQueue.perSecond(G);
     var H = seed.queue_mkt["city" + currentcityid];
-    var ad = $("queue_market").visible();
+    var ae = $("queue_market").visible();
     var w = false;
-    if (ad) {
+    if (ae) {
         var z = new Array()
     }
     var aa = -1;
     var H = seed.queue_mkt["city" + currentcityid];
     if (!Object.isArray(H)) {
-        var an = Object.keys(H);
-        for (var K = 0; K < an.length; K++) {
+        var ap = Object.keys(H);
+        for (var K = 0; K < ap.length; K++) {
             var E = unixtime();
-            var r = H[an[K]];
+            var r = H[ap[K]];
             for (var J = 0; J < r.length; J++) {
-                var aj = parseInt(r[J].eventUnixTime) - E;
-                if (aj > 0) {
-                    cm.speedUpModalTimer.update("market", cm.log.convertToHMS(aj, false), aj);
+                var al = parseInt(r[J].eventUnixTime) - E;
+                if (al > 0) {
+                    cm.speedUpModalTimer.update("market", cm.log.convertToHMS(al, false), al);
                     t = true;
                     w = true;
-                    if (ad) {
+                    if (ae) {
                         switch (parseInt(r[J].resourceType)) {
                             case 1:
-                                var Q = resourceinfo.rec1;
+                                var O = resourceinfo.rec1;
                                 break;
                             case 2:
-                                var Q = resourceinfo.rec2;
+                                var O = resourceinfo.rec2;
                                 break;
                             case 3:
-                                var Q = resourceinfo.rec3;
+                                var O = resourceinfo.rec3;
                                 break;
                             case 4:
-                                var Q = resourceinfo.rec4;
+                                var O = resourceinfo.rec4;
                                 break;
                             default:
                         }
-                        var s = 1 - (aj / (60 * 30));
-                        var ay = parseInt(p * s);
+                        var s = 1 - (al / (60 * 30));
+                        var aA = parseInt(p * s);
                         var T = (r[J].unitPricex1000) / 1000;
                         z.push('<div class="queue_item">');
                         z.push('<div class="info"><div class="stat"><span class="item">');
-                        z.push(g_js_strings.update_queue.akbatc.replace("%1$s", r[J].quantityK).replace("%2$s", Q).replace("%3$s", T));
+                        z.push(g_js_strings.update_queue.akbatc.replace("%1$s", r[J].quantityK).replace("%2$s", O).replace("%3$s", T));
                         z.push('</span><span class="time">');
-                        z.push(timestr(aj));
+                        z.push(timestr(al));
                         z.push("</span>");
                         z.push('<div class="speedup"><a class="inlineButton red14" onclick="modal_speedup_market(');
                         z.push(r[J].eventUnixTime + "," + J + "," + r[J].marketDeliveryId);
                         z.push(');return false;"><span>' + g_js_strings.commonstr.speedup + "</span></a></div>");
                         z.push('</div><div class="bar" style="width:');
-                        z.push(ay);
+                        z.push(aA);
                         z.push('px;">&nbsp;</div></div>');
                         z.push("</div>")
                     }
                 } else {
                     cm.speedUpModalTimer.endSpeedUpModal("market");
-                    seed.queue_mkt["city" + currentcityid][an[K]].splice(J, 1);
-                    if (seed.queue_mkt["city" + currentcityid][an[K]].length < 1) {
-                        delete seed.queue_mkt["city" + currentcityid][an[K]]
+                    seed.queue_mkt["city" + currentcityid][ap[K]].splice(J, 1);
+                    if (seed.queue_mkt["city" + currentcityid][ap[K]].length < 1) {
+                        delete seed.queue_mkt["city" + currentcityid][ap[K]]
                     }
                     if (Object.keys(seed.queue_mkt["city" + currentcityid]).length < 1) {
                         seed.queue_mkt["city" + currentcityid] = []
@@ -47369,13 +48266,13 @@ function update_queue() {
         }
     }
     if (G) {}
-    if (ah) {
+    if (aj) {
         $("queue_building").innerHTML = R.join("")
     } else {
-        if (ax) {
-            $("queue_train").innerHTML = au.join("")
+        if (az) {
+            $("queue_train").innerHTML = aw.join("")
         } else {
-            if (ad) {
+            if (ae) {
                 $("queue_market").innerHTML = z.join("")
             }
         }
@@ -47672,7 +48569,7 @@ function init() {
                 jQuery("#crossPromoBarContainer").css("display", "block")
             }
             jQuery("#main_engagement_tabs").css("display", "block");
-            jQuery("#kocContainer").fadeIn(400);
+            jQuery("#kocContainer").fadeIn(1000, "easeInCirc");
             setTimeout(function () {
                 jQuery(".beta").fadeOut(2000, "easeOutCirc")
             }, 2000);
@@ -47880,8 +48777,7 @@ function createThroneItems() {
     });
     c.sort();
     jQuery.each(c, function (h, i) {
-        d = new cm.ThroneItemModel(i, f[i]);
-        kocThroneItems[d.id] = d
+        cm.ThroneController.addItem(f[i])
     });
     jQuery.each(seed.throne.slotEquip, function (i, h) {
         jQuery.each(h, function (l, j) {
@@ -48737,8 +49633,12 @@ var MapObject = Class.create({
                 if (S && N.prestigeType === 2) {
                     V = "FeyCity" + P
                 } else {
-                    if (S) {
-                        V = "PrestigeCity" + P
+                    if (S && N.prestigeType === 3) {
+                        V = "BritonCity" + P
+                    } else {
+                        if (S) {
+                            V = "PrestigeCity" + P
+                        }
                     }
                 }
             }
@@ -49952,7 +50852,7 @@ var ScoutReport = Class.create(MarchReport, {
                         c.push("_30.png'/></td><td class='trnm'>");
                         c.push(resourceinfo["rec" + f]);
                         c.push("</td><td class='startcol'>");
-                        c.push(addCommas(parseInt(this.rslt.rsc[b[d]])));
+                        c.push(addCommas(this.rslt.rsc[b[d]]));
                         c.push("</td></tr>")
                     }
                     c.push("</tbody></table>");
@@ -51624,7 +52524,7 @@ function modal_marketplace(b) {
     a.push("<div class='accthd'>" + g_js_strings.modal_marketplace.youract + "</div>");
     a.push("<div class='info'><b id='marketmod_recname'>" + resourceinfo.rec1 + "");
     a.push("</b>: <span id='marketmod_recnum'>");
-    a.push(addCommas(parseInt(seed.resources["city" + currentcityid]["rec" + 1][0]) / 3600));
+    a.push(addCommas(seed.resources["city" + currentcityid]["rec" + 1][0] / 3600));
     a.push("</span></div>");
     a.push("<div class='info'><b>" + resourceinfo.rec0 + "</b>: <span id='marketmod_goldnum'>");
     a.push(addCommas(seed.citystats["city" + currentcityid].gold[0]));
@@ -51904,7 +52804,7 @@ function modal_marketplace_changerec(recid) {
                     var prices = Object.keys(buyinfo);
                     for (var i = 0; i < prices.length; i++) {
                         buyhtml.push("<tr><td class='amount'><div>");
-                        buyhtml.push(addCommas(parseInt(buyinfo[prices[i]]) * 1000));
+                        buyhtml.push(addCommas(buyinfo[prices[i]] * 1000));
                         buyhtml.push("</div></td><td class='unitprice'><div>");
                         buyhtml.push(parseInt(prices[i].split("mg")[0]) / 1000);
                         buyhtml.push("</div></td></tr>")
@@ -51919,7 +52819,7 @@ function modal_marketplace_changerec(recid) {
                     for (var i = 0; i < prices.length; i++) {
                         sellhtml.push("<tr><td width='27%' class='amount'>");
                         sellhtml.push("<input type='hidden' id='market_resourceamount_input" + i + "' value='" + parseInt(sellinfo[prices[i]]) * 1000 + "'/>");
-                        sellhtml.push(addCommas(parseInt(sellinfo[prices[i]]) * 1000));
+                        sellhtml.push(addCommas(sellinfo[prices[i]] * 1000));
                         sellhtml.push("</td><td width='26%' class='unitprice'>");
                         sellhtml.push(parseInt(prices[i].split("mg")[0]) / 1000);
                         sellhtml.push("</td>");
@@ -52247,11 +53147,11 @@ function market_dotrade(quantk, price, transac) {
 function modal_marketplace_updateprice() {
     var b = parseInt($("marketmod_amount").value) * parseFloat($("marketmod_price").value);
     var a = parseInt(b * 0.005 * 100) / 100;
-    $("marketmod_fee").innerHTML = addCommas(parseInt(a));
+    $("marketmod_fee").innerHTML = addCommas(a);
     if (parseInt($("marketmod_transac").value) == 1) {
-        $("marketmod_totalprice").innerHTML = addCommas(parseInt(b + a))
+        $("marketmod_totalprice").innerHTML = addCommas(b + a)
     } else {
-        $("marketmod_totalprice").innerHTML = addCommas(parseInt(b - a))
+        $("marketmod_totalprice").innerHTML = addCommas(b - a)
     }
 }
 function modal_marketplace_bidoffer() {
@@ -52426,11 +53326,7 @@ cm.MerlinTutorialSteps = [{
             } else {
                 $("tutorialCover").addClassName("fieldview");
                 $("tutorialCover").show();
-                cm.TutorialView.updateCoverByElement(jQuery("#mod_views_field"), {
-                    padding: true,
-                    margin: true,
-                    border: true
-                });
+                cm.TutorialView.updateCoverByElement(jQuery("#mod_views_field"), true);
                 cm.TutorialView.updateArrow([35, 178], "up", g_js_strings.tutorialCheck.clickforfield);
                 cm.ConversionTracker.track("biftetracking", 500);
                 if (numWorlds == 1) {
@@ -52649,11 +53545,7 @@ cm.MerlinTutorialSteps = [{
             } else {
                 $("tutorialCover").addClassName("cityview");
                 $("tutorialCover").show();
-                cm.TutorialView.updateCoverByElement(jQuery("#mod_views_city"), {
-                    padding: true,
-                    margin: true,
-                    border: true
-                });
+                cm.TutorialView.updateCoverByElement(jQuery("#mod_views_city"), true);
                 cm.TutorialView.updateArrow([-7, 178], "up", g_js_strings.tutorialCheck.clickforcity);
                 cm.ConversionTracker.track("biftetracking", 1300);
                 if (numWorlds == 1) {
@@ -53672,13 +54564,13 @@ function modal_messages_viewtrades_view(o, b, f, k, l, h, e, j, c, g) {
     if (parseInt(k) == 1) {
         n.push("<div><b>" + g_js_strings.modal_messages_viewtrades_view.unitprice + ":</b> " + h + " " + resourceinfo.rec0 + "</div>");
         n.push("<div><b>" + g_js_strings.modal_messages_viewtrades_view.costofa.replace("%1$s", resourceinfo["rec" + l]) + ":</b> " + addCommas(Math.floor(h * usedQuant)) + " " + resourceinfo.rec0 + "</div>");
-        n.push("<div><b>" + g_js_strings.modal_messages_viewtrades_view.mktfee + ":</b> " + addCommas(parseInt(h * maxQuant * 0.005)) + " " + resourceinfo.rec0 + "</div>");
+        n.push("<div><b>" + g_js_strings.modal_messages_viewtrades_view.mktfee + ":</b> " + addCommas(h * maxQuant * 0.005) + " " + resourceinfo.rec0 + "</div>");
         n.push("<div><b>" + g_js_strings.modal_messages_viewtrades_view.totalgold + ":</b> " + addCommas(parseInt(parseInt(h * usedQuant * 1005) / 1000)) + " " + resourceinfo.rec0 + "</div>");
         n.push("<div>**" + g_js_strings.modal_messages_viewtrades_view.res30min + "</div>")
     } else {
         if (parseInt(k) == 2) {
             n.push("<div><b>" + g_js_strings.modal_messages_viewtrades_view.unitprice + ":</b> " + h + " " + resourceinfo.rec0 + "</div>");
-            n.push("<div><b>" + g_js_strings.modal_messages_viewtrades_view.mktfee + ":</b> " + addCommas(parseInt(h * maxQuant * 0.005)) + " " + resourceinfo.rec0 + "</div>");
+            n.push("<div><b>" + g_js_strings.modal_messages_viewtrades_view.mktfee + ":</b> " + addCommas(h * maxQuant * 0.005) + " " + resourceinfo.rec0 + "</div>");
             n.push("<div><b>" + g_js_strings.modal_messages_viewtrades_view.goldearned + ":</b> " + addCommas(Math.floor(h * usedQuant)) + " " + resourceinfo.rec0 + " <span class='note'></span></div>")
         }
     }
@@ -53780,7 +54672,7 @@ function modal_messages_viewtrades(pageNo) {
                         msghtml.push(formatDateByUnixTime(idvrpt.reportUnixTime));
                         msghtml.push("</div></td>");
                         msghtml.push("<td class='nmcol'><div>");
-                        msghtml.push(addCommas(parseInt(idvrpt.quantityK) * 1000));
+                        msghtml.push(addCommas(idvrpt.quantityK * 1000));
                         msghtml.push(" ");
                         msghtml.push(resourceinfo["rec" + idvrpt.resourceType]);
                         switch (parseInt(idvrpt.postingType)) {
@@ -54358,7 +55250,7 @@ function getReportDisplay() {
                             K.push(resourceinfo["rec" + v])
                         }
                         K.push("</td><td class='startcol'>");
-                        K.push(addCommas(parseInt(a.rsc[c[E]])));
+                        K.push(addCommas(a.rsc[c[E]]));
                         K.push("</td></tr>")
                     }
                     K.push("</tbody></table>");
@@ -55883,6 +56775,40 @@ cm.ModalManager = function (d) {
         hardReset: v,
         alert: n,
         error: q
+    }
+}(jQuery);
+cm.MultiBuyUse = function (a) {
+    var b = function (c, d) {
+        return cm.Template.renderTemplate("PrestigeManager", c, d)
+    };
+    return {
+        prompt: function (h, e, c) {
+            var d = ksoItems[h].name;
+            var g = " (x" + e + ") ";
+            var i = (ksoItems[h].price * e) + "<img class='gem' src='img/gem.png'>";
+            var f = g_js_strings.multi.desc + "<br><div class='larger'>" + d + g + " " + g_js_strings.commonstr.fortxl + " <span class='green_text'>" + i + "</span></div><div class='would'>" + g_js_strings.multi.would + "</div>";
+            bodyMarkup = b("multiBuy", {
+                description: f,
+                bulletPoints: "",
+                buttonText: g_js_strings.commonstr.buy
+            });
+            cm.ModalManager.addMedium({
+                "class": "prestigeConfirmModal",
+                title: g_js_strings.multi.pur,
+                body: bodyMarkup,
+                top: 135
+            });
+            a(".prestigeConfirmModal .buttonv2.green").unbind("click").bind("click", function () {
+                c(h, e);
+                cm.ModalManager.close()
+            })
+        },
+        getNumberUsed: function (e) {
+            var d = a("#item" + e + " .quantity");
+            var c = d.val();
+            c = isNaN(c) ? 0 : c;
+            return d.length > 0 ? parseInt(c) : 1
+        }
     }
 }(jQuery);
 var cm = cm || {};
@@ -58257,35 +59183,52 @@ cm.PrestigeCityFieldView = function (f) {
             cm.BlessingSystemView.startAnimation("prestige_field_waterfall", 130, 60)
         }
     };
-    var i = function (r) {
-        var q = !r ? currentcityid : r;
-        var p = [];
-        var o;
-        switch (+cm.PrestigeModel.getPrestigeFaction()) {
+    var i = function (s) {
+        var r = !s ? currentcityid : s,
+            q = [],
+            p, o;
+        switch (parseInt(cm.PrestigeModel.getPrestigeFaction(), 10)) {
             case 1:
-                o = {
+                p = {
                     "23": 0,
                     "22": 0
                 };
+                o = {
+                    "23": 2,
+                    "22": 2
+                };
                 break;
             case 2:
-                o = {
+                p = {
                     "25": 0,
                     "24": 0
                 };
-                break
+                o = {
+                    "25": 2,
+                    "24": 2
+                };
+                break;
+            case 3:
+                p = {
+                    "27": 0,
+                    "26": 0
+                };
+                o = {
+                    "27": 1,
+                    "26": 3
+                }
         }
-        f.each(d, function (t, s) {
-            if (seed.buildings["city" + q]["pos" + s]) {
-                o[seed.buildings["city" + q]["pos" + s][0]]++
+        f.each(d, function (u, t) {
+            if (seed.buildings["city" + r]["pos" + t]) {
+                p[seed.buildings["city" + r]["pos" + t][0]]++
             }
         });
-        f.each(o, function (s, t) {
-            if (t < m) {
-                p.push(parseInt(s, 10))
+        f.each(p, function (t, u) {
+            if (u < o[t]) {
+                q.push(parseInt(t, 10))
             }
         });
-        return p
+        return q
     };
     var b = function () {
         var o = h();
@@ -58312,7 +59255,7 @@ cm.PrestigeCityFieldView = function (f) {
     }
 }(jQuery);
 cm.PrestigeCityModel = function () {
-    var d = function () {
+    var e = function () {
         return false
     };
     var a = function () {
@@ -58335,14 +59278,25 @@ cm.PrestigeCityModel = function () {
         18: 1,
         21: 1
     };
-    var e = function (h) {
+    var d = {
+        6: 1,
+        9: 1,
+        15: 1,
+        16: 1,
+        17: 1,
+        18: 1
+    };
+    var f = function (i) {
         if (a()) {
-            var g = b;
+            var h = b;
             if (cm.PrestigeModel.isFey()) {
-                g = c
+                h = c
             }
-            for (var f in g) {
-                if (parseInt(f) == h) {
+            if (cm.PrestigeModel.isBriton()) {
+                h = d
+            }
+            for (var g in h) {
+                if (parseInt(g) == i) {
                     return false
                 }
             }
@@ -58353,8 +59307,8 @@ cm.PrestigeCityModel = function () {
     };
     return {
         isPrestige: a,
-        shouldShow: e,
-        useStub: d
+        shouldShow: f,
+        useStub: e
     }
 }();
 cm.PrestigeCityPlayerProtectionController = function (d) {
@@ -58499,6 +59453,9 @@ cm.PrestigeCityView = function (d) {
             if (cm.PrestigeModel.isFey()) {
                 d("#citymap").addClass("Fey")
             }
+            if (cm.PrestigeModel.isBriton()) {
+                d("#citymap").addClass("Briton")
+            }
         }
     };
     var b = function () {
@@ -58511,7 +59468,8 @@ cm.PrestigeCityView = function (d) {
                 q = "fall";
             cm.AnimationCreation.toggleAnim(s, p, o, r, q)
         } else {
-            d("#cityFall").hide()
+            d("#cityFall").hide();
+            cm.AnimationCreation.toggleAnim(null, null, null, null, "fall")
         }
     };
     var k = function (o) {
@@ -58571,10 +59529,10 @@ cm.PrestigeGroveView = function (d) {
             m = +o.food || 0,
             i = +o.stone || 0,
             q = +o.totalPoints || 0,
-            k = cm.Resources.getGroveResourceRate(1, currentcityid, m),
-            h = cm.Resources.getGroveResourceRate(2, currentcityid, g),
-            j = cm.Resources.getGroveResourceRate(3, currentcityid, i),
-            n = cm.Resources.getGroveResourceRate(4, currentcityid, e),
+            k = cm.Resources.getProductionNoUpkeep(1, currentcityid),
+            h = cm.Resources.getProductionNoUpkeep(2, currentcityid),
+            j = cm.Resources.getProductionNoUpkeep(3, currentcityid),
+            n = cm.Resources.getProductionNoUpkeep(4, currentcityid),
             f = q - g - e - m - i;
         var l = {
             foodGatheringRate: addCommas(Math.floor(k)),
@@ -58610,6 +59568,12 @@ cm.PrestigeGroveView = function (d) {
                 p = g_js_strings.factory.title;
                 l.blurbText = g_js_strings.factory.blurbText;
                 l.blurb = g_js_strings.factory.blurb;
+                l.primaryTitle = p;
+                break;
+            case 3:
+                p = g_js_strings.countryside.title;
+                l.blurbText = g_js_strings.countryside.blurbText;
+                l.blurb = g_js_strings.countryside.blurb;
                 l.primaryTitle = p;
                 break;
             default:
@@ -59063,7 +60027,7 @@ cm.PrestigeManagerModel = function (e) {
         }, z = {
             1: true,
             2: true,
-            3: false
+            3: true
         };
     var x = function (F, E, D) {
         C = F || currentcityid;
@@ -59651,97 +60615,101 @@ cm.PrestigeManagerView = function (e) {
     }
 }(jQuery);
 cm = cm || {};
-cm.PrestigeModel = function (f) {
-    var j = 3,
+cm.PrestigeModel = function (g) {
+    var k = 3,
         a = 10,
-        n = {
+        o = {
             1: "druid",
             2: "fey",
             3: "briton"
         };
-    var c = function (q) {
-        q = q || currentcityid;
-        var p = {
+    var c = function (r) {
+        r = r || currentcityid;
+        var q = {
             prestigeLevel: 0,
             prestigeType: 0,
             blessings: []
         };
-        if (k(q)) {
-            p = seed.cityData.city[q]["prestigeInfo"]
+        if (l(r)) {
+            q = seed.cityData.city[r]["prestigeInfo"]
         }
-        return p
+        return q
     };
-    var g = function (p) {
-        p = p || currentcityid;
-        if (k(p)) {
-            return seed.cityData.city[p]["prestigeInfo"]["prestigeLevel"]
-        }
-        return 0
-    };
-    var e = function (p) {
-        p = p || currentcityid;
-        if (k(p)) {
-            return seed.cityData.city[p]["prestigeInfo"]["prestigeType"]
-        }
-        return 0
-    };
-    var i = function (p) {
-        p = p || currentcityid;
-        return n[e(p)]
-    };
-    var d = function (q) {
+    var h = function (q) {
         q = q || currentcityid;
-        var p = 0;
-        if (seed.cityData && seed.cityData.city && seed.cityData.city[q] && seed.cityData.city[q]["cityValue"]) {
-            p = seed.cityData.city[q]["cityValue"]
+        if (l(q)) {
+            return seed.cityData.city[q]["prestigeInfo"]["prestigeLevel"]
         }
-        return p
+        return 0
     };
-    var k = function (p) {
-        p = p || currentcityid;
-        return seed.cityData && seed.cityData.city && seed.cityData.city[p] && seed.cityData.city[p]["isPrestigeCity"] && seed.cityData.city[p]["prestigeInfo"] ? true : false
+    var e = function (q) {
+        q = q || currentcityid;
+        if (l(q)) {
+            return seed.cityData.city[q]["prestigeInfo"]["prestigeType"]
+        }
+        return 0
     };
-    var o = function (p) {
-        f.each(p, function (r, q) {
-            if (!q || parseInt(q.cityValue) == 0) {
+    var j = function (q) {
+        q = q || currentcityid;
+        return o[e(q)]
+    };
+    var d = function (r) {
+        r = r || currentcityid;
+        var q = 0;
+        if (seed.cityData && seed.cityData.city && seed.cityData.city[r] && seed.cityData.city[r]["cityValue"]) {
+            q = seed.cityData.city[r]["cityValue"]
+        }
+        return q
+    };
+    var l = function (q) {
+        q = q || currentcityid;
+        return seed.cityData && seed.cityData.city && seed.cityData.city[q] && seed.cityData.city[q]["isPrestigeCity"] && seed.cityData.city[q]["prestigeInfo"] ? true : false
+    };
+    var p = function (q) {
+        g.each(q, function (s, r) {
+            if (!r || parseInt(r.cityValue) == 0) {
                 return
             }
-            if (q.cityValue !== undefined) {
-                seed.cityData.city[+r]["cityValue"] = q.cityValue
+            if (r.cityValue !== undefined) {
+                seed.cityData.city[+s]["cityValue"] = r.cityValue
             }
-            if (q.isPrestigeCity !== undefined) {
-                seed.cityData.city[+r]["isPrestigeCity"] = q.isPrestigeCity
+            if (r.isPrestigeCity !== undefined) {
+                seed.cityData.city[+s]["isPrestigeCity"] = r.isPrestigeCity
             }
-            if (q.prestigeInfo) {
-                seed.cityData.city[+r]["prestigeInfo"] = q.prestigeInfo
+            if (r.prestigeInfo) {
+                seed.cityData.city[+s]["prestigeInfo"] = r.prestigeInfo
             }
         })
     };
-    var h = function () {
-        return j
+    var i = function () {
+        return k
     };
-    var m = function () {
+    var n = function () {
         return a
     };
-    var l = function () {
+    var m = function () {
         return cm.PrestigeModel.getPrestigeFactionClass(currentcityid) == "fey"
     };
     var b = function () {
         return cm.PrestigeModel.getPrestigeFactionClass(currentcityid) == "druid"
     };
+    var f = function () {
+        return cm.PrestigeModel.getPrestigeFactionClass(currentcityid) == "briton"
+    };
     return {
-        factionClasses: n,
+        factionClasses: o,
         getPrestigeInfo: c,
         getCityValue: d,
-        isPrestige: k,
-        updateSeed: o,
+        isPrestige: l,
+        updateSeed: p,
         getPrestigeFaction: e,
-        getPrestigeFactionClass: i,
-        getPrestigeLevel: g,
+        getPrestigeFactionClass: j,
+        getPrestigeLevel: h,
         buildingBoost: 1.25,
-        getLevelCapSoft: h,
-        getLevelCapHard: m,
-        isFey: l,
+        getLevelCapSoft: i,
+        getLevelCapHard: n,
+        isBriton: f,
+        isFey: m,
         isDruid: b
     }
 }(jQuery);
@@ -59775,7 +60743,7 @@ cm.PrestigeTextView = function () {
                 var f = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST")).values[j - 1][1] - 0;
                 var i = Math.round((f - 1) * 100) + "%";
                 var g = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST")).values[j - 1][2];
-                return a(g_js_strings.prestige_bonus.rally0 + g + g_js_strings.prestige_bonus.rally0b) + a(g_js_strings.prestige_bonus.rally1 + i + g_js_strings.prestige_bonus.rally0b)
+                return a(g_js_strings.prestige_bonus.rally0 + g + ".") + a(g_js_strings.prestige_bonus.rally1 + i + g_js_strings.prestige_bonus.rally0b)
             }
             if (l == 5) {
                 var f = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_COTTAGE_BOOST")).values[j - 1][1] - 0;
@@ -60823,7 +61791,7 @@ function quest_string_objective(j) {
                                                     a = i.buildsecond
                                                 } else {
                                                     if (j >= 11002 && j <= 11090) {
-                                                        a = i.mightreachesa.replace("%1$s", addCommas(parseInt(f)))
+                                                        a = i.mightreachesa.replace("%1$s", addCommas(f))
                                                     } else {
                                                         if (j == 999001) {
                                                             a = i.appointfriendknight
@@ -62165,6 +63133,9 @@ cm.ReportModel = function (g) {
         if (s.bonus && s.bonus.tch && s.bonus.tch.s1 && i(s.bonus.tch.s1) > 0) {
             r.bonus_tab.research = s.bonus.tch.s1
         }
+        if (s.bonus && s.bonus.tch2 && s.bonus.tch2.s1 && i(s.bonus.tch2.s1) > 0) {
+            r.bonus_tab.research = g.extend(r.bonus_tab.research || {}, s.bonus.tch2.s1)
+        }
         if (s.s1atkBoost || s.s1defBoost) {
             r.bonus_tab.items = {
                 "Attack Boost": s.s1atkBoost,
@@ -62190,19 +63161,6 @@ cm.ReportModel = function (g) {
         }
         r.showleftWounded = true;
         return r
-    };
-    var n = function (r) {
-        return r ? (parseInt(r * 1000) / 10) + "%" : 0
-    };
-    var m = function (t) {
-        var u = {};
-        for (var r in t) {
-            if (t.hasOwnProperty(r)) {
-                var s = cm.thronestats.effects && cm.thronestats.effects[r] && cm.thronestats.effects[r][1] ? cm.thronestats.effects[r][1] : r;
-                u[s] = t[r] + "%"
-            }
-        }
-        return u
     };
     var h = function (t) {
         var v = "";
@@ -62241,6 +63199,9 @@ cm.ReportModel = function (g) {
         if (t.bonus && t.bonus.tch && t.bonus.tch.s0 && i(t.bonus.tch.s0) > 0) {
             s.bonus_tab.research = t.bonus.tch.s0
         }
+        if (t.bonus && t.bonus.tch2 && t.bonus.tch2.s0 && i(t.bonus.tch2.s0) > 0) {
+            s.bonus_tab.research = g.extend(s.bonus_tab.research || {}, t.bonus.tch2.s0)
+        }
         if (t.s0atkBoost || t.s0defBoost) {
             s.bonus_tab.items = {
                 "Attack Boost": j(t.s0atkBoost),
@@ -62272,6 +63233,19 @@ cm.ReportModel = function (g) {
         }
         s.showleftWounded = true;
         return s
+    };
+    var n = function (r) {
+        return r ? (parseInt(r * 1000) / 10) + "%" : 0
+    };
+    var m = function (t) {
+        var u = {};
+        for (var r in t) {
+            if (t.hasOwnProperty(r)) {
+                var s = cm.ThroneController.getEffectName(r);
+                u[s] = t[r] + "%"
+            }
+        }
+        return u
     };
     var f = function (r) {
         return stimgUrl + "img/" + r
@@ -62688,7 +63662,13 @@ cm.ReportView = function (k) {
         spd: "Speed",
         rng: "Range",
         ld: "Load",
-        type: "Type"
+        type: "Type",
+        ic: "Improved Cartography",
+        itw: "Into the Wild",
+        smt: "Siege Master's Training",
+        id: "Improved Defenses",
+        sr: "Strengthen Ranks",
+        "if": "Improved Fletching"
     };
     var m = function (J) {
         var G = "";
@@ -62824,25 +63804,55 @@ cm.ReportView = function (k) {
         k("." + G + "_details .detail_main").hide();
         k("." + G + "_details .detail_main" + F).show()
     };
-    var p = function (F) {
-        return "<div class='scout_tab_section'><div class='black_tab'><div class='tab tab0' tab='0'>" + g_js_strings.report_view.troop0 + "</div><div class='tab tab1' tab='1'>" + g_js_strings.report_view.defenses + "</div><div class='tab tab2' tab='2'>" + g_js_strings.report_view.buildings + "</div><div class='tab tab3' tab='3'>" + g_js_strings.report_view.research + "</div><div class='tab tab4' tab='4'>" + g_js_strings.report_view.resources + "</div></div><div class='scout_detail_main scout_detail_main0'>" + w(F.unts, "Troop type", "count") + "</div><div class='scout_detail_main scout_detail_main1'>" + w(F.frt, "Defense type", "count") + "</div><div class='scout_detail_main scout_detail_main2'>" + w(F.blds, "Building type", "level") + "</div><div class='scout_detail_main scout_detail_main3'>" + w(F.tch, "Research type", "level") + "</div><div class='scout_detail_main scout_detail_main4'>" + w(F.rsc, "Resource", "Amount") + "</div></div>"
+    var p = function (G) {
+        var F = "";
+        F += "<div class='scout_tab_section'>";
+        F += "<div class='black_tab'>";
+        F += "<div class='tab tab0' tab='0'>" + g_js_strings.report_view.troop0 + "</div>";
+        F += "<div class='tab tab1' tab='1'>" + g_js_strings.report_view.defenses + "</div>";
+        F += "<div class='tab tab2' tab='2'>" + g_js_strings.report_view.buildings + "</div>";
+        F += "<div class='tab tab3' tab='3'>" + g_js_strings.report_view.research + "</div>";
+        F += "<div class='tab tab4' tab='4'>" + g_js_strings.report_view.resources + "</div>";
+        F += "</div>";
+        F += "<div class='scout_detail_main scout_detail_main0'>" + w(G.unts, "Troop type", "count") + "</div>";
+        F += "<div class='scout_detail_main scout_detail_main1'>" + w(G.frt, "Defense type", "count") + "</div>";
+        F += "<div class='scout_detail_main scout_detail_main2'>" + w(G.blds, "Building type", "level") + "</div>";
+        if (typeof G.tch2 !== "undefined") {
+            F += "<div class='scout_detail_main scout_detail_main3'>" + w(G.tch, "Research type", "level", G.tch2) + "</div>"
+        } else {
+            F += "<div class='scout_detail_main scout_detail_main3'>" + w(G.tch, "Research type", "level") + "</div>"
+        }
+        F += "<div class='scout_detail_main scout_detail_main4'>" + w(G.rsc, "Resource", "Amount") + "</div>";
+        F += "</div>";
+        return F
     };
-    var w = function (L, K, I) {
-        var H = 0;
-        var G = "";
-        G += "<div class='quarter stripe_dark'>" + cm.translate.it(K) + "</div><div class='quarter stripe_dark'>" + cm.translate.it(I) + "</div>";
-        G += "<div class='quarter stripe_dark'>" + cm.translate.it(K) + "</div><div class='quarter stripe_dark'>" + cm.translate.it(I) + "</div>";
-        for (var F in L) {
-            if (L.hasOwnProperty(F)) {
-                var J = H % 4 == 2 || H % 4 == 3 ? "stripe_light" : "";
-                H++;
-                G += "<div class='quarter " + J + "'>" + cm.translate.it(F) + "</div><div class='quarter " + J + "'>" + addCommas(parseInt(L[F])) + "</div>"
+    var w = function (J, I, H, F) {
+        var G = 0;
+        var M = 1;
+        var K = "";
+        K += "<div class='quarter stripe_dark'>" + cm.translate.it(I) + "</div><div class='quarter stripe_dark'>" + cm.translate.it(H) + "</div>";
+        K += "<div class='quarter stripe_dark'>" + cm.translate.it(I) + "</div><div class='quarter stripe_dark'>" + cm.translate.it(H) + "</div>";
+        for (var L in J) {
+            if (J.hasOwnProperty(L)) {
+                var N = G % 4 == 2 || G % 4 == 3 ? "stripe_light" : "";
+                G++;
+                K += "<div class='quarter " + N + "'>" + cm.translate.it(L) + "</div><div class='quarter " + N + "'>" + addCommas(J[L]) + "</div>"
             }
         }
-        if (H == 0) {
+        if (typeof F !== "undefined") {
+            for (var L in F) {
+                if (F.hasOwnProperty(L)) {
+                    var N = G % 4 == 2 || G % 4 == 3 ? "stripe_light" : "";
+                    G++;
+                    K += "<div class='quarter " + N + "'>" + techcost2["tch" + M][0] + "</div><div class='quarter " + N + "'>" + addCommas(F[L]) + "</div>";
+                    M++
+                }
+            }
+        }
+        if (G == 0) {
             return "<div class='padding5'>" + g_js_strings.report_view.no_scouting_info + "</div>"
         } else {
-            return G
+            return K
         }
     };
     var r = function () {
@@ -62933,18 +63943,25 @@ cm.ResearchSpeedupController = new function () {
         var d = f.name;
         return d
     };
+    this.is_workshop_research = function () {
+        return b == "wks"
+    };
     var a = "Speedup_Research_Click";
     var b = "tch";
-    this.queueClick = function (h) {
-        var d = c(h),
-            f = seed.queue_tch["city" + currentcityid][0],
-            g = techcost["tch" + f[0]][0] + " (" + g_js_strings.commonstr.lv + f[1] + ")";
-        modal_speedup(b, d, undefined, g);
+    this.queueClick = function (i, k) {
+        b = k;
+        var j = this.is_workshop_research() ? seed.queue_tch2 : seed.queue_tch;
+        var f = this.is_workshop_research() ? techcost2 : techcost;
+        var d = c(i),
+            g = j["city" + currentcityid][0],
+            h = f["tch" + g[0]][0] + " (" + g_js_strings.commonstr.lv + g[1] + ")";
+        modal_speedup(b, d, undefined, h);
         cm.MixPanelTracker.track(a, {
             from: "queue"
         })
     };
-    this.popupClick = function (f) {
+    this.popupClick = function (f, g) {
+        b = g;
         var d = c(f);
         modal_speedup(b, d);
         cm.MixPanelTracker.track(a, {
@@ -63032,8 +64049,12 @@ Research.AlternativeLevels = {
     6: 11
 };
 Research.Methods = {
-    maxLevel: function (a) {
-        return Research.AlternativeLevels[a] ? Research.AlternativeLevels[a] : 12
+    maxLevel: function (b, a) {
+        if (a === 2) {
+            return 10
+        } else {
+            return Research.AlternativeLevels[b] ? Research.AlternativeLevels[b] : 12
+        }
     },
     openAlchemy: function () {
         removeTooltip();
@@ -63084,14 +64105,14 @@ Research.Methods = {
                         m.push("<div class='met'>")
                     }
                     if (parseInt(y[1][u]) > 0) {
-                        m.push(addCommas(parseInt(y[1][u])))
+                        m.push(addCommas(y[1][u]))
                     } else {
                         m.push(y[1][u])
                     }
                     m.push("</div>");
                     r.push("<div>");
                     if (parseInt(y[2][u]) > 0) {
-                        r.push(addCommas(parseInt(y[2][u])))
+                        r.push(addCommas(y[2][u]))
                     } else {
                         r.push(y[2][u])
                     }
@@ -63177,7 +64198,7 @@ Research.Methods = {
                     p.push("</div>")
                 } else {
                     if (n == B) {
-                        p.push("<div class='btns clearfix'><a class='inlineButton20Red' name='" + n + "' onclick='cm.ResearchSpeedupController.popupClick(event)'>");
+                        p.push("<div class='btns clearfix'><a class='inlineButton20Red' name='" + n + "' onclick=\"cm.ResearchSpeedupController.popupClick(event, 'tch');\">");
                         p.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div>");
                         p.push("<div class='timerem'>" + g_js_strings.commonstr.timeremaining + ": <span id='alchemymodal_tch");
                         p.push(n);
@@ -63186,7 +64207,7 @@ Research.Methods = {
                         p.push("</span></b></div>");
                         if (getTechHelpEligible(n, currentcityid) == false) {
                             p.push("<div class='btns clearfix'><a class='button20' onclick='tch_gethelp(");
-                            p.push(n);
+                            p.push(n + ", " + cm.RESEARCH_TYPES.ALCHEMY_LAB);
                             p.push(");return false;'><span>" + g_js_strings.modal_quests.askhelp + "</span></a>");
                             p.push("<a class='helptext' onclick='Modal.showAlert(\"");
                             p.push(g_js_strings.modal_build.whatsthiscontent);
@@ -63227,6 +64248,200 @@ Research.Methods = {
         researchView = new cm.ResearchView(z, researchCollectionModel);
         researchController = new cm.ResearchController(researchCollectionModel, researchView)
     },
+    openBritonWorkshop: function () {
+        removeTooltip();
+        var o = new Array();
+        o.push("<div class='alchemymodal' id='alchemymodal'>");
+        o.push("<div class='tabsbar'>");
+        o.push("<a class='tab selected'><span>" + g_js_strings.modal_openAlchemy.resitms + "</span></a>");
+        o.push("</div>");
+        o.push("<div class='alchemywrap' id='alchemywrap'>");
+        o.push("<div class='tableheader'><table cellpadding='0' cellspacing='0'><thead><tr><td class='tch'><div>" + g_js_strings.commonstr.technology + "</div></td><td class='res'><div>" + g_js_strings.commonstr.resource + "</div></td><td class='req'><div>" + g_js_strings.commonstr.required + "</div></td><td class='own'><div>" + g_js_strings.commonstr.youown + "</div></td></tr></thead></table></div>");
+        o.push("<div class='techlist'>");
+        var e = Object.keys(techcost2);
+        o.push("<table cellpadding='0' cellspacing='0'><tbody>");
+        var B = 0;
+        if (seed.queue_tch2 && seed.queue_tch2["city" + currentcityid] && seed.queue_tch2["city" + currentcityid].length > 0) {
+            B = parseInt(seed.queue_tch2["city" + currentcityid][0][0])
+        }
+        var b = new Array();
+        var d = Object.keys(seed.queue_tch2);
+        for (var u = 0; u < d.length; u++) {
+            if (d[u] != "city" + currentcityid) {
+                if (seed.queue_tch2[d[u]].length > 0) {
+                    b.push(parseInt(seed.queue_tch2[d[u]][0][0]))
+                }
+            }
+        }
+        var a = new Object();
+        var y = new Object();
+        var k = false;
+        for (var u = 0; u < e.length; u++) {
+            var z = techcost2[e[u]];
+            var m = parseInt(e[u].split("tch")[1]);
+            var w = parseInt(seed.tech2[e[u]]);
+            var x = checkreq("tch", m, (parseInt(seed.tech2[e[u]]) + 1), 2);
+            var s = new Array();
+            var l = new Array();
+            var q = new Array();
+            var p = true;
+            if (w < Research.Methods.maxLevel(m, 2)) {
+                for (var t = 0; t < x[0].length; t++) {
+                    s.push("<div>");
+                    s.push(x[0][t]);
+                    s.push("</div>");
+                    if (x[3][t] == 0) {
+                        p = false;
+                        l.push("<div class='unmet'>")
+                    } else {
+                        l.push("<div class='met'>")
+                    }
+                    if (parseInt(x[1][t]) > 0) {
+                        l.push(addCommas(x[1][t]))
+                    } else {
+                        l.push(x[1][t])
+                    }
+                    l.push("</div>");
+                    q.push("<div>");
+                    if (parseInt(x[2][t]) > 0) {
+                        q.push(addCommas(x[2][t]))
+                    } else {
+                        q.push(x[2][t])
+                    }
+                    q.push("</div>")
+                }
+            } else {
+                p = false
+            }
+            if (u % 2 == 1) {
+                o.push("<tr class='stripe'>")
+            } else {
+                o.push("<tr>")
+            }
+            o.push("<td class='tchlist_img'><img src='" + stimgUrl + "img/tech2/" + m + "_s33.png'/></td>");
+            o.push("<td class='tchlist_info'>");
+            o.push("<div class='techhd'>");
+            o.push(z[0]);
+            o.push(" (" + g_js_strings.commonstr.lv + " ");
+            o.push(seed.tech2[e[u]]);
+            o.push(")</div>");
+            o.push("<div class='desc'>");
+            o.push(techcost2[e[u]][10]);
+            o.push("</div>");
+            var n = false;
+            for (var t = 0; t < b.length; t++) {
+                if (m == b[t]) {
+                    n = true;
+                    t = b.length
+                }
+            }
+            if (n) {
+                o.push("<div class='btns clearfix'><b>" + g_js_strings.modal_openAlchemy.currentlyres + "</b></div>")
+            } else {
+                if (parseInt(seed.tech2[e[u]]) < Research.Methods.maxLevel(m, 2) && B == 0 && p) {
+                    var v = 0;
+                    var c = seed.knights["city" + currentcityid];
+                    if (c) {
+                        c = c["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
+                        if (c) {
+                            v = parseInt(c.intelligence);
+                            v = ((parseInt(c.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (v * 1.25) : v
+                        }
+                    }
+                    var r = "";
+                    var g = parseInt(seed.tech2[e[u]]) + 1;
+                    if (m != 17) {
+                        g = Math.min(g, 11)
+                    }
+                    var f = Math.pow(2, (g - 1));
+                    var A = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().SCIENTIFIC_METHODOLOGIES);
+                    if (typeof A !== "number") {
+                        A = 1
+                    }
+                    var h = parseInt(techcost2[e[u]][7] * f * A * (1 / (1 + 0.005 * v)));
+                    y[m.toString()] = {
+                        buttonId: cm.ResearchView.BUTTON_PREFIX + m,
+                        timeTextId: cm.ResearchView.TIMETEXT_PREFIX + m,
+                        checkboxId: cm.ResearchView.CHECKBOX_PREFIX + m
+                    };
+                    a[m.toString()] = {
+                        currentLevel: w,
+                        baseTime: timestr(h),
+                        speedTime: timestr(Math.max(h - 600, 0)),
+                        helped: k
+                    };
+                    o.push("<div class='buttonRow'>");
+                    o.push("<a class='buttonDown20' id='" + y[m.toString()].buttonId + "' name='" + m + "' onclick='researchController.researchButtonClicked(event);return false'>");
+                    o.push("<span>" + g_js_strings.commonstr.research + "</span></a> ");
+                    o.push("<span>" + g_js_strings.commonstr.time + ": <span class='timeText' id='" + y[m.toString()].timeTextId + "'>" + a[m.toString()].speedTime + "</span></span>");
+                    o.push("</div>");
+                    o.push("<div class='checkboxRow'>");
+                    o.push("<div>");
+                    o.push("<a class='helptext' onclick='Modal.showAlert(\"");
+                    o.push(g_js_strings.modal_build.whatsthiscontent);
+                    o.push("\");return false;'>");
+                    o.push(g_js_strings.modal_build.whatsthis);
+                    o.push("</a>");
+                    o.push("</div>");
+                    o.push("<div>");
+                    o.push("<input id='" + y[m.toString()].checkboxId + "' name='" + m + "' type='checkbox' onclick='researchController.checkboxChanged(event)' />");
+                    o.push("<label for='" + y[m.toString()].checkboxId + "'>");
+                    o.push(cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch));
+                    o.push("</label>");
+                    o.push("</div>");
+                    o.push("</div>")
+                } else {
+                    if (m == B) {
+                        o.push("<div class='btns clearfix'><a class='inlineButton20Red' name='" + m + "' onclick=\"cm.ResearchSpeedupController.popupClick(event, 'wks');\">");
+                        o.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div>");
+                        o.push("<div class='timerem'>" + g_js_strings.commonstr.timeremaining + ": <span id='alchemymodal_tch");
+                        o.push(m);
+                        o.push("_queue_timeleft'>");
+                        o.push(timestr(parseInt(seed.queue_tch2["city" + currentcityid][0][3]) - unixtime()));
+                        o.push("</span></b></div>");
+                        if (getTechHelpEligible(m, currentcityid, 2) == false) {
+                            o.push("<div class='btns clearfix'><a class='button20' onclick='tch_gethelp(");
+                            o.push(m + ", " + cm.RESEARCH_TYPES.WORKSHOP);
+                            o.push(");return false;'><span>" + g_js_strings.modal_quests.askhelp + "</span></a>");
+                            o.push("<a class='helptext' onclick='Modal.showAlert(\"");
+                            o.push(g_js_strings.modal_build.whatsthiscontent);
+                            o.push("\");return false;'>");
+                            o.push(g_js_strings.modal_build.whatsthis);
+                            o.push("</a>");
+                            o.push("</div>")
+                        }
+                    } else {
+                        if (!p) {
+                            if (w < Research.Methods.maxLevel(m, 2)) {
+                                o.push("<div class='btns clearfix'><b class='unmet'>" + g_js_strings.modal_openAlchemy.reqnotmet + "</b></div>")
+                            } else {
+                                o.push("<div class='btns clearfix'><b class='maxlv'>" + g_js_strings.modal_openAlchemy.maxres + "</b></div>")
+                            }
+                        }
+                    }
+                }
+            }
+            o.push("</td>");
+            o.push("<td class='tchlist_res'>");
+            o.push(s.join(""));
+            o.push("</td>");
+            o.push("<td class='tchlist_req'>");
+            o.push(l.join(""));
+            o.push("</td>");
+            o.push("<td class='tchlist_own'>");
+            o.push(q.join(""));
+            o.push("</td>");
+            o.push("</tr>")
+        }
+        o.push("</tbody></table>");
+        o.push("</div>");
+        o.push("</div>");
+        o.push("</div>");
+        $("modal_build_content").innerHTML = o.join("");
+        researchCollectionModel = new cm.ResearchCollectionModel(a);
+        researchView = new cm.ResearchView(y, researchCollectionModel);
+        researchController = new cm.ResearchController(researchCollectionModel, researchView)
+    },
     shareBtnTooltip: function (a) {
         var b = "<div>" + g_js_strings.modal_openAlchemy.reshelp_tooltip + "</div>";
         Tooltip.show(a, b)
@@ -63237,6 +64452,9 @@ Object.extend(Research, Research.Properties);
 
 function modal_openAlchemy() {
     Research.openAlchemy()
+}
+function modal_openBritonWorkshop() {
+    Research.openBritonWorkshop()
 };
 var cm = cm || {};
 cm.ResourceLoader = (function (e) {
@@ -63303,223 +64521,193 @@ cm.ResourceLoader = (function (e) {
     }
 })(jQuery);
 cm = cm || {};
-cm.Resources = function (g) {
-    var c = function (t, s) {
+cm.Resources = function (e) {
+    var n = function (s, r) {
+        r = +r || +currentcityid;
+        return seed.resources["city" + r]["rec" + s]
+    };
+    var a = function (t, s) {
         s = +s || +currentcityid;
-        return seed.resources["city" + s]["rec" + t]
-    };
-    var h = function (u, t) {
-        t = +t || +currentcityid;
-        var s = c(u, t)[0];
-        if (u < 5) {
-            s /= 3600
+        var r = n(t, s)[0];
+        if (t < 5) {
+            r /= 3600
         }
-        return s
+        return r
     };
-    var o = function (s, u, t) {
-        t = +t || +currentcityid;
-        seed.resources["city" + t]["rec" + u][0] += Math.floor(+s || 0)
+    var m = function (r, t, s) {
+        s = +s || +currentcityid;
+        seed.resources["city" + s]["rec" + t][0] += Math.floor(+r || 0)
     };
-    var l = function (s, u, t) {
-        t = +t || +currentcityid;
-        seed.resources["city" + t]["rec" + u][0] = Math.floor(+s || 0)
+    var o = function (r, t, s) {
+        s = +s || +currentcityid;
+        seed.resources["city" + s]["rec" + t][0] = Math.floor(+r || 0)
     };
-    var q = function (y, x) {
-        x = +x || +currentcityid;
-        var t = seed.citystats["city" + x]["pop"],
-            s = +(t[0]),
-            u = +(t[3]),
-            w = Math.min(1, s / u),
-            v = c(y, x)[2] || 0;
-        return (v * w)
-    };
-    var i = function (x, w) {
+    var p = function (x, w) {
         w = +w || +currentcityid;
+        var s = seed.citystats["city" + w]["pop"],
+            r = +(s[0]),
+            t = +(s[3]),
+            v = Math.min(1, r / t),
+            u = n(x, w)[2] || 0;
+        return (u * v)
+    };
+    var h = function (v, s, u) {
+        u = +u || +currentcityid;
         var t = 0,
-            u = 0,
-            s = 0,
-            v = 0;
-        t = r(x, "knight", w);
-        u = r(x, "research", w);
-        s = r(x, "item", w);
-        v = t + u + s;
-        return v
-    };
-    var p = function (w, v, u) {
-        v = +v || +currentcityid;
-        var t = 12200,
-            s = u * t + i(w, v);
-        return s
-    };
-    var r = function (w, t, v) {
-        v = +v || +currentcityid;
-        var u = 0,
-            s = q(w, v);
-        switch (t) {
+            r = p(v, u);
+        switch (s) {
             case "knight":
-                u = s * e(v);
+                t = r * j(u);
                 break;
             case "research":
-                u = s * m(w);
+                t = r * d(v);
                 break;
             case "wilderness":
-                u = s * b(w, v);
+                t = r * c(v, u);
                 break;
             case "providence":
-                u = j();
+                t = f();
                 break;
             case "item":
-                u = s * a(w);
+                t = r * l(v);
                 break;
             case "throne":
-                u = s * n(w);
+                t = r * b(v);
                 break;
             case "blessing":
-                u = s * k(w, v);
+                t = r * q(v, u);
                 break;
             case "upkeep":
-                u = f(w, v);
-                break
-        }
-        return u
-    };
-    var d = function (w, x) {
-        x = +x || +currentcityid;
-        var s = Math.floor(q(w, x)),
-            A = Math.floor(r(w, "knight", x)),
-            C = Math.floor(r(w, "research", x)),
-            y = Math.floor(r(w, "wilderness", x)),
-            z = Math.floor(r(w, "providence", x)),
-            u = Math.floor(r(w, "item", x)),
-            B = Math.floor(r(w, "throne", x)),
-            v = Math.floor(r(w, "blessing", x)),
-            t = Math.floor(r(w, "upkeep", x));
-        return s + A + C + y + z + u + v + B - t
-    };
-    var e = function (w) {
-        var t = seed.knights["city" + w],
-            v, u, s = 0;
-        if (!t) {
-            return s
-        }
-        v = seed.leaders["city" + w].resourcefulnessKnightId;
-        u = t["knt" + v];
-        if (!u) {
-            return s
-        }
-        s = u.resourcefulness;
-        if (u.resourcefulnessBoostExpireUnixtime > (unixtime() / 1000)) {
-            s *= 1.25
-        }
-        return s / 100
-    };
-    var m = function (s) {
-        return (seed.tech["tch" + s] / 10)
-    };
-    var b = function (x, w) {
-        var u = seed.wilderness["city" + w],
-            t = 0,
-            s, v;
-        if (u && !g.isArray(u)) {
-            jQuery.each(u, function (y, z) {
-                switch (+z.tileType) {
-                    case cm.TILE_TYPES.TILE_TYPE_GRASSLAND:
-                        s = 1;
-                        break;
-                    case cm.TILE_TYPES.TILE_TYPE_LAKE:
-                        s = 1;
-                        break;
-                    case cm.TILE_TYPES.TILE_TYPE_WOODS:
-                        s = 2;
-                        break;
-                    case cm.TILE_TYPES.TILE_TYPE_HILLS:
-                        s = 3;
-                        break;
-                    case cm.TILE_TYPES.TILE_TYPE_MOUNTAIN:
-                        s = 4;
-                        break
-                }
-                if (s === x) {
-                    t += +(z.tileLevel)
-                }
-            })
-        }
-        v = 0.05 * t;
-        v *= cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().REALLOCATED_LABOR, w, {
-            type: x
-        });
-        return v
-    };
-    var j = function () {
-        return 100
-    };
-    var a = function (s) {
-        return (seed.playerEffects["r" + s + "BstExp"] > unixtime()) ? 0.25 : 0
-    };
-    var n = function (v) {
-        var s = seed.throne.slotEquip[seed.throne.activeSlot],
-            t, u = 0;
-        jQuery.each(s, function (w, x) {
-            t = kocThroneItems[x];
-            jQuery.each(t.effects, function (F, C) {
-                if (+(F.split("slot")[1]) > t.quality) {
-                    return
-                }
-                var B = t.level,
-                    A = cm.thronestats.tiers[+C.id][+C.tier],
-                    D = +(A.base),
-                    z = +(A.growth),
-                    E = D + ((B * B + B) * z * 0.5),
-                    y;
-                switch (+C.id) {
-                    case 82:
-                        u += E;
-                        break;
-                    case 83:
-                        y = 1;
-                        break;
-                    case 84:
-                        y = 2;
-                        break;
-                    case 85:
-                        y = 3;
-                        break;
-                    case 86:
-                        y = 4;
-                        break
-                }
-                if (y === v) {
-                    u += E
-                }
-            })
-        });
-        return u / 100
-    };
-    var k = function (v, u) {
-        u = u || currentcityid;
-        var s = cm.BlessingSystemModel.getBlessing(),
-            t = 0;
-        switch (v) {
-            case 2:
-                t += cm.BlessingSystemModel.applyBlessing(s.NATURE_GIFTS, u);
+                t = k(v, u);
                 break
         }
         return t
     };
-    var f = function (v, u) {
-        var t = +(seed.resources["city" + u]["rec" + v][3]) || 0,
-            s = cm.ThroneController.effectBonus(79) / 100;
-        t = Math.floor(t - (t * s));
+    var i = function (v, w) {
+        w = +w || +currentcityid;
+        var r = Math.floor(p(v, w)),
+            z = Math.floor(h(v, "knight", w)),
+            B = Math.floor(h(v, "research", w)),
+            x = Math.floor(h(v, "wilderness", w)),
+            y = Math.floor(h(v, "providence", w)),
+            t = Math.floor(h(v, "item", w)),
+            A = Math.floor(h(v, "throne", w)),
+            u = Math.floor(h(v, "blessing", w)),
+            s = Math.floor(h(v, "upkeep", w));
+        return r + z + B + x + y + t + u + A - s
+    };
+    var g = function (t, s) {
+        s = +s || +currentcityid;
+        var r = Math.floor(h(t, "upkeep", s));
+        return i(t, s) + r
+    };
+    var j = function (v) {
+        var s = seed.knights["city" + v],
+            u, t, r = 0;
+        if (!s) {
+            return r
+        }
+        u = seed.leaders["city" + v].resourcefulnessKnightId;
+        t = s["knt" + u];
+        if (!t) {
+            return r
+        }
+        r = t.resourcefulness;
+        if (t.resourcefulnessBoostExpireUnixtime > (unixtime() / 1000)) {
+            r *= 1.25
+        }
+        return r / 100
+    };
+    var d = function (r) {
+        return (seed.tech["tch" + r] / 10)
+    };
+    var c = function (w, v) {
+        var t = seed.wilderness["city" + v],
+            s = 0,
+            r, u;
+        if (t && !e.isArray(t)) {
+            jQuery.each(t, function (x, y) {
+                switch (+y.tileType) {
+                    case cm.TILE_TYPES.TILE_TYPE_GRASSLAND:
+                        r = 1;
+                        break;
+                    case cm.TILE_TYPES.TILE_TYPE_LAKE:
+                        r = 1;
+                        break;
+                    case cm.TILE_TYPES.TILE_TYPE_WOODS:
+                        r = 2;
+                        break;
+                    case cm.TILE_TYPES.TILE_TYPE_HILLS:
+                        r = 3;
+                        break;
+                    case cm.TILE_TYPES.TILE_TYPE_MOUNTAIN:
+                        r = 4;
+                        break
+                }
+                if (r === w) {
+                    s += +(y.tileLevel)
+                }
+            })
+        }
+        u = 0.05 * s;
+        u *= cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().REALLOCATED_LABOR, v, {
+            type: w
+        });
+        u *= cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().GNOMISH_QUARRY_FOREMAN, v, {
+            type: w
+        });
+        return u
+    };
+    var f = function () {
+        return 100
+    };
+    var l = function (r) {
+        return (seed.playerEffects["r" + r + "BstExp"] > unixtime()) ? 0.25 : 0
+    };
+    var b = function (u) {
+        var s = 0,
+            r = {
+                1: 83,
+                2: 84,
+                3: 85,
+                4: 86
+            }, t = r[u];
+        s += cm.ThroneController.effectBonus(82);
+        s += cm.ThroneController.effectBonus(t);
+        return s / 100
+    };
+    var q = function (u, t) {
+        t = t || currentcityid;
+        var r = cm.BlessingSystemModel.getBlessing(),
+            s = 0;
+        switch (u) {
+            case 2:
+                s += cm.BlessingSystemModel.applyBlessing(r.NATURE_GIFTS, t);
+                break
+        }
+        return s
+    };
+    var k = function (v, u) {
+        var t = 0;
+        if ((seed.resources["city" + u]["rec" + v])) {
+            t = +(seed.resources["city" + u]["rec" + v][3]) || 0;
+            var r = 33;
+            if (cm.thronestats.boosts.Upkeep) {
+                r = +cm.thronestats.boosts.Upkeep.Max
+            }
+            var s = Math.min(cm.ThroneController.effectBonus(79), r) / 100;
+            t = Math.floor(t - (t * s))
+        }
         return t
     };
     return {
-        getResource: c,
-        getAmount: h,
-        getProductionBase: q,
-        getProductionBonus: r,
-        getProduction: d,
-        getGroveResourceBonus: i,
-        getGroveResourceRate: p
+        getResource: n,
+        getAmount: a,
+        getProductionBase: p,
+        getProductionBonus: h,
+        getProduction: i,
+        getProductionNoUpkeep: g,
+        getUpkeep: k
     }
 }(jQuery);
 cm.RevivalModel = function () {
@@ -64582,10 +65770,34 @@ cm.PaymentXMLService = function (b) {
 cm = cm || {};
 cm.ShopController = function ($) {
     var buy = function (itemId) {
+        var count = cm.MultiBuyUse.getNumberUsed(itemId);
+        if (count > 1) {
+            var item = ksoItems[itemId],
+                gems = Number(seed.player.gems);
+            if ((item.price * count) > gems) {
+                cm.ShopView.openGetMoreGemsModal()
+            } else {
+                cm.MultiBuyUse.prompt(itemId, count, buyNow_)
+            }
+        } else {
+            if (count == 0) {
+                cm.ModalManager.alert(g_js_strings.multi.zero);
+                return false
+            } else {
+                if (count == 1) {
+                    buyNow_(itemId, 1)
+                } else {
+                    cm.ModalManager.alert(g_js_strings.multi.one_or_more);
+                    return false
+                }
+            }
+        }
+    };
+    var buyNow_ = function (itemId, count) {
         var item = ksoItems[itemId],
             gems = Number(seed.player.gems),
             isCourtItem;
-        if (item.price > gems) {
+        if ((item.price * count) > gems) {
             cm.ShopView.openGetMoreGemsModal()
         } else {
             var params = Object.clone(g_ajaxparams);
@@ -64593,6 +65805,7 @@ cm.ShopController = function ($) {
             if (item.isOnSale) {
                 params.sale = 1
             }
+            params.quantity = cm.MultiBuyUse.getNumberUsed(itemId);
             var profiler = new cm.Profiler("ResponseTime", "buyItem.php");
             new Ajax.Request(g_ajaxpath + "ajax/buyItem.php" + g_ajaxsuffix, {
                 method: "post",
@@ -64600,20 +65813,20 @@ cm.ShopController = function ($) {
                 onSuccess: function (transport) {
                     var itemKey, maxOwnedAllowed, rslt = eval("(" + transport.responseText + ")");
                     if (rslt.ok) {
-                        seed.player.gems = Number(seed.player.gems) - item.price;
+                        seed.player.gems = Number(seed.player.gems) - (item.price * count);
                         itemKey = "i" + item.id;
                         var kso1 = seed.items[itemKey];
                         if (seed.items[itemKey]) {
-                            seed.items[itemKey] = Number(seed.items[itemKey]) + 1
+                            seed.items[itemKey] = Number(seed.items[itemKey]) + count
                         } else {
-                            seed.items[itemKey] = 1
+                            seed.items[itemKey] = count
                         }
                         var kso2 = seed.items[itemKey];
-                        item.add();
+                        item.add(count);
                         cm.ShopView.increaseInventoryHistoryByItemKey(itemKey);
                         $("#shopGemQuantity").text(seed.player.gems);
                         $("#kochead_gems").text(seed.player.gems);
-                        var text = g_js_strings.modal_shop_buy.purchasealert.replace("%1$s", item.name);
+                        var text = count + g_js_strings.modal_shop_buy.purchasealertn.replace("%1$s", item.name);
                         $("#shopMessage").text(text);
                         $("#shopMessage").show();
                         $("#item" + item.id + "Count").text(item.count);
@@ -64944,7 +66157,8 @@ cm.ShopView = function ($) {
                 costContent: costContent.join(""),
                 count: item.count,
                 ownedString: g_js_strings.commonstr.owned,
-                buyString: g_js_strings.commonstr.buy
+                buyString: g_js_strings.commonstr.buy,
+                hideInput: ""
             });
             templateArray.push(template)
         });
@@ -65164,6 +66378,12 @@ cm.sounds = function (g) {
         modal_build25: "open_watchtower",
         modal_build26: "open_alchemy_lab",
         modal_build27: "open_alchemy_lab",
+        modal_build22: "open_barracks",
+        modal_build23: "open_alchemy_lab",
+        modal_build24: "open_barracks",
+        modal_build25: "open_watchtower",
+        modal_build26: "open_barracks",
+        modal_build27: "open_workshop",
         modal_build3: "open_quarry",
         modal_build2: "open_sawmill",
         modal_build4: "open_mine",
@@ -65341,11 +66561,15 @@ function do_modal_speedup(d, a, b, c, t, l) {
         if (d == "tch") {
             h = getTechHelpEligible(a, currentcityid)
         } else {
-            if (("frt" == d) || d.match(/^m\d+,\d+$/)) {
-                h = true
+            if (d == "wks") {
+                h = getTechHelpEligible(a, currentcityid, 2)
             } else {
-                if ("craft" == d || "throne" == d) {
-                    h = false
+                if (("frt" == d) || d.match(/^m\d+,\d+$/)) {
+                    h = true
+                } else {
+                    if ("craft" == d || "throne" == d) {
+                        h = false
+                    }
                 }
             }
         }
@@ -65444,6 +66668,12 @@ function addHelp(c, e, a, d, b) {
                 a.push("tch_gethelp(");
                 a.push(b);
                 a.push(");")
+            } else {
+                if (d == "wks") {
+                    a.push("tch_gethelp(");
+                    a.push(b);
+                    a.push(", 1);")
+                }
             }
         }
         a.push("return false;'><span>" + g_js_strings.commonstr.share + "</span></a></div>");
@@ -65596,11 +66826,9 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
                 seed.queue_throne.start = startTime - reduced;
                 seed.queue_throne.end = endTime - reduced;
                 cm.ThronePanelView.appliedSpeedUp();
-                cm.log.l("hide speedup modal 1");
                 if (seed.queue_throne.end < unixtime()) {
                     Modal.hideModalAll();
-                    cm.ModalManager.close();
-                    cm.log.l("hide speedup modal 2")
+                    cm.ModalManager.close()
                 }
             } else {
                 cm.ModalManager.alert({
@@ -65661,24 +66889,30 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
                     params.tid = typeid;
                     phppg = "speedupResearch"
                 } else {
-                    if (type == "trn") {
-                        params.uid = typeid;
-                        phppg = "speedupTraining"
+                    if (type == "wks") {
+                        params.tid = typeid;
+                        params.workshop = true;
+                        phppg = "speedupResearchWorkshop"
                     } else {
-                        if (type == "frt") {
-                            params.fid = typeid;
-                            phppg = "speedupFortify"
+                        if (type == "trn") {
+                            params.uid = typeid;
+                            phppg = "speedupTraining"
                         } else {
-                            if (type == "mkt") {
-                                params.mid = typeid;
-                                phppg = "speedupTrade"
+                            if (type == "frt") {
+                                params.fid = typeid;
+                                phppg = "speedupFortify"
                             } else {
-                                if (type.match(/^m\d+,\d+$/)) {
-                                    var march_info = type.split(",");
-                                    params.mid = type.split(",")[0].split("m")[1];
-                                    phppg = "speedupMarch"
+                                if (type == "mkt") {
+                                    params.mid = typeid;
+                                    phppg = "speedupTrade"
                                 } else {
-                                    return
+                                    if (type.match(/^m\d+,\d+$/)) {
+                                        var march_info = type.split(",");
+                                        params.mid = type.split(",")[0].split("m")[1];
+                                        phppg = "speedupMarch"
+                                    } else {
+                                        return
+                                    }
                                 }
                             }
                         }
@@ -65712,57 +66946,62 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
                                 var utstart = parseInt(seed.queue_tch["city" + currentcityid][0][2]);
                                 var uteta = parseInt(seed.queue_tch["city" + currentcityid][0][3])
                             } else {
-                                if (type == "trn") {
-                                    if (cm.speedUpModalTimer.speedUpTypeInstance === "rev1" || cm.speedUpModalTimer.speedUpTypeInstance === "rev2") {
-                                        cm.RevivalQueue.revive_response(rslt)
-                                    }
-                                    var queue = cm.speedUpModalTimer.speedUpTypeInstance == "rev" ? seed.queue_revive : seed.queue_unt;
-                                    var q = queue["city" + currentcityid];
-                                    if (cm.speedUpModalTimer.speedUpTypeInstance != "rev" && typeof qIndex === "undefined") {
-                                        var qIndex = 0;
-                                        var isPrestigeQueue = cm.speedUpModalTimer.prestigeQueueSelected;
-                                        for (var index = 0; index < q.length; index++) {
-                                            if (q[index][7] === isPrestigeQueue) {
-                                                qIndex = index;
-                                                break
+                                if (type == "wks") {
+                                    var utstart = parseInt(seed.queue_tch2["city" + currentcityid][0][2]);
+                                    var uteta = parseInt(seed.queue_tch2["city" + currentcityid][0][3])
+                                } else {
+                                    if (type == "trn") {
+                                        if (cm.speedUpModalTimer.speedUpTypeInstance === "rev1" || cm.speedUpModalTimer.speedUpTypeInstance === "rev2") {
+                                            cm.RevivalQueue.revive_response(rslt)
+                                        }
+                                        var queue = cm.speedUpModalTimer.speedUpTypeInstance == "rev" ? seed.queue_revive : seed.queue_unt;
+                                        var q = queue["city" + currentcityid];
+                                        if (cm.speedUpModalTimer.speedUpTypeInstance != "rev" && typeof qIndex === "undefined") {
+                                            var qIndex = 0;
+                                            var isPrestigeQueue = cm.speedUpModalTimer.prestigeQueueSelected;
+                                            for (var index = 0; index < q.length; index++) {
+                                                if (q[index][7] === isPrestigeQueue) {
+                                                    qIndex = index;
+                                                    break
+                                                }
+                                            }
+                                        } else {
+                                            if (typeof qIndex === "undefined") {
+                                                qIndex = 0
                                             }
                                         }
-                                    } else {
-                                        if (typeof qIndex === "undefined") {
-                                            qIndex = 0
-                                        }
-                                    }
-                                    queue["city" + currentcityid][qIndex][3] = rslt.dateTraining;
-                                    queue["city" + currentcityid][qIndex][2] = rslt.dateTrainingStart;
-                                    if ($("intraining_estimatedtimeremain")) {
-                                        var that = this;
-                                        var kso = $("#button_training_cancel");
-                                        var ksoo = $("button_training_cancel");
-                                        ksoo.setAttribute("onclick", "");
-                                        ksoo.onclick = function () {
-                                            cancelTraining(qIndex, currentcityid, q[qIndex][0], q[qIndex][1], q[qIndex][3], q[qIndex][2], q[qIndex][5], true)
-                                        };
-                                        if (q[qIndex][3]) {
-                                            CountDown.stopCountDown("intraining_estimatedtimeremain");
-                                            CountDown.addCountDown("intraining_estimatedtimeremain", (q[qIndex][3] - unixtime()), function () {
-                                                update_seed_ajax(true, function () {
-                                                    $("intraining_estimatedtimeremain").update(g_js_strings.modal_barracks_trainingtab.completetxt);
-                                                    $("button_training_cancel").hide();
-                                                    modal_barracks_trainingtab()
+                                        queue["city" + currentcityid][qIndex][3] = rslt.dateTraining;
+                                        queue["city" + currentcityid][qIndex][2] = rslt.dateTrainingStart;
+                                        if ($("intraining_estimatedtimeremain")) {
+                                            var that = this;
+                                            var kso = $("#button_training_cancel");
+                                            var ksoo = $("button_training_cancel");
+                                            ksoo.setAttribute("onclick", "");
+                                            ksoo.onclick = function () {
+                                                cancelTraining(qIndex, currentcityid, q[qIndex][0], q[qIndex][1], q[qIndex][3], q[qIndex][2], q[qIndex][5], true)
+                                            };
+                                            if (q[qIndex][3]) {
+                                                CountDown.stopCountDown("intraining_estimatedtimeremain");
+                                                CountDown.addCountDown("intraining_estimatedtimeremain", (q[qIndex][3] - unixtime()), function () {
+                                                    update_seed_ajax(true, function () {
+                                                        $("intraining_estimatedtimeremain").update(g_js_strings.modal_barracks_trainingtab.completetxt);
+                                                        $("button_training_cancel").hide();
+                                                        modal_barracks_trainingtab()
+                                                    })
                                                 })
-                                            })
+                                            }
                                         }
-                                    }
-                                    if (rslt.updateCityUnits) {
-                                        update_cityUnits(rslt.updateCityUnits)
-                                    }
-                                    if (rslt.updateWoundedCityUnits) {
-                                        update_woundedCityUnits(rslt.updateWoundedCityUnits)
-                                    }
-                                } else {
-                                    if ("frt" == type) {
-                                        seed.queue_fort["city" + currentcityid][0][2] -= reduced;
-                                        seed.queue_fort["city" + currentcityid][0][3] -= reduced
+                                        if (rslt.updateCityUnits) {
+                                            update_cityUnits(rslt.updateCityUnits)
+                                        }
+                                        if (rslt.updateWoundedCityUnits) {
+                                            update_woundedCityUnits(rslt.updateWoundedCityUnits)
+                                        }
+                                    } else {
+                                        if ("frt" == type) {
+                                            seed.queue_fort["city" + currentcityid][0][2] -= reduced;
+                                            seed.queue_fort["city" + currentcityid][0][3] -= reduced
+                                        }
                                     }
                                 }
                             }
@@ -65776,12 +67015,17 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
                                 seed.queue_tch["city" + currentcityid][0][2] = utstart - timered;
                                 seed.queue_tch["city" + currentcityid][0][3] = uteta - timered
                             } else {
-                                if (type == "") {} else {
-                                    if (type.match(/^m\d+,\d+$/)) {
-                                        var march = seed.queue_atkp["city" + currentcityid]["m" + params.mid];
-                                        march.destinationUnixTime = rslt.destinationUnixTime;
-                                        march.marchUnixTime = rslt.marchUnixTime;
-                                        march.returnUnixTime = rslt.returnUnixTime
+                                if (type == "wks") {
+                                    seed.queue_tch2["city" + currentcityid][0][2] = utstart - timered;
+                                    seed.queue_tch2["city" + currentcityid][0][3] = uteta - timered
+                                } else {
+                                    if (type == "") {} else {
+                                        if (type.match(/^m\d+,\d+$/)) {
+                                            var march = seed.queue_atkp["city" + currentcityid]["m" + params.mid];
+                                            march.destinationUnixTime = rslt.destinationUnixTime;
+                                            march.marchUnixTime = rslt.marchUnixTime;
+                                            march.returnUnixTime = rslt.returnUnixTime
+                                        }
                                     }
                                 }
                             }
@@ -65797,7 +67041,9 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
                         }
                         update_queue()
                     } else {
-                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                        if (rslt.error_code != "3016") {
+                            Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                        }
                     }
                 },
                 onFailure: function () {}
@@ -66726,30 +67972,30 @@ cm.Template = function (e) {
 }(jQuery);
 cm = cm || {};
 cm.ThroneController = function (g) {
-    var e = function (t) {
-        if (+t.id == +(tvuid) || isNaN(+t.id)) {
+    var f = function (y) {
+        if (+y.id == +(tvuid) || isNaN(+y.id)) {
             cm.ThroneView.openThrone()
         } else {
             AjaxCall.gPostRequest("ajax/_dispatch53.php", {
                 ctrl: "throneRoom\\ThroneRoomServiceAjax",
                 action: "getEquipped",
-                playerId: t.id
-            }, function (u) {
-                if (u.ok === true) {
-                    var v = u.items;
-                    var x = {};
-                    var w = {};
-                    g.each(v, function (y, z) {
-                        x[z.id] = new cm.ThroneItemModel(z.id, z)
+                playerId: y.id
+            }, function (z) {
+                if (z.ok === true) {
+                    var A = z.items;
+                    var C = {};
+                    var B = {};
+                    g.each(A, function (D, E) {
+                        C[E.id] = new cm.ThroneItemModel(E)
                     });
-                    w.id = t.id;
-                    w.items = x;
-                    w.name = t.name;
-                    cm.ThroneView.openThrone(w)
+                    B.id = y.id;
+                    B.items = C;
+                    B.name = y.name;
+                    cm.ThroneView.openThrone(B)
                 } else {
                     cm.ModalManager.alert({
                         button_text: g_js_strings.commonstr.ok,
-                        text: u.msg,
+                        text: z.msg,
                         "class": "craftFailure",
                         exe: function () {
                             Modal.hideModalAll();
@@ -66760,125 +68006,123 @@ cm.ThroneController = function (g) {
             })
         }
     };
-    var s = function (u) {
-        var x = [],
-            w, v = 0,
-            t;
-        g.each(u, function (y, z) {
-            v++;
-            t = Math.ceil(v / 5);
-            w = g("<div/>");
-            w.attr("id", "throneInventoryItem" + z.id);
-            w.addClass(z.type + " " + z.faction + " quality" + z.quality);
-            if (z.unique > 0) {
-                w.addClass("unique" + z.unique)
+    var x = function (z) {
+        var C = [],
+            B, A = 0,
+            y;
+        g.each(z, function (D, E) {
+            A++;
+            y = Math.ceil(A / 5);
+            B = g("<div/>");
+            B.attr("id", "throneInventoryItem" + E.id);
+            B.addClass(E.type + " " + E.faction + " quality" + E.quality);
+            if (E.unique > 0) {
+                B.addClass("unique" + E.unique)
             }
-            if (z.isEquipped) {
-                w.addClass("equip")
+            if (E.isEquipped) {
+                B.addClass("equip")
             }
             if (!g.isEmptyObject(seed.queue_throne)) {
-                if (z.id == seed.queue_throne.itemId) {
-                    w.append("<span class='repair'></span>")
+                if (E.id == seed.queue_throne.itemId) {
+                    B.append("<span class='repair'></span>")
                 } else {
-                    if (z.isBroken) {
-                        w.append("<span class='broken'></span>")
+                    if (E.isBroken) {
+                        B.append("<span class='broken'></span>")
                     }
                 }
             } else {
-                if (z.isBroken) {
-                    w.append("<span class='broken'></span>")
+                if (E.isBroken) {
+                    B.append("<span class='broken'></span>")
                 }
             }
-            w.mouseenter(function (A) {
+            B.mouseenter(function (F) {
                 g("#contextMenu").remove();
                 if (g("#throneInventoryItemTooltip").length === 0 || g("#kofcNewTooltipDiv").css("display") === "none") {
-                    cm.ThroneView.hoverItem(A, this, z)
+                    cm.ThroneView.hoverItem(F, this, E)
                 }
             });
-            w.mouseleave(function (A) {
-                cm.ThroneView.unhoverItem(A, this, z)
-            });
-            if (t <= seed.throne.rowNum) {
-                w.bind("click", function (A) {
-                    cm.ThroneView.unhoverItem(A, this, z);
-                    cm.ContextualMenuThrone.renderMenu(this, z)
+            B.mouseleave(function (F) {});
+            if (y <= seed.throne.rowNum) {
+                B.bind("click", function (F) {
+                    cm.ContextualMenuThrone.renderMenu(this, E)
                 })
             }
-            x.push(w)
+            C.push(B)
         });
-        return x
+        return C
     };
-    var m = function (u) {
-        var t = new cm.ThroneItemModel(999, u);
-        kocThroneItems[t.id] = t
+    var o = function (z) {
+        var y = new cm.ThroneItemModel(z);
+        kocThroneItems[y.id] = y;
+        return y
     };
-    var n = function (u) {
-        var t = +(cm.WorldSettings.getSetting("TR_MAX_INVENTORY_ROWS")),
-            z = seed.throne.rowNum,
-            w = [],
-            y, x;
-        for (var v = 0; v < t; ++v) {
-            x = v + 1;
-            y = g("<li/>");
-            y.attr("id", "throneInventoryRow" + (v + 1));
-            if (x <= z) {
-                y.addClass("active")
+    var p = function (z) {
+        var y = +(cm.WorldSettings.getSetting("TR_MAX_INVENTORY_ROWS")),
+            E = seed.throne.rowNum,
+            B = [],
+            D, C;
+        for (var A = 0; A < y; ++A) {
+            C = A + 1;
+            D = g("<li/>");
+            D.attr("id", "throneInventoryRow" + (A + 1));
+            if (C <= E) {
+                D.addClass("active")
             } else {
-                if (x === (z + 1)) {
-                    y.addClass("buy");
-                    y.bind("click", function () {
+                if (C === (E + 1)) {
+                    D.addClass("buy");
+                    D.bind("click", function () {
                         cm.ContextualMenuThrone.renderMenu(this, null)
                     })
                 } else {
-                    y.addClass("inactive")
+                    D.addClass("inactive")
                 }
             }
-            if (u.length >= 5) {
-                g.each(u.splice(0, 5), function (A, B) {
-                    y.append(B)
+            if (z.length >= 5) {
+                g.each(z.splice(0, 5), function (F, G) {
+                    D.append(G)
                 })
             } else {
-                if (u.length >= 1 && u.length < 5) {
-                    g.each(u.splice(0, u.length), function (A, B) {
-                        y.append(B)
+                if (z.length >= 1 && z.length < 5) {
+                    g.each(z.splice(0, z.length), function (F, G) {
+                        D.append(G)
                     })
                 }
             }
-            w.push(y)
+            B.push(D)
         }
-        return w
+        return B
     };
-    var k = function (y) {
-        var x = y.type,
-            v = seed.throne.activeSlot,
-            z = seed.throne.slotEquip[v],
-            w = [],
-            t;
-        var u = {};
-        g.each(z, function (A, B) {
-            t = kocThroneItems[B];
-            if (t.type === x) {
-                u.item1 = y;
-                u.item2 = t;
-                u.idx = A;
+    var n = function (D) {
+        var C = D.type,
+            A = seed.throne.activeSlot,
+            E = seed.throne.slotEquip[A],
+            B = [],
+            y;
+        var z = {};
+        g.each(E, function (F, G) {
+            y = kocThroneItems[G];
+            if (y.type === C) {
+                z.item1 = D;
+                z.item2 = y;
+                z.idx = F;
                 return false
             }
         });
-        return u
+        return z
     };
-    var a = function (t) {
+    var a = function (y) {
         AjaxCall.gPostRequest("ajax/_dispatch53.php", {
             ctrl: "throneRoom\\ThroneRoomServiceAjax",
             action: "equipItem",
-            itemId: t.id,
+            itemId: y.id,
             presetId: seed.throne.activeSlot
-        }, function (u) {
-            if (u.ok === true) {
-                cm.ThroneView.clickItemEquip(t)
+        }, function (z) {
+            if (z.ok === true) {
+                cm.ThroneView.clickItemEquip(y)
             } else {
                 cm.ModalManager.alert({
                     button_text: g_js_strings.commonstr.ok,
-                    text: u.msg,
+                    text: z.msg,
                     "class": "craftFailure",
                     exe: function () {
                         Modal.hideModalAll();
@@ -66888,19 +68132,19 @@ cm.ThroneController = function (g) {
             }
         })
     };
-    var r = function (t) {
+    var v = function (y) {
         AjaxCall.gPostRequest("ajax/_dispatch53.php", {
             ctrl: "throneRoom\\ThroneRoomServiceAjax",
             action: "unequipItem",
-            itemId: t.id,
+            itemId: y.id,
             presetId: seed.throne.activeSlot
-        }, function (u) {
-            if (u.ok === true) {
-                cm.ThroneView.clickItemUnequip(t)
+        }, function (z) {
+            if (z.ok === true) {
+                cm.ThroneView.clickItemUnequip(y)
             } else {
                 cm.ModalManager.alert({
                     button_text: g_js_strings.commonstr.ok,
-                    text: u.msg,
+                    text: z.msg,
                     "class": "craftFailure",
                     exe: function () {
                         Modal.hideModalAll();
@@ -66910,19 +68154,19 @@ cm.ThroneController = function (g) {
             }
         })
     };
-    var p = function (t) {
+    var t = function (y) {
         AjaxCall.gPostRequest("ajax/_dispatch53.php", {
             ctrl: "throneRoom\\ThroneRoomServiceAjax",
             action: "salvage",
-            itemId: t.id,
+            itemId: y.id,
             cityId: currentcityid
-        }, function (u) {
-            if (u.ok === true) {
-                t.salvage()
+        }, function (z) {
+            if (z.ok === true) {
+                y.salvage()
             } else {
                 cm.ModalManager.alert({
                     button_text: g_js_strings.commonstr.ok,
-                    text: u.msg,
+                    text: z.msg,
                     "class": "craftFailure",
                     exe: function () {
                         Modal.hideModalAll();
@@ -66932,18 +68176,18 @@ cm.ThroneController = function (g) {
             }
         })
     };
-    var h = function (u, t) {
+    var i = function (z, y) {
         AjaxCall.gPostRequest("ajax/_dispatch53.php", {
             ctrl: "throneRoom\\ThroneRoomServiceAjax",
             action: "setPreset",
-            presetId: t
-        }, function (v) {
-            if (v.ok === true) {
-                cm.ThroneView.clickActivePreset(u)
+            presetId: y
+        }, function (A) {
+            if (A.ok === true) {
+                cm.ThroneView.clickActivePreset(z)
             } else {
                 cm.ModalManager.alert({
                     button_text: g_js_strings.commonstr.ok,
-                    text: v.msg,
+                    text: A.msg,
                     "class": "craftFailure",
                     exe: function () {
                         Modal.hideModalAll();
@@ -66953,26 +68197,26 @@ cm.ThroneController = function (g) {
             }
         })
     };
-    var q = function (v) {
-        var u = "TR_PRESET_COST_" + (seed.throne.slotNum + 1),
-            w = +(cm.WorldSettings.getSetting(u)),
-            t = +(seed.player.gems);
-        if (w > t) {
+    var u = function (A) {
+        var z = "TR_PRESET_COST_" + (seed.throne.slotNum + 1),
+            B = +(cm.WorldSettings.getSetting(z)),
+            y = +(seed.player.gems);
+        if (B > y) {
             modal_getgems()
         } else {
             AjaxCall.gPostRequest("ajax/_dispatch53.php", {
                 ctrl: "throneRoom\\ThroneRoomServiceAjax",
                 action: "buyNextPreset"
-            }, function (x) {
-                if (x.ok === true) {
-                    seed.player.gems = +(seed.player.gems) - w;
+            }, function (C) {
+                if (C.ok === true) {
+                    seed.player.gems = +(seed.player.gems) - B;
                     g("#kochead_gems").text(seed.player.gems);
                     g(".gemContainer .amount").text(seed.player.gems);
-                    cm.ThroneView.buyPreset(v)
+                    cm.ThroneView.buyPreset(A)
                 } else {
                     cm.ModalManager.alert({
                         button_text: g_js_strings.commonstr.ok,
-                        text: x.msg,
+                        text: C.msg,
                         "class": "craftFailure",
                         exe: function () {
                             Modal.hideModalAll();
@@ -66983,26 +68227,26 @@ cm.ThroneController = function (g) {
             })
         }
     };
-    var o = function (v) {
-        var u = "TR_ROW_COST_" + (seed.throne.rowNum + 1),
-            w = +(cm.WorldSettings.getSetting(u)),
-            t = +(seed.player.gems);
-        if (w > t) {
+    var q = function (A) {
+        var z = "TR_ROW_COST_" + (seed.throne.rowNum + 1),
+            B = +(cm.WorldSettings.getSetting(z)),
+            y = +(seed.player.gems);
+        if (B > y) {
             modal_getgems()
         } else {
             AjaxCall.gPostRequest("ajax/_dispatch53.php", {
                 ctrl: "throneRoom\\ThroneRoomServiceAjax",
                 action: "buyNextRow"
-            }, function (x) {
-                if (x.ok === true) {
-                    seed.player.gems = +(seed.player.gems) - w;
+            }, function (C) {
+                if (C.ok === true) {
+                    seed.player.gems = +(seed.player.gems) - B;
                     g("#kochead_gems").text(seed.player.gems);
                     g(".gemContainer .amount").text(seed.player.gems);
-                    cm.ThroneView.buyRow(v)
+                    cm.ThroneView.buyRow(A)
                 } else {
                     cm.ModalManager.alert({
                         button_text: g_js_strings.commonstr.ok,
-                        text: x.msg,
+                        text: C.msg,
                         "class": "craftFailure",
                         exe: function () {
                             Modal.hideModalAll();
@@ -67013,40 +68257,61 @@ cm.ThroneController = function (g) {
             })
         }
     };
-    var j = function (z) {
-        var t = seed.throne.slotEquip[seed.throne.activeSlot],
-            x, w, v, A = 0,
-            u, y = [94, 95, 96];
-        if (jQuery.inArray(z, y) > -1) {
-            v = cm.thronestats.tiers[z][1];
-            base = +(v.base);
-            growth = +(v.growth);
-            A += base
+    var h = function (z, y) {
+        z = +z;
+        y = +y;
+        return cm.thronestats.tiers && cm.thronestats.tiers[z] && cm.thronestats.tiers[z][y] ? cm.thronestats.tiers[z][y] : {}
+    };
+    var w = function (C, A, D) {
+        var z = h(C, A),
+            B = +(z.base) || 0,
+            y = +(z.growth) || 0;
+        return +(B + ((D * D + D) * y * 0.5)).toFixed(2) || 0
+    };
+    var l = function (y) {
+        y = +y;
+        return cm.thronestats.effects && cm.thronestats.effects[y] ? cm.thronestats.effects[y] : {}
+    };
+    var k = function (y) {
+        return l(y)[1] || "Effect"
+    };
+    var r = function (y) {
+        return l(y)[4] || "Suffix"
+    };
+    var m = function (A) {
+        var y = seed.throne.slotEquip[seed.throne.activeSlot],
+            B = 0,
+            z = [94, 95, 96];
+        if (jQuery.inArray(A, z) > -1) {
+            B += h(A, 1).base
         } else {
-            jQuery.each(t, function (B, C) {
-                x = kocThroneItems[C];
-                w = x.effects;
-                jQuery.each(w, function (E, D) {
-                    v = cm.thronestats.tiers[D.id][D.tier];
-                    base = +(v.base);
-                    growth = +(v.growth);
-                    u = +(E.split("slot")[1]);
-                    if (+(D.id) === z && x.quality >= u) {
-                        A += +(base + ((x.level * x.level + x.level) * growth * 0.5))
+            jQuery.each(y, function (F, E) {
+                var D = kocThroneItems[E],
+                    C = D.effects;
+                jQuery.each(C, function (I, H) {
+                    var G = +(I.split("slot")[1]);
+                    if (+(H.id) === A && D.quality >= G) {
+                        B += cm.ThroneController.getEffectAmount(A, H.tier, D.level)
                     }
                 })
             })
         }
-        return A
+        return B
     };
-    var c = function (x) {
-        var y = +(seed.throne.activeSlot),
-            z = seed.throne.slotEquip[y],
-            w = "",
-            C = false,
-            A = kocThroneItems,
-            v, B = 0,
-            t = {}, u = {
+    var s = function (y) {
+        if (!cm.thronestats.boosts[y] || !cm.thronestats.boosts[y]["Max"]) {
+            return ""
+        }
+        return cm.thronestats.boosts[y]["Max"]
+    };
+    var c = function (C) {
+        var D = +(seed.throne.activeSlot),
+            E = seed.throne.slotEquip[D],
+            B = "",
+            H = false,
+            F = kocThroneItems,
+            A, G = 0,
+            y = {}, z = {
                 briton: {
                     count: 0
                 },
@@ -67057,93 +68322,93 @@ cm.ThroneController = function (g) {
                     count: 0
                 }
             };
-        g.each(x, function (D, E) {
-            switch (E.faction) {
+        g.each(C, function (I, J) {
+            switch (J.faction) {
                 case "briton":
-                    u.briton.count++;
+                    z.briton.count++;
                     break;
                 case "fey":
-                    u.fey.count++;
+                    z.fey.count++;
                     break;
                 case "druid":
-                    u.druid.count++;
+                    z.druid.count++;
                     break
             }
         });
-        g.each(u, function (D, E) {
-            if (E.count >= 4) {
-                w = D;
-                B = 4
+        g.each(z, function (I, J) {
+            if (J.count >= 4) {
+                B = I;
+                G = 4
             }
         });
-        if ((B >= 4 && w != "")) {
-            C = true
+        if ((G >= 4 && B != "")) {
+            H = true
         } else {
-            C = false
+            H = false
         }
-        t.hazBonus = C;
-        t.faction = w;
-        return t
-    };
-    var f = function (v) {
-        var A = seed.throne.rowNum,
-            w = A * 5,
-            t = 0,
-            z = kocThroneItems,
-            y = 0,
-            u = cm.thronestats.mightByQuality,
-            x = cm.thronestats.mightByLevel;
-        g.each(z, function (C, B) {
-            ++t;
-            if (t > w) {
-                return false
-            }
-            y += u[B.quality].Might;
-            y += x[B.level].Might
-        });
+        y.hazBonus = H;
+        y.faction = B;
         return y
     };
-    var i = function (u) {
-        var t = [],
-            w = [],
-            v = {};
-        g.each(kocThroneItems, function (y, x) {
-            if (!x.isEquipped && x.presetId == 0) {
-                if (g.inArray(x.quality, u) >= 0) {
-                    t.push(x);
-                    w.push(x.id)
+    var e = function (A) {
+        var F = seed.throne.rowNum,
+            B = F * 5,
+            y = 0,
+            E = kocThroneItems,
+            D = 0,
+            z = cm.thronestats.mightByQuality,
+            C = cm.thronestats.mightByLevel;
+        g.each(E, function (H, G) {
+            ++y;
+            if (y > B) {
+                return false
+            }
+            D += z[G.quality].Might;
+            D += C[G.level].Might
+        });
+        return D
+    };
+    var j = function (z) {
+        var y = [],
+            B = [],
+            A = {};
+        g.each(kocThroneItems, function (D, C) {
+            if (!C.isEquipped && C.presetId == 0) {
+                if (g.inArray(C.quality, z) >= 0) {
+                    y.push(C);
+                    B.push(C.id)
                 }
             }
         });
-        v.ids = w;
-        v.items = t;
-        return v
+        A.ids = B;
+        A.items = y;
+        return A
     };
-    var b = function (t) {
-        var u = 0;
-        g.each(t, function (w, v) {
-            u += Object.keys(v.effects).length * (v.quality + v.level) * cm.WorldSettings.getSettingAsNumber("AETHERSTONE_SALVAGE_MULTIPLIER", 500)
+    var b = function (y) {
+        var z = 0;
+        g.each(y, function (B, A) {
+            z += Object.keys(A.effects).length * (A.quality + A.level) * cm.WorldSettings.getSettingAsNumber("AETHERSTONE_SALVAGE_MULTIPLIER", 500)
         });
-        return u
+        return z
     };
-    var d = function (t, v) {
-        var u;
+    var d = function (y, A) {
+        var z;
         AjaxCall.gPostRequest("ajax/_dispatch53.php", {
             ctrl: "throneRoom\\ThroneRoomServiceAjax",
             action: "salvage",
-            itemId: t.join(","),
+            itemId: y.join(","),
             cityId: currentcityid,
-            qualityId: v.join(",")
-        }, function (w) {
-            if (w.ok === true) {
-                g.each(t, function (y, x) {
-                    u = kocThroneItems[x];
-                    u.salvage()
+            qualityId: A.join(",")
+        }, function (B) {
+            if (B.ok === true) {
+                g.each(y, function (D, C) {
+                    z = kocThroneItems[C];
+                    z.salvage()
                 })
             } else {
                 cm.ModalManager.alert({
                     button_text: g_js_strings.commonstr.ok,
-                    text: w.msg,
+                    text: B.msg,
                     "class": "craftFailure",
                     exe: function () {
                         Modal.hideModalAll();
@@ -67153,31 +68418,32 @@ cm.ThroneController = function (g) {
             }
         })
     };
-    var l = function () {};
-    l();
     return {
-        createItems: s,
-        createRows: n,
-        checkType: k,
-        addItem: m,
+        createItems: x,
+        createRows: p,
+        checkType: n,
+        addItem: o,
         equipItem: a,
-        unequipItem: r,
-        salvageItem: p,
-        setPreset: h,
-        buyPreset: q,
-        buyRow: o,
-        effectBonus: j,
+        unequipItem: v,
+        salvageItem: t,
+        setPreset: i,
+        buyPreset: u,
+        buyRow: q,
+        getEffectAmount: w,
+        getEffectName: k,
+        getEffectSuffix: r,
+        effectBonus: m,
         hasFactionBonus: c,
-        calcMight: f,
-        calcMassSalvagableItems: i,
+        calcMight: e,
+        calcMassSalvagableItems: j,
         calcMassSalvagableAetherstones: b,
         massSalvageItems: d,
-        getThroneItems: e
+        getThroneItems: f
     }
 }(jQuery);
 cm = cm || {};
 cm.ThroneItemModel = jQueryClass.extend({
-    init: function (b, a) {
+    init: function (a) {
         this.id = a.id;
         this.unique = (a.unique) ? +(a.unique) : 0;
         this.faction = a.faction;
@@ -67264,12 +68530,10 @@ cm.ThroneItemModel = jQueryClass.extend({
         }
     },
     createSuffix: function () {
-        var b = this.effects["slot" + 5],
-            d = b.id,
-            a = b.tier,
-            c;
-        c = cm.thronestats.effects[d][4];
-        return c
+        var a = this.effects["slot" + 5],
+            c = a.id,
+            b = cm.ThroneController.getEffectSuffix(c);
+        return b
     },
     createName: function () {
         var c = this.createPrefix(),
@@ -67311,7 +68575,7 @@ cm.ThronePanelController = function (f) {
         if (v.quality >= 5 && w == "enhance") {
             return true
         } else {
-            if (v.level >= 10 && w == "upgrade") {
+            if (v.level >= 12 && w == "upgrade") {
                 return true
             } else {
                 return false
@@ -68070,10 +69334,10 @@ cm.ThronePanelView = function (E) {
         }
         return T.join("")
     };
-    var j = function (S, ac, aa, U) {
+    var j = function (S, ac, Z, U) {
         var W = [],
-            V, ad, X, Z, R = {}, Y, T, ab;
-        if (aa == "next") {
+            V, aa, Y, R = {}, X, T, ab;
+        if (Z == "next") {
             if (U == "enhance") {
                 ++ac.quality
             } else {
@@ -68082,32 +69346,30 @@ cm.ThronePanelView = function (E) {
                 }
             }
         }
-        E.each(ac.effects, function (ae, af) {
+        E.each(ac.effects, function (ad, ae) {
             T = "";
-            V = +(ae.split("slot")[1]);
-            ad = cm.thronestats.effects[af.id];
-            X = cm.thronestats.tiers[af.id][af.tier];
-            Z = +(X.base) + ((ac.level * ac.level + ac.level) * +(X.growth) / 2);
-            Z = Z.toFixed(2);
-            R[af.id] = {};
-            R[af.id].percent = Z;
-            R[af.id].name = ad[1];
+            V = +(ad.split("slot")[1]);
+            aa = cm.ThroneController.getEffectName(ae.id);
+            Y = cm.ThroneController.getEffectAmount(ae.id, ae.tier, ac.level);
+            R[ae.id] = {};
+            R[ae.id].percent = Y;
+            R[ae.id].name = aa;
             if (V % 2 == 0) {
-                Y = "even"
+                X = "even"
             } else {
-                Y = "odd"
+                X = "odd"
             }
             if (V > ac.quality) {
-                Y += " disabled"
+                X += " disabled"
             }
-            if (Z > 1) {
-                T += ad[1] + " +" + Z + "%"
+            if (Y > 0) {
+                T += aa + " +" + Y + "%"
             } else {
-                T += ad[1] + " " + Z + "%"
+                T += aa + " " + Y + "%"
             }
-            W.push("<li class='" + Y + "' >" + T + "</li>")
+            W.push("<li class='" + X + "' >" + T + "</li>")
         });
-        if (aa == "next") {
+        if (Z == "next") {
             if (U == "enhance") {
                 --ac.quality
             } else {
@@ -68116,7 +69378,7 @@ cm.ThronePanelView = function (E) {
                 }
             }
         }
-        if (aa === "next") {
+        if (Z === "next") {
             if (cm.ThronePanelController.isLastLevel(ac, U)) {
                 ab = E("<div/>").addClass("lock").attr("id", "lockedStatIcon");
                 E("#nextStatContainer").append(ab)
@@ -68800,27 +70062,27 @@ cm.ThronePanelView = function (E) {
     }
 }(jQuery);
 cm = cm || {};
-cm.ThroneView = function (c) {
-    var A = 1,
-        h, l = {}, k;
-    var p = function (E) {
-        var G = (E) ? E.items : undefined,
-            C = true;
-        if (E) {
-            C = (E.id == tvuid) ? true : false
+cm.ThroneView = function (e) {
+    var B = 1,
+        j, m = {}, l;
+    var q = function (F) {
+        var H = (F) ? F.items : undefined,
+            D = true;
+        if (F) {
+            D = (F.id == tvuid) ? true : false
         }
-        var D = cm.Template.renderTemplate("Throne", "mainThrone", {}),
-            F = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
+        var E = cm.Template.renderTemplate("Throne", "mainThrone", {}),
+            G = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
                 gem: seed.player.gems,
-                primaryTitle: (!C) ? (E.name + g_js_strings.throneRoom.title_part) : g_js_strings.throneRoom.title_throneRoom
+                primaryTitle: (!D) ? (F.name + g_js_strings.throneRoom.title_part) : g_js_strings.throneRoom.title_throneRoom
             });
         cm.ModalManager.addLarge({
             gem: seed.player.gems,
-            title: F,
-            body: D,
+            title: G,
+            body: E,
             closeNow: false,
             close: function () {
-                c("#contextMenu").remove();
+                e("#contextMenu").remove();
                 cm.ThronePanelView.closePanel()
             },
             "class": "throneContainer",
@@ -68833,557 +70095,570 @@ cm.ThroneView = function (c) {
                 cm.PlayerGuide.open("throneroom")
             }
         });
-        c(".buttonv2.green.h20").click(function () {
+        e(".buttonv2.green.h20").click(function () {
             modal_getgems()
         });
-        if (C) {
-            c("#throneInventoryTab").click(function (H) {
+        if (D) {
+            e("#throneInventoryTab").click(function (I) {
                 v("inventory", this)
             })
         } else {
-            c("#throneInventoryTab").attr("class", "deactive")
+            e("#throneInventoryTab").attr("class", "deactive")
         }
-        c("#throneStatTab").click(function (H) {
-            v("stat", this, G)
+        e("#throneStatTab").click(function (I) {
+            v("stat", this, H)
         });
-        b(G);
-        if (C) {
+        d(H);
+        if (D) {
             t(kocThroneItems)
         }
-        q(G);
-        if (C) {
+        r(H);
+        if (D) {
             w()
         }
         return false
     };
-    var b = function (H) {
-        var C, I = seed.throne.activeSlot,
-            K = seed.throne.slotEquip[I],
-            L, E, D, G = "",
-            F = 0,
-            J = 0;
-        if (!H) {
-            H = {};
-            c.each(K, function (M, N) {
-                L = kocThroneItems[N];
-                H[L.id] = L
+    var d = function (I) {
+        var D, J = seed.throne.activeSlot,
+            L = seed.throne.slotEquip[J],
+            M, F, E, H = "",
+            G = 0,
+            K = 0;
+        if (!I) {
+            I = {};
+            e.each(L, function (N, O) {
+                M = kocThroneItems[O];
+                I[M.id] = M
             })
         }
-        D = cm.ThroneController.hasFactionBonus(H);
-        c("#throneItemContainer").empty();
-        c.each(H, function (M, N) {
-            L = N;
-            E = c("<div/>");
-            E.attr("id", L.type + "Container");
-            E.addClass(L.faction);
-            if (L.unique > 0) {
-                E.addClass("unique" + L.unique)
+        E = cm.ThroneController.hasFactionBonus(I);
+        e("#throneItemContainer").empty();
+        e.each(I, function (N, O) {
+            M = O;
+            F = e("<div/>");
+            F.attr("id", M.type + "Container");
+            F.addClass(M.faction);
+            if (M.unique > 0) {
+                F.addClass("unique" + M.unique)
             }
-            E.bind("mouseenter", {
-                item: L
-            }, function (O) {
-                O.stopPropagation();
-                cm.ThroneView.hoverItem(O, this, O.data.item)
+            F.bind("mouseenter", {
+                item: M
+            }, function (P) {
+                P.stopPropagation();
+                cm.ThroneView.hoverItem(P, this, P.data.item)
             });
-            E.bind("mouseleave", {
-                item: L
-            }, function (O) {
-                O.stopPropagation();
-                cm.ThroneView.unhoverItem(O, this, O.data.item)
+            F.bind("mouseleave", {
+                item: M
+            }, function (P) {
+                P.stopPropagation()
             });
-            c("#throneItemContainer").append(E)
+            e("#throneItemContainer").append(F)
         });
-        if (D.hazBonus) {
-            switch (D.faction) {
+        if (E.hazBonus) {
+            switch (E.faction) {
                 case "briton":
-                    F = 94;
-                    J = cm.ThroneController.effectBonus(F);
+                    G = 94;
+                    K = cm.ThroneController.effectBonus(G);
                     break;
                 case "fey":
-                    F = 95;
-                    J = cm.ThroneController.effectBonus(F);
+                    G = 95;
+                    K = cm.ThroneController.effectBonus(G);
                     break;
                 case "druid":
-                    F = 96;
-                    J = cm.ThroneController.effectBonus(F);
+                    G = 96;
+                    K = cm.ThroneController.effectBonus(G);
                     break
             }
-            E = c("<div/>");
-            E.attr("id", "reliefContainer");
-            E.addClass(D.faction);
-            G = g_js_strings.throneRoom["faction_bonus_" + D.faction] + " " + J + "%";
-            E.bind("mouseenter", function (M) {
-                M.stopPropagation();
-                Tooltip.show(M, G, [0, -70])
+            F = e("<div/>");
+            F.attr("id", "reliefContainer");
+            F.addClass(E.faction);
+            H = g_js_strings.throneRoom["faction_bonus_" + E.faction] + " " + K + "%";
+            F.bind("mouseenter", function (N) {
+                N.stopPropagation();
+                Tooltip.show(N, H, [0, -70])
             });
-            c("#throneItemContainer").append(E)
+            e("#throneItemContainer").append(F)
         }
     };
-    var t = function (C) {
-        var E = cm.ThroneController.createItems(C),
-            D = cm.ThroneController.createRows(E);
-        c("#throneInventoryList").empty();
-        c.each(D, function (F, G) {
-            c("#throneInventoryList").append(G)
+    var t = function (D) {
+        var F = cm.ThroneController.createItems(D),
+            E = cm.ThroneController.createRows(F);
+        e("#throneInventoryList").empty();
+        e.each(E, function (G, H) {
+            e("#throneInventoryList").append(H)
         })
     };
-    var q = function (G) {
-        var D = [],
-            E = "odd",
-            K, F = 0,
-            C = {}, H = seed.throne.activeSlot,
-            I = seed.throne.slotEquip[H],
-            J;
-        c("#throneStatDisplay").html("");
-        if (!G) {
-            G = {};
-            c.each(I, function (L, M) {
-                J = kocThroneItems[M];
-                G[J.id] = J
+    var r = function (H) {
+        var E = [],
+            F = "odd",
+            L, G = 0,
+            D = {}, I = seed.throne.activeSlot,
+            J = seed.throne.slotEquip[I],
+            K;
+        e("#throneStatDisplay").html("");
+        if (!H) {
+            H = {};
+            e.each(J, function (M, N) {
+                K = kocThroneItems[N];
+                H[K.id] = K
             });
-            K = c("<li/>");
-            K.html(g_js_strings.throneRoom.might1 + ": " + cm.ThroneController.calcMight(G));
-            c("#throneStatDisplay").append(K)
+            L = e("<li/>");
+            L.html(g_js_strings.throneRoom.might1 + ": " + cm.ThroneController.calcMight(H));
+            e("#throneStatDisplay").append(L)
         }
-        C = f(G);
-        c.each(C, function (L, M) {
-            F++;
-            E = (F % 2 === 0) ? "even" : "odd";
-            K = c("<li/>");
-            K.addClass(E);
-            K.html((M.percent).toFixed(2) + "% " + M.name);
-            c("#throneStatDisplay").append(K)
+        D = h(H);
+        e.each(D, function (M, N) {
+            G++;
+            F = (G % 2 === 0) ? "even" : "odd";
+            L = e("<li/>");
+            L.addClass(F);
+            L.html((N.percent).toFixed(2) + "% " + N.name);
+            e("#throneStatDisplay").append(L)
         })
     };
-    var f = function (D) {
-        var I, G, C, H, F = {}, E;
-        c.each(D, function (J, K) {
-            I = K;
-            c.each(I.effects, function (L, M) {
-                E = +(L.split("slot")[1]);
-                if (I.quality >= E) {
-                    G = cm.thronestats.effects[M.id];
-                    C = cm.thronestats.tiers[M.id][M.tier];
-                    H = +(C.base) + ((I.level * I.level + I.level) * +(C.growth) * 0.5);
-                    H = Math.ceil(H);
-                    if (!I.isBroken) {
-                        if (!F[M.id]) {
-                            F[M.id] = {}
-                        }
-                        if (!F[M.id].percent) {
-                            F[M.id].percent = H
-                        } else {
-                            F[M.id].percent += H
-                        }
-                        F[M.id].name = G[1]
+    var h = function (D) {
+        var F, E = {};
+        e.each(D, function (G, I) {
+            var H = I.effects;
+            e.each(H, function (J, L) {
+                var N = L.id,
+                    K = +(J.split("slot")[1]);
+                if (I.quality >= K && !I.isBroken) {
+                    var M = cm.ThroneController.getEffectAmount(N, L.tier, I.level);
+                    if (!E[N]) {
+                        E[N] = {}
                     }
+                    if (!E[N].percent) {
+                        E[N].percent = M
+                    } else {
+                        E[N].percent += M
+                    }
+                    E[N].name = cm.ThroneController.getEffectName(N)
                 }
             })
         });
-        return F
+        return E
     };
     var w = function () {
-        var E = [],
-            I, H, D = 8,
-            J = seed.throne.activeSlot,
-            F = seed.throne.slotNum;
-        for (var G = 0; G < D; ++G) {
-            H = G + 1;
-            I = c("<li/>");
-            if (H === J) {
-                I.attr("id", "throneInventoryPreset" + H);
-                I.addClass("selected");
-                I.html(H);
-                I.bind("click", function () {
+        var F = [],
+            J, I, E = 8,
+            K = seed.throne.activeSlot,
+            G = seed.throne.slotNum;
+        for (var H = 0; H < E; ++H) {
+            I = H + 1;
+            J = e("<li/>");
+            if (I === K) {
+                J.attr("id", "throneInventoryPreset" + I);
+                J.addClass("selected");
+                J.html(I);
+                J.bind("click", function () {
                     u(this);
                     removeTooltip()
                 })
             } else {
-                if (H === (F + 1)) {
-                    I.attr("id", "throneInventoryPreset" + H);
-                    I.addClass("buy");
-                    I.html(H);
-                    I.bind("click", function () {
-                        r(this);
+                if (I === (G + 1)) {
+                    J.attr("id", "throneInventoryPreset" + I);
+                    J.addClass("buy");
+                    J.html(I);
+                    J.bind("click", function () {
+                        s(this);
                         removeTooltip()
                     })
                 } else {
-                    if (H <= F) {
-                        I.attr("id", "throneInventoryPreset" + H);
-                        I.addClass("active");
-                        I.html(H);
-                        I.bind("click", {
-                            idx: G
-                        }, function (K) {
-                            var L = K.data.idx + 1;
-                            cm.ThroneController.setPreset(this, L);
+                    if (I <= G) {
+                        J.attr("id", "throneInventoryPreset" + I);
+                        J.addClass("active");
+                        J.html(I);
+                        J.bind("click", {
+                            idx: H
+                        }, function (L) {
+                            var M = L.data.idx + 1;
+                            cm.ThroneController.setPreset(this, M);
                             removeTooltip()
                         });
-                        I.bind("mouseenter", function (K) {
-                            z(this, K, K.target.id)
+                        J.bind("mouseenter", function (L) {
+                            z(this, L, L.target.id)
                         });
-                        I.bind("mouseleave", function (K) {
+                        J.bind("mouseleave", function (L) {
                             removeTooltip()
                         })
                     } else {
-                        I.attr("id", "throneInventoryPreset" + H);
-                        I.addClass("locked");
-                        I.html(H)
+                        J.attr("id", "throneInventoryPreset" + I);
+                        J.addClass("locked");
+                        J.html(I)
                     }
                 }
             }
-            E.push(I)
+            F.push(J)
         }
-        var C = c("#throneStatList");
-        c.each(E, function (K, L) {
-            C.append(L)
+        var D = e("#throneStatList");
+        e.each(F, function (L, M) {
+            D.append(M)
         })
     };
-    var v = function (E, G, D) {
-        var F = c("div#throneInfoContainer ul.tabNavigation li.active"),
-            C = c("#throneInfoContainer");
-        if (c(G).hasClass("active")) {
-            c(G).removeClass("active");
-            c(G).addClass("inactive");
-            C.stop().animate({
+    var v = function (F, H, E) {
+        var G = e("div#throneInfoContainer ul.tabNavigation li.active"),
+            D = e("#throneInfoContainer");
+        if (e(H).hasClass("active")) {
+            e(H).removeClass("active");
+            e(H).addClass("inactive");
+            D.stop().animate({
                 left: "-190"
             }, 500, "easeOutCirc")
         } else {
-            F.removeClass("active");
-            F.addClass("inactive");
-            c(G).removeClass("inactive");
-            c(G).addClass("active");
-            C.stop().animate({
+            G.removeClass("active");
+            G.addClass("inactive");
+            e(H).removeClass("inactive");
+            e(H).addClass("active");
+            D.stop().animate({
                 left: "0"
             }, 500, "easeOutCirc");
-            switch (E) {
+            switch (F) {
                 case "inventory":
-                    c("#throneInventoryContainer").show();
-                    c("#throneStatContainer").hide();
+                    e("#throneInventoryContainer").show();
+                    e("#throneStatContainer").hide();
                     break;
                 case "stat":
-                    c("#throneInventoryContainer").hide();
-                    c("#throneStatContainer").show();
-                    q(D);
+                    e("#throneInventoryContainer").hide();
+                    e("#throneStatContainer").show();
+                    r(E);
                     break;
                 default:
                     break
             }
         }
     };
-    var r = function (C) {
-        cm.ContextualMenuThrone.renderMenu(C, null)
+    var s = function (D) {
+        cm.ContextualMenuThrone.renderMenu(D, null)
     };
-    var B = function (G) {
-        var H = c("#throneStatList li"),
-            E = +(c(G).html()),
-            D = E - 1,
-            C = E,
-            F;
-        F = c(H[D]);
-        F.removeClass("buy");
-        F.addClass("active");
-        F.unbind("click");
-        F.bind("click", function () {
-            var I = E;
-            cm.ThroneController.setPreset(this, I)
+    var C = function (H) {
+        var I = e("#throneStatList li"),
+            F = +(e(H).html()),
+            E = F - 1,
+            D = F,
+            G;
+        G = e(I[E]);
+        G.removeClass("buy");
+        G.addClass("active");
+        G.unbind("click");
+        G.bind("click", function () {
+            var J = F;
+            cm.ThroneController.setPreset(this, J)
         });
-        F.bind("mouseenter", function (I) {
-            z(this, I, I.target.id)
+        G.bind("mouseenter", function (J) {
+            z(this, J, J.target.id)
         });
-        F.bind("mouseleave", function (I) {
+        G.bind("mouseleave", function (J) {
             removeTooltip()
         });
-        F = c(H[C]);
-        F.removeClass("locked");
-        F.addClass("buy");
-        F.unbind("click");
-        F.bind("click", function () {
-            r(this)
+        G = e(I[D]);
+        G.removeClass("locked");
+        G.addClass("buy");
+        G.unbind("click");
+        G.bind("click", function () {
+            s(this)
         });
         seed.throne.slotNum = +(seed.throne.slotNum) + 1;
-        seed.throne.slotEquip[D + 1] = []
+        seed.throne.slotEquip[E + 1] = []
     };
-    var u = function (G) {
-        var F = c(G),
-            E = c("#throneStatList .selected"),
-            D = +(c(G).html()),
-            H = seed.throne.slotEquip[D],
-            C;
-        E.removeClass("selected");
-        E.addClass("active");
-        E.bind("mouseenter", function (I) {
-            z(this, I, I.target.id)
+    var u = function (H) {
+        var G = e(H),
+            F = e("#throneStatList .selected"),
+            E = +(e(H).html()),
+            I = seed.throne.slotEquip[E],
+            D;
+        F.removeClass("selected");
+        F.addClass("active");
+        F.bind("mouseenter", function (J) {
+            z(this, J, J.target.id)
         });
-        E.bind("mouseleave", function (I) {
+        F.bind("mouseleave", function (J) {
             removeTooltip()
         });
-        F.removeClass("active");
-        F.addClass("selected");
-        F.unbind("mouseenter").unbind("mouseleave");
-        seed.throne.activeSlot = D;
-        c.each(kocThroneItems, function (I, J) {
-            C = c.inArray(J.id, H) > -1;
-            if (C) {
-                J.isEquipped = true
+        G.removeClass("active");
+        G.addClass("selected");
+        G.unbind("mouseenter").unbind("mouseleave");
+        seed.throne.activeSlot = E;
+        e.each(kocThroneItems, function (J, K) {
+            D = e.inArray(K.id, I) > -1;
+            if (D) {
+                K.isEquipped = true
             } else {
-                J.isEquipped = false
+                K.isEquipped = false
             }
         });
         cm.ThroneView.equipTimer();
-        b();
-        q();
+        d();
+        r();
         t(kocThroneItems)
     };
-    var a = function (C) {
-        cm.ContextualMenuThrone.renderMenu(C, null)
+    var a = function (D) {
+        cm.ContextualMenuThrone.renderMenu(D, null)
     };
-    var y = function (C) {
+    var y = function (D) {
         seed.throne.rowNum = +(seed.throne.rowNum) + 1;
         t(kocThroneItems)
     };
-    var o = function (E) {
+    var p = function (F) {
         x();
-        var C = +(seed.throne.activeSlot),
-            G = seed.throne.slotEquip[C],
-            D = [],
-            F = cm.ThroneController.checkType(E);
-        if (c.isEmptyObject(F)) {
-            kocThroneItems[E.id].isEquipped = true;
-            c("#throneInventoryItem" + E.id).addClass("equip");
-            G.push(E.id);
-            seed.throne.slotEquip[C] = G;
-            c("#throneInventoryItem" + E.id).unbind("click");
-            c("#throneInventoryItem" + E.id).bind("click", function () {
-                cm.ContextualMenuThrone.renderMenu(this, E)
+        var D = +(seed.throne.activeSlot),
+            H = seed.throne.slotEquip[D],
+            E = [],
+            G = cm.ThroneController.checkType(F);
+        if (e.isEmptyObject(G)) {
+            kocThroneItems[F.id].isEquipped = true;
+            e("#throneInventoryItem" + F.id).addClass("equip");
+            H.push(F.id);
+            seed.throne.slotEquip[D] = H;
+            e("#throneInventoryItem" + F.id).unbind("click");
+            e("#throneInventoryItem" + F.id).bind("click", function () {
+                cm.ContextualMenuThrone.renderMenu(this, F)
             })
         } else {
-            F.item2.isEquipped = false;
-            c("#throneInventoryItem" + F.item2.id).removeClass("equip");
-            seed.throne.slotEquip[C] = G.splice(F.idx, 1);
-            c("#throneInventoryItem" + F.item2.id).unbind("click");
-            c("#throneInventoryItem" + F.item2.id).bind("click", function () {
-                cm.ContextualMenuThrone.renderMenu(this, F.item2)
+            G.item2.isEquipped = false;
+            e("#throneInventoryItem" + G.item2.id).removeClass("equip");
+            seed.throne.slotEquip[D] = H.splice(G.idx, 1);
+            e("#throneInventoryItem" + G.item2.id).unbind("click");
+            e("#throneInventoryItem" + G.item2.id).bind("click", function () {
+                cm.ContextualMenuThrone.renderMenu(this, G.item2)
             });
-            kocThroneItems[F.item1.id].isEquipped = true;
-            c("#throneInventoryItem" + F.item1.id).addClass("equip");
-            kocThroneItems[E.id].presetId = C;
-            G.push(F.item1.id);
-            seed.throne.slotEquip[C] = G;
-            c("#throneInventoryItem" + F.item1.id).unbind("click");
-            c("#throneInventoryItem" + F.item1.id).bind("click", function () {
-                cm.ContextualMenuThrone.renderMenu(this, F.item1)
+            kocThroneItems[G.item1.id].isEquipped = true;
+            e("#throneInventoryItem" + G.item1.id).addClass("equip");
+            kocThroneItems[F.id].presetId = D;
+            H.push(G.item1.id);
+            seed.throne.slotEquip[D] = H;
+            e("#throneInventoryItem" + G.item1.id).unbind("click");
+            e("#throneInventoryItem" + G.item1.id).bind("click", function () {
+                cm.ContextualMenuThrone.renderMenu(this, G.item1)
             })
         }
-        b();
-        q()
+        d();
+        r()
     };
-    var d = function (E) {
-        var C = +(seed.throne.activeSlot),
-            F = seed.throne.slotEquip[C],
-            D = [];
-        c("#throneInventoryItem" + E.id).removeClass("equip");
-        c("#throneInventoryItem" + E.id).unbind("click");
-        c("#throneInventoryItem" + E.id).bind("click", function () {
-            cm.ContextualMenuThrone.renderMenu(this, E)
+    var f = function (F) {
+        var D = +(seed.throne.activeSlot),
+            G = seed.throne.slotEquip[D],
+            E = [];
+        e("#throneInventoryItem" + F.id).removeClass("equip");
+        e("#throneInventoryItem" + F.id).unbind("click");
+        e("#throneInventoryItem" + F.id).bind("click", function () {
+            cm.ContextualMenuThrone.renderMenu(this, F)
         });
         x();
-        kocThroneItems[E.id].presetId = 0;
-        E.isEquipped = false;
-        c.each(F, function (G, H) {
-            if (H !== E.id) {
-                D.push(H)
+        kocThroneItems[F.id].presetId = 0;
+        F.isEquipped = false;
+        e.each(G, function (H, I) {
+            if (I !== F.id) {
+                E.push(I)
             }
         });
-        seed.throne.slotEquip[C] = D;
-        b();
-        q()
+        seed.throne.slotEquip[D] = E;
+        d();
+        r()
     };
-    var n = function (F, G, E) {
-        F.stopPropagation();
-        var C = g(E),
-            I = [0, 30],
-            D, H = c(G).attr("id");
-        if (H.indexOf("throne") > -1) {
+    var o = function (G, H, F) {
+        G.stopPropagation();
+        var E = i(F),
+            I = b(H, F),
+            D = {
+                maxWidth: "430px"
+            };
+        Tooltip.show(G, E, I, D)
+    };
+    var i = function (L) {
+        var J = false;
+        e.each(kocThroneItems, function (M, N) {
+            if (L.id == N.id) {
+                J = true
+            }
+        });
+        var G = [],
+            I = +(seed.throne.activeSlot),
+            K = seed.throne.slotEquip[I],
+            H, F, D = cm.thronestats.mightByQuality,
+            E = cm.thronestats.mightByLevel;
+        if (!L.isEquipped) {
+            e.each(K, function (M, N) {
+                H = kocThroneItems[N];
+                if (L.type === H.type) {
+                    H = H;
+                    return false
+                } else {
+                    H = null
+                }
+            })
+        }
+        G.push(" <div id='throneInventoryItemTooltip'> ");
+        G.push("<div class='section'>");
+        G.push(" <div class='title " + L.createQualityName().toLowerCase() + "' style='text-transform: capitalize;'> ");
+        G.push(L.name);
+        G.push(" </div> ");
+        G.push(" <div class='description'> ");
+        G.push(" <div class='portrait " + L.faction + " " + L.type + " quality" + L.quality + " unique" + L.unique + "'> </div> ");
+        G.push("<ul>");
+        G.push("<li>" + g_js_strings.commonstr.faction + ": " + L.faction + "</li>");
+        G.push("<li>" + g_js_strings.commonstr.quality + ": " + L.createPrefix() + "</li>");
+        G.push("<li>" + g_js_strings.commonstr.type + ": " + g_js_strings.throneRoom[L.type] + "</li>");
+        G.push("<li>" + g_js_strings.commonstr.level + ": " + L.level + "</li>");
+        G.push("<li>" + g_js_strings.commonstr.might + ": " + A(L) + "</li>");
+        G.push("</ul>");
+        G.push(" </div> ");
+        G.push(" <ul> ");
+        e.each(L.effects, function (N, P) {
+            var M = cm.ThroneController.getEffectName(P.id),
+                O = cm.ThroneController.getEffectAmount(P.id, P.tier, L.level);
+            O = (O > 0) ? "+" + O : O;
+            css = (N % 2 === 0) ? "even" : "odd";
+            F = +(N.split("slot")[1]);
+            if (F <= L.quality) {
+                G.push(" <li class='effect " + css + "'> " + O + "% " + M + " </li> ")
+            } else {
+                G.push(" <li class='effect disabled " + css + "'> " + O + "% " + M + " </li> ")
+            }
+        });
+        G.push(" </ul> ");
+        G.push(" </div> ");
+        if (H && J) {
+            G.push("<div class='section'>");
+            G.push(" <div class='title equip " + H.createQualityName().toLowerCase() + "' style='text-transform: capitalize;'> ");
+            G.push(H.name);
+            G.push("<span class='icon'></span>");
+            G.push(" </div> ");
+            G.push(" <div class='description'> ");
+            G.push(" <div class='portrait " + H.faction + " quality" + H.quality + " " + H.type + " unique" + H.unique + "'> </div> ");
+            G.push("<ul>");
+            G.push("<li>" + g_js_strings.commonstr.faction + ": " + H.faction + "</li>");
+            G.push("<li>" + g_js_strings.commonstr.quality + ": " + H.createPrefix() + "</li>");
+            G.push("<li>" + g_js_strings.commonstr.type + ": " + g_js_strings.throneRoom[H.type] + "</li>");
+            G.push("<li>" + g_js_strings.commonstr.level + ": " + H.level + "</li>");
+            G.push("<li>" + g_js_strings.commonstr.might + ": " + A(H) + "</li>");
+            G.push("</ul>");
+            G.push(" </div> ");
+            G.push(" <ul> ");
+            e.each(H.effects, function (N, P) {
+                var M = cm.ThroneController.getEffectName(P.id),
+                    O = cm.ThroneController.getEffectAmount(P.id, P.tier, L.level);
+                O = (O > 0) ? "+" + O : O;
+                css = (N % 2 === 0) ? "even" : "odd";
+                F = +(N.split("slot")[1]);
+                if (F <= H.quality) {
+                    G.push(" <li class='effect " + css + "'> " + O + "% " + M + " </li> ")
+                } else {
+                    G.push(" <li class='effect disabled " + css + "'> " + O + "% " + M + " </li> ")
+                }
+            });
+            G.push(" </ul> ")
+        }
+        G.push(" </div> ");
+        return G.join("")
+    };
+    var b = function (F, E) {
+        var D = c(F),
+            G = [0, 30];
+        if (D === "item") {
+            switch (E.type) {
+                case "advisor":
+                    G = [-300, 250];
+                    break;
+                case "candelabrum":
+                    G = [-380, -25];
+                    break;
+                case "table":
+                    G = [0, 150];
+                    break;
+                case "window":
+                    G = [-40, 30]
+            }
+        }
+        return G
+    };
+    var c = function (E) {
+        var F = e(E).attr("id"),
+            D = "error";
+        if (F.indexOf("throne") > -1) {
             D = "icon"
         } else {
             D = "item"
         }
-        if (E.type == "advisor" && D == "item") {
-            I = [-300, 250]
-        }
-        Tooltip.show(F, C, I, {
-            maxWidth: "430px"
-        });
-        if (E.isEquipped) {
-            c("#" + E.type + "Container").addClass("hover")
-        }
+        return D
     };
-    var i = function (D, E, C) {
-        if (C.isEquipped) {
-            c("#" + C.type + "Container").removeClass("hover")
+    var A = function (H) {
+        if (!(H instanceof cm.ThroneItemModel)) {
+            return 0
         }
-    };
-    var g = function (P) {
-        var N = false;
-        c.each(kocThroneItems, function (T, U) {
-            if (P.id == U.id) {
-                N = true
-            }
-        });
-        var J = [],
-            S, Q, M, L, G, E, D, R, K = +(seed.throne.activeSlot),
-            O = seed.throne.slotEquip[K],
-            I, H, C = cm.thronestats.mightByQuality,
-            F = cm.thronestats.mightByLevel;
-        if (!P.isEquipped) {
-            c.each(O, function (T, U) {
-                I = kocThroneItems[U];
-                if (P.type === I.type) {
-                    I = I;
-                    return false
-                } else {
-                    I = null
-                }
-            })
-        }
-        J.push(" <div id='throneInventoryItemTooltip'> ");
-        J.push("<div class='section'>");
-        J.push(" <div class='title " + P.createQualityName().toLowerCase() + "' style='text-transform: capitalize;'> ");
-        J.push(P.name);
-        J.push(" </div> ");
-        J.push(" <div class='description'> ");
-        J.push(" <div class='portrait " + P.faction + " " + P.type + " quality" + P.quality + " unique" + P.unique + "'> </div> ");
-        J.push("<ul>");
-        J.push("<li>" + g_js_strings.commonstr.faction + ": " + P.faction + "</li>");
-        J.push("<li>" + g_js_strings.commonstr.quality + ": " + P.createPrefix() + "</li>");
-        J.push("<li>" + g_js_strings.commonstr.type + ": " + g_js_strings.throneRoom[P.type] + "</li>");
-        J.push("<li>" + g_js_strings.commonstr.level + ": " + P.level + "</li>");
-        J.push("<li>" + g_js_strings.commonstr.might + ": " + (C[P.quality].Might + F[P.level].Might) + "</li>");
-        J.push("</ul>");
-        J.push(" </div> ");
-        J.push(" <ul> ");
-        c.each(P.effects, function (T, U) {
-            effect = cm.thronestats.effects[U.id];
-            tier = cm.thronestats.tiers[U.id][U.tier];
-            percent = +(tier.base + ((P.level * P.level + P.level) * tier.growth * 0.5));
-            percent = percent.toFixed(2);
-            percent = (percent > 0) ? "+" + percent : percent;
-            css = (T % 2 === 0) ? "even" : "odd";
-            H = +(T.split("slot")[1]);
-            if (H <= P.quality) {
-                J.push(" <li class='effect " + css + "'> " + percent + "% " + effect[1] + " </li> ")
-            } else {
-                J.push(" <li class='effect disabled " + css + "'> " + percent + "% " + effect[1] + " </li> ")
-            }
-        });
-        J.push(" </ul> ");
-        J.push(" </div> ");
-        if (I && N) {
-            J.push("<div class='section'>");
-            J.push(" <div class='title equip " + I.createQualityName().toLowerCase() + "' style='text-transform: capitalize;'> ");
-            J.push(I.name);
-            J.push("<span class='icon'></span>");
-            J.push(" </div> ");
-            J.push(" <div class='description'> ");
-            J.push(" <div class='portrait " + I.faction + " quality" + I.quality + " " + I.type + " unique" + I.unique + "'> </div> ");
-            J.push("<ul>");
-            J.push("<li>" + g_js_strings.commonstr.faction + ": " + I.faction + "</li>");
-            J.push("<li>" + g_js_strings.commonstr.quality + ": " + I.createPrefix() + "</li>");
-            J.push("<li>" + g_js_strings.commonstr.type + ": " + g_js_strings.throneRoom[I.type] + "</li>");
-            J.push("<li>" + g_js_strings.commonstr.level + ": " + I.level + "</li>");
-            J.push("<li>" + g_js_strings.commonstr.might + ": " + (C[I.quality].Might + F[I.level].Might) + "</li>");
-            J.push("</ul>");
-            J.push(" </div> ");
-            J.push(" <ul> ");
-            c.each(I.effects, function (T, U) {
-                effect = cm.thronestats.effects[U.id];
-                tier = cm.thronestats.tiers[U.id][U.tier];
-                percent = +(tier.base + ((I.level * I.level + I.level) * tier.growth * 0.5));
-                percent = percent.toFixed(2);
-                percent = (percent > 0) ? "+" + percent : percent;
-                css = (T % 2 === 0) ? "even" : "odd";
-                H = +(T.split("slot")[1]);
-                if (H <= I.quality) {
-                    J.push(" <li class='effect " + css + "'> " + percent + "% " + effect[1] + " </li> ")
-                } else {
-                    J.push(" <li class='effect disabled " + css + "'> " + percent + "% " + effect[1] + " </li> ")
-                }
-            });
-            J.push(" </ul> ")
-        }
-        J.push(" </div> ");
-        return J.join("")
+        var E = cm.thronestats.mightByQuality || {}, G = cm.thronestats.mightByLevel || {}, F = E[H.quality] && E[H.quality].Might ? +E[H.quality].Might : 0,
+            D = E[H.level] && E[H.level].Might ? +E[H.level].Might : 0;
+        return (E[H.quality].Might + G[H.level].Might)
     };
     var x = function () {
-        var C = 5;
-        c("#throneInfoContent").append("<div id='shitbox'></div>");
-        c("#shitbox").html("Time left is " + C);
-        var D = setInterval(function () {
-            C--;
-            c("#shitbox").html("Time left is " + C);
-            if (C === 0) {
-                clearInterval(D);
-                c("#shitbox").remove()
+        var D = 5;
+        e("#throneInfoContent").append("<div id='shitbox'></div>");
+        e("#shitbox").html("Time left is " + D);
+        var E = setInterval(function () {
+            D--;
+            e("#shitbox").html("Time left is " + D);
+            if (D === 0) {
+                clearInterval(E);
+                e("#shitbox").remove()
             }
         }, 1000)
     };
-    var z = function (J, C, I) {
-        var H = new Array(),
-            E, G, D = {}, F;
-        G = (J.id == "maparea_boosts_throneroom") ? seed.throne.slotEquip[seed.throne.activeSlot] : seed.throne.slotEquip[+(J.innerHTML)];
-        c.each(G, function (K, L) {
-            F = kocThroneItems[L];
-            D[F.id] = F
+    var z = function (K, D, J) {
+        var I = new Array(),
+            F, H, E = {}, G;
+        H = (K.id == "maparea_boosts_throneroom") ? seed.throne.slotEquip[seed.throne.activeSlot] : seed.throne.slotEquip[+(K.innerHTML)];
+        e.each(H, function (L, M) {
+            G = kocThroneItems[M];
+            E[G.id] = G
         });
-        E = f(D);
-        H.push("<div id='boosts_tooltip'><b>" + g_js_strings.commonstr.throneroom + "</b><br/><br/>");
-        if (E.length <= 0 || c.isEmptyObject(E)) {
-            H.push("<div>" + g_js_strings.throneRoom.empty_preset + "</div>")
+        F = h(E);
+        I.push("<div id='boosts_tooltip'><b>" + g_js_strings.commonstr.throneroom + "</b><br/><br/>");
+        if (F.length <= 0 || e.isEmptyObject(F)) {
+            I.push("<div>" + g_js_strings.throneRoom.empty_preset + "</div>")
         } else {
-            c.each(E, function (K, L) {
-                H.push("<div>" + L.percent + "% " + L.name) + "</div>"
+            e.each(F, function (L, M) {
+                I.push("<div>" + M.percent + "% " + M.name) + "</div>"
             })
         }
-        H.push("</div>");
-        if (J.id == "maparea_boosts_throneroom") {
-            showTooltip(H.join(""), J, C, I)
+        I.push("</div>");
+        if (K.id == "maparea_boosts_throneroom") {
+            showTooltip(I.join(""), K, D, J)
         } else {
-            Tooltip.show(C, H.join(""), [10, 10], null)
+            Tooltip.show(D, I.join(""), [10, 10], null)
         }
     };
-    var j = function () {
-        var D = g_js_strings.mass_salvage.instructions,
-            E = m(),
-            C = cm.Template.renderTemplate("Throne", "massSalvage", {
-                qualityList: E,
-                instructions: D,
+    var k = function () {
+        var E = g_js_strings.mass_salvage.instructions,
+            F = n(),
+            D = cm.Template.renderTemplate("Throne", "massSalvage", {
+                qualityList: F,
+                instructions: E,
                 button: g_js_strings.commonstr.salvage
             });
         cm.ModalManager.addMedium({
             title: g_js_strings.mass_salvage.title,
-            body: C
+            body: D
         });
-        c("#massSalvageButton").bind("click", function () {
-            var F = c("#massSalvageQualityList").find("input"),
-                J = [],
-                G, H, I = [];
+        e("#massSalvageButton").bind("click", function () {
+            var G = e("#massSalvageQualityList").find("input"),
+                K = [],
+                H, I, J = [];
             cm.ModalManager.close();
-            c.each(F, function (K, L) {
-                if (c(L).is(":checked")) {
-                    J.push(L)
+            e.each(G, function (L, M) {
+                if (e(M).is(":checked")) {
+                    K.push(M)
                 }
             });
-            c.each(J, function (L, K) {
-                H = c(K).attr("id");
-                I.push(+(H.split("massSalvageQualityItem")[1]))
+            e.each(K, function (M, L) {
+                I = e(L).attr("id");
+                J.push(+(I.split("massSalvageQualityItem")[1]))
             });
-            G = cm.ThroneController.calcMassSalvagableItems(I).items, e(G, I)
+            H = cm.ThroneController.calcMassSalvagableItems(J).items, g(H, J)
         })
     };
-    var m = function () {
-        var C = [],
-            D = {
+    var n = function () {
+        var D = [],
+            E = {
                 0: g_js_strings.throneRoom.simple,
                 1: g_js_strings.throneRoom.common,
                 2: g_js_strings.throneRoom.uncommon,
@@ -69391,63 +70666,60 @@ cm.ThroneView = function (c) {
                 4: g_js_strings.throneRoom.epic,
                 5: g_js_strings.throneRoom.wondrous
             };
-        c.each(D, function (F, E) {
-            C.push("<li id='massSalvageQualityItem" + F + "'>");
-            C.push("<input type='checkbox' id='massSalvageQualityItem" + F + "' />");
-            C.push("<label for='massSalvageQualityItem" + F + "'>" + E + "</label>");
-            C.push("</li>")
+        e.each(E, function (G, F) {
+            D.push("<li id='massSalvageQualityItem" + G + "'>");
+            D.push("<input type='checkbox' id='massSalvageQualityItem" + G + "' />");
+            D.push("<label for='massSalvageQualityItem" + G + "'>" + F + "</label>");
+            D.push("</li>")
         });
-        return C.join("")
+        return D.join("")
     };
-    var e = function (E, J) {
-        var H, I = [],
-            G = 0,
-            C, F, D = [];
-        G = cm.ThroneController.calcMassSalvagableAetherstones(E);
-        c.each(E, function (L, K) {
-            D.push(K.id)
+    var g = function (F, K) {
+        var I, J = [],
+            H = 0,
+            D, G, E = [];
+        H = cm.ThroneController.calcMassSalvagableAetherstones(F);
+        e.each(F, function (M, L) {
+            E.push(L.id)
         });
-        F = G + " " + g_js_strings.commonstr.aetherstones;
-        C = cm.Template.renderTemplate("Throne", "massSalvageConfirm", {
+        G = H + " " + g_js_strings.commonstr.aetherstones;
+        D = cm.Template.renderTemplate("Throne", "massSalvageConfirm", {
             notify: g_js_strings.mass_salvage.confirm_notify,
             label: g_js_strings.mass_salvage.confirm_label,
-            amount: F,
+            amount: G,
             button: g_js_strings.commonstr.salvage
         });
         cm.ModalManager.addMedium({
             title: g_js_strings.mass_salvage.title,
-            body: C
+            body: D
         });
-        c("#massSalvageConfirmButton").click(function (K) {
-            if (J == undefined) {
+        e("#massSalvageConfirmButton").click(function (L) {
+            if (K == undefined) {
                 cm.ModalManager.close();
-                cm.ThroneController.salvageItem(E[0])
+                cm.ThroneController.salvageItem(F[0])
             } else {
                 cm.ModalManager.close();
-                cm.ThroneController.massSalvageItems(D, J)
+                cm.ThroneController.massSalvageItems(E, K)
             }
         })
     };
-    var s = function () {};
-    s();
     return {
-        openThrone: p,
+        openThrone: q,
         renderInventory: t,
-        renderThrone: b,
-        renderItemTooltip: g,
-        renderStats: q,
-        hoverItem: n,
-        unhoverItem: i,
-        clickItemEquip: o,
-        clickItemUnequip: d,
+        renderThrone: d,
+        renderItemTooltip: i,
+        renderStats: r,
+        hoverItem: o,
+        clickItemEquip: p,
+        clickItemUnequip: f,
         clickBuyRow: a,
         equipTimer: x,
         clickActivePreset: u,
-        buyPreset: B,
+        buyPreset: C,
         buyRow: y,
         boostsTooltip: z,
-        renderMassSalvage: j,
-        renderMassSalvageConfirm: e
+        renderMassSalvage: k,
+        renderMassSalvageConfirm: g
     }
 }(jQuery);
 cm = cm || {};
@@ -70420,7 +71692,7 @@ function cancelTraining(o, p, c, l, g, b, t, a, e) {
     if (d) {
         var i = new Array();
         i.push("<td class='rec'>" + g_js_strings.commonstr.gold + "</td>");
-        i.push("<td class='rec'>" + addCommas(parseInt(q)) + "</td>");
+        i.push("<td class='rec'>" + addCommas(q) + "</td>");
         s.push(i.join(""))
     } else {
         for (var m = 0; m < r[0].length; m++) {
@@ -70428,7 +71700,7 @@ function cancelTraining(o, p, c, l, g, b, t, a, e) {
                 var i = new Array();
                 i.push("<td class='rec'>" + r[0][m] + "</td>");
                 if (parseInt(r[1][m]) > 0) {
-                    i.push("<td class='rec'>" + addCommas(parseInt(r[1][m]) * l / 2) + "</td>")
+                    i.push("<td class='rec'>" + addCommas(r[1][m] * l / 2) + "</td>")
                 } else {
                     i.push("<td class='rec'>" + r[1][m] * l / 2 + "</td>")
                 }
@@ -70529,7 +71801,7 @@ function cancelFortifications(b, g, f, l, a, i, h, k) {
             var n = new Array();
             n.push("<td class='rec'>" + o[0][d] + "</td>");
             if (parseInt(o[1][d]) > 0) {
-                n.push("<td class='rec'>" + addCommas(parseInt(o[1][d]) * l / 2) + "</td>")
+                n.push("<td class='rec'>" + addCommas(o[1][d] * l / 2) + "</td>")
             } else {
                 n.push("<td class='rec'>" + o[1][d] * l / 2 + "</td>")
             }
@@ -71852,11 +73124,10 @@ cm.TutorialEventDispatcher = new function () {
     }
 };
 cm.TutorialView = function (e) {
-    var c = function (m, k, h) {
-        var i = m,
-            j = a(m, k),
-            l = b(m, h);
-        f(j.width, j.height, l.left, l.top)
+    var c = function (l, j, h) {
+        var i = a(l, j),
+            k = b(l, h);
+        f(i.width, i.height, k.left, k.top)
     };
     var f = function (j, l, i, p) {
         var o = jQuery("#tutorialCover").offset(),
@@ -71895,21 +73166,8 @@ cm.TutorialView = function (e) {
         e("#arrowtip").show()
     };
     var a = function (k, j) {
-        j = j || {};
-        var h = k.width(),
-            i = k.height();
-        if (j.padding) {
-            h += parseInt(k.css("padding-left"), 10) + parseInt(k.css("padding-right"), 10);
-            i += parseInt(k.css("padding-top"), 10) + parseInt(k.css("padding-bottom"), 10)
-        }
-        if (j.margin) {
-            h += parseInt(k.css("margin-left"), 10) + parseInt(k.css("margin-right"), 10);
-            i += parseInt(k.css("margin-top"), 10) + parseInt(k.css("margin-bottom"), 10)
-        }
-        if (j.border) {
-            i += parseInt(k.css("borderTopWidth"), 10) + parseInt(k.css("borderBottomWidth"), 10);
-            h += parseInt(k.css("borderLeftWidth"), 10) + parseInt(k.css("borderRightWidth"), 10)
-        }
+        var h = j ? k.outerWidth(true) : k.width(),
+            i = j ? k.outerHeight(true) : k.height();
         return {
             height: i,
             width: h
@@ -72061,19 +73319,20 @@ cm.UnlockView = function (f) {
         }
     }
     function i() {
-        var w = cm.guardianSummonModel.getData();
-        var s = cm.guardianSummonModel.getAttrBonus();
-        var u = cm.guardianSummonModel.getSetBonus();
+        var x = cm.guardianSummonModel.getData();
+        var t = cm.guardianSummonModel.getAttrBonus();
+        var v = cm.guardianSummonModel.getSetBonus();
         var q = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().EMPOWERED_IRON);
-        var o = u ? g_js_strings.guardian.setBonusAchieved : "<strong>" + g_js_strings.guardian.setBonus + "</strong><br>" + g_js_strings.guardian.permanentlyReduce;
-        var v = cm.guardianModalModel.getType();
-        var m = u ? g_js_strings.guardian.setBonusAchievedTooltip : g_js_strings.guardian.tooltipSetBonus;
-        var p = u ? h(w, v) : g_js_strings.guardian.tooltipSetBonus;
-        var r = (s && s.value ? s.value.substr(0, 4) : "");
-        var n = a(r, u, 15 + (v == "ore" ? q : 0));
-        var t = "<div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon wood'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='wood_stat'>" + a(w[0].cl2.substr(0, 4), u && v == "wood", 15) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon ore'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='ore_stat'>" + a(w[1].cl2.substr(0, 4), u && v == "ore", 15 + q) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon food'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='food_stat'>" + a(w[2].cl2.substr(0, 4), u && v == "food", 15) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon stone " + (w[3] ? "sat" : "desat") + "'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='stone_stat " + (w[3] ? "sat" : "desat") + "'>" + (w[3] ? a(w[3].cl2.substr(0, 4), u && v == "stone", 15) : "+0%") + "</div><div title='" + g_js_strings.guardian.tooltipAttrReceived + "' class='attribute " + (s && s.type ? s.type.toLowerCase() : "none") + "'></div><div title='" + g_js_strings.guardian.tooltipAttrReceived + "' class='attribute_stat'>" + n + "</div>";
-        cm.custom_tooltips.appleTop = p;
-        return "<div class='unlock_view'><div class='brown_top'></div><div class='brown_bottom'></div><div class='vanilla_middle'><div class='resource_top'>" + t + "</div></div><div class='apple_top " + (u ? "glow" : "") + "'  onmouseover=\"showClearingTooltip( this, event, 'appleTop' );return false;\"  onmouseout='removeTooltip(); return false;'></div><div class='cityGuardianName'>" + fUp(currentcityinfo[1]) + "'s " + g_js_strings.guardian.guardians + "</div><div class='guardian_collection'>" + b(w) + "</div><div class='arrow'></div><div class='apple_bottom" + (u ? " glow" : "") + "' title='" + m + "'>" + o + "</div></div>"
+        var r = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().EMPOWERED_STONE);
+        var p = v ? g_js_strings.guardian.setBonusAchieved : "<strong>" + g_js_strings.guardian.setBonus + "</strong><br>" + g_js_strings.guardian.permanentlyReduce;
+        var w = cm.guardianModalModel.getType();
+        var m = v ? g_js_strings.guardian.setBonusAchievedTooltip : g_js_strings.guardian.tooltipSetBonus;
+        var o = v ? h(x, w) : g_js_strings.guardian.tooltipSetBonus;
+        var s = (t && t.value ? t.value.substr(0, 4) : "");
+        var n = a(s, v, 15 + (w == "ore" ? q : 0) + (w == "stone" ? r : 0));
+        var u = "<div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon wood'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='wood_stat'>" + a(x[0].cl2.substr(0, 4), v && w == "wood", 15) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon ore'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='ore_stat'>" + a(x[1].cl2.substr(0, 4), v && w == "ore", 15 + q) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon food'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='food_stat'>" + a(x[2].cl2.substr(0, 4), v && w == "food", 15) + "</div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='icon stone " + (x[3] ? "sat" : "desat") + "'></div><div title='" + g_js_strings.guardian.tooltipAttr + "' class='stone_stat " + (x[3] ? "sat" : "desat") + "'>" + (x[3] ? a(x[3].cl2.substr(0, 4), v && w == "stone", 15 + r) : "+0%") + "</div><div title='" + g_js_strings.guardian.tooltipAttrReceived + "' class='attribute " + (t && t.type ? t.type.toLowerCase() : "none") + "'></div><div title='" + g_js_strings.guardian.tooltipAttrReceived + "' class='attribute_stat'>" + n + "</div>";
+        cm.custom_tooltips.appleTop = o;
+        return "<div class='unlock_view'><div class='brown_top'></div><div class='brown_bottom'></div><div class='vanilla_middle'><div class='resource_top'>" + u + "</div></div><div class='apple_top " + (v ? "glow" : "") + "'  onmouseover=\"showClearingTooltip( this, event, 'appleTop' );return false;\"  onmouseout='removeTooltip(); return false;'></div><div class='cityGuardianName'>" + fUp(currentcityinfo[1]) + "'s " + g_js_strings.guardian.guardians + "</div><div class='guardian_collection'>" + b(x) + "</div><div class='arrow'></div><div class='apple_bottom" + (v ? " glow" : "") + "' title='" + m + "'>" + p + "</div></div>"
     }
     var c = {
         summon: "orange",
@@ -72291,7 +73550,10 @@ cm.getScriptVersion = function () {
                         update_help_construct(rslt.updateHelpConstruct)
                     }
                     if (rslt.updateHelpResearch) {
-                        update_help_research(rslt.updateHelpResearch)
+                        update_help_research(rslt.updateHelpResearch, cm.RESEARCH_TYPES.ALCHEMY_LAB)
+                    }
+                    if (rslt.updateHelpResearch2) {
+                        update_help_research(rslt.updateHelpResearch2, cm.RESEARCH_TYPES.WORKSHOP)
                     }
                     if (rslt.allianceDiplomacies) {
                         seed.allianceDiplomacies = rslt.allianceDiplomacies
@@ -72396,27 +73658,37 @@ function update_cityUnits(a) {
         cityinfo_changetab(3)
     }
 }
-function update_help_research(m) {
-    var a = Object.keys(m)[0];
-    var e = m[a];
-    var l = Object.keys(e)[0];
-    var c = parseInt(e[l].t);
-    var o = parseInt(e[l].n) + parseInt(e[l].a);
-    var k = parseInt(seed.updateHelpResearch[a][l].a) + parseInt(seed.updateHelpResearch[a][l].n);
-    if (k > 0) {
-        o = o - k
+function update_help_research(n, q) {
+    switch (q) {
+        case cm.RESEARCH_TYPES.ALCHEMY_LAB:
+            var e = seed.updateHelpResearch;
+            var s = seed.queue_tch;
+            break;
+        case cm.RESEARCH_TYPES.WORKSHOP:
+            var e = seed.updateHelpResearch2;
+            var s = seed.queue_tch2;
+            break
     }
-    seed.updateHelpResearch[a] = e;
-    var n = Object.keys(seed.queue_tch);
-    for (var g = 0; g < n.length; g++) {
-        for (var f = 0; f < seed.queue_tch[n[g]].length; f++) {
-            if (parseInt(seed.queue_tch[n[g]][f][0]) == c) {
-                var b = parseInt(seed.queue_tch[n[g]][f][3]) - parseInt(seed.queue_tch[n[g]][f][2]);
+    var a = Object.keys(n)[0];
+    var f = n[a];
+    var m = Object.keys(f)[0];
+    var c = parseInt(f[m].t);
+    var p = parseInt(f[m].n) + parseInt(f[m].a);
+    var l = parseInt(e[a][m].a) + parseInt(e[a][m].n);
+    if (l > 0) {
+        p = p - l
+    }
+    e[a] = f;
+    var o = Object.keys(seed.queue_tch);
+    for (var h = 0; h < o.length; h++) {
+        for (var g = 0; g < s[o[h]].length; g++) {
+            if (parseInt(s[o[h]][g][0]) == c) {
+                var b = parseInt(s[o[h]][g][3]) - parseInt(s[o[h]][g][2]);
                 var d = parseInt(b * 0.01);
-                var h = 60;
-                var p = Math.max(d, h);
-                seed.queue_tch[n[g]][f][2] = parseInt(seed.queue_tch[n[g]][f][2]) - p * o;
-                seed.queue_tch[n[g]][f][3] = parseInt(seed.queue_tch[n[g]][f][3]) - p * o;
+                var k = 60;
+                var r = Math.max(d, k);
+                s[o[h]][g][2] = parseInt(s[o[h]][g][2]) - r * p;
+                s[o[h]][g][3] = parseInt(s[o[h]][g][3]) - r * p;
                 break
             }
         }
@@ -73349,19 +74621,9 @@ function getUserSettings() {
                 userHtml.push("</div>");
                 userHtml.push("<div class='langdd clearfix'>");
                 userHtml.push("<select id='userLanguage'>");
-                userHtml.push("<option value='en' " + ((g_ajaxparams.lang == "en") ? "selected" : "") + ">English</option>");
-                userHtml.push("<option value='es' " + ((g_ajaxparams.lang == "es") ? "selected" : "") + ">Espa&#241;ol</option>");
-                userHtml.push("<option value='de' " + ((g_ajaxparams.lang == "de") ? "selected" : "") + ">Deutsch</option>");
-                userHtml.push("<option value='fr' " + ((g_ajaxparams.lang == "fr") ? "selected" : "") + ">Fran&#231;ais</option>");
-                userHtml.push("<option value='it' " + ((g_ajaxparams.lang == "it") ? "selected" : "") + ">Italiano</option>");
-                userHtml.push("<option value='sv' " + ((g_ajaxparams.lang == "sv") ? "selected" : "") + ">Svenska</option>");
-                userHtml.push("<option value='da' " + ((g_ajaxparams.lang == "da") ? "selected" : "") + ">Dansk</option>");
-                userHtml.push("<option value='tr' " + ((g_ajaxparams.lang == "tr") ? "selected" : "") + ">T&#252;rk&#231;e</option>");
-                userHtml.push("<option value='ko' " + ((g_ajaxparams.lang == "ko") ? "selected" : "") + ">&#54620;&#44397;&#50612;</option>");
-                userHtml.push("<option value='ja' " + ((g_ajaxparams.lang == "ja") ? "selected" : "") + ">&#26085;&#26412;&#35486;</option>");
-                userHtml.push("<option value='zh-Hant' " + ((g_ajaxparams.lang == "zh-Hant") ? "selected" : "") + ">&#32321;&#39636;&#20013;&#25991;</option>");
-                userHtml.push("<option value='zh-Hans' " + ((g_ajaxparams.lang == "zh-Hans") ? "selected" : "") + ">&#31616;&#20307;&#20013;&#25991;</option>");
-                userHtml.push("<option value='nl' " + ((g_ajaxparams.lang == "nl") ? "selected" : "") + ">Nederlands</option>");
+                jQuery.each(g_supportedLangugages, function (langCode, langLabel) {
+                    userHtml.push('<option value="' + langCode + '"' + ((g_ajaxparams.lang === langCode) ? " selected" : "") + ">" + langLabel + "</option>")
+                });
                 userHtml.push("</select>");
                 userHtml.push("<a class='button20' href='#' onclick='saveLanguage();return false;'><span>" + g_js_strings.getUserSettings.savelang + "</span></a>");
                 userHtml.push("</div>");
@@ -73489,6 +74751,11 @@ function removeFromIgnoreList(uid) {
 };
 
 function addCommas(b) {
+    if (isNaN(parseInt(b, 10))) {
+        return b
+    } else {
+        b = parseInt(b, 10)
+    }
     b += "";
     x = b.split(".");
     x1 = x[0];
@@ -73951,6 +75218,7 @@ function modal_openWalls() {
     for (var b = 1; b < (c + 1); b++) {
         a += (b * 1000)
     }
+    a *= cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().HEIGHTENED_SECURITY);
     var d = modal_walls_spacecalc(1);
     e.push("<div class='wallspacetaken'>");
     e.push("<span>");
@@ -74238,6 +75506,7 @@ function modal_walls_train_max(b) {
     for (var c = 1; c < (d + 1); c++) {
         e += (c * 1000)
     }
+    e *= cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().HEIGHTENED_SECURITY);
     e = e / 2;
     var j = modal_walls_spacecalc(2);
     var a = 0;
@@ -74285,21 +75554,27 @@ function modal_walls_train_timecalc(d, b) {
         $("modal_barracks_tutred").innerHTML = "0sec"
     }
 }
-function modal_walls_traintime(d, e) {
-    var b = parseInt(parseInt(fortcost["frt" + d][7])) * e;
-    var f = 1;
-    f += 0.1 * parseInt(seed.tech.tch16);
+function modal_walls_traintime(e, f) {
+    var b = parseInt(parseInt(fortcost["frt" + e][7])) * f;
+    var g = 1;
+    g += 0.1 * parseInt(seed.tech.tch16);
     var a = 0;
-    var c = seed.knights["city" + currentcityid];
-    if (c) {
-        c = c["knt" + seed.leaders["city" + currentcityid].politicsKnightId];
-        if (c) {
-            a = parseInt(c.combat);
-            newkntlv = ((parseInt(c.politicsBoostExpireUnixtime) - unixtime()) > 0) ? (a * 1.25) : a;
-            f = f + (0.005 * newkntlv)
+    var d = seed.knights["city" + currentcityid];
+    if (d) {
+        d = d["knt" + seed.leaders["city" + currentcityid].politicsKnightId];
+        if (d) {
+            a = parseInt(d.combat);
+            newkntlv = ((parseInt(d.politicsBoostExpireUnixtime) - unixtime()) > 0) ? (a * 1.25) : a;
+            g = g + (0.005 * newkntlv)
         }
     }
-    b = Math.max(1, Math.ceil(b / f));
+    b = Math.max(1, Math.ceil(b / g));
+    if (typeof seed.tech2 !== "undefined") {
+        if (typeof seed.tech2.tch3 !== "undefined") {
+            var c = (1 - parseFloat(seed.tech2.tch3) * 0.05);
+            b = Math.max(1, Math.ceil(b * c))
+        }
+    }
     return b
 }
 function walls_train_defense(tid, num, iid) {

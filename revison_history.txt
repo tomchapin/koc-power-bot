@@ -1,5 +1,21 @@
 REVISION HISTORY:
 ----------------
+20130206c
+   New try at chat filter
+   Max might for auto scout in search tab
+   Gift tab update
+   Variable map search delay
+   Farm tab switch to new march function
+   Update throne tab for candelabrum
+   Throne tab upgrade function improved
+   Tower tab update to recognize recalled marches (Subject to correct notification from kabam)
+   Send alert to email
+   Switchable toggle buttons
+   AutoDF algorithm update
+   Chat tab new commands (Disabled by default)
+   Calterfunc update
+   Check report for dropped items
+   Inventory tab update
 20130101b
    Fix for new kabam game url
    Fix kabam widescreen
