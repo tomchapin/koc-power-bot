@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130206c
+// @version        20130207a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130206c';
+var Version = '20130207a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21187,7 +21187,7 @@ Tabs.gifts = {
 				var rslt = eval("(" + message.responseText + ")");
 				if (rslt.ok) {
 					for(i in rslt.message){
-						if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Â¡Nuevo regalo recibido!")){
+						if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!")){
 							t.foundgift(i);
 						};
 					};
