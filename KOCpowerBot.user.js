@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130206b
+// @version        20130206c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130206b';
+var Version = '20130206c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -20184,6 +20184,18 @@ var March = {
 	//End Rallypoint
   
     sendMarch : function (params, callback){
+		//need to check that march is not oversized!
+		var cids = March.getMaxSize(params.cid);
+		var x = 0;
+		for (i = 1;i<16;i++) {
+			var y = eval('params.u'+i);
+			if (matTypeof(y)== 'number')
+			x+=y;
+		};
+		if(cids < x) {
+			logit('attempted to send march size '+x+' max allowed is '+cids);
+			return;
+		};
         var t = this;
         t.profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
         t.currentrequests++;
