@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130207d
+// @version        20130207e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130207d';
+var Version = '20130207e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -9086,7 +9086,8 @@ cm.MARCH_TYPES = {
                                 destinationUnixTime = Seed.queue_atkp[cityID][e]['destinationUnixTime'];
                                 MarchStatus = Seed.queue_atkp[cityID][e]['marchStatus'];
                                 MarchType = Seed.queue_atkp[cityID][e]['marchType'];
-                                if (MarchType == 9 && m.botMarchStatus > 3 && m.botMarchStatus < 9) {
+                                botMarchStatus = Seed.queue_atkp[cityID][e]['botMarchStatus'];
+                                if (MarchType == 9 && botMarchStatus > 3 && botMarchStatus < 9) {
                                     count++;
                                     setTimeout(t.DoAllDelete, (count*1250), (Seed.queue_atkp[cityID][e]['marchId']),d,count);
                                 }
