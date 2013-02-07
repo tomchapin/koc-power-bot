@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130207b
+// @version        20130207c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130207b';
+var Version = '20130207c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21112,7 +21112,7 @@ Tabs.gifts = {
 						logit('rslt.succ is '+rslt.succeedRecipients);
 						for(i = 0;i<rslt.succeedRecipients.length;i++) {
 						var z = rslt.succeedRecipients[i];
-						GiftDB.people[Number(z)][1];
+						GiftDB.people[Number(z)][1] += 1;
 							//logit('i is '+i+' length is '+rslt.succeedRecipients.length+' z is '+z+' Giftdb is '+GiftDB.people[Number(z)]);
 						
 					};
