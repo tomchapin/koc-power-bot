@@ -9086,7 +9086,7 @@ cm.MARCH_TYPES = {
                                 destinationUnixTime = Seed.queue_atkp[cityID][e]['destinationUnixTime'];
                                 MarchStatus = Seed.queue_atkp[cityID][e]['marchStatus'];
                                 MarchType = Seed.queue_atkp[cityID][e]['marchType'];
-                                if (MarchType == 9 && m.botMarchStatus < 3) {
+                                if (MarchType == 9 && m.botMarchStatus > 3 && m.botMarchStatus < 9) {
                                     count++;
                                     setTimeout(t.DoAllDelete, (count*1250), (Seed.queue_atkp[cityID][e]['marchId']),d,count);
                                 }
