@@ -1,8 +1,8 @@
-help the enemy toggled my throne room!
+Missing gems?  
+Often aetherstone counts are wrong as addressed <a href="http://community.kabam.com/forums/showthread.php?155344-Bug-in-function-to-removes-an-item-%28please-pass-on-to-the-Devs%29">here</a>
 
-It's not a practice of the enemy toggling your throne room to whatever they want.  
-It's that when you clicked the button the kabam server rejected your request to toggle to throne room set whatever and still showed you that it has toggled.  
-To verify this you can go to web developer /web console in firefox.  filter for dispatch53 and right click on the console to check log request and response bodies.  
-Now toggle your throne room back and forth and eventually you will get "{"ok":false,"error_code":0}" as the response but it will still show that your throne room has changed.  
+However that is not a huge issue until you factor in that kabam doesn't ask for permission to take your gems when you don't have enough aetherstone. permission is assumed.
 
-In response to this issue we scripters have made you a throne room toggle in bot under throne subtab throne which is still very much in development.
+Tell kabam you want them to ask your permission first!!
+
+Fill out a customer complaint <a href="https://kabam.secure.force.com/PKB/pkb_contactUs?game=All&lang=en_US&l=en_US">here</a>
