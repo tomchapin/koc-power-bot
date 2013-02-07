@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130207c
+// @version        20130207d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130207c';
+var Version = '20130207d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -9086,7 +9086,7 @@ cm.MARCH_TYPES = {
                                 destinationUnixTime = Seed.queue_atkp[cityID][e]['destinationUnixTime'];
                                 MarchStatus = Seed.queue_atkp[cityID][e]['marchStatus'];
                                 MarchType = Seed.queue_atkp[cityID][e]['marchType'];
-                                if (MarchType == 9 && (botMarchStatus == 3 || MarchStatus == 3)) {
+                                if (MarchType == 9 && m.botMarchStatus < 3) {
                                     count++;
                                     setTimeout(t.DoAllDelete, (count*1250), (Seed.queue_atkp[cityID][e]['marchId']),d,count);
                                 }
@@ -20105,7 +20105,7 @@ var March = {
 			for(var k in Seed.queue_atkp[cityId]){
 				var m = Seed.queue_atkp[cityId][k];
 				if(m.marchType == 9) {
-					if(m.botMarchStatus > 2 && m.botMarchStatus < 10)slots++; //If raid is stopped take it as empty slot
+					if(m.botMarchStatus < 3 || m.botMarchStatus > 9)slots++; //If raid is stopped take it as empty slot
 				} else {
 					slots++;				
 				}
