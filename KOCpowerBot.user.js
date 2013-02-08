@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130207e
+// @version        20130208a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130207e';
+var Version = '20130208a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -811,7 +811,7 @@ if(unsafeWindow.g_js_strings)unsafeWindow.g_js_strings.commonstr.yourScriptVersi
   killbox();
   if(Options.mklag)  setInterval(fixkabamlag,1000*60);
   if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
-  AddSubTabLink("Kabam Forums",function(){window.open("http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot")}, 'kabamforums');
+	document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>';
 }
 
 /************************ Food Alerts *************************/
