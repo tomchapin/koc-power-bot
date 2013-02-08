@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130208b
+// @version        20130208c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130208b';
+var Version = '20130208c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -196,6 +196,7 @@ var Options = {
   crestbtns: false,
   Farmbtns:	false,
   SaveState: {},
+  CrestSlots: 0,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -19282,8 +19283,9 @@ Tabs.startup = {
     m += '<td><INPUT id=showCrestTargets type=submit value="Show Targets"></td>';
     m += '<TD><INPUT id=pbsendreport type=checkbox '+ (Options.crestreport?' CHECKED':'') +'\> Send Crest report every ';
     m += '<INPUT id=pbsendcrestreportint value='+ Options.CrestMsgInterval +' type=text size=3 \> hours </td>\
+		  <TD>Keep <INPUT id=pbcrestslots value='+ Options.CrestSlots +' type=text size=3 \> Slots Free</td>\
           <TD>Attack interval <INPUT type=text size=3 value='+Options.Crestinterval+' id=pbcrest_interval />seconds</tr></table>';
-  
+          
     m += '<DIV id=pbOpt class=pbStat>CRESTING OPTIONS</div><TABLE id=pbcrestopt     width=100% height=0% class=pbTab><TR align="center"></table>';
     m += '<DIV style="margin-bottom:10px;">Crest from city: <span id=crestcity></span></div>';
     
@@ -19331,6 +19333,11 @@ Tabs.startup = {
     }, false);
     $("pbcrest_interval").addEventListener('change', function(e){
         Options.Crestinterval = parseIntNan(e.target.value);
+        saveOptions();
+    },false);
+    
+    $("pbcrestslots").addEventListener('change', function(e){
+        Options.CrestSlots = parseIntNan(e.target.value);
         saveOptions();
     },false);
     
@@ -19805,7 +19812,7 @@ Tabs.startup = {
         }
         t.getAtkKnight(cityID);
 
-        var march_slots = Number(March.getEmptySlots(cityID.split("city")[1]));
+        var march_slots = Number(Number(March.getEmptySlots(cityID.split("city")[1]))-Number(Options.CrestSlots));
         if (march_slots < 1) {
            if (CrestData.length == 1) {
             t.timer = setTimeout(function(){ t.Rounds(r,retry,CrestDataNum);},Options.Crestinterval*1000);
