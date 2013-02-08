@@ -811,6 +811,7 @@ if(unsafeWindow.g_js_strings)unsafeWindow.g_js_strings.commonstr.yourScriptVersi
   killbox();
   if(Options.mklag)  setInterval(fixkabamlag,1000*60);
   if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
+  AddSubTabLink("Kabam Forums",function(){window.open("http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot")}, 'kabamforums');
 }
 
 /************************ Food Alerts *************************/
