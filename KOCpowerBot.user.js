@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130208a
+// @version        20130208b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
 	}
 }
 
-var Version = '20130208a';
+var Version = '20130208b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13765,6 +13765,8 @@ latestChats : [],
     var tx=searchDOM(htmlObj,'node.className=="tx"',8);
     if(!nm || !time || !tx) { return undefined; }
     var nameArr=nm.innerHTML.split(' ');
+	var Afchar = new RegExp(atob('rQ=='),"g");
+	tx = tx.replace(Afchar,"").replace(/\&\#8232\;/g,"");
     var fromMe = nameArr[1]==Seed.player.name?true:false;
     return {
         'obj':htmlObj,
