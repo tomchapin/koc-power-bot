@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130209a
+// @version        20130210a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130209a';
+var Version = '20130210a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -8171,7 +8171,9 @@ Tabs.transport = {
         if (Seed.playerEffects.loadExpire > unsafeWindow.unixtime()) {
             loadEffectBoost = 0.25;
         };
-        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01) + loadEffectBoost+featherweight;
+        var tboost = unsafeWindow.cm.ThroneController.effectBonus(6);
+        if(tboost > unsafeWindow.cm.thronestats.boosts['Load'].Max) tboost = unsafeWindow.cm.thronestats.boosts['Load'].Max;
+        var loadBoostBase = (Number(tboost) * 0.01) + loadEffectBoost+featherweight;
         
                 if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
                     loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
@@ -8181,12 +8183,8 @@ Tabs.transport = {
                         loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
                     };
         var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
-        
-        if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100))
-        loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
-        
+
         loadBoostBase += 1;
-        //loadBoostBase += loadEffectBoost+featherweight; //Already added above
         var LoadUnit = Math.floor(loadBoostBase*Load);
         var maxloadperwagon = LoadUnit;
           var maxload = (maxloadperwagon * Troops);
