@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130210a
+// @version        20130210b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130210a';
+var Version = '20130210b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -725,8 +725,8 @@ function pbStartup (){
     .castleBut:hover {background-image:url("'+ URL_CASTLE_BUT_SEL +'")}\
     .castleButNon {background-image:url("'+ URL_CASTLE_BUT +'")}\
     .castleButSel {background-image:url("'+ URL_CASTLE_BUT_SEL +'")}\
-    input.pbDefButOn {cursor:pointer; border:1px solid #45d183; -moz-box-shadow:inset 0px 1px 5px #3aef8b; -moz-border-radius:5px;}\
-    input.pbDefButOff {cursor:pointer; border:1px solid #f61646; -moz-box-shadow:inset 0px 1px 5px #f6375f; -moz-border-radius:5px;}\
+    input.pbDefButOn {cursor:pointer; border:1px solid red; -moz-box-shadow:inset 0px 1px 5px #3aef8b; -moz-border-radius:5px;}\
+    input.pbDefButOff {cursor:pointer; border:1px solid blue; -moz-box-shadow:inset 0px 1px 5px #f6375f; -moz-border-radius:5px;}\
     a.ptButton20 {color:#ffff80}\
     table.pbMainTab { empty-cells: show; margin-left: 5px; margin-top: 4px; padding: 1px;  padding-left:5px;}\
     table.pbMainTab tr td a {color:inherit }\
