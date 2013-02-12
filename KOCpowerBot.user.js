@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130211a
+// @version        20130211b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130211a';
+var Version = '20130211b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13811,8 +13811,8 @@ latestChats : [],
     var tx=searchDOM(htmlObj,'node.className=="tx"',8);
     if(!nm || !time || !tx) { return undefined; }
     var nameArr=nm.innerHTML.split(' ');
-   var Afchar = new RegExp(atob('rQ=='),"g");
-   tx = tx.replace(Afchar,"").replace(/\&\#8232\;/g,"");
+    //var Afchar = new RegExp(atob('rQ=='),"g");
+    //tx = tx.replace(Afchar,"").replace(/\&\#8232\;/g,"");
     var fromMe = nameArr[1]==Seed.player.name?true:false;
     return {
         'obj':htmlObj,
@@ -21270,7 +21270,7 @@ Tabs.gifts = {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                for(i in rslt.message){
-                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!")){
+                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Ã‚Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!")){
                      t.foundgift(i);
                   };
                };
@@ -21529,7 +21529,7 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
       
       m = m.replace(/Gr/g,'G'+x+'r').replace(/gR/g,'g'+x+'R').replace(/GR/g,'G'+x+'R').replace(/gr/g,'g'+x+'r');
       
-      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÂ­'+x+'I').replace(/ri/g,'r'+x+'i');
+      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÃ‚Â­'+x+'I').replace(/ri/g,'r'+x+'i');
       
       m = m.replace(/Na/g,'N'+x+'a').replace(/nA/g,'n'+x+'A').replace(/NA/g,'N'+x+'A').replace(/na/g,'n'+x+'a');
       
