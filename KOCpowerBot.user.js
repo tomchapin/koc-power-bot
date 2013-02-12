@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130210b
+// @version        20130211a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130210b';
+var Version = '20130211a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -14000,20 +14000,47 @@ latestChats : [],
     },
    'tr':{
         'question':function(chatObj,info) {
-            // This is dangerous and in alpha. chat processor is screwy and password isnt working with parameters but I need broader testing so restricting this for now
-         // If you are reading this and know what you are doing you can enable it, but its at your own risk until this gets sorted. Dont enable globally yet.
-         if(!chatObj.notProcessed || (Seed.allianceDiplomacies.allianceId!='245') || chatObj.fromMe) { return; }
+                    // This is dangerous and in beta. Chat processor is still not 100% but I'm releasing this bit
+			if(!chatObj.notProcessed || chatObj.fromMe) { return; }
             var t=ChatStuff;
-         var preset=parseInt(info) || 0;
-         if (preset>0 && preset<=Seed.throne.slotNum) {
-            Tabs.Throne.doPreset(preset,0);
-            t.SendChat(chatObj.shortName,'Throne Room changed to preset '+preset+' per request.\r\n');
-         }
-         else {
-            Tabs.Throne.doPreset('1',0);
-            t.SendChat(chatObj.shortName,'Throne Room changed to preset 1 by default.\r\n');
-         }
-        },
+			var preset=parseInt(info) || 0;
+			Options.alertConfig.lastAttack = now; // Prevent Tower TR from immediately switching back if no recent incoming
+			var msg = '';
+			if (Options.alertConfig.alertTR) {
+				msg += ' CAUTION: Auto TR toggle on incoming is on and set to change to preset ' + Options.alertConfig.alertTRset +'.';
+			};
+			if (preset>0 && preset<=Seed.throne.slotNum) {
+				Tabs.Throne.doPreset(preset,0);
+				
+				t.SendChat(chatObj.shortName,'Throne Room changed to preset '+preset+' per request.\r\n' + msg);
+			}
+			else {
+				Tabs.Throne.doPreset('1',0);
+				t.SendChat(chatObj.shortName,'Throne Room changed to preset 1 by default.\r\n' + msg);
+			};
+			// Send message to self to record TR switch action	
+			var message = chatObj.shortName.toString() + ' changed your TR to preset ' + preset.toString() + '.';
+			
+			var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+			params.emailTo = Seed.player['name'];
+			params.subject = "Remote TR change command";
+			params.message = message;
+			params.requestType = "COMPOSED_MAIL";
+			
+			new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+				method: "post",
+				parameters: params,
+				onSuccess: function (message) {
+					var rslt = eval("(" + message.responseText + ")");
+					if (rslt.ok) {
+							GM_log('Message sent to record remote TR change request');
+					}
+				},
+				onFailure: function () {
+					GM_log('Message to record remote TR change request failed');
+				},
+			});
+		},
         'answer':function(chatObj,info) {
             if(!chatObj.notProcessed) { return; }
         },
