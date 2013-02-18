@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130211b
+// @version        20130218a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -144,7 +144,7 @@ var Options = {
   lasttransport: 0,
   reassigninterval: 60,
   lastreassign : 0,
-  HelpRequest  : false,
+  HelpRequest  : true,
   DeleteRequest: false,
   DeletegAl    : false,
   MapShowExtra : false,
