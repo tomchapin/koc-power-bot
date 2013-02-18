@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130218a
+// @version        20130218b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130211b';
+var Version = '20130218b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21665,36 +21665,19 @@ function SaveStatus () {
    Options.SaveState.crest = Options.crestRunning;
    Options.SaveState.trset = Seed.throne.activeSlot;
    saveOptions();
-   
-   /***
-transport
-Tabs.transport
-t.traderState.running
-toggleTraderState
-
-
-farm
-Tabs.farm
-FarmOptions.Running
-toggleBarbState
-
-darkforest
-Tabs.Barb
-AttackOptions.Running
-toggleBarbState
-
-crest
- Tabs.Crest
-Options.crestRunning
-toggleCrestState
-
-
-
-Options.SaveState
-    * 
-    * 
-    * ***/
-   
 }
- 
+var OreAlert = {
+        e_eachMinute : function (){  
+                for(i=0; i < Cities.numCities; i++) {
+                        var oreleft = Math.round(parseInt(Seed.resources["city" + Cities.cities[i].id]['rec4'][0])/3600);
+                        var msg = '';
+                        if (oreleft < 50000000) {
+                                msg += translate("My city")+' '+Cities.cities[i].name.substring(0,10) + ' (' + Cities.cities[i].x +','+ Cities.cities[i].y + ') ';
+                                msg += translate("is low on ORE: ")+addCommas(oreleft);
+                                //sendChat("/"+ Seed.player.name +' '+ msg) //Whisper
+                                sendChat ("/a " + msg);
+                        }
+                }              
+  },
+}
 pbStartup ();
