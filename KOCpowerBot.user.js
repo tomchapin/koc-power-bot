@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130218b
+// @version        20130219a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130218b';
+var Version = '20130219a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -197,7 +197,8 @@ var Options = {
   Farmbtns: false,
   SaveState: {},
   CrestSlots: 0,
-  colorCityTabs: true
+  colorCityTabs: true,
+  ThroneHUD: false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -814,6 +815,7 @@ if(unsafeWindow.g_js_strings)unsafeWindow.g_js_strings.commonstr.yourScriptVersi
   if(Options.mklag)  setInterval(fixkabamlag,1000*60);
   if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
    document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>';
+  if(Options.ThroneHUD)Tabs.Throne.ThroneHUDinit();
 }
 
 /************************ Food Alerts *************************/
@@ -2363,11 +2365,13 @@ FillEquipCheckboxes: function(){
    }  
 },
 doPreset : function (room, retry) {
+        var t = Tabs.Throne;    
    if(isNaN(retry))retry=0;
    if(retry > 15) {if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Giving Up</font>";return;};
       if(document.getElementById('ThroneTRS'))
       document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
-        var t = Tabs.Throne;    
+      if(document.getElementById('ThroneHUD'))
+      document.getElementById('htra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'setPreset';
@@ -2380,6 +2384,8 @@ doPreset : function (room, retry) {
                 var rslt = eval("(" + transport.responseText + ")");
                 if(rslt.ok){
                document.getElementById('tra'+params.presetId).disabled = true;
+			  if(document.getElementById('ThroneHUD'))
+				document.getElementById('htra'+params.presetId).disabled = true;
                t.TTpaint(params.presetId);
                if(document.getElementById('throneInventoryPreset'+params.presetId))
                   button = document.getElementById('throneInventoryPreset'+params.presetId);
@@ -3256,6 +3262,25 @@ doSalvage : function(){
             t.SalvageRunning = false;
             t.salvageCheck();
         }
+},
+ThroneHUDinit : function (){
+	var t = Tabs.Throne;
+	var div = document.createElement('div');
+	var m = '<TABLE height=0% class=pbTab><TR align="center">';
+    for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
+       m += '<TD><INPUT id=htra'+k+' type=submit value='+k+'></td>';
+    m += '</table><br>';
+	div.innerHTML = m;
+	div.style.position="absolute";
+	div.style.top="29px";
+	div.style.right="220px";
+	div.id="ThroneHUD";
+	div.style.zIndex="20000";
+	par=document.getElementById('mod_maparea');
+	par.insertBefore(div,par.firstChild);
+	for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
+		document.getElementById('htra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
+	document.getElementById('htra'+unsafeWindow.seed.throne.activeSlot).disabled = true;
 },
 ThroneT : function (){
         var t = Tabs.Throne;    
@@ -10809,7 +10834,8 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbReassignBut type=checkbox '+ (Options.reassgnbtns?'CHECKED ':'') +'/></td><TD>'+translate("Reassign toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbDFBut type=checkbox '+ (Options.dfbtns?'CHECKED ':'') +'/></td><TD>'+translate("Dark Forest toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbCrestBut type=checkbox '+ (Options.crestbtns?'CHECKED ':'') +'/></td><TD>'+translate("Crest toggle button on top of screen")+'</td></tr>\
-        <TR><TD><INPUT id=pbFarmBut type=checkbox '+ (Options.Farmbtns?'CHECKED ':'') +'/></td><TD>'+translate("Farm toggle button on top of screen")+'</td></tr>';
+        <TR><TD><INPUT id=pbFarmBut type=checkbox '+ (Options.Farmbtns?'CHECKED ':'') +'/></td><TD>'+translate("Farm toggle button on top of screen")+'</td></tr>\
+        <TR><TD><INPUT id=pbThroneHUDBut type=checkbox '+ (Options.ThroneHUD?'CHECKED ':'') +'/></td><TD>'+translate("Throne HUD")+'</td></tr>';
         
         m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
@@ -10939,6 +10965,7 @@ Tabs.Options = {
       t.togOpt ('pbDFBut', 'dfbtns');
       t.togOpt ('pbCrestBut', 'crestbtns');
       t.togOpt ('pbFarmBut', 'Farmbtns');
+      t.togOpt ('pbThroneHUDBut', 'ThroneHUD');
       t.changeOpt ('pbwhichcity', 'smain');
       t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
       t.changeOpt ('pbfilter','fchar');
