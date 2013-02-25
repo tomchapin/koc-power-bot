@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201302124a
+// @version        201302124b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130224a';
+var Version = '20130224b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2431,7 +2431,7 @@ paintEquipInfo : function (z,what){
         var tier=0;
         var Current=0;
         var icon = 'http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type +'_normal_1_'+ y.quality+'.png';
-        if (y.isEquipped) m='<TABLE width=80% height=0% align="center" class=ThroneEQ style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
+        if (y.isEquipped) m='<TABLE width=80% height=0% align="center" class=ThroneEQ  ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         else m='<TABLE width=80% height=0% align="center" class=Throne ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         switch(parseInt(y["quality"])){
          case 1:color="grey";break;
