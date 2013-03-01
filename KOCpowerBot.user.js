@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201302126c
+// @version        20130301a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130226c';
+var Version = '20130301a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2592,8 +2592,8 @@ PaintSalvageHistory : function() {
         t.PaintQueue();
         // need to update for doupgradesimple and ibrokeitems.
         if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true && Seed.queue_throne.end == undefined){
-                  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
-                  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
+                  //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
+                  //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
                     setTimeout(t.doRepair,5000);
                   clearTimeout(t.setActionTimer);
                   t.setActionTimer = setInterval(t.doAction,10000);
@@ -2859,6 +2859,8 @@ PaintSalvageHistory : function() {
         
      doRepair : function() {
         var t = Tabs.Throne;
+        //cid and aetherstone no longer charged for throne repairs?!?
+        /**
         var cityid = 0;
         for (var k in Cities.byID) {
             if ( Seed.resources["city"+k]["rec5"][0] > ThroneOptions.minStones)
@@ -2876,7 +2878,13 @@ PaintSalvageHistory : function() {
         if(ThroneOptions.ibrokeitems.length)params.throneRoomItemId = ThroneOptions.ibrokeitems[0];
         else params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
         params.cityId = cityid;
-                    
+                    **/
+        if(!unsafeWindow.kocThroneItems[ThroneOptions.ibrokeitems[0]] || !unsafeWindow.kocThroneItems[ThroneOptions.ibrokeitems[0]].isBroken)ThroneOptions.ibrokeitems.shift();
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+        params.action = 'timeRepair';
+        if(ThroneOptions.ibrokeitems.length)params.throneRoomItemId = ThroneOptions.ibrokeitems[0];
+        else params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
             parameters: params,
