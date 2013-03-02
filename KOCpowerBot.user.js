@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130301a
+// @version        20130301b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130301a';
+var Version = '20130301b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2623,7 +2623,7 @@ PaintSalvageHistory : function() {
             cidarray.push(k);
             }
         }
-        if(cidarray != [])
+        if(cidarray.length > 0)
         cityid = cidarray[Math.floor(Math.random() * cidarray.length)];
         if(cityid == 0){
            document.getElementById('ShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
