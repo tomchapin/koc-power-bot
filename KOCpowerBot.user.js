@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130301b
+// @version        20130303a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130301b';
+var Version = '20130303a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3740,8 +3740,8 @@ Tabs.tower = {
     document.getElementById('pbLoadingSwf').style.display = 'none';
     document.getElementById('pbSoundOpts').style.display = 'inline';
     t.volSlider.setValue (Options.alertSound.volume/100);
-    t.loadUrl (Options.alertSound.soundUrl);
-    setTimeout (function (){t.mss.setVolume (1, Options.alertSound.volume);}, 500);
+    setTimeout (function (){t.loadUrl (Options.alertSound.soundUrl);},500);
+    setTimeout (function (){t.mss.setVolume (1, Options.alertSound.volume);}, 1000);
     if (Options.alertSound.alarmActive && Options.alertSound.expireTime>unixTime())   
       t.soundTheAlert();
   },
