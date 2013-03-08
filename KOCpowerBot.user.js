@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130303a
+// @version        20130308a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130303a';
+var Version = '20130308a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2879,11 +2879,16 @@ PaintSalvageHistory : function() {
         else params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
         params.cityId = cityid;
                     **/
-        if(!unsafeWindow.kocThroneItems[ThroneOptions.ibrokeitems[0]] || !unsafeWindow.kocThroneItems[ThroneOptions.ibrokeitems[0]].isBroken)ThroneOptions.ibrokeitems.shift();
+        if(ThroneOptions.ibrokeitems.length > 0)
+        if(!unsafeWindow.kocThroneItems[ThroneOptions.ibrokeitems[0]].isBroken)ThroneOptions.ibrokeitems.shift();//if it's not broke, don't fix it! lol
+        
+        
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'timeRepair';
-        if(ThroneOptions.ibrokeitems.length)params.throneRoomItemId = ThroneOptions.ibrokeitems[0];
+        if(ThroneOptions.ibrokeitems.length > 0)params.throneRoomItemId = ThroneOptions.ibrokeitems[0];//If we still have a broken card, try fixing it
+        
+        
         else params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
