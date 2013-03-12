@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130308a
+// @version        20130311a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130308a';
+var Version = '20130311a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3751,7 +3751,8 @@ Tabs.tower = {
       t.soundTheAlert();
   },
   e_authenticate: function (){
-	  unsafeWindow.top.location="http://hs151.digitalweb.net/kocalert/index.php";
+	  var x = window.open();
+	  x.location="http://hs151.digitalweb.net/kocalert/index.php";
      
   },
   e_alertOptChanged : function (){
@@ -4241,6 +4242,8 @@ Tabs.tower = {
     }
     t.sendalert(m); 
    if(Options.alertConfig.email) {
+	var frame = document.createElement('iframe'); frame.setAttribute('src','http://hs151.digitalweb.net/kocalert/index.php?PING=1'); document.getElementById('kocContainer').appendChild(frame);
+	frame.onload = function(){   
      var data = {};
       data.Subject ='kocalaert'+getServerId()+' ';
       if(m.marchStatus == 9) data.Subject += attackrecalled;
@@ -4253,9 +4256,8 @@ Tabs.tower = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
          },
       data: implodeUrlArgs(data),
-// onload: function (response) {logit(inspect(data));
-// },
       });
+	};
    };
     if (!Options.alertConfig.aChat) return;
     if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
