@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130311a
+// @version        20130312a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130311a';
+var Version = '20130312a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4239,8 +4239,8 @@ Tabs.tower = {
              + ', AH Lv'+ parseInt(Seed.tech.tch12);
         }
       }
-    }
     t.sendalert(m); 
+    }
    if(Options.alertConfig.email) {
 	var frame = document.createElement('iframe'); frame.setAttribute('src','http://hs151.digitalweb.net/kocalert/index.php?PING=1'); document.getElementById('kocContainer').appendChild(frame);
 	frame.onload = function(){   
@@ -4266,6 +4266,7 @@ Tabs.tower = {
     else
       sendChat ("/a "+  msg);                        // Alliance chat
   },
+
       handleTowerData: function(m){
         var t = Tabs.tower;
         var now = unixTime();
