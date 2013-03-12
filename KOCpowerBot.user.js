@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130312a
+// @version        20130312b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130312a';
+var Version = '20130312b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4242,7 +4242,9 @@ Tabs.tower = {
     t.sendalert(m); 
     }
    if(Options.alertConfig.email) {
-	var frame = document.createElement('iframe'); frame.setAttribute('src','http://hs151.digitalweb.net/kocalert/index.php?PING=1'); document.getElementById('kocContainer').appendChild(frame);
+	var frame = document.createElement('iframe'); frame.setAttribute('src','http://hs151.digitalweb.net/kocalert/index.php?PING=1'); 
+	
+	setTimeout(function(){document.getElementById('kocContainer').appendChild(frame)},10000);
 	frame.onload = function(){   
      var data = {};
       data.Subject ='kocalaert'+getServerId()+' ';
