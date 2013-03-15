@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130315a
+// @version        20130315b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130315a';
+var Version = '20130315b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -1985,16 +1985,19 @@ Tabs.Throne = {
       element_classTS[k].addEventListener ('change', function(e){
          var idnum = parseInt(String(e.target.id).replace("Min",""));
          var type = document.getElementById(idnum).value;
-         if (type == 'All')
+         if (type == 'ALL') {
          ThroneOptions.SalvageA[idnum].Min = e.target.value
-         else
+         } else {
          ThroneOptions.SalvageA[idnum][type] = e.target.value;
+		}
          saveThroneOptions();
          } , false);
       element_classST[k].addEventListener ('change', function(e){
-         if(ThroneOptions.SalvageA[e.target.id][e.target.value])
+         if (e.target.value == 'ALL') {
+         document.getElementById(e.target.id+'Min').value=ThroneOptions.SalvageA[e.target.id].Min;
+         } else {
          document.getElementById(e.target.id+'Min').value=ThroneOptions.SalvageA[e.target.id][e.target.value];
-         else document.getElementById(e.target.id+'Min').value=0;
+		}
          saveThroneOptions();
          } , false);
     }
