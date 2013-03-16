@@ -10596,6 +10596,7 @@ Tabs.Barb = {
                      GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                      saveAttackOptions();
                    } else {
+					 scripterdebuglog(rslt,true);//temp until I get some data on peoples claims of repeat df flooding
                      //logit( inspect(rslt,3,1));
                      if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
                      if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
@@ -21657,12 +21658,13 @@ function equippedthronestats (stat_id){
    return total;
 }
 
-function scripterdebuglog (a) {
+function scripterdebuglog (a,df) {
    if(!Options.plog)return;
    var data = {};
    data.info = inspect(a);
    data.version = Version;
    data.domain = getServerId();
+   if(df)data.df = df;
    logit('sending debug data '+data.info);
   GM_xmlhttpRequest({
     method: 'POST',
