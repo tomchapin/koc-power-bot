@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130321a
+// @version        20130321b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130321a';
+var Version = '20130321b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2595,6 +2595,18 @@ PaintSalvageHistory : function() {
         if (!ThroneOptions.Active) return;
         t.checkUpgradeInfo();
 		//need to update for doupgradesimple and ibrokeitems.
+		if(ThroneOptions.ibrokeitems.length > 0){
+                  setTimeout(t.doRepair,5000);
+                  clearTimeout(t.setActionTimer);
+                  t.setActionTimer = setInterval(t.doAction,10000);
+                return;
+		}
+        if (ThroneOptions.Items.length ==0) {
+      if(document.getElementById('ShowStatus'))document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
+                  clearTimeout(t.setActionTimer);
+                  t.setActionTimer = setInterval(t.doAction,10*60*1000);
+                 return;
+        }
         if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true && Seed.queue_throne.end == undefined){
                   //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
                   //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
@@ -2602,12 +2614,6 @@ PaintSalvageHistory : function() {
                   clearTimeout(t.setActionTimer);
                   t.setActionTimer = setInterval(t.doAction,10000);
                 return;
-        }
-        if (ThroneOptions.Items.length ==0) {
-      if(document.getElementById('ShowStatus'))document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
-                  clearTimeout(t.setActionTimer);
-                  t.setActionTimer = setInterval(t.doAction,10*60*1000);
-                 return;
         }
         ThroneOptions.Items["0"]["active"] = true;
         t.PaintQueue();
@@ -2671,7 +2677,7 @@ PaintSalvageHistory : function() {
                     {
                         document.getElementById('ShowStatus').innerHTML = 'Upgrader accidentally spent gems!  Turning upgrader off!!';
                         ThroneOptions.Active = false;
-                        saveThroneData();
+                        saveThroneOptions();
                     }
                     Seed.resources["city" + cityid]["rec5"][0] -= rslt.aetherstones;
                       y.level = rslt.item.level;
@@ -2767,7 +2773,7 @@ PaintSalvageHistory : function() {
                     {
                         document.getElementById('ShowStatus').innerHTML = 'Upgrader accidentally spent gems!  Turning upgrader off!!';
                         ThroneOptions.Active = false;
-                        saveThroneData();
+                        saveThroneOptions();
                     }
                     Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
                     if (rslt.success)
@@ -2852,13 +2858,14 @@ PaintSalvageHistory : function() {
                     {
                         document.getElementById('ShowStatus').innerHTML = 'UpgraderB accidentally spent gems!  Turning upgrader off!!';
                         ThroneOptions.Active = false;
-                        saveThroneData();
+                        saveThroneOptions();
                     }
                     Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
                     if (!rslt.success && ThroneOptions.Active)ThroneOptions.ibrokeitems.push(params.throneRoomItemId);
                     //{
                     //}
                     unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+                    saveThroneOptions();
 
                 } 
                 return;
@@ -2892,8 +2899,9 @@ PaintSalvageHistory : function() {
         params.cityId = cityid;
                     **/
         if(ThroneOptions.ibrokeitems.length > 0)
+        if(unsafeWindow.kocThroneItems[ThroneOptions.ibrokeitems[0]]) {
         if(!unsafeWindow.kocThroneItems[ThroneOptions.ibrokeitems[0]].isBroken)ThroneOptions.ibrokeitems.shift();//if it's not broke, don't fix it! lol
-        
+		} else ThroneOptions.ibrokeitems.shift();//if it's not there, remove it
         
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
@@ -2910,8 +2918,10 @@ PaintSalvageHistory : function() {
                 var rslt = eval("(" + transport.responseText + ")");
                     if(rslt.ok){
                   ThroneOptions.RepairEnd = rslt.eta;
-                  if(params.throneRoomItemId != ThroneOptions.Items["0"]["id"]) ThroneOptions.ibrokeitems.shift();
-                  else t.repairId = ThroneOptions.Items["0"]["id"];
+                  if(ThroneOptions.Items["0"]) {
+					  if(params.throneRoomItemId != ThroneOptions.Items["0"]["id"]) ThroneOptions.ibrokeitems.shift();
+					  else t.repairId = ThroneOptions.Items["0"]["id"];
+				  } else ThroneOptions.ibrokeitems.shift();
                   Seed.queue_throne.itemId= params.throneRoomItemId;
                   Seed.queue_throne.start=unixTime();
                   Seed.queue_throne.end= rslt.eta;
@@ -2921,7 +2931,7 @@ PaintSalvageHistory : function() {
                   ThroneOptions.Good++;
                   saveThroneOptions();
                } else {    
-                           ThroneOptions.Good++;
+                        ThroneOptions.Good++;
                         saveThroneOptions();
                    }        
                    return;
