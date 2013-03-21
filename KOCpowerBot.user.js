@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130316b
+// @version        20130320a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130316b';
+var Version = '20130320a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -7363,7 +7363,7 @@ Tabs.transport = {
         m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountAstone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
-        m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
+        m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';hereherehere
         m += '<TR align="center">';
         m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td>';
         m += '<TD id=TransGold align=right width=110px></td>';
@@ -7483,7 +7483,6 @@ Tabs.transport = {
                 .innerHTML)) ? input : parseIntCommas(document.getElementById('TransGold')
                 .innerHTML);
         }, false);
-        //hereherehere
         document.getElementById('MaxAstone')
             .addEventListener('click', function () {
             t.Astone = 0;
@@ -10074,7 +10073,7 @@ Tabs.Barb = {
   knt:{},
   barbArray:{},
   lookup:1,
-  city:0,
+  city:1,
   deleting:false,
   troopDef : [
       ['Supply', 1],
@@ -10143,7 +10142,8 @@ Tabs.Barb = {
            m += '<TD class=pblevelopt><INPUT id=pbcity'+i+'level'+w+' type=checkbox unchecked=true>Lvl:'+w+'</td>';
         }
      }
-    
+     m+='</table>'
+     m+='<div id="dferrorlog"></div>';
      t.myDiv.innerHTML = m;
 
      saveAttackOptions();
@@ -10476,9 +10476,9 @@ Tabs.Barb = {
        if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
        
-       if(t.barbArray[city].length > 0)
+       if(t.barbArray[city].length > 0){
         var barbinfo = t.barbArray[city].shift();
-       else if(parseInt(AttackOptions.Update[city][1])==0){
+       }else if(parseInt(AttackOptions.Update[city][1])==0){
         if(!t.searchRunning)t.checkBarbData();
         return;
        } else {
@@ -10523,7 +10523,7 @@ Tabs.Barb = {
 
   getnextCity: function(){
     var t = Tabs.Barb;
-    if(t.searchRunning || !AttackOptions.Running) return;
+    if(!AttackOptions.Running) return;
     
     var city = t.city+1;
     if (city>Seed.cities.length){
@@ -10571,7 +10571,7 @@ Tabs.Barb = {
   },
     
   doBarb: function(cityID,counter,xcoord,ycoord,level,kid,trps){
-          var t = Tabs.Barb;
+          var t = Tabs.Barb;//hereherehere
           var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
           params.cid=cityID;
           params.type=4;
@@ -10596,12 +10596,18 @@ Tabs.Barb = {
                      GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                      saveAttackOptions();
                    } else {
-					 //scripterdebuglog(rslt,true);//temp until I get some data on peoples claims of repeat df flooding
+					   if(rslt.error_code && rslt.msg)document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+Cities.byID[cityID].name+' dark forest failed: '+rslt.msg+'</FONT>';
+					 //scripterdebuglog(rslt,true);//For those getting unknown errors, uncomment this line and Baos will also receive your errors live.
                      //logit( inspect(rslt,3,1));
                      if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
                      if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
                      if (rslt.error_code == 210) AttackOptions.BarbsFailedRP++;
-                     if (rslt.error_code == 8) AttackOptions.BarbsFailedTraffic++;
+                     if (rslt.error_code == 4) actionLog('not enough units to attack darkforest');
+                     if (rslt.error_code == 8) {
+						 AttackOptions.BarbsFailedTraffic++;
+						 t.doBarb(cityID,counter,xcoord,ycoord,level,kid,trps);
+						 return;
+					 }
                      if (rslt.error_code == 104) {
                        AttackOptions.BarbsFailedBog++;
                        GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
