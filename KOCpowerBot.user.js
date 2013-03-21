@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130321b
+// @version        20130321c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130321b';
+var Version = '20130321c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4264,10 +4264,10 @@ Tabs.tower = {
     t.sendalert(m); 
     }
    if(Options.alertConfig.email) {
-	var frame = document.createElement('iframe'); frame.setAttribute('src','http://hs151.digitalweb.net/kocalert/index.php?PING=1'); 
+	var alertframe = document.createElement('iframe'); alertframe.setAttribute('src','http://hs151.digitalweb.net/kocalert/index.php?PING=1'); 
 	
-	setTimeout(function(){document.getElementById('kocContainer').appendChild(frame)},10000);
-	frame.onload = function(){   
+	setTimeout(function(){document.getElementById('kocContainer').appendChild(alertframe)},10000);
+	alertframe.onload = function(){   
      var data = {};
       data.Subject ='kocalaert'+getServerId()+' ';
       if(m.marchStatus == 9) data.Subject += attackrecalled;
