@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130320a
+// @version        20130321a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130320a';
+var Version = '20130321a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2594,13 +2594,7 @@ PaintSalvageHistory : function() {
         var now = new Date().getTime()/1000.0;
         if (!ThroneOptions.Active) return;
         t.checkUpgradeInfo();
-        if (ThroneOptions.Items.length ==0) {
-      if(document.getElementById('ShowStatus'))document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
-                 return;
-        }
-        ThroneOptions.Items["0"]["active"] = true;
-        t.PaintQueue();
-        // need to update for doupgradesimple and ibrokeitems.
+		//need to update for doupgradesimple and ibrokeitems.
         if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true && Seed.queue_throne.end == undefined){
                   //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
                   //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
@@ -2609,6 +2603,14 @@ PaintSalvageHistory : function() {
                   t.setActionTimer = setInterval(t.doAction,10000);
                 return;
         }
+        if (ThroneOptions.Items.length ==0) {
+      if(document.getElementById('ShowStatus'))document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
+                  clearTimeout(t.setActionTimer);
+                  t.setActionTimer = setInterval(t.doAction,10*60*1000);
+                 return;
+        }
+        ThroneOptions.Items["0"]["active"] = true;
+        t.PaintQueue();
         if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == false && Seed.queue_throne.end == undefined){
          if(document.getElementById('ShowStatus'))
                   document.getElementById('ShowStatus').innerHTML = "Doing " + ThroneOptions.Items["0"]["action"] + "...";
