@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130321d
+// @version        20130321e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130321d';
+var Version = '20130321e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2821,7 +2821,19 @@ PaintSalvageHistory : function() {
             },
         });   
     },
-        
+    doUpgradeAll : function(){
+        var t = Tabs.Throne;
+		var y = unsafeWindow.kocThroneItems;
+		for(i in y) {
+			logit('i is '+i);
+			if(!y[i].isBroken) {
+				logit('and is not broken '+i);
+				t.doUpgradesimple(i);
+				setTimeout(t.doUpgradeAll,2000);
+				break;
+			};
+		}
+	},
       
     doUpgradesimple : function(item) {
         var t = Tabs.Throne;
@@ -2854,16 +2866,24 @@ PaintSalvageHistory : function() {
                 if(rslt.ok){
                 if (rslt.updateSeed)
                   unsafeWindow.update_seed(rslt.updateSeed);
-                    if (rslt.gems > 0)
-                    {
+					var y = unsafeWindow.kocThroneItems[params.throneRoomItemId];
+                    if (rslt.gems > 0) {
                         document.getElementById('ShowStatus').innerHTML = 'UpgraderB accidentally spent gems!  Turning upgrader off!!';
                         ThroneOptions.Active = false;
                         saveThroneOptions();
-                    }
+                    };
                     Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
-                    if (!rslt.success && ThroneOptions.Active)ThroneOptions.ibrokeitems.push(params.throneRoomItemId);
-                    //{
-                    //}
+                    if (rslt["break"]){
+						if(ThroneOptions.Active)ThroneOptions.ibrokeitems.push(params.throneRoomItemId);
+						y.isBroken = true;
+                       y.brokenType = "level";
+                       y.status = rslt.item.status;
+                       y.name = y.createName();
+					} else {
+						y.level = rslt.item.level;
+                       y.quality = rslt.item.quality;
+                       y.name = y.createName();
+					};
                     unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
                     saveThroneOptions();
 
@@ -2871,6 +2891,7 @@ PaintSalvageHistory : function() {
                 return;
             },
             onFailure: function () {
+				logit('failure');
                return;
             },
         });   
