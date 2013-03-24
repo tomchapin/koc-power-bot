@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130324a
+// @version        20130324b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130324a';
+var Version = '20130324b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10108,7 +10108,6 @@ Tabs.Barb = {
   lookup:1,
   city:1,
   deleting:false,
-  waittime: 0,
   troopDef : [
       ['Supply', 1],
       ['Miltia', 2],
@@ -10502,10 +10501,6 @@ Tabs.Barb = {
       if (Seed.resources[cityID]["rec5"][0] > Number(AttackOptions.threshold)) {
          return;
       };
-      //We've been captcha'd.  waiting 2 mins.
-      if(t.waittime > unsafeWindow.unixtime()) {
-		  return;
-	   };
        var element1 = 'pddatacity'+(city-1);
        document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
        var element2 = 'pddataarray'+(city-1);
@@ -10651,7 +10646,6 @@ Tabs.Barb = {
                        GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                        saveAttackOptions();
                      }
-                     if(rslt.user_action)t.waittime = Number(unsafeWindow.unixtime()+400);
                      document.getElementById('pberror2').innerHTML = 'Excess Traffic errors:' + AttackOptions.BarbsFailedTraffic;
                      document.getElementById('pberror3').innerHTML = 'Rally Point errors: '+ AttackOptions.BarbsFailedRP;
                      document.getElementById('pberror4').innerHTML = 'Knight errors:' + AttackOptions.BarbsFailedKnight;
@@ -20457,7 +20451,7 @@ var March = {
                     if (rslt.user_action == "marchCaptcha") {
                         logit('captcha');
                         if(!unsafeWindow.Recaptcha){
-                            setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
+                            setTimeout (function(){t.sendMarch(params,callback);}, 2*60*1000);
                             return;
                         }
                         t.captchawin = new pbPopup ('pbmarch_captcha', 0, 0, 300, 200, true);
