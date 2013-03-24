@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130324b
+// @version        20130324c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130324b';
+var Version = '20130324c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -20221,6 +20221,7 @@ var March = {
     queue : [],
     lastattack : null,
     timer : null,
+    waittime:0,
   
     //March queue system
     addMarch : function (params, callback){
@@ -20394,6 +20395,10 @@ var March = {
          logit('attempted to send march size '+x+' max allowed is '+cids);
          return;
       };
+      if(March.waittime > unsafeWindow.unixtime()){
+		logit('stalling marches to deal with captcha');
+		return;  
+	  };
         var t = this;
         t.profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
         t.currentrequests++;
@@ -20450,8 +20455,9 @@ var March = {
                     }
                     if (rslt.user_action == "marchCaptcha") {
                         logit('captcha');
+                        March.waittime = Number(unsafeWindow.unixtime()+120);
                         if(!unsafeWindow.Recaptcha){
-                            setTimeout (function(){t.sendMarch(params,callback);}, 2*60*1000);
+                            setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
                             return;
                         }
                         t.captchawin = new pbPopup ('pbmarch_captcha', 0, 0, 300, 200, true);
