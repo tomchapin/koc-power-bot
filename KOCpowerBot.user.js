@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130324d
+// @version        20130324e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130324d';
+var Version = '20130324e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10611,15 +10611,16 @@ Tabs.Barb = {
           params.kid=kid;
           params.xcoord = xcoord;
           params.ycoord = ycoord;
+          logit(cityID);
         for (ii=1; ii<parseInt(t.troopDef.length+1); ii++) {
-			if(parseInt(trps[ii]) > Seed.units[cityID]['unt'+ii]){
+			if(parseInt(trps[ii]) > Seed.units['city'+cityID]['unt'+ii]){
 				document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+Cities.byID[cityID].name+' dark forest failed: Not doing march, not enough units </FONT>';
 				return;
 			};
             if(parseInt(trps[ii]) > 0)
                 params['u'+ii]=trps[ii];
         };
-		if (parseInt(trps[ii]) > Seed.units[cityID]['unt'+ii]) check = 0;
+		if (parseInt(trps[ii]) > Seed.units['city'+cityID]['unt'+ii]) check = 0;
 
           AttackOptions.BarbsTried++;
           document.getElementById('pberror1').innerHTML = 'Tries:'+ AttackOptions.BarbsTried;
