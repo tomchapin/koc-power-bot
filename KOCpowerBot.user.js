@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130324e
+// @version        20130325a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130324e';
+var Version = '20130325a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -1836,7 +1836,7 @@ Tabs.Throne = {
     var t = Tabs.Throne;
     try {      
       m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
-      m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD><b>Keep cards</b> with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> attributes</td></tr>';
+      m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD><b>Keep cards</b> with <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> attributes</td></tr>';
       m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wondrous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
       m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> cards.</td></table>';
       
@@ -2928,9 +2928,8 @@ PaintSalvageHistory : function() {
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'timeRepair';
         if(ThroneOptions.ibrokeitems.length > 0)params.throneRoomItemId = ThroneOptions.ibrokeitems[0];//If we still have a broken card, try fixing it
-        
-        
         else params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
+        
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
             parameters: params,
@@ -10611,7 +10610,6 @@ Tabs.Barb = {
           params.kid=kid;
           params.xcoord = xcoord;
           params.ycoord = ycoord;
-          logit(cityID);
         for (ii=1; ii<parseInt(t.troopDef.length+1); ii++) {
 			if(parseInt(trps[ii]) > Seed.units['city'+cityID]['unt'+ii]){
 				document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+Cities.byID[cityID].name+' dark forest failed: Not doing march, not enough units </FONT>';
