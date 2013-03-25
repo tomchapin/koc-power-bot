@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130325a
+// @version        20130325b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130325a';
+var Version = '20130325b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2607,13 +2607,16 @@ PaintSalvageHistory : function() {
                   t.setActionTimer = setInterval(t.doAction,10*60*1000);
                  return;
         }
-        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true && Seed.queue_throne.end == undefined){
-                  //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
-                  //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
+        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true){
+			if(Seed.queue_throne.end == undefined) {
+                  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
+                  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
+			  } else {
                     setTimeout(t.doRepair,5000);
                   clearTimeout(t.setActionTimer);
                   t.setActionTimer = setInterval(t.doAction,10000);
                 return;
+			};
         }
         ThroneOptions.Items["0"]["active"] = true;
         t.PaintQueue();
