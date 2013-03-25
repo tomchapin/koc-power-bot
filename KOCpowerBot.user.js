@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130325b
+// @version        20130325c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130325b';
+var Version = '20130325c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2594,6 +2594,11 @@ PaintSalvageHistory : function() {
         var now = new Date().getTime()/1000.0;
         if (!ThroneOptions.Active) return;
         t.checkUpgradeInfo();
+        if(Seed.queue_throne.end  > unsafeWindow.unixtime()) {
+			if(document.getElementById('ShowStatus'))document.getElementById('ShowStatus').innerHTML = "Waiting on repair";
+			return;
+		};
+	if(Seed.queue_throne.end == undefined) {
 		//need to update for doupgradesimple and ibrokeitems.
 		if(ThroneOptions.ibrokeitems.length > 0){
                   setTimeout(t.doRepair,5000);
@@ -2604,23 +2609,18 @@ PaintSalvageHistory : function() {
         if (ThroneOptions.Items.length ==0) {
       if(document.getElementById('ShowStatus'))document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
                   clearTimeout(t.setActionTimer);
-                  t.setActionTimer = setInterval(t.doAction,10*60*1000);
+                  t.setActionTimer = setInterval(t.doAction,60*1000);
                  return;
         }
         if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true){
-			if(Seed.queue_throne.end == undefined) {
-                  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
-                  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
-			  } else {
                     setTimeout(t.doRepair,5000);
                   clearTimeout(t.setActionTimer);
                   t.setActionTimer = setInterval(t.doAction,10000);
                 return;
-			};
         }
         ThroneOptions.Items["0"]["active"] = true;
         t.PaintQueue();
-        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == false && Seed.queue_throne.end == undefined){
+        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == false){
          if(document.getElementById('ShowStatus'))
                   document.getElementById('ShowStatus').innerHTML = "Doing " + ThroneOptions.Items["0"]["action"] + "...";
             if (ThroneOptions.Items["0"]["action"] == "Upgrade") setTimeout(t.doUpgrade,5000);
@@ -2628,6 +2628,9 @@ PaintSalvageHistory : function() {
             clearTimeout(t.setActionTimer);
             t.setActionTimer = setInterval(t.doAction,10000);
         }
+        
+	};
+        
   },
   
   
