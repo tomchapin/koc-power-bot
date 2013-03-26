@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130325c
+// @version        20130325d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130325c';
+var Version = '20130325d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2956,7 +2956,13 @@ PaintSalvageHistory : function() {
                   var x = rslt.eta - unixTime();
                   ThroneOptions.Good++;
                   saveThroneOptions();
-               } else {    
+               } else {  
+				   if(rslt.error_code == 256) {
+						unsafeWindow.kocThroneItems[params.throneRoomItemId].isBroken = false;
+						unsafeWindow.kocThroneItems[params.throneRoomItemId].brokenType = "";
+						unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+				   };
+				   //{"ok":false,"error_code":256,"msg":"Item is not broken"}  
                         ThroneOptions.Good++;
                         saveThroneOptions();
                    }        
@@ -3042,7 +3048,8 @@ PaintSalvageHistory : function() {
                 clearInterval(t.setRepairTimer);
                 if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
                 else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
-                //unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
+					unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
+					unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
                 Seed.queue_throne = "";
                 return;
             } else {
@@ -3364,13 +3371,14 @@ ThroneT : function (){
      var m = '<DIV  class=pbStat>Throne room toggle</div><center><TABLE height=0% class=pbTab><TR align="center">';
             for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
                  m += '<TD><INPUT id=tra'+k+' type=submit value='+k+'></td>';
-            m += '</table><br>';
+            m += '</table><button id=ttptc>Post to chat</button> <br>';
             m+='<table><TD><DIV id=ThroneTRS></div></td></table>';
             t.Overv.innerHTML = m;
             for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
             document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
             t.TTpaint(unsafeWindow.seed.throne.activeSlot);
             document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = true;
+            document.getElementById('ttptc').addEventListener('click', t.TTpoststats, false);
 },
 TTpaint : function(room) {
         var t = Tabs.Throne;
@@ -3396,6 +3404,19 @@ TTpaintstats : function () {
          };
          m+='</table></div>';
           document.getElementById('ThroneTRS').innerHTML = m;  
+},
+TTpoststats : function () {
+	var m = ':::.|Throne Room #'+unsafeWindow.seed.throne.activeSlot;
+         for(i in unsafeWindow.cm.thronestats.effects) {
+			 if(i<94){
+         var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
+         if(z != 0) {
+            m+='||'+unsafeWindow.cm.thronestats.effects[i][1]+': '+z+'%';
+                }
+         };
+	 };
+    sendChat ("/a "+  m);
+
 },
 
 hide : function (){
