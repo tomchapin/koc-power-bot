@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130325d
+// @version        20130327a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130325d';
+var Version = '20130327a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -206,6 +206,7 @@ var Options = {
   colorCityTabs: true,
   ThroneHUD: false,
   WWclick: false,
+  loginReward: false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -768,8 +769,10 @@ function pbStartup (){
   readApothecaryOptions();
   Tabs.gifts.readGiftsdb();
   setCities();
-if(unsafeWindow.g_ajaxparams.lang == "en")unsafeWindow.g_js_strings.getChat.nobadlang = "No bad language. No personal attacks. No links. Use /username to whisper to another player. Respect the mods, the scripters, and each other and most importantly, have fun!";
-if(unsafeWindow.g_js_strings)unsafeWindow.g_js_strings.commonstr.yourScriptVersionIsOut = unsafeWindow.g_js_strings.checkoutofdate.reloadconfirm;
+	if(unsafeWindow.g_ajaxparams.lang == "en")unsafeWindow.g_js_strings.getChat.nobadlang = "No bad language. No personal attacks. No links. Use /username to whisper to another player. Respect the mods, the scripters, and each other and most importantly, have fun!";
+	if(unsafeWindow.g_js_strings)unsafeWindow.g_js_strings.commonstr.yourScriptVersionIsOut = unsafeWindow.g_js_strings.checkoutofdate.reloadconfirm;
+
+	if(Options.loginReward && Seed.loginReward.show_hud) unsafeWindow.cm.DailyRewardsView.hudClick();
 
 // TODO: Make sure WinPos is visible on-screen ?
   if (Options.pbWinPos==null || Options.pbWinPos.x==null|| Options.pbWinPos.x=='' || isNaN(Options.pbWinPos.x)){
@@ -10953,7 +10956,8 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbCrestBut type=checkbox '+ (Options.crestbtns?'CHECKED ':'') +'/></td><TD>'+translate("Crest toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbFarmBut type=checkbox '+ (Options.Farmbtns?'CHECKED ':'') +'/></td><TD>'+translate("Farm toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbThroneHUDBut type=checkbox '+ (Options.ThroneHUD?'CHECKED ':'') +'/></td><TD>'+translate("Throne HUD")+'</td></tr>\
-        <TR><TD><INPUT id=pbWWclick type=checkbox '+ (Options.WWclick?'CHECKED ':'') +'/></td><TD>'+translate("Hit OK on multiple window warning popup which causes refresh")+'</td></tr>';
+        <TR><TD><INPUT id=pbWWclick type=checkbox '+ (Options.WWclick?'CHECKED ':'') +'/></td><TD>'+translate("Hit OK on multiple window warning popup which causes refresh")+'</td></tr>\
+        <TR><TD><INPUT id=pbloginReward type=checkbox '+ (Options.loginReward?'CHECKED ':'') +'/></td><TD>'+translate("Auto click/accept daily login reward")+'</td></tr>';
         
         m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
@@ -11085,6 +11089,7 @@ Tabs.Options = {
       t.togOpt ('pbFarmBut', 'Farmbtns');
       t.togOpt ('pbThroneHUDBut', 'ThroneHUD');
       t.togOpt ('pbWWclick', 'WWclick');
+      t.togOpt ('pbloginReward', 'loginReward');
       t.changeOpt ('pbwhichcity', 'smain');
       t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
       t.changeOpt ('pbfilter','fchar');
