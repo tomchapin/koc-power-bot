@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130328b
+// @version        20130328c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130328b';
+var Version = '20130328c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -753,7 +753,9 @@ function pbStartup (){
     span.pbTextFriendly {color: #080}\
     span.pbTextHostile {color: #800}\
     .pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
-    div.indent25 {padding-left:25px}';
+    div.indent25 {padding-left:25px}\
+    .pbttabs {background-color:#A68064; font-weight:bold; color:white}\
+    .pbttabsdis {background-color:#603311; font-weight:bold; color:white}';    
     
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
@@ -2406,9 +2408,12 @@ doPreset : function (room, retry) {
                document.getElementById('tra'+params.presetId).disabled = true;
 			};
 			 if(document.getElementById('ThroneHUD')) {
-				for(a = 1;a <= Seed.throne.slotNum;a++)
+				for(a = 1;a <= Seed.throne.slotNum;a++) {
 				document.getElementById('htra'+a).disabled = false;
+				document.getElementById('htra'+a).className = "pbttabs";
+			};
 				document.getElementById('htra'+params.presetId).disabled = true;
+				document.getElementById('htra'+params.presetId).className = "pbttabsdis";
 			};
                t.TTpaint(params.presetId);
                if(document.getElementById('throneInventoryPreset'+params.presetId))
@@ -3364,7 +3369,7 @@ ThroneHUDinit : function (){
 	var div = document.createElement('div');
 	var m = '<TABLE height=0% class=pbTab><TR align="center">';
     for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
-       m += '<TD><INPUT id=htra'+k+' type=submit value='+k+'></td>';
+       m += '<TD><INPUT id=htra'+k+' type=submit value='+k+' class="pbttabs"></td>';
     m += '</table><br>';
 	div.innerHTML = m;
 	div.style.position="absolute";
@@ -3377,6 +3382,7 @@ ThroneHUDinit : function (){
 	for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
 		document.getElementById('htra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
 	document.getElementById('htra'+unsafeWindow.seed.throne.activeSlot).disabled = true;
+	document.getElementById('htra'+unsafeWindow.seed.throne.activeSlot).className = "pbttabsdis";
 },
 ThroneT : function (){
         var t = Tabs.Throne;    
