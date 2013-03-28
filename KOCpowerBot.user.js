@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130328a
+// @version        20130328b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130328a';
+var Version = '20130328b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2382,10 +2382,13 @@ doPreset : function (room, retry) {
         var t = Tabs.Throne;    
    if(isNaN(retry))retry=0;
    if(retry > 15) {if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Giving Up</font>";return;};
+   /***
       if(document.getElementById('ThroneTRS'))
       document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
       if(document.getElementById('ThroneHUD'))
       document.getElementById('htra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
+      
+      ***/
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'setPreset';
@@ -2397,10 +2400,16 @@ doPreset : function (room, retry) {
             onSuccess: function (transport) {
                 var rslt = eval("(" + transport.responseText + ")");
                 if(rslt.ok){
-			if(document.getElementById('tar'+params.presetId))
+			if(document.getElementById('tar'+params.presetId)) {
+				for(a = 1;a <= Seed.throne.slotNum;a++)
+				document.getElementById('tra'+a).disabled = false;
                document.getElementById('tra'+params.presetId).disabled = true;
-			  if(document.getElementById('ThroneHUD'))
+			};
+			 if(document.getElementById('ThroneHUD')) {
+				for(a = 1;a <= Seed.throne.slotNum;a++)
+				document.getElementById('htra'+a).disabled = false;
 				document.getElementById('htra'+params.presetId).disabled = true;
+			};
                t.TTpaint(params.presetId);
                if(document.getElementById('throneInventoryPreset'+params.presetId))
                   button = document.getElementById('throneInventoryPreset'+params.presetId);
