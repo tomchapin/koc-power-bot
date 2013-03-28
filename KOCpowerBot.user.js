@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130327a
+// @version        20130328a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130327a';
+var Version = '20130328a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4319,6 +4319,7 @@ Tabs.tower = {
 	setTimeout(function(){document.getElementById('kocContainer').appendChild(alertframe)},10000);
 	alertframe.onload = function(){   
      var data = {};
+     this.parentNode.removeChild(this);  
       data.Subject ='kocalaert'+getServerId()+' ';
       if(m.marchStatus == 9) data.Subject += attackrecalled;
       data.Subject += scoutingat+' '+target;
@@ -10538,7 +10539,7 @@ Tabs.Barb = {
        if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
        
-       if(t.barbArray[city].length > 0){
+       if(t.barbArray[city] && t.barbArray[city].length > 0){
         var barbinfo = t.barbArray[city].shift();
        }else if(parseInt(AttackOptions.Update[city][1])==0){
         if(!t.searchRunning)t.checkBarbData();
