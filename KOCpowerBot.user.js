@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130328c
+// @version        20130330a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130328c';
+var Version = '20130330a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -6266,14 +6266,8 @@ Tabs.Search = {
         t.clickedStartScout();
         return;
     }
-    var rallypointlevel = March.getRallypointLevel(city.id);
-    var slots = 0;
-       for (z in Seed.queue_atkp['city'+city.id]){
-             slots++;
-       }
-    if  (Seed.queue_atkp['city'+city.id].toSource() == "[]") slots=0;
-
-    if(slots >= rallypointlevel){
+    logit('first '+Number(March.getTotalSlots(city.id))+' second: '+Number(March.getMarchSlots(city.id)));
+     if (Number(Number(March.getTotalSlots(city.id))-Number(March.getMarchSlots(city.id))) <= 0){
         setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
         document.getElementById('pbSrcScoutResult').innerHTML += translate('Waiting for rally point to clear')+'...';
         return;
@@ -20331,12 +20325,12 @@ var March = {
       var slots = rallypointlevel; //Set default number of slots to rallypointlevel
       if(slots == 12)slots = 11;// a level 12 rallypoint only allows for 11 marches.  the bonus from 11 to 12 is increased army size.
       if(ascended.isPrestigeCity){
-         switch(ascended.prestigeLevel){
+         switch(ascended.prestigeLevel){//any ascended city has a +3 slot bonus regardless of level.
             case 1:
-               slots += 1;
+               slots += 3;
                break;
             case 2:
-               slots += 2;
+               slots += 3;
                break;
             case 3:
                slots += 3;
