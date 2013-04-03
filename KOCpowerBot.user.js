@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130330a
+// @version        20130403a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130330a';
+var Version = '20130403a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -19921,12 +19921,12 @@ Tabs.startup = {
                 var now = new Date().getTime()/1000.0;
                 now = now.toFixed(0);
                 CrestData[CrestDataNum].lastRoundOne = now;
+                setTimeout (function(){callback(r,0,parseInt(CrestDataNum));}, (Options.Crestinterval*1000));
                 } else {
                     Options.Crest2Count++;
+                setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Options.Crestinterval*1000));
                 }
                 saveCrestData();
-                setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Options.Crestinterval*1000));   
-                return;
             } else { //onFailure
                 setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Math.random()*1000)+(Options.Crestinterval*1000));
             }
@@ -19935,17 +19935,25 @@ Tabs.startup = {
     
 
     
-    abandonWilderness: function(tid,x,y,cid,callback,retry, CrestDataNum){
+    abandonWilderness: function(){
         var t = Tabs.Crest;      
         if (!Options.crestRunning) return;
-        
+        toploop:
+        for(m in CrestData) {
+			var cid = CrestData[m].CrestCity;
+			var         cityID = 'city' + cid;
+			if(CrestData[m].isWild){
+				for (var k in Seed.wilderness[cityID] ){
+					if (Seed.wilderness[cityID][k]['xCoord']==CrestData[m].X && Seed.wilderness[cityID][k]['yCoord']==CrestData[m].Y) {
+
+						//t.abandonWilderness(Seed.wilderness[cityID][k]['tileId'],Seed.wilderness[cityID][k]['xCoord'],Seed.wilderness[cityID][k]['yCoord'],CrestData[m].CrestCity,t.Rounds,retry,CrestDataNum);
+						
+						
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        var cityID = cid;
-        var tileid = tid;
-        params.tid=tid;
+        params.tid=Seed.wilderness[cityID][k]['tileId'];
         params.cid=cid;
-        params.x=x;
-          params.y=y;                 
+        params.x=Seed.wilderness[cityID][k]['xCoord'];
+          params.y=Seed.wilderness[cityID][k]['yCoord'];
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/abandonWilderness.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
               parameters: params,
@@ -19973,10 +19981,10 @@ Tabs.startup = {
                         }
                     }
                     if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-                    if (Object.keys(Seed.wilderness["city" + cityID]).length == 1) {
-                        Seed.wilderness["city" + cityID] = []
+                    if (Object.keys(Seed.wilderness[cityID]).length == 1) {
+                        Seed.wilderness[cityID] = []
                        } else    {
-                        delete Seed.wilderness["city"+cityID]["t"+tileid];
+                        delete Seed.wilderness[cityID]["t"+params.tid];
                        }
                 } else {
                     if (rslt.error_code != 401) {
@@ -19986,6 +19994,15 @@ Tabs.startup = {
               },
               onFailure: function () {}
           });
+						
+						
+						
+						break toploop;
+					}
+				}
+			}
+		};
+
     },
     
     
@@ -20003,14 +20020,7 @@ Tabs.startup = {
         r = (typeof CrestData[CrestDataNum].curRound === 'undefined') ? 1 : CrestData[CrestDataNum].curRound;
         cityID = 'city' + CrestData[CrestDataNum].CrestCity;
         retry++;
-        if(CrestData[CrestDataNum].isWild){
-            for (var k in Seed.wilderness[cityID] ){
-                if (Seed.wilderness[cityID][k]['xCoord']==CrestData[CrestDataNum].X && Seed.wilderness[cityID][k]['yCoord']==CrestData[CrestDataNum].Y && t.error_code!=401) {
-                    t.abandonWilderness(Seed.wilderness[cityID][k]['tileId'],Seed.wilderness[cityID][k]['xCoord'],Seed.wilderness[cityID][k]['yCoord'],CrestData[CrestDataNum].CrestCity,t.Rounds,retry,CrestDataNum);
-                    break;
-                }
-            }
-        }
+new t.abandonWilderness();
         /*****
         switch (retry) {
             case 10:
@@ -21862,5 +21872,7 @@ var GlobalEachSecond = function () {
 		};
 	//end window open in other browser warning auto click
 };
+
+
 
 pbStartup ();
