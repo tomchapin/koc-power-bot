@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130403d
+// @version        20130404a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130403d';
+var Version = '20130404a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4979,7 +4979,7 @@ Tabs.build = {
     },
     e_autoBuild: function () {
         var t = Tabs.build;
-      var buildInterval = 30 * 1000; // 2 seconds between checks by default
+      var buildInterval = 10 * 1000; // 2 seconds between checks by default
         document.getElementById('pbbuildError').innerHTML = '';
       
         if (t.buildStates.running == true) {
@@ -5179,7 +5179,7 @@ Tabs.build = {
                             Seed.resources["city" + currentcityid].rec4[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][4]) * mult * 3600;
                             Seed.citystats["city" + currentcityid].gold[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][5]) * mult;
                             Seed.queue_con["city" + currentcityid].push([bdgid, curlvl + 1, parseInt(rslt.buildingId), unsafeWindow.unixtime(), unsafeWindow.unixtime() + time, 0, time, citpos]);
-                            unsafeWindow.Modal.hideModalAll();
+                            //unsafeWindow.Modal.hideModalAll();
                             unsafeWindow.queue_changetab_building();
                             unsafeWindow.modal_build_show_state();
                             if (params.cid == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
@@ -5222,7 +5222,7 @@ Tabs.build = {
                     onFailure: function () {
                         document.getElementById('pbbuildError').innerHTML = translate("Connection Error while building! Please try later again");
                     }
-                });
+                },true);
             } else {
                 t.requeueQueueElement(bQi); // requeue item if check is invalid
             }
