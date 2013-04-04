@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130403a
+// @version        20130403b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130403a';
+var Version = '20130403b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -207,6 +207,7 @@ var Options = {
   ThroneHUD: false,
   WWclick: false,
   loginReward: false,
+  CrestRand: false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -19518,7 +19519,8 @@ Tabs.startup = {
     m += '<INPUT id=pbsendcrestreportint value='+ Options.CrestMsgInterval +' type=text size=3 \> hours </td>\
         <TD>Keep <INPUT id=pbcrestslots value='+ Options.CrestSlots +' type=text size=3 \> Slots Free</td>\
           <TD>Attack interval <INPUT type=text size=3 value='+Options.Crestinterval+' id=pbcrest_interval />seconds</tr></table>';
-          
+   m += '<table><tr><td><INPUT id=pbRattacks type=checkbox '+(Options.CrestRand?'CHECKED':'')+'>Randomize attack order</td></tr></table>';
+
     m += '<DIV id=pbOpt class=pbStat>CRESTING OPTIONS</div><TABLE id=pbcrestopt     width=100% height=0% class=pbTab><TR align="center"></table>';
     m += '<DIV style="margin-bottom:10px;">Crest from city: <span id=crestcity></span></div>';
     
@@ -19590,6 +19592,12 @@ Tabs.startup = {
     $('pbcrest_iswild').addEventListener('click', function(){
         CrestOptions.isWild = this.checked;
     },false);
+    
+	$('pbRattacks').addEventListener('click', function(){
+        Options.CrestRand = this.checked;
+        saveOptions();
+    },false);
+    
     $('pbcrest_rnd1').addEventListener('click', function(){
         var checked = (!this.checked);
         CrestOptions.round1 = this.checked;
@@ -20015,8 +20023,18 @@ Tabs.startup = {
         if (!Options.crestRunning) return;
         if (CrestData.length == 0)
             {logit('length was 0');return;};
-        if (CrestDataNum >= CrestData.length)
+        if (CrestDataNum >= CrestData.length) {
             CrestDataNum = 0;
+            if(Options.CrestRand){
+			   //AS per http://osric.com/chris/accidental-developer/2012/07/javascript-array-sort-random-ordering/ sort was not used, this is used instead to get true random results.
+				var n = CrestData.length;
+				var tempArr = [];
+				for ( q = 0; q < n-1; q++ )
+				tempArr.push(CrestData.splice(Math.floor(Math.random()*CrestData.length),1)[0]);
+				tempArr.push(CrestData.length[0]);
+				CrestData=tempArr;
+			};
+		};
         r = (typeof CrestData[CrestDataNum].curRound === 'undefined') ? 1 : CrestData[CrestDataNum].curRound;
         cityID = 'city' + CrestData[CrestDataNum].CrestCity;
         retry++;
@@ -21872,7 +21890,6 @@ var GlobalEachSecond = function () {
 		};
 	//end window open in other browser warning auto click
 };
-
 
 
 pbStartup ();
