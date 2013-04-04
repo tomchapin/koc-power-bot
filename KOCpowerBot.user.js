@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130405a
+// @version        20130405b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130405a';
+var Version = '20130405b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -5004,7 +5004,7 @@ Tabs.build = {
 				* ***/
                     if (parseInt(qcon[0][4]) > now) isBusy = true;
                     else {
-						Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2];// first make sure the building is correct
+						Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
 						logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
 						qcon.shift(); // remove expired build from queue    
 					};
