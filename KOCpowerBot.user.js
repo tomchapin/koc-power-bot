@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130403b
+// @version        20130403c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130403b';
+var Version = '20130403c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4979,13 +4979,15 @@ Tabs.build = {
     },
     e_autoBuild: function () {
         var t = Tabs.build;
-      var buildInterval = 2 * 1000; // 2 seconds between checks by default
+      var buildInterval = 30 * 1000; // 2 seconds between checks by default
         document.getElementById('pbbuildError').innerHTML = '';
       
         if (t.buildStates.running == true) {
             var now = unixTime();
             //logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
+			var itime = 1000;
             for (var i = 0; i < Cities.cities.length; i++) {
+				itime += 5000;
                 var cityId = Cities.cities[i].id;
                 var isBusy = false;
                 var qcon = Seed.queue_con["city" + cityId];
@@ -5000,8 +5002,8 @@ Tabs.build = {
                     if (t["bQ_" + cityId].length > 0) { // something to do?
                         var bQi = t["bQ_" + cityId][0]; //take first queue item to build
 
-                        t.doOne(bQi);
-                  buildInterval = 10 * 1000; // we tried to build so use longer interval
+                        t.doOneSlowdown(bQi,itime);
+                  //buildInterval = 10 * 1000; // we tried to build so use longer interval
                         //setTimeout(t.e_autoBuild, 10000); //should be at least 10
                         //return; // we need to make sure that there is enough time for each ajax request to not overwrite the vaule that are needed by the next run
                     }
@@ -5010,6 +5012,12 @@ Tabs.build = {
         }
         setTimeout(t.e_autoBuild, buildInterval); //should be at least 10
     },
+    
+    doOneSlowdown : function (bQi,itime){
+        var t = Tabs.build;
+		setTimeout(function(){t.doOne(bQi)},itime);
+	},
+    
     paintBusyDivs: function () {
         var t = Tabs.build;
         var now = unixTime();
@@ -5179,13 +5187,35 @@ Tabs.build = {
                             t.cancelQueueElement(0, currentcityid, time, false);
                         } else {
                             var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-                            if (rslt.error_code == 103) { // building has already the target level => just  delete
-                                t.cancelQueueElement(0, currentcityid, time, false);
-                                actionLog(translate("Queue item deleted: Building at this Level already exists or build process already started!"));
-                            } else {
-                                t.requeueQueueElement(bQi);
-                                document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
-                            }
+						var a = null;
+						var g = rslt.error_code;
+						var g_server = unsafeWindow.g_server;
+						switch (g) {
+							case "0":
+								a = "Unexpected Error.";
+								break;
+							case "2":
+								a = "Construction is already starting.";
+								break;
+							case "8":
+								a = "Excess traffic.";
+								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server);
+								break;
+							case "102":
+								//a = "Another building already exists on the same spot!"; lets delete our queued building
+								t.cancelQueueElement(0, currentcityid, time, false);
+								break;
+							case "103":
+								// building has already the target level => just  delete
+								t.cancelQueueElement(0, currentcityid, time, false);
+								break;
+							case "default":
+								a = "Something has gone wrong.";
+								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server); 
+								t.requeueQueueElement(bQi);
+								document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
+								break
+							};
                             logit(errmsg);
                         }
                     },
