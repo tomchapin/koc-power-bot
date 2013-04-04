@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130404a
+// @version        20130404b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130404a';
+var Version = '20130404b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -5170,7 +5170,7 @@ Tabs.build = {
                     parameters: params,
                     onSuccess: function (rslt) {
                  if (rslt.updateSeed)
-               unsafeWindow.update_seed(rslt.updateSeed);
+                unsafeWindow.update_seed(rslt.updateSeed);
                         if (rslt.ok) {
                             actionLog(translate("Building") + " " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);
                             Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
@@ -5194,7 +5194,9 @@ Tabs.build = {
 							case "0":
 								a = "Unexpected Error.";
 								break;
-							case "2":
+							case "2"://lets try update seed to fix the missing build?
+								unsafeWindow.g_update_seed_ajax_do = true;
+								unsafeWindow.update_seed_ajax();
 								a = "Construction is already starting.";
 								break;
 							case "8":
