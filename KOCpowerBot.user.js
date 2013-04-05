@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130405c
+// @version        20130405d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130405c';
+var Version = '20130405d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21299,21 +21299,11 @@ Tabs.gifts = {
       if(GiftDB.agift)
          setTimeout(t.sendgifts,10000);
       if(GiftDB.adgift)
-         setTimeout(function () {t.scangifts(4)},3*61*1000);
+         setInterval(function () {t.scangifts(4)},10*61*1000);
    },
    populatepeople : function () {
         var t = Tabs.gifts;
       t.curava = new Array();
-        //convert old variable
-        for(b in GiftDB.people) {
-         if(typeof GiftDB.people[b] == 'number'){
-         var x = GiftDB.people[b];
-         GiftDB.people[b] = [x,0];
-         };
-         if(!GiftDB.people[b][3])GiftDB.people[b][3] = 0;//time limited fix for older variable
-      
-      };
-        //convert old variable
               var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
       params.ctrl = 'allianceGifting\\AllianceGiftingServiceAjax';
       params.action = 'getRecipients';
@@ -21340,13 +21330,15 @@ Tabs.gifts = {
                         }
                         var name = sex+' '+rslt.recipients[i].displayName;
                         var sent=0;
-                        if(GiftDB.people[rslt.recipients[i].userId]) {
+                        if(GiftDB.people[Number(rslt.recipients[i].userId)]) {
                            sent = GiftDB.people[rslt.recipients[i].userId][1];
                            GiftDB.people[Number(rslt.recipients[i].userId)][2] = name;//annoying people change their name.  lets update.
-                        };
+                        }else{
+							GiftDB.people[rslt.recipients[i].userId] = [0,0,name,0];
+						};;
                      m += '<tr><td></td><td>'+name+'<td/><td>Total sent: '+sent+'</td>'; 
                      m+= '<td><select class="giftstosend" id="'+rslt.recipients[i].userId+'" name="'+name+'">';
-                     m+='<option value="0">None</option>';
+						m+='<option value="0">None</option>';
                      for(g =0;g < GiftDB.giftitems.length;g++) {
                   if(GiftDB.people[Number(rslt.recipients[i].userId)] && GiftDB.people[Number(rslt.recipients[i].userId)][0] == Number(GiftDB.giftitems[g].itemId))
                      m+='<option value="'+GiftDB.giftitems[g].itemId+'" selected="selected">'+GiftDB.giftitems[g].name+'</option>';
@@ -21363,6 +21355,8 @@ Tabs.gifts = {
                      var name = GiftDB.people[h][2];
                      m += '<tr><td>Not Available: </td><td>'+name+'<td/><td>Total sent: '+GiftDB.people[h][1]+'</td>'; 
                      m+= '<td><select class="giftstosend" id="'+h+'" name="'+name+'">';
+                     
+                     
                      m+='<option value="0">None</option>';
                      for(g =0;g < GiftDB.giftitems.length;g++) {
                   if(GiftDB.people[Number(h)] && GiftDB.people[Number(h)][0] == Number(GiftDB.giftitems[g].itemId))
@@ -21380,17 +21374,18 @@ Tabs.gifts = {
                    for (c = 0; c < element_class.length; c++) {
                         if(element_class[c])
                         element_class[c].addEventListener('change', function(e){
-                  if(e.target.value != -1) {
-                  if(!GiftDB.people[Number(e.target.id)])
-                     GiftDB.people[Number(e.target.id)] = [Number(e.target.value),0];
-                     else GiftDB.people[Number(e.target.id)][0] =Number(e.target.value);
-                     GiftDB.people[Number(e.target.id)][2] = e.target.name;
-                     GiftDB.people[Number(e.target.id)][3] = 0;
-                  }else {
-                     delete GiftDB.people[Number(e.target.id)];
-                  };
-                     t.saveGiftsdb();
-                  } , false);
+						  if(e.target.value != -1) {
+						  if(!GiftDB.people[Number(e.target.id)])
+							 GiftDB.people[Number(e.target.id)] = [Number(e.target.value),0];
+							 else 
+							 GiftDB.people[Number(e.target.id)][0] =Number(e.target.value);
+							 GiftDB.people[Number(e.target.id)][2] = e.target.name;
+							 GiftDB.people[Number(e.target.id)][3] = 0;
+						  }else {
+							 delete GiftDB.people[Number(e.target.id)];
+						  };
+							 t.saveGiftsdb();
+						  } , false);
                     }
                }
             },
@@ -21522,7 +21517,7 @@ Tabs.gifts = {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                for(i in rslt.message){
-                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Ã‚Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!")){
+                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Ã‚Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!" || rslt.message[i].subject == "Yeni Hediye Alındı!" || rslt.message[i].subject == "Neues Geschenk erhalten!")){
                      t.foundgift(i);
                   };
                };
