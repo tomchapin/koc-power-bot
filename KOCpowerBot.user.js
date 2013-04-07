@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130407a
+// @version        20130407b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130407a';
+var Version = '20130407b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3940,7 +3940,7 @@ Tabs.tower = {
                   if(Options.SaveState.transport && !Tabs.transport.traderState.running)Tabs.transport.toggleTraderState();
                   if(Options.SaveState.farm && !FarmOptions.Running)Tabs.farm.toggleBarbState();
                   if(Options.SaveState.darkforest && !AttackOptions.Running)Tabs.Barb.toggleBarbState();
-                  if(Options.SaveState.crest && !Options.crestRunning)Tabs.Crest.toggleCrestState();
+                  if(Options.SaveState.crest && !Options.crestRunning)Tabs.Attack.toggleCrestState();
                };
                if (Options.SaveState.trset != Seed.throne.activeSlot)
                   Tabs.Throne.doPreset(Options.SaveState.trset);
@@ -4054,7 +4054,7 @@ Tabs.tower = {
                Options.SaveState.darkforest = AttackOptions.Running;
                if(Options.SaveState.darkforest)Tabs.Barb.toggleBarbState();
                Options.SaveState.crest = Options.crestRunning;
-               if(Options.SaveState.crest)Tabs.Crest.toggleCrestState();
+               if(Options.SaveState.crest)Tabs.Attack.toggleCrestState();
             };
             Options.SaveState.trset = Seed.throne.activeSlot;
          };
@@ -5703,6 +5703,7 @@ Tabs.Search = {
   popFirst : true,
   SearchList : [],
   IgAlly : [],
+  dat : [],  
   
   init : function (div){
     var t = Tabs.Search;
@@ -6115,7 +6116,7 @@ Tabs.Search = {
       return a[2] - b[2];
     }
     
-    dat = [];
+    t.dat = [];
     for (i=0; i<t.mapDat.length; i++){
       lvl = parseInt (t.mapDat[i][4]);
       type = t.mapDat[i][3];
@@ -6129,25 +6130,25 @@ Tabs.Search = {
            (Options.neutralOnly && t.mapDat[i][12] == 'n') ||
            (Options.unalliedOnly && t.mapDat[i][12] == 'u') ||
            (Options.srcAll))
-                dat.push(t.mapDat[i]);
+               t.dat.push(t.mapDat[i]);
       } else {
        if (lvl>=Options.srcMinLevel && lvl<=Options.srcMaxLevel){
         if (t.opt.searchType==0 || Options.wildType==0
         ||  (Options.wildType==1 && (type==1 || type==2))
         ||  (Options.wildType == type)){
           if (!Options.unownedOnly || t.mapDat[i][5]===false)
-            dat.push (t.mapDat[i]);
+           t.dat.push (t.mapDat[i]);
         }
        }
       }
     }
     if (DEBUG_SEARCH) DebugTimer.display('SEACHdraw: FILTER');
 
-    document.getElementById('pastatFound').innerHTML = translate('Found')+': '+ dat.length;
-    if (dat.length == 0){
+    document.getElementById('pastatFound').innerHTML = translate('Found')+': '+t.dat.length;
+    if (t.dat.length == 0){
       m = '<BR><CENTER>'+translate("None found")+'</center>';
     } else {
-      dat.sort(mySort);
+      t.dat.sort(mySort);
       if (DEBUG_SEARCH) DebugTimer.display('SEACHdraw: SORT');
       if (coordsOnly)
         m = '<TABLE align=center id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Location")+'</td></tr>';
@@ -6158,32 +6159,32 @@ Tabs.Search = {
             m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Location")+'</td><TD style="padding-left: 10px">'+translate("Distance")+'</td><TD style="padding-left: 10px;">'+translate("Lvl")+'</td><TD width=100px> &nbsp; '+translate("Type")+'</td><TD></td><TD>'+translate("Export to Raid")+'</td></tr>';
         }
     }
-      var numRows = dat.length;
+      var numRows = t.dat.length;
       if (numRows > t.MAX_SHOW_WHILE_RUNNING && t.searchRunning){
         numRows = t.MAX_SHOW_WHILE_RUNNING;
-        document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>'+translate('NOTE: Table only shows ')+ t.MAX_SHOW_WHILE_RUNNING +' of '+ dat.length +translate(' results until search is complete')+'.</font>';
+        document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>'+translate('NOTE: Table only shows ')+ t.MAX_SHOW_WHILE_RUNNING +' of '+ t.dat.length +translate(' results until search is complete')+'.</font>';
       }
       for (i=0; i<numRows; i++){
-        m += '<TR><TD><DIV onclick="pbGotoMap('+ dat[i][0] +','+ dat[i][1] +')"><A>'+ dat[i][0] +','+ dat[i][1] +'</a></div></td>';
+        m += '<TR><TD><DIV onclick="pbGotoMap('+ t.dat[i][0] +','+ t.dat[i][1] +')"><A>'+ t.dat[i][0] +','+ t.dat[i][1] +'</a></div></td>';
         if (coordsOnly) {
           m += '</tr>';
         } else {
           if (t.opt.searchType == 2) { // city search
-            m += '<TD align="right" >'+ dat[i][2].toFixed(2) +'</td>';
-            if (dat[i][5])
-              m += '<TD colspan=4>* '+translate("MISTED")+' * &nbsp; &nbsp; <SPAN onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;"><A>'+translate("Scout")+'</a></span></td></tr>';
+            m += '<TD align="right" >'+ t.dat[i][2].toFixed(2) +'</td>';
+            if ( t.dat[i][5])
+              m += '<TD colspan=4>* '+translate("MISTED")+' * &nbsp; &nbsp; <SPAN onclick="pbSearchScout('+ t.dat[i][0] +','+ t.dat[i][1] +');return false;"><A>'+translate("Scout")+'</a></span></td></tr>';
             else{
               var allStyle = '';
-              if (dat[i][12]=='f')
+              if ( t.dat[i][12]=='f')
                 allStyle = 'class=pbTextFriendly';
-              else if (dat[i][12]=='h')
+              else if ( t.dat[i][12]=='h')
                 allStyle = 'class=pbTextHostile';
-              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>'+translate("ONLINE")+'</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">'+translate("Lookup")+'</a></td></tr>';
+              m += '<TD>'+ t.dat[i][9]+'</td><TD align=right>'+ t.dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ t.dat[i][11]+'</span></td><TD>'+( t.dat[i][13]?'<SPAN class=boldDarkRed>'+translate("ONLINE")+'</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ t.dat[i][7] +')">'+translate("Lookup")+'</a></td></tr>';
             }
             } else {
-          m += '<TD align=right  valign="top">'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
-            +'</td><TD  valign="top">'+ (dat[i][5]?(dat[i][6]!=0?' <A onclick="pbSearchLookup('+dat[i][6]+')">'+translate("OWNED")+'</a>':'<A onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;">'+translate("MISTED")+'</a>'):'') +'</td>';
-          if (t.opt.searchType == 0) m+= '<TD align=center  valign="top"><A onclick="pbExportToRaid('+ dat[i][0]+','+dat[i][1] +')">'+translate("Export")+'</a></td>';
+          m += '<TD align=right  valign="top">'+ t.dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ t.dat[i][4] +'</td><TD> &nbsp; '+ tileNames[ t.dat[i][3]]
+            +'</td><TD  valign="top">'+ ( t.dat[i][5]?( t.dat[i][6]!=0?' <A onclick="pbSearchLookup('+ t.dat[i][6]+')">'+translate("OWNED")+'</a>':'<A onclick="pbSearchScout('+ t.dat[i][0] +','+ t.dat[i][1] +');return false;">'+translate("MISTED")+'</a>'):'') +'</td>';
+          if (t.opt.searchType == 0) m+= '<TD align=center  valign="top"><A onclick="pbExportToRaid('+ t.dat[i][0]+','+ t.dat[i][1] +')">'+translate("Export")+'</a></td>';
           m+='</tr>';
             }
         }
@@ -6192,7 +6193,6 @@ Tabs.Search = {
       m += '</table>';
     }
     document.getElementById('padivOutTab').innerHTML = m;
-    dat = null;
     if (DEBUG_SEARCH) DebugTimer.display('SEACHdraw: DRAW');
   },
 
@@ -7051,172 +7051,6 @@ Tabs.sample = {
   },
 }
 
-
-/*********************************** ATTACK TAB ***********************************/
-function setMaxHeightScrollable (e){
-  e.style.height = '100%';
-  e.style.height = e.clientHeight + 'px';
-  //e.style.maxHeight = e.clientHeight + 'px';
-  e.style.overflowY = 'auto';
-}
-
-Tabs.Attack = {
-  tabDisabled : !ENABLE_ATTACK_TAB,
-  tabOrder: 500,
-  myDiv : null,
-  data : {},  
-  MapAjax : new CMapAjax(),
-    
-  init : function (div){
-    var t = Tabs.Attack;
-    t.myDiv = div;
-    t.myDiv.innerHTML = '<TABLE width=100% height=100% class=pbTab><TR><TD><INPUT id=pbBarbShow type=submit value="Show All Targets" \> <BR>\
-       City: <SPAN id=pbAtkCSS></span> &nbsp; &nbsp; &nbsp; Radius: <INPUT id=pbBarbDist size=3 type=text> &nbsp; &nbsp; <INPUT id=pbBarbScan type=submit value=Scan \></td></tr><TR><TD height=100%>\
-       <DIV id=pbAtkDiv style="background-color:white"></div></td></tr></table>';
-    t.loadTargets ();
-    // TODO: Check current cities, invalidate data if city moved
-    document.getElementById('pbBarbScan').addEventListener ('click', t.e_clickedScan, false);
-    document.getElementById('pbBarbShow').addEventListener ('click', t.e_clickedShow, false);
-    new CdispCityPicker ('pbAtkCS', document.getElementById('pbAtkCSS'), false, function (c){t.scanCity=c}, 0);
-  },
-  
-  hide : function (){
-  },
-
-  state : 0,
-  show : function (){
-    var t = Tabs.Attack;
-    if (t.state == 0){
-      setMaxHeightScrollable (document.getElementById('pbAtkDiv'));
-      t.state = 1;
-    }
-  },
-
-  clearDiv : function (){
-    document.getElementById('pbAtkDiv').innerHTML = '';
-  },
-  writeDiv : function (m){
-    document.getElementById('pbAtkDiv').innerHTML += m;
-  },
-  
-  loadTargets : function (){
-    var t = Tabs.Attack;
-DebugTimer.start();
-    var totTargets = 0;   
-    for (var c=0; c<Cities.numCities; c++){
-      var s = GM_getValue ('atk_'+ getServerId() +'_'+ Cities.cities[c].id, null);
-      if (s == null)
-        t.data['city'+ Cities.cities[c].id] = {cityX:Cities.cities[c].x, cityY:Cities.cities[c].y, radius:0, numTargets:0, targets:{}};
-      else
-        t.data['city'+ Cities.cities[c].id] = JSON2.parse (s);
-      totTargets += t.data['city'+ Cities.cities[c].id].numTargets;
-    }
-DebugTimer.display ('Time to GM_getValue() '+ totTargets +' targets for all cities');    
-  },
-  
-  e_clickedScan : function (){
-    var t = Tabs.Attack;
-    t.clearDiv();
-    var dist = parseInt(document.getElementById('pbBarbDist').value);
-    if (isNaN(dist) || dist<1 || dist>35){
-      t.writeDiv ("<SPAN class=boldRed>Nuh-uh, try again</span><BR>");
-      return;
-    }
-    t.writeDiv ('Scanning map for city: '+ t.scanCity.name +'<BR>');
-    t.scanBarbs (t.scanCity.id, dist);
-  },
-
-  popShow : null,  
-  
-  e_clickedShow : function (){    // show all current attack data
-    var t = Tabs.Attack;
-    if (t.popShow == null){
-      t.popShow = new pbPopup ('pbbs', 0,0, 500,500, true, function (){t.popShow.destroy(); t.popShow=null;});
-      t.popShow.centerMe (mainPop.getMainDiv());  
-    }
-    var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPad>';
-    for (var c=0; c<Cities.numCities; c++){
-      var dat = t.data['city'+ Cities.cities[c].id];
-      m += '<TR><TD colspan=3><DIV class=pbStat>'+ Cities.cities[c].name +' &nbsp; (radius:'+ dat.radius +' &nbsp;targets:'+ dat.numTargets  +')</div></td></tr>';
-      // sort by distance ...
-      var atks = [];
-      for (k in dat.targets)
-        atks.push (dat.targets[k]);
-      atks.sort (function(a,b){return a.dist-b.dist});     
-      for (i=0; i<atks.length; i++)
-        m += '<TR><TD>Barb Camp '+ atks[i].lvl +'</td><TD>'+ atks[i].x +','+ atks[i].y +'</td><TD> &nbsp; Dist='+ atks[i].dist.toFixed(2) +'</td></tr>';
-    }    
-    t.popShow.getMainDiv().innerHTML = '</table></div>'+ m;
-    t.popShow.getTopDiv().innerHTML = '<CENTER><B>Showing all targets in memory</b></center>';
-    t.popShow.show(true);    
-  },
-
-  configWriteTargets : function (cityID){
-    var t = Tabs.Attack;
-    var serverID = getServerId();
-    DebugTimer.start();    
-    GM_setValue ('atk_'+ serverID +'_'+ cityID,  JSON2.stringify(t.data['city'+ cityID]));
-    t.writeDiv ('** Time to GM_setValue() '+ t.data['city'+ cityID].numTargets +' targets for city: '+ (DebugTimer.getMillis()/1000) +' seconds<BR>');
-  },
-    
-  oScan : {},   
-  scanBarbs : function (cityID, distance){   // max distance:35
-    var t = Tabs.Attack;
-    var city = Cities.byID[cityID];
-// TODO: remember state - in case of refresh
-    var x = t.MapAjax.normalize(city.x-distance);
-    var y = t.MapAjax.normalize(city.y-distance);
-    t.oScan = { city:city, centerX:city.x, centerY:city.y, maxDist:distance,
-        minX:x, maxX:city.x+distance, minY:y, maxY:city.y+distance, curX:x, curY:y, data:[] };
-    setTimeout (function(){t.MapAjax.request (t.oScan.curX, t.oScan.curY, 15, t.e_mapCallback)}, MAP_DELAY);
-    t.writeDiv ('Scanning @ '+ t.oScan.curX +','+ t.oScan.curY +'<BR>');
-  },
-
-  e_scanDone : function (errMsg){
-    var t = Tabs.Attack;
-    t.data['city'+ t.oScan.city.id] = {cityX:t.oScan.city.x, cityY:t.oScan.city.y, radius:t.oScan.maxDist, numTargets:0, targets:{}};
-    var dat = t.data['city'+ t.oScan.city.id];
-    t.writeDiv ('Done scanning<BR>');
-    for (var i=0; i<t.oScan.data.length; i++){
-      var map = t.oScan.data[i];
-      dat.targets[map[0] +'_'+ map[1]] = {type:'b', x:map[0], y:map[1], dist:map[2], lvl:map[3]};
-      ++dat.numTargets;
-    }
-    t.configWriteTargets (t.oScan.city.id);
-  },
-      
-  e_mapCallback : function (left, top, width, rslt){
-    var t = Tabs.Attack;
-    if (!rslt.ok){
-      setTimeout (function(){t.e_scanDone (rslt.errorMsg)}, 0);
-      t.writeDIV ('<BR>ERROR: '+ rslt.errorMsg +'<BR>');
-      return;
-    }
-    var map = rslt.data;
-    for (k in map){
-      var lvl = parseInt(map[k].tileLevel);
-      if (map[k].tileType==51 && !map[k].tileCityId && lvl<8) {  // if barb
-        var dist = distance (t.oScan.centerX, t.oScan.centerY, map[k].xCoord, map[k].yCoord);
-        if (dist <= t.oScan.maxDist){
-          t.oScan.data.push ([parseInt(map[k].xCoord), parseInt(map[k].yCoord), dist, lvl]);
-        }
-      }
-    }
-    t.oScan.curX += 15;
-    if (t.oScan.curX > t.oScan.maxX){
-      t.oScan.curX = t.oScan.minX;
-      t.oScan.curY += 15;
-      if (t.oScan.curY > t.oScan.maxY){
-        setTimeout (function(){t.e_scanDone (null)}, 0);
-        return;
-      }
-    }
-    var x = t.oScan.curX;
-    var y = t.oScan.curY;
-    setTimeout (function(){t.MapAjax.request (x,y, 15, t.e_mapCallback)}, MAP_DELAY);
-    t.writeDiv ('Scanning @ '+ x +','+ y +'<BR>');
-  },
-}
 
 /*********************************** News TAB ***********************************/
 Tabs.News = {
@@ -19537,10 +19371,11 @@ Tabs.startup = {
     show : function(){},
     hide : function(){},
 } 
-/*********************************  Crest Tab ***********************************/
- Tabs.Crest = {
+/*********************************  Attack Tab ***********************************/
+
+ Tabs.Attack = {
   tabOrder : 70,
-  tabLabel : unsafeWindow.g_js_strings.commonstr.crest,
+  tabLabel : unsafeWindow.g_js_strings.commonstr.attack,
   myDiv : null,
   rallypointlevel:null,
   error_code: 0,
@@ -19548,7 +19383,7 @@ Tabs.startup = {
 
 /** window display **/
   init : function (div){
-    var t = Tabs.Crest;
+    var t = Tabs.Attack;
     Options.crestMarchError = 0;
 
     setInterval(t.sendCrestReport, 1*60*1000);  
@@ -19560,10 +19395,10 @@ Tabs.startup = {
     if(Options.crestbtns)AddSubTabLink('Crest',t.toggleCrestState, 'CrestToggleTab');
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (Options.crestRunning == false) {
-           m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = OFF"></td>';
+           m += '<TD><INPUT id=Cresttoggle type=submit value="Attack = OFF"></td>';
       if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
        } else {
-           m += '<TD><INPUT id=Cresttoggle type=submit value="Crest = ON"></td>';
+           m += '<TD><INPUT id=Cresttoggle type=submit value="Attack = ON"></td>';
       if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
        }
 
@@ -19582,7 +19417,7 @@ Tabs.startup = {
     
     m += '<TABLE class=ptTab><TR><TD>Wild coords: X:<INPUT id=pbcrestx type=text size=3 maxlength=3 value=""></td>';
     m += '<TD>Y:<INPUT id=pbcresty type=text size=3 maxlength=3 value=""></td></tr>';
-    m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild CHECKED /> Is Wild </td></tr></table>';
+    m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Is Wild </td></tr></table>';
    
 
     m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD>Wave <b>1</b>(initial): </td><TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_30.png></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
@@ -19610,7 +19445,7 @@ Tabs.startup = {
     m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png></td><TD><INPUT id=R2Ball type=text size=7 maxlength=6 value=0></td>';
     m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_30.png></td><TD><INPUT id=R2Ram type=text size=7 maxlength=6 value=0></td>';
     m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png></td><TD><INPUT id=R2Cat type=text size=7 maxlength=6 value=0></td></tr></table>';
-    m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteCrest type=submit value="Add Attack"></div>';
+    m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteCrest type=submit value="Add Attack"> <INPUT id=pbimpRoute type=submit value="Mass Add Attacks">(from search tab)</div>';
     
     t.myDiv.innerHTML = m;
     
@@ -19823,6 +19658,7 @@ Tabs.startup = {
     document.getElementById('R2Cat').addEventListener('change', function(){CrestOptions.R2Cat = document.getElementById('R2Cat').value;} , false);
     document.getElementById('CrestHelp').addEventListener('click', function(){t.helpPop();} , false);
     document.getElementById('pbSaveRouteCrest').addEventListener('click', function(){t.addCrestRoute();}, false);
+    document.getElementById('pbimpRoute').addEventListener('click', function(){t.MasAddsttacktRoutes();}, false);
     document.getElementById('showCrestTargets').addEventListener('click', function(){t.showCrestRoute();}, false);
   },
   
@@ -19860,7 +19696,7 @@ Tabs.startup = {
             return;
         }
         
-        var t = Tabs.Crest;
+        var t = Tabs.Attack;
         var CrestLength = CrestData.length;
         
         CrestData[CrestLength] = new CrestFunc(CrestOptions);
@@ -19868,11 +19704,29 @@ Tabs.startup = {
 
     },
     
+    MasAddsttacktRoutes : function () {
+        if(Tabs.Search.dat.length < 1) {
+            alert("Please Use Searh tab");
+            return;
+        }
+//(array) 0 = 52,332,4.47,0,9,false,0,0,
+//(array) 1 = 59,326,9.22,0,9,false,0,0,
+        var t = Tabs.Attack;
+        for(i = 0; i < Tabs.Search.dat.length;i++) {
+        	var LCO = CrestOptions;
+        	LCO.X = Tabs.Search.dat[i][0];
+        	LCO.Y = Tabs.Search.dat[i][1];
+        	CrestData.push (new CrestFunc(LCO));
+			};
+        saveCrestData();
+        t.showCrestRoute();
+
+    },
     
 
 /** Show Crest Targets **/
     showCrestRoute : function () {
-        var t = Tabs.Crest;
+        var t = Tabs.Attack;
         var popCrestTargets = null;
         t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
         var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';     
@@ -19911,7 +19765,7 @@ Tabs.startup = {
 
 /** paintCrestTargets **/
     paintCrestTargets : function () {
-        t = Tabs.Crest;
+        t = Tabs.Attack;
 
         for(var i = 0; i < CrestData.length; i++) {
             t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, "Wave 2", CrestData[i].R2ST, CrestData[i].R2MM, CrestData[i].R2Scout, CrestData[i].R2Pike, CrestData[i].R2Sword, CrestData[i].R2Arch, CrestData[i].R2LC, CrestData[i].R2HC, CrestData[i].R2SW, CrestData[i].R2Ball, CrestData[i].R2Ram, CrestData[i].R2Cat, " ");
@@ -19925,7 +19779,7 @@ Tabs.startup = {
 
 /** Add Tab Crest **/
     _addTabCrest : function (QueID, col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14) {
-        var t = Tabs.Crest;
+        var t = Tabs.Attack;
         var row = document.getElementById('pbCrestTargets').insertRow(0);
 
         for (var i = 0; i <= 14; i++) {
@@ -19945,7 +19799,7 @@ Tabs.startup = {
 
 /** Cancel Crest Target **/
     cancelCrestTarget : function (QueID) {
-         var t = Tabs.Crest;
+         var t = Tabs.Attack;
          var queueId = parseInt(QueID);
          CrestData.splice(queueId, 1);
          saveCrestData();
@@ -19958,7 +19812,7 @@ Tabs.startup = {
  
 
     getAtkKnight : function(cityID){
-        var t = Tabs.Crest;
+        var t = Tabs.Attack;
         t.knt = new Array();
         for (k in Seed.knights[cityID]){
             if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
@@ -19975,7 +19829,7 @@ Tabs.startup = {
 
    
      sendMarch: function(p,callback,r,retry, CrestDataNum){
-        var t = Tabs.Crest;
+        var t = Tabs.Attack;
         March.addMarch(p, function(rslt){
             if(rslt.ok){
                 if(r==1){
@@ -20000,7 +19854,7 @@ Tabs.startup = {
 
     
     abandonWilderness: function(){
-        var t = Tabs.Crest;      
+        var t = Tabs.Attack;      
         if (!Options.crestRunning) return;
         toploop:
         for(m in CrestData) {
@@ -20072,7 +19926,7 @@ Tabs.startup = {
     
     
     Rounds : function (r, retry, CrestDataNum) {
-        var t = Tabs.Crest;
+        var t = Tabs.Attack;
         clearTimeout(t.timer);
         //r = (typeof r === 'undefined') ? 0 : r;
         //retry = (typeof retry === 'undefined') ? 0 : retry;
@@ -20095,7 +19949,7 @@ Tabs.startup = {
         r = (typeof CrestData[CrestDataNum].curRound === 'undefined') ? 1 : CrestData[CrestDataNum].curRound;
         cityID = 'city' + CrestData[CrestDataNum].CrestCity;
         retry++;
-new t.abandonWilderness();
+			new t.abandonWilderness();
         /*****
         switch (retry) {
             case 10:
@@ -20225,16 +20079,16 @@ new t.abandonWilderness();
     },
 
     toggleCrestState: function(obj) {
-        var t = Tabs.Crest;
+        var t = Tabs.Attack;
         obj=document.getElementById('Cresttoggle');
             if (Options.crestRunning == true) {
                 Options.crestRunning = false;
-                obj.value = "Crest = OFF";
+                obj.value = "Attack = OFF";
          if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
                 saveOptions();
             } else {
                 Options.crestRunning = true;
-                obj.value = "Crest = ON";
+                obj.value = "Attack = ON";
       if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
                 for (crest in Options.Creststatus) {
                     owned = Seed.items['i'+crest];
@@ -20257,7 +20111,7 @@ new t.abandonWilderness();
         if(!Options.crestreport || !Options.crestRunning)
             return;
             
-        var t = Tabs.Crest;
+        var t = Tabs.Attack;
         var now = new Date().getTime()/1000.0;
         now = now.toFixed(0);
         
@@ -20335,7 +20189,7 @@ new t.abandonWilderness();
 
 
     hide : function (){
-        var t = Tabs.Crest;
+        var t = Tabs.Attack;
     },
 
     show : function (){
