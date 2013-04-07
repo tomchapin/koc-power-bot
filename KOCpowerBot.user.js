@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130407b
+// @version        20130407c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130407b';
+var Version = '20130407c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -5002,12 +5002,17 @@ Tabs.build = {
 				(number) 6 = 76
 				(number) 7 = position
 				* ***/
-                    if (parseInt(qcon[0][4]) > now) isBusy = true;
-                    else {
-						Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
-						logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
-						qcon.shift(); // remove expired build from queue    
-					};
+                 if (parseInt(qcon[0][4]) > now) isBusy = true;
+                  else {
+                  	if(qcon[0][1] == 0) {//if it is destruct
+                  		delete Seed.buildings["city" + cityId]['pos'+qcon[0][7]];
+								if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+               	   } else {
+								Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
+								logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
+								qcon.shift(); // remove expired build from queue    
+							};
+						};
                 }
                 //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
                 if (isBusy) {
@@ -5246,7 +5251,7 @@ Tabs.build = {
                         }
                     },
                     onFailure: function () {
-                        document.getElementById('pbbuildError').innerHTML = translate("Connection Error while building! Please try later again");
+                        document.getElementById('pbbuildError').innerHTML = translate("Connection Error while building! Please try again later");
                     }
                 },true);
             } else {
