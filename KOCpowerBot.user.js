@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130405d
+// @version        20130407a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130405d';
+var Version = '20130407a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21380,7 +21380,6 @@ Tabs.gifts = {
 							 else 
 							 GiftDB.people[Number(e.target.id)][0] =Number(e.target.value);
 							 GiftDB.people[Number(e.target.id)][2] = e.target.name;
-							 GiftDB.people[Number(e.target.id)][3] = 0;
 						  }else {
 							 delete GiftDB.people[Number(e.target.id)];
 						  };
