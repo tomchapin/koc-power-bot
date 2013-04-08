@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130408a
+// @version        20130408b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130408a';
+var Version = '20130408b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10570,7 +10570,6 @@ Tabs.Barb = {
                      saveAttackOptions();
                    } else {
 					   if(rslt.error_code && rslt.msg)document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+Cities.byID[cityID].name+' dark forest failed: '+rslt.msg+'</FONT>';
-					 //scripterdebuglog(rslt,true);//For those getting unknown errors, uncomment this line and Baos will also receive your errors live.
                      //logit( inspect(rslt,3,1));
                      if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
                      if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
@@ -20355,8 +20354,8 @@ var March = {
             max = (rallypointlevel * 10000) * buff;
             break;
       }
-      return Math.floor(max); // haven't been able to configure game to determine if this should be floor or ceil
-   },
+      return Math.ceil(max); // haven't been able to configure game to determine if this should be floor or ceil
+   },//changed to ceil Apr 8/13.  and added debug log to catch errors -Baos
    getAscendedStats : function (cityId){
       var t = this;
       var ret = {};
@@ -20468,7 +20467,6 @@ var March = {
                                     params.marchWarning = 1;
                                     params.marchCaptcha_challenge = unsafeWindow.Recaptcha.get_challenge();
                                     params.marchCaptcha_response = unsafeWindow.Recaptcha.get_response();
-                           scripterdebuglog([params.marchCaptcha_challenge,params.marchCaptcha_response]);
                                     setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
                                     t.captchawin.destroy();
                                 }, false);
@@ -20477,6 +20475,8 @@ var March = {
                         });
                         return;
                     }
+                    rslt.max = cids;
+							scripterdebuglog(rslt,'march');//For those getting unknown errors, uncomment this line and Baos will also receive your errors live.
                     setTimeout (function(){callback(rslt)}, 5*1000); //return all sever excess traffic error to original function to handle
                     return;
                 }
@@ -21688,13 +21688,13 @@ function equippedthronestats (stat_id){
    return total;
 }
 
-function scripterdebuglog (a,df) {
+function scripterdebuglog (a,x) {
    if(!Options.plog)return;
    var data = {};
    data.info = inspect(a);
    data.version = Version;
    data.domain = getServerId();
-   if(df)data.df = df;
+   if(x)data[x] = x;
    logit('sending debug data '+data.info);
   GM_xmlhttpRequest({
     method: 'POST',
