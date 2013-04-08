@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130407c
+// @version        20130408a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130407c';
+var Version = '20130408a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -20382,7 +20382,8 @@ var March = {
          x+=y;
       };
       if(cids < x) {
-         logit('attempted to send march size '+x+' max allowed is '+cids);
+      	actionLog('attempted to send march size '+x+' max allowed is '+cids);//too many people complaining about broken things that are not broken.  lets give the masses a log to look at.
+         logit('attempted to send march size '+x+' max allowed is '+cids);//lets keep this one for us just in case.
          return;
       };
       if(March.waittime > unsafeWindow.unixtime()){
