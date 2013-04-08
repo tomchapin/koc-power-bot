@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130408b
+// @version        20130408d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130408b';
+var Version = '20130408d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -20475,8 +20475,42 @@ var March = {
                         });
                         return;
                     }
+                    
+                    //lets start telling kabam their server sucks! 
+                    
+						var a = null;
+						var g = rslt.error_code;
+						var g_server = unsafeWindow.g_server;
+						switch (g) {
+							case "0":
+								a = "Unexpected Error.";
+								break;
+							case "8":
+								a = "Excess traffic.";
+								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server);
+								break;
+							case "3":
+								//game out of sync
+								break;
+							case "4":
+								//not enough units
+								break;
+							case "104":
+								//unable to attack target
+								break;
+							case "208":
+								// beginner protection
+								break;
+							case "210":
+								// Max marches
+								break;
+							case "default":
+								a = "Something has gone wrong.";
+								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server); 
                     rslt.max = cids;
 							scripterdebuglog(rslt,'march');//For those getting unknown errors, uncomment this line and Baos will also receive your errors live.
+								break
+							};
                     setTimeout (function(){callback(rslt)}, 5*1000); //return all sever excess traffic error to original function to handle
                     return;
                 }
@@ -21691,6 +21725,7 @@ function equippedthronestats (stat_id){
 function scripterdebuglog (a,x) {
    if(!Options.plog)return;
    var data = {};
+   if(a.error_code)data.error_code = a.error_code;
    data.info = inspect(a);
    data.version = Version;
    data.domain = getServerId();
