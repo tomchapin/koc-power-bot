@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130408f
+// @version        20130409a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130408f';
+var Version = '20130409a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -15492,7 +15492,7 @@ Tabs.Spam = {
        }
         m += '</tr></table></div>';
        m += '<DIV class=pbStat>Settings</div><TABLE class=pbTab>';
-        m += '<tr><td>Automatically post every <INPUT id=pbSpamMin type=text size=2 maxlength=3 disabled=true value="60"  \> minutes</td></tr><BR>\
+        m += '<tr><td>Automatically post every <INPUT id=pbSpamMin type=text size=2 maxlength=3 value="1"  \> hours</td></tr><BR>\
               <tr><TD><TABLE cellpadding=0 cellspacing=0>\
               <TD align=left>Your spam: &nbsp; </td><TD><INPUT id=pbSpamAd type=text size=60 maxlength=500 value="'+ Options.spamconfig.spamvert +'" \></td></tr>\
               </table><BR>';
@@ -15518,9 +15518,9 @@ Tabs.Spam = {
   var t = Tabs.Spam;
   Options.spamconfig.spamvert = document.getElementById('pbSpamAd').value;
   Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
-  if(parseInt(Options.spamconfig.spammins) < 30){
-   Options.spamconfig.spammins = 30;
-   document.getElementById('pbSpamMin').value = 60;
+  if(parseInt(Options.spamconfig.spammins) < 1){
+   document.getElementById('pbSpamMin').value = 1;
+   Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
   }
   saveOptions ();
 
@@ -15553,48 +15553,22 @@ Tabs.Spam = {
   else {
    Options.spamconfig.aspam = true;
    obj.value = "Spam On";
-   SpamEvery.init();
   }
   saveOptions ();
 
  },
-};  
-
-var SpamEvery  = {
-  timer : null,
-  spamtimer : 0,
-  init : function (){
-    if (!Options.spamconfig.aspam) return;
-    if (Options.spamconfig.spammins < 1)
-      Options.spamconfig.spammins = 1;
-    SpamEvery.setEnable (Options.spamconfig.aspam);
-  },
-  setEnable : function (tf){
-    var t = SpamEvery;
-    return;//disabled to move toward global timer options
-    clearTimeout (t.timer);
-    if (tf)
-      t.timer = setTimeout (t.count, 60*1000);
-  },
-  count : function (){
-   var t = SpamEvery;
-   t.spamtimer = Options.spamconfig.spammins;
-   if(parseInt(t.spamtimer) < 60) t.spamtimer = 60;
-   if (Options.spamconfig.atime > t.spamtimer) {
-    Options.spamconfig.atime = 2;
-    t.doit ();
-   } else {
-    Options.spamconfig.atime = (Options.spamconfig.atime + 1);
-    SpamEvery.init ();
-   }
-   saveOptions ();
-  },
-  doit : function (){
-    actionLog ('Spamming ('+ Options.spamconfig.spammins +' minutes expired)');
+ 
+ Count: function(){
+	Options.spamconfig.atime++;
+	if(Options.spamconfig.atime >= Options.spamconfig.spammins) {
+    actionLog ('Spamming ('+ Options.spamconfig.spammins +' hours expired)');
     sendChat ("/" + Options.spamconfig.spamstate + " " +  Options.spamconfig.spamvert);
-    SpamEvery.init ();
-  }
-}
+	 Options.spamconfig.atime = Number(0);
+    saveOptions();
+	};
+
+ },
+};  
 
 /************** ChatPane **********/
 var ChatPane = {
@@ -21762,7 +21736,7 @@ logit('1min');
 };
 
 function GESeveryhour () {//put functions here to execute every hour
-	if(Options.spamconfig.aspam )SpamEvery.doit();
+	if(Options.spamconfig.aspam )Tabs.Spam.Count();
 };
 
 function GESeveryday () {//put functions here to execute every day
