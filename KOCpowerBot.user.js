@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130409a
+// @version        20130409b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130409a';
+var Version = '20130409b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -811,7 +811,6 @@ function pbStartup (){
   
   FairieKiller.init (Options.pbKillFairie);
   RefreshEvery.init ();
-  SpamEvery.init ();
   CollectGold.init();
   FoodAlerts.init();
   ChatPane.init();
