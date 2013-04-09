@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130408e
+// @version        20130408f
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130408e';
+var Version = '20130408f';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -224,6 +224,8 @@ var GlobalOptions = {
   version : 0,
   pbNoMoreKabam : false,
   escapeurl : null,
+  GESeveryhour:0,
+  GESeveryday:0,
 };
 
 var CrestOptions = {
@@ -832,7 +834,6 @@ function pbStartup (){
    document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>';
   if(Options.ThroneHUD)Tabs.Throne.ThroneHUDinit();
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
-  if(GlobalOptions.pbupdate)setInterval(AutoUpdater,10*60*1000);
 }
 
 /************************ Food Alerts *************************/
@@ -15491,7 +15492,7 @@ Tabs.Spam = {
        }
         m += '</tr></table></div>';
        m += '<DIV class=pbStat>Settings</div><TABLE class=pbTab>';
-        m += '<tr><td>Automatically post every <INPUT id=pbSpamMin type=text size=2 maxlength=3 value="'+ Options.spamconfig.spammins +'"  \> minutes</td></tr><BR>\
+        m += '<tr><td>Automatically post every <INPUT id=pbSpamMin type=text size=2 maxlength=3 disabled=true value="60"  \> minutes</td></tr><BR>\
               <tr><TD><TABLE cellpadding=0 cellspacing=0>\
               <TD align=left>Your spam: &nbsp; </td><TD><INPUT id=pbSpamAd type=text size=60 maxlength=500 value="'+ Options.spamconfig.spamvert +'" \></td></tr>\
               </table><BR>';
@@ -15519,7 +15520,7 @@ Tabs.Spam = {
   Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
   if(parseInt(Options.spamconfig.spammins) < 30){
    Options.spamconfig.spammins = 30;
-   document.getElementById('pbSpamMin').value = 30;
+   document.getElementById('pbSpamMin').value = 60;
   }
   saveOptions ();
 
@@ -15570,6 +15571,7 @@ var SpamEvery  = {
   },
   setEnable : function (tf){
     var t = SpamEvery;
+    return;//disabled to move toward global timer options
     clearTimeout (t.timer);
     if (tf)
       t.timer = setTimeout (t.count, 60*1000);
@@ -21724,7 +21726,24 @@ var OreAlert = {
   },
 }
 
+var GESeachmin = 0;
 var GlobalEachSecond = function () {
+	var unixtime = unsafeWindow.unixtime();
+  if(GESeachmin > unixtime) {
+  	GESeachmin = Number(unixtime+60);
+  	new GESeachmin();
+  };
+  if(GlobalOptions.GESeveryhour > unixtime){
+  	GlobalOptions.GESeveryhour = Number(unixtime+60*60);
+	GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+	new GESeveryhour();
+  };
+  if(GlobalOptions.GESeveryday > unixtime){
+  	GlobalOptions.GESeveryday = Number(unixtime+24*60*60);
+	GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+	new GESeveryday();
+  };
+	
 	//start window open in other browser warning auto click
 		if(Options.WWclick) {
 			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal1');
@@ -21737,6 +21756,22 @@ var GlobalEachSecond = function () {
 		};
 	//end window open in other browser warning auto click
 };
+
+function GESeachmin () {//put functions here to execute every min
+logit('1min');
+};
+
+function GESeveryhour () {//put functions here to execute every hour
+	if(Options.spamconfig.aspam )SpamEvery.doit();
+};
+
+function GESeveryday () {//put functions here to execute every day
+  if(GlobalOptions.pbupdate)AutoUpdater();//check for script updates
+};
+
+
+
+
 function AutoUpdater (prom) {
 	var userscripts = 'http://userscripts.org/scripts/source/101052.user.js';
 	var googlecode = 'http://koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
