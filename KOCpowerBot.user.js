@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130409b
+// @version        20130409c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130409b';
+var Version = '20130409c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -715,7 +715,7 @@ function pbStartup (){
   readOptions();
   var styles = '.xtab {padding-right: 5px; border:none; background:none; white-space:nowrap;}\
     .xtabBR {padding-right: 5px; border:none; background:none;}\
-    table.pbTab tr td {border:none; background:none; white-space:nowrap; padding:0px}\
+    table.pbTab tr td {border:none; background:none; white-space:nowrap; padding:0px z-index:999999;}\
     table.Throne {background-color:#FFFFE3; white-space:nowrap; padding:0px; border-style:solid; border-color:darkgrey; width:250px; max-width:250px; text-wrap:normal;word-wrap:break-word}\
     table.Throne tr td {background:none; white-space:nowrap; padding:0px; border-style:none;}\
     table.ThroneEQ {background-color:#FFFFE3; white-space:nowrap; padding:0px; border-style:solid; border-color:lightred; width:250px; max-width:250px; text-wrap:normal;word-wrap:break-word}\
@@ -754,14 +754,14 @@ function pbStartup (){
     tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px; width:80%; padding:0px; }\
     tr.pbretry_pbMainPopTop td { background-color:#a00; color:#fff; border:none; height: 42px;  padding:0px; }\
     .pbPopMain  { border:1px solid #000000; -moz-box-shadow:inset 0px 0px 10px #6a6a6a; -moz-border-radius-bottomright: 20px; -moz-border-radius-bottomleft: 20px;}\
-    .pbPopup  {border:5px ridge #666; opacity:'+(parseFloat(Options.Opacity)<'0.5'?'0.5':Options.Opacity)+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000; }\
+    .pbPopup  {border:5px ridge #666; opacity:'+(parseFloat(Options.Opacity)<'0.5'?'0.5':Options.Opacity)+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000; z-index:999999;}\
     span.pbTextFriendly {color: #080}\
     span.pbTextHostile {color: #800}\
     .pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
     div.indent25 {padding-left:25px}\
     .pbttabs {background-color:#A68064; font-weight:bold; color:white}\
     .pbttabsdis {background-color:#603311; font-weight:bold; color:white}';    
-    
+
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readLanguage();
@@ -833,6 +833,7 @@ function pbStartup (){
    document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>';
   if(Options.ThroneHUD)Tabs.Throne.ThroneHUDinit();
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
+  ChatComOverlay();
 }
 
 /************************ Food Alerts *************************/
@@ -17312,14 +17313,14 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     this.slider.style.backgroundColor='#fff';
   
   this.sliderL = document.createElement ('div');
-  this.sliderL.setAttribute ('style', 'width:100px; height:100%; position:relative; ');
+  this.sliderL.setAttribute ('style', 'width:100px; height:100%; position:relative;');
   this.sliderL.className = classPrefix +'Part';
   this.sliderL.draggable = true;
   if (noClass)
     this.sliderL.style.backgroundColor='#0c0';
   
   this.knob = document.createElement ('div');
-  this.knob.setAttribute ('style', 'width:3px; position:relative; left:0px; background-color:#222');
+  this.knob.setAttribute ('style', 'width:3px; position:relative; left:0px; background-color:#222;');
   this.knob.style.height = height +'px';
   this.knob.style.top = (0-sliderTop) +'px';
   this.knob.className = classPrefix +'Knob';
@@ -21506,27 +21507,56 @@ Tabs.ascension = {
         clearInterval(t.Timer)
     },
 }
+function ChatComOverlay () {
+	if(!document.getElementsByClassName('postaction')[0].getElementsByClassName('button20')[0])return;//safety
+	document.getElementsByClassName('postaction')[0].getElementsByClassName('button20')[0].onclick=function(){OSendChat()};
+	var overlay = document.createElement("div");
+	var mod_comm_input = document.getElementById('mod_comm_input')
+  overlay.setAttribute("id","overlay");
+  overlay.setAttribute("class", "overlay");
+  mod_comm_input.hidden=true;
+  mod_comm_input.parentNode.appendChild(overlay);
+	overlay.innerHTML = '<input id="bot_comm_input" type="text" autocomplete="on"></input>';
+	var bot_comm_input = document.getElementById('bot_comm_input');
+	bot_comm_input.size = 40;
+	bot_comm_input.addEventListener ('keypress', function(e) {if(e.which == 13)OSendChat();}, false);
+
+};
+
+
+
+
+function OSendChat () {
+	logit('doing something');
+	   if(Options.filter)
+   document.getElementById('mod_comm_input').value = BtFilter(document.getElementById('bot_comm_input'));
+   else
+   document.getElementById('mod_comm_input').value = document.getElementById('bot_comm_input').value;
+   document.getElementById('bot_comm_input').value = "";
+   unsafeWindow.Chat.sendChat();
+};
+
+
+
 //override for kabams SUPER ANNOYING word filter...   deSCRIPTion
 //The point is to not enable rude/bad words but simply curb some of the excessive filtering
-if(Options.filter)
-document.getElementById('mod_comm_input').addEventListener ('keypress', function(e) {
-   if(e.which != 13)
-   return;
-   var whisper = "";
+
+function BtFilter(e) {
+	   var whisper = "";
    var firstindex = 0;
    var enctype = 0;
    
-   if(this.value.charAt(0) == "\\") {
-      this.value = String(this.value).slice(1);
+   if(e.value.charAt(0) == "\\") {
+      e.value = String(e.value).slice(1);
       enctype = 1;
    };
    
-   if(this.value.charAt(0) == "/" || this.value.charAt(0) == "@") {
-      firstindex = this.value.indexOf(" ");
-      whisper = this.value.slice(0,firstindex)+' ';
+   if(e.value.charAt(0) == "/" || e.value.charAt(0) == "@") {
+      firstindex = e.value.indexOf(" ");
+      whisper = e.value.slice(0,firstindex)+' ';
    };
    
-   var m = this.value.substr(firstindex,this.value.length);
+   var m = e.value.substr(firstindex,e.value.length);
    
    if(enctype == 1) {
      var unicodeString = '';
@@ -21539,7 +21569,7 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
    };
    
    if(enctype == 0) {
-      var m = this.value.substr(firstindex,this.value.length);
+      var m = e.value.substr(firstindex,e.value.length);
       var x = Filter[Options.fchar];
       m = m.replace(/Fa/g,'F'+x+'a').replace(/fA/g,'f'+x+'A').replace(/FA/g,'F'+x+'A').replace(/fa/g,'f'+x+'a');
       
@@ -21551,8 +21581,17 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
       
       m = m.replace(/885/g,'8'+x+'8'+x+'5').replace(/80085/g,'8'+x+'0'+x+'0'+x+'8'+'5');
    };
-   this.value = whisper+m;
-}, false);
+   return(whisper+m);
+
+};
+
+
+
+
+
+
+
+
 
 
 
