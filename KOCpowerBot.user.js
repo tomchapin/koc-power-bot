@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130408d
+// @version        20130408e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130408d';
+var Version = '20130408e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -220,6 +220,8 @@ var GlobalOptions = {
   autoPublishPrivacySetting : 80,
   pbupdate : true,
   pbupdatebeta : 0,
+  scriptdate : 0,
+  version : 0,
   pbNoMoreKabam : false,
   escapeurl : null,
 };
@@ -830,6 +832,7 @@ function pbStartup (){
    document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>';
   if(Options.ThroneHUD)Tabs.Throne.ThroneHUDinit();
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
+  if(GlobalOptions.pbupdate)setInterval(AutoUpdater,10*60*1000);
 }
 
 /************************ Food Alerts *************************/
@@ -10931,11 +10934,10 @@ Tabs.Options = {
       },false);   
       document.getElementById('pbupdatebeta').addEventListener ('change', function(){
               GlobalOptions.pbupdatebeta = document.getElementById('pbupdatebeta').value;
-            AutoUpdater_101052.beta = GlobalOptions.pbupdatebeta;
             GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);    
       document.getElementById('pbupdatenow').addEventListener ('click', function(){
-            AutoUpdater_101052.call(true,true);
+            AutoUpdater(true);
       },false);    
       document.getElementById('pbsendmeaway').addEventListener ('click', function(){
             GlobalOptions.pbNoMoreKabam = document.getElementById('pbsendmeaway').checked;
@@ -15738,107 +15740,6 @@ function display_confirm(confirm_msg,ok_function,cancel_function){
         },false);
     }
 }
-
-// The following code is released under public domain.
-
-var AutoUpdater_101052 = {
-    id: 101052,
-    days: 1,
-    name: "KOC Power Bot",
-    version: Version,
-    beta: GlobalOptions.pbupdatebeta,
-    betaUrl : 'http://koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js',
-    time: new Date().getTime(),
-    call: function(response, secure) {
-        GM_xmlhttpRequest({
-            method: 'GET',
-        url: this.beta ? this.betaUrl : 'http'+(secure ? 's' : '')+'://userscripts.org/scripts/source/'+this.id+'.meta.js',
-        onload: function(xpr) {AutoUpdater_101052.compare(xpr, response);},
-            onerror: function(xpr) {if (secure) AutoUpdater_101052.call(response, false);}
-        });
-    },
-    enable: function() {
-        GM_registerMenuCommand("Enable "+this.name+" updates", function() {
-            GM_setValue('updated_101052', new Date().getTime()+'');
-            AutoUpdater_101052.call(true, true)
-        });
-    },
-    compareVersion: function(r_version, l_version) {
-        var r_parts = r_version.split(''),
-            l_parts = l_version.split(''),
-            r_len = r_parts.length,
-            l_len = l_parts.length,
-            r = l = 0;
-        for(var i = 0, len = (r_len > l_len ? r_len : l_len); i < len && r == l; ++i) {
-            r = +(r_parts[i] || '0');
-            l = +(l_parts[i] || '0');
-        }
-        return (r !== l) ? r > l : false;
-    },
-    compare: function(xpr,response) {
-        this.xversion=/\/\/\s*@version\s+(.+)\s*\n/i.exec(xpr.responseText);
-        this.xname=/\/\/\s*@name\s+(.+)\s*\n/i.exec(xpr.responseText);
-        if ( (this.xversion) && (this.xname[1] == this.name) ) {
-            this.xversion = this.xversion[1];
-            this.xname = this.xname[1];
-        } else {
-            if ( (xpr.responseText.match("the page you requested doesn't exist")) || (this.xname[1] != this.name) ) {
-                //GM_setValue('updated_101052', 'off');
-            }
-            return false;
-        }
-        var updated = this.compareVersion(this.xversion, this.version);
-        
-        if ( updated ) {
-                         
-            display_confirm('A new version of '+this.xname+' is available.\nDo you wish to install the latest version?',
-                // Ok
-                function(){
-                    try {
-                        location.href = AutoUpdater_101052.beta ? AutoUpdater_101052.betaUrl :  'http://userscripts.org/scripts/source/101052.user.js';
-                    } catch(e) {}
-                },
-                // Cancel
-                function(){
-                    if ( AutoUpdater_101052.xversion ) {
-                        if(confirm('Do you want to turn off auto updating for this script?')) {
-                            //GM_setValue('updated_101052', 'off');
-                            GlobalOptions.pbupdate = false;
-                            GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-                            AutoUpdater_101052.enable();
-                            alert('Automatic updates can be re-enabled for this script in the Options tab.');
-                        }
-                    }
-                }
-            );
-                                      
-        } else if (response){
-            alert('No updates available for '+this.name);
-        }
-    },
-    check: function(tf) {
-        if (!tf){
-            this.enable();
-        } else {
-            GM_registerMenuCommand("Check "+this.name+" for updates", function() {
-                GM_setValue('updated_101052', new Date().getTime()+'');
-                AutoUpdater_101052.call(true, true)
-            });
-            if (+this.time > (+GM_getValue('updated_101052', 0) + 1000*60*60*24*this.days)) {
-                GM_setValue('updated_101052', this.time+'');
-                this.call(false, true);
-            }
-        }
-    }
-};
-if (typeof(GM_xmlhttpRequest) !== 'undefined' && typeof(GM_updatingEnabled) === 'undefined') { // has an updater?
-    try {
-        AutoUpdater_101052.check(GlobalOptions.pbupdate);
-    } catch(e) {
-        AutoUpdater_101052.check(GlobalOptions.pbupdate);
-    }
-}
-/********* End updater code *************/
 
 //****************************
 //This is a new implementation of the CalterUwFunc class to modify a function of the 'unsafewWindow' object.
@@ -21836,6 +21737,66 @@ var GlobalEachSecond = function () {
 		};
 	//end window open in other browser warning auto click
 };
+function AutoUpdater (prom) {
+	var userscripts = 'http://userscripts.org/scripts/source/101052.user.js';
+	var googlecode = 'http://koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
+	switch(GlobalOptions.pbupdatebeta)
+	{
+		case "0":
+		var scriptpage = userscripts;
+		break;
+		case "1":
+		var scriptpage = googlecode;
+		break;
+		default:
+		var scriptpage = userscripts;;
+		break;
+	};
+	GM_xmlhttpRequest({
+         method: 'HEAD',
+         url: scriptpage,
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+         },
+         onload: function (x) {
+				var first = Number(x.responseHeaders.indexOf("Last-Modified"))+15;
+            var last = x.responseHeaders.indexOf("\n",first);
+            var lastmodified = x.responseHeaders.slice(first,last);
+            
+				if(GlobalOptions.version != Version) {//just completed our upgrade
+					GlobalOptions.version = Version;
+					GlobalOptions.scriptdate = lastmodified;
+				} else  if(GlobalOptions.scriptdate != lastmodified) {//need to do our upgrade
 
+
+            display_confirm('A new version of KOC Power Bot is available.\nDo you wish to install the latest version?',
+                // Ok
+                function(){
+                    try {
+                        location.href = scriptpage;
+                    } catch(e) {}
+                },
+                // Cancel
+                function() {
+                	try {
+                	if(lobalOptions.pbupdate) {
+                        if(confirm('Do you want to turn off auto updating for this script?')) {
+                            //GM_setValue('updated_101052', 'off');
+                            GlobalOptions.pbupdate = false;
+                            GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+                            alert('Automatic updates can be re-enabled for this script in the Options tab.');
+                        }
+                     }
+                } catch(e) {}
+             }
+            );
+            
+            
+            } else if (prom) alert('No updates available');
+            
+				GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+         },
+      });
+};
 
 pbStartup ();
