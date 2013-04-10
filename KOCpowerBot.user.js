@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130409d
+// @version        20130409e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130409d';
+var Version = '20130409e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4909,7 +4909,8 @@ Tabs.build = {
                             var buildingId = "unknown";
                         }
                         t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel) //
-                        //logit(city.substr(4) + ' ' + builds[city][pos][0] + ' ' + builds[city][pos][1] + ' ' + builds[city][pos][2] + ' ' + builds[city][pos][3]);
+                       // logit(city.substr(4) + ' ' + builds[city][pos][0] + ' ' + builds[city][pos][1] + ' ' + builds[city][pos][2] + ' ' + builds[city][pos][3]);                
+                        
                     }
                 }
             }
@@ -5166,8 +5167,41 @@ Tabs.build = {
                         t.cancelQueueElement(0, currentcityid, time, false);
                     } else {
                         var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
-                        t.requeueQueueElement(bQi);
-                        document.getElementById('pbbuildError').innerHTML = errmsg;
+                        document.getElementById('pbbuildError').innerHTML = inspect(errmsg);
+						var a = null;
+						var g = rslt.error_code;
+						var g_server = unsafeWindow.g_server;
+						switch (g) {
+							case "0":
+								a = "Unexpected Error.";
+								break;
+							case "2"://lets try update seed to fix the missing build?
+								unsafeWindow.g_update_seed_ajax_do = true;
+								unsafeWindow.update_seed_ajax();
+								a = "Construction is already starting.";
+								break;
+							case "8":
+								a = "Excess traffic.";
+								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server);
+								break;
+							case "102":
+								//a = "Another building already exists on the same spot!"; lets delete our queued building
+								t.cancelQueueElement(0, currentcityid, time, false);
+								break;
+							case "103":
+								// building has already the target level => just  delete
+								t.cancelQueueElement(0, currentcityid, time, false);
+								break;
+							case "default":
+								a = "Something has gone wrong.";
+								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server); 
+								t.requeueQueueElement(bQi);
+								document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
+								break
+							};
+							if(rslt.user_action) {
+								t.UASlowDown += 1000;
+							};
                         logit(errmsg);
                     }
                 },
@@ -5402,80 +5436,7 @@ Tabs.build = {
         var result = new Array(buildingMult, buildingTime);
         return result;
     },
-    bot_buildguardian: function (c, a) {
-        var t = Tabs.build;
-        var cityId = t.getCurrentCityId();
-        var buildingType = 50;
-        for (i = 0; i < Cities.numCities; i++) {
-            if (Seed.guardian[i].cityId == cityId) {
-                var buildingLevel = Seed.guardian[i].level;
-                break;
-            }
-        }
-        var buildingId = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][3]);
-        if (DEBUG_TRACE) logit("Pos: " + buildingPos + " Type: " + buildingType + " Level: " + buildingLevel + " Id: " + buildingId);
-        var buildingAttempts = 0;
-        var loaded_bQ = t["bQ_" + cityId];
-        if (typeof Seed.queue_con['city' + cityId][0] != 'undefined') {
-            var current_construction_pos = Seed.queue_con['city' + cityId][0][2];
-        } else {
-            var current_construction_pos = "0";
-        }
-        if (loaded_bQ.length == 0 && current_construction_pos != "") { //check anyway if there is currently build in progess for this specific building
-            if (current_construction_pos != 'NaN' && current_construction_pos == buildingId) {
-                buildingLevel += 1;
-            }
-        } else {
-            if (current_construction_pos != "" && current_construction_pos == buildingId) {
-                buildingLevel += 1;
-            }
-            for (var i = 0; i < loaded_bQ.length; i++) { // check if there are already queue items for this building or the building is currently building
-                var loadedCity = loaded_bQ[i].cityId;
-                var loadedSlot = loaded_bQ[i].buildingPos;
-                if (loadedSlot == buildingPos && loadedCity == cityId) {
-                    buildingLevel += 1;
-                }
-                if (loaded_bQ[i].buildingMode == 'destruct' && loadedSlot == buildingPos && loadedCity == cityId) { // check if destrcution is already in queue
-                    t.modalmessage(translate("Destruction already in Queue!"));
-                    return;
-                }
-            }
-        }
-        if (t.currentBuildMode == "build") {
-            if (buildingLevel >= 9) {
-                t.modalmessage(translate('Due to building requirements (DI), buildings above level 9\nshould be manualy built.'));
-                return;
-            }
-            var buildingMode = "build";
-            var result = t.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
-            var buildingMult = result[0];
-            var buildingTime = result[1];
-            var queueId = loaded_bQ.length;
-            t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);
-            t._addTab(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode);
-        }
-        if (t.currentBuildMode == "max") {
-            var buildingMode = "build";
-            for (var bL = buildingLevel; bL < 9; bL++) {
-                var queueId = loaded_bQ.length;
-                var result = t.calculateQueueValues(cityId, bL, buildingType, buildingMode);
-                var buildingMult = result[0];
-                var buildingTime = result[1];
-                queueId = queueId;
-                t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult, buildingMode);
-                t._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
-            }
-        }
-        if (t.currentBuildMode == "destruct") {
-            var buildingMode = "destruct";
-            var result = t.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
-            var buildingMult = result[0];
-            var buildingTime = result[1];
-            var queueId = loaded_bQ.length;
-            t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);
-            t._addTab(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode);
-        }
-    },
+    
     bot_gethelp: function (f, currentcityid, time, retry) {
         var t = Tabs.build;
         var city = t.getCityNameById(currentcityid);
@@ -5688,13 +5649,9 @@ Tabs.build = {
         var t = Tabs.build;
         if (obj.value == translate('Build Mode = OFF')) {
             unsafeWindow.buildslot = t.bot_buildslot; // overwrite original koc function
-            var guardian = document.getElementById('citymap').getElementsByClassName('bldg_guardian_0');
-            if (guardian.length > 0) guardian[0].addEventListener('click', t.bot_buildguardian, false);
             obj.value = translate("Build Mode = ON");
         } else {
             unsafeWindow.buildslot = t.koc_buildslot; // restore original koc function
-            var guardian = document.getElementById('citymap').getElementsByClassName('bldg_guardian_0');
-            if (guardian.length > 0) guardian[0].removeEventListener('click', t.bot_buildguardian, false);
             obj.value = translate("Build Mode = OFF");
         }
     },
@@ -5736,7 +5693,7 @@ Tabs.Search = {
 
                 11:{'name':"Carmathen",'x':75,'y':375},
                 12:{'name':"Shallot",'x':225,'y':375},
-                //13:{'name':"-------",'x':375,'y':375},
+                //13:{'name':"-------",'x':375,'y':375},Search Tab
                 14:{'name':"Cadbury",'x':525,'y':375},
                 15:{'name':"Glastonbury",'x':675,'y':375},
 
@@ -6534,7 +6491,7 @@ Tabs.Search = {
     if (!t.searchRunning)
       return;
     if (!rslt.ok){
-      t.stopSearch (translate('ERROR')+': '+ rslt.errorMsg);
+     // t.stopSearch (translate('ERROR')+': '+ rslt.errorMsg);
       return;
     }
     
@@ -10053,6 +10010,7 @@ Tabs.Barb = {
   lookup:1,
   city:1,
   deleting:false,
+  maplag:0,
   troopDef : [
       ['Supply', 1],
       ['Miltia', 2],
@@ -14420,7 +14378,7 @@ function CMapAjax (){
   this.normalize = normalize;  
   this.request = request;
 
-  function request (left, top, width, notify){    
+  function request (left, top, width, notify){ 
     var left = parseInt(left / 5) * 5;
     var top = parseInt(top / 5) * 5;
     var width = parseInt((width+4) / 5) * 5;
@@ -14432,11 +14390,12 @@ function CMapAjax (){
       method: "post",
       parameters: params,
       onSuccess: function (rslt) {
+      	if(!rslt.ok) MAP_DELAY+=100;
         notify(left, top, width, rslt);
       },
       onFailure: function (rslt) {
         notify(left, top, width, rslt);
-      }
+      },
     });
     function generateBlockList (left, top, width) {
       var width5 = parseInt(width / 5);
@@ -15022,15 +14981,23 @@ function AjaxRequest (url, opts){
   ajax.onreadystatechange = function(){
 //  ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete']; states 0-4
     if (ajax.readyState==4) {
+
      if (ajax.status == 500)
         if (opts.onFailure) opts.onFailure(ajax);
-      if (ajax.status >= 200 && ajax.status < 305)
-        if (opts.onSuccess) opts.onSuccess(ajax);
-      else
+      if (ajax.status >= 200 && ajax.status < 305){
+          //catch for kabam sending junk
+   		 var patt = (/function..\s*.\s*return\seval.unescape./im);
+     		 var result=patt.test(ajax.response);
+   		  if(result){
+    		 	ajax.responseText = {"ok":"false"};
+    		 	opts.onSuccess(ajax);
+    		   } else
+      	  if (opts.onSuccess) opts.onSuccess(ajax);
+     } else
         if (opts.onFailure) opts.onFailure(ajax);
     } else {
       if (opts.onChange) opts.onChange (ajax);
-    }
+    } 
   }  
     
   ajax.open(method, url, true);   // always async!
@@ -20391,7 +20358,7 @@ var March = {
 								a = "Something has gone wrong.";
 								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server); 
                     rslt.max = cids;
-							scripterdebuglog(rslt,'march');//For those getting unknown errors, uncomment this line and Baos will also receive your errors live.
+							//scripterdebuglog(rslt,'march');//For those getting unknown errors, uncomment this line and Baos will also receive your errors live.
 								break
 							};
                     setTimeout (function(){callback(rslt)}, 5*1000); //return all sever excess traffic error to original function to handle
@@ -21781,6 +21748,7 @@ logit('1min');
 
 function GESeveryhour () {//put functions here to execute every hour
 	if(Options.spamconfig.aspam )Tabs.Spam.Count();
+	MAP_DELAY = Options.MAP_DELAY;
 };
 
 function GESeveryday () {//put functions here to execute every day
