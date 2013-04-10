@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130409c
+// @version        20130409d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130409c';
+var Version = '20130409d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4728,6 +4728,7 @@ Tabs.build = {
     lbQ: [],
     toolsMode: null,
     buildingSelect:'all',
+    UASlowDown : 0,
 
     init: function (div) {
         var t = Tabs.build;
@@ -4983,7 +4984,7 @@ Tabs.build = {
     },
     e_autoBuild: function () {
         var t = Tabs.build;
-      var buildInterval = 20 * 1000; // 2 seconds between checks by default
+      var buildInterval = 20 * 1000+t.UASlowDown; // 2 seconds between checks by default
         document.getElementById('pbbuildError').innerHTML = '';
       
         if (t.buildStates.running == true) {
@@ -5251,7 +5252,12 @@ Tabs.build = {
 								document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
 								break
 							};
+							if(rslt.user_action) {
+								t.UASlowDown += 1000;
+							};
+							
                             logit(errmsg);
+                            
                         }
                     },
                     onFailure: function () {
@@ -5413,7 +5419,7 @@ Tabs.build = {
         if (typeof Seed.queue_con['city' + cityId][0] != 'undefined') {
             var current_construction_pos = Seed.queue_con['city' + cityId][0][2];
         } else {
-            var current_construction_pos = "";
+            var current_construction_pos = "0";
         }
         if (loaded_bQ.length == 0 && current_construction_pos != "") { //check anyway if there is currently build in progess for this specific building
             if (current_construction_pos != 'NaN' && current_construction_pos == buildingId) {
