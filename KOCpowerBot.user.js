@@ -21489,7 +21489,7 @@ function ChatComOverlay () {
   overlay.setAttribute("class", "overlay");
   mod_comm_input.hidden=true;
   mod_comm_input.parentNode.appendChild(overlay);
-	overlay.innerHTML = '<input id="bot_comm_input" type="text" autocorrect="off" autocomplete="on"></input>';
+	overlay.innerHTML = '<input id="bot_comm_input" type="text" autocorrect="on" autocomplete="off"></input>';
 	var bot_comm_input = document.getElementById('bot_comm_input');
 	bot_comm_input.size = 40;
 	bot_comm_input.addEventListener ('keypress', function(e) {if(e.which == 13)OSendChat();}, false);
