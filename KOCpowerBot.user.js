@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130410e
+// @version        20130410f
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130410e';
+var Version = '20130410f';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -796,7 +796,6 @@ function pbStartup (){
     saveOptions ();
     
     
-if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.    
     
   }
 
@@ -839,6 +838,7 @@ if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get 
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
   ChatComOverlay();
   GuardianTT();
+if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.    
 }
 
 /************************ Food Alerts *************************/
