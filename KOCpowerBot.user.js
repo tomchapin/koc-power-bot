@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130410d
+// @version        20130410e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130410d';
+var Version = '20130410e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -838,6 +838,7 @@ if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get 
   if(Options.ThroneHUD)Tabs.Throne.ThroneHUDinit();
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
   ChatComOverlay();
+  GuardianTT();
 }
 
 /************************ Food Alerts *************************/
@@ -4912,9 +4913,7 @@ Tabs.build = {
                         } else {
                             var buildingId = "unknown";
                         }
-                        t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel) //
-                       // logit(city.substr(4) + ' ' + builds[city][pos][0] + ' ' + builds[city][pos][1] + ' ' + builds[city][pos][2] + ' ' + builds[city][pos][3]);                
-                        
+                        t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel);
                     }
                 }
             }
@@ -21764,6 +21763,10 @@ function GESeveryday () {//put functions here to execute every day
   if(GlobalOptions.pbupdate)AutoUpdater();//check for script updates
 };
 
+function GuardianTT () {
+	var z = new CalterUwFunc("showCityTooltip",[[/showTooltip/,'a += "<div>"+g_js_strings.guardian[seed.guardian[j].type+"_fullName"]+"</div>";showTooltip']]);
+   z.setEnable(true); 
+};
 
 
 
