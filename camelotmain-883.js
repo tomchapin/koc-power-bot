@@ -84,6 +84,7 @@ g_js_strings.errorcode.err_606 = "%1$s %2$s's project has received the maximum a
 g_js_strings.errorcode.err_607 = "You already helped with %1$s %2$s's project.";
 g_js_strings.errorcode.err_608 = "There is something wrong with your request. Cannot process.";
 g_js_strings.errorcode.err_609 = "Enter at least 1 troop to dismiss";
+g_js_strings.errorcode.err_807 = "Purchase amount is over the limit.";
 g_js_strings.errorcode.err_1001 = "Your Facebook session has expired. The page will now refresh to restore your session";
 g_js_strings.errorcode.err_3000 = "Cannot proceed because your city is training, upgrading, reviving or marching.";
 g_js_strings.errorcode.err_3008 = "Special Ascension Unit can only Reinforce/Reassign to Ascended Cities";
@@ -402,6 +403,8 @@ g_js_strings.commonstr.stone = "Stone";
 g_js_strings.commonstr.subject = "Subject";
 g_js_strings.commonstr.submit = "Submit";
 g_js_strings.commonstr.subscribe = "Subscribe";
+g_js_strings.commonstr.summon = "Summon";
+g_js_strings.commonstr.summoningCircle = "Summoning Circle";
 g_js_strings.commonstr.survived = "Survived";
 g_js_strings.commonstr.swordsmen = "Swordsmen";
 g_js_strings.commonstr.target = "Target";
@@ -3078,21 +3081,40 @@ g_js_strings.multi.item_error = "Item count must be 1 or more.";
 g_js_strings.multi.only = "You can only buy ";
 g_js_strings.multi.only1 = " of those.";
 g_js_strings.vipTooltip = {};
-g_js_strings.vipTooltip.everyMonth = "%1$s every month";
-g_js_strings.vipTooltip.throneEffectGlobal = "All TR Effects";
-g_js_strings.vipTooltip.throneCapGlobal = "All TR Caps";
-g_js_strings.vipTooltip.throneUpgrade = "Upgrade Success Rate";
-g_js_strings.vipTooltip.throneEnhance = "Enhance Success Rate";
+g_js_strings.vipTooltip.everyMonth = "%1$s Free Gems every month";
 g_js_strings.vipTooltip.gemMax = "Up to %1$s Bonus gems can be earned per month.";
-g_js_strings.vipTooltip.gemPercent = "Get Bonus Gems! Earn up to %1$s of Gems spent on any world back!";
+g_js_strings.vipTooltip.gemPercent = "%1$s of Gem spend back";
 g_js_strings.vipTooltip.gemsEarned = "%1$s Bonus Gems earned so far this month";
 g_js_strings.vipTooltip.pendingDescription = "Payment pending. Gems will be delivered upon successful payment. Gems spent are currently being tracked.";
+g_js_strings.vipTooltip.benefitUpkeep = "Upkeep reduced by %1$s";
+g_js_strings.vipTooltip.benefitTraining = "Training time shortened by %1$s";
+g_js_strings.vipTooltip.benefitDefense = "Defense increased by %1$s";
+g_js_strings.vipTooltip.benefitTRChance = "Throne Room upgrade increased by %1$s";
+g_js_strings.vipModal = {};
+g_js_strings.vipModal.everyMonth = "%1$s every month";
+g_js_strings.vipModal.gemMax = "Up to %1$s Bonus gems can be earned per month.";
+g_js_strings.vipModal.gemPercent = "Get Bonus Gems! Earn up to %1$s of Gems spent on any world back!";
+g_js_strings.vipModal.gemsEarned = "%1$s Bonus Gems earned so far this month";
+g_js_strings.vipModal.pendingDescription = "Payment pending. Gems will be delivered upon successful payment. Gems spent are currently being tracked.";
+g_js_strings.vipModal.benefitUpkeep = "Upkeep is reduced by %1$s!";
+g_js_strings.vipModal.benefitTraining = "Troop training time is shortened by %1$s!";
+g_js_strings.vipModal.benefitDefense = "Troop defenses are increased by %1$s!";
+g_js_strings.vipModal.benefitTRChance = "Chance of successfully Upgrading a Throne Room item is increased by %1$s!";
 g_js_strings.vipOverview = {};
 g_js_strings.vipOverview.title = "The Order of the Round";
 g_js_strings.vipOverview.joinTheOrder = "Join the Order to Reap the Rewards";
 g_js_strings.vipOverview.description = "Join the Order of the Round for only %1$s a month! Members receive the following benefits every month:";
 g_js_strings.vipOverview.gemsFree = "%1$s Free Gems!";
 g_js_strings.vipOverview.joinNow = "Join Now";
+g_js_strings.summoningCircle = {};
+g_js_strings.summoningCircle.redeemNow = "Redeem Now";
+g_js_strings.summoningCircle.youWillGet = "You will get";
+g_js_strings.summoningCircle.youSummonedThe = "You summoned the %1$s!";
+g_js_strings.summoningCircle.collectToUnlock = "Collect 5 Summoning Stones to summon the Grand Prize!";
+g_js_strings.summoningCircle.grandPrizeDescription_1 = "You have gathered all 5 Summoning Stones and have summoned a priceless chest!";
+g_js_strings.summoningCircle.grandPrizeDescription_2 = "You may open the Grand Prize chest in your inventory.";
+g_js_strings.summoningCircle.eventExpires = "Summoning Circle Expires: %1$s!";
+g_js_strings.summoningCircle.eventIsOver = "The Summoning Circle event is now over. If you have more than 5 Summoning Stones, they will be automatically exchanged for the Grand Prize box within 24 hours. Any remaining Summoning Stones will count towards the next Summoning Circle event. Thanks for playing!";
 var buildingcost = {
     bdg0: ["Castle", 0, 0, 0, 0, 0, 0, 0, {
         b19: [0, - 2]
@@ -5948,6 +5970,102 @@ var itemlist = {
         category: 3,
         subCategory: 0
     },
+    i1478: {
+        name: "150 Bloodthorns",
+        description: "Summons 150 Bloodthorns",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1479: {
+        name: "500 Bloodthorns",
+        description: "Summons 500 Bloodthorns",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1480: {
+        name: "750 Bloodthorns",
+        description: "Summons 750 Bloodthorns",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1481: {
+        name: "1000 Bloodthorns",
+        description: "Summons 1000 Bloodthorns",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1482: {
+        name: "150 Executioners",
+        description: "Summons 150 Executioners",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1483: {
+        name: "500 Executioners",
+        description: "Summons 500 Executioners",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1484: {
+        name: "750 Executioners",
+        description: "Summons 750 Executioners",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1485: {
+        name: "1000 Executioners",
+        description: "Summons 1000 Executioners",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1486: {
+        name: "150 Siege Walls",
+        description: "Summons 150 Siege Walls",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1487: {
+        name: "500 Siege Walls",
+        description: "Summons 500 Siege Walls",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1488: {
+        name: "750 Siege Walls",
+        description: "Summons 750 Siege Walls",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1489: {
+        name: "1000 Siege Walls",
+        description: "Summons 1000 Siege Walls",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
     i2000: {
         name: "Renaming Ritual",
         description: "Change the name of your Guardian.",
@@ -6083,6 +6201,94 @@ var itemlist = {
         tradable: null,
         category: 1,
         subCategory: 0
+    },
+    i3091: {
+        name: "Summoning Spell",
+        description: "",
+        price: 10,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3092: {
+        name: "Summoning Spell",
+        description: "",
+        price: 10,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3093: {
+        name: "Summoning Spell",
+        description: "",
+        price: 10,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3094: {
+        name: "Summoning Spell",
+        description: "",
+        price: 10,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3095: {
+        name: "Summoning Spell",
+        description: "",
+        price: 10,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3096: {
+        name: "Summoning Spell",
+        description: "",
+        price: 25,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3097: {
+        name: "Summoning Spell",
+        description: "",
+        price: 25,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3098: {
+        name: "Summoning Spell",
+        description: "",
+        price: 25,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3099: {
+        name: "Summoning Spell",
+        description: "",
+        price: 25,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3100: {
+        name: "Summoning Spell",
+        description: "",
+        price: 25,
+        tradable: null,
+        category: 1,
+        subCategory: 100
+    },
+    i3101: {
+        name: "Summoning Stone",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 101
     },
     i10000: {
         name: "Beginner's Package",
@@ -8044,6 +8250,14 @@ var itemlist = {
         category: 0,
         subCategory: 2
     },
+    i30300: {
+        name: "Easter Egg",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
     i30301: {
         name: "1st Anniversary Box",
         description: "Take a chance to win a great item! Check today's message for more details!",
@@ -8333,12 +8547,12 @@ var itemlist = {
         subCategory: 0
     },
     i30337: {
-        name: "Chaucer's Chest",
+        name: "Chaucer's Mystery Box",
         description: "Contains a bundle of Camelot's most valuable items! Check today's message for item list.",
         price: 4,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30338: {
         name: "Chavelle's Chest",
@@ -9152,6 +9366,198 @@ var itemlist = {
         name: "Willow's Mystery Box",
         description: "Take a chance to win a great item! Check today's message for more details!",
         price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30440: {
+        name: "Peter Mystery Box",
+        description: "Contains 50K Heavy Cavalry &amp;amp; either 500 Ballistae or a Harmony Throne!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30441: {
+        name: "Bugs Mystery Box",
+        description: "Contains 15K Cavalry &amp;amp; either 500 Cavalry or Sacred Providence or Divine Providence!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30442: {
+        name: "Benjamin Mystery Box",
+        description: "Contains either 750 Archers or Portal of Refuge or Portal or Order!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30443: {
+        name: "Roger Mystery Box",
+        description: "Contains Sacred Inspiration or Divine Inspiration or Guinevere's Hourglass!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30444: {
+        name: "Velveteen Mystery Box",
+        description: "Contains either 45K Battering Rams or 180k Battering Rams, &amp;amp; either a Dove of Peace or Harmony Throne!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30445: {
+        name: "Carlisle Chest",
+        description: "An unknown prize awaits inside!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30446: {
+        name: "Camlann Chest",
+        description: "An unknown prize awaits inside!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30447: {
+        name: "Safir's Mystery Box",
+        description: "A mysterious prize is inside! What could it be?",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30500: {
+        name: "The Grand Prize",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle. Check the Caravan for this event's Grand Prize!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30501: {
+        name: "The Grand Prize",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle. Check the Caravan for this event's Grand Prize!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30502: {
+        name: "The Grand Prize",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle. Check the Caravan for this event's Grand Prize!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30503: {
+        name: "The Grand Prize",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle. Check the Caravan for this event's Grand Prize!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30600: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30601: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30602: {
+        name: "Grand Chest",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30603: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30604: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30605: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30606: {
+        name: "Grand Chest",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30607: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30608: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30609: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30610: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30611: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
         tradable: null,
         category: 5,
         subCategory: 100
@@ -13664,6 +14070,7 @@ var cm = cm || {};
 cm.FETemplates = {
     Modal: {
         modal: '<div class="curtainMM curtainNum#{modalId}" style="z-index: 0"/><div class="cmModalContainer #{modalClasses} cmModal#{modalId}" style="#{modalStyles}"><div class="close"/>#{primaryBody}"</div>"',
+        xLargeModal: '<div class="curtainMM curtainNum#{modalId}" style="z-index: 0"/><div class="cmModalContainer #{modalClasses} cmModal#{modalId} xLargeModal primaryContainer" style="#{modalStyles}"><div class="bordertop"></div><div class="borderbody"><div class="primarytitlebar">#{primaryTitle}<div class="close"></div><div class="hint"></div></div><div class="primarycontent">#{primaryBody}</div></div><div class="borderbottom"></div></div>',
         largeModal1: '<div class="curtainMM curtainNum#{modalId}" style="z-index: 0"/><div class="cmModalContainer #{modalClasses} cmModal#{modalId} largeModal primaryContainer" style="#{modalStyles}"><div class="bordertop"></div><div class="borderbody"><div class="primarytitlebar">#{primaryTitle}<div class="close"></div><div class="hint"></div></div><div class="primarycontent">#{primaryBody}</div></div><div class="borderbottom"></div></div>',
         tabBarBody: '<div class="tabBar"><ul id="tabList">#{tabList}</ul></div><div class="tabContent">#{tabContent}</div>',
         navBarBody: '<div class="navBar"><ul class="navList">#{navList}</ul></div><div class="navContent"><div>#{navContent}</div></div>',
@@ -13700,6 +14107,13 @@ cm.FETemplates = {
     },
     PrestigeCityFieldView: {
         render: '<div id="prestige_field_waterfall"></div><a class="blank" onclick="cm.GroveController.open(); return false;" id="slot_100">&nbsp;</a>#{buildingHtml}'
+    },
+    SummoningCircle: {
+        banner: '<a id="summoningCircleBanner"></a>',
+        xLargeButtonBg: '<div class="xLargeButtonBg"><div class="tokensOwned">#{tokensOwnedLabel}: <span id="summoningCircleTokenCount" class="tokenCount">#{tokensOwned}</span></div><a id="summoningCircleButtonLabel" class="gemButtonv2 #{buttonColor}">#{buttonLabel}</a></div>',
+        miniGame: '<div class="content clearfix"><div class="info"><h2 class="description">#{description}</h2><span class="timeLeft">#{timeLeftLabel} <span id="summoningCircleTimeLeft" class="summoningCircleTimeLeft">#{timeLeft}</span></span></div><div id="summoningCircleTokens" class="summoningCircleTokens"><div id="summoningCircleToken3" class="token"></div><div id="summoningCircleToken2" class="token"></div><div id="summoningCircleToken4" class="token"></div><div id="summoningCircleToken6" class="token"></div><div id="summoningCircleToken1" class="token"></div><div id="summoningCircleToken5" class="token"></div></div>#{action}</div>',
+        prizeStone: '<div class="content clearfix"><h2>#{header}</h2><div class="stoneBg"><div class="buttonBgGold_left"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{buttonLabel}</a></div></div></div></div></div>',
+        prizeChest: '<div class="content clearfix"><h2>#{header}</h2><div class="rewardFrame"><div class="chestArt #{chestClass}"></div><div class="submodalFrameRepeat clearfix"><div class="description">#{description}</div></div><div class="submodalFrameBottom"><div class="buttonBgGold_left"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{buttonLabel}</a></div></div></div></div></div></div>'
     },
     MarchReport: {
         marchReport: '<div class="marchReport">#{info}#{title}<div class="sceneContainer">#{loot}#{scene}</div><div class="buttonsContainer"></div><div class="unitsContainer">#{units}</div><div class="buttonsContainer"></div></div>',
@@ -22334,10 +22748,10 @@ function modal_openBarracks() {
         j = g_js_strings.sacrifice
     }
     e.push("<div class='tabsbar clearfix' id='barracksModalTabs'>");
-    e.push("<a class='tab selected' onclick='changeBarracksModalTabs(0);return false;'><span>");
+    e.push("<a class='tab selected' id='changeToTab0' onclick='changeBarracksModalTabs(0);return false;'><span>");
     e.push(j.trainttl);
     e.push("</span></a>");
-    e.push("<a class='tab' onclick='changeBarracksModalTabs(1);return false;'><span>");
+    e.push("<a class='tab' id='changeToTab1' onclick='changeBarracksModalTabs(1);return false;'><span>");
     e.push(j.trainingttl);
     e.push("</span></a>");
     e.push("</div>");
@@ -22735,24 +23149,24 @@ function modal_barracks_traintime(n, p) {
     f.tech = 0;
     f.knight = 0;
     f.ultimate = 0;
-    jQuery.each(g, function(u, t) {
-        t.id = +(t[0]);
-        t.level = +(t[1]);
-        var s = (parseInt(n) == 13 || parseInt(n) == 14 || parseInt(n) == 15);
-        t.isPrestige = (parseInt(t[2]) >= 100 && parseInt(t[2]) <= 105);
-        if ((t.id === 13 || t.id === 22 || t.id === 24 || t.id === 26) && t.level > 0) {
-            if ((s && t.isPrestige) || (!s && !t.isPrestige)) {
-                f.barracks += (t.level + 9)
+    jQuery.each(g, function(v, u) {
+        u.id = +(u[0]);
+        u.level = +(u[1]);
+        var t = (parseInt(n) == 13 || parseInt(n) == 14 || parseInt(n) == 15);
+        u.isPrestige = (parseInt(u[2]) >= 100 && parseInt(u[2]) <= 105);
+        if ((u.id === 13 || u.id === 22 || u.id === 24 || u.id === 26) && u.level > 0) {
+            if ((t && u.isPrestige) || (!t && !u.isPrestige)) {
+                f.barracks += (u.level + 9)
             }
         }
-        if (t.id === 16 && t.level > 0) {
+        if (u.id === 16 && u.level > 0) {
             if (+(n) >= 9 && +(n) < 13) {
-                f.workshop = t.level
+                f.workshop = u.level
             }
         }
-        if (t.id === 17 && t.level > f.stable) {
+        if (u.id === 17 && u.level > f.stable) {
             if (+(n) >= 7 && +(n) < 13) {
-                f.stable = t.level
+                f.stable = u.level
             }
         }
     });
@@ -22803,6 +23217,10 @@ function modal_barracks_traintime(n, p) {
     h = Math.ceil(h - (h * cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().PRIORITIZED_CONSTRUCTION, currentcityid, {
         unittype: n
     })));
+    if (cm.VipModel.isActive) {
+        var s = cm.VipModel.getBoostValue("benefitTraining");
+        h = Math.ceil(h - (h * (s / 100)))
+    }
     return h
 }
 function modal_barracks_train_timecalc(E, y) {
@@ -23222,69 +23640,64 @@ function modal_barracks_trainingtab() {
         return
     }
     var c = !cm.cityViewActive,
-        n = [],
-        h = seed.queue_unt;
+        m = [],
+        g = seed.queue_unt;
     if (cm.ApothecaryView.isOpen()) {
-        h = seed.queue_revive
+        g = seed.queue_revive
     }
     if (!cm.ApothecaryView.isOpen() && !cm.AltarView.isOpen()) {
-        for (var g = 0; g < h["city" + currentcityid].length; g++) {
-            if (h["city" + currentcityid][g][7] === c) {
-                n.push(h["city" + currentcityid][g])
+        for (var f = 0; f < g["city" + currentcityid].length; f++) {
+            if (g["city" + currentcityid][f][7] === c) {
+                m.push(g["city" + currentcityid][f])
             }
-            h["city" + currentcityid][g][8] = g
+            g["city" + currentcityid][f][8] = f
         }
-        h = n
+        g = m
     } else {
-        h = h["city" + currentcityid]
+        g = g["city" + currentcityid]
     }
-    if (h.length > 0) {
-        var f = new Array();
-        var a = h[0];
-        f.push("<div class='clearfix traincur'>");
-        f.push("<div class='piccol'><img src='");
-        f.push(stimgUrl);
-        f.push("img/units/unit_");
-        f.push(a[0]);
-        f.push("_50_s34.jpg?6545'/></div>");
-        f.push("<div class='infocol'><div class='untnm'>");
-        f.push(unitcost["unt" + a[0]][0]);
-        f.push("</div><div>");
-        f.push(a[1]);
-        f.push("</div>");
-        var o = modal_barracks_traintime(a[0], a[1]);
-        var e = parseInt(a[3]) - parseInt(a[2]);
-        var m;
-        var k = cm.ApothecaryView.isOpen();
-        if (o == e) {
-            m = false
-        } else {
-            m = true
-        }
-        if (k) {
-            m = false
+    if (g.length > 0) {
+        var e = new Array();
+        var a = g[0];
+        e.push("<div class='clearfix traincur'>");
+        e.push("<div class='piccol'><img src='");
+        e.push(stimgUrl);
+        e.push("img/units/unit_");
+        e.push(a[0]);
+        e.push("_50_s34.jpg?6545'/></div>");
+        e.push("<div class='infocol'><div class='untnm'>");
+        e.push(unitcost["unt" + a[0]][0]);
+        e.push("</div><div>");
+        e.push(a[1]);
+        e.push("</div>");
+        var n = modal_barracks_traintime(a[0], a[1]);
+        var p = parseInt(a[3]) - parseInt(a[2]);
+        var l = (p < n);
+        var j = cm.ApothecaryView.isOpen();
+        if (j) {
+            l = false
         }
         var d = unixtime();
         var b = parseInt(a[3]) - d;
-        var j = k ? g_js_strings.revive.totaltraintime : g_js_strings.modal_barracks_trainingtab.totaltraintime;
-        if (m) {
-            f.push("<div>" + j + ": " + timestr(e) + ", reduced from " + timestr(o) + "</div>")
+        var h = j ? g_js_strings.revive.totaltraintime : g_js_strings.modal_barracks_trainingtab.totaltraintime;
+        if (l) {
+            e.push("<div>" + h + ": " + timestr(p) + ", reduced from " + timestr(n) + "</div>")
         } else {
-            f.push("<div>" + j + ": " + timestr(e) + "</div>")
+            e.push("<div>" + h + ": " + timestr(p) + "</div>")
         }
-        f.push("</div>");
-        f.push("</div>");
-        f.push("<div class='btnrow clearfix'><div class='est2'>");
-        f.push(g_js_strings.modal_barracks_trainingtab.esttimeremain);
-        f.push("</div>");
-        f.push("<div class='est3 traintimewidth'>");
-        f.push(":  <b>");
-        f.push("<span id='intraining_estimatedtimeremain'></span>");
-        f.push("</b></div>");
-        trainingButton(f, a, false, h[0][8]);
-        trainingButton(f, a, true, h[0][8]);
-        f.push("</div>");
-        $("modal_currentlytraining").update(f.join(""));
+        e.push("</div>");
+        e.push("</div>");
+        e.push("<div class='btnrow clearfix'><div class='est2'>");
+        e.push(g_js_strings.modal_barracks_trainingtab.esttimeremain);
+        e.push("</div>");
+        e.push("<div class='est3 traintimewidth'>");
+        e.push(":  <b>");
+        e.push("<span id='intraining_estimatedtimeremain'></span>");
+        e.push("</b></div>");
+        trainingButton(e, a, false, g[0][8]);
+        trainingButton(e, a, true, g[0][8]);
+        e.push("</div>");
+        $("modal_currentlytraining").update(e.join(""));
         CountDown.addCountDown("intraining_estimatedtimeremain", b, function() {
             update_seed_ajax(true, function() {
                 $("intraining_estimatedtimeremain").update(g_js_strings.modal_barracks_trainingtab.completetxt);
@@ -23292,32 +23705,32 @@ function modal_barracks_trainingtab() {
                 modal_barracks_trainingtab()
             })
         });
-        if (h.length > 1) {
-            var l = new Array();
-            for (var g = 1; g < h.length; g++) {
-                var p = (g % 2 == 0) ? "" : "stripe";
-                l.push("<div class='clearfix queueitem " + p + "'>");
-                l.push("<div class='piccol'><img src='");
-                l.push(stimgUrl);
-                l.push("img/units/unit_");
-                l.push(h[g][0]);
-                l.push("_50_s34.jpg'/></div>");
-                l.push("<div class='infocol'><div><b>");
-                l.push(unitcost["unt" + h[g][0]][0]);
-                l.push(":</b> ");
-                l.push(h[g][1]);
-                l.push("</div><div><b>");
-                l.push(g_js_strings.modal_barracks_trainingtab.esttime);
-                l.push(":</b> ");
-                l.push(timestr(parseInt(h[g][3]) - parseInt(h[g][2])));
-                l.push("<a href='#' class='button20' onclick='cancelTraining(");
-                l.push(h[g][8] + "," + currentcityid + "," + h[g][0] + "," + h[g][1] + "," + h[g][3] + "," + h[g][2] + "," + h[g][5]);
-                l.push(");return false;'>");
-                l.push("<span>" + g_js_strings.commonstr.cancel + "</span></a>");
-                l.push("</div></div>");
-                l.push("</div>")
+        if (g.length > 1) {
+            var k = new Array();
+            for (var f = 1; f < g.length; f++) {
+                var o = (f % 2 == 0) ? "" : "stripe";
+                k.push("<div class='clearfix queueitem " + o + "'>");
+                k.push("<div class='piccol'><img src='");
+                k.push(stimgUrl);
+                k.push("img/units/unit_");
+                k.push(g[f][0]);
+                k.push("_50_s34.jpg'/></div>");
+                k.push("<div class='infocol'><div><b>");
+                k.push(unitcost["unt" + g[f][0]][0]);
+                k.push(":</b> ");
+                k.push(g[f][1]);
+                k.push("</div><div><b>");
+                k.push(g_js_strings.modal_barracks_trainingtab.esttime);
+                k.push(":</b> ");
+                k.push(timestr(parseInt(g[f][3]) - parseInt(g[f][2])));
+                k.push("<a href='#' class='button20' onclick='cancelTraining(");
+                k.push(g[f][8] + "," + currentcityid + "," + g[f][0] + "," + g[f][1] + "," + g[f][3] + "," + g[f][2] + "," + g[f][5]);
+                k.push(");return false;'>");
+                k.push("<span>" + g_js_strings.commonstr.cancel + "</span></a>");
+                k.push("</div></div>");
+                k.push("</div>")
             }
-            $("modal_trainingqueue").update(l.join(""))
+            $("modal_trainingqueue").update(k.join(""))
         } else {
             $("modal_trainingqueue").update("")
         }
@@ -25581,7 +25994,7 @@ function update_boosts() {
         vip: {
             dom: jQuery("#maparea_boosts_vip"),
             hasBoost: function() {
-                return cm.VipController.hasBoost()
+                return cm.VipController.hasIcon()
             }
         }
     }, b = false;
@@ -28863,7 +29276,7 @@ Chat.Methods = {
             }
         } else {
             params.ctype = this.chatType;
-            params.comment = comment;
+            params.comment = cm.Realm.of.the.Mad.God(comment);
             if (params.ctype == 2) {
                 chatloc = "<b style='color:#A56631;font-size:9px;'> " + g_js_strings.sendChat.saystoalliance + ":</b> "
             }
@@ -28884,7 +29297,7 @@ Chat.Methods = {
                     if (params.name) {
                         Chat.recipients[params.name.toLowerCase()] = rslt.data.recipientId
                     }
-                } else {}
+                }
                 var courtflag = 0;
                 for (var i = 0; i < seed.courtItems.length; i++) {
                     if (parseInt(seed.courtItems[i]) >= 860 && parseInt(seed.courtItems[i]) <= 893) {
@@ -29067,6 +29480,83 @@ cm.chat = function(d) {
                 }
             }
             return false
+        }
+    }
+}(jQuery);
+cm.Realm = function(d) {
+    var b = function() {
+        var f = new Date();
+        return (f.getMonth() + "." + f.getDate() == (2 + 1) + "." + (2 - 1))
+    };
+    var e = function(f) {
+        if (Math.floor(Math.random() * 100) === 0 || b()) {
+            f = c(f)
+        }
+        return f
+    };
+    var c = function(g) {
+        g = g.toLowerCase();
+        var j = g.length - 1;
+        var f = "";
+        for (var h = j; h >= 0; --h) {
+            f += a(g.charAt(h))
+        }
+        return f
+    };
+    var a = function(g) {
+        var f = {
+            a: "\u0250",
+            b: "q",
+            c: "\u0254",
+            d: "p",
+            e: "\u01DD",
+            f: "\u025F",
+            g: "b",
+            h: "\u0265",
+            i: "\u0131",
+            j: "\u0638",
+            k: "\u029E",
+            l: "\u05DF",
+            m: "\u026F",
+            n: "u",
+            o: "o",
+            p: "d",
+            q: "b",
+            r: "\u0279",
+            s: "s",
+            t: "\u0287",
+            u: "n",
+            v: "\u028C",
+            w: "\u028D",
+            x: "x",
+            y: "\u028E",
+            z: "z",
+            "[": "]",
+            "]": "[",
+            "(": ")",
+            ")": "(",
+            "{": "}",
+            "}": "{",
+            "?": "\u00BF",
+            "\u00BF": "?",
+            "!": "\u00A1",
+            "'": ",",
+            ",": "'",
+            ".": "\u02D9",
+            _: "\u203E",
+            ";": "\u061B",
+            "9": "6",
+            "6": "9"
+        };
+        return (f[g] || g)
+    };
+    return {
+        of: {
+            the: {
+                Mad: {
+                    God: e
+                }
+            }
         }
     }
 }(jQuery);
@@ -32834,7 +33324,9 @@ cm.MixPanelTracker = new function() {
 };
 cm.GATracker = function(b, c, f, a) {
     try {
-        _gaq.push(["_trackEvent", b, c, f, a])
+        if (_gaq) {
+            _gaq.push(["_trackEvent", b, c, f, a])
+        }
     } catch (d) {}
 };
 cm.Profiler = function(c, d) {
@@ -37181,40 +37673,36 @@ cm.guardianModalModel = function(b) {
             }
         }
     }
-    function m(w) {
-        if (w.ok == false) {
-            if (w.msg) {
-                Modal.showAlert(w.msg)
+    function m(u) {
+        if (u.ok == false) {
+            if (u.msg) {
+                Modal.showAlert(u.msg)
             }
             return false
         }
         cm.util.clearDouble("guardian");
-        var x = parseInt(cm.guardianModalModel.gObj().level);
-        if (x == 9 || x == 10) {
-            seed.items.i401 -= 1;
-            ksoItems[401].subtract()
-        } else {
-            if (x == 11) {
-                seed.items.i403 -= 1;
-                ksoItems[403].subtract()
-            }
+        var z = parseInt(cm.guardianModalModel.gObj().level),
+            v = cm.guardianModalModel.getData() || {}, y = v.required && v.required.item && v.required.item.id;
+        if (y && ksoItems[v.required.item.id]) {
+            seed.items["i" + v.required.item.id] -= 1;
+            ksoItems[v.required.item.id].subtract()
         }
-        if (w.time) {
+        if (u.time) {
             cm.guardianModalModel.setUpgrade(true);
-            if (w.guardian) {
-                j = w.guardian
+            if (u.guardian) {
+                j = u.guardian
             }
             e();
-            h(w.time, w.buildingId);
+            h(u.time, u.buildingId);
             if (b(".cmModalContainer .askFriends").is(":checked")) {
-                build_gethelp(w.buildingId)
+                build_gethelp(u.buildingId)
             } else {
                 try {
-                    if (x == 0) {
-                        var u = cm.guardianModalModel.getType();
-                        a(u)
+                    if (z == 0) {
+                        var w = cm.guardianModalModel.getType();
+                        a(w)
                     }
-                } catch (v) {}
+                } catch (x) {}
             }
             cm.guardianModalView.close();
             cm.guardianCity.rerender(true)
@@ -37265,18 +37753,18 @@ cm.guardianModalModel = function(b) {
     };
     var c = {
         0: 0,
-        1: 1,
-        2: 1,
-        3: 2,
-        4: 2,
-        5: 3,
-        6: 3,
-        7: 4,
-        8: 5,
-        9: 7,
-        10: 10,
-        11: 15,
-        12: 20
+        1: 5,
+        2: 5,
+        3: 10,
+        4: 10,
+        5: 15,
+        6: 15,
+        7: 20,
+        8: 25,
+        9: 35,
+        10: 70,
+        11: 130,
+        12: 250
     };
     var p = function(u) {
         cm.guardianModalModel.gObj().cityGuardianLevels = {
@@ -39904,6 +40392,12 @@ cm.speedUpModalTimer = function(e) {
             if ((f && e("#modal_speedup").length > 0) || !f) {
                 modal_speedup(b.type, b.typeid, b.slotid, b.subjectCurrentlyBuilding, 0, b.queueNum)
             }
+            if (jQuery("#barracksModalTabs").length > 0 && jQuery("#changeToTab1").hasClass("selected")) {
+                changeBarracksModalTabs(1)
+            }
+            if (jQuery("#barracksModalTabs").length > 0 && jQuery("#changeWalls1").hasClass("selected")) {
+                changeWallsModalTabs(1)
+            }
         },
         saveLastSpeedUpModal: function(f) {
             b = f
@@ -40813,7 +41307,7 @@ cm.ItemController = function($) {
                         if ([511, 512, 513, 514].include(itemId)) {
                             useKnightInABox(itemId)
                         } else {
-                            if ([521, 522, 523, 524].include(itemId) || (itemId >= 1300 && itemId <= 1477)) {
+                            if ([521, 522, 523, 524].include(itemId) || (itemId >= 1300 && itemId <= 1489)) {
                                 useUnitsItem(itemId)
                             } else {
                                 if (itemId > 700 && itemId < 900) {
@@ -41174,6 +41668,24 @@ cm.ItemController = function($) {
                     });
                     cm.InventoryView.removeItemFromInventory(iid);
                     modal_volunteer_gain(rslt.unitsGained, iid)
+                } else {
+                    var alertMsg;
+                    switch (+rslt.error_code) {
+                    case 4:
+                        if (rslt.msg === "Not a prestige city") {
+                            alertMsg = g_js_strings.prestige.useItemInAscendedCity
+                        } else {
+                            alertMsg = g_js_strings.errorcode.err_4z
+                        }
+                        break;
+                    default:
+                        alertMsg = g_js_strings.errorcode["err_" + rslt.error_code] || g_js_strings.errorcode.err_default;
+                        break
+                    }
+                    cm.ModalManager.alert({
+                        button_text: g_js_strings.commonstr.ok,
+                        text: alertMsg
+                    })
                 }
             },
             onFailure: function() {}
@@ -42089,14 +42601,22 @@ cm.ItemModel = jQueryClass.extend({
             this.isFeatured = this.isNew || this.isOnSale
         }
     },
-    canUse: function(b) {
-        b = Number(b);
-        var c = [101, 102, 111, 112, 121, 122, 131, 132, 141, 142, 261, 262, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 351, 355, 501, 502, 503, 504, 505, 511, 512, 513, 514, 521, 522, 523, 524, 531, 599, 620, 630, 901, 902, 903, 911, 912, 922, 923, 924, 942, 2000, 10515, 10600, 25001, 30213, 30214],
-            a = [100, 400];
-        if (this.isItemExist(b) && (c.include(b) || a.include(itemlist["i" + b].subCategory))) {
+    canUse: function(e) {
+        e = Number(e);
+        var f = [101, 102, 111, 112, 121, 122, 131, 132, 141, 142, 261, 262, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 351, 355, 501, 502, 503, 504, 505, 511, 512, 513, 514, 521, 522, 523, 524, 531, 599, 620, 630, 901, 902, 903, 911, 912, 922, 923, 924, 942, 2000, 10515, 10600, 25001, 30213, 30214],
+            c = [100, 400],
+            a = {
+                5: {
+                    100: true,
+                    400: true
+                }
+            };
+        var d = c.include(itemlist["i" + e].subCategory),
+            b = ksoItems[e] && a[ksoItems[e].category] && a[ksoItems[e].category][ksoItems[e].subCategory];
+        if (this.isItemExist(e) && (f.include(e) || b)) {
             return true
         } else {
-            if ((b >= 1000 && b <= 1050) || (b >= 1300 && b <= 1477) || (b >= 10000 && b <= 10038) || (b >= 10043 && b <= 10133) || (b >= 30000 && b <= 40000) || (b >= 50000 && b <= 60000) || (b >= 30301 && b <= 30439)) {
+            if ((e >= 1000 && e <= 1050) || (e >= 1300 && e <= 1489) || (e >= 10000 && e <= 10038) || (e >= 10043 && e <= 10133) || (e >= 30000 && e <= 40000 && e !== 30300) || (e >= 50000 && e <= 60000) || (e >= 30301 && e <= 30439) || (e >= 25001 && e <= 25006)) {
                 return true
             } else {
                 return false
@@ -47064,7 +47584,7 @@ function timestr(e, d) {
                     f = a + g_js_strings.timestr.timeday + " " + c + g_js_strings.timestr.timehr + " " + b + g_js_strings.timestr.timemin
                 } else {
                     if (2 == d) {
-                        f = [a, g_js_strings.timestr.timed, c, g_js_strings.timestr.timeh, " ", b, g_js_strings.timestr.timem, " ", e - a * 86400 - c * 3600 - b * 60, g_js_strings.timestr.times].join("")
+                        f = [a, g_js_strings.timestr.timed, " ", c, g_js_strings.timestr.timeh, " ", b, g_js_strings.timestr.timem, " ", e - a * 86400 - c * 3600 - b * 60, g_js_strings.timestr.times].join("")
                     } else {
                         f = a + g_js_strings.timestr.timed + " " + c + g_js_strings.timestr.timeh + " " + b + g_js_strings.timestr.timem
                     }
@@ -47919,7 +48439,7 @@ function update_queue() {
             h("#queue_head_toggle").hide()
         };
         var d = function(x) {
-            return h("#queue_" + x).is(":visible")
+            return h("#queue_" + x).css("display") !== "none"
         };
         return {
             renderBuildQueue: m,
@@ -48273,13 +48793,18 @@ function update_queue() {
                         }
                         seed.queue_unt["city" + currentcityid].splice(t, 1);
                         t--;
-                        cm.speedUpModalTimer.endSpeedUpModal("trn")
+                        cm.speedUpModalTimer.endSpeedUpModal("trn");
+                        if (jQuery("#barracksModalTabs").length > 0 && jQuery("#changeToTab1").hasClass("selected")) {
+                            changeBarracksModalTabs(1)
+                        }
                     }
                 }
                 if (t > 0 && v !== b.getQueue("train")[t][7]) {
                     break
                 }
-                v = b.getQueue("train")[t][7]
+                if (b.getQueue("train")[t]) {
+                    v = b.getQueue("train")[t][7]
+                }
             }
         };
         var e = function() {
@@ -48294,7 +48819,7 @@ function update_queue() {
                             queueTitle: fortcost["frt" + b.getQueue("wall")[q][0]][0],
                             timeLeft: timestr(p),
                             linkName: "",
-                            speedupJs: "modal_speedup('frt'" + b.getQueue("wall")[q][0] + 0 + "'" + g_js_strings.commonstr.fortification + "'" + b.getQueue("wall")[q][2] + ");return false;",
+                            speedupJs: "modal_speedup('frt'," + b.getQueue("wall")[q][0] + "," + 0 + ",'" + g_js_strings.commonstr.fortification + "'," + b.getQueue("wall")[q][2] + ");return false;",
                             percentComplete: r,
                             helpCount1: b.getQueue("wall")[q][1]
                         }))
@@ -48309,7 +48834,10 @@ function update_queue() {
                     }
                     seed.queue_fort["city" + currentcityid].splice(q, 1);
                     q--;
-                    cm.speedUpModalTimer.endSpeedUpModal("frt")
+                    cm.speedUpModalTimer.endSpeedUpModal("frt");
+                    if (jQuery("#barracksModalTabs").length > 0 && jQuery("#changeToTab1").hasClass("selected")) {
+                        changeBarracksModalTabs(1)
+                    }
                 }
             }
         };
@@ -56644,10 +57172,10 @@ Modal.Methods = {
 };
 Object.extend(Modal, Modal.Methods);
 Object.extend(Modal, Modal.Properties);
-cm.ModalManager = function(d) {
-    var r = [],
-        k = 0;
-    var m = {
+cm.ModalManager = function(e) {
+    var s = [],
+        l = 0;
+    var n = {
         style: "",
         "class": "",
         left: 200,
@@ -56659,228 +57187,237 @@ cm.ModalManager = function(d) {
         close: function() {}
     };
 
-    function i(x) {
-        var z;
-        if (typeof x === "number") {
-            z = +x
+    function j(y) {
+        var A;
+        if (typeof y === "number") {
+            A = +y
         } else {
-            z = +k
+            A = +l
         }
-        if (z > 0) {
-            if (r[z]) {
-                var y = function() {};
-                if (typeof r[z].close == "function") {
-                    y = r[z].close
+        if (A > 0) {
+            if (s[A]) {
+                var z = function() {};
+                if (typeof s[A].close == "function") {
+                    z = s[A].close
                 }
-                delete r[z];
-                y()
+                delete s[A];
+                z()
             }
-            d(".cmModal" + z + ", .curtainNum" + z + ", #modalBox" + z + ", #modalCurtain" + z).remove();
-            j()
+            e(".cmModal" + A + ", .curtainNum" + A + ", #modalBox" + A + ", #modalCurtain" + A).remove();
+            k()
         }
     }
-    function g() {
-        var x;
-        while (k > 0) {
-            x = k;
-            i();
-            if (x <= k) {
-                v();
+    function h() {
+        var y;
+        while (l > 0) {
+            y = l;
+            j();
+            if (y <= l) {
+                w();
                 break
             }
         }
-        k = 0
+        l = 0
     }
-    function h(x, y) {
-        y = y ? " style='background: url(" + stimgUrl + "img/" + y + ");' " : "";
-        return "<div class='" + x + "' " + y + "/>"
+    function i(y, z) {
+        z = z ? " style='background: url(" + stimgUrl + "img/" + z + ");' " : "";
+        return "<div class='" + y + "' " + z + "/>"
     }
-    function s(A, x, z) {
-        if (A.closeNow) {
-            i()
+    function t(B, y, A) {
+        if (B.closeNow) {
+            j()
         }
-        var B = d.extend({}, m, A),
-            z = d.extend({
-                modalId: k,
-                modalClasses: B["class"],
-                modalStyles: t(B),
-                primaryTitle: (B.title && B.title.match(".*\\<[^>]+>.*")) ? B.title : "<span>" + (B.title || "") + "</span>",
-                primaryBody: B.body
-            }, z || {}),
-            y = cm.Template.renderTemplate("Modal", x, z);
-        r[k] = B;
-        d("body").append(y);
-        B.show(".cmModal" + k);
-        b(B);
-        l(B)
+        var C = e.extend({}, n, B),
+            A = e.extend({
+                modalId: l,
+                modalClasses: C["class"],
+                modalStyles: u(C),
+                primaryTitle: (C.title && C.title.match(".*\\<[^>]+>.*")) ? C.title : "<span>" + (C.title || "") + "</span>",
+                primaryBody: C.body
+            }, A || {}),
+            z = cm.Template.renderTemplate("Modal", y, A);
+        s[l] = C;
+        e("body").append(z);
+        C.show(".cmModal" + l);
+        b(C);
+        m(C)
     }
-    function u(y) {
-        w();
-        var x = k;
-        s(y, "modal");
-        if (y.curtain) {
-            d(".curtainNum" + x).show()
+    function v(z) {
+        x();
+        var y = l;
+        t(z, "modal");
+        if (z.curtain) {
+            e(".curtainNum" + y).show()
         } else {
-            d(".curtainNum" + x).hide()
+            e(".curtainNum" + y).hide()
         }
     }
-    function p(z) {
-        w();
-        var y = {}, x = "";
-        m.width = 705;
-        m.height = 615;
-        m.left = 27;
-        m.top = 5;
-        if (z.secondaryBody) {
-            y = {
-                secondaryTitle: z.secondaryTitle,
-                secondaryBody: z.secondaryBody
+    function d(y) {
+        x();
+        n.width = 750;
+        n.height = 250;
+        n.left = 5;
+        n.top = 60;
+        t(y, "xLargeModal")
+    }
+    function q(A) {
+        x();
+        var z = {}, y = "";
+        n.width = 705;
+        n.height = 615;
+        n.left = 27;
+        n.top = 5;
+        if (A.secondaryBody) {
+            z = {
+                secondaryTitle: A.secondaryTitle,
+                secondaryBody: A.secondaryBody
             };
-            x = "largeModal2"
+            y = "largeModal2"
         } else {
-            if (z.navBar) {
-                y.primaryBody = c(z)
+            if (A.navBar) {
+                z.primaryBody = c(A)
             }
-            x = "largeModal1"
+            y = "largeModal1"
         }
-        s(z, x, y)
+        t(A, y, z)
     }
-    function e(x) {
-        w();
-        m.width = 500;
-        m.height = 250;
-        m.left = 120;
-        m.top = 60;
-        s(x, "mediumModal")
+    function f(y) {
+        x();
+        n.width = 500;
+        n.height = 250;
+        n.left = 120;
+        n.top = 60;
+        t(y, "mediumModal")
     }
-    function a(x) {
-        w();
-        m.width = 361;
-        m.height = 242;
-        m.left = 200;
-        m.top = 190;
-        s(x, "smallModal")
+    function a(y) {
+        x();
+        n.width = 361;
+        n.height = 242;
+        n.left = 200;
+        n.top = 190;
+        t(y, "smallModal")
     }
-    function c(z) {
-        var x = z.navBar,
-            y = "";
-        d.each(x, function(B, A) {
-            y += '<li class="' + A["class"] + '"><div><span>' + A.label + "</span></div></li>"
+    function c(A) {
+        var y = A.navBar,
+            z = "";
+        e.each(y, function(C, B) {
+            z += '<li class="' + B["class"] + '"><div><span>' + B.label + "</span></div></li>"
         });
         return cm.Template.renderTemplate("Modal", "navBarBody", {
-            navList: y,
-            navContent: z.body
+            navList: z,
+            navContent: A.body
         })
     }
-    function t(x) {
-        return (x.style ? x.style + " " : "") + "position: absolute; left: " + x.left + "px; top: " + x.top + "px; width: " + x.width + "px; height: " + x.height + "px;"
+    function u(y) {
+        return (y.style ? y.style + " " : "") + "position: absolute; left: " + y.left + "px; top: " + y.top + "px; width: " + y.width + "px; height: " + y.height + "px;"
     }
-    function l(x) {
-        var y;
-        if (x.lower) {
-            y = 100000
+    function m(y) {
+        var z;
+        if (y.lower) {
+            z = 100000
         } else {
-            if (x.z) {
-                y = x.z
+            if (y.z) {
+                z = y.z
             } else {
-                y = 100400
+                z = 100400
             }
         }
-        d(".cmModal" + k).css("z-index", y + (k * 5));
-        d(".curtainNum" + k).css("z-index", (y - 1) + (k * 5))
+        e(".cmModal" + l).css("z-index", z + (l * 5));
+        e(".curtainNum" + l).css("z-index", (z - 1) + (l * 5))
     }
-    function b(z) {
-        d(".close").unbind("click").bind("click", i).show();
-        if (z.hideClose) {
-            d(".close").hide()
+    function b(A) {
+        e(".close").unbind("click").bind("click", j).show();
+        if (A.hideClose) {
+            e(".close").hide()
         }
-        if (typeof z.hint === "function") {
-            d(".cmModal" + k + " .hint").unbind("click").bind("click", z.hint).show()
+        if (typeof A.hint === "function") {
+            e(".cmModal" + l + " .hint").unbind("click").bind("click", A.hint).show()
         } else {
-            d(".cmModal" + k + " .hint").hide()
+            e(".cmModal" + l + " .hint").hide()
         }
-        if (z.navBar) {
-            var y = z.navBar,
-                x = d(".cmModal" + k + " .navList li");
-            x.bind("click", function() {
-                var A = d(x).index(this);
-                d.each(x, function(B, C) {
-                    d(C).removeClass("selected")
+        if (A.navBar) {
+            var z = A.navBar,
+                y = e(".cmModal" + l + " .navList li");
+            y.bind("click", function() {
+                var B = e(y).index(this);
+                e.each(y, function(C, D) {
+                    e(D).removeClass("selected")
                 });
-                d(this).addClass("selected");
-                (y[A]["click"])()
+                e(this).addClass("selected");
+                (z[B]["click"])()
             })
         }
     }
-    function o() {
-        var x = 100400;
-        x = x + (k * 5);
-        return x
+    function p() {
+        var y = 100400;
+        y = y + (l * 5);
+        return y
     }
-    function w() {
-        k++
+    function x() {
+        l++
     }
-    function j() {
-        while (d(".cmModal" + k + ", .curtainNum" + k + ", #modalBox" + k + ", #modalCurtain" + k).length === 0 && k > 0) {
-            k--
+    function k() {
+        while (e(".cmModal" + l + ", .curtainNum" + l + ", #modalBox" + l + ", #modalCurtain" + l).length === 0 && l > 0) {
+            l--
         }
-        if (k <= 0) {
-            k = 0
+        if (l <= 0) {
+            l = 0
         }
     }
-    function f() {
-        return k
+    function g() {
+        return l
     }
-    function n(y) {
-        if (typeof y == "string") {
-            y = {
-                text: y
+    function o(z) {
+        if (typeof z == "string") {
+            z = {
+                text: z
             }
         }
-        var x = "<div class='main'>" + y.text + "</div><div class='bottom_box'>" + (y.button_text || g_js_strings.commonstr.ok) + "</div>";
+        var y = "<div class='main'>" + z.text + "</div><div class='bottom_box'>" + (z.button_text || g_js_strings.commonstr.ok) + "</div>";
         cm.ModalManager.add({
-            close: (y.close) ? y.close : null,
-            body: x,
-            "class": "guardian_generic " + y["class"],
+            close: (z.close) ? z.close : null,
+            body: y,
+            "class": "guardian_generic " + z["class"],
             curtain: true,
             width: 360,
             height: 250,
             left: 225,
             top: 155
         });
-        d(".guardian_generic .bottom_box").unbind("click").bind("click", function() {
-            if (typeof y.pre == "function") {
-                y.pre()
+        e(".guardian_generic .bottom_box").unbind("click").bind("click", function() {
+            if (typeof z.pre == "function") {
+                z.pre()
             }
-            i();
-            if (typeof y.exe == "function") {
-                y.exe()
+            j();
+            if (typeof z.exe == "function") {
+                z.exe()
             }
         })
     }
-    function v() {
-        d(".curtainMM, .cmModalContainer, .modalCurtain, .modalBox").remove();
-        k = 0
+    function w() {
+        e(".curtainMM, .cmModalContainer, .modalCurtain, .modalBox").remove();
+        l = 0
     }
-    function q(x) {
-        var y = g_js_strings.errorcode["err_" + (x.error_code || x.errorCode)];
-        if (y) {
-            cm.ModalManager.alert(y)
+    function r(y) {
+        var z = g_js_strings.errorcode["err_" + (y.error_code || y.errorCode)];
+        if (z) {
+            cm.ModalManager.alert(z)
         }
     }
     return {
-        getZ: o,
-        addLevel: w,
-        getLevel: f,
-        add: u,
-        addLarge: p,
-        addMedium: e,
+        getZ: p,
+        addLevel: x,
+        getLevel: g,
+        add: v,
+        addXLarge: d,
+        addLarge: q,
+        addMedium: f,
         addSmall: a,
-        close: i,
-        closeAll: g,
-        hardReset: v,
-        alert: n,
-        error: q
+        close: j,
+        closeAll: h,
+        hardReset: w,
+        alert: o,
+        error: r
     }
 }(jQuery);
 cm.MultiBuyUse = function(b) {
@@ -65534,9 +66071,12 @@ cm.SalesPromotionView = function(d) {
             f = k.discountPercentage ? (j.percentOff).replace("%1$s", k.discountPercentage) : "",
             l = +k.expireTime - unixtime();
         d.each(h, function(o, n) {
+            if (!o || !ksoItems[o]) {
+                return
+            }
             m.push(cm.Template.renderTemplate("SalesPromotion", "saleRewardItem", {
                 itemId: o,
-                itemName: ksoItems[o].name,
+                itemName: ksoItems[o].name || "",
                 itemAmount: n
             }))
         });
@@ -65891,6 +66431,11 @@ cm.ShopController = function($) {
             }
         }
     };
+    var validate_rslt = function(rslt) {
+        if (rslt.error_code && parseInt(rslt.error_code) == 807) {
+            cm.ModalManager.alert(g_js_strings.errorcode.err_807)
+        }
+    };
     var buyNow_ = function(itemId, count) {
         var item = ksoItems[itemId],
             gems = Number(seed.player.gems),
@@ -65910,6 +66455,7 @@ cm.ShopController = function($) {
                 parameters: params,
                 onSuccess: function(transport) {
                     var itemKey, maxOwnedAllowed, rslt = eval("(" + transport.responseText + ")");
+                    validate_rslt(rslt);
                     if (rslt.ok) {
                         seed.player.gems = Number(seed.player.gems) - (item.price * count);
                         itemKey = "i" + item.id;
@@ -65987,6 +66533,7 @@ cm.ShopController = function($) {
                 parameters: params,
                 onSuccess: function(transport) {
                     var rslt = eval("(" + transport.responseText + ")");
+                    validate_rslt(rslt);
                     if (rslt.ok) {
                         seed.player.gems = Number(seed.player.gems) - item.price;
                         $("#kochead_gems").text(seed.player.gems);
@@ -67149,6 +67696,657 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
         }
     }
 };
+cm = cm || {};
+cm.SummoningCircleController = function(f) {
+    var u = function() {
+        var x = cm.SummoningCircleModel.updateActiveEventId(),
+            w = ksoItems[cm.SummoningCircleModel.get("SPELL_ITEM_ID")],
+            y = ksoItems[cm.SummoningCircleModel.get("STONE_ITEM_ID")],
+            v = {
+                action: l() ? "redeem" : "summon",
+                timeLeft: cm.SummoningCircleModel.getTimeLeft(x),
+                tokensOwned: y.count,
+                summonCost: w.price,
+                reward: cm.SummoningCircleModel.getRewardList(x)
+            };
+        cm.SummoningCircleView.openMiniGame(v);
+        cm.SummoningCircleView.showStones(y.count);
+        f("#summoningCircleButtonLabel").unbind("click").click(n);
+        f(".summoningCircleModal .gemContainer .buttonv2.green").click(function() {
+            cm.ModalManager.close();
+            modal_getgems()
+        })
+    };
+    var q = function(x, y) {
+        var v = cm.SummoningCircleModel.getChestType(x),
+            w = "<p>" + g_js_strings.summoningCircle.grandPrizeDescription_1 + "</p><p>" + g_js_strings.summoningCircle.grandPrizeDescription_2 + "</p>";
+        cm.SummoningCircleView.openPrizeChest(+x, v, w, y);
+        f("#minigameRewardBtn").unbind("click").click(function() {
+            cm.ModalManager.close()
+        })
+    };
+    var s = function() {
+        var v = ksoItems[cm.SummoningCircleModel.get("STONE_ITEM_ID")].count,
+            x = cm.SummoningCircleModel.STONES_TO_REDEEM,
+            w = ksoItems[cm.SummoningCircleModel.get("SPELL_ITEM_ID")].price;
+        cm.SummoningCircleView.overdriveStones(false);
+        cm.SummoningCircleView.hideStones();
+        cm.SummoningCircleView.updateXLButtonBg(v, {
+            action: (v >= x) ? "redeem" : "summon",
+            summonCost: w
+        })
+    };
+    var r = function(x) {
+        if (+x === cm.SummoningCircleModel.get("STONE_ITEM_ID")) {
+            cm.SummoningCircleView.openPrizeStone(a)
+        } else {
+            var v = cm.SummoningCircleModel.getChestType(+x),
+                w = "<p>" + ksoItems[+x].description + "</p>";
+            cm.SummoningCircleView.openPrizeChest(+x, v, w, a)
+        }
+        f("#minigameRewardBtn").unbind("click").click(function() {
+            cm.ModalManager.close()
+        })
+    };
+    var k = function() {
+        var v = cm.SummoningCircleModel.getActiveEventId(),
+            w = cm.SummoningCircleModel.getTimeLeft(v);
+        cm.SummoningCircleView.updateBannerTime(w);
+        cm.SummoningCircleView.updateMiniGameTime(w);
+        if (w <= 0) {
+            j()
+        }
+    };
+    var j = function() {
+        cm.SummoningCircleModel.stopTimer();
+        cm.SummoningCircleModel.updateActiveEventId();
+        cm.SummoningCircleView.hideBanner();
+        cm.ModalManager.alert({
+            "class": "summoningCircleExpired",
+            text: g_js_strings.summoningCircle.eventIsOver,
+            button_text: g_js_strings.commonstr.ok,
+            close: function() {
+                cm.ModalManager.closeAll()
+            }
+        })
+    };
+    var a = function() {
+        var v = ksoItems[cm.SummoningCircleModel.get("STONE_ITEM_ID")].count,
+            x = cm.SummoningCircleModel.STONES_TO_REDEEM,
+            w = ksoItems[cm.SummoningCircleModel.get("SPELL_ITEM_ID")].price;
+        cm.SummoningCircleView.overdriveStones(false);
+        if (!f("#summoningCircleToken" + v).hasClass("token" + v)) {
+            cm.SummoningCircleView.showStones(v)
+        }
+        cm.SummoningCircleView.updateXLButtonBg(v, {
+            action: (v >= x) ? "redeem" : "summon",
+            summonCost: w
+        })
+    };
+    var p = function(v) {
+        cm.SummoningCircleModel.clearEvents();
+        f.each(v, function(w, x) {
+            cm.SummoningCircleModel.addEvent(+w, x)
+        });
+        cm.SummoningCircleModel.updateActiveEventId()
+    };
+    var o = function(w, v) {
+        var x = -1;
+        if (v !== w) {
+            cm.SummoningCircleView.hideBanner();
+            if (v > 0) {
+                x = cm.SummoningCircleModel.getTimeLeft(v);
+                cm.SummoningCircleView.showBanner();
+                cm.SummoningCircleView.updateBannerTime(x);
+                f("#summoningCircleBanner").unbind("click").click(i)
+            }
+        }
+    };
+    var i = function(v) {
+        u()
+    };
+    var n = function(v) {
+        var w = ksoItems[cm.SummoningCircleModel.get("STONE_ITEM_ID")];
+        if (cm.SummoningCircleModel.isActionDisabled) {
+            return
+        } else {
+            if (w.count >= 5) {
+                e(v)
+            } else {
+                h(v)
+            }
+        }
+        cm.SummoningCircleModel.isActionDisabled = true;
+        f("#summoningCircleButtonLabel").addClass("gray").removeClass("green").removeClass("blue")
+    };
+    var h = function(v) {
+        if (m()) {
+            cm.SummoningCircleView.overdriveStones(true);
+            setTimeout(function() {
+                cm.SummoningCircleModel.summon(b, g)
+            }, 1000)
+        } else {
+            cm.ModalManager.close();
+            modal_getgems()
+        }
+    };
+    var m = function() {
+        var v = +seed.player.gems,
+            w = ksoItems[cm.SummoningCircleModel.get("SPELL_ITEM_ID")].price || 99999;
+        return v >= w
+    };
+    var b = function(v) {
+        cm.SummoningCircleModel.isActionDisabled = false;
+        if (v.ok) {
+            if (v.gems) {
+                update_gems(v.gems);
+                f(".gemContainer .amount").html(v.gems)
+            }
+            if (v.items) {
+                update_inventory(v.items);
+                f.each(v.items, function(x, w) {
+                    r(x)
+                })
+            } else {
+                cm.SummoningCircleView.overdriveStones(false)
+            }
+        } else {
+            cm.SummoningCircleView.overdriveStones(false);
+            cm.log.l(v.error_code + ": " + v.feedback)
+        }
+    };
+    var g = function() {
+        cm.SummoningCircleModel.isActionDisabled = false;
+        cm.SummoningCircleView.overdriveStones(false);
+        cm.log.l("Summon Fail")
+    };
+    var e = function(v) {
+        if (l()) {
+            cm.SummoningCircleView.overdriveStones(true);
+            setTimeout(function() {
+                cm.SummoningCircleModel.redeem(d, c)
+            }, 1000)
+        } else {
+            cm.ModalManager.alert({
+                button_text: g_js_strings.commonstr.ok,
+                text: "YOU DO NOT HAVE ENOUGH SUMMONING STONES TO REDEEM!"
+            })
+        }
+    };
+    var l = function() {
+        var v = ksoItems[cm.SummoningCircleModel.get("STONE_ITEM_ID")].count || 0,
+            w = cm.SummoningCircleModel.STONES_TO_REDEEM;
+        return v >= w
+    };
+    var d = function(v) {
+        cm.SummoningCircleModel.isActionDisabled = false;
+        if (v.ok) {
+            var w = cm.SummoningCircleModel.get("STONE_ITEM_ID"),
+                x = cm.SummoningCircleModel.STONES_TO_REDEEM;
+            ksoItems[w].subtract(x);
+            if (v.gems) {
+                update_gems(v.gems);
+                f(".gemContainer .amount").html(v.gems)
+            }
+            if (v.items) {
+                update_inventory(v.items);
+                f.each(v.items, function(z, y) {
+                    q(z, s)
+                })
+            } else {
+                cm.SummoningCircleView.overdriveStones(false)
+            }
+        } else {
+            cm.SummoningCircleView.overdriveStones(false);
+            cm.log.l(v.error_code + ": " + v.feedback)
+        }
+    };
+    var c = function() {
+        cm.SummoningCircleModel.isActionDisabled = false;
+        cm.SummoningCircleView.overdriveStones(false);
+        cm.log.l("Redeem Fail")
+    };
+    var t = function(w) {
+        var x = cm.SummoningCircleModel.getActiveEventId(),
+            v = 0;
+        p(w);
+        v = cm.SummoningCircleModel.getActiveEventId();
+        o(x, v);
+        if (v && v !== x) {
+            cm.SummoningCircleModel.startTimer(k)
+        }
+    };
+    return {
+        onUpdateSeed: t,
+        onMinigameButtonClick: n
+    }
+}(jQuery);
+cm = cm || {};
+cm.SummoningCircleModel = function(k) {
+    var a = {
+        SPELL_ITEM_ID: 3100,
+        STONE_ITEM_ID: 3101
+    }, A = {}, x = 0,
+        b = 5,
+        c, w = false;
+    var j = function(D) {
+        var C = ksoItems[D];
+        return C.category === 1 && C.subCategory === 100
+    };
+    var y = function(D) {
+        var C = ksoItems[D];
+        return C.category === 1 && C.subCategory === 101
+    };
+    var e = function(D) {
+        var C = {};
+        C.startTime = +D.startTime;
+        C.endTime = +D.endTime;
+        C.spell = +D.spell;
+        C.reward = {};
+        k.each(D.reward.items, function(E, F) {
+            if (!C.reward.items) {
+                C.reward.items = {}
+            }
+            C.reward.items[+E] = +F
+        });
+        return C
+    };
+    var d = function(C, D) {
+        A[+C] = e(D)
+    };
+    var p = function(C) {
+        return A[C]
+    };
+    var r = function(C) {
+        x = +C
+    };
+    var B = function() {
+        return x || 0
+    };
+    var s = function() {
+        if (!h(x)) {
+            r(0);
+            k.each(A, function(C, D) {
+                if (!x && h(C)) {
+                    r(+C);
+                    q("SPELL_ITEM_ID", + D.spell || u.SPELL_ITEM_ID)
+                }
+            })
+        }
+        return x
+    };
+    var h = function(D) {
+        var C = unixtime(),
+            E = A[D] || {
+                startTime: +Infinity,
+                endTime: 0
+            };
+        return (C >= E.startTime && C <= E.endTime)
+    };
+    var v = function() {
+        A = {}
+    };
+    var t = function(D) {
+        var C = unixtime(),
+            E = p(D),
+            F = -1;
+        if (h(D)) {
+            F = E.endTime - C
+        }
+        return F
+    };
+    var q = function(C, D) {
+        a[C] = D
+    };
+    var u = function(C) {
+        return a[C] || null
+    };
+    var z = function(C) {
+        var D = p(C) || {}, E = {};
+        if (D.reward && D.reward.items) {
+            E.items = {};
+            k.each(D.reward.items, function(G, F) {
+                E.items[G] = F
+            })
+        }
+        return E
+    };
+    var i = function(D) {
+        var C;
+        switch (+D) {
+        case 30500:
+        case 30501:
+        case 30502:
+        case 30503:
+            C = "grand";
+            break;
+        case 30608:
+        case 30609:
+        case 30610:
+        case 30611:
+            C = "gold";
+            break;
+        case 30604:
+        case 30605:
+        case 30606:
+        case 30607:
+            C = "silver";
+            break;
+        case 30600:
+        case 30601:
+        case 30602:
+        case 30603:
+        default:
+            C = "bronze";
+            break
+        }
+        return C
+    };
+    var o = function(C) {
+        c = setInterval(C, 1000)
+    };
+    var n = function() {
+        c = clearInterval(c)
+    };
+    var f = function(E, C, D) {
+        if (B() < 1) {
+            return
+        }
+        E = k.extend({
+            userId: tvuid,
+            eventId: B(),
+            cid: currentcityid,
+            quantity: 1
+        }, E);
+        AjaxCall.gPostRequest("ajax/mgSummoningCircle.php", E, C, D)
+    };
+    var l = function(C, D) {
+        if (+seed.player.gems < ksoItems[u("SPELL_ITEM_ID")].price) {
+            return
+        }
+        f({
+            action: "summon"
+        }, C, D)
+    };
+    var g = function(C, D) {
+        if (ksoItems[u("STONE_ITEM_ID")].count < b) {
+            return
+        }
+        f({
+            action: "redeem",
+            quantity: b
+        }, C, D)
+    };
+    var m = function() {};
+    return {
+        get: u,
+        eventTimer: c,
+        isActionDisabled: w,
+        isSpell: j,
+        isStone: y,
+        STONES_TO_REDEEM: b,
+        addEvent: d,
+        getActiveEventId: B,
+        updateActiveEventId: s,
+        clearEvents: v,
+        startTimer: o,
+        stopTimer: n,
+        getTimeLeft: t,
+        getRewardList: z,
+        getChestType: i,
+        summon: l,
+        redeem: g
+    }
+}(jQuery);
+cm = cm || {};
+cm.SummoningCircleView = function(d) {
+    var i = {
+        token1: {
+            widthFrame: 111,
+            widthTotal: 4995,
+            dom: "#summoningCircleToken1"
+        },
+        token2: {
+            widthFrame: 87,
+            widthTotal: 3915,
+            dom: "#summoningCircleToken2"
+        },
+        token3: {
+            widthFrame: 78,
+            widthTotal: 3510,
+            dom: "#summoningCircleToken3"
+        },
+        token4: {
+            widthFrame: 74,
+            widthTotal: 3330,
+            dom: "#summoningCircleToken4"
+        },
+        token5: {
+            widthFrame: 113,
+            widthTotal: 5085,
+            dom: "#summoningCircleToken5"
+        },
+        token6: {
+            widthFrame: 248,
+            widthTotal: 7440,
+            dom: "#summoningCircleToken6"
+        }
+    };
+    var w = function(z, A) {
+        return cm.Template.renderTemplate("SummoningCircle", z, A)
+    };
+    var k = function() {
+        return w("banner", {})
+    };
+    var m = function(z, A, B) {
+        return w("xLargeButtonBg", {
+            tokensOwnedLabel: "Stones Owned",
+            tokensOwned: z,
+            buttonColor: A,
+            buttonLabel: B
+        })
+    };
+    var u = function(A, z) {
+        z = z || "0";
+        var B = "";
+        switch (A) {
+        case "redeem":
+            B = g_js_strings.summoningCircle.redeemNow;
+            break;
+        case "summon":
+            B = g_js_strings.commonstr.summon + ' <span class="gems">' + z + "</span>";
+            break;
+        case "use":
+        default:
+            B = "Delete Account";
+            break
+        }
+        return B
+    };
+    var e = function(A) {
+        var B = u(A.action, A.summonCost),
+            z = w("miniGame", {
+                description: g_js_strings.summoningCircle.collectToUnlock,
+                timeLeftLabel: g_js_strings.commonstr.timeremaining + ":",
+                timeLeft: timestr(A.timeLeft),
+                action: m(A.tokensOwned, A.action === "redeem" ? "blue" : "green", B)
+            });
+        return z
+    };
+    var g = function(z) {
+        var A = '<div class="summoningCircleTooltip"><b>' + g_js_strings.summoningCircle.youWillGet + "</b><ul>";
+        if (z && z.items) {
+            d.each(z.items, function(C, B) {
+                A += "<li><b>" + ksoItems[C].name + "</b><br/>" + ksoItems[C].description + "</li>"
+            })
+        }
+        A += "</ul></div>";
+        return A
+    };
+    var v = function() {
+        return w("prizeStone", {
+            header: g_js_strings.summoningCircle.youSummonedThe.replace("%1$s", ksoItems[cm.SummoningCircleModel.get("STONE_ITEM_ID")].name),
+            buttonLabel: g_js_strings.commonstr.ok
+        })
+    };
+    var r = function(A, z, B) {
+        return w("prizeChest", {
+            header: g_js_strings.summoningCircle.youSummonedThe.replace("%1$s", ksoItems[A].name),
+            chestClass: z,
+            description: B,
+            buttonLabel: g_js_strings.commonstr.ok
+        })
+    };
+    var t = function(z) {
+        if (d("#summoningCircleBanner").length > 0) {
+            d("#summoningCircleBanner").show()
+        } else {
+            d("#mod_maparea").append(k())
+        }
+    };
+    var j = function() {
+        d("#summoningCircleBanner").hide()
+    };
+    var n = function(z) {
+        if (d("#summoningCircleBanner").length > 0 && typeof z !== undefined) {
+            d("#summoningCircleBanner").html(g_js_strings.summoningCircle.eventExpires.replace("%1$s", '<span class="timeLeft">' + timestr(z) + "</span>"))
+        }
+    };
+    var y = function(A) {
+        var B = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
+            gem: seed.player.gems,
+            primaryTitle: g_js_strings.commonstr.summoningCircle
+        }),
+            z = e(A);
+        cm.ModalManager.addXLarge({
+            title: B,
+            "class": "summoningCircleModal",
+            body: z,
+            close: function() {
+                d(document).unbind("keyup keydown")
+            }
+        });
+        d("#summoningCircleToken6").unbind("mouseenter").bind("mouseenter", function(C) {
+            var D = g(A.reward || {});
+            Tooltip.show(C, D, [-200, - 140])
+        });
+        d(document).keyup(function(C) {
+            if (C.which == 13 || C.which == 32) {
+                C.preventDefault();
+                if (d("#minigameRewardBtn").length > 0) {
+                    d("#minigameRewardBtn").click()
+                } else {
+                    d("#summoningCircleButtonLabel").click()
+                }
+            }
+        });
+        d(document).keydown(function(D) {
+            var C = D.charCode ? D.charCode : D.keyCode ? D.keyCode : 0;
+            if (C == 32) {
+                D.preventDefault()
+            }
+        })
+    };
+    var h = function(A, C) {
+        if (!i || !i["token" + A]) {
+            return
+        }
+        var z = "token" + A,
+            B = i[z];
+        cm.AnimationCreation.toggleAnim(d(B.dom), B.widthFrame, B.widthTotal, C || 60, z)
+    };
+    var f = function(A) {
+        var z = "token" + A;
+        cm.AnimationCreation.toggleAnim(null, null, null, null, z)
+    };
+    var c = function(z) {
+        return d("#summoningCircleToken" + z).addClass("token" + z)
+    };
+    var s = function(z) {
+        return d("#summoningCircleToken" + z).removeClass("token" + z)
+    };
+    var l = function(C) {
+        if (!C) {
+            return
+        }
+        var B = cm.SummoningCircleModel.STONES_TO_REDEEM,
+            A = 6;
+        C = Math.min(C, B);
+        for (var z = 1; z <= A; z++) {
+            if (z < C) {
+                c(z);
+                h(z)
+            } else {
+                s(z);
+                f(z)
+            }
+        }
+        c(C).hide().delay(500).fadeIn(1000, function() {
+            h(C)
+        });
+        if (C === B) {
+            c(A).hide().delay(2500).fadeIn(4000, function() {
+                h(A)
+            })
+        }
+    };
+    var p = function() {
+        d("#summoningCircleTokens .token").fadeOut(4000, function() {
+            d("#summoningCircleTokens .token").removeClass("token1 token2 token3 token4 token5 token6").show()
+        })
+    };
+    var o = function(A) {
+        for (var z = 1; z <= 6; z++) {
+            h(z, A ? 30 : 60)
+        }
+    };
+    var q = function(z) {
+        if (d("#summoningCircleTimeLeft").length > 0 && typeof z !== undefined) {
+            d("#summoningCircleTimeLeft").html(timestr(z, 2))
+        }
+    };
+    var a = function(z, A) {
+        d("#summoningCircleTokenCount").html(z);
+        d("#summoningCircleButtonLabel").html(u(A.action, A.summonCost));
+        if (A.action === "redeem") {
+            d("#summoningCircleButtonLabel").addClass("blue").removeClass("green").removeClass("gray")
+        } else {
+            d("#summoningCircleButtonLabel").addClass("green").removeClass("blue").removeClass("gray")
+        }
+    };
+    var b = function(z) {
+        cm.ModalManager.addSmall({
+            "class": "summoningCircleStoneModal",
+            body: v(),
+            close: z
+        })
+    };
+    var x = function(B, A, z, C) {
+        cm.ModalManager.addMedium({
+            "class": "summoningCircleChestModal",
+            title: g_js_strings.commonstr.congratulationsexc,
+            body: r(B, A, z),
+            close: C
+        });
+        d(".summoningCircleChestModal .chestArt").unbind("mouseenter").bind("mouseenter", function(D) {
+            var E = "<b>" + ksoItems[B].name + '</b><p style="width: 200px;">' + ksoItems[B].description + "</p>";
+            Tooltip.show(D, E, [-276, - 2])
+        })
+    };
+    return {
+        showBanner: t,
+        hideBanner: j,
+        updateBannerTime: n,
+        openMiniGame: y,
+        showStones: l,
+        hideStones: p,
+        overdriveStones: o,
+        updateMiniGameTime: q,
+        updateXLButtonBg: a,
+        openPrizeStone: b,
+        openPrizeChest: x
+    }
+}(jQuery);
 var swfobject = function() {
     var aq = "undefined",
         aD = "object",
@@ -68852,7 +70050,7 @@ cm.ThronePanelController = function(h) {
     var p = function() {
         var x = cm.HeatUpModel.getModifierPercentage(),
             z = seed.tech.tch17 / 100,
-            y = (cm.VipModel.getBenefits().throneUpgrade || 0) / 100;
+            y = (cm.VipModel.getBenefits().benefitTRChance || 0) / 100;
         return x + z + y
     };
     var i = function(z, y) {
@@ -73568,19 +74766,39 @@ cm.UnlockView = function(f) {
     }
 }(jQuery);
 var g_update_seed_ajax_do = false;
-cm.getScriptVersion = function() {
-    var d = jQuery("#main_script").attr("src");
-    if (d) {
-        var c = d.split("-");
-        var b = c[c.length - 1];
-        var a = d ? (b.split(".")[0]) : -1;
-        cm.log.l("We have this version in camelotmain #main_script tag=" + a);
-        return a
-    } else {
-        cm.log.l("Warning: Could not find src str on the #main_script src tag. ");
-        return -1
+cm.ScriptVersionUpdater = function(e) {
+    var b = 0;
+    var d = function() {
+        var i = e("#main_script").attr("src");
+        if (i) {
+            var h = i.split("-"),
+                g = h[h.length - 1],
+                f = i ? (g.split(".")[0]) : -1;
+            cm.log.l("We have this version in camelotmain #main_script tag=" + f);
+            return f
+        } else {
+            cm.log.l("Warning: Could not find src str on the #main_script src tag.");
+            return -1
+        }
+    };
+    var c = function() {
+        var f = g_js_strings.commonstr.yourScriptVersionIsOut + "<br><a href='javascript: history.go(0);'>" + g_js_strings.commonstr.reload + "</a><div class='qReloadRequestPopUp'></div>";
+        cm.ModalManager.alert(f)
+    };
+    var a = function(g) {
+        var f = d();
+        if (g && f != -1 && e(".qReloadRequestPopUp").length == 0) {
+            if (parseInt(g) > parseInt(f) && b < 3) {
+                cm.log.l("Backend expects: " + g);
+                c();
+                b++
+            }
+        }
+    };
+    return {
+        check: a
     }
-};
+}(jQuery);
 (function() {
     var l_lastCallTime = 0;
     var reload_requests = 0;
@@ -73623,13 +74841,8 @@ cm.getScriptVersion = function() {
                 var rslt = eval("(" + message.responseText + ")");
                 if (rslt.ok) {
                     cm.epochTimeOffset.update(rslt.reqmicrotime, endTime - startTime);
-                    var current_version = cm.getScriptVersion();
-                    if (rslt.script_version && current_version != -1 && jQuery(".qReloadRequestPopUp").length == 0) {
-                        if (parseInt(rslt.script_version) > parseInt(current_version) && reload_requests < 3) {
-                            cm.log.l("Backend expects: " + rslt.script_version);
-                            cm.ModalManager.alert(g_js_strings.commonstr.yourScriptVersionIsOut + "<br><a href='javascript: history.go(0);'>" + g_js_strings.commonstr.reload + "</a><div class='qReloadRequestPopUp'></div>");
-                            reload_requests++
-                        }
+                    if (rslt.script_version) {
+                        cm.ScriptVersionUpdater.check(rslt.script_version)
                     }
                     if (rslt.victoryTokenId) {
                         pop_treasure_chest_modal(rslt.victoryTokenId.m)
@@ -73705,6 +74918,9 @@ cm.getScriptVersion = function() {
                     }
                     if (rslt.updateWoundedCityUnits) {
                         update_woundedCityUnits(rslt.updateWoundedCityUnits)
+                    }
+                    if (rslt.updateSummoningCircle) {
+                        cm.SummoningCircleController.onUpdateSeed(rslt.updateSummoningCircle)
                     }
                     if (rslt.updateSeed && rslt.updateSeed.guardian && rslt.updateSeed.guardian[parseInt(currentcityid)] && rslt.updateSeed.guardian[parseInt(currentcityid)].cityGuardianLevels) {
                         var guardianLevels = rslt.updateSeed.guardian[parseInt(currentcityid)].cityGuardianLevels;
@@ -75293,21 +76509,22 @@ cm.utilityView = function(b) {
     }
 }(jQuery);
 cm = cm || {};
-cm.VipController = function(c) {
+cm.VipController = function(b) {
     var g = function() {
         var k = cm.VipModel.getPrice(),
             j = cm.VipModel.getBenefits(),
             m = cm.VipModel.getSubStatus(),
             l = cm.VipModel.getExpireTimeLeft();
         cm.VipView.openSubscriptionBenefits(k, j, m, l);
-        c("#subscribeButton").unbind().click(b)
+        b("#subscribeButton").unbind().click(a)
     };
-    var d = function(j) {
+    var c = function(j) {
         parent.cm.subscribe.subscribe(j)
     };
-    var e = function(j) {
+    var d = function(j) {
         if (typeof j.subscriber !== "undefined") {
             seed.subscriber = j.subscriber;
+            seed.subscriber.gemsEarned = 0;
             if (typeof j.subscriber.immediate !== "undefined") {
                 if (typeof j.subscriber.immediate.items !== "undefined") {
                     update_inventory(j.subscriber.immediate.items)
@@ -75320,10 +76537,10 @@ cm.VipController = function(c) {
         }
         update_boosts()
     };
-    var b = function() {
+    var a = function() {
         if (cm.VipModel.getSubStatus() === "inactive" && cm.VipModel.getExpireTimeLeft() > 0) {} else {
             if (cm.VipModel.getSubStatus() === "inactive") {
-                d(e);
+                c(d);
                 cm.ModalManager.close()
             } else {
                 if (cm.VipModel.getSubStatus() === "active") {
@@ -75338,7 +76555,7 @@ cm.VipController = function(c) {
     var i = function() {
         g()
     };
-    var f = function(k) {
+    var e = function(k) {
         var j = cm.VipModel.getBenefits(),
             m = cm.VipModel.getSubStatus(),
             l = cm.VipModel.getExpireTimeLeft();
@@ -75349,57 +76566,65 @@ cm.VipController = function(c) {
             cm.VipModel.tooltipTimer = setInterval(function() {
                 cm.VipView.updateTooltipTimer(cm.VipModel.getExpireTimeLeft());
                 if (cm.VipModel.getExpireTimeLeft() <= 0 && cm.VipModel.getExpireTime() !== 0) {
-                    c("#subscribeExpires").remove();
+                    b("#subscribeExpires").remove();
                     clearInterval(cm.VipModel.tooltipTimer)
                 }
             }, 1000)
         }
     };
-    var a = function() {
+    var f = function() {
         var k = cm.VipModel.getSubStatus(),
             j = cm.VipModel.getExpireTimeLeft();
         cm.VipView.updateBoostIcon(k, j);
-        return cm.VipModel.hasBoost()
+        return cm.VipModel.hasIcon()
     };
     return {
         onEngagementTabClick: h,
         onBoostClick: i,
-        onBoostHover: f,
-        hasBoost: a
+        onBoostHover: e,
+        hasIcon: f
     }
 }(jQuery);
 cm = cm || {};
 cm.VipModel = function(g) {
     var h = null;
     var f = function() {
-        return Boolean(seed.subscriber && seed.subscriber.isActive)
+        return a() === "active"
     };
-    var b = function() {
+    var c = function(m) {
+        var l = this.getBenefits();
+        if (l[m]) {
+            return l[m]
+        } else {
+            return 0
+        }
+    };
+    var k = function() {
         return a() === "active" || a() === "pending" || i() > 0
     };
     var e = function() {
-        var k = {};
+        var l = {};
         if (seed.subscriber && seed.subscriber.benefits) {
-            k = seed.subscriber.benefits || {}
+            l = seed.subscriber.benefits || {}
         }
-        return k
+        return l
     };
     var j = function() {
-        var k = null;
+        var l = null;
         if (seed.subscriber && seed.subscriber.price) {
-            k = seed.subscriber.price
+            l = seed.subscriber.price
         }
-        return k
+        return l
     };
-    var c = function() {
-        var k = 0;
+    var b = function() {
+        var l = 0;
         if (typeof seed.subscriber.expireTime !== "undefined") {
-            k = seed.subscriber.expireTime
+            l = seed.subscriber.expireTime
         }
-        return k
+        return l
     };
     var i = function() {
-        return c() - unixtime()
+        return b() - unixtime()
     };
     var a = function() {
         if (typeof seed.subscriber.status !== "undefined") {
@@ -75408,69 +76633,63 @@ cm.VipModel = function(g) {
             return "inactive"
         }
     };
-    var d = function(k) {
-        seed.subscriber.status = k
+    var d = function(l) {
+        seed.subscriber.status = l
     };
     return {
         tooltipTimer: h,
         isActive: f,
-        hasBoost: b,
+        getBoostValue: c,
+        hasIcon: k,
         getBenefits: e,
         getPrice: j,
-        getExpireTime: c,
+        getExpireTime: b,
         getExpireTimeLeft: i,
         setSubStatus: d,
         getSubStatus: a
     }
 }(jQuery);
 cm = cm || {};
-cm.VipView = function(i) {
-    var d = g_js_strings.vipTooltip,
-        h = g_js_strings.vipOverview;
-    var a = function(n) {
-        var o = [];
-        i.each(n, function(s, p) {
-            var q, r;
-            switch (s) {
-            case "gems":
-                q = d.everyMonth.replace("%1$s", g_js_strings.commonstr.gems);
-                r = p;
-                o.push({
-                    type: s,
-                    string: r + " " + q
-                });
-                break;
+cm.VipView = function(j) {
+    var e = g_js_strings.vipTooltip,
+        k = g_js_strings.vipModal,
+        i = g_js_strings.vipOverview;
+    var h = function(p) {
+        var q = [];
+        j.each(p, function(u, r) {
+            var s, t;
+            switch (u) {
             case "gemBonusCap":
-                r = p;
-                o.push({
-                    type: s,
-                    string: g_js_strings.vipTooltip.gemMax.replace("%1$s", r)
+                t = r;
+                q.push({
+                    type: u,
+                    string: k.gemMax.replace("%1$s", t)
                 });
                 break;
             case "gemBonusPercent":
-                r = p + "%";
-                o.push({
-                    type: s,
-                    string: g_js_strings.vipTooltip.gemPercent.replace("%1$s", r)
+                t = r + "%";
+                q.push({
+                    type: u,
+                    string: k.gemPercent.replace("%1$s", t)
+                });
+                break;
+            case "benefitUpkeep":
+            case "benefitTraining":
+            case "benefitDefense":
+            case "benefitTRChance":
+                t = r + "%";
+                q.push({
+                    type: u,
+                    string: k[u].replace("%1$s", t)
                 });
                 break;
             case "items":
-                i.each(p, function(t, u) {
-                    q = d.everyMonth.replace("%1$s", ksoItems[t].name || "Item Name");
-                    r = u;
-                    o.push({
-                        type: s,
-                        string: r + " " + q
-                    })
-                });
-                break;
-            case "throneEffect":
-                i.each(p, function(u, t) {
-                    q = cm.ThroneController.getEffectName(u) || "TR Stat";
-                    r = ((t > 0) ? "+" : "") + t + "%";
-                    o.push({
-                        type: s,
-                        string: r + " " + q
+                j.each(r, function(v, w) {
+                    s = k.everyMonth.replace("%1$s", ksoItems[v].name || "Item Name");
+                    t = w;
+                    q.push({
+                        type: u,
+                        string: t + " " + s
                     })
                 });
                 break;
@@ -75478,140 +76697,174 @@ cm.VipView = function(i) {
                 break;
             case "billingPeriod":
                 break;
+            case "gems":
+                break;
             default:
-                q = d[s] || "Generic Stat";
-                r = ((p > 0) ? "+" : "") + p + "%";
-                o.push({
-                    type: s,
-                    string: r + " " + q
+                s = k[u] || "Generic Stat";
+                t = ((r > 0) ? "+" : "") + r + "%";
+                q.push({
+                    type: u,
+                    string: t + " " + s
                 });
                 break
             }
         });
-        return o
+        return q
     };
-    var f = function(r, u, t) {
-        var s = a(r),
-            p = b(s),
+    var a = function(p) {
+        var q = [];
+        j.each(p, function(t, r) {
+            var s;
+            switch (t) {
+            case "gems":
+                s = r;
+                q.push({
+                    type: t,
+                    string: e.everyMonth.replace("%1$s", s)
+                });
+                break;
+            case "benefitUpkeep":
+            case "benefitTraining":
+            case "benefitDefense":
+            case "benefitTRChance":
+                s = r + "%";
+                q.push({
+                    type: t,
+                    string: e[t].replace("%1$s", s)
+                });
+                break;
+            default:
+                break
+            }
+        });
+        if (typeof p.gemBonusPercent != "undefined") {
+            value = p.gemBonusPercent + "%";
+            q.push({
+                type: "gemBonusPercent",
+                string: e.gemPercent.replace("%1$s", value)
+            })
+        }
+        return q
+    };
+    var f = function(t, w, v) {
+        var u = a(t),
+            r = b(u),
+            s = "",
             q = "",
-            o = "",
-            n = "";
-        if (u === "pending") {
-            o = e()
+            p = "";
+        if (w === "pending") {
+            q = d()
         } else {
-            if (u === "inactive" && t >= 0) {
-                q = j(t)
+            if (w === "inactive" && v >= 0) {
+                s = l(v)
             }
         }
-        if (u !== "inactive" || t > 0) {
-            n = "<br/><div>" + g_js_strings.vipTooltip.gemsEarned.replace("%1$s", Math.ceil(seed.subscriber.gemsEarned)) + "</div>"
+        if (w !== "inactive" || v > 0) {
+            p = "<br/><div>" + g_js_strings.vipTooltip.gemsEarned.replace("%1$s", Math.ceil(seed.subscriber.gemsEarned)) + "</div>"
         }
         return cm.Template.renderTemplate("Vip", "boosts_tooltip", {
             orderOfTheRoundTable: g_js_strings.commonstr.orderOfTheRoundTable,
-            stats: p,
-            expireTime: q,
-            subStatusInfo: o,
-            gemsEarned: n
+            stats: r,
+            expireTime: s,
+            subStatusInfo: q,
+            gemsEarned: p
         })
     };
-    var b = function(o) {
-        var n = "";
-        i.each(o, function(p, q) {
-            n += "<div>" + q.string + "</div>"
+    var b = function(q) {
+        var p = "";
+        j.each(q, function(r, s) {
+            p += "<div>" + s.string + "</div>"
         });
-        if (n === "") {
-            n = "<div>NO BONUSES AVAILABLE</div>"
-        }
-        return n
+        return p
     };
-    var j = function(n) {
-        return '<div id="subscribeExpires">EXPIRES IN: <span id="subscribeTimeLeft">' + timestr(n) + "</span></div>"
+    var l = function(p) {
+        return '<div id="subscribeExpires">EXPIRES IN: <span id="subscribeTimeLeft">' + timestr(p) + "</span></div>"
     };
-    var e = function() {
+    var d = function() {
         return "<br/><div>" + g_js_strings.vipTooltip.pendingDescription + "</div>"
     };
-    var m = function(p, o, u, t) {
-        var s = a(o),
-            n = "",
-            r = "",
-            q = "";
-        i.each(s, function(v, w) {
-            if (w.type !== "gems") {
-                n += "<li>" + w.string + "</li>"
+    var o = function(r, q, w, v) {
+        var u = h(q),
+            p = "",
+            t = "",
+            s = "";
+        j.each(u, function(x, y) {
+            if (y.type !== "gems") {
+                p += "<li>" + y.string + "</li>"
             }
         });
-        if (u === "inactive" && t > 0) {
-            r = "gray";
-            q = h.joinNow
+        if (w === "inactive" && v > 0) {
+            t = "gray";
+            s = i.joinNow
         } else {
-            if (u === "inactive") {
-                r = "green";
-                q = h.joinNow
+            if (w === "inactive") {
+                t = "green";
+                s = i.joinNow
             } else {
-                if (u === "pending") {
-                    r = "gray";
-                    q = h.joinNow
+                if (w === "pending") {
+                    t = "gray";
+                    s = i.joinNow
                 } else {
-                    if (u === "active") {
-                        r = "";
-                        q = g_js_strings.commonstr.ok
+                    if (w === "active") {
+                        t = "";
+                        s = g_js_strings.commonstr.ok
                     }
                 }
             }
         }
         return cm.Template.renderTemplate("Vip", "subscription_overview", {
-            header: h.joinTheOrder,
-            description: h.description.replace("%1$s", p),
-            gemsFree: h.gemsFree.replace("%1$s", o.gems),
-            benefits: n,
-            buttonClasses: r,
-            buttonLabel: q
+            header: i.joinTheOrder,
+            description: i.description.replace("%1$s", r),
+            gemsFree: i.gemsFree.replace("%1$s", q.gems),
+            benefits: p,
+            buttonClasses: t,
+            buttonLabel: s
         })
     };
-    var g = function(o, n, q, p) {
-        if (o.id == "maparea_boosts_vip") {
-            showTooltip(f(n, q, p), o, null, "mod_maparea");
-            i("#boosts_tooltip").css("width", "auto")
+    var g = function(q, p, s, r) {
+        if (q.id == "maparea_boosts_vip") {
+            showTooltip(f(p, s, r), q, null, "mod_maparea");
+            j("#boosts_tooltip").css("width", "auto")
         }
     };
-    var k = function(n) {
-        i("#subscribeTimeLeft").html(timestr(n))
+    var m = function(p) {
+        j("#subscribeTimeLeft").html(timestr(p))
     };
-    var c = function(p, o) {
-        var n = stimgUrl + "img/";
-        if (p === "pending") {
-            n += "bonus_vip.png";
-            i("#maparea_boosts_vip").attr("src", n)
+    var c = function(r, q) {
+        var p = stimgUrl + "img/";
+        if (r === "pending") {
+            p += "bonus_vip.png";
+            j("#maparea_boosts_vip").attr("src", p)
         } else {
-            if (p === "active") {
-                n += "bonus_vip_green.png";
-                i("#maparea_boosts_vip").attr("src", n)
+            if (r === "active") {
+                p += "bonus_vip_green.png";
+                j("#maparea_boosts_vip").attr("src", p)
             } else {
-                if (p === "inactive" && o > 0) {
-                    n += "bonus_vip_gray.png";
-                    i("#maparea_boosts_vip").attr("src", n)
+                if (r === "inactive" && q > 0) {
+                    p += "bonus_vip_gray.png";
+                    j("#maparea_boosts_vip").attr("src", p)
                 }
             }
         }
     };
-    var l = function(p, o, r, q) {
-        var n = m(p, o, r, q);
+    var n = function(r, q, t, s) {
+        var p = o(r, q, t, s);
         cm.ModalManager.addLarge({
             "class": "subscriberModal",
-            title: "<span>" + h.title + '</span> <span id="round_table_">&#84;&#97;&#98;&#108;&#101;&#32;&#80;&#105;&#122;&#122;&#97;</span>',
-            body: n
+            title: "<span>" + i.title + '</span> <span id="round_table_">&#84;&#97;&#98;&#108;&#101;&#32;&#80;&#105;&#122;&#122;&#97;</span>',
+            body: p
         });
-        i("#_pizza").hover(function() {
-            i("#round_table_").css("color", "white")
+        j("#_pizza").hover(function() {
+            j("#round_table_").css("color", "white")
         }, function() {
-            i("#round_table_").css("color", "transparent")
+            j("#round_table_").css("color", "transparent")
         })
     };
     return {
         boostTooltip: g,
-        updateTooltipTimer: k,
+        updateTooltipTimer: m,
         updateBoostIcon: c,
-        openSubscriptionBenefits: l
+        openSubscriptionBenefits: n
     }
 }(jQuery);
 var cm = cm || {};
@@ -75682,10 +76935,10 @@ cm.voltron = (function(c) {
 function modal_openWalls() {
     var e = new Array();
     e.push("<div class='tabsbar clearfix barracksmodaltabs' id='barracksModalTabs'>");
-    e.push("<a class='tab selected' onclick='changeWallsModalTabs(0);return false;'><span>");
+    e.push("<a class='tab selected' id='changeWalls0' onclick='changeWallsModalTabs(0);return false;'><span>");
     e.push(g_js_strings.modal_openWalls.builddefenses);
     e.push("</span></a>");
-    e.push("<a class='tab' onclick='changeWallsModalTabs(1);return false;'><span>");
+    e.push("<a class='tab' id='changeWalls1' onclick='changeWallsModalTabs(1);return false;'><span>");
     e.push(g_js_strings.modal_openWalls.defqueue);
     e.push("</span></a>");
     var a = 0;
