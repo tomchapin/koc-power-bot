@@ -1,2 +1,5 @@
-If you have completed offers for gems and didn't receive them, trial pay has a support form you can fill out
-<a href="https://www.trialpay.com/social-support/fb/">https://www.trialpay.com/social-support/fb/</a>
+It has come to our attention that several people have been impersonating Scripters lately. These individuals have been joining alliances and threatening other users.
+
+We wanted to clarify that the actual group that contributes to writing and maintaining KOC Powerbot is actually quite small. If you use the Bot, you will see that when one of us speaks in chat, a grey background appears with the word "Scripters" in watermark. Each of the members of our team is a volunteer who spends his or her time trying to improve your player experience. That is why you have elected to use the Bot. We do not set out to harm other users through hacking facebook profiles or systems, or any other tactic that the imposters claim to use when intimidating other users.
+
+Of course, we welcome others who would like to contribute to writing and updating KOC Powerbot, and we would like to reassure you that our Bot is safe to use. We would also like to remind you that if another player is threatening to any kind of harm, computer harm or otherwise, you should immediately report them to <a href="https://kabam.secure.force.com/PKB/pkb_contactUs?game=All&lang=en_US&l=en_US">Kabam</a>.
