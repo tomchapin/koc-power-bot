@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130410f
+// @version        20130415a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130410f';
+var Version = '20130415a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -19253,10 +19253,10 @@ Tabs.startup = {
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (Options.crestRunning == false) {
            m += '<TD><INPUT id=Cresttoggle type=submit value="Attack = OFF"></td>';
-      if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
+      if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Attack: Off</span>'
        } else {
            m += '<TD><INPUT id=Cresttoggle type=submit value="Attack = ON"></td>';
-      if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
+      if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Attack: On</span>'
        }
 
 
@@ -19941,12 +19941,12 @@ Tabs.startup = {
             if (Options.crestRunning == true) {
                 Options.crestRunning = false;
                 obj.value = "Attack = OFF";
-         if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Crest: Off</span>'
+         if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Attack: Off</span>'
                 saveOptions();
             } else {
                 Options.crestRunning = true;
                 obj.value = "Attack = ON";
-      if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Crest: On</span>'
+      if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #FFFF00">Attack: On</span>'
                 for (crest in Options.Creststatus) {
                     owned = Seed.items['i'+crest];
                     if (owned == undefined) {
