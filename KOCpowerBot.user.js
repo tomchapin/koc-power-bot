@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130416a
+// @version        20130416b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,8 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130416a';
+var Version = '20130416b';
+
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -87,6 +88,7 @@ unsafeWindow.arthurCheck = function (a) {
     })
   }
 };
+
 var upgradeData = {
   active : false,
   item_upgrade : {},
@@ -518,6 +520,8 @@ if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
   return;
 }
 
+var InstallChecker = setTimeout (function(){unsafeWindow.Modal.showAlert(translate('power bot installation is corrupt, please reinstall'))}, 2*60*1000);
+
 if (document.URL.search(/facebook.com/i) >= 0){
    if(document.URL.search(/dialog\/feed/i) >= 0)
       HandlePublishPopup ();
@@ -703,6 +707,7 @@ function pbStartup (){
   clearTimeout (pbStartupTimer);
   if (unsafeWindow.pbLoaded)
     return;
+    clearTimeout (InstallChecker);
   var metc = getClientCoords(document.getElementById('main_engagement_tabs'));
   if (metc.width==null || metc.width==0){
     pbStartupTimer = setTimeout (pbStartup, 1000);
@@ -7103,7 +7108,8 @@ if(GlobalOptions.Baos) {
       var t = Tabs.Scripter
       t.myDiv = div;
       var m = '<DIV class=pbStat>Scripter</div><br>';
-      m += '<table><tr><td></td><td><INPUT id=SCode type=text size=70 maxlength=-1 value="" \></td><td></td></tr>'
+      m += '<table algiht=right><tr><td></td><td><INPUT id=SCode type=text size=70 maxlength=-1 value="" \></td><td></td></tr>'
+      m += '<tr><td><P align="right">alert(</td><td><INPUT id=SaCode type=text size=70 maxlength=-1 value="" \></td><td>)</td></tr>'
       m += '<tr><td>alert(inspect(</td><td><INPUT id=SaiCode type=text size=70 maxlength=-1 value="" \></td><td>))</td></tr>'
       m += '</table><INPUT id=Baos780 type=text size=20 maxlength=-1 value='+y+' \>'
       div.innerHTML = m;
@@ -7116,6 +7122,11 @@ if(GlobalOptions.Baos) {
       document.getElementById('SaiCode').addEventListener ('keypress', function (e){
       if(e.which == 13)
          alert(inspect(eval(this.value)));
+      }, false);      
+            
+      document.getElementById('SaCode').addEventListener ('keypress', function (e){
+      if(e.which == 13)
+         alert(eval(this.value));
       }, false);      
       
       document.getElementById('Baos780').addEventListener ('change', function (){
