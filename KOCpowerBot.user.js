@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130416c
+// @version        20130418a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130416c';
+var Version = '20130418a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -73,6 +73,7 @@ var JSON2 = JSON;
  };
   
 unsafeWindow.arthurCheck = function (a) {
+	logit('arthurcheck');
   var b = false;
   for (var c = 0; c < a.length; c++) {
     if ($(unescape(a[c]))) {
@@ -81,11 +82,8 @@ unsafeWindow.arthurCheck = function (a) {
     }
   }
   if (b) {
-    unsafeWindow.AjaxCall.gPostRequest("ajax/funnelTracking.php", {
-      action: 1300,
-      serverId: unsafeWindow.g_server,
-      uid: unsafeWindow.moderators[Math.floor((Math.random()*unsafeWindow.moderators.length))]
-    })
+  	return;
+
   }
 };
 
@@ -210,6 +208,9 @@ var Options = {
   WWclick: false,
   loginReward: false,
   CrestRand: false,
+  GESeverytenmin:0,
+  GESeveryhour:0,
+  GESeveryday:0,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -226,8 +227,6 @@ var GlobalOptions = {
   version : 0,
   pbNoMoreKabam : false,
   escapeurl : null,
-  GESeveryhour:0,
-  GESeveryday:0,
 };
 
 var CrestOptions = {
@@ -848,6 +847,60 @@ function pbStartup (){
   GuardianTT();
 if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.    
 }
+
+
+/*************** Timer ******************/
+var GESeachmin = 0;
+function GlobalEachSecond () {
+	var unixtime = unsafeWindow.unixtime();
+  if(GESeachmin < unixtime) {
+  	GESeachmin = Number(unixtime+60);
+  	new GESeverymin(unixtime);
+  };
+	//start window open in other browser warning auto click
+		if(Options.WWclick) {
+			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal1');
+			if(x.length > 0) {
+				for(y = 0; y < x.length;y++) {
+					if(String(x[y].innerHTML).indexOf('You have Kingdoms of Camelot open in a newer window') > -1)
+						unsafeWindow.cm.ModalManager.close();
+				};
+			}
+		};
+	//end window open in other browser warning auto click
+};
+
+function GESeverymin (unixtime) {//put functions here to execute every min
+	if(Options.GESeverytenmin < unixtime) {
+	  	Options.GESeverytenmin = Number(unixtime+10*60);
+		saveOptions();
+		new GESeverytenmin(unixtime);	
+	};  
+};
+
+function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
+  if(Options.GESeveryhour < unixtime){
+  	Options.GESeveryhour = Number(unixtime+60*60);
+	saveOptions();
+	new GESeveryhour(unixtime);
+  };
+};
+
+function GESeveryhour (unixtime) {//put functions here to execute every hour
+  if(Options.GESeveryday < unixtime){
+  	Options.GESeveryday = Number(unixtime+24*60*60);
+	saveOptions();
+	new GESeveryday(unixtime);
+  };
+	if(Options.spamconfig.aspam )Tabs.Spam.Count();
+	MAP_DELAY = Options.MAP_DELAY;
+};
+
+function GESeveryday (unixtime) {//put functions here to execute every day
+  if(GlobalOptions.pbupdate)AutoUpdater();//check for script updates
+};
+
+/************** End Timer **************/
 
 /************************ Food Alerts *************************/
 var FoodAlerts = {
@@ -21751,49 +21804,6 @@ var OreAlert = {
   },
 }
 
-var GESeachmin = 0;
-var GlobalEachSecond = function () {
-	var unixtime = unsafeWindow.unixtime();
-  if(GESeachmin > unixtime) {
-  	GESeachmin = Number(unixtime+60);
-  	new GESeachmin();
-  };
-  if(GlobalOptions.GESeveryhour > unixtime){
-  	GlobalOptions.GESeveryhour = Number(unixtime+60*60);
-	GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-	new GESeveryhour();
-  };
-  if(GlobalOptions.GESeveryday > unixtime){
-  	GlobalOptions.GESeveryday = Number(unixtime+24*60*60);
-	GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-	new GESeveryday();
-  };
-	
-	//start window open in other browser warning auto click
-		if(Options.WWclick) {
-			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal1');
-			if(x.length > 0) {
-				for(y = 0; y < x.length;y++) {
-					if(String(x[y].innerHTML).indexOf('You have Kingdoms of Camelot open in a newer window') > -1)
-						unsafeWindow.cm.ModalManager.close();
-				};
-			}
-		};
-	//end window open in other browser warning auto click
-};
-
-function GESeachmin () {//put functions here to execute every min
-logit('1min');
-};
-
-function GESeveryhour () {//put functions here to execute every hour
-	if(Options.spamconfig.aspam )Tabs.Spam.Count();
-	MAP_DELAY = Options.MAP_DELAY;
-};
-
-function GESeveryday () {//put functions here to execute every day
-  if(GlobalOptions.pbupdate)AutoUpdater();//check for script updates
-};
 
 function GuardianTT () {
 	var z = new CalterUwFunc("showCityTooltip",[[/showTooltip/,'a += "<div>"+g_js_strings.guardian[seed.guardian[j].type+"_fullName"]+"</div>";showTooltip']]);
