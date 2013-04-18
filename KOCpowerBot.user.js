@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130418a
+// @version        20130418b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130418a';
+var Version = '20130418b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -5073,12 +5073,12 @@ Tabs.build = {
                   else {
                   	if(qcon[0][1] == 0) {//if it is destruct
                   		delete Seed.buildings["city" + cityId]['pos'+qcon[0][7]];
-								if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
                	   } else {
 								Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
 								logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
-								qcon.shift(); // remove expired build from queue    
 							};
+							if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+							qcon.shift(); // remove expired build from queue    
 						};
                 }
                 //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
@@ -5089,7 +5089,6 @@ Tabs.build = {
                 } else {
                     if (t["bQ_" + cityId].length > 0) { // something to do?
                         var bQi = t["bQ_" + cityId][0]; //take first queue item to build
-
                         t.doOneSlowdown(bQi,itime);
                   //buildInterval = 10 * 1000; // we tried to build so use longer interval
                         //setTimeout(t.e_autoBuild, 10000); //should be at least 10
@@ -5147,14 +5146,11 @@ Tabs.build = {
         //  var mode = "build"; //FOR DEBUG
         var citpos = parseInt(bQi.buildingPos);
         //  var citpos = 6; //FOR DEBUG
-        
-                var qcon = Seed.queue_con["city" + bQi.cityId];
-                if (matTypeof(qcon) == 'array' && qcon.length > 0) {
+			var qcon = Seed.queue_con["city" + bQi.cityId];
+				if (matTypeof(qcon) == 'array' && qcon.length > 0) {
 					logit('construct something going on in '+Cities.byID[currentcityid].name+' so not building');
 					return;
 				};
-        
-        
         if ((Seed.buildings['city' + currentcityid]["pos" + citpos] == undefined)) bypasscheck = true;
         if (!bypasscheck) {
             var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
