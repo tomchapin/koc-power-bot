@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130419a
+// @version        20130419b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130419a';
+var Version = '20130419b';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -7786,8 +7786,7 @@ Tabs.transport = {
         
         if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100))
         loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
-        
-        loadBoostBase += 1;
+        else loadBoostBase += 1;
         loadBoostBase += loadEffectBoost+featherweight; //Should be done after throne room max check to get max boost?
         var LoadUnit = Math.floor(loadBoostBase*Load);
         var GlobalMaxLoad = t.Troops * LoadUnit;
