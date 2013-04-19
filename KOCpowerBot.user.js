@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130418c
+// @version        20130419a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130418c';
+var Version = '20130419a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -5189,6 +5189,7 @@ Tabs.build = {
             }
             if (l_curlvl > curlvl && mode == 'build') {
                 t.requeueQueueElement(bQi);
+                logit('requeue '+l_curlvl+' > '+curlvl);
                 return;
             }
         } else {
@@ -5249,12 +5250,12 @@ Tabs.build = {
 								// building has already the target level => just  delete
 								t.cancelQueueElement(0, currentcityid, time, false);
 								break;
-							case "default":
+							default:
 								a = "Something has gone wrong.";
 								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server); 
 								t.requeueQueueElement(bQi);
 								document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
-								break
+								break;
 							};
 							if(rslt.user_action) {
 								t.UASlowDown += 1000;
@@ -5297,6 +5298,7 @@ Tabs.build = {
                  if (rslt.updateSeed)
                 unsafeWindow.update_seed(rslt.updateSeed);
                         if (rslt.ok) {
+                            //logit(inspect(rslt));
                             actionLog(translate("Building") + " " + unsafeWindow.buildingcost['bdg' + bdgid][0] + " Level " + params.lv + " at " + cityName);
                             Seed.resources["city" + currentcityid].rec1[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][1]) * mult * 3600;
                             Seed.resources["city" + currentcityid].rec2[0] -= parseInt(unsafeWindow.buildingcost["bdg" + bdgid][2]) * mult * 3600;
@@ -5330,18 +5332,20 @@ Tabs.build = {
 								break;
 							case "102":
 								//a = "Another building already exists on the same spot!"; lets delete our queued building
+								logit('Another building already exists on the same spot lets delete our queued building');
 								t.cancelQueueElement(0, currentcityid, time, false);
 								break;
 							case "103":
 								// building has already the target level => just  delete
+								logit('building has already the target level => just  delete')
 								t.cancelQueueElement(0, currentcityid, time, false);
 								break;
-							case "default":
+							default:
 								a = "Something has gone wrong.";
 								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server); 
 								t.requeueQueueElement(bQi);
 								document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
-								break
+								break;
 							};
 							if(rslt.user_action) {
 								t.UASlowDown += 1000;
@@ -5375,6 +5379,7 @@ Tabs.build = {
         var buildingMult = parseInt(bQi.buildingMult);
         var buildingAttempts = parseInt(bQi.buildingAttempts);
         var buildingMode = bQi.buildingMode;
+        if(buildingAttempts < 10)
         t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts + 1, buildingMult, buildingMode); // requeue item
         t.cancelQueueElement(0, cityId, buildingTime, false); // delete Queue Item
     },
@@ -20441,12 +20446,12 @@ var March = {
 							case "210":
 								// Max marches
 								break;
-							case "default":
+							default:
 								a = "Something has gone wrong.";
 								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server); 
-                    rslt.max = cids;
-							//scripterdebuglog(rslt,'march');//For those getting unknown errors, uncomment this line and Baos will also receive your errors live.
-								break
+         	           rslt.max = cids;
+								//scripterdebuglog(rslt,'march');//For those getting unknown errors, uncomment this line and Baos will also receive your errors live.
+								break;
 							};
                     setTimeout (function(){callback(rslt)}, 5*1000); //return all sever excess traffic error to original function to handle
                     return;
