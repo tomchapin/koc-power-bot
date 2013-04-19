@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130418b
+// @version        20130418c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130418b';
+var Version = '20130418c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -5046,7 +5046,7 @@ Tabs.build = {
     },
     e_autoBuild: function () {
         var t = Tabs.build;
-      var buildInterval = 20 * 1000+t.UASlowDown; // 2 seconds between checks by default
+      var buildInterval = 5000+t.UASlowDown; // 2 seconds between checks by default
         document.getElementById('pbbuildError').innerHTML = '';
       
         if (t.buildStates.running == true) {
@@ -5083,7 +5083,7 @@ Tabs.build = {
                 }
                 //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
                 if (isBusy) {
-					logit('construct '+Cities.byID[cityId].name+' is busy');
+					//logit('construct '+Cities.byID[cityId].name+' is busy');
 					//0 = 5,9,7222643,1365086688,1365087900,0,3840,8
                     //TODO add info of remaining build time and queue infos
                 } else {
@@ -21589,11 +21589,10 @@ function ChatComOverlay () {
 
 
 function OSendChat () {
-	logit('doing something');
-	   if(Options.filter)
-   document.getElementById('mod_comm_input').value = BtFilter(document.getElementById('bot_comm_input'));
+	if(Options.filter)
+   	document.getElementById('mod_comm_input').value = BtFilter(document.getElementById('bot_comm_input'));
    else
-   document.getElementById('mod_comm_input').value = document.getElementById('bot_comm_input').value;
+   	document.getElementById('mod_comm_input').value = document.getElementById('bot_comm_input').value;
    document.getElementById('bot_comm_input').value = "";
    unsafeWindow.Chat.sendChat();
 };
