@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130419d
+// @version        20130419e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130419d';
+var Version = '20130419e';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -4792,6 +4792,14 @@ Tabs.build = {
     toolsMode: null,
     buildingSelect:'all',
     UASlowDown : 0,
+	build0:false,
+	build1:false,
+	build2:false,
+	build3:false,
+	build4:false,
+	build5:false,
+	build6:false,
+	build7:false,
 
     init: function (div) {
         var t = Tabs.build;
@@ -5058,6 +5066,7 @@ Tabs.build = {
                 var cityId = Cities.cities[i].id;
                 var isBusy = false;
                 var qcon = Seed.queue_con["city" + cityId];
+             if(t['build'+Cities.byID[cityId].idx] == true)continue;//so we don't get overloaded with slowed down requests
                 if (matTypeof(qcon) == 'array' && qcon.length > 0) {
 				/***
 				string) 0 = buildingtype
@@ -5089,6 +5098,7 @@ Tabs.build = {
                 } else {
                     if (t["bQ_" + cityId].length > 0) { // something to do?
                         var bQi = t["bQ_" + cityId][0]; //take first queue item to build
+                        t['build'+Cities.byID[cityId].idx] = true;
                         t.doOneSlowdown(bQi,itime);
                   //buildInterval = 10 * 1000; // we tried to build so use longer interval
                         //setTimeout(t.e_autoBuild, 10000); //should be at least 10
@@ -5136,6 +5146,7 @@ Tabs.build = {
     doOne: function (bQi) {
         var t = Tabs.build;
         var currentcityid = parseInt(bQi.cityId);
+        t['build'+Cities.byID[currentcityid].idx] = false;
         var cityName = t.getCityNameById(currentcityid);
         var time = parseInt(bQi.buildingTime);
         var mult = parseInt(bQi.buildingMult);
