@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304120b
+// @version        201304120c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130420b';
+var Version = '20130420c';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -73,18 +73,8 @@ var JSON2 = JSON;
  };
   
 unsafeWindow.arthurCheck = function (a) {
-	logit('arthurcheck');
-  var b = false;
-  for (var c = 0; c < a.length; c++) {
-    if ($(unescape(a[c]))) {
-      b = true;
-      break;
-    }
-  }
-  if (b) {
-  	return;
-
-  }
+	logit('arthurCheck intercepted');
+	return;
 };
 
 var upgradeData = {
@@ -18582,7 +18572,7 @@ Tabs.startup = {
     t.myDiv = div;
     var selbut=0;
     if(Options.crestbtns)AddSubTabLink('Crest',t.toggleCrestState, 'CrestToggleTab');
-    var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED CRESTING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
+    var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED ATTACKING FUNCTION</div><TABLE id=pbcrestfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (Options.crestRunning == false) {
            m += '<TD><INPUT id=Cresttoggle type=submit value="Attack = OFF"></td>';
       if(document.getElementById('CrestToggleTab'))document.getElementById('CrestToggleTab').innerHTML = '<span style="color: #CCC">Attack: Off</span>'
@@ -18599,10 +18589,17 @@ Tabs.startup = {
     m += '<INPUT id=pbsendcrestreportint value='+ Options.CrestMsgInterval +' type=text size=3 \> hours </td>\
         <TD>Keep <INPUT id=pbcrestslots value='+ Options.CrestSlots +' type=text size=3 \> Slots Free</td>\
           <TD>Attack interval <INPUT type=text size=3 value='+Options.Crestinterval+' id=pbcrest_interval />seconds</tr></table>';
-   m += '<table><tr><td><INPUT id=pbRattacks type=checkbox '+(Options.CrestRand?'CHECKED':'')+'>Randomize attack order</td></tr></table>';
+   m += '<table><tr><td><INPUT id=pbRattacks type=checkbox '+(Options.CrestRand?'CHECKED':'')+'>Randomize attack order</td>';
+   m += '<td><INPUT id=DelTargets type=submit value="'+translate('Mass Delete')+': ">';
+   m += ' <select id="pbattdelcity">';
+   for(g in Cities.byID) {
+   	m +='<option value="'+Cities.byID[g].id+'">'+Cities.byID[g].name+'</option>';
+   };
+   m += '</select> </td>';
+   m += '</tr></table>';
 
-    m += '<DIV id=pbOpt class=pbStat>CRESTING OPTIONS</div><TABLE id=pbcrestopt     width=100% height=0% class=pbTab><TR align="center"></table>';
-    m += '<DIV style="margin-bottom:10px;">Crest from city: <span id=crestcity></span></div>';
+    m += '<DIV id=pbOpt class=pbStat>ATTACKING OPTIONS</div><TABLE id=pbcrestopt     width=100% height=0% class=pbTab><TR align="center"></table>';
+    m += '<DIV style="margin-bottom:10px;">Attack from city: <span id=crestcity></span></div>';
     
     m += '<TABLE class=ptTab><TR><TD>Wild coords: X:<INPUT id=pbcrestx type=text size=3 maxlength=3 value=""></td>';
     m += '<TD>Y:<INPUT id=pbcresty type=text size=3 maxlength=3 value=""></td></tr>';
@@ -18849,6 +18846,7 @@ Tabs.startup = {
     document.getElementById('pbSaveRouteCrest').addEventListener('click', function(){t.addCrestRoute();}, false);
     document.getElementById('pbimpRoute').addEventListener('click', function(){t.MasAddsttacktRoutes();}, false);
     document.getElementById('showCrestTargets').addEventListener('click', function(){t.showCrestRoute();}, false);
+    document.getElementById('DelTargets').addEventListener('click', function(){t.MassDelTargets();}, false);
   },
   
   helpPop : function (){
@@ -18920,14 +18918,22 @@ Tabs.startup = {
         t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
         var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';     
         t.popCrestTargets.getMainDiv().innerHTML = '</table></div>' + m;
-        t.popCrestTargets.getTopDiv().innerHTML = '<TD><CENTER><B>Crest Targets</center></td>';
+        t.popCrestTargets.getTopDiv().innerHTML = '<TD><CENTER><B>Attack Targets</center></td>';
         t.paintCrestTargets();
         t._addTabHeader();
         t.popCrestTargets.show(true);
 
     },
     
-    
+    MassDelTargets : function () {
+      var t = Tabs.Attack;
+    	var x = document.getElementById('pbattdelcity').value;
+    	for(i = Number(CrestData.length-1); i > -1 ;i--)
+    		if(CrestData[i].CrestCity == x) 
+    			CrestData.splice(i,1);
+      saveCrestData();
+      t.showCrestRoute();
+    },
 
 /** add header **/
     _addTabHeader : function () {
