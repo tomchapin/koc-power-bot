@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130419e
+// @version        20130419f
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130419e';
+var Version = '20130419f';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -55,7 +55,7 @@ var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
 var MAP_DELAY = 4000;
-
+var MAP_DELAY_WATCH = Number(0);
 var DEFAULT_ALERT_SOUND_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
 var SWF_PLAYER_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
 
@@ -10766,7 +10766,7 @@ Tabs.Barb = {
       return;
     if (rslt.ok){
     map = rslt.data;
-    
+    logit(inspect(rslt));
     var cityID = 'city' + Seed.cities[t.lookup-1][0];
    var tiles = [];
     for(x in Seed.queue_atkp[cityID]) {
@@ -10809,7 +10809,6 @@ Tabs.Barb = {
     
     setTimeout (function(){t.MapAjax.request (x, y, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
    } else {
-      
       setTimeout (function(){t.MapAjax.request (left, top, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
    }
     
@@ -14473,7 +14472,6 @@ function translate (str) {
     return str;    
 }
 
-
 /*******************   KOC Map interface ****************/
 // 0:bog, 10:grassland, 11:lake, 20:woods, 30:hills, 40:mountain, 50:plain, 51:city / barb, 53:misted city
 function CMapAjax (){
@@ -14481,6 +14479,10 @@ function CMapAjax (){
   this.request = request;
 
   function request (left, top, width, notify){ 
+  if(MAP_DELAY_WATCH > Number(unsafeWindow.unixtime())) {
+  	notify(left, top, width,  {"ok":false});
+  	return;//we're slowing down the requests so the server doesn't get bogged.
+  };
     var left = parseInt(left / 5) * 5;
     var top = parseInt(top / 5) * 5;
     var width = parseInt((width+4) / 5) * 5;
@@ -14493,6 +14495,7 @@ function CMapAjax (){
       parameters: params,
       onSuccess: function (rslt) {
       	if(!rslt.ok) MAP_DELAY+=100;
+		MAP_DELAY_WATCH = Number(unsafeWindow.unixtime())+Number(Number(MAP_DELAY)/1000);
         notify(left, top, width, rslt);
       },
       onFailure: function (rslt) {
@@ -15091,7 +15094,7 @@ function AjaxRequest (url, opts){
    		 var patt = (/function..\s*.\s*return\seval.unescape./im);
      		 var result=patt.test(ajax.response);
    		  if(result){
-    		 	ajax.responseText = {"ok":"false"};
+    		 	ajax.responseText = {"ok":false};
     		 	opts.onSuccess(ajax);
     		   } else
       	  if (opts.onSuccess) opts.onSuccess(ajax);
