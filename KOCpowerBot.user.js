@@ -884,6 +884,7 @@ function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
 	saveOptions();
 	new GESeveryhour(unixtime);
   };
+  if(GiftDB.adgift) Tabs.gifts.scangifts(4);
 };
 
 function GESeveryhour (unixtime) {//put functions here to execute every hour
@@ -21143,8 +21144,6 @@ Tabs.gifts = {
       t.giftstats();
       if(GiftDB.agift)
          setTimeout(t.sendgifts,10000);
-      if(GiftDB.adgift)
-         setInterval(function () {t.scangifts(4)},10*61*1000);
    },
    populatepeople : function () {
         var t = Tabs.gifts;
