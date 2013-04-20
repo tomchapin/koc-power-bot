@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130419g
+// @version        201304120a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130419g';
+var Version = '20130420a';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -783,7 +783,7 @@ function pbStartup (){
 	if(unsafeWindow.g_ajaxparams.lang == "en")unsafeWindow.g_js_strings.getChat.nobadlang = "No bad language. No personal attacks. No links. Use /username to whisper to another player. Respect the mods, the scripters, and each other and most importantly, have fun!";
 	if(unsafeWindow.g_js_strings)unsafeWindow.g_js_strings.commonstr.yourScriptVersionIsOut = unsafeWindow.g_js_strings.checkoutofdate.reloadconfirm;
 
-	if(Options.loginReward && Seed.loginReward.show_today) unsafeWindow.cm.DailyRewardsView.hudClick();
+	if(Options.loginReward && Seed.loginReward.show_hud && document.getElementById('dailyRewardHudInside')) unsafeWindow.cm.DailyRewardsView.hudClick();
 
 // TODO: Make sure WinPos is visible on-screen ?
   if (Options.pbWinPos==null || Options.pbWinPos.x==null|| Options.pbWinPos.x=='' || isNaN(Options.pbWinPos.x)){
@@ -838,8 +838,8 @@ function pbStartup (){
   if(Options.mklag)  setInterval(fixkabamlag,1000*60);
   if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
    document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>\
-   <a class="navTab" onclick=" window.open(\'https://kabam.secure.force.com/PKB/pkb_contactUs?game=All&lang=en_US&l=en_US\');"><span>Kabam</span></a>\
-   <a class="navTab" onclick=" window.open(\'https://www.trialpay.com/social-support/fb/ \');"><span>Trialpay</span></a>';
+<a class="navTab" onclick=" window.open(\'https://kabam.secure.force.com/PKB/pkb_contactUs?game=All&lang=en_US&l=en_US\');"><span>Kabam</span></a>\
+<a class="navTab" onclick=" window.open(\'https://www.trialpay.com/social-support/fb/ \');"><span>Trialpay</span></a>';
 
   if(Options.ThroneHUD)Tabs.Throne.ThroneHUDinit();
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
@@ -21596,8 +21596,7 @@ function ChatComOverlay () {
 	bot_comm_input.size = 40;
 	bot_comm_input.addEventListener ('keypress', function(e) {if(e.which == 13)OSendChat();}, false);
 	var x = new CalterUwFunc("Chat.whisper",[[/mod.comm.input/ig,'bot_comm_input']]);
-   x.setEnable(true);
-
+	x.setEnable(true);
 };
 
 
