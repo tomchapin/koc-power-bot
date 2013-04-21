@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304120c
+// @version        201304120d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130420c';
+var Version = '20130420d';
 
 
 //bandaid to stop loading in advertisements containing the @include urls
@@ -5058,7 +5058,7 @@ Tabs.build = {
                 var isBusy = false;
                 var qcon = Seed.queue_con["city" + cityId];
              if(t['build'+Cities.byID[cityId].idx] == true)continue;//so we don't get overloaded with slowed down requests
-                if (matTypeof(qcon) == 'array' && qcon.length > 0) {
+                if (qcon.length > 0) {
 				/***
 				string) 0 = buildingtype
 				(number) 1 = buildinglevel
@@ -5077,8 +5077,9 @@ Tabs.build = {
 								Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
 								logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
 							};
+							qcon.shift(); // remove expired build from queue
+							unsafeWindow.modal_build_show_state();
 							if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
-							qcon.shift(); // remove expired build from queue    
 						};
                 }
                 //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
@@ -5229,26 +5230,26 @@ Tabs.build = {
                         var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
                         document.getElementById('pbbuildError').innerHTML = inspect(errmsg);
 						var a = null;
-						var g = rslt.error_code;
+						var g = Number(rslt.error_code);
 						var g_server = unsafeWindow.g_server;
 						switch (g) {
-							case "0":
+							case 0:
 								a = "Unexpected Error.";
 								break;
-							case "2"://lets try update seed to fix the missing build?
+							case 2://lets try update seed to fix the missing build?
 								unsafeWindow.g_update_seed_ajax_do = true;
 								unsafeWindow.update_seed_ajax();
 								a = "Construction is already starting.";
 								break;
-							case "8":
+							case 8:
 								a = "Excess traffic.";
 								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server);
 								break;
-							case "102":
+							case 102:
 								//a = "Another building already exists on the same spot!"; lets delete our queued building
 								t.cancelQueueElement(0, currentcityid, time, false);
 								break;
-							case "103":
+							case 103:
 								// building has already the target level => just  delete
 								t.cancelQueueElement(0, currentcityid, time, false);
 								break;
@@ -5317,27 +5318,27 @@ Tabs.build = {
                         } else {
                             var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
 						var a = null;
-						var g = rslt.error_code;
+						var g = Number(rslt.error_code);
 						var g_server = unsafeWindow.g_server;
 						switch (g) {
-							case "0":
+							case 0:
 								a = "Unexpected Error.";
 								break;
-							case "2"://lets try update seed to fix the missing build?
+							case 2://lets try update seed to fix the missing build?
 								unsafeWindow.g_update_seed_ajax_do = true;
 								unsafeWindow.update_seed_ajax();
 								a = "Construction is already starting.";
 								break;
-							case "8":
+							case 8:
 								a = "Excess traffic.";
 								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server);
 								break;
-							case "102":
+							case 102:
 								//a = "Another building already exists on the same spot!"; lets delete our queued building
 								logit('Another building already exists on the same spot lets delete our queued building');
 								t.cancelQueueElement(0, currentcityid, time, false);
 								break;
-							case "103":
+							case 103:
 								// building has already the target level => just  delete
 								logit('building has already the target level => just  delete')
 								t.cancelQueueElement(0, currentcityid, time, false);
