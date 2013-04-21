@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304120d
+// @version        201304121a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,8 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130420d';
-
+var Version = '20130421a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -1719,7 +1718,7 @@ Tabs.farm = {
     if (!t.searchRunning)
       return;
     if (!rslt.ok){
-      setTimeout (function(){t.MapAjax.request (left, top, width, t.mapCallback)}, MAP_DELAY*2);
+      setTimeout (function(){t.MapAjax.request (left, top, width, t.mapCallback)}, MAP_DELAY);
       return;
     }
     map = rslt.data;
@@ -5257,7 +5256,7 @@ Tabs.build = {
 								a = "Something has gone wrong.";
 								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server); 
 								t.requeueQueueElement(bQi);
-								document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name + ': ' + errmsg + translate(" Item was requeued. Check for retry count.");
+								document.getElementById('pbbuildError').innerHTML = Cities.byID[currentcityid].name + ': ' + inspect(errmsg) + translate(" Item was requeued. Check for retry count.");
 								break;
 							};
 							if(rslt.user_action) {
@@ -6556,6 +6555,7 @@ Tabs.Search = {
     if (!t.searchRunning)
       return;
     if (!rslt.ok){
+    	setTimeout (function(){t.MapAjax.request (left, top, width, t.eventgetplayeronline)}, MAP_DELAY);//we requery if bad ajax request.  could cause flood issues?
      // t.stopSearch (translate('ERROR')+': '+ rslt.errorMsg);
       return;
     }
