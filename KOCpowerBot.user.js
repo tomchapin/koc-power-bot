@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304123d
+// @version        201304123e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130423d';
+var Version = '20130423e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -844,6 +844,7 @@ afkwatcher();
 
 /*************** Timer ******************/
 var GESeachmin = 0;
+var a2min = -1;
 function GlobalEachSecond () {
 	var unixtime = unsafeWindow.unixtime();
   if(GESeachmin < unixtime) {
@@ -864,8 +865,10 @@ function GlobalEachSecond () {
 };
 
 function GESeverymin (unixtime) {//put functions here to execute every min
-	if(!a2min)var a2min = 	Number(unixtime+2*60);
+	logit('a2min is 1 '+a2min);
+	if(a2min == -1) a2min = 	Number(unixtime+2*60);
 	if(a2min < unixtime) {
+		logit('a2min is 2 '+a2min);
 		a2min = 	Number(unixtime+2*60);
 		GESevery2min(unixtime);
 	};
@@ -878,6 +881,7 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 };
 
 function GESevery2min (unixtime) {//put functions here to execute every 2 min
+logit('2 min '+isAFK);
 	detafk();
 };
 
@@ -3535,12 +3539,13 @@ TTpoststats : function () {
 },
 
 rotatethrone : function () {
+	var t = Tabs.Throne;
 	if(isAFK){
 		var activeSlot = Number(Seed.throne.activeSlot);
 			for (k=activeSlot+1;k != activeSlot;k++) {
 				if(k > Number(Seed.throne.slotNum)) k = 1;
 				if(ThroneOptions.autotoggle[k]) {
-				Tabs.Throne.doPreset(k);
+				t.doPreset(k);
 				break;
 			}
 		}
