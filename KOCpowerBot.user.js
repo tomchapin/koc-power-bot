@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304122a
+// @version        201304122b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130422a';
+var Version = '20130422b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -12171,7 +12171,7 @@ Tabs.Reassign = {
         params.u10 = 0;
         params.u11 = 0;
         params.u12 = 0;    
-        if(Seed.cityData.city[city].isPrestigeCity){
+        if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity){
          params.u13 = 0;
          params.u14 = 0;
          params.u15 = 0;
@@ -12182,7 +12182,7 @@ Tabs.Reassign = {
         var maxsend = March.getMaxSize(city);
         totalsend=0;
         
-        if(Seed.cityData.city[city].isPrestigeCity)
+        if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity)
         var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","BloodThorn","Executioner","SiegeTower"];
         else var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult"];
         for (k=0; k<troopsselect.length; k++) {
@@ -12228,7 +12228,7 @@ Tabs.Reassign = {
         params.u10 = send[10];
         params.u11 = send[11];
         params.u12 = send[12];    
-        if(Seed.cityData.city[city].isPrestigeCity){
+        if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity){
          params.u13 = send[13];
          params.u14 = send[14];
          params.u15 = send[15];
