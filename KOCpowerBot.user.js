@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304123a
+// @version        201304123b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130423a';
+var Version = '20130423b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -75,6 +75,8 @@ unsafeWindow.arthurCheck = function (a) {
 	logit('arthurCheck intercepted');
 	return;
 };
+
+var isAFK = false;
 
 var upgradeData = {
   active : false,
@@ -381,6 +383,7 @@ var ThroneOptions = {
     SaveUnique:true,
     heatup:true,
     ibrokeitems:[],
+    autotoggle:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,},
 };
 
 var AttackOptions = {
@@ -861,17 +864,21 @@ function GlobalEachSecond () {
 };
 
 function GESeverymin (unixtime) {//put functions here to execute every min
+	if(!a2min)var a2min = 	Number(unixtime+2*60);
+	if(a2min < unixtime) {
+		a2min = 	Number(unixtime+2*60);
+		GESevery2min =(unixtime);
+	};
 	if(Options.GESeverytenmin < unixtime) {
 	  	Options.GESeverytenmin = Number(unixtime+10*60);
 		saveOptions();
 		new GESeverytenmin(unixtime);	
 	};  
-	//detect afk	
-	if (afk == afk2) {
-		//we are afk;
-		logit('afk detected');
-		};
-		afk2 = afk;
+	Tabs.Throne.rotatethrone();
+};
+
+function GESevery2min (unixtime) {//put functions here to execute every 2 min
+	detafk();
 };
 
 function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
@@ -904,8 +911,18 @@ function GESeveryday (unixtime) {//put functions here to execute every day
 var afk = 0;
 var afk2=-1;
 function afkwatcher () {
-	document.body.onmousemove = function(){afk++}
+	document.body.onmousemove = function(){afk++};
+	document.body.onkeypress = function(){afk++};
 };
+function detafk () {
+	if (afk == afk2) {
+		//we are afk;
+		logit('afk detected');
+		isAFK = true;
+	} 
+	else isAFK = false;
+	afk2 = afk;
+}
 /************** End Afk detector **************/
 
 
@@ -2480,7 +2497,7 @@ doPreset : function (room, retry) {
             onSuccess: function (transport) {
                 var rslt = eval("(" + transport.responseText + ")");
                 if(rslt.ok){
-			if(document.getElementById('tar'+params.presetId)) {
+			if(document.getElementById('tra'+params.presetId)) {
 				for(a = 1;a <= Seed.throne.slotNum;a++)
 				document.getElementById('tra'+a).disabled = false;
                document.getElementById('tra'+params.presetId).disabled = true;
@@ -3466,12 +3483,14 @@ ThroneT : function (){
         var t = Tabs.Throne;    
      var m = '<DIV  class=pbStat>Throne room toggle</div><center><TABLE height=0% class=pbTab><TR align="center">';
             for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
-                 m += '<TD><INPUT id=tra'+k+' type=submit value='+k+'></td>';
-            m += '</table><button id=ttptc>Post to chat</button> <br>';
+                 m += '<TD><INPUT id=autotr'+k+' type=checkbox '+ (ThroneOptions.autotoggle[k]?'CHECKED ':'') +'/><INPUT id=tra'+k+' type=submit value='+k+'></td>';
+            m += '</table>'+translate('Will auto change to checked Throne rooms and rotate when afk')+'<br><br><button id=ttptc>Post to chat</button> <br>';
             m+='<table><TD><DIV id=ThroneTRS></div></td></table>';
             t.Overv.innerHTML = m;
-            for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
-            document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
+            for (var k=1;k<Number(Seed.throne.slotNum+1);k++) {
+            	document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
+            	document.getElementById('autotr'+k).addEventListener ('click', function(){ThroneOptions.autotoggle[Number(String(this.id).replace(/autotr/,""))] = this.checked; saveThroneOptions();}, false);
+         	};
             t.TTpaint(unsafeWindow.seed.throne.activeSlot);
             document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = true;
             document.getElementById('ttptc').addEventListener('click', t.TTpoststats, false);
@@ -3513,6 +3532,19 @@ TTpoststats : function () {
 	 };
     sendChat ("/a "+  m);
 
+},
+
+rotatethrone : function () {
+	if(isAFK){
+		var activeSlot = Number(Seed.throne.activeSlot);
+			for (k=activeSlot+1;k != activeSlot;k++) {
+				if(k > Number(Seed.throne.slotNum)) k = 1;
+				if(ThroneOptions.autotoggle[k]) {
+				Tabs.Throne.doPreset(k);
+				break;
+			}
+		}
+	}
 },
 
 hide : function (){
@@ -4017,7 +4049,7 @@ Tabs.tower = {
                   if(Options.SaveState.crest && !Options.crestRunning)Tabs.Attack.toggleCrestState();
                };
                if (Options.SaveState.trset != Seed.throne.activeSlot)
-                  Tabs.Throne.doPreset(Options.SaveState.trset);
+                  if(isAFK)Tabs.Throne.doPreset(Options.SaveState.trset);
                Options.alertConfig.RecentActivity = false;
                saveOptions();
             }
@@ -4138,7 +4170,7 @@ Tabs.tower = {
       var currentset = Seed.throne.activeSlot;
       if (Options.alertConfig.alertTRset != currentset){
             var preset = Options.alertConfig.alertTRset
-            Tabs.Throne.doPreset(preset);
+            if(isAFK)Tabs.Throne.doPreset(preset);
       }
    }
   },
