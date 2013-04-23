@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304122b
+// @version        201304123a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130422b';
+var Version = '20130423a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -834,7 +834,8 @@ function pbStartup (){
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
   ChatComOverlay();
   GuardianTT();
-if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.    
+if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
+afkwatcher();
 }
 
 
@@ -865,6 +866,12 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 		saveOptions();
 		new GESeverytenmin(unixtime);	
 	};  
+	//detect afk	
+	if (afk == afk2) {
+		//we are afk;
+		logit('afk detected');
+		};
+		afk2 = afk;
 };
 
 function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
@@ -891,6 +898,16 @@ function GESeveryday (unixtime) {//put functions here to execute every day
 };
 
 /************** End Timer **************/
+
+/************** Afk detector **************/
+
+var afk = 0;
+var afk2=-1;
+function afkwatcher () {
+	document.body.onmousemove = function(){afk++}
+};
+/************** End Afk detector **************/
+
 
 /************************ Food Alerts *************************/
 var FoodAlerts = {
