@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304123b
+// @version        201304123c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130423b';
+var Version = '20130423c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4848,6 +4848,8 @@ Tabs.build = {
         t.buildStates = {
             running: false,
             help: false,
+            tr :	false,
+            trset :	0,
         };
         t.readBuildStates();
         for (var i = 0; i < Cities.cities.length; i++) {
@@ -4868,7 +4870,8 @@ Tabs.build = {
             <OPTION value=max>' + translate("level max") + '</option>\
             <OPTION value=destruct>' + translate("destruct") + '</option>\
             </select></td>';
-        m += '<TD><INPUT id=pbHelpRequest type=checkbox ' + (t.buildStates.help ? ' CHECKED' : '') + '\></td><TD>' + translate("Ask for help") + '?</td></table>';
+        m += '<TD><INPUT id=pbHelpRequest type=checkbox ' + (t.buildStates.help ? ' CHECKED' : '') + '\></td><TD>' + translate("Ask for help") + '?</td>';
+        m += '<td><INPUT id=pbbuildtr type=checkbox '+(t.buildStates.tr?'CHECKED':'')+'> '+translate('Only build when throne room set')+' <INPUT id=pbbuildtrset type=text size=2 maxlength=1 value="'+ t.buildStates.trset +'">  '+translate('is equiped')+'</td></table>';
         m += '<DIV id=pbBuildDivF class=pbStat>' + translate("QUICK ADD") + '</div>'
         m += '<TABLE id=pbbuildtools width=100% height=0% class=pbTab><TR>';
         m += '<DIV id=cityBuild></div>';
@@ -4955,6 +4958,14 @@ Tabs.build = {
         }, false);
         document.getElementById('pbHelpRequest').addEventListener('change', function () {
             t.buildStates.help = (document.getElementById('pbHelpRequest').checked);
+            t.saveBuildStates();
+        }, false);
+        document.getElementById('pbbuildtr').addEventListener('click', function () {
+            t.buildStates.tr = this.checked;
+            t.saveBuildStates();
+        }, false);
+        document.getElementById('pbbuildtrset').addEventListener('change', function () {
+            t.buildStates.trset = this.value;
             t.saveBuildStates();
         }, false);
         document.getElementById('whichBuilding').addEventListener('change',function(){
@@ -5091,6 +5102,7 @@ Tabs.build = {
         }
 
     },
+
     e_autoBuild: function () {
         var t = Tabs.build;
       var buildInterval = 5000+t.UASlowDown; // 2 seconds between checks by default
@@ -5136,6 +5148,7 @@ Tabs.build = {
 					//0 = 5,9,7222643,1365086688,1365087900,0,3840,8
                     //TODO add info of remaining build time and queue infos
                 } else {
+				      if(t.buildStates.tr && t.buildStates.trset != Seed.throne.activeSlot) continue;//check just before we start building.  lets the other enhancements keep working.
                     if (t["bQ_" + cityId].length > 0) { // something to do?
                         var bQi = t["bQ_" + cityId][0]; //take first queue item to build
                         t['build'+Cities.byID[cityId].idx] = true;
@@ -5149,7 +5162,10 @@ Tabs.build = {
         }
         setTimeout(t.e_autoBuild, buildInterval); //should be at least 10
     },
-    
+
+
+
+
     doOneSlowdown : function (bQi,itime){
         var t = Tabs.build;
 		setTimeout(function(){t.doOne(bQi)},itime);
@@ -12324,7 +12340,7 @@ Tabs.AutoTrain = {
     var m = '<DIV class=pbStat>AUTO TRAIN</div><TABLE width=100% height=0% class=pbTab><TR><TD width=200></td>';
         m += '<TD align=center><INPUT id=pbAutoTrainState type=submit value="'+translate("AutoTrain")+' = '+ (TrainOptions.Running?'ON':'OFF')+'"></td>';
         m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value='+translate("HELP")+'></td></tr></table>';
-        m += '<table><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> Only train when throne room set <INPUT id=pbatTRset type=text size=2 maxlength=1 value="'+ TrainOptions.trset +'">  is equiped</td>';
+        m += '<table><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> '+translate('Only train when throne room set')+' <INPUT id=pbatTRset type=text size=2 maxlength=1 value="'+ TrainOptions.trset +'">  '+translate('is equiped')+'</td>';
         m += '</tr></table></div>';
         m += '<DIV class=pbStat>TRAIN OPTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
     for (i=0;i<Seed.cities.length;i++){
