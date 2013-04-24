@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304124a
+// @version        201304124b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130424a';
+var Version = '20130424b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -851,7 +851,21 @@ function GlobalEachSecond () {
   	GESeachmin = Number(unixtime+60);
   	new GESeverymin(unixtime);
   };
-	//start window open in other browser warning auto click
+};
+
+function GESeverymin (unixtime) {//put functions here to execute every min
+	if(a2min == -1) a2min = 	Number(unixtime+2*60);
+	if(a2min < unixtime) {
+		a2min = 	Number(unixtime+2*60);
+		new GESevery2min(unixtime);
+	};
+	if(Options.GESeverytenmin < unixtime) {
+	  	Options.GESeverytenmin = Number(unixtime+10*60);
+		saveOptions();
+		new GESeverytenmin(unixtime);	
+	};  
+	new Tabs.Throne.rotatethrone();
+		//start window open in other browser warning auto click
 		if(Options.WWclick) {
 			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal1');
 			if(x.length > 0) {
@@ -864,22 +878,8 @@ function GlobalEachSecond () {
 	//end window open in other browser warning auto click
 };
 
-function GESeverymin (unixtime) {//put functions here to execute every min
-	if(a2min == -1) a2min = 	Number(unixtime+2*60);
-	if(a2min < unixtime) {
-		a2min = 	Number(unixtime+2*60);
-		GESevery2min(unixtime);
-	};
-	if(Options.GESeverytenmin < unixtime) {
-	  	Options.GESeverytenmin = Number(unixtime+10*60);
-		saveOptions();
-		new GESeverytenmin(unixtime);	
-	};  
-	Tabs.Throne.rotatethrone();
-};
-
 function GESevery2min (unixtime) {//put functions here to execute every 2 min
-	detafk();
+	new detafk();
 };
 
 function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
@@ -888,7 +888,7 @@ function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
 	saveOptions();
 	new GESeveryhour(unixtime);
   };
-  if(GiftDB.adgift) Tabs.gifts.scangifts(4);
+  if(GiftDB.adgift) new Tabs.gifts.scangifts(4);
 };
 
 function GESeveryhour (unixtime) {//put functions here to execute every hour
