@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304123f
+// @version        201304124a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130423f';
+var Version = '20130424a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3537,7 +3537,7 @@ TTpoststats : function () {
 
 rotatethrone : function () {
 	var t = Tabs.Throne;
-	if(isAFK){
+	if(isAFK && !Options.alertConfig.RecentActivity){
 		var activeSlot = Number(Seed.throne.activeSlot);
 			for (k=activeSlot+1;k != activeSlot;k++) {
 				if(k > Number(Seed.throne.slotNum)) k = 1;
