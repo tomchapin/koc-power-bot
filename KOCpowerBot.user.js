@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304125a
+// @version        201304125b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130425a';
+var Version = '20130425b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -881,7 +881,7 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 };
 
 function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
-	new detafk();
+	//new detafk();
 };
 
 function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
