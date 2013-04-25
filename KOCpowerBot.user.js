@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304124b
+// @version        201304125a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130424b';
+var Version = '20130425a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -837,14 +837,14 @@ function pbStartup (){
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
   ChatComOverlay();
   GuardianTT();
-if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
-afkwatcher();
+ if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
+ afkwatcher();
 }
 
 
 /*************** Timer ******************/
 var GESeachmin = 0;
-var a2min = -1;
+var atwomin = 0;
 function GlobalEachSecond () {
 	var unixtime = unsafeWindow.unixtime();
   if(GESeachmin < unixtime) {
@@ -854,11 +854,13 @@ function GlobalEachSecond () {
 };
 
 function GESeverymin (unixtime) {//put functions here to execute every min
-	//if(a2min == -1) a2min = Number(unixtime+2*60);
-	//if(a2min < unixtime) {
-	//	a2min = Number(unixtime+2*60);
-	//	new GESevery2min(unixtime);
-	//};
+	if(atwomin == 0) atwomin = Number(unixtime+2*60);
+	logit('a2min is '+atwomin);
+	logit('unixtime is '+unixtime);
+	if(atwomin < unixtime) {
+		atwomin = Number(unixtime+2*60);
+		new GESeverytwomin(unixtime);
+	};
 	if(Options.GESeverytenmin < unixtime) {
 	  	Options.GESeverytenmin = Number(unixtime+10*60);
 		saveOptions();
@@ -878,7 +880,7 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 	//end window open in other browser warning auto click
 };
 
-function GESevery2min (unixtime) {//put functions here to execute every 2 min
+function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
 	new detafk();
 };
 
@@ -910,19 +912,18 @@ function GESeveryday (unixtime) {//put functions here to execute every day
 /************** Afk detector **************/
 
 var afk = 0;
-var afk2=-1;
+var afkb=-1;
 function afkwatcher () {
 	document.body.onmousemove = function(){afk++};
 	document.body.onkeypress = function(){afk++};
 };
 function detafk () {
-	if (afk == afk2) {
-		//we are afk;
+	if (afk == afkb) {
 		logit('afk detected');
 		isAFK = true;
 	} 
 	else isAFK = false;
-	afk2 = afk;
+	afkb = afk;
 }
 /************** End Afk detector **************/
 
