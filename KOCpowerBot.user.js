@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304125f
+// @version        201304125g
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130425f';
+var Version = '20130425g';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13133,9 +13133,11 @@ function whisperlog(chatwrap) {
      var catchwhispers = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap);if']]);
      catchwhispers.setEnable(true);
 	} else {
+		if(isAFK) {
 		LoggedWhispers.push(chatwrap);
 		saveWhisper();
 		//logit(inspect(chatwrap));
+	};
 	};
   };
 unsafeWindow.whisperlog = whisperlog;
