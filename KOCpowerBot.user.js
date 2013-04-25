@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304125b
+// @version        201304125d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130425b';
+var Version = '20130425d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -866,7 +866,6 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 		saveOptions();
 		new GESeverytenmin(unixtime);	
 	};  
-	new Tabs.Throne.rotatethrone();
 		//start window open in other browser warning auto click
 		if(Options.WWclick) {
 			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal1');
@@ -881,7 +880,8 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 };
 
 function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
-	//new detafk();
+	new detafk();
+	new Tabs.Throne.rotatethrone();
 };
 
 function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
@@ -3540,6 +3540,32 @@ rotatethrone : function () {
 	var t = Tabs.Throne;
 	if(isAFK && !Options.alertConfig.RecentActivity){
 		var activeSlot = Number(Seed.throne.activeSlot);
+		
+		var foundone = false;
+	for(k=activeSlot+1;k <  Number(Seed.throne.slotNum);k++){
+				if(ThroneOptions.autotoggle[k]) {
+				t.doPreset(k);
+				foundone = true;
+				break;
+			}
+	}
+	
+	if(!foundone) {
+		for(k = 1;k<Number(Seed.throne.slotNum);k++){
+				if(ThroneOptions.autotoggle[k]) {
+				t.doPreset(k);
+				foundone = true;
+				break;
+			}
+		}
+	}
+		
+		
+		
+		/***
+		
+Complex loop that browsers can't handle =/. replaced with multiple loops above.		
+		
 			for (k=activeSlot+1;k != activeSlot;k++) {
 				if(k > Number(Seed.throne.slotNum)) k = 1;
 				//logit('k is '+k);
@@ -3548,6 +3574,10 @@ rotatethrone : function () {
 				break;
 			}
 		}
+		
+		***/
+		
+		
 	}
 },
 
@@ -13063,8 +13093,11 @@ var WideScreen = {
 /*******************  Whisper ****************/
 function whisperlog(chatwrap) {
 	if(!chatwrap) {
-   var catchwhispers = new CalterUwFunc ('Chat.Methods.getChat', [[/if\(\w\=\=\d\|\|\w\=\=\d\)/,' if(i == 3)whisperlog(chatwrap);if(i == 3 || i == 2)'],[/\$/,'jQuery']]);
-     catchwhispers.setEnable(true);
+   //var catchwhispers = new CalterUwFunc ('Chat.Methods.getChat', [[/cm/g,'unsafeWindow.cm']][/if\(i==3\|\|i==2\)/,'if(i==3||i==2)']);
+   //,[/if\(\w\=\=\d\|\|\w\=\=\d\)/,' if(i == 3)whisperlog(chatwrap);if(i == 3 || i == 2)'],[/\$/,'unsafeWindow.jQuery']]);
+   
+     var catr = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap);if']]);
+     catr.setEnable(true);
 	} else {
 		logit(inspect(chatwrap));
 	};
