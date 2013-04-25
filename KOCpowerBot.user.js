@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304125d
+// @version        201304125e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130425d';
+var Version = '20130425e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -449,6 +449,7 @@ var CombatOptions = {
                {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
 }
 
+
 // Get element by id shortform with parent node option
 function $(ID,root) {return (root||document).getElementById(ID);}
 
@@ -837,8 +838,9 @@ function pbStartup (){
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
   ChatComOverlay();
   GuardianTT();
- if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
- afkwatcher();
+	if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
+	afkwatcher();
+	whisperlog();
 }
 
 
@@ -13091,15 +13093,48 @@ var WideScreen = {
 }
 
 /*******************  Whisper ****************/
+var LoggedWhispers = [];
+
+
+function saveWhisper (){
+  var serverID = getServerId();
+  setTimeout (function (){GM_setValue ('Whisper_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(LoggedWhispers));}, 0);
+}
+
+function readWhisper (){
+  var serverID = getServerId();
+  s = GM_getValue ('Whisper_'+Seed.player['name']+'_'+serverID, '[]');
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          LoggedWhispers[k][kk] = opts[k][kk];
+      else
+        LoggedWhispers[k] = opts[k];
+    }
+  }
+}
+
+function postWhisper () {
+	for(k = 0;k<LoggedWhispers.length;k++)
+	document.getElementById('mod_comm_list2').insertBefore(LoggedWhispers[k],document.getElementById('mod_comm_list2').firstChild);
+};
+
+function eraseWhisper () {
+	LoggedWhispers = [];
+	saveWhisper();
+};
+
+
 function whisperlog(chatwrap) {
 	if(!chatwrap) {
-   //var catchwhispers = new CalterUwFunc ('Chat.Methods.getChat', [[/cm/g,'unsafeWindow.cm']][/if\(i==3\|\|i==2\)/,'if(i==3||i==2)']);
-   //,[/if\(\w\=\=\d\|\|\w\=\=\d\)/,' if(i == 3)whisperlog(chatwrap);if(i == 3 || i == 2)'],[/\$/,'unsafeWindow.jQuery']]);
-   
-     var catr = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap);if']]);
-     catr.setEnable(true);
+     var catchwhispers = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap);if']]);
+     catchwhispers.setEnable(true);
 	} else {
-		logit(inspect(chatwrap));
+		LoggedWhispers.push(chatwrap);
+		saveWhisper();
+		//logit(inspect(chatwrap));
 	};
   };
 unsafeWindow.whisperlog = whisperlog;

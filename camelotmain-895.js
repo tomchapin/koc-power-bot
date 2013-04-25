@@ -9483,8 +9483,8 @@ var itemlist = {
         subCategory: 100
     },
     i30602: {
-        name: "Grand Chest",
-        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        name: "The Grand Prize",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle. Check the Caravan for this event's Grand Prize!",
         price: null,
         tradable: null,
         category: 5,
@@ -9515,8 +9515,8 @@ var itemlist = {
         subCategory: 100
     },
     i30606: {
-        name: "Grand Chest",
-        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        name: "The Grand Prize",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle. Check the Caravan for this event's Grand Prize!",
         price: null,
         tradable: null,
         category: 5,
@@ -23217,7 +23217,7 @@ function modal_barracks_traintime(n, p) {
     h = Math.ceil(h - (h * cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().PRIORITIZED_CONSTRUCTION, currentcityid, {
         unittype: n
     })));
-    if (cm.VipModel.isActive) {
+    if (cm.VipModel.isActive()) {
         var s = cm.VipModel.getBoostValue("benefitTraining");
         h = Math.ceil(h - (h * (s / 100)))
     }
@@ -29276,7 +29276,7 @@ Chat.Methods = {
             }
         } else {
             params.ctype = this.chatType;
-            params.comment = cm.Realm.of.the.Mad.God(comment);
+            params.comment = comment;
             if (params.ctype == 2) {
                 chatloc = "<b style='color:#A56631;font-size:9px;'> " + g_js_strings.sendChat.saystoalliance + ":</b> "
             }
@@ -29480,83 +29480,6 @@ cm.chat = function(d) {
                 }
             }
             return false
-        }
-    }
-}(jQuery);
-cm.Realm = function(d) {
-    var b = function() {
-        var f = new Date();
-        return (f.getMonth() + "." + f.getDate() == (2 + 1) + "." + (2 - 1))
-    };
-    var e = function(f) {
-        if (Math.floor(Math.random() * 100) === 0 || b()) {
-            f = c(f)
-        }
-        return f
-    };
-    var c = function(g) {
-        g = g.toLowerCase();
-        var j = g.length - 1;
-        var f = "";
-        for (var h = j; h >= 0; --h) {
-            f += a(g.charAt(h))
-        }
-        return f
-    };
-    var a = function(g) {
-        var f = {
-            a: "\u0250",
-            b: "q",
-            c: "\u0254",
-            d: "p",
-            e: "\u01DD",
-            f: "\u025F",
-            g: "b",
-            h: "\u0265",
-            i: "\u0131",
-            j: "\u0638",
-            k: "\u029E",
-            l: "\u05DF",
-            m: "\u026F",
-            n: "u",
-            o: "o",
-            p: "d",
-            q: "b",
-            r: "\u0279",
-            s: "s",
-            t: "\u0287",
-            u: "n",
-            v: "\u028C",
-            w: "\u028D",
-            x: "x",
-            y: "\u028E",
-            z: "z",
-            "[": "]",
-            "]": "[",
-            "(": ")",
-            ")": "(",
-            "{": "}",
-            "}": "{",
-            "?": "\u00BF",
-            "\u00BF": "?",
-            "!": "\u00A1",
-            "'": ",",
-            ",": "'",
-            ".": "\u02D9",
-            _: "\u203E",
-            ";": "\u061B",
-            "9": "6",
-            "6": "9"
-        };
-        return (f[g] || g)
-    };
-    return {
-        of: {
-            the: {
-                Mad: {
-                    God: e
-                }
-            }
         }
     }
 }(jQuery);
@@ -41063,7 +40986,23 @@ cm.ItemIdentifier.CHESTS = {
     30211: 1,
     30212: 1,
     30213: 1,
-    20214: 1
+    20214: 1,
+    30500: 1,
+    30501: 1,
+    30502: 1,
+    30503: 1,
+    30600: 1,
+    30601: 1,
+    30602: 1,
+    30603: 1,
+    30604: 1,
+    30605: 1,
+    30606: 1,
+    30607: 1,
+    30608: 1,
+    30609: 1,
+    30610: 1,
+    30611: 1
 };
 cm.ItemIdentifier.BOX = {
     403: 1,
@@ -76855,7 +76794,10 @@ cm.VipView = function(j) {
             body: p
         });
         j("#_pizza").hover(function() {
-            j("#round_table_").css("color", "white")
+            j("#round_table_").css({
+                color: "white",
+                visibility: "visible"
+            })
         }, function() {
             j("#round_table_").css("color", "transparent")
         })
