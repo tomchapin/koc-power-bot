@@ -854,11 +854,11 @@ function GlobalEachSecond () {
 };
 
 function GESeverymin (unixtime) {//put functions here to execute every min
-	if(a2min == -1) a2min = 	Number(unixtime+2*60);
-	if(a2min < unixtime) {
-		a2min = 	Number(unixtime+2*60);
-		new GESevery2min(unixtime);
-	};
+	//if(a2min == -1) a2min = Number(unixtime+2*60);
+	//if(a2min < unixtime) {
+	//	a2min = Number(unixtime+2*60);
+	//	new GESevery2min(unixtime);
+	//};
 	if(Options.GESeverytenmin < unixtime) {
 	  	Options.GESeverytenmin = Number(unixtime+10*60);
 		saveOptions();
@@ -3541,6 +3541,7 @@ rotatethrone : function () {
 		var activeSlot = Number(Seed.throne.activeSlot);
 			for (k=activeSlot+1;k != activeSlot;k++) {
 				if(k > Number(Seed.throne.slotNum)) k = 1;
+				//logit('k is '+k);
 				if(ThroneOptions.autotoggle[k]) {
 				t.doPreset(k);
 				break;
@@ -13058,7 +13059,21 @@ var WideScreen = {
   },
 }
 
-/*******************   Chat tab ****************/
+/*******************  Whisper ****************/
+function whisperlog(chatwrap) {
+	if(!chatwrap) {
+   var catchwhispers = new CalterUwFunc ('Chat.Methods.getChat', [[/if\(\w\=\=\d\|\|\w\=\=\d\)/,' if(i == 3)whisperlog(chatwrap);if(i == 3 || i == 2)'],[/\$/,'jQuery']]);
+     catchwhispers.setEnable(true);
+	} else {
+		logit(inspect(chatwrap));
+	};
+  };
+unsafeWindow.whisperlog = whisperlog;
+/*******************  End Whisper ****************/
+
+
+
+/*******************  Chat tab ****************/
 Tabs.Chat = {
   tabOrder : 300,
   tabLabel : unsafeWindow.g_js_strings.commonstr.chat,
