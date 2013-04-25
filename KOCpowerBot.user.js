@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304125g
+// @version        201304125h
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130425g';
+var Version = '20130425h';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13098,8 +13098,8 @@ var LoggedWhispers = [];
 
 function saveWhisper (){
   var serverID = getServerId();
-  setTimeout (function (){GM_setValue ('Whisper_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(LoggedWhispers));}, 0);
-}
+   setTimeout (function (){GM_setValue ('Whisper_' + Seed.player['name'] + '_' +serverID, LoggedWhispers);}, 0);
+};
 
 function readWhisper (){
   var serverID = getServerId();
@@ -13114,11 +13114,20 @@ function readWhisper (){
         LoggedWhispers[k] = opts[k];
     }
   }
-}
+};
 
 function postWhisper () {
-	for(k = 0;k<LoggedWhispers.length;k++)
-	document.getElementById('mod_comm_list2').insertBefore(LoggedWhispers[k],document.getElementById('mod_comm_list2').firstChild);
+	var mod_comm_list2 = document.getElementById('mod_comm_list2');
+	var mod_comm_list1 = document.getElementById('mod_comm_list1')
+	for(k = 0;k<LoggedWhispers.length;k++) {
+		
+		
+       var chatwrap2 = document.createElement("div");
+            chatwrap2.className = "chatwrap clearfix direct";
+            chatwrap2.innerHTML = LoggedWhispers[k];
+	mod_comm_list2.insertBefore(chatwrap2,mod_comm_list2.firstChild);
+	//mod_comm_list1.insertBefore(chatwrap2,mod_comm_list1.firstChild);
+};
 };
 
 function eraseWhisper () {
@@ -13127,14 +13136,14 @@ function eraseWhisper () {
 };
 
 
-function whisperlog(chatwrap) {
-	if(!chatwrap) {
+function whisperlog(innerHTML) {
+	if(!innerHTML) {
 		readWhisper();
-     var catchwhispers = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap);if']]);
+     var catchwhispers = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap.innerHTML);if']]);
      catchwhispers.setEnable(true);
 	} else {
 		if(isAFK) {
-		LoggedWhispers.push(chatwrap);
+		LoggedWhispers.push(innerHTML);
 		saveWhisper();
 		//logit(inspect(chatwrap));
 	};
