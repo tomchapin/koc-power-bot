@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304125h
+// @version        201304125i
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130425h';
+var Version = '20130425i';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13093,6 +13093,35 @@ var WideScreen = {
 }
 
 /*******************  Whisper ****************/
+
+
+Tabs.Whisper = {
+   tabOrder: 199999,
+   tabDisabled : false,
+   tabLabel : 'Whisper',
+   myDiv : null,
+   
+   init : function (div) {
+      var t = Tabs.Whisper;
+      t.myDiv = div;
+      var m = '<DIV class=pbStat>Logged whispers while afk</div><br>';
+		m += '<table><tr><td><INPUT id=pbpostwh type=submit value="Show logged whispers" \></td><td><INPUT id=pbdelwh type=submit value="Delete Logged Whispers" \></td></tr></table>';      
+      div.innerHTML = m;
+      
+      document.getElementById('pbpostwh').addEventListener ('click', function() {postWhisper()}, false);
+      
+      document.getElementById('pbdelwh').addEventListener ('click', function() {eraseWhisper()} , false);
+      
+   },
+  hide : function (){
+    var t = Tabs.Whisper;
+  },
+
+  show : function (){
+    var t = Tabs.Whisper;
+  },  
+}
+
 var LoggedWhispers = [];
 
 
