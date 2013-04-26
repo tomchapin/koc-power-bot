@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304125i
+// @version        201304125j
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130425i';
+var Version = '20130425j';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -791,8 +791,7 @@ function pbStartup (){
     var c = getClientCoords (document.getElementById('main_engagement_tabs'));
     Options.pbWinPos.x = c.x+4;
     saveOptions ();
-    
-    
+
     
   }
 
@@ -842,7 +841,6 @@ function pbStartup (){
 	afkwatcher();
 	whisperlog();
 }
-
 
 /*************** Timer ******************/
 var GESeachmin = 0;
@@ -7456,7 +7454,7 @@ Tabs.transport = {
         m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
         m += '<TD id=Calc colspan=3></td></tr>';
         m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png" alt="Food"></td>';
         m += '<TD id=TransRec1 align=right width=110px></td>';
         m += '<TD id=HaveRec1 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
@@ -7464,7 +7462,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png" alt="Wood"></td>';
         m += '<TD id=TransRec2 align=right width=110px></td>';
         m += '<TD id=HaveRec2 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
@@ -7472,7 +7470,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png" alt="Stone"></td>';
         m += '<TD id=TransRec3 align=right width=110px></td>';
         m += '<TD id=HaveRec3 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
@@ -7480,7 +7478,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png" alt="Iron"></td>';
         m += '<TD id=TransRec4 align=right width=110px></td>';
         m += '<TD id=HaveRec4 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
@@ -7488,7 +7486,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td>';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png" alt="Aether"></td>';
         m += '<TD id=TransRec5 align=right width=110px></td>';
         m += '<TD id=HaveRec5 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
@@ -7496,7 +7494,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td>';
+        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png" alt="Gold"></td>';
         m += '<TD id=TransGold align=right width=110px></td>';
         m += '<TD id=HaveGold align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
@@ -8076,12 +8074,12 @@ Tabs.transport = {
             m += '<TR><TD width=20px>' + (i + 1) + '</td><TD width=175px>' + translate("From:") + '&nbsp;&nbsp;' + cityname + '</TD><TD width=175px>' + translate("To:") + '&nbsp;&nbsp;' + TO + '</td><TD width=175px>' + status + '</td>';
             m += '<TD width=60px><A onclick="traceEdit(' + queueId + ')">' + translate("Edit") + '</a></td><TD width=60px><A onclick="traceDelete(' + queueId + ')">Delete</a></td></tr>';
             m += '<TR><TD></td><TD>Troops:&nbsp;&nbsp;' + unsafeWindow.unitcost[unit][0] + '</td></tr>';
-            if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Food) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Food) + '</td>';
-            if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Wood) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Wood) + '</td>';
-            if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Stone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Stone) + '</td>';
-            if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Ore) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Ore) + '</td>';
-            if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Astone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Astone) + '</td>';
-            if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Gold) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Gold) + '</td>';
+            if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png" alt="Food"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Food) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Food) + '</td>';
+            if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png" alt="Wood"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Wood) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Wood) + '</td>';
+            if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png" alt="Stone"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Stone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Stone) + '</td>';
+            if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png" alt="Iron"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Ore) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Ore) + '</td>';
+            if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png" alt="Aether"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Astone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Astone) + '</td>';
+            if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png" alt="Gold"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Gold) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Gold) + '</td>';
         }
         m += '</table>';
         document.getElementById('pbRoutesQueue')
