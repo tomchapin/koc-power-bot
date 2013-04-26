@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201304126b
+// @version        201304126c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130426b';
+var Version = '20130426c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -831,7 +831,7 @@ function pbStartup (){
   if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
    document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>\
 <a class="navTab" onclick=" window.open(\'https://kabam.secure.force.com/PKB/pkb_contactUs?game=All&lang=en_US&l=en_US\');"><span>Kabam</span></a>\
-<a class="navTab" onclick=" window.open(\'https://www.trialpay.com/social-support/fb/ \');"><span>Trialpay</span></a>';
+<a class="navTab" onclick=" window.open(\'https://www.trialpay.com/support/contactus/\');"><span>Trialpay</span></a>';
 
   if(Options.ThroneHUD)Tabs.Throne.ThroneHUDinit();
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
