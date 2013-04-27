@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
 // @version        201304126c
 // @namespace      mat
@@ -7885,8 +7885,7 @@ Tabs.transport = {
         }
         11,792,500,000 12292500000   35734.8  37250
         **/
-        
-        if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100))
+                if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100))
         loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
         loadBoostBase += 1;
         loadBoostBase += featherweight; //Should be done after throne room max check to get max boost?
@@ -18331,7 +18330,7 @@ Tabs.Inventory = {
 /**************************** Start Up Tab ******************************************/
 
 var buildingIDs = {
-    Farm:1,Mine:4,Quarry:3,Sawmill:2,Castle:0,Wall:19,Barracks:13,Cottage:5,RelStat:18,Stable:17,Blacksmith:15,KnightsHall:7,Workshop:16,FeySpire:20,Apothecary:21,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,Wall:19
+    Farm:1,Mine:4,Quarry:3,Sawmill:2,Castle:0,Wall:19,Barracks:13,Cottage:5,RelStat:18,Stable:17,Blacksmith:15,KnightsHall:7,Workshop:16,FeySpire:20,Apothecary:21,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,WatchTower:14
     };
 var buildingTypes = {
     type5:"Cottage",type6:"",type7:"KnightsHall",type8:"Embassy",type9:"",type10:"",type11:"AlcLab",type12:"RallyPoint",type13:"Barracks",type14:"WatchTower",type15:"Blacksmith",type16:"Workshop",type17:"Stable",type18:"RelStation",type19:"Wall",type20:"FeySpire",type21:"Apothecary",
@@ -18349,10 +18348,10 @@ var fieldlayoutOptions = {
     pos100:"Farm",pos101:"Sawmill",pos104:"Quarry",pos105:"Mine",pos102:"Mine",pos103:"Mine",pos106:"Mine",pos107:"Mine",pos108:"Mine",pos109:"Mine",pos110:"Mine",pos111:"Mine",pos112:"Mine",pos113:"Mine",pos114:"Mine",pos115:"Mine",pos116:"Mine",pos117:"Mine",pos118:"Mine",pos119:"Mine",pos120:"Mine",pos121:"Mine",pos122:"Mine",pos123:"Mine",pos124:"Mine",pos125:"Mine",pos126:"Mine",pos127:"Mine",pos128:"Mine",pos129:"Mine",pos130:"Mine",pos131:"Mine",pos132:"Mine",pos133:"Mine",pos134:"Mine",pos135:"Mine",pos136:"Mine",pos137:"Mine",pos138:"Mine",pos139:"Mine",pos142:"Mine"
     };  
 var AscbuildingIDs = {
-    Castle:0,Wall:19,Barracks:13,Cottage:5,KnightsHall:7,FeySpire:20,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,Wall:19,Market:10
+    Castle:0,Wall:19,Barracks:13,Cottage:5,KnightsHall:7,FeySpire:20,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,Wall:19,Market:10,Apothecary:21,WatchTower:14
     };
 var AscbuildingTypes = {
-    type5:"Cottage",type6:"",type7:"KnightsHall",type8:"Embassy",type9:"",type10:"Market",type11:"AlcLab",type12:"RallyPoint",type13:"Barracks",type14:"WatchTower",type19:"Wall",type20:"FeySpire"
+    type5:"Cottage",type6:"",type7:"KnightsHall",type8:"Embassy",type9:"",type10:"Market",type11:"AlcLab",type12:"RallyPoint",type13:"Barracks",type14:"WatchTower",type19:"Wall",type20:"FeySpire",type21:"Apothecary"
 };
 var AsccityBuildingNames = {
     Wall:"Wall",Cottage:"Cottage",Barracks:"Barracks",Apothecary:"Apothecary",FeySpire:"Fey Spire",Embassy:"Embassy",AlcLab:"Alchemy Lab",WatchTower:"Watch Tower",KnightsHall:"Knights Hall",RallyPoint:"Rally Point",Market:"Market"
@@ -18619,15 +18618,24 @@ Tabs.startup = {
         t.myDiv = cityDiv;
         t.where = "City";
         var counter = 0;
-   var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
+   	var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
         var cityGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/CityTileIDs.jpg">';
-   var asccityGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/AscCityTileIDs.jpg">';
+   	var asccityGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/AscCityTileIDs.jpg">';
+	var asccityfeyGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/AscCityFeyTileIDs.jpg">';
+	var asccitybritGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/AscCityBritonTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
-   if(AscCityInd == true) {
-      document.getElementById('gridPicture').innerHTML = asccityGrid;
-   } else {
-      document.getElementById('gridPicture').innerHTML = cityGrid;
-   }
+	if(AscCityInd == true) {
+		varAscCityType=Seed.cityData.city[t.city.city.id].prestigeInfo.prestigeType;
+		if (varAscCityType == 1) {
+			document.getElementById('gridPicture').innerHTML = asccityGrid;
+		} else if (varAscCityType == 2) {
+			document.getElementById('gridPicture').innerHTML = asccityfeyGrid;
+		} else {
+			document.getElementById('gridPicture').innerHTML = asccitybritGrid;
+		}
+	} else {
+		document.getElementById('gridPicture').innerHTML = cityGrid;
+	}
         var message='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showDefaults type=submit value="Load Defaults"><INPUT id=setDefaults type=submit value="Set Defaults">';
 
         for (k=1;k<=32;k++){
