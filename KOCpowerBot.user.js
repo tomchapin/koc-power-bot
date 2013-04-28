@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        201304127a
+// @version        201304128a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130427a';
+var Version = '20130428a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -12731,7 +12731,7 @@ Tabs.AutoTrain = {
     if (!TrainOptions.Running) return;
     if (TrainOptions.tr && TrainOptions.trset != 0) {
         if (Seed.throne.activeSlot != TrainOptions.trset) {
-           setTimeout(t.nextcity, 60000);
+           setTimeout(t.nextcity, 20*000);
             return;
             };
         };
@@ -19717,12 +19717,12 @@ var March = {
       var now = unixTime();
       if (Seed.playerEffects.aurasExpire) {
          if (Seed.playerEffects.aurasExpire > now) {
-            buff += 1.15
+            buff += 0.15
          }
       }
       if (Seed.playerEffects.auras2Expire) {
          if (Seed.playerEffects.auras2Expire > now) {
-            buff += 1.3
+            buff += 0.3
          }
       }
       var tr = Math.floor(equippedthronestats(66));
