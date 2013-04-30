@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130430b
+// @version        20130430c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130430b';
+var Version = '20130430c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21381,6 +21381,7 @@ function demist() {
 
 //remove the bookmark
 function removeBM(id1) {
+   var uW = unsafeWindow;
 
    var id = id1.split("a")[1];
    var params = uW.Object.clone(uW.g_ajaxparams);
