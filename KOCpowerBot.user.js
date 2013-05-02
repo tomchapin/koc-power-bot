@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130502d
+// @version        20130502e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130502d';
+var Version = '20130502e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -7561,8 +7561,10 @@ Tabs.transport = {
             .addEventListener('click', function () {
             t.Food = 0;
             if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountFood')
@@ -7574,8 +7576,10 @@ Tabs.transport = {
             .addEventListener('click', function () {
             t.Wood = 0;
             if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountWood')
@@ -7587,8 +7591,10 @@ Tabs.transport = {
             .addEventListener('click', function () {
             t.Stone = 0;
             if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountStone')
@@ -7600,8 +7606,10 @@ Tabs.transport = {
             .addEventListener('click', function () {
             t.Ore = 0;
             if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountOre')
@@ -7613,8 +7621,10 @@ Tabs.transport = {
             .addEventListener('click', function () {
             t.Gold = 0;
             if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountGold')
@@ -7622,12 +7632,13 @@ Tabs.transport = {
                 .innerHTML)) ? input : parseIntCommas(document.getElementById('TransGold')
                 .innerHTML);
         }, false);
-        document.getElementById('MaxAstone')
-            .addEventListener('click', function () {
+        document.getElementById('MaxAstone').addEventListener('click', function () {
             t.Astone = 0;
             if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountAstone')
