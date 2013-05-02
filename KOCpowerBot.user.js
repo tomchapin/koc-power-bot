@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130502e
+// @version        20130502f
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130502e';
+var Version = '20130502f';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4888,7 +4888,7 @@ Tabs.build = {
         t.buildStates = {
             running: false,
             help: false,
-            tr :	false,
+            tr :	false,Build Imp
             trset :	0,
         };
         t.readBuildStates();
@@ -5559,6 +5559,10 @@ Tabs.build = {
         }
         if (t.currentBuildMode == "destruct") {
             var buildingMode = "destruct";
+            if(buildingLevel > 9) {
+            	t.modalmessage(translate('Due to building requirements (DI), buildings above level 9\nshould be manualy destructed.'));
+            	return;
+            };
             var result = t.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
             var buildingMult = result[0];
             var buildingTime = result[1];
