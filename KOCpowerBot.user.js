@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130430c
+// @version        20130502a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130430c';
+var Version = '20130502a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -5340,6 +5340,8 @@ Tabs.build = {
 								unsafeWindow.update_seed_ajax();
 								a = "Construction is already starting.";
 								break;
+							case 3://Unknown issue when updating your game, please try again
+								break;
 							case 8:
 								a = "Excess traffic.";
 								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server);
@@ -5427,6 +5429,8 @@ Tabs.build = {
 								unsafeWindow.g_update_seed_ajax_do = true;
 								unsafeWindow.update_seed_ajax();
 								a = "Construction is already starting.";
+								break;
+							case 3://Unknown issue when updating your game, please try again
 								break;
 							case 8:
 								a = "Excess traffic.";
