@@ -4888,7 +4888,7 @@ Tabs.build = {
         t.buildStates = {
             running: false,
             help: false,
-            tr :	false,Build Imp
+            tr :	false,
             trset :	0,
         };
         t.readBuildStates();
