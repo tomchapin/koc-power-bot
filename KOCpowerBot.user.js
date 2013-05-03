@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130502f
+// @version        20130503a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130502f';
+var Version = '20130503a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4855,7 +4855,8 @@ var buildTabTypes = {
     type19: "Wall",
     type20: "FeySpire",
     type21: "Apothecary",
-    type0: "Castle"
+    type0: "Castle",
+    type666: "Wallet Gremlins"
 };
 Tabs.build = {
     tabOrder: 20,
@@ -5340,9 +5341,9 @@ Tabs.build = {
 							case 0:
 								a = "Unexpected Error.";
 								break;
-							case 2://lets try update seed to fix the missing build?
-								unsafeWindow.g_update_seed_ajax_do = true;
-								unsafeWindow.update_seed_ajax();
+							case 2://lets try update seed to fix the missing build
+								unsafeWindow.buildingcost["bdg666"] = ["Wallet Gremlins", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
+								Seed.queue_con["city" + currentcityid].push([666, 666, 666, unsafeWindow.unixtime(), unsafeWindow.unixtime() + 5*60, 0, 5*60, 999]);
 								a = "Construction is already starting.";
 								break;
 							case 3://Unknown issue when updating your game, please try again
@@ -5431,8 +5432,8 @@ Tabs.build = {
 								a = "Unexpected Error.";
 								break;
 							case 2://lets try update seed to fix the missing build?
-								unsafeWindow.g_update_seed_ajax_do = true;
-								unsafeWindow.update_seed_ajax();
+								unsafeWindow.buildingcost["bdg666"] = ["Wallet Gremlins", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
+								Seed.queue_con["city" + currentcityid].push([666, 666, 666, unsafeWindow.unixtime(), unsafeWindow.unixtime() + 5*60, 0, 5*60, 999]);
 								a = "Construction is already starting.";
 								break;
 							case 3://Unknown issue when updating your game, please try again
@@ -21522,6 +21523,29 @@ function fetchPlayerInfo(uid, notify){
    });
 };
 
+function test101 (){
+	//ctrl=throneRoom%5CThroneRoomServiceAjax&action=getEquipped&playerId=14332094
+
+
+	      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+      params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
+      params.action = 'getEquipped';
+      params.playerId=14332094;
+            new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+               var rslt = eval("(" + transport.responseText + ")");
+               if(rslt.ok) {
+                  alert(inspect(rslt));
+               }
+            },
+            onFailure: function () {
+                  return;
+            },
+         });
+};
 
 /********* demist end ******/
 pbStartup ();
