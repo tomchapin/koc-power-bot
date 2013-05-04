@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130503a
+// @version        20130503b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130503a';
+var Version = '20130503b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10353,9 +10353,9 @@ Tabs.Barb = {
         z+='<TD>'+troopDef[i][0]+'</td>';
      z+='<TD>MIN dist</td><TD>MAX dist</td>';
      for(i=0;i<10;i++){
-         z += '<TR><TD>Level '+(i+1)+': </td>';
+         z += '<TR><TD>Level_'+(i+1)+': </td>';
          for(var j=0; j<troopDef.length; j++){
-             z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=4 maxlength=6 value="'+(AttackOptions.Troops[i+1][j+1]?AttackOptions.Troops[i+1][j+1]:0)+'" /></td>';
+             z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=6 maxlength=6 value="'+(AttackOptions.Troops[i+1][j+1]?AttackOptions.Troops[i+1][j+1]:0)+'" /></td>';
          }
         z+='<TD align=left><INPUT id=Mindist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.MinDistance[i+1]+'"</td>';
          z+='<TD align=right><INPUT id=dist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[i+1]+'"</td>';
@@ -10804,16 +10804,20 @@ Tabs.Barb = {
     var message = 'AutoDF Stats:' + '%0A';
     
       message += '%0A Aetherstone Gain (for '+ AttackOptions.MsgInterval +' hour(s) of DF hunting) %0A';
+      var totaldf = 0;
     for (q=1;q<=Seed.cities.length;q++){
         var cityID = 'city' + Seed.cities[q-1][0];
+        totaldf += Number(AttackOptions.BarbsDone[q]);
             message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks on ' + t.barbArray[q].length +' forests' + '%0A';        
-        var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOptions.AetherStatus[q];
+        var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOpt
+            message+= Seed.cities[q-1][1] + ': ' + ions.AetherStatus[q];
         message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.AetherStatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec5'][0] )) + ' Gain: ';
         message += addCommas(gain)  + '%0A';
         total += gain;
         AttackOptions.AetherStatus[q] = parseInt(Seed.resources[cityID]['rec5'][0] );
     }
     message += '%0A Total Aetherstone gain : '+addCommas(total)+'%0A';
+    message += '%0A Total outgoing attacks : '+addCommas(totaldf)+'%0A';
    for (z in AttackOptions.ItemsFound){
       message += '%0A'+unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFound[z];
    }
@@ -12452,8 +12456,8 @@ Tabs.AutoTrain = {
                     m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
             }
         m+='</select></td>';
-        m+='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=4 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
-        m+='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=max'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
+        m+='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
+        m+='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=max'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
         m +='<TD>'+translate("Use Workers")+': ';
         m+='<SELECT class='+city+' id="workers'+city+'"><option value="0">0%</options>';
         m+='<option value="25">25%</options>';
@@ -12487,13 +12491,13 @@ Tabs.AutoTrain = {
         m+='</td></tr></table>';        
         if(Seed.cityData.city[citynum].prestigeInfo.blessings) {
         if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(11) != -1) {
-         m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt13'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+         m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt13'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=6 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
       };
       if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(21) != -1) {
-         m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt14'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+         m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt14'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=6 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
       };
       if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(31) != -1) {
-         m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt15'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+         m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt15'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=6 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
       };
    }; 
         m+='</td></tr></table>';
@@ -21523,29 +21527,6 @@ function fetchPlayerInfo(uid, notify){
    });
 };
 
-function test101 (){
-	//ctrl=throneRoom%5CThroneRoomServiceAjax&action=getEquipped&playerId=14332094
-
-
-	      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-      params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
-      params.action = 'getEquipped';
-      params.playerId=14332094;
-            new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-            method: "post",
-            parameters: params,
-            loading: true,
-            onSuccess: function (transport) {
-               var rslt = eval("(" + transport.responseText + ")");
-               if(rslt.ok) {
-                  alert(inspect(rslt));
-               }
-            },
-            onFailure: function () {
-                  return;
-            },
-         });
-};
 
 /********* demist end ******/
 pbStartup ();
