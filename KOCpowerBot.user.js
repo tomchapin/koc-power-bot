@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130503b
+// @version        20130503c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130503b';
+var Version = '20130503c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -18671,7 +18671,7 @@ Tabs.startup = {
 	} else {
 		document.getElementById('gridPicture').innerHTML = cityGrid;
 	}
-        var message='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showDefaults type=submit value="Load Defaults"><INPUT id=setDefaults type=submit value="Set Defaults">';
+        var message='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showDefaults type=submit value="Load Defaults"> <INPUT id=setDefaults type=submit value="Set Defaults"> <INPUT id=loadCottages type=submit value="Load All Cottages"> <INPUT id=loadBarracks type=submit value="Load All Barracks">';
 
         for (k=1;k<=32;k++){
             if (k==1){
@@ -18729,6 +18729,32 @@ Tabs.startup = {
 
             }
             saveLayoutOptions();
+        });
+        document.getElementById('loadCottages').addEventListener('click', function(){
+            for (pos=2;pos<=32;pos++){
+                //logit(document.getElementById('tileID' + i).value)
+                if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+                    document.getElementById('tileID' + pos).value = "Cottage";
+                }else{
+                    //logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0]);
+
+                    document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
+                    document.getElementById('tileID' + pos).disabled = true;
+                }
+               }
+        });
+        document.getElementById('loadBarracks').addEventListener('click', function(){
+            for (pos=2;pos<=32;pos++){
+                //logit(document.getElementById('tileID' + i).value)
+                if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
+                    document.getElementById('tileID' + pos).value = "Barracks";
+                }else{
+                    //logit(unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0]);
+
+                    document.getElementById('tileID' + pos).value = unsafeWindow.buildingcost["bdg" + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]][0];
+                    document.getElementById('tileID' + pos).disabled = true;
+                }
+               }
         });
         //code for set buttons
     },
