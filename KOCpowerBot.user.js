@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130505b
+// @version        20130505c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130505b';
+var Version = '20130505c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3736,7 +3736,7 @@ Tabs.tower = {
         110: { 'country': "Philippines", 'provider': "Smart" },
         111: { 'country': "UNITED STATES", 'provider': "CellularSouth" },
         112: { 'country': "UNITED STATES", 'provider': "Viaero" },
-        113: { 'country': "CANADA", 'provider': "Wind Mobile" }
+        113: { 'country': "CANADA", 'provider': "Wind Mobile" },
         114: { 'country': "UNITED STATES", 'provider': "Sprint PCS" }
     },
   init: function(div){
