@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130504a
+// @version        20130504b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130504a';
+var Version = '20130504b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -868,15 +868,22 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 		new GESeverytenmin(unixtime);	
 	};  
 		//start window open in other browser warning auto click//cmModalContainer guardian_generic undefined cmModal1
-		if(Options.WWclick) {//class="cmModalContainer guardian_generic undefined cmModal1"
-			var x = unsafeWindow.jQuery("*[class^='cmModalContainer guardian_generic undefined cmModal']");
-			if(x.length > 0) {
-				for(y = 0; y < x.length;y++) {//You have Kingdoms of Camelot open in a newer window. If you have multiple connections to the same world open, please use your most recent window for the best experience and close this one.
-					if(String(x[y].innerHTML).indexOf("You have Kingdoms of Camelot open in a newer window. If you have multiple connections to the same world open, please use your most recent window for the best experience and close this one.") > -1){
-						unsafeWindow.cm.ModalManager.close();
-					}
-				};
-			}
+		if(Options.WWclick) {
+		//for (z =1;z<5;z++) {
+			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal1');
+			if(!x)
+			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal2');
+			if(!x)
+			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal3');
+			if(x)
+				if(x.length > 0) {
+					for(y = 0; y < x.length;y++) {
+						if(String(x[y].innerHTML).indexOf("You have Kingdoms of Camelot open in a newer window. If you have multiple connections to the same world open, please use your most recent window for the best experience and close this one.") > -1){
+							unsafeWindow.cm.ModalManager.close();
+						}
+					};
+				}
+			//}
 		};
 	//end window open in other browser warning auto click
 };
@@ -10809,9 +10816,8 @@ Tabs.Barb = {
     for (q=1;q<=Seed.cities.length;q++){
         var cityID = 'city' + Seed.cities[q-1][0];
         totaldf += Number(AttackOptions.BarbsDone[q]);
-            message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks on ' + t.barbArray[q].length +' forests' + '%0A';        
-        var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOpt
-            message+= Seed.cities[q-1][1] + ': ' + ions.AetherStatus[q];
+        message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks on ' + t.barbArray[q].length +' forests' + '%0A';        
+  		  var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOptions.AetherStatus[q];
         message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.AetherStatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec5'][0] )) + ' Gain: ';
         message += addCommas(gain)  + '%0A';
         total += gain;
