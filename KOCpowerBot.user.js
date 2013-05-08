@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130505d
+// @version        20130508a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130505d';
+var Version = '20130508a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -927,6 +927,7 @@ function afkwatcher () {
 	document.body.onkeypress = function(){afk++};
 };
 function detafk () {
+	logit('afk '+afk);
 	if (afk == afkb) {
 		logit('afk detected');
 		isAFK = true;
@@ -1995,6 +1996,7 @@ Tabs.Throne = {
       m+='<TABLE width=80% class=pbTab>';
       for (k in unsafeWindow.cm.thronestats.effects) {
         if(!ThroneOptions.SalvageA[k]) ThroneOptions.SalvageA[k] = {};
+        if(!ThroneOptions.SalvageA[k].Min) ThroneOptions.SalvageA[k].Min = 0;//fixing a mistake, Min must be defined.  
          m += '<TR><TD><A onclick="setFAV('+ k +')"><DIV class=pbSalvage_fav id=SalvageFAV'+k+'></div></td>';
          m += '<TD class=pbThrone><INPUT id=pbThroneItems'+k+' type=checkbox checked='+ (ThroneOptions.Salvage[k]?'CHECKED ':'') +'>'+ unsafeWindow.cm.thronestats.effects[k][1] +'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][3]+'</td><TD width="4">'+ unsafeWindow.cm.thronestats.effects[k][2]+'</td>\
          <td></td><td class=pbThroneST><select id='+k+'>';
@@ -2098,6 +2100,7 @@ Tabs.Throne = {
     var element_class = document.getElementsByClassName('pbThrone');
     var element_classTS = document.getElementsByClassName('pbThroneS');
     var element_classST = document.getElementsByClassName('pbThroneST');
+    
     for (k=0;k<element_class.length;k++){
       element_class[k].addEventListener('click', t.saveSalvageOptions , false);
       element_classTS[k].addEventListener ('change', function(e){
@@ -4865,7 +4868,7 @@ var buildTabTypes = {
     type20: "FeySpire",
     type21: "Apothecary",
     type0: "Castle",
-    type666: "Wallet Gremlins"
+    type666: "Lucylastic"
 };
 Tabs.build = {
     tabOrder: 20,
@@ -5355,7 +5358,7 @@ Tabs.build = {
 								a = "Unexpected Error.";
 								break;
 							case 2://lets try update seed to fix the missing build
-								unsafeWindow.buildingcost["bdg666"] = ["Wallet Gremlins", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
+								unsafeWindow.buildingcost["bdg666"] = ["Lucylastic", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
 								Seed.queue_con["city" + currentcityid].push([666, 666, 666, unsafeWindow.unixtime(), unsafeWindow.unixtime() + 5*60, 0, 5*60, 999]);
 								a = "Construction is already starting.";
 								break;
@@ -5445,7 +5448,7 @@ Tabs.build = {
 								a = "Unexpected Error.";
 								break;
 							case 2://lets try update seed to fix the missing build?
-								unsafeWindow.buildingcost["bdg666"] = ["Wallet Gremlins", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
+								unsafeWindow.buildingcost["bdg666"] = ["Lucylastic", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
 								Seed.queue_con["city" + currentcityid].push([666, 666, 666, unsafeWindow.unixtime(), unsafeWindow.unixtime() + 5*60, 0, 5*60, 999]);
 								a = "Construction is already starting.";
 								break;
