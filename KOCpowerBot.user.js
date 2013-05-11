@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130508a
+// @version        20130511a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130508a';
+var Version = '20130511a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -8153,7 +8153,7 @@ Tabs.transport = {
         n += '</select></td></table><BR><TABLE  id=editRoutes class=pbTab>';
         for (var i = 0; i < Types.length; i++) {
             var icon = Types[i];
-            n += '<TR><TD width=50px align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/' + icon + '_30.png"></td>';
+            n += '<TR><TD width=50px align=center><img alt="' + icon + '" src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/' + icon + '_30.png"></td>';
             n += '<TD width=50px align=center><INPUT id=pbbship' + icon + ' type=checkbox></td>';
             n += '<TD width=125px>' + translate("Keep:") + ' <INPUT id=pbbtargetamount' + icon + ' type=text size=11 maxlength=11 value="0"></td>';
             n += '<TD width=125px>' + translate("Trade:") + ' <INPUT id=pbbtradeamount' + icon + ' type=text size=11 maxlength=11 value="0"\></td></tr>';
