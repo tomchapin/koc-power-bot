@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
 // @version        20130511a
 // @namespace      mat
@@ -7934,7 +7934,7 @@ Tabs.transport = {
         var LoadUnit = Math.floor(loadBoostBase*Load);
         var GlobalMaxLoad = t.Troops * LoadUnit;
         t.MaxLoad = parseInt(document.getElementById('TroopsToSend').value) * LoadUnit;
-	t.MaxLoad = Math.floor(t.MaxLoad + 0.001);  // Lessen issues with roundoff errors
+	t.MaxLoad = Math.floor(t.MaxLoad);  // Lessen issues with roundoff errors
         t.TroopsNeeded = (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit;
         t.TroopsNeeded = t.TroopsNeeded.toFixed(0);
         if (t.TroopsNeeded < ((t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit)) t.TroopsNeeded++;
