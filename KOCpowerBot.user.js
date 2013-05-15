@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130513a
+// @version        20130515a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130513a';
+var Version = '20130515a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -886,6 +886,7 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 			//}
 		};
 	//end window open in other browser warning auto click
+		new Tabs.Throne.throneHUDredraw();
 };
 
 function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
@@ -3548,6 +3549,23 @@ TTpoststats : function () {
 
 },
 
+throneHUDredraw : function () {
+	var trm = unsafeWindow.seed.throne.activeSlot;
+			if(document.getElementById('tra'+trm)) {
+				for(a = 1;a <= Seed.throne.slotNum;a++)
+				document.getElementById('tra'+a).disabled = false;
+               document.getElementById('tra'+trm).disabled = true;
+			};
+			 if(document.getElementById('ThroneHUD')) {
+				for(a = 1;a <= Seed.throne.slotNum;a++) {
+				document.getElementById('htra'+a).disabled = false;
+				document.getElementById('htra'+a).className = "pbttabs";
+			};
+				document.getElementById('htra'+trm).disabled = true;
+				document.getElementById('htra'+trm).className = "pbttabsdis";
+			};	
+},
+
 rotatethrone : function () {
 	var t = Tabs.Throne;
 	if(isAFK && !Options.alertConfig.RecentActivity){
@@ -4099,7 +4117,9 @@ Tabs.tower = {
                   if(Options.SaveState.crest && !Options.crestRunning)Tabs.Attack.toggleCrestState();
                };
                if (Options.SaveState.trset != Seed.throne.activeSlot)
+               if(Options.alertConfig.AFK) {
                   if(isAFK)Tabs.Throne.doPreset(Options.SaveState.trset);
+               } else Tabs.Throne.doPreset(Options.SaveState.trset);
                Options.alertConfig.RecentActivity = false;
                saveOptions();
             }
