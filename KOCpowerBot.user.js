@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130518a
+// @version        20130521a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130518a';
+var Version = '20130521a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2492,6 +2492,7 @@ FillEquipCheckboxes: function(){
 },
 doPreset : function (room, retry) {
         var t = Tabs.Throne;    
+        actionLog('changing to tr '+room);
    if(isNaN(retry))retry=0;
    if(retry > 15) {if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Giving Up</font>";return;};
    /***
@@ -3570,9 +3571,8 @@ rotatethrone : function () {
 	var t = Tabs.Throne;
 	if(isAFK && !Options.alertConfig.RecentActivity){
 		var activeSlot = Number(Seed.throne.activeSlot);
-		
 		var foundone = false;
-	for(k=activeSlot+1;k <  Number(Seed.throne.slotNum);k++){
+	for(k=activeSlot+1;k <=  Number(Seed.throne.slotNum);k++){
 				if(ThroneOptions.autotoggle[k]) {
 				t.doPreset(k);
 				foundone = true;
@@ -3581,7 +3581,7 @@ rotatethrone : function () {
 	}
 	
 	if(!foundone) {
-		for(k = 1;k<Number(Seed.throne.slotNum);k++){
+		for(k = 1;k<=Number(Seed.throne.slotNum);k++){
 				if(ThroneOptions.autotoggle[k]) {
 				t.doPreset(k);
 				foundone = true;
