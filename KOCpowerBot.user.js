@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130522a
+// @version        20130522b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130522a';
+var Version = '20130522b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10084,12 +10084,7 @@ Tabs.AutoCraft = {
       clearInterval(t.timer);
       return;
      }
-     if (TrainOptions.actr && TrainOptions.actrset != 0) {
-          if (Seed.throne.activeSlot != TrainOptions.actrset) {
-             // wrong TR equipped
-            return;
-        };
-     };
+
      if (t.numcity<Cities.numCities-1) {
            t.numcity++;
          } else {
@@ -10148,7 +10143,12 @@ Tabs.AutoCraft = {
            return;
           }
      }
-     t.CraftingItem(cityId,  itemId, recipeId, category);
+     
+     if (TrainOptions.actr) {
+        if (Number(Seed.throne.activeSlot) == Number(TrainOptions.actrset)) {
+     			t.CraftingItem(cityId,  itemId, recipeId, category);
+        };
+     } else t.CraftingItem(cityId,  itemId, recipeId, category);
     },
     CraftingItem: function (currentcity, itemId, recipeId, category) {
       var t = Tabs.AutoCraft;
