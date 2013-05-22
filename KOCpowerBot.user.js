@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130521b
+// @version        20130521c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130521b';
+var Version = '20130521c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -839,7 +839,6 @@ function pbStartup (){
   GuardianTT();
 	if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
 	afkwatcher();
-	whisperlog();
 	demist();
 }
 
@@ -13158,19 +13157,84 @@ Tabs.Whisper = {
    tabDisabled : false,
    tabLabel : 'Whisper',
    myDiv : null,
+   LoggedWhispers : [],
+   catchwhispers : null,
    
    init : function (div) {
-      var t = Tabs.Whisper;
+      var t = Tabs.Whisper;      
+		unsafeWindow.whisperlog = t.whisperlog;
+		t.whisperlog();
       t.myDiv = div;
       var m = '<DIV class=pbStat>Logged whispers while afk</div><br>';
 		m += '<table><tr><td><INPUT id=pbpostwh type=submit value="Show logged whispers" \></td><td><INPUT id=pbdelwh type=submit value="Delete Logged Whispers" \></td></tr></table>';      
       div.innerHTML = m;
       
-      document.getElementById('pbpostwh').addEventListener ('click', function() {postWhisper()}, false);
+      document.getElementById('pbpostwh').addEventListener ('click', function() {t.postWhisper()}, false);
       
-      document.getElementById('pbdelwh').addEventListener ('click', function() {eraseWhisper()} , false);
+      document.getElementById('pbdelwh').addEventListener ('click', function() {t.eraseWhisper()} , false);
       
    },
+   
+   saveWhisper : function (){
+      var t = Tabs.Whisper;
+  		var serverID = getServerId();
+   	setTimeout (function (){GM_setValue ('Whisper_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(t.LoggedWhispers));}, 0);
+	},
+   
+   readWhisper : function (){
+      var t = Tabs.Whisper;
+ 	   var serverID = getServerId();
+ 		s = GM_getValue ('Whisper_'+Seed.player['name']+'_'+serverID, '[]');
+  		if (s != null){
+    		opts = JSON2.parse (s);
+    		for (k in opts){
+      		if (matTypeof(opts[k]) == 'object')
+        			for (kk in opts[k])
+         			t.LoggedWhispers[k][kk] = opts[k][kk];
+      		else
+        			t.LoggedWhispers[k] = opts[k];
+    		}
+  		}
+	},
+   
+   postWhisper : function () {
+      var t = Tabs.Whisper;
+		var mod_comm_list2 = document.getElementById('mod_comm_list2');
+		var mod_comm_list1 = document.getElementById('mod_comm_list1')
+		for(k = 0;k<t.LoggedWhispers.length;k++) {
+      	var chatwrap1 = document.createElement("div");
+            chatwrap1.className = "chatwrap clearfix direct";
+            chatwrap1.innerHTML = t.LoggedWhispers[k];		
+       	var chatwrap2 = document.createElement("div");
+            chatwrap2.className = "chatwrap clearfix direct";
+            chatwrap2.innerHTML = t.LoggedWhispers[k];
+			mod_comm_list2.insertBefore(chatwrap2,mod_comm_list2.firstChild);
+			mod_comm_list1.insertBefore(chatwrap1,mod_comm_list1.firstChild);
+		};
+	},
+	
+   eraseWhisper : function() {
+      var t = Tabs.Whisper;
+		t.LoggedWhispers = [];
+		t.saveWhisper();
+	},
+	
+	whisperlog : function(innerHTML) {
+   	var t = Tabs.Whisper;
+		if(!innerHTML) {
+			t.readWhisper();
+     		t.catchwhispers = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap.innerHTML);if']]);
+     		t.catchwhispers.setEnable(true);
+		} else {
+			if(isAFK) {
+				t.LoggedWhispers.push(innerHTML);
+				t.saveWhisper();
+				//logit(inspect(chatwrap));
+			};
+		};
+  },	
+	
+   
   hide : function (){
     var t = Tabs.Whisper;
   },
@@ -13180,68 +13244,6 @@ Tabs.Whisper = {
   },  
 }
 
-var LoggedWhispers = [];
-
-
-function saveWhisper (){
-  var serverID = getServerId();
-   setTimeout (function (){GM_setValue ('Whisper_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(LoggedWhispers));}, 0);
-};
-
-function readWhisper (){
-  var serverID = getServerId();
-  s = GM_getValue ('Whisper_'+Seed.player['name']+'_'+serverID, '[]');
-  if (s != null){
-    opts = JSON2.parse (s);
-    for (k in opts){
-      if (matTypeof(opts[k]) == 'object')
-        for (kk in opts[k])
-          LoggedWhispers[k][kk] = opts[k][kk];
-      else
-        LoggedWhispers[k] = opts[k];
-    }
-  }
-};
-
-function postWhisper () {
-	var mod_comm_list2 = document.getElementById('mod_comm_list2');
-	var mod_comm_list1 = document.getElementById('mod_comm_list1')
-	for(k = 0;k<LoggedWhispers.length;k++) {
-		
-		
-       var chatwrap1 = document.createElement("div");
-            chatwrap1.className = "chatwrap clearfix direct";
-            chatwrap1.innerHTML = LoggedWhispers[k];		
-       var chatwrap2 = document.createElement("div");
-            chatwrap2.className = "chatwrap clearfix direct";
-            chatwrap2.innerHTML = LoggedWhispers[k];
-            
-            
-	mod_comm_list2.insertBefore(chatwrap2,mod_comm_list2.firstChild);
-	mod_comm_list1.insertBefore(chatwrap1,mod_comm_list1.firstChild);
-};
-};
-
-function eraseWhisper () {
-	LoggedWhispers = [];
-	saveWhisper();
-};
-
-
-function whisperlog(innerHTML) {
-	if(!innerHTML) {
-		readWhisper();
-     var catchwhispers = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap.innerHTML);if']]);
-     catchwhispers.setEnable(true);
-	} else {
-		if(isAFK) {
-		LoggedWhispers.push(innerHTML);
-		saveWhisper();
-		//logit(inspect(chatwrap));
-	};
-	};
-  };
-unsafeWindow.whisperlog = whisperlog;
 /*******************  End Whisper ****************/
 
 
