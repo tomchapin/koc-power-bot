@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130521a
+// @version        20130521b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130521a';
+var Version = '20130521b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -856,8 +856,6 @@ function GlobalEachSecond () {
 
 function GESeverymin (unixtime) {//put functions here to execute every min
 	if(atwomin == 0) atwomin = Number(unixtime+2*60);
-	logit('a2min is '+atwomin);
-	logit('unixtime is '+unixtime);
 	if(atwomin < unixtime) {
 		atwomin = Number(unixtime+2*60);
 		new GESeverytwomin(unixtime);
@@ -928,9 +926,8 @@ function afkwatcher () {
 	document.body.onkeypress = function(){afk++};
 };
 function detafk () {
-	logit('afk '+afk);
 	if (afk == afkb) {
-		logit('afk detected');
+		actionLog('afk detected');
 		isAFK = true;
 	} 
 	else isAFK = false;
@@ -1580,25 +1577,20 @@ Tabs.farm = {
        
        t.getAtkKnight(cityID);
        t.rallypointlevel = March.getTotalSlots(citynumber);
-       numMarches = t.rallypointlevel;
-       var slots=0;
-       if (Seed.queue_atkp[cityID] != undefined){
-           for(var k in Seed.queue_atkp[cityID])
-              slots++;
-              if(Seed.queue_atkp[cityID].toSource() == "[]")
-          slots = 0;
-        }
-      else slots=0;
-       
+       var slots = March.getMarchSlots(citynumber);
        var element2 = 'pddataFarmarray'+(city-1);
-       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + numMarches +')';
+       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
        
        if (!FarmOptions.CityEnable[city]) return;
-      if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(FarmOptions.RallyClip)) return;
+		if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(FarmOptions.RallyClip)) return;
+		
+
        if (t.knt.toSource() == "[]") return;
         if (u1 > parseInt(Seed.units[cityID]['unt1']) || u2 > parseInt(Seed.units[cityID]['unt2']) || u3 > parseInt(Seed.units[cityID]['unt3']) || u4 > parseInt(Seed.units[cityID]['unt4']) || u5 > parseInt(Seed.units[cityID]['unt5']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u11 > parseInt(Seed.units[cityID]['unt11']) || u12 > parseInt(Seed.units[cityID]['unt12'])) return;
         if (FarmOptions.FarmNumber[city]>=t.FarmArray[city].length) FarmOptions.FarmNumber[city]=0;
+
         var kid = t.knt[0].ID;
+
 
          var interval = 0;
          switch(FarmOptions.Interval){
@@ -1627,17 +1619,18 @@ Tabs.farm = {
        }
            if (check == 0) return;
        
+
         var xcoord = t.FarmArray[city][FarmOptions.FarmNumber[city]]['x'];
         var ycoord = t.FarmArray[city][FarmOptions.FarmNumber[city]]['y'];
         var uid = t.FarmArray[city][FarmOptions.FarmNumber[city]]['UserId'];
         saveFarmOptions();
-           if ((numMarches - FarmOptions.RallyClip) > slots) t.checkInactives(citynumber,city,FarmOptions.FarmNumber[city],xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+        t.checkInactives(citynumber,city,FarmOptions.FarmNumber[city],xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
   },
   
   getnextCity: function(){
     var t = Tabs.farm;
     if (!FarmOptions.Running) return;
-    if(t.searchRunning) return;
+    //if(t.searchRunning) return;
     var city = t.city+1;
     if (city>Seed.cities.length){
         city=1;
