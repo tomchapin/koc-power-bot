@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130521c
+// @version        20130522a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130521c';
+var Version = '20130522a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -15118,7 +15118,18 @@ Tabs.Spam = {
 	Options.spamconfig.atime++;
 	if(Options.spamconfig.atime >= Options.spamconfig.spammins) {
     actionLog ('Spamming ('+ Options.spamconfig.spammins +' hours expired)');
-    sendChat ("/" + Options.spamconfig.spamstate + " " +  Options.spamconfig.spamvert);
+   var spam = String(Options.spamconfig.spamvert);
+   if(spam.charAt(0) == "\\") {
+		spam = spam.slice(1);
+		var unicodeString = '';
+     for (var i=0; i < spam.length; i++) {
+      var theUnicode = spam.charCodeAt(i);;;
+      theUnicode = '&#' + theUnicode+';';
+      unicodeString += theUnicode;
+     }
+     spam = String(unicodeString);
+   };
+   sendChat(String('/' + Options.spamconfig.spamstate + ' ' + spam));
 	 Options.spamconfig.atime = Number(0);
     saveOptions();
 	};
@@ -21189,12 +21200,6 @@ function BtFilter(e) {
    return(whisper+m);
 
 };
-
-
-
-
-
-
 
 
 
