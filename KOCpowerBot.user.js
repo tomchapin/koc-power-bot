@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130522b
+// @version        20130523a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130522b';
+var Version = '20130523a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -1851,7 +1851,7 @@ Tabs.Throne = {
     unsafeWindow.Savlage = t.setSalvageItem;
     unsafeWindow.ActionPopup = t.ActionPopup;
     unsafeWindow.postInfo = t.postInfo;
-    
+    unsafeWindow.doEquip = t.doEquip;
     var a = JSON2.parse(GM_getValue ('ThroneHistory_'+getServerId(), '[]'));
     if (matTypeof(a) == 'array') t.log = a;
     var a = JSON2.parse(GM_getValue ('ThroneSalvageHistory_'+getServerId(), '[]'));
@@ -2272,8 +2272,8 @@ Compare :function (){
      m+= '<DIV id=pbThroneMain class=pbStat>Compare Throne Items</div><br>';
      m+='<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=type type=list></select></td><TD>Card Family: <SELECT id=family type=list></select></td><TD>Effect: <SELECT id=effect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=keyword size=10></td></tr></table>';
 
-     m+='<br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR>';
 
+     m+='<br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR>';
      for (i=1;i<=ActiveItems;i++){
        m+='<TD><DIV id=DIV'+ i +'></div></td>';
        if (i%3==0) m+='</tr><TR></tr><TR>';
@@ -2562,7 +2562,7 @@ paintEquipInfo : function (z,what){
         var tier=0;
         var Current=0;
         var icon = 'http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type +'_normal_1_'+ y.quality+'.png';
-        if (y.isEquipped) m='<TABLE width=80% height=0% align="center" class=ThroneEQ  ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
+        if (y.isEquipped)m='<TABLE width=80% height=0% align="center" class=ThroneEQ  ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         else m='<TABLE width=80% height=0% align="center" class=Throne ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         switch(parseInt(y["quality"])){
          case 1:color="grey";break;
@@ -2580,12 +2580,12 @@ paintEquipInfo : function (z,what){
             tier = parseInt(y["effects"]["slot"+i]["tier"]);
             level = y["level"];
             p = unsafeWindow.cm.thronestats.tiers[id][tier];
-            Current = p.base + ((level * level + level) * p.growth * 0.5);
+            Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
             var quality = parseInt(y["quality"]);
             if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
             else m+='<TR><TD><FONT color=grey>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
       }
-      m+="</table>"
+      m+='</table><table align="center"><tr><td><a onclick="doEquip('+z+')">Equip</a></td><td><a onclick="postInfo('+z+')">Post to chat</a></td></tr></table>';
       document.getElementById('DIV'+what).innerHTML = m;
 },
 
@@ -3095,7 +3095,7 @@ PaintSalvageHistory : function() {
     },
 
 
-    doEquip : function(n,preset) {
+    doEquip : function(n) {
         var t = Tabs.Throne;
         if (typeof(unsafeWindow.kocThroneItems[n]) == 'object') {
                 var y = unsafeWindow.kocThroneItems[n];
@@ -3106,7 +3106,7 @@ PaintSalvageHistory : function() {
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'equipItem';
         params.itemId = y.id;
-        params.presetId = document.getElementById("preset").value;
+        params.presetId = unsafeWindow.seed.throne.activeSlot;
                     
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
@@ -13149,7 +13149,7 @@ var WideScreen = {
   },
 }
 
-/*******************  Whisper ****************/
+/*******************  Whisper Tab ****************/
 
 
 Tabs.Whisper = {
