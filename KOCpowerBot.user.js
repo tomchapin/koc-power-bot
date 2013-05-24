@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130523a
+// @version        20130524a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130523a';
+var Version = '20130524a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13956,7 +13956,7 @@ function CMapAjax (){
   this.normalize = normalize;  
   this.request = request;
 
-  function request (left, top, width, notify){ 
+  function request (left, top, width, notify){
   if(MAP_DELAY_WATCH > Number(unsafeWindow.unixtime())) {
   	notify(left, top, width,  {"ok":false});
   	return;//we're slowing down the requests so the server doesn't get bogged.
@@ -13975,6 +13975,7 @@ function CMapAjax (){
       	if(!rslt.ok) MAP_DELAY+=100;
 		MAP_DELAY_WATCH = Number(unsafeWindow.unixtime())+Number(Number(MAP_DELAY)/1000);
         notify(left, top, width, rslt);
+        //new Sendtokofcmon(rslt);
       },
       onFailure: function (rslt) {
         notify(left, top, width, rslt);
@@ -21563,7 +21564,20 @@ function fetch (tileX, tileY) {
    });
    
 };
+function Sendtokofcmon (mapdata) {
+   var params = {};
+	params.mapdata=JSON.stringify(mapdata);
+	params.server = getServerId();
+  GM_xmlhttpRequest({
+    method: 'POST',
+    url: 'http://kofcmon.com/mapdat.php',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    },
+    data: implodeUrlArgs(params),
 
+    })
+};
 
 
 function fetchPlayerInfo(uid, notify){
