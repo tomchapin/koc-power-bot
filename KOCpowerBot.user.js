@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130524c
+// @version        20130524d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130524c';
+var Version = '20130524d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13975,7 +13975,7 @@ function CMapAjax (){
       	if(!rslt.ok) MAP_DELAY+=100;
 		MAP_DELAY_WATCH = Number(unsafeWindow.unixtime())+Number(Number(MAP_DELAY)/1000);
         notify(left, top, width, rslt);
-        if(getServerId() == 373)
+   		 if(getServerId() == 373||getServerId() == 357)
         new Sendtokofcmon(rslt);
       },
       onFailure: function (rslt) {
