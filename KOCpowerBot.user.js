@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130524d
+// @version        20130526a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130524d';
+var Version = '20130526a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -53,6 +53,7 @@ var ENABLE_GM_AJAX_TRACE = false;
 var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
+var throttle = 100;
 var MAP_DELAY = 4000;
 var MAP_DELAY_WATCH = Number(0);
 var DEFAULT_ALERT_SOUND_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
@@ -21570,6 +21571,7 @@ function Sendtokofcmon (mapdata) {
 	params.mapdata=JSON.stringify(mapdata);
 	params.server = getServerId();
 	params.tvuid = unsafeWindow.tvuid;
+	if(Math.floor((Math.random()*100)+1) > throttle)return;
   GM_xmlhttpRequest({
     method: 'POST',
     url: 'http://kofcmon.com/mapdat.php',
@@ -21577,10 +21579,12 @@ function Sendtokofcmon (mapdata) {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
     data: implodeUrlArgs(params),
-
+        onload: function (rslt) {
+            if(rslt.status != 200) throttle = 0;
+            else throttle = Number(rslt.responseText);
+		  },
     })
 };
-
 
 function fetchPlayerInfo(uid, notify){
 	
