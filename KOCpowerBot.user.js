@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130526a
+// @version        20130526B
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130526a';
+var Version = '20130526b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4878,7 +4878,7 @@ var buildTabTypes = {
     type20: "FeySpire",
     type21: "Apothecary",
     type0: "Castle",
-    type666: "Lucylastic"
+    type666: "KOCpowerbot"
 };
 Tabs.build = {
     tabOrder: 20,
@@ -5368,8 +5368,8 @@ Tabs.build = {
 								a = "Unexpected Error.";
 								break;
 							case 2://lets try update seed to fix the missing build
-								unsafeWindow.buildingcost["bdg666"] = ["Lucylastic", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
-								Seed.queue_con["city" + currentcityid].push([666, 666, 666, unsafeWindow.unixtime(), unsafeWindow.unixtime() + 5*60, 0, 5*60, 999]);
+								unsafeWindow.buildingcost["bdg666"] = ["KOCpowerbot", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
+								Seed.queue_con["city" + currentcityid].push([666, 666, 666, unsafeWindow.unixtime(), unsafeWindow.unixtime() + 90, 0, 90, 999]);
 								a = "Construction is already starting.";
 								break;
 							case 3://Unknown issue when updating your game, please try again
@@ -5458,8 +5458,8 @@ Tabs.build = {
 								a = "Unexpected Error.";
 								break;
 							case 2://lets try update seed to fix the missing build?
-								unsafeWindow.buildingcost["bdg666"] = ["Lucylastic", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
-								Seed.queue_con["city" + currentcityid].push([666, 666, 666, unsafeWindow.unixtime(), unsafeWindow.unixtime() + 5*60, 0, 5*60, 999]);
+								unsafeWindow.buildingcost["bdg666"] = ["KOCpowerbot", 0, 0, 0, 0, 0, 0, 0, [], [], ""];//comical wallet gremlin placeholder
+								Seed.queue_con["city" + currentcityid].push([666, 666, 666, unsafeWindow.unixtime(), unsafeWindow.unixtime() + 90, 0, 90, 999]);
 								a = "Construction is already starting.";
 								break;
 							case 3://Unknown issue when updating your game, please try again
