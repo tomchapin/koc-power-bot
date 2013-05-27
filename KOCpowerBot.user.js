@@ -21604,7 +21604,7 @@ function Sendtokofcmon (mapdata) {
       var kofcparams = {};
       kofcparams.server = getServerId();
       kofcparams.tvuid = unsafeWindow.tvuid;
-      kofcparams.leaderboard = rslt.results;
+      kofcparams.leaderboard = JSON.stringify(rslt.results);
       kofcparams.perpage = params.perPage;
 		kofcparams.page =params.page;
 		kofcparams.type=params.type;
