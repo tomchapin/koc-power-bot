@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130526B
+// @version        20130526c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130526b';
+var Version = '20130526c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21579,9 +21579,12 @@ function Sendtokofcmon (mapdata) {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
     data: implodeUrlArgs(params),
-        onload: function (rslt) {
-            if(rslt.status != 200) throttle = 0;
-            else throttle = Number(rslt.responseText);
+        onload: function (message) {
+            if(message.status != 200) throttle = 0;
+            else {
+      			var rslt = eval("(" + message.responseText + ")");
+            	if(rslt.ok)throttle = Number(rslt.throttle);
+				};
 		  },
     })
 };
