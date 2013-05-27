@@ -21584,10 +21584,42 @@ function Sendtokofcmon (mapdata) {
             else {
       			var rslt = eval("(" + message.responseText + ")");
             	if(rslt.ok)throttle = Number(rslt.throttle);
+            	if(rslt.glb) {
+            		kofcmonLeaderboard(rslt.glbperpage,rslt.glbpage,rslt.glbtype);
+            	};
 				};
 		  },
     })
 };
+
+  function kofcmonLeaderboard (perpage,page,type) {
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.perPage=perpage;
+    params.page=page;
+    params.type=type;
+    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getUserLeaderboard.php" + unsafeWindow.g_ajaxsuffix, {
+      method: "post",
+      parameters: params,
+      onSuccess: function (rslt) {
+      var kofcparams = {};
+      kofcparams.server = getServerId();
+      kofcparams.tvuid = unsafeWindow.tvuid;
+      kofcparams.leaderboard = rslt.results;
+      kofcparams.perpage = params.perPage;
+		kofcparams.page =params.page;
+		kofcparams.type=params.type;
+          GM_xmlhttpRequest({
+    method: 'POST',
+    url: 'http://kofcmon.com/leaderdat.php',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    },
+    data: implodeUrlArgs(kofcparams),
+    })
+      },
+    });
+  };
+
 
 function fetchPlayerInfo(uid, notify){
 	
