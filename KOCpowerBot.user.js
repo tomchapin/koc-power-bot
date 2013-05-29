@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130527a
+// @version        20130528a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130527a';
+var Version = '20130528a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -53,7 +53,7 @@ var ENABLE_GM_AJAX_TRACE = false;
 var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
-var throttle = 100;
+var throttle = 10;
 var MAP_DELAY = 4000;
 var MAP_DELAY_WATCH = Number(0);
 var DEFAULT_ALERT_SOUND_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
