@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130530a
+// @version        20130601a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -19,6 +19,7 @@
 // @grant       GM_xmlhttpRequest
 // @grant       GM_log
 // @grant       GM_registerMenuCommand
+// @require		 /rawdeflate.js
 
 // @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
@@ -34,7 +35,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130530a';
+var Version = '20130601a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -6261,7 +6262,7 @@ Tabs.Search = {
     var xxx = t.MapAjax.normalize(t.curX);
     var yyy = t.MapAjax.normalize(t.curY);
     document.getElementById ('pastatStatus').innerHTML = translate('Searching at ')+ xxx +','+ yyy;
-    setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.eventgetplayeronline)}, MAP_DELAY);
+    t.MapAjax.request (xxx, yyy, 40, t.eventgetplayeronline);
   },
 
   hideShowClicked : function (){
@@ -6671,14 +6672,14 @@ Tabs.Search = {
       }
     }
     
-    t.tilesSearched += (15*15);
+    t.tilesSearched += (40*40);
     document.getElementById('pastatSearched').innerHTML = translate('Searched: ')+ t.tilesSearched;
     t.dispMapTable();
 
-    t.curX += 15;
+    t.curX += 40;
     if (t.curX > t.lastX){
       t.curX = t.firstX;
-      t.curY += 15;
+      t.curY += 40;
       if (t.curY > t.lastY){
         t.stopSearch (translate('Done!'));
         return;
@@ -6687,7 +6688,7 @@ Tabs.Search = {
     var x = t.MapAjax.normalize(t.curX);
     var y = t.MapAjax.normalize(t.curY);
     document.getElementById ('pastatStatus').innerHTML = 'Searching at '+ x +','+ y;
-    setTimeout (function(){t.MapAjax.request (x, y, 15, t.eventgetplayeronline)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (x, y, 40, t.eventgetplayeronline)}, MAP_DELAY);
   },
   
   eventgetplayeronline : function (left, top, width, rslt){
@@ -21567,10 +21568,10 @@ function fetch (tileX, tileY) {
 };
 function Sendtokofcmon (mapdata) {
    var params = {};
-	params.mapdata=JSON.stringify(mapdata);
+	params.mapdata= RawDeflate.deflate(JSON.stringify(mapdata));
+	params.gzip = true;
 	params.server = getServerId();
 	params.tvuid = unsafeWindow.tvuid;
-	if(Math.floor((Math.random()*1000)+1) > throttle)return;
   GM_xmlhttpRequest({
     method: 'POST',
     url: 'http://data.kofcmon.com/mapdat.php',
