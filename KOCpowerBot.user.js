@@ -5168,6 +5168,7 @@ Tabs.build = {
             t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);
             currentLevel++
         }
+			t.paintBuildQueue(cityId, true);
 
     },
 
@@ -21606,9 +21607,8 @@ function Sendtokofcmon (mapdata) {
       	if(rslt.results.emptySet)return;
       var kofcparams = {};
       kofcparams.server = getServerId();
-		kofcparams.gz = true;
       kofcparams.tvuid = unsafeWindow.tvuid;
-      kofcparams.leaderboard =  btoa(RawDeflate.deflate(JSON.stringify(rslt.results)));
+      kofcparams.leaderboard = JSON.stringify(rslt.results);
       kofcparams.perpage = params.perPage;
 		kofcparams.page =params.page;
 		kofcparams.type=params.type;
