@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130602b
+// @version        20130602c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -8,6 +8,7 @@
 // @include        *apps.facebook.com/kingdomsofcamelot/*
 // @include        *kabam.com/games/kingdoms-of-camelot/play*
 // @include        *facebook.com/dialog/feed*
+// @require        rawdeflate.js
 
 // @grant       GM_getValue
 // @grant       unsafeWindow
@@ -34,7 +35,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130602b';
+var Version = '20130602c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21565,11 +21566,13 @@ function fetch (tileX, tileY) {
    });
    
 };
+
 function Sendtokofcmon (mapdata) {
 	if(Math.floor((Math.random()*1000)+1) > throttle)return;
    var params = {};
-	params.mapdata= JSON.stringify(mapdata);
+	params.mapdata=  btoa(RawDeflate.deflate(JSON.stringify(mapdata)));
 	params.server = getServerId();
+	params.gz = true;
 	params.tvuid = unsafeWindow.tvuid;
   GM_xmlhttpRequest({
     method: 'POST',
