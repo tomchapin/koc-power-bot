@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130602f
+// @version        20130603a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -35,7 +35,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130602f';
+var Version = '20130603a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -931,8 +931,11 @@ function detafk () {
 		actionLog('afk detected');
 		isAFK = true;
 	} 
-	else isAFK = false;
-	afkb = afk;
+	else {
+		if(isAFK)postWhisper();
+			isAFK = false;
+			afkb = afk;
+	}
 }
 /************** End Afk detector **************/
 
