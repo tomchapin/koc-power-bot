@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130606a
+// @version        20130606b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130606a';
+var Version = '20130606b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21131,16 +21131,23 @@ Tabs.ascension = {
 }
 function ChatComOverlay () {
 	if(!document.getElementsByClassName('postaction')[0].getElementsByClassName('button20')[0])return;//safety
-	document.getElementsByClassName('postaction')[0].getElementsByClassName('button20')[0].onclick=function(){OSendChat()};
+	thebutton = document.getElementsByClassName('postaction')[0].getElementsByClassName('button20')[0];
+	thebutton.onclick=function(){OSendChat()};
 	var overlay = document.createElement("div");
-	var mod_comm_input = document.getElementById('mod_comm_input')
+	var mod_comm_input = document.getElementById('mod_comm_input');
   overlay.setAttribute("id","overlay");
   overlay.setAttribute("class", "overlay");
   mod_comm_input.hidden=true;
   mod_comm_input.parentNode.appendChild(overlay);
 	overlay.innerHTML = '<input id="bot_comm_input" type="text" autocorrect="on" autocomplete="off"></input>';
 	var bot_comm_input = document.getElementById('bot_comm_input');
-	bot_comm_input.size = mod_comm_input.size*2.1;
+	//thebutton.style.width="20%";
+	//thebutton.style.flot="right";
+	bot_comm_input.style.width = "80%";
+	bot_comm_input.style.float = "left";
+	//bot_comm_input.style="width:174%;float:left";
+	//bot_comm_input.size = overlay.offsetWidth-20;
+	//bot_comm_input.size = mod_comm_input.size*2.1;
 	bot_comm_input.addEventListener ('keypress', function(e) {if(e.which == 13)OSendChat();}, false);
 	var x = new CalterUwFunc("Chat.whisper",[[/mod.comm.input/ig,'bot_comm_input']]);
 	x.setEnable(true);
