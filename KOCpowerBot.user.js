@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130604b
+// @version        20130606a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130604b';
+var Version = '20130606a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21140,7 +21140,7 @@ function ChatComOverlay () {
   mod_comm_input.parentNode.appendChild(overlay);
 	overlay.innerHTML = '<input id="bot_comm_input" type="text" autocorrect="on" autocomplete="off"></input>';
 	var bot_comm_input = document.getElementById('bot_comm_input');
-	bot_comm_input.size = mod_comm_input.size*1.6;
+	bot_comm_input.size = mod_comm_input.size*2.1;
 	bot_comm_input.addEventListener ('keypress', function(e) {if(e.which == 13)OSendChat();}, false);
 	var x = new CalterUwFunc("Chat.whisper",[[/mod.comm.input/ig,'bot_comm_input']]);
 	x.setEnable(true);
