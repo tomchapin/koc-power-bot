@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130606b
+// @version        20130606c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130606b';
+var Version = '20130606c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21143,7 +21143,7 @@ function ChatComOverlay () {
 	var bot_comm_input = document.getElementById('bot_comm_input');
 	//thebutton.style.width="20%";
 	//thebutton.style.flot="right";
-	bot_comm_input.style.width = "80%";
+	bot_comm_input.style.width = "75%";
 	bot_comm_input.style.float = "left";
 	//bot_comm_input.style="width:174%;float:left";
 	//bot_comm_input.size = overlay.offsetWidth-20;
