@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130608a
+// @version        20130608b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130608a';
+var Version = '20130608b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -6552,16 +6552,16 @@ Tabs.Search = {
              if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
              document.getElementById('pbSrcScoutResult').innerHTML += translate('Sent!')+'<BR>';
              if (notify)
-              setTimeout(function(){ notify(count+1); }, 1000);
+              setTimeout(function(){ notify(count+1); }, 4000);
          } else {
           if(document.getElementById('pbskip').checked) {
              document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Moving on')+'....<BR>';
              if (notify)
-              setTimeout(function(){ notify(count+1); }, 1000);
+              setTimeout(function(){ notify(count+1); }, 4000);
           } else {
              document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Retrying')+'....<BR>';
              if (notify)
-              setTimeout(function(){ notify(count); }, 1000);
+              setTimeout(function(){ notify(count); }, 4000);
         }
           }
         },
