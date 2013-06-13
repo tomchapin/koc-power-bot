@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130608b
+// @version        20130613a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130608b';
+var Version = '20130613a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3503,6 +3503,7 @@ ThroneT : function (){
             t.Overv.innerHTML = m;
             for (var k=1;k<Number(Seed.throne.slotNum+1);k++) {
             	document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
+
             	document.getElementById('autotr'+k).addEventListener ('click', function(){ThroneOptions.autotoggle[Number(String(this.id).replace(/autotr/,""))] = this.checked; saveThroneOptions();}, false);
          	};
             t.TTpaint(unsafeWindow.seed.throne.activeSlot);
@@ -3526,7 +3527,8 @@ TTpaintstats : function () {
             m= document.getElementById('ThroneTRS').innerHTML;
          m+='<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via http://userscripts.org/scripts/discuss/101052</font>';
          for(i in unsafeWindow.cm.thronestats.effects) {
-            var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
+//            var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
+	    var z = equippedthronestats(Number(i));
             if(z != 0) {
             m+='<tr><td>'+unsafeWindow.cm.thronestats.effects[i][1]+'</td><td>'+z+'%</td></tr>';
                 }
