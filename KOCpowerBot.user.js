@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130614a
+// @version        20130614c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130614a';
+var Version = '20130614c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -2682,7 +2682,9 @@ PaintSalvageHistory : function() {
                     ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
                     ThroneOptions.Items[k]["levelto"] = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
                         ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
-                    if (ThroneOptions.Items[k]["levelto"]>10 && !firstRun) {ThroneOptions.Items.splice (k,1);if(document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then level 10!</font>";return;}
+                        var newlvl = ThroneOptions.Items[k]["levelto"];
+                    if (!unsafeWindow.cm.thronestats.upgrade[newlvl] && !firstRun) {ThroneOptions.Items.splice (k,1);if(document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then level "+Number(newlvl-1)+"!</font>";return;}
+
                 }
                 if (ThroneOptions.Items[k]["action"] == "Enhance") {
                     ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
