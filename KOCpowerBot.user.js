@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130613a
+// @version        20130614a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130613a';
+var Version = '20130614a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -5225,12 +5225,7 @@ Tabs.build = {
                 } else {
 				      if(t.buildStates.tr && t.buildStates.trset != Seed.throne.activeSlot) continue;//check just before we start building.  lets the other enhancements keep working.
                     if (t["bQ_" + cityId].length > 0) { // something to do?
-                        var bQi = t["bQ_" + cityId][0]; //take first queue item to build
-                        t['build'+Cities.byID[cityId].idx] = true;
-                        t.doOneSlowdown(bQi,itime);
-                  //buildInterval = 10 * 1000; // we tried to build so use longer interval
-                        //setTimeout(t.e_autoBuild, 10000); //should be at least 10
-                        //return; // we need to make sure that there is enough time for each ajax request to not overwrite the vaule that are needed by the next run
+                        t.doOneSlowdown(cityId,itime);
                     }
                 }
             }
@@ -5241,9 +5236,9 @@ Tabs.build = {
 
 
 
-    doOneSlowdown : function (bQi,itime){
+    doOneSlowdown : function (cityId,itime){
         var t = Tabs.build;
-		setTimeout(function(){t.doOne(bQi)},itime);
+		setTimeout(function(){t.doOne(cityId)},itime);
 	},
     
     paintBusyDivs: function () {
@@ -5274,8 +5269,10 @@ Tabs.build = {
             }
         }
     },
-    doOne: function (bQi) {
+    doOne: function (cityId) {
         var t = Tabs.build;
+			var bQi = t["bQ_" + cityId][0]; //take first queue item to build
+			t['build'+Cities.byID[cityId].idx] = true;
         var currentcityid = parseInt(bQi.cityId);
         t['build'+Cities.byID[currentcityid].idx] = false;
         var cityName = t.getCityNameById(currentcityid);
@@ -5295,15 +5292,13 @@ Tabs.build = {
 				};
         if ((Seed.buildings['city' + currentcityid]["pos" + citpos] == undefined)) bypasscheck = true;
         if (!bypasscheck) {
+        	logit("con "+Seed.buildings['city' + currentcityid]["pos" + citpos]);
             var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
             var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
-            //  var bdgid = 13; //FOR DEBUG
             var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
             var curlvl = parseIntNan(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
-            //  var curlvl = 8; //FOR DEBUG
             var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
             var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
-            //  var bid = 1523749; //FOR DEBUG
             if (curlvl > 8 && mode == 'build') {
                 t.cancelQueueElement(0, currentcityid, time, false);
                 actionLog(translate("Queue item deleted: Building level equals 9 or higher!!!"));
@@ -5326,6 +5321,7 @@ Tabs.build = {
             }
             if (l_curlvl < curlvl) {
                 t.cancelQueueElement(0, currentcityid, time, false);
+                logit("con "+l_curlvl+" < "+curlvl);
                 actionLog(translate("Queue item deleted: Building level is equal or higher!!!"));
                 return;
             }
