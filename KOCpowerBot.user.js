@@ -5225,6 +5225,7 @@ Tabs.build = {
                 } else {
 				      if(t.buildStates.tr && t.buildStates.trset != Seed.throne.activeSlot) continue;//check just before we start building.  lets the other enhancements keep working.
                     if (t["bQ_" + cityId].length > 0) { // something to do?
+							t['build'+Cities.byID[cityId].idx] = true;
                         t.doOneSlowdown(cityId,itime);
                     }
                 }
@@ -5272,7 +5273,7 @@ Tabs.build = {
     doOne: function (cityId) {
         var t = Tabs.build;
 			var bQi = t["bQ_" + cityId][0]; //take first queue item to build
-			t['build'+Cities.byID[cityId].idx] = true;
+			if(!bQi)return;
         var currentcityid = parseInt(bQi.cityId);
         t['build'+Cities.byID[currentcityid].idx] = false;
         var cityName = t.getCityNameById(currentcityid);
@@ -5292,7 +5293,7 @@ Tabs.build = {
 				};
         if ((Seed.buildings['city' + currentcityid]["pos" + citpos] == undefined)) bypasscheck = true;
         if (!bypasscheck) {
-        	logit("con "+Seed.buildings['city' + currentcityid]["pos" + citpos]);
+        	//logit("con "+Seed.buildings['city' + currentcityid]["pos" + citpos]);
             var l_bdgid = parseInt(bQi.buildingType); //JUST FOR CHECK
             var bdgid = parseInt(Seed.buildings['city' + currentcityid]["pos" + citpos][0]);
             var l_curlvl = parseInt(bQi.buildingLevel); //JUST FOR CHECK
@@ -5327,7 +5328,7 @@ Tabs.build = {
             }
             if (l_curlvl > curlvl && mode == 'build') {
                 t.requeueQueueElement(bQi);
-                logit('requeue '+l_curlvl+' > '+curlvl);
+                //logit('requeue '+l_curlvl+' > '+curlvl);
                 return;
             }
         } else {
