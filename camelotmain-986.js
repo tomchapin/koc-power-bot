@@ -121,6 +121,7 @@ g_js_strings.commonstr.barbarians = "Barbarians";
 g_js_strings.commonstr.benefits = "Benefits";
 g_js_strings.commonstr.blessings = "Blessings";
 g_js_strings.commonstr.bog = "Bog";
+g_js_strings.commonstr.boss = "Dark Forest";
 g_js_strings.commonstr.briton = "Briton";
 g_js_strings.commonstr.britonCity = "Briton City";
 g_js_strings.commonstr.build = "Build";
@@ -185,7 +186,10 @@ g_js_strings.commonstr.druidCity = "Druid City";
 g_js_strings.commonstr.edit = "Edit";
 g_js_strings.commonstr.efficiency = "Efficiency";
 g_js_strings.commonstr.encamped = "Encamped";
+g_js_strings.commonstr.ended = "Ended";
+g_js_strings.commonstr.end = "End";
 g_js_strings.commonstr.ends = "Ends";
+g_js_strings.commonstr.ended = "Ended On";
 g_js_strings.commonstr.enemy = "Enemy";
 g_js_strings.commonstr.enhance = "Enhance";
 g_js_strings.commonstr.enhanced = "Enhanced";
@@ -199,6 +203,7 @@ g_js_strings.commonstr.featured = "Featured";
 g_js_strings.commonstr.feedback = "Feedback";
 g_js_strings.commonstr.fey = "Fey";
 g_js_strings.commonstr.feyCity = "Fey City";
+g_js_strings.commonstr.findMe = "Find Me";
 g_js_strings.commonstr.first = "First";
 g_js_strings.commonstr.food = "Food";
 g_js_strings.commonstr.fortx = "For";
@@ -251,6 +256,7 @@ g_js_strings.commonstr.knight = "Knight";
 g_js_strings.commonstr.lady = "Lady";
 g_js_strings.commonstr.ladylord = "Lady/Lord";
 g_js_strings.commonstr.lake = "Lake";
+g_js_strings.commonstr.lastUpdate = "Last Update";
 g_js_strings.commonstr.leaderboard = "Leaderboard";
 g_js_strings.commonstr.leaders = "Leaders";
 g_js_strings.commonstr.leave = "Leave";
@@ -309,6 +315,7 @@ g_js_strings.commonstr.outbox = "Outbox";
 g_js_strings.commonstr.overview = "Overview";
 g_js_strings.commonstr.owned = "Owned";
 g_js_strings.commonstr.page = "Page";
+g_js_strings.commonstr.pageshort = "Pg";
 g_js_strings.commonstr.pending = "Pending";
 g_js_strings.commonstr.percentoff = "%1$s% off";
 g_js_strings.commonstr.pikemen = "Pikemen";
@@ -325,6 +332,7 @@ g_js_strings.commonstr.premier = "Premier";
 g_js_strings.commonstr.prestige = "Ascend";
 g_js_strings.commonstr.prev = "Prev";
 g_js_strings.commonstr.previous = "Previous";
+g_js_strings.commonstr.prize = "Prize";
 g_js_strings.commonstr.production = "Production";
 g_js_strings.commonstr.profile = "Profile";
 g_js_strings.commonstr.promote = "Promote";
@@ -363,7 +371,6 @@ g_js_strings.commonstr.returning = "Returning";
 g_js_strings.commonstr.reward = "Reward";
 g_js_strings.commonstr.roles = "Roles";
 g_js_strings.commonstr.ruin = "Ruin";
-g_js_strings.commonstr.boss = "Dark Forest";
 g_js_strings.commonstr.salary = "Salary";
 g_js_strings.commonstr.salvage = "Salvage";
 g_js_strings.commonstr.salaries = "Salaries";
@@ -382,7 +389,6 @@ g_js_strings.commonstr.send = "Send";
 g_js_strings.commonstr.sendtofriends = "Send to Friends";
 g_js_strings.commonstr.set = "Set";
 g_js_strings.commonstr.get = "Get";
-g_js_strings.commonstr.pageshort = "Pg";
 g_js_strings.commonstr.share = "Share";
 g_js_strings.commonstr.sharetowall = "Share to Wall";
 g_js_strings.commonstr.shop = "Shop";
@@ -393,6 +399,7 @@ g_js_strings.commonstr.sold = "Sold";
 g_js_strings.commonstr.space = "Space";
 g_js_strings.commonstr.speed = "Speed";
 g_js_strings.commonstr.speedup = "Speed Up";
+g_js_strings.commonstr.start = "Start";
 g_js_strings.commonstr.instantfinish = "Instant Finish";
 g_js_strings.commonstr.stable = "Stable";
 g_js_strings.commonstr.stat = "Stat";
@@ -521,6 +528,7 @@ g_js_strings.modaltitles.wildernessdefense = "Wilderness Defense";
 g_js_strings.modal_openBarracks = new Object();
 g_js_strings.modal_openBarracks.trainttl = "Train Troops";
 g_js_strings.modal_openBarracks.trainingttl = "In Training";
+g_js_strings.modal_openBarracks.rarettl = "Rare Troops";
 g_js_strings.modal_openBarracks.youown = "You Own";
 g_js_strings.modal_openBarracks.wounded = "Wounded";
 g_js_strings.modal_openBarracks.dismiss = "Dismiss";
@@ -543,6 +551,7 @@ g_js_strings.modal_barracks_train.numtotrain = "# of Troops to Train";
 g_js_strings.modal_barracks_train.traintime = "Training Time";
 g_js_strings.modal_barracks_train.timereduction = "Time Reduction";
 g_js_strings.modal_barracks_train.starttraining = "Start Training";
+g_js_strings.modal_barracks_train.unitskill16 = "+10% Attack against Dark Forests";
 g_js_strings.revive_popup = new Object();
 g_js_strings.revive_popup.numtotrain = "# of Troops to Revive";
 g_js_strings.revive_popup.traintime = "Reviving Time";
@@ -566,6 +575,7 @@ g_js_strings.sacrifice_popup.unitdesc12 = "Increase Catapults base stats by %1$s
 g_js_strings.sacrifice_popup.unitdesc13 = "Increase Bloodthorns base stats by %1$s% by Sacrificing Bloodthorns!";
 g_js_strings.sacrifice_popup.unitdesc14 = "Increase Executioners base stats by %1$s% by Sacrificing Executioners!";
 g_js_strings.sacrifice_popup.unitdesc15 = "Increase Siege Walls base stats by %1$s% by Sacrificing Siege Walls!";
+g_js_strings.sacrifice_popup.unitdesc16 = "Increase Flame Archers base stats by %1$s% by Sacrificing Flame Archers!";
 g_js_strings.sacrifice_tooltip = new Object();
 g_js_strings.sacrifice_tooltip.unitdesc1 = "Supply Troops Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc2 = "Militiamen Empowered by %1$s%";
@@ -582,6 +592,7 @@ g_js_strings.sacrifice_tooltip.unitdesc12 = "Catapults Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc13 = "Bloodthorns Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc14 = "Executioners Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc15 = "Siege Walls Empowered by %1$s%";
+g_js_strings.sacrifice_tooltip.unitdesc16 = "Flame Archers Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.active_rituals = "Active Rituals:";
 g_js_strings.sacrifice_tooltip.duration_left = "%1$s left.";
 g_js_strings.modal_barracks_trainingtab = new Object();
@@ -970,10 +981,28 @@ g_js_strings.popOverShareLayer.sharetitle = "You've collected your reward!";
 g_js_strings.popOverShareLayer.sharedesc = "Now share a bonus chest with your friends.  Each chest contains 20,000 free resources!";
 g_js_strings.modal_tourny_changetab = new Object();
 g_js_strings.modal_tourny_changetab.notourny = "There are no tournaments for this tab currently.";
+g_js_strings.modal_tourny_changetab.gainMightToJoin = "Gain Might to join the Tournament!";
 g_js_strings.modal_tourny_changetab.lordladyname = "Lord/Lady Name";
 g_js_strings.modal_tourny_changetab.chancellorname = "Chancellor Name";
 g_js_strings.modal_tourny_changetab.mightgained = "Might Gained";
 g_js_strings.modal_tourny_changetab.rewardperplayer = "Reward per Player";
+g_js_strings.modal_tourny_changetab.domainLeaders = "%1$s Leaders";
+g_js_strings.modal_tourny_changetab.notRanked = "Not Ranked";
+g_js_strings.modal_tourny_changetab.yourRank = "Your Rank";
+g_js_strings.modal_tourny_changetab.yourBracket = "Your Bracket";
+g_js_strings.modal_tourny_changetab.mightIncrease = "Might Increase";
+g_js_strings.modal_tourny_changetab.currentPrize = "Current Prize";
+g_js_strings.modal_tourny_changetab.playerName = "Player Name";
+g_js_strings.modal_tourny_changetab.allianceName = "Alliance Name";
+g_js_strings.modal_tourny_changetab.beatYouBy = "%1$s beat you by %2$s!";
+g_js_strings.modal_tourny_changetab.youdveEarned = "If you had beat them, you would have earned";
+g_js_strings.modal_tourny_changetab.youreOnlyAheadBy = "You are only ahead of %1$s by %2$s";
+g_js_strings.modal_tourny_changetab.youWereAheadBy = "You were ahead of %1$s by %2$s";
+g_js_strings.modal_tourny_changetab.dontLetThemPass = "Don't let them pass you or they could steal your prize!";
+g_js_strings.modal_tourny_changetab.yourPrize = "Your Current Prize";
+g_js_strings.modal_tourny_changetab.isAheadOfYou = "%1$s is ahead of you by %2$s!";
+g_js_strings.modal_tourny_changetab.gainMightToPass = "Gain %1$s to pass them!";
+g_js_strings.modal_tourny_changetab.theirPrize = "Their Prize";
 g_js_strings.changeview_court_content = new Object();
 g_js_strings.changeview_court_content.havefeast = "Have a Feast";
 g_js_strings.changeview_court_content.gohunt = "Go Hunting";
@@ -1457,7 +1486,6 @@ g_js_strings.showAddCityTooltip.addcities = "Add cities to increase resources.";
 g_js_strings.showCityTooltip = new Object();
 g_js_strings.showCityTooltip.foodsupply = "Food Supply";
 g_js_strings.directory_changetab = new Object();
-g_js_strings.directory_changetab.tourncoming = "Tournaments are coming soon.";
 g_js_strings.directory_changetab.viewdet = "View Details";
 g_js_strings.directory_changetab.generousgifts = "Be a generous Lord or Lady<br/>and send gifts to your friends!";
 g_js_strings.directory_changetab.sendgifts = "Send Gifts";
@@ -2268,6 +2296,12 @@ g_js_strings.throneRoom.unique_banner30271 = "Pendragon's Banner";
 g_js_strings.throneRoom.unique_window30272 = "Window of Shalott";
 g_js_strings.throneRoom.unique_advisor30273 = "Warhorse";
 g_js_strings.throneRoom.unique_advisor30274 = "The Harbinger";
+g_js_strings.throneRoom.unique_chair30275 = "Stalwart Throne";
+g_js_strings.throneRoom.unique_window30276 = "Persevering Window";
+g_js_strings.throneRoom.unique_banner30277 = "Unyielding Banner";
+g_js_strings.throneRoom.unique_candelabrum30278 = "Magnanimous Chandelier";
+g_js_strings.throneRoom.unique_table30279 = "Skillful Table";
+g_js_strings.throneRoom.unique_trophy30280 = "Courageous Trophy";
 g_js_strings.throneRoom.might1 = "TR Might";
 g_js_strings.throneRoom.statCapNear = "You are approaching the capacity for this stat.";
 g_js_strings.throneRoom.statCapLimit = "You have reached the capacity for this stat.";
@@ -2372,6 +2406,19 @@ g_js_strings.throneRoom.effectName_93 = "Chance to Find Items in PvP";
 g_js_strings.throneRoom.effectName_94 = "Druid Bonus 1";
 g_js_strings.throneRoom.effectName_95 = "Fey Bonus 1";
 g_js_strings.throneRoom.effectName_96 = "Briton Bonus 1";
+g_js_strings.throneRoom.effectName_97 = "Revive Speed";
+g_js_strings.throneRoom.effectName_98 = "Revive Cost";
+g_js_strings.throneRoom.effectName_99 = "Increased Population";
+g_js_strings.throneRoom.effectName_100 = "Reduced Research Cost";
+g_js_strings.throneRoom.effectName_101 = "Ore Guardian Resource Buff";
+g_js_strings.throneRoom.effectName_102 = "Ore Guardian Troop Attack Buff";
+g_js_strings.throneRoom.effectName_103 = "Wood Guardian Resource Buff";
+g_js_strings.throneRoom.effectName_104 = "Wood Guardian Troop HP Buff";
+g_js_strings.throneRoom.effectName_105 = "Stone Guardian Resource Buff";
+g_js_strings.throneRoom.effectName_106 = "Stone Guardian Train Speed Buff";
+g_js_strings.throneRoom.effectName_107 = "Food Guardian Resource Buff";
+g_js_strings.throneRoom.effectName_108 = "Food Guardian March Speed Buff";
+g_js_strings.throneRoom.effectName_109 = "Increased City Value";
 g_js_strings.report_view.tab0 = "Troops";
 g_js_strings.report_view.tab1 = "Troop Stats";
 g_js_strings.report_view.tab2 = "Bonuses";
@@ -2438,6 +2485,7 @@ g_js_strings.serverUpgraded.continueToYourDomain = "Continue to your Domain";
 g_js_strings.revive = new Object();
 g_js_strings.revive.trainttl = "Revive Troops";
 g_js_strings.revive.trainingttl = "Reviving";
+g_js_strings.revive.rarettl = "Rare Troops";
 g_js_strings.revive.youown = "You Own";
 g_js_strings.revive.wounded = "Wounded";
 g_js_strings.revive.dismiss = "Dismiss";
@@ -2455,6 +2503,7 @@ g_js_strings.revive.cantdo0_barracks = "Need to select at least 1 troop to train
 g_js_strings.sacrifice = new Object();
 g_js_strings.sacrifice.trainttl = "Sacrifice Troops";
 g_js_strings.sacrifice.trainingttl = "Current Sacrifices";
+g_js_strings.sacrifice.rarettl = "Rare Troops";
 g_js_strings.sacrifice.youown = "You Own";
 g_js_strings.sacrifice.dismiss = "Dismiss";
 g_js_strings.sacrifice.curintrain = "Rituals in Progress";
@@ -2570,6 +2619,8 @@ g_js_strings.playerGuide.throneroom_95_p = "Increases success rate by 2x and com
 g_js_strings.playerGuide.throneroom_96_h = "Lucky Token";
 g_js_strings.playerGuide.throneroom_97_p = "Cost- 15 Gems";
 g_js_strings.playerGuide.throneroom_98_p = "Increases success rate by 4x and completely prevents an item from breaking if an Upgrade is unsuccessful. This item is consumed with each Upgrade attempt.";
+g_js_strings.playerGuide.throneroom_99_p = "Cost- 75 Gems";
+g_js_strings.playerGuide.throneroom_100_p = "Increases success rate by 25x and completely prevents an item from breaking if an Upgrade is unsuccessful. This item is consumed with each Upgrade attempt.";
 g_js_strings.playerGuide.throneroom_99_button = "Enhancing an item";
 g_js_strings.playerGuide.throneroom_100_h = "Enhancing a Throne Room Item";
 g_js_strings.playerGuide.throneroom_101_p = "Ever found a Simple Throne Room item that had powerful effects on it? Well with Enhancement, an item???s Quality can now be changed! Using Aetherstones, a user can attempt to increase the Quality of their Throne Room Item using the Enhance panel.";
@@ -3115,6 +3166,38 @@ g_js_strings.summoningCircle.grandPrizeDescription_1 = "You have gathered all 5 
 g_js_strings.summoningCircle.grandPrizeDescription_2 = "You may open the Grand Prize chest in your inventory.";
 g_js_strings.summoningCircle.eventExpires = "Summoning Circle Expires: %1$s!";
 g_js_strings.summoningCircle.eventIsOver = "The Summoning Circle event is now over. If you have more than 5 Summoning Stones, they will be automatically exchanged for the Grand Prize box within 24 hours. Any remaining Summoning Stones will count towards the next Summoning Circle event. Thanks for playing!";
+g_js_strings.vote = {};
+g_js_strings.vote.voteOnNew = "You've been invited to a Royal Audience in order to give counsel on the future of the Kingdom. You will be given points based on your Might gained during the Royal Audience session.  These points can be used to vote on a new idea that you want to see in the game. Help change the future of the kingdom by voting!";
+g_js_strings.vote.goVote = "Go Vote";
+g_js_strings.vote.voteNowExc = "Vote Now!";
+g_js_strings.vote.newVoteTitle = "New Vote";
+g_js_strings.vote.modalTitle = "Royal Audience";
+g_js_strings.vote.timeLeft = "Time Left";
+g_js_strings.vote.yourVotes = "Your Votes";
+g_js_strings.vote.royalAudience = "Royal Audience";
+g_js_strings.vote.startVoting = "Start Voting";
+g_js_strings.vote.welcomeToTheNew = "Welcome to the new Voting Feature in Kingdoms of Camelot!";
+g_js_strings.vote.whenAVoteIs = "When a vote is occurring you'll earn a <b>Voting Point</b> for every <b>10,000 Might</b> you earn!  Use those points to vote on <b>Features</b> that the <b>Kingdoms of Camelot team will implement</b> in the future.  Have fun, and make your voice heard!";
+g_js_strings.vote.confirmVote = "CONFIRM VOTE";
+g_js_strings.vote.moreInfo = "More info";
+g_js_strings.vote.cancel = "Cancel";
+g_js_strings.vote.vote = "Vote";
+g_js_strings.vote.confirmVoteButton = "Yes, Vote";
+g_js_strings.vote.voteTimeExpired = "Voting time has expired on this item.";
+g_js_strings.vote.voteNotEnough = "One or more contribution points are required to vote.";
+g_js_strings.vote.prize_description1 = "1st prize";
+g_js_strings.vote.prize_description2 = "2nd prize";
+g_js_strings.vote.prize_description3 = "3rd prize";
+g_js_strings.vote.start_voting = "Start Voting";
+g_js_strings.vote.voteOnNewFeatures = "Vote on new features for Kingdoms of Camelot!";
+g_js_strings.vote.top_voters = "Top Voters";
+g_js_strings.voteTooltip = {};
+g_js_strings.voteTooltip.contributionPoints = "Contribution Points";
+g_js_strings.voteTooltip.contributionPointsDetails = "The amount of points you are able to use on voting. Gain more points by gaining Might. Contribution Points are reset when a Royal Audience ends.";
+g_js_strings.voteTooltip.Locked = "Locked";
+g_js_strings.voteTooltip.Unlocked = "Unlocked";
+g_js_strings.voteTooltip.milestoneUnlocked = "You've unlocked this reward and earned %1$s of %2$s";
+g_js_strings.voteTooltip.milestoneLocked = "Use more Contribution Points to unlock %1$s of %2$s";
 var buildingcost = {
     bdg0: ["Castle", 0, 0, 0, 0, 0, 0, 0, {
         b19: [0, - 2]
@@ -3303,7 +3386,8 @@ var unitnamedesctranslated = {
     unt12: ["Catapult", "Catapults throw large rocks from a huge distance. They are most effective against the enemy"],
     unt13: ["Bloodthorn", "Born of the wilderness, the Bloodthorn unit is an elite warrior that specializes in dealing quick, deadly blows to their enemies."],
     unt14: ["Executioner", "Born of Ice and Steel, the Executioner is an elite unit that specializes in overwhelming their enemies with massive force."],
-    unt15: ["Siege Wall", "The Siege Wall guarantees advancement on the battlefield for its army."]
+    unt15: ["Siege Wall", "The Siege Wall guarantees advancement on the battlefield for its army."],
+    unt16: ["Flame Archer", "Flame Archers are extremely adept at slaying troops from a distance. Their flame-tipped arrows wreak extra damage when attacking Dark Forests."]
 };
 var fortcost = {
     frt53: ["Wall-Mounted Crossbows", 250, 2000, 750, 500, 0, 0, 180, {
@@ -6066,6 +6150,38 @@ var itemlist = {
         category: 3,
         subCategory: 0
     },
+    i1490: {
+        name: "150 Flame Archers",
+        description: "Summons 150 Flame Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1491: {
+        name: "500 Flame Archers",
+        description: "Summons 500 Flame Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1492: {
+        name: "750 Flame Archers",
+        description: "Summons 750 Flame Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1493: {
+        name: "1000 Flame Archers",
+        description: "Summons 1000 Flame Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
     i2000: {
         name: "Renaming Ritual",
         description: "Change the name of your Guardian.",
@@ -7602,6 +7718,14 @@ var itemlist = {
         category: 1,
         subCategory: 0
     },
+    i20019: {
+        name: "Super Lucky Token",
+        description: "Prevents an item from breaking and increases the chance of success by 25x.  Will be consumed with each Upgrade attempt.",
+        price: 75,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
     i25001: {
         name: "Mercenaries Cursed Chest N",
         description: "Contains some of Camelots most powerful items. Each Cursed Chest requires a Merlin's Incantation to open.",
@@ -8077,9 +8201,9 @@ var itemlist = {
     i30219: {
         name: "Advisor Wynn",
         description: "",
-        price: null,
+        price: 500,
         tradable: null,
-        category: 0,
+        category: 1,
         subCategory: 2
     },
     i30220: {
@@ -8144,7 +8268,7 @@ var itemlist = {
         price: 450,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30259: {
         name: "Relief Mystery Box",
@@ -8250,6 +8374,54 @@ var itemlist = {
         category: 0,
         subCategory: 2
     },
+    i30275: {
+        name: "Stalwart Throne",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30276: {
+        name: "Persevering Window",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30277: {
+        name: "Unyielding Banner",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30278: {
+        name: "Magnanimous Chandelier",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30279: {
+        name: "Skillful Table",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30280: {
+        name: "Courageous Trophy",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
     i30300: {
         name: "Easter Egg",
         description: "",
@@ -8296,7 +8468,7 @@ var itemlist = {
         price: 45,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30306: {
         name: "Acton's Chest",
@@ -8304,7 +8476,7 @@ var itemlist = {
         price: 1000,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30307: {
         name: "Agatha's Chest",
@@ -8312,7 +8484,7 @@ var itemlist = {
         price: 300,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30308: {
         name: "Alcott's Chest",
@@ -8320,7 +8492,7 @@ var itemlist = {
         price: 25,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30309: {
         name: "Alder's Chest",
@@ -8328,7 +8500,7 @@ var itemlist = {
         price: 250,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30310: {
         name: "Aldercry's Chest",
@@ -8336,7 +8508,7 @@ var itemlist = {
         price: 30,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30311: {
         name: "Aldrich's Chest",
@@ -8344,7 +8516,7 @@ var itemlist = {
         price: 65,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30312: {
         name: "Amsden's Chest",
@@ -8352,7 +8524,7 @@ var itemlist = {
         price: 40,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30313: {
         name: "Arden's Chest",
@@ -8360,7 +8532,7 @@ var itemlist = {
         price: 20,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30314: {
         name: "Averill's Chest",
@@ -8368,7 +8540,7 @@ var itemlist = {
         price: 90,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30315: {
         name: "Avery's Chest",
@@ -8376,7 +8548,7 @@ var itemlist = {
         price: 500,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30316: {
         name: "Bancroft's Chest",
@@ -8384,7 +8556,7 @@ var itemlist = {
         price: 80,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30317: {
         name: "Barclay's Chest",
@@ -8392,7 +8564,7 @@ var itemlist = {
         price: 400,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30318: {
         name: "Baron's Chest",
@@ -8400,7 +8572,7 @@ var itemlist = {
         price: 15,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30319: {
         name: "Bartemius's Chest",
@@ -8408,7 +8580,7 @@ var itemlist = {
         price: 10,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30320: {
         name: "Beardsley's Chest",
@@ -8416,7 +8588,7 @@ var itemlist = {
         price: 200,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30321: {
         name: "Beldon's Chest",
@@ -8424,7 +8596,7 @@ var itemlist = {
         price: 10,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30322: {
         name: "Bentley's Chest",
@@ -8432,7 +8604,7 @@ var itemlist = {
         price: 55,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30323: {
         name: "Bertram's Chest",
@@ -8440,7 +8612,7 @@ var itemlist = {
         price: 35,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30324: {
         name: "Birthday Box",
@@ -8464,7 +8636,7 @@ var itemlist = {
         price: 100,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30327: {
         name: "Blythe's Chest",
@@ -8472,7 +8644,7 @@ var itemlist = {
         price: null,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30328: {
         name: "Bolton's Chest",
@@ -8480,7 +8652,7 @@ var itemlist = {
         price: 55,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30329: {
         name: "Brayden's Chest",
@@ -8488,7 +8660,7 @@ var itemlist = {
         price: 10,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30330: {
         name: "Brinley's Chest",
@@ -8512,7 +8684,7 @@ var itemlist = {
         price: 85,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30333: {
         name: "Caldwell's Chest",
@@ -8520,7 +8692,7 @@ var itemlist = {
         price: 20,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30334: {
         name: "Carleton's Chest",
@@ -8528,7 +8700,7 @@ var itemlist = {
         price: 75,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30335: {
         name: "Carmichael's Chest",
@@ -8536,7 +8708,7 @@ var itemlist = {
         price: 100,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30336: {
         name: "Carrington's Chest",
@@ -8544,7 +8716,7 @@ var itemlist = {
         price: 50,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30337: {
         name: "Chaucer's Mystery Box",
@@ -8560,7 +8732,7 @@ var itemlist = {
         price: 55,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30339: {
         name: "Chief Advisor's Chest",
@@ -8568,7 +8740,7 @@ var itemlist = {
         price: 85,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30340: {
         name: "Chilton's Chest",
@@ -8576,7 +8748,7 @@ var itemlist = {
         price: 200,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30341: {
         name: "Christmas Box",
@@ -8584,7 +8756,7 @@ var itemlist = {
         price: 100,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30342: {
         name: "Cinco De Mayo Box",
@@ -8592,7 +8764,7 @@ var itemlist = {
         price: 100,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30343: {
         name: "Claiborne's Chest",
@@ -8600,7 +8772,7 @@ var itemlist = {
         price: 45,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30344: {
         name: "Clifford's Chest",
@@ -8608,7 +8780,7 @@ var itemlist = {
         price: 45,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30345: {
         name: "Corliss's Chest",
@@ -8616,7 +8788,7 @@ var itemlist = {
         price: 65,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30346: {
         name: "Cornelius's Chest",
@@ -8624,7 +8796,7 @@ var itemlist = {
         price: 90,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30347: {
         name: "Creighton's Chest",
@@ -8632,7 +8804,7 @@ var itemlist = {
         price: 400,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30348: {
         name: "Creighton's Chest",
@@ -8640,7 +8812,7 @@ var itemlist = {
         price: null,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30349: {
         name: "Cygnus's Chest",
@@ -8648,7 +8820,7 @@ var itemlist = {
         price: 250,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30350: {
         name: "Dalton's Chest",
@@ -8656,7 +8828,7 @@ var itemlist = {
         price: 40,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30351: {
         name: "Dayne's Chest",
@@ -8664,7 +8836,7 @@ var itemlist = {
         price: 55,
         tradable: null,
         category: 5,
-        subCategory: 0
+        subCategory: 100
     },
     i30352: {
         name: "Dempster's Mystery Box",
@@ -8976,7 +9148,7 @@ var itemlist = {
         price: 100,
         tradable: null,
         category: 5,
-        subCategory: 100
+        subCategory: 400
     },
     i30391: {
         name: "Lucky #3 Box",
@@ -8984,7 +9156,7 @@ var itemlist = {
         price: 100,
         tradable: null,
         category: 5,
-        subCategory: 100
+        subCategory: 400
     },
     i30392: {
         name: "Lucky #5 Box",
@@ -8992,7 +9164,7 @@ var itemlist = {
         price: 100,
         tradable: null,
         category: 5,
-        subCategory: 100
+        subCategory: 400
     },
     i30393: {
         name: "Lucky #7 Box",
@@ -9000,7 +9172,7 @@ var itemlist = {
         price: 100,
         tradable: null,
         category: 5,
-        subCategory: 100
+        subCategory: 400
     },
     i30394: {
         name: "Ludevic's Mystery Box",
@@ -9466,6 +9638,14 @@ var itemlist = {
         category: 5,
         subCategory: 100
     },
+    i30504: {
+        name: "Royal Audience Reward",
+        description: "A reward for letting your voice be heard in the Royal Audience!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
     i30600: {
         name: "Druid Chest",
         description: "A modest prize won from Summoning Circle.",
@@ -9558,6 +9738,11342 @@ var itemlist = {
         name: "Briton Chest",
         description: "A valuable prize won from Summoning Circle.",
         price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30612: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30613: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30614: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30615: {
+        name: "The Grand Prize",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle. Check the Caravan for this event's Grand Prize!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30616: {
+        name: "The Grand Prize",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle. Check the Caravan for this event's Grand Prize!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30617: {
+        name: "Dagonet Mystery Box",
+        description: "Take a chance to win one of the most powerful items in Camelot! Check today's message for more details!",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30618: {
+        name: "The Chest of Valor",
+        description: "Take a chance and win great items and support a good cause! Check today's messages for more details!",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30701: {
+        name: "North",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30702: {
+        name: "Seabert",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30703: {
+        name: "Wallach",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30704: {
+        name: "Cristiano",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30705: {
+        name: "Agileo",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30706: {
+        name: "Cirillo",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30707: {
+        name: "Matheu",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30708: {
+        name: "Kipp",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30709: {
+        name: "Valentine",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30710: {
+        name: "Richart",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30711: {
+        name: "Carlita",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30712: {
+        name: "Alfredo",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30713: {
+        name: "Berit",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30714: {
+        name: "Thoma",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30715: {
+        name: "Lois",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30716: {
+        name: "Serafino",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30717: {
+        name: "Camila",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30718: {
+        name: "Carine",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30719: {
+        name: "Reiner",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30720: {
+        name: "Verrill",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30721: {
+        name: "Adalsinda",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30722: {
+        name: "Winter",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30723: {
+        name: "Albertine",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30724: {
+        name: "Harvey",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30725: {
+        name: "Ballard",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30726: {
+        name: "Milan",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30727: {
+        name: "Marietta",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30728: {
+        name: "Zeta",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30729: {
+        name: "Caren",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30730: {
+        name: "Sigwald",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30731: {
+        name: "Bertolda",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30732: {
+        name: "Mona",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30733: {
+        name: "Cecilio",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30734: {
+        name: "Graziella",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30735: {
+        name: "Ambrogio",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30736: {
+        name: "Hermalindo",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30737: {
+        name: "Gilberte",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30738: {
+        name: "Emerson",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30739: {
+        name: "Cecile",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30740: {
+        name: "Lincoln",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30741: {
+        name: "Nicola",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30742: {
+        name: "Camillo",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30743: {
+        name: "Biaggio",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30744: {
+        name: "Wies",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30745: {
+        name: "Frine",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30746: {
+        name: "Marielena",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30747: {
+        name: "Eldridge",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30748: {
+        name: "Rigoberta",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30749: {
+        name: "Filma",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30750: {
+        name: "Antonia",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30751: {
+        name: "Bronson",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30752: {
+        name: "Anonciada",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30753: {
+        name: "Michel",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30754: {
+        name: "Whit",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30755: {
+        name: "Marcella",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30756: {
+        name: "Bogart",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30757: {
+        name: "Sigfredo",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30758: {
+        name: "Milba",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30759: {
+        name: "Ruffina",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30760: {
+        name: "Guido",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30761: {
+        name: "Michaelangelo",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30762: {
+        name: "Attilio",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30763: {
+        name: "Saveria",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30764: {
+        name: "Felisa",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30765: {
+        name: "Adele",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30766: {
+        name: "Arnelle",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30767: {
+        name: "Salaberga",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30768: {
+        name: "Baron",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30769: {
+        name: "Eugenie",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30770: {
+        name: "Snowden",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30771: {
+        name: "Raven",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30772: {
+        name: "Reginald",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30773: {
+        name: "Gypsy",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30774: {
+        name: "Manning",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30775: {
+        name: "Cathryn",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30776: {
+        name: "Andree",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30777: {
+        name: "Ilsa",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30778: {
+        name: "Saverio",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30779: {
+        name: "Giampaolo",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30780: {
+        name: "Patrizia",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30781: {
+        name: "Pauline",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30782: {
+        name: "Ernesta",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30783: {
+        name: "Canuta",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30784: {
+        name: "Adriano",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30785: {
+        name: "Catherine\u00c2\u00a0\u00c2\u00a0",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30786: {
+        name: "Duna",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30787: {
+        name: "Lenny",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30788: {
+        name: "Shandy",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30789: {
+        name: "Josephine",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30790: {
+        name: "Milva",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30791: {
+        name: "Fulla",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30792: {
+        name: "Webster",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30793: {
+        name: "Amelie",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30794: {
+        name: "Shepherd",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30795: {
+        name: "Aidan",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30796: {
+        name: "Carlino",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30797: {
+        name: "Gualteria",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30798: {
+        name: "Herbert",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30799: {
+        name: "Blenda",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30800: {
+        name: "Pia",
+        description: "Check the MOTD for Box contents.",
+        price: 1,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30801: {
+        name: "Demelza",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30802: {
+        name: "B\u00c3\u00a4rbel",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30803: {
+        name: "Laurence",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30804: {
+        name: "Aryana",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30805: {
+        name: "Pablo",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30806: {
+        name: "Conradine",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30807: {
+        name: "Donya",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30808: {
+        name: "Raffaella",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30809: {
+        name: "Ida",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30810: {
+        name: "Celio",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30811: {
+        name: "Egerton",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30812: {
+        name: "Amato",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30813: {
+        name: "Amato",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30814: {
+        name: "Bernardo",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30815: {
+        name: "Jeanne",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30816: {
+        name: "Desiderio",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30817: {
+        name: "Rishley",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30818: {
+        name: "Kamelia",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30819: {
+        name: "Salutiano",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30820: {
+        name: "Waverly",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30821: {
+        name: "Irma",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30822: {
+        name: "Benigno",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30823: {
+        name: "Mario",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30824: {
+        name: "Geraldine",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30825: {
+        name: "Emilienne",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30826: {
+        name: "Morven",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30827: {
+        name: "Guiditta",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30828: {
+        name: "Clariss",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30829: {
+        name: "Riberto",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30830: {
+        name: "Misty",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30831: {
+        name: "Nixie",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30832: {
+        name: "Cosima",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30833: {
+        name: "Leonora",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30834: {
+        name: "Teofilo",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30835: {
+        name: "Cola",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30836: {
+        name: "Maximino",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30837: {
+        name: "Griselda",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30838: {
+        name: "Addolorata",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30839: {
+        name: "Angel",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30840: {
+        name: "Emma",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30841: {
+        name: "Pierson",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30842: {
+        name: "Eleonora",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30843: {
+        name: "Clemente",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30844: {
+        name: "Cosma",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30845: {
+        name: "Marlow",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30846: {
+        name: "Elvira",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30847: {
+        name: "Osbert",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30848: {
+        name: "Huberta",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30849: {
+        name: "Idoberga",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30850: {
+        name: "Erden",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30851: {
+        name: "Rudyard",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30852: {
+        name: "Rosana",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30853: {
+        name: "Francesca",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30854: {
+        name: "Tito",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30855: {
+        name: "Graziano",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30856: {
+        name: "Adelvina",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30857: {
+        name: "Oakley",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30858: {
+        name: "Clodio",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30859: {
+        name: "Ludovico",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30860: {
+        name: "Tristano",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30861: {
+        name: "Baldwin",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30862: {
+        name: "Ivo",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30863: {
+        name: "Eustachio",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30864: {
+        name: "Oswald",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30865: {
+        name: "Clinton",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30866: {
+        name: "Dunstan",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30867: {
+        name: "Taddeo",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30868: {
+        name: "Alfilda",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30869: {
+        name: "Lonzo",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30870: {
+        name: "Slade",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30871: {
+        name: "Fons",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30872: {
+        name: "Crimilda",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30873: {
+        name: "Ippolito",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30874: {
+        name: "Carmelina",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30875: {
+        name: "Dane",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30876: {
+        name: "Raina",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30877: {
+        name: "Watson",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30878: {
+        name: "Wolfgang\u00c2\u00a0",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30879: {
+        name: "Guiomar",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30880: {
+        name: "Umberto",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30881: {
+        name: "Sherlock",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30882: {
+        name: "Carmela",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30883: {
+        name: "Landon",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30884: {
+        name: "Giosetta",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30885: {
+        name: "Alette",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30886: {
+        name: "Kelby",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30887: {
+        name: "Farley",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30888: {
+        name: "Aisley",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30889: {
+        name: "Editta",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30890: {
+        name: "Hugh",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30891: {
+        name: "Meinrad",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30892: {
+        name: "Dagoberta",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30893: {
+        name: "Nevio",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30894: {
+        name: "Jianna",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30895: {
+        name: "Raimonda",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30896: {
+        name: "Capri",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30897: {
+        name: "Rosa",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30898: {
+        name: "Hilliard",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30899: {
+        name: "Agostino",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30900: {
+        name: "Aart",
+        description: "Check the MOTD for Box contents.",
+        price: 2,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30901: {
+        name: "Hettie",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30902: {
+        name: "Thorpe",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30903: {
+        name: "Julienne",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30904: {
+        name: "Sigurd",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30905: {
+        name: "Cara",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30906: {
+        name: "Argimon",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30907: {
+        name: "Luella",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30908: {
+        name: "Pasqualina",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30909: {
+        name: "Lamberta",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30910: {
+        name: "Crista",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30911: {
+        name: "Ima",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30912: {
+        name: "Wilda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30913: {
+        name: "Etelvina",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30914: {
+        name: "Norman",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30915: {
+        name: "Whitney",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30916: {
+        name: "Kimberley",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30917: {
+        name: "Rolanda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30918: {
+        name: "Constanza",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30919: {
+        name: "Rolene",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30920: {
+        name: "Adler",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30921: {
+        name: "Aldonza",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30922: {
+        name: "Roma",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30923: {
+        name: "Valdrada",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30924: {
+        name: "Freda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30925: {
+        name: "Hazel",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30926: {
+        name: "Trista",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30927: {
+        name: "Caroline",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30928: {
+        name: "Piper",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30929: {
+        name: "Hortense",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30930: {
+        name: "Arvella",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30931: {
+        name: "Mena",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30932: {
+        name: "Radcliff",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30933: {
+        name: "J\u00c3\u00b6rg",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30934: {
+        name: "Orlanda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30935: {
+        name: "Vicenzo",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30936: {
+        name: "Heather",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30937: {
+        name: "Fielding",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30938: {
+        name: "Ransford",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30939: {
+        name: "Milton",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30940: {
+        name: "Marie",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30941: {
+        name: "Arcangelo",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30942: {
+        name: "Lucrezia",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30943: {
+        name: "Bing",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30944: {
+        name: "Charlotte",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30945: {
+        name: "Brunhilda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30946: {
+        name: "Kenner",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30947: {
+        name: "Jaegar",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30948: {
+        name: "Daniele",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30949: {
+        name: "Sal",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30950: {
+        name: "Remo",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30951: {
+        name: "Gavino",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30952: {
+        name: "Rodney",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30953: {
+        name: "Colombano",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30954: {
+        name: "Cesarina",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30955: {
+        name: "Lawson",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30956: {
+        name: "Azzurra",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30957: {
+        name: "Agnes",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30958: {
+        name: "Fulton",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30959: {
+        name: "Lauro",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30960: {
+        name: "Flaminia",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30961: {
+        name: "Alonza",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30962: {
+        name: "Corradeo",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30963: {
+        name: "Suzetta",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30964: {
+        name: "Wheaton",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30965: {
+        name: "Rosilda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30966: {
+        name: "Tripp",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30967: {
+        name: "Daniela",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30968: {
+        name: "Humiliana",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30969: {
+        name: "Pippo",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30970: {
+        name: "Walton",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30971: {
+        name: "Crescenzo",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30972: {
+        name: "Corliss",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30973: {
+        name: "Floyd",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30974: {
+        name: "Beatrice",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30975: {
+        name: "Garrick",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30976: {
+        name: "Kevin",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30977: {
+        name: "Sanford",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30978: {
+        name: "Mead",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30979: {
+        name: "Porsche",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30980: {
+        name: "Thistle",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30981: {
+        name: "Giuseppa",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30982: {
+        name: "Selig",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30983: {
+        name: "Rudolf",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30984: {
+        name: "Milada",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30985: {
+        name: "Margherita",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30986: {
+        name: "Renee",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30987: {
+        name: "Harva",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30988: {
+        name: "Penley",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30989: {
+        name: "Rodrick",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30990: {
+        name: "Simonetta",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30991: {
+        name: "Demetrio",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30992: {
+        name: "Karl",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30993: {
+        name: "Aline",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30994: {
+        name: "Avery",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30995: {
+        name: "Alda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30996: {
+        name: "Claretta",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30997: {
+        name: "Berthe",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30998: {
+        name: "Hilderic",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30999: {
+        name: "Nerina",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31000: {
+        name: "Bernhard",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31001: {
+        name: "Gundelinda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31002: {
+        name: "Anatolio",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31003: {
+        name: "Theobald",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31004: {
+        name: "David",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31005: {
+        name: "Tatum",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31006: {
+        name: "Loretto",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31007: {
+        name: "Roderica",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31008: {
+        name: "Biagio",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31009: {
+        name: "Gessica",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31010: {
+        name: "Celedonia",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31011: {
+        name: "Rotha",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31012: {
+        name: "Elnora",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31013: {
+        name: "Lyre",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31014: {
+        name: "Penn",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31015: {
+        name: "Ema",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31016: {
+        name: "Gertie",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31017: {
+        name: "Dayton",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31018: {
+        name: "Johanne",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31019: {
+        name: "Augusto",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31020: {
+        name: "Simone",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31021: {
+        name: "Amorie",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31022: {
+        name: "Uta",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31023: {
+        name: "Consolata",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31024: {
+        name: "Agapito",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31025: {
+        name: "Putnam",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31026: {
+        name: "Romy",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31027: {
+        name: "Brunilda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31028: {
+        name: "Bibiana",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31029: {
+        name: "Teolinda",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31030: {
+        name: "Bonfilia",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31031: {
+        name: "Antonello",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31032: {
+        name: "Willeen",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31033: {
+        name: "Daralis",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31034: {
+        name: "Ford",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31035: {
+        name: "Roland",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31036: {
+        name: "Marcia",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31037: {
+        name: "Federica",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31038: {
+        name: "Preston",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31039: {
+        name: "Victorine",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31040: {
+        name: "Oriana",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31041: {
+        name: "Domenico",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31042: {
+        name: "Yvonne\u00c2\u00a0",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31043: {
+        name: "Lothario",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31044: {
+        name: "Berlyn",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31045: {
+        name: "Felicie",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31046: {
+        name: "Arrigo",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31047: {
+        name: "Serena",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31048: {
+        name: "Rodolfo",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31049: {
+        name: "Claus",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31050: {
+        name: "Ludovica",
+        description: "Check the MOTD for Box contents.",
+        price: 3,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31051: {
+        name: "Ultman",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31052: {
+        name: "Ullric",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31053: {
+        name: "Wanda",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31054: {
+        name: "Olin",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31055: {
+        name: "Rutilia",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31056: {
+        name: "Hernan",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31057: {
+        name: "Adrienna",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31058: {
+        name: "Newman",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31059: {
+        name: "Winthrop",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31060: {
+        name: "Tusnelda",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31061: {
+        name: "Hedwig",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31062: {
+        name: "Bernadeth",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31063: {
+        name: "Ludovic",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31064: {
+        name: "Carolina",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31065: {
+        name: "Louise",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31066: {
+        name: "Eldon",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31067: {
+        name: "Aubrey",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31068: {
+        name: "Velma",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31069: {
+        name: "King",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31070: {
+        name: "Lutgarda",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31071: {
+        name: "Rufina",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31072: {
+        name: "Humbert",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31073: {
+        name: "Maida",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31074: {
+        name: "Dixie",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31075: {
+        name: "Gia",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31076: {
+        name: "Fernanda",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31077: {
+        name: "Calandra",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31078: {
+        name: "Crysta",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31079: {
+        name: "Noemi",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31080: {
+        name: "Aiken",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31081: {
+        name: "Germaine",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31082: {
+        name: "Bertalina",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31083: {
+        name: "Hedda",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31084: {
+        name: "Germano",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31085: {
+        name: "Kaelyn",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31086: {
+        name: "Donald",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31087: {
+        name: "Carol",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31088: {
+        name: "Read",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31089: {
+        name: "Jairo",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31090: {
+        name: "Manrique",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31091: {
+        name: "Columbia",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31092: {
+        name: "Randelle",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31093: {
+        name: "Clifford",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31094: {
+        name: "Marzio",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31095: {
+        name: "Queena",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31096: {
+        name: "Ovidia",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31097: {
+        name: "Adelaida",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31098: {
+        name: "Lotte",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31099: {
+        name: "Crocetta",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31100: {
+        name: "Saturno",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31101: {
+        name: "Herlinda",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31102: {
+        name: "Schon",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31103: {
+        name: "Averil",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31104: {
+        name: "Sig",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31105: {
+        name: "Arsenio",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31106: {
+        name: "Colton",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31107: {
+        name: "Anzia",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31108: {
+        name: "Valfredo",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31109: {
+        name: "Angele",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31110: {
+        name: "Clarice",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31111: {
+        name: "Seifert",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31112: {
+        name: "Missy",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31113: {
+        name: "Ulfer",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31114: {
+        name: "Hunter",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31115: {
+        name: "Marino",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31116: {
+        name: "Cleto",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31117: {
+        name: "Ward",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31118: {
+        name: "Faxon",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31119: {
+        name: "Cosmo",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31120: {
+        name: "Wandie",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31121: {
+        name: "Hiltruda",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31122: {
+        name: "Clementia",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31123: {
+        name: "Kamie",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31124: {
+        name: "Renny",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31125: {
+        name: "Leonard",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31126: {
+        name: "Teodosio",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31127: {
+        name: "Louie",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31128: {
+        name: "Annah",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31129: {
+        name: "Christoph",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31130: {
+        name: "Creighton",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31131: {
+        name: "Gertrude",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31132: {
+        name: "Edda",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31133: {
+        name: "Stoffel",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31134: {
+        name: "Giampiero",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31135: {
+        name: "Agilberta",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31136: {
+        name: "Clodomira",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31137: {
+        name: "Talat",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31138: {
+        name: "Urbano",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31139: {
+        name: "Geno",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31140: {
+        name: "Alberto",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31141: {
+        name: "Ullock",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31142: {
+        name: "Calvina",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31143: {
+        name: "Henning",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31144: {
+        name: "Clodene",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31145: {
+        name: "Benedetto",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31146: {
+        name: "Armanno",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31147: {
+        name: "Tina",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31148: {
+        name: "Aurelio",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31149: {
+        name: "Aldo",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31150: {
+        name: "Irene",
+        description: "Check the MOTD for Box contents.",
+        price: 4,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31151: {
+        name: "Elsbeth",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31152: {
+        name: "West",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31153: {
+        name: "Stefan",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31154: {
+        name: "Jagger",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31155: {
+        name: "Lacole",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31156: {
+        name: "Margarita",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31157: {
+        name: "Bern",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31158: {
+        name: "Giannino",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31159: {
+        name: "Haylee",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31160: {
+        name: "Biagino",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31161: {
+        name: "Chilton",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31162: {
+        name: "Heriberta",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31163: {
+        name: "Manheim",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31164: {
+        name: "Agnese",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31165: {
+        name: "Raffaello",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31166: {
+        name: "Johana",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31167: {
+        name: "Kaufman",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31168: {
+        name: "Daisy",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31169: {
+        name: "Baptiste",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31170: {
+        name: "Ullivieri",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31171: {
+        name: "Love",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31172: {
+        name: "Varick",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31173: {
+        name: "Cody",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31174: {
+        name: "Leopoldo",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31175: {
+        name: "Bruns",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31176: {
+        name: "Armino",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31177: {
+        name: "Maria",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31178: {
+        name: "Elisa",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31179: {
+        name: "Frodina",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31180: {
+        name: "Andreana",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31181: {
+        name: "Concetto",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31182: {
+        name: "Everilda",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31183: {
+        name: "Celeste",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31184: {
+        name: "Dalton",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31185: {
+        name: "Marlena",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31186: {
+        name: "Keene",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31187: {
+        name: "Vasilios",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31188: {
+        name: "Emmie",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31189: {
+        name: "Raleigh",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31190: {
+        name: "Sigismonda",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31191: {
+        name: "Leola",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31192: {
+        name: "Tyne",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31193: {
+        name: "Terrell",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31194: {
+        name: "Stein",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31195: {
+        name: "Carmina",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31196: {
+        name: "Schneider",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31197: {
+        name: "Madeleine\u00c2\u00a0",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31198: {
+        name: "Vogel",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31199: {
+        name: "Cristoforo",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31200: {
+        name: "Lucienne",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31201: {
+        name: "Antonietta",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31202: {
+        name: "Valburga",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31203: {
+        name: "Herminsenda",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31204: {
+        name: "Aloisa",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31205: {
+        name: "Federico",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31206: {
+        name: "Barron",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31207: {
+        name: "Amalie",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31208: {
+        name: "Antonino",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31209: {
+        name: "Michell",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31210: {
+        name: "Vittore",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31211: {
+        name: "Croccifixio",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31212: {
+        name: "Idelgunda",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31213: {
+        name: "Ada",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31214: {
+        name: "Devon",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31215: {
+        name: "Gisella",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31216: {
+        name: "Nantilde",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31217: {
+        name: "Clarissa",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31218: {
+        name: "Maxmiliano",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31219: {
+        name: "Antonella",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31220: {
+        name: "Leonzio",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31221: {
+        name: "Lamia",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31222: {
+        name: "Colombo",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31223: {
+        name: "Aldelmo",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31224: {
+        name: "Rue",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31225: {
+        name: "Rainey",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31226: {
+        name: "Agostina",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31227: {
+        name: "Alfonso",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31228: {
+        name: "Brun",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31229: {
+        name: "Redford",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31230: {
+        name: "Alessandro",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31231: {
+        name: "Gundenia",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31232: {
+        name: "Drake",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31233: {
+        name: "Easter",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31234: {
+        name: "Sachetan",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31235: {
+        name: "Almodis",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31236: {
+        name: "Harold",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31237: {
+        name: "Payton",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31238: {
+        name: "Lind",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31239: {
+        name: "Thorne",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31240: {
+        name: "Tabner",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31241: {
+        name: "Romolo",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31242: {
+        name: "Rudolpho",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31243: {
+        name: "Bella",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31244: {
+        name: "Landric",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31245: {
+        name: "Gontilda",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31246: {
+        name: "Christa",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31247: {
+        name: "Arla",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31248: {
+        name: "Mallory",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31249: {
+        name: "Caprice",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31250: {
+        name: "Mylon",
+        description: "Check the MOTD for Box contents.",
+        price: 5,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31251: {
+        name: "Zola",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31252: {
+        name: "Cecilia",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31253: {
+        name: "Siffredo",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31254: {
+        name: "Waller",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31255: {
+        name: "Euda",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31256: {
+        name: "Maitland",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31257: {
+        name: "Jarvia",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31258: {
+        name: "Steen",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31259: {
+        name: "Antoinette",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31260: {
+        name: "Zenzo",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31261: {
+        name: "Beatie",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31262: {
+        name: "Cipriana",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31263: {
+        name: "Urraca",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31264: {
+        name: "Georgette",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31265: {
+        name: "Manley",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31266: {
+        name: "Anastasio",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31267: {
+        name: "Truman",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31268: {
+        name: "Alberta",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31269: {
+        name: "Ceferina",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31270: {
+        name: "Irmine",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31271: {
+        name: "Mathilde",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31272: {
+        name: "Fern",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31273: {
+        name: "Brunela",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31274: {
+        name: "Barrett",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31275: {
+        name: "Rosangela",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31276: {
+        name: "Cinzia",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31277: {
+        name: "Adeltruda",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31278: {
+        name: "Cleveland",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31279: {
+        name: "Bernardino",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31280: {
+        name: "Sophie",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31281: {
+        name: "Crocifisso",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31282: {
+        name: "Gaetan",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31283: {
+        name: "Liduvina",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31284: {
+        name: "Teofila",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31285: {
+        name: "Selby",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31286: {
+        name: "Jacopo",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31287: {
+        name: "Bega",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31288: {
+        name: "Adrenilda",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31289: {
+        name: "Markus",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31290: {
+        name: "Orman",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31291: {
+        name: "Mara",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31292: {
+        name: "Joachim",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31293: {
+        name: "Dominico",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31294: {
+        name: "Keifer",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31295: {
+        name: "Elsa",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31296: {
+        name: "Nerio",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31297: {
+        name: "Floriano",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31298: {
+        name: "Amaranta",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31299: {
+        name: "Winifred",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31300: {
+        name: "Tye",
+        description: "Check the MOTD for Box contents.",
+        price: 7,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31301: {
+        name: "Fairfax",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31302: {
+        name: "Lioba",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31303: {
+        name: "Deonilde",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31304: {
+        name: "Casimiro",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31305: {
+        name: "Donia",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31306: {
+        name: "Ernestine",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31307: {
+        name: "Ludwig",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31308: {
+        name: "Emari",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31309: {
+        name: "Bernadyne",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31310: {
+        name: "Adalfieri",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31311: {
+        name: "Bernie",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31312: {
+        name: "Melanie",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31313: {
+        name: "Bartolommeo",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31314: {
+        name: "Emilse",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31315: {
+        name: "Benigna",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31316: {
+        name: "Bysen",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31317: {
+        name: "Malfreda",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31318: {
+        name: "Geovani",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31319: {
+        name: "Forbes",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31320: {
+        name: "Simona",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31321: {
+        name: "Merudina",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31322: {
+        name: "Ambra",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31323: {
+        name: "Baldovino",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31324: {
+        name: "Laure",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31325: {
+        name: "Gioconda",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31326: {
+        name: "Monegunda",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31327: {
+        name: "Rupert",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31328: {
+        name: "Claire",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31329: {
+        name: "Denise",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31330: {
+        name: "Vito",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31331: {
+        name: "Rudolph",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31332: {
+        name: "Arturo",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31333: {
+        name: "Traviata",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31334: {
+        name: "Rutherford",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31335: {
+        name: "Linfred",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31336: {
+        name: "Bernard",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31337: {
+        name: "Hieronomo",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31338: {
+        name: "Gianpaolo",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31339: {
+        name: "Bron",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31340: {
+        name: "Callisto",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31341: {
+        name: "Edsel",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31342: {
+        name: "Heresvida",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31343: {
+        name: "Oxford",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31344: {
+        name: "Therese",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31345: {
+        name: "Linwood",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31346: {
+        name: "Hewitt",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31347: {
+        name: "Henriette",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31348: {
+        name: "Iselda",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31349: {
+        name: "Holly",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31350: {
+        name: "Carl",
+        description: "Check the MOTD for Box contents.",
+        price: 8,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31351: {
+        name: "Geanna",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31352: {
+        name: "Franca",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31353: {
+        name: "Pippa",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31354: {
+        name: "Terrel",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31355: {
+        name: "Achille",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31356: {
+        name: "Wesley",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31357: {
+        name: "Remigio",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31358: {
+        name: "Tranter",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31359: {
+        name: "Leigh",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31360: {
+        name: "Lippo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31361: {
+        name: "Osvaldo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31362: {
+        name: "Hermenexilda",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31363: {
+        name: "Abriana",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31364: {
+        name: "Marsden",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31365: {
+        name: "Cristiana",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31366: {
+        name: "Lotario",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31367: {
+        name: "Sigrada",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31368: {
+        name: "Maddalena",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31369: {
+        name: "Adalberto",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31370: {
+        name: "Juliette",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31371: {
+        name: "Lino",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31372: {
+        name: "Eartha",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31373: {
+        name: "Boris",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31374: {
+        name: "Benjamin",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31375: {
+        name: "Agata",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31376: {
+        name: "Adelaisa",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31377: {
+        name: "Delfina",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31378: {
+        name: "Piera",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31379: {
+        name: "Vincente",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31380: {
+        name: "Amedeo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31381: {
+        name: "Marcelle\u00c2\u00a0",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31382: {
+        name: "Cosimo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31383: {
+        name: "Marguerite\u00c2\u00a0",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31384: {
+        name: "Cira",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31385: {
+        name: "Dedric",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31386: {
+        name: "Kim",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31387: {
+        name: "Irmgaard",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31388: {
+        name: "Medardo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31389: {
+        name: "Vilhelm",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31390: {
+        name: "Loreal",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31391: {
+        name: "Adolfo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31392: {
+        name: "Rizieri",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31393: {
+        name: "Cienna",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31394: {
+        name: "Ember",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31395: {
+        name: "Anselma",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31396: {
+        name: "Concetta",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31397: {
+        name: "Darrel",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31398: {
+        name: "Bertram",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31399: {
+        name: "Rigoberto",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31400: {
+        name: "Rosamond",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31401: {
+        name: "Amelia",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31402: {
+        name: "Dieterich",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31403: {
+        name: "Anselmo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31404: {
+        name: "Hadley",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31405: {
+        name: "Konrad",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31406: {
+        name: "Welby",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31407: {
+        name: "Studs",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31408: {
+        name: "Sven",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31409: {
+        name: "Anselm",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31410: {
+        name: "Louis",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31411: {
+        name: "Alice",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31412: {
+        name: "Felippo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31413: {
+        name: "Willem",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31414: {
+        name: "Makepeace",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31415: {
+        name: "Valtruda",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31416: {
+        name: "Grayson",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31417: {
+        name: "Blanche",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31418: {
+        name: "Rilla",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31419: {
+        name: "Bryon",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31420: {
+        name: "Wilma",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31421: {
+        name: "Dino",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31422: {
+        name: "Shipley",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31423: {
+        name: "Shaw",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31424: {
+        name: "Annetta",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31425: {
+        name: "Claudine",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31426: {
+        name: "Corrado",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31427: {
+        name: "Amadeo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31428: {
+        name: "Halton",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31429: {
+        name: "Parr",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31430: {
+        name: "Elena",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31431: {
+        name: "Bettina",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31432: {
+        name: "Sansone",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31433: {
+        name: "Vedis",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31434: {
+        name: "Zedislava",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31435: {
+        name: "Elisabeth",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31436: {
+        name: "Hermilda",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31437: {
+        name: "Garfield",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31438: {
+        name: "Tobias",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31439: {
+        name: "Paule",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31440: {
+        name: "Gytha",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31441: {
+        name: "Angelo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31442: {
+        name: "Horst",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31443: {
+        name: "Thatcher",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31444: {
+        name: "Donatello",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31445: {
+        name: "Landra",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31446: {
+        name: "Giraldo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31447: {
+        name: "Arnulfa",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31448: {
+        name: "Costanzo",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31449: {
+        name: "Currier",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31450: {
+        name: "Laurenza",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31451: {
+        name: "Adrienne",
+        description: "Check the MOTD for Box contents.",
+        price: 10,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31452: {
+        name: "Amaline",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31453: {
+        name: "Riccardo",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31454: {
+        name: "Benilda",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31455: {
+        name: "Jarvis",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31456: {
+        name: "Ulrica",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31457: {
+        name: "Reine",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31458: {
+        name: "Jarman",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31459: {
+        name: "Kenelm",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31460: {
+        name: "Wagner",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31461: {
+        name: "Richelle",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31462: {
+        name: "Berengaria",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31463: {
+        name: "Loudon",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31464: {
+        name: "Sandon",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31465: {
+        name: "Annunciata",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31466: {
+        name: "Czarina",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31467: {
+        name: "Angela",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31468: {
+        name: "Venidle",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31469: {
+        name: "Porscha",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31470: {
+        name: "Netta",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31471: {
+        name: "Tomas",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31472: {
+        name: "Odette",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31473: {
+        name: "Dario",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31474: {
+        name: "Hildemarca",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31475: {
+        name: "Masima",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31476: {
+        name: "Tanner",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31477: {
+        name: "Vanni",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31478: {
+        name: "Assunta",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31479: {
+        name: "Durward",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31480: {
+        name: "Georgio",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31481: {
+        name: "Hoffman",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31482: {
+        name: "Fernande",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31483: {
+        name: "Wayland",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31484: {
+        name: "Vincens",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31485: {
+        name: "Vanda",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31486: {
+        name: "Edmondo",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31487: {
+        name: "Colombina",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31488: {
+        name: "Eulalia",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31489: {
+        name: "Nerezza",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31490: {
+        name: "Bice",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31491: {
+        name: "Wilhelmina",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31492: {
+        name: "Huntley",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31493: {
+        name: "Bionca",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31494: {
+        name: "Angelica",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31495: {
+        name: "Dempster",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31496: {
+        name: "Cencio",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31497: {
+        name: "Chapman",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31498: {
+        name: "Raffelle",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31499: {
+        name: "Isarno",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31500: {
+        name: "Chiarina",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31501: {
+        name: "Colby",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31502: {
+        name: "Kenton",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31503: {
+        name: "Alger",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31504: {
+        name: "Alexandrine",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31505: {
+        name: "Amerigo",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31506: {
+        name: "Romelia",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31507: {
+        name: "Carlo",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31508: {
+        name: "Liese",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31509: {
+        name: "Alonzo",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31510: {
+        name: "Wilhelm",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31511: {
+        name: "Carla",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31512: {
+        name: "Newell",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31513: {
+        name: "Leland",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31514: {
+        name: "Sigmunda",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31515: {
+        name: "Genevieve",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31516: {
+        name: "Giuseppe",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31517: {
+        name: "Debora",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31518: {
+        name: "Uwe",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31519: {
+        name: "Osmond",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31520: {
+        name: "Walda",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31521: {
+        name: "Bertoldo",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31522: {
+        name: "Townsend",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31523: {
+        name: "Aroa",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31524: {
+        name: "Ulla",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31525: {
+        name: "Renardo",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31526: {
+        name: "Wakefield",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31527: {
+        name: "Gibitruda",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31528: {
+        name: "Rayburn",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31529: {
+        name: "Nyle",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31530: {
+        name: "Clotilda",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31531: {
+        name: "Massimilano",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31532: {
+        name: "Millard",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31533: {
+        name: "Joy",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31534: {
+        name: "Anastagio",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31535: {
+        name: "Bernadette",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31536: {
+        name: "Kinsey",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31537: {
+        name: "Helene",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31538: {
+        name: "Denton",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31539: {
+        name: "Emilie",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31540: {
+        name: "Williams",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31541: {
+        name: "Wetherby",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31542: {
+        name: "Pierre",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31543: {
+        name: "Contessa",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31544: {
+        name: "Digby",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31545: {
+        name: "Ang\u00c3\u00a9lica",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31546: {
+        name: "Edmonda",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31547: {
+        name: "Alwin",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31548: {
+        name: "Keyon",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31549: {
+        name: "Kent",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31550: {
+        name: "Radella",
+        description: "Check the MOTD for Box contents.",
+        price: 15,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31551: {
+        name: "Stokley",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31552: {
+        name: "Leonie",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31553: {
+        name: "Idelia",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31554: {
+        name: "Dianora",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31555: {
+        name: "Primo",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31556: {
+        name: "Alfonsina",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31557: {
+        name: "Schuman",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31558: {
+        name: "Audrey",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31559: {
+        name: "Fabiola",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31560: {
+        name: "Audelina",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31561: {
+        name: "Gretchen",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31562: {
+        name: "Tuesday",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31563: {
+        name: "Desi",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31564: {
+        name: "Ilbert",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31565: {
+        name: "Kennis",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31566: {
+        name: "Claiborne",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31567: {
+        name: "Anne",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31568: {
+        name: "Matilda",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31569: {
+        name: "Meta",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31570: {
+        name: "Ediltrudis",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31571: {
+        name: "Bambi",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31572: {
+        name: "Clementine",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31573: {
+        name: "Adalina",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31574: {
+        name: "Darwin",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31575: {
+        name: "Serafina",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31576: {
+        name: "Pell",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31577: {
+        name: "Filippo",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31578: {
+        name: "Oria",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31579: {
+        name: "Augusta",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31580: {
+        name: "Elma",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31581: {
+        name: "Lindberg",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31582: {
+        name: "Ellery",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31583: {
+        name: "Ernesto",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31584: {
+        name: "Vala",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31585: {
+        name: "Bertoaria",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31586: {
+        name: "Warren",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31587: {
+        name: "Floriana",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31588: {
+        name: "Ennio",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31589: {
+        name: "Winefrida",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31590: {
+        name: "Cesarino",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31591: {
+        name: "Edward",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31592: {
+        name: "Charley",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31593: {
+        name: "Buck",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31594: {
+        name: "Beorn",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31595: {
+        name: "Anunciata",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31596: {
+        name: "Lukas",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31597: {
+        name: "Bruna",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31598: {
+        name: "Raymonde",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31599: {
+        name: "Marthe",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31600: {
+        name: "Edlyn",
+        description: "Check the MOTD for Box contents.",
+        price: 20,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31601: {
+        name: "Jemma",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31602: {
+        name: "Lance",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31603: {
+        name: "Bautista",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31604: {
+        name: "Dennis",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31605: {
+        name: "Krischan",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31606: {
+        name: "Aida",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31607: {
+        name: "Francoise",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31608: {
+        name: "Segene",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31609: {
+        name: "Wallace",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31610: {
+        name: "Vihelmina",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31611: {
+        name: "Clara",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31612: {
+        name: "Constantina",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31613: {
+        name: "Banan",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31614: {
+        name: "Oswin",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31615: {
+        name: "Celso",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31616: {
+        name: "Milgita",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31617: {
+        name: "Albertina",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31618: {
+        name: "Donatella",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31619: {
+        name: "Arabella",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31620: {
+        name: "Herman",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31621: {
+        name: "Alfeo",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31622: {
+        name: "Bolona",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31623: {
+        name: "Garyson",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31624: {
+        name: "Carmine",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31625: {
+        name: "Ruprecht",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31626: {
+        name: "Nash",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31627: {
+        name: "Tillie",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31628: {
+        name: "Christian",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31629: {
+        name: "Bonafila",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31630: {
+        name: "Leona",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31631: {
+        name: "Leonilda",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31632: {
+        name: "Palma",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31633: {
+        name: "Annalisa",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31634: {
+        name: "Gricelda",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31635: {
+        name: "Fabio",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31636: {
+        name: "Donte",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31637: {
+        name: "Hilton",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31638: {
+        name: "Dudley",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31639: {
+        name: "Lauretta",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31640: {
+        name: "Ricciardo",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31641: {
+        name: "Capricia",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31642: {
+        name: "Sina",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31643: {
+        name: "Celestine",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31644: {
+        name: "Benito",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31645: {
+        name: "Mathis",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31646: {
+        name: "Maximilian",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31647: {
+        name: "Fleming",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31648: {
+        name: "Dover",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31649: {
+        name: "Varrick",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31650: {
+        name: "Alrigo",
+        description: "Check the MOTD for Box contents.",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31651: {
+        name: "Marden",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31652: {
+        name: "Philippa",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31653: {
+        name: "Ronya",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31654: {
+        name: "Wilmer",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31655: {
+        name: "Annunziata",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31656: {
+        name: "Homera",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31657: {
+        name: "Thurlow",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31658: {
+        name: "Leondra",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31659: {
+        name: "Annamarie",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31660: {
+        name: "Bayen",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31661: {
+        name: "Concettina",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31662: {
+        name: "Lebena",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31663: {
+        name: "Rose",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31664: {
+        name: "Allegra",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31665: {
+        name: "Wulfilde",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31666: {
+        name: "Frederika",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31667: {
+        name: "Rudee",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31668: {
+        name: "Amedea",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31669: {
+        name: "Luca",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31670: {
+        name: "Siddel",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31671: {
+        name: "Walberto",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31672: {
+        name: "Stanley",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31673: {
+        name: "Gretta",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31674: {
+        name: "Llewellyn",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31675: {
+        name: "Palmiro",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31676: {
+        name: "Innocenzio",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31677: {
+        name: "Wendy",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31678: {
+        name: "Telford",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31679: {
+        name: "Clemence",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31680: {
+        name: "Awiergan",
+        description: "Check the MOTD for Box contents.",
+        price: 30,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31681: {
+        name: "Elda",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31682: {
+        name: "Sandra",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31683: {
+        name: "Spencer",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31684: {
+        name: "Free",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31685: {
+        name: "Courtland",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31686: {
+        name: "Frieda",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31687: {
+        name: "Shelley",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31688: {
+        name: "Mauro",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31689: {
+        name: "Fabrice",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31690: {
+        name: "Severo",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31691: {
+        name: "Doreen",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31692: {
+        name: "Abele",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31693: {
+        name: "Clovis",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31694: {
+        name: "Claudio",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31695: {
+        name: "Mirella",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31696: {
+        name: "Thane",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31697: {
+        name: "Amalsinda",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31698: {
+        name: "Woodrow",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31699: {
+        name: "Corin",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31700: {
+        name: "Vico",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31701: {
+        name: "Berta",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31702: {
+        name: "Rigby",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31703: {
+        name: "Packard",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31704: {
+        name: "Erminio",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31705: {
+        name: "Terrelle",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31706: {
+        name: "Cynric",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31707: {
+        name: "Trudy",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31708: {
+        name: "Hildegarde",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31709: {
+        name: "Arnaldo",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31710: {
+        name: "Rochester",
+        description: "Check the MOTD for Box contents.",
+        price: 35,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31711: {
+        name: "Onofledis",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31712: {
+        name: "Nelson",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31713: {
+        name: "Leontine",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31714: {
+        name: "Buell",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31715: {
+        name: "Graziana",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31716: {
+        name: "Adamo",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31717: {
+        name: "Sepp",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31718: {
+        name: "Howe",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31719: {
+        name: "Rictruda",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31720: {
+        name: "Honey",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31721: {
+        name: "Wendell",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31722: {
+        name: "Celia",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31723: {
+        name: "Philomene",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31724: {
+        name: "Bryce",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31725: {
+        name: "Pancrazio",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31726: {
+        name: "Esmond",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31727: {
+        name: "Rawlins",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31728: {
+        name: "Locke",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31729: {
+        name: "Kurt",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31730: {
+        name: "Frida",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31731: {
+        name: "Bertrando",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31732: {
+        name: "Elden",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31733: {
+        name: "Eva",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31734: {
+        name: "Raquilda",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31735: {
+        name: "Dwennon",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31736: {
+        name: "Bruno",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31737: {
+        name: "Johannes",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31738: {
+        name: "Alba",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31739: {
+        name: "Kenley",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31740: {
+        name: "Dickinson",
+        description: "Check the MOTD for Box contents.",
+        price: 40,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31741: {
+        name: "Manhattan",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31742: {
+        name: "Francine",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31743: {
+        name: "Parry",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31744: {
+        name: "Marie-Louise",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31745: {
+        name: "Valda",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31746: {
+        name: "Mozart",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31747: {
+        name: "Wright",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31748: {
+        name: "Isaldina",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31749: {
+        name: "Lurleen",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31750: {
+        name: "Zamiel",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31751: {
+        name: "Rolonda",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31752: {
+        name: "Delayna",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31753: {
+        name: "Filipo",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31754: {
+        name: "Simonne",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31755: {
+        name: "Ogden",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31756: {
+        name: "Cedrina",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31757: {
+        name: "Elmar",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31758: {
+        name: "Alarice",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31759: {
+        name: "Halsey",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31760: {
+        name: "Abramo",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31761: {
+        name: "Siegmund",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31762: {
+        name: "Armando",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31763: {
+        name: "Averill",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31764: {
+        name: "Harman",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31765: {
+        name: "Dorset",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31766: {
+        name: "Johann",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31767: {
+        name: "Theodoric",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31768: {
+        name: "Batilde",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31769: {
+        name: "Rachel",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31770: {
+        name: "Gabriele",
+        description: "Check the MOTD for Box contents.",
+        price: 45,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31771: {
+        name: "Alphonsine",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31772: {
+        name: "Huette",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31773: {
+        name: "Selda",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31774: {
+        name: "Bianca",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31775: {
+        name: "Bertha",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31776: {
+        name: "Ritter",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31777: {
+        name: "Celino",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31778: {
+        name: "Noelia",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31779: {
+        name: "Elmo",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31780: {
+        name: "Hilmer",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31781: {
+        name: "Gabriella",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31782: {
+        name: "Ulrich",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31783: {
+        name: "Basilio",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31784: {
+        name: "Ripley",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31785: {
+        name: "Cirilo",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31786: {
+        name: "Ulva",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31787: {
+        name: "Lea",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31788: {
+        name: "Ramsey",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31789: {
+        name: "Hobart",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31790: {
+        name: "Hilma",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31791: {
+        name: "Chiara",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31792: {
+        name: "Strom",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31793: {
+        name: "Tancredo",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31794: {
+        name: "Washington",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31795: {
+        name: "Panfilo",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31796: {
+        name: "Jonesy",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31797: {
+        name: "Mather",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31798: {
+        name: "Cristina",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31799: {
+        name: "Gabrielle",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31800: {
+        name: "Ciriaco",
+        description: "Check the MOTD for Box contents.",
+        price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31801: {
+        name: "Hamilton",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31802: {
+        name: "Selma",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31803: {
+        name: "Filippa",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31804: {
+        name: "Willy",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31805: {
+        name: "Meinhard",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31806: {
+        name: "Barclay",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31807: {
+        name: "Francesco",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31808: {
+        name: "Loring",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31809: {
+        name: "Helga",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31810: {
+        name: "Ewing",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31811: {
+        name: "Beniamino",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31812: {
+        name: "Vigberto",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31813: {
+        name: "Resi",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31814: {
+        name: "Camille",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31815: {
+        name: "Dawn",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31816: {
+        name: "Elise",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31817: {
+        name: "Walmond",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31818: {
+        name: "Cesare",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31819: {
+        name: "Virginie",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31820: {
+        name: "Rudiger",
+        description: "Check the MOTD for Box contents.",
+        price: 60,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31821: {
+        name: "Arduino",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31822: {
+        name: "Rylan",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31823: {
+        name: "Gioffreda",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31824: {
+        name: "Sandro",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31825: {
+        name: "Vanna",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31826: {
+        name: "Ciro",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31827: {
+        name: "Ratrudis",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31828: {
+        name: "Dustin",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31829: {
+        name: "Margret",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31830: {
+        name: "Claudia",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31831: {
+        name: "Bertilda",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31832: {
+        name: "Clotilde",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31833: {
+        name: "Remington",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31834: {
+        name: "Jessamine",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31835: {
+        name: "Waldemar",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31836: {
+        name: "Winslow",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31837: {
+        name: "Whitfield",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31838: {
+        name: "Barbara",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31839: {
+        name: "Rory",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31840: {
+        name: "Warner",
+        description: "Check the MOTD for Box contents.",
+        price: 70,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31841: {
+        name: "Pio",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31842: {
+        name: "Maitane",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31843: {
+        name: "Monika",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31844: {
+        name: "Egon",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31845: {
+        name: "Harden",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31846: {
+        name: "Herrick",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31847: {
+        name: "Isabelle",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31848: {
+        name: "Armengol",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31849: {
+        name: "Dietrich",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31850: {
+        name: "Litton",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31851: {
+        name: "Gleda",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31852: {
+        name: "Davide",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31853: {
+        name: "Carlotta",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31854: {
+        name: "Wayne",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31855: {
+        name: "Alphonso",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31856: {
+        name: "Cadman",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31857: {
+        name: "Stroud",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31858: {
+        name: "Derica",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31859: {
+        name: "Mina",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31860: {
+        name: "Ermenilda",
+        description: "Check the MOTD for Box contents.",
+        price: 75,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31861: {
+        name: "blessed",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31862: {
+        name: "Donata",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31863: {
+        name: "Adolf",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31864: {
+        name: "Dante",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31865: {
+        name: "Ravinger",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31866: {
+        name: "Archibalda",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31867: {
+        name: "Aldwyn",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31868: {
+        name: "Tacito",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31869: {
+        name: "Julia",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31870: {
+        name: "Camelia",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31871: {
+        name: "Storm",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31872: {
+        name: "Pasqualino",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31873: {
+        name: "Hugolino",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31874: {
+        name: "Belveder",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31875: {
+        name: "Bartolo",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31876: {
+        name: "Ilise",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31877: {
+        name: "Teodequilda",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31878: {
+        name: "Raena",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31879: {
+        name: "Robert",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31880: {
+        name: "Wheeler",
+        description: "Check the MOTD for Box contents.",
+        price: 80,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31881: {
+        name: "Rodger",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31882: {
+        name: "Jillian",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31883: {
+        name: "Konnen",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31884: {
+        name: "Notburga",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31885: {
+        name: "Donaron",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31886: {
+        name: "Etelreda",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31887: {
+        name: "Winston",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31888: {
+        name: "Lindbert",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31889: {
+        name: "Verner",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31890: {
+        name: "Aldeguda",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31891: {
+        name: "Grisel",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31892: {
+        name: "Anna",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31893: {
+        name: "Edolie",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31894: {
+        name: "Till",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31895: {
+        name: "Ghita",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31896: {
+        name: "Baldassare",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31897: {
+        name: "Edvina",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31898: {
+        name: "Giorgio",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31899: {
+        name: "Olimpia",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31900: {
+        name: "Calros",
+        description: "Check the MOTD for Box contents.",
+        price: 90,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31901: {
+        name: "Alfred",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31902: {
+        name: "Arietta",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31903: {
+        name: "Albert",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31904: {
+        name: "Octavio",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31905: {
+        name: "Rodman",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31906: {
+        name: "Gelsomina",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31907: {
+        name: "Agapeto",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31908: {
+        name: "Vitalia",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31909: {
+        name: "Benedetta",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31910: {
+        name: "Dieter",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31911: {
+        name: "Wylie",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31912: {
+        name: "Elton",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31913: {
+        name: "Bartolomeo",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31914: {
+        name: "Palmer",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31915: {
+        name: "Nolita",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31916: {
+        name: "Marcelino",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31917: {
+        name: "Ena",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31918: {
+        name: "Fedele",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31919: {
+        name: "Xildas",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31920: {
+        name: "Dezi",
+        description: "Check the MOTD for Box contents.",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31921: {
+        name: "Cipriano",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31922: {
+        name: "Damiano",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31923: {
+        name: "Ulf",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31924: {
+        name: "Romualdo",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31925: {
+        name: "Augustine",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31926: {
+        name: "Alvise",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31927: {
+        name: "Rae",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31928: {
+        name: "Calogero",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31929: {
+        name: "Marinella",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31930: {
+        name: "Adelina",
+        description: "Check the MOTD for Box contents.",
+        price: 125,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31931: {
+        name: "Rosalie",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31932: {
+        name: "Leopolda",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31933: {
+        name: "Wells",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31934: {
+        name: "Eaton",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31935: {
+        name: "Gian",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31936: {
+        name: "Fiorenzo",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31937: {
+        name: "Willie",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31938: {
+        name: "Mileta",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31939: {
+        name: "Mandel",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31940: {
+        name: "Ralph",
+        description: "Check the MOTD for Box contents.",
+        price: 150,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31941: {
+        name: "Cirino",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31942: {
+        name: "Caedmon",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31943: {
+        name: "Celestino",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31944: {
+        name: "Roberta",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31945: {
+        name: "Terel",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31946: {
+        name: "Ulbrecht",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31947: {
+        name: "Chelsea",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31948: {
+        name: "Amando",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31949: {
+        name: "Berl",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31950: {
+        name: "Carina",
+        description: "Check the MOTD for Box contents.",
+        price: 175,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31951: {
+        name: "Luka",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31952: {
+        name: "Shirley",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31953: {
+        name: "Rosanna",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31954: {
+        name: "Leben",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31955: {
+        name: "Hilda",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31956: {
+        name: "Win",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31957: {
+        name: "Rosenda",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31958: {
+        name: "Crocifissa",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31959: {
+        name: "Ilda",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31960: {
+        name: "Costantino",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31961: {
+        name: "Wyndam",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31962: {
+        name: "Benvenuto",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31963: {
+        name: "Andrea",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31964: {
+        name: "Bianka",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31965: {
+        name: "Donato",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31966: {
+        name: "Spike",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31967: {
+        name: "Amalberta",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31968: {
+        name: "Ferdinanda",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31969: {
+        name: "Ampelio",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31970: {
+        name: "Lucie",
+        description: "Check the MOTD for Box contents.",
+        price: 200,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31971: {
+        name: "Lenia",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31972: {
+        name: "Wolf",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31973: {
+        name: "Enea",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31974: {
+        name: "Poppy",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31975: {
+        name: "Dafne",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31976: {
+        name: "Wereburga",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31977: {
+        name: "Arrighetto",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31978: {
+        name: "Aisly",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31979: {
+        name: "Imbert",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31980: {
+        name: "Albinus",
+        description: "Check the MOTD for Box contents.",
+        price: 250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31981: {
+        name: "Anson",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31982: {
+        name: "Alessandra",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31983: {
+        name: "Goldie",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31984: {
+        name: "Berlin",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31985: {
+        name: "Arianna",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31986: {
+        name: "Margaretha",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31987: {
+        name: "Ismelda",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31988: {
+        name: "Romeo",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31989: {
+        name: "Edilberta",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31990: {
+        name: "Lise",
+        description: "Check the MOTD for Box contents.",
+        price: 300,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31991: {
+        name: "Geovanna",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31992: {
+        name: "Olga",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31993: {
+        name: "Constantia",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31994: {
+        name: "Everett",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31995: {
+        name: "Amory",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31996: {
+        name: "Calogera",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31997: {
+        name: "Willa",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31998: {
+        name: "Beppe",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i31999: {
+        name: "Knox",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32000: {
+        name: "Tomkin",
+        description: "Check the MOTD for Box contents.",
+        price: 350,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32001: {
+        name: "Ortensia",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32002: {
+        name: "Reanna",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32003: {
+        name: "Luanna",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32004: {
+        name: "Timoteo",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32005: {
+        name: "Charly",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32006: {
+        name: "Adriana",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32007: {
+        name: "Wendel",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32008: {
+        name: "Sherman",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32009: {
+        name: "Miller",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32010: {
+        name: "Albina",
+        description: "Check the MOTD for Box contents.",
+        price: 400,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32011: {
+        name: "Anjelo",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32012: {
+        name: "Gail",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32013: {
+        name: "Eber",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32014: {
+        name: "Rolf",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32015: {
+        name: "Granger",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32016: {
+        name: "Otavia",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32017: {
+        name: "Scott",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32018: {
+        name: "Primeiro",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32019: {
+        name: "Roque",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32020: {
+        name: "Eusebio",
+        description: "Check the MOTD for Box contents.",
+        price: 500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32021: {
+        name: "Redmond",
+        description: "Check the MOTD for Box contents.",
+        price: 600,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32022: {
+        name: "Kass",
+        description: "Check the MOTD for Box contents.",
+        price: 600,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32023: {
+        name: "Fleta",
+        description: "Check the MOTD for Box contents.",
+        price: 600,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32024: {
+        name: "Ermenburga",
+        description: "Check the MOTD for Box contents.",
+        price: 600,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32025: {
+        name: "Michaela",
+        description: "Check the MOTD for Box contents.",
+        price: 600,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32026: {
+        name: "Parker",
+        description: "Check the MOTD for Box contents.",
+        price: 700,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32027: {
+        name: "Lyndon",
+        description: "Check the MOTD for Box contents.",
+        price: 700,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32028: {
+        name: "Dallin",
+        description: "Check the MOTD for Box contents.",
+        price: 700,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32029: {
+        name: "Giotto",
+        description: "Check the MOTD for Box contents.",
+        price: 700,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32030: {
+        name: "Marzia",
+        description: "Check the MOTD for Box contents.",
+        price: 700,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32031: {
+        name: "Calvino",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32032: {
+        name: "Rider",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32033: {
+        name: "Dwight",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32034: {
+        name: "Ildefonso",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32035: {
+        name: "Baldlice",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32036: {
+        name: "Pastora",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32037: {
+        name: "Stina",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32038: {
+        name: "Ladolfo",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32039: {
+        name: "Carlos",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32040: {
+        name: "Werner",
+        description: "Check the MOTD for Box contents.",
+        price: 750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32041: {
+        name: "Yohan",
+        description: "Check the MOTD for Box contents.",
+        price: 800,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32042: {
+        name: "Leonhard",
+        description: "Check the MOTD for Box contents.",
+        price: 800,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32043: {
+        name: "Helma",
+        description: "Check the MOTD for Box contents.",
+        price: 800,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32044: {
+        name: "Cross",
+        description: "Check the MOTD for Box contents.",
+        price: 800,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32045: {
+        name: "Minia",
+        description: "Check the MOTD for Box contents.",
+        price: 800,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32046: {
+        name: "Caseareo",
+        description: "Check the MOTD for Box contents.",
+        price: 900,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32047: {
+        name: "Olympie",
+        description: "Check the MOTD for Box contents.",
+        price: 900,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32048: {
+        name: "Mitzy",
+        description: "Check the MOTD for Box contents.",
+        price: 900,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32049: {
+        name: "Ellfreda",
+        description: "Check the MOTD for Box contents.",
+        price: 900,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32050: {
+        name: "Blanca",
+        description: "Check the MOTD for Box contents.",
+        price: 900,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32051: {
+        name: "Gioachino",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32052: {
+        name: "Wilfred",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32053: {
+        name: "Brigida",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32054: {
+        name: "Bova",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32055: {
+        name: "Disibodo",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32056: {
+        name: "Antonio",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32057: {
+        name: "Chadrick",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32058: {
+        name: "Ceanna",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32059: {
+        name: "Seward",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32060: {
+        name: "Girolamo",
+        description: "Check the MOTD for Box contents.",
+        price: 1000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32061: {
+        name: "Annabella",
+        description: "Check the MOTD for Box contents.",
+        price: 1250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32062: {
+        name: "Firmino",
+        description: "Check the MOTD for Box contents.",
+        price: 1250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32063: {
+        name: "Laurelei",
+        description: "Check the MOTD for Box contents.",
+        price: 1250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32064: {
+        name: "Adalia",
+        description: "Check the MOTD for Box contents.",
+        price: 1250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32065: {
+        name: "Edelina",
+        description: "Check the MOTD for Box contents.",
+        price: 1250,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32066: {
+        name: "Rosendo",
+        description: "Check the MOTD for Box contents.",
+        price: 1500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32067: {
+        name: "Ridley",
+        description: "Check the MOTD for Box contents.",
+        price: 1500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32068: {
+        name: "Emory",
+        description: "Check the MOTD for Box contents.",
+        price: 1500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32069: {
+        name: "Wilona",
+        description: "Check the MOTD for Box contents.",
+        price: 1500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32070: {
+        name: "Domenica",
+        description: "Check the MOTD for Box contents.",
+        price: 1500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32071: {
+        name: "Etelinda",
+        description: "Check the MOTD for Box contents.",
+        price: 1750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32072: {
+        name: "Melia",
+        description: "Check the MOTD for Box contents.",
+        price: 1750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32073: {
+        name: "Aimee",
+        description: "Check the MOTD for Box contents.",
+        price: 1750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32074: {
+        name: "Celine",
+        description: "Check the MOTD for Box contents.",
+        price: 1750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32075: {
+        name: "Bernardetta",
+        description: "Check the MOTD for Box contents.",
+        price: 1750,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32076: {
+        name: "Rocco",
+        description: "Check the MOTD for Box contents.",
+        price: 2000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32077: {
+        name: "Bonifacia",
+        description: "Check the MOTD for Box contents.",
+        price: 2000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32078: {
+        name: "Sabrina",
+        description: "Check the MOTD for Box contents.",
+        price: 2000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32079: {
+        name: "Sherwood",
+        description: "Check the MOTD for Box contents.",
+        price: 2000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32080: {
+        name: "Marelda",
+        description: "Check the MOTD for Box contents.",
+        price: 2000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32081: {
+        name: "Elenora",
+        description: "Check the MOTD for Box contents.",
+        price: 2500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32082: {
+        name: "Suzanne\u00c2\u00a0",
+        description: "Check the MOTD for Box contents.",
+        price: 2500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32083: {
+        name: "Macario",
+        description: "Check the MOTD for Box contents.",
+        price: 2500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32084: {
+        name: "Arvin",
+        description: "Check the MOTD for Box contents.",
+        price: 2500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32085: {
+        name: "Alden",
+        description: "Check the MOTD for Box contents.",
+        price: 2500,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32086: {
+        name: "Conchetta",
+        description: "Check the MOTD for Box contents.",
+        price: 5000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32087: {
+        name: "Denver",
+        description: "Check the MOTD for Box contents.",
+        price: 5000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32088: {
+        name: "Melville",
+        description: "Check the MOTD for Box contents.",
+        price: 5000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32089: {
+        name: "Ransley",
+        description: "Check the MOTD for Box contents.",
+        price: 5000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32090: {
+        name: "Nicolas",
+        description: "Check the MOTD for Box contents.",
+        price: 5000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32091: {
+        name: "Primavera",
+        description: "Check the MOTD for Box contents.",
+        price: 10000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32092: {
+        name: "Henry",
+        description: "Check the MOTD for Box contents.",
+        price: 10000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32093: {
+        name: "Zan",
+        description: "Check the MOTD for Box contents.",
+        price: 10000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32094: {
+        name: "Julie",
+        description: "Check the MOTD for Box contents.",
+        price: 10000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32095: {
+        name: "Ramona",
+        description: "Check the MOTD for Box contents.",
+        price: 10000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32096: {
+        name: "Aroldo",
+        description: "Check the MOTD for Box contents.",
+        price: 50000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32097: {
+        name: "Mildereda",
+        description: "Check the MOTD for Box contents.",
+        price: 50000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32098: {
+        name: "Rahel",
+        description: "Check the MOTD for Box contents.",
+        price: 50000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32099: {
+        name: "Liesel",
+        description: "Check the MOTD for Box contents.",
+        price: 50000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32100: {
+        name: "Yedda",
+        description: "Check the MOTD for Box contents.",
+        price: 50000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32101: {
+        name: "Mathias",
+        description: "Check the MOTD for Box contents.",
+        price: 100000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32102: {
+        name: "Hildebranda",
+        description: "Check the MOTD for Box contents.",
+        price: 100000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32103: {
+        name: "Lottie",
+        description: "Check the MOTD for Box contents.",
+        price: 100000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32104: {
+        name: "Caterina",
+        description: "Check the MOTD for Box contents.",
+        price: 100000,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32105: {
+        name: "Bayern M\u00fcnchen",
+        description: "Bet on this team by purchasing this box! Check the MotD for box contents",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32106: {
+        name: "Borussia Dortmund",
+        description: "Bet on this team by purchasing this box! Check the MotD for box contents",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32107: {
+        name: "S.L. Benefica",
+        description: "Bet on this team by purchasing this box! Check the MotD for box contents",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32108: {
+        name: "Chelsea F.C.",
+        description: "Bet on this team by purchasing this box! Check the MotD for box contents",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32109: {
+        name: "Champion's Cup",
+        description: "Winner's chest",
+        price: 100,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32110: {
+        name: "European Cup",
+        description: "Winner's chest",
+        price: 100,
         tradable: null,
         category: 5,
         subCategory: 100
@@ -13939,12 +25455,12 @@ var titlenames = {
     "90": "Monarch"
 };
 var buildingmight = {
-    "0": [300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 76800, 153600, 307200, 614400],
+    "0": [50, 600, 1200, 2400, 4800, 9600, 19200, 38400, 76800, 153600, 307200, 614400],
     "1": [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
     "2": [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
     "3": [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
     "4": [15, 30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
-    "5": [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5120],
+    "5": [10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240],
     "6": [90, 180, 360, 720, 1440, 2880, 5760, 11520, 23040, 46080],
     "7": [90, 180, 360, 720, 1440, 2880, 5760, 11520, 23040, 46080],
     "8": [150, 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 76800, 153600],
@@ -13978,7 +25494,7 @@ var buildingmaxlvl = {
     "2": 12,
     "3": 12,
     "4": 12,
-    "5": 10,
+    "5": 11,
     "6": 10,
     "7": 10,
     "8": 11,
@@ -14012,7 +25528,7 @@ var buildingupgradedesc = {
     "2": ["Uses 10 workers, produces 100 Wood per hour, with a capacity of 10,000", "Uses 30 workers, and produces 300 Wood per hour, with a capacity of 30,000", "Uses 60 workers, and produces 600 Wood per hour, with a capacity of 60,000", "Uses 100 workers, and produces 1,000 Wood per hour, with a capacity of 100,000", "Uses 150 workers, and produces 1,500 Wood per hour, with a capacity of 150,000", "Uses 200 workers, and produces 2,100 Wood per hour, with a capacity of 210,000", "Uses 280 workers, and produces 2,800 Wood per hour, with a capacity of 280,000", "Uses 360 workers, and produces 4,000 Wood per hour, with a capacity of 400,000", "Uses 450 workers, and produces 5,750 Wood per hour, with a capacity of 575,000", "Uses 550 workers, and produces 7,700 Wood per hour, with a capacity of 770,000", "Uses 660 workers, and produces 9,850 Wood per hour, with a capacity of 985,000", "Uses 780 workers, and produces 12,200 Wood per hour, with a capacity of 1,220,000"],
     "3": ["Uses 10 workers, produces 100 Stone per hour, with a capacity of 10,000", "Uses 30 workers, and produces 300 Stone per hour, with a capacity of 30,000", "Uses 60 workers, and produces 600 Stone per hour, with a capacity of 60,000", "Uses 100 workers, and produces 1,000 Stone per hour, with a capacity of 100,000", "Uses 150 workers, and produces 1,500 Stone per hour, with a capacity of 150,000", "Uses 200 workers, and produces 2,100 Stone per hour, with a capacity of 210,000", "Uses 280 workers, and produces 2,800 Stone per hour, with a capacity of 280,000", "Uses 360 workers, and produces 4,000 Stone per hour, with a capacity of 400,000", "Uses 450 workers, and produces 5,750 Stone per hour, with a capacity of 575,000", "Uses 550 workers, and produces 7,700 Stone per hour, with a capacity of 770,000", "Uses 660 workers, and produces 9,850 Stone per hour, with a capacity of 985,000", "Uses 780 workers, and produces 12,200 Stone per hour, with a capacity of 1,220,000"],
     "4": ["Uses 10 workers, produces 100 Ore per hour, with a capacity of 10,000", "Uses 30 workers, and produces 300 Ore per hour, with a capacity of 30,000", "Uses 60 workers, and produces 600 Ore per hour, with a capacity of 60,000", "Uses 100 workers, and produces 1,000 Ore per hour, with a capacity of 100,000", "Uses 150 workers, and produces 1,500 Ore per hour, with a capacity of 150,000", "Uses 200 workers, and produces 2,100 Ore per hour, with a capacity of 210,000", "Uses 280 workers, and produces 2,800 Ore per hour, with a capacity of 280,000", "Uses 360 workers, and produces 4,000 Ore per hour, with a capacity of 400,000", "Uses 450 workers, and produces 5,750 Ore per hour, with a capacity of 575,000", "Uses 550 workers, and produces 7,700 Ore per hour, with a capacity of 770,000", "Uses 660 workers, and produces 9,850 Ore per hour, with a capacity of 985,000", "Uses 780 workers, and produces 12,200 Ore per hour, with a capacity of 1,220,000"],
-    "5": ["Raises your Population Limit by 100", "Raises your Population Limit by 300", "Raises your Population Limit by 600", "Raises your Population Limit by 1,000", "Raises your Population Limit by 1,500", "Raises your Population Limit by 2.100", "Raises your Population Limit by 2,800", "Raises your Population Limit by 3,600", "Raises your Population Limit by 4,500", "Raises your Population Limit by 5,500"],
+    "5": ["Raises your Population Limit by 100", "Raises your Population Limit by 300", "Raises your Population Limit by 600", "Raises your Population Limit by 1,000", "Raises your Population Limit by 1,500", "Raises your Population Limit by 2.100", "Raises your Population Limit by 2,800", "Raises your Population Limit by 3,600", "Raises your Population Limit by 4,500", "Raises your Population Limit by 5,500", "Raises your Population Limit by 6,600"],
     "6": ["Negates the penalty on Happiness caused by your Tax Rate by 1 point", "Negates the penalty on Happiness caused by your Tax Rate by 2 points", "Negates the penalty on Happiness caused by your Tax Rate by 3 points", "Negates the penalty on Happiness caused by your Tax Rate by 4 points", "Negates the penalty on Happiness caused by your Tax Rate by 5 points", "Negates the penalty on Happiness caused by your Tax Rate by 6 points", "Negates the penalty on Happiness caused by your Tax Rate by 7 points", "Negates the penalty on Happiness caused by your Tax Rate by 8 points", "Negates the penalty on Happiness caused by your Tax Rate by 9 points", "Negates the penalty on Happiness caused by your Tax Rate by 10 points"],
     "7": ["Increase your Knights&#39; experience by 10 per hour", "Increase your Knights&#39; experience by 20 per hour", "Increase your Knights&#39; experience by 30 per hour", "Increase your Knights&#39; experience by 40 per hour", "Increase your Knights&#39; experience by 50 per hour", "Increase your Knights&#39; experience by 60 per hour", "Increase your Knights&#39; experience by 70 per hour", "Increase your Knights&#39; experience by 80 per hour", "Increase your Knights&#39; experience by 90 per hour", "Increase your Knights&#39; experience by 100 per hour"],
     "8": ["Join an Alliance, and house one ally&#39;s troops", "Create an Alliance, and house two allies&#39; troops", "House three allies&#39; troops", "House four allies&#39; troops", "House five allies&#39; troops", "House six allies&#39; troops", "House seven allies&#39; troops", "House eight allies&#39; troops", "House nine allies&#39; troops", "House ten allies&#39; troops", "House eleven allies&#39; troops"],
@@ -14036,7 +25552,7 @@ var buildingupgradedesc = {
     "22": ["Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units"],
     "23": ["Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle."],
     "24": ["Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units."],
-    "25": ["Sacrifice Supply Troops and Militiamen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Scouts and Pikeman. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Swordsmen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Supply Wagons. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Heavy Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Ballista. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Battering Rams. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Catapults, Executioners, Bloodthorn, and Siege Walls. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours."],
+    "25": ["Sacrifice Supply Troops and Militiamen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Scouts and Pikeman. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Swordsmen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Supply Wagons. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Heavy Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Ballista. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Battering Rams. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Catapults, Executioners, Bloodthorn, Siege Walls, and Flame Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours."],
     "26": ["Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units"],
     "27": ["Research Improved Cartography and raise research cap to Level 1", "Research Into the Wild and raise research cap to Level 2", "Raise research cap to Level 3", "Research Siege Master&#39;s Training and raise research cap to Level 4", "Raise research cap to Level 5", "Research improved Defenses and raise research cap to Level 6", "Raise research cap to Level 7", "Research Strengthen Ranks and raise research cap to Level 8", "Raise research cap to Level 9", "Research Improved Fletching and raise research cap to Level 10"]
 };
@@ -14083,6 +25599,12 @@ cm.FETemplates = {
         actionButton: '<a class="buttonv2 #{className}">#{label}</a>',
         miniActionButton: '<a class="button #{className}"> </a>'
     },
+    Voting: {
+        voting_body: '<div class="votingContainer"><div id="votingHeader" class="votingHeader"><div id="votingContributionPoints" class="votingHeaderCell left">#{contributionPoints}</div><div id="votingTimeLeft" class="votingHeaderCell center">#{timeLeft}</div><div id="votingYourVotes" class="votingHeaderCell right"></div></div><div id="votingUnlocks" class="votingUnlocks"><div class="votingDividerTop"></div><div class="votingDividerBottom"></div><div id="votingMilestonebgOne" class="votingMilestonebg one"></div><div id="votingMilestonebgTwo" class="votingMilestonebg two"></div><div id="votingMilestonebgThree" class="votingMilestonebg three"></div><div id="votingMilestonebgFour" class="votingMilestonebg four"></div><div id="votingUnlockBar" class="votingUnlockBar"><div id="votingUnlockProgress" class="votingUnlockProgress"></div></div><div id="votingMilestoneOne" class="votingMilestone one">25%</div><div id="votingMilestoneTwo" class="votingMilestone two">50%</div><div id="votingMilestoneThree" class="votingMilestone three">75%</div><div id="votingMilestoneFour" class="votingMilestone four">100%</div><div id="votingMilestoneMarker" class="votingMilestoneMarker"></div><div id="votingMilestoneMarkerText" class="votingMilestoneMarkerText"></div></div><div id="votingItems" class="votingItems">#{votingItems}</div></div>',
+        voting_item: '<div class="votingItem"><div class="votingItemDescription" lnum="#{listNumber}"><div class="votingItemDescriptionTitle">#{featureTitle}</div><div class="votingItemDescriptionText">#{description}</div></div><div class="votingItemRightColumn"><div class="votingItemSlider"><input id="sliderText#{listNumber}" lnum="#{listNumber}" class="votingItemSliderText" type="text" value="0" onkeyup="cm.VotingController.sliderTextEntered(event,this)" onkeydown="cm.KeyFilter.allowOnlyNumbers(event)"><div id="track#{listNumber}" class="votingSlider"><div id="handle#{listNumber}" class="votingSliderHandle"></div></div></div><div class="votingItemButton" lnum="#{listNumber}"><div class="buttonBgGold_left"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{vote}</a></div></div></div></div></div></div>',
+        voting_more_info: "<div class=\"votingMoreInfoPanel\"><div class='bgFramingBorderBeveled'></div><div class='top_voters'>#{top_voters}</div><div class='left_numbers'>#{left_numbers}</div><div class='right_numbers'>#{right_numbers}</div><div class='left_image' style=\"background: url(#{feature_image});\"></div><div class='your_place'>#{your_place}</div><div class='main_description'>#{description}</div><div class='prizes'><div class='img1 img' ></div><div class='text_place prize_description1'>#{prize_description1}</div><div class='img2 img' ></div><div class='text_place prize_description2'>#{prize_description2}</div><div class='img3 img' ></div><div class='text_place prize_description3'>#{prize_description3}</div></div></div>",
+        votingConfirmation: '<div class="allocationConfirmation"><div class=\'allocationFrame\'><div class=\'title\'>#{primaryTitle}</div><div class=\'msg1\'></div><div class=\'msg2\'>Use <span style="font-weight:bold">#{numVotes}</span> Voting Points on <span style="font-weight:bold">#{featureTitle}?</span></div><div class="votingConfirmationButtons"><div id="voteCommitButton" class="buttonBgGold_left" nVotes="#{numVotes}" fid="#{featureId}"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{vote}</a></div></div></div></div></div></div>'
+    },
     NewGame: {
         modalShell: '<div class="primarytitlebar">#{titleBar}</div><div class="primarycontent clearfix">#{body}</div><div class="#{logoClass}"></div>',
         parchmentShell: '<div class="parchment_wrapper"><div id="newGamePortrait" class="avatar_246 #{avatarId}"></div><div class="parchment"><div class="player_display"><h1 id="newGameLordyHeader" class="lordy">#{lordyText}</h1><h2 id="newGameNameHeader" class="name">#{playerName}</h2></div><div class="main_panel"><div class="titlebar">#{panelTitle}</div><div class="content">#{panelBody}</div></div></div></div>',
@@ -14113,7 +25635,8 @@ cm.FETemplates = {
         xLargeButtonBg: '<div class="xLargeButtonBg"><div class="tokensOwned">#{tokensOwnedLabel}: <span id="summoningCircleTokenCount" class="tokenCount">#{tokensOwned}</span></div><a id="summoningCircleButtonLabel" class="gemButtonv2 #{buttonColor}">#{buttonLabel}</a></div>',
         miniGame: '<div class="content clearfix"><div class="info"><h2 class="description">#{description}</h2><span class="timeLeft">#{timeLeftLabel} <span id="summoningCircleTimeLeft" class="summoningCircleTimeLeft">#{timeLeft}</span></span></div><div id="summoningCircleTokens" class="summoningCircleTokens"><div id="summoningCircleToken3" class="token"></div><div id="summoningCircleToken2" class="token"></div><div id="summoningCircleToken4" class="token"></div><div id="summoningCircleToken6" class="token"></div><div id="summoningCircleToken1" class="token"></div><div id="summoningCircleToken5" class="token"></div></div>#{action}</div>',
         prizeStone: '<div class="content clearfix"><h2>#{header}</h2><div class="stoneBg"><div class="buttonBgGold_left"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{buttonLabel}</a></div></div></div></div></div>',
-        prizeChest: '<div class="content clearfix"><h2>#{header}</h2><div class="rewardFrame"><div class="chestArt #{chestClass}"></div><div class="submodalFrameRepeat clearfix"><div class="description">#{description}</div></div><div class="submodalFrameBottom"><div class="buttonBgGold_left"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{buttonLabel}</a></div></div></div></div></div></div>'
+        prizeChest: '<div class="content clearfix"><h2>#{header}</h2><div class="rewardFrame"><div class="chestArt #{chestClass}"></div><div class="submodalFrameRepeat clearfix"><div class="description">#{description}</div></div><div class="submodalFrameBottom"><div class="buttonBgGold_left"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{buttonLabel}</a></div></div></div></div></div></div>',
+        ascension_styled_button: '<div class="buttonBgGold_left"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{buttonLabel}</a></div></div></div>'
     },
     MarchReport: {
         marchReport: '<div class="marchReport">#{info}#{title}<div class="sceneContainer">#{loot}#{scene}</div><div class="buttonsContainer"></div><div class="unitsContainer">#{units}</div><div class="buttonsContainer"></div></div>',
@@ -14126,10 +25649,13 @@ cm.FETemplates = {
         marchReportUnitsTable: "<table><thead><tr><th>#{troopHeader}</th><th>#{foughtHeader}</th><th>#{survivedHeader}</th></tr></thead><tbody>#{units}</tbody></table>"
     },
     Barracks: {
-        unit_training_modal: '<div id="barracks_train"><div class="imageContainer"><img src="#{unitImage}"/></div><div class="unitInfoContainer"><div class="unitDescription">#{unitDescription}</div><div class="unitStats"><ul><li> <span class="label">#{attackLabel}</span> <span class="value">#{attackValue}</span></li><li> <span class="label">#{speedLabel}</span> <span class="value">#{speedValue}</span></li><li> <span class="label">#{defenseLabel}</span> <span class="value">#{defenseValue}</span></li><li> <span class="label">#{rangeLabel}</span> <span class="value">#{rangeValue}</span></li><li> <span class="label">#{lifeLabel}</span> <span class="value">#{lifeValue}</span></li><li> <span class="label">#{loadLabel}</span> <span class="value">#{loadValue}</span></li><li class="bottom"> <span class="label">#{upkeepLabel}</span> <span class="value">#{upkeepValue}</span></li><li class="bottom"> <span class="label">#{typeLabel}</span> <span class="value">#{typeValue}</span></li></ul></div><div class="unitReqs"><table><thead><tr><td>#{resourceHeader}</td><td>#{requiredHeader}</td><td>#{youOwnHeader}</td></tr></thead><tbody>#{reqs}</tbody></table></div><div class="unitsQuantity"><div class="youOwnContainer"><span class="label">#{youOwnLabel}:</span> <span class="value">#{youOwnValue}</span></div><div class="maxContainer"><span class="label">#{maxLabel}:</span> <span id="modal_barracks_max_num" class="value">#{maxValue}</span></div></div><div class="unitsTrainingQuantity"><p>#{troopTrainLabel}</p><input type="text" id="modal_barracks_num" onkeyup="modal_barracks_train_timecalc(this, #{unitId});" /><a class="inlineButton blue14" onclick="modal_barracks_train_maxbtn(#{unitId});return false;"> <span>#{maxLabel}</span> </a></div><div class="unitsTrainingTime"><span class="label">#{trainTimeLabel} </span><span class="value" id="modal_barracks_traintime"></span></div>#{misc}<div class="buttonContainer"><a onclick="modal_barracks_train_action(#{unitId});" class="button25" id="unit_btns_start"><span>#{buttonLabel}</span></a></div></div></div>',
+        unit_stats_table: '<div class="unitStats"><ul><li class="top"> <span class="label">#{attackLabel}</span> <span class="value">#{attackValue}</span></li><li class="top"> <span class="label">#{speedLabel}</span> <span class="value">#{speedValue}</span></li><li> <span class="label">#{defenseLabel}</span> <span class="value">#{defenseValue}</span></li><li> <span class="label">#{rangeLabel}</span> <span class="value">#{rangeValue}</span></li><li> <span class="label">#{lifeLabel}</span> <span class="value">#{lifeValue}</span></li><li> <span class="label">#{loadLabel}</span> <span class="value">#{loadValue}</span></li><li> <span class="label">#{upkeepLabel}</span> <span class="value">#{upkeepValue}</span></li><li> <span class="label">#{typeLabel}</span> <span class="value">#{typeValue}</span></li>#{additionalStats}</ul></div>',
+        unit_viewing_modal: '<div id="barracks_train"><div class="imageContainer"><img src="#{unitImage}"/></div><div class="unitInfoContainer"><div class="unitDescription">#{unitDescription}</div>#{unitStats}</div></div>',
+        unit_training_modal: '<div id="barracks_train"><div class="imageContainer"><img src="#{unitImage}"/></div><div class="unitInfoContainer"><div class="unitDescription">#{unitDescription}</div>#{unitStats}<div class="unitReqs"><table><thead><tr><td>#{resourceHeader}</td><td>#{requiredHeader}</td><td>#{youOwnHeader}</td></tr></thead><tbody>#{reqs}</tbody></table></div><div class="unitsQuantity"><div class="youOwnContainer"><span class="label">#{youOwnLabel}:</span> <span class="value">#{youOwnValue}</span></div><div class="maxContainer"><span class="label">#{maxLabel}:</span> <span id="modal_barracks_max_num" class="value">#{maxValue}</span></div></div><div class="unitsTrainingQuantity"><p>#{troopTrainLabel}</p><input type="text" id="modal_barracks_num" onkeyup="modal_barracks_train_timecalc(this, #{unitId});" /><a class="inlineButton blue14" onclick="modal_barracks_train_maxbtn(#{unitId});return false;"> <span>#{maxLabel}</span> </a></div><div class="unitsTrainingTime"><span class="label">#{trainTimeLabel} </span><span class="value" id="modal_barracks_traintime"></span></div>#{misc}<div class="buttonContainer"><a onclick="modal_barracks_train_action(#{unitId});" class="button25" id="unit_btns_start"><span>#{buttonLabel}</span></a></div></div></div>',
         unit_training_boost: '<div id="trainingBoostContainer" class="trainingBoostContainer"><input type="checkbox" name="trainingBoost" id="#{inputId}" onclick="clearOtherTuts(#{index});" #{isDisabled} /><div class="trainingBoostInfoContainer"><img src="#{imgSource}" /><div class="trainingBoostInfo"><div class="name">#{name}</div><div class="time"><span class="timeLabel">#{timeLabel}:</span><span id="#{timeId}" class="timeAmount">0 #{secLabel}</span></div><div class="quantity"><span class="quantityAmount">#{youOwnLabel}: #{youOwnValue}.</span><a onclick="modal_barracks_getmoreshop();">#{getMoreLabel}</a></div></div></div></div>',
         unit_training_gamble: '<div id="unitGambleOption" class="unitGambleOption"><ul><li><input type="radio" name="gambleOption" id="gambleOption0" checked="checked" onclick="chooseGambleOptions(0, #{unitId});" /><p>#{label0}</p></li><li><input type="radio" name="gambleOption" id="gambleOption1" onclick="chooseGambleOptions(1, #{unitId});" /><p>#{label1}</p></li><li><input type="radio" name="gambleOption" id="gambleOption2" onclick="chooseGambleOptions(2, #{unitId});" /><p>#{label2}</p></li></ul></div>',
-        unit_training_gamble_option: '<li><input type="radio" name="gambleOption" id="gambleOption#{index}" /><p>#{label}</p></li>'
+        unit_training_gamble_option: '<li><input type="radio" name="gambleOption" id="gambleOption#{index}" /><p>#{label}</p></li>',
+        unit_training_info: '<div class=\'unit\'><img src="#{imgSrc}"/><div class="unitinfo"><div class="unitnm">#{unitName}</div><div class="unitdesc">#{unitDesc}</div>#{woundCountMarkup}<div class="unitcount"><b>#{youOwnLabel}:</b> #{youOwnCount}</div><div class="clearfix btn train_dismiss">#{trainButton}#{dismissButton}</div></div></div>'
     },
     Inventory: {
         inventoryModal: "<div id='inventoryModalContainer'><div id='inventoryModalHeader'><a class='button20' onclick='Modal.hideModalAll(); cm.ShopView.openShop();'><span> #{getmoreitemsString} </span></a><div id='gemsContainer'><span class='label'> #{gemsString} </span><span id='inventoryGemQuantity' class='gemsQuantity'> </span><img src='img/gem.png' /><a class='buttonGreen20' onclick='cm.ConversionTracker.track(\"payments\", \"MORE_GEMS_MY_ITEMS\", \"\"); modal_getgems();return false;'><span> + #{getmoregemsString} </span></a></div></div><div id='inventoryModalBody'><div id='inventoryTabs'><ul><li id='inventoryTab1' class='selected'><a onclick='cm.InventoryView.openTab(1);'> #{generalString} </a></li><li id='inventoryTab2'><a onclick='cm.InventoryView.openTab(2);'> #{speedupString} </a></li><li id='inventoryTab3'><a onclick='cm.InventoryView.openTab(3);'> #{combatString} </a></li><li id='inventoryTab4'><a onclick='cm.InventoryView.openTab(4);'> #{resourcesString} </a></li><li id='inventoryTab5'><a onclick='cm.InventoryView.openTab(5);'> #{chestString} </a></li><li id='inventoryTab6'><a onclick='cm.InventoryView.openTab(6);'> #{courtString} </a></li></ul></div><div id='inventoryMessage'></div><div id='inventoryBanner'></div><div id='inventoryItemsContainer'><a id='inventoryPrevPageButton' onclick='cm.InventoryView.goPrevPage();'></a><a id='inventoryNextPageButton' onclick='cm.InventoryView.goNextPage();'></a><ul id='inventoryItemsContainerList'></ul></div></div></div>",
@@ -14158,13 +25684,13 @@ cm.FETemplates = {
     autoAttack_28: {
         self: '<div id="modal_rallypoint_autoattack" style="display: none;" class="autoattack_manager"><div class="countdown"></div><div class="header"><div class="start_button"></div><div class="title">{g_js_strings.modal_auto_attack.restartraidtimer}</div><img src="{site_image_url}img/1pixel.png" usemap="#map_autoattack{instance_guid}" /><map name="map_autoattack{instance_guid}"><area shape="polygon" coords="0,0,252,0,236,29,16,29" href="#" /></map><div class="options_button"><a class="inlineButton brown20"><span>{g_js_strings.commonstr.options}</span></a></div><div class="whats_a_barbraid"><a>{g_js_strings.modal_auto_attack.whatisabarbarianraid}</a></div></div><div class="global_controller"><div class="num_city">{city_name}<span>{city_number}</span></div><div class="raids_manupulate"><a class="inlineButton brown20 addraid"><span>+ {g_js_strings.modal_auto_attack.addraid}</span></a></div><div class="raids_bulk_controller"><a class="inlineButton brown20"><span class="stopAll">{g_js_strings.modal_auto_attack.stopall}</span></a><a class="inlineButton brown20"><span class="resumeAll">{g_js_strings.modal_auto_attack.resumeall}</span></a></div></div><div class="glass_pane"></div><div class="main"><div class="raids"><div class="add_raid_message">{g_js_strings.modal_auto_attack.youdonothaveanysavedraids}. <a>{g_js_strings.modal_auto_attack.addaraid}</a> {g_js_strings.modal_auto_attack.now}.</div></div><div class="glass_pane"></div></div></div>',
         "queue[*]": '<div class="raid"><div class="raid_title"><span class="toggler"></span>{g_js_strings.commonstr.barbariancamp} {g_js_strings.commonstr.lvl} {$.cityMarches.toTileLevel} <span class="coordinates">({$.cityMarches.toXCoord}, {$.cityMarches.toYCoord})</span> - <span class="status {$.status_css}">{$.status}</span><div class="raid_controller"><div class="view_buttons"><a class="inlineButton brown8 stop"><span>{g_js_strings.modal_auto_attack.stop}</span></a><a class="inlineButton brown8 resume"><span>{g_js_strings.modal_auto_attack.resume}</span></a><a class="inlineButton brown8 edit"><span>{g_js_strings.commonstr.edit}</span></a><a class="inlineButton brown8 delete"><span>{g_js_strings.commonstr.deletetx}</span></a></div><div class="edit_buttons"><a class="inlineButton blue11 save"><span>{g_js_strings.commonstr.save}</span></a><a class="inlineButton brown11 cancel"><span>{g_js_strings.commonstr.cancel}</span></a></div></div></div><div class="information clearfix"><div class="details"><div><span class="detail_title">{g_js_strings.commonstr.coordinates}:</span> <span class="coordinates_label">{$.cityMarches.toXCoord}, {$.cityMarches.toYCoord}</span><div class="coordinates_editor"><div class="manual_input"><span>X = <input value="{$.cityMarches.toXCoord}" /></span><span>Y = <input value="{$.cityMarches.toYCoord}" /></span><a>{g_js_strings.modal_attack.dord}{g_js_strings.modal_attack.selbookmark}</a></div><div class="select_bookmarks"><select><option value="0">{g_js_strings.modal_attack_target_dropdown.choosebookmark}</option></select><a>{g_js_strings.modal_attack.dord}{g_js_strings.modal_attack.inpcoor}</a></div></div></div><div><span class="detail_title">{g_js_strings.commonstr.knight}:</span> <span class="knight_name">{$.knight_name}</span><select class="knight_selector"><option>1</option></select></div><div><span class="detail_title">{g_js_strings.modal_auto_attack.roundtrip}:</span> <span class="round_trip">{$.round_trip}</span></div><div class="last_march"><span class="detail_title">{g_js_strings.modal_auto_attack.lastmarch}:</span> {$.last_march}</div></div><!-- .details --><div class="troops"><div>{$.troops}</div></div><!-- .troops --></div><!-- .information --><div class="glass_pane"></div></div><!-- end of .raid -->',
-        "queue[*].troops[*]": '<div class="troop_info"><div class="icon"><img src="{site_image_url}img/units/unit_{$.type_id}_30.png" /></div><div class="details"><div class="type_label">{$.type}</div><div class="quantity"><span class="editor"><input name="{$.type_id}" /> <span>/ {$.stock}</span></span><span class="label">{$.quantity}</span></div></div></div>',
+        "queue[*].troops[*]": '<div class="troop_info"><div class="icon"><img src="{site_image_url}img/units/unit_{$.type_id}_30.jpg" /></div><div class="details"><div class="type_label">{$.type}</div><div class="quantity"><span class="editor"><input name="{$.type_id}" /> <span>/ {$.stock}</span></span><span class="label">{$.quantity}</span></div></div></div>',
         options: '<div class="autoattack_options" id="{$.htmlElementIdBase}"><div class="option_section troop_option"><p class="title">{g_js_strings.modal_auto_attack.troopoptions}</p><div class="option_input_block no_auto_refill"><input type="radio" name="replenish_radio" id="{$.htmlElementIdBase}_noreplenish" class=""/><div class="option_description"><label for="{$.htmlElementIdBase}_noreplenish">{g_js_strings.modal_auto_attack.autostopraid}</label><select class="settings_input" id="{$.htmlElementIdBase}_pausePct" name="pausePct"><option value="100">100%</option><option value="90">90%</option><option value="75">75%</option><option value="50">50%</option></select><p class="message">{g_js_strings.modal_auto_attack.autostopraiddescription}</p></div></div><div class="option_input_block auto_refill"><input type="radio" name="replenish_radio" id="{$.htmlElementIdBase}_replenish" class=""/><div class="option_description"><label for="{$.htmlElementIdBase}_replenish">{g_js_strings.modal_auto_attack.autorefilltroop}</label><div class="option_input_block"><input type="checkbox" name="noreplenish_when_lost" id="{$.htmlElementIdBase}_noreplenish_when_lost" class=""/><div class="option_description"><label for="{$.htmlElementIdBase}_noreplenish_when_lost">{g_js_strings.modal_auto_attack.autorefilltroopexception}</label></div></div><p class="message">{g_js_strings.modal_auto_attack.autorefilltroopdescription}</p></div></div></div><div class="option_section"><p class="title">{g_js_strings.modal_auto_attack.reportoptions}</p><p class="message">{g_js_strings.modal_auto_attack.reportlifetimedescription}</p><div class="option_input_block"><input type="checkbox" name="autoDelReport" id="{$.htmlElementIdBase}_autoDelReport" class=""/><div class="option_description"><label for="{$.htmlElementIdBase}_autoDelReport">{g_js_strings.modal_auto_attack.autodeleteallreport}</label></div></div></div><div class="button_row"><a class="inlineButton brown20"><span>{g_js_strings.commonstr.saveandclose}</span></a></div></div>'
     },
     autoAttack_34: {
         self: '<div id="modal_rallypoint_autoattack" style="display: none;" class="autoattack_manager"><div class="countdown"></div><div class="header"><div class="start_button"></div><div class="title">{g_js_strings.modal_auto_attack.restartraidtimer}</div><img src="{site_image_url}img/1pixel.png" usemap="#map_autoattack{instance_guid}" /><map name="map_autoattack{instance_guid}"><area shape="polygon" coords="0,0,252,0,236,29,16,29" href="#" /></map><div class="options_button"><a class="inlineButton brown20"><span>{g_js_strings.commonstr.options}</span></a></div><div class="whats_a_barbraid"><a>{g_js_strings.modal_auto_attack.whatisabarbarianraid}</a></div></div><div class="global_controller"><div class="num_city">{city_name}<span>{city_number}</span></div><div class="raids_manupulate"><a class="inlineButton brown20 addraid"><span>+ {g_js_strings.modal_auto_attack.addraid}</span></a></div><div class="raids_bulk_controller"><a class="inlineButton brown20"><span class="stopAll">{g_js_strings.modal_auto_attack.stopall}</span></a><a class="inlineButton brown20"><span class="resumeAll">{g_js_strings.modal_auto_attack.resumeall}</span></a></div></div><div class="glass_pane"></div><div class="main"><div class="raids"><div class="add_raid_message">{g_js_strings.modal_auto_attack.youdonothaveanysavedraids}. <a>{g_js_strings.modal_auto_attack.addaraid}</a> {g_js_strings.modal_auto_attack.now}.</div></div><div class="glass_pane"></div></div></div>',
         "queue[*]": '<div class="raid"><div class="raid_title"><span class="toggler"></span>{g_js_strings.commonstr.barbariancamp} {g_js_strings.commonstr.lvl} {$.cityMarches.toTileLevel} <span class="coordinates">({$.cityMarches.toXCoord}, {$.cityMarches.toYCoord})</span> - <span class="status {$.status_css}">{$.status}</span><div class="raid_controller"><div class="view_buttons"><a class="inlineButton brown8 stop"><span>{g_js_strings.modal_auto_attack.stop}</span></a><a class="inlineButton brown8 resume"><span>{g_js_strings.modal_auto_attack.resume}</span></a><a class="inlineButton brown8 edit"><span>{g_js_strings.commonstr.edit}</span></a><a class="inlineButton brown8 delete"><span>{g_js_strings.commonstr.deletetx}</span></a></div><div class="edit_buttons"><a class="inlineButton blue11 save"><span>{g_js_strings.commonstr.save}</span></a><a class="inlineButton brown11 cancel"><span>{g_js_strings.commonstr.cancel}</span></a></div></div></div><div class="information clearfix"><div class="details"><div><span class="detail_title">{g_js_strings.commonstr.coordinates}:</span> <span class="coordinates_label">{$.cityMarches.toXCoord}, {$.cityMarches.toYCoord}</span><div class="coordinates_editor"><div class="manual_input"><span>X = <input value="{$.cityMarches.toXCoord}" /></span><span>Y = <input value="{$.cityMarches.toYCoord}" /></span><a>{g_js_strings.modal_attack.dord}{g_js_strings.modal_attack.selbookmark}</a></div><div class="select_bookmarks"><select><option value="0">{g_js_strings.modal_attack_target_dropdown.choosebookmark}</option></select><a>{g_js_strings.modal_attack.dord}{g_js_strings.modal_attack.inpcoor}</a></div></div></div><div><span class="detail_title">{g_js_strings.commonstr.knight}:</span> <span class="knight_name">{$.knight_name}</span><select class="knight_selector"><option>1</option></select></div><div><span class="detail_title">{g_js_strings.modal_auto_attack.roundtrip}:</span> <span class="round_trip">{$.round_trip}</span></div><div class="last_march"><span class="detail_title">{g_js_strings.modal_auto_attack.lastmarch}:</span> {$.last_march}</div></div><!-- .details --><div class="troops"><div>{$.troops}</div></div><!-- .troops --></div><!-- .information --><div class="glass_pane"></div></div><!-- end of .raid -->',
-        "queue[*].troops[*]": '<div class="troop_info"><div class="icon"><img src="{site_image_url}img/units/unit_{$.type_id}_30_s34.jpg" /></div><div class="details"><div class="type_label">{$.type}</div><div class="quantity"><span class="editor"><input name="{$.type_id}" /> <span>/ {$.stock}</span></span><span class="label">{$.quantity}</span></div></div></div>',
+        "queue[*].troops[*]": '<div class="troop_info"><div class="icon"><img src="{site_image_url}img/units/unit_{$.type_id}_30.jpg" /></div><div class="details"><div class="type_label">{$.type}</div><div class="quantity"><span class="editor"><input name="{$.type_id}" /> <span>/ {$.stock}</span></span><span class="label">{$.quantity}</span></div></div></div>',
         options: '<div class="autoattack_options" id="{$.htmlElementIdBase}"><div class="option_section troop_option"><p class="title">{g_js_strings.modal_auto_attack.troopoptions}</p><div class="option_input_block no_auto_refill"><input type="radio" name="replenish_radio" id="{$.htmlElementIdBase}_noreplenish" class=""/><div class="option_description"><label for="{$.htmlElementIdBase}_noreplenish">{g_js_strings.modal_auto_attack.autostopraid}</label><select class="settings_input" id="{$.htmlElementIdBase}_pausePct" name="pausePct"><option value="100">100%</option><option value="90">90%</option><option value="75">75%</option><option value="50">50%</option></select><p class="message">{g_js_strings.modal_auto_attack.autostopraiddescription}</p></div></div><div class="option_input_block auto_refill"><input type="radio" name="replenish_radio" id="{$.htmlElementIdBase}_replenish" class=""/><div class="option_description"><label for="{$.htmlElementIdBase}_replenish">{g_js_strings.modal_auto_attack.autorefilltroop}</label><div class="option_input_block"><input type="checkbox" name="noreplenish_when_lost" id="{$.htmlElementIdBase}_noreplenish_when_lost" class=""/><div class="option_description"><label for="{$.htmlElementIdBase}_noreplenish_when_lost">{g_js_strings.modal_auto_attack.autorefilltroopexception}</label></div></div><p class="message">{g_js_strings.modal_auto_attack.autorefilltroopdescription}</p></div></div></div><div class="option_section"><p class="title">{g_js_strings.modal_auto_attack.reportoptions}</p><p class="message">{g_js_strings.modal_auto_attack.reportlifetimedescription}</p><div class="option_input_block"><input type="checkbox" name="autoDelReport" id="{$.htmlElementIdBase}_autoDelReport" class=""/><div class="option_description"><label for="{$.htmlElementIdBase}_autoDelReport">{g_js_strings.modal_auto_attack.autodeleteallreport}</label></div></div></div><div class="button_row"><a class="inlineButton brown20"><span>{g_js_strings.commonstr.saveandclose}</span></a></div></div>'
     },
     DailyRewards: {
@@ -14174,7 +25700,7 @@ cm.FETemplates = {
     reinforcedReport101: {
         self: '<div class="reinforceReport"><div class="reportHeader"><div class="reportTitle">{PRESENTATION_MODEL.reinforcementreceived}</div><div class="reportSubtitle"><span class="cityNumber">{city.number}</span> {city.name} {date}</div></div><div class="helpSection"><img src="{stimgurl}img/scenes_reinforcement.jpg" width="408" height="216" />{PRESENTATION_MODEL.note}<ul style="height: 23px;"><li class="sendTroopsHome"><a name="reinforceReportSendTroopsHomeButton" class="inlineButton brown20"><span>{PRESENTATION_MODEL.sendtroopshome}</span></a></li><li class="backToReports"><a name="reinforceReportBackButton" class="inlineButton blue20"><span>{PRESENTATION_MODEL.backtoreports}</span></a></li></ul></div><div class="detailSection"><div class="memberLabel">{PRESENTATION_MODEL.alliancemember}</div><div class="allianceInformation">{member.name} ({member.cordx}, {member.cordy})</div><div class="reinforcedLabel">{PRESENTATION_MODEL.reinforcedyouwith}</div>{reinforced_troops}</div></div>',
         reinforced_troops: '<div><ul class="troopsTitleRow"><li class="typeColumn">{PRESENTATION_MODEL.troops}</li><li class="numberColume">{PRESENTATION_MODEL.number}</li></ul>{$}</div>',
-        "reinforced_troops[*]": '<ul class="troopsRow"><li class="typeColumn"><img src="{stimgurl}img/units/unit_{$.unitid}_30_s34.jpg" /> {$.unitname}</li><li class="numberColume">{$.reinforced}</li></ul>'
+        "reinforced_troops[*]": '<ul class="troopsRow"><li class="typeColumn"><img src="{stimgurl}img/units/unit_{$.unitid}_30.jpg" /> {$.unitname}</li><li class="numberColume">{$.reinforced}</li></ul>'
     },
     Grove: {
         grove: "<!--groveHeader--><div class=\"gemContainer\"><span class=\"amount\">#{gem}</span><a class=\"buttonv2 green h20\" onclick=\"modal_getgems();\">#{getMore}</a></div><span>#{primaryTitle}</span><!--/groveHeader--><!--groveMain--><div class='groveModal'><div class='grove'><div class='blurbTitle'>#{primaryTitle}</div><div class='blurbAbout'>#{blurb}</div><div class='blurbText'>#{blurbText}</div></div><div class='fieldresource'><div class='fieldTitle'>#{fieldResource}</div><div class='grovedescription'>#{groveDescription}</div><div class='allocation'><div class='item rescourceTitle'><div class='resourcePoint itemcolumn'>#{pointsAvailable}</div><div class='pointsTitle itemcolumn'>#{resourcePointsAvailable}</div><span id=\"groveResetPrice\" style=\"margin:0 0 0 56px;\">#{resetPrice}</span><a id=\"groveResetButton\" class=\"buttonv2 green h20\" style=\"line-height:24px;\">#{resetButton}</a></div><div class='item'><a id='foodSub' class='subtract'><span>-</span></a><div id='foodState' class='pointstates itemcolumn'>#{food}</div><a id='foodAdd' class='add'><span>+</span></a><div class='title itemcolumn'>#{farms}</div><div class='stat_food itemcolumn'></div><div class='productionpoint itemcolumn'>#{foodGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item'><a id='woodSub' class='subtract'><span>-</span></a><div id='woodState' class='pointstates itemcolumn'>#{wood}</div><a id='woodAdd' class='add'><span>+</span></a><div class='title itemcolumn'>#{sawmill}</div><div class='stat_wood itemcolumn'></div><div class='productionpoint itemcolumn'>#{woodGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item'><a id='stoneSub'class='subtract'><span>-</span></a><div id='stoneState' class='pointstates itemcolumn'>#{stone}</div><a id='stoneAdd' class='add'><span>+</span></a><div class='title itemcolumn'>#{quarries}</div><div class='stat_stone itemcolumn'></div><div class='productionpoint itemcolumn'>#{stoneGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item'><a id='ironSub' class='subtract'><span>-</span></a><div id='ironState' class='pointstates itemcolumn'>#{ore}</div><div id='ironAdd' class='add'>+</div><div class='title itemcolumn'>#{mines}</div><div class='stat_iron itemcolumn'></div><div class='productionpoint itemcolumn'>#{oreGatheringRate}</div><div class='perHour itemcolumn'>#{perHour}</div></div><div class='item button'><a id=\"groveApplyButton\" class='gemButtonv2 gray'>#{apply}</a></div></div></div></div><!--/groveMain-->"
@@ -14238,6 +25764,17 @@ cm.FETemplates = {
     },
     AllocationResetConfirm: {
         groveAllocationResetConfirmation: "<div class=\"allocationConfirmation\"><div class='allocationFrame'><div class='title'>#{primaryTitle}</div><div class='msg1'>Reset Point Allocation?</div><div class='msg2'>You will be charged one gem for each point currently locked in.</div><div id=\"groveResetCommitButton\" class='gemButtonv2 green'>Reset <span class=\"gems\">#{gemCost}</span></div></div></div>"
+    },
+    Tournaments: {
+        tournaments_skeleton: '<div class="content clearfix" id="tournamentOfMightContent">#{content}</div>',
+        event_status: '<div class="eventStatus">#{description}</div>',
+        player_status: '<div class="playerStatus #{loadingClass}"><div class="you"><div class="avatar avatars_100 #{yourAvatarClass}"></div><ul class="info"><li><b>#{yourName}</b></li><li>#{yourRankLabel}: #{yourRank}</li><li>#{yourBracketLabel}: <b>#{yourBracket}</b></li><li>#{yourMightLabel}: #{yourMight}</li><li>#{yourPrizeLabel}: <b>#{yourPrize}</b></li></ul></div><div class="them"><div class="avatar avatars_70 #{theirAvatarClass}"></div><ul class="info"><li>#{theirStatus}</li><li>#{theirChallenge}</li><li>#{theirPrize}</li></ul></div></div>',
+        navigation_tabs: '<div class="navigationTabsContainer clearfix"><ul class="tabs">#{tabs}</ul></div>',
+        navigation_tab: '<li class="#{className} tab" id="#{id}">#{label}</li>',
+        ranking_rows: '<div class="rankings clearfix #{noPrizeClass}"><ul class="header"><li class="row clearfix"><ul class="ranking"><li class="rank">#{rankLabel}</li><li class="bracket"></li><li class="player">#{playerNameLabel}</li><li class="alliance">#{allianceNameLabel}</li><li class="might">#{mightIncreaseLabel}</li><li class="prize">#{prizeLabel}</li></ul></li></ul><ul class="rows">#{ranks}</ul></div>',
+        ranking_row: '<li class="row clearfix row_#{rank} #{highlightClass}"><ul class="ranking"><li class="rank">#{rank}</li><li class="bracket"><div class="icon" style="background-position: #{iconX}px #{iconY}px"></div></li><li class="player">#{playerName}</li><li class="alliance">#{allianceName}</li><li class="might">#{mightIncrease}</li><li class="prize">#{prize}</li></ul></li>',
+        footer: '<div class="footer"><span class="timeline">#{timeline}</span>#{findMeButton}<span class="lastUpdated">#{lastUpdatedLabel} #{lastUpdated}</span></div>',
+        loading: '<li><div id="floatingBarsG"><div class="blockG" id="rotateG_01"></div><div class="blockG" id="rotateG_02"></div><div class="blockG" id="rotateG_03"></div><div class="blockG" id="rotateG_04"></div><div class="blockG" id="rotateG_05"></div><div class="blockG" id="rotateG_06"></div><div class="blockG" id="rotateG_07"></div><div class="blockG" id="rotateG_08"></div></div></li>'
     },
     MapProfile: {
         mapPortal: '<div id="mapprofilePortalContainer"><p class="notification"> #{notification} </p><div class="itemContainer"><div class="iconContainer"><img src="#{portalSrc}" /><span id="mapProfilePortalAmount"> #{portalQuantity}</span></div><div class="buyContainer"><span id="mapProfileGemAmount">#{gemAmount}</span><a id="mapProfileBuyButton" onclick="teleport_modal_buy();" class="inlineButton blue14"><span>#{buyLabel}</span></a></div><div class="label"> #{itemLabel} </div></div><div id="mapProfileErrorMessage"></div></div>'
@@ -14498,7 +26035,7 @@ AddCity.Methods = {
         var b = "";
         var h = "";
         var c = {
-            link_item_img: "<img src='" + stimgUrl + "img/items/70/" + this.c_new_city_deed[this.next_city_idx - 2].split("i")[1] + ".jpg' />",
+            link_item_img: "<img src='" + ksoItems[this.c_new_city_deed[this.next_city_idx - 2].split("i")[1]].getImage(70) + "' />",
             text_item_name: itemlist[this.c_new_city_deed[this.next_city_idx - 2]].name,
             text_item_count: (e) ? "1/1" : "0/1",
             text_item_class: "single"
@@ -14564,7 +26101,7 @@ AddCity.Methods = {
         var j = "";
         if (l || d) {
             var c = {
-                link_item_img: "<img src='" + stimgUrl + "img/items/70/" + this.c_new_city_deed[this.next_city_idx - 2].split("i")[1] + ".jpg' />",
+                link_item_img: "<img src='" + ksoItems[this.c_new_city_deed[this.next_city_idx - 2].split("i")[1]].getImage(70) + "' />",
                 text_item_name: itemlist[this.c_new_city_deed[this.next_city_idx - 2]].name,
                 text_item_count: (l) ? "1/1" : "0/1",
                 text_item_class: "single"
@@ -14575,7 +26112,7 @@ AddCity.Methods = {
             var m = Object.keys(g);
             for (var e = 0; e < m.length; e++) {
                 var c = {
-                    link_item_img: "<img src='" + stimgUrl + "img/items/70/" + m[e].split("i")[1] + ".jpg' />",
+                    link_item_img: "<img src='" + ksoItems[m[e].split("i")[1]].getImage(70) + "' />",
                     text_item_name: itemlist[m[e]].name,
                     text_item_count: (seed.items[m[e]] || 0) + "/" + g[m[e]],
                     text_item_class: "triple",
@@ -16102,7 +27639,7 @@ function membersInfo(pageNo) {
                     memhtml.push("<td class='colnm'>" + memberInfo[key].genderAndName + "</td>");
                     memhtml.push("<td class='colpos'>" + allianceOfficerTypeMapping[parseInt(memberInfo[key].positionType)] + "</td>");
                     memhtml.push("<td class='colrank'>" + memberInfo[key].ranking + "</td>");
-                    memhtml.push("<td class='colmight'>" + memberInfo[key].prestige + "</td>");
+                    memhtml.push("<td class='colmight'>" + Math.round(memberInfo[key].prestige) + "</td>");
                     memhtml.push((cm.WorldSettings.isOn("GLORY_FE") ? "<td class='colglory'>" + memberInfo[key].glory + "</td>" : ""));
                     memhtml.push("<td class='colact'><a  class='button20' onclick='getMessageWindow(" + memberInfo[key].userId + ',"' + escape(memberInfo[key].genderAndName) + "\");return false;'><span>" + g_js_strings.commonstr.message + "</span></a><a  class='button20' onclick='showMemberInfo(" + key + ");return false;' id='btnView" + key + "'><span>" + g_js_strings.commonstr.view + "</span></a></td></tr>");
                     cnt++
@@ -16140,7 +27677,7 @@ function showMemberInfo(memberId) {
     var strHTML = "<div style='padding:35px 20px 20px 120px;'><div>";
     strHTML += "<table><tr><td rowspan='10' style='vertical-align:top'><img src='" + memberInfo[memberId].avatarurl + "'/></td><td>" + g_js_strings.commonstr.profile + ":</td><td>" + memberInfo[memberId].genderAndName + "</td></tr>";
     strHTML += "<tr><td>" + g_js_strings.showMemberInfo.fbname + ":</td><td><fb:name uid='" + memberInfo[memberId].fbuid + "' linked='false'></fb:name></td></tr>";
-    strHTML += "<tr><td>" + g_js_strings.commonstr.might + ":</td><td>" + memberInfo[memberId].prestige + "</td></tr>";
+    strHTML += "<tr><td>" + g_js_strings.commonstr.might + ":</td><td>" + Math.round(memberInfo[memberId].prestige) + "</td></tr>";
     strHTML += cm.WorldSettings.isOn("GLORY_FE") ? "<tr><td>" + g_js_strings.commonstr.glory + ":</td><td>" + memberInfo[memberId].glory + "</td></tr>" : "";
     strHTML += "<tr><td>" + g_js_strings.commonstr.title + ":</td><td>" + titlenames[memberInfo[memberId].title] + "</td></tr>";
     strHTML += "<tr><td>" + g_js_strings.commonstr.alliance + ":</td><td>" + memberAllianceName + "</td></tr>";
@@ -16981,11 +28518,11 @@ cm.AltarModel = function(f) {
             i = cm.WorldSettings.getSettingAsObject("ASCENSION_SACRIFICE_ALTAR_LEVEL_UNLOCKS"),
             j = 1;
         f.each(i, function(m, n) {
-            if (f.inArray(k, f.map(n.troops.split(","), function(p, o) {
-                return parseInt(p, 10)
-            })) > -1) {
-                j = m;
-                return
+            var o = f.map(n.troops.split(","), function(q, p) {
+                return +q
+            });
+            if (f.inArray(+k, o) > -1) {
+                j = m
             }
         });
         return {
@@ -17050,29 +28587,18 @@ cm.AltarModel = function(f) {
         getMax: c
     }
 }(jQuery);
-cm.AltarView = function(f) {
-    var b;
-    var a = 25;
+cm.AltarView = function(d) {
+    var i;
+    var e = 25;
     var g = function() {
-        return parseInt(cm.last_building_opened) == a
+        return parseInt(cm.last_building_opened) == e
     };
-    var h = function(i) {
-        return i ? "met" : "unmet"
+    var a = function(j) {
+        return j ? "met" : "unmet"
     };
-    var d = function(l) {
-        var n = c(l),
-            o = unitcost["unt" + l][0],
-            m, j = cm.AltarModel.getRequirements(l),
-            i = cm.AltarModel.getStatIncrease();
-        if (!j.met || seed.units["city" + currentcityid]["unt" + l] <= 0) {
-            m = 0
-        } else {
-            m = (seed.units["city" + currentcityid]["unt" + l] > cm.AltarModel.getMax()) ? cm.AltarModel.getMax() : seed.units["city" + currentcityid]["unt" + l]
-        }
-        var k = cm.Template.renderTemplate("Barracks", "unit_training_modal", {
-            unitId: l,
-            unitImage: stimgUrl + "/img/units/unit_" + l + "_215_s34.jpg?6545",
-            unitDescription: g_js_strings.sacrifice_popup["unitdesc" + l].replace("%1$s", i),
+    var b = function(k) {
+        var j = cm.AltarModel.getStatIncrease();
+        return cm.Template.renderTemplate("Barracks", "unit_stats_table", {
             attackLabel: g_js_strings.modal_barracks_train.attack,
             speedLabel: g_js_strings.modal_barracks_train.speed,
             defenseLabel: g_js_strings.modal_barracks_train.defense,
@@ -17081,45 +28607,62 @@ cm.AltarView = function(f) {
             loadLabel: g_js_strings.modal_barracks_train.load,
             upkeepLabel: g_js_strings.commonstr.upkeep,
             typeLabel: g_js_strings.commonstr.type,
-            attackValue: unitstats["unt" + l][1] + '<span class="green bold"> +' + (((unitstats["unt" + l][1] * i / 100) < 1) ? (unitstats["unt" + l][1] * i / 100).toFixed(2) : parseFloat((unitstats["unt" + l][1] * i / 100).toFixed(1))) + "</span>",
-            speedValue: unitstats["unt" + l][3] + '<span class="green bold"> +' + (((unitstats["unt" + l][3] * i / 100) < 1) ? (unitstats["unt" + l][3] * i / 100).toFixed(2) : parseFloat((unitstats["unt" + l][3] * i / 100).toFixed(1))) + "</span>",
-            defenseValue: unitstats["unt" + l][2] + '<span class="green bold"> +' + (((unitstats["unt" + l][2] * i / 100) < 1) ? (unitstats["unt" + l][2] * i / 100).toFixed(2) : parseFloat((unitstats["unt" + l][2] * i / 100).toFixed(1))) + "</span>",
-            rangeValue: unitstats["unt" + l][4] + '<span class="green bold"> +' + (((unitstats["unt" + l][4] * i / 100) < 1) ? (unitstats["unt" + l][4] * i / 100).toFixed(2) : parseFloat((unitstats["unt" + l][4] * i / 100).toFixed(1))) + "</span>",
-            lifeValue: unitstats["unt" + l][0] + '<span class="green bold"> +' + (((unitstats["unt" + l][0] * i / 100) < 1) ? (unitstats["unt" + l][0] * i / 100).toFixed(2) : parseFloat((unitstats["unt" + l][0] * i / 100).toFixed(1))) + "</span>",
-            loadValue: unitstats["unt" + l][5] + '<span class="green bold"> +' + (((unitstats["unt" + l][5] * i / 100) < 1) ? (unitstats["unt" + l][5] * i / 100).toFixed(2) : parseFloat((unitstats["unt" + l][5] * i / 100).toFixed(1))) + "</span>",
-            upkeepValue: unitupkeeps[l],
-            typeValue: cm.BarracksUnitsTypeMap.getTypeString(l),
+            attackValue: unitstats["unt" + k][1] + '<span class="green bold"> +' + (((unitstats["unt" + k][1] * j / 100) < 1) ? (unitstats["unt" + k][1] * j / 100).toFixed(2) : parseFloat((unitstats["unt" + k][1] * j / 100).toFixed(1))) + "</span>",
+            speedValue: unitstats["unt" + k][3] + '<span class="green bold"> +' + (((unitstats["unt" + k][3] * j / 100) < 1) ? (unitstats["unt" + k][3] * j / 100).toFixed(2) : parseFloat((unitstats["unt" + k][3] * j / 100).toFixed(1))) + "</span>",
+            defenseValue: unitstats["unt" + k][2] + '<span class="green bold"> +' + (((unitstats["unt" + k][2] * j / 100) < 1) ? (unitstats["unt" + k][2] * j / 100).toFixed(2) : parseFloat((unitstats["unt" + k][2] * j / 100).toFixed(1))) + "</span>",
+            rangeValue: unitstats["unt" + k][4] + '<span class="green bold"> +' + (((unitstats["unt" + k][4] * j / 100) < 1) ? (unitstats["unt" + k][4] * j / 100).toFixed(2) : parseFloat((unitstats["unt" + k][4] * j / 100).toFixed(1))) + "</span>",
+            lifeValue: unitstats["unt" + k][0] + '<span class="green bold"> +' + (((unitstats["unt" + k][0] * j / 100) < 1) ? (unitstats["unt" + k][0] * j / 100).toFixed(2) : parseFloat((unitstats["unt" + k][0] * j / 100).toFixed(1))) + "</span>",
+            loadValue: unitstats["unt" + k][5] + '<span class="green bold"> +' + (((unitstats["unt" + k][5] * j / 100) < 1) ? (unitstats["unt" + k][5] * j / 100).toFixed(2) : parseFloat((unitstats["unt" + k][5] * j / 100).toFixed(1))) + "</span>",
+            upkeepValue: unitupkeeps[k],
+            typeValue: cm.BarracksUnitsTypeMap.getTypeString(k)
+        })
+    };
+    var h = function(m) {
+        var o = c(m),
+            p = unitcost["unt" + m][0],
+            n, k = cm.AltarModel.getRequirements(m),
+            j = cm.AltarModel.getStatIncrease();
+        if (!k.met || seed.units["city" + currentcityid]["unt" + m] <= 0) {
+            n = 0
+        } else {
+            n = (seed.units["city" + currentcityid]["unt" + m] > cm.AltarModel.getMax()) ? cm.AltarModel.getMax() : seed.units["city" + currentcityid]["unt" + m]
+        }
+        var l = cm.Template.renderTemplate("Barracks", "unit_training_modal", {
+            unitId: m,
+            unitImage: getTroopImage(m, 215),
+            unitDescription: g_js_strings.sacrifice_popup["unitdesc" + m].replace("%1$s", j),
+            unitStats: b(m),
             resourceHeader: g_js_strings.commonstr.resource,
             requiredHeader: g_js_strings.commonstr.required,
             youOwnHeader: g_js_strings.commonstr.youown,
-            reqs: n,
+            reqs: o,
             youOwnLabel: g_js_strings.commonstr.youown,
             maxLabel: g_js_strings.commonstr.max,
-            youOwnValue: seed.units["city" + currentcityid]["unt" + l],
-            maxValue: m,
+            youOwnValue: seed.units["city" + currentcityid]["unt" + m],
+            maxValue: n,
             troopTrainLabel: g_js_strings.sacrifice_popup.numtotrain + ":",
             trainTimeLabel: g_js_strings.sacrifice_popup.traintime,
             misc: "",
             buttonLabel: g_js_strings.sacrifice_popup.starttraining
         });
-        Modal.showModal(500, 400, 120, 20, o, k)
+        Modal.showModal(500, 400, 120, 20, p, l)
     };
-    var c = function(j) {
+    var c = function(k) {
         if (g()) {
-            var i = cm.AltarModel.getRequirements(j);
-            return "<tr class='gold'><td class='res'>" + i.res + "</td><td class='req " + h(i.met) + "'>" + g_js_strings.commonstr.lv + i.req + " " + buildingcost["bdg" + a][0] + "</td><td class='own'>" + g_js_strings.commonstr.lv + i.own + " " + buildingcost["bdg" + a][0] + "</td></tr>"
+            var j = cm.AltarModel.getRequirements(k);
+            return "<tr class='gold'><td class='res'>" + j.res + "</td><td class='req " + a(j.met) + "'>" + g_js_strings.commonstr.lv + j.req + " " + buildingcost["bdg" + e][0] + "</td><td class='own'>" + g_js_strings.commonstr.lv + j.own + " " + buildingcost["bdg" + e][0] + "</td></tr>"
         } else {
             return false
         }
     };
-    var e = function(j, i) {
-        return j.replace("%1$s", cm.AltarModel.getStatIncrease(i)).replace("%2$s", cm.AltarModel.getBuffDuration(i, null, cm.TIME.HOURS))
+    var f = function(k, j) {
+        return k.replace("%1$s", cm.AltarModel.getStatIncrease(j)).replace("%2$s", cm.AltarModel.getBuffDuration(j, null, cm.TIME.HOURS))
     };
     return {
         isOpen: g,
-        createSubModal: d,
+        createSubModal: h,
         createRequirementRows: c,
-        getUpgradeDesc: e,
+        getUpgradeDesc: f,
         MAX_QUANTITY: "max_quantity"
     }
 }(jQuery);
@@ -17500,7 +29043,7 @@ function modal_attack(f, l, p, r) {
             n.push(stimgUrl);
             n.push("img/units/unit_");
             n.push(j);
-            n.push("_50_s34.jpg'/><div class='unitinfo'><div class='unitname'>");
+            n.push("_50.jpg'/><div class='unitinfo'><div class='unitname'>");
             n.push(unitcost[y[w]][0]);
             n.push("</div><div><span class='unitnum'>");
             n.push(g);
@@ -19178,7 +30721,7 @@ cm.MarchModal = function($) {
             return
         }
         var item_id = result[1];
-        if (itemlist["i" + item_id].price > seed.player.gems) {
+        if (itemlist["i" + item_id].price > cm.Gems.count()) {
             modal_shop_buy_notenough();
             return
         }
@@ -19208,7 +30751,7 @@ cm.MarchModal = function($) {
             Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)));
             return
         }
-        seed.player.gems = seed.player.gems - item.price;
+        cm.Gems.subtract(item.price);
         var owned_element = $("#modal_attack_itemstock_" + item_id).first();
         if (owned_element.length < 1) {
             return
@@ -19229,7 +30772,7 @@ cm.MarchModal = function($) {
             $("#modal_attack_item" + item_id).removeAttr("disabled");
             $("#modal_attack_itemstock_" + item_id).parent().removeClass("zero")
         }
-        $("#kochead_gems").html(seed.player.gems);
+        $("#kochead_gems").html(cm.Gems.count());
         cm.MixPanelTracker.track("store_purchase", {
             item: item.name,
             cost: item.price,
@@ -20055,7 +31598,7 @@ cm.KeyFilter = new function() {
 cm.TroopFactory = new function() {
     this.getUnit = function(e) {
         var d = e.substring(1);
-        var b = "img/units/unit_" + d + "_30_s34.jpg";
+        var b = "img/units/unit_" + d + "_30.jpg";
         var a = unitcost["unt" + d][0];
         var c = {};
         c.id = d;
@@ -20246,6 +31789,28 @@ cm.timer = function(d) {
                 "function": g,
                 interval: e
             }
+        },
+        clear: function(e) {
+            if (a[e]) {
+                delete a[e]
+            }
+        }
+    }
+}(jQuery);
+cm.Countdown = function(a) {
+    return {
+        register: function(c, f, e, d, b) {
+            cm.timer.register(c, function() {
+                if (f()) {
+                    cm.Countdown.clear(c);
+                    d()
+                } else {
+                    e()
+                }
+            }, b)
+        },
+        clear: function(b) {
+            cm.timer.clear(b)
         }
     }
 }(jQuery);
@@ -20293,21 +31858,47 @@ cm.LinkHelper = (function() {
         trackAndOpenLinkOnClick: a
     }
 })();
-cm.Gems = function(a) {
-    function b(c) {
-        var d = a("div.gemContainer span.amount");
-        seed.player.gems = +(seed.player.gems) - c;
-        a("#kochead_gems").html(seed.player.gems);
-        if (d) {
-            d.html(seed.player.gems)
+cm.Gems = function(d) {
+    var a = function() {
+        return +(seed.player.gems)
+    };
+    var b = function(h) {
+        h = (typeof h === "undefined" ? (a() || 0) : +h);
+        var g = localStorage.getItem(tvuid + "_gems");
+        if (g === null) {
+            g = h;
+            localStorage.setItem(tvuid + "_gems", h)
+        }
+        if (h > g) {
+            cm.sounds.play("gem_increase")
+        }
+        localStorage.setItem(tvuid + "_gems", h);
+        seed.player.gems = h
+    };
+    var c = function(g) {
+        b(a() + g)
+    };
+    var f = function(g) {
+        b(a() - g)
+    };
+    var e = function(g) {
+        var h = d("div.gemContainer span.amount");
+        f(g);
+        d("#kochead_gems").html(a());
+        if (h) {
+            h.html(a())
         }
         if (cm.VipModel.getSubStatus() !== "inactive" || cm.VipModel.getExpireTime() - unixtime() > 0) {
-            seed.subscriber.gemsEarned += c * (seed.subscriber.benefits.gemBonusPercent / 100);
+            seed.subscriber.gemsEarned += g * (seed.subscriber.benefits.gemBonusPercent / 100);
             seed.subscriber.gemsEarned = Math.min(seed.subscriber.gemsEarned, seed.subscriber.benefits.gemBonusCap)
         }
-    }
+    };
     return {
-        spend: b
+        count: a,
+        update: b,
+        add: c,
+        subtract: f,
+        spend: e
     }
 }(jQuery);
 cm.Sort = function(b) {
@@ -22156,7 +33747,7 @@ BarbarianRaid.Methods = {
     callForHelp: function() {
         var a = new Array();
         a.push(["REPLACE_RaIdId", seed.barbarianRaid.barbarianRaidId]);
-        common_postToProfile("119", Object.cloneFeed(template_data_119), Object.cloneFeed(actionlink_data_119), continuation_119, a)
+        common_postToProfile("119", a)
     },
     peace: function() {
         var a = new Array();
@@ -22337,7 +33928,7 @@ BarbarianRaid.Methods = {
             } else {
                 d.push(stimgUrl)
             }
-            d.push("img/units/unit_" + e + "_50_s34.jpg'/>");
+            d.push("img/units/unit_" + e + "_50.jpg'/>");
             d.push("		<div class='unitinfo'>");
             d.push("				<div class='unitname'>");
             d.push("					" + unitcost[f[c]][0]);
@@ -22380,7 +33971,7 @@ BarbarianRaid.Methods = {
             } else {
                 d.push(stimgUrl)
             }
-            d.push("img/units/unit_" + e + "_50_s34.jpg'/>");
+            d.push("img/units/unit_" + e + "_50.jpg'/>");
             d.push("		<div class='unitinfo'>");
             d.push("				<div class='unitname'>");
             d.push("					" + unitcost[f[c]][0]);
@@ -22739,107 +34330,145 @@ function getWounded(a) {
     return cm.WoundedModel.get(a)
 }
 function modal_openBarracks() {
-    var e = new Array();
-    var j = g_js_strings.modal_openBarracks;
-    if (cm.ApothecaryView.isOpen()) {
-        j = g_js_strings.revive
-    }
-    if (cm.AltarView.isOpen()) {
-        j = g_js_strings.sacrifice
-    }
-    e.push("<div class='tabsbar clearfix' id='barracksModalTabs'>");
-    e.push("<a class='tab selected' id='changeToTab0' onclick='changeBarracksModalTabs(0);return false;'><span>");
-    e.push(j.trainttl);
-    e.push("</span></a>");
-    e.push("<a class='tab' id='changeToTab1' onclick='changeBarracksModalTabs(1);return false;'><span>");
-    e.push(j.trainingttl);
-    e.push("</span></a>");
-    e.push("</div>");
-    e.push("<div id='barracks_0' class='tablewrap barrackswrap'>");
-    e.push("<div class='unitlist clearfix'>");
-    var d = Object.keys(unitcost);
-    for (var f = 0; f < d.length; f++) {
-        var c = +d[f].split("unt")[1];
-        threshold = 12;
-        if (cm.ApothecaryView.isOpen() || cm.AltarView.isOpen() || (!cm.PrestigeModel.isPrestige() && c <= threshold) || ((cm.cityViewActive == true && c <= threshold) || (cm.cityViewActive != true && c == 13 && parseInt(cm.PrestigeModel.getPrestigeFaction(), 10) === 1) || (cm.cityViewActive != true && c == 14 && parseInt(cm.PrestigeModel.getPrestigeFaction(), 10) === 2) || (cm.cityViewActive != true && c == 15 && parseInt(cm.PrestigeModel.getPrestigeFaction(), 10) === 3))) {
-            if ((cm.ApothecaryView.isOpen() || cm.AltarView.isOpen()) && !cm.BarracksUnitsTypeMap.canCityHaveUnit(c)) {
-                continue
+    var c = new Array(),
+        h = g_js_strings.modal_openBarracks,
+        g = cm.cityViewActive && !cm.ApothecaryView.isOpen();
+    var e = function(p, l) {
+        var n = cm.cityViewActive && !cm.ApothecaryView.isOpen(),
+            q = !cm.cityViewActive && cm.PrestigeModel.isPrestige() && !cm.ApothecaryView.isOpen() && !cm.AltarView.isOpen(),
+            k = q && cm.PrestigeModel.isDruid(),
+            m = q && cm.PrestigeModel.isFey(),
+            o = q && cm.PrestigeModel.isBriton(),
+            i = l <= 12,
+            r;
+        if (n) {
+            if (p === 0) {
+                r = l <= 12
+            } else {
+                if (p === 2) {
+                    r = l === 16
+                }
             }
-            var b = true;
-            if (b || cm.BlessingSystemModel.isBlessingActive(cm.BlessingSystemModel.getBlessing().FIGHTING_SPIRIT)) {
-                var a = getWounded(c);
-                e.push("<div class='unit'>");
-                e.push("<img src='");
-                e.push(stimgUrl);
-                e.push("img/units/unit_");
-                e.push(c);
-                e.push("_68_s34.jpg?6545'/>");
-                e.push("<div class='unitinfo'>");
-                e.push("<div class='unitnm'>");
-                e.push(unitcost[d[f]][0]);
-                e.push("</div>");
-                e.push("<div class='unitdesc'>");
-                e.push(unitcost[d[f]][10]);
-                e.push("</div>");
-                if (cm.ApothecaryView.isOpen()) {
-                    e.push("<div class='wounded_count'><b>" + j.wounded + ":</b> " + a + "</div>")
+        } else {
+            if (k) {
+                r = l === 13
+            } else {
+                if (m) {
+                    r = l === 14
+                } else {
+                    if (o) {
+                        r = l === 15
+                    } else {
+                        if (cm.ApothecaryView.isOpen() || cm.AltarView.isOpen()) {
+                            r = true
+                        } else {
+                            r = false
+                        }
+                    }
                 }
-                var g = g_js_strings.commonstr.train;
-                if (cm.ApothecaryView.isOpen()) {
-                    g = g_js_strings.revive.revive
-                }
-                if (cm.AltarView.isOpen()) {
-                    g = g_js_strings.sacrifice.sacrifice
-                }
-                e.push("<div class='unitcount'><b>");
-                e.push(j.youown);
-                e.push(":</b> ");
-                e.push(seed.units["city" + currentcityid]["unt" + c]);
-                e.push("</div>");
-                e.push("<div class='clearfix btn train_dismiss'><a  class='button20' onclick='modal_barracks_train(");
-                e.push(c);
-                e.push(");return false;'><span>" + g + "</span></a><a  class='buttonDown20' onclick='modal_barracks_dismiss(");
-                e.push(c);
-                e.push(");return false;'><span>");
-                e.push(g_js_strings.commonstr.dismiss);
-                e.push("</span></a></div>");
-                e.push("</div>");
-                e.push("</div>")
             }
         }
+        return r
+    };
+    if (cm.ApothecaryView.isOpen()) {
+        h = g_js_strings.revive
     }
-    e.push("</div>");
-    e.push("</div>");
-    e.push("<div id='barracks_1' style='display:none;' class='barrackswrap'>");
-    e.push("<div class='trainboxwrap'>");
-    e.push("<div class='trainbox'>");
-    e.push("<div class='trainhd'><span>");
-    e.push(j.curintrain);
-    e.push("</span></div><div id='modal_currentlytraining'>");
-    e.push("</div>");
-    e.push("</div>");
-    e.push("<div class='trainbox'>");
-    e.push("<div class='trainhd waiting'><span>");
-    e.push(j.waittrain);
-    e.push("</span></div>");
-    e.push("<div id='modal_trainingqueue'>");
-    e.push("</div>");
-    e.push("</div>");
-    e.push("</div>");
-    e.push("</div>");
-    var h = $("modal_build_content");
-    if (h) {
-        h.innerHTML = e.join("")
+    if (cm.AltarView.isOpen()) {
+        h = g_js_strings.sacrifice
+    }
+    c.push("<div class='tabsbar clearfix' id='barracksModalTabs'>");
+    c.push("<a class='tab selected' id='changeToTab0' onclick='changeBarracksModalTabs(0);return false;'><span>");
+    c.push(h.trainttl);
+    c.push("</span></a>");
+    c.push("<a class='tab' id='changeToTab1' onclick='changeBarracksModalTabs(1);return false;'><span>");
+    c.push(h.trainingttl);
+    c.push("</span></a>");
+    if (g) {
+        c.push("<a class='tab' id='changeToTab2' onclick='changeBarracksModalTabs(2);return false;'><span>");
+        c.push(h.rarettl);
+        c.push("</span></a>")
+    }
+    c.push("</div>");
+    c.push("<div id='barracks_0' class='barrackswrap'>");
+    c.push("<div class='unitlist clearfix'>");
+    var b = Object.keys(unitcost);
+    for (var d = 0; d < b.length; d++) {
+        var a = +b[d].split("unt")[1];
+        if (e(0, a)) {
+            var j = g_js_strings.commonstr.train;
+            if (cm.ApothecaryView.isOpen()) {
+                j = g_js_strings.revive.revive
+            } else {
+                if (cm.AltarView.isOpen()) {
+                    j = g_js_strings.sacrifice.sacrifice
+                }
+            }
+            c.push(cm.Template.renderTemplate("Barracks", "unit_training_info", {
+                unitId: a,
+                imgSrc: getTroopImage(a, 68),
+                unitName: unitcost[b[d]][0],
+                unitDesc: unitcost[b[d]][10],
+                woundCountMarkup: cm.ApothecaryView.isOpen() ? "<div class='wounded_count'><b>" + h.wounded + ":</b> " + getWounded(a) + "</div>" : "",
+                youOwnLabel: h.youown,
+                youOwnCount: seed.units["city" + currentcityid]["unt" + a],
+                trainButton: '<a class="button20" onclick="modal_barracks_train(\'' + a + "');return false;\"><span>" + j + "</span></a>",
+                dismissButton: '<a class="buttonDown20" onclick="modal_barracks_dismiss(\'' + a + "');return false;\"><span>" + g_js_strings.commonstr.dismiss + "</span></a>"
+            }))
+        }
+    }
+    c.push("</div>");
+    c.push("</div>");
+    c.push("<div id='barracks_1' style='display:none;' class='barrackswrap'>");
+    c.push("<div class='trainboxwrap'>");
+    c.push("<div class='trainbox'>");
+    c.push("<div class='trainhd'><span>");
+    c.push(h.curintrain);
+    c.push("</span></div><div id='modal_currentlytraining'>");
+    c.push("</div>");
+    c.push("</div>");
+    c.push("<div class='trainbox'>");
+    c.push("<div class='trainhd waiting'><span>");
+    c.push(h.waittrain);
+    c.push("</span></div>");
+    c.push("<div id='modal_trainingqueue'>");
+    c.push("</div>");
+    c.push("</div>");
+    c.push("</div>");
+    c.push("</div>");
+    if (g) {
+        c.push("<div id='barracks_2' style='display:none;' class='barrackswrap'>");
+        c.push("<div class='unitlist clearfix'>");
+        var b = Object.keys(unitcost);
+        for (var d = 0; d < b.length; d++) {
+            var a = +b[d].split("unt")[1];
+            if (e(2, a)) {
+                var j = g_js_strings.commonstr.view;
+                c.push(cm.Template.renderTemplate("Barracks", "unit_training_info", {
+                    unitId: a,
+                    imgSrc: getTroopImage(a, 68),
+                    unitName: unitcost[b[d]][0],
+                    unitDesc: unitcost[b[d]][10],
+                    youOwnLabel: h.youown,
+                    youOwnCount: seed.units["city" + currentcityid]["unt" + a],
+                    trainButton: '<a class="button20" onclick="modal_barracks_view(\'' + a + "'); return false;\"><span>" + j + "</span></a>",
+                    dismissButton: '<a class="buttonDown20" onclick="modal_barracks_dismiss(\'' + a + "'); return false;\"><span>" + g_js_strings.commonstr.dismiss + "</span></a>"
+                }))
+            }
+        }
+        c.push("</div>");
+        c.push("</div>")
+    }
+    var f = $("modal_build_content");
+    if (f) {
+        f.innerHTML = c.join("")
     }
 }
 function modal_barracks_dismiss(b) {
     var a = new Array();
     a.push("<div id='barracks_dismiss' class='clearfix'><div class='unitinfo clearfix'>");
     a.push("<img src='");
-    a.push(stimgUrl);
-    a.push("img/units/unit_");
-    a.push(b);
-    a.push("_50_s34.jpg'/>");
+    a.push(getTroopImage(b, 50));
+    a.push("'/>");
     a.push("<div class='nm'>" + unitcost["unt" + b][0] + "</div>");
     a.push("<div class='count'>" + addCommas(seed.units["city" + currentcityid]["unt" + b]) + "</div>");
     a.push("</div>");
@@ -22917,28 +34546,60 @@ function modal_barracks_dismiss_keyup(a) {
 function modal_barracks_dismiss_max(a) {
     $("barracks_dismiss_ipt").value = a
 }
-function modal_barracks_train(b) {
+function modal_barracks_train(a) {
     if (!cm.ApothecaryView.isOpen() && !cm.AltarView.isOpen()) {
-        cm.sounds.play("modal_barracks_train_" + b)
+        cm.sounds.play("modal_barracks_train_" + a)
     }
-    var a = createRequirementRows(b),
-        c = unitcost["unt" + b][0],
-        d;
     if (cm.AltarView.isOpen()) {
-        cm.AltarView.createSubModal(b)
+        cm.AltarView.createSubModal(a)
     } else {
         if (cm.WorldSettings.hasKeyValuePair("TROOP_GAMBLE", "ON")) {
-            createGambleContainer(b)
+            createGambleContainer(a)
         } else {
-            createTutelageContainer(b)
+            createTutelageContainer(a)
         }
     }
+}
+function render_barracks_troop_stats(a) {
+    var b = "";
+    if (g_js_strings.modal_barracks_train["unitskill" + a]) {
+        b = '<li class="full"> <span class="label">' + g_js_strings.commonstr.skills + '</span> <span class="value">' + g_js_strings.modal_barracks_train["unitskill" + a] + "</span></li>"
+    }
+    return cm.Template.renderTemplate("Barracks", "unit_stats_table", {
+        attackLabel: g_js_strings.modal_barracks_train.attack,
+        speedLabel: g_js_strings.modal_barracks_train.speed,
+        defenseLabel: g_js_strings.modal_barracks_train.defense,
+        rangeLabel: g_js_strings.modal_barracks_train.range,
+        lifeLabel: g_js_strings.modal_barracks_train.life,
+        loadLabel: g_js_strings.modal_barracks_train.load,
+        upkeepLabel: g_js_strings.commonstr.upkeep,
+        typeLabel: g_js_strings.commonstr.type,
+        attackValue: unitstats["unt" + a][1],
+        speedValue: unitstats["unt" + a][3],
+        defenseValue: unitstats["unt" + a][2],
+        rangeValue: unitstats["unt" + a][4],
+        lifeValue: unitstats["unt" + a][0],
+        loadValue: unitstats["unt" + a][5],
+        upkeepValue: unitupkeeps[a],
+        typeValue: cm.BarracksUnitsTypeMap.getTypeString(a),
+        additionalStats: b
+    })
+}
+function modal_barracks_view(b) {
+    var c = unitcost["unt" + b][0];
+    var a = cm.Template.renderTemplate("Barracks", "unit_viewing_modal", {
+        unitId: b,
+        unitImage: getTroopImage(b, 215),
+        unitDescription: unitcost["unt" + b][10],
+        unitStats: render_barracks_troop_stats(b)
+    });
+    Modal.showModal(500, 400, 120, 20, c, a)
 }
 function createTutelageContainer(c) {
     var b = [36, 37, 38],
         h = ["modal_barracks_tutred", "modal_barracks_arthurs_tutred", "modal_barracks_merlins_tutred"],
         q = ["modal_barracks_tut", "modal_barracks_arthurs_tut", "modal_barracks_merlins_tut"],
-        n, e = [],
+        n, e = "",
         m, o = "";
     for (var d = 0, g = b.length; d < g; ++d) {
         if (ksoItems[b[d]].count <= 0) {
@@ -22946,7 +34607,7 @@ function createTutelageContainer(c) {
         } else {
             o = ""
         }
-        m = stimgUrl + "img/items/70/" + b[d] + ".jpg";
+        m = ksoItems[b[d]].getImage(70);
         n = cm.Template.renderTemplate("Barracks", "unit_training_boost", {
             index: d + 1,
             inputId: q[d],
@@ -22960,9 +34621,9 @@ function createTutelageContainer(c) {
             isDisabled: o,
             getMoreLabel: g_js_strings.commonstr.getmore
         });
-        e.push(n)
+        e += n
     }
-    e = "<div id='tutelageContainer'>" + e.join("") + "</div>";
+    e = "<div id='tutelageContainer'>" + e + "</div>";
     var k = createRequirementRows(c),
         l = unitcost["unt" + c][0],
         f;
@@ -22982,26 +34643,11 @@ function createTutelageContainer(c) {
         f = (modal_barracks_train_max(c) > 0) ? modal_barracks_train_max(c) : 0
     }
     var a = cm.ApothecaryView.isOpen() ? g_js_strings.revive_popup : g_js_strings.modal_barracks_train;
-    var n = cm.Template.renderTemplate("Barracks", "unit_training_modal", {
+    n = cm.Template.renderTemplate("Barracks", "unit_training_modal", {
         unitId: c,
-        unitImage: stimgUrl + "/img/units/unit_" + c + "_215_s34.jpg?6545",
+        unitImage: getTroopImage(c, 215),
         unitDescription: unitcost["unt" + c][10],
-        attackLabel: g_js_strings.modal_barracks_train.attack,
-        speedLabel: g_js_strings.modal_barracks_train.speed,
-        defenseLabel: g_js_strings.modal_barracks_train.defense,
-        rangeLabel: g_js_strings.modal_barracks_train.range,
-        lifeLabel: g_js_strings.modal_barracks_train.life,
-        loadLabel: g_js_strings.modal_barracks_train.load,
-        upkeepLabel: g_js_strings.commonstr.upkeep,
-        typeLabel: g_js_strings.commonstr.type,
-        attackValue: unitstats["unt" + c][1],
-        speedValue: unitstats["unt" + c][3],
-        defenseValue: unitstats["unt" + c][2],
-        rangeValue: unitstats["unt" + c][4],
-        lifeValue: unitstats["unt" + c][0],
-        loadValue: unitstats["unt" + c][5],
-        upkeepValue: unitupkeeps[c],
-        typeValue: cm.BarracksUnitsTypeMap.getTypeString(c),
+        unitStats: render_barracks_troop_stats(c),
         resourceHeader: g_js_strings.commonstr.resource,
         requiredHeader: g_js_strings.commonstr.required,
         youOwnHeader: g_js_strings.commonstr.youown,
@@ -23065,24 +34711,9 @@ function createGambleContainer(unitid) {
             var text_opt = cm.ApothecaryView.isOpen() ? g_js_strings.revive_popup : g_js_strings.modal_barracks_train;
             var template = cm.Template.renderTemplate("Barracks", "unit_training_modal", {
                 unitId: unitid,
-                unitImage: stimgUrl + "/img/units/unit_" + unitid + "_215_s34.jpg?6545",
+                unitImage: getTroopImage(unitid, 215),
                 unitDescription: unitcost["unt" + unitid][10],
-                attackLabel: g_js_strings.modal_barracks_train.attack,
-                speedLabel: g_js_strings.modal_barracks_train.speed,
-                defenseLabel: g_js_strings.modal_barracks_train.defense,
-                rangeLabel: g_js_strings.modal_barracks_train.range,
-                lifeLabel: g_js_strings.modal_barracks_train.life,
-                loadLabel: g_js_strings.modal_barracks_train.load,
-                upkeepLabel: g_js_strings.commonstr.upkeep,
-                typeLabel: g_js_strings.commonstr.type,
-                attackValue: unitstats["unt" + unitid][1],
-                speedValue: unitstats["unt" + unitid][3],
-                defenseValue: unitstats["unt" + unitid][2],
-                rangeValue: unitstats["unt" + unitid][4],
-                lifeValue: unitstats["unt" + unitid][0],
-                loadValue: unitstats["unt" + unitid][5],
-                upkeepValue: unitupkeeps[unitid],
-                typeValue: cm.BarracksUnitsTypeMap.getTypeString(unitid),
+                unitStats: render_barracks_troop_stats(unitid),
                 resourceHeader: g_js_strings.commonstr.resource,
                 requiredHeader: g_js_strings.commonstr.required,
                 youOwnHeader: g_js_strings.commonstr.youown,
@@ -23594,16 +35225,18 @@ function modal_barracks_train_action(c) {
 }
 function changeBarracksModalTabs(a) {
     var c = $("barracksModalTabs").select("a");
+    modal_openBarracks();
     for (var b = 0; b < c.length; b++) {
-        c[b].className = "tab";
+        $("changeToTab" + b).className = "tab";
         $("barracks_" + b).hide()
     }
     $("barracks_" + a).show();
-    c[a].addClassName("selected");
-    if (a == 0) {
+    $("changeToTab" + a).addClassName("selected");
+    switch (a) {
+    case 0:
         $("modal_build").className = "tab1";
-        modal_openBarracks()
-    } else {
+        break;
+    case 1:
         $("modal_build").className = "tab2";
         modal_barracks_trainingtab();
         if (cm.ApothecaryView.isOpen()) {
@@ -23612,6 +35245,10 @@ function changeBarracksModalTabs(a) {
         if (cm.AltarView.isOpen() && cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().DARK_RITUAL)) {
             jQuery(".trainhd.waiting").remove()
         }
+        break;
+    case 2:
+        $("modal_build").className = "tab3";
+        break
     }
 }
 function getCurrentBarracksTab() {
@@ -23661,10 +35298,8 @@ function modal_barracks_trainingtab() {
         var a = g[0];
         e.push("<div class='clearfix traincur'>");
         e.push("<div class='piccol'><img src='");
-        e.push(stimgUrl);
-        e.push("img/units/unit_");
-        e.push(a[0]);
-        e.push("_50_s34.jpg?6545'/></div>");
+        e.push(getTroopImage(a[0], 50));
+        e.push("'/></div>");
         e.push("<div class='infocol'><div class='untnm'>");
         e.push(unitcost["unt" + a[0]][0]);
         e.push("</div><div>");
@@ -23711,10 +35346,8 @@ function modal_barracks_trainingtab() {
                 var o = (f % 2 == 0) ? "" : "stripe";
                 k.push("<div class='clearfix queueitem " + o + "'>");
                 k.push("<div class='piccol'><img src='");
-                k.push(stimgUrl);
-                k.push("img/units/unit_");
-                k.push(g[f][0]);
-                k.push("_50_s34.jpg'/></div>");
+                k.push(getTroopImage(g[f][0], 50));
+                k.push("'/></div>");
                 k.push("<div class='infocol'><div><b>");
                 k.push(unitcost["unt" + g[f][0]][0]);
                 k.push(":</b> ");
@@ -23852,6 +35485,16 @@ function train_unit(tid, num, iid, gambleId) {
             profiler.stop()
         }
     })
+}
+function getTroopImage(c, b) {
+    c = +c;
+    b = +b;
+    var a = [30, 50, 68, 215];
+    if (jQuery.inArray(b, a) < 0) {
+        cm.log.l("invalid size")
+    } else {
+        return stimgUrl + "img/units/unit_" + c + "_" + b + ".jpg"
+    }
 };
 cm = cm || {};
 cm.BeginnerPackageView = function(d) {
@@ -26240,7 +37883,9 @@ cm.BuildingView = function(e, c) {
     var d = function() {
         b.getElement("buildTimeText").innerHTML = f.getTime();
         b.getElement("askHelpCheckbox").checked = f.getHelped();
-        b.getElement("whatIsThisLink").style.visibility = f.isTutorialMode() ? "hidden" : "visible";
+        if (b.getElement("whatIsThisLink")) {
+            b.getElement("whatIsThisLink").style.visibility = f.isTutorialMode() ? "hidden" : "visible"
+        }
         b.getElement("askHelpCheckbox").parentNode.style.visibility = f.isTutorialMode() ? "hidden" : "visible"
     };
     this.getElement = function(g) {
@@ -27449,8 +39094,8 @@ function destructBuilding(b, a) {
     c.push("<div id='modal_lv10'>");
     c.push("<div class='lv10 clearfix'>");
     c.push("<img src='");
-    c.push(stimgUrl);
-    c.push("img/items/70/9.jpg'/>");
+    c.push(ksoItems[9].getImage(70));
+    c.push("'/>");
     c.push("<div class='info'><div class='ttl'>");
     c.push(g_js_strings.destructBuilding.needtodestruct.replace("%1$s", itemlist.i9.name));
     c.push("</div><div class='own'>" + g_js_strings.commonstr.youown + ": ");
@@ -30069,41 +41714,62 @@ function load_stop() {
     Modal.hideModal()
 }
 function track_chrome_btn(a) {}
-function common_postToProfile(a, k, b, c, f, l) {
-    f.push(["REPLACE_CiTyId", currentcityid]);
-    f.push(["REPLACE_CiTyNaMe", currentcityinfo[1]]);
-    f.push(["REPLACE_TiTlEnAmE", titlenames[seed.player.title]]);
-    f.push(["REPLACE_LoRdNaMe", seed.player.name]);
+function common_postToProfile(a, g, m) {
+    var k = function(q) {
+        var e = {};
+        for (var p in q) {
+            if (Object.isArray(q[p])) {
+                e[p] = new Array();
+                for (var o = 0; o < q[p].length; o++) {
+                    e[p].push(Object.clone(q[p][o]))
+                }
+            } else {
+                if (typeof q[p] == "object") {
+                    e[p] = Object.clone(q[p])
+                } else {
+                    e[p] = q[p]
+                }
+            }
+        }
+        return e
+    }, l = k(window["template_data_" + a]),
+        b = k(window["actionlink_data_" + a]),
+        c = window["continuation_" + a];
+    m = m || null;
+    g.push(["REPLACE_CiTyId", currentcityid]);
+    g.push(["REPLACE_CiTyNaMe", currentcityinfo[1]]);
+    g.push(["REPLACE_TiTlEnAmE", titlenames[seed.player.title]]);
+    g.push(["REPLACE_LoRdNaMe", seed.player.name]);
     if (seed.player.fname && seed.player.fname.length > 0) {
-        var m = seed.player.fname + " " + seed.player.lname;
-        f.push(["REPLACE_DiSpLaYnAmE", m])
+        var n = seed.player.fname + " " + seed.player.lname;
+        g.push(["REPLACE_DiSpLaYnAmE", n])
     } else {
-        f.push(["REPLACE_DiSpLaYnAmE", seed.player.name])
+        g.push(["REPLACE_DiSpLaYnAmE", seed.player.name])
     }
-    f.push(["REPLACE_PrEfIx", seed.player.prefix]);
-    f.push(["REPLACE_LeVeL", seed.player.title]);
-    f.push(["REPLACE_SeRvErId", g_server]);
-    f.push(["REPLACE_SeRvErNaMe", domainName]);
+    g.push(["REPLACE_PrEfIx", seed.player.prefix]);
+    g.push(["REPLACE_LeVeL", seed.player.title]);
+    g.push(["REPLACE_SeRvErId", g_server]);
+    g.push(["REPLACE_SeRvErNaMe", domainName]);
     if (seed.allianceDiplomacies) {
-        f.push(["REPLACE_AlLiAnCeId", seed.allianceDiplomacies.allianceId]);
-        f.push(["REPLACE_AlLiAnCeNaMe", seed.allianceDiplomacies.allianceName])
+        g.push(["REPLACE_AlLiAnCeId", seed.allianceDiplomacies.allianceId]);
+        g.push(["REPLACE_AlLiAnCeNaMe", seed.allianceDiplomacies.allianceName])
     }
-    for (var g = 0; g < f.length; g++) {
-        var d = new RegExp(f[g][0], "g");
-        if (k.caption) {
-            k.caption = k.caption.replace(d, f[g][1])
+    for (var f = 0; f < g.length; f++) {
+        var d = new RegExp(g[f][0], "g");
+        if (l.caption) {
+            l.caption = l.caption.replace(d, g[f][1])
         }
-        if (k.name) {
-            k.name = k.name.replace(d, f[g][1])
+        if (l.name) {
+            l.name = l.name.replace(d, g[f][1])
         }
-        k.href = k.href.replace(d, f[g][1]);
-        k.media[0].href = k.media[0].href.replace(d, f[g][1]);
-        k.media[0].src = k.media[0].src.replace(d, f[g][1]);
-        b[0].href = b[0].href.replace(d, f[g][1]);
-        b[0].text = b[0].text.replace(d, f[g][1])
+        l.href = l.href.replace(d, g[f][1]);
+        l.media[0].href = l.media[0].href.replace(d, g[f][1]);
+        l.media[0].src = l.media[0].src.replace(d, g[f][1]);
+        b[0].href = b[0].href.replace(d, g[f][1]);
+        b[0].text = b[0].text.replace(d, g[f][1])
     }
     try {
-        postToProfile(a, k, b, [], c, null, l)
+        postToProfile(a, l, b, [], c, null, m)
     } catch (h) {
         var j
     }
@@ -30323,14 +41989,14 @@ function showResourceTooltip(t, o, k) {
         n = 0,
         w = 0,
         g = 0,
-        y = 0,
+        z = 0,
         j = 0,
         b, f = 0,
         v, h = seed.throne.activeSlot,
         a = seed.throne.slotEquip[h],
         x, p = {};
-    jQuery.each(a, function(z, A) {
-        x = kocThroneItems[A];
+    jQuery.each(a, function(A, B) {
+        x = kocThroneItems[B];
         p[x.id] = x
     });
     v = cm.ThroneController.hasFactionBonus(p);
@@ -30372,21 +42038,24 @@ function showResourceTooltip(t, o, k) {
         n = Math.round(u[0] / 3600);
         w = Math.round(u[1] / 3600);
         g = cm.Resources.getUpkeep(q, currentcityid);
-        y = b["r" + q].persec;
-        j = Math.floor(y + g);
+        z = b["r" + q].persec;
+        j = Math.floor(z + g);
         e.push("<div>" + g_js_strings.commonstr.youown + ": " + n + "</div>");
         e.push("<div>" + g_js_strings.showResourceTooltip.caplimit + ": " + w + "</div>");
         e.push("<div>" + g_js_strings.showResourceTooltip.hrprod + ": " + j + "</div>");
         if (q === 1) {
             e.push("<div>" + g_js_strings.showResourceTooltip.troopsupkeep + ": " + g + "</div>");
-            f = parseInt(u[0] / 3600) / parseInt($("stat_" + m + "_grw").innerHTML.split(",").join(""));
-            if (Math.abs(f) <= 24) {
-                var l = g_js_strings.showResourceTooltip.foodrunningout;
-                var r = g_js_strings.showResourceTooltip.foodrunningoutunit_m;
-                if (Math.ceil(Math.abs(f)) == 1) {
-                    r = g_js_strings.showResourceTooltip.foodrunningoutunit_s
+            var y = parseInt($("stat_" + m + "_grw").innerHTML.split(",").join(""));
+            if (y < g) {
+                f = parseInt(u[0] / 3600) / (g - y);
+                if (Math.abs(f) <= 24) {
+                    var l = g_js_strings.showResourceTooltip.foodrunningout;
+                    var r = g_js_strings.showResourceTooltip.foodrunningoutunit_m;
+                    if (Math.ceil(Math.abs(f)) == 1) {
+                        r = g_js_strings.showResourceTooltip.foodrunningoutunit_s
+                    }
+                    e.push("<div class='red'>" + l + ": < " + Math.ceil(Math.abs(f)) + " " + r + "</div>")
                 }
-                e.push("<div class='red'>" + l + ": < " + Math.ceil(Math.abs(f)) + " " + r + "</div>")
             }
         }
     }
@@ -30534,7 +42203,7 @@ function cityinfo_army() {
         e.push(stimgUrl);
         e.push("img/units/unit_");
         e.push(d);
-        e.push("_30_s34.jpg?6545'/>");
+        e.push("_30.jpg?6545'/>");
         e.push(seed.units["city" + currentcityid][b[c]]);
         e.push("</div>");
         e.push("</td>");
@@ -30624,6 +42293,25 @@ function directory_friends_onlinestatus() {
         })
     }
 }
+function addPlayers(d, f, e, c) {
+    var a = f.length;
+    for (var b = 0; b < a; b++) {
+        d.push("<div class='leaderrow clearfix" + (b === 0 ? " first" : "") + "'>");
+        d.push("<span class='" + (c || f[b].you ? "ranking" : "") + "'>" + f[b].ranking + ". ");
+        if (e == 24) {
+            d.push(f[b].alliance)
+        } else {
+            d.push(f[b].name)
+        }
+        d.push("</span>");
+        d.push("<br/>");
+        d.push("<span class='contest-value " + (f[b].you ? "ranking" : "") + "'>+" + addCommas(f[b].contestValue) + "</span>");
+        d.push("</div>");
+        if (b !== a - 1) {
+            d.push("<div class='divider-line-small'></div>")
+        }
+    }
+}
 function directory_changetab(tabnum) {
     for (var i = 1; i < 3; i++) {
         $("directory_tabs_" + i).hide()
@@ -30633,31 +42321,35 @@ function directory_changetab(tabnum) {
     if (tabnum == 1) {
         var params = Object.clone(g_ajaxparams);
         params.format = 1;
+        params.data = "chrome";
         new Ajax.Request(g_ajaxpath + "ajax/getLeaderboard.php" + g_ajaxsuffix, {
             method: "post",
             parameters: params,
             onSuccess: function(transport) {
                 var rslt = eval("(" + transport.responseText + ")");
-                if (rslt.ok) {
-                    if (!rslt.data) {
-                        $("tournament_tab").innerHTML = "<div class='leaderupsell'>" + g_js_strings.directory_changetab.tourncoming + "</div>"
+                if (rslt.ok && rslt.eventInfo) {
+                    var fhtml = new Array();
+                    fhtml.push("<div class='leaderboardheader'>" + rslt.eventInfo.name + "</div>");
+                    if (rslt.eventInfo.status === "current") {
+                        fhtml.push("<div class='datefoot'>" + g_js_strings.commonstr.ends + ": <span id='tournament-countdown' class='countdown'></span></div>")
                     } else {
-                        var fhtml = new Array();
-                        fhtml.push("<div class='leaderboardheader'>" + rslt.name + "</div>");
-                        var arrlen = (rslt.data.length < 5) ? rslt.data.length : 5;
-                        for (var i = 0; i < arrlen; i++) {
-                            fhtml.push("<div class='leaderrow clearfix" + (i === 0 ? " first" : "") + "'>");
-                            fhtml.push("<div class='ranking'>" + rslt.data[i].ranking + "</div>");
-                            if (rslt.type == 24) {
-                                fhtml.push("<div class='name'>" + rslt.data[i].alliance + "</div>")
-                            } else {
-                                fhtml.push("<div class='name'>" + rslt.data[i].name + "</div>")
-                            }
-                            fhtml.push("</div>")
+                        if (rslt.eventInfo.status === "completed") {
+                            var endDate = new Date(rslt.eventInfo.endDate * 1000);
+                            fhtml.push("<div class='datefoot'>" + g_js_strings.commonstr.ended + ": <span class='countdown'>" + endDate.toLocaleString() + "</span></div>")
                         }
-                        fhtml.push("<div class='datefoot'>" + g_js_strings.commonstr.ends + ": <br/>" + new Date(parseInt(rslt.enddate) * 1000).toGMTString() + "</div>");
-                        fhtml.push("<a  onclick='modal_tournaments();return false;' class='button20'><span>" + g_js_strings.directory_changetab.viewdet + "</span></a>");
-                        $("tournament_tab").innerHTML = fhtml.join("")
+                    }
+                    fhtml.push("<div class='brown-box-small'>");
+                    addPlayers(fhtml, rslt.topPlayers, rslt.type, true);
+                    fhtml.push("</div>");
+                    addPlayers(fhtml, rslt.yourPlayers, rslt.type, false);
+                    fhtml.push("<a onclick='modal_tournaments(\"" + rslt.eventInfo.status + "\");return false;' class='button20'><span>" + g_js_strings.directory_changetab.viewdet + "</span></a>");
+                    $("tournament_tab").innerHTML = fhtml.join("");
+                    var now = new Date();
+                    var delta = parseInt(rslt.eventInfo.endDate) - Math.round(now.getTime() / 1000);
+                    if (rslt.eventInfo.status === "current" && delta > 0) {
+                        CountDown.addCountDown("tournament-countdown", delta, function() {
+                            directory_changetab(1)
+                        })
                     }
                 } else {
                     Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
@@ -30886,7 +42578,10 @@ function checkreq(L, A, n, E) {
             if (parseInt(D[e[G]][0]) == 1) {
                 d = parseInt(D[e[G]][1])
             } else {
-                d = Math.min(buildingmaxlvl[K], n + parseInt(D[e[G]][1]))
+                d = Math.min(buildingmaxlvl[K], n + parseInt(D[e[G]][1]));
+                if (parseInt(A) === 5 && n == 11 && K == 0) {
+                    d = 11
+                }
             }
             if (L == "tch") {
                 var t = [9, 15, 16, 17],
@@ -32292,7 +43987,7 @@ jQuery(document).ready(function(a) {
             if (d.city.id === +(currentcityid)) {
                 c = cm.CITY_STATUS.MY_CITY_AND_CURRENT_CITY
             } else {
-                if (d.alliance.id === b) {
+                if (d.alliance.id === b && b !== 0) {
                     c = cm.CITY_STATUS.ANOTHER_PLAYER_CITY_AND_IN_YOUR_ALLIANCE
                 } else {
                     if (d.city.id === 0 && d.user.id === 0) {
@@ -34184,7 +45879,7 @@ cm.DailyRewardsView = function(d) {
             if (n) {
                 var r = new Array(),
                     q = seed.player.fname + " " + seed.player.lname;
-                common_postToProfile("303", Object.cloneFeed(template_data_303), Object.cloneFeed(actionlink_data_303), continuation_303, r)
+                common_postToProfile("303", r)
             }
             if (seed.beginnerPromo) {
                 cm.BeginnerPackageView.init(seed.beginnerPromo)
@@ -35004,7 +46699,7 @@ cm.WatchTowerReportDialogController = function(d, k) {
             jQuery("#buffItem" + t).find(".inlineButton").removeClass("disabled")
         }
         jQuery("#buffItem" + t).find(".amountRow").html(r);
-        jQuery("#kochead_gems").html(seed.player.gems);
+        jQuery("#kochead_gems").html(cm.Gems.count());
         mpmetrics.track("store_purchase", {
             item: q.name,
             cost: q.price,
@@ -35019,7 +46714,7 @@ cm.WatchTowerReportDialogController = function(d, k) {
         var u = s.getAttribute("name");
         try {
             var r = i.itemLookup[u];
-            if (r.getPrice() > seed.player.gems) {
+            if (r.getPrice() > cm.Gems.count()) {
                 modal_shop_buy_notenough()
             } else {
                 s.style.visibility = "hidden";
@@ -35709,7 +47404,7 @@ cm.log = function() {
         },
         l: function(a) {
             if (window.console && typeof console.log == "function" && window.g_env == "dev") {
-                console.log(a)
+                console.log.apply(console, arguments)
             }
             return a
         },
@@ -35899,7 +47594,7 @@ var cm = function(b) {
     c.gameWon = function(e, d) {
         cm.flash.incrementItem(d);
         e = parseInt(e);
-        gems = parseInt(seed.player.gems);
+        gems = cm.Gems.count();
         if (isNaN(e) || isNaN(gems)) {
             return
         }
@@ -35910,7 +47605,7 @@ var cm = function(b) {
         if (gems < 0) {
             gems = 0
         }
-        seed.player.gems = gems;
+        cm.Gems.update(gems);
         jQuery("#kochead_gems").html(gems)
     };
     c.hideFlash = function() {
@@ -37498,12 +49193,16 @@ cm.guardianCity = function(e) {
     function b() {
         var g = e(this).find("img");
         var h = g.attr("src");
-        g.attr("src", h.replace("guardian/", "guardian/hover_states_png8/"))
+        if (typeof h !== "undefined") {
+            g.attr("src", h.replace("guardian/", "guardian/hover_states_png8/"))
+        }
     }
     function d() {
         var g = e(this).find("img");
         var h = g.attr("src");
-        g.attr("src", h.replace("guardian/hover_states_png8/", "guardian/"))
+        if (typeof h !== "undefined") {
+            g.attr("src", h.replace("guardian/hover_states_png8/", "guardian/"))
+        }
     }
     return {
         init: function() {
@@ -37581,16 +49280,16 @@ cm.guardianModalModel = function(b) {
     }
     function a(u) {
         if (u == cm.guardianConst.types[0]) {
-            common_postToProfile(300, Object.cloneFeed(template_data_300), Object.cloneFeed(actionlink_data_300), continuation_300, [])
+            common_postToProfile(300, [])
         } else {
             if (u == cm.guardianConst.types[1]) {
-                common_postToProfile(301, Object.cloneFeed(template_data_301), Object.cloneFeed(actionlink_data_301), continuation_301, [])
+                common_postToProfile(301, [])
             } else {
                 if (u == cm.guardianConst.types[2]) {
-                    common_postToProfile(304, Object.cloneFeed(template_data_304), Object.cloneFeed(actionlink_data_304), continuation_304, [])
+                    common_postToProfile(304, [])
                 } else {
                     if (u == cm.guardianConst.types[3]) {
-                        common_postToProfile(305, Object.cloneFeed(template_data_305), Object.cloneFeed(actionlink_data_305), continuation_305, [])
+                        common_postToProfile(305, [])
                     }
                 }
             }
@@ -37844,23 +49543,27 @@ cm.guardianModalModel = function(b) {
             return u
         },
         getStoneTrainingSpeedBonus: function() {
-            var w = cm.guardianModalModel.getTrainBonus() / 100;
+            var x = cm.guardianModalModel.getTrainBonus() / 100;
             var v = cm.guardianSummonModel.getSetBonus();
-            var y = cm.guardianModalModel.getType() == "stone";
-            var x = 0;
-            if (y && v) {
-                x = 1.5
+            var A = cm.guardianModalModel.getType() == "stone";
+            var z = 0;
+            var w = (cm.ThroneController.getBoundedEffect(106) / 100);
+            var y = 0;
+            if (A && v) {
+                z = 1.5;
+                y = w
             }
-            if (y && !v) {
-                x = 1
+            if (A && !v) {
+                z = 1;
+                y = w
             }
-            if (!y && v) {
-                x = 0.5
+            if (!A && v) {
+                z = 0.5
             }
-            if (!y && !v) {
-                x = 0
+            if (!A && !v) {
+                z = 0
             }
-            var u = w * x;
+            var u = (x * z) + y;
             return u
         },
         getCurrentStoneGuardianLevel: function() {
@@ -37869,23 +49572,26 @@ cm.guardianModalModel = function(b) {
             return +u
         },
         getMarchBonus: function() {
-            var v = cm.guardianSummonModel.getSetBonus();
+            var w = cm.guardianSummonModel.getSetBonus();
             var u = cm.guardianModalModel.gObj().cityGuardianLevels.food;
             u = u || 0;
             u = +u;
-            var w = f[u];
+            var x = f[u];
             if (cm.guardianModalModel.getType() == "food") {
-                if (v) {
-                    w = w * 1.5
+                if (w) {
+                    x = x * 1.5
                 }
+                var v = x;
+                x = x + cm.ThroneController.getBoundedEffect(108);
+                cm.log.l("Throne Room items: March bonus increased from " + v + " to " + x)
             } else {
-                if (v) {
-                    w = w * 0.5
+                if (w) {
+                    x = x * 0.5
                 } else {
-                    w = 0
+                    x = 0
                 }
             }
-            return w
+            return x
         },
         getTrainBonus: function() {
             return c[cm.guardianModalModel.getCurrentStoneGuardianLevel()]
@@ -38111,7 +49817,7 @@ cm.guardianModalView = function(e) {
         }
     }
     function u(w, x, v) {
-        return "<img id='loc_" + x + "' inventory_id='" + v + "' src='" + stimgUrl + "img/items/70/" + w + ".jpg' />"
+        return "<img id='loc_" + x + "' inventory_id='" + v + "' src='" + ksoItems[w].getImage(70) + "' />"
     }
     function j() {
         var y = cm.guardianArmorModel.getInvItems();
@@ -38305,7 +50011,7 @@ cm.guardianTransformController = function(a) {
                 b.hide();
                 cm.guardianTransformModel.buy(function(c) {
                     if (c.ok) {
-                        a("#kochead_gems").html(seed.player.gems);
+                        a("#kochead_gems").html(cm.Gems.count());
                         cm.guardianTransformView.rerender()
                     } else {
                         cm.ModalManager.alert({
@@ -38465,7 +50171,7 @@ cm.guardianTransformModel = function(f) {
             b(k)
         },
         buy: function(k) {
-            if (c[g].itemPrice > parseInt(seed.player.gems)) {
+            if (c[g].itemPrice > cm.Gems.count()) {
                 k(a(g_js_strings.guardian_err.notEnoughGems))
             } else {
                 cm.ShopController.easyBuy(c[g].itemId, function() {
@@ -38495,7 +50201,7 @@ cm.guardianTransformView = function(a) {
             }
             if (b.itemPrice) {
                 h = e ? "<div class='transform_price'><div class='pcost'>" + b.itemPrice + "</div><div class='little_gem'></div><div class='buy'><a class='inlineButton blue14' style='display: inline;'><span>Buy</span></a></div></div>" : "";
-                h += "<div class='transform_to'>" + b.unlockText + "</div><div class='transform_cost'>" + b.cost + '</div><div class="icon_own"><img src="' + stimgUrl + "img/items/30/" + b.itemId + '.jpg" class="icon"><div class="own "><span id="item_stock">' + (b && b.numOfItems ? b.numOfItems : 0) + "</span></div>   </div>"
+                h += "<div class='transform_to'>" + b.unlockText + "</div><div class='transform_cost'>" + b.cost + '</div><div class="icon_own"><img src="' + ksoItems[b.itemId].getImage(30) + '" class="icon"><div class="own "><span id="item_stock">' + (b && b.numOfItems ? b.numOfItems : 0) + "</span></div>   </div>"
             }
             var f = "choose_button";
             if (i) {
@@ -38801,61 +50507,71 @@ cm.HUDInit = function(e) {
         d.setParentElement("hudThirdContainer")
     }
 };
-cm.HUDIcon = function(m) {
-    var l = this;
+cm.HUDIcon = function(n) {
+    var m = this;
     var a;
+    var g;
     var e;
     var b;
-    var o;
+    var p;
     var f;
-    var h;
-    var n;
+    var i;
+    var o;
     var d;
-    var g;
-    var k = function() {
-        o = m.images["icon"];
+    var h;
+    var l = function() {
+        p = n.images["icon"];
         a = document.createElement("a");
-        a.href = m.url;
+        a.href = n.url;
         a.target = "_top";
-        a.className = m.cssClass;
-        a.innerHTML = m.innerHTML || "";
-        Event.observe(a, "click", j);
+        a.className = n.cssClass;
+        a.innerHTML = n.innerHTML || "";
+        if (n.elmId) {
+            a.id = n.elmId || ""
+        }
+        Event.observe(a, "click", k);
         Event.observe(a, "mouseover", c);
-        Event.observe(a, "mouseout", i);
+        Event.observe(a, "mouseout", j);
         f = document.createElement("img");
-        f.src = o;
+        f.src = p;
         a.appendChild(f);
-        if (m.images["border"]) {
+        if (n.content) {
+            g = document.createElement("div");
+            g.className = "content";
+            g.innerHTML = n.content;
+            a.appendChild(g)
+        }
+        if (n.images["border"]) {
             b = document.createElement("img");
-            b.src = m.images["border"];
+            b.src = n.images["border"];
             b.className = "borderImage";
             a.appendChild(b)
         }
-        h = document.createElement("img");
-        h.src = m.images["over"];
-        n = m.tooltip;
+        i = document.createElement("img");
+        i.src = n.images["over"];
+        o = n.tooltip;
         d = ["mapContainerId"]
     };
-    this.setParentElement = function(p) {
-        $(p).appendChild(a)
+    this.setParentElement = function(q) {
+        $(q).appendChild(a)
     };
-    var j = function(p) {
-        if (m.clickCallback) {
-            var q = m.clickCallback;
-            if (typeof(q == "function")) {
-                q(p)
+    var k = function(q) {
+        if (n.clickCallback) {
+            var r = n.clickCallback;
+            if (typeof(r == "function")) {
+                r(q)
             }
         }
     };
-    var c = function(p) {
-        f.src = h.src + "?v=1";
-        showTooltip(n, a, p, "maparea_city")
+    var c = function(q) {
+        f.src = i.src + "?v=1";
+        showTooltip(o, a, q, "maparea_city")
     };
-    var i = function(p) {
-        f.src = o;
+    var j = function(q) {
+        f.src = p;
         removeTooltip()
     };
-    k()
+    l()
 };
 cm.HUDDealOfTheDayIcon = function(k) {
     var a;
@@ -39000,102 +50716,93 @@ cm.HUDIconTypes = {
     DEAL_OF_THE_DAY_NEW: 10,
     VALENTINE_DAY_DEALSPOT: 11,
     TRIALPAY_DEALSPOT2: 12,
-    VIP_SUB: 13
+    VIP_SUB: 13,
+    ROYAL_AUDIENCE: 14
 };
 cm.HUDIconFactory = {
     getIcon: function(b) {
+        var c = null;
         switch (b.type) {
         case cm.HUDIconTypes.DEAL_OF_THE_DAY:
-            return new cm.HUDDealOfTheDayIcon(b);
+            c = new cm.HUDDealOfTheDayIcon(b);
             break;
         case cm.HUDIconTypes.DEAL_OF_THE_DAY_NEW:
             b.clickCallback = function() {
-                var d = parent.KB.TrialPay.DealSpot.getInstance();
-                d.setEnabled(true);
-                d.show()
+                var e = parent.KB.TrialPay.DealSpot.getInstance();
+                e.setEnabled(true);
+                e.show()
             };
-            return new cm.HUDIcon(b);
+            c = new cm.HUDIcon(b);
             break;
         case cm.HUDIconTypes.INVITE:
             b.clickCallback = function() {
                 invite_friends_popup()
             };
-            return new cm.HUDIcon(b);
+            c = new cm.HUDIcon(b);
             break;
         case cm.HUDIconTypes.GIFT:
         case cm.HUDIconTypes.GIFT_OF_THE_DAY:
             b.clickCallback = function() {
                 cm.ChooseGiftController.openModal()
             };
-            return new cm.HUDIcon(b);
+            c = new cm.HUDIcon(b);
             break;
         case cm.HUDIconTypes.NEXT_UNPURCHASED_PACKAGE:
             b.clickCallback = function() {
                 cm.ConversionTracker.track("payments", "MORE_GEMS_HUD", "");
                 modal_getgems()
             };
-            return new cm.HUDIcon(b);
+            c = new cm.HUDIcon(b);
             break;
         case cm.HUDIconTypes.MERLINS_WHEEL:
             b.clickCallback = function() {
                 cm.mww.start(0)
             };
-            return new cm.HUDIcon(b);
+            c = new cm.HUDIcon(b);
             break;
         case cm.HUDIconTypes.SHARE:
             b.clickCallback = cm.HUDIconShare.exe;
-            return new cm.HUDIcon(b);
+            c = new cm.HUDIcon(b);
             break;
         case cm.HUDIconTypes.DAILY_REWARD:
             var a = ~~ (1 * (seed.loginReward.consec_days_logon)) + 1,
-                c;
+                d;
             if (a > 5) {
-                c = "<span id='dailyRewardHudInside'>5+</span>"
+                d = "<span id='dailyRewardHudInside'>5+</span>"
             } else {
-                c = "<span id='dailyRewardHudInside'>" + a + "</span>"
+                d = "<span id='dailyRewardHudInside'>" + a + "</span>"
             }
             b.clickCallback = function() {
                 cm.DailyRewardsView.hudClick()
             };
-            b.innerHTML = c;
-            return new cm.HUDIcon(b);
+            b.innerHTML = d;
+            c = new cm.HUDIcon(b);
             break;
         case cm.HUDIconTypes.GEM_GIFTING:
             b.clickCallback = function() {
                 cm.ConversionTracker.track("payments", "MORE_GEMS_HUD", "");
                 modal_getgems()
             };
-            return new cm.HUDIcon(b);
+            c = new cm.HUDIcon(b);
             break;
         case cm.HUDIconTypes.TRIALPAY_DEALSPOT2:
-            return new cm.HUDDealSpot(b);
-            b.clickCallback1 = function() {
-                try {
-                    TRIALPAY.social.render_dealspot_swf({
-                        id: "trialpay_dealspot",
-                        app_id: appSettings.appId,
-                        currency_url: g_paymentHost + "/payment/cog?gameid=1",
-                        onOfferUnavailable: "TRIALPAY.social.delete_dealspot_swf",
-                        mode: "fbpayments",
-                        sid: tpuid,
-                        width: 50,
-                        height: 50
-                    });
-                    return
-                } catch (d) {}
-                cm.log.l("TRIALPAY is not loaded.")
-            };
-            return new cm.HUDIcon(b);
+            c = new cm.HUDDealSpot(b);
             break;
         case cm.HUDIconTypes.VIP_SUB:
             b.clickCallback = function() {
                 cm.VipController.onEngagementTabClick()
             };
-            return new cm.HUDIcon(b);
+            c = new cm.HUDIcon(b);
+            break;
+        case cm.HUDIconTypes.ROYAL_AUDIENCE:
+            var b = cm.VotingHUDIcon.getIconData();
+            c = new cm.HUDIcon(b);
             break;
         default:
-            return null
+            c = null;
+            break
         }
+        return c
     }
 };
 cm.HUDIconShare = function(e) {
@@ -40368,7 +52075,7 @@ cm.InventoryView = function(t) {
             courtString: g_js_strings.commonstr.court
         });
         Modal.showModal(740, 400, 10, 10, N, K);
-        t("#inventoryGemQuantity").text(seed.player.gems);
+        t("#inventoryGemQuantity").text(cm.Gems.count());
         t("#inventoryBanner").html(M);
         t("#inventoryBanner").addClass(L);
         a();
@@ -40485,11 +52192,11 @@ cm.InventoryView = function(t) {
                 if (X.subCategory == 50) {
                     K = X.name.split("_")[1];
                     T = g_js_strings.mysteryChest["name_" + K];
-                    R = stimgUrl + "img/items/70/" + X.info.image + ".jpg";
+                    R = ksoItems[X.info.image].getImage(70);
                     N = g_js_strings.mysteryChest["description_" + X.info.description]
                 } else {
                     T = X.name;
-                    R = stimgUrl + "img/items/70/" + X.id + ".jpg";
+                    R = ksoItems[X.id].getImage(70);
                     N = X.description
                 }
                 t(cm.Template.renderTemplate("Inventory", "itemContainer", {
@@ -40991,6 +52698,7 @@ cm.ItemIdentifier.CHESTS = {
     30501: 1,
     30502: 1,
     30503: 1,
+    30504: 1,
     30600: 1,
     30601: 1,
     30602: 1,
@@ -41002,7 +52710,1424 @@ cm.ItemIdentifier.CHESTS = {
     30608: 1,
     30609: 1,
     30610: 1,
-    30611: 1
+    30611: 1,
+    30612: 1,
+    30613: 1,
+    30614: 1,
+    30615: 1,
+    30616: 1,
+    30617: 1,
+    30618: 1,
+    30701: 1,
+    30702: 1,
+    30703: 1,
+    30704: 1,
+    30705: 1,
+    30706: 1,
+    30707: 1,
+    30708: 1,
+    30709: 1,
+    30710: 1,
+    30711: 1,
+    30712: 1,
+    30713: 1,
+    30714: 1,
+    30715: 1,
+    30716: 1,
+    30717: 1,
+    30718: 1,
+    30719: 1,
+    30720: 1,
+    30721: 1,
+    30722: 1,
+    30723: 1,
+    30724: 1,
+    30725: 1,
+    30726: 1,
+    30727: 1,
+    30728: 1,
+    30729: 1,
+    30730: 1,
+    30731: 1,
+    30732: 1,
+    30733: 1,
+    30734: 1,
+    30735: 1,
+    30736: 1,
+    30737: 1,
+    30738: 1,
+    30739: 1,
+    30740: 1,
+    30741: 1,
+    30742: 1,
+    30743: 1,
+    30744: 1,
+    30745: 1,
+    30746: 1,
+    30747: 1,
+    30748: 1,
+    30749: 1,
+    30750: 1,
+    30751: 1,
+    30752: 1,
+    30753: 1,
+    30754: 1,
+    30755: 1,
+    30756: 1,
+    30757: 1,
+    30758: 1,
+    30759: 1,
+    30760: 1,
+    30761: 1,
+    30762: 1,
+    30763: 1,
+    30764: 1,
+    30765: 1,
+    30766: 1,
+    30767: 1,
+    30768: 1,
+    30769: 1,
+    30770: 1,
+    30771: 1,
+    30772: 1,
+    30773: 1,
+    30774: 1,
+    30775: 1,
+    30776: 1,
+    30777: 1,
+    30778: 1,
+    30779: 1,
+    30780: 1,
+    30781: 1,
+    30782: 1,
+    30783: 1,
+    30784: 1,
+    30785: 1,
+    30786: 1,
+    30787: 1,
+    30788: 1,
+    30789: 1,
+    30790: 1,
+    30791: 1,
+    30792: 1,
+    30793: 1,
+    30794: 1,
+    30795: 1,
+    30796: 1,
+    30797: 1,
+    30798: 1,
+    30799: 1,
+    30800: 1,
+    30801: 1,
+    30802: 1,
+    30803: 1,
+    30804: 1,
+    30805: 1,
+    30806: 1,
+    30807: 1,
+    30808: 1,
+    30809: 1,
+    30810: 1,
+    30811: 1,
+    30812: 1,
+    30813: 1,
+    30814: 1,
+    30815: 1,
+    30816: 1,
+    30817: 1,
+    30818: 1,
+    30819: 1,
+    30820: 1,
+    30821: 1,
+    30822: 1,
+    30823: 1,
+    30824: 1,
+    30825: 1,
+    30826: 1,
+    30827: 1,
+    30828: 1,
+    30829: 1,
+    30830: 1,
+    30831: 1,
+    30832: 1,
+    30833: 1,
+    30834: 1,
+    30835: 1,
+    30836: 1,
+    30837: 1,
+    30838: 1,
+    30839: 1,
+    30840: 1,
+    30841: 1,
+    30842: 1,
+    30843: 1,
+    30844: 1,
+    30845: 1,
+    30846: 1,
+    30847: 1,
+    30848: 1,
+    30849: 1,
+    30850: 1,
+    30851: 1,
+    30852: 1,
+    30853: 1,
+    30854: 1,
+    30855: 1,
+    30856: 1,
+    30857: 1,
+    30858: 1,
+    30859: 1,
+    30860: 1,
+    30861: 1,
+    30862: 1,
+    30863: 1,
+    30864: 1,
+    30865: 1,
+    30866: 1,
+    30867: 1,
+    30868: 1,
+    30869: 1,
+    30870: 1,
+    30871: 1,
+    30872: 1,
+    30873: 1,
+    30874: 1,
+    30875: 1,
+    30876: 1,
+    30877: 1,
+    30878: 1,
+    30879: 1,
+    30880: 1,
+    30881: 1,
+    30882: 1,
+    30883: 1,
+    30884: 1,
+    30885: 1,
+    30886: 1,
+    30887: 1,
+    30888: 1,
+    30889: 1,
+    30890: 1,
+    30891: 1,
+    30892: 1,
+    30893: 1,
+    30894: 1,
+    30895: 1,
+    30896: 1,
+    30897: 1,
+    30898: 1,
+    30899: 1,
+    30900: 1,
+    30901: 1,
+    30902: 1,
+    30903: 1,
+    30904: 1,
+    30905: 1,
+    30906: 1,
+    30907: 1,
+    30908: 1,
+    30909: 1,
+    30910: 1,
+    30911: 1,
+    30912: 1,
+    30913: 1,
+    30914: 1,
+    30915: 1,
+    30916: 1,
+    30917: 1,
+    30918: 1,
+    30919: 1,
+    30920: 1,
+    30921: 1,
+    30922: 1,
+    30923: 1,
+    30924: 1,
+    30925: 1,
+    30926: 1,
+    30927: 1,
+    30928: 1,
+    30929: 1,
+    30930: 1,
+    30931: 1,
+    30932: 1,
+    30933: 1,
+    30934: 1,
+    30935: 1,
+    30936: 1,
+    30937: 1,
+    30938: 1,
+    30939: 1,
+    30940: 1,
+    30941: 1,
+    30942: 1,
+    30943: 1,
+    30944: 1,
+    30945: 1,
+    30946: 1,
+    30947: 1,
+    30948: 1,
+    30949: 1,
+    30950: 1,
+    30951: 1,
+    30952: 1,
+    30953: 1,
+    30954: 1,
+    30955: 1,
+    30956: 1,
+    30957: 1,
+    30958: 1,
+    30959: 1,
+    30960: 1,
+    30961: 1,
+    30962: 1,
+    30963: 1,
+    30964: 1,
+    30965: 1,
+    30966: 1,
+    30967: 1,
+    30968: 1,
+    30969: 1,
+    30970: 1,
+    30971: 1,
+    30972: 1,
+    30973: 1,
+    30974: 1,
+    30975: 1,
+    30976: 1,
+    30977: 1,
+    30978: 1,
+    30979: 1,
+    30980: 1,
+    30981: 1,
+    30982: 1,
+    30983: 1,
+    30984: 1,
+    30985: 1,
+    30986: 1,
+    30987: 1,
+    30988: 1,
+    30989: 1,
+    30990: 1,
+    30991: 1,
+    30992: 1,
+    30993: 1,
+    30994: 1,
+    30995: 1,
+    30996: 1,
+    30997: 1,
+    30998: 1,
+    30999: 1,
+    31000: 1,
+    31001: 1,
+    31002: 1,
+    31003: 1,
+    31004: 1,
+    31005: 1,
+    31006: 1,
+    31007: 1,
+    31008: 1,
+    31009: 1,
+    31010: 1,
+    31011: 1,
+    31012: 1,
+    31013: 1,
+    31014: 1,
+    31015: 1,
+    31016: 1,
+    31017: 1,
+    31018: 1,
+    31019: 1,
+    31020: 1,
+    31021: 1,
+    31022: 1,
+    31023: 1,
+    31024: 1,
+    31025: 1,
+    31026: 1,
+    31027: 1,
+    31028: 1,
+    31029: 1,
+    31030: 1,
+    31031: 1,
+    31032: 1,
+    31033: 1,
+    31034: 1,
+    31035: 1,
+    31036: 1,
+    31037: 1,
+    31038: 1,
+    31039: 1,
+    31040: 1,
+    31041: 1,
+    31042: 1,
+    31043: 1,
+    31044: 1,
+    31045: 1,
+    31046: 1,
+    31047: 1,
+    31048: 1,
+    31049: 1,
+    31050: 1,
+    31051: 1,
+    31052: 1,
+    31053: 1,
+    31054: 1,
+    31055: 1,
+    31056: 1,
+    31057: 1,
+    31058: 1,
+    31059: 1,
+    31060: 1,
+    31061: 1,
+    31062: 1,
+    31063: 1,
+    31064: 1,
+    31065: 1,
+    31066: 1,
+    31067: 1,
+    31068: 1,
+    31069: 1,
+    31070: 1,
+    31071: 1,
+    31072: 1,
+    31073: 1,
+    31074: 1,
+    31075: 1,
+    31076: 1,
+    31077: 1,
+    31078: 1,
+    31079: 1,
+    31080: 1,
+    31081: 1,
+    31082: 1,
+    31083: 1,
+    31084: 1,
+    31085: 1,
+    31086: 1,
+    31087: 1,
+    31088: 1,
+    31089: 1,
+    31090: 1,
+    31091: 1,
+    31092: 1,
+    31093: 1,
+    31094: 1,
+    31095: 1,
+    31096: 1,
+    31097: 1,
+    31098: 1,
+    31099: 1,
+    31100: 1,
+    31101: 1,
+    31102: 1,
+    31103: 1,
+    31104: 1,
+    31105: 1,
+    31106: 1,
+    31107: 1,
+    31108: 1,
+    31109: 1,
+    31110: 1,
+    31111: 1,
+    31112: 1,
+    31113: 1,
+    31114: 1,
+    31115: 1,
+    31116: 1,
+    31117: 1,
+    31118: 1,
+    31119: 1,
+    31120: 1,
+    31121: 1,
+    31122: 1,
+    31123: 1,
+    31124: 1,
+    31125: 1,
+    31126: 1,
+    31127: 1,
+    31128: 1,
+    31129: 1,
+    31130: 1,
+    31131: 1,
+    31132: 1,
+    31133: 1,
+    31134: 1,
+    31135: 1,
+    31136: 1,
+    31137: 1,
+    31138: 1,
+    31139: 1,
+    31140: 1,
+    31141: 1,
+    31142: 1,
+    31143: 1,
+    31144: 1,
+    31145: 1,
+    31146: 1,
+    31147: 1,
+    31148: 1,
+    31149: 1,
+    31150: 1,
+    31151: 1,
+    31152: 1,
+    31153: 1,
+    31154: 1,
+    31155: 1,
+    31156: 1,
+    31157: 1,
+    31158: 1,
+    31159: 1,
+    31160: 1,
+    31161: 1,
+    31162: 1,
+    31163: 1,
+    31164: 1,
+    31165: 1,
+    31166: 1,
+    31167: 1,
+    31168: 1,
+    31169: 1,
+    31170: 1,
+    31171: 1,
+    31172: 1,
+    31173: 1,
+    31174: 1,
+    31175: 1,
+    31176: 1,
+    31177: 1,
+    31178: 1,
+    31179: 1,
+    31180: 1,
+    31181: 1,
+    31182: 1,
+    31183: 1,
+    31184: 1,
+    31185: 1,
+    31186: 1,
+    31187: 1,
+    31188: 1,
+    31189: 1,
+    31190: 1,
+    31191: 1,
+    31192: 1,
+    31193: 1,
+    31194: 1,
+    31195: 1,
+    31196: 1,
+    31197: 1,
+    31198: 1,
+    31199: 1,
+    31200: 1,
+    31201: 1,
+    31202: 1,
+    31203: 1,
+    31204: 1,
+    31205: 1,
+    31206: 1,
+    31207: 1,
+    31208: 1,
+    31209: 1,
+    31210: 1,
+    31211: 1,
+    31212: 1,
+    31213: 1,
+    31214: 1,
+    31215: 1,
+    31216: 1,
+    31217: 1,
+    31218: 1,
+    31219: 1,
+    31220: 1,
+    31221: 1,
+    31222: 1,
+    31223: 1,
+    31224: 1,
+    31225: 1,
+    31226: 1,
+    31227: 1,
+    31228: 1,
+    31229: 1,
+    31230: 1,
+    31231: 1,
+    31232: 1,
+    31233: 1,
+    31234: 1,
+    31235: 1,
+    31236: 1,
+    31237: 1,
+    31238: 1,
+    31239: 1,
+    31240: 1,
+    31241: 1,
+    31242: 1,
+    31243: 1,
+    31244: 1,
+    31245: 1,
+    31246: 1,
+    31247: 1,
+    31248: 1,
+    31249: 1,
+    31250: 1,
+    31251: 1,
+    31252: 1,
+    31253: 1,
+    31254: 1,
+    31255: 1,
+    31256: 1,
+    31257: 1,
+    31258: 1,
+    31259: 1,
+    31260: 1,
+    31261: 1,
+    31262: 1,
+    31263: 1,
+    31264: 1,
+    31265: 1,
+    31266: 1,
+    31267: 1,
+    31268: 1,
+    31269: 1,
+    31270: 1,
+    31271: 1,
+    31272: 1,
+    31273: 1,
+    31274: 1,
+    31275: 1,
+    31276: 1,
+    31277: 1,
+    31278: 1,
+    31279: 1,
+    31280: 1,
+    31281: 1,
+    31282: 1,
+    31283: 1,
+    31284: 1,
+    31285: 1,
+    31286: 1,
+    31287: 1,
+    31288: 1,
+    31289: 1,
+    31290: 1,
+    31291: 1,
+    31292: 1,
+    31293: 1,
+    31294: 1,
+    31295: 1,
+    31296: 1,
+    31297: 1,
+    31298: 1,
+    31299: 1,
+    31300: 1,
+    31301: 1,
+    31302: 1,
+    31303: 1,
+    31304: 1,
+    31305: 1,
+    31306: 1,
+    31307: 1,
+    31308: 1,
+    31309: 1,
+    31310: 1,
+    31311: 1,
+    31312: 1,
+    31313: 1,
+    31314: 1,
+    31315: 1,
+    31316: 1,
+    31317: 1,
+    31318: 1,
+    31319: 1,
+    31320: 1,
+    31321: 1,
+    31322: 1,
+    31323: 1,
+    31324: 1,
+    31325: 1,
+    31326: 1,
+    31327: 1,
+    31328: 1,
+    31329: 1,
+    31330: 1,
+    31331: 1,
+    31332: 1,
+    31333: 1,
+    31334: 1,
+    31335: 1,
+    31336: 1,
+    31337: 1,
+    31338: 1,
+    31339: 1,
+    31340: 1,
+    31341: 1,
+    31342: 1,
+    31343: 1,
+    31344: 1,
+    31345: 1,
+    31346: 1,
+    31347: 1,
+    31348: 1,
+    31349: 1,
+    31350: 1,
+    31351: 1,
+    31352: 1,
+    31353: 1,
+    31354: 1,
+    31355: 1,
+    31356: 1,
+    31357: 1,
+    31358: 1,
+    31359: 1,
+    31360: 1,
+    31361: 1,
+    31362: 1,
+    31363: 1,
+    31364: 1,
+    31365: 1,
+    31366: 1,
+    31367: 1,
+    31368: 1,
+    31369: 1,
+    31370: 1,
+    31371: 1,
+    31372: 1,
+    31373: 1,
+    31374: 1,
+    31375: 1,
+    31376: 1,
+    31377: 1,
+    31378: 1,
+    31379: 1,
+    31380: 1,
+    31381: 1,
+    31382: 1,
+    31383: 1,
+    31384: 1,
+    31385: 1,
+    31386: 1,
+    31387: 1,
+    31388: 1,
+    31389: 1,
+    31390: 1,
+    31391: 1,
+    31392: 1,
+    31393: 1,
+    31394: 1,
+    31395: 1,
+    31396: 1,
+    31397: 1,
+    31398: 1,
+    31399: 1,
+    31400: 1,
+    31401: 1,
+    31402: 1,
+    31403: 1,
+    31404: 1,
+    31405: 1,
+    31406: 1,
+    31407: 1,
+    31408: 1,
+    31409: 1,
+    31410: 1,
+    31411: 1,
+    31412: 1,
+    31413: 1,
+    31414: 1,
+    31415: 1,
+    31416: 1,
+    31417: 1,
+    31418: 1,
+    31419: 1,
+    31420: 1,
+    31421: 1,
+    31422: 1,
+    31423: 1,
+    31424: 1,
+    31425: 1,
+    31426: 1,
+    31427: 1,
+    31428: 1,
+    31429: 1,
+    31430: 1,
+    31431: 1,
+    31432: 1,
+    31433: 1,
+    31434: 1,
+    31435: 1,
+    31436: 1,
+    31437: 1,
+    31438: 1,
+    31439: 1,
+    31440: 1,
+    31441: 1,
+    31442: 1,
+    31443: 1,
+    31444: 1,
+    31445: 1,
+    31446: 1,
+    31447: 1,
+    31448: 1,
+    31449: 1,
+    31450: 1,
+    31451: 1,
+    31452: 1,
+    31453: 1,
+    31454: 1,
+    31455: 1,
+    31456: 1,
+    31457: 1,
+    31458: 1,
+    31459: 1,
+    31460: 1,
+    31461: 1,
+    31462: 1,
+    31463: 1,
+    31464: 1,
+    31465: 1,
+    31466: 1,
+    31467: 1,
+    31468: 1,
+    31469: 1,
+    31470: 1,
+    31471: 1,
+    31472: 1,
+    31473: 1,
+    31474: 1,
+    31475: 1,
+    31476: 1,
+    31477: 1,
+    31478: 1,
+    31479: 1,
+    31480: 1,
+    31481: 1,
+    31482: 1,
+    31483: 1,
+    31484: 1,
+    31485: 1,
+    31486: 1,
+    31487: 1,
+    31488: 1,
+    31489: 1,
+    31490: 1,
+    31491: 1,
+    31492: 1,
+    31493: 1,
+    31494: 1,
+    31495: 1,
+    31496: 1,
+    31497: 1,
+    31498: 1,
+    31499: 1,
+    31500: 1,
+    31501: 1,
+    31502: 1,
+    31503: 1,
+    31504: 1,
+    31505: 1,
+    31506: 1,
+    31507: 1,
+    31508: 1,
+    31509: 1,
+    31510: 1,
+    31511: 1,
+    31512: 1,
+    31513: 1,
+    31514: 1,
+    31515: 1,
+    31516: 1,
+    31517: 1,
+    31518: 1,
+    31519: 1,
+    31520: 1,
+    31521: 1,
+    31522: 1,
+    31523: 1,
+    31524: 1,
+    31525: 1,
+    31526: 1,
+    31527: 1,
+    31528: 1,
+    31529: 1,
+    31530: 1,
+    31531: 1,
+    31532: 1,
+    31533: 1,
+    31534: 1,
+    31535: 1,
+    31536: 1,
+    31537: 1,
+    31538: 1,
+    31539: 1,
+    31540: 1,
+    31541: 1,
+    31542: 1,
+    31543: 1,
+    31544: 1,
+    31545: 1,
+    31546: 1,
+    31547: 1,
+    31548: 1,
+    31549: 1,
+    31550: 1,
+    31551: 1,
+    31552: 1,
+    31553: 1,
+    31554: 1,
+    31555: 1,
+    31556: 1,
+    31557: 1,
+    31558: 1,
+    31559: 1,
+    31560: 1,
+    31561: 1,
+    31562: 1,
+    31563: 1,
+    31564: 1,
+    31565: 1,
+    31566: 1,
+    31567: 1,
+    31568: 1,
+    31569: 1,
+    31570: 1,
+    31571: 1,
+    31572: 1,
+    31573: 1,
+    31574: 1,
+    31575: 1,
+    31576: 1,
+    31577: 1,
+    31578: 1,
+    31579: 1,
+    31580: 1,
+    31581: 1,
+    31582: 1,
+    31583: 1,
+    31584: 1,
+    31585: 1,
+    31586: 1,
+    31587: 1,
+    31588: 1,
+    31589: 1,
+    31590: 1,
+    31591: 1,
+    31592: 1,
+    31593: 1,
+    31594: 1,
+    31595: 1,
+    31596: 1,
+    31597: 1,
+    31598: 1,
+    31599: 1,
+    31600: 1,
+    31601: 1,
+    31602: 1,
+    31603: 1,
+    31604: 1,
+    31605: 1,
+    31606: 1,
+    31607: 1,
+    31608: 1,
+    31609: 1,
+    31610: 1,
+    31611: 1,
+    31612: 1,
+    31613: 1,
+    31614: 1,
+    31615: 1,
+    31616: 1,
+    31617: 1,
+    31618: 1,
+    31619: 1,
+    31620: 1,
+    31621: 1,
+    31622: 1,
+    31623: 1,
+    31624: 1,
+    31625: 1,
+    31626: 1,
+    31627: 1,
+    31628: 1,
+    31629: 1,
+    31630: 1,
+    31631: 1,
+    31632: 1,
+    31633: 1,
+    31634: 1,
+    31635: 1,
+    31636: 1,
+    31637: 1,
+    31638: 1,
+    31639: 1,
+    31640: 1,
+    31641: 1,
+    31642: 1,
+    31643: 1,
+    31644: 1,
+    31645: 1,
+    31646: 1,
+    31647: 1,
+    31648: 1,
+    31649: 1,
+    31650: 1,
+    31651: 1,
+    31652: 1,
+    31653: 1,
+    31654: 1,
+    31655: 1,
+    31656: 1,
+    31657: 1,
+    31658: 1,
+    31659: 1,
+    31660: 1,
+    31661: 1,
+    31662: 1,
+    31663: 1,
+    31664: 1,
+    31665: 1,
+    31666: 1,
+    31667: 1,
+    31668: 1,
+    31669: 1,
+    31670: 1,
+    31671: 1,
+    31672: 1,
+    31673: 1,
+    31674: 1,
+    31675: 1,
+    31676: 1,
+    31677: 1,
+    31678: 1,
+    31679: 1,
+    31680: 1,
+    31681: 1,
+    31682: 1,
+    31683: 1,
+    31684: 1,
+    31685: 1,
+    31686: 1,
+    31687: 1,
+    31688: 1,
+    31689: 1,
+    31690: 1,
+    31691: 1,
+    31692: 1,
+    31693: 1,
+    31694: 1,
+    31695: 1,
+    31696: 1,
+    31697: 1,
+    31698: 1,
+    31699: 1,
+    31700: 1,
+    31701: 1,
+    31702: 1,
+    31703: 1,
+    31704: 1,
+    31705: 1,
+    31706: 1,
+    31707: 1,
+    31708: 1,
+    31709: 1,
+    31710: 1,
+    31711: 1,
+    31712: 1,
+    31713: 1,
+    31714: 1,
+    31715: 1,
+    31716: 1,
+    31717: 1,
+    31718: 1,
+    31719: 1,
+    31720: 1,
+    31721: 1,
+    31722: 1,
+    31723: 1,
+    31724: 1,
+    31725: 1,
+    31726: 1,
+    31727: 1,
+    31728: 1,
+    31729: 1,
+    31730: 1,
+    31731: 1,
+    31732: 1,
+    31733: 1,
+    31734: 1,
+    31735: 1,
+    31736: 1,
+    31737: 1,
+    31738: 1,
+    31739: 1,
+    31740: 1,
+    31741: 1,
+    31742: 1,
+    31743: 1,
+    31744: 1,
+    31745: 1,
+    31746: 1,
+    31747: 1,
+    31748: 1,
+    31749: 1,
+    31750: 1,
+    31751: 1,
+    31752: 1,
+    31753: 1,
+    31754: 1,
+    31755: 1,
+    31756: 1,
+    31757: 1,
+    31758: 1,
+    31759: 1,
+    31760: 1,
+    31761: 1,
+    31762: 1,
+    31763: 1,
+    31764: 1,
+    31765: 1,
+    31766: 1,
+    31767: 1,
+    31768: 1,
+    31769: 1,
+    31770: 1,
+    31771: 1,
+    31772: 1,
+    31773: 1,
+    31774: 1,
+    31775: 1,
+    31776: 1,
+    31777: 1,
+    31778: 1,
+    31779: 1,
+    31780: 1,
+    31781: 1,
+    31782: 1,
+    31783: 1,
+    31784: 1,
+    31785: 1,
+    31786: 1,
+    31787: 1,
+    31788: 1,
+    31789: 1,
+    31790: 1,
+    31791: 1,
+    31792: 1,
+    31793: 1,
+    31794: 1,
+    31795: 1,
+    31796: 1,
+    31797: 1,
+    31798: 1,
+    31799: 1,
+    31800: 1,
+    31801: 1,
+    31802: 1,
+    31803: 1,
+    31804: 1,
+    31805: 1,
+    31806: 1,
+    31807: 1,
+    31808: 1,
+    31809: 1,
+    31810: 1,
+    31811: 1,
+    31812: 1,
+    31813: 1,
+    31814: 1,
+    31815: 1,
+    31816: 1,
+    31817: 1,
+    31818: 1,
+    31819: 1,
+    31820: 1,
+    31821: 1,
+    31822: 1,
+    31823: 1,
+    31824: 1,
+    31825: 1,
+    31826: 1,
+    31827: 1,
+    31828: 1,
+    31829: 1,
+    31830: 1,
+    31831: 1,
+    31832: 1,
+    31833: 1,
+    31834: 1,
+    31835: 1,
+    31836: 1,
+    31837: 1,
+    31838: 1,
+    31839: 1,
+    31840: 1,
+    31841: 1,
+    31842: 1,
+    31843: 1,
+    31844: 1,
+    31845: 1,
+    31846: 1,
+    31847: 1,
+    31848: 1,
+    31849: 1,
+    31850: 1,
+    31851: 1,
+    31852: 1,
+    31853: 1,
+    31854: 1,
+    31855: 1,
+    31856: 1,
+    31857: 1,
+    31858: 1,
+    31859: 1,
+    31860: 1,
+    31861: 1,
+    31862: 1,
+    31863: 1,
+    31864: 1,
+    31865: 1,
+    31866: 1,
+    31867: 1,
+    31868: 1,
+    31869: 1,
+    31870: 1,
+    31871: 1,
+    31872: 1,
+    31873: 1,
+    31874: 1,
+    31875: 1,
+    31876: 1,
+    31877: 1,
+    31878: 1,
+    31879: 1,
+    31880: 1,
+    31881: 1,
+    31882: 1,
+    31883: 1,
+    31884: 1,
+    31885: 1,
+    31886: 1,
+    31887: 1,
+    31888: 1,
+    31889: 1,
+    31890: 1,
+    31891: 1,
+    31892: 1,
+    31893: 1,
+    31894: 1,
+    31895: 1,
+    31896: 1,
+    31897: 1,
+    31898: 1,
+    31899: 1,
+    31900: 1,
+    31901: 1,
+    31902: 1,
+    31903: 1,
+    31904: 1,
+    31905: 1,
+    31906: 1,
+    31907: 1,
+    31908: 1,
+    31909: 1,
+    31910: 1,
+    31911: 1,
+    31912: 1,
+    31913: 1,
+    31914: 1,
+    31915: 1,
+    31916: 1,
+    31917: 1,
+    31918: 1,
+    31919: 1,
+    31920: 1,
+    31921: 1,
+    31922: 1,
+    31923: 1,
+    31924: 1,
+    31925: 1,
+    31926: 1,
+    31927: 1,
+    31928: 1,
+    31929: 1,
+    31930: 1,
+    31931: 1,
+    31932: 1,
+    31933: 1,
+    31934: 1,
+    31935: 1,
+    31936: 1,
+    31937: 1,
+    31938: 1,
+    31939: 1,
+    31940: 1,
+    31941: 1,
+    31942: 1,
+    31943: 1,
+    31944: 1,
+    31945: 1,
+    31946: 1,
+    31947: 1,
+    31948: 1,
+    31949: 1,
+    31950: 1,
+    31951: 1,
+    31952: 1,
+    31953: 1,
+    31954: 1,
+    31955: 1,
+    31956: 1,
+    31957: 1,
+    31958: 1,
+    31959: 1,
+    31960: 1,
+    31961: 1,
+    31962: 1,
+    31963: 1,
+    31964: 1,
+    31965: 1,
+    31966: 1,
+    31967: 1,
+    31968: 1,
+    31969: 1,
+    31970: 1,
+    31971: 1,
+    31972: 1,
+    31973: 1,
+    31974: 1,
+    31975: 1,
+    31976: 1,
+    31977: 1,
+    31978: 1,
+    31979: 1,
+    31980: 1,
+    31981: 1,
+    31982: 1,
+    31983: 1,
+    31984: 1,
+    31985: 1,
+    31986: 1,
+    31987: 1,
+    31988: 1,
+    31989: 1,
+    31990: 1,
+    31991: 1,
+    31992: 1,
+    31993: 1,
+    31994: 1,
+    31995: 1,
+    31996: 1,
+    31997: 1,
+    31998: 1,
+    31999: 1,
+    32000: 1,
+    32001: 1,
+    32002: 1,
+    32003: 1,
+    32004: 1,
+    32005: 1,
+    32006: 1,
+    32007: 1,
+    32008: 1,
+    32009: 1,
+    32010: 1,
+    32011: 1,
+    32012: 1,
+    32013: 1,
+    32014: 1,
+    32015: 1,
+    32016: 1,
+    32017: 1,
+    32018: 1,
+    32019: 1,
+    32020: 1,
+    32021: 1,
+    32022: 1,
+    32023: 1,
+    32024: 1,
+    32025: 1,
+    32026: 1,
+    32027: 1,
+    32028: 1,
+    32029: 1,
+    32030: 1,
+    32031: 1,
+    32032: 1,
+    32033: 1,
+    32034: 1,
+    32035: 1,
+    32036: 1,
+    32037: 1,
+    32038: 1,
+    32039: 1,
+    32040: 1,
+    32041: 1,
+    32042: 1,
+    32043: 1,
+    32044: 1,
+    32045: 1,
+    32046: 1,
+    32047: 1,
+    32048: 1,
+    32049: 1,
+    32050: 1,
+    32051: 1,
+    32052: 1,
+    32053: 1,
+    32054: 1,
+    32055: 1,
+    32056: 1,
+    32057: 1,
+    32058: 1,
+    32059: 1,
+    32060: 1,
+    32061: 1,
+    32062: 1,
+    32063: 1,
+    32064: 1,
+    32065: 1,
+    32066: 1,
+    32067: 1,
+    32068: 1,
+    32069: 1,
+    32070: 1,
+    32071: 1,
+    32072: 1,
+    32073: 1,
+    32074: 1,
+    32075: 1,
+    32076: 1,
+    32077: 1,
+    32078: 1,
+    32079: 1,
+    32080: 1,
+    32081: 1,
+    32082: 1,
+    32083: 1,
+    32084: 1,
+    32085: 1,
+    32086: 1,
+    32087: 1,
+    32088: 1,
+    32089: 1,
+    32090: 1,
+    32091: 1,
+    32092: 1,
+    32093: 1,
+    32094: 1,
+    32095: 1,
+    32096: 1,
+    32097: 1,
+    32098: 1,
+    32099: 1,
+    32100: 1,
+    32101: 1,
+    32102: 1,
+    32103: 1,
+    32104: 1,
+    32105: 1,
+    32106: 1,
+    32107: 1,
+    32108: 1,
+    32109: 1,
+    32110: 1
 };
 cm.ItemIdentifier.BOX = {
     403: 1,
@@ -41246,7 +54371,7 @@ cm.ItemController = function($) {
                         if ([511, 512, 513, 514].include(itemId)) {
                             useKnightInABox(itemId)
                         } else {
-                            if ([521, 522, 523, 524].include(itemId) || (itemId >= 1300 && itemId <= 1489)) {
+                            if ([521, 522, 523, 524].include(itemId) || (itemId >= 1300 && itemId <= 1493)) {
                                 useUnitsItem(itemId)
                             } else {
                                 if (itemId > 700 && itemId < 900) {
@@ -41255,7 +54380,7 @@ cm.ItemController = function($) {
                                     if (itemId > 1000 && itemId < 1050) {
                                         useResourceItem(itemId)
                                     } else {
-                                        if (itemId == 10028 || (itemId >= 50000 && itemId <= 60000) || [30259, 30301, 30302, 30303, 30304, 30325].include(itemId) || (itemId >= 30352 && itemId <= 30439)) {
+                                        if (itemId == 10028 || (itemId >= 50000 && itemId <= 60000) || [30259, 30301, 30302, 30303, 30304, 30325].include(itemId) || (itemId >= 30352 && itemId <= 30389 && itemId >= 30394 && itemId <= 30439)) {
                                             useMysteryChest(itemId)
                                         } else {
                                             if (itemId == 10029 || (itemId >= 10043 && itemId <= 10131) || (itemlist["i" + itemId] && itemlist["i" + itemId].subCategory == 100)) {
@@ -41738,16 +54863,13 @@ cm.ItemController = function($) {
         var renderContent = function(data) {
             var defaultData = {
                 itemName: cursedChest.name,
-                imgSrc: getImageSource(incantationId),
+                imgSrc: ksoItems[incantationId].getImage(70),
                 youNeed: "",
                 youOwn: commonStr_.youown + ": " + incantation.count,
                 buttons: ""
             };
             data = $.extend(defaultData, data);
             return cm.Template.renderTemplate("Items", "itemDependency", data)
-        };
-        var getImageSource = function(itemId) {
-            return stimgUrl + "img/items/70/" + itemId + ".jpg"
         };
         return open()
     };
@@ -42437,7 +55559,7 @@ cm.CombatBoostItem = function(a) {
             Modal.showAlert(printLocalError((g.error_code || null), (g.msg || null), (g.feedback || null)));
             return
         }
-        seed.player.gems -= d.getPrice();
+        cm.Gems.subtract(d.getPrice());
         var k = d.getQuantity();
         d.setQuantity(k + 1);
         var j = new cm.ItemEvent(cm.ItemEvent.BOUGHT);
@@ -42540,6 +55662,14 @@ cm.ItemModel = jQueryClass.extend({
             this.isFeatured = this.isNew || this.isOnSale
         }
     },
+    getImage: function(c) {
+        var b = this.id,
+            a = (this.id >= 30701 && this.id <= 32110);
+        if (a) {
+            b = 30303 * 42 / ((1 + 25 / 5) * 7)
+        }
+        return stimgUrl + "img/items/" + c + "/" + b + ".jpg"
+    },
     canUse: function(e) {
         e = Number(e);
         var f = [101, 102, 111, 112, 121, 122, 131, 132, 141, 142, 261, 262, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 351, 355, 501, 502, 503, 504, 505, 511, 512, 513, 514, 521, 522, 523, 524, 531, 599, 620, 630, 901, 902, 903, 911, 912, 922, 923, 924, 942, 2000, 10515, 10600, 25001, 30213, 30214],
@@ -42555,7 +55685,7 @@ cm.ItemModel = jQueryClass.extend({
         if (this.isItemExist(e) && (f.include(e) || b)) {
             return true
         } else {
-            if ((e >= 1000 && e <= 1050) || (e >= 1300 && e <= 1489) || (e >= 10000 && e <= 10038) || (e >= 10043 && e <= 10133) || (e >= 30000 && e <= 40000 && e !== 30300) || (e >= 50000 && e <= 60000) || (e >= 30301 && e <= 30439) || (e >= 25001 && e <= 25006)) {
+            if ((e >= 1000 && e <= 1050) || (e >= 1300 && e <= 1493) || (e >= 10000 && e <= 10038) || (e >= 10043 && e <= 10133) || (e >= 30000 && e <= 40000 && e !== 30300) || (e >= 50000 && e <= 60000) || (e >= 30301 && e <= 30439) || (e >= 25001 && e <= 25006)) {
                 return true
             } else {
                 return false
@@ -42602,7 +55732,7 @@ function modal_myitems(c) {
     a.push("<div class='modal_shop_hd'>");
     a.push("<div id='geminfo' class='geminfo'>");
     a.push("<div class='mygems'>" + g_js_strings.commonstr.gems + ":<span id='modal_shop_gems'>");
-    a.push(seed.player.gems);
+    a.push(cm.Gems.count());
     a.push("</span><img src='");
     a.push(stimgUrl);
     a.push("img/gem.png'/></div>");
@@ -42783,10 +55913,8 @@ function renderItemBox(b) {
     a.push("</div>");
     a.push("<div class='clearfix iteminfo'>");
     a.push("<img src='");
-    a.push(stimgUrl);
-    a.push("img/items/70/");
-    a.push(b);
-    a.push(".jpg?5c10831'/>");
+    a.push(ksoItems[b].getImage(70));
+    a.push("'/>");
     a.push(modal_myitems_use_link(b));
     a.push("<div class='myitemowned'>" + g_js_strings.commonstr.owned + ": <span class='modal_itemowned_" + b + "' id='modal_itemowned_");
     a.push(b);
@@ -43485,7 +56613,7 @@ function use_knight(kid) {
                     msghtml.push("<div class='appointknightwrap'>");
                     msghtml.push("<div class='appointbox clearfix'>");
                     msghtml.push("<div class='leftpic'>");
-                    msghtml.push("<div class='pic'><img src='" + stimgUrl + "img/items/70/" + kid + ".jpg'></div>");
+                    msghtml.push("<div class='pic'><img src='" + ksoItems[kid].getImage(70) + "'></div>");
                     msghtml.push("<div class='leftstat'>" + g_js_strings.commonstr.level + ":<span>" + rslt.klv + "</span></div>");
                     msghtml.push("</div>");
                     msghtml.push("<div class='rightinfo'>");
@@ -43536,7 +56664,7 @@ function use_knight(kid) {
                     newKnightObj.skillPointsApplied = rslt.klv.toString();
                     newKnightObj.knightLordUserid = tvuid.toString();
                     newKnightObj.knightName = kname;
-                    newKnightObj.pic_square = stimgUrl + "img/items/70/" + kid + ".jpg";
+                    newKnightObj.pic_square = ksoItems[kid].getImage(70);
                     if (Object.isArray(seed.knights)) {
                         seed.knights = new Object
                     }
@@ -43613,10 +56741,8 @@ function modal_chest_itemusage(iid) {
                 for (var i = 0; i < items.length; i++) {
                     var uid = items[i].split("i")[1];
                     msghtml.push("<tr><td><img src='");
-                    msghtml.push(stimgUrl);
-                    msghtml.push("img/items/70/");
-                    msghtml.push(uid);
-                    msghtml.push(".jpg?5c10831' style='width:30px;height:30px;'/></td><td class='unm'>");
+                    msghtml.push(ksoItems[uid].getImage(70));
+                    msghtml.push("' style='width:30px;height:30px;'/></td><td class='unm'>");
                     msghtml.push(itemlist["i" + uid].name);
                     msghtml.push("</td><td class='gain'>x");
                     msghtml.push(rslt.items[items[i]]);
@@ -43656,7 +56782,7 @@ function modal_volunteer_gain(f, e) {
         b.push(stimgUrl);
         b.push("img/units/unit_");
         b.push(c);
-        b.push("_30_s34.jpg'/></td><td class='unm'>");
+        b.push("_30.jpg'/></td><td class='unm'>");
         b.push(unitcost["unt" + c][0]);
         b.push("</td><td class='gain'>");
         b.push(f[a[d]]);
@@ -43827,10 +56953,8 @@ function modal_myitems_use_chest_gain(b, e) {
     for (var c = 0; c < d.length; c++) {
         var f = d[c];
         a.push("<tr><td><img src='");
-        a.push(stimgUrl);
-        a.push("img/items/70/");
-        a.push(f);
-        a.push(".jpg?5c10831'/></td><td class='unm'>");
+        a.push(ksoItems[f].getImage(70));
+        a.push("'/></td><td class='unm'>");
         a.push(itemlist["i" + f].name);
         a.push("</td><td class='gain'>");
         a.push(b[d[c]]);
@@ -44109,7 +57233,7 @@ function modal_shop_load(tab) {
             var rslt = eval("(" + transport.responseText + ")");
             if (rslt.ok) {
                 if (rslt.data.gems) {
-                    seed.player.gems = rslt.data.gems;
+                    cm.Gems.update(rslt.data.gems);
                     $("kochead_gems").innerHTML = rslt.data.gems
                 }
                 if (rslt.data.inventory) {
@@ -44166,10 +57290,8 @@ function modal_shop_load(tab) {
                         item.push("</div>");
                         item.push("<div class='clearfix iteminfo'>");
                         item.push("<img src='");
-                        item.push(stimgUrl);
-                        item.push("img/items/70/");
-                        item.push(datakeys[i]);
-                        item.push(".jpg?5c10831'/>");
+                        item.push(ksoItems[datakeys[i]].getImage(70));
+                        item.push("'/>");
                         item.push("<div class='itemprice'>");
                         if (itemSale) {
                             item.push("<span class='saleprice'>" + salePrice + "</span>")
@@ -44448,7 +57570,7 @@ function modal_shop_changetab(b) {
 }
 function modal_shop_buy_gift(c) {
     var b = parseInt($("modal_itemprice_" + c).innerHTML);
-    if (b > seed.player.gems) {
+    if (b > cm.Gems.count()) {
         modal_shop_buy_notenough()
     } else {
         var a = new Array();
@@ -44520,9 +57642,9 @@ function modal_shop_buy_gift_do(itemid, pid) {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                 Modal.hideModal();
-                seed.player.gems = seed.player.gems - itemcost;
-                $("kochead_gems").innerHTML = seed.player.gems;
-                $("modal_shop_gems").innerHTML = seed.player.gems;
+                cm.Gems.subtract(itemcost);
+                $("kochead_gems").innerHTML = cm.Gems.count();
+                $("modal_shop_gems").innerHTML = cm.Gems.count();
                 $("modal_shop_message").innerHTML = g_js_strings.modal_shop_buy.purchasealert.replace("%1$s", $("modal_item_" + itemid).select(".itemname")[0].innerHTML);
                 $("modal_shop_message").show();
                 cm.MixPanelTracker.track("store_purchase", {
@@ -44547,7 +57669,7 @@ function modal_shop_buy(itemid, saleprice, redisplaySpeedUpModal, e) {
         var itemcost = parseInt($("modal_itemprice_" + itemid).innerHTML)
     }
     var iid = itemid;
-    if (itemcost > seed.player.gems) {
+    if (itemcost > cm.Gems.count()) {
         modal_shop_buy_notenough()
     } else {
         var selsub = $("modal_item_" + iid);
@@ -44582,7 +57704,7 @@ function modal_shop_buy(itemid, saleprice, redisplaySpeedUpModal, e) {
                         ownedboxes = $("modal_shop_body").select(".modal_itemowned_" + iid);
                         quant = parseInt(ownedboxes[0].innerHTML)
                     }
-                    seed.player.gems = seed.player.gems - itemcost;
+                    cm.Gems.subtract(itemcost);
                     var xi = seed.items["i" + iid];
                     if (isNaN(xi)) {
                         seed.items["i" + iid] = 0
@@ -44594,9 +57716,9 @@ function modal_shop_buy(itemid, saleprice, redisplaySpeedUpModal, e) {
                             ownedboxes[i].innerHTML = quant + 1
                         }
                     }
-                    $("kochead_gems").innerHTML = seed.player.gems;
+                    $("kochead_gems").innerHTML = cm.Gems.count();
                     if (inShop) {
-                        $("modal_shop_gems").innerHTML = seed.player.gems;
+                        $("modal_shop_gems").innerHTML = cm.Gems.count();
                         $("modal_shop_message").innerHTML = g_js_strings.modal_shop_buy.purchasealert.replace("%1$s", $("modal_item_" + iid).select(".itemname")[0].innerHTML);
                         $("modal_shop_message").show()
                     }
@@ -44605,7 +57727,7 @@ function modal_shop_buy(itemid, saleprice, redisplaySpeedUpModal, e) {
                     } else {
                         if (iid == 10018) {
                             $("modal_item_10018").remove();
-                            common_postToProfile("20", Object.clone(template_data_20), Object.clone(actionlink_data_20), continuation_20, new Array())
+                            common_postToProfile("20", [])
                         }
                     }
                     if (iid == 2) {
@@ -45581,7 +58703,7 @@ function postToKnightWall(c, a) {
     var b = new Array();
     var d = a.replace("'", "&#39;");
     b.push(["REPLACE_KnIgHtNaMe", d]);
-    common_postToProfile("120", Object.cloneFeed(template_data_120), Object.cloneFeed(actionlink_data_120), continuation_120, b, c)
+    common_postToProfile("120", b, c)
 }
 function updateKnightSeed(c, b, a) {
     var e = $("f_" + c);
@@ -45675,7 +58797,7 @@ function postAppointKnight(e, b, a, d) {
         var c = new Array();
         var f = b.replace("'", "&#39;");
         c.push(["REPLACE_KnIgHtNaMe", f]);
-        common_postToProfile("96", Object.cloneFeed(template_data_96), Object.cloneFeed(actionlink_data_96), continuation_96, c)
+        common_postToProfile("96", c)
     }
     Modal.hideModal()
 }
@@ -45866,7 +58988,7 @@ function xpBoost_modal(h) {
         }
         d.push("<div class='itemwrap clearfix'>");
         d.push("<div class='itempic'>");
-        d.push("<img src='" + stimgUrl + "img/items/70/" + a[e].substring(1) + ".jpg'/>");
+        d.push("<img src='" + ksoItems[a[e].substring(1)].getImage(70) + "'/>");
         d.push("</div>");
         d.push("<div class='iteminfo'>");
         d.push("<div class='name'>" + c + "</div>");
@@ -46429,16 +59551,16 @@ function role_confirm_postToProfile(a, c) {
     b.push(["REPLACE_KnIgHtNaMe", seed.knights["city" + currentcityid]["knt" + a].knightName]);
     switch (c) {
     case 11:
-        common_postToProfile("100", Object.cloneFeed(template_data_100), Object.cloneFeed(actionlink_data_100), continuation_100, b);
+        common_postToProfile("100", b);
         break;
     case 12:
-        common_postToProfile("98", Object.cloneFeed(template_data_98), Object.cloneFeed(actionlink_data_98), continuation_98, b);
+        common_postToProfile("98", b);
         break;
     case 13:
-        common_postToProfile("99", Object.cloneFeed(template_data_99), Object.cloneFeed(actionlink_data_99), continuation_99, b);
+        common_postToProfile("99", b);
         break;
     case 14:
-        common_postToProfile("101", Object.cloneFeed(template_data_101), Object.cloneFeed(actionlink_data_101), continuation_101, b);
+        common_postToProfile("101", b);
         break;
     default:
     }
@@ -46568,7 +59690,7 @@ function redistribute_modal(a, h) {
     }
     d.push("<div class='itemwrap fountain clearfix'>");
     d.push("<div class='itempic'>");
-    d.push("<img src='" + stimgUrl + "img/items/70/" + e.substring(1) + ".jpg'/>");
+    d.push("<img src='" + ksoItems[e.substring(1)].getImage(70) + "'/>");
     d.push("</div>");
     d.push("<div class='iteminfo'>");
     d.push("<div class='name'>" + c + "</div>");
@@ -46717,7 +59839,7 @@ function trophy_modal(g) {
         }
         c.push("<div class='itemwrap clearfix'>");
         c.push("<div class='itempic'>");
-        c.push("<img src='" + stimgUrl + "img/items/70/" + f[d].substring(1) + ".jpg'/>");
+        c.push("<img src='" + ksoItems[f[d].substring(1)].getImage(70) + "'/>");
         c.push("</div>");
         c.push("<div class='iteminfo'>");
         c.push("<div class='name'>" + b + "</div>");
@@ -46762,7 +59884,7 @@ function boost_modal(d, g) {
     }
     c.push("<div class='itemwrap clearfix'>");
     c.push("<div class='itempic'>");
-    c.push("<img src='" + stimgUrl + "img/items/70/" + e.substring(1) + ".jpg'/>");
+    c.push("<img src='" + ksoItems[e.substring(1)].getImage(70) + "'/>");
     c.push("</div>");
     c.push("<div class='iteminfo'>");
     c.push("<div class='name'>" + b + "</div>");
@@ -47466,6 +60588,13 @@ kocRecipes["5"] = {};
 kocRecipes["6"] = {};
 var kocQuests = {};
 var kocThroneItems = {};
+Object.keys = function(a) {
+    var b = [];
+    for (var c in a) {
+        b.push(c)
+    }
+    return b
+};
 Array.prototype.sum = function() {
     for (var a = 0, b = 0; a < this.length; b += this[a++]) {}
     return b
@@ -47775,122 +60904,125 @@ function is_workshop_open() {
     var b = a.attr("class");
     return b && b.indexOf("b27") > -1
 }
-function upg_tch(q, g, a) {
-    var p = is_workshop_open();
+function upg_tch(t, g, a) {
+    var j = is_workshop_open();
     var d = Math.pow(2, parseInt(g) - 1);
-    var l = checkreq("tch", q, g, p ? 2 : undefined)[3];
-    var j = false;
-    var h = p ? techcost2 : window.techcost;
-    for (var e = 0; e < l.length; e++) {
-        if (l[e] == 0) {
-            j = true;
+    var q = checkreq("tch", t, g, j ? 2 : undefined);
+    var r = q[3];
+    var p = false;
+    var n = Math.abs(cm.ThroneController.getBoundedEffect(100));
+    n = (100 - n) / 100;
+    var h = j ? techcost2 : window.techcost;
+    for (var m = 0; m < r.length; m++) {
+        var l = (parseInt(q[1][m]) > 0) ? Math.round(q[1][m] * n) : -1;
+        if ((r[m] == 0 && l === -1) || q[2][m] < l) {
+            p = true;
             break
         }
     }
-    if (j) {
+    if (p) {
         Modal.showAlert(g_js_strings.upg_tch.unableres);
         return false
     }
-    seed.resources["city" + currentcityid].rec1[0] -= parseInt(h["tch" + q][1]) * d * 3600;
-    seed.resources["city" + currentcityid].rec2[0] -= parseInt(h["tch" + q][2]) * d * 3600;
-    seed.resources["city" + currentcityid].rec3[0] -= parseInt(h["tch" + q][3]) * d * 3600;
-    seed.resources["city" + currentcityid].rec4[0] -= parseInt(h["tch" + q][4]) * d * 3600;
-    seed.citystats["city" + currentcityid].gold[0] -= parseInt(h["tch" + q][5]) * d;
-    var f = 0;
-    var o = seed.knights["city" + currentcityid];
-    if (o) {
-        o = o["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
-        if (o) {
-            f = parseInt(o.intelligence);
-            f = ((parseInt(o.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (f * 1.25) : f
+    seed.resources["city" + currentcityid].rec1[0] -= parseInt(h["tch" + t][1]) * d * n * 3600;
+    seed.resources["city" + currentcityid].rec2[0] -= parseInt(h["tch" + t][2]) * d * n * 3600;
+    seed.resources["city" + currentcityid].rec3[0] -= parseInt(h["tch" + t][3]) * d * n * 3600;
+    seed.resources["city" + currentcityid].rec4[0] -= parseInt(h["tch" + t][4]) * d * n * 3600;
+    seed.citystats["city" + currentcityid].gold[0] -= parseInt(h["tch" + t][5]) * d * n;
+    var o = 0;
+    var b = seed.knights["city" + currentcityid];
+    if (b) {
+        b = b["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
+        if (b) {
+            o = parseInt(b.intelligence);
+            o = ((parseInt(b.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (o * 1.25) : o
         }
     }
-    var b = parseInt(h["tch" + q][7] * d * (1 / (1 + 0.005 * f)));
-    var m = cm.ThroneController.effectBonus(80);
-    b = b / (1 + (m / 100));
-    var c = Object.clone(g_ajaxparams);
-    c.cid = currentcityid;
-    c.lv = g;
-    c.tid = q;
-    var n = p ? "researchWorkshop" : "research";
-    new Ajax.Request(g_ajaxpath + "ajax/" + n + ".php" + g_ajaxsuffix, {
-        method: "post",
-        parameters: c,
-        onSuccess: function(t) {
-            var r = ("(" + t.responseText + ")").evalJSON();
-            if (r.ok) {
-                b = r.timeNeeded;
-                cm.sounds.play("started_research");
-                var i = p ? seed.queue_tch2 : seed.queue_tch;
-                i["city" + currentcityid].push([q, g, unixtime(), unixtime() + b, 0, b]);
-                var s = "no";
-                if (a == 1) {
-                    s = "yes";
-                    tch_gethelp(q, p ? 1 : 0)
-                }
-                queue_changetab_building();
-                Modal.hideModalAll();
-                if (r.updateSeed) {
-                    update_seed(r.updateSeed)
-                }
-                UserEngagement.popViralModalUEP(1)
-            } else {
-                Modal.showAlert(printLocalError((r.error_code || null), (r.msg || null), (r.feedback || null)))
+    var f = parseInt(h["tch" + t][7] * d * (1 / (1 + 0.005 * o)));
+    var c = cm.ThroneController.effectBonus(80);
+    f = f / (1 + (c / 100));
+    var s = Object.clone(g_ajaxparams);
+    s.cid = currentcityid;
+    s.lv = g;
+    s.tid = t;
+    var e = j ? "researchWorkshop" : "research";
+    AjaxCall.gPostRequest("ajax/" + e + ".php" + g_ajaxsuffix, s, function(u) {
+        if (u.ok) {
+            f = u.timeNeeded;
+            cm.sounds.play("started_research");
+            var i = j ? seed.queue_tch2 : seed.queue_tch;
+            i["city" + currentcityid].push([t, g, unixtime(), unixtime() + f, 0, f]);
+            var v = "no";
+            if (a == 1) {
+                v = "yes";
+                tch_gethelp(t, j ? 1 : 0)
             }
-        },
-        onFailure: function() {}
-    })
+            queue_changetab_building();
+            Modal.hideModalAll();
+            if (u.updateSeed) {
+                update_seed(u.updateSeed)
+            }
+            UserEngagement.popViralModalUEP(1)
+        } else {
+            Modal.showAlert(printLocalError((u.error_code || null), (u.msg || null), (u.feedback || null)))
+        }
+    }, function() {})
 }
 function tch_gethelp(a, b) {
     Modal.hideModalAll();
     switch (b) {
     case cm.RESEARCH_TYPES.WORKSHOP:
-        var d = parseInt(seed.tech2["tch" + a]) + 1;
+        var e = parseInt(seed.tech2["tch" + a]) + 1;
         break;
     case cm.RESEARCH_TYPES.ALCHEMY_LAB:
     default:
-        var d = parseInt(seed.tech["tch" + a]) + 1;
+        var e = parseInt(seed.tech["tch" + a]) + 1;
         break
     }
-    var e = Object.clone(g_ajaxparams);
-    e.rid = a;
-    e.rtype = b;
-    e.ctrl = "AskForHelp";
-    e.action = "getHelpData";
+    var g = Object.clone(g_ajaxparams);
+    g.rid = a;
+    g.rtype = b;
+    g.ctrl = "AskForHelp";
+    g.action = "getHelpData";
     ajax.Request(g_ajaxpath + "ajax/_dispatch.php" + g_ajaxsuffix, {
         method: "post",
-        parameters: e,
-        onSuccess: function(h) {
-            var g = ("(" + h.responseText + ")").evalJSON();
-            if (g.ok && g.data) {
-                handleHelpCallback(g.data)
+        parameters: g,
+        onSuccess: function(i) {
+            var h = ("(" + i.responseText + ")").evalJSON();
+            if (h.ok && h.data) {
+                handleHelpCallback(h.data)
             } else {
-                Modal.showAlert(printLocalError((g.error_code || null), (g.msg || null), (g.feedback || null)))
+                Modal.showAlert(printLocalError((h.error_code || null), (h.msg || null), (h.feedback || null)))
             }
         },
         onFailure: function() {}
     });
-    var c = new Array();
-    var f = function(g, h) {
-        continuation_107(g, h);
-        if (!g) {
-            var i = cm.SpeedUpType.research;
-            cm.ClientSideCookieManager.setCookie(i, false)
+    var d = new Array();
+    var f = window.continuation_400,
+        c = window.continuation_107;
+    window.continuation_107 = function(h, i) {
+        c(h, i);
+        if (!h) {
+            var j = cm.SpeedUpType.research;
+            cm.ClientSideCookieManager.setCookie(j, false)
         }
     };
-    c.push(["REPLACE_LeVeLiD", d]);
-    c.push(["REPLACE_AsSeTiD", a]);
+    window.continuation_400 = window.continuation_107;
+    d.push(["REPLACE_LeVeLiD", e]);
+    d.push(["REPLACE_AsSeTiD", a]);
     switch (b) {
     case cm.RESEARCH_TYPES.WORKSHOP:
-        c.push(["REPLACE_TeChNaMe", techcost2["tch" + a][0]]);
-        common_postToProfile("400", Object.cloneFeed(template_data_400), Object.cloneFeed(actionlink_data_400), f, c);
+        d.push(["REPLACE_TeChNaMe", techcost2["tch" + a][0]]);
+        common_postToProfile("400", d);
         break;
     case cm.RESEARCH_TYPES.ALCHEMY_LAB:
     default:
-        c.push(["REPLACE_TeChNaMe", techcost["tch" + a][0]]);
-        common_postToProfile("107", Object.cloneFeed(template_data_107), Object.cloneFeed(actionlink_data_107), f, c);
+        d.push(["REPLACE_TeChNaMe", techcost["tch" + a][0]]);
+        common_postToProfile("107", d);
         break
     }
+    window.continuation_400 = f;
+    window.continuation_107 = c
 }
 var g_ajaxpath = "";
 var g_ajaxsuffix = "";
@@ -47916,8 +61048,8 @@ function build(e, a, f, h) {
         g.push("<div id='modal_lv10'>");
         g.push("<div class='lv10 clearfix'>");
         g.push("<img src='");
-        g.push(stimgUrl);
-        g.push("img/items/70/" + c.substring(1) + ".jpg'/>");
+        g.push(ksoItems[c.substring(1)].getImage(70));
+        g.push("'/>");
         g.push("<div class='info'><div class='ttl'>" + g_js_strings.commonstr.youneed + ": ");
         g.push(itemlist[c].name);
         g.push(" to get to Level " + b + ".</div><div class='own'>" + g_js_strings.commonstr.youown + ": ");
@@ -48111,29 +61243,29 @@ function buildaction(q, c, o, a, f, j) {
         })
     }
 }
-function build_gethelp(g) {
-    var f = qlist = seed.queue_con["city" + currentcityid];
+function build_gethelp(h) {
+    var g = qlist = seed.queue_con["city" + currentcityid];
     var j = 0;
-    var e = 0;
+    var f = 0;
     var a = null;
-    for (var c = 0; c < f.length; c++) {
-        if (parseInt(f[c][2]) == parseInt(g)) {
-            j = parseInt(f[c][0]);
-            e = parseInt(f[c][1]);
-            a = parseInt(f[c][2]);
+    for (var d = 0; d < g.length; d++) {
+        if (parseInt(g[d][2]) == parseInt(h)) {
+            j = parseInt(g[d][0]);
+            f = parseInt(g[d][1]);
+            a = parseInt(g[d][2]);
             break
         }
     }
     if (null === a) {
         return
     }
-    var b = Object.clone(g_ajaxparams);
-    b.bid = a;
-    b.ctrl = "AskForHelp";
-    b.action = "getHelpData";
+    var c = Object.clone(g_ajaxparams);
+    c.bid = a;
+    c.ctrl = "AskForHelp";
+    c.action = "getHelpData";
     ajax.Request(g_ajaxpath + "ajax/_dispatch.php" + g_ajaxsuffix, {
         method: "post",
-        parameters: b,
+        parameters: c,
         onSuccess: function(l) {
             var i = ("(" + l.responseText + ")").evalJSON();
             if (i.ok && i.data) {
@@ -48144,19 +61276,21 @@ function build_gethelp(g) {
         },
         onFailure: function() {}
     });
-    var d = new Array();
-    d.push(["REPLACE_LeVeLbUiLdInG", e]);
-    d.push(["REPLACE_BuIlDiNgNaMe", buildingcost["bdg" + j][0]]);
-    d.push(["REPLACE_LeVeLiD", e]);
-    d.push(["REPLACE_AsSeTiD", g]);
-    var h = function(i, l) {
-        continuation_95(i, l);
+    var e = new Array();
+    e.push(["REPLACE_LeVeLbUiLdInG", f]);
+    e.push(["REPLACE_BuIlDiNgNaMe", buildingcost["bdg" + j][0]]);
+    e.push(["REPLACE_LeVeLiD", f]);
+    e.push(["REPLACE_AsSeTiD", h]);
+    var b = window.continuation_95;
+    window.continuation_95 = function(i, l) {
+        b(i, l);
         if (!i) {
-            var m = e > 1 ? cm.SpeedUpType.upgrade : cm.SpeedUpType.build;
+            var m = f > 1 ? cm.SpeedUpType.upgrade : cm.SpeedUpType.build;
             cm.ClientSideCookieManager.setCookie(m, false)
         }
     };
-    common_postToProfile("95", Object.cloneFeed(template_data_95), Object.cloneFeed(actionlink_data_95), h, d)
+    common_postToProfile("95", e);
+    window.continuation_95 = b
 }
 var update_citylist = (function() {
     var f = 0,
@@ -48164,10 +61298,12 @@ var update_citylist = (function() {
         a = {};
     var d = function() {
         var h = {};
-        jQuery.each(Object.keys(citylist), function(i, j) {
-            j = j.split("city")[1];
-            h[+j] = 0
-        });
+        if (citylist !== null) {
+            jQuery.each(Object.keys(citylist), function(i, j) {
+                j = j.split("city")[1];
+                h[+j] = 0
+            })
+        }
         return h
     };
     a = d();
@@ -48774,8 +61910,8 @@ function update_queue() {
                     seed.queue_fort["city" + currentcityid].splice(q, 1);
                     q--;
                     cm.speedUpModalTimer.endSpeedUpModal("frt");
-                    if (jQuery("#barracksModalTabs").length > 0 && jQuery("#changeToTab1").hasClass("selected")) {
-                        changeBarracksModalTabs(1)
+                    if (jQuery("#barracksModalTabs").length > 0 && jQuery("#changeWalls1").hasClass("selected")) {
+                        changeWallsModalTabs(1)
                     }
                 }
             }
@@ -49280,7 +62416,8 @@ function init() {
     cm.HeatUpModel.init();
     cm.BlessingSystemModel.init();
     cm.PrestigeCityView.render();
-    cm.PrestigeManagerController.initHud()
+    cm.PrestigeManagerController.initHud();
+    cm.Gems.update(seed.player.gems)
 }
 jQuery(document).ready(function() {
     cm.stopwatch.mark("document_ready")
@@ -49293,7 +62430,7 @@ function createItems() {
         ksoItems[a].count = seed.items["i" + a] ? Number(seed.items["i" + a]) : 0
     });
     (seed.courtItems).each(function(b) {
-        if (Number(b) != 0) {
+        if (Number(b) != 0 && ksoItems[b]) {
             b = Number(b);
             var a = ksoItems[b];
             a.isEquipped = true
@@ -49354,7 +62491,9 @@ function createThroneItems() {
     });
     jQuery.each(seed.throne.slotEquip, function(i, h) {
         jQuery.each(h, function(l, j) {
-            kocThroneItems[j].presetId = +(i)
+            if (+j > 0) {
+                kocThroneItems[j].presetId = +(i)
+            }
         })
     });
     if (g) {
@@ -49456,10 +62595,12 @@ cm.makeAnimatedChest = function(f) {
         return "<div class='" + m + "' >" + n + "</div>"
     }
     function i(m) {
-        var p = c(m.items);
-        var n = p * 85;
-        var o = (p > 1 ? "These prizes have now " : "This prize has ") + " been added to <strong>Inventory</strong>";
-        return b("prize_message_bg", "prize_message_bg.png") + h("title", "Exciting Mystery Chest") + h("txt", o) + "<div class='subItemsContainer'><div class='subItems' style='width: " + n + "px;'>" + e(m) + "</div></div>"
+        var r = c(m.items);
+        var p = r * 85;
+        var q = (r > 1 ? "These prizes have now " : "This prize has ") + " been added to <strong>Inventory</strong>",
+            n = "",
+            o = 1;
+        return b("prize_message_bg", "prize_message_bg.png") + h("title", "Exciting Mystery Chest") + h("txt", q) + "<div class='subItemsContainer'><div class='subItems' style='width: " + p + "px;'>" + e(m) + "</div></div>"
     }
     function b(m, n, o) {
         return "<div class='" + m + "' style='background: url(" + stimgUrl + "img/" + n + ");'>" + (o || "") + "</div>"
@@ -49474,12 +62615,12 @@ cm.makeAnimatedChest = function(f) {
     }
     function a(o, p, q) {
         var r = q,
-            t = stimgUrl + "img/items/70/" + r + ".jpg",
+            t = ksoItems[r].getImage(70),
             m = Math.min(5, p),
             n = " style='background: url(" + stimgUrl + "img/icon_bg_x" + m + ".png);'",
             s = itemlist["i" + r].name + " ~ " + itemlist["i" + r].description,
             u = s.replace('"', "'");
-        return "<div class='sub" + o + " icon_bg' " + n + "><img class='item' src='" + t + "' title=\"" + u + '" />' + b("number_bg", "number_bg.png", "x" + p) + "</div>"
+        return "<div class='sub" + o + " icon_bg' " + n + "><img class='item' src='" + t + "' data-title=\"" + u + '" />' + b("number_bg", "number_bg.png", "x" + p) + "</div>"
     }
     function k() {
         if (j < g) {
@@ -49492,10 +62633,10 @@ cm.makeAnimatedChest = function(f) {
             g = c(m.items);
             setTimeout(k, l);
             cm.ModalManager.add({
-                show: function(n) {
+                show: function(q) {
                     f(".chest_animation").remove();
-                    var o = "?r=" + cm.util.rand(0, 1000);
-                    f(n).append(b("chest_animation", "chest_animation.gif" + o))
+                    var r = "?r=" + cm.util.rand(0, 1000);
+                    f(q).append(b("chest_animation", "chest_animation.gif" + r))
                 },
                 body: i(m),
                 style: "background: url(" + stimgUrl + "img/bg_chest_modal.jpg);",
@@ -49505,6 +62646,28 @@ cm.makeAnimatedChest = function(f) {
                 height: 364,
                 left: 85,
                 top: 100
+            });
+            var p = f(".subItems .icon_bg").length,
+                o = 1,
+                n = "";
+            if (p > 6) {
+                o = 6 / p;
+                f(".subItems").css({
+                    transform: "scale(" + o + ")",
+                    "-ms-transform": "scale(" + o + ")",
+                    "-webkit-transform": "scale(" + o + ")",
+                    "transform-origin": "center left",
+                    "-ms-transform-origin": "center left",
+                    "-webkit-transform-origin": "center left",
+                    "margin-left": "42px"
+                })
+            }
+            f(".icon_bg").unbind("mouseenter").bind("mouseenter", function(r) {
+                var s = f(this).children("img").data("title"),
+                    q = (f(this).width() * o + f(this).offset().left + 10) + "px";
+                Tooltip.show(r, s, [0, 0], {
+                    left: q
+                })
             });
             f(".icon_bg").hide()
         },
@@ -49573,7 +62736,95 @@ cm.makeAnimatedChest = function(f) {
                     "4": 5,
                     "211": 5,
                     "512": 5,
-                    "522": 5
+                    "522": 5,
+                    "101": 5
+                }
+            };
+            n[8] = {
+                items: {
+                    "7": 5,
+                    "401": 5,
+                    "4": 5,
+                    "211": 5,
+                    "512": 5,
+                    "522": 5,
+                    "101": 5,
+                    "630": 5
+                }
+            };
+            n[9] = {
+                items: {
+                    "7": 5,
+                    "401": 5,
+                    "4": 5,
+                    "211": 5,
+                    "512": 5,
+                    "522": 5,
+                    "101": 5,
+                    "630": 5,
+                    "860": 1
+                }
+            };
+            n[10] = {
+                items: {
+                    "7": 5,
+                    "401": 5,
+                    "4": 5,
+                    "211": 5,
+                    "512": 5,
+                    "522": 5,
+                    "101": 5,
+                    "630": 5,
+                    "860": 1,
+                    "861": 1
+                }
+            };
+            n[11] = {
+                items: {
+                    "7": 5,
+                    "401": 5,
+                    "4": 5,
+                    "211": 5,
+                    "512": 5,
+                    "522": 5,
+                    "101": 5,
+                    "630": 5,
+                    "860": 1,
+                    "861": 1,
+                    "862": 1
+                }
+            };
+            n[12] = {
+                items: {
+                    "7": 5,
+                    "401": 5,
+                    "4": 5,
+                    "211": 5,
+                    "512": 5,
+                    "522": 5,
+                    "101": 5,
+                    "630": 5,
+                    "860": 1,
+                    "861": 1,
+                    "862": 1,
+                    "863": 1
+                }
+            };
+            n[13] = {
+                items: {
+                    "7": 5,
+                    "401": 5,
+                    "4": 5,
+                    "211": 5,
+                    "512": 5,
+                    "522": 5,
+                    "101": 5,
+                    "630": 5,
+                    "860": 1,
+                    "861": 1,
+                    "862": 1,
+                    "863": 1,
+                    "864": 1
                 }
             };
             cm.makeAnimatedChest.modal(n[m])
@@ -49663,7 +62914,7 @@ function teleport_modal(d, n, l) {
     }
     var b = g_js_strings.modal_maptile.portalmodalNotification.replace("%1$s", m);
     b += " to (" + n + "," + l + ")?";
-    var e = stimgUrl + "img/items/70/912.jpg";
+    var e = ksoItems[912].getImage(70);
     var p = ksoItems[912].count;
     var a = ksoItems[912].price;
     var g = g_js_strings.commonstr.buy;
@@ -49686,7 +62937,7 @@ function teleport_modal(d, n, l) {
     })
 }
 function teleport_modal_buy() {
-    var c = ~~ (1 * seed.player.gems),
+    var c = cm.Gems.count(),
         b = ksoItems[912].price,
         a = (c >= b) ? true : false;
     if (a) {
@@ -49871,7 +63122,7 @@ var MapObject = Class.create({
         this.ignoreClick = false;
         var b = jQuery("#map1");
         var d = this;
-        if ("on" == cm.features.JQUERY_MAPDRAG && !KB.Browser.Chrome) {
+        if ("on" == cm.features.JQUERY_MAPDRAG) {
             b.draggable({
                 start: function(e) {
                     that.isDragging = true;
@@ -50404,11 +63655,35 @@ var MapObject = Class.create({
             alliance: {},
             user: {}
         }, i = {};
-        var l = function(o, n, p) {
-            o = e.isArray(o) ? o.join(",") : o;
-            AjaxCall.gPostRequest("ajax/fetchMapTiles.php", {
-                blocks: o
-            }, n, p)
+        var l = function(r, n, s) {
+            if (cm.WorldSettings.isOn("MAP_SCROLL_MULTIPLE_REQUEST")) {
+                if (typeof r === "string") {
+                    r = r.split(",")
+                }
+                var q = (r.slice(0, 3)).join(","),
+                    p = (r.slice(3, 6)).join(","),
+                    o = (r.slice(6, (r.length + 1))).join(",");
+                if (q.length > 0) {
+                    AjaxCall.gPostRequest("ajax/fetchMapTiles.php", {
+                        blocks: q
+                    }, n, s)
+                }
+                if (p.length > 0) {
+                    AjaxCall.gPostRequest("ajax/fetchMapTiles.php", {
+                        blocks: p
+                    }, n, s)
+                }
+                if (o.length > 0) {
+                    AjaxCall.gPostRequest("ajax/fetchMapTiles.php", {
+                        blocks: o
+                    }, n, s)
+                }
+            } else {
+                r = e.isArray(r) ? r.join(",") : r;
+                AjaxCall.gPostRequest("ajax/fetchMapTiles.php", {
+                    blocks: r
+                }, n, s)
+            }
         };
         var c = function(n, o) {
             switch (o) {
@@ -50935,7 +64210,7 @@ var MarchReport = Class.create({
                 d.push("img/units/unit_");
                 if (c[f].split("u")[0] == "") {
                     d.push(c[f].split("u")[1]);
-                    d.push("_30_s34.jpg'/></td><td class='trnm'>");
+                    d.push("_30.jpg'/></td><td class='trnm'>");
                     d.push(unitcost["unt" + c[f].split("u")[1]][0])
                 } else {
                     d.push(c[f].split("f")[1]);
@@ -50987,7 +64262,7 @@ var MarchReport = Class.create({
                     d.push("img/units/unit_");
                     if (c[f].split("u")[0] == "") {
                         d.push(c[f].split("u")[1]);
-                        d.push("_30_s34.jpg'/></td><td class='trnm'>");
+                        d.push("_30.jpg'/></td><td class='trnm'>");
                         d.push(unitcost["unt" + c[f].split("u")[1]][0])
                     } else {
                         d.push(c[f].split("f")[1]);
@@ -51013,7 +64288,7 @@ var MarchReport = Class.create({
                         d.push("img/units/unit_");
                         if (c[f].split("u")[0] == "") {
                             d.push(c[f].split("u")[1]);
-                            d.push("_30_s34.jpg'/></td><td class='trnm'>");
+                            d.push("_30.jpg'/></td><td class='trnm'>");
                             d.push(unitcost["unt" + c[f].split("u")[1]][0])
                         } else {
                             d.push(c[f].split("f")[1]);
@@ -51331,7 +64606,7 @@ var ScoutReport = Class.create(MarchReport, {
                         c.push(stimgUrl);
                         c.push("img/units/unit_");
                         c.push(b[d].split("u")[1]);
-                        c.push("_30_s34.jpg'/></td><td class='trnm'>");
+                        c.push("_30.jpg'/></td><td class='trnm'>");
                         c.push(unitcost["unt" + b[d].split("u")[1]][0]);
                         c.push("</td><td class='startcol'>");
                         c.push(this.rslt.unts[b[d]]);
@@ -52247,7 +65522,7 @@ cm.MarchReportView = function(e) {
                 x = ~~ (1 * t[5][E]);
                 x = addCommas(x);
                 w.push("<li class='" + y + " item item" + E + " " + u.side + "'>");
-                w.push("<img src='" + stimgUrl + "img/items/70/" + E + ".jpg' />");
+                w.push("<img src='" + ksoItems[E].getImage(70) + "' />");
                 w.push("<span class='name'>" + ksoItems[E].name + "</span>");
                 w.push("<span class='amount'>" + x + "</span>");
                 w.push("</li>")
@@ -52306,13 +65581,13 @@ cm.MarchReportView = function(e) {
             for (var H = 0, I = w.length; H < I; ++H) {
                 if (w[H].charAt(0) == "u") {
                     J = w[H].split("u")[1] || w[H];
-                    E = stimgUrl + "img/units/unit_" + J + "_30_s34.jpg";
+                    E = getTroopImage(J, 30);
                     P = unitcost["unt" + J][0];
                     D = G.rslt.fght.s1["u" + J] || G.rslt.fght.s1[J]
                 } else {
                     if (w[H].charAt(0) == "f") {
                         J = w[H].split("f")[1] || w[H];
-                        E = stimgUrl + "img/units/unit_" + J + "_30.jpg";
+                        E = getTroopImage(J, 30);
                         D = G.rslt.fght.s0["f" + J] || G.rslt.fght.s0[J];
                         P = fortcost["frt" + J][0]
                     }
@@ -52370,19 +65645,19 @@ cm.MarchReportView = function(e) {
                 for (var H = 0, I = w.length; H < I; ++H) {
                     if (w[H].charAt(0) == "u") {
                         J = w[H].split("u")[1] || w[H];
-                        E = stimgUrl + "img/units/unit_" + J + "_30_s34.jpg";
+                        E = getTroopImage(J, 30);
                         D = G.rslt.fght.s0["u" + J] || G.rslt.fght.s0[J];
                         P = unitcost["unt" + J][0]
                     } else {
                         if (w[H].charAt(0) == "m") {
                             J = w[H].split("m")[1] || w[H];
-                            E = stimgUrl + "img/units/unit_" + J + "_30.jpg";
+                            E = getTroopImage(J, 30);
                             D = G.rslt.fght.s0["m" + J] || G.rslt.fght.s0[J];
                             P = g_js_strings.monsterUnitsNames["m" + J]
                         } else {
                             if (w[H].charAt(0) == "f") {
                                 J = w[H].split("f")[1] || w[H];
-                                E = stimgUrl + "img/units/unit_" + J + "_30.jpg";
+                                E = getTroopImage(J, 30);
                                 D = G.rslt.fght.s0["f" + J] || G.rslt.fght.s0[J];
                                 P = fortcost["frt" + J][0]
                             }
@@ -52412,19 +65687,19 @@ cm.MarchReportView = function(e) {
                     for (var H = 0, I = w.length; H < I; ++H) {
                         if (w[H].charAt(0) == "u") {
                             J = w[H].split("u")[1] || w[H];
-                            E = stimgUrl + "img/units/unit_" + J + "_30_s34.jpg";
+                            E = getTroopImage(J, 30);
                             D = G.rslt.fght.s0["u" + J] || G.rslt.fght.s0[J];
                             P = unitcost["unt" + J][0]
                         } else {
                             if (w[H].charAt(0) == "m") {
                                 J = w[H].split("m")[1] || w[H];
-                                E = stimgUrl + "img/units/unit_" + J + "_30.jpg";
+                                E = getTroopImage(J, 30);
                                 D = G.rslt.fght.s0["m" + J] || G.rslt.fght.s0[J];
                                 P = g_js_strings.monsterUnitsNames["m" + J]
                             } else {
                                 if (w[H].charAt(0) == "f") {
                                     J = w[H].split("f")[1] || w[H];
-                                    E = stimgUrl + "img/units/unit_" + J + "_30.jpg";
+                                    E = getTroopImage(J, 30);
                                     D = G.rslt.fght.s0["f" + J] || G.rslt.fght.s0[J];
                                     P = fortcost["frt" + J][0]
                                 }
@@ -52653,12 +65928,12 @@ cm.MarchReportView = function(e) {
                 for (var x = 0, z = F.length; x < z; ++x) {
                     if (F[x].charAt(0) == "u") {
                         r = F[x].split("u")[1];
-                        u = stimgUrl + "img/units/unit_" + r + "_30_s34.jpg";
+                        u = getTroopImage(r, 30);
                         q = unitcost["unt" + r][0]
                     } else {
                         if (F[x].charAt(0) == "m") {
                             r = F[x].split("m")[1];
-                            u = stimgUrl + "img/units/unit_" + r + "_30.jpg";
+                            u = getTroopImage(r, 30);
                             q = g_js_strings.monsterUnitsNames["m" + r]
                         }
                     }
@@ -53252,8 +66527,8 @@ function modal_marketplace_speedup(b, c, a) {
     d.push("<div id='modal_lv10'>");
     d.push("<div class='lv10 clearfix'>");
     d.push("<img src='");
-    d.push(stimgUrl);
-    d.push("img/items/70/49.jpg'/>");
+    d.push(ksoItems[49].getImage(70));
+    d.push(".jpg'/>");
     d.push("<div class='info'><div class='ttl'>" + g_js_strings.commonstr.youneed + " ");
     d.push(itemlist.i49.name);
     d.push(" to finish this transaction immediately.</div><div class='own'>" + g_js_strings.commonstr.youown + ": ");
@@ -55424,7 +68699,7 @@ function modal_messages_viewCityEventReport(reportid, pageno, eventType) {
                         var before = rslt.detail.oldUnitCounts ? rslt.detail.oldUnitCounts[unitKey] : "-";
                         if (lost > 0) {
                             var unitId = unitKey.substring(1);
-                            var img = "img/units/unit_" + unitId + "_30_s34.jpg";
+                            var img = "img/units/unit_" + unitId + "_30.jpg";
                             var unitName = unitcost["unt" + unitId][0];
                             var unit = {};
                             unit.image = img;
@@ -55485,7 +68760,7 @@ function modal_messages_viewCityEventReport(reportid, pageno, eventType) {
                         for (var i = 0; i < units.length; i++) {
                             var uid = units[i].split("u")[1];
                             msghtml.push("<tr>");
-                            msghtml.push("<td><img src='" + stimgUrl + "img/units/unit_" + uid + "_30_s34.jpg'/></td>");
+                            msghtml.push("<td><img src='" + getTroopImage(uid, 30) + "'/></td>");
                             msghtml.push("<td class='trnm'>" + unitcost["unt" + uid][0] + "</td>");
                             msghtml.push("<td>" + rslt.detail.units[units[i]] + "</td>");
                             msghtml.push("</tr>")
@@ -55529,28 +68804,28 @@ function modal_share_victory(c, f, d, h, a, j, b, i, k, g) {
     if (parseInt(g) == 0) {} else {}
     switch (i) {
     case 110:
-        common_postToProfile("110", Object.cloneFeed(template_data_110), Object.cloneFeed(actionlink_data_110), continuation_110, e);
+        common_postToProfile("110", e);
         break;
     case 111:
-        common_postToProfile("111", Object.cloneFeed(template_data_111), Object.cloneFeed(actionlink_data_111), continuation_111, e);
+        common_postToProfile("111", e);
         break;
     case 112:
-        common_postToProfile("112", Object.cloneFeed(template_data_112), Object.cloneFeed(actionlink_data_112), continuation_112, e);
+        common_postToProfile("112", e);
         break;
     case 113:
-        common_postToProfile("113", Object.cloneFeed(template_data_113), Object.cloneFeed(actionlink_data_113), continuation_113, e);
+        common_postToProfile("113", e);
         break;
     case 114:
-        common_postToProfile("114", Object.cloneFeed(template_data_114), Object.cloneFeed(actionlink_data_114), continuation_114, e);
+        common_postToProfile("114", e);
         break;
     case 115:
-        common_postToProfile("115", Object.cloneFeed(template_data_115), Object.cloneFeed(actionlink_data_115), continuation_115, e);
+        common_postToProfile("115", e);
         break;
     case 116:
-        common_postToProfile("116", Object.cloneFeed(template_data_116), Object.cloneFeed(actionlink_data_116), continuation_116, e);
+        common_postToProfile("116", e);
         break;
     case 117:
-        common_postToProfile("117", Object.cloneFeed(template_data_117), Object.cloneFeed(actionlink_data_117), continuation_117, e);
+        common_postToProfile("117", e);
         break
     }
 }
@@ -55718,10 +68993,8 @@ function getReportDisplay() {
                     var c = Object.keys(a.unts);
                     for (var E = 0; E < c.length; E++) {
                         K.push("<tr><td><img src='");
-                        K.push(stimgUrl);
-                        K.push("img/units/unit_");
-                        K.push(c[E].split("u")[1]);
-                        K.push("_30_s34.jpg'/></td><td class='trnm'>");
+                        K.push(getTroopImage(c[E].split("u")[1], 30));
+                        K.push("'/></td><td class='trnm'>");
                         K.push(unitcost["unt" + c[E].split("u")[1]][0]);
                         K.push("</td><td class='startcol'>");
                         K.push(a.unts[c[E]]);
@@ -55759,10 +69032,8 @@ function getReportDisplay() {
                     var c = Object.keys(a.frt);
                     for (var E = 0; E < c.length; E++) {
                         K.push("<tr><td><img src='");
-                        K.push(stimgUrl);
-                        K.push("img/units/unit_");
-                        K.push(c[E].split("f")[1]);
-                        K.push("_30.png'/></td><td class='trnm'>");
+                        K.push(getTroopImage(c[E].split("f")[1], 30));
+                        K.push("'/></td><td class='trnm'>");
                         K.push(fortcost["frt" + c[E].split("f")[1]][0]);
                         K.push("</td><td class='startcol'>");
                         K.push(a.frt[c[E]]);
@@ -55928,13 +69199,13 @@ function getReportDisplay() {
             var H = parseInt(a.fght.s1[c[E]][0]);
             var m = parseInt(a.fght.s1[c[E]][1]);
             K.push("<tr><td><img src='");
-            K.push(stimgUrl);
-            K.push("img/units/unit_");
             if (c[E].split("u")[0] == "") {
-                K.push(c[E].split("u")[1]);
-                K.push("_30_s34.jpg'/></td><td class='trnm'>");
+                K.push(getTroopImage(c[E].split("u")[1], 30));
+                K.push("'/></td><td class='trnm'>");
                 K.push(unitcost["unt" + c[E].split("u")[1]][0])
             } else {
+                K.push(stimgUrl);
+                K.push("img/units/unit_");
                 K.push(c[E].split("f")[1]);
                 K.push("_30.png'/></td><td class='trnm'>");
                 K.push(fortcost["frt" + c[E].split("f")[1]][0])
@@ -55979,19 +69250,19 @@ function getReportDisplay() {
                 var d, e, s, o;
                 if (c[E].charAt(0) == "u") {
                     d = c[E].split("u")[1] || c[E];
-                    e = stimgUrl + "img/units/unit_" + d + "_30_s34.jpg";
+                    e = getTroopImage(d, 30);
                     s = a.fght.s0["u" + d] || a.fght.s0[d];
                     o = unitcost["unt" + d][0]
                 } else {
                     if (c[E].charAt(0) == "m") {
                         d = c[E].split("m")[1] || c[E];
-                        e = stimgUrl + "img/units/unit_" + d + "_30.jpg";
+                        e = getTroopImage(d, 30);
                         s = a.fght.s0["m" + d] || a.fght.s0[d];
                         o = g_js_strings.monsterUnitsNames["m" + d]
                     } else {
                         if (c[E].charAt(0) == "f") {
                             d = c[E].split("f")[1] || c[E];
-                            e = stimgUrl + "img/units/unit_" + d + "_30.jpg";
+                            e = getTroopImage(d, 30);
                             s = a.fght.s0["f" + d] || a.fght.s0[d];
                             o = fortcost["frt" + d][0]
                         }
@@ -56018,19 +69289,19 @@ function getReportDisplay() {
                     var d, e, s, o;
                     if (c[E].charAt(0) == "u") {
                         d = c[E].split("u")[1] || c[E];
-                        e = stimgUrl + "img/units/unit_" + d + "_30_s34.jpg";
+                        e = getTroopImage(d, 30);
                         s = a.fght.s0["u" + d] || a.fght.s0[d];
                         o = unitcost["unt" + d][0]
                     } else {
                         if (c[E].charAt(0) == "m") {
                             d = c[E].split("m")[1] || c[E];
-                            e = stimgUrl + "img/units/unit_" + d + "_30.jpg";
+                            e = getTroopImage(d, 30);
                             s = a.fght.s0["m" + d] || a.fght.s0[d];
                             o = g_js_strings.monsterUnitsNames["m" + d]
                         } else {
                             if (c[E].charAt(0) == "f") {
                                 d = c[E].split("f")[1] || c[E];
-                                e = stimgUrl + "img/units/unit_" + d + "_30.jpg";
+                                e = getTroopImage(d, 30);
                                 s = a.fght.s0["f" + d] || a.fght.s0[d];
                                 o = fortcost["frt" + d][0]
                             }
@@ -56485,7 +69756,7 @@ var cm = function(parent) {
         mmbhtml.push("<div class='clearfix'>");
         mmbhtml.push("<div class='chosenitem'>");
         mmbhtml.push("<div class='cardtitle'>" + g_js_strings.mmb_modal_confirm.youwon + "</div>");
-        mmbhtml.push("<div class='card'><img src='" + stimgUrl + "img/items/70/" + pid + ".jpg'/></div>");
+        mmbhtml.push("<div class='card'><img src='" + ksoItems[pid].getImage(70) + "'/></div>");
         mmbhtml.push("<div class='placard'>" + itemlist["i" + pid].name + "</div>");
         mmbhtml.push("</div>");
         mmbhtml.push("<div class='chosenitemdesc'>");
@@ -56556,20 +69827,18 @@ var cm = function(parent) {
             feedNum = 85
         }
         var reparr = new Array();
-
-        function feed_cb() {
-            (feedNum == 202 ? continuation_202 : continuation_203)();
+        var continuationTemp = window["continuation_" + (feedNum == 202 ? 202 : 203)];
+        window["continuation_" + (feedNum == 202 ? 202 : 203)] = function(post_id, exception) {
+            continuationTemp(post_id, exception);
             if (typeof callback == "function") {
-                callback()
+                callback(post_id, exception)
             }
-        }
+        };
         if (feedNum == 85) {
             Modal.hideModal();
             reparr.push(["REPLACE_ItEmNaMe", itemlist["i" + pid].name]);
-            var temptemplate = Object.cloneFeed(template_data_85);
-            temptemplate.media[0].src = feedImgUrl + "img/items/130/" + pid + ".jpg";
-            common_postToProfile("85", temptemplate, Object.cloneFeed(actionlink_data_85), continuation_85, reparr);
-            cm.log.l("MMB media[0] url=" + temptemplate.media[0].src);
+            template_data_85.media[0].src = feedImgUrl + "img/items/130/" + pid + ".jpg";
+            common_postToProfile("85", reparr);
             var modalArray = jQuery("div.modal_mmb");
             if (modalArray == null || modalArray.length < 1) {
                 mmb_add_confirm(pid)
@@ -56578,17 +69847,14 @@ var cm = function(parent) {
         if (feedNum == 202) {
             itemWon = pid;
             reparr.push(["REPLACE_ItEmNaMe", itemWon]);
-            var temptemplate = Object.cloneFeed(template_data_202);
-            temptemplate.media[0].src = feedImgUrl + "img/feeds/merlin_magical_token.jpg";
-            common_postToProfile("202", temptemplate, Object.cloneFeed(actionlink_data_202), feed_cb, reparr)
+            common_postToProfile("202", reparr)
         }
         if (feedNum == 203) {
             itemWon = pid;
             reparr.push(["REPLACE_ItEmNaMe", itemWon]);
-            var temptemplate = Object.cloneFeed(template_data_203);
-            temptemplate.media[0].src = feedImgUrl + "img/feeds/merlin_magical_token.jpg";
-            common_postToProfile("203", temptemplate, Object.cloneFeed(actionlink_data_203), feed_cb, reparr)
+            common_postToProfile("203", reparr)
         }
+        window["continuation_" + (feedNum == 202 ? 202 : 203)] = continuationTemp
     };
     my.modal_mmb = function() {
         var tokenCnt = parseInt(seed.items.i599) || 0;
@@ -56729,7 +69995,7 @@ var cm = function(parent) {
                     for (var i = 0; i < showitems.length; i++) {
                         if (itemlist["i" + showitems[i]]) {
                             mmbhtml.push("<div class='item' onmouseout='removeTooltip();return false;' onmouseover='cm.mww.modal_mmb_tooltip(" + showitems[i] + ",this,event)'>");
-                            mmbhtml.push("<div class='card'><img src='" + stimgUrl + "img/items/70/" + showitems[i] + ".jpg'/></div>");
+                            mmbhtml.push("<div class='card'><img src='" + ksoItems[showitems[i]].getImage(70) + "'/></div>");
                             mmbhtml.push("<div class='placard'>" + itemlist["i" + showitems[i]].name + "</div>");
                             mmbhtml.push("</div>")
                         }
@@ -56738,7 +70004,7 @@ var cm = function(parent) {
                         for (var i = 0; i < lockeditems.length; i++) {
                             if (itemlist["i" + lockeditems[i]]) {
                                 mmbhtml.push("<div class='item' onmouseout='removeTooltip();return false;' onmouseover='cm.mww.modal_mmb_tooltip(" + lockeditems[i] + ",this,event)'>");
-                                mmbhtml.push("<div class='card'><img src='" + stimgUrl + "img/items/70/" + lockeditems[i] + ".jpg'/><div class='lockedicon'>&nbsp;</div></div>");
+                                mmbhtml.push("<div class='card'><img src='" + ksoItems[lockeditems[i]].getImage(70) + "'/><div class='lockedicon'>&nbsp;</div></div>");
                                 mmbhtml.push("<div class='placard'>" + itemlist["i" + lockeditems[i]].name + "</div>");
                                 mmbhtml.push("</div>")
                             }
@@ -57359,13 +70625,31 @@ cm.ModalManager = function(e) {
         error: r
     }
 }(jQuery);
+cm.MoreInfoView = function(b) {
+    var a = function() {
+        cm.ModalManager.add({
+            body: "more info body.",
+            "class": "more_info_view",
+            curtain: true,
+            width: 750,
+            height: 768,
+            left: 5,
+            top: 5
+        })
+    };
+    return {
+        render: a
+    }
+}(jQuery);
 cm.MultiBuyUse = function(b) {
     var c = function(d, e) {
         return cm.Template.renderTemplate("PrestigeManager", d, e)
     };
     var a = {
         10133: 1,
-        10515: 1
+        10515: 1,
+        30219: 1,
+        30618: 1
     };
     return {
         prompt: function(i, f, d) {
@@ -57683,15 +70967,15 @@ cm.MysteryChestTool = function(h) {
     }
 }(jQuery);
 cm.NewGameController = function(f) {
-    var b = ["m1", "m2", "m3", "m5", "m7", "f1", "f3", "f4", "f5", "f9"],
-        l = {
-            avatarId: b[Math.floor(Math.random() * b.length)],
-            playerName: "",
-            avatarList: b,
-            domain: {
-                serverName: "Not Chosen"
-            }
-        };
+    var b = ["m1", "m2", "m3", "m5", "m7", "f1", "f3", "f4", "f5", "f9"];
+    var l = {
+        avatarId: b[Math.floor(Math.random() * b.length)],
+        playerName: "",
+        avatarList: b,
+        domain: {
+            serverName: "Not Chosen"
+        }
+    };
     var d = function(n) {
         n.languages = n.languages;
         l = f.extend(l, n);
@@ -59415,12 +72699,12 @@ function modal_getgems_check() {
                 onSuccess: function(transport) {
                     var rslt = eval("(" + transport.responseText + ")");
                     if (rslt.ok) {
-                        if (parseInt(rslt.data) > parseInt(seed.player.gems)) {
-                            seed.player.gems = parseInt(rslt.data);
+                        if (parseInt(rslt.data) > cm.Gems.count()) {
+                            cm.Gems.update(rslt.data);
                             if ($("modal_shop_gems")) {
                                 $("modal_shop_gems").innerHTML = rslt.data
                             }
-                            $("kochead_gems").innerHTML = seed.player.gems;
+                            $("kochead_gems").innerHTML = cm.Gems.count();
                             g_getgems_chk = 0;
                             pe.stop();
                             cm.CRMLink.update()
@@ -59705,7 +72989,7 @@ cm.playerReportsModel = function(b) {
 cm.PrestigeCityCenterView = function(b) {
     var a = function() {
         var d = cm.PrestigeModel.getPrestigeFactionClass(currentcityid);
-        b(".guardianModal").append("<div class='cityCenterframe largeModal'><div class='bordertop'></div><div class='borderbody'><div class='primarytitlebar'><div class='gemContainer'><span class='amount'>" + seed.player.gems + "</span><a class='buttonv2 green h20' onclick='modal_getgems();'>" + g_js_strings.commonstr.getmore + "</a></div><span>" + g_js_strings.prestige.cityCenterTitle + "</span></div><div class='primarycontent'><div class='cityCenter " + d + "'><div class='cityCenterTitle'>" + g_js_strings.prestige.cityCenterThe + "</div><div class='cityCenterDesc'>" + g_js_strings.prestige.cityCenterDesc + "</div></div></div></div><div class='borderbottom'></div></div>");
+        b(".guardianModal").append("<div class='cityCenterframe largeModal'><div class='bordertop'></div><div class='borderbody'><div class='primarytitlebar'><div class='gemContainer'><span class='amount'>" + cm.Gems.count() + "</span><a class='buttonv2 green h20' onclick='modal_getgems();'>" + g_js_strings.commonstr.getmore + "</a></div><span>" + g_js_strings.prestige.cityCenterTitle + "</span></div><div class='primarycontent'><div class='cityCenter " + d + "'><div class='cityCenterTitle'>" + g_js_strings.prestige.cityCenterThe + "</div><div class='cityCenterDesc'>" + g_js_strings.prestige.cityCenterDesc + "</div></div></div></div><div class='borderbottom'></div></div>");
         b("div.guardianModal .close").css({
             top: "-176px",
             right: "10px"
@@ -60158,7 +73442,7 @@ cm.PrestigeGroveView = function(d) {
         }
         var s = cm.Template.renderTemplate("Grove", "groveMain", l),
             r = cm.Template.renderTemplate("Grove", "groveHeader", {
-                gem: seed.player.gems,
+                gem: cm.Gems.count(),
                 primaryTitle: p,
                 getMore: g_js_strings.commonstr.getmore
             });
@@ -60167,7 +73451,7 @@ cm.PrestigeGroveView = function(d) {
         } else {
             cm.ModalManager.addLarge({
                 body: s,
-                gem: seed.player.gems,
+                gem: cm.Gems.count(),
                 closeNow: false,
                 title: r,
                 close: function() {},
@@ -60492,8 +73776,8 @@ cm.PrestigeManagerController = function(j) {
                 var I = cm.PrestigeManagerModel.getPrestigeInfo("cityId"),
                     H = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType");
                 if (G.gems !== undefined) {
-                    seed.player.gems = G.gems;
-                    j("#kochead_gems").html(seed.player.gems)
+                    cm.Gems.update(G.gems);
+                    j("#kochead_gems").html(cm.Gems.count())
                 }
                 update_seed(G.updateSeed);
                 cm.BlessingSystemModel.updateTempFaction(I, H);
@@ -60789,7 +74073,7 @@ cm.PrestigeManagerModel = function(e) {
     };
     var k = function() {
         var D = B("action");
-        return +seed.player.gems >= +a(D)
+        return cm.Gems.count() >= +a(D)
     };
     var c = function() {
         var E = (p.prestigeType !== b.prestigeType),
@@ -61152,7 +74436,7 @@ cm.PrestigeManagerView = function(e) {
     };
     var c = function(z) {
         var y = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
-            gem: seed.player.gems,
+            gem: cm.Gems.count(),
             primaryTitle: z.title
         });
         if (e(".prestigeManagerModal").length > 0) {
@@ -61747,8 +75031,8 @@ ProgressBar.Methods = {
         Modal.showModal(250, 400, 245, 190, "Become a Fan", a.join(""))
     },
     modal_gems_gained: function() {
-        seed.player.gems = parseInt(seed.player.gems) + parseInt(this.progressbar_data.gemsGained);
-        $("kochead_gems").innerHTML = seed.player.gems;
+        cm.Gems.add(this.progressbar_data.gemsGained);
+        $("kochead_gems").innerHTML = cm.Gems.count();
         var a = "";
         switch (parseInt(this.progressbar_data.maxScore)) {
         case 1:
@@ -62273,7 +75557,7 @@ function shareQuestComplete(b) {
     a.push(["REPLACE_AsSeTiD", b]);
     a.push(["REPLACE_QuEsTnAmE", questlist["q" + b].name]);
     a.push(["REPLACE_AwArDnAmE", questlist["q" + b].name]);
-    common_postToProfile("84", Object.cloneFeed(template_data_84), Object.cloneFeed(actionlink_data_84), continuation_84, a);
+    common_postToProfile("84", a);
     removePopOverLayer()
 }
 function quest_string_objective(j) {
@@ -62457,8 +75741,8 @@ function quest_give_award(g) {
         }
     }
     if (parseInt(a[3][0]) != 0) {
-        seed.player.gems = parseInt(seed.player.gems) + parseInt(a[3][0]);
-        $("kochead_gems").innerHTML = seed.player.gems
+        cm.Gems.add(a[3][0]);
+        $("kochead_gems").innerHTML = cm.Gems.count()
     }
     if (parseInt(a[3][1]) != 0) {
         seed.player.might = parseInt(seed.player.might) + parseInt(a[3][1]);
@@ -62514,7 +75798,7 @@ function quest_string_award(e) {
             c.push(stimgUrl);
             c.push("img/units/unit_");
             c.push(a[1][b][0]);
-            c.push("_50_s34.jpg'/><div class='iteminfo'><div class='ttl'>");
+            c.push("_50.jpg'/><div class='iteminfo'><div class='ttl'>");
             c.push(unitcost["unt" + a[1][b][0]][0]);
             c.push("</div><div>");
             c.push(addCommas(a[1][b][1]));
@@ -62524,10 +75808,8 @@ function quest_string_award(e) {
     if (a[2].length > 0) {
         for (var b = 0; b < a[2].length; b++) {
             c.push("<div class='item'><img src='");
-            c.push(stimgUrl);
-            c.push("img/items/70/");
-            c.push(a[2][b][0]);
-            c.push(".jpg?5c10831'/><div class='iteminfo'><div class='ttl'>");
+            c.push(ksoItems[a[2][b][0]].getImage(70));
+            c.push("'/><div class='iteminfo'><div class='ttl'>");
             c.push(itemlist["i" + a[2][b][0]].name);
             c.push("</div><div>");
             c.push(addCommas(a[2][b][1]));
@@ -62855,7 +76137,7 @@ function modal_openRallypoint() {
         b.push(stimgUrl);
         b.push("img/units/unit_");
         b.push(c);
-        b.push("_50_s34.jpg?6545'/><div class='unitinfo'>");
+        b.push("_50.jpg?6545'/><div class='unitinfo'>");
         b.push("<div><b>");
         b.push(unitcost["unt" + c][0]);
         b.push("</b></div>");
@@ -63137,7 +76419,7 @@ function view_march(marchid) {
                 for (var i in cm.UNIT_TYPES) {
                     i = cm.UNIT_TYPES[i];
                     if (rslt.march["unit" + i + "Return"] > 0) {
-                        msghtml.push("<tr><td><img src='../src/img/units/unit_" + i + "_30_s34.jpg'></td>");
+                        msghtml.push("<tr><td><img src='../src/img/units/unit_" + i + "_30.jpg'></td>");
                         msghtml.push("<td class='modal_march_table_cell'>" + unitcost["unt" + i][0] + "</td>");
                         msghtml.push("<td class='modal_march_table_cell'>" + rslt.march["unit" + i + "Return"] + "</td></tr>")
                     }
@@ -63226,7 +76508,7 @@ cm.RecipeController = function(f) {
         return true
     };
     var b = function(j) {
-        var i = ~~ (1 * seed.player.gems);
+        var i = cm.Gems.count();
         if (j.insurance > i) {
             return false
         }
@@ -63307,10 +76589,10 @@ cm.RecipeController = function(f) {
                     seed.resources["city" + currentcityid]["rec5"][0] = Number(seed.resources["city" + currentcityid]["rec5"][0]) - Number(r)
                 });
                 if (i) {
-                    seed.player.gems = +(1 * seed.player.gems) - +(1 * m.insurance);
-                    jQuery("#kochead_gems").html(seed.player.gems);
-                    jQuery("#kochead_gems").html(seed.player.gems);
-                    jQuery("#kochead_gems").html(seed.player.gems)
+                    cm.Gems.subtract(m.insurance);
+                    jQuery("#kochead_gems").html(cm.Gems.count());
+                    jQuery("#kochead_gems").html(cm.Gems.count());
+                    jQuery("#kochead_gems").html(cm.Gems.count())
                 }
                 if (o.status == "failure") {
                     if (m.consolation) {
@@ -64158,7 +77440,7 @@ cm.ReportView = function(k) {
         };
         if (J.charAt(0) == "u") {
             I.unitId = J.split("u")[1] || J;
-            I.image = G ? stimgUrl + "img/rt" + I.unitId + ".png" : stimgUrl + "img/units/unit_" + I.unitId + "_30_s34.jpg";
+            I.image = G ? stimgUrl + "img/units/unit_" + I.unitId + "_68.jpg" : stimgUrl + "img/units/unit_" + I.unitId + "_30.jpg";
             I.unitsInfoValue = F["u" + I.unitId] || F[I.unitId];
             I.name = unitcost["unt" + I.unitId] ? unitcost["unt" + I.unitId][0] : "Troops"
         } else {
@@ -64629,390 +77911,215 @@ Research.Methods = {
             return Research.AlternativeLevels[b] ? Research.AlternativeLevels[b] : 12
         }
     },
-    openAlchemy: function() {
+    openAlchemy: function(c) {
+        var r, z, t, q;
+        if (c === 2) {
+            r = seed.queue_tch2;
+            z = techcost2;
+            t = seed.tech2;
+            q = "img/tech2/"
+        } else {
+            r = seed.queue_tch;
+            z = techcost;
+            t = seed.tech;
+            q = "img/tech/"
+        }
         removeTooltip();
-        var p = new Array();
-        p.push("<div class='alchemymodal' id='alchemymodal'>");
-        p.push("<div class='tabsbar'>");
-        p.push("<a class='tab selected'><span>" + g_js_strings.modal_openAlchemy.resitms + "</span></a>");
-        p.push("</div>");
-        p.push("<div class='alchemywrap' id='alchemywrap'>");
-        p.push("<div class='tableheader'><table cellpadding='0' cellspacing='0'><thead><tr><td class='tch'><div>" + g_js_strings.commonstr.technology + "</div></td><td class='res'><div>" + g_js_strings.commonstr.resource + "</div></td><td class='req'><div>" + g_js_strings.commonstr.required + "</div></td><td class='own'><div>" + g_js_strings.commonstr.youown + "</div></td></tr></thead></table></div>");
-        p.push("<div class='techlist'>");
-        var e = Object.keys(techcost);
-        p.push("<table cellpadding='0' cellspacing='0'><tbody>");
-        var B = 0;
-        if (seed.queue_tch["city" + currentcityid].length > 0) {
-            B = parseInt(seed.queue_tch["city" + currentcityid][0][0])
+        var C = Math.abs(cm.ThroneController.getBoundedEffect(100));
+        C = (100 - C) / 100;
+        var s = new Array();
+        s.push("<div class='alchemymodal' id='alchemymodal'>");
+        s.push("<div class='tabsbar'>");
+        s.push("<a class='tab selected'><span>" + g_js_strings.modal_openAlchemy.resitms + "</span></a>");
+        s.push("</div>");
+        s.push("<div class='alchemywrap' id='alchemywrap'>");
+        s.push("<div class='tableheader'><table cellpadding='0' cellspacing='0'><thead><tr><td class='tch'><div>" + g_js_strings.commonstr.technology + "</div></td><td class='res'><div>" + g_js_strings.commonstr.resource + "</div></td><td class='req'><div>" + g_js_strings.commonstr.required + "</div></td><td class='own'><div>" + g_js_strings.commonstr.youown + "</div></td></tr></thead></table></div>");
+        s.push("<div class='techlist'>");
+        var f = Object.keys(z);
+        s.push("<table cellpadding='0' cellspacing='0'><tbody>");
+        var J = 0;
+        if (r["city" + currentcityid].length > 0) {
+            J = parseInt(r["city" + currentcityid][0][0])
         }
         var b = new Array();
-        var d = Object.keys(seed.queue_tch);
-        for (var v = 0; v < d.length; v++) {
-            if (d[v] != "city" + currentcityid) {
-                if (seed.queue_tch[d[v]].length > 0) {
-                    b.push(parseInt(seed.queue_tch[d[v]][0][0]))
+        var e = Object.keys(r);
+        for (var B = 0; B < e.length; B++) {
+            if (e[B] != "city" + currentcityid) {
+                if (r[e[B]].length > 0) {
+                    b.push(parseInt(r[e[B]][0][0]))
                 }
             }
         }
         var a = new Object();
-        var z = new Object();
-        var l = false;
-        for (var v = 0; v < e.length; v++) {
-            var A = techcost[e[v]];
-            var n = parseInt(e[v].split("tch")[1]);
-            var x = parseInt(seed.tech[e[v]]);
-            var y = checkreq("tch", n, (parseInt(seed.tech[e[v]]) + 1));
-            var t = new Array();
-            var m = new Array();
-            var r = new Array();
-            var q = true;
-            if (x < Research.Methods.maxLevel(n)) {
-                for (var u = 0; u < y[0].length; u++) {
-                    t.push("<div>");
-                    t.push(y[0][u]);
-                    t.push("</div>");
-                    if (y[3][u] == 0) {
-                        q = false;
-                        m.push("<div class='unmet'>")
+        var G = new Object();
+        var m = false;
+        for (var B = 0; B < f.length; B++) {
+            var H = z[f[B]];
+            var o = parseInt(f[B].split("tch")[1]);
+            var E = parseInt(t[f[B]]);
+            var F = checkreq("tch", o, (parseInt(t[f[B]]) + 1), c);
+            var y = new Array();
+            var n = new Array();
+            var w = new Array();
+            var u = true;
+            if (E < Research.Methods.maxLevel(o, c)) {
+                for (var A = 0; A < F[0].length; A++) {
+                    var v = (parseInt(F[1][A]) > 0) ? Math.round(F[1][A] * C) : -1;
+                    y.push("<div>");
+                    y.push(F[0][A]);
+                    y.push("</div>");
+                    if ((F[3][A] == 0 && v === -1) || F[2][A] < v) {
+                        u = false;
+                        n.push("<div class='unmet'>")
                     } else {
-                        m.push("<div class='met'>")
+                        n.push("<div class='met'>")
                     }
-                    if (parseInt(y[1][u]) > 0) {
-                        m.push(addCommas(y[1][u]))
+                    if (parseInt(F[1][A]) > 0) {
+                        n.push(addCommas(Math.round(F[1][A] * C)))
                     } else {
-                        m.push(y[1][u])
+                        n.push(F[1][A])
                     }
-                    m.push("</div>");
-                    r.push("<div>");
-                    if (parseInt(y[2][u]) > 0) {
-                        r.push(addCommas(y[2][u]))
+                    n.push("</div>");
+                    w.push("<div>");
+                    if (parseInt(F[2][A]) > 0) {
+                        w.push(addCommas(F[2][A]))
                     } else {
-                        r.push(y[2][u])
+                        w.push(F[2][A])
                     }
-                    r.push("</div>")
+                    w.push("</div>")
                 }
             } else {
-                q = false
+                u = false
             }
-            if (v % 2 == 1) {
-                p.push("<tr class='stripe'>")
+            if (B % 2 == 1) {
+                s.push("<tr class='stripe'>")
             } else {
-                p.push("<tr>")
+                s.push("<tr>")
             }
-            p.push("<td class='tchlist_img'><img src='" + stimgUrl + "img/tech/" + n + "_s33.png'/></td>");
-            p.push("<td class='tchlist_info'>");
-            p.push("<div class='techhd'>");
-            p.push(A[0]);
-            p.push(" (" + g_js_strings.commonstr.lv + " ");
-            p.push(seed.tech[e[v]]);
-            p.push(")</div>");
-            p.push("<div class='desc'>");
-            p.push(techcost[e[v]][10]);
-            p.push("</div>");
-            var o = false;
-            for (var u = 0; u < b.length; u++) {
-                if (n == b[u]) {
-                    o = true;
-                    u = b.length
+            s.push("<td class='tchlist_img'><img src='" + stimgUrl + q + o + "_s33.png'/></td>");
+            s.push("<td class='tchlist_info'>");
+            s.push("<div class='techhd'>");
+            s.push(H[0]);
+            s.push(" (" + g_js_strings.commonstr.lv + " ");
+            s.push(t[f[B]]);
+            s.push(")</div>");
+            s.push("<div class='desc'>");
+            s.push(z[f[B]][10]);
+            s.push("</div>");
+            var p = false;
+            for (var A = 0; A < b.length; A++) {
+                if (o == b[A]) {
+                    p = true;
+                    A = b.length
                 }
             }
-            if (o) {
-                p.push("<div class='btns clearfix'><b>" + g_js_strings.modal_openAlchemy.currentlyres + "</b></div>")
+            if (p) {
+                s.push("<div class='btns clearfix'><b>" + g_js_strings.modal_openAlchemy.currentlyres + "</b></div>")
             } else {
-                if (parseInt(seed.tech[e[v]]) < Research.Methods.maxLevel(n) && B == 0 && q) {
-                    var w = 0;
-                    var c = seed.knights["city" + currentcityid];
-                    if (c) {
-                        c = c["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
-                        if (c) {
-                            w = parseInt(c.intelligence);
-                            w = ((parseInt(c.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (w * 1.25) : w
+                if (parseInt(t[f[B]]) < Research.Methods.maxLevel(o, c) && J == 0 && u) {
+                    var D = 0;
+                    var d = seed.knights["city" + currentcityid];
+                    if (d) {
+                        d = d["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
+                        if (d) {
+                            D = parseInt(d.intelligence);
+                            D = ((parseInt(d.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (D * 1.25) : D
                         }
                     }
-                    var s = "";
-                    var h = parseInt(seed.tech[e[v]]) + 1;
-                    if (n != 17) {
-                        h = Math.min(h, 11)
+                    var x = "";
+                    var k = parseInt(t[f[B]]) + 1;
+                    if (o != 17) {
+                        k = Math.min(k, 11)
                     }
-                    var g = Math.pow(2, (h - 1));
-                    var f = cm.ThroneController.effectBonus(80);
-                    var k = parseInt(techcost[e[v]][7] * g * (1 / (1 + 0.005 * w)));
-                    k = Math.round(k / (1 + f / 100));
-                    z[n.toString()] = {
-                        buttonId: cm.ResearchView.BUTTON_PREFIX + n,
-                        timeTextId: cm.ResearchView.TIMETEXT_PREFIX + n,
-                        checkboxId: cm.ResearchView.CHECKBOX_PREFIX + n
+                    var h = Math.pow(2, (k - 1));
+                    var I = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().SCIENTIFIC_METHODOLOGIES);
+                    if (typeof c !== "number" || c !== 2 || typeof I !== "number") {
+                        I = 1
+                    }
+                    var g = cm.ThroneController.effectBonus(80);
+                    var l = parseInt(z[f[B]][7] * h * I * (1 / (1 + 0.005 * D)));
+                    l = Math.round(l / (1 + g / 100));
+                    G[o.toString()] = {
+                        buttonId: cm.ResearchView.BUTTON_PREFIX + o,
+                        timeTextId: cm.ResearchView.TIMETEXT_PREFIX + o,
+                        checkboxId: cm.ResearchView.CHECKBOX_PREFIX + o
                     };
-                    a[n.toString()] = {
-                        currentLevel: x,
-                        baseTime: timestr(k),
-                        speedTime: timestr(Math.max(k - 600, 0)),
-                        helped: l
+                    a[o.toString()] = {
+                        currentLevel: E,
+                        baseTime: timestr(l),
+                        speedTime: timestr(Math.max(l - 600, 0)),
+                        helped: m
                     };
-                    p.push("<div class='buttonRow'>");
-                    p.push("<a class='buttonDown20' id='" + z[n.toString()].buttonId + "' name='" + n + "' onclick='researchController.researchButtonClicked(event);return false'>");
-                    p.push("<span>" + g_js_strings.commonstr.research + "</span></a> ");
-                    p.push("<span>" + g_js_strings.commonstr.time + ": <span class='timeText' id='" + z[n.toString()].timeTextId + "'>" + a[n.toString()].speedTime + "</span></span>");
-                    p.push("</div>");
-                    p.push("<div class='checkboxRow'>");
-                    p.push("<div>");
-                    p.push("<a class='helptext' onclick='Modal.showAlert(\"");
-                    p.push(g_js_strings.modal_build.whatsthiscontent);
-                    p.push("\");return false;'>");
-                    p.push(g_js_strings.modal_build.whatsthis);
-                    p.push("</a>");
-                    p.push("</div>");
-                    p.push("<div>");
-                    p.push("<input id='" + z[n.toString()].checkboxId + "' name='" + n + "' type='checkbox' onclick='researchController.checkboxChanged(event)' />");
-                    p.push("<label for='" + z[n.toString()].checkboxId + "'>");
-                    p.push(cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch));
-                    p.push("</label>");
-                    p.push("</div>");
-                    p.push("</div>")
-                } else {
-                    if (n == B) {
-                        p.push("<div class='btns clearfix'><a class='inlineButton20Red' name='" + n + "' onclick=\"cm.ResearchSpeedupController.popupClick(event, 'tch');\">");
-                        p.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div>");
-                        p.push("<div class='timerem'>" + g_js_strings.commonstr.timeremaining + ": <span id='alchemymodal_tch");
-                        p.push(n);
-                        p.push("_queue_timeleft'>");
-                        p.push(timestr(parseInt(seed.queue_tch["city" + currentcityid][0][3]) - unixtime()));
-                        p.push("</span></b></div>");
-                        if (getTechHelpEligible(n, currentcityid) == false) {
-                            p.push("<div class='btns clearfix'><a class='button20' onclick='tch_gethelp(");
-                            p.push(n + ", " + cm.RESEARCH_TYPES.ALCHEMY_LAB);
-                            p.push(");return false;'><span>" + g_js_strings.modal_quests.askhelp + "</span></a>");
-                            p.push("<a class='helptext' onclick='Modal.showAlert(\"");
-                            p.push(g_js_strings.modal_build.whatsthiscontent);
-                            p.push("\");return false;'>");
-                            p.push(g_js_strings.modal_build.whatsthis);
-                            p.push("</a>");
-                            p.push("</div>")
-                        }
-                    } else {
-                        if (!q) {
-                            if (x < Research.Methods.maxLevel(n)) {
-                                p.push("<div class='btns clearfix'><b class='unmet'>" + g_js_strings.modal_openAlchemy.reqnotmet + "</b></div>")
-                            } else {
-                                p.push("<div class='btns clearfix'><b class='maxlv'>" + g_js_strings.modal_openAlchemy.maxres + "</b></div>")
-                            }
-                        }
-                    }
-                }
-            }
-            p.push("</td>");
-            p.push("<td class='tchlist_res'>");
-            p.push(t.join(""));
-            p.push("</td>");
-            p.push("<td class='tchlist_req'>");
-            p.push(m.join(""));
-            p.push("</td>");
-            p.push("<td class='tchlist_own'>");
-            p.push(r.join(""));
-            p.push("</td>");
-            p.push("</tr>")
-        }
-        p.push("</tbody></table>");
-        p.push("</div>");
-        p.push("</div>");
-        p.push("</div>");
-        $("modal_build_content").innerHTML = p.join("");
-        researchCollectionModel = new cm.ResearchCollectionModel(a);
-        researchView = new cm.ResearchView(z, researchCollectionModel);
-        researchController = new cm.ResearchController(researchCollectionModel, researchView)
-    },
-    openBritonWorkshop: function() {
-        removeTooltip();
-        var o = new Array();
-        o.push("<div class='alchemymodal' id='alchemymodal'>");
-        o.push("<div class='tabsbar'>");
-        o.push("<a class='tab selected'><span>" + g_js_strings.modal_openAlchemy.resitms + "</span></a>");
-        o.push("</div>");
-        o.push("<div class='alchemywrap' id='alchemywrap'>");
-        o.push("<div class='tableheader'><table cellpadding='0' cellspacing='0'><thead><tr><td class='tch'><div>" + g_js_strings.commonstr.technology + "</div></td><td class='res'><div>" + g_js_strings.commonstr.resource + "</div></td><td class='req'><div>" + g_js_strings.commonstr.required + "</div></td><td class='own'><div>" + g_js_strings.commonstr.youown + "</div></td></tr></thead></table></div>");
-        o.push("<div class='techlist'>");
-        var e = Object.keys(techcost2);
-        o.push("<table cellpadding='0' cellspacing='0'><tbody>");
-        var B = 0;
-        if (seed.queue_tch2 && seed.queue_tch2["city" + currentcityid] && seed.queue_tch2["city" + currentcityid].length > 0) {
-            B = parseInt(seed.queue_tch2["city" + currentcityid][0][0])
-        }
-        var b = new Array();
-        var d = Object.keys(seed.queue_tch2);
-        for (var u = 0; u < d.length; u++) {
-            if (d[u] != "city" + currentcityid) {
-                if (seed.queue_tch2[d[u]].length > 0) {
-                    b.push(parseInt(seed.queue_tch2[d[u]][0][0]))
-                }
-            }
-        }
-        var a = new Object();
-        var y = new Object();
-        var k = false;
-        for (var u = 0; u < e.length; u++) {
-            var z = techcost2[e[u]];
-            var m = parseInt(e[u].split("tch")[1]);
-            var w = parseInt(seed.tech2[e[u]]);
-            var x = checkreq("tch", m, (parseInt(seed.tech2[e[u]]) + 1), 2);
-            var s = new Array();
-            var l = new Array();
-            var q = new Array();
-            var p = true;
-            if (w < Research.Methods.maxLevel(m, 2)) {
-                for (var t = 0; t < x[0].length; t++) {
-                    s.push("<div>");
-                    s.push(x[0][t]);
+                    s.push("<div class='buttonRow'>");
+                    s.push("<a class='buttonDown20' id='" + G[o.toString()].buttonId + "' name='" + o + "' onclick='researchController.researchButtonClicked(event);return false'>");
+                    s.push("<span>" + g_js_strings.commonstr.research + "</span></a> ");
+                    s.push("<span>" + g_js_strings.commonstr.time + ": <span class='timeText' id='" + G[o.toString()].timeTextId + "'>" + a[o.toString()].speedTime + "</span></span>");
                     s.push("</div>");
-                    if (x[3][t] == 0) {
-                        p = false;
-                        l.push("<div class='unmet'>")
-                    } else {
-                        l.push("<div class='met'>")
-                    }
-                    if (parseInt(x[1][t]) > 0) {
-                        l.push(addCommas(x[1][t]))
-                    } else {
-                        l.push(x[1][t])
-                    }
-                    l.push("</div>");
-                    q.push("<div>");
-                    if (parseInt(x[2][t]) > 0) {
-                        q.push(addCommas(x[2][t]))
-                    } else {
-                        q.push(x[2][t])
-                    }
-                    q.push("</div>")
-                }
-            } else {
-                p = false
-            }
-            if (u % 2 == 1) {
-                o.push("<tr class='stripe'>")
-            } else {
-                o.push("<tr>")
-            }
-            o.push("<td class='tchlist_img'><img src='" + stimgUrl + "img/tech2/" + m + "_s33.png'/></td>");
-            o.push("<td class='tchlist_info'>");
-            o.push("<div class='techhd'>");
-            o.push(z[0]);
-            o.push(" (" + g_js_strings.commonstr.lv + " ");
-            o.push(seed.tech2[e[u]]);
-            o.push(")</div>");
-            o.push("<div class='desc'>");
-            o.push(techcost2[e[u]][10]);
-            o.push("</div>");
-            var n = false;
-            for (var t = 0; t < b.length; t++) {
-                if (m == b[t]) {
-                    n = true;
-                    t = b.length
-                }
-            }
-            if (n) {
-                o.push("<div class='btns clearfix'><b>" + g_js_strings.modal_openAlchemy.currentlyres + "</b></div>")
-            } else {
-                if (parseInt(seed.tech2[e[u]]) < Research.Methods.maxLevel(m, 2) && B == 0 && p) {
-                    var v = 0;
-                    var c = seed.knights["city" + currentcityid];
-                    if (c) {
-                        c = c["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
-                        if (c) {
-                            v = parseInt(c.intelligence);
-                            v = ((parseInt(c.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (v * 1.25) : v
-                        }
-                    }
-                    var r = "";
-                    var g = parseInt(seed.tech2[e[u]]) + 1;
-                    if (m != 17) {
-                        g = Math.min(g, 11)
-                    }
-                    var f = Math.pow(2, (g - 1));
-                    var A = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().SCIENTIFIC_METHODOLOGIES);
-                    if (typeof A !== "number") {
-                        A = 1
-                    }
-                    var h = parseInt(techcost2[e[u]][7] * f * A * (1 / (1 + 0.005 * v)));
-                    y[m.toString()] = {
-                        buttonId: cm.ResearchView.BUTTON_PREFIX + m,
-                        timeTextId: cm.ResearchView.TIMETEXT_PREFIX + m,
-                        checkboxId: cm.ResearchView.CHECKBOX_PREFIX + m
-                    };
-                    a[m.toString()] = {
-                        currentLevel: w,
-                        baseTime: timestr(h),
-                        speedTime: timestr(Math.max(h - 600, 0)),
-                        helped: k
-                    };
-                    o.push("<div class='buttonRow'>");
-                    o.push("<a class='buttonDown20' id='" + y[m.toString()].buttonId + "' name='" + m + "' onclick='researchController.researchButtonClicked(event);return false'>");
-                    o.push("<span>" + g_js_strings.commonstr.research + "</span></a> ");
-                    o.push("<span>" + g_js_strings.commonstr.time + ": <span class='timeText' id='" + y[m.toString()].timeTextId + "'>" + a[m.toString()].speedTime + "</span></span>");
-                    o.push("</div>");
-                    o.push("<div class='checkboxRow'>");
-                    o.push("<div>");
-                    o.push("<a class='helptext' onclick='Modal.showAlert(\"");
-                    o.push(g_js_strings.modal_build.whatsthiscontent);
-                    o.push("\");return false;'>");
-                    o.push(g_js_strings.modal_build.whatsthis);
-                    o.push("</a>");
-                    o.push("</div>");
-                    o.push("<div>");
-                    o.push("<input id='" + y[m.toString()].checkboxId + "' name='" + m + "' type='checkbox' onclick='researchController.checkboxChanged(event)' />");
-                    o.push("<label for='" + y[m.toString()].checkboxId + "'>");
-                    o.push(cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch));
-                    o.push("</label>");
-                    o.push("</div>");
-                    o.push("</div>")
+                    s.push("<div class='checkboxRow'>");
+                    s.push("<div>");
+                    s.push("<a class='helptext' onclick='Modal.showAlert(\"");
+                    s.push(g_js_strings.modal_build.whatsthiscontent);
+                    s.push("\");return false;'>");
+                    s.push(g_js_strings.modal_build.whatsthis);
+                    s.push("</a>");
+                    s.push("</div>");
+                    s.push("<div>");
+                    s.push("<input id='" + G[o.toString()].checkboxId + "' name='" + o + "' type='checkbox' onclick='researchController.checkboxChanged(event)' />");
+                    s.push("<label for='" + G[o.toString()].checkboxId + "'>");
+                    s.push(cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch));
+                    s.push("</label>");
+                    s.push("</div>");
+                    s.push("</div>")
                 } else {
-                    if (m == B) {
-                        o.push("<div class='btns clearfix'><a class='inlineButton20Red' name='" + m + "' onclick=\"cm.ResearchSpeedupController.popupClick(event, 'wks');\">");
-                        o.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div>");
-                        o.push("<div class='timerem'>" + g_js_strings.commonstr.timeremaining + ": <span id='alchemymodal_tch");
-                        o.push(m);
-                        o.push("_queue_timeleft'>");
-                        o.push(timestr(parseInt(seed.queue_tch2["city" + currentcityid][0][3]) - unixtime()));
-                        o.push("</span></b></div>");
-                        if (getTechHelpEligible(m, currentcityid, 2) == false) {
-                            o.push("<div class='btns clearfix'><a class='button20' onclick='tch_gethelp(");
-                            o.push(m + ", " + cm.RESEARCH_TYPES.WORKSHOP);
-                            o.push(");return false;'><span>" + g_js_strings.modal_quests.askhelp + "</span></a>");
-                            o.push("<a class='helptext' onclick='Modal.showAlert(\"");
-                            o.push(g_js_strings.modal_build.whatsthiscontent);
-                            o.push("\");return false;'>");
-                            o.push(g_js_strings.modal_build.whatsthis);
-                            o.push("</a>");
-                            o.push("</div>")
+                    if (o == J) {
+                        s.push("<div class='btns clearfix'><a class='inlineButton20Red' name='" + o + "' onclick=\"cm.ResearchSpeedupController.popupClick(event, 'tch');\">");
+                        s.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div>");
+                        s.push("<div class='timerem'>" + g_js_strings.commonstr.timeremaining + ": <span id='alchemymodal_tch");
+                        s.push(o);
+                        s.push("_queue_timeleft'>");
+                        s.push(timestr(parseInt(r["city" + currentcityid][0][3]) - unixtime()));
+                        s.push("</span></b></div>");
+                        if (getTechHelpEligible(o, currentcityid) == false, c) {
+                            s.push("<div class='btns clearfix'><a class='button20' onclick='tch_gethelp(");
+                            s.push(o + ", " + cm.RESEARCH_TYPES.ALCHEMY_LAB);
+                            s.push(");return false;'><span>" + g_js_strings.modal_quests.askhelp + "</span></a>");
+                            s.push("<a class='helptext' onclick='Modal.showAlert(\"");
+                            s.push(g_js_strings.modal_build.whatsthiscontent);
+                            s.push("\");return false;'>");
+                            s.push(g_js_strings.modal_build.whatsthis);
+                            s.push("</a>");
+                            s.push("</div>")
                         }
                     } else {
-                        if (!p) {
-                            if (w < Research.Methods.maxLevel(m, 2)) {
-                                o.push("<div class='btns clearfix'><b class='unmet'>" + g_js_strings.modal_openAlchemy.reqnotmet + "</b></div>")
+                        if (!u) {
+                            if (E < Research.Methods.maxLevel(o, c)) {
+                                s.push("<div class='btns clearfix'><b class='unmet'>" + g_js_strings.modal_openAlchemy.reqnotmet + "</b></div>")
                             } else {
-                                o.push("<div class='btns clearfix'><b class='maxlv'>" + g_js_strings.modal_openAlchemy.maxres + "</b></div>")
+                                s.push("<div class='btns clearfix'><b class='maxlv'>" + g_js_strings.modal_openAlchemy.maxres + "</b></div>")
                             }
                         }
                     }
                 }
             }
-            o.push("</td>");
-            o.push("<td class='tchlist_res'>");
-            o.push(s.join(""));
-            o.push("</td>");
-            o.push("<td class='tchlist_req'>");
-            o.push(l.join(""));
-            o.push("</td>");
-            o.push("<td class='tchlist_own'>");
-            o.push(q.join(""));
-            o.push("</td>");
-            o.push("</tr>")
+            s.push("</td>");
+            s.push("<td class='tchlist_res'>");
+            s.push(y.join(""));
+            s.push("</td>");
+            s.push("<td class='tchlist_req'>");
+            s.push(n.join(""));
+            s.push("</td>");
+            s.push("<td class='tchlist_own'>");
+            s.push(w.join(""));
+            s.push("</td>");
+            s.push("</tr>")
         }
-        o.push("</tbody></table>");
-        o.push("</div>");
-        o.push("</div>");
-        o.push("</div>");
-        $("modal_build_content").innerHTML = o.join("");
+        s.push("</tbody></table>");
+        s.push("</div>");
+        s.push("</div>");
+        s.push("</div>");
+        $("modal_build_content").innerHTML = s.join("");
         researchCollectionModel = new cm.ResearchCollectionModel(a);
-        researchView = new cm.ResearchView(y, researchCollectionModel);
+        researchView = new cm.ResearchView(G, researchCollectionModel);
         researchController = new cm.ResearchController(researchCollectionModel, researchView)
     },
     shareBtnTooltip: function(a) {
@@ -65027,7 +78134,7 @@ function modal_openAlchemy() {
     Research.openAlchemy()
 }
 function modal_openBritonWorkshop() {
-    Research.openBritonWorkshop()
+    Research.openAlchemy(2)
 };
 var cm = cm || {};
 cm.ResourceLoader = (function(e) {
@@ -65304,42 +78411,47 @@ cm.RevivalModel = function() {
         }]
     };
     var d = undefined;
-    var e = function(g) {
+    var e = function(h) {
         if (!d) {
             d = cm.WorldSettings.getSettingAsObject("APOTHECARY_COST")
         }
-        return +(d[g]["Cost"]) || 2000
+        var i = +(d[h]["Cost"]) || 2000;
+        var g = (100 + cm.ThroneController.getBoundedEffect(98)) / 100;
+        cm.log.l("Gold cost reduced by: " + g);
+        return Math.floor(i * g)
     };
     var b = function(k, j) {
         var g = 1,
             i = 0,
             n = seed.buildings["city" + currentcityid],
-            p = 0,
+            q = 0,
             h = null;
         for (var l in n) {
             h = n[l];
             if (h.id === 21 && h.isDruid) {
-                p++
+                q++
             }
         }
         try {
             g = e(k) * j, i = cm.ThroneController.hasFactionBonus()
         } catch (m) {}
-        var o = unitcost["unt" + k][7] * j / cm.WorldSettings.getSetting("APOTHECARY_TIME_FACTOR");
-        o = o >= 5 ? o : 5;
-        cm.log.l("1. apoth revival time = " + o);
-        if (p > 1) {
-            o = o / 1.2
+        var o = (100 + cm.ThroneController.getBoundedEffect(97)) / 100;
+        var r = o * cm.WorldSettings.getSetting("APOTHECARY_TIME_FACTOR");
+        var p = unitcost["unt" + k][7] * j / r;
+        p = p >= 5 ? p : 5;
+        cm.log.l("revivalSpeedIncrease = " + o);
+        if (q > 1) {
+            p = p / 1.2
         }
         if (i.hazBonus && i.faction === "druid") {
             bonus = cm.ThroneController.effectBonus(96);
-            o = o - (o * (bonus / 100))
+            p = p - (p * (bonus / 100))
         }
-        cm.log.l("2. apoth revival time = " + o);
-        o = Math.ceil(o - (o * cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().PICK_ME_UP, currentcityid)));
-        cm.log.l("3. with blessing = " + o);
+        cm.log.l("2. apoth revival time = " + p);
+        p = Math.ceil(p - (p * cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().PICK_ME_UP, currentcityid)));
+        cm.log.l("3. with blessing = " + p);
         return {
-            time: o,
+            time: p,
             cost: g,
             afford: f() >= g,
             quantity: j
@@ -65419,10 +78531,8 @@ cm.RevivalQueue = function() {
             var quant = (parseInt(seed.items["i" + speedupitems[i]]) > 0) ? parseInt(seed.items["i" + speedupitems[i]]) : 0;
             sphtml.push("<div class='item " + (i == 0 ? "instantFinish" : "") + " clearfix'>");
             sphtml.push("<img class='itemIcon' src='");
-            sphtml.push(stimgUrl);
-            sphtml.push("img/items/70/");
-            sphtml.push(speedupitems[i]);
-            sphtml.push(".jpg'/>");
+            sphtml.push(ksoItems[speedupitems[i]].getImage(70));
+            sphtml.push("'/>");
             sphtml.push("<div class='iteminfo'>");
             sphtml.push("<div class='itemhd'>");
             sphtml.push(itemlist["i" + speedupitems[i]].name);
@@ -65614,7 +78724,7 @@ cm.RevivalQueue = function() {
                     barhtml.push(stimgUrl);
                     barhtml.push("img/units/unit_");
                     barhtml.push(unt[0]);
-                    barhtml.push("_50_s34.jpg?6545'/></div>");
+                    barhtml.push("_50.jpg?6545'/></div>");
                     barhtml.push("<div class='infocol'><div class='untnm'>");
                     barhtml.push(unitcost["unt" + unt[0]][0]);
                     barhtml.push("</div><div>");
@@ -65682,7 +78792,7 @@ cm.RevivalQueue = function() {
                             qhtml.push(stimgUrl);
                             qhtml.push("img/units/unit_");
                             qhtml.push(queue["city" + currentcityid][i][0]);
-                            qhtml.push("_50_s34.jpg'/></div>");
+                            qhtml.push("_50.jpg'/></div>");
                             qhtml.push("<div class='infocol'><div><b>");
                             qhtml.push(unitcost["unt" + queue["city" + currentcityid][i][0]][0]);
                             qhtml.push(":</b> ");
@@ -65912,7 +79022,7 @@ cm.SacrificeQueue = function() {
                 barhtml.push(stimgUrl);
                 barhtml.push("img/units/unit_");
                 barhtml.push(queue.unitType);
-                barhtml.push("_50_s34.jpg?6545'/></div>");
+                barhtml.push("_50.jpg?6545'/></div>");
                 barhtml.push("<div class='infocol'><div class='untnm'>");
                 barhtml.push(unitcost["unt" + queue.unitType][0]);
                 barhtml.push("</div><div>");
@@ -66350,7 +79460,7 @@ cm.ShopController = function($) {
         var count = cm.MultiBuyUse.getNumberUsed(itemId);
         if (count > 1) {
             var item = ksoItems[itemId],
-                gems = Number(seed.player.gems);
+                gems = cm.Gems.count();
             if ((item.price * count) > gems) {
                 cm.ShopView.openGetMoreGemsModal()
             } else {
@@ -66377,7 +79487,7 @@ cm.ShopController = function($) {
     };
     var buyNow_ = function(itemId, count) {
         var item = ksoItems[itemId],
-            gems = Number(seed.player.gems),
+            gems = cm.Gems.count(),
             isCourtItem;
         if ((item.price * count) > gems) {
             cm.ShopView.openGetMoreGemsModal()
@@ -66396,7 +79506,7 @@ cm.ShopController = function($) {
                     var itemKey, maxOwnedAllowed, rslt = eval("(" + transport.responseText + ")");
                     validate_rslt(rslt);
                     if (rslt.ok) {
-                        seed.player.gems = Number(seed.player.gems) - (item.price * count);
+                        cm.Gems.subtract(item.price * count);
                         itemKey = "i" + item.id;
                         var kso1 = seed.items[itemKey];
                         if (seed.items[itemKey]) {
@@ -66407,8 +79517,8 @@ cm.ShopController = function($) {
                         var kso2 = seed.items[itemKey];
                         item.add(count);
                         cm.ShopView.increaseInventoryHistoryByItemKey(itemKey);
-                        $("#shopGemQuantity").text(seed.player.gems);
-                        $("#kochead_gems").text(seed.player.gems);
+                        $("#shopGemQuantity").text(cm.Gems.count());
+                        $("#kochead_gems").text(cm.Gems.count());
                         var text = count + g_js_strings.modal_shop_buy.purchasealertn.replace("%1$s", item.name);
                         $("#shopMessage").text(text);
                         $("#shopMessage").show();
@@ -66435,7 +79545,7 @@ cm.ShopController = function($) {
                                 cm.ShopView.organizeItems()
                             }
                             if (item.id == 10018) {
-                                common_postToProfile("20", Object.clone(template_data_20), Object.clone(actionlink_data_20), continuation_20, new Array())
+                                common_postToProfile("20", [])
                             }
                         }
                         if (item.id == 2) {
@@ -66458,7 +79568,7 @@ cm.ShopController = function($) {
     };
     var easyBuy = function(itemId, callBack) {
         var item = ksoItems[itemId],
-            gems = Number(seed.player.gems);
+            gems = cm.Gems.count();
         if (item.price > gems) {
             cm.ShopView.openGetMoreGemsModal()
         } else {
@@ -66474,8 +79584,8 @@ cm.ShopController = function($) {
                     var rslt = eval("(" + transport.responseText + ")");
                     validate_rslt(rslt);
                     if (rslt.ok) {
-                        seed.player.gems = Number(seed.player.gems) - item.price;
-                        $("#kochead_gems").text(seed.player.gems);
+                        cm.Gems.subtract(item.price);
+                        $("#kochead_gems").text(cm.Gems.count());
                         seed.items["i" + item.id] = Number(seed.items["i" + item.id]) + 1;
                         item.add();
                         cm.MixPanelTracker.track("store_purchase", {
@@ -66499,6 +79609,32 @@ cm.ShopController = function($) {
         easyBuy: easyBuy
     }
 }(jQuery);
+cm.ShopItemModel = function() {
+    var itemLookup_ = {};
+    var init_ = function(itemId) {
+        var params = Object.clone(g_ajaxparams);
+        new Ajax.Request(g_ajaxpath + "ajax/showShop.php" + g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function(transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if (rslt.ok) {
+                    var shop = rslt.data.shopOrder;
+                    for (var x in shop) {
+                        itemLookup_[shop[x]] = true
+                    }
+                }
+            }
+        })
+    };
+    var onSale_ = function(itemId) {
+        return itemLookup_[itemId] ? true : false
+    };
+    return {
+        onSale: onSale_,
+        init: init_
+    }
+}();
 cm = cm || {};
 cm.ShopView = function($) {
     var tab0 = [],
@@ -66553,7 +79689,7 @@ cm.ShopView = function($) {
             courtString: g_js_strings.commonstr.court,
             type: seed.platform.type,
             url: seed.platform.type == "facebook" ? seed.platform.url : "#",
-            gemsAmount: seed.player.gems,
+            gemsAmount: cm.Gems.count(),
             bannerHTML: bannerHTML,
             className: className
         });
@@ -66728,9 +79864,9 @@ cm.ShopView = function($) {
                 }
             }
             if (item.subCategory == 50) {
-                imageSource = stimgUrl + "img/items/70/" + item.info.image + ".jpg"
+                imageSource = ksoItems[item.info.image].getImage(70)
             } else {
-                imageSource = stimgUrl + "img/items/70/" + item.id + ".jpg"
+                imageSource = ksoItems[item.id].getImage(70)
             }
             var template = cm.Template.renderTemplate("Shop", "shopItem", {
                 id: item.id,
@@ -66871,6 +80007,259 @@ cm.ShopView = function($) {
         removeItemFromShop: removeItemFromShop
     }
 }(jQuery);
+if (!Control) {
+    var Control = {}
+}
+Control.Slider = Class.create({
+    initialize: function(d, a, b) {
+        var c = this;
+        if (Object.isArray(d)) {
+            this.handles = d.collect(function(f) {
+                return $(f)
+            })
+        } else {
+            this.handles = [$(d)]
+        }
+        this.track = $(a);
+        this.options = b || {};
+        this.axis = this.options.axis || "horizontal";
+        this.increment = this.options.increment || 1;
+        this.step = parseInt(this.options.step || "1");
+        this.range = this.options.range || $R(0, 1);
+        this.lnum = this.options.lnum || 0;
+        this.value = 0;
+        this.values = this.handles.map(function() {
+            return 0
+        });
+        this.spans = this.options.spans ? this.options.spans.map(function(e) {
+            return $(e)
+        }) : false;
+        this.options.startSpan = $(this.options.startSpan || null);
+        this.options.endSpan = $(this.options.endSpan || null);
+        this.restricted = this.options.restricted || false;
+        this.maximum = this.options.maximum || this.range.end;
+        this.minimum = this.options.minimum || this.range.start;
+        this.alignX = parseInt(this.options.alignX || "0");
+        this.alignY = parseInt(this.options.alignY || "0");
+        this.trackLength = this.maximumOffset() - this.minimumOffset();
+        this.handleLength = this.isVertical() ? (this.handles[0].offsetHeight != 0 ? this.handles[0].offsetHeight : this.handles[0].style.height.replace(/px$/, "")) : (this.handles[0].offsetWidth != 0 ? this.handles[0].offsetWidth : this.handles[0].style.width.replace(/px$/, ""));
+        this.active = false;
+        this.dragging = false;
+        this.disabled = false;
+        if (this.options.disabled) {
+            this.setDisabled()
+        }
+        this.allowedValues = this.options.values ? this.options.values.sortBy(Prototype.K) : false;
+        if (this.allowedValues) {
+            this.minimum = this.allowedValues.min();
+            this.maximum = this.allowedValues.max()
+        }
+        this.eventMouseDown = this.startDrag.bindAsEventListener(this);
+        this.eventMouseUp = this.endDrag.bindAsEventListener(this);
+        this.eventMouseMove = this.update.bindAsEventListener(this);
+        this.handles.each(function(f, e) {
+            e = c.handles.length - 1 - e;
+            c.setValue(parseFloat((Object.isArray(c.options.sliderValue) ? c.options.sliderValue[e] : c.options.sliderValue) || c.range.start), e);
+            f.makePositioned().observe("mousedown", c.eventMouseDown)
+        });
+        this.track.observe("mousedown", this.eventMouseDown);
+        document.observe("mouseup", this.eventMouseUp);
+        document.observe("mousemove", this.eventMouseMove);
+        Event.observe("mainbody", "mouseleave", this.eventMouseUp);
+        this.initialized = true
+    },
+    dispose: function() {
+        var a = this;
+        Event.stopObserving(this.track, "mousedown", this.eventMouseDown);
+        Event.stopObserving(document, "mouseup", this.eventMouseUp);
+        Event.stopObserving(document, "mousemove", this.eventMouseMove);
+        this.handles.each(function(b) {
+            Event.stopObserving(b, "mousedown", a.eventMouseDown)
+        })
+    },
+    setDisabled: function() {
+        this.disabled = true
+    },
+    setEnabled: function() {
+        this.disabled = false
+    },
+    getNearestValue: function(a) {
+        if (this.allowedValues) {
+            if (a >= this.allowedValues.max()) {
+                return (this.allowedValues.max())
+            }
+            if (a <= this.allowedValues.min()) {
+                return (this.allowedValues.min())
+            }
+            var c = Math.abs(this.allowedValues[0] - a);
+            var b = this.allowedValues[0];
+            this.allowedValues.each(function(d) {
+                var e = Math.abs(d - a);
+                if (e <= c) {
+                    b = d;
+                    c = e
+                }
+            });
+            return b
+        }
+        if (a > this.range.end) {
+            return this.range.end
+        }
+        if (a < this.range.start) {
+            return this.range.start
+        }
+        return a
+    },
+    setValue: function(b, a) {
+        if (!this.active) {
+            this.activeHandleIdx = a || 0;
+            this.activeHandle = this.handles[this.activeHandleIdx];
+            this.updateStyles()
+        }
+        a = a || this.activeHandleIdx || 0;
+        if (this.initialized && this.restricted) {
+            if ((a > 0) && (b < this.values[a - 1])) {
+                b = this.values[a - 1]
+            }
+            if ((a < (this.handles.length - 1)) && (b > this.values[a + 1])) {
+                b = this.values[a + 1]
+            }
+        }
+        b = this.getNearestValue(b);
+        this.values[a] = b;
+        this.value = this.values[0];
+        this.handles[a].style[this.isVertical() ? "top" : "left"] = this.translateToPx(b);
+        this.drawSpans();
+        if (!this.dragging || !this.event) {
+            this.updateFinished()
+        }
+    },
+    setValueBy: function(b, a) {
+        this.setValue(this.values[a || this.activeHandleIdx || 0] + b, a || this.activeHandleIdx || 0)
+    },
+    translateToPx: function(a) {
+        return Math.round(((this.trackLength - this.handleLength) / (this.range.end - this.range.start)) * (a - this.range.start)) + "px"
+    },
+    translateToValue: function(a) {
+        return ((a / (this.trackLength - this.handleLength) * (this.range.end - this.range.start)) + this.range.start)
+    },
+    getRange: function(b) {
+        var a = this.values.sortBy(Prototype.K);
+        b = b || 0;
+        return $R(a[b], a[b + 1])
+    },
+    minimumOffset: function() {
+        return (this.isVertical() ? this.alignY : this.alignX)
+    },
+    maximumOffset: function() {
+        return (this.isVertical() ? (this.track.offsetHeight != 0 ? this.track.offsetHeight : this.track.style.height.replace(/px$/, "")) - this.alignY : (this.track.offsetWidth != 0 ? this.track.offsetWidth : this.track.style.width.replace(/px$/, "")) - this.alignX)
+    },
+    isVertical: function() {
+        return (this.axis == "vertical")
+    },
+    drawSpans: function() {
+        var a = this;
+        if (this.spans) {
+            $R(0, this.spans.length - 1).each(function(b) {
+                a.setSpan(a.spans[b], a.getRange(b))
+            })
+        }
+        if (this.options.startSpan) {
+            this.setSpan(this.options.startSpan, $R(0, this.values.length > 1 ? this.getRange(0).min() : this.value))
+        }
+        if (this.options.endSpan) {
+            this.setSpan(this.options.endSpan, $R(this.values.length > 1 ? this.getRange(this.spans.length - 1).max() : this.value, this.maximum))
+        }
+    },
+    setSpan: function(b, a) {
+        if (this.isVertical()) {
+            b.style.top = this.translateToPx(a.start);
+            b.style.height = this.translateToPx(a.end - a.start + this.range.start)
+        } else {
+            b.style.left = this.translateToPx(a.start);
+            b.style.width = this.translateToPx(a.end - a.start + this.range.start)
+        }
+    },
+    updateStyles: function() {
+        this.handles.each(function(a) {
+            Element.removeClassName(a, "selected")
+        });
+        Element.addClassName(this.activeHandle, "selected")
+    },
+    startDrag: function(c) {
+        if (Event.isLeftClick(c)) {
+            if (!this.disabled) {
+                this.active = true;
+                var d = Event.element(c);
+                var e = [Event.pointerX(c), Event.pointerY(c)];
+                var a = d;
+                if (a == this.track) {
+                    var b = this.track.cumulativeOffset();
+                    this.event = c;
+                    this.setValue(this.translateToValue((this.isVertical() ? e[1] - b[1] : e[0] - b[0]) - (this.handleLength / 2)));
+                    var b = this.activeHandle.cumulativeOffset();
+                    this.offsetX = (e[0] - b[0]);
+                    this.offsetY = (e[1] - b[1])
+                } else {
+                    while ((this.handles.indexOf(d) == -1) && d.parentNode) {
+                        d = d.parentNode
+                    }
+                    if (this.handles.indexOf(d) != -1) {
+                        this.activeHandle = d;
+                        this.activeHandleIdx = this.handles.indexOf(this.activeHandle);
+                        this.updateStyles();
+                        var b = this.activeHandle.cumulativeOffset();
+                        this.offsetX = (e[0] - b[0]);
+                        this.offsetY = (e[1] - b[1])
+                    }
+                }
+            }
+            Event.stop(c)
+        }
+    },
+    update: function(a) {
+        if (this.active) {
+            if (!this.dragging) {
+                this.dragging = true
+            }
+            this.draw(a);
+            if (Prototype.Browser.WebKit) {
+                window.scrollBy(0, 0)
+            }
+            Event.stop(a)
+        }
+    },
+    draw: function(b) {
+        var c = [Event.pointerX(b), Event.pointerY(b)];
+        var a = this.track.cumulativeOffset();
+        c[0] -= this.offsetX + a[0];
+        c[1] -= this.offsetY + a[1];
+        this.event = b;
+        this.setValue(this.translateToValue(this.isVertical() ? c[1] : c[0]));
+        if (this.initialized && this.options.onSlide) {
+            this.options.onSlide(this.values.length > 1 ? this.values : this.value, this)
+        }
+    },
+    endDrag: function(a) {
+        if (this.active && this.dragging) {
+            this.finishDrag(a, true);
+            Event.stop(a)
+        }
+        this.active = false;
+        this.dragging = false
+    },
+    finishDrag: function(a, b) {
+        this.active = false;
+        this.dragging = false;
+        this.updateFinished()
+    },
+    updateFinished: function() {
+        if (this.initialized && this.options.onChange) {
+            this.options.onChange(this.values.length > 1 ? this.values : this.value, this)
+        }
+        this.event = null
+    }
+});
 var SNOWFLAKES = 100;
 
 function snowinit() {
@@ -66960,18 +80349,12 @@ cm.sounds = function(g) {
         modal_build23: "open_alchemy_lab",
         modal_build24: "open_barracks",
         modal_build25: "open_watchtower",
-        modal_build26: "open_alchemy_lab",
-        modal_build27: "open_alchemy_lab",
-        modal_build22: "open_barracks",
-        modal_build23: "open_alchemy_lab",
-        modal_build24: "open_barracks",
-        modal_build25: "open_watchtower",
         modal_build26: "open_barracks",
         modal_build27: "open_workshop",
-        modal_build3: "open_quarry",
-        modal_build2: "open_sawmill",
-        modal_build4: "open_mine",
         modal_build1: "open_farm",
+        modal_build2: "open_sawmill",
+        modal_build3: "open_quarry",
+        modal_build4: "open_mine",
         modal_barracks_train_1: "select_supplytroop1",
         modal_barracks_train_2: "select_militiaman1",
         modal_barracks_train_3: "select_scout1",
@@ -67005,7 +80388,9 @@ cm.sounds = function(g) {
         chat_received: "chat_received",
         tr_build: "tr_build",
         tr_success_build: "tr_success_build",
-        tr_fail_build: "tr_fail_build"
+        tr_fail_build: "tr_fail_build",
+        close_modal: "click_x_close",
+        gem_increase: "gem_increase"
     };
     var i = function() {
         localStorage.setItem("effects", _effects);
@@ -67172,10 +80557,8 @@ function do_modal_speedup(d, a, b, c, t, l) {
         var p = (parseInt(seed.items["i" + r[o]]) > 0) ? parseInt(seed.items["i" + r[o]]) : 0;
         n.push("<div class='item " + (o == 0 ? "instantFinish" : "") + " clearfix'>");
         n.push("<img class='itemIcon' src='");
-        n.push(stimgUrl);
-        n.push("img/items/70/");
-        n.push(r[o]);
-        n.push(".jpg'/>");
+        n.push(ksoItems[r[o]].getImage(70));
+        n.push("'/>");
         n.push("<div class='iteminfo'>");
         n.push("<div class='itemhd'>");
         n.push(itemlist["i" + r[o]].name);
@@ -67278,7 +80661,7 @@ function addTutelage(o, f, n, c, a, s, j) {
             var k = (t == 38 && ksoItems[t].count > 0);
             if (m || l || k) {
                 g = ksoItems[t].count;
-                h = stimgUrl + "img/items/70/" + t + ".jpg";
+                h = ksoItems[t].getImage(70);
                 d = 'modal_speedup_apply("' + c + '","' + t + '", ' + a + (typeof j !== "undefined" ? "," + j : "") + ");";
                 r = g == 0 ? "return false;" : d;
                 q = g == 0 ? "greyedout" : "";
@@ -67329,10 +80712,8 @@ function modal_speedup_market(d, a, c) {
     var e = (parseInt(seed.items["i" + 49]) > 0) ? parseInt(seed.items["i" + 49]) : 0;
     b.push("<div class='item clearfix'>");
     b.push("<img src='");
-    b.push(stimgUrl);
-    b.push("img/items/70/");
-    b.push("49");
-    b.push(".jpg'/>");
+    b.push(ksoItems[49].getImage(70));
+    b.push("'/>");
     b.push("<div class='iteminfo'>");
     b.push("<div class='itemhd'>");
     b.push(itemlist["i" + 49].name);
@@ -67770,7 +81151,7 @@ cm.SummoningCircleController = function(f) {
         }
     };
     var m = function() {
-        var v = +seed.player.gems,
+        var v = cm.Gems.count(),
             w = ksoItems[cm.SummoningCircleModel.get("SPELL_ITEM_ID")].price || 99999;
         return v >= w
     };
@@ -68000,7 +81381,7 @@ cm.SummoningCircleModel = function(k) {
         AjaxCall.gPostRequest("ajax/mgSummoningCircle.php", E, C, D)
     };
     var l = function(C, D) {
-        if (+seed.player.gems < ksoItems[u("SPELL_ITEM_ID")].price) {
+        if (cm.Gems.count() < ksoItems[u("SPELL_ITEM_ID")].price) {
             return
         }
         f({
@@ -68038,8 +81419,8 @@ cm.SummoningCircleModel = function(k) {
     }
 }(jQuery);
 cm = cm || {};
-cm.SummoningCircleView = function(d) {
-    var i = {
+cm.SummoningCircleView = function(e) {
+    var j = {
         token1: {
             widthFrame: 111,
             widthTotal: 4995,
@@ -68071,219 +81452,225 @@ cm.SummoningCircleView = function(d) {
             dom: "#summoningCircleToken6"
         }
     };
-    var w = function(z, A) {
-        return cm.Template.renderTemplate("SummoningCircle", z, A)
+    var x = function(A, B) {
+        return cm.Template.renderTemplate("SummoningCircle", A, B)
     };
-    var k = function() {
-        return w("banner", {})
+    var l = function() {
+        return x("banner", {})
     };
-    var m = function(z, A, B) {
-        return w("xLargeButtonBg", {
+    var n = function(A, B, C) {
+        return x("xLargeButtonBg", {
             tokensOwnedLabel: "Stones Owned",
-            tokensOwned: z,
-            buttonColor: A,
-            buttonLabel: B
+            tokensOwned: A,
+            buttonColor: B,
+            buttonLabel: C
         })
     };
-    var u = function(A, z) {
-        z = z || "0";
-        var B = "";
-        switch (A) {
+    var v = function(B, A) {
+        A = A || "0";
+        var C = "";
+        switch (B) {
         case "redeem":
-            B = g_js_strings.summoningCircle.redeemNow;
+            C = g_js_strings.summoningCircle.redeemNow;
             break;
         case "summon":
-            B = g_js_strings.commonstr.summon + ' <span class="gems">' + z + "</span>";
+            C = g_js_strings.commonstr.summon + ' <span class="gems">' + A + "</span>";
             break;
         case "use":
         default:
-            B = "Delete Account";
+            C = "Delete Account";
             break
         }
-        return B
+        return C
     };
-    var e = function(A) {
-        var B = u(A.action, A.summonCost),
-            z = w("miniGame", {
+    var f = function(B) {
+        var C = v(B.action, B.summonCost),
+            A = x("miniGame", {
                 description: g_js_strings.summoningCircle.collectToUnlock,
                 timeLeftLabel: g_js_strings.commonstr.timeremaining + ":",
-                timeLeft: timestr(A.timeLeft),
-                action: m(A.tokensOwned, A.action === "redeem" ? "blue" : "green", B)
+                timeLeft: timestr(B.timeLeft),
+                action: n(B.tokensOwned, B.action === "redeem" ? "blue" : "green", C)
             });
-        return z
-    };
-    var g = function(z) {
-        var A = '<div class="summoningCircleTooltip"><b>' + g_js_strings.summoningCircle.youWillGet + "</b><ul>";
-        if (z && z.items) {
-            d.each(z.items, function(C, B) {
-                A += "<li><b>" + ksoItems[C].name + "</b><br/>" + ksoItems[C].description + "</li>"
-            })
-        }
-        A += "</ul></div>";
         return A
     };
-    var v = function() {
-        return w("prizeStone", {
+    var h = function(A) {
+        var B = '<div class="summoningCircleTooltip"><b>' + g_js_strings.summoningCircle.youWillGet + "</b><ul>";
+        if (A && A.items) {
+            e.each(A.items, function(D, C) {
+                B += "<li><b>" + ksoItems[D].name + "</b><br/>" + ksoItems[D].description + "</li>"
+            })
+        }
+        B += "</ul></div>";
+        return B
+    };
+    var w = function() {
+        return x("prizeStone", {
             header: g_js_strings.summoningCircle.youSummonedThe.replace("%1$s", ksoItems[cm.SummoningCircleModel.get("STONE_ITEM_ID")].name),
             buttonLabel: g_js_strings.commonstr.ok
         })
     };
-    var r = function(A, z, B) {
-        return w("prizeChest", {
-            header: g_js_strings.summoningCircle.youSummonedThe.replace("%1$s", ksoItems[A].name),
-            chestClass: z,
-            description: B,
+    var s = function(B, A, C) {
+        return x("prizeChest", {
+            header: g_js_strings.summoningCircle.youSummonedThe.replace("%1$s", ksoItems[B].name),
+            chestClass: A,
+            description: C,
             buttonLabel: g_js_strings.commonstr.ok
         })
     };
-    var t = function(z) {
-        if (d("#summoningCircleBanner").length > 0) {
-            d("#summoningCircleBanner").show()
+    var u = function(A) {
+        if (e("#summoningCircleBanner").length > 0) {
+            e("#summoningCircleBanner").show()
         } else {
-            d("#mod_maparea").append(k())
+            e("#mod_maparea").append(l())
         }
     };
-    var j = function() {
-        d("#summoningCircleBanner").hide()
+    var k = function() {
+        e("#summoningCircleBanner").hide()
     };
-    var n = function(z) {
-        if (d("#summoningCircleBanner").length > 0 && typeof z !== undefined) {
-            d("#summoningCircleBanner").html(g_js_strings.summoningCircle.eventExpires.replace("%1$s", '<span class="timeLeft">' + timestr(z) + "</span>"))
+    var o = function(A) {
+        if (e("#summoningCircleBanner").length > 0 && typeof A !== undefined) {
+            e("#summoningCircleBanner").html(g_js_strings.summoningCircle.eventExpires.replace("%1$s", '<span class="timeLeft">' + timestr(A) + "</span>"))
         }
     };
-    var y = function(A) {
-        var B = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
-            gem: seed.player.gems,
+    var z = function(B) {
+        var C = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
+            gem: cm.Gems.count(),
             primaryTitle: g_js_strings.commonstr.summoningCircle
         }),
-            z = e(A);
+            A = f(B);
         cm.ModalManager.addXLarge({
-            title: B,
+            title: C,
             "class": "summoningCircleModal",
-            body: z,
+            body: A,
             close: function() {
-                d(document).unbind("keyup keydown")
+                e(document).unbind("keyup keydown")
             }
         });
-        d("#summoningCircleToken6").unbind("mouseenter").bind("mouseenter", function(C) {
-            var D = g(A.reward || {});
-            Tooltip.show(C, D, [-200, - 140])
+        e("#summoningCircleToken6").unbind("mouseenter").bind("mouseenter", function(D) {
+            var E = h(B.reward || {});
+            Tooltip.show(D, E, [-200, - 140])
         });
-        d(document).keyup(function(C) {
-            if (C.which == 13 || C.which == 32) {
-                C.preventDefault();
-                if (d("#minigameRewardBtn").length > 0) {
-                    d("#minigameRewardBtn").click()
+        e(document).keyup(function(D) {
+            if (D.which == 13 || D.which == 32) {
+                D.preventDefault();
+                if (e("#minigameRewardBtn").length > 0) {
+                    e("#minigameRewardBtn").click()
                 } else {
-                    d("#summoningCircleButtonLabel").click()
+                    e("#summoningCircleButtonLabel").click()
                 }
             }
         });
-        d(document).keydown(function(D) {
-            var C = D.charCode ? D.charCode : D.keyCode ? D.keyCode : 0;
-            if (C == 32) {
-                D.preventDefault()
+        e(document).keydown(function(E) {
+            var D = E.charCode ? E.charCode : E.keyCode ? E.keyCode : 0;
+            if (D == 32) {
+                E.preventDefault()
             }
         })
     };
-    var h = function(A, C) {
-        if (!i || !i["token" + A]) {
+    var i = function(B, D) {
+        if (!j || !j["token" + B]) {
             return
         }
-        var z = "token" + A,
-            B = i[z];
-        cm.AnimationCreation.toggleAnim(d(B.dom), B.widthFrame, B.widthTotal, C || 60, z)
+        var A = "token" + B,
+            C = j[A];
+        cm.AnimationCreation.toggleAnim(e(C.dom), C.widthFrame, C.widthTotal, D || 60, A)
     };
-    var f = function(A) {
-        var z = "token" + A;
-        cm.AnimationCreation.toggleAnim(null, null, null, null, z)
+    var g = function(B) {
+        var A = "token" + B;
+        cm.AnimationCreation.toggleAnim(null, null, null, null, A)
     };
-    var c = function(z) {
-        return d("#summoningCircleToken" + z).addClass("token" + z)
+    var c = function(A) {
+        return e("#summoningCircleToken" + A).addClass("token" + A)
     };
-    var s = function(z) {
-        return d("#summoningCircleToken" + z).removeClass("token" + z)
+    var t = function(A) {
+        return e("#summoningCircleToken" + A).removeClass("token" + A)
     };
-    var l = function(C) {
-        if (!C) {
+    var m = function(D) {
+        if (!D) {
             return
         }
-        var B = cm.SummoningCircleModel.STONES_TO_REDEEM,
-            A = 6;
-        C = Math.min(C, B);
-        for (var z = 1; z <= A; z++) {
-            if (z < C) {
-                c(z);
-                h(z)
+        var C = cm.SummoningCircleModel.STONES_TO_REDEEM,
+            B = 6;
+        D = Math.min(D, C);
+        for (var A = 1; A <= B; A++) {
+            if (A < D) {
+                c(A);
+                i(A)
             } else {
-                s(z);
-                f(z)
+                t(A);
+                g(A)
             }
         }
-        c(C).hide().delay(500).fadeIn(1000, function() {
-            h(C)
+        c(D).hide().delay(500).fadeIn(1000, function() {
+            i(D)
         });
-        if (C === B) {
-            c(A).hide().delay(2500).fadeIn(4000, function() {
-                h(A)
+        if (D === C) {
+            c(B).hide().delay(2500).fadeIn(4000, function() {
+                i(B)
             })
         }
     };
-    var p = function() {
-        d("#summoningCircleTokens .token").fadeOut(4000, function() {
-            d("#summoningCircleTokens .token").removeClass("token1 token2 token3 token4 token5 token6").show()
+    var q = function() {
+        e("#summoningCircleTokens .token").fadeOut(4000, function() {
+            e("#summoningCircleTokens .token").removeClass("token1 token2 token3 token4 token5 token6").show()
         })
     };
-    var o = function(A) {
-        for (var z = 1; z <= 6; z++) {
-            h(z, A ? 30 : 60)
+    var p = function(B) {
+        for (var A = 1; A <= 6; A++) {
+            i(A, B ? 30 : 60)
         }
     };
-    var q = function(z) {
-        if (d("#summoningCircleTimeLeft").length > 0 && typeof z !== undefined) {
-            d("#summoningCircleTimeLeft").html(timestr(z, 2))
+    var r = function(A) {
+        if (e("#summoningCircleTimeLeft").length > 0 && typeof A !== undefined) {
+            e("#summoningCircleTimeLeft").html(timestr(A, 2))
         }
     };
-    var a = function(z, A) {
-        d("#summoningCircleTokenCount").html(z);
-        d("#summoningCircleButtonLabel").html(u(A.action, A.summonCost));
-        if (A.action === "redeem") {
-            d("#summoningCircleButtonLabel").addClass("blue").removeClass("green").removeClass("gray")
+    var a = function(A, B) {
+        e("#summoningCircleTokenCount").html(A);
+        e("#summoningCircleButtonLabel").html(v(B.action, B.summonCost));
+        if (B.action === "redeem") {
+            e("#summoningCircleButtonLabel").addClass("blue").removeClass("green").removeClass("gray")
         } else {
-            d("#summoningCircleButtonLabel").addClass("green").removeClass("blue").removeClass("gray")
+            e("#summoningCircleButtonLabel").addClass("green").removeClass("blue").removeClass("gray")
         }
     };
-    var b = function(z) {
+    var b = function(A) {
         cm.ModalManager.addSmall({
             "class": "summoningCircleStoneModal",
-            body: v(),
-            close: z
+            body: w(),
+            close: A
         })
     };
-    var x = function(B, A, z, C) {
+    var y = function(C, B, A, D) {
         cm.ModalManager.addMedium({
             "class": "summoningCircleChestModal",
             title: g_js_strings.commonstr.congratulationsexc,
-            body: r(B, A, z),
-            close: C
+            body: s(C, B, A),
+            close: D
         });
-        d(".summoningCircleChestModal .chestArt").unbind("mouseenter").bind("mouseenter", function(D) {
-            var E = "<b>" + ksoItems[B].name + '</b><p style="width: 200px;">' + ksoItems[B].description + "</p>";
-            Tooltip.show(D, E, [-276, - 2])
+        e(".summoningCircleChestModal .chestArt").unbind("mouseenter").bind("mouseenter", function(E) {
+            var F = "<b>" + ksoItems[C].name + '</b><p style="width: 200px;">' + ksoItems[C].description + "</p>";
+            Tooltip.show(E, F, [-276, - 2])
+        })
+    };
+    var d = function(A) {
+        return cm.Template.renderTemplate("SummoningCircle", "ascension_styled_button", {
+            buttonLabel: A
         })
     };
     return {
-        showBanner: t,
-        hideBanner: j,
-        updateBannerTime: n,
-        openMiniGame: y,
-        showStones: l,
-        hideStones: p,
-        overdriveStones: o,
-        updateMiniGameTime: q,
+        showBanner: u,
+        hideBanner: k,
+        updateBannerTime: o,
+        openMiniGame: z,
+        showStones: m,
+        hideStones: q,
+        overdriveStones: p,
+        updateMiniGameTime: r,
         updateXLButtonBg: a,
         openPrizeStone: b,
-        openPrizeChest: x
+        openPrizeChest: y,
+        button: d
     }
 }(jQuery);
 var swfobject = function() {
@@ -69207,30 +82594,34 @@ cm.Template = function(e) {
 }(jQuery);
 cm = cm || {};
 cm.ThroneController = function(g) {
-    var f = function(z) {
-        if (+z.id == +(tvuid) || isNaN(+z.id)) {
+    var f = function(A) {
+        if (+A.id == +(tvuid) || isNaN(+A.id)) {
             cm.ThroneView.openThrone()
         } else {
             AjaxCall.gPostRequest("ajax/_dispatch53.php", {
                 ctrl: "throneRoom\\ThroneRoomServiceAjax",
                 action: "getEquipped",
-                playerId: z.id
-            }, function(A) {
-                if (A.ok === true) {
-                    var B = A.items;
+                playerId: A.id
+            }, function(B) {
+                if (B.ok === true) {
+                    var C = B.items;
+                    var E = {};
                     var D = {};
-                    var C = {};
-                    g.each(B, function(E, F) {
-                        D[F.id] = new cm.ThroneItemModel(F)
+                    g.each(C, function(G, H) {
+                        try {
+                            E[H.id] = new cm.ThroneItemModel(H)
+                        } catch (F) {
+                            cm.log.l("Error getting item: " + F, A)
+                        }
                     });
-                    C.id = z.id;
-                    C.items = D;
-                    C.name = z.name;
-                    cm.ThroneView.openThrone(C)
+                    D.id = A.id;
+                    D.items = E;
+                    D.name = A.name;
+                    cm.ThroneView.openThrone(D)
                 } else {
                     cm.ModalManager.alert({
                         button_text: g_js_strings.commonstr.ok,
-                        text: A.msg,
+                        text: B.msg,
                         "class": "craftFailure",
                         exe: function() {
                             Modal.hideModalAll();
@@ -69241,184 +82632,124 @@ cm.ThroneController = function(g) {
             })
         }
     };
-    var y = function(A) {
-        var D = [],
-            C, B = 0,
-            z;
-        g.each(A, function(E, F) {
-            B++;
-            z = Math.ceil(B / 5);
-            C = g("<div/>");
-            C.attr("id", "throneInventoryItem" + F.id);
-            C.addClass(F.type + " " + F.faction + " quality" + F.quality);
-            if (F.unique > 0) {
-                C.addClass("unique" + F.unique)
+    var z = function(B) {
+        var E = [],
+            D, C = 0,
+            A;
+        g.each(B, function(F, G) {
+            C++;
+            A = Math.ceil(C / 5);
+            D = g("<div/>");
+            D.attr("id", "throneInventoryItem" + G.id);
+            D.addClass(G.type + " " + G.faction + " quality" + G.quality);
+            if (G.unique > 0) {
+                D.addClass("unique" + G.unique)
             }
-            if (F.isEquipped) {
-                C.addClass("equip")
+            if (G.isEquipped) {
+                D.addClass("equip")
             }
             if (!g.isEmptyObject(seed.queue_throne)) {
-                if (F.id == seed.queue_throne.itemId) {
-                    C.append("<span class='repair'></span>")
+                if (G.id == seed.queue_throne.itemId) {
+                    D.append("<span class='repair'></span>")
                 } else {
-                    if (F.isBroken) {
-                        C.append("<span class='broken'></span>")
+                    if (G.isBroken) {
+                        D.append("<span class='broken'></span>")
                     }
                 }
             } else {
-                if (F.isBroken) {
-                    C.append("<span class='broken'></span>")
+                if (G.isBroken) {
+                    D.append("<span class='broken'></span>")
                 }
             }
-            C.mouseenter(function(G) {
+            D.mouseenter(function(H) {
                 g("#contextMenu").remove();
                 if (g("#throneInventoryItemTooltip").length === 0 || g("#kofcNewTooltipDiv").css("display") === "none") {
-                    cm.ThroneView.hoverItem(G, this, F)
+                    cm.ThroneView.hoverItem(H, this, G)
                 }
             });
-            C.mouseleave(function(G) {});
-            if (z <= seed.throne.rowNum) {
-                C.bind("click", function(G) {
-                    cm.ContextualMenuThrone.renderMenu(this, F)
+            D.mouseleave(function(H) {});
+            if (A <= seed.throne.rowNum) {
+                D.bind("click", function(H) {
+                    cm.ContextualMenuThrone.renderMenu(this, G)
                 })
             }
-            D.push(C)
+            E.push(D)
         });
-        return D
+        return E
     };
-    var o = function(A) {
-        var z = new cm.ThroneItemModel(A);
-        kocThroneItems[z.id] = z;
-        return z
+    var p = function(C) {
+        var B = {};
+        try {
+            B = new cm.ThroneItemModel(C);
+            kocThroneItems[B.id] = B
+        } catch (A) {
+            cm.log.l("Ignoring Throne Item: " + A, C)
+        }
+        return B
     };
-    var p = function(A) {
-        var z = +(cm.WorldSettings.getSetting("TR_MAX_INVENTORY_ROWS")),
-            F = seed.throne.rowNum,
-            C = [],
-            E, D;
-        for (var B = 0; B < z; ++B) {
-            D = B + 1;
-            E = g("<li/>");
-            E.attr("id", "throneInventoryRow" + (B + 1));
-            if (D <= F) {
-                E.addClass("active")
+    var q = function(B) {
+        var A = +(cm.WorldSettings.getSetting("TR_MAX_INVENTORY_ROWS")),
+            G = seed.throne.rowNum,
+            D = [],
+            F, E;
+        for (var C = 0; C < A; ++C) {
+            E = C + 1;
+            F = g("<li/>");
+            F.attr("id", "throneInventoryRow" + (C + 1));
+            if (E <= G) {
+                F.addClass("active")
             } else {
-                if (D === (F + 1)) {
-                    E.addClass("buy");
-                    E.bind("click", function() {
+                if (E === (G + 1)) {
+                    F.addClass("buy");
+                    F.bind("click", function() {
                         cm.ContextualMenuThrone.renderMenu(this, null)
                     })
                 } else {
-                    E.addClass("inactive")
+                    F.addClass("inactive")
                 }
             }
-            if (A.length >= 5) {
-                g.each(A.splice(0, 5), function(G, H) {
-                    E.append(H)
+            if (B.length >= 5) {
+                g.each(B.splice(0, 5), function(H, I) {
+                    F.append(I)
                 })
             } else {
-                if (A.length >= 1 && A.length < 5) {
-                    g.each(A.splice(0, A.length), function(G, H) {
-                        E.append(H)
+                if (B.length >= 1 && B.length < 5) {
+                    g.each(B.splice(0, B.length), function(H, I) {
+                        F.append(I)
                     })
                 }
             }
-            C.push(E)
+            D.push(F)
         }
-        return C
+        return D
     };
-    var n = function(E) {
-        var D = E.type,
-            B = seed.throne.activeSlot,
-            F = seed.throne.slotEquip[B],
-            C = [],
-            z;
-        var A = {};
-        g.each(F, function(G, H) {
-            z = kocThroneItems[H];
-            if (z.type === D) {
-                A.item1 = E;
-                A.item2 = z;
-                A.idx = G;
+    var o = function(F) {
+        var E = F.type,
+            C = seed.throne.activeSlot,
+            G = seed.throne.slotEquip[C],
+            D = [],
+            A;
+        var B = {};
+        g.each(G, function(H, I) {
+            A = kocThroneItems[I];
+            if (A.type === E) {
+                B.item1 = F;
+                B.item2 = A;
+                B.idx = H;
                 return false
             }
         });
-        return A
+        return B
     };
-    var a = function(z) {
+    var a = function(A) {
         AjaxCall.gPostRequest("ajax/_dispatch53.php", {
             ctrl: "throneRoom\\ThroneRoomServiceAjax",
             action: "equipItem",
-            itemId: z.id,
+            itemId: A.id,
             presetId: seed.throne.activeSlot
-        }, function(A) {
-            if (A.ok === true) {
-                cm.ThroneView.clickItemEquip(z)
-            } else {
-                cm.ModalManager.alert({
-                    button_text: g_js_strings.commonstr.ok,
-                    text: A.msg,
-                    "class": "craftFailure",
-                    exe: function() {
-                        Modal.hideModalAll();
-                        cm.ModalManager.close()
-                    }
-                })
-            }
-        })
-    };
-    var v = function(z) {
-        AjaxCall.gPostRequest("ajax/_dispatch53.php", {
-            ctrl: "throneRoom\\ThroneRoomServiceAjax",
-            action: "unequipItem",
-            itemId: z.id,
-            presetId: seed.throne.activeSlot
-        }, function(A) {
-            if (A.ok === true) {
-                cm.ThroneView.clickItemUnequip(z)
-            } else {
-                cm.ModalManager.alert({
-                    button_text: g_js_strings.commonstr.ok,
-                    text: A.msg,
-                    "class": "craftFailure",
-                    exe: function() {
-                        Modal.hideModalAll();
-                        cm.ModalManager.close()
-                    }
-                })
-            }
-        })
-    };
-    var t = function(z) {
-        AjaxCall.gPostRequest("ajax/_dispatch53.php", {
-            ctrl: "throneRoom\\ThroneRoomServiceAjax",
-            action: "salvage",
-            itemId: z.id,
-            cityId: currentcityid
-        }, function(A) {
-            if (A.ok === true) {
-                z.salvage()
-            } else {
-                cm.ModalManager.alert({
-                    button_text: g_js_strings.commonstr.ok,
-                    text: A.msg,
-                    "class": "craftFailure",
-                    exe: function() {
-                        Modal.hideModalAll();
-                        cm.ModalManager.close()
-                    }
-                })
-            }
-        })
-    };
-    var i = function(A, z) {
-        AjaxCall.gPostRequest("ajax/_dispatch53.php", {
-            ctrl: "throneRoom\\ThroneRoomServiceAjax",
-            action: "setPreset",
-            presetId: z
         }, function(B) {
             if (B.ok === true) {
-                cm.ThroneView.clickActivePreset(A)
+                cm.ThroneView.clickItemEquip(A)
             } else {
                 cm.ModalManager.alert({
                     button_text: g_js_strings.commonstr.ok,
@@ -69432,222 +82763,58 @@ cm.ThroneController = function(g) {
             }
         })
     };
-    var u = function(B) {
-        var A = "TR_PRESET_COST_" + (seed.throne.slotNum + 1),
-            C = +(cm.WorldSettings.getSetting(A)),
-            z = +(seed.player.gems);
-        if (C > z) {
-            modal_getgems()
-        } else {
-            AjaxCall.gPostRequest("ajax/_dispatch53.php", {
-                ctrl: "throneRoom\\ThroneRoomServiceAjax",
-                action: "buyNextPreset"
-            }, function(D) {
-                if (D.ok === true) {
-                    seed.player.gems = +(seed.player.gems) - C;
-                    g("#kochead_gems").text(seed.player.gems);
-                    g(".gemContainer .amount").text(seed.player.gems);
-                    cm.ThroneView.buyPreset(B)
-                } else {
-                    cm.ModalManager.alert({
-                        button_text: g_js_strings.commonstr.ok,
-                        text: D.msg,
-                        "class": "craftFailure",
-                        exe: function() {
-                            Modal.hideModalAll();
-                            cm.ModalManager.close()
-                        }
-                    })
-                }
-            })
-        }
-    };
-    var q = function(B) {
-        var A = "TR_ROW_COST_" + (seed.throne.rowNum + 1),
-            C = +(cm.WorldSettings.getSetting(A)),
-            z = +(seed.player.gems);
-        if (C > z) {
-            modal_getgems()
-        } else {
-            AjaxCall.gPostRequest("ajax/_dispatch53.php", {
-                ctrl: "throneRoom\\ThroneRoomServiceAjax",
-                action: "buyNextRow"
-            }, function(D) {
-                if (D.ok === true) {
-                    seed.player.gems = +(seed.player.gems) - C;
-                    g("#kochead_gems").text(seed.player.gems);
-                    g(".gemContainer .amount").text(seed.player.gems);
-                    cm.ThroneView.buyRow(B)
-                } else {
-                    cm.ModalManager.alert({
-                        button_text: g_js_strings.commonstr.ok,
-                        text: D.msg,
-                        "class": "craftFailure",
-                        exe: function() {
-                            Modal.hideModalAll();
-                            cm.ModalManager.close()
-                        }
-                    })
-                }
-            })
-        }
-    };
-    var h = function(A, z) {
-        A = +A;
-        z = +z;
-        return cm.thronestats.tiers && cm.thronestats.tiers[A] && cm.thronestats.tiers[A][z] ? cm.thronestats.tiers[A][z] : {}
-    };
-    var x = function(E, B, F) {
-        var A = h(E, B),
-            D = +(A.base) || 0,
-            z = +(A.growth) || 0,
-            C = +(D + ((F * F + F) * z * 0.5)).toFixed(2) || 0;
-        return Math.min(C, s(E))
-    };
-    var l = function(z) {
-        z = +z;
-        return cm.thronestats.effects && cm.thronestats.effects[z] ? cm.thronestats.effects[z] : {}
-    };
-    var k = function(z) {
-        return l(z)[1] || "Effect"
-    };
-    var r = function(z) {
-        return l(z)[4] || "Suffix"
-    };
-    var m = function(C) {
-        var A = seed.throne.activeSlot,
-            z = seed.throne.slotEquip[A],
-            E = 0,
-            B = [94, 95, 96],
-            D = s(C);
-        if (jQuery.inArray(C, B) > -1) {
-            E += h(C, 1).base
-        } else {
-            jQuery.each(z, function(I, H) {
-                var G = kocThroneItems[H],
-                    F = G.effects;
-                jQuery.each(F, function(L, K) {
-                    var J = +(L.split("slot")[1]);
-                    if (+(K.id) === C && G.quality >= J) {
-                        E += cm.ThroneController.getEffectAmount(C, K.tier, G.level)
+    var w = function(A) {
+        AjaxCall.gPostRequest("ajax/_dispatch53.php", {
+            ctrl: "throneRoom\\ThroneRoomServiceAjax",
+            action: "unequipItem",
+            itemId: A.id,
+            presetId: seed.throne.activeSlot
+        }, function(B) {
+            if (B.ok === true) {
+                cm.ThroneView.clickItemUnequip(A)
+            } else {
+                cm.ModalManager.alert({
+                    button_text: g_js_strings.commonstr.ok,
+                    text: B.msg,
+                    "class": "craftFailure",
+                    exe: function() {
+                        Modal.hideModalAll();
+                        cm.ModalManager.close()
                     }
                 })
-            })
-        }
-        return Math.min(E, D)
-    };
-    var w = function(z) {
-        return l(z)[2] || []
-    };
-    var s = function(A) {
-        return 9999999;
-        var z = w(A)[0];
-        if (!cm.thronestats.boosts[z] || !cm.thronestats.boosts[z]["Max"]) {
-            return 9999999
-        }
-        return cm.thronestats.boosts[z]["Max"]
-    };
-    var c = function(D) {
-        var E = +(seed.throne.activeSlot),
-            F = seed.throne.slotEquip[E],
-            C = "",
-            I = false,
-            G = kocThroneItems,
-            B, H = 0,
-            z = {}, A = {
-                briton: {
-                    count: 0
-                },
-                fey: {
-                    count: 0
-                },
-                druid: {
-                    count: 0
-                }
-            };
-        g.each(D, function(J, K) {
-            switch (K.faction) {
-            case "briton":
-                A.briton.count++;
-                break;
-            case "fey":
-                A.fey.count++;
-                break;
-            case "druid":
-                A.druid.count++;
-                break
             }
-        });
-        g.each(A, function(J, K) {
-            if (K.count >= 4) {
-                C = J;
-                H = 4
-            }
-        });
-        if ((H >= 4 && C != "")) {
-            I = true
-        } else {
-            I = false
-        }
-        z.hazBonus = I;
-        z.faction = C;
-        return z
+        })
     };
-    var e = function(B) {
-        var G = seed.throne.rowNum,
-            C = G * 5,
-            z = 0,
-            F = kocThroneItems,
-            E = 0,
-            A = cm.thronestats.mightByQuality,
-            D = cm.thronestats.mightByLevel;
-        g.each(F, function(I, H) {
-            ++z;
-            if (z > C) {
-                return false
-            }
-            E += A[H.quality].Might;
-            E += D[H.level].Might
-        });
-        return E
-    };
-    var j = function(A) {
-        var z = [],
-            C = [],
-            B = {};
-        g.each(kocThroneItems, function(E, D) {
-            if (!D.isEquipped && D.presetId == 0) {
-                if (g.inArray(D.quality, A) >= 0) {
-                    z.push(D);
-                    C.push(D.id)
-                }
-            }
-        });
-        B.ids = C;
-        B.items = z;
-        return B
-    };
-    var b = function(z) {
-        var A = 0;
-        g.each(z, function(C, B) {
-            A += Object.keys(B.effects).length * (B.quality + B.level) * cm.WorldSettings.getSettingAsNumber("AETHERSTONE_SALVAGE_MULTIPLIER", 500)
-        });
-        return A
-    };
-    var d = function(z, B) {
-        var A;
+    var u = function(A) {
         AjaxCall.gPostRequest("ajax/_dispatch53.php", {
             ctrl: "throneRoom\\ThroneRoomServiceAjax",
             action: "salvage",
-            itemId: z.join(","),
-            cityId: currentcityid,
-            qualityId: B.join(",")
+            itemId: A.id,
+            cityId: currentcityid
+        }, function(B) {
+            if (B.ok === true) {
+                A.salvage()
+            } else {
+                cm.ModalManager.alert({
+                    button_text: g_js_strings.commonstr.ok,
+                    text: B.msg,
+                    "class": "craftFailure",
+                    exe: function() {
+                        Modal.hideModalAll();
+                        cm.ModalManager.close()
+                    }
+                })
+            }
+        })
+    };
+    var i = function(B, A) {
+        AjaxCall.gPostRequest("ajax/_dispatch53.php", {
+            ctrl: "throneRoom\\ThroneRoomServiceAjax",
+            action: "setPreset",
+            presetId: A
         }, function(C) {
             if (C.ok === true) {
-                g.each(z, function(E, D) {
-                    A = kocThroneItems[D];
-                    A.salvage()
-                })
+                cm.ThroneView.clickActivePreset(B)
             } else {
                 cm.ModalManager.alert({
                     button_text: g_js_strings.commonstr.ok,
@@ -69661,39 +82828,300 @@ cm.ThroneController = function(g) {
             }
         })
     };
+    var v = function(C) {
+        var B = "TR_PRESET_COST_" + (seed.throne.slotNum + 1),
+            D = +(cm.WorldSettings.getSetting(B)),
+            A = cm.Gems.count();
+        if (D > A) {
+            modal_getgems()
+        } else {
+            AjaxCall.gPostRequest("ajax/_dispatch53.php", {
+                ctrl: "throneRoom\\ThroneRoomServiceAjax",
+                action: "buyNextPreset"
+            }, function(E) {
+                if (E.ok === true) {
+                    cm.Gems.subtract(D);
+                    g("#kochead_gems").text(cm.Gems.count());
+                    g(".gemContainer .amount").text(cm.Gems.count());
+                    cm.ThroneView.buyPreset(C)
+                } else {
+                    cm.ModalManager.alert({
+                        button_text: g_js_strings.commonstr.ok,
+                        text: E.msg,
+                        "class": "craftFailure",
+                        exe: function() {
+                            Modal.hideModalAll();
+                            cm.ModalManager.close()
+                        }
+                    })
+                }
+            })
+        }
+    };
+    var r = function(C) {
+        var B = "TR_ROW_COST_" + (seed.throne.rowNum + 1),
+            D = +(cm.WorldSettings.getSetting(B)),
+            A = cm.Gems.count();
+        if (D > A) {
+            modal_getgems()
+        } else {
+            AjaxCall.gPostRequest("ajax/_dispatch53.php", {
+                ctrl: "throneRoom\\ThroneRoomServiceAjax",
+                action: "buyNextRow"
+            }, function(E) {
+                if (E.ok === true) {
+                    cm.Gems.subtract(D);
+                    g("#kochead_gems").text(cm.Gems.count());
+                    g(".gemContainer .amount").text(cm.Gems.count());
+                    cm.ThroneView.buyRow(C)
+                } else {
+                    cm.ModalManager.alert({
+                        button_text: g_js_strings.commonstr.ok,
+                        text: E.msg,
+                        "class": "craftFailure",
+                        exe: function() {
+                            Modal.hideModalAll();
+                            cm.ModalManager.close()
+                        }
+                    })
+                }
+            })
+        }
+    };
+    var h = function(B, A) {
+        B = +B;
+        A = +A;
+        return cm.thronestats.tiers && cm.thronestats.tiers[B] && cm.thronestats.tiers[B][A] ? cm.thronestats.tiers[B][A] : {}
+    };
+    var y = function(G, C, H) {
+        var B = h(G, C),
+            F = +(B.base) || 0,
+            A = +(B.growth) || 0,
+            E = +(F + ((H * H + H) * A * 0.5)).toFixed(2) || 0,
+            D = Math.min(E, t(G));
+        if (D > 1 || D < -1) {
+            D = Math.floor(D)
+        }
+        return D
+    };
+    var m = function(A) {
+        A = +A;
+        return cm.thronestats.effects && cm.thronestats.effects[A] ? cm.thronestats.effects[A] : {}
+    };
+    var l = function(A) {
+        return m(A)[1] || "Effect"
+    };
+    var s = function(A) {
+        return m(A)[4] || "Suffix"
+    };
+    var n = function(D) {
+        var B = seed.throne.activeSlot,
+            A = seed.throne.slotEquip[B],
+            F = 0,
+            C = [94, 95, 96],
+            E = t(D);
+        if (jQuery.inArray(D, C) > -1) {
+            F += h(D, 1).base
+        } else {
+            jQuery.each(A, function(J, I) {
+                var H = kocThroneItems[I],
+                    G = H.effects;
+                jQuery.each(G, function(M, L) {
+                    var K = +(M.split("slot")[1]);
+                    if (+(L.id) === D && H.quality >= K) {
+                        F += cm.ThroneController.getEffectAmount(D, L.tier, H.level)
+                    }
+                })
+            })
+        }
+        return Math.min(F, E)
+    };
+    var j = function(D) {
+        var C = x(D)[0];
+        var B = cm.thronestats.boosts[C]["Min"];
+        var A = cm.thronestats.boosts[C]["Max"];
+        var E = cm.ThroneController.effectBonus(D);
+        B = typeof B == "number" ? B : -1000000;
+        A = typeof A == "number" ? A : 1000000;
+        return Math.max(Math.min(A, E), B)
+    };
+    var x = function(A) {
+        return m(A)[2] || []
+    };
+    var t = function(B) {
+        return 9999999;
+        var A = x(B)[0];
+        if (!cm.thronestats.boosts[A] || !cm.thronestats.boosts[A]["Max"]) {
+            return 9999999
+        }
+        return cm.thronestats.boosts[A]["Max"]
+    };
+    var c = function(E) {
+        var F = +(seed.throne.activeSlot),
+            G = seed.throne.slotEquip[F],
+            D = "",
+            J = false,
+            H = kocThroneItems,
+            C, I = 0,
+            A = {}, B = {
+                briton: {
+                    count: 0
+                },
+                fey: {
+                    count: 0
+                },
+                druid: {
+                    count: 0
+                }
+            };
+        g.each(E, function(K, L) {
+            switch (L.faction) {
+            case "briton":
+                B.briton.count++;
+                break;
+            case "fey":
+                B.fey.count++;
+                break;
+            case "druid":
+                B.druid.count++;
+                break
+            }
+        });
+        g.each(B, function(K, L) {
+            if (L.count >= 4) {
+                D = K;
+                I = 4
+            }
+        });
+        if ((I >= 4 && D != "")) {
+            J = true
+        } else {
+            J = false
+        }
+        A.hazBonus = J;
+        A.faction = D;
+        return A
+    };
+    var e = function(C) {
+        var H = seed.throne.rowNum,
+            D = H * 5,
+            A = 0,
+            G = kocThroneItems,
+            F = 0,
+            B = cm.thronestats.mightByQuality,
+            E = cm.thronestats.mightByLevel;
+        g.each(G, function(J, I) {
+            ++A;
+            if (A > D) {
+                return false
+            }
+            F += B[I.quality].Might;
+            F += E[I.level].Might
+        });
+        return F
+    };
+    var k = function(B) {
+        var A = [],
+            D = [],
+            C = {};
+        g.each(kocThroneItems, function(F, E) {
+            if (!E.isEquipped && E.presetId == 0) {
+                if (g.inArray(E.quality, B) >= 0) {
+                    A.push(E);
+                    D.push(E.id)
+                }
+            }
+        });
+        C.ids = D;
+        C.items = A;
+        return C
+    };
+    var b = function(A) {
+        var B = 0;
+        g.each(A, function(D, C) {
+            B += Object.keys(C.effects).length * (C.quality + C.level) * cm.WorldSettings.getSettingAsNumber("AETHERSTONE_SALVAGE_MULTIPLIER", 500)
+        });
+        return B
+    };
+    var d = function(A, C) {
+        var B;
+        AjaxCall.gPostRequest("ajax/_dispatch53.php", {
+            ctrl: "throneRoom\\ThroneRoomServiceAjax",
+            action: "salvage",
+            itemId: A.join(","),
+            cityId: currentcityid,
+            qualityId: C.join(",")
+        }, function(D) {
+            if (D.ok === true) {
+                g.each(A, function(F, E) {
+                    B = kocThroneItems[E];
+                    B.salvage()
+                })
+            } else {
+                cm.ModalManager.alert({
+                    button_text: g_js_strings.commonstr.ok,
+                    text: D.msg,
+                    "class": "craftFailure",
+                    exe: function() {
+                        Modal.hideModalAll();
+                        cm.ModalManager.close()
+                    }
+                })
+            }
+        })
+    };
     return {
-        createItems: y,
-        createRows: p,
-        checkType: n,
-        addItem: o,
+        createItems: z,
+        createRows: q,
+        checkType: o,
+        addItem: p,
         equipItem: a,
-        unequipItem: v,
-        salvageItem: t,
+        unequipItem: w,
+        salvageItem: u,
         setPreset: i,
-        buyPreset: u,
-        buyRow: q,
-        getEffectAmount: x,
-        getEffectName: k,
-        getEffectSuffix: r,
-        effectBonus: m,
-        getBoostCap: s,
+        buyPreset: v,
+        buyRow: r,
+        getEffectAmount: y,
+        getEffectName: l,
+        getEffectSuffix: s,
+        effectBonus: n,
+        getBoostCap: t,
         hasFactionBonus: c,
         calcMight: e,
-        calcMassSalvagableItems: j,
+        calcMassSalvagableItems: k,
         calcMassSalvagableAetherstones: b,
         massSalvageItems: d,
-        getThroneItems: f
+        getThroneItems: f,
+        getBoundedEffect: j
     }
 }(jQuery);
 cm = cm || {};
 cm.ThroneItemModel = jQueryClass.extend({
     init: function(a) {
+        a.id = Number(a.id);
+        a.quality = Number(a.quality);
+        a.level = Number(a.level);
+        if (isNaN(a.id) || a.id < 1) {
+            throw "Invalid Throne Item id"
+        }
+        if (jQuery.inArray(a.faction, ["druid", "fey", "briton"]) < 0) {
+            throw "Invalid Throne Item faction"
+        }
+        if (jQuery.inArray(a.type, ["advisor", "banner", "candelabrum", "chair", "table", "trophy", "window"]) < 0) {
+            throw "Invalid Throne Item type"
+        }
+        if (isNaN(a.quality) || a.quality < 0) {
+            throw "Invalid Throne Item quality"
+        }
+        if (isNaN(a.level) || a.level < 0) {
+            throw "Invalid Throne Item level"
+        }
         this.id = a.id;
         this.unique = (a.unique) ? +(a.unique) : 0;
         this.faction = a.faction;
         this.type = a.type;
-        this.quality = Number(a.quality);
-        this.level = Number(a.level);
+        this.quality = a.quality;
+        this.level = a.level;
         this.effects = a.effects;
         this.isEquipped = false;
         this.isBroken = (a.status == 3 || a.status == 4) ? true : false;
@@ -69865,7 +83293,7 @@ cm.ThronePanelController = function(h) {
                     E.stones.css = "have";
                     E.gems.render = false
                 }
-                E.gems.total = +(seed.player.gems);
+                E.gems.total = cm.Gems.count();
                 if (E.stones.use == E.stones.total) {
                     E.gems.use = 0
                 } else {
@@ -69878,7 +83306,7 @@ cm.ThronePanelController = function(h) {
                 E.stones.total = 0;
                 E.stones.use = 0;
                 E.gems.render = true;
-                E.gems.total = +(seed.player.gems);
+                E.gems.total = cm.Gems.count();
                 E.gems.use = c(z[D].Stones)
             }
         }
@@ -69888,7 +83316,7 @@ cm.ThronePanelController = function(h) {
         var C = 0,
             B = v(),
             x = [null, ksoItems[20001], ksoItems[20002], ksoItems[20003], ksoItems[20004]],
-            y = [null, ksoItems[20001], ksoItems[20002], ksoItems[20005], ksoItems[20006]],
+            y = [null, ksoItems[20001], ksoItems[20002], ksoItems[20005], ksoItems[20006], ksoItems[20019]],
             A;
         if (z === "enhance") {
             A = x[B]
@@ -70067,7 +83495,7 @@ cm.ThronePanelController = function(h) {
     var k = function(E, I) {
         var B, z, x = +(h("#costDropDown").val()),
             H, G = v(),
-            y = +(seed.player.gems);
+            y = cm.Gems.count();
         if (E === "enhance") {
             B = "upgradeQuality"
         } else {
@@ -70132,7 +83560,7 @@ cm.ThronePanelController = function(h) {
         } else {
             F = C.gems.use
         }
-        if (F > +(seed.player.gems)) {
+        if (F > cm.Gems.count()) {
             cm.ModalManager.alert({
                 close: function() {
                     cm.ThronePanelView.panelStatus = "closed";
@@ -70232,7 +83660,7 @@ cm.ThronePanelController = function(h) {
                 y = cm.thronestats.repairCostUpgrade[x.level].GemCost
             }
         }
-        if (+(seed.player.gems) < y) {
+        if (cm.Gems.count() < y) {
             cm.ModalManager.alert({
                 close: function() {
                     cm.ThronePanelView.panelStatus = "closed";
@@ -70367,7 +83795,7 @@ cm.ThronePanelView = function(E) {
             id: 0,
             name: g_js_strings.throneRoom.buff_none
         },
-        ksoItems["20001"], ksoItems["20002"], ksoItems["20005"], ksoItems["20006"], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12]],
+        ksoItems["20001"], ksoItems["20002"], ksoItems["20005"], ksoItems["20006"], ksoItems["20019"], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12]],
         a = [g.buff_none],
         m = "closed",
         d = {}, u, Q, P, I = "";
@@ -70385,7 +83813,7 @@ cm.ThronePanelView = function(E) {
             id: 0,
             name: g_js_strings.throneRoom.buff_none
         },
-        ksoItems["20001"], ksoItems["20002"], ksoItems["20005"], ksoItems["20006"], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12]];
+        ksoItems["20001"], ksoItems["20002"], ksoItems["20005"], ksoItems["20006"], ksoItems["20019"], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12]];
         V = cm.Template.renderTemplate("Throne", "thronePanel", {});
         E("#thronePanelContainer").html(V);
         if (Y) {
@@ -70796,44 +84224,44 @@ cm.ThronePanelView = function(E) {
         cm.HeatUpView.bindTooltip();
         cm.HeatUpView.update()
     };
-    var b = function(S, U, X) {
-        var W = cm.ThronePanelController.isLastLevel(U, S),
-            R, T = E("#thronePanelItemRequirementsContainer"),
-            V;
-        if (S == "enhance") {
-            V = g_js_strings.throneRoom.button_enhance
+    var b = function(T, V, Y, R) {
+        var X = cm.ThronePanelController.isLastLevel(V, T),
+            S, U = E("#thronePanelItemRequirementsContainer"),
+            W;
+        if (T == "enhance") {
+            W = g_js_strings.throneRoom.button_enhance
         } else {
-            if (S == "upgrade") {
-                V = g_js_strings.throneRoom.button_upgrade
+            if (T == "upgrade") {
+                W = g_js_strings.throneRoom.button_upgrade
             }
         }
-        if (X == 0) {
-            X = ""
+        if (Y == 0) {
+            Y = ""
         } else {
-            X = " <span>" + X + "</span>"
+            Y = " <span>" + Y + "</span>"
         }
-        if (U.isBroken) {
-            R = E("<a/>");
-            R.addClass("gemButtonv2 gray");
-            R.html(V + X)
+        if (V.isBroken || R === true) {
+            S = E("<a/>");
+            S.addClass("gemButtonv2 gray");
+            S.html(W + Y)
         } else {
-            if (W) {
-                R = E("<a/>");
-                R.addClass("gemButtonv2 gray");
-                R.html(V + X)
+            if (X) {
+                S = E("<a/>");
+                S.addClass("gemButtonv2 gray");
+                S.html(W + Y)
             } else {
-                R = E("<a/>");
-                R.addClass("gemButtonv2 green");
-                R.html(V + X);
-                R.click(function() {
+                S = E("<a/>");
+                S.addClass("gemButtonv2 green");
+                S.html(W + Y);
+                S.click(function() {
                     A("throneMainContainer");
-                    cm.ThronePanelController.changeItem(S, U)
+                    cm.ThronePanelController.changeItem(T, V)
                 })
             }
         }
         E("#thronePanelItemRequirementsContainer .gemButtonv2").remove();
-        T.append(R);
-        return R
+        U.append(S);
+        return S
     };
     var A = function(T) {
         var S = E("<div/>").attr("id", "throneSpinnyContainer"),
@@ -70848,78 +84276,79 @@ cm.ThronePanelView = function(E) {
         E("#throneSpinnyContainer").remove()
     };
     var y = function() {
-        var ac = C(),
-            aa = P,
-            ad = cm.ThronePanelView.enhanceOptions,
-            U = cm.ThronePanelView.upgradeOptions,
-            ae = +(E("#buffDropDown").val()),
-            T = E("#thronePanelBuffIcon"),
-            X = E("#thronePanelBuffPrice"),
-            W = E("#thronePanelRiskBarContainer"),
-            R = E("#thronePanelRiskBar"),
-            af = E("#costDropDown"),
-            Z = [],
-            Y = cm.thronestats[ac],
-            V, ab, S;
-        if (ac === "enhance") {
-            ab = ad[ae]
+        var ad = C(),
+            ab = P,
+            ae = cm.ThronePanelView.enhanceOptions,
+            V = cm.ThronePanelView.upgradeOptions,
+            af = +(E("#buffDropDown").val()),
+            U = E("#thronePanelBuffIcon"),
+            Y = E("#thronePanelBuffPrice"),
+            X = E("#thronePanelRiskBarContainer"),
+            S = E("#thronePanelRiskBar"),
+            ag = E("#costDropDown"),
+            aa = [],
+            Z = cm.thronestats[ad],
+            W, ac, T;
+        if (ad === "enhance") {
+            ac = ae[af]
         } else {
-            if (ac === "upgrade") {
-                ab = U[ae]
+            if (ad === "upgrade") {
+                ac = V[af]
             }
         }
-        T.attr("class", "");
-        T.css("backgroundPosition", "0 0");
-        if (cm.ThronePanelController.isLastLevel(aa, ac)) {
-            T.addClass("icon 0");
-            T.unbind("hover")
+        U.attr("class", "");
+        U.css("backgroundPosition", "0 0");
+        if (cm.ThronePanelController.isLastLevel(ab, ad)) {
+            U.addClass("icon 0");
+            U.unbind("hover")
         } else {
-            T.addClass("icon i" + ab.id);
-            if (ksoItems[ab.id]) {
-                T.hover(function(ag) {
-                    Tooltip.show(ag, ksoItems[ab.id].description, [-50, - 90])
-                }, function(ag) {
+            U.addClass("icon i" + ac.id);
+            if (ksoItems[ac.id]) {
+                U.hover(function(ah) {
+                    Tooltip.show(ah, ksoItems[ac.id].description, [-50, - 90])
+                }, function(ah) {
                     removeTooltip()
                 })
             }
-            r(T, null, "buff")
+            r(U, null, "buff")
         }
-        X.empty();
-        if (af.val() == 0) {
-            V = cm.ThronePanelController.calcCost(ac, aa, ab, "stones")
+        Y.empty();
+        if (ag.val() == 0) {
+            W = cm.ThronePanelController.calcCost(ad, ab, ac, "stones")
         } else {
-            if (af.val() == 1) {
-                V = cm.ThronePanelController.calcCost(ac, aa, ab, "gems")
+            if (ag.val() == 1) {
+                W = cm.ThronePanelController.calcCost(ad, ab, ac, "gems")
             }
         }
-        if (!cm.ThronePanelController.isLastLevel(aa, ac)) {
-            if (ab && ksoItems[ab.id]) {
-                if (ab.count > 0) {
-                    Z.push("<span class='items'>" + ksoItems[ab.id].count + "/1</span>")
+        if (!cm.ThronePanelController.isLastLevel(ab, ad)) {
+            if (ac && ksoItems[ac.id]) {
+                if (ac.count > 0) {
+                    aa.push("<span class='items'>" + ksoItems[ac.id].count + "/1</span>")
                 } else {
-                    Z.push("<span class='items havent'>" + ksoItems[ab.id].count + "/1</span>");
-                    Z.push("<span class='gems'>" + ksoItems[ab.id].price + "</span>")
+                    aa.push("<span class='items havent'>" + ksoItems[ac.id].count + "/1</span>");
+                    aa.push("<span class='gems'>" + ksoItems[ac.id].price + "</span>")
                 }
             }
         } else {
-            Z.push("<span class='gems'>--</span>")
+            aa.push("<span class='gems'>--</span>")
         }
-        X.append(Z.join(""));
-        if (!cm.ThronePanelController.isLastLevel(aa, ac)) {
+        Y.append(aa.join(""));
+        if (!cm.ThronePanelController.isLastLevel(ab, ad)) {
             cm.ThronePanelController.updateRiskBar();
-            R.addClass("riskBar active")
+            S.addClass("riskBar active")
         } else {
             E("#thronePanelRiskBar").remove();
             E("#thronePanelRiskBarContainer").removeClass("active")
         }
-        if (ksoItems[ab.id]) {
-            if (ksoItems[ab.id].count > 0) {
-                b(ac, aa, V.gems.use)
+        if (ksoItems[ac.id]) {
+            if (ksoItems[ac.id].count > 0) {
+                b(ad, ab, W.gems.use)
             } else {
-                b(ac, aa, (ksoItems[ab.id].price + V.gems.use))
+                var R = parseInt(ac.id) == 20019 ? !cm.ShopItemModel.onSale(ac.id) : undefined;
+                b(ad, ab, (ksoItems[ac.id].price + W.gems.use), R)
             }
         } else {
-            b(ac, aa, (V.gems.use))
+            b(ad, ab, (W.gems.use))
         }
         return false
     };
@@ -71317,6 +84746,7 @@ cm.ThroneView = function(e) {
     var B = 1,
         j, m = {}, l;
     var q = function(F) {
+        cm.ShopItemModel.init();
         var H = (F) ? F.items : undefined,
             D = true;
         if (F) {
@@ -71324,11 +84754,11 @@ cm.ThroneView = function(e) {
         }
         var E = cm.Template.renderTemplate("Throne", "mainThrone", {}),
             G = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
-                gem: seed.player.gems,
+                gem: cm.Gems.count(),
                 primaryTitle: (!D) ? (F.name + g_js_strings.throneRoom.title_part) : g_js_strings.throneRoom.title_throneRoom
             });
         cm.ModalManager.addLarge({
-            gem: seed.player.gems,
+            gem: cm.Gems.count(),
             title: G,
             body: E,
             closeNow: false,
@@ -72081,13 +85511,6 @@ var Tooltip = {
             m = $(this.tooltipDiv);
             this.resetCSS(m)
         }
-        if (l) {
-            m.setStyle(l);
-            var c = this;
-            jQuery(f).mouseleave(function() {
-                c.resetCSS(m)
-            })
-        }
         jQuery(f).mouseleave(function(e) {
             m.hide()
         });
@@ -72103,7 +85526,14 @@ var Tooltip = {
             left: j + "px"
         });
         m.update(n);
-        m.style.display = "block"
+        m.style.display = "block";
+        if (l) {
+            m.setStyle(l);
+            var c = this;
+            jQuery(f).mouseleave(function() {
+                c.resetCSS(m)
+            })
+        }
     },
     hide: function() {
         if ($(this.tooltipDiv)) {
@@ -72111,22 +85541,229 @@ var Tooltip = {
         }
     }
 };
+cm = cm || {};
+cm.TournamentsController = function(b) {
+    var c = g_js_strings.modal_tourny_changetab,
+        k = g_js_strings.commonstr;
+    var e = function(m, n) {
+        cm.TournamentsModel.setListParams(m, n);
+        d();
+        cm.TournamentsView.showLoading();
+        cm.TournamentsModel.init(d)
+    };
+    var d = function() {
+        var m = "",
+            n = cm.TournamentsModel.getListParams().tournyPos,
+            q = cm.TournamentsModel.getListParams().poolType,
+            p = cm.TournamentsModel.getRankingData(),
+            o = p.info;
+        if (typeof p.bracket === "undefined") {
+            cm.TournamentsModel.setListParams(null, "world")
+        }
+        if (typeof p.world === "undefined") {
+            cm.TournamentsModel.setListParams(null, "bracket")
+        }
+        m += l();
+        m += j();
+        m += f();
+        m += i();
+        m += h();
+        cm.TournamentsView.openTournaments(o.name, m);
+        b("#previous_" + n).addClass("selected");
+        b(".tournamentOfMightModal .navigationTabsContainer .tab").unbind("click").click(a);
+        b(".tournamentOfMightModal .footer .timeline .previous").unbind("click").click(g);
+        cm.Countdown.register("activeTournament", function() {
+            return unixtime() >= o.endDate
+        }, function() {
+            b(".tournamentOfMightModal .eventStatus .timeleft").html(timestr(o.endDate - unixtime()))
+        }, function() {
+            b(".tournamentOfMightModal .eventStatus .countdown").remove()
+        });
+        b(".im_a_fermata").unbind("click").click(function() {
+            var s = 0;
+            b.each(p[q], function(t, u) {
+                if (u.playerName === seed.player.prefix + " " + seed.player.name) {
+                    s = t
+                }
+            });
+            var r = b(".tournamentOfMightModal .rows .player:contains('" + seed.player.name + "')").siblings(".rank").html();
+            jQuery(".rows").animate({
+                scrollTop: s * 28
+            }, 500, "easeOutCirc")
+        }).holdClick(function() {
+            cm.sounds.play("modal_build_speedup_apply")
+        }, 3000)
+    };
+    var l = function() {
+        var n = cm.TournamentsModel.getRankingData(),
+            m = n.info;
+        return cm.TournamentsView.renderDescription(m.description, {
+            startDate: m.startDate,
+            endDate: m.endDate
+        })
+    };
+    var j = function() {
+        var m = "",
+            o = cm.TournamentsModel.getListParams().tournyPos,
+            r = cm.TournamentsModel.getRankingData(),
+            q = r.info,
+            n = r.player,
+            t = r.competitor,
+            s, p;
+        if (n && t) {
+            if (o > 0) {
+                if (+n.rank === 1) {
+                    p = {
+                        theirStatus: g_js_strings.report_view.won,
+                        theirChallenge: c.youWereAheadBy.replace("%1$s", "<b>" + t.playerName + "</b>").replace("%2$s", "<b>" + Math.abs(n.mightIncrease - t.mightIncrease) + " " + k.might + "</b>")
+                    }
+                } else {
+                    p = {
+                        theirStatus: c.beatYouBy.replace("%1$s", "<b>" + t.playerName + "</b>").replace("%2$s", "<b>" + Math.abs(n.mightIncrease - t.mightIncrease) + " " + k.might + "</b>"),
+                        theirPrize: c.youdveEarned + ": " + (t.prize || "NA")
+                    }
+                }
+            } else {
+                if (n.mightIncrease > t.mightIncrease) {
+                    p = {
+                        theirStatus: c.youreOnlyAheadBy.replace("%1$s", "<b>" + t.playerName + "</b>").replace("%2$s", "<b>" + Math.abs(n.mightIncrease - t.mightIncrease) + " " + k.might + "</b>"),
+                        theirChallenge: c.dontLetThemPass
+                    }
+                } else {
+                    p = {
+                        theirStatus: c.isAheadOfYou.replace("%1$s", "<b>" + t.playerName + "</b>").replace("%2$s", "<b>" + Math.abs(n.mightIncrease - t.mightIncrease) + " " + k.might + "</b>"),
+                        theirChallenge: c.gainMightToPass.replace("%1$s", "<b>" + Math.abs(n.mightIncrease - t.mightIncrease) + " " + k.might + "</b>"),
+                        theirPrize: c.theirPrize + ": " + (t.prize || "NA")
+                    }
+                }
+            }
+            s = b.extend({
+                yourAvatarClass: n.avatarClass,
+                yourName: n.playerName,
+                yourRank: (n.rank && n.rank < Infinity) ? n.rank : c.notRanked,
+                yourBracket: q.bracketName,
+                yourMight: n.mightIncrease,
+                yourPrize: n.prize,
+                theirAvatarClass: t.avatarClass
+            }, p);
+            m += cm.TournamentsView.renderPlayerStatus(s)
+        } else {
+            if (!KB.Browser.IE) {
+                s = {
+                    loadingClass: "huh",
+                    yourName: seed.player.prefix + " " + seed.player.name,
+                    yourRankLabel: c.yourRank,
+                    yourBracketLabel: c.yourBracket,
+                    yourMightLabel: c.mightgained,
+                    yourPrizeLabel: c.currentPrize,
+                    yourAvatarClass: seed.player.g.toLowerCase() + seed.player.avatarId,
+                    yourRank: "Not Ranked",
+                    yourBracket: "Bracket of Awesome",
+                    yourMight: "Call me, might.",
+                    yourPrize: "Blurry Text",
+                    theirAvatarClass: "default",
+                    theirStatus: "Red eye? Try clear eye!",
+                    theirChallenge: "All your base are belong to us",
+                    theirPrize: "Yatta!"
+                };
+                m += cm.TournamentsView.renderPlayerStatus(s)
+            }
+        }
+        return m
+    };
+    var f = function() {
+        var p = cm.TournamentsModel.getListParams().poolType,
+            o = cm.TournamentsModel.getRankingData(),
+            n = o.info,
+            m = [];
+        if (o.bracket && o.bracket.length > 0) {
+            m.push({
+                label: n.bracketName,
+                className: p === "bracket" ? "selected" : ""
+            })
+        }
+        if (o.world && o.world.length > 0) {
+            m.push({
+                label: g_js_strings.modal_tourny_changetab.domainLeaders.replace("%1$s", domainName),
+                className: p !== "bracket" ? "selected" : ""
+            })
+        }
+        return cm.TournamentsView.renderGenericTabs(m)
+    };
+    var i = function() {
+        var p = cm.TournamentsModel.getListParams().poolType,
+            o = cm.TournamentsModel.getRankingData(),
+            n = o.info,
+            m = "";
+        if (o[p] && o[p].length > 0) {
+            b.each(o[p], function(q, r) {
+                m += cm.TournamentsView.renderRankingRow(r)
+            })
+        } else {
+            if (+unixtime() > +n.startDate && +unixtime() < +n.endDate) {
+                m = '<li class="empty">' + c.gainMightToJoin + "</li>"
+            } else {
+                m = '<li class="empty">' + c.notourny + "</li>"
+            }
+        }
+        return cm.TournamentsView.renderRankingList(m, p === "world")
+    };
+    var h = function() {
+        var r = cm.TournamentsModel.getListParams().poolType,
+            q = cm.TournamentsModel.getRankingData(),
+            n = q.player,
+            p = q.info,
+            m = q.previous,
+            o = false;
+        if (q[r] && q[r].length > 0) {
+            b.each(q[r], function(s, t) {
+                if (t.playerName === seed.player.prefix + " " + seed.player.name) {
+                    o = true
+                }
+            })
+        }
+        return cm.TournamentsView.renderFooter(m, o, p.lastUpdated)
+    };
+    var a = function(m) {
+        if (b(this).hasClass("selected")) {
+            return
+        }
+        cm.TournamentsModel.setListParams(null, b(this).index() ? "world" : "bracket");
+        cm.TournamentsView.showLoading();
+        setTimeout(e, 500)
+    };
+    var g = function(m) {
+        if (b(this).hasClass("selected")) {
+            return
+        }
+        cm.TournamentsModel.setListParams(b(this).attr("id").split("_")[1], null);
+        cm.TournamentsView.showLoading();
+        setTimeout(e, 1000)
+    };
+    return {
+        open: e
+    }
+}(jQuery);
 
-function modal_tournaments() {
-    var a = new Array();
-    a.push("<div class='modal_tourny_container'>");
-    a.push("<div id='modal_tourny_body' class='tournywrap' name='1'><div class='modal_tourny_hd'>&nbsp;</div>");
-    a.push("<div class='tabsbar clearfix' id='modal_tourny_tabs'>");
-    a.push("<a  id='modal_tourny_tab1' onclick='modal_tourny_changetab(1);return false;' class='tab selected'><span>" + g_js_strings.commonstr.tournament + "</span></a>");
-    a.push("<a  id='modal_tourny_tab2' onclick='modal_tourny_changetab(2);return false;' class='tab'><span>" + g_js_strings.commonstr.previous + " 1</span></a>");
-    a.push("<a  id='modal_tourny_tab3' onclick='modal_tourny_changetab(3);return false;' class='tab'><span>" + g_js_strings.commonstr.previous + " 2</span></a>");
-    a.push("<a  id='modal_tourny_tab4' onclick='modal_tourny_changetab(4);return false;' class='tab'><span>" + g_js_strings.commonstr.previous + " 3</span></a>");
-    a.push("<a  id='modal_tourny_tab5' onclick='modal_tourny_changetab(5);return false;' class='tab'><span>" + g_js_strings.commonstr.previous + " 4</span></a>");
-    a.push("</div>");
-    a.push("<div id='modal_tourny_content'></div>");
-    a.push("</div>");
-    a.push("</div>");
-    Modal.showModal(740, 740, 10, 10, g_js_strings.modaltitles.tournaments, a.join(""), "");
+function modal_tournaments(a) {
+    var b = (a === "current") ? 0 : 1;
+    cm.TournamentsModel.setListParams(b, "bracket");
+    cm.TournamentsController.open();
+    return;
+    var c = new Array();
+    c.push("<div class='modal_tourny_container'>");
+    c.push("<div id='modal_tourny_body' class='tournywrap' name='1'><div class='modal_tourny_hd'>&nbsp;</div>");
+    c.push("<div class='tabsbar clearfix' id='modal_tourny_tabs'>");
+    c.push("<a  id='modal_tourny_tab1' onclick='modal_tourny_changetab(1);return false;' class='tab selected'><span>" + g_js_strings.commonstr.tournament + "</span></a>");
+    c.push("<a  id='modal_tourny_tab2' onclick='modal_tourny_changetab(2);return false;' class='tab'><span>" + g_js_strings.commonstr.previous + " 1</span></a>");
+    c.push("<a  id='modal_tourny_tab3' onclick='modal_tourny_changetab(3);return false;' class='tab'><span>" + g_js_strings.commonstr.previous + " 2</span></a>");
+    c.push("<a  id='modal_tourny_tab4' onclick='modal_tourny_changetab(4);return false;' class='tab'><span>" + g_js_strings.commonstr.previous + " 3</span></a>");
+    c.push("<a  id='modal_tourny_tab5' onclick='modal_tourny_changetab(5);return false;' class='tab'><span>" + g_js_strings.commonstr.previous + " 4</span></a>");
+    c.push("</div>");
+    c.push("<div id='modal_tourny_content'></div>");
+    c.push("</div>");
+    c.push("</div>");
+    Modal.showModal(740, 740, 10, 10, g_js_strings.modaltitles.tournaments, c.join(""), "");
     modal_tourny_changetab(1)
 }
 function modal_tourny_changetab(newtab) {
@@ -72262,6 +85899,359 @@ function modal_tourny_changetab(newtab) {
         onFailure: function() {}
     })
 };
+cm = cm || {};
+cm.TournamentsModel = function(h) {
+    var m = g_js_strings.modal_tourny_changetab,
+        q = g_js_strings.commonstr;
+    var k = {}, i = {
+        tournyPos: 0,
+        poolType: "bracket"
+    };
+    var d = function(s, r, t) {
+        AjaxCall.gPostRequest("ajax/getLeaderboard.php", {
+            tournyPos: +s || 0,
+            format: 2
+        }, r, t)
+    };
+    var j = function(u) {
+        p();
+        var r = g().tournyPos,
+            t = unixtime() - e().info.lastRefresh,
+            s = 3600;
+        if (e() && t < s) {
+            u()
+        } else {
+            d(r, function(v) {
+                if (v.ok) {
+                    n(r, v);
+                    u(v)
+                } else {
+                    cm.log.l(v)
+                }
+            }, function(v) {
+                cm.log.l(v)
+            })
+        }
+    };
+    var n = function(u, w) {
+        u = +u;
+        var v = [],
+            t = [],
+            r = [];
+        k[u] = {};
+        for (var s = 0; s < 4; s++) {
+            if (w["previous" + s] && w["previous" + s] > -1) {
+                r.push(w["previous" + s])
+            }
+        }
+        k[u]["previous"] = r;
+        k[u]["player"] = a(w);
+        if (w.data) {
+            jQuery.each(w.data, function(x, y) {
+                v.push(o(w, y))
+            });
+            k[u]["bracket"] = v;
+            k[u]["competitor"] = f(u)
+        }
+        if (w.worldData) {
+            jQuery.each(w.worldData, function(x, y) {
+                t.push(o(w, y))
+            });
+            k[u]["world"] = t
+        }
+        k[u]["info"] = b(w)
+    };
+    var l = function(r, s) {
+        s = h.inArray(s, ["bracket", "world"]) < 0 ? "bracket" : s;
+        return k[r][s]
+    };
+    var c = function(s) {
+        var r = Infinity;
+        jQuery.each(l(s, "bracket"), function(t, u) {
+            if (+tvuid === +u.userId) {
+                r = u.rank
+            }
+        });
+        return r
+    };
+    var f = function(v) {
+        var r = l(v, "bracket"),
+            z = c(v),
+            s = Infinity,
+            t = 1,
+            y = r.length,
+            w = e().player,
+            A = (r.length > 1) ? r[r.length - 1] : r[0],
+            x = (r.length > 1) ? r[z] : r[0],
+            u = (r.length > 1) ? r[z - 2] : r[0],
+            B;
+        if (z === s) {
+            B = A
+        } else {
+            if (z === t) {
+                B = x
+            } else {
+                if (z === y) {
+                    B = u
+                } else {
+                    if (+x.mightIncrease > 0.95 * (+w.mightIncrease)) {
+                        B = x
+                    } else {
+                        B = u
+                    }
+                }
+            }
+        }
+        return B
+    };
+    var b = function(s) {
+        var r = {
+            name: s.name,
+            bracketName: s.bracketName,
+            description: s.description,
+            startDate: +s.startDate,
+            endDate: +s.endDate,
+            lastUpdated: +s.lastUpdated,
+            lastRefresh: unixtime()
+        };
+        return r
+    };
+    var a = function(v) {
+        var t = "NA",
+            u = v.player || {}, r = (u.ranking && +u.ranking > 0) ? +u.ranking : Infinity;
+        if (r < Infinity) {
+            var s = v.data[r - 1];
+            if (+s.itemType && s.itemCount) {
+                t = ksoItems[s.itemType].name + " (" + s.itemCount + ")"
+            } else {
+                if (s.itemType == 0 && s.itemCount) {
+                    t = q.gems + " (" + s.itemCount + ")"
+                }
+            }
+        }
+        return {
+            userId: tvuid,
+            avatarClass: ((seed.player.prefix === q.lady) ? "f" : "m") + seed.player.avatarId,
+            rank: r,
+            iconId: typeof u.iconId === "undefined" ? +v.iconId : u.iconId,
+            playerName: seed.player.prefix + " " + seed.player.name,
+            allianceName: null,
+            mightIncrease: u.contestValue || 0,
+            prize: t
+        }
+    };
+    var o = function(t, s) {
+        var r = "";
+        if (+s.itemType && s.itemCount) {
+            r = ksoItems[s.itemType].name + " (" + s.itemCount + ")"
+        } else {
+            if (+s.itemType === 0 && s.itemCount) {
+                r = q.gems + " (" + s.itemCount + ")"
+            }
+        }
+        return {
+            userId: +s.userId,
+            avatarClass: s.avatarId,
+            rank: +s.ranking,
+            iconId: typeof s.iconId === "undefined" ? +t.iconId : s.iconId,
+            playerName: s.name,
+            allianceName: s.alliance,
+            mightIncrease: +s.contestValue,
+            prize: r
+        }
+    };
+    var e = function() {
+        var r = {
+            info: {
+                description: q.loadingddd
+            },
+            bracket: [],
+            world: [],
+            previous: []
+        };
+        return k[g().tournyPos] || r
+    };
+    var p = function(r, s) {
+        i.tournyPos = r || i.tournyPos || 0;
+        i.poolType = s || i.poolType || "bracket"
+    };
+    var g = function() {
+        return i
+    };
+    return {
+        init: j,
+        getRankingData: e,
+        setListParams: p,
+        getListParams: g
+    }
+}(jQuery);
+cm = cm || {};
+cm.TournamentsView = function(c) {
+    var f = g_js_strings.modal_tourny_changetab,
+        n = g_js_strings.commonstr;
+    var a = function(p) {
+        if (c(".tournamentOfMightModal").length > 0) {
+            c(".tournamentOfMightModal .primarytitlebar span").html(p.title);
+            c(".tournamentOfMightModal .primarycontent").html(p.body)
+        } else {
+            p = c.extend({
+                title: p.title,
+                "class": "tournamentOfMightModal"
+            }, p);
+            cm.ModalManager.addXLarge(p)
+        }
+    };
+    var b = function(p, q) {
+        return cm.Template.renderTemplate("Tournaments", p, q)
+    };
+    var e = function(p) {
+        c(p).hover(function() {
+            var r = c(this).next().length > 0 ? c(this).next() : c(this).prev(),
+                q = parseInt(c(this).css("width")),
+                t = parseInt(r.css("width")),
+                s;
+            c(this).css("width", "auto");
+            s = parseInt(c(this).css("width"));
+            if (s > q) {
+                c(this).css("width", s + 10);
+                r.css("width", Math.max(0, t - (s - q) - 10))
+            } else {
+                c(this).css("width", "");
+                r.css("width", "")
+            }
+        }, function() {
+            c(this).css("width", "");
+            c(this).next().css("width", "");
+            c(this).prev().css("width", "")
+        })
+    };
+    var m = function(s) {
+        s = ((+s || 0) - 1) % 15;
+        var q = 5,
+            t = 3,
+            r = 23,
+            p = {
+                x: 0,
+                y: 0
+            };
+        p.x = -(Math.floor(s % q) * r) || 0;
+        p.y = -(Math.floor(s / q) * r) || 0;
+        return p
+    };
+    var o = function(v, t) {
+        var s = "Win by having the greatest positive increase in Might by the end of the Tournament!",
+            r = "Increase your Might by constructing and upgrading Buildings, training Troops, and building Wall Defenses!",
+            p = "<b>" + s + "</b><br/>" + r,
+            x = v || p,
+            u = "",
+            q = cm.utils.Date("F, d @ H:i", t.startDate),
+            w = cm.utils.Date("F, d @ H:i", t.endDate);
+        if (t.startDate && t.endDate) {
+            u = n.start + ": " + q + " -- " + n.end + ": " + w;
+            if (unixtime() < t.endDate) {
+                u += ' <span class="countdown">(' + g_js_strings.vote.timeLeft + ': <span class="timeleft">' + timestr(t.endDate - unixtime()) + "</span>)</span>"
+            }
+            x += "<br/><b>" + u + "</b>"
+        }
+        return b("event_status", {
+            description: x
+        })
+    };
+    var j = function(p) {
+        p = c.extend({
+            loadingClass: "",
+            yourAvatarClass: "",
+            yourName: "",
+            yourRankLabel: f.yourRank,
+            yourRank: "",
+            yourBracketLabel: f.yourBracket,
+            yourBracket: "",
+            yourMightLabel: f.mightgained,
+            yourMight: "",
+            yourPrizeLabel: f.currentPrize,
+            yourPrize: "",
+            theirAvatarClass: "",
+            theirStatus: "",
+            theirChallenge: "",
+            theirPrize: ""
+        }, p);
+        return b("player_status", p)
+    };
+    var k = function(p) {
+        var q = "";
+        c.each(p, function(r, s) {
+            q += b("navigation_tab", s)
+        });
+        return b("navigation_tabs", {
+            tabs: q
+        })
+    };
+    var i = function(p, q) {
+        return b("ranking_rows", {
+            rankLabel: n.rank,
+            playerNameLabel: f.playerName,
+            allianceNameLabel: f.allianceName,
+            mightIncreaseLabel: f.mightgained,
+            prizeLabel: n.prize,
+            ranks: p,
+            noPrizeClass: q ? "no_prize" : ""
+        })
+    };
+    var d = function(p) {
+        c.extend(p, {
+            iconX: cm.TournamentsView.getIconCoord(p.iconId).x,
+            iconY: cm.TournamentsView.getIconCoord(p.iconId).y,
+            highlightClass: p.playerName === seed.player.prefix + " " + seed.player.name ? "highlight" : ""
+        });
+        return b("ranking_row", p)
+    };
+    var h = function(u, t, r) {
+        var q = ['<a class="previous" id="previous_0">' + n.ccurrent + "</a>"],
+            s = "",
+            p = {};
+        c.each(u, function(v, w) {
+            q.push('<a class="previous" id="previous_' + (v + 1) + '">' + n.ended + " " + cm.utils.Date("n/j/y", w) + "</a>")
+        });
+        s = (q.length > 1) ? q.join("&nbsp;&nbsp;|&nbsp;&nbsp;") : "";
+        p = {
+            timeline: s
+        };
+        if (t) {
+            p.findMeButton = '<a class="im_a_fermata buttonv2">' + n.findMe + "</a>"
+        }
+        if (r) {
+            p.lastUpdatedLabel = n.lastUpdate + ":";
+            p.lastUpdated = cm.utils.Date("H:i n/j/y", r)
+        }
+        return b("footer", p)
+    };
+    var l = function() {
+        c(".tournamentOfMightModal .rows").html(b("loading", {}))
+    };
+    var g = function(q, p) {
+        a({
+            title: q || g_js_strings.changeDomain.tournamentOfmight,
+            body: b("tournaments_skeleton", {
+                content: p
+            }),
+            close: function() {
+                cm.Countdown.clear("activeTournament")
+            }
+        });
+        e(".tournamentOfMightModal .ranking li")
+    };
+    return {
+        getIconCoord: m,
+        renderDescription: o,
+        renderPlayerStatus: j,
+        renderGenericTabs: k,
+        renderRankingList: i,
+        renderRankingRow: d,
+        renderFooter: h,
+        showLoading: l,
+        openTournaments: g
+    }
+}(jQuery);
 cm.TownCrierCaravan = function(d, e) {
     var c = this;
     var b = e;
@@ -74789,6 +88779,9 @@ cm.ScriptVersionUpdater = function(e) {
                     if (rslt.updateMarch) {
                         update_march(rslt.updateMarch)
                     }
+                    if (typeof rslt.updateVote !== "undefined") {
+                        seed.voting = rslt.updateVote
+                    }
                     if (typeof rslt.ss !== "undefined") {
                         seed.ss = rslt.ss
                     }
@@ -74850,7 +88843,9 @@ cm.ScriptVersionUpdater = function(e) {
                     }
                     if (rslt.updateMight) {
                         seed.player.might = parseInt(rslt.updateMight);
-                        update_might()
+                        setTimeout(function() {
+                            update_might()
+                        }, 10000)
                     }
                     if (rslt.updateCityUnits) {
                         update_cityUnits(rslt.updateCityUnits)
@@ -74877,6 +88872,7 @@ cm.ScriptVersionUpdater = function(e) {
                         }
                     }
                     cm.GloryView.topNavGlory(rslt.updateGlory || 0);
+                    cm.VotingNewEvent.trigger(rslt);
                     if (undefined != rslt.truceExpireUnixTime) {
                         seed.player.truceExpireUnixTime = rslt.truceExpireUnixTime
                     } else {
@@ -74938,8 +88934,8 @@ function update_inventory(c) {
     }
 }
 function update_gems(a) {
-    seed.player.gems = +a;
-    jQuery("#kochead_gems").html(seed.player.gems)
+    cm.Gems.update(a);
+    jQuery("#kochead_gems").html(cm.Gems.count())
 }
 function update_woundedCityUnits(a) {
     var g = Object.keys(a);
@@ -75427,11 +89423,9 @@ UserEngagement.Methods = {
             onSuccess: function(transport) {
                 var rslt = eval("(" + transport.responseText + ")");
                 if (rslt.ok) {
-                    var replarr = new Array();
-                    replarr.push(["REPLACE_fEeDiD", rslt.feedId]);
-                    var clonedTemp = Object.cloneFeed(template_data_201);
-                    var clonedAction = Object.cloneFeed(actionlink_data_201);
-                    common_postToProfile("201", clonedTemp, clonedAction, continuation_201, replarr)
+                    var reparr = new Array();
+                    reparr.push(["REPLACE_fEeDiD", rslt.feedId]);
+                    common_postToProfile("201", reparr)
                 }
             },
             onFailure: function() {}
@@ -75561,14 +89555,12 @@ UserEngagement.Methods = {
             onSuccess: function(transport) {
                 var rslt = eval("(" + transport.responseText + ")");
                 if (rslt.ok) {
-                    var replarr = new Array();
+                    var reparr = new Array();
                     var tileName = (seed.queue_atkp["city" + currentcityid]["m" + mid].toTileType == 51) ? "Barbarian Camp" : g_mapObject.types[parseInt(seed.queue_atkp["city" + currentcityid]["m" + mid].toTileType)].capitalize();
-                    replarr.push(["REPLACE_TiLeNaMe", tileName]);
-                    replarr.push(["REPLACE_fEeDiD", rslt.feedId]);
-                    replarr.push(["REPLACE_tOkEnId", rslt.tokenId]);
-                    var clonedTemp = Object.cloneFeed(template_data_118);
-                    var clonedAction = Object.cloneFeed(actionlink_data_118);
-                    common_postToProfile("118", clonedTemp, clonedAction, continuation_118, replarr)
+                    reparr.push(["REPLACE_TiLeNaMe", tileName]);
+                    reparr.push(["REPLACE_fEeDiD", rslt.feedId]);
+                    reparr.push(["REPLACE_tOkEnId", rslt.tokenId]);
+                    common_postToProfile("118", reparr)
                 } else {
                     Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
                 }
@@ -75892,7 +89884,7 @@ function getUserSettings() {
             if (rslt.ok) {
                 var ignorelist = rslt.chatdata;
                 var ignoreHtml = new Array();
-                if (Object.keys(ignorelist) && Object.keys(ignorelist).length > 0) {
+                if (ignorelist && Object.keys(ignorelist) && Object.keys(ignorelist).length > 0) {
                     var idlist = Object.keys(ignorelist);
                     for (var i = 0; i < idlist.length; i++) {
                         ignoreHtml.push("<div class='userrow clearfix' id='igList_" + idlist[i] + "'>");
@@ -75903,7 +89895,7 @@ function getUserSettings() {
                 }
                 var blocklist = rslt.msgdata;
                 var blockHtml = new Array();
-                if (Object.keys(blocklist) && Object.keys(blocklist).length > 0) {
+                if (blocklist && Object.keys(blocklist) && Object.keys(blocklist).length > 0) {
                     var bidlist = Object.keys(blocklist);
                     for (var i = 0; i < bidlist.length; i++) {
                         blockHtml.push("<div class='userrow clearfix' id='blList_" + bidlist[i] + "'>");
@@ -76428,6 +90420,21 @@ cm.utils.Date = function(j, h) {
         return this.each(function() {
             c(this)
         })
+    };
+    a.fn.holdClick = function(b, c) {
+        var d = 0;
+        var e = function(f) {
+            a(f).mousedown(function(h, g) {
+                d = setTimeout(function() {
+                    b.call(h, g)
+                }, c)
+            }).bind("mouseup mouseleave", function() {
+                clearTimeout(d)
+            })
+        };
+        return this.each(function() {
+            e(this)
+        })
     }
 })(jQuery);
 cm.utilityView = function(b) {
@@ -76873,6 +90880,669 @@ cm.voltron = (function(c) {
         }
     }
 })(jQuery);
+cm = cm || {};
+cm.VotingController = function(e) {
+    var c = [];
+    var b = function() {
+        AjaxCall.gPostRequest("ajax/royalAudience.php", {
+            action: "voting_modal",
+            user_id: tvuid,
+            event_id: seed.voting.eventId
+        }, function(h) {
+            if (h.ok) {
+                var i = h;
+                delete i.ok;
+                if (typeof i.votes_earned === "undefined" || i.votes_earned === null) {
+                    i.votes_earned = 0
+                }
+                if (typeof i.votes_spent === "undefined" || i.votes_spent === null) {
+                    i.votes_spent = 0
+                }
+                if (typeof i.voting_ends === "undefined" || i.voting_ends === null) {
+                    i.voting_ends = 0
+                }
+                cm.VotingModel.setVotesData(i);
+                cm.VotingView.render(i);
+                g(i)
+            } else {
+                if (typeof h.enabled !== "undefined" && (!h.enabled)) {
+                    cm.ModalManager.alert(h.feedback)
+                } else {
+                    Modal.showAlert(printLocalError((h.error_code || null), (h.msg || null), (h.feedback || null)))
+                }
+            }
+        })
+    };
+    var g = function(k) {
+        if (typeof k === "undefined") {
+            var k = cm.VotingModel.getVotesData()
+        }
+        var h = k.features.length;
+        for (var j = 0; j < h; j++) {
+            c[j] = new Control.Slider("handle" + j, "track" + j, {
+                onSlide: function(i, n) {
+                    jQuery("#sliderText" + n.lnum).val((i * cm.VotingModel.getVotes()).toFixed())
+                },
+                onChange: function(i, n) {
+                    if (jQuery("#sliderText" + n.lnum).val() !== (i * cm.VotingModel.getVotes()).toFixed()) {
+                        jQuery("#sliderText" + n.lnum).val((i * cm.VotingModel.getVotes()).toFixed())
+                    }
+                },
+                lnum: j
+            })
+        }
+        for (var j = 0; j < h; j++) {
+            var l = cm.VotingModel.getImage(k.features[j].icon_id, false, true, true);
+            jQuery(jQuery(".votingItemDescription")[j]).css("background", "url('" + l + "') 2px 1px no-repeat")
+        }
+        jQuery(".votingItemButton").click(function() {
+            var i = jQuery(this).attr("lnum");
+            var n = jQuery("#sliderText" + i).val();
+            if (cm.VotingModel.getTimeLeft() > 0 && parseInt(n) > 0) {
+                cm.VotingView.renderConfirmation({
+                    numVotes: n,
+                    featureTitle: cm.VotingModel.getVotesData().features[i].title,
+                    featureId: cm.VotingModel.getVotesData().features[i].feature_id
+                });
+                jQuery("#voteCommitButton").click(function() {
+                    jQuery("#voteCommitButton").unbind();
+                    AjaxCall.gPostRequest("ajax/royalAudience.php", {
+                        action: "vote",
+                        user_id: tvuid,
+                        event_id: seed.voting.eventId,
+                        feature_id: jQuery("#voteCommitButton").attr("fid"),
+                        activity_points: jQuery("#voteCommitButton").attr("nvotes")
+                    }, function(o) {
+                        if (o.ok) {
+                            cm.ModalManager.closeAll();
+                            cm.VotingController.openVotingModal()
+                        } else {
+                            cm.ModalManager.close();
+                            Modal.showAlert(printLocalError((o.error_code || null), (o.msg || null), (o.feedback || null)))
+                        }
+                    })
+                })
+            } else {
+                if (parseInt(n) <= 0) {
+                    cm.ModalManager.alert(g_js_strings.vote.voteNotEnough)
+                } else {
+                    cm.ModalManager.alert(g_js_strings.vote.voteTimeExpired)
+                }
+            }
+        });
+        jQuery(".votingMoreInfo").click(cm.VotingMoreInfo.open);
+        d(cm.VotingModel.getVotesSpent());
+        jQuery("#votingMilestoneOne").html(k.voting_quotas[0].quota);
+        jQuery("#votingMilestoneTwo").html(k.voting_quotas[1].quota);
+        jQuery("#votingMilestoneThree").html(k.voting_quotas[2].quota);
+        jQuery("#votingMilestoneFour").html(k.voting_quotas[3].quota);
+        var m = function(o) {
+            var q = k.voting_quotas[o].reward_quantity;
+            var n = "???";
+            if (typeof itemlist["i" + k.voting_quotas[o].reward_id] !== "undefined") {
+                n = itemlist["i" + k.voting_quotas[o].reward_id].name
+            }
+            var i = "#votingMilestone" + ((o === 0) ? "One" : "") + ((o === 1) ? "Two" : "") + ((o === 2) ? "Three" : "") + ((o === 3) ? "Four" : "");
+            var p = jQuery(i).hasClass("active") ? "<div style='font-weight:bold;color:green'>" + g_js_strings.voteTooltip.Unlocked + "</div>" + g_js_strings.voteTooltip.milestoneUnlocked.replace("%1$s", q).replace("%2$s", n) : "<div style='font-weight:bold;color:red'>" + g_js_strings.voteTooltip.Locked + "</div>" + g_js_strings.voteTooltip.milestoneLocked.replace("%1$s", q).replace("%2$s", n);
+            cm.Tooltip.setTooltip({
+                htmlElement: jQuery(i),
+                tooltip: p
+            })
+        };
+        cm.Tooltip.setTooltip({
+            htmlElement: jQuery(".votingHeaderCell.left"),
+            tooltip: "<div style='font-weight:bold'>" + g_js_strings.voteTooltip.contributionPoints + "</div>" + g_js_strings.voteTooltip.contributionPointsDetails
+        });
+        m(0);
+        m(1);
+        m(2);
+        m(3);
+        clearInterval(cm.VotingModel.countDownInterval);
+        cm.VotingModel.countDownInterval = setInterval(function() {
+            jQuery("#votingTimeLeft").html("<span class='timeLeft'>" + g_js_strings.vote.timeLeft + ": </span><span class='timeLeftValue'>" + cm.VotingModel.getTimeLeftString() + "</span>");
+            if (cm.VotingModel.getTimeLeft() <= 0) {
+                clearInterval(cm.VotingModel.countDownInterval);
+                jQuery("#votingTimeLeft").html("<span class='timeLeft'>" + g_js_strings.vote.timeLeft + ": </span><span class='timeLeftValue'>" + timestr(0) + "</span>")
+            }
+        }, 1000)
+    };
+    var a = function() {
+        for (var h = 0; h < c.length; h++) {
+            c[h].dispose()
+        }
+    };
+    var f = function(i, h) {
+        var j;
+        if (window.event) {
+            j = window.event.keyCode
+        } else {
+            if (i.which) {
+                j = i.which
+            } else {
+                j = i.charCode
+            }
+        }
+        if (j === 37 || j === 39) {} else {
+            if (isNaN(h.value) || cm.VotingModel.getVotes() <= 0) {
+                h.setValue(0);
+                c[jQuery(h).attr("lnum")].setValue(0)
+            } else {
+                c[jQuery(h).attr("lnum")].setValue((h.value / cm.VotingModel.getVotes()))
+            }
+        }
+    };
+    var d = function(k) {
+        var l = cm.VotingModel.getVotesData().voting_quotas,
+            j = [];
+        for (var h = 0; h < l.length; h++) {
+            j[h] = parseInt(l[h].quota)
+        }
+        var m = 0;
+        if (k <= j[0]) {
+            m = 12 + Math.round(k / j[0] * (61 - 12))
+        } else {
+            if (k <= j[1]) {
+                m = 118 + Math.round((k - j[0]) / (j[1] - j[0]) * (237 - 118))
+            } else {
+                if (k <= j[2]) {
+                    m = 294 + Math.round((k - j[1]) / (j[2] - j[1]) * (414 - 294))
+                } else {
+                    m = 471 + Math.round((k - j[2]) / (j[3] - j[2]) * (590 - 471));
+                    if (k >= j[3]) {
+                        m = 709
+                    }
+                }
+            }
+        }
+        if (k >= j[0]) {
+            jQuery("#votingMilestoneOne").addClass("active");
+            jQuery("#votingMilestonebgOne").addClass("active")
+        }
+        if (k >= j[1]) {
+            jQuery("#votingMilestoneTwo").addClass("active");
+            jQuery("#votingMilestonebgTwo").addClass("active")
+        }
+        if (k >= j[2]) {
+            jQuery("#votingMilestoneThree").addClass("active");
+            jQuery("#votingMilestonebgThree").addClass("active")
+        }
+        if (k >= j[3]) {
+            jQuery("#votingMilestoneFour").addClass("active");
+            jQuery("#votingMilestonebgFour").addClass("active");
+            jQuery("#votingMilestoneMarker").hide();
+            jQuery("#votingMilestoneMarkerText").hide()
+        }
+        jQuery("#votingUnlockProgress").css("width", m + "px");
+        jQuery("#votingMilestoneMarkerText").html(k);
+        jQuery("#votingMilestoneMarker").css("left", m + 20 + "px");
+        jQuery("#votingMilestoneMarkerText").css("left", m + Math.round(20 - jQuery("#votingMilestoneMarkerText").width() / 2) + "px")
+    };
+    return {
+        openVotingModal: b,
+        sliderTextEntered: f,
+        clearSliders: a,
+        setBonusBar: d
+    }
+}(jQuery);
+cm.VotingEntryFlowView = function(h, e) {
+    var g = null;
+    var d = function() {
+        if (parseInt(seed.tutorial.t1) < 50) {
+            cm.log.l("You can not see voting notification while in tutorial mode.");
+            return false
+        }
+        cm.ModalManager.close();
+        cm.ModalManager.close();
+        cm.ModalManager.close();
+        if (seed.playerFlags && seed.playerFlags.royalAudienceVotingTutorial && parseInt(seed.playerFlags.royalAudienceVotingTutorial) == 1) {
+            f()
+        } else {
+            c()
+        }
+    };
+    var f = function() {
+        if (g != null) {
+            g();
+            g = null
+        } else {
+            e()
+        }
+    };
+    var c = function() {
+        var i = "<div class='description'><div class='welcome_message'>" + g_js_strings.vote.welcomeToTheNew + "</div><div class='hand_vote'></div><div class='when_a_vote'>" + g_js_strings.vote.whenAVoteIs + "</div></div><div class='bgFrameSubmodalBottomWide'>" + cm.SummoningCircleView.button(g_js_strings.vote.start_voting) + "</div>";
+        cm.ModalManager.addMedium({
+            title: g_js_strings.vote.royalAudience,
+            body: i,
+            "class": "voting_entry_modal",
+            button_text: g_js_strings.vote.voteNow
+        });
+        h(".voting_entry_modal .bgFrameSubmodalBottomWide").unbind("click").bind("click", b);
+        AjaxCall.gPostRequest("ajax/playerFlags.php", {
+            action: "royal_audience_voting_tutorial",
+            user_id: tvuid,
+            value: true,
+            event_id: seed.voting.eventId
+        }, function() {}, function() {})
+    };
+    var b = function() {
+        cm.ModalManager.close();
+        seed.playerFlags.royalAudienceVotingTutorial = 1;
+        f()
+    };
+    var a = function(i) {
+        g = i
+    };
+    return {
+        start: d,
+        setAfterTutorialTarget: a
+    }
+}(jQuery, cm.VotingController.openVotingModal);
+cm = cm || {};
+cm.VotingHUDIcon = function(f) {
+    var g = function() {
+        var k, m;
+        var l = function(p, o) {
+            k = +p || 0;
+            m = +o || 0
+        };
+        var n = function() {
+            return +k || 0
+        };
+        var j = function() {
+            return m - unixtime()
+        };
+        var i = function() {
+            return j() <= 0
+        };
+        return {
+            update: l,
+            getEventId: n,
+            getTimeLeft: j,
+            isExpired: i
+        }
+    }();
+    var h = function() {
+        var j = '<h3 class="header">' + g_js_strings.vote.voteNowExc + "</h3>%1$s<br/>" + g_js_strings.commonstr.timeremaining + "</p>",
+            i = {
+                type: cm.HUDIconTypes.ROYAL_AUDIENCE,
+                url: "javascript:void(0)",
+                images: {
+                    border: null,
+                    icon: stimgUrl + "img/iconVoteHUD.png",
+                    over: stimgUrl + "img/iconVoteHUD.png"
+                },
+                tooltip: g_js_strings.vote.voteNowExc,
+                cssClass: "hudIcon",
+                elmId: "votingHudIcon",
+                mapContainerId: "maparea_city",
+                content: j.replace("%1$s", "0s"),
+                clickCallback: function() {
+                    cm.VotingEntryFlowView.start()
+                }
+            };
+        var k = function(m) {
+            f("#votingHudIcon .content").html(j.replace("%1$s", timestr(m)))
+        };
+        var l = function(m) {
+            f("#hudWideContainer").html("");
+            if (m) {
+                cm.HUDIconFactory.getIcon({
+                    type: cm.HUDIconTypes.ROYAL_AUDIENCE
+                }).setParentElement("hudWideContainer")
+            }
+        };
+        return {
+            iconData: i,
+            updateIcon: k,
+            setIconDisplay: l
+        }
+    }();
+    var a = function(l) {
+        var j = g.getEventId(),
+            i = +l.eventId || 0,
+            k = +l.votingEnds > unixtime();
+        return (i !== j)
+    };
+    var d = function(i) {
+        g.update(i.eventId, i.votingEnds);
+        h.setIconDisplay(true);
+        h.updateIcon(g.getTimeLeft())
+    };
+    var e = function() {
+        return g.isExpired()
+    };
+    var c = function() {
+        h.updateIcon(g.getTimeLeft())
+    };
+    var b = function() {
+        g.update(0, 0);
+        h.setIconDisplay(false)
+    };
+    return {
+        getIconData: function() {
+            return h.iconData
+        },
+        onUpdateSeed: function(i) {
+            i = f.extend({
+                eventId: 0,
+                votingEnds: unixtime()
+            }, i);
+            if (a(i)) {
+                d(i);
+                cm.Countdown.register("royalAudienceIcon", e, c, b)
+            }
+        }
+    }
+}(jQuery);
+cm = cm || {};
+cm.VotingModel = function(e) {
+    var g = function() {
+        return Math.max((parseInt(l.votes_earned) - parseInt(l.votes_spent)), 0)
+    };
+    var k = function() {
+        return parseInt(l.votes_spent)
+    };
+    var d = function() {
+        return parseInt(l.votes_earned)
+    };
+    var i = function() {
+        return parseInt(l.voting_ends) - unixtime()
+    };
+    var j = function() {
+        return timestr(i())
+    };
+    var b = null;
+    var l = {
+        voting_quotas: [{
+            quota: 5000,
+            reward_id: 0,
+            reward_quantity: 0
+        }, {
+            quota: 10000,
+            reward_id: 0,
+            reward_quantity: 0
+        }, {
+            quota: 20000,
+            reward_id: 0,
+            reward_quantity: 0
+        }, {
+            quota: 40000,
+            reward_id: 0,
+            reward_quantity: 0
+        }],
+        features: [],
+        votes_earned: 0,
+        votes_spent: 0,
+        voting_ends: 0
+    };
+    var c = {
+        1: "alliancev2",
+        2: "ascension",
+        3: "combatviz",
+        4: "lvl12barracks",
+        5: "newtroop",
+        6: "pvp",
+        7: "secondbuild",
+        8: "throneroom"
+    };
+    var a = function(r, p, m, o) {
+        var n = c[r] ? c[r] : c[1];
+        var q = p ? (n + "_stroke") : n;
+        q = m ? ("art_medium_" + q) : ("art_large_" + q);
+        q = o ? (q + "02") : q;
+        q = stimgUrl + "img/" + q + ".png";
+        return q
+    };
+    var h = function(m) {
+        l = m
+    };
+    var f = function() {
+        return l
+    };
+    return {
+        getVotes: g,
+        getVotesSpent: k,
+        getContributionPoints: d,
+        getTimeLeft: i,
+        getTimeLeftString: j,
+        countDownInterval: b,
+        getImage: a,
+        setVotesData: h,
+        getVotesData: f
+    }
+}(jQuery);
+cm.VotingMoreInfo = function(c) {
+    var e = 0;
+    var f = function() {
+        e = e < 8 ? e + 1 : 1;
+        return {
+            top_voters: [{
+                name: "Lulimok"
+            }, {
+                name: "BobBookcaseDriverTaxi"
+            }, {
+                name: "max87234923"
+            }, {
+                name: "sadmapYesManColgate"
+            }, {
+                name: "romber"
+            }, {
+                name: "walgurSuperLongNameMeister"
+            }, {
+                name: "nomi"
+            }, {
+                name: "JalmanopSmithsonian"
+            }, {
+                name: "Rotiserri"
+            }, {
+                name: "Rokupoping"
+            }],
+            items: [721, 1411, 3011],
+            feature_image: e,
+            your_place: 821,
+            description: "The sunflower feature has many sunflowers in it.  It allows players to increase troops attacks using sun flowers and swords."
+        }
+    };
+    var d;
+    var g = function() {
+        var k = c(this);
+        var j = k.attr("lnum");
+        if (!cm.VotingModel.getVotesData().features[j]) {
+            cm.log.l("VotingMoreInfo line 29: unrecognized votingId.");
+            return false
+        }
+        d = cm.VotingModel.getVotesData().features[j];
+        AjaxCall.gPostRequest("ajax/royalAudience.php", {
+            action: "more_info_modal",
+            user_id: tvuid,
+            event_id: seed.voting.eventId,
+            feature_id: d.feature_id
+        }, function(l) {
+            b(l)
+        })
+    };
+    var a = function(l) {
+        if (!ksoItems[l]) {
+            cm.log.l("Got invalid ItemId from backend, assign to Nick.  Using ItemId 49 instead.");
+            l = 49
+        }
+        var k = ksoItems[l];
+        var j = '<img src="' + ksoItems[l].getImage(70) + '" class="hover_left_item"/>';
+        return j + "<b>" + k.name + "</b> - " + k.description
+    };
+    var h = 1000;
+    var i = function(j) {
+        if (j.length > h) {
+            return j.substr(0, h) + "..."
+        } else {
+            return j
+        }
+    };
+    var b = function(p) {
+        var o = 0;
+        var l = "";
+        var n = "";
+        for (var k = 0; k < 5; k++) {
+            if (p.top_voters[k]) {
+                var m = p.top_voters[k].name;
+                l += ("<div>" + (o + 1) + ". " + m + "</div>");
+                o++
+            }
+        }
+        for (var k = 5; k < 10; k++) {
+            if (p.top_voters[k]) {
+                var m = p.top_voters[k].name;
+                n += ("<div>" + (o + 1) + ". " + m + "</div>");
+                o++
+            }
+        }
+        var j = cm.Template.renderTemplate("Voting", "voting_more_info", {
+            left_numbers: l,
+            right_numbers: n,
+            feature_image: cm.VotingModel.getImage(d.icon_id, true, false),
+            description: i(d.description),
+            top_voters: g_js_strings.vote.top_voters,
+            your_place: parseInt(p.your_place) == -1 ? "" : (p.your_place + ". " + seed.player.name),
+            prize_description1: g_js_strings.vote.prize_description1,
+            prize_description2: g_js_strings.vote.prize_description2,
+            prize_description3: g_js_strings.vote.prize_description3
+        });
+        cm.ModalManager.addLarge({
+            title: d.title,
+            body: j,
+            "class": "voting_more_info",
+            button_text: g_js_strings.vote.voteNow
+        });
+        cm.Tooltip.setTooltip({
+            htmlElement: c(".img1, .prize_description1"),
+            tooltip: p.prize_descriptions.first_place_description
+        });
+        cm.Tooltip.setTooltip({
+            htmlElement: c(".img2, .prize_description2"),
+            tooltip: p.prize_descriptions.second_place_description
+        });
+        cm.Tooltip.setTooltip({
+            htmlElement: c(".img3, .prize_description3"),
+            tooltip: p.prize_descriptions.third_place_description
+        })
+    };
+    return {
+        open: g
+    }
+}(jQuery);
+cm.VotingNewEvent = function(b) {
+    var h = true;
+    var g = h ? window.readCookie : localStorage.getItem;
+    var c = h ? window.createCookie : localStorage.setItem;
+    var j = "lastVoteEventId";
+    var e = function(k) {
+        return k.eventId != g(j)
+    };
+    var i = function(l, k) {
+        return l == k
+    };
+    var d = function(k) {
+        if (k.updateVote && k.updateVote.eventId && parseInt(k.updateVote.eventId) == -1) {
+            return false
+        }
+        cm.VotingHUDIcon.onUpdateSeed(k.updateVote);
+        if (k.updateVote) {
+            if (e(k.updateVote)) {
+                c(j, k.updateVote.eventId, 100000);
+                if (i(g(j), k.updateVote.eventId)) {
+                    cm.VotingEntryFlowView.setAfterTutorialTarget(a);
+                    cm.VotingEntryFlowView.start()
+                }
+            }
+        }
+    };
+    var f = function(k, l) {
+        return cm.Template.renderTemplate("PrestigeManager", k, l)
+    };
+    var a = function() {
+        if (b(".voting_entry_modal").length > 0 || parseInt(seed.tutorial.t1) < 50) {
+            return false
+        }
+        var k = "<div class='description'><div class='welcome_message'>" + g_js_strings.vote.voteOnNewFeatures + "</div><div class='hand_vote'></div><div class='when_a_vote'>" + g_js_strings.vote.voteOnNew + "</div></div><div class='bgFrameSubmodalBottomWide'>" + cm.SummoningCircleView.button(g_js_strings.vote.start_voting) + "</div>";
+        cm.ModalManager.addMedium({
+            title: g_js_strings.vote.royalAudience,
+            body: k,
+            "class": "voting_entry_modal voting_new_modal",
+            button_text: g_js_strings.vote.voteNow
+        });
+        b(".voting_entry_modal .bgFrameSubmodalBottomWide").unbind("click").bind("click", cm.VotingEntryFlowView.start)
+    };
+    return {
+        trigger: d
+    }
+}(jQuery);
+cm = cm || {};
+cm.VotingView = function(d) {
+    var c = function(h) {
+        var e = h || {};
+        var g = "";
+        var f = 275;
+        if (e.description) {
+            g = (e.description.length > f) ? (e.description.substr(0, f) + "...") : (e.description)
+        } else {
+            g = "Vote description."
+        }
+        return cm.Template.renderTemplate("Voting", "voting_item", {
+            description: g + " <span class='votingMoreInfo' lnum='" + e.listNumber + "' >" + g_js_strings.vote.moreInfo + "</span>",
+            listNumber: e.listNumber || 0,
+            featureTitle: e.title || "Feature Title",
+            vote: g_js_strings.vote.vote
+        })
+    };
+    var a = function(f) {
+        var e = cm.Template.renderTemplate("Voting", "votingConfirmation", {
+            primaryTitle: g_js_strings.vote.confirmVote,
+            featureTitle: f.featureTitle || "Feature Title",
+            featureId: f.featureId,
+            numVotes: f.numVotes || 0,
+            cancel: g_js_strings.vote.cancel,
+            vote: g_js_strings.vote.confirmVoteButton
+        });
+        cm.ModalManager.add({
+            body: e,
+            closeNow: false,
+            close: function() {},
+            "class": "allocationFrame",
+            curtain: true,
+            width: 361,
+            height: 242,
+            top: 190,
+            left: 200
+        })
+    };
+    var b = function(g) {
+        var j = g.features;
+        var e = "";
+        for (var f = 0; f < j.length; f++) {
+            j[f].listNumber = f;
+            e += c(j[f])
+        }
+        var h = {
+            contributionPoints: cm.VotingModel.getVotes(),
+            timeLeft: "<span class='timeLeft'>" + g_js_strings.vote.timeLeft + ": </span><span class='timeLeftValue'>" + cm.VotingModel.getTimeLeftString() + "</span>",
+            yourVotes: g_js_strings.vote.yourVotes + ": " + cm.VotingModel.getVotes(),
+            votingItems: e
+        };
+        cm.ModalManager.addXLarge({
+            close: function() {
+                cm.VotingController.clearSliders();
+                clearInterval(cm.VotingModel.countDownInterval)
+            },
+            "class": "votingModal",
+            title: "<span>" + g_js_strings.vote.modalTitle + "</span>",
+            body: cm.Template.renderTemplate("Voting", "voting_body", h)
+        })
+    };
+    return {
+        render: b,
+        renderConfirmation: a
+    }
+}(jQuery);
 
 function modal_openWalls() {
     var e = new Array();
