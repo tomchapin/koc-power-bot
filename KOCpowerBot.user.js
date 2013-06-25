@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130623a
+// @version        20130624a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130623a';
+var Version = '20130624a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -9851,107 +9851,107 @@ cm.MARCH_TYPES = {
  
 /*************************** Auto Craft Tab *************************************/
 Tabs.AutoCraft = {
-    tabOrder: 20, //CHECKTHIS ?
-    tabLabel: unsafeWindow.g_js_strings.commonstr.craft,
-    myDiv: null,
-    timer: null,
-    craftIntervall  : TrainOptions.CraftIntervallMin,
-    crafting: [],
-    myDiv: null,
-    timer: null,
-    timerStat: null,
-    numcity :-1,
-    craftinfo : {},
-    retrycount : 0,
+   tabOrder: 20, //CHECKTHIS ?
+   tabLabel: unsafeWindow.g_js_strings.commonstr.craft,
+   myDiv: null,
+   timer: null,
+   craftIntervall  : TrainOptions.CraftIntervallMin,
+   crafting: [],
+   myDiv: null,
+   timer: null,
+   timerStat: null,
+   numcity :-1,
+   craftinfo : {},
+   retrycount : 0,
 
-    init: function(div){
-       var t = Tabs.AutoCraft;
-       t.myDiv = div;   
-       t.crafting = {
-             running: TrainOptions.CraftingRunning,
-       };
-        
-        // set this after TrainOptions has been read in
-        t.craftIntervall =TrainOptions.CraftIntervallMin;
-        
-        var m = '<DIV id=pbCraftingDiv class=pbStat>AUTO CRAFTING - SETTINGS</div><TABLE id=pbcraftingfunc width=100% height=0% class=pbTab><TR><TD width="10%">Interval: <input type=text value="'+TrainOptions.CraftIntervallMin+'" size=2  maxlength=2 id=pbCraftIntervall> Minute(s)<span class=boldRed><sup>*Refresh Required</sup></span></td>';
-        if (t.crafting.running == false) {
-                m += '<TD  width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = OFF"></td>';
-     }            else {
-                m += '<TD width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = ON"></td>';
-                t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
-        }
-        m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr>';
-        m += '<tr><td align=left><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=1 value="'+ TrainOptions.actrset +'">  is equiped</td></table></div>';
-        m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
+   init: function(div){
+      var t = Tabs.AutoCraft;
+      t.myDiv = div;   
+      t.crafting = {
+         running: TrainOptions.CraftingRunning,
+      };
 
-       m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td>";
-       m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td>";
-        m += "</tr><tr>";
-        var count = 0;
-        for(var i=0; i < unsafeWindow.recipelist[1].length; i++){
-            var h = parseInt(unsafeWindow.recipelist[1][i].output_item_id);
-            t.craftinfo[h] = {};
-            t.craftinfo[h].recipe_id = unsafeWindow.recipelist[1][i].recipe_id;
-            t.craftinfo[h].category = unsafeWindow.recipelist[1][i].category;
-            t.craftinfo[h].input = unsafeWindow.recipelist[1][i].input;
-            t.craftinfo[h].requirements = unsafeWindow.recipelist[1][i].requirements;
-            t.craftinfo[h].inputItems = unsafeWindow.recipelist[1][i].input.items;
-            t.craftinfo[h].astone = unsafeWindow.recipelist[1][i].input.resources;
-            m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
-            m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
-            if ((count+1)%2 == 0) m += "</tr><tr>";
-            count++;
-        }
-        for(var i=0; i < unsafeWindow.recipelist[3].length; i++){
-            var h = parseInt(unsafeWindow.recipelist[3][i].output_item_id);
-            t.craftinfo[h] = {};
-            t.craftinfo[h].recipe_id = unsafeWindow.recipelist[3][i].recipe_id;
-            t.craftinfo[h].category = unsafeWindow.recipelist[3][i].category;
-            t.craftinfo[h].input = unsafeWindow.recipelist[3][i].input;
-            t.craftinfo[h].requirements = unsafeWindow.recipelist[3][i].requirements;
-            t.craftinfo[h].inputItems = unsafeWindow.recipelist[3][i].input.items;
-            t.craftinfo[h].astone = unsafeWindow.recipelist[3][i].input.resources;
-            m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
-            m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
-            if ((count+1)%2 == 0) m += "</tr><tr>";
-            count++;
-        }
-        
-       m+="</table><b>Note:</b> If you complete more than one Item, the creation will be done randomly. <BR> <b>Important: Min. 50 000 Aethestones and Refresh to Update the Inventory!</b> ";
-       m += '<DIV id=pbCraftingStats class=pbStat>AETHERSTONES AND CRAFTING TIME</div><span id="CraftStat"></span>';
+      // set this after TrainOptions has been read in
+      t.craftIntervall =TrainOptions.CraftIntervallMin;
 
-       t.myDiv.innerHTML = m;
-
-
-       window.addEventListener('unload', t.onUnload, false);
-       
-    document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
-    document.getElementById("pbCraftRunning").addEventListener ('click', function (){t.toggleStateRunning(this)}, false);     
-    t.changeCraft ('pbCraftIntervall', 'CraftIntervallMin')
-    document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;saveTrainOptions();}, false);
-    document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;saveTrainOptions();}, false);
-  },
-      changeCraft : function (valueId, optionName, callOnChange){
-    var t = Tabs.AutoCraft;
-    var e = document.getElementById(valueId);
-    e.value = TrainOptions[optionName];
-    e.addEventListener ('change', eventHandler, false);
-    function eventHandler (){
-      TrainOptions[optionName] = this.value;
-      saveTrainOptions();
-      if (callOnChange)
-        callOnChange (this.value);
+      var m = '<DIV id=pbCraftingDiv class=pbStat>AUTO CRAFTING - SETTINGS</div><TABLE id=pbcraftingfunc width=100% height=0% class=pbTab><TR><TD width="10%">Interval: <input type=text value="'+TrainOptions.CraftIntervallMin+'" size=2  maxlength=2 id=pbCraftIntervall> Minute(s)<span class=boldRed><sup>*Refresh Required</sup></span></td>';
+      if (t.crafting.running == false) {
+         m += '<TD  width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = OFF"></td>';
+      }            else {
+         m += '<TD width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = ON"></td>';
+         t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
       }
-    },
-  updateStat: function() {
-   var t = Tabs.AutoCraft;
-   var rownum = 0;
-   function _row (name, row, noTotal, typee){
+      m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr>';
+      m += '<tr><td align=left><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=1 value="'+ TrainOptions.actrset +'">  is equiped</td></table></div>';
+      m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
+
+      m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td>";
+      m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td>";
+      m += "</tr><tr>";
+      var count = 0;
+      for(var i=0; i < unsafeWindow.recipelist[1].length; i++){
+         var h = parseInt(unsafeWindow.recipelist[1][i].output_item_id);
+         t.craftinfo[h] = {};
+         t.craftinfo[h].recipe_id = unsafeWindow.recipelist[1][i].recipe_id;
+         t.craftinfo[h].category = unsafeWindow.recipelist[1][i].category;
+         t.craftinfo[h].input = unsafeWindow.recipelist[1][i].input;
+         t.craftinfo[h].requirements = unsafeWindow.recipelist[1][i].requirements;
+         t.craftinfo[h].inputItems = unsafeWindow.recipelist[1][i].input.items;
+         t.craftinfo[h].astone = unsafeWindow.recipelist[1][i].input.resources;
+         m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
+         m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
+         if ((count+1)%2 == 0) m += "</tr><tr>";
+         count++;
+      }
+      for(var i=0; i < unsafeWindow.recipelist[3].length; i++){
+         var h = parseInt(unsafeWindow.recipelist[3][i].output_item_id);
+         t.craftinfo[h] = {};
+         t.craftinfo[h].recipe_id = unsafeWindow.recipelist[3][i].recipe_id;
+         t.craftinfo[h].category = unsafeWindow.recipelist[3][i].category;
+         t.craftinfo[h].input = unsafeWindow.recipelist[3][i].input;
+         t.craftinfo[h].requirements = unsafeWindow.recipelist[3][i].requirements;
+         t.craftinfo[h].inputItems = unsafeWindow.recipelist[3][i].input.items;
+         t.craftinfo[h].astone = unsafeWindow.recipelist[3][i].input.resources;
+         m += "<td ><center><img src='http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
+         m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
+         if ((count+1)%2 == 0) m += "</tr><tr>";
+         count++;
+      }
+
+      m+="</table><b>Note:</b> If you complete more than one Item, the creation will be done randomly. <BR> <b>Important: Min. 50 000 Aethestones and Refresh to Update the Inventory!</b> ";
+      m += '<DIV id=pbCraftingStats class=pbStat>AETHERSTONES AND CRAFTING TIME</div><span id="CraftStat"></span>';
+
+      t.myDiv.innerHTML = m;
+
+
+      window.addEventListener('unload', t.onUnload, false);
+
+      document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
+      document.getElementById("pbCraftRunning").addEventListener ('click', function (){t.toggleStateRunning(this)}, false);     
+      t.changeCraft ('pbCraftIntervall', 'CraftIntervallMin')
+      document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;saveTrainOptions();}, false);
+      document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;saveTrainOptions();}, false);
+   },
+   changeCraft : function (valueId, optionName, callOnChange){
+      var t = Tabs.AutoCraft;
+      var e = document.getElementById(valueId);
+      e.value = TrainOptions[optionName];
+      e.addEventListener ('change', eventHandler, false);
+      function eventHandler (){
+         TrainOptions[optionName] = this.value;
+         saveTrainOptions();
+         if (callOnChange)
+            callOnChange (this.value);
+      }
+   },
+   updateStat: function() {
+      var t = Tabs.AutoCraft;
+      var rownum = 0;
+      function _row (name, row, noTotal, typee){
          if (rownum++ % 2)
-           style = '';
+            style = '';
          else
-           style = ' style = "background: #e8e8e8"';
+            style = ' style = "background: #e8e8e8"';
          var tot = 0;
          var m = [];
          m.push ('<TR style="background: #fff" align=right');
@@ -9962,282 +9962,295 @@ Tabs.AutoCraft = {
          m.push (name);
          m.push ('</td>');
          if (noTotal){
-           m.push ('<TD');
-           m.push (style);
-           m.push ('>&nbsp;</td>');
+            m.push ('<TD');
+            m.push (style);
+            m.push ('>&nbsp;</td>');
          } else {
-           for (i=0; i<row.length; i++)
-             tot += row[i];
-           m.push ('<TD style="background: #ffc">');
+            for (i=0; i<row.length; i++)
+               tot += row[i];
+            m.push ('<TD style="background: #ffc">');
             if (tot<0) {
-             m.push ("<SPAN class=boldRed>"+addCommas(tot)+"</span>");
+               m.push ("<SPAN class=boldRed>"+addCommas(tot)+"</span>");
             } else {
-             m.push (addCommas(tot));
+               m.push (addCommas(tot));
             }
-           m.push ('</td>');
+            m.push ('</td>');
          }
          for (i=0; i<row.length; i++){
-           m.push ('<TD');
-           m.push (style);
-           m.push ('>');
-           if (row[i]<50000) {
-                    m.push ("<SPAN class=boldRed>"+addCommas(row[i])+"</span>");
-       } else {
-                    m.push (addCommas(row[i]));
-           }
-           m.push ('</td>');
+            m.push ('<TD');
+            m.push (style);
+            m.push ('>');
+            if (row[i]<50000) {
+               m.push ("<SPAN class=boldRed>"+addCommas(row[i])+"</span>");
+            } else {
+               m.push (addCommas(row[i]));
+            }
+            m.push ('</td>');
          }
-   
+
          m.push ('</tr>');
          return m.join('');
-       }
+      }
 
-   clearTimeout(t.timerStat);
-   var str="<TABLE class=pbTabOverview cellpadding=0 cellspacing=0><TR  align=center><TD width=55 align=center></td><TD width=88 style='background: #ffc; font-size:150%' align=center><SPAN class=oohfancy>TOTAL</SPAN></td>";
-   for(i=0; i<Cities.numCities; i++) {
-            cityID = 'city'+ Cities.cities[i].id;
-         
-            str += "<TD width=81><SPAN class=oohfancy>"+ Cities.cities[i].name.substring(0,10) +"</SPAN></td>";
-          
-   }
-   rows = [];
-   var now = unixTime();
-   rows[0] = [];
-   for(i=0; i<Cities.numCities; i++) {
-          cityID = 'city'+ Cities.cities[i].id;
-          rows[0][i] = parseInt(Seed.citystats[cityID].gold[0]);
-        }
-        for (r=1; r<6; r++){
-          rows[r] = [];
-          for(i=0; i<Cities.numCities; i++) {
+      clearTimeout(t.timerStat);
+      var str="<TABLE class=pbTabOverview cellpadding=0 cellspacing=0><TR  align=center><TD width=55 align=center></td><TD width=88 style='background: #ffc; font-size:150%' align=center><SPAN class=oohfancy>TOTAL</SPAN></td>";
+      for(i=0; i<Cities.numCities; i++) {
+         cityID = 'city'+ Cities.cities[i].id;
+
+         str += "<TD width=81><SPAN class=oohfancy>"+ Cities.cities[i].name.substring(0,10) +"</SPAN></td>";
+
+      }
+      rows = [];
+      var now = unixTime();
+      rows[0] = [];
+      for(i=0; i<Cities.numCities; i++) {
+         cityID = 'city'+ Cities.cities[i].id;
+         rows[0][i] = parseInt(Seed.citystats[cityID].gold[0]);
+      }
+      for (r=1; r<6; r++){
+         rows[r] = [];
+         for(i=0; i<Cities.numCities; i++) {
             cityID = 'city'+ Cities.cities[i].id;
             if (r==5)
-             rows[r][i] = parseInt(Seed.resources[cityID]['rec'+r][0]);
+               rows[r][i] = parseInt(Seed.resources[cityID]['rec'+r][0]);
             else
-             rows[r][i] = parseInt(Seed.resources[cityID]['rec'+r][0] / 3600);
-            
-          }
-         
+               rows[r][i] = parseInt(Seed.resources[cityID]['rec'+r][0] / 3600);
+
+         }
+
       }
       str += _row ('<img height=18 src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png>', rows[5], false, 0);
       str +='<tr style="background: #e8e8e8" align=right><td><img height=20 src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/items/70/3.jpg title="Crafting"></b></td><td>&nbsp;</td>';
-                for(i=0; i<Cities.numCities; i++) {
-                 var totTime = 0;
-          // the last item in the queue should be the item in progress
-          var len = Seed.queue_craft["city" + Cities.cities[i].id].length;
-          if ( len > 0) {
-             var q=Seed.queue_craft["city" + Cities.cities[i].id][len-1];
-                  var totTime = 0;
-                  totTime = q.craftingEtaUnixTime - now;
-                  if (totTime < 0)
-                    totTime = 0;
-                  if (getCityBuilding(Cities.cities[i].id,20).count>0 && totTime == 0)
-                    affuichage = '<SPAN class=boldRed><B>'+ timestr(totTime) +'</b></span>';
-                  else
-                    affuichage = timestr(totTime);
-                  
-                  str +="<td><span onclick='Crafting("+Cities.cities[i].id+");'>"+ affuichage + "</span></td>";  
-           
-                 } else {
-                 affuichage = timestr(totTime);
-                 if (getCityBuilding(Cities.cities[i].id,20).count>0)
-                    affuichage = '<SPAN class=boldRed><B>'+ timestr(totTime) +'</b></span>';
-                    
-                 str +="<td><span onclick='Crafting("+Cities.cities[i].id+");'>"+affuichage+"</span></td>";
-                 }
-                }    
-             str +="</tr>";    
-             
-         document.getElementById("CraftStat").innerHTML=str;
-         t.timerStat = setTimeout(function() { t.updateStat(); }, 2000);
-         
-         
-  },
-  updateCraftnb : function() {
-   var t = Tabs.AutoCraft;
-   for(var h in t.craftinfo) {
-        if (document.getElementById("Craft_nb_" +h)) document.getElementById("Craft_nb_"+h).value=parseInt(TrainOptions.CraftingNb[h]) ;
-     }
-  },
-  saveCraftState : function() {
-   var t = Tabs.AutoCraft;
-   TrainOptions.CraftingRunning =  t.crafting.running;
-   for(var h in t.craftinfo) {
-        if (document.getElementById("Craft_nb_" +h)) TrainOptions.CraftingNb[h] = document.getElementById("Craft_nb_"+h).value;
-     }
-    saveTrainOptions();
-  },
-  toggleStateRunning: function(obj){
+      for(i=0; i<Cities.numCities; i++) {
+         var totTime = 0;
+         // the last item in the queue should be the item in progress
+         var len = Seed.queue_craft["city" + Cities.cities[i].id].length;
+         if ( len > 0) {
+            var q=Seed.queue_craft["city" + Cities.cities[i].id][len-1];
+            var totTime = 0;
+            totTime = q.craftingEtaUnixTime - now;
+            if (totTime < 0)
+               totTime = 0;
+            if (getCityBuilding(Cities.cities[i].id,20).count>0 && totTime == 0)
+               affuichage = '<SPAN class=boldRed><B>'+ timestr(totTime) +'</b></span>';
+            else
+               affuichage = timestr(totTime);
+
+            str +="<td><span onclick='Crafting("+Cities.cities[i].id+");'>"+ affuichage + "</span></td>";  
+
+         } else {
+            affuichage = timestr(totTime);
+            if (getCityBuilding(Cities.cities[i].id,20).count>0)
+               affuichage = '<SPAN class=boldRed><B>'+ timestr(totTime) +'</b></span>';
+
+            str +="<td><span onclick='Crafting("+Cities.cities[i].id+");'>"+affuichage+"</span></td>";
+         }
+      }    
+      str +="</tr>";    
+
+      document.getElementById("CraftStat").innerHTML=str;
+      t.timerStat = setTimeout(function() { t.updateStat(); }, 2000);
+
+
+   },
+   updateCraftnb : function() {
+      var t = Tabs.AutoCraft;
+      for(var h in t.craftinfo) {
+         if (document.getElementById("Craft_nb_" +h)) document.getElementById("Craft_nb_"+h).value=parseInt(TrainOptions.CraftingNb[h]) ;
+      }
+   },
+   saveCraftState : function() {
+      var t = Tabs.AutoCraft;
+      TrainOptions.CraftingRunning =  t.crafting.running;
+      for(var h in t.craftinfo) {
+         if (document.getElementById("Craft_nb_" +h)) TrainOptions.CraftingNb[h] = document.getElementById("Craft_nb_"+h).value;
+      }
+      saveTrainOptions();
+   },
+   toggleStateRunning: function(obj){
       var t = Tabs.AutoCraft;
       obj = document.getElementById('pbCraftRunning');
-          if (t.crafting.running == true) {
-              t.crafting.running = false;
-              t.saveCraftState();
-              if (obj) obj.value = "Crafting = OFF";
-              clearInterval(t.timer);
-          }
-          else {
-              t.crafting.running = true;
-              t.saveCraftState();
-              if (obj) obj.value  = "Crafting = ON";
+      if (t.crafting.running == true) {
+         t.crafting.running = false;
+         t.saveCraftState();
+         if (obj) obj.value = "Crafting = OFF";
+         clearInterval(t.timer);
+      }
+      else {
+         t.crafting.running = true;
+         t.saveCraftState();
+         if (obj) obj.value  = "Crafting = ON";
               t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
-              t.Start();
-          }
-          t.updateCraftnb();
-    },
-    Start: function() {
-     var t = Tabs.AutoCraft;
-     if(!TrainOptions.CraftingRunning) {
-          // crafting was turned off
-      clearInterval(t.timer);
-      return;
-     }
-
-     if (t.numcity<Cities.numCities-1) {
-           t.numcity++;
-         } else {
-          t.numcity=-1;
-          // finished with all cities / end of loop
-          return;
-     }
-     var c=t.numcity;
-     var cityId=Cities.cities[c].id;
-     
-     var ret=getCityBuilding(cityId,20).count;
-     if (ret==0) {
-          // no spire in this city
-       t.Start();
-       return;
-     }
-     if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<5000) {
-          // not enough a-stone
-       t.Start();
-       return;
-     }
-     var tableau = [];
-     for(var d in TrainOptions.CraftingNb) {
-           if (parseInt(TrainOptions.CraftingNb[d])>0) {
-         if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
-         if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(getCityBuilding(cityId,20).maxLevel))
-         if(t.craftinfo[d].inputItems == "") {
-            tableau.push (d);
-         } else {
-            for(var i in t.craftinfo[d].inputItems) {
-               if(parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
-                  break;
-            }  
-            if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
-                  tableau.push (d);
-         }
-           }
-     }
-       if (tableau.length == 0) {
-          // nothing to craft
-      t.Start();
-      return;
-    }
-     var itemId = tableau[Math.floor(Math.random()*tableau.length)];
-     var recipeId = t.craftinfo[itemId].recipe_id;
-     var category = t.craftinfo[itemId].category;
-     var i=Seed.queue_craft["city"+cityId];
-     if(i.length>0) {
-          var q=i[ i.length-1];
-           var totTime = 0;
-           var now = unixTime();
-          totTime = q.craftingEtaUnixTime - now;
-          if (totTime > 0) {
-             // item still crafting
-           t.Start();
-           return;
-          }
-     }
-     
-     if (TrainOptions.actr) {
-        if (Number(Seed.throne.activeSlot) == Number(TrainOptions.actrset)) {
-     			t.CraftingItem(cityId,  itemId, recipeId, category);
-        };
-     } else t.CraftingItem(cityId,  itemId, recipeId, category);
-    },
-    CraftingItem: function (currentcity, itemId, recipeId, category) {
+         t.Start();
+      }
+      t.updateCraftnb();
+   },
+   Start: function() {
       var t = Tabs.AutoCraft;
-      Seed.resources['city'+currentcity].rec5[0]=parseInt(Seed.resources['city'+currentcity].rec5[0] - t.craftinfo[itemId].astone[1]);
+      if(!TrainOptions.CraftingRunning) {
+         // crafting was turned off
+         clearInterval(t.timer);
+         return;
+      }
+
+      if (t.numcity<Cities.numCities-1) {
+         t.numcity++;
+      } else {
+         t.numcity=-1;
+         // finished with all cities / end of loop
+         return;
+      }
+      var c=t.numcity;
+      var cityId=Cities.cities[c].id;
+
+      var ret=getCityBuilding(cityId,20).count;
+      if (ret==0) {
+         // no spire in this city
+         t.Start();
+         return;
+      }
+      if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<5000) {
+         // not enough a-stone
+         t.Start();
+         return;
+      }
+      var tableau = [];
+      for(var d in TrainOptions.CraftingNb) {
+         if (parseInt(TrainOptions.CraftingNb[d])>0) {
+            if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
+               if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(getCityBuilding(cityId,20).maxLevel))
+                  if(t.craftinfo[d].inputItems == "") {
+                     tableau.push (d);
+                  } else {
+                     for(var i in t.craftinfo[d].inputItems) {
+                        if(parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
+                           break;
+                     }  
+                     if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
+                        tableau.push (d);
+                  }
+         }
+      }
+      if (tableau.length == 0) {
+         // nothing to craft
+         t.Start();
+         return;
+      }
+      var itemId = tableau[Math.floor(Math.random()*tableau.length)];
+      var recipeId = t.craftinfo[itemId].recipe_id;
+      var category = t.craftinfo[itemId].category;
+      var que=Seed.queue_craft["city"+cityId];
+
+      while (que.length >1)
+      {
+         que.splice(0,1);
+      }
+      if(que.length>0) {
+         var q=que[ que.length-1];
+         var totTime = 0;
+         var now = unixTime();
+         totTime = q.craftingEtaUnixTime - now;
+         if (totTime > -1) {
+            // item still crafting
+            t.Start();
+            return;
+         }
+         else
+         {
+            que.splice(0,1);
+         }
+      }
+
+      if (TrainOptions.actr) {
+         if (Number(Seed.throne.activeSlot) == Number(TrainOptions.actrset)) {
+            t.CraftingItem(cityId,  itemId, recipeId, category);
+         };
+      } else t.CraftingItem(cityId,  itemId, recipeId, category);
+   },
+   CraftingItem: function (currentcity, itemId, recipeId, category) {
+
+      var t = Tabs.AutoCraft;
+      if (!isNaN(t.craftinfo[itemId].astone[1]))
+         Seed.resources['city'+currentcity].rec5[0]=parseInt(Seed.resources['city'+currentcity].rec5[0] - t.craftinfo[itemId].astone[1]);
+      else 
+         logit("NAN: " + t.craftinfo[itemId].astone[1]);
       var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-          params.action="craft";
-          params.ctrl="Crafting";
-          params.cityId=currentcity;
-          params.insurance=false;
-           params.itemId=itemId;
-           params.recipeId=recipeId;
-           params.categoryId=category;
+      params.action="craft";
+      params.ctrl="Crafting";
+      params.cityId=currentcity;
+      params.insurance=false;
+      params.itemId=itemId;
+      params.recipeId=recipeId;
+      params.categoryId=category;
       new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, { method: "post", parameters: params,loading: true,
-          onSuccess: function (transport) {
-              var o=eval("("+transport.responseText+")");
-      if (o.updateSeed)
-        unsafeWindow.update_seed(o.updateSeed);
-              if(o.ok===true){
-              //alert(inspect(o));
+         onSuccess: function (transport) {
+            var o=eval("("+transport.responseText+")");
+            if (o.updateSeed)
+               unsafeWindow.update_seed(o.updateSeed);
+            if(o.ok===true){
+               //alert(inspect(o));
                if (o.status=="error") {
-                   // crafting error
-            if (o.errorCode == 2)
-               t.numcity--;
-            t.retrycount++;
-            if(t.retrycount > 10)
-               return;
-                t.Start();
-                return;
+                  // crafting error
+                  if (o.errorCode == 2)
+                     t.numcity--;
+                  t.retrycount++;
+                  if(t.retrycount > 4)
+                     return;
+                  t.Start();
+                  return;
                } else if(o.status=="failure"){
-                   // craft failed
-                setTimeout(function() {
-                 t.CraftingItem(currentcity,  itemId, recipeId);
-                }, 5000);
-                } else if (o.status=="success"){
-                   // sucessful
-               t.retrycount == 0;
-                //actionLog ('<b>'+culang.auto+' '+culang.crafting+'</b>:  <span class=boldGreen>OK</span> #'+ (TrainOptions.CraftingNb[itemId] -1)+' ');
-                 TrainOptions.CraftingNb[itemId] =  TrainOptions.CraftingNb[itemId] -1;
-                 saveTrainOptions();
-                 t.updateCraftnb();
-               if(!Seed.queue_craft["city"+currentcity]) {
-             Seed.queue_craft["city"+currentcity]=[];
-            }
-             var n={};
-             n.recipeId=recipeId;
-             n.craftingUnixTime=o.time.startTime;
-             n.craftingEtaUnixTime=o.time.endTime;
-             n.craftingId=o.craftingId;
-             n.categoryId=null;
-             n.recipeIndex=null;
-             unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
+                  // craft failed
+                  setTimeout(function() {
+                     t.CraftingItem(currentcity,  itemId, recipeId);
+                  }, 5000);
+               } else if (o.status=="success"){
+                  // sucessful
+                  t.retrycount == 0;
+                  //actionLog ('<b>'+culang.auto+' '+culang.crafting+'</b>:  <span class=boldGreen>OK</span> #'+ (TrainOptions.CraftingNb[itemId] -1)+' ');
+                  TrainOptions.CraftingNb[itemId] =  TrainOptions.CraftingNb[itemId] -1;
+                  saveTrainOptions();
+                  t.updateCraftnb();
+                  if(!Seed.queue_craft["city"+currentcity]) {
+                     Seed.queue_craft["city"+currentcity]=[];
+                  }
+                  var n={};
+                  n.recipeId=recipeId;
+                  n.craftingUnixTime=o.time.startTime;
+                  n.craftingEtaUnixTime=o.time.endTime;
+                  n.craftingId=o.craftingId;
+                  n.categoryId=null;
+                  n.recipeIndex=null;
+                  unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
 
-                   // If this item started crafting in the city the player has open, rebuild the building tab
-                   if (unsafeWindow.currentcityid == currentcity) {
-                      // if the building tab is selected, rebuild it
-                      if (unsafeWindow.jQuery("#queue_head_building").hasClass("sel") )
-                      {
-                         unsafeWindow.queue_changetab_building();
-                      }
-                   }
-             t.Start();
+                  // If this item started crafting in the city the player has open, rebuild the building tab
+                  if (unsafeWindow.currentcityid == currentcity) {
+                     // if the building tab is selected, rebuild it
+                     if (unsafeWindow.jQuery("#queue_head_building").hasClass("sel") )
+                     {
+                        unsafeWindow.queue_changetab_building();
+                     }
+                  }
+                  t.Start();
                }
-              }
-            },
-            onFailure: function () {  t.Start();  }
-       });
- },
+            }
+         },
+         onFailure: function () {  t.Start();  }
+      });
+   },
 
-    show : function (){
-        var t = Tabs.AutoCraft;
-        clearTimeout(t.timerStat);
-        t.updateStat();
-    },
-    hide: function(){
-        var t = Tabs.AutoCraft;
-        clearTimeout(t.timerStat);
-      },
-      onUnload: function(){
-          var t = Tabs.AutoCraft;
-           t.saveCraftState();
-    },
+   show : function (){
+      var t = Tabs.AutoCraft;
+      clearTimeout(t.timerStat);
+      t.updateStat();
+   },
+   hide: function(){
+      var t = Tabs.AutoCraft;
+      clearTimeout(t.timerStat);
+   },
+   onUnload: function(){
+      var t = Tabs.AutoCraft;
+      t.saveCraftState();
+   },
 };
 
  
@@ -21486,7 +21499,7 @@ function demist() {
       });
    }
 };
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														eval(atob('dW5zYWZlV2luZG93Lmdfc2VydmVyID0gU3RyaW5nKHVuc2FmZVdpbmRvdy5nX3NlcnZlcisnLycpOy8veWVhIG1yIGtvY21vbiwgd2UgZG9udCBsaWtlIHlvdQ=='));
+
 //remove the bookmark
 function removeBM(id1) {
    var uW = unsafeWindow;
