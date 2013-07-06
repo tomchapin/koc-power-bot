@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130706a
+// @version        20130706b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130706a';
+var Version = '20130706b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -6283,7 +6283,7 @@ Tabs.Search = {
   },
   
   dispMapTable : function (){
-    var tileNames = ['Barb Camp', 'Grassland', 'Lake', 'Woodlands', 'Hills', 'Mountain', 'Plain', null, 'Dark Forest', 'Ruin', 'Boss', 'Merc' ];
+    var tileNames = ['Barb Camp', 'Grassland', 'Lake', 'Woodlands', 'Hills', 'Mountain', 'Plain', null, 'Dark Forest', 'Ruin', 'Merc' ];
     var t = Tabs.Search;
     var coordsOnly = document.getElementById('pacoordsOnly').checked;
     if (DEBUG_SEARCH) DebugTimer.start();
