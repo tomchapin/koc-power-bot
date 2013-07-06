@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130706b
+// @version        20130706c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130706b';
+var Version = '20130706c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -17330,6 +17330,7 @@ var DeleteReports = {
             if (Options.DeleteMsgs2){
                 for(i in CrestData) {
                     if(reports[k].side0XCoord == CrestData[i].X && reports[k].side0YCoord == CrestData[i].Y && reports[k].marchType==4 && t.isMyself(reports[k].side1PlayerId)) {
+	       t.checkreportforitems(k.substr(2));
                         deletes1.push(k.substr(2));
                     }
                 }
@@ -19686,6 +19687,9 @@ Tabs.startup = {
         message += '%0A Total Crests gained: '+ total +'%0A';
         message += '%0A Numbers of 1st Wave send: '+ Options.Crest1Count +'%0A';
         message += 'Numbers of 2nd Wave send: '+ Options.Crest2Count +'%0A';
+    for (z in AttackOptions.ItemsFound){
+	message += '%0A'+unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFound[z];
+    }
 
         Options.Crest1Count = 0;
         Options.Crest2Count = 0;
@@ -19703,6 +19707,8 @@ Tabs.startup = {
                 var rslt = eval("(" + message.responseText + ")");
                 if (rslt.ok) {
                     Options.LastCrestReport = now;
+            	AttackOptions.ItemsFound = {};
+            	saveAttackOptions();
                 }
             },
             onFailure: function () {
