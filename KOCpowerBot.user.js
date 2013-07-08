@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130706c
+// @version        20130708a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130706c';
+var Version = '20130708a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -422,6 +422,7 @@ var AttackOptions = {
   barbMaxKnight         : 255,
   threshold          : 750000,
   ItemsFound         : {},
+  ItemsFoundCr       : {},
 };
 
 var ResetAll=false;
@@ -17402,9 +17403,15 @@ var DeleteReports = {
                   var loot = rslt.detail.loot[5];
                if (matTypeof(loot) == 'object')
                   for (z in loot) {
-                     if(AttackOptions.ItemsFound[z])
-                        AttackOptions.ItemsFound[z] += loot[z];
-                     else AttackOptions.ItemsFound[z] = loot[z];
+		    if (rslt.darkForestConfict) {
+		     if(AttackOptions.ItemsFound[z])
+		        AttackOptions.ItemsFound[z] += loot[z];
+		     else AttackOptions.ItemsFound[z] = loot[z];
+		    } else {
+		     if(AttackOptions.ItemsFoundCr[z])
+		        AttackOptions.ItemsFoundCr[z] += loot[z];
+		     else AttackOptions.ItemsFoundCr[z] = loot[z];
+		    }
                   }
                   saveAttackOptions();
                };
@@ -19687,8 +19694,8 @@ Tabs.startup = {
         message += '%0A Total Crests gained: '+ total +'%0A';
         message += '%0A Numbers of 1st Wave send: '+ Options.Crest1Count +'%0A';
         message += 'Numbers of 2nd Wave send: '+ Options.Crest2Count +'%0A';
-    for (z in AttackOptions.ItemsFound){
-	message += '%0A'+unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFound[z];
+    for (z in AttackOptions.ItemsFoundCr){
+	message += '%0A'+unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFoundCr[z];
     }
 
         Options.Crest1Count = 0;
@@ -19707,7 +19714,7 @@ Tabs.startup = {
                 var rslt = eval("(" + message.responseText + ")");
                 if (rslt.ok) {
                     Options.LastCrestReport = now;
-            	AttackOptions.ItemsFound = {};
+            	AttackOptions.ItemsFoundCr = {};
             	saveAttackOptions();
                 }
             },
