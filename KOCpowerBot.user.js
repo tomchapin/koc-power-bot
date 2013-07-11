@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130708a
+// @version        20130710a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130708a';
+var Version = '20130710a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -5226,8 +5226,9 @@ Tabs.build = {
 					//0 = 5,9,7222643,1365086688,1365087900,0,3840,8
                     //TODO add info of remaining build time and queue infos
                 } else {
-				      if(t.buildStates.tr && t.buildStates.trset != Seed.throne.activeSlot) continue;//check just before we start building.  lets the other enhancements keep working.
+				      if(t.buildStates.tr && t.buildStates.trset != Seed.throne.activeSlot) continue;//check just before we start building.  lets the other enhancements keep working.                	
                     if (t["bQ_" + cityId].length > 0) { // something to do?
+                                    
 							t['build'+Cities.byID[cityId].idx] = true;
                         t.doOneSlowdown(cityId,itime);
                     }
@@ -5354,6 +5355,8 @@ Tabs.build = {
                 params.bid = bid;
             }
             params.type = bdgid;
+                params.pay_for_an_additional_queue=0;
+                params.permission=0;
             new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/destruct.php" + unsafeWindow.g_ajaxsuffix, {
                 method: "post",
                 parameters: params,
@@ -5435,6 +5438,8 @@ Tabs.build = {
                     params.bid = bid;
                 }
                 params.type = bdgid;
+                params.pay_for_an_additional_queue=0;
+                params.permission=0;
                 new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
                     method: "post",
                     parameters: params,
