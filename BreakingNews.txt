@@ -1,15 +1,13 @@
-xray vision has been released into public domain.  We've been asking kabam for over 2 months to fix this exploit that allows detection of who owns the mists without scouting.
+We've waited for kabam to fix the misted city exploit long enough.  Time for you to take action!  Time to boycott gems until they fix this!
+<br>
+<div style="display:block; clear:both; text-align: left; background: #000 url(http://www.ipetitions.com/assets/images/widgets/black.png) no-repeat top left; width: 200px;">
+<iframe src="http://www.ipetitions.com/widget/view/black/604263" marginheight="0" marginwidth="0" style="width: 200px; height:150px; border:0;" scrolling="no"></iframe>
+<div style="text-align:center; font-family:Arial;font-size: 9px; width: 196px; margin-top: -3px; padding: 1px 2px 2px; color: #8a8a8a; font-style: italic;">
+        <a style="color: #fff; text-decoration:none;" href="http://www.ipetitions.com/">Petition by iPetitions</a>
+</div>
 
-We were very alarmed when we found the code in kocmon which we put even more pressure on kabam to fix.  
+</div>
 
-How the code works
 
-we bookmark a misted city
 
-we request info from kabam about our bookmark
 
-it returns the true identity of the owner.
-
-Please file a report with the link to kabam above!
-
-<a href="http://community.kabam.com/forums/showthread.php?172850-misted-city-glitch-aka-xray-vision&p=965189#post965189">xray vision thread on kabam bug reports</a>
