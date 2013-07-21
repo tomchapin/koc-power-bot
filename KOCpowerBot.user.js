@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130713a
+// @version        20130721a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130713a';
+var Version = '20130721a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -5614,7 +5614,7 @@ Tabs.build = {
     calculateQueueValues: function (cityId, buildingLevel, buildingType, buildingMode) {
         var t = Tabs.build;
         var now = unixTime();
-        var constructionBoost = unsafeWindow.cm.ThroneController.effectBonus(78);
+        var constructionBoost = Math.min(unsafeWindow.cm.ThroneController.effectBonus(78),600);
         if (buildingMode == 'build') {
             var buildingMult = Math.pow(2, buildingLevel);
         }
