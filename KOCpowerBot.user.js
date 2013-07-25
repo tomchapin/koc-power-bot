@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130721a
+// @version        20130725a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130721a';
+var Version = '20130725a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10306,6 +10306,7 @@ Tabs.Barb = {
       ['BThorn', 13],
       ['EXec', 14],
       ['Tower', 15],
+      ['FlmArch', 16],
      ],
     
   init : function (div){
@@ -10412,7 +10413,7 @@ Tabs.Barb = {
      for(i=0;i<10;i++){
          z += '<TR><TD>Level_'+(i+1)+': </td>';
          for(var j=0; j<troopDef.length; j++){
-             z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=6 maxlength=6 value="'+(AttackOptions.Troops[i+1][j+1]?AttackOptions.Troops[i+1][j+1]:0)+'" /></td>';
+             z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=5 maxlength=6 value="'+(AttackOptions.Troops[i+1][j+1]?AttackOptions.Troops[i+1][j+1]:0)+'" /></td>';
          }
         z+='<TD align=left><INPUT id=Mindist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.MinDistance[i+1]+'"</td>';
          z+='<TD align=right><INPUT id=dist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[i+1]+'"</td>';
