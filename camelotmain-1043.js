@@ -737,6 +737,7 @@ g_js_strings.modal_build.asquickas = "as quick as";
 g_js_strings.modal_build.timeremaining = "Time Remanining";
 g_js_strings.modal_build.cancelcurrconstuct = "Cancel Current Construction";
 g_js_strings.modal_build.buildoneattime = "You can only build one<br/>building at a time.";
+g_js_strings.modal_build.buildqueuefull = "The build queue is full.";
 g_js_strings.modal_build.reqnotmet = "Requirements for this<br/>building have not been met.";
 g_js_strings.modal_build.reducebuildtimedesc = "Reduce build time when you ask your friends to help. For each friend that clicks on your feed, the build time will be reduced by one minute, up to a maximum of a 10 minute reduction.";
 g_js_strings.modal_build.newreducebuildtimedesc = "Reduce build time when you ask your friends to help. For each friend that clicks on your feed, the build time will be reduced by either 1 minute or 1% whichever is greater. Up to 10 friends can speed up your build.";
@@ -745,6 +746,7 @@ g_js_strings.modal_build.whatsthis = "what&#39;s this?";
 g_js_strings.modal_build.whatsthiscontent = "Reduce build or research time by sharing a story to your Wall and to your Alliance chat asking for help.  For each friend or Alliance member that clicks on the provided link, the build or research time will reduced by one minute or 1% (whichever is greater) up to a maximum of 5 friends and 5 Alliance members.";
 g_js_strings.modal_build.mintime = "Min. time";
 g_js_strings.modal_build.bonusinfo = "* This will increase if you have bonuses applied ";
+g_js_strings.modal_build.buildqueueno2nd = "Can not build Spire in 2nd or higher build queue.";
 g_js_strings.deconstructBuilding = new Object();
 g_js_strings.deconstructBuilding.lvl1deconstructdesc = "Level 1 buildings can be deconstructed immediately and no resources are returned back";
 g_js_strings.deconstructBuilding.deconstructtakes = "Deconstructing this building takes %1$s and you will get";
@@ -766,6 +768,7 @@ g_js_strings.cancelconstruction.cancelconstructiontitle = "Cancel Construction?"
 g_js_strings.cancelconstruction.cancelconstruction = "Cancel Construction";
 g_js_strings.cancelconstruction.cancelconstructiontakes = "Cancelling this construction will get";
 g_js_strings.cancelconstruction.cancelconstructionloseitem = "Warning: cancelling this construction will NOT return {itemName}!";
+g_js_strings.cancelconstruction.gemRebate = "Any Gems spent to activate build queues will not be refunded upon cancelation.";
 g_js_strings.loyalBoost_modal = new Object();
 g_js_strings.loyalBoost_modal.rewardknight = "Reward your knight to increase loyalty";
 g_js_strings.loyalBoost_modal.rewardwith = "Reward with";
@@ -995,7 +998,7 @@ g_js_strings.modal_tourny_changetab.currentPrize = "Current Prize";
 g_js_strings.modal_tourny_changetab.playerName = "Player Name";
 g_js_strings.modal_tourny_changetab.allianceName = "Alliance Name";
 g_js_strings.modal_tourny_changetab.beatYouBy = "%1$s beat you by %2$s!";
-g_js_strings.modal_tourny_changetab.youdveEarned = "If you had beat them, you would have earned";
+g_js_strings.modal_tourny_changetab.youdveEarned = "You missed out on earning";
 g_js_strings.modal_tourny_changetab.youreOnlyAheadBy = "You are only ahead of %1$s by %2$s";
 g_js_strings.modal_tourny_changetab.youWereAheadBy = "You were ahead of %1$s by %2$s";
 g_js_strings.modal_tourny_changetab.dontLetThemPass = "Don't let them pass you or they could steal your prize!";
@@ -1588,6 +1591,7 @@ g_js_strings.buildaction = new Object();
 g_js_strings.buildaction.cannotbuild = "cannot build";
 g_js_strings.deleteaction = new Object();
 g_js_strings.deleteaction.somethingwentwrong = "Something went wrong please retry";
+g_js_strings.deleteaction.deconstructBlocked = "You cannot deconstuct while another construction is in progress.";
 g_js_strings.deleteaction.craftQueueFull = "You cannot deconstuct your Spire while it's crafting something; please cancel your current crafting project.";
 g_js_strings.update_queue = new Object();
 g_js_strings.update_queue.frhelp = "Friends helping";
@@ -2229,6 +2233,7 @@ g_js_strings.throneRoom.table = "Table";
 g_js_strings.throneRoom.window = "Window";
 g_js_strings.throneRoom.trophy = "Trophy";
 g_js_strings.throneRoom.candelabrum = "Candelabrum";
+g_js_strings.throneRoom.hero = "Hero";
 g_js_strings.throneRoom.title_throneRoom = "Throne Room";
 g_js_strings.throneRoom.button_enhance = "Enhance";
 g_js_strings.throneRoom.button_upgrade = "Upgrade";
@@ -2239,12 +2244,13 @@ g_js_strings.throneRoom.button_instantRepair = "Instant Repair";
 g_js_strings.throneRoom.button_startRepair = "Start Repair";
 g_js_strings.throneRoom.button_speedUp = "Speed Up";
 g_js_strings.throneRoom.description_chair = "From here the lord sits and manages his kingdom.";
-g_js_strings.throneRoom.description_advisor = "The Seneschal's symbol of office; the Seneschal offers advice and carries out his liege-lord's commands.";
+g_js_strings.throneRoom.description_advisor = "The Advisor's symbol of office; the Advisor offers advice and carries out his liege-lord's commands.";
 g_js_strings.throneRoom.description_window = "A lord must survey his kingdom; how can he understand the needs of his people if he cannont see their plight?";
 g_js_strings.throneRoom.description_banner = "Tapestries chronicles great legends of the past and mighty deeds of the present.";
 g_js_strings.throneRoom.description_table = "The reliquary stand is where the rarest, most powerful, and holiest artifacts and relics are put on display.";
 g_js_strings.throneRoom.description_trophy = "This is a Trophy";
 g_js_strings.throneRoom.description_candelabrum = "This is a Candelabrum";
+g_js_strings.throneRoom.description_hero = "This is a Hero";
 g_js_strings.throneRoom.buff_none = "No items";
 g_js_strings.throneRoom.buff_lesserProtectionRune = "Lesser Protection Stone";
 g_js_strings.throneRoom.buff_protectionRune = "Protection Stone";
@@ -2302,6 +2308,12 @@ g_js_strings.throneRoom.unique_banner30277 = "Unyielding Banner";
 g_js_strings.throneRoom.unique_candelabrum30278 = "Magnanimous Chandelier";
 g_js_strings.throneRoom.unique_table30279 = "Skillful Table";
 g_js_strings.throneRoom.unique_trophy30280 = "Courageous Trophy";
+g_js_strings.throneRoom.unique_window30281 = "Warfarer's Portal";
+g_js_strings.throneRoom.unique_banner30282 = "Champion's Shroud";
+g_js_strings.throneRoom.unique_table30283 = "Healer's Shrine";
+g_js_strings.throneRoom.unique_hero30284 = "Guileful Ranger";
+g_js_strings.throneRoom.unique_hero30285 = "Elite Guard";
+g_js_strings.throneRoom.unique_hero30286 = "Grand Siegemaster";
 g_js_strings.throneRoom.might1 = "TR Might";
 g_js_strings.throneRoom.statCapNear = "You are approaching the capacity for this stat.";
 g_js_strings.throneRoom.statCapLimit = "You have reached the capacity for this stat.";
@@ -2523,7 +2535,7 @@ g_js_strings.playerGuide = new Object();
 g_js_strings.playerGuide.throneroom_0_button = "Throne Room Item Basics";
 g_js_strings.playerGuide.throneroom_1_p = "Throne Room Items are items that can be won in battle that provide bonuses to your Kingdom. There are over 300 different bonuses ranging in potency and effect so players are able to use different items to customize their Throne Rooms. Each Throne Room Item is comprised of 5 important pieces of??information: Type, Quality, Suffix, Upgrade, and Effects.";
 g_js_strings.playerGuide.throneroom_2_h = "Item Type";
-g_js_strings.playerGuide.throneroom_3_p = "There are 7 different types of Throne Room Items: Candelabrum, Chair, Window, Tapestry, Relic, Seneschal, and Trophy. Item type is included in the item name and can be seen in the item icon.";
+g_js_strings.playerGuide.throneroom_3_p = "There are 8 different types of Throne Room Items: Advisor, Banner, Candelabrum, Hero, Table, Throne, Trophy, and Window. Item type is included in the item name and can be seen in the item icon.";
 g_js_strings.playerGuide.throneroom_4_h = "Item Effects";
 g_js_strings.playerGuide.throneroom_5_p = "Item Effects are the Buffs and Debuffs that a Throne Room Item provides to your Kingdom. These Effects can increase the strength of your Troops, decrease the strength of an enemy's Troops, increase resource production, and much more. You can view all the available Buffs and Debuffs here: ";
 g_js_strings.playerGuide.throneroom_6_a = '<a href="http://community.kabam.com/forums/showthread.php?64944-Item-Effects-Definitions-(Buffs-and-Debuffs)&p=389480#post389480" target="_blank">Throne Room Effects Explained</a>';
@@ -2567,9 +2579,9 @@ g_js_strings.playerGuide.throneroom_43_p = "The Inventory tab is where you can v
 g_js_strings.playerGuide.throneroom_44_a = '<a href="#" onclick="jQuery(jQuery(\'.navList li\')[3]).click(); return false;">Equipping Items</a>.';
 g_js_strings.playerGuide.throneroom_45_p = "A player is given three Inventory Rows to start with, each of which can contain 5 Throne Room items. A player can choose to purchase additional rows for Gems by clicking on the Green + on the top Greyed out inventory rows.";
 g_js_strings.playerGuide.throneroom_46_p = "Items will be added to the Inventory in the order they are acquired and they cannot be moved around in the inventory. Items will continue to accumulate and can even reside in rows that have not been purchased. If there is an item in a row that has not been purchased it cannot be equipped. If a player wants to use that item, they will either need to purchase the row(s) necessary to access the item, or Salvage enough items to shift the remaining items into a row purchased by that player.";
-g_js_strings.playerGuide.throneroom_47_p = "Only one of each item type can be equipped at a time. This means if a player has a fully equipped Throne Room, it would have one Candelabrum, one Chair, one Window, one Tapestry, one Relic, one Advisor, and one Trophy. When a player wants to change the Effects of his Throne Room, he can swap out items by equipping and unequipping items from the Inventory tab.";
+g_js_strings.playerGuide.throneroom_47_p = "Only one of each item type can be equipped at a time. This means if a player has a fully equipped Throne Room, it would have one Hero, one Candelabrum, one Throne, one Window, one Banner, one Table, one Advisor, and one Trophy. When a player wants to change the Effects of his Throne Room, he can swap out items by equipping and unequipping items from the Inventory tab.";
 g_js_strings.playerGuide.throneroom_48_h = "Stats Tab and Pre-sets";
-g_js_strings.playerGuide.throneroom_49_p = "The Stats Tab is where players can view the active effects of their equipped items. This is also where a player can set up Pre-Sets. To avoid swapping out individual items, players can create a pre-set, which is a group of equipped items that are saved for later use. Players start out with 2 Pre-Sets for free, but you can buy additional presets for a total of 8. This means that players can save eight configurations of items (again x1 Candelabrum, x1 Chair, x1 Window, x1 Tapestry, x1 Relic, x1 Advisor). This will also be a time saver for players. Equipping an item will require a 5 second cool down (similar to swapping Guardians). A Pre-Set, however, only requires that a player wait 5 seconds a single time instead of equipping and waiting for each item.";
+g_js_strings.playerGuide.throneroom_49_p = "The Stats Tab is where players can view the active effects of their equipped items. This is also where a player can set up Pre-Sets. To avoid swapping out individual items, players can create a pre-set, which is a group of equipped items that are saved for later use. Players start out with 2 Pre-Sets for free, but you can buy additional presets for a total of 8. This means that players can save eight configurations of items (again x1 Hero, x1 Candelabrum, x1 Throne, x1 Window, x1 Banner, x1 Table, x1 Advisor). This will also be a time saver for players. Equipping an item will require a 5 second cool down (similar to swapping Guardians). A Pre-Set, however, only requires that a player wait 5 seconds a single time instead of equipping and waiting for each item.";
 g_js_strings.playerGuide.throneroom_50_button = "Equipping, Unequipping, and Salvaging Items";
 g_js_strings.playerGuide.throneroom_51_h = "Equipping an Item";
 g_js_strings.playerGuide.throneroom_52_p = 'Click on the "Inventory" tab to view your inventory. This is where all of your acquired Throne Room Items are being stored. Hovering over an item will show you the item tool tip. Click on the item and you will be given the option to equip or salvage the item. Equipping an item, will add the item to your Throne Room, and the item\'s effects will be applied to your Kingdom. There is a 5 second cool down after you equip an item (see pre-sets section for more information).';
@@ -3151,6 +3163,7 @@ g_js_strings.vipModal.benefitUpkeep = "Upkeep is reduced by %1$s!";
 g_js_strings.vipModal.benefitTraining = "Troop training time is shortened by %1$s!";
 g_js_strings.vipModal.benefitDefense = "Troop defenses are increased by %1$s!";
 g_js_strings.vipModal.benefitTRChance = "Chance of successfully Upgrading a Throne Room item is increased by %1$s!";
+g_js_strings.vipModal.benefitQueue = "One FREE additional Build queue!";
 g_js_strings.vipOverview = {};
 g_js_strings.vipOverview.title = "The Order of the Round";
 g_js_strings.vipOverview.joinTheOrder = "Join the Order to Reap the Rewards";
@@ -3198,6 +3211,42 @@ g_js_strings.voteTooltip.Locked = "Locked";
 g_js_strings.voteTooltip.Unlocked = "Unlocked";
 g_js_strings.voteTooltip.milestoneUnlocked = "You've unlocked this reward and earned %1$s of %2$s";
 g_js_strings.voteTooltip.milestoneLocked = "Use more Contribution Points to unlock %1$s of %2$s";
+g_js_strings.queue = {};
+g_js_strings.queue.occupied = "All build Queues are currently occupied.";
+g_js_strings.queue.startb = "Additional Build Queue";
+g_js_strings.queue.start = "Start";
+g_js_strings.queue.proceed = "Proceed";
+g_js_strings.queue.gem_bal = "Gem Balance";
+g_js_strings.queue.free = "Free Additional Queue Available";
+g_js_strings.queue.open = "Additional Queue Open";
+g_js_strings.queue.tostartbuilding = " to start an additional building?";
+g_js_strings.queue.confdialog = "Use %1$s Gems to start an additional %2$s?";
+g_js_strings.queue.learn = "Learn More";
+g_js_strings.queue.lower = "First Free with Subscription!";
+g_js_strings.queue.more = "More Info";
+g_js_strings.queue.upper = "Additional Queue Open";
+g_js_strings.queue.nothing = "Nothing Building";
+g_js_strings.queue.nothing_res = "Nothing Researching";
+g_js_strings.queue.totalQueues = "Total Queues";
+g_js_strings.fb_objects = {};
+g_js_strings.fb_objects.dark_forest_title = "Dark Forest";
+g_js_strings.fb_objects.dark_forest_description = "Dark Forests are the homes of villainous denizens and creatures most foul. Almost certain death awaits novice armies, but bountiful rewards shall be claimed by the victors!";
+g_js_strings.fb_objects.throne_room_item_title = "Throne Room Item";
+g_js_strings.fb_objects.throne_room_item_description = "A power artifact that unleashes the full power of the Kingdom???s potential.";
+g_js_strings.fb_objects.city_title = "City";
+g_js_strings.fb_objects.city_description = "Establish another City to increase your Kingdom???s power and reach across Camelot!";
+g_js_strings.fb_objects.ascend_city_title = "Ascension City";
+g_js_strings.fb_objects.ascend_city_description = "Pledge the city???s allegiance to either the Fey, Briton or Druid factions for exclusive Troops, research additional technologies, strategic buffs and powerful Blessings.";
+g_js_strings.fb_objects.castle_title = "Castle";
+g_js_strings.fb_objects.castle_description = "The center of the city, the Castle represents one???s power and influence across the Kingdoms.";
+g_js_strings.fb_objects.gift_title = "Gift";
+g_js_strings.fb_objects.gift_description = "A token of appreciation to help the Lord or Lady maintain their Kingdom.";
+g_js_strings.fb_objects.help_construction_title = "Construction";
+g_js_strings.fb_objects.help_construction_description = "Building and upgrading structures is essential for any Kingdom hoping to seize control in Camelot.";
+g_js_strings.fb_objects.help_research_title = "Research";
+g_js_strings.fb_objects.help_research_description = "Researching technologies is crucial for ruling a Kingdom and provides a competitive edge in battle.";
+g_js_strings.fb_objects.wild_title = "Wild";
+g_js_strings.fb_objects.wild_description = "Expand your Kingdom???s territory and power by claiming wilds for bonus to your current cities or build a new city!";
 var buildingcost = {
     bdg0: ["Castle", 0, 0, 0, 0, 0, 0, 0, {
         b19: [0, - 2]
@@ -7726,6 +7775,22 @@ var itemlist = {
         category: 1,
         subCategory: 0
     },
+    i20020: {
+        name: "Masters Token +13",
+        description: "100% success rate when Upgrading an item up to +13",
+        price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i20021: {
+        name: "Masters Token +14",
+        description: "100% success rate when Upgrading an item up to +14",
+        price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
     i25001: {
         name: "Mercenaries Cursed Chest N",
         description: "Contains some of Camelots most powerful items. Each Cursed Chest requires a Merlin's Incantation to open.",
@@ -8049,6 +8114,14 @@ var itemlist = {
     i30107: {
         name: "Mystery Candelabrum",
         description: "Use this item to receive a random Throne Room Candelabrum of any quality and faction.  Must have space in Throne Room Inventory to successfully use this item.",
+        price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 1
+    },
+    i30108: {
+        name: "Random Hero Item",
+        description: "Use this item to receive a random Throne Room Hero of any quality and faction. Must have space in Throne Room Inventory to successfully use this item.",
         price: null,
         tradable: null,
         category: 1,
@@ -8416,6 +8489,54 @@ var itemlist = {
     },
     i30280: {
         name: "Courageous Trophy",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30281: {
+        name: "Warfarer's Portal",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30282: {
+        name: "Champion's Shroud",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30283: {
+        name: "Healer's Shrine",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30284: {
+        name: "Guileful Ranger",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30285: {
+        name: "Elite Guard",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30286: {
+        name: "Grand Siegemaster",
         description: "",
         price: null,
         tradable: null,
@@ -21077,6 +21198,94 @@ var itemlist = {
         tradable: null,
         category: 5,
         subCategory: 100
+    },
+    i32111: {
+        name: "Reincarnation Mystery Box",
+        description: "Take a chance to win one of the most powerful items in Camelot! Check today's message for more details!",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32112: {
+        name: "Retribution Mystery Box",
+        description: "Take a chance to win one of the most powerful items in Camelot! Check today's message for more details!",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32113: {
+        name: "Pelleas Storm Mystery Box",
+        description: "Take a chance to win one of the most powerful items in Camelot! Check today's message for more details!",
+        price: 25,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32114: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32115: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32116: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32117: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32118: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32119: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32120: {
+        name: "Grand Chest",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i32121: {
+        name: "Grand Chest",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
     }
 };
 var shopOrder = [505, 599, 10021, 10029, 401, 911, 912, 924, 361, 362, 363, 231, 923, 355, 221, 922, 351, 941, 1, 211, 241, 2, 3, 4, 5, 6, 7, 8, 10, 9, 26, 49, 276, 277, 278, 273, 274, 275, 261, 262, 271, 272, 55, 57, 931, 901, 1015, 1025, 1035, 1045, 101, 102, 111, 112, 121, 122, 131, 132, 141, 142, 501, 502, 503, 504, 10023, 10027, 942, 10007, 10008, 10009, 10010, 10011, 1202, 1203, 1204, 1205, 1206, 711, 721, 731, 741, 801, 802, 803, 804, 805, 811, 812, 813, 814, 821, 822, 823, 824, 825, 831, 832, 833, 834, 835, 841, 842, 843, 844, 845, 851, 852, 853, 854, 855, 893, 860, 861, 885, 886, 887, 888, 889, 862, 863, 864, 865, 866, 867, 868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879, 880, 881, 882, 883, 884];
@@ -25468,7 +25677,7 @@ var buildingmight = {
     "10": [90, 180, 360, 720, 1440, 2880, 5760, 11520, 23040, 46080],
     "11": [90, 180, 360, 720, 1440, 2880, 5760, 11520, 23040, 46080, 92160, 184320],
     "12": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720, 61440],
-    "13": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360],
+    "13": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
     "14": [90, 180, 360, 720, 1440, 2880, 5760, 11520, 23040, 46080],
     "15": [60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720, 61440, 122880],
     "16": [60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720, 61440, 122880],
@@ -25481,11 +25690,11 @@ var buildingmight = {
     "53": [50, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600, 51200, 102400],
     "20": [150, 300, 600, 1200, 2400, 4800, 9600, 19200, 38400, 76800],
     "21": [120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720, 61440],
-    "22": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360],
+    "22": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
     "23": [120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720, 61440],
     "24": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
     "25": [120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720, 61440],
-    "26": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360],
+    "26": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360, 30720],
     "27": [30, 60, 120, 240, 480, 960, 1920, 3840, 7680, 15360]
 };
 var buildingmaxlvl = {
@@ -25502,7 +25711,7 @@ var buildingmaxlvl = {
     "10": 10,
     "11": 12,
     "12": 12,
-    "13": 10,
+    "13": 11,
     "14": 10,
     "15": 12,
     "16": 12,
@@ -25515,11 +25724,11 @@ var buildingmaxlvl = {
     "53": 12,
     "20": 10,
     "21": 10,
-    "22": 10,
+    "22": 11,
     "23": 10,
-    "24": 10,
+    "24": 11,
     "25": 10,
-    "26": 10,
+    "26": 11,
     "27": 10
 };
 var buildingupgradedesc = {
@@ -25536,7 +25745,7 @@ var buildingupgradedesc = {
     "10": ["Engage in one transaction at a time", "Engage in two transaction at a time", "Engage in three transaction at a time", "Engage in four transaction at a time", "Engage in five transaction at a time", "Engage in six transaction at a time", "Engage in seven transaction at a time", "Engage in eight transaction at a time", "Engage in nine transaction at a time", "Engage in ten transaction at a time"],
     "11": ["Research Fertilizer, Logging, Stoneworking, and Mining, and raise your research cap to Level 1", "Research Poisoned Edged, and raise your research cap to Level 2", "Research Geometry, Eagle Eyes, and Metal Alloys, and raise your research cap to Level 3", "Research Featherweight Powder, Magical Mapping, and Fletching, and raise your research cap to Level 4", "Research Alloy Horseshoes and Giant&#39;s Strength, and raise your research cap to Level 5", "Research Shrinking Powder and Healing Potions, and raise your research cap to Level 6", "Raise your research cap to Level 7", "Raise your research cap to Level 8", "Raise your research cap to Level 9", "Raise your research cap to Level 10", "Raise your research cap to Level 11", "Raise your research cap to Level 12"],
     "12": ["Send one army at a time, with up to 10,000 troops", "Send two armies at a time, with up to 20,000 troops each", "Send three armies at a time, with up to 30,000 troops each", "Send four armies at a time, with up to 40,000 troops each", "Send five armies at a time, with up to 50,000 troops each", "Send six armies at a time, with up to 60,000 troops each", "Send seven armies at a time, with up to 70,000 troops each", "Send eight armies at a time, with up to 80,000 troops each", "Send nine armies at a time, with up to 90,000 troops each", "Send ten armies at a time, with up to 100,000 troops each", "Send eleven armies at a time, with up to 150,000 troops each", "Send eleven armies at a time, with up to 200,000 troops each"],
-    "13": ["Train Supply Troopers and Militiamen", "Train Scouts and Pikemen, and increase your training speed", "Train Swordsmen, and increase your training speed", "Train Archers, and increase your training speed", "Train Cavalry, and increase your training speed", "Train Supply Wagons, and increase your training speed", "Train Heavy Cavalry, and increase your training speed", "Train Ballistae, and increase your training speed", "Train Battering Rams, and increase your training speed", "Train Catapults, and increase your training speed"],
+    "13": ["Train Supply Troopers and Militiamen", "Train Scouts and Pikemen, and increase your training speed", "Train Swordsmen, and increase your training speed", "Train Archers, and increase your training speed", "Train Cavalry, and increase your training speed", "Train Supply Wagons, and increase your training speed", "Train Heavy Cavalry, and increase your training speed", "Train Ballistae, and increase your training speed", "Train Battering Rams, and increase your training speed", "Train Catapults, and increase your training speed", "Increase your training speed."],
     "14": ["Warns you of an impending attack", "Tells you the purpose of an impending attack (Plunder or Scout)", "Tells you the arrival time of an impending attack", "Tells you the Title and Alliance of the Player sending an impending attack", "Gives you an estimate of the total Troops in an impending attack", "Tells you the Troop types in an impending attack", "Gives you an estimate of how many of each Troop type in an impending attack", "Tells you the exact number of Troops in an impending attack", "Tells you the Combat Skill of the Knight leading an impending attack", "Tells you the Research levels of the Player sending an impending attack"],
     "15": ["Allows you to research Level 1 Metal Alloys and Train Swordsmen", "Allows you to research Level 2 Metal Alloys", "Allows you to research Level 3 Metal Alloys", "Allows you to research Level 4 Metal Alloys", "Allows you to research Level 5 Metal Alloys and Train Battering Rams and Heavy Cavalry", "Allows you to research Level 6 Metal Alloys", "Allows you to research Level 7 Metal Alloys", "Allows you to research Level 8 Metal Alloys", "Allows you to research Level 9 Metal Alloys", "Allows you to research Level 10 and 11 Metal Alloys", "Allows you to research Level 11 Metal Alloys", "Allows you to research Level 12 Metal Alloys"],
     "16": ["Research Level 1 Geometry and Build Level 2 Walls", "Research Level 2 Geometry and Build Level 3 Walls", "Research Level 3 Geometry and Build Level 4 Walls and Train Supply Wagons", "Research Level 4 Geometry and Build Level 5 Walls", "Research Level 5 Geometry and Build Level 6 Walls and Train Ballistae", "Research Level 6 Geometry and Build Level 7 Walls", "Research Level 7 Geometry and Build Level 8 Walls and Train Battering Rams", "Research Level 8 Geometry and Build Level 9 Walls", "Research Level 9 Geometry and Build Level 10 Walls and Train Catapults", "Research Level 10 Geometry", "Research Level 11 Geometry", "Research Level 12 Geometry"],
@@ -25551,9 +25760,9 @@ var buildingupgradedesc = {
     "21": ["Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle."],
     "22": ["Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units"],
     "23": ["Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle."],
-    "24": ["Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units."],
+    "24": ["Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units."],
     "25": ["Sacrifice Supply Troops and Militiamen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Scouts and Pikeman. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Swordsmen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Supply Wagons. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Heavy Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Ballista. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Battering Rams. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Catapults, Executioners, Bloodthorn, Siege Walls, and Flame Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours."],
-    "26": ["Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units"],
+    "26": ["Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units"],
     "27": ["Research Improved Cartography and raise research cap to Level 1", "Research Into the Wild and raise research cap to Level 2", "Raise research cap to Level 3", "Research Siege Master&#39;s Training and raise research cap to Level 4", "Raise research cap to Level 5", "Research improved Defenses and raise research cap to Level 6", "Raise research cap to Level 7", "Research Strengthen Ranks and raise research cap to Level 8", "Raise research cap to Level 9", "Research Improved Fletching and raise research cap to Level 10"]
 };
 var provincenames = {
@@ -25614,7 +25823,7 @@ cm.FETemplates = {
         playConfirmPanel: '<h2 class="player_name">#{lordyText} #{playerName}</h2><h3 class="founded_kingdom">#{foundedKingdom}</h3><div class="placed_under_protection">#{placedUnderProtection}</div><ul class="player_hints">#{playerHints}</ul><h3 class="placed_under_protection">#{callToAction}</h3><div class="action_buttons">#{actionButtons}</div>'
     },
     Queue: {
-        queue: '<div class="queue_item"><div class="info"><div class="stat"><span class="item">#{queueTitle}</span><span class="time">#{timeLeft}</span><div class="speedup"><a class="inlineButton red14" name="#{linkName}" onclick="#{speedupJs}"><span>#{speedupLabel}</span></a></div></div><div class="bar" style="#{progressbarCss}">&nbsp;</div></div>#{stats}</div>',
+        queue: '<div class="queue_item"><div class="info"><div class="stat"><span class="item">#{queueTitle}</span><span class="time">#{timeLeft}</span><div class="speedup"><a class="buttonv2 red" name="#{linkName}" onclick="#{speedupJs}"><span>#{speedupLabel}</span></a></div></div><div class="bar" style="#{progressbarCss}">&nbsp;</div></div>#{stats}</div>',
         single_stat: '<div class="stats">#{amountLabel}: #{helpCount1}</div>',
         dual_stat: '<div class="stats"><span class="friends">#{friendLabel}: <span>#{helpCount1}</span></span><span class="allis">#{allyLabel}: <span>#{helpCount2}</span></span></div>'
     },
@@ -25696,6 +25905,13 @@ cm.FETemplates = {
     DailyRewards: {
         openMain: '<div id="dailyRewardModalContainer"><div class="title">#{title}</div><p class="notification">#{notification}</p><p class="itemNotification"><span style="color: red;">#{itemName}</span>#{itemNotification}</p><div class="dailyRewardInfoContainer"><ul>#{rewardInfoHtml}</ul><div id="progressBarContainer" class="progressBarContainer"><div id="dailyRewardProgress" style="width: #{progressBar}%"></div></div></div><div class="shareContainer"><input type="checkbox" id="shareDailyRewardCheck" /><span class="label">#{shareLabel}</span></div><a id="dailyRewardModalButton"><span>#{button}</span></a></div>',
         rewardInfo: '<li class="#{rewardStatus} item#{position}"><div class="label"><span class="day">#{dayLabel} <br/> #{dayCount}</span><span class="check #{checkStatus}"></span></div><div class="rewardImage #{itemId}"></div></li>'
+    },
+    multiQueue: {
+        mqInfoPopup: '<div class="mqInfoContainer"><div id="mqInfoHeader" class="mqInfoHeader"></div><div id="mqInfoDescription" class="mqInfoDescription">#{mqDescription}</div><div id="mqInfoBenefits" class="mqInfoBenefits">#{mqBenefits}</div></div>',
+        confPopup: '<div class="confPopup"><div class="title">#{title}</div><div class="description">#{description}</div><div class="gembal">#{gembal}</div><div class="gemButtonv2 green startBuilding">#{button}</div></div>',
+        bottom: '<div class="bottom_q"><div class="additional_queue">#{upper}</div><div class="first_free_with">#{lower}<a href="javascript: cm.VipController.onEngagementTabClick();" class="more_info">#{more_info}</a></div></div>',
+        cost_gems: '<div class="cost_gems"><div class="gems"></div><div class="cost">#{cost}</div></div>',
+        upgradeSection: '<div class="upgradeSection"><div class="open_message">#{free}</div>#{cost_gems}<a class="button#{buttonColor}20 extra_upgrade" onclick="#{onclick}"><span>#{upgrade}</span></a><div class="time_estimate">#{time_estimate}</div><div class="learn">#{learn}</div><div class="share_a_message"><input id=\'askHelpCheckbox\' type=\'checkbox\'onclick=\'buildingController.askHelpCheckboxChanged(event);\' />#{share_a_message}</div></div>'
     },
     reinforcedReport101: {
         self: '<div class="reinforceReport"><div class="reportHeader"><div class="reportTitle">{PRESENTATION_MODEL.reinforcementreceived}</div><div class="reportSubtitle"><span class="cityNumber">{city.number}</span> {city.name} {date}</div></div><div class="helpSection"><img src="{stimgurl}img/scenes_reinforcement.jpg" width="408" height="216" />{PRESENTATION_MODEL.note}<ul style="height: 23px;"><li class="sendTroopsHome"><a name="reinforceReportSendTroopsHomeButton" class="inlineButton brown20"><span>{PRESENTATION_MODEL.sendtroopshome}</span></a></li><li class="backToReports"><a name="reinforceReportBackButton" class="inlineButton blue20"><span>{PRESENTATION_MODEL.backtoreports}</span></a></li></ul></div><div class="detailSection"><div class="memberLabel">{PRESENTATION_MODEL.alliancemember}</div><div class="allianceInformation">{member.name} ({member.cordx}, {member.cordy})</div><div class="reinforcedLabel">{PRESENTATION_MODEL.reinforcedyouwith}</div>{reinforced_troops}</div></div>',
@@ -26223,9 +26439,11 @@ function modal_wilderness_buildcity_confirm(tileid, cityid) {
         onSuccess: function(transport) {
             var rslt = eval("(" + transport.responseText + ")");
             if (rslt.ok) {
-                top.location = appUrl
+                kraken.network.publishGamesFeed(cm.FB_ACTIONS.BUILD, cm.FB_OBJECTS.CITY, undefined, function(response) {
+                    top.location = appUrl
+                })
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -26367,7 +26585,19 @@ cm.BUILDING_TYPES = {
     WORKSHOP: 16,
     STABLE: 17,
     RELIEF_STATION: 18,
-    WALL: 19
+    WALL: 19,
+    FEY_SPIRE: 20,
+    APOTHECARY: 21,
+    DRUID_BARRACKS: 22,
+    DRUID_APOTHECARY: 23,
+    FEY_BARRACKS: 24,
+    FEY_ALTAR: 25,
+    BRITON_BARRACKS: 26,
+    BRITON_WORKSHOP: 27,
+    WOOD_GUARDIAN: 50,
+    ORE_GUARDIAN: 51,
+    FOOD_GUARDIAN: 52,
+    STONE_GUARDIAN: 53
 };
 cm.RESEARCH_TYPES = {
     ALCHEMY_LAB: 0,
@@ -26405,6 +26635,142 @@ cm.CONTEST_TYPES = {
     CONTEST_TYPE_KNIGHT_EXPERIENCE: 23,
     CONTEST_TYPE_ALLIANCE_MIGHT: 24,
     CONTEST_TYPE_GLORY: 25
+};
+cm.ERROR_TYPE = {
+    UNEXPECTED: 0,
+    FATAL: 1,
+    LOCKED: 2,
+    RETRY: 3,
+    REQ_NOT_MET: 4,
+    NOT_CITY_OWNER: 5,
+    QUEUE_FULL: 6,
+    COOLING_DOWN: 7,
+    SERVER_BUSY: 8,
+    UPDATEFAIL_SELF_PLAYER: 10,
+    UPDATEFAIL_SELF_CITY: 11,
+    UPDATEFAIL_OTHER: 12,
+    NAME_TAKEN: 50,
+    NAME_REGEX_FAIL: 51,
+    NAME_BANNED: 52,
+    NAME_NOT_FOUND: 53,
+    NAME_FILTERED: 54,
+    RELOAD: 60,
+    NO_READ_ACCESS: 61,
+    EMPTY_PAGE: 62,
+    NO_REPORT: 63,
+    BUILDING_NOT_EXIST: 101,
+    ALREADY_OCCUPIED: 102,
+    INVALID_LEVEL: 103,
+    INVALID_TILE_TYPE: 104,
+    BUILDING_LOCATION_MISMATCH: 105,
+    BUILDING_IS_UNIQUE: 106,
+    BUILDING_ONLY_TWO: 107,
+    CITY_ALREADY_RESEARCHING: 111,
+    TECH_ALREADY_UNDER_RESEARCH: 112,
+    CAPACITY_FULL: 121,
+    NOTHING_TO_CANCEL: 131,
+    BUILDING_ALREADY_UNDER_CONSTRUCTION: 151,
+    BUILDING_IN_USE: 152,
+    INVALID_DESTINATION: 201,
+    NO_INFO_ORIGIN: 202,
+    NO_INFO_DESTINATION: 203,
+    MARCH_TO_ORIGIN: 204,
+    NO_INFO_DEST_USER: 205,
+    ILLEGAL_TARGET_PLAYER: 206,
+    SELF_PROTECTED: 207,
+    TARGET_PROTECTED: 208,
+    CANNOT_ATTACK_OR_SCOUT_ALLY: 209,
+    OVERMARCH: 210,
+    OVERUNITS: 211,
+    KNIGHT_IN_ROLE: 212,
+    KNIGHT_NOT_IN_CITY: 213,
+    ALREADY_KNIGHTED: 214,
+    NOT_FRIEND: 215,
+    INCONSISTENT_ATTRIBUTE: 216,
+    OVERUNITS_CAN_NOT_BOOST: 218,
+    MARCH_NOT_EXIST: 251,
+    MARCH_INFO_MISMATCH: 252,
+    MARCH_CANCEL_NO_TIME: 253,
+    LAST_CITY: 301,
+    HAS_OUTMARCH: 311,
+    HAS_MARKETPOST: 312,
+    NEED_AT_LEAST_ONE_EMBASSY: 313,
+    MAX_CITY_COUNT: 320,
+    MAX_KNIGHT_LOYALTY_COUNT: 330,
+    TILE_INFO_MISMATCH: 401,
+    NO_EMPTY_PLAIN: 402,
+    TARGET_CHANGED: 403,
+    NOT_TILE_OWNER: 404,
+    ALREADY_IN_ALLIANCE: 501,
+    NOT_IN_ALLIANCE: 502,
+    DO_NOT_HAVE_LEVEL_2_EMBASSY: 503,
+    ALREAY_IN_OTHER_ALLIANCE: 504,
+    FEED_ALREADY_POSTED: 601,
+    FEED_EXPIRED: 602,
+    NOT_ENOUGH_WOUNDED: 609,
+    SHOP_NOLONGER_ON_SALE: 701,
+    RAID_INVALID: 801,
+    RAID_ALREADY_BEING_DEFENDED: 802,
+    RAID_MAX_DEFENDERS: 803,
+    RAID_NOT_ENOUGH_GOLD: 804,
+    RAID_NOT_ENOUGH_TROOPS: 805,
+    RAID_ALREADY_HELPED: 806,
+    OVER_PURCHASE_LIMIT: 807,
+    NO_CITIES_FOUND: 999,
+    NO_FACEBOOK_EXPIRED: 1001,
+    NO_FACEBOOK_CANNOT_VALIDATE: 1002,
+    INFORMATION_MISSING: 1101,
+    INITIALIZE_FAILED: 1102,
+    ADDUSER_FAILED: 1103,
+    SERVER_FULL: 1104,
+    SERVER_ALMOST_FULL: 1105,
+    SERVER_NOT_OPEN: 1106,
+    CHAT_USER_IS_SILENCED: 1200,
+    CHAT_REPORT_LIMIT_MAX: 1201,
+    VACATION_MODE_USER_IN_WARSTATUS_BEGINNER: 1301,
+    VACATION_MODE_USER_EVENT_IN_PROGRESS: 1302,
+    VACATION_MODE_IS_ON: 1302,
+    FEATURE_OFF: 1400,
+    CURSED_CHEST_KEY_ERROR: 1500,
+    NOT_ENOUGH_GEMS: 2000,
+    PRESTIGE_GENERAL: 3000,
+    PRESTIGE_BUILDING_IN_PROGRESS: 3001,
+    PRESTIGE_RESEARCH_IN_PROGRESS: 3002,
+    PRESTIGE_UNITS_IN_TRAINING_OR_APOTHECARY: 3003,
+    PRESTIGE_CITY_FORTIFYING: 3004,
+    FEY_SPIRE_CRAFTING_IN_PROGRESS: 3005,
+    HAS_BARBARIAN_RAIDS_QUEUE: 3006,
+    TROOP_RETURNING: 3007,
+    PRESTIGE_REINFORCE_REASSIGN: 3008,
+    SACRIFICE_GENERAL: 3010,
+    SACRIFICE_REQ_NOT_MET: 3011,
+    SPEEDUP_DOUBLECLICK: 3016,
+    SACRIFICE_QUEUE_FULL: 3012,
+    SACRIFICE_WRONG_PARAMS: 3013,
+    SACRIFICE_DATA_MANIPULATION: 3014,
+    SACRIFICE_DUPLICATE: 3015
+};
+cm.FB_ACTIONS = {
+    ASCEND: "ascend",
+    BUILD: "build",
+    CONQUER: "conquer",
+    DEFEAT: "defeat",
+    REQUEST: "request",
+    SEND: "send",
+    UNLOCK: "unlock",
+    UPGRADE: "upgrade"
+};
+cm.FB_OBJECTS = {
+    PROFILE: "profile",
+    PLAYER: "player",
+    DARK_FOREST: "dark_forest",
+    THRONE_ROOM_ITEM: "throne_room_item",
+    CITY: "city",
+    CASTLE: "castle",
+    GIFT: "gift",
+    HELP: "help",
+    WILD: "wild",
+    TROOP: "troop"
 };
 (function() {
     if (undefined === window.unitcost) {
@@ -26602,7 +26968,7 @@ function recommendFriendsModule() {
                 document.getElementById("allianceContent").innerHTML = strHTML;
                 FB.XFBML.Host.parseDomTree(document.getElementById("divFriendsInSameDomain"))
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -26681,7 +27047,7 @@ function inviteFriendsModule() {
                 document.getElementById("allianceContent").innerHTML = strHTML;
                 friendsTabInAllianceInvite(rslt.referralId)
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -27004,7 +27370,7 @@ function createAlliance() {
                                 onSuccess: function(message) {
                                     var rslt = ("(" + message.responseText + ")").evalJSON();
                                     if (!rslt.ok) {
-                                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                                        Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                                     }
                                 },
                                 onFailure: function() {}
@@ -27020,7 +27386,7 @@ function createAlliance() {
                     distinct_id: tvuid
                 })
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -27259,7 +27625,7 @@ function allianceInfo(b) {
                 }
             }
         } else {
-            Modal.showAlert(printLocalError((o.error_code || null), (o.msg || null), (o.feedback || null)))
+            Modal.showAlert(printLocalError(o.error_code, o.msg, o.feedback))
         }
     })
 }
@@ -27343,7 +27709,7 @@ function actionOnPendingApproval(type, uid, isRecommendation, fbuid) {
                     window.open("https://www.facebook.com/inbox/?compose&id=" + fbuid + "&subject=" + sub + "&message=" + msg, "facebookCompose", "status = 1, height=420, width = 970,left=300,top=300, resizable = 0")
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)));
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
                 allianceInfo()
             }
         },
@@ -27375,7 +27741,7 @@ function actionOnAllianceInvitations(actionType, inAlliance, allianceId) {
                             distinct_id: tvuid
                         })
                     } else {
-                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                        Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                     }
                 },
                 onFailure: function() {}
@@ -27393,7 +27759,7 @@ function actionOnAllianceInvitations(actionType, inAlliance, allianceId) {
                             var aI = document.getElementById("tblAllianceInvitations").tBodies[0];
                             aI.deleteRow(document.getElementById("tr_AI_" + allianceId).rowIndex)
                         } else {
-                            Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                            Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                         }
                     },
                     onFailure: function() {}
@@ -27449,7 +27815,7 @@ function resignAlliance(divId) {
                     allianceInfo()
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -27493,7 +27859,7 @@ function leaveAlliance(divId) {
                     update_seed(rslt.updateSeed)
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)));
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
                 allianceInfo()
             }
         },
@@ -27515,7 +27881,7 @@ function assignNewChancellor(divId) {
                 document.getElementById(divId).innerHTML = g_js_strings.commonstr.alliance + ": " + arrAllianceInfo.allianceName + "<br/>" + g_js_strings.assignNewChancellor.newchancellorisa.replace("%1$s", newChancellorName);
                 allianceInfo()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)));
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
                 allianceInfo()
             }
         },
@@ -27535,7 +27901,7 @@ function cancelCurrentAllianceRequest(confirm) {
                 if (rslt.ok) {
                     allianceInfo()
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)));
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
                     allianceInfo()
                 }
             },
@@ -27763,7 +28129,7 @@ function doActionOnMember(actionType, memberId) {
                     showStatusMessage(memberInfo[memberId].genderAndName + rslt.message)
                 } else {
                     Modal.hideModal();
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)));
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
                     membersInfo()
                 }
             },
@@ -27821,7 +28187,7 @@ function allianceList(pageNo) {
                     ctrlPagination("alliance_list2", rslt.noOfPages, "allianceList")
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -27880,7 +28246,7 @@ function joinAllianceRequest(idx) {
                 arrPendingRequest[oldRequest]["allianceId"] = allianceId;
                 arrPendingRequest[oldRequest]["name"] = otherAllianceInfo[idx].name
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -27977,7 +28343,7 @@ function getInfoForAnUser(uid, callBackFn) {
                 }
             } else {
                 Modal.hideModal();
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -28103,7 +28469,7 @@ function setAllianceDiplomacies() {
                 if (rslt.ok) {
                     document.getElementById("allianceSearchResults_sd").innerHTML = g_js_strings.setAllianceDiplomacies.diplosuccess
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -28364,7 +28730,7 @@ function modal_alliance_report_view(rptid, side, tiletype, tilelv, defid, defnm,
         onSuccess: function(message) {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok == false) {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             } else {
                 var msghtml = new Array();
                 msghtml.push("<div class='reportdetail clearfix'><a  class='button20' onclick='loadPage_pagination(\"modal_report_list_pagination\",\"" + currpg + '","allianceReports",' + tpgs + ");return false;'><span>" + g_js_strings.commonstr.back + "</span></a></div>");
@@ -29584,7 +29950,7 @@ function modal_attack_do() {
                     if (processUserAction(rslt, AttackCall_, params)) {
                         return
                     }
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {
@@ -30295,7 +30661,7 @@ function showResult(a) {
         if (a.ok) {
             Modal.showAlert(g_js_strings.commonstr.cancelled)
         } else {
-            Modal.showAlert(printLocalError((a.error_code || null), (a.msg || null), (a.feedback || null)))
+            Modal.showAlert(printLocalError(a.error_code, a.msg, a.feedback))
         }
     }
 }
@@ -30393,7 +30759,7 @@ cm.MarchModal = function($) {
     };
     var filterBoosts_ = function() {
         var boost_sections = $("#modal_attack .section.boost");
-        if ((march_type_ == cm.MARCH_TYPES.MARCH_TYPE_ATTACK) && $("#modal_attack_raidfilter_checkbox").attr("checked")) {
+        if ((march_type_ == cm.MARCH_TYPES.MARCH_TYPE_ATTACK) && $("#modal_attack_raidfilter_checkbox").prop("checked")) {
             $("#btnMarch span").html(g_js_strings.modal_attack.raidandsave);
             boost_sections.addClass("filter");
             var boost_items = $("#modal_attack .section.boost input");
@@ -30417,7 +30783,7 @@ cm.MarchModal = function($) {
         var troop_number = 0;
         var units = seed.units["city" + currentcityid];
         var is_enable = false;
-        var is_show_supply_only = $("#modal_attack_supplyfilter_checkbox").attr("checked");
+        var is_show_supply_only = $("#modal_attack_supplyfilter_checkbox").prop("checked");
         for (var i = troops.length - 1; i >= 0; --i) {
             troop = $(troops[i]);
             troop_type = parseInt(troop.attr("name"));
@@ -30522,7 +30888,7 @@ cm.MarchModal = function($) {
             marchspeed: true
         });
         speed *= cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().REDUCE_FATIGUE, currentcityid, {});
-        var barbarian_raid = $("#modal_attack_raidfilter_checkbox").attr("checked");
+        var barbarian_raid = $("#modal_attack_raidfilter_checkbox").prop("checked");
         var attack_selected = $("#modal_attack_tab_4").hasClass("selected");
         var throne67 = cm.ThroneController.effectBonus(67);
         var throne68, throne69, throne70, throne71, throne72;
@@ -30668,7 +31034,7 @@ cm.MarchModal = function($) {
                         }
                     } else {
                         revert_knight_status();
-                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                        Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                     }
                 },
                 onFailure: revert_knight_status
@@ -30683,7 +31049,7 @@ cm.MarchModal = function($) {
             if (undefined != extra && extra.is_force) {
                 break
             }
-            if ((march_type_ == cm.MARCH_TYPES.MARCH_TYPE_ATTACK) && $("#modal_attack_raidfilter_checkbox").attr("checked")) {
+            if ((march_type_ == cm.MARCH_TYPES.MARCH_TYPE_ATTACK) && $("#modal_attack_raidfilter_checkbox").prop("checked")) {
                 event.preventDefault();
                 return
             }
@@ -30712,7 +31078,7 @@ cm.MarchModal = function($) {
         if (!is_allow_buy_) {
             return
         }
-        if ($("#modal_attack_raidfilter_checkbox").attr("checked")) {
+        if ($("#modal_attack_raidfilter_checkbox").prop("checked")) {
             return
         }
         var re = /_(\d+)$/;
@@ -30748,7 +31114,7 @@ cm.MarchModal = function($) {
         $("#modal_attack_itemprice_" + item_id).css("visibility", "visible");
         var rslt = eval("(" + message.responseText + ")");
         if (!rslt.ok) {
-            Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)));
+            Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
             return
         }
         cm.Gems.subtract(item.price);
@@ -30795,7 +31161,7 @@ cm.MarchModal = function($) {
             $("#" + i).css("display", march_detail_.show[i][march_type] ? "" : "none")
         }
         if (march_detail_.show.modal_attack_supplyfilter[march_type]) {
-            $("#modal_attack_supplyfilter_checkbox").attr("checked", true)
+            $("#modal_attack_supplyfilter_checkbox").prop("checked", true)
         } else {
             $("#modal_attack_supplyfilter_checkbox").removeAttr("checked")
         }
@@ -31321,7 +31687,28 @@ KB.AudioManager = (function() {
     this.AM_stopMusic = function() {
         var h = d.dynamicCache ? d.dynamicCache.getLastElement() : null;
         if (h && typeof(h.fadeOut) === "function") {
-            h.fadeOut()
+            h.fadeOut();
+            return true
+        }
+    };
+    this.AM_pauseMusic = function() {
+        if (g) {
+            return false
+        }
+        var h = d.dynamicCache ? d.dynamicCache.getLastElement() : null;
+        if (h) {
+            h.pause();
+            return true
+        }
+    };
+    this.AM_unpauseMusic = function() {
+        if (g) {
+            return false
+        }
+        var h = d.dynamicCache ? d.dynamicCache.getLastElement() : null;
+        if (h) {
+            h.play();
+            return true
         }
     };
     this.AM_enableMusic = function(h) {
@@ -32231,7 +32618,7 @@ cm.AutoAttackManagerModel = function() {
                     }, l)) {
                         return
                     }
-                    Modal.showAlert(printLocalError((m.error_code || null), (m.msg || null), (m.feedback || null)));
+                    Modal.showAlert(printLocalError(m.error_code, m.msg, m.feedback));
                     if (k.onFailure) {
                         k.onFailure()
                     }
@@ -32504,13 +32891,13 @@ cm.AutoAttackOptionsView = function(c, d) {
         h()
     };
     var i = function(l) {
-        c("#" + f + "_autoDelReport").attr("checked", l.newSettings.autoDelReport)
+        c("#" + f + "_autoDelReport").prop("checked", l.newSettings.autoDelReport)
     };
     var a = function(n) {
         var m = null;
         var l = null;
         var o = c("#" + f + "_noreplenish_when_lost");
-        o.attr("checked", false);
+        o.prop("checked", false);
         c("#" + f + "_pausePct").val(n.newSettings.pausePct);
         switch (n.newSettings.troopMode) {
         case cm.AUTO_BARB_TROOP_MODE.AUTO_BARB_TROOP_MODE_STOP_ON_PERCENTAGE_LOST:
@@ -32518,7 +32905,7 @@ cm.AutoAttackOptionsView = function(c, d) {
             l = m.next();
             break;
         case cm.AUTO_BARB_TROOP_MODE.AUTO_BARB_TROOP_MODE_REFILL_UNLESS_LOST_BATTLE:
-            o.attr("checked", true);
+            o.prop("checked", true);
         case cm.AUTO_BARB_TROOP_MODE.AUTO_BARB_TROOP_MODE_REFILL_ALWAYS:
             m = k.find(".troop_option .option_input_block.auto_refill");
             l = m.prev();
@@ -32527,7 +32914,7 @@ cm.AutoAttackOptionsView = function(c, d) {
         m.addClass("selected");
         m.find("input").attr("disabled", false);
         m.find("select").attr("disabled", false);
-        m.find("> input").attr("checked", true);
+        m.find("> input").prop("checked", true);
         l.removeClass("selected");
         l.find("input").attr("disabled", true);
         l.find("select").attr("disabled", true);
@@ -32809,7 +33196,7 @@ cm.AutoAttackRaidModel = function(e) {
                     }, h)) {
                         return
                     }
-                    Modal.showAlert(printLocalError((j.error_code || null), (j.msg || null), (j.feedback || null)))
+                    Modal.showAlert(printLocalError(j.error_code, j.msg, j.feedback))
                 }
             },
             onFailure: function() {
@@ -34526,7 +34913,7 @@ function modal_barracks_dismiss_do(unitid) {
                 seed.units["city" + currentcityid]["unt" + unitid] = parseInt(seed.units["city" + currentcityid]["unt" + unitid]) - parseInt(get_barracks_dismiss_input());
                 Modal.hideModalAll()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -34626,9 +35013,7 @@ function createTutelageContainer(c) {
     e = "<div id='tutelageContainer'>" + e + "</div>";
     var k = createRequirementRows(c),
         l = unitcost["unt" + c][0],
-        f;
-    var j;
-    var p = checkreq("unt", c, 1);
+        f, j, p = checkreq("unt", c, 1);
     for (var d = 0, g = p[0].length; d < g; ++d) {
         if (p[3][d] == 0) {
             j = true;
@@ -35449,10 +35834,7 @@ function train_unit(tid, num, iid, gambleId) {
                         }
                         recentlyEntryWasAddedQueue.push([tid, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
                         var cost = cm.RevivalModel.getRevivalStats(tid, num).cost;
-                        cm.log.l("returning gold: " + cost);
-                        cm.log.l("gold=" + seed.citystats["city" + currentcityid].gold[0]);
                         seed.citystats["city" + currentcityid].gold[0] -= parseInt(cost);
-                        cm.log.l("gold=" + seed.citystats["city" + currentcityid].gold[0]);
                         update_gold();
                         cm.WoundedModel.sub(tid, num)
                     } else {
@@ -35478,7 +35860,7 @@ function train_unit(tid, num, iid, gambleId) {
                     Modal.hideModal()
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {
@@ -36805,6 +37187,7 @@ cm.BlessingSystemView = function(g) {
     };
     return {
         render: k,
+        animate: x,
         renderSelect: c,
         openSelect: b,
         renderConfirm: A,
@@ -37787,11 +38170,19 @@ cm.BuildingSpeedupController = new function() {
         var d = f.name;
         return d
     };
+    var c = function(d) {
+        var e = seed.queue_con["city" + currentcityid];
+        for (var f in e) {
+            if (e[f][2] == d) {
+                return f
+            }
+        }
+        return false
+    };
     var b = "Speedup_Building_Click";
-    var c = "bdg";
     this.queueClick = function(g, f) {
         var d = a(g);
-        modal_speedup(c, d, undefined, f);
+        modal_speedup("bdg", d, undefined, f, c(d));
         cm.MixPanelTracker.track(b, {
             from: "queue"
         })
@@ -37799,7 +38190,7 @@ cm.BuildingSpeedupController = new function() {
     this.buildingClick = function(g) {
         var d = a(g);
         var f = jQuery(g.target).parent().parent().parent().attr("id");
-        modal_speedup(c, d, f);
+        modal_speedup("bdg", d, f, undefined, c(d));
         cm.MixPanelTracker.track(b, {
             from: "building"
         });
@@ -37807,7 +38198,7 @@ cm.BuildingSpeedupController = new function() {
     };
     this.popupClick = function(f) {
         var d = a(f);
-        modal_speedup(c, d);
+        modal_speedup("bdg", d, undefined, undefined, c(d));
         cm.MixPanelTracker.track(b, {
             from: "popup"
         })
@@ -37881,12 +38272,16 @@ cm.BuildingView = function(e, c) {
     var a = e;
     var f = c;
     var d = function() {
-        b.getElement("buildTimeText").innerHTML = f.getTime();
-        b.getElement("askHelpCheckbox").checked = f.getHelped();
+        if (b.getElement("buildTimeText")) {
+            b.getElement("buildTimeText").innerHTML = f.getTime()
+        }
+        if (b.getElement("askHelpCheckbox")) {
+            b.getElement("askHelpCheckbox").checked = f.getHelped();
+            b.getElement("askHelpCheckbox").parentNode.style.visibility = f.isTutorialMode() ? "hidden" : "visible"
+        }
         if (b.getElement("whatIsThisLink")) {
             b.getElement("whatIsThisLink").style.visibility = f.isTutorialMode() ? "hidden" : "visible"
         }
-        b.getElement("askHelpCheckbox").parentNode.style.visibility = f.isTutorialMode() ? "hidden" : "visible"
     };
     this.getElement = function(g) {
         return $(a[g])
@@ -37916,31 +38311,32 @@ function modal_build_demolish(b, d, a) {
 function modal_build(u, r) {
     buildingModel = null;
     Modal.hideModalAll();
-    var X = new Array();
+    var Y = new Array();
     var c = seed.buildings["city" + currentcityid]["pos" + u];
     if (c == null) {
         var y = r;
-        var ab = 0;
+        var ac = 0;
         var M = 1;
         var p = g_js_strings.modal_build.newbuilding + " - " + buildingcost["bdg" + y][0] + " " + g_js_strings.commonstr.lv + "1";
         var B = 1
     } else {
         var y = c[0];
-        var ab = parseInt(c[1]);
-        var M = ab + 1;
-        var p = buildingcost["bdg" + y][0] + " " + g_js_strings.commonstr.lv + ab;
-        var B = (M > 5) ? 5 : 1
+        var ac = parseInt(c[1]);
+        var M = ac + 1;
+        var p = buildingcost["bdg" + y][0] + " " + g_js_strings.commonstr.lv + ac;
+        var B = (M > 5) ? 5 : 1;
+        cm.last_building_ID_opened = c[3]
     }
     if (y) {
         cm.sounds.play("modal_build" + y)
     } else {
         cm.log.l("newbdgid is undefined.")
     }
-    var e = Math.pow(2, ab);
-    X.push("<div id='modal_build' class='tab1'>");
-    X.push("<div class='modal_build_body' id='modal_build_spinny' style='display:none;'>");
-    X.push("<div class='modal_build_spinny'></div>");
-    X.push("</div>");
+    var e = Math.pow(2, ac);
+    Y.push("<div id='modal_build' class='tab1'>");
+    Y.push("<div class='modal_build_body' id='modal_build_spinny' style='display:none;'>");
+    Y.push("<div class='modal_build_spinny'></div>");
+    Y.push("</div>");
     var O;
     if (cm.PrestigeModel.isPrestige()) {
         O = " Prestige " + cm.PrestigeModel.getPrestigeFactionClass()
@@ -37948,513 +38344,506 @@ function modal_build(u, r) {
         O = ""
     }
     if (seed.cities[5] && currentcityid === parseInt(seed.cities[5][0], 10)) {
-        X.push("<div class='modal_build_body city6" + O + "' id='modal_build_body'>")
+        Y.push("<div class='modal_build_body city6" + O + "' id='modal_build_body'>")
     } else {
         if (seed.cities[6] && currentcityid === parseInt(seed.cities[6][0], 10)) {
-            X.push("<div class='modal_build_body city7" + O + "' id='modal_build_body'>")
+            Y.push("<div class='modal_build_body city7" + O + "' id='modal_build_body'>")
         } else {
-            X.push("<div class='modal_build_body" + O + "' id='modal_build_body'>")
+            Y.push("<div class='modal_build_body" + O + "' id='modal_build_body'>")
         }
     }
     cm.last_building_opened = y;
-    X.push("<div class='buildinginfo clearfix'>");
-    X.push("<div class='buildingpic'>");
-    X.push("<div class='building b");
-    X.push(y);
-    X.push("_" + B + "'>");
-    X.push("</div>");
-    X.push("</div>");
-    X.push("<div class='buildingdesc'>");
-    X.push(buildingcost["bdg" + y][10]);
-    X.push("</div>");
-    X.push("<div class='destructbtns'>");
-    if (ab > 0 && parseInt(u) != 0 && parseInt(u) != 1 && !(cm.TutorialManager.inTutorialMode())) {
-        X.push("<a class='buttonDown20' onclick='deconstructBuilding(" + c[3] + "," + u + ")' onmouseover='modal_build_demolish(1,this,event);' onmouseout='removeTooltip();'><span>" + g_js_strings.commonstr.decontruct + "</span></a>");
-        if (ab > 1) {
-            X.push("<div id='divDestroyBuilding' class='destroycol'>");
-            X.push("<div class='clearfix'><a class='button20' onclick='destructBuilding(" + c[3] + "," + u + ")' onmouseover='modal_build_demolish(2,this,event);' onmouseout='removeTooltip();'><span>" + g_js_strings.commonstr.destroy + "</span></a></div>");
-            X.push("<div class='dragonstomp'>(" + g_js_strings.modal_build.usedragon + ")</div>");
-            X.push("</div>")
+    Y.push("<div class='buildinginfo clearfix'>");
+    Y.push("<div class='buildingpic'>");
+    Y.push("<div class='building b");
+    Y.push(y);
+    Y.push("_" + B + "'>");
+    Y.push("</div>");
+    Y.push("</div>");
+    Y.push("<div class='buildingdesc'>");
+    Y.push(buildingcost["bdg" + y][10]);
+    Y.push("</div>");
+    Y.push("<div class='destructbtns'>");
+    if (ac > 0 && parseInt(u) != 0 && parseInt(u) != 1 && !(cm.TutorialManager.inTutorialMode())) {
+        Y.push("<a class='buttonDown20' onclick='deconstructBuilding(" + c[3] + "," + u + ")' onmouseover='modal_build_demolish(1,this,event);' onmouseout='removeTooltip();'><span>" + g_js_strings.commonstr.decontruct + "</span></a>");
+        if (ac > 1) {
+            Y.push("<div id='divDestroyBuilding' class='destroycol'>");
+            Y.push("<div class='clearfix'><a class='button20' onclick='destructBuilding(" + c[3] + "," + u + ")' onmouseover='modal_build_demolish(2,this,event);' onmouseout='removeTooltip();'><span>" + g_js_strings.commonstr.destroy + "</span></a></div>");
+            Y.push("<div class='dragonstomp'>(" + g_js_strings.modal_build.usedragon + ")</div>");
+            Y.push("</div>")
         }
     } else {
         if (parseInt(u) == 0 && seed.cities.length > 1) {
-            X.push("<div><div class='clearfix' id='divDestroyBuilding' style='display:block;margin-left:6px;margin-top:5px;'><a class='button20' onclick='cityaction_abandonprompt();return false;'><span>" + g_js_strings.modal_build.abandoncity + "</span></a></div></div>")
+            Y.push("<div><div class='clearfix' id='divDestroyBuilding' style='display:block;margin-left:6px;margin-top:5px;'><a class='button20' onclick='cityaction_abandonprompt();return false;'><span>" + g_js_strings.modal_build.abandoncity + "</span></a></div></div>")
         }
     }
-    X.push("</div>");
-    X.push("</div>");
-    X.push("<div class='buildingdetail'>");
-    if (ab < parseInt(buildingmaxlvl[y])) {
-        var ad = true;
-        X.push("<div class='reqhd'>" + g_js_strings.commonstr.level + " ");
-        X.push(M);
-        X.push(" " + g_js_strings.commonstr.requirement + "</div>");
-        X.push("<div class='buildreq clearfix'>");
-        X.push("<div class='leftColumn'>");
-        X.push("<table cellpadding='0' cellspacing='0'><thead><tr><td class='rec'>" + g_js_strings.commonstr.resource + "</td><td class='req'>" + g_js_strings.commonstr.required + "</td><td class='own'>" + g_js_strings.commonstr.youown + "</td></tr></thead><tbody>");
-        var ao = checkreq("bdg", y, M);
+    Y.push("</div>");
+    Y.push("</div>");
+    Y.push("<div class='buildingdetail'>");
+    if (ac < parseInt(buildingmaxlvl[y])) {
+        var ae = true;
+        Y.push("<div class='reqhd'>" + g_js_strings.commonstr.level + " ");
+        Y.push(M);
+        Y.push(" " + g_js_strings.commonstr.requirement + "</div>");
+        Y.push("<div class='buildreq clearfix'>");
+        Y.push("<div class='leftColumn'>");
+        Y.push("<table cellpadding='0' cellspacing='0'><thead><tr><td class='rec'>" + g_js_strings.commonstr.resource + "</td><td class='req'>" + g_js_strings.commonstr.required + "</td><td class='own'>" + g_js_strings.commonstr.youown + "</td></tr></thead><tbody>");
+        var ap = checkreq("bdg", y, M);
         var g = new Array();
         var d = new Array();
         var h = new Array();
-        for (var H = 0; H < ao[0].length; H++) {
-            if (typeof ao[1][H] != "string" || ao[1][H].indexOf("Lv.0") == -1) {
+        for (var H = 0; H < ap[0].length; H++) {
+            if (typeof ap[1][H] != "string" || ap[1][H].indexOf("Lv.0") == -1) {
                 g.push("<div>");
-                g.push(ao[0][H]);
+                g.push(ap[0][H]);
                 g.push("</div>");
-                if (ao[3][H] == 0) {
-                    ad = false;
+                if (ap[3][H] == 0) {
+                    ae = false;
                     d.push("<div class='unmet'>")
                 } else {
-                    if (H === 0 && ab >= 10 && parseInt(y, 10) === 0) {
-                        if (getBuildingLevel(19) >= ab) {
+                    if (H === 0 && ac >= 10 && parseInt(y, 10) === 0) {
+                        if (getBuildingLevel(19) >= ac) {
                             d.push("<div class='met'>")
                         } else {
                             d.push("<div class='unmet'>");
-                            ad = false
+                            ae = false
                         }
                     } else {
                         d.push("<div class='met'>")
                     }
                 }
-                if (parseInt(ao[1][H]) > 0) {
-                    d.push(addCommas(ao[1][H]))
+                if (parseInt(ap[1][H]) > 0) {
+                    d.push(addCommas(ap[1][H]))
                 } else {
-                    if (ab >= 10 && parseInt(y, 10) === 0) {
-                        d.push(g_js_strings.commonstr.lv + ab + " " + buildingcost.bdg19[0])
+                    if (ac >= 10 && parseInt(y, 10) === 0) {
+                        d.push(g_js_strings.commonstr.lv + ac + " " + buildingcost.bdg19[0])
                     } else {
-                        d.push(ao[1][H])
+                        d.push(ap[1][H])
                     }
                 }
                 d.push("</div>");
                 h.push("<div>");
-                if (parseInt(ao[2][H]) > 0) {
-                    h.push(addCommas(ao[2][H]))
+                if (parseInt(ap[2][H]) > 0) {
+                    h.push(addCommas(ap[2][H]))
                 } else {
-                    h.push(ao[2][H])
+                    h.push(ap[2][H])
                 }
                 h.push("</div>")
             }
         }
-        X.push("<td class='rec'>");
-        X.push(g.join(""));
-        X.push("</td>");
-        X.push("<td>");
-        X.push(d.join(""));
-        X.push("</td>");
-        X.push("<td class='ownres'>");
-        X.push(h.join(""));
-        X.push("</td>");
-        X.push("</tr>");
-        if (parseInt(ab) >= 9) {
+        Y.push("<td class='rec'>");
+        Y.push(g.join(""));
+        Y.push("</td>");
+        Y.push("<td>");
+        Y.push(d.join(""));
+        Y.push("</td>");
+        Y.push("<td class='ownres'>");
+        Y.push(h.join(""));
+        Y.push("</td>");
+        Y.push("</tr>");
+        if (parseInt(ac) >= 9) {
             var D = "i401";
             if (parseInt(y, 10) === 0) {
-                if (parseInt(ab) == 10) {
+                if (parseInt(ac) == 10) {
                     D = "i402"
                 } else {
-                    if (parseInt(ab) == 11) {
+                    if (parseInt(ac) == 11) {
                         D = "i404"
                     }
                 }
             } else {
-                if (parseInt(ab) > 10) {
+                if (parseInt(ac) > 10) {
                     D = "i403"
                 }
             }
             var A = ~~ (1 * D.split("i")[1]);
-            X.push("<tr>");
-            X.push("<td class='rec'><div>");
-            X.push(itemlist[D].name);
-            X.push("</div></td>");
-            X.push("<td>");
+            Y.push("<tr>");
+            Y.push("<td class='rec'><div>");
+            Y.push(itemlist[D].name);
+            Y.push("</div></td>");
+            Y.push("<td>");
             if (ksoItems[A].count > 0) {
-                X.push("<div class='met'>")
+                Y.push("<div class='met'>")
             } else {
-                X.push("<div class='unmet'>")
+                Y.push("<div class='unmet'>")
             }
-            X.push(1);
-            X.push("</div>");
-            X.push("</td>");
-            X.push("<td class='ownres'><div>");
+            Y.push(1);
+            Y.push("</div>");
+            Y.push("</td>");
+            Y.push("<td class='ownres'><div>");
             if (ksoItems[A].count > 0) {
-                X.push(addCommas(ksoItems[A].count))
+                Y.push(addCommas(ksoItems[A].count))
             } else {
-                X.push(0);
-                ad = false
+                Y.push(0);
+                ae = false
             }
-            X.push("</div></td>");
-            X.push("</tr>")
+            Y.push("</div></td>");
+            Y.push("</tr>")
         }
-        X.push("</tbody></table>");
-        X.push(cm.PrestigeTextView.get(y, cm.PrestigeModel.getPrestigeLevel()));
-        X.push("</div>");
-        var ar = 0;
-        var av = seed.queue_con["city" + currentcityid];
+        Y.push("</tbody></table>");
+        Y.push(cm.PrestigeTextView.get(y, cm.PrestigeModel.getPrestigeLevel()));
+        Y.push("</div>");
+        var at = 0;
+        var aw = seed.queue_con["city" + currentcityid];
         var s = 0;
         var z = 0;
-        if (av.length > 0) {
-            ar = 1;
-            for (var I = 0; I < av.length; I++) {
-                if (parseInt(u) == parseInt(av[I][7])) {
-                    ar = 2;
-                    s = parseInt(av[I][4]) - parseInt(av[I][3]);
-                    z = av[I][2];
+        if (aw.length > 0) {
+            at = 1;
+            for (var I = 0; I < aw.length; I++) {
+                if (parseInt(u) == parseInt(aw[I][7])) {
+                    at = 2;
+                    s = parseInt(aw[I][4]) - parseInt(aw[I][3]);
+                    z = aw[I][2];
                     break
                 }
             }
         }
-        if (ar == 0 && ad) {
-            var w = g_js_strings.commonstr.build;
-            var ay = cm.SpeedUpType.build;
-            if (ab > 0) {
-                w = g_js_strings.commonstr.upgrade;
-                ay = cm.SpeedUpType.upgrade
-            }
-            var aa = g_js_strings.modal_build.buildandaskhelp;
-            if (ab > 0) {
-                aa = g_js_strings.modal_build.upgradeandaskhelp
-            }
-            var n = seed.knights["city" + currentcityid];
-            var t = 0;
+        var w = g_js_strings.commonstr.build;
+        var az = cm.SpeedUpType.build;
+        if (ac > 0) {
+            w = g_js_strings.commonstr.upgrade;
+            az = cm.SpeedUpType.upgrade
+        }
+        var ab = g_js_strings.modal_build.buildandaskhelp;
+        if (ac > 0) {
+            ab = g_js_strings.modal_build.upgradeandaskhelp
+        }
+        var n = seed.knights["city" + currentcityid];
+        var t = 0;
+        if (n) {
+            n = n["knt" + seed.leaders["city" + currentcityid].politicsKnightId];
             if (n) {
-                n = n["knt" + seed.leaders["city" + currentcityid].politicsKnightId];
-                if (n) {
-                    t = parseInt(n.politics);
-                    if ((parseInt(n.politicsBoostExpireUnixtime) - unixtime()) > 0) {
-                        t = parseInt(t * 1.25)
-                    }
+                t = parseInt(n.politics);
+                if ((parseInt(n.politicsBoostExpireUnixtime) - unixtime()) > 0) {
+                    t = parseInt(t * 1.25)
                 }
             }
-            var aj = buildingcost["bdg" + y][7] * e;
-            if (parseInt(y) < 6 && parseInt(y) > 0 && e == 1) {
-                aj = 15
-            }
-            var C = cm.ThroneController.effectBonus(78);
-            aj = parseInt(aj / (1 + 0.005 * t + 0.1 * parseInt(seed.tech.tch16)));
-            aj = Math.round(aj / (1 + (C / 100)));
-            var au = Math.max(600, parseInt(aj * 0.1));
-            var S = (aj - au) < 0 ? 0 : (aj - au);
-            var K = aj;
-            var ac = cm.TutorialManager.inTutorialMode();
-            X.push("<div class='rightColumn'>");
-            X.push("<div>");
-            X.push("<div class='buttonRow'>");
-            X.push("<a class='button20' onclick='buildingController.buildButtonClicked(event);return false;'>");
-            X.push("<span>");
-            X.push(w);
-            X.push("</span></a>");
-            X.push("<a id='modal_whats_this_link' class='helptext' style='visibility:hidden' onclick='Modal.showAlert(\"");
-            X.push(g_js_strings.modal_build.whatsthiscontent);
-            X.push("\");return false;'>");
-            X.push(g_js_strings.modal_build.whatsthis);
-            X.push("</a>");
-            X.push("<span class='time'>" + g_js_strings.commonstr.time + ": ");
-            X.push("<span id='buildTimeText'>");
-            X.push(timestr(K));
-            X.push("</span>");
-            X.push("</span>");
-            X.push("</div>");
-            X.push("<div class='checkboxRow'style='visibility:hidden'>");
-            X.push("<input id='askHelpCheckbox' type='checkbox'onclick='buildingController.askHelpCheckboxChanged(event)' />");
-            X.push("<label for='askHelpCheckbox'>" + cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch) + "</label>");
-            X.push("</div>");
-            X.push("</div>");
-            X.push("<div class='upgrade'>");
-            X.push("<table cellpadding='0' cellspacing='0'><thead><tr><td class='lvcol'>" + g_js_strings.commonstr.lvl + "</td><td class='ycol'><div>" + g_js_strings.commonstr.yield + "</div></td></tr></thead><tbody>");
-            if (ab > 0) {
-                X.push("<tr><td class='lvcol'><div>");
-                X.push(ab);
-                X.push("</div><div class='cur'>" + g_js_strings.commonstr.current + "</div></td><td class='ycol'><div>");
+        }
+        var ak = buildingcost["bdg" + y][7] * e;
+        if (parseInt(y) < 6 && parseInt(y) > 0 && e == 1) {
+            ak = 15
+        }
+        var C = cm.ThroneController.effectBonus(78);
+        ak = parseInt(ak / (1 + 0.005 * t + 0.1 * parseInt(seed.tech.tch16)));
+        var R = parseInt(jQuery.parseJSON(cm.WorldSettings.getSetting("TR_BOOSTS")).values[14][2]);
+        if (!R) {
+            cm.log.l("WorldSettings TR_BOOSTS->ConstructionSpeed is not set correctly.")
+        }
+        C = Math.min(R, C);
+        ak = Math.round(ak / (1 + (C / 100)));
+        var av = Math.max(600, parseInt(ak * 0.1));
+        var T = (ak - av) < 0 ? 0 : (ak - av);
+        var K = ak;
+        var ad = cm.TutorialManager.inTutorialMode();
+        cm.QueueView.setRenderedBaseTime(K);
+        if (at == 0 && ae) {
+            Y.push("<div class='rightColumn'>");
+            Y.push("<div>");
+            Y.push("<div class='buttonRow'>");
+            Y.push("<a class='button20' onclick='buildingController.buildButtonClicked(event);return false;'>");
+            Y.push("<span>");
+            Y.push(w);
+            Y.push("</span></a>");
+            Y.push("<a id='modal_whats_this_link' class='helptext' style='visibility:hidden' onclick='Modal.showAlert(\"");
+            Y.push(g_js_strings.modal_build.whatsthiscontent);
+            Y.push("\");return false;'>");
+            Y.push(g_js_strings.modal_build.whatsthis);
+            Y.push("</a>");
+            Y.push("<span class='time'>" + g_js_strings.commonstr.time + ": ");
+            Y.push("<span id='buildTimeText'>");
+            Y.push(timestr(K));
+            Y.push("</span>");
+            Y.push("</span>");
+            Y.push("</div>");
+            Y.push("<div class='checkboxRow'style='visibility:hidden'>");
+            Y.push("<input id='askHelpCheckbox' type='checkbox'onclick='buildingController.askHelpCheckboxChanged(event)' />");
+            Y.push("<label for='askHelpCheckbox'>" + cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch) + "</label>");
+            Y.push("</div>");
+            Y.push("</div>");
+            Y.push("<div class='upgrade'>");
+            Y.push("<table cellpadding='0' cellspacing='0'><thead><tr><td class='lvcol'>" + g_js_strings.commonstr.lvl + "</td><td class='ycol'><div>" + g_js_strings.commonstr.yield + "</div></td></tr></thead><tbody>");
+            if (ac > 0) {
+                Y.push("<tr><td class='lvcol'><div>");
+                Y.push(ac);
+                Y.push("</div><div class='cur'>" + g_js_strings.commonstr.current + "</div></td><td class='ycol'><div>");
                 if (cm.AltarView.isOpen()) {
-                    X.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ab - 1], ab))
+                    Y.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ac - 1], ac))
                 } else {
-                    X.push(buildingupgradedesc[parseInt(y)][ab - 1])
+                    Y.push(buildingupgradedesc[parseInt(y)][ac - 1])
                 }
-                X.push("</div></td></tr>")
+                Y.push("</div></td></tr>")
             }
-            X.push("<tr class='nextrow'><td class='lvcol'><div>");
-            X.push(ab + 1);
-            X.push("</div></td><td class='ycol'><div>");
+            Y.push("<tr class='nextrow'><td class='lvcol'><div>");
+            Y.push(ac + 1);
+            Y.push("</div></td><td class='ycol'><div>");
             if (cm.AltarView.isOpen()) {
-                X.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ab], ab + 1))
+                Y.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ac], ac + 1))
             } else {
-                X.push(buildingupgradedesc[parseInt(y)][ab])
+                Y.push(buildingupgradedesc[parseInt(y)][ac])
             }
-            X.push("</div></td></tr>");
-            X.push("</tbody></table>");
-            X.push("<div style='clear:both;'>" + g_js_strings.modal_build.bonusinfo + "</div>");
-            X.push("</div>");
-            X.push("</div>");
-            var V = false;
-            var an = cm.ClientSideCookieManager.getCookie(ay);
-            if ((an == null || an == "true") && seed.tutorial.t1 > 21) {
-                V = true
+            Y.push("</div></td></tr>");
+            Y.push("</tbody></table>");
+            Y.push("<div style='clear:both;'>" + g_js_strings.modal_build.bonusinfo + "</div>");
+            Y.push("</div>");
+            Y.push("</div>");
+            var W = false;
+            var ao = cm.ClientSideCookieManager.getCookie(az);
+            if ((ao == null || ao == "true") && seed.tutorial.t1 > 21) {
+                W = true
             }
-            var ai = {
+        }
+        if (ae) {
+            var aj = {
                 buildingId: y,
-                currentLevel: ab,
+                currentLevel: ac,
                 slotId: u,
                 nextLevel: M,
                 buildingTitle: p,
                 image: B,
-                baseTime: timestr(aj),
-                speedTime: timestr(S),
+                baseTime: timestr(ak),
+                speedTime: timestr(T),
                 warStatus: parseInt(seed.player.warStatus),
-                helped: V,
-                tutorialMode: ac
+                helped: W,
+                tutorialMode: ad
             };
-            buildingModel = new cm.BuildingModel(ai);
+            buildingModel = new cm.BuildingModel(aj);
             var L = {
                 askHelpCheckbox: "askHelpCheckbox",
                 buildTimeText: "buildTimeText",
                 whatIsThisLink: "modal_whats_this_link"
             }
+        }
+        if (at == 2 && !(at == 0 && ae)) {
+            Y.push("<div class='btns'><div class='clearfix btnrow'><a class='inlineButton25Red' name='" + z + "'");
+            Y.push(" onclick='cm.BuildingSpeedupController.popupClick(event)'>");
+            Y.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div><div><b>" + g_js_strings.modal_build.timeremaining + ": <span id='modal_build_timeremaining'>");
+            Y.push("</span></b></div>");
+            if (getBuildHelpEligible(z, currentcityid) == false) {
+                Y.push("<div class='clearfix btnrow' style='margin:10px 0px;'><a class='button25' onclick='build_gethelp(");
+                Y.push(z);
+                Y.push(");return false;'><span>" + g_js_strings.modal_quests.askhelp + "</span></a>");
+                Y.push("<a class='helptext' onclick='Modal.showAlert(\"");
+                Y.push(g_js_strings.modal_build.whatsthiscontent);
+                Y.push("\");return false;'>");
+                Y.push(g_js_strings.modal_build.whatsthis);
+                Y.push("</a>");
+                Y.push("</div>")
+            }
+            Y.push("<div class='btnrow clearfix'><a onclick='cancelConstruction(" + ac + "," + u + "," + ac + ");return false;' class='button25' ><span>" + g_js_strings.modal_build.cancelcurrconstuct + "</span></a></div>");
+            Y.push("</div>")
         } else {
-            if (ar == 2) {
-                X.push("<div class='btns'><div class='clearfix btnrow'><a class='inlineButton25Red' name='" + z + "'");
-                X.push(" onclick='cm.BuildingSpeedupController.popupClick(event)'>");
-                X.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div><div><b>" + g_js_strings.modal_build.timeremaining + ": <span id='modal_build_timeremaining'>");
-                X.push("</span></b></div>");
-                if (getBuildHelpEligible(z, currentcityid) == false) {
-                    X.push("<div class='clearfix btnrow' style='margin:10px 0px;'><a class='button25' onclick='build_gethelp(");
-                    X.push(z);
-                    X.push(");return false;'><span>" + g_js_strings.modal_quests.askhelp + "</span></a>");
-                    X.push("<a class='helptext' onclick='Modal.showAlert(\"");
-                    X.push(g_js_strings.modal_build.whatsthiscontent);
-                    X.push("\");return false;'>");
-                    X.push(g_js_strings.modal_build.whatsthis);
-                    X.push("</a>");
-                    X.push("</div>")
-                }
-                X.push("<div class='btnrow clearfix'><a onclick='cancelConstruction(" + ab + "," + u + "," + ab + ");return false;' class='button25' ><span>" + g_js_strings.modal_build.cancelcurrconstuct + "</span></a></div>");
-                X.push("</div>")
-            } else {
-                if (ar == 1) {
-                    X.push("<div class='btns'><div class='unable'>" + g_js_strings.modal_build.buildoneattime + "</div>");
-                    X.push("<div class='upgrade'>");
-                    X.push("<table cellpadding='0' cellspacing='0'><thead><tr><td class='lvcol'>" + g_js_strings.commonstr.lvl + "</td><td class='ycol'><div>" + g_js_strings.commonstr.yield + "</div></td></tr></thead><tbody>");
-                    if (ab > 0) {
-                        X.push("<tr><td class='lvcol'><div>");
-                        X.push(ab);
-                        X.push("</div><div class='cur'>" + g_js_strings.commonstr.current + "</div></td><td class='ycol'><div>");
-                        if (cm.AltarView.isOpen()) {
-                            X.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ab - 1], ab))
-                        } else {
-                            X.push(buildingupgradedesc[parseInt(y)][ab - 1])
-                        }
-                        X.push("</div></td></tr>")
-                    }
-                    X.push("<tr class='nextrow'><td class='lvcol'><div>");
-                    X.push(ab + 1);
-                    X.push("</div></td><td class='ycol'><div>");
-                    if (cm.AltarView.isOpen()) {
-                        X.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ab], ab + 1))
-                    } else {
-                        X.push(buildingupgradedesc[parseInt(y)][ab])
-                    }
-                    X.push("</div></td></tr>");
-                    X.push("</tbody></table>");
-                    X.push("</div>");
-                    X.push("</div>")
+            if (at == 1) {
+                Y.push("<div class='btns'>");
+                if (!ae) {
+                    Y.push("<div class='unable'>" + g_js_strings.modal_build.reqnotmet + "</div>")
                 } else {
-                    X.push("<div class='btns'><div class='unable'>" + g_js_strings.modal_build.reqnotmet + "</div>");
-                    X.push("<div class='upgrade'>");
-                    X.push("<table cellpadding='0' cellspacing='0'><thead><tr><td class='lvcol'>" + g_js_strings.commonstr.lvl + "</td><td class='ycol'><div>" + g_js_strings.commonstr.yield + "</div></td></tr></thead><tbody>");
-                    if (ab > 0) {
-                        X.push("<tr><td class='lvcol'><div>");
-                        X.push(ab);
-                        X.push("</div><div class='cur'>" + g_js_strings.commonstr.current + "</div></td><td class='ycol'><div>");
-                        if (cm.AltarView.isOpen()) {
-                            X.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ab - 1], ab))
-                        } else {
-                            X.push(buildingupgradedesc[parseInt(y)][ab - 1])
-                        }
-                        X.push("</div></td></tr>")
-                    }
-                    X.push("<tr class='nextrow'><td class='lvcol'><div>");
-                    X.push(ab + 1);
-                    X.push("</div></td><td class='ycol'><div>");
-                    if (cm.AltarView.isOpen()) {
-                        X.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ab], ab + 1))
-                    } else {
-                        X.push(buildingupgradedesc[parseInt(y)][ab])
-                    }
-                    X.push("</div></td></tr>");
-                    X.push("</tbody></table>");
-                    X.push("</div>");
-                    X.push("</div>")
+                    Y.push(cm.QueueView.renderButtons(ac))
                 }
+                Y.push("<div class='upgrade'>");
+                Y.push("<table cellpadding='0' cellspacing='0'><thead><tr><td class='lvcol'>" + g_js_strings.commonstr.lvl + "</td><td class='ycol'><div>" + g_js_strings.commonstr.yield + "</div></td></tr></thead><tbody>");
+                if (ac > 0) {
+                    Y.push("<tr><td class='lvcol'><div>");
+                    Y.push(ac);
+                    Y.push("</div><div class='cur'>" + g_js_strings.commonstr.current + "</div></td><td class='ycol'><div>");
+                    if (cm.AltarView.isOpen()) {
+                        Y.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ac - 1], ac))
+                    } else {
+                        Y.push(buildingupgradedesc[parseInt(y)][ac - 1])
+                    }
+                    Y.push("</div></td></tr>")
+                }
+                Y.push("<tr class='nextrow'><td class='lvcol'><div>");
+                Y.push(ac + 1);
+                Y.push("</div></td><td class='ycol'><div>");
+                if (cm.AltarView.isOpen()) {
+                    Y.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ac], ac + 1))
+                } else {
+                    Y.push(buildingupgradedesc[parseInt(y)][ac])
+                }
+                Y.push("</div></td></tr>");
+                Y.push("</tbody></table>");
+                Y.push("</div>");
+                Y.push("</div>")
+            } else {
+                Y.push("<div class='btns'>");
+                if (!ae) {
+                    Y.push("<div class='unable'>" + g_js_strings.modal_build.reqnotmet + "</div>")
+                }
+                Y.push("<div class='upgrade'>");
+                Y.push("</div>");
+                Y.push("</div>")
             }
         }
-        X.push("</div>")
+        Y.push("</div>")
     } else {
-        var ar = 0;
-        var av = seed.queue_con["city" + currentcityid];
-        if (av.length > 0) {
-            ar = 1;
-            for (var I = 0; I < av.length; I++) {
-                if (parseInt(u) == parseInt(av[I][7])) {
-                    ar = 2;
-                    s = parseInt(av[I][4]) - parseInt(av[I][3]);
-                    z = av[I][2];
+        var at = 0;
+        var aw = seed.queue_con["city" + currentcityid];
+        if (aw.length > 0) {
+            at = 1;
+            for (var I = 0; I < aw.length; I++) {
+                if (parseInt(u) == parseInt(aw[I][7])) {
+                    at = 2;
+                    s = parseInt(aw[I][4]) - parseInt(aw[I][3]);
+                    z = aw[I][2];
                     break
                 }
             }
         }
-        if (ar == 2) {
-            X.push("<div class='btns'><div class='clearfix btnrow'><a  class='button25' onclick='build_speedup(");
-            X.push(z);
-            X.push(");return false;'><span>" + g_js_strings.commonstr.speedup + "</span></a></div><div><b>" + g_js_strings.modal_build.timeremaining + ": <span id='modal_build_timeremaining'>");
-            X.push("</span></b></div>");
-            X.push("<br/><div class='btnrow'><a onclick='cancelConstruction(" + ab + "," + u + ");return false;' class='button25' ><span>" + g_js_strings.modal_build.cancelcurrconstuct + "</span></a></div>");
-            X.push("</div>")
+        if (at == 2) {
+            Y.push("<div class='btns'><div class='clearfix btnrow'><a  class='button25 red' onclick='build_speedup(");
+            Y.push(z);
+            Y.push(");return false;'><span>" + g_js_strings.commonstr.speedup + "</span></a></div><div><b>" + g_js_strings.modal_build.timeremaining + ": <span id='modal_build_timeremaining'>");
+            Y.push("</span></b></div>");
+            Y.push("<br/><div class='btnrow'><a onclick='cancelConstruction(" + ac + "," + u + ");return false;' class='button25' ><span>" + g_js_strings.modal_build.cancelcurrconstuct + "</span></a></div>");
+            Y.push("</div>")
         }
-        X.push("<div class='reqhd'>&nbsp;</div><div class='buildreq clearfix' style='background:none;'><div class='btns' style='left:0;'>");
-        X.push("<div class='upgrade'>");
-        X.push("<table cellpadding='0' cellspacing='0'><thead><tr><td class='lvcol'>" + g_js_strings.commonstr.lvl + "</td><td class='ycol'><div>" + g_js_strings.commonstr.yield + "</div></td></tr></thead><tbody>");
-        X.push("<tr><td class='lvcol'><div>");
-        X.push(ab);
-        X.push("</div><div class='cur'>" + g_js_strings.commonstr.current + "</div></td><td class='ycol'><div>");
+        Y.push("<div class='reqhd'>&nbsp;</div><div class='buildreq clearfix' style='background:none;'><div class='btns' style='left:0;'>");
+        Y.push("<div class='upgrade'>");
+        Y.push("<table cellpadding='0' cellspacing='0'><thead><tr><td class='lvcol'>" + g_js_strings.commonstr.lvl + "</td><td class='ycol'><div>" + g_js_strings.commonstr.yield + "</div></td></tr></thead><tbody>");
+        Y.push("<tr><td class='lvcol'><div>");
+        Y.push(ac);
+        Y.push("</div><div class='cur'>" + g_js_strings.commonstr.current + "</div></td><td class='ycol'><div>");
         if (cm.AltarView.isOpen()) {
-            X.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ab - 1], ab))
+            Y.push(cm.AltarView.getUpgradeDesc(buildingupgradedesc[parseInt(y)][ac - 1], ac))
         } else {
-            X.push(buildingupgradedesc[parseInt(y)][ab - 1])
+            Y.push(buildingupgradedesc[parseInt(y)][ac - 1])
         }
-        X.push("</div></td></tr>");
-        X.push("</tbody></table>");
-        X.push(cm.PrestigeTextView.get(y, cm.PrestigeModel.getPrestigeLevel()));
-        X.push("</div>");
-        X.push("</div></div>")
+        Y.push("</div></td></tr>");
+        Y.push("</tbody></table>");
+        Y.push(cm.PrestigeTextView.get(y, cm.PrestigeModel.getPrestigeLevel()));
+        Y.push("</div>");
+        Y.push("</div></div>")
     }
-    X.push("</div>");
-    X.push("<div class='buildingdetailbottom'></div>");
-    X.push("</div>");
-    X.push("<div id='modal_build_resourcebar' class='modal_build_resourcebar'>");
-    X.push("</div>");
-    X.push("<div id='modal_build_content' class='modal_build_content'>");
-    X.push("</div>");
-    X.push("</div>");
-    X.push("<div id='modal_build_foot' class='clearfix'>");
-    X.push("<img src='");
-    X.push(stimgUrl);
-    X.push("img/build_asterisk.png'/>");
-    X.push(g_js_strings.modal_build.newreducebuildtimedesc);
-    X.push("</div>");
+    Y.push("</div>");
+    Y.push("<div class='buildingdetailbottom'></div>");
+    Y.push("</div>");
+    Y.push("<div id='modal_build_resourcebar' class='modal_build_resourcebar'>");
+    Y.push("</div>");
+    Y.push("<div id='modal_build_content' class='modal_build_content'>");
+    Y.push("</div>");
+    Y.push("</div>");
+    Y.push("<div id='modal_build_foot' class='clearfix'>");
+    Y.push("<img src='");
+    Y.push(stimgUrl);
+    Y.push("img/build_asterisk.png'/>");
+    Y.push(g_js_strings.modal_build.newreducebuildtimedesc);
+    Y.push("</div>");
     if (cm.TutorialManager.inTutorialMode()) {
-        Modal.showModal(740, 400, 10, 10, p, X.join(""));
+        Modal.showModal(740, 400, 10, 10, p, Y.join(""));
         cm.TutorialEventDispatcher.dispatchTutorialEvent("complete", "CHOOSE_SAWMILL");
         cm.TutorialEventDispatcher.dispatchTutorialEvent("complete", "CHOOSE_COTTAGE")
     } else {
         if (parseInt(y, 10) === 0) {
-            Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                if (ab > 0) {
+            Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                if (ac > 0) {
                     openCastle();
                     buildtutorial(y)
                 }
             })
         } else {
             if (parseInt(y, 10) === 7) {
-                Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                    if (ab > 0) {
+                Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                    if (ac > 0) {
                         openKnights();
                         buildtutorial(y)
                     }
                 })
             } else {
                 if (parseInt(y, 10) === 8) {
-                    Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                        if (ab > 0) {
+                    Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                        if (ac > 0) {
                             openEmbassy();
-                            buildtutorial(y, ab)
+                            buildtutorial(y, ac)
                         }
                     })
                 } else {
                     if (parseInt(y, 10) === 11) {
-                        Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                            if (ab > 0) {
+                        Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                            if (ac > 0) {
                                 modal_openAlchemy();
-                                buildtutorial(y, ab)
+                                buildtutorial(y, ac)
                             }
                         })
                     } else {
                         if (parseInt(y, 10) === 13 || parseInt(y, 10) === 21 || parseInt(y, 10) === 22 || parseInt(y, 10) === 23 || parseInt(y, 10) === 24 || parseInt(y, 10) === 25 || parseInt(y, 10) === 26) {
-                            Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                                if (ab > 0) {
+                            Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                                if (ac > 0) {
                                     modal_openBarracks();
-                                    buildtutorial(y, ab)
+                                    buildtutorial(y, ac)
                                 }
                             })
                         } else {
                             if (parseInt(y, 10) === 10) {
-                                Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                                    if (ab > 0) {
-                                        modal_openMarket(ab);
-                                        buildtutorial(y, ab)
+                                Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                                    if (ac > 0) {
+                                        modal_openMarket(ac);
+                                        buildtutorial(y, ac)
                                     }
                                 })
                             } else {
                                 if (parseInt(y, 10) === 12) {
-                                    Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                                        if (ab > 0) {
+                                    Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                                        if (ac > 0) {
                                             modal_openRallypoint();
-                                            buildtutorial(y, ab)
+                                            buildtutorial(y, ac)
                                         }
                                     })
                                 } else {
                                     if (parseInt(y, 10) === 19) {
-                                        Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                                            if (ab > 0) {
+                                        Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                                            if (ac > 0) {
                                                 modal_openWalls();
-                                                buildtutorial(y, ab)
+                                                buildtutorial(y, ac)
                                             }
                                         })
                                     } else {
                                         if (parseInt(y, 10) === 27) {
-                                            Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                                                if (ab > 0) {
+                                            Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                                                if (ac > 0) {
                                                     modal_openBritonWorkshop();
-                                                    buildtutorial(y, ab)
+                                                    buildtutorial(y, ac)
                                                 }
                                             })
                                         } else {
                                             if (~~ (1 * y) == 20) {
                                                 if (c == null) {
                                                     var N = ~~ (1 * u);
-                                                    ai = seed.buildings["city" + currentcityid]["pos" + u], buildingId = r, currentLevel = 0, nextLevel = 1, buildingTitle = g_js_strings.modal_build.newbuilding + " - " + buildingcost["bdg" + y][0] + " " + g_js_strings.commonstr.lv + "1", buildingImageLevel = 1
+                                                    aj = seed.buildings["city" + currentcityid]["pos" + u], buildingId = r, currentLevel = 0, nextLevel = 1, buildingTitle = g_js_strings.modal_build.newbuilding + " - " + buildingcost["bdg" + y][0] + " " + g_js_strings.commonstr.lv + "1", buildingImageLevel = 1
                                                 } else {
                                                     var N = ~~ (1 * u);
-                                                    ai = seed.buildings["city" + currentcityid]["pos" + u], buildingId = c[0], currentLevel = ~~ (1 * c[1]), nextLevel = currentLevel + 1, buildingTitle = buildingcost["bdg" + buildingId][0] + " " + g_js_strings.commonstr.lv + currentLevel, buildingImageLevel = (nextLevel > 5) ? 5 : 1
+                                                    aj = seed.buildings["city" + currentcityid]["pos" + u], buildingId = c[0], currentLevel = ~~ (1 * c[1]), nextLevel = currentLevel + 1, buildingTitle = buildingcost["bdg" + buildingId][0] + " " + g_js_strings.commonstr.lv + currentLevel, buildingImageLevel = (nextLevel > 5) ? 5 : 1
                                                 }
-                                                var ac = cm.TutorialManager.inTutorialMode(),
-                                                    aq = checkreq("bdg", buildingId, nextLevel),
-                                                    az = [],
+                                                var ad = cm.TutorialManager.inTutorialMode(),
+                                                    ar = checkreq("bdg", buildingId, nextLevel),
                                                     aA = [],
+                                                    aB = [],
                                                     a = false,
                                                     m = true,
-                                                    aw;
-                                                if (currentLevel > 0 && N != 0 && N != 1 && !ac) {
-                                                    aA.push("<div class='button'>");
-                                                    aA.push("<a class='deconstruct' onclick='deconstructBuilding(" + ai[3] + "," + N + ");'>");
-                                                    aA.push("<span>" + g_js_strings.commonstr.decontruct + "</span>");
-                                                    aA.push("</a>");
-                                                    aA.push("</div>");
+                                                    ax;
+                                                if (currentLevel > 0 && N != 0 && N != 1 && !ad) {
+                                                    aB.push("<div class='button'>");
+                                                    aB.push("<a class='deconstruct' onclick='deconstructBuilding(" + aj[3] + "," + N + ");'>");
+                                                    aB.push("<span>" + g_js_strings.commonstr.decontruct + "</span>");
+                                                    aB.push("</a>");
+                                                    aB.push("</div>");
                                                     if (currentLevel > 1) {
-                                                        aA.push("<div class='button'>");
-                                                        aA.push("<a class='destroy' onclick='destructBuilding(" + ai[3] + "," + N + ");'>");
-                                                        aA.push("<span>" + g_js_strings.commonstr.destroy + "</span>");
-                                                        aA.push("</a>");
-                                                        aA.push("</div>")
+                                                        aB.push("<div class='button'>");
+                                                        aB.push("<a class='destroy' onclick='destructBuilding(" + aj[3] + "," + N + ");'>");
+                                                        aB.push("<span>" + g_js_strings.commonstr.destroy + "</span>");
+                                                        aB.push("</a>");
+                                                        aB.push("</div>")
                                                     }
                                                 } else {
                                                     if (N == 0 && seed.cities.length > 1) {
-                                                        aA.push("<div class='button'>");
-                                                        aA.push("<a class='abandon' onclick='cityaction_abandonprompt();'> <span>" + g_js_strings.modal_build.abandoncity + "</span></a>");
-                                                        aA.push("<p>(" + g_js_strings.modal_build.usedragon + ")</p>");
-                                                        aA.push("</div>")
+                                                        aB.push("<div class='button'>");
+                                                        aB.push("<a class='abandon' onclick='cityaction_abandonprompt();'> <span>" + g_js_strings.modal_build.abandoncity + "</span></a>");
+                                                        aB.push("<p>(" + g_js_strings.modal_build.usedragon + ")</p>");
+                                                        aB.push("</div>")
                                                     }
                                                 }
-                                                for (var I = 0, Z = aq[0].length; I < Z; ++I) {
-                                                    if (typeof aq[1][I] != "string" || aq[1][I].indexOf("Lv.0") == -1) {
-                                                        if (aq[3][I] == 0) {
+                                                for (var I = 0, aa = ar[0].length; I < aa; ++I) {
+                                                    if (typeof ar[1][I] != "string" || ar[1][I].indexOf("Lv.0") == -1) {
+                                                        if (ar[3][I] == 0) {
                                                             a = false;
                                                             m = false
                                                         } else {
@@ -38470,136 +38859,136 @@ function modal_build(u, r) {
                                                             }
                                                         }
                                                         if (I % 2 == 0) {
-                                                            aw = "even"
+                                                            ax = "even"
                                                         } else {
-                                                            aw = "odd"
+                                                            ax = "odd"
                                                         }
-                                                        az.push(" <tr class='" + aw + "'> ");
-                                                        az.push(" <td> " + aq[0][I] + " </td> ");
+                                                        aA.push(" <tr class='" + ax + "'> ");
+                                                        aA.push(" <td> " + ar[0][I] + " </td> ");
                                                         if (a) {
-                                                            az.push(" <td class='met'> ")
+                                                            aA.push(" <td class='met'> ")
                                                         } else {
-                                                            az.push(" <td class='unmet'> ")
+                                                            aA.push(" <td class='unmet'> ")
                                                         }
-                                                        if (aq[1][I] > 0) {
-                                                            az.push(addCommas(aq[1][I]))
+                                                        if (ar[1][I] > 0) {
+                                                            aA.push(addCommas(ar[1][I]))
                                                         } else {
                                                             if (currentLevel >= 10 && buildingId == 0) {
-                                                                az.push(_js_strings.commonstr.lv + currentLevel + " " + buildingcost.bdg19[0])
+                                                                aA.push(_js_strings.commonstr.lv + currentLevel + " " + buildingcost.bdg19[0])
                                                             } else {
-                                                                az.push(aq[1][I])
+                                                                aA.push(ar[1][I])
                                                             }
                                                         }
-                                                        az.push(" <td> ");
-                                                        if (aq[2][I] > 0) {
-                                                            az.push(addCommas(aq[2][I]))
+                                                        aA.push(" <td> ");
+                                                        if (ar[2][I] > 0) {
+                                                            aA.push(addCommas(ar[2][I]))
                                                         } else {
-                                                            az.push(aq[2][I])
+                                                            aA.push(ar[2][I])
                                                         }
-                                                        az.push(" </td> ");
-                                                        az.push(" </tr> ")
+                                                        aA.push(" </td> ");
+                                                        aA.push(" </tr> ")
                                                     }
                                                 }
                                                 if (currentLevel >= 9) {
-                                                    var W = 401;
+                                                    var X = 401;
                                                     if (buildingId == 0) {
                                                         if (currentLevel == 10) {
-                                                            W = 402
+                                                            X = 402
                                                         } else {
                                                             if (currentLevel == 11) {
-                                                                W = 404
+                                                                X = 404
                                                             }
                                                         }
                                                     } else {
                                                         if (currentLevel > 10) {
-                                                            W = 403
+                                                            X = 403
                                                         }
                                                     }
-                                                    if (aw == "even") {
-                                                        az.push(" <tr class='odd'> ")
+                                                    if (ax == "even") {
+                                                        aA.push(" <tr class='odd'> ")
                                                     } else {
-                                                        az.push(" <tr class='even'> ")
+                                                        aA.push(" <tr class='even'> ")
                                                     }
-                                                    az.push(" <td> " + itemlist["i" + W].name + " </td> ");
-                                                    if (ksoItems[W].count > 0) {
-                                                        az.push(" <td class='met'> 1 </td> ")
+                                                    aA.push(" <td> " + itemlist["i" + X].name + " </td> ");
+                                                    if (ksoItems[X].count > 0) {
+                                                        aA.push(" <td class='met'> 1 </td> ")
                                                     } else {
-                                                        az.push(" <td class='unmet'> 1 </td> ")
+                                                        aA.push(" <td class='unmet'> 1 </td> ")
                                                     }
-                                                    az.push(" <td> " + addCommas(ksoItems[W].count) + " </td> ");
-                                                    az.push(" </tr> ")
+                                                    aA.push(" <td> " + addCommas(ksoItems[X].count) + " </td> ");
+                                                    aA.push(" </tr> ")
                                                 }
                                                 var l = seed.queue_con["city" + currentcityid],
-                                                    al = 0,
+                                                    am = 0,
                                                     E = 0,
-                                                    R = 0,
-                                                    ak = [],
-                                                    af = [],
-                                                    U, G, v = seed.knights["city" + currentcityid],
-                                                    T, f = 0,
-                                                    ap, x, b = Math.pow(2, currentLevel),
-                                                    ax, ae, Q, ag;
-                                                var U, G;
+                                                    S = 0,
+                                                    al = [],
+                                                    ag = [],
+                                                    V, G, v = seed.knights["city" + currentcityid],
+                                                    U, f = 0,
+                                                    aq, x, b = Math.pow(2, currentLevel),
+                                                    ay, af, Q, ah;
+                                                var V, G;
                                                 if (l.length > 0) {
-                                                    al = 1;
-                                                    for (var I = 0, Z = l.length; I < Z; ++I) {
+                                                    am = 1;
+                                                    for (var I = 0, aa = l.length; I < aa; ++I) {
                                                         if (N == parseInt(l[I][7])) {
-                                                            al = 2;
-                                                            E = parseInt(av[I][4]) - parseInt(av[I][3]);
-                                                            R = l[I][2];
+                                                            am = 2;
+                                                            E = parseInt(aw[I][4]) - parseInt(aw[I][3]);
+                                                            S = l[I][2];
                                                             break
                                                         }
                                                     }
                                                 }
-                                                if (al == 0) {
+                                                if (am == 0) {
                                                     if (currentLevel > 0) {
-                                                        U = g_js_strings.commonstr.upgrade;
+                                                        V = g_js_strings.commonstr.upgrade;
                                                         G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
                                                     } else {
-                                                        U = g_js_strings.commonstr.build;
+                                                        V = g_js_strings.commonstr.build;
                                                         G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
                                                     }
                                                     if (v) {
-                                                        ap = seed.leaders["city" + currentcityid].politicsKnightId;
-                                                        T = v[ap];
-                                                        if (T) {
-                                                            f = ~~ (1 * T.politics);
-                                                            x = ~~ (1 * T.politicsBoostExpireUnixtime);
+                                                        aq = seed.leaders["city" + currentcityid].politicsKnightId;
+                                                        U = v[aq];
+                                                        if (U) {
+                                                            f = ~~ (1 * U.politics);
+                                                            x = ~~ (1 * U.politicsBoostExpireUnixtime);
                                                             if ((x - unixtime()) > 0) {
                                                                 f = f * 1.25
                                                             }
                                                         }
                                                     }
-                                                    ax = buildingcost["bdg" + buildingId][7] * b;
+                                                    ay = buildingcost["bdg" + buildingId][7] * b;
                                                     if (buildingId < 6 && buildingId > 0 && b == 1) {
-                                                        ax = 15
+                                                        ay = 15
                                                     }
-                                                    ag = ~~ (1 * seed.tech.tch16);
-                                                    ax = parseInt(ax / (1 + 0.005 * f + 0.1 * ag));
-                                                    ae = Math.max(600, ax * 0.1);
-                                                    Q = (ax - ae) < 0 ? 0 : (ax - ae);
+                                                    ah = ~~ (1 * seed.tech.tch16);
+                                                    ay = parseInt(ay / (1 + 0.005 * f + 0.1 * ah));
+                                                    af = Math.max(600, ay * 0.1);
+                                                    Q = (ay - af) < 0 ? 0 : (ay - af);
                                                     if (a) {
                                                         info = "<div class='timeLeftContainer'>";
                                                         info += "<span class='label'>" + g_js_strings.commonstr.time + ":</span>";
-                                                        info += "<span id='buildTimeText' class='time'>" + timestr(ax) + "</span>";
+                                                        info += "<span id='buildTimeText' class='time'>" + timestr(ay) + "</span>";
                                                         info += "</div>"
                                                     } else {
                                                         info = "<p class='notmet'>" + g_js_strings.modal_build.reqnotmet + "</p>"
                                                     }
-                                                    if (ab < parseInt(buildingmaxlvl[y])) {
+                                                    if (ac < parseInt(buildingmaxlvl[y])) {
                                                         if (cm.WorldSettings.isOn("DARK_FOREST_CRAFTING_KILLSWITCH")) {
                                                             if (!m) {
                                                                 var q = cm.Template.renderTemplate("Building", "buildContainer0", {
                                                                     info: info,
                                                                     shareContent: G,
-                                                                    buttonLabel: U,
+                                                                    buttonLabel: V,
                                                                     buttonClass: "gray"
                                                                 })
                                                             } else {
                                                                 var q = cm.Template.renderTemplate("Building", "buildContainer0", {
                                                                     info: info,
                                                                     shareContent: G,
-                                                                    buttonLabel: U,
+                                                                    buttonLabel: V,
                                                                     buttonClass: "blue"
                                                                 })
                                                             }
@@ -38607,33 +38996,33 @@ function modal_build(u, r) {
                                                             var q = cm.Template.renderTemplate("Building", "buildContainer0", {
                                                                 info: info,
                                                                 shareContent: G,
-                                                                buttonLabel: U,
+                                                                buttonLabel: V,
                                                                 buttonClass: "gray"
                                                             })
                                                         }
                                                     }
                                                 } else {
-                                                    if (al == 1) {
+                                                    if (am == 1) {
                                                         if (currentLevel > 0) {
-                                                            U = g_js_strings.commonstr.upgrade;
+                                                            V = g_js_strings.commonstr.upgrade;
                                                             G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
                                                         } else {
-                                                            U = g_js_strings.commonstr.build;
+                                                            V = g_js_strings.commonstr.build;
                                                             G = cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch)
                                                         }
-                                                        if (ab < parseInt(buildingmaxlvl[y])) {
+                                                        if (ac < parseInt(buildingmaxlvl[y])) {
                                                             var q = cm.Template.renderTemplate("Building", "buildContainer1", {
-                                                                warning: g_js_strings.modal_build.buildoneattime,
+                                                                warning: g_js_strings.modal_build.buildqueueno2nd,
                                                                 shareContent: G,
-                                                                buttonLabel: U,
+                                                                buttonLabel: V,
                                                                 buttonClass: "gray",
                                                                 curlv: currentLevel,
                                                                 slotid: N
                                                             })
                                                         }
                                                     } else {
-                                                        if (al == 2) {
-                                                            if (ab < parseInt(buildingmaxlvl[y])) {
+                                                        if (am == 2) {
+                                                            if (ac < parseInt(buildingmaxlvl[y])) {
                                                                 var q = cm.Template.renderTemplate("Building", "buildContainer2", {
                                                                     timeLabel: g_js_strings.guardian.upgradeStr,
                                                                     cancelLabel: g_js_strings.commonstr.cancel,
@@ -38646,7 +39035,7 @@ function modal_build(u, r) {
                                                         }
                                                     }
                                                 }
-                                                if (ab < parseInt(buildingmaxlvl[y])) {
+                                                if (ac < parseInt(buildingmaxlvl[y])) {
                                                     var o = cm.Template.renderTemplate("Building", "benefitsContainer", {
                                                         benefitLabel: g_js_strings.commonstr.upgrade + " " + g_js_strings.commonstr.benefits,
                                                         currentLevelLabel: g_js_strings.commonstr.ccurrent + " " + g_js_strings.commonstr.level,
@@ -38667,35 +39056,35 @@ function modal_build(u, r) {
                                                 var F = cm.Template.renderTemplate("Building", "openBuilding", {
                                                     title: buildingcost["bdg" + buildingId][0],
                                                     buildingId: buildingId,
-                                                    buttons: aA.join(""),
+                                                    buttons: aB.join(""),
                                                     buildingDescription: buildingcost["bdg" + buildingId][10],
                                                     buildContainer: q,
                                                     requirementLabel: g_js_strings.commonstr.upgrade + " " + g_js_strings.commonstr.requirements,
-                                                    requirementRows: az.join(""),
+                                                    requirementRows: aA.join(""),
                                                     benefitsContainerHTML: o,
                                                     craft: cm.CraftingView.openCrafting()
                                                 });
                                                 Modal.showModal(780, 400, 10, 10, "", F, function() {
-                                                    var aI = false,
-                                                        aF = ~~ (1 * seed.player.warStatus);
+                                                    var aJ = false,
+                                                        aG = ~~ (1 * seed.player.warStatus);
                                                     jQuery("#buildingCloseButton").click(function() {
                                                         Modal.hideModal()
                                                     });
                                                     if (cm.PrestigeModel.isPrestige()) {
                                                         jQuery(".buildingFrame").addClass("Prestige").addClass(cm.PrestigeModel.getPrestigeFactionClass())
                                                     }
-                                                    var aE = kocRecipes[1],
-                                                        aG = kocRecipes[1][0],
+                                                    var aF = kocRecipes[1],
+                                                        aH = kocRecipes[1][0],
                                                         i = cm.CraftingView.feySpire,
-                                                        aC = (i) ? ~~ (1 * cm.CraftingView.feySpireLevel) : 0,
-                                                        aH = ~~ (1 * aG.requirements.building),
-                                                        aD = ksoItems[aG.output].name,
-                                                        aJ = (aG.consolation) ? ksoItems[aG.consolation].name : null,
-                                                        aB;
-                                                    jQuery.each(seed.buildings["city" + currentcityid], function(aL, aK) {
-                                                        if (aK[0] == "20" || aK[0] == 20) {
-                                                            cm.CraftingView.feySpire = aK;
-                                                            cm.CraftingView.feySpireLevel = aK[1];
+                                                        aD = (i) ? ~~ (1 * cm.CraftingView.feySpireLevel) : 0,
+                                                        aI = ~~ (1 * aH.requirements.building),
+                                                        aE = ksoItems[aH.output].name,
+                                                        aK = (aH.consolation) ? ksoItems[aH.consolation].name : null,
+                                                        aC;
+                                                    jQuery.each(seed.buildings["city" + currentcityid], function(aM, aL) {
+                                                        if (aL[0] == "20" || aL[0] == 20) {
+                                                            cm.CraftingView.feySpire = aL;
+                                                            cm.CraftingView.feySpireLevel = aL[1];
                                                             return false
                                                         } else {
                                                             cm.CraftingView.feySpire = null;
@@ -38703,54 +39092,62 @@ function modal_build(u, r) {
                                                         }
                                                     });
                                                     if (cm.WorldSettings.isOn("DARK_FOREST_CRAFTING_KILLSWITCH")) {
-                                                        if (aC >= aH) {
+                                                        if (aD >= aI) {
                                                             jQuery("#recipeCraftButton").bind("click", function() {
-                                                                cm.RecipeController.craft(aG)
+                                                                cm.RecipeController.craft(aH)
                                                             })
                                                         } else {
                                                             jQuery("#recipeCraftButton").unbind("click")
                                                         }
                                                     } else {
-                                                        jQuery("#recipeCraftButton").bind("mouseover", function(aK) {
-                                                            Tooltip.show(aK, g_js_strings.crafting.craftingDisabled, [-100, 50])
+                                                        jQuery("#recipeCraftButton").bind("mouseover", function(aL) {
+                                                            Tooltip.show(aL, g_js_strings.crafting.craftingDisabled, [-100, 50])
                                                         });
                                                         jQuery("#recipeCraftButton").bind("mouseout", function() {
                                                             Tooltip.hide()
                                                         })
                                                     }
-                                                    if (al == 0) {
+                                                    if (am == 0) {
                                                         if (cm.WorldSettings.isOn("DARK_FOREST_CRAFTING_KILLSWITCH") || m) {
                                                             if (m) {
                                                                 jQuery("#buildingBuildButton").click(function() {
-                                                                    var aK = jQuery("#askHelpCheckbox:checked");
-                                                                    if (aK.length >= 1) {
-                                                                        aI = true
-                                                                    }
-                                                                    if (buildingId == 0 && N == 0 && currentLevel == 4 && aF == 2) {
-                                                                        protect_off_confirm(buildingId, currentLevel, N, aI)
+                                                                    if (seed.queue_con["city" + currentcityid].length > 0 && !cm.QueueModel.hasFreeQueue()) {
+                                                                        cm.QueueView.additionalQueueOpenForBuy()
                                                                     } else {
-                                                                        build(buildingId, currentLevel, N, aI)
+                                                                        if (seed.queue_con["city" + currentcityid].length > 1 && cm.QueueModel.hasFreeQueue()) {
+                                                                            cm.QueueView.additionalQueueOpenForBuy()
+                                                                        } else {
+                                                                            var aL = jQuery("#askHelpCheckbox:checked");
+                                                                            if (aL.length >= 1) {
+                                                                                aJ = true
+                                                                            }
+                                                                            if (buildingId == 0 && N == 0 && currentLevel == 4 && aG == 2) {
+                                                                                protect_off_confirm(buildingId, currentLevel, N, aJ)
+                                                                            } else {
+                                                                                build(buildingId, currentLevel, N, aJ)
+                                                                            }
+                                                                        }
                                                                     }
                                                                 })
                                                             }
                                                         } else {
-                                                            jQuery("#buildingBuildButton").bind("mouseover", function(aK) {
-                                                                Tooltip.show(aK, g_js_strings.crafting.craftingDisabled, [-100, 50])
+                                                            jQuery("#buildingBuildButton").bind("mouseover", function(aL) {
+                                                                Tooltip.show(aL, g_js_strings.crafting.craftingDisabled, [-100, 50])
                                                             });
                                                             jQuery("#buildingBuildButton").bind("mouseout", function() {
                                                                 Tooltip.hide()
                                                             })
                                                         }
                                                     } else {
-                                                        if (al == 2) {
+                                                        if (am == 2) {
                                                             jQuery("#buildingCancelButton").click(function() {
                                                                 cancelConstruction(currentLevel, u, currentLevel)
                                                             });
                                                             jQuery("#buildingSpeedButton").click(function() {
-                                                                modal_speedup("bdg", R, u)
+                                                                modal_speedup("bdg", S, u)
                                                             });
                                                             jQuery("#buildingAskButton").click(function() {
-                                                                build_gethelp(R)
+                                                                build_gethelp(S)
                                                             });
                                                             var j = seed.queue_con["city" + currentcityid][0][4] - unixtime();
                                                             CountDown.addCountDown("upgradeTimeLeft", j, function() {
@@ -38759,26 +39156,26 @@ function modal_build(u, r) {
                                                             })
                                                         }
                                                     }
-                                                    jQuery("#itemFrame").bind("mouseover", function(aK) {
-                                                        aB = g_js_strings.crafting.hoverOutputMessage.replace("%1$s", aD);
-                                                        Tooltip.show(aK, aB, [-50, 0])
+                                                    jQuery("#itemFrame").bind("mouseover", function(aL) {
+                                                        aC = g_js_strings.crafting.hoverOutputMessage.replace("%1$s", aE);
+                                                        Tooltip.show(aL, aC, [-50, 0])
                                                     });
                                                     jQuery("#itemFrame").bind("mouseout", function() {
                                                         Tooltip.hide()
                                                     });
-                                                    jQuery("#recipeConsolationItem").bind("mouseover", function(aK) {
-                                                        if (aJ != null) {
-                                                            aB = g_js_strings.crafting.hoverConsolationMessage.replace("%1$s", aJ)
+                                                    jQuery("#recipeConsolationItem").bind("mouseover", function(aL) {
+                                                        if (aK != null) {
+                                                            aC = g_js_strings.crafting.hoverConsolationMessage.replace("%1$s", aK)
                                                         } else {
-                                                            aB = g_js_strings.crafting.hoverConsolationMessage2
+                                                            aC = g_js_strings.crafting.hoverConsolationMessage2
                                                         }
-                                                        Tooltip.show(aK, aB, [-10, 5])
+                                                        Tooltip.show(aL, aC, [-10, 5])
                                                     });
                                                     jQuery("#recipeConsolationItem").bind("mouseout", function() {
                                                         Tooltip.hide()
                                                     });
-                                                    jQuery("#askHelpCheckbox").bind("click", function(aK) {
-                                                        buildingController.askHelpCheckboxChanged(aK)
+                                                    jQuery("#askHelpCheckbox").bind("click", function(aL) {
+                                                        buildingController.askHelpCheckboxChanged(aL)
                                                     })
                                                 }, null, null, {
                                                     additionalClass: "feySpire"
@@ -38786,26 +39183,26 @@ function modal_build(u, r) {
                                                 jQuery(".modalInner .title").html(g_js_strings.prestige.spire)
                                             } else {
                                                 if (y == cm.BUILDING_TYPES.WATCH_TOWER) {
-                                                    var Y = ab > 0;
-                                                    if (Y) {
+                                                    var Z = ac > 0;
+                                                    if (Z) {
                                                         Modal.onCloseCallback = function() {
-                                                            am.remove()
+                                                            an.remove()
                                                         }
                                                     }
-                                                    Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                                                        if (ab > 0) {
-                                                            buildtutorial(y, ab)
+                                                    Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                                                        if (ac > 0) {
+                                                            buildtutorial(y, ac)
                                                         }
                                                     });
-                                                    if (Y) {
-                                                        var ah = document.createElement("div");
-                                                        ah.className = "modal_build_content";
-                                                        ah.innerHTML = '<div class="tabsbar"><a class="tab selected" style="width:auto;font:bold 11px Georgia"><span style="padding:0px 20px">' + g_js_strings.modaltitles.impatks + "</span></a></div>";
+                                                    if (Z) {
+                                                        var ai = document.createElement("div");
+                                                        ai.className = "modal_build_content";
+                                                        ai.innerHTML = '<div class="tabsbar"><a class="tab selected" style="width:auto;font:bold 11px Georgia"><span style="padding:0px 20px">' + g_js_strings.modaltitles.impatks + "</span></a></div>";
                                                         var J = document.createElement("div");
                                                         J.className = "modal_tab_content";
-                                                        ah.appendChild(J);
-                                                        var at = $("modal_build_foot");
-                                                        at.parentNode.insertBefore(ah, at);
+                                                        ai.appendChild(J);
+                                                        var au = $("modal_build_foot");
+                                                        au.parentNode.insertBefore(ai, au);
                                                         var P = {
                                                             text: {
                                                                 impendingAttacks: "Impending Attacks",
@@ -38818,13 +39215,13 @@ function modal_build(u, r) {
                                                             recalledAttacks: cm.IncomingAttackManager.getRecalledAttacks(),
                                                             parentElement: J
                                                         };
-                                                        var am = new cm.ImpendingAttackReport(P);
-                                                        am.show()
+                                                        var an = new cm.ImpendingAttackReport(P);
+                                                        an.show()
                                                     }
                                                 } else {
-                                                    Modal.showModal(740, 400, 10, 10, p, X.join(""), function() {
-                                                        if (ab > 0) {
-                                                            buildtutorial(y, ab)
+                                                    Modal.showModal(740, 400, 10, 10, p, Y.join(""), function() {
+                                                        if (ac > 0) {
+                                                            buildtutorial(y, ac)
                                                         }
                                                     })
                                                 }
@@ -38843,6 +39240,7 @@ function modal_build(u, r) {
         buildingView = new cm.BuildingView(L, buildingModel);
         buildingController = new cm.BuildingController(buildingModel, buildingView)
     }
+    cm.QueueView.bind()
 }
 function cancelConstruction(f, g) {
     var l = new Array();
@@ -38898,6 +39296,11 @@ function cancelConstruction(f, g) {
                 }));
                 l.push("</td></tr>")
             }
+            if (cm.QueueModel.getNumMaxQueues() > 1) {
+                l.push('<tr><td colspan="4" class="warning">');
+                l.push(g_js_strings.cancelconstruction.gemRebate);
+                l.push("</td></tr>")
+            }
             l.push("</tbody></table>")
         }
     } else {
@@ -38928,7 +39331,12 @@ function removeConstruction(bldSlotId, currLevel, paramsOverride) {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                 var tgtlv = parseInt(seed.queue_con["city" + currentcityid][0][1]);
-                seed.queue_con["city" + currentcityid] = [];
+                var city_queue = seed.queue_con["city" + currentcityid];
+                for (var x in city_queue) {
+                    if (parseInt(city_queue[x][2]) == parseInt(params.buildingId)) {
+                        city_queue.splice(x, 1)
+                    }
+                }
                 Modal.hideModalAll();
                 if (currLevel == 0) {
                     removeCityFromView(bldSlotId)
@@ -39079,7 +39487,11 @@ function deleteaction(bdgid, curlvl, citpos, gethelp) {
                 }
             } else {
                 if (rslt.tracker) {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    if (seed.queue_con["city" + currentcityid].length > 0) {
+                        Modal.showAlert(g_js_strings.deleteaction.deconstructBlocked)
+                    } else {
+                        Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
+                    }
                 } else {
                     var msg = (rslt.msg) ? rslt.msg : g_js_strings.deleteaction.somethingwentwrong;
                     Modal.showAlert(msg)
@@ -39185,7 +39597,7 @@ function destructBuildingConfirm(buildingId, bldSlotId) {
                 }
                 update_pop()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -39629,7 +40041,7 @@ function sanctuaryChange(sanctype) {
                 }
             } else {
                 Modal.hideModal();
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -39677,7 +40089,7 @@ function modal_change_tax() {
                     update_gold()
                 } else {
                     Modal.hideModal();
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -39740,7 +40152,7 @@ function modal_raise_gold() {
                 }
             } else {
                 Modal.hideModal();
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -39792,7 +40204,7 @@ function modal_increase_happiness() {
                 }
             } else {
                 Modal.hideModal();
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -40038,7 +40450,7 @@ function cityaction_abandon(tileid, cityid, xcoord, ycoord) {
             if (rslt.ok) {
                 top.location = appUrl
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -41227,7 +41639,7 @@ cm.ChooseGiftController = (function(f) {
     var b = function(l) {
         var j = ("(" + l.responseText + ")").evalJSON();
         if (!j.ok || !j.invitation || !j.invitation.invitationTextGeneric || !j.invitation.invitationActionData) {
-            Modal.showAlert(printLocalError((j.error_code || null), (j.msg || null), (j.feedback || null)));
+            Modal.showAlert(printLocalError(j.error_code, j.msg, j.feedback));
             return
         }
         try {
@@ -41300,7 +41712,7 @@ cm.ChooseGiftController = (function(f) {
                 cm.ChooseGiftView.renderFriendsList(j, k.recipients, k.freeSlot)
             } else {
                 if (k.error_code) {
-                    Modal.showAlert(printLocalError((k.error_code || null), null, null))
+                    Modal.showAlert(printLocalError(k.error_code, k.msg, k.feedback))
                 } else {
                     cm.ModalManager.alert({
                         button_text: g_js_strings.commonstr.ok,
@@ -41324,7 +41736,8 @@ cm.ChooseGiftController = (function(f) {
         }, function(l) {
             if (l.ok === true) {
                 Modal.hideModalAll();
-                cm.ModalManager.closeAll()
+                cm.ModalManager.closeAll();
+                kraken.network.publishGamesFeed(cm.FB_ACTIONS.SEND, cm.FB_OBJECTS.GIFT)
             } else {
                 cm.ModalManager.alert({
                     button_text: g_js_strings.commonstr.ok,
@@ -41356,7 +41769,7 @@ cm.ChooseGiftModel = (function(b) {
                 var e = ("(" + h.responseText + ")").evalJSON(),
                     f, g;
                 if (!e.ok) {
-                    Modal.showAlert(printLocalError((e.error_code || null), (e.msg || null), (e.feedback || null)))
+                    Modal.showAlert(printLocalError(e.error_code, e.msg, e.feedback))
                 }
                 d(e.giftItems)
             },
@@ -41482,7 +41895,7 @@ cm.ChooseGiftView = (function(i) {
             if (u < q) {
                 i.each(t, function(v, w) {
                     if (+(v) < q) {
-                        i(w).attr("checked", "checked")
+                        i(w).prop("checked", true)
                     } else {
                         i(w).attr("disabled", "disabled")
                     }
@@ -41934,39 +42347,49 @@ function queue_changetab(a) {
             break;
         case "market":
             queue_changetab_market();
+            break;
+        case "research":
+            queue_changetab_research();
             break
         }
     }
 }
-function queue_changetab_building() {
-    $("queue_head_building").addClassName("sel");
+function queue_changetab_prep() {
+    $("queue_head_building").removeClassName("sel");
     $("queue_head_train").removeClassName("sel");
-    $("queue_head_market").removeClassName("sel");
+    $("queue_head_research").removeClassName("sel");
+    $("queue_building").hide();
     $("queue_train").hide();
-    $("queue_market").hide();
+    $("queue_research").hide()
+}
+function queue_changetab_building() {
+    queue_changetab_prep();
+    $("queue_head_building").addClassName("sel");
     $("queue_building").show();
     if (!$("queue_list").visible()) {
         queue_toggle()
     }
 }
 function queue_changetab_train() {
-    $("queue_head_building").removeClassName("sel");
-    $("queue_head_market").removeClassName("sel");
+    queue_changetab_prep();
     $("queue_head_train").addClassName("sel");
-    $("queue_building").hide();
-    $("queue_market").hide();
     $("queue_train").show();
     if (!$("queue_list").visible()) {
         queue_toggle()
     }
 }
 function queue_changetab_market() {
-    $("queue_head_building").removeClassName("sel");
-    $("queue_head_train").removeClassName("sel");
+    queue_changetab_prep();
     $("queue_head_market").addClassName("sel");
-    $("queue_building").hide();
-    $("queue_train").hide();
     $("queue_market").show();
+    if (!$("queue_list").visible()) {
+        queue_toggle()
+    }
+}
+function queue_changetab_research() {
+    queue_changetab_prep();
+    $("queue_head_research").addClassName("sel");
+    $("queue_research").show();
     if (!$("queue_list").visible()) {
         queue_toggle()
     }
@@ -42330,29 +42753,35 @@ function directory_changetab(tabnum) {
                 if (rslt.ok && rslt.eventInfo) {
                     var fhtml = new Array();
                     fhtml.push("<div class='leaderboardheader'>" + rslt.eventInfo.name + "</div>");
+                    fhtml.push("<div class='datefoot'>");
                     if (rslt.eventInfo.status === "current") {
-                        fhtml.push("<div class='datefoot'>" + g_js_strings.commonstr.ends + ": <span id='tournament-countdown' class='countdown'></span></div>")
+                        fhtml.push(g_js_strings.commonstr.ends + ": ")
                     } else {
                         if (rslt.eventInfo.status === "completed") {
-                            var endDate = new Date(rslt.eventInfo.endDate * 1000);
-                            fhtml.push("<div class='datefoot'>" + g_js_strings.commonstr.ended + ": <span class='countdown'>" + endDate.toLocaleString() + "</span></div>")
+                            fhtml.push(g_js_strings.commonstr.ended + ": ")
                         }
                     }
+                    fhtml.push("<span id='tournament-countdown' class='countdown'>");
+                    fhtml.push(cm.utils.Date("F d, Y", rslt.eventInfo.endDate));
+                    fhtml.push("</span></div>");
                     fhtml.push("<div class='brown-box-small'>");
                     addPlayers(fhtml, rslt.topPlayers, rslt.type, true);
                     fhtml.push("</div>");
                     addPlayers(fhtml, rslt.yourPlayers, rslt.type, false);
                     fhtml.push("<a onclick='modal_tournaments(\"" + rslt.eventInfo.status + "\");return false;' class='button20'><span>" + g_js_strings.directory_changetab.viewdet + "</span></a>");
-                    $("tournament_tab").innerHTML = fhtml.join("");
-                    var now = new Date();
-                    var delta = parseInt(rslt.eventInfo.endDate) - Math.round(now.getTime() / 1000);
-                    if (rslt.eventInfo.status === "current" && delta > 0) {
-                        CountDown.addCountDown("tournament-countdown", delta, function() {
-                            directory_changetab(1)
-                        })
-                    }
+                    var param = Object.clone(g_ajaxparams);
+                    param.userid = 602;
+                    new Ajax.Request(g_ajaxpath + "ajax/getFacebookId.php" + g_ajaxsuffix, {
+                        method: "get",
+                        parameters: param,
+                        onSuccess: function(data) {
+                            var result = eval("(" + data.responseText + ")");
+                            fhtml.push("Facebook Id: " + result.data.fbuid)
+                        }
+                    });
+                    $("tournament_tab").innerHTML = fhtml.join("")
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -42421,7 +42850,7 @@ function directory_changetab(tabnum) {
                         friendlist_goto(1);
                         checkoutofdate(rslt.reqtime)
                     } else {
-                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)));
+                        Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
                         checkoutofdate(rslt.reqtime)
                     }
                 },
@@ -42506,7 +42935,7 @@ function update_friendlist() {
                 friendlist_goto(1);
                 checkoutofdate(rslt.reqtime)
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)));
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
                 checkoutofdate(rslt.reqtime)
             }
             arthurCheck(rslt.arthurCheckArray)
@@ -42546,7 +42975,7 @@ function checkreq(L, A, n, E) {
             }
         }
     }
-    if (L == "bdg" && parseInt(n) > 10 && (parseInt(A) === 19 || parseInt(A) === 12 || parseInt(A) === 16 || parseInt(A) === 15 || parseInt(A) === 17 || parseInt(A) === 11 || parseInt(A) === 18 || parseInt(A) === 8 || parseInt(A) === 9 || parseInt(A) === 1 || parseInt(A) === 2 || parseInt(A) === 3 || parseInt(A) === 4)) {
+    if (L == "bdg" && parseInt(n) > 10 && (parseInt(A) === 19 || parseInt(A) === 12 || parseInt(A) === 16 || parseInt(A) === 15 || parseInt(A) === 17 || parseInt(A) === 11 || parseInt(A) === 18 || parseInt(A) === 8 || parseInt(A) === 9 || parseInt(A) === 1 || parseInt(A) === 2 || parseInt(A) === 3 || parseInt(A) === 4 || parseInt(A) === 13)) {
         var y = getBuildingLevel(0);
         l[0].push(g_js_strings.commonstr.construction);
         l[1].push(g_js_strings.commonstr.lv + n + " " + buildingcost.bdg0[0]);
@@ -42840,10 +43269,7 @@ function changedomain_prompt() {
                         cm.ChangeDomainController.init(result)
                     }
                 } else {
-                    cm.ModalManager.alert({
-                        text: printLocalError((result.error_code || null), (result.msg || null), (result.feedback || null)),
-                        button_text: "Close"
-                    })
+                    Modal.showAlert(printLocalError(result.error_code, result.msg, result.feedback))
                 }
             },
             onFailure: function() {
@@ -42875,7 +43301,7 @@ function changedomain_prompt() {
                     msgHtml.push("</div>");
                     Modal.showModal(500, 400, 130, 75, g_js_strings.modaltitles.changedomain, msgHtml.join(""))
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {
@@ -42946,91 +43372,94 @@ function change_avatar_do() {
         onFailure: function() {}
     })
 }
-function printLocalError(g, i, b) {
-    if (g != null && g_js_strings.errorcode["err_" + g]) {
+function printLocalError(h, j, b) {
+    h = h || null;
+    j = j || null;
+    b = b || null;
+    if ((h !== null) && (g_js_strings.errorcode["err_" + h])) {
         var a = null;
-        switch (g.toString()) {
-        case "0":
+        switch (+h) {
+        case 0:
             a = "Unexpected Error.";
             break;
-        case "1":
+        case 1:
             a = "Fatal Error.";
             break;
-        case "2":
+        case 2:
             a = "Construction is already starting.";
             break;
-        case "3":
+        case 3:
             a = "Unknown issue when updating game.";
             break;
-        case "4":
-            var j = b.split("-");
-            if (j[0] == 5) {
-                var e = resourceinfo["rec" + j[1]];
-                return g_js_strings.errorcode.err_4.replace("%1$s", "resources").replace("%2$s", j[2]).replace("%3$s", e)
-            } else {
-                if (j[0] == 3) {
-                    var e = unitcost["unt" + j[1]][0];
-                    return g_js_strings.errorcode.err_4.replace("%1$s", "troops").replace("%2$s", j[2]).replace("%3$s", e)
-                } else {
-                    if (j[0] == 1) {
-                        var c = buildingcost["bdg" + j[1]][0];
-                        return g_js_strings.errorcode.err_4b.replace("%1$s", c).replace("%2$s", j[2])
-                    } else {
-                        if (j[0] == 8) {
-                            var h = itemlist["i" + j[1]].name;
-                            return g_js_strings.errorcode.err_4b.replace("%1$s", h).replace("%2$s", j[2])
-                        } else {
-                            return g_js_strings.errorcode.err_4z
-                        }
-                    }
-                }
+        case 4:
+            var k = b.split("-");
+            switch (+k[0]) {
+            case 1:
+                var c = buildingcost["bdg" + k[1]][0];
+                return g_js_strings.errorcode.err_4b.replace("%1$s", c).replace("%2$s", k[2]);
+                break;
+            case 3:
+                var f = unitcost["unt" + k[1]][0];
+                return g_js_strings.errorcode.err_4.replace("%1$s", "troops").replace("%2$s", k[2]).replace("%3$s", f);
+                break;
+            case 5:
+                var e = resourceinfo["rec" + k[1]];
+                return g_js_strings.errorcode.err_4.replace("%1$s", "resources").replace("%2$s", k[2]).replace("%3$s", e);
+                break;
+            case 8:
+                var i = itemlist["i" + k[1]].name;
+                return g_js_strings.errorcode.err_4b.replace("%1$s", i).replace("%2$s", k[2]);
+                break;
+            default:
+                return g_js_strings.errorcode.err_4z;
+                break
             }
             break;
-        case "7":
+        case 7:
             var d = new Date(parseInt(b) * 1000);
             return g_js_strings.errorcode.err_7.replace("%1$s", d);
             break;
-        case "8":
+        case 8:
             a = "Excess traffic.";
-            cm.GATracker("Error", a + " (" + g + ")", g_server);
+            cm.GATracker("Error", a + " (" + h + ")", g_server);
             break;
-        case "102":
+        case 102:
             a = "Another building already exists on the same spot!";
             break;
-        case "103":
-            var f = b;
-            a = "Can't change to level " + f;
+        case 103:
+            var g = b;
+            a = "Can't change to level " + g;
             return {
                 tracker: true,
-                errorCode: g.toString(),
+                errorCode: h.toString(),
                 msg: a,
-                text: g_js_strings.errorcode.err_103.replace("%1$s", f)
+                text: g_js_strings.errorcode.err_103.replace("%1$s", g)
             };
             break;
-        case "216":
+        case 216:
             a = "Can't update knight.";
             break;
-        case "1001":
+        case 1001:
             Modal.onCloseCallback = function() {
                 top.location = appUrl
             };
             break;
-        case "default":
+        default:
             a = "Something has gone wrong.";
-            cm.GATracker("Error", a + " (" + g + ")", g_server);
+            cm.GATracker("Error", a + " (" + h + ")", g_server);
             break
         }
         if (a) {
             return {
                 tracker: true,
-                errorCode: g.toString(),
+                errorCode: h.toString(),
                 msg: a
             }
         }
-        return g_js_strings.errorcode["err_" + g]
+        return g_js_strings.errorcode["err_" + h]
     } else {
-        if (i && !i.blank()) {
-            return i
+        if (j && !j.blank()) {
+            return j
         }
     }
     cm.GATracker("Error", "Something has gone wrong", g_server);
@@ -43094,59 +43523,65 @@ function check_queue_con(c) {
     }
     return a
 }
-function postToAllianceChat(j, a) {
+function postToAllianceChat(m, a) {
     if (seed.allianceNames) {
+        a = parseInt(a);
         var c = seed.player.name;
         var b = {};
-        var d = "";
-        var k = 0;
-        var m = 0;
-        var f = tvuid;
+        var e = "";
+        var n = 0;
+        var q = 0;
+        var g = tvuid;
+        var o = 0;
+        var h = "";
         var l = 0;
-        var g = "";
-        var h = 0;
-        if (j == 1) {
-            k = Object.keys(seed.queue_tch);
-            for (var e = 0; e < k.length; e++) {
-                if (seed.queue_tch[k[e]][0] && (seed.queue_tch[k[e]][0][0] == a)) {
-                    m = seed.queue_tch[k[e]][0][1];
-                    l = k[e].split("city")[1];
-                    g = "tech";
-                    h = seed.queue_tch[k[e]][0][0];
-                    break
+        if (m == 1) {
+            n = Object.keys(seed.queue_tch);
+            for (var f = 0; f < n.length; f++) {
+                for (var d = 0; d < seed.queue_tch[n[f]].length; d++) {
+                    if (seed.queue_tch[n[f]][d] && (seed.queue_tch[n[f]][d][0] == a)) {
+                        q = seed.queue_tch[n[f]][d][1];
+                        o = n[f].split("city")[1];
+                        h = "tech";
+                        l = seed.queue_tch[n[f]][d][0]
+                    }
                 }
             }
         } else {
-            if (j == 2) {
-                k = Object.keys(seed.queue_tch2);
-                for (var e = 0; e < k.length; e++) {
-                    if (seed.queue_tch2[k[e]][0] && (seed.queue_tch2[k[e]][0][0] == a)) {
-                        m = seed.queue_tch2[k[e]][0][1];
-                        l = k[e].split("city")[1];
-                        g = "tech2";
-                        h = seed.queue_tch2[k[e]][0][0];
-                        break
+            if (m == 2) {
+                n = Object.keys(seed.queue_tch2);
+                for (var f = 0; f < n.length; f++) {
+                    for (var d = 0; d < seed.queue_tch2[n[f]].length; d++) {
+                        if (seed.queue_tch2[n[f]][d] && (seed.queue_tch2[n[f]][d][0] == a)) {
+                            q = seed.queue_tch2[n[f]][d][1];
+                            o = n[f].split("city")[1];
+                            h = "tech2";
+                            l = seed.queue_tch2[n[f]][d][0]
+                        }
                     }
                 }
             } else {
-                k = Object.keys(seed.queue_con);
-                for (var e = 0; e < k.length; e++) {
-                    if (seed.queue_con[k[e]][0] && (seed.queue_con[k[e]][0][2] == a)) {
-                        m = seed.queue_con[k[e]][0][1];
-                        l = k[e].split("city")[1];
-                        g = "building";
-                        h = seed.queue_con[k[e]][0][0];
-                        break
+                n = Object.keys(seed.queue_con);
+                for (var f = 0; f < n.length; f++) {
+                    var p = seed.queue_con[n[f]];
+                    for (var k in p) {
+                        if (p[k] && (p[k][2] == a)) {
+                            q = p[k][1];
+                            o = n[f].split("city")[1];
+                            h = "building";
+                            l = p[k][0];
+                            break
+                        }
                     }
                 }
             }
         }
-        b.helpType = g;
-        b.helpId = h;
-        b.lvl = m;
+        b.helpType = h;
+        b.helpId = l;
+        b.lvl = q;
         b.aid = a;
-        b.inv = f;
-        b.cid = l;
+        b.inv = g;
+        b.cid = o;
         b.player_prefix = seed.player.prefix;
         b.playerName = c;
         Chat.changeTab(2);
@@ -45426,7 +45861,7 @@ function changeview_court_content(uid) {
                     Modal.showModal(500, 400, 130, 100, g_js_strings.modaltitles.courtlyaction, coracthtml.join(""))
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -45487,7 +45922,7 @@ function doCourtAction(action, pid) {
                 Modal.showModal(500, 400, 132, 89, "Congratulations!", coracthtml.join(""));
                 UserEngagement.popViralModalUEP()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -46856,7 +47291,7 @@ function thumbs(assetid, thumbs, topicid) {
         onSuccess: function(transport) {
             var result = eval("(" + transport.responseText + ")");
             if (result.ok) {} else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {
@@ -46876,7 +47311,7 @@ function seeEdits(assetid) {
             if (result.ok) {
                 Modal.showAlert(result.data)
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {
@@ -47052,7 +47487,7 @@ function addFolder(folderid) {
                     renameFolder(result.data, name, description)
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -47369,58 +47804,53 @@ function kickout_allies(mid, cid, fromUid, fromCid, upkeep) {
                 }
                 delete seed.queue_atkinc["m" + mid]
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
     })
 };
 var cm = cm || {};
-var cm = function(b) {
-    var d = b.error = b.error || {};
-    var a = 0;
-    var e = 5;
-
-    function c() {
-        if (a++ < e) {
-            AjaxCall.gPostRequest("ajax/postError.php", {
-                window: this.window
-            }, function() {}, function() {})
+cm.log = function(c) {
+    var a = (window.console = window.console || {});
+    var b = function(e) {
+        var d;
+        if (window.g_env === "prod" || a[e] === undefined) {
+            d = function() {}
+        } else {
+            if (Function.prototype.bind && a[e].bind) {
+                d = a[e].bind(a)
+            } else {
+                d = function() {
+                    a[e].apply(a, arguments)
+                }
+            }
         }
-    }
-    return b
-}(cm);
-cm.log = function() {
+        return d
+    };
     return {
-        err: function(a) {
-            if (a.ok == false && a.msg) {
-                Modal.showAlert(a.msg, "Ok")
-            }
+        dir: b("dir"),
+        l: b("log"),
+        error: function(f, d, e) {
+            AjaxCall.gPostRequest("ajax/feError.php", {
+                level: +f,
+                type: +d,
+                message: e
+            }, c.noop, c.noop)
         },
-        dir: function(a) {
-            if (window.console && typeof console.dir == "function" && a && window.g_env == "dev") {
-                console.dir(a)
-            }
-        },
-        l: function(a) {
-            if (window.console && typeof console.log == "function" && window.g_env == "dev") {
-                console.log.apply(console, arguments)
-            }
-            return a
-        },
-        convertToHMS: function(g, e) {
-            e = e == undefined ? true : false;
-            var c = e ? " " : "";
-            if (g <= 0) {
+        convertToHMS: function(j, h) {
+            h = h == undefined ? true : false;
+            var g = h ? " " : "";
+            if (j <= 0) {
                 return "now"
             }
-            var a = parseInt(g / 3600);
-            var b = parseInt((g - (a * 3600)) / 60);
-            var f = parseInt((g - (a * 3600) - (b * 60)));
-            return (a > 0 ? a + c + "h " : "") + (b > 0 ? b + c + "m " : "") + f + c + "s"
+            var e = parseInt(j / 3600);
+            var f = parseInt((j - (e * 3600)) / 60);
+            var i = parseInt((j - (e * 3600) - (f * 60)));
+            return (e > 0 ? e + g + "h " : "") + (f > 0 ? f + g + "m " : "") + i + g + "s"
         }
     }
-}();
+}(jQuery);
 cm.test = function() {
     return {
         all: function() {
@@ -48499,7 +48929,7 @@ cm.GroveController = function(e) {
                 cm.ModalManager.close()
             } else {
                 cm.ModalManager.close();
-                Modal.showAlert(printLocalError((n.error_code || null), (n.msg || null), (n.feedback || null)))
+                Modal.showAlert(printLocalError(n.error_code, n.msg, n.feedback))
             }
         })
     };
@@ -50333,9 +50763,6 @@ cm.HeatUpView = function(d) {
         h = h.replace("%4$s", f.DECREASE_TIME_INTERVAL);
         g.bind("mouseenter", function(i) {
             Tooltip.show(i, h, [0, 0])
-        });
-        g.bind("mouseenter", function(i) {
-            Tooltip.remove(0)
         })
     };
     return {
@@ -50456,7 +50883,7 @@ function sendHelpRequest() {
                     helpHtml.push("</div>");
                     Modal.showModal(400, 400, 180, 100, g_js_strings.modaltitles.helprequestsent, helpHtml.join(""))
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -51978,21 +52405,25 @@ cm.intelligentOrdering = function() {
         }
     }
 }();
-cm.speedUpModalTimer = function(e) {
-    var d, c = [],
+cm.speedUpModalTimer = function(d) {
+    var e, c = [],
         b, a = false;
     return {
-        update: function(g, h, f) {
-            if (g == d) {
-                e(".speedUpModalTimeLeft").html(timestr(f))
+        update: function(g, i, f, j) {
+            j = j == undefined ? "" : j;
+            var h = g + j;
+            if (h == e) {
+                d(".speedUpModalTimeLeft").html(timestr(f))
             }
-            c[g] = f;
-            if (h == "1s" || f <= 1) {
-                cm.speedUpModalTimer.endSpeedUpModal(g)
+            c[h] = f;
+            if (i == "1s" || f <= 1) {
+                cm.speedUpModalTimer.endSpeedUpModal(h)
             }
         },
-        endSpeedUpModal: function(f) {
-            if ((f == d) && e("#modal_speedup").length > 0) {
+        endSpeedUpModal: function(f, h) {
+            h = h == undefined ? "" : h;
+            var g = f + h;
+            if ((g == e) && d("#modal_speedup").length > 0) {
                 Modal.hideModal()
             }
             if (f == "bdg" && cm.guardianModalModel.upgrading()) {
@@ -52002,25 +52433,31 @@ cm.speedUpModalTimer = function(e) {
                 cm.guardianCity.rerender(true)
             }
         },
-        open: function(f) {
-            d = f
+        open: function(f, h) {
+            h = h == undefined ? "" : h;
+            var g = f + h;
+            e = g
         },
-        removeType: function(f) {
-            this.endSpeedUpModal(f);
-            delete c[f]
+        removeType: function(f, h) {
+            h = h == undefined ? "" : h;
+            var g = f + h;
+            this.endSpeedUpModal(g);
+            delete c[g]
         },
-        getTimeLeft: function(f) {
-            if (undefined === c[f]) {
+        getTimeLeft: function(f, h) {
+            h = h == undefined ? "" : h;
+            var g = f + h;
+            if (undefined === c[g]) {
                 return 0
             }
-            return c[f]
+            return c[g]
         },
         getCurrentModalTimeLeft: function() {
-            return this.getTimeLeft(d)
+            return this.getTimeLeft(e)
         },
         redisplayModal: function(f) {
-            if ((f && e("#modal_speedup").length > 0) || !f) {
-                modal_speedup(b.type, b.typeid, b.slotid, b.subjectCurrentlyBuilding, 0, b.queueNum)
+            if ((f && d("#modal_speedup").length > 0) || !f) {
+                modal_speedup(b.type, b.typeid, b.slotid, b.subjectCurrentlyBuilding, b.qIndex)
             }
             if (jQuery("#barracksModalTabs").length > 0 && jQuery("#changeToTab1").hasClass("selected")) {
                 changeBarracksModalTabs(1)
@@ -52030,7 +52467,7 @@ cm.speedUpModalTimer = function(e) {
             }
         },
         saveLastSpeedUpModal: function(f) {
-            b = f
+            b = jQuery.extend({}, f)
         },
         goToSpeedups: function() {
             cm.ShopView.openShop(2)
@@ -54127,7 +54564,18 @@ cm.ItemIdentifier.CHESTS = {
     32107: 1,
     32108: 1,
     32109: 1,
-    32110: 1
+    32110: 1,
+    32111: 1,
+    32112: 1,
+    32113: 1,
+    32114: 1,
+    32115: 1,
+    32116: 1,
+    32117: 1,
+    32118: 1,
+    32119: 1,
+    32120: 1,
+    32121: 1
 };
 cm.ItemIdentifier.BOX = {
     403: 1,
@@ -55054,7 +55502,7 @@ cm.ItemController = function($) {
                     cm.InventoryView.removeItemFromInventory(iid);
                     update_boosts()
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -55292,7 +55740,7 @@ cm.ItemController = function($) {
                     update_boosts();
                     g_mapObject.getMoreSlots()
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -55556,7 +56004,7 @@ cm.CombatBoostItem = function(a) {
         h.removeEventListener(cm.ItemServiceEvent.BUY_SUCCESS, b);
         var g = jQuery.parseJSON(i.responseText);
         if (!g.ok) {
-            Modal.showAlert(printLocalError((g.error_code || null), (g.msg || null), (g.feedback || null)));
+            Modal.showAlert(printLocalError(g.error_code, g.msg, g.feedback));
             return
         }
         cm.Gems.subtract(d.getPrice());
@@ -56084,7 +56532,7 @@ function modal_myitems_use_peace_dove(itemid) {
                 $("modal_shop_message").innerHTML = itemlist["i" + itemid].name + " used!";
                 $("modal_shop_message").show()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -56136,7 +56584,7 @@ function modal_myitems_use_potion_mist(itemid) {
                 $("modal_shop_message").show();
                 g_mapObject.getMoreSlots()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -56676,7 +57124,7 @@ function use_knight(kid) {
                     cm.InventoryView.removeItemFromInventory(kid);
                     Modal.showModal(500, 500, 10, 10, g_js_strings.modaltitles.appointknight, msghtml.join(""))
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -57459,7 +57907,7 @@ function modal_shop_load(tab) {
                     modal_shop_changetab(tab)
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -57766,7 +58214,7 @@ function modal_shop_buy(itemid, saleprice, redisplaySpeedUpModal, e) {
                         btns += "</a>";
                         Modal.showAlert(txt, btns)
                     } else {
-                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                        Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                     }
                 }
             },
@@ -58044,7 +58492,157 @@ function jsonT(self, rules) {
         }
     };
     return T.init().apply("self")
-};
+}
+if (!this.JSON) {
+    this.JSON = {}
+}(function() {
+    function f(n) {
+        return n < 10 ? "0" + n : n
+    }
+    if (typeof Date.prototype.toJSON !== "function") {
+        Date.prototype.toJSON = function(key) {
+            return isFinite(this.valueOf()) ? this.getUTCFullYear() + "-" + f(this.getUTCMonth() + 1) + "-" + f(this.getUTCDate()) + "T" + f(this.getUTCHours()) + ":" + f(this.getUTCMinutes()) + ":" + f(this.getUTCSeconds()) + "Z" : null
+        };
+        String.prototype.toJSON = Number.prototype.toJSON = Boolean.prototype.toJSON = function(key) {
+            return this.valueOf()
+        }
+    }
+    var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+        escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
+        gap, indent, meta = {
+            "\b": "\\b",
+            "\t": "\\t",
+            "\n": "\\n",
+            "\f": "\\f",
+            "\r": "\\r",
+            '"': '\\"',
+            "\\": "\\\\"
+        }, rep;
+
+    function quote(string) {
+        escapable.lastIndex = 0;
+        return escapable.test(string) ? '"' + string.replace(escapable, function(a) {
+            var c = meta[a];
+            return typeof c === "string" ? c : "\\u" + ("0000" + a.charCodeAt(0).toString(16)).slice(-4)
+        }) + '"' : '"' + string + '"'
+    }
+    function str(key, holder) {
+        var i, k, v, length, mind = gap,
+            partial, value = holder[key];
+        if (value && typeof value === "object" && typeof value.toJSON === "function") {
+            value = value.toJSON(key)
+        }
+        if (typeof rep === "function") {
+            value = rep.call(holder, key, value)
+        }
+        switch (typeof value) {
+        case "string":
+            return quote(value);
+        case "number":
+            return isFinite(value) ? String(value) : "null";
+        case "boolean":
+        case "null":
+            return String(value);
+        case "object":
+            if (!value) {
+                return "null"
+            }
+            gap += indent;
+            partial = [];
+            if (Object.prototype.toString.apply(value) === "[object Array]") {
+                length = value.length;
+                for (i = 0; i < length; i += 1) {
+                    partial[i] = str(i, value) || "null"
+                }
+                v = partial.length === 0 ? "[]" : gap ? "[\n" + gap + partial.join(",\n" + gap) + "\n" + mind + "]" : "[" + partial.join(",") + "]";
+                gap = mind;
+                return v
+            }
+            if (rep && typeof rep === "object") {
+                length = rep.length;
+                for (i = 0; i < length; i += 1) {
+                    k = rep[i];
+                    if (typeof k === "string") {
+                        v = str(k, value);
+                        if (v) {
+                            partial.push(quote(k) + (gap ? ": " : ":") + v)
+                        }
+                    }
+                }
+            } else {
+                for (k in value) {
+                    if (Object.hasOwnProperty.call(value, k)) {
+                        v = str(k, value);
+                        if (v) {
+                            partial.push(quote(k) + (gap ? ": " : ":") + v)
+                        }
+                    }
+                }
+            }
+            v = partial.length === 0 ? "{}" : gap ? "{\n" + gap + partial.join(",\n" + gap) + "\n" + mind + "}" : "{" + partial.join(",") + "}";
+            gap = mind;
+            return v
+        }
+    }
+    if (typeof JSON.stringify !== "function") {
+        JSON.stringify = function(value, replacer, space) {
+            var i;
+            gap = "";
+            indent = "";
+            if (typeof space === "number") {
+                for (i = 0; i < space; i += 1) {
+                    indent += " "
+                }
+            } else {
+                if (typeof space === "string") {
+                    indent = space
+                }
+            }
+            rep = replacer;
+            if (replacer && typeof replacer !== "function" && (typeof replacer !== "object" || typeof replacer.length !== "number")) {
+                throw new Error("JSON.stringify")
+            }
+            return str("", {
+                "": value
+            })
+        }
+    }
+    if (typeof JSON.parse !== "function") {
+        JSON.parse = function(text, reviver) {
+            var j;
+
+            function walk(holder, key) {
+                var k, v, value = holder[key];
+                if (value && typeof value === "object") {
+                    for (k in value) {
+                        if (Object.hasOwnProperty.call(value, k)) {
+                            v = walk(value, k);
+                            if (v !== undefined) {
+                                value[k] = v
+                            } else {
+                                delete value[k]
+                            }
+                        }
+                    }
+                }
+                return reviver.call(holder, key, value)
+            }
+            cx.lastIndex = 0;
+            if (cx.test(text)) {
+                text = text.replace(cx, function(a) {
+                    return "\\u" + ("0000" + a.charCodeAt(0).toString(16)).slice(-4)
+                })
+            }
+            if (/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, "@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, "]").replace(/(?:^|:|,)(?:\s*\[)+/g, ""))) {
+                j = eval("(" + text + ")");
+                return typeof reviver === "function" ? walk({
+                    "": j
+                }, "") : j
+            }
+            throw new SyntaxError("JSON.parse")
+        }
+    }
+}());
 var KB = {
     Browser: (function() {
         var f = navigator.userAgent.toLowerCase(),
@@ -58124,9 +58722,9 @@ KB.SoundFactory = {
         }
     }
 };
-KB.EmbedSound = function(f, n) {
-    var k = this,
-        d, o, l, i, e, h, m, c, b, g, a, j;
+KB.EmbedSound = function(f, o) {
+    var l = this,
+        d, p, m, j, e, i, h, n, c, b, g, a, k;
     this.audio = null;
     this.volume = null;
     this.duration = null;
@@ -58139,11 +58737,11 @@ KB.EmbedSound = function(f, n) {
             this.stop();
             this.audio.play();
             g = d ? true : false
-        } catch (p) {
-            if (j > 0) {
-                j -= 1;
+        } catch (q) {
+            if (k > 0) {
+                k -= 1;
                 setTimeout(function() {
-                    k.play()
+                    l.play()
                 }, 2000)
             }
         }
@@ -58152,29 +58750,29 @@ KB.EmbedSound = function(f, n) {
         try {
             g = false;
             this.audio.stop();
-            this.setVolume(o)
-        } catch (p) {}
+            this.setVolume(p)
+        } catch (q) {}
     };
     this.pause = function() {
         try {
             this.audio.pause()
-        } catch (p) {}
-    };
-    this.seek = function(p) {
-        try {
-            if (p > this.audio.duration) {
-                p = this.audio.duration
-            } else {
-                if (p < 0) {
-                    p = 0
-                }
-            }
-            this.audio.currentposition = p
         } catch (q) {}
     };
-    this.setVolume = function(q) {
+    this.seek = function(q) {
         try {
-            this.volume = q;
+            if (q > this.audio.duration) {
+                q = this.audio.duration
+            } else {
+                if (q < 0) {
+                    q = 0
+                }
+            }
+            this.audio.currentposition = q
+        } catch (r) {}
+    };
+    this.setVolume = function(r) {
+        try {
+            this.volume = r;
             if (this.volume > 100) {
                 this.volume = 100
             } else {
@@ -58182,23 +58780,23 @@ KB.EmbedSound = function(f, n) {
                     this.volume = 0
                 }
             }
-            var r;
+            var s;
             if (this.volume >= 50) {
-                r = this.volume * 12.04 - 1204
+                s = this.volume * 12.04 - 1204
             } else {
                 if (this.volume >= 25) {
-                    r = this.volume * 1711.92 - 44535
+                    s = this.volume * 1711.92 - 44535
                 } else {
-                    r = this.volume * 94.4 - 4096
+                    s = this.volume * 94.4 - 4096
                 }
             }
-            this.audio.volume = r
-        } catch (p) {}
+            this.audio.volume = s
+        } catch (q) {}
     };
     this.toggleMute = function() {
         try {
             this.audio.mute = !this.audio.mute
-        } catch (p) {}
+        } catch (q) {}
     };
     this.fadeIn = function() {
         try {
@@ -58206,16 +58804,18 @@ KB.EmbedSound = function(f, n) {
                 this.play();
                 return
             }
-        } catch (p) {}
+        } catch (q) {}
     };
     this.fadeOut = function() {
         try {
-            this.stop();
-            return
-        } catch (p) {}
+            if (KB.Browser.IE && KB.Browser.Version <= 8) {
+                this.stop();
+                return
+            }
+        } catch (q) {}
     };
     this.getName = function() {
-        return l
+        return m
     };
     this.purge = function() {
         document.body.removeChild(this.audio)
@@ -58224,41 +58824,41 @@ KB.EmbedSound = function(f, n) {
         if (!f) {
             return
         }
-        j = 5;
+        k = 5;
         c = b = false;
-        n = n || {};
-        d = n.loop === true ? n.loop : false;
-        o = n.volume || KB.Sound.DEFAULT_VOLUME;
-        k.volume = o;
-        l = f;
-        i = KB.Sound.SOURCE_DIRECTORY + l;
-        k.duration = n.duration || 0;
-        k.velocity = n.velocity || 50;
-        i += ".mp3";
-        k.audio = document.createElement("embed");
-        k.audio.setAttribute("src", i);
-        k.audio.setAttribute("autoStart", "false");
-        k.audio.setAttribute("autoPlay", "false");
-        k.audio.setAttribute("loop", d.toString());
-        k.audio.setAttribute("enablejavascript", "true");
-        k.audio.setAttribute("hidden", "true");
-        k.audio.setAttribute("volume", k.volume.toString());
-        k.audio.setAttribute("type", "application/x-mplayer2");
+        o = o || {};
+        d = o.loop === true ? o.loop : false;
+        p = o.volume || KB.Sound.DEFAULT_VOLUME;
+        l.volume = p;
+        m = f;
+        j = KB.Sound.SOURCE_DIRECTORY + m;
+        l.duration = o.duration || 0;
+        l.velocity = o.velocity || 50;
+        j += ".mp3";
+        l.audio = document.createElement("embed");
+        l.audio.setAttribute("src", j);
+        l.audio.setAttribute("autoStart", "false");
+        l.audio.setAttribute("autoPlay", "false");
+        l.audio.setAttribute("loop", d.toString());
+        l.audio.setAttribute("enablejavascript", "true");
+        l.audio.setAttribute("hidden", "true");
+        l.audio.setAttribute("volume", l.volume.toString());
+        l.audio.setAttribute("type", "application/x-mplayer2");
         if (document.body) {
-            document.body.appendChild(k.audio)
+            document.body.appendChild(l.audio)
         }
-        k.setVolume(k.volume)
+        l.setVolume(l.volume)
     }())
 };
-KB.HTML5Sound = function(f, m) {
-    var j = this,
-        d, n, k, i, e, h, l, c, b, g, a;
+KB.HTML5Sound = function(f, n) {
+    var k = this,
+        d, o, l, j, e, i, h, m, c, b, g, a;
     this.audio = null;
     this.volume = null;
     this.duration = null;
     this.velocity = null;
-    this.setSource = function(o) {
-        this.audio.src = o
+    this.setSource = function(p) {
+        this.audio.src = p
     };
     this.play = function() {
         if (d && g) {
@@ -58275,24 +58875,24 @@ KB.HTML5Sound = function(f, m) {
             this.audio.currentTime = 0
         }
         setTimeout(function() {
-            j.setVolume(n)
+            k.setVolume(o)
         }, 200)
     };
     this.pause = function() {
         this.audio.pause()
     };
-    this.seek = function(o) {
-        if (o > this.audio.duration) {
-            o = this.audio.duration
+    this.seek = function(p) {
+        if (p > this.audio.duration) {
+            p = this.audio.duration
         } else {
-            if (o < 0) {
-                o = 0
+            if (p < 0) {
+                p = 0
             }
         }
-        this.audio.currentTime = o
+        this.audio.currentTime = p
     };
-    this.setVolume = function(o) {
-        this.volume = o;
+    this.setVolume = function(p) {
+        this.volume = p;
         if (this.volume > 100) {
             this.volume = 100
         } else {
@@ -58310,32 +58910,33 @@ KB.HTML5Sound = function(f, m) {
             return
         }
         if (b) {
+            clearInterval(i);
             clearInterval(h)
         }
         c = true;
         b = false;
-        var t = this.duration * 1000;
-        if (t > 0) {
+        var u = this.duration * 1000;
+        if (u > 0) {
             clearInterval(e);
-            var r = this.volume;
+            var s = this.volume;
             if (!this.audio.isPlaying) {
                 this.play();
-                r = 0
+                s = 0
             }
-            this.setVolume(r);
-            var q = t / this.velocity,
-                p = n / q,
-                o = 0,
-                s;
+            this.setVolume(s);
+            var r = u / this.velocity,
+                q = o / r,
+                p = 0,
+                t;
             e = setInterval(function() {
-                r += p;
-                s = Math.min(n, Math.ceil(r));
-                j.setVolume(s);
-                if (o >= q) {
+                s += q;
+                t = Math.min(o, Math.ceil(s));
+                k.setVolume(t);
+                if (p >= r) {
                     c = false;
                     clearInterval(e)
                 }
-                o += 1
+                p += 1
             }, this.velocity)
         }
     };
@@ -58348,28 +58949,58 @@ KB.HTML5Sound = function(f, m) {
         }
         c = false;
         b = true;
-        var t = this.duration * 1000;
-        if (t > 0) {
+        var u = this.duration * 1000;
+        if (u > 0) {
+            clearInterval(i);
+            var r = u / this.velocity,
+                q = this.volume / r,
+                s = this.volume,
+                t, p = 0;
+            i = setInterval(function() {
+                s -= q;
+                t = Math.max(0, Math.ceil(s));
+                k.setVolume(t);
+                if (p >= r) {
+                    b = false;
+                    clearInterval(i);
+                    k.stop()
+                }
+                p += 1
+            }, this.velocity)
+        }
+    };
+    this.fadePause = function() {
+        if (b) {
+            return
+        }
+        if (c) {
+            clearInterval(e)
+        }
+        c = false;
+        b = true;
+        var u = this.duration * 1000;
+        if (u > 0) {
             clearInterval(h);
-            var q = t / this.velocity,
-                p = this.volume / q,
-                r = this.volume,
-                s, o = 0;
+            var s = this.volume,
+                r = u / this.velocity,
+                q = this.volume / r,
+                p = 0,
+                t;
             h = setInterval(function() {
-                r -= p;
-                s = Math.max(0, Math.ceil(r));
-                j.setVolume(s);
-                if (o >= q) {
+                s -= q;
+                t = Math.max(0, Math.ceil(s));
+                k.setVolume(t);
+                if (p >= r) {
                     b = false;
                     clearInterval(h);
-                    j.stop()
+                    k.pause()
                 }
-                o += 1
+                p += 1
             }, this.velocity)
         }
     };
     this.getName = function() {
-        return k
+        return l
     };
     this.purge = function() {};
     (function() {
@@ -58377,26 +59008,27 @@ KB.HTML5Sound = function(f, m) {
             return
         }
         c = b = false;
-        m = m || {};
-        d = m.loop === true ? m.loop : false;
-        n = m.volume || KB.Sound.DEFAULT_VOLUME;
-        j.volume = n;
-        k = f;
-        a = m.extension;
-        i = KB.Sound.SOURCE_DIRECTORY + k + a;
+        n = n || {};
+        d = n.loop === true ? n.loop : false;
+        o = n.volume || KB.Sound.DEFAULT_VOLUME;
+        k.volume = o;
+        l = f;
+        a = n.extension;
+        j = KB.Sound.SOURCE_DIRECTORY + l + a;
         e = null;
+        i = null;
         h = null;
-        j.duration = m.duration || 0;
-        j.velocity = m.velocity || 50;
-        j.audio = new Audio();
-        j.audio.src = i;
-        j.audio.loop = d;
+        k.duration = n.duration || 0;
+        k.velocity = n.velocity || 50;
+        k.audio = new Audio();
+        k.audio.src = j;
+        k.audio.loop = d;
         if (d && KB.Browser.Firefox) {
-            j.audio.addEventListener("ended", function() {
-                j.audio.currentTime = 0
+            k.audio.addEventListener("ended", function() {
+                k.audio.currentTime = 0
             }, false)
         }
-        j.setVolume(j.volume)
+        k.setVolume(k.volume)
     }())
 };
 cm = cm || {};
@@ -58634,7 +59266,7 @@ function openKnights() {
                 $("knightshall_0").innerHTML = msghtml.join("")
             } else {
                 if (!rslt.error_code || rlst.error_code != 1001) {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             }
         },
@@ -58751,7 +59383,7 @@ function inviteKnight(uid, name, entryTag, postToWall) {
                         postToKnightWall(uid, name)
                     }
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -58786,7 +59418,7 @@ function appointKnight(uid, name) {
                 }
                 $("bottomAppointLine").innerHTML = g_js_strings.appointKnight.knightsuccess
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -59031,7 +59663,7 @@ function increaseXPItem(iid, kid) {
                 });
                 update_knights()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -59149,7 +59781,7 @@ function applyItemCrest(iid, kid) {
                 })
             } else {
                 var cooldownTime = (new Date()).getTime() / 1000 + parseFloat(rslt.timeToWait);
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (cooldownTime || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, cooldownTime))
             }
         },
         onFailure: function() {}
@@ -59184,7 +59816,7 @@ function rewardKnight(kid, gneed) {
                         reward_confirm_modal(kid, gneed, 5, "")
                     } else {
                         var cooldownTime = (new Date()).getTime() / 1000 + parseFloat(rslt.timeToWait);
-                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (cooldownTime || null)))
+                        Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, cooldownTime))
                     }
                 },
                 onFailure: function() {}
@@ -59440,7 +60072,7 @@ function dismissKnight(kid) {
                 changeKnightModalTabs(1)
             } else {
                 Modal.hideModal();
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -59539,7 +60171,7 @@ function assignKnightRole(assignflag, kid, pos, tgt) {
                     changeKnightModalTabs(1)
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -59749,7 +60381,7 @@ function applyFountain(item, kid, fountainsNeeded) {
                     distinct_id: tvuid
                 })
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -59793,7 +60425,7 @@ function save_skill(kid) {
                 changeKnightModalTabs(1)
             } else {
                 Modal.hideModal();
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -59939,7 +60571,7 @@ function applyBoostItem(item, kid) {
                     distinct_id: tvuid
                 })
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -60330,7 +60962,7 @@ function modal_fow_leaderboard(d, a) {
                 jQuery("#mightLeaderboardTab").addClass("selected")
             }
         } else {
-            Modal.showAlert(printLocalError((e.error_code || null), (e.msg || null), (e.feedback || null)))
+            Modal.showAlert(printLocalError(e.error_code, e.msg, e.feedback))
         }
     })
 }
@@ -60904,67 +61536,81 @@ function is_workshop_open() {
     var b = a.attr("class");
     return b && b.indexOf("b27") > -1
 }
-function upg_tch(t, g, a) {
-    var j = is_workshop_open();
+function upg_tch(u, g, a) {
+    var l = is_workshop_open();
+    var h = l ? seed.queue_tch2["city" + currentcityid] : seed.queue_tch["city" + currentcityid];
     var d = Math.pow(2, parseInt(g) - 1);
-    var q = checkreq("tch", t, g, j ? 2 : undefined);
-    var r = q[3];
-    var p = false;
-    var n = Math.abs(cm.ThroneController.getBoundedEffect(100));
-    n = (100 - n) / 100;
-    var h = j ? techcost2 : window.techcost;
-    for (var m = 0; m < r.length; m++) {
-        var l = (parseInt(q[1][m]) > 0) ? Math.round(q[1][m] * n) : -1;
-        if ((r[m] == 0 && l === -1) || q[2][m] < l) {
-            p = true;
+    var r = checkreq("tch", u, g, l ? 2 : undefined);
+    var t = r[3];
+    var q = false;
+    var o = Math.abs(cm.ThroneController.getBoundedEffect(100));
+    o = (100 - o) / 100;
+    var j = l ? techcost2 : window.techcost;
+    for (var n = 0; n < t.length; n++) {
+        var m = (parseInt(r[1][n]) > 0) ? Math.round(r[1][n] * o) : -1;
+        if ((t[n] == 0 && m === -1) || r[2][n] < m) {
+            q = true;
             break
         }
     }
-    if (p) {
+    if (q) {
         Modal.showAlert(g_js_strings.upg_tch.unableres);
         return false
     }
-    seed.resources["city" + currentcityid].rec1[0] -= parseInt(h["tch" + t][1]) * d * n * 3600;
-    seed.resources["city" + currentcityid].rec2[0] -= parseInt(h["tch" + t][2]) * d * n * 3600;
-    seed.resources["city" + currentcityid].rec3[0] -= parseInt(h["tch" + t][3]) * d * n * 3600;
-    seed.resources["city" + currentcityid].rec4[0] -= parseInt(h["tch" + t][4]) * d * n * 3600;
-    seed.citystats["city" + currentcityid].gold[0] -= parseInt(h["tch" + t][5]) * d * n;
-    var o = 0;
+    seed.resources["city" + currentcityid].rec1[0] -= parseInt(j["tch" + u][1]) * d * o * 3600;
+    seed.resources["city" + currentcityid].rec2[0] -= parseInt(j["tch" + u][2]) * d * o * 3600;
+    seed.resources["city" + currentcityid].rec3[0] -= parseInt(j["tch" + u][3]) * d * o * 3600;
+    seed.resources["city" + currentcityid].rec4[0] -= parseInt(j["tch" + u][4]) * d * o * 3600;
+    seed.citystats["city" + currentcityid].gold[0] -= parseInt(j["tch" + u][5]) * d * o;
+    var p = 0;
     var b = seed.knights["city" + currentcityid];
     if (b) {
         b = b["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
         if (b) {
-            o = parseInt(b.intelligence);
-            o = ((parseInt(b.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (o * 1.25) : o
+            p = parseInt(b.intelligence);
+            p = ((parseInt(b.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (p * 1.25) : p
         }
     }
-    var f = parseInt(h["tch" + t][7] * d * (1 / (1 + 0.005 * o)));
+    var f = parseInt(j["tch" + u][7] * d * (1 / (1 + 0.005 * p)));
     var c = cm.ThroneController.effectBonus(80);
     f = f / (1 + (c / 100));
     var s = Object.clone(g_ajaxparams);
     s.cid = currentcityid;
     s.lv = g;
-    s.tid = t;
-    var e = j ? "researchWorkshop" : "research";
-    AjaxCall.gPostRequest("ajax/" + e + ".php" + g_ajaxsuffix, s, function(u) {
-        if (u.ok) {
-            f = u.timeNeeded;
+    s.tid = u;
+    if (h.length === 1 && cm.QueueModel.hasFreeQueue()) {
+        s.pay_for_an_additional_queue = 0
+    } else {
+        if (h.length > 0) {
+            s.pay_for_an_additional_queue = 1;
+            s.gems = cm.QueueModel.getLastCostEstimate()
+        } else {
+            s.pay_for_an_additional_queue = 0
+        }
+    }
+    var e = l ? "researchWorkshop" : "research";
+    AjaxCall.gPostRequest("ajax/" + e + ".php" + g_ajaxsuffix, s, function(v) {
+        if (v.ok) {
+            f = v.timeNeeded;
             cm.sounds.play("started_research");
-            var i = j ? seed.queue_tch2 : seed.queue_tch;
-            i["city" + currentcityid].push([t, g, unixtime(), unixtime() + f, 0, f]);
-            var v = "no";
+            var i = l ? seed.queue_tch2 : seed.queue_tch;
+            i["city" + currentcityid].push([u, g, unixtime(), unixtime() + f, 0, f]);
+            var w = "no";
             if (a == 1) {
-                v = "yes";
-                tch_gethelp(t, j ? 1 : 0)
+                w = "yes";
+                tch_gethelp(u, l ? 1 : 0);
+                kraken.network.publishGamesFeed(cm.FB_ACTIONS.REQUEST, cm.FB_OBJECTS.HELP, {
+                    objectType: "research"
+                })
             }
-            queue_changetab_building();
+            queue_changetab_research();
             Modal.hideModalAll();
-            if (u.updateSeed) {
-                update_seed(u.updateSeed)
+            if (v.updateSeed) {
+                update_seed(v.updateSeed)
             }
             UserEngagement.popViralModalUEP(1)
         } else {
-            Modal.showAlert(printLocalError((u.error_code || null), (u.msg || null), (u.feedback || null)))
+            Modal.showAlert(printLocalError(v.error_code, v.msg, v.feedback))
         }
     }, function() {})
 }
@@ -60992,7 +61638,7 @@ function tch_gethelp(a, b) {
             if (h.ok && h.data) {
                 handleHelpCallback(h.data)
             } else {
-                Modal.showAlert(printLocalError((h.error_code || null), (h.msg || null), (h.feedback || null)))
+                Modal.showAlert(printLocalError(h.error_code, h.msg, h.feedback))
             }
         },
         onFailure: function() {}
@@ -61022,7 +61668,10 @@ function tch_gethelp(a, b) {
         break
     }
     window.continuation_400 = f;
-    window.continuation_107 = c
+    window.continuation_107 = c;
+    kraken.network.publishGamesFeed(cm.FB_ACTIONS.REQUEST, cm.FB_OBJECTS.HELP, {
+        objectType: "research"
+    })
 }
 var g_ajaxpath = "";
 var g_ajaxsuffix = "";
@@ -61096,9 +61745,6 @@ function buildaction(q, c, o, a, f, j) {
             break
         }
     }
-    if (seed.queue_con["city" + currentcityid].length > 0) {
-        l = true
-    }
     if (l) {
         Modal.showAlert(g_js_strings.buildaction.cannotbuild);
         return false
@@ -61134,45 +61780,54 @@ function buildaction(q, c, o, a, f, j) {
             e.bid = seed.buildings["city" + currentcityid]["pos" + o][3]
         }
         e.type = q;
+        if (cm.QueueModel.getActiveBuildingCount() > 0) {
+            e.pay_for_an_additional_queue = 1;
+            e.gems = cm.QueueModel.getLastCostEstimate()
+        } else {
+            e.pay_for_an_additional_queue = 0
+        }
         var p = new cm.Profiler("ResponseTime", "construct.php");
         e.permission = jQuery("#modal_lv10").length > 0 ? 1 : 0;
         ajax.Request(g_ajaxpath + "ajax/construct.php" + g_ajaxsuffix, {
             method: "post",
             parameters: e,
-            onSuccess: function(y) {
+            onSuccess: function(t) {
                 p.stop();
                 cm.MarchModal.setBackedOff(false);
-                var t = ("(" + y.responseText + ")").evalJSON();
-                if (t.ok) {
+                var z = ("(" + t.responseText + ")").evalJSON();
+                if (z.ok) {
                     cm.sounds.play("build_start");
                     modal_build_show_state();
+                    if (z.gemsDeducted) {
+                        cm.Gems.spend(z.gemsDeducted)
+                    }
                     seed.resources["city" + currentcityid].rec1[0] -= parseInt(buildingcost["bdg" + q][1]) * g * 3600;
                     seed.resources["city" + currentcityid].rec2[0] -= parseInt(buildingcost["bdg" + q][2]) * g * 3600;
                     seed.resources["city" + currentcityid].rec3[0] -= parseInt(buildingcost["bdg" + q][3]) * g * 3600;
                     seed.resources["city" + currentcityid].rec4[0] -= parseInt(buildingcost["bdg" + q][4]) * g * 3600;
                     seed.citystats["city" + currentcityid].gold[0] -= parseInt(buildingcost["bdg" + q][5]) * g;
-                    seed.queue_con["city" + currentcityid].push([q, c + 1, parseInt(t.buildingId), unixtime(), unixtime() + +(t.timeNeeded), 0, + (t.timeNeeded), parseInt(o)]);
+                    seed.queue_con["city" + currentcityid].push([q, c + 1, parseInt(z.buildingId), unixtime(), unixtime() + +(z.timeNeeded), 0, + (z.timeNeeded), parseInt(o)]);
                     if (c == 0) {
-                        seed.buildings["city" + currentcityid]["pos" + o] = [q, 0, o, t.buildingId]
+                        seed.buildings["city" + currentcityid]["pos" + o] = [q, 0, o, z.buildingId]
                     }
-                    var x = "no";
-                    var w = "401";
+                    var y = "no";
+                    var C = "401";
                     if (parseInt(q, 10) === 0) {
                         if (parseInt(c) == 10) {
-                            w = "402"
+                            C = "402"
                         } else {
                             if (parseInt(c) == 11) {
-                                w = "404"
+                                C = "404"
                             }
                         }
                     } else {
                         if (parseInt(c) > 10) {
-                            w = "403"
+                            C = "403"
                         }
                     }
-                    if (f && seed.items["i" + w] > 0) {
-                        seed.items["i" + w] = parseInt(seed.items["i" + w]) - 1;
-                        ksoItems[w].subtract()
+                    if (f && seed.items["i" + C] > 0) {
+                        seed.items["i" + C] = parseInt(seed.items["i" + C]) - 1;
+                        ksoItems[C].subtract()
                     }
                     Modal.hideModalAll();
                     update_bdg();
@@ -61182,27 +61837,97 @@ function buildaction(q, c, o, a, f, j) {
                         cm.TutorialEventDispatcher.dispatchTutorialEvent("complete", "CLICK_BUILD_BUTTON_COTTAGE")
                     } else {
                         if (e.pos == 0 && e.lv == 2) {
-                            var s = false;
-                            var v = Object.keys(seed.buildings);
-                            for (var u = 0; u < v.length; u++) {
-                                if (parseInt(seed.buildings[v[u]].pos0[1]) >= 2) {
-                                    s = true
+                            var x = false;
+                            var s = Object.keys(seed.buildings);
+                            for (var w = 0; w < s.length; w++) {
+                                if (parseInt(seed.buildings[s[w]].pos0[1]) >= 2) {
+                                    x = true
                                 }
                             }
-                            if (!s) {
+                            if (!x) {
                                 pop_castle_two_modal()
                             }
                         }
                     }
-                    if (t.updateSeed) {
-                        update_seed(t.updateSeed)
+                    if (z.updateSeed) {
+                        update_seed(z.updateSeed)
                     }
                     if (a) {
-                        build_gethelp(t.buildingId);
-                        x = "yes"
+                        build_gethelp(z.buildingId);
+                        y = "yes";
+                        kraken.network.publishGamesFeed(cm.FB_ACTIONS.REQUEST, cm.FB_OBJECTS.HELP, {
+                            objectType: "construction"
+                        })
+                    }
+                    var u = function(F) {
+                        F = +F;
+                        var i = 0,
+                            E = seed.buildings["city" + currentcityid],
+                            G = seed.queue_con["city" + currentcityid],
+                            H = 0;
+                        jQuery.each(E, function(I, L) {
+                            var K = +L[0],
+                                J = +L[1];
+                            if (K === F && J > i) {
+                                i = J
+                            }
+                        });
+                        jQuery.each(G, function(K, I) {
+                            var L = +I[0],
+                                J = +I[1];
+                            if (L === F && J > i) {
+                                H += 1;
+                                if (H > 1) {
+                                    i = J
+                                }
+                            }
+                        });
+                        return i
+                    };
+                    switch (+q) {
+                    case cm.BUILDING_TYPES.CASTLE:
+                        if (+o === 0) {
+                            kraken.network.publishGamesFeed(cm.FB_ACTIONS.UPGRADE, cm.FB_OBJECTS.CASTLE)
+                        }
+                        break;
+                    case cm.BUILDING_TYPES.BARRACK:
+                        var D = u(q),
+                            A = c + 1;
+                        jQuery.each(unitcost, function(i, E) {
+                            var G = jQuery.hasOwnProperties(E, 8, "b" + cm.BUILDING_TYPES.BARRACK, 1) ? +(E[8]["b" + cm.BUILDING_TYPES.BARRACK][1]) : 0,
+                                F = i.substring(3);
+                            if (D < G && A === G) {
+                                kraken.network.publishGamesFeed(cm.FB_ACTIONS.UNLOCK, cm.FB_OBJECTS.TROOP, {
+                                    unitId: F
+                                })
+                            }
+                        });
+                        break;
+                    case cm.BUILDING_TYPES.DRUID_BARRACKS:
+                    case cm.BUILDING_TYPES.BRITON_BARRACKS:
+                    case cm.BUILDING_TYPES.FEY_BARRACKS:
+                        var B = u(q),
+                            v;
+                        switch (q) {
+                        case cm.BUILDING_TYPES.DRUID_BARRACKS:
+                            v = cm.UNIT_TYPES.UNIT_TYPE_BLOODTHORN;
+                            break;
+                        case cm.BUILDING_TYPES.BRITON_BARRACKS:
+                            v = cm.UNIT_TYPES.UNIT_TYPE_SHIELD_BEARER;
+                            break;
+                        case cm.BUILDING_TYPES.FEY_BARRACKS:
+                            v = cm.UNIT_TYPES.UNIT_TYPE_EXECUTIONER;
+                            break
+                        }
+                        if (B < 1) {
+                            kraken.network.publishGamesFeed(cm.FB_ACTIONS.UNLOCK, cm.FB_OBJECTS.TROOP, {
+                                unitId: v
+                            })
+                        }
+                        break
                     }
                 } else {
-                    if (processUserAction(t, function() {
+                    if (processUserAction(z, function() {
                         buildaction(q, c, o, a, f, e)
                     }, e)) {
                         return
@@ -61220,7 +61945,11 @@ function buildaction(q, c, o, a, f, j) {
                         }
                     }
                     modal_build_show_state();
-                    Modal.showAlert(printLocalError((t.error_code || null), (t.msg || null), (t.feedback || null)))
+                    if (z.error_code === 2000) {
+                        cm.ShopView.openGetMoreGemsModal()
+                    } else {
+                        Modal.showAlert(printLocalError(z.error_code, z.msg, z.feedback))
+                    }
                 }
                 UserEngagement.popViralModalUEP()
             },
@@ -61271,7 +62000,7 @@ function build_gethelp(h) {
             if (i.ok && i.data) {
                 handleHelpCallback(i.data)
             } else {
-                Modal.showAlert(printLocalError((i.error_code || null), (i.msg || null), (i.feedback || null)))
+                Modal.showAlert(printLocalError(i.error_code, i.msg, i.feedback))
             }
         },
         onFailure: function() {}
@@ -61289,6 +62018,9 @@ function build_gethelp(h) {
             cm.ClientSideCookieManager.setCookie(m, false)
         }
     };
+    kraken.network.publishGamesFeed(cm.FB_ACTIONS.REQUEST, cm.FB_OBJECTS.HELP, {
+        objectType: "construction"
+    });
     common_postToProfile("95", e);
     window.continuation_95 = b
 }
@@ -61377,7 +62109,7 @@ var update_citylist = (function() {
 })();
 
 function update_queue() {
-    var b = function(i) {
+    var b = function(j) {
         var h;
         var g = {
             building: seed.queue_con,
@@ -61388,93 +62120,119 @@ function update_queue() {
             wall: seed.queue_fort,
             market: seed.queue_mkt || {}
         };
-        var f = function(l) {
-            return g[l]["city" + currentcityid]
+        var f = function(m) {
+            return g[m]["city" + currentcityid]
         };
         var d = function() {
             h = {
                 building: false,
                 train: false,
-                market: false
+                market: false,
+                research: false
             }
         };
-        var e = function(l) {
-            h[l] = true
+        var e = function(m) {
+            h[m] = true
         };
-        var j = function(l) {
-            return h[l]
+        var l = function(m) {
+            return h[m]
+        };
+        var i = function(n) {
+            var m = 0;
+            if (n === "building") {
+                m += f("building").length;
+                m += f("craft").length
+            } else {
+                if (n === "train") {
+                    m += f("train").length;
+                    m += f("wall").length
+                } else {
+                    if (n === "research") {
+                        m += f("tech").length;
+                        m += f("tech2").length
+                    }
+                }
+            }
+            return m
         };
         return {
             getQueue: f,
             resetHasQueues: d,
             setHasQueue: e,
-            hasQueue: j
+            hasQueue: l,
+            getNumQueuesByCat: i
         }
     }(jQuery);
     var a = function(h) {
-        var q = g_js_strings.commonstr,
+        var r = g_js_strings.commonstr,
             g = g_js_strings.update_queue,
-            o;
-        var v = function(x, y) {
-            return cm.Template.renderTemplate("Queue", x, y)
+            p;
+        var w = function(y, z) {
+            return cm.Template.renderTemplate("Queue", y, z)
         };
-        var l = function(x) {
-            var y = i(x.percentComplete);
-            return v("queue", h.extend(x, {
-                speedupLabel: q.speedup,
-                progressbarCss: " width: " + y + "px;"
+        var l = function(y) {
+            var z = i(y.percentComplete);
+            return w("queue", h.extend(y, {
+                speedupLabel: r.speedup,
+                progressbarCss: " width: " + z + "px;"
             }))
         };
-        var j = function(x) {
-            return v("single_stat", h.extend(x, {
-                amountLabel: q.amt
+        var j = function(y) {
+            return w("single_stat", h.extend(y, {
+                amountLabel: r.amt
             }))
         };
-        var n = function(x) {
-            return v("dual_stat", h.extend(x, {
+        var n = function(y) {
+            return w("dual_stat", h.extend(y, {
                 friendLabel: g.frhelp,
                 allyLabel: g.allihelp
             }))
         };
-        var e = function(x) {
-            return h.extend(x, {
-                stats: n(x)
+        var e = function(y) {
+            return h.extend(y, {
+                stats: n(y)
             })
         };
-        var p = function(x) {
-            return h.extend(x, {
-                stats: j(x)
+        var q = function(y) {
+            return h.extend(y, {
+                stats: j(y)
             })
         };
-        var i = function(x) {
-            var y = 228;
-            return parseInt(y * x)
+        var i = function(y) {
+            var z = 170;
+            return parseInt(z * y)
         };
-        var m = function(z) {
-            var y = e(z),
-                x = l(y);
-            return x
+        var m = function(A) {
+            var z = e(A),
+                y = l(z);
+            return y
         };
-        var t = function(y) {
-            var z = p(y),
-                x = l(z);
-            return x
+        var u = function(z) {
+            var A = q(z),
+                y = l(A);
+            return y
         };
-        var u = function(x) {
-            return l(x)
+        var v = function(y) {
+            return l(y)
         };
-        var w = function() {
-            o = {
+        var o = function(z) {
+            var A = e(z),
+                y = l(A);
+            return y
+        };
+        var x = function() {
+            p = {
                 building: [],
                 train: [],
-                market: []
+                market: [],
+                research: []
             }
         };
-        var r = function(y, x) {
-            o[y].push(x)
+        var s = function(z, y) {
+            p[z].push(y)
         };
-        var s = function(x) {
-            return o[x].join("")
+        var t = function(y) {
+            return p[y].join("")
         };
         var f = function() {
             if (a.isVisible("building")) {
@@ -61485,19 +62243,20 @@ function update_queue() {
                 } else {
                     if (a.isVisible("market")) {
                         h("#queue_market").html(a.getOutBuffer("market"))
+                    } else {
+                        if (a.isVisible("research")) {
+                            h("#queue_research").html(a.getOutBuffer("research"))
+                        }
                     }
                 }
             }
-            if (!b.hasQueue("building")) {
-                h("#queue_building").hide()
-            }
-            if (!b.hasQueue("train")) {
-                h("#queue_train").hide()
-            }
+            if (!b.hasQueue("building")) {}
+            if (!b.hasQueue("train")) {}
             if (!b.hasQueue("market")) {
                 h("#queue_market").hide()
             }
-            if (b.hasQueue("building") || b.hasQueue("train") || b.hasQueue("market")) {
+            if (!b.hasQueue("research")) {}
+            if (b.hasQueue("building") || b.hasQueue("train") || b.hasQueue("market") || b.hasQueue("research")) {
                 h("#queue_head_toggle").show();
                 if (a.isVisible("list")) {
                     h("#queue_head_toggle").removeClass("expand_button");
@@ -61513,156 +62272,160 @@ function update_queue() {
             }
             h("#queue_head_toggle").hide()
         };
-        var d = function(x) {
-            return h("#queue_" + x).css("display") !== "none"
+        var d = function(z) {
+            var y = h("#queue_" + z).css("display");
+            return y !== "none" && typeof y !== "undefined"
         };
         return {
             renderBuildQueue: m,
-            renderTrainQueue: t,
-            renderMarketQueue: u,
-            resetOutBuffers: w,
-            pushOutBuffer: r,
-            getOutBuffer: s,
+            renderTrainQueue: u,
+            renderMarketQueue: v,
+            renderResearchQueue: o,
+            resetOutBuffers: x,
+            pushOutBuffer: s,
+            getOutBuffer: t,
             updateQueueDom: f,
             isVisible: d
         }
     }(jQuery);
     var c = function() {
         var f = function() {
-            var y = -1;
-            for (var I = 0; I < b.getQueue("building").length; I++) {
-                var o = parseInt(b.getQueue("building")[I][4]) - unixtime();
-                if (o > 0) {
-                    cm.speedUpModalTimer.update("bdg", cm.log.convertToHMS(o, false), o);
-                    cm.guardianModalModel.update(o);
+            var z = -1;
+            for (var J = 0; J < b.getQueue("building").length; J++) {
+                var p = parseInt(b.getQueue("building")[J][4]) - unixtime();
+                if (p > 0) {
+                    cm.speedUpModalTimer.update("bdg", cm.log.convertToHMS(p, false), p, J);
+                    cm.guardianModalModel.update(p);
                     b.setHasQueue("building");
                     if (a.isVisible("building")) {
-                        var t = cm.guardianModalModel.upgrading() ? fUp(cm.guardianModalModel.getType()) + " Guardian" : buildingcost["bdg" + b.getQueue("building")[I][0]][0];
-                        var J = b.getQueue("building")[I][5] / b.getQueue("building")[I][6] + ((unixtime() - b.getQueue("building")[I][3]) / (b.getQueue("building")[I][4] - b.getQueue("building")[I][3])) * ((b.getQueue("building")[I][6] - b.getQueue("building")[I][5]) / b.getQueue("building")[I][6]);
-                        var u = (parseInt(b.getQueue("building")[I][1]) > 0) ? " (" + g_js_strings.commonstr.lv + b.getQueue("building")[I][1] + ")" : " (" + g_js_strings.commonstr.destroy + ")";
-                        var A = t + u;
-                        var K = seed.updateHelpConstruct["city" + currentcityid];
-                        var C = K ? K["b" + b.getQueue("building")[I][2]] : false;
-                        var p = C && parseInt(C.n) > 0 ? C.n : "0";
-                        var q = C && parseInt(C.a) > 0 ? C.a : "0";
+                        var u = cm.guardianModalModel.upgrading() ? fUp(cm.guardianModalModel.getType()) + " Guardian" : buildingcost["bdg" + b.getQueue("building")[J][0]][0];
+                        var K = b.getQueue("building")[J][5] / b.getQueue("building")[J][6] + ((unixtime() - b.getQueue("building")[J][3]) / (b.getQueue("building")[J][4] - b.getQueue("building")[J][3])) * ((b.getQueue("building")[J][6] - b.getQueue("building")[J][5]) / b.getQueue("building")[J][6]);
+                        var v = (parseInt(b.getQueue("building")[J][1]) > 0) ? " (" + g_js_strings.commonstr.lv + b.getQueue("building")[J][1] + ")" : " (" + g_js_strings.commonstr.destroy + ")";
+                        var B = u + v;
+                        var M = seed.updateHelpConstruct["city" + currentcityid];
+                        var D = M ? M["b" + b.getQueue("building")[J][2]] : false;
+                        var q = D && parseInt(D.n) > 0 ? D.n : "0";
+                        var r = D && parseInt(D.a) > 0 ? D.a : "0";
                         a.pushOutBuffer("building", a.renderBuildQueue({
-                            queueTitle: t + u,
-                            timeLeft: timestr(o),
-                            linkName: b.getQueue("building")[I][2],
-                            speedupJs: "cm.BuildingSpeedupController.queueClick(event, &quot;" + A + "&quot;);",
-                            percentComplete: J,
-                            helpCount1: p,
-                            helpCount2: q
+                            queueTitle: u + v,
+                            timeLeft: timestr(p),
+                            linkName: b.getQueue("building")[J][2],
+                            speedupJs: "cm.BuildingSpeedupController.queueClick(event, &quot;" + B + "&quot;);",
+                            percentComplete: K,
+                            helpCount1: q,
+                            helpCount2: r
                         }));
-                        if ($("modal_build_timeremaining")) {
-                            $("modal_build_timeremaining").innerHTML = timestr(o)
+                        if ($("modal_build_timeremaining") && parseInt(cm.last_building_ID_opened) == b.getQueue("building")[J][2]) {
+                            $("modal_build_timeremaining").innerHTML = timestr(p)
                         }
                     }
                 } else {
-                    cm.sounds.play("finished_building");
-                    cm.speedUpModalTimer.endSpeedUpModal("bdg");
-                    var E = parseInt(b.getQueue("building")[I][1]);
-                    var w = b.getQueue("building")[I][7];
-                    if (E == 0) {
-                        y = parseInt(b.getQueue("building")[I][0]);
-                        bdgOriginalLvl = parseInt(seed.buildings["city" + currentcityid]["pos" + w][1]);
-                        if (!seed.buildings["city" + currentcityid]["pos" + w]) {
-                            return false
-                        }
-                        bdgType = parseInt(seed.buildings["city" + currentcityid]["pos" + w][0]);
-                        removeCityFromView(w);
-                        if (bdgOriginalLvl > 1) {
-                            mult = Math.pow(2, bdgOriginalLvl - 2);
-                            seed.resources["city" + currentcityid].rec1[0] += parseInt(buildingcost["bdg" + bdgType][1]) * mult * 3600;
-                            seed.resources["city" + currentcityid].rec2[0] += parseInt(buildingcost["bdg" + bdgType][2]) * mult * 3600;
-                            seed.resources["city" + currentcityid].rec3[0] += parseInt(buildingcost["bdg" + bdgType][3]) * mult * 3600;
-                            seed.resources["city" + currentcityid].rec4[0] += parseInt(buildingcost["bdg" + bdgType][4]) * mult * 3600;
-                            seed.citystats["city" + currentcityid].gold[0] += parseInt(buildingcost["bdg" + bdgType][5]) * mult
-                        }
-                        if (bdgType > 0 && bdgType < 5) {
-                            var z = parseInt(seed.citystats["city" + currentcityid]["pop"][3]);
-                            for (k = bdgOriginalLvl; k > 0; k--) {
-                                z -= k * 10
+                    cm.speedUpModalTimer.endSpeedUpModal("bdg", J);
+                    var L = b.getQueue("building")[J];
+                    var F = parseInt(L[1]);
+                    var x = L[7];
+                    realTimeFinishBuildingSound(L);
+                    if (F == 0) {
+                        z = parseInt(L[0]);
+                        if (seed.buildings["city" + currentcityid]["pos" + x]) {
+                            bdgOriginalLvl = parseInt(seed.buildings["city" + currentcityid]["pos" + x][1]);
+                            if (!seed.buildings["city" + currentcityid]["pos" + x]) {
+                                return false
                             }
-                            seed.citystats["city" + currentcityid]["pop"][3] = z
-                        } else {
-                            if (bdgType == 5) {
-                                var D = seed.citystats["city" + currentcityid]["pop"][1];
-                                var x = seed.citystats["city" + currentcityid]["pop"][0];
+                            bdgType = parseInt(seed.buildings["city" + currentcityid]["pos" + x][0]);
+                            removeCityFromView(x);
+                            if (bdgOriginalLvl > 1) {
+                                mult = Math.pow(2, bdgOriginalLvl - 2);
+                                seed.resources["city" + currentcityid].rec1[0] += parseInt(buildingcost["bdg" + bdgType][1]) * mult * 3600;
+                                seed.resources["city" + currentcityid].rec2[0] += parseInt(buildingcost["bdg" + bdgType][2]) * mult * 3600;
+                                seed.resources["city" + currentcityid].rec3[0] += parseInt(buildingcost["bdg" + bdgType][3]) * mult * 3600;
+                                seed.resources["city" + currentcityid].rec4[0] += parseInt(buildingcost["bdg" + bdgType][4]) * mult * 3600;
+                                seed.citystats["city" + currentcityid].gold[0] += parseInt(buildingcost["bdg" + bdgType][5]) * mult
+                            }
+                            if (bdgType > 0 && bdgType < 5) {
+                                var A = parseInt(seed.citystats["city" + currentcityid]["pop"][3]);
                                 for (k = bdgOriginalLvl; k > 0; k--) {
-                                    D -= k * 100
+                                    A -= k * 10
                                 }
-                                if (D < 51) {
-                                    D = 50
-                                }
-                                if (x > D) {
-                                    seed.citystats["city" + currentcityid]["pop"][0] = D
-                                }
-                                seed.citystats["city" + currentcityid]["pop"][1] = D
+                                seed.citystats["city" + currentcityid]["pop"][3] = A
                             } else {
-                                if (bdgType == cm.BUILDING_TYPES.WATCH_TOWER) {
-                                    var v = cm.WatchTowerList.getCityWatchTower(currentcityid);
-                                    if (v) {
-                                        v.demolish()
+                                if (bdgType == 5) {
+                                    var E = seed.citystats["city" + currentcityid]["pop"][1];
+                                    var y = seed.citystats["city" + currentcityid]["pop"][0];
+                                    for (k = bdgOriginalLvl; k > 0; k--) {
+                                        E -= k * 100
+                                    }
+                                    if (E < 51) {
+                                        E = 50
+                                    }
+                                    if (y > E) {
+                                        seed.citystats["city" + currentcityid]["pop"][0] = E
+                                    }
+                                    seed.citystats["city" + currentcityid]["pop"][1] = E
+                                } else {
+                                    if (bdgType == cm.BUILDING_TYPES.WATCH_TOWER) {
+                                        var w = cm.WatchTowerList.getCityWatchTower(currentcityid);
+                                        if (w) {
+                                            w.demolish()
+                                        }
                                     }
                                 }
                             }
+                            J--;
+                            var C = parseInt(seed.player.might);
+                            for (var H = bdgOriginalLvl - 1; H > -1; H--) {
+                                C -= buildingmight[parseInt(z)][H]
+                            }
+                            seed.player.might = C;
+                            update_might();
+                            update_pop()
                         }
-                        seed.queue_con["city" + currentcityid].splice(I, 1);
-                        I--;
-                        var B = parseInt(seed.player.might);
-                        for (var G = bdgOriginalLvl - 1; G > -1; G--) {
-                            B -= buildingmight[parseInt(y)][G]
-                        }
-                        seed.player.might = B;
-                        update_might();
-                        update_pop()
                     } else {
-                        seed.con_hlp["b" + b.getQueue("building")[I][2]] = 0;
-                        if (!seed.buildings["city" + currentcityid]["pos" + w]) {
+                        seed.con_hlp["b" + b.getQueue("building")[J][2]] = 0;
+                        if (!seed.buildings["city" + currentcityid]["pos" + x]) {
                             return false
                         }
-                        seed.buildings["city" + currentcityid]["pos" + w] = [b.getQueue("building")[I][0], b.getQueue("building")[I][1], w, seed.buildings["city" + currentcityid]["pos" + w][3]];
-                        y = parseInt(b.getQueue("building")[I][0]);
-                        seed.queue_con["city" + currentcityid].splice(I, 1);
-                        I--;
-                        if (buildingmight[parseInt(y)]) {
-                            var r = cm.PrestigeModel.getPrestigeLevel();
-                            var s = 1;
-                            if (r > 0) {
-                                s = Math.pow(cm.PrestigeModel.buildingBoost, r)
+                        seed.buildings["city" + currentcityid]["pos" + x] = [b.getQueue("building")[J][0], b.getQueue("building")[J][1], x, seed.buildings["city" + currentcityid]["pos" + x][3]];
+                        z = parseInt(b.getQueue("building")[J][0]);
+                        seed.queue_con["city" + currentcityid].splice(J, 1);
+                        J--;
+                        if (buildingmight[parseInt(z)]) {
+                            var s = cm.PrestigeModel.getPrestigeLevel();
+                            var t = 1;
+                            if (s > 0) {
+                                t = Math.pow(cm.PrestigeModel.buildingBoost, s)
                             }
-                            seed.player.might = parseInt(seed.player.might) + (parseInt(buildingmight[parseInt(y)][E - 1]) * s)
+                            seed.player.might = parseInt(seed.player.might) + (parseInt(buildingmight[parseInt(z)][F - 1]) * t)
                         }
                         update_might();
-                        if (y > 0 && y < 5) {
-                            seed.citystats["city" + currentcityid]["pop"][3] = parseInt(seed.citystats["city" + currentcityid]["pop"][3]) + E * 10
+                        if (z > 0 && z < 5) {
+                            seed.citystats["city" + currentcityid]["pop"][3] = parseInt(seed.citystats["city" + currentcityid]["pop"][3]) + F * 10
                         } else {
-                            if (y == 5) {
-                                var F = parseInt(seed.citystats["city" + currentcityid]["pop"][1]);
-                                if (F < 51) {
-                                    seed.citystats["city" + currentcityid]["pop"][1] = E * 100;
+                            if (z == 5) {
+                                var G = parseInt(seed.citystats["city" + currentcityid]["pop"][1]);
+                                if (G < 51) {
+                                    seed.citystats["city" + currentcityid]["pop"][1] = F * 100;
                                     seed.citystats["city" + currentcityid]["pop"][0] = 50
                                 } else {
-                                    seed.citystats["city" + currentcityid]["pop"][1] = parseInt(seed.citystats["city" + currentcityid]["pop"][1]) + E * 100
+                                    seed.citystats["city" + currentcityid]["pop"][1] = parseInt(seed.citystats["city" + currentcityid]["pop"][1]) + F * 100
                                 }
-                                seed.citystats["city" + currentcityid]["pop"][0] = parseInt(seed.citystats["city" + currentcityid]["pop"][0]) + E * 50;
+                                seed.citystats["city" + currentcityid]["pop"][0] = parseInt(seed.citystats["city" + currentcityid]["pop"][0]) + F * 50;
                                 update_pop()
                             } else {
-                                if (y == cm.BUILDING_TYPES.WATCH_TOWER) {
-                                    var v = cm.WatchTowerList.getCityWatchTower(currentcityid);
-                                    if (v) {
-                                        v.setLevel(E)
+                                if (z == cm.BUILDING_TYPES.WATCH_TOWER) {
+                                    var w = cm.WatchTowerList.getCityWatchTower(currentcityid);
+                                    if (w) {
+                                        w.setLevel(F)
                                     } else {
-                                        buildingId = seed.buildings["city" + currentcityid]["pos" + w][3];
+                                        buildingId = seed.buildings["city" + currentcityid]["pos" + x][3];
                                         watchTowerInfo = {
                                             buildingId: buildingId,
                                             cityId: currentcityid.toString(),
-                                            slot: w,
-                                            level: E
+                                            slot: x,
+                                            level: F
                                         };
-                                        var v = new cm.WatchTower(watchTowerInfo);
-                                        cm.WatchTowerList.add(v)
+                                        var w = new cm.WatchTower(watchTowerInfo);
+                                        cm.WatchTowerList.add(w)
                                     }
                                 }
                             }
@@ -61672,243 +62435,244 @@ function update_queue() {
                     cm.PrestigeCityView.render()
                 }
             }
-            if (y > -1) {
+            if (z > -1) {
                 update_bdg();
                 fields_generate();
                 cm.TutorialEventDispatcher.dispatchTutorialEvent("complete", "WATCH_SAWMILL_PROGRESS");
-                var H = quests_validquests();
-                quest_allcompleted(H.valid);
-                modal_quests_generate(H.valid, H.recommended, 0)
+                var I = quests_validquests();
+                quest_allcompleted(I.valid);
+                modal_quests_generate(I.valid, I.recommended, 0)
             }
+            cm.QueueView.bottom(a, cm.QueueModel.getActiveBuildingCount() == 1, cm.QueueModel.getActiveBuildingCount())
         };
         var j = function() {
-            for (var q = 0; q < b.getQueue("tech").length; q++) {
-                var p = parseInt(b.getQueue("tech")[q][3]) - unixtime();
-                if (p > 0) {
-                    cm.speedUpModalTimer.update("tch", cm.log.convertToHMS(p, false), p);
-                    b.setHasQueue("building");
-                    if (a.isVisible("building")) {
-                        var s = parseInt(b.getQueue("tech")[q][4]) / parseInt(b.getQueue("tech")[q][5]) + ((unixtime() - parseInt(b.getQueue("tech")[q][2])) / (parseInt(b.getQueue("tech")[q][3]) - parseInt(b.getQueue("tech")[q][2]))) * ((parseInt(b.getQueue("tech")[q][5]) - parseInt(b.getQueue("tech")[q][4])) / parseInt(b.getQueue("tech")[q][5]));
-                        var r = seed.updateHelpResearch["city" + currentcityid];
-                        var o = r ? r["t" + b.getQueue("tech")[q][0]] : false;
-                        var t = o && parseInt(o.n) > 0 ? o.n : "0";
-                        var u = o && parseInt(o.a) > 0 ? o.a : "0";
-                        a.pushOutBuffer("building", a.renderBuildQueue({
-                            queueTitle: techcost["tch" + b.getQueue("tech")[q][0]][0] + " (" + g_js_strings.commonstr.lv + b.getQueue("tech")[q][1] + ")",
-                            timeLeft: timestr(p),
-                            linkName: b.getQueue("tech")[q][0],
-                            speedupJs: "cm.ResearchSpeedupController.queueClick(event, 'tch');",
-                            percentComplete: s,
-                            helpCount1: t,
-                            helpCount2: u
+            for (var r = 0; r < b.getQueue("tech").length; r++) {
+                var q = parseInt(b.getQueue("tech")[r][3]) - unixtime();
+                if (q > 0) {
+                    cm.speedUpModalTimer.update("tch", cm.log.convertToHMS(q, false), q, r);
+                    b.setHasQueue("research");
+                    if (a.isVisible("research")) {
+                        var t = parseInt(b.getQueue("tech")[r][4]) / parseInt(b.getQueue("tech")[r][5]) + ((unixtime() - parseInt(b.getQueue("tech")[r][2])) / (parseInt(b.getQueue("tech")[r][3]) - parseInt(b.getQueue("tech")[r][2]))) * ((parseInt(b.getQueue("tech")[r][5]) - parseInt(b.getQueue("tech")[r][4])) / parseInt(b.getQueue("tech")[r][5]));
+                        var s = seed.updateHelpResearch["city" + currentcityid];
+                        var p = s ? s["t" + b.getQueue("tech")[r][0]] : false;
+                        var u = p && parseInt(p.n) > 0 ? p.n : "0";
+                        var v = p && parseInt(p.a) > 0 ? p.a : "0";
+                        a.pushOutBuffer("research", a.renderResearchQueue({
+                            queueTitle: techcost["tch" + b.getQueue("tech")[r][0]][0] + " (" + g_js_strings.commonstr.lv + b.getQueue("tech")[r][1] + ")",
+                            timeLeft: timestr(q),
+                            linkName: b.getQueue("tech")[r][0],
+                            speedupJs: "cm.ResearchSpeedupController.queueClick(event, 'tch', " + r + ");",
+                            percentComplete: t,
+                            helpCount1: u,
+                            helpCount2: v
                         }));
-                        if ($("alchemymodal") && $("alchemymodal_tch" + b.getQueue("tech")[q][0] + "_queue_timeleft")) {
-                            $("alchemymodal_tch" + b.getQueue("tech")[q][0] + "_queue_timeleft").innerHTML = timestr(p)
+                        if ($("alchemymodal") && $("alchemymodal_tch" + b.getQueue("tech")[r][0] + "_queue_timeleft")) {
+                            $("alchemymodal_tch" + b.getQueue("tech")[r][0] + "_queue_timeleft").innerHTML = timestr(q)
                         }
                     }
                 } else {
                     cm.sounds.play("finished_research");
-                    seed.tech["tch" + b.getQueue("tech")[q][0]] = parseInt(b.getQueue("tech")[q][1]);
-                    seed.tch_hlp["t" + b.getQueue("tech")[q][0]] = 0;
-                    seed.queue_tch["city" + currentcityid].splice(q, 1);
+                    seed.tech["tch" + b.getQueue("tech")[r][0]] = parseInt(b.getQueue("tech")[r][1]);
+                    seed.tch_hlp["t" + b.getQueue("tech")[r][0]] = 0;
+                    seed.queue_tch["city" + currentcityid].splice(r, 1);
                     if ($("alchemymodal")) {
                         modal_openAlchemy()
                     }
-                    cm.speedUpModalTimer.endSpeedUpModal("tch")
+                    cm.speedUpModalTimer.endSpeedUpModal("tch", r)
                 }
             }
         };
         var d = function() {
-            for (var s = 0; s < b.getQueue("tech2").length; s++) {
-                var q = parseInt(b.getQueue("tech2")[s][3]) - unixtime();
-                if (q > 0) {
-                    cm.speedUpModalTimer.update("wks", cm.log.convertToHMS(q, false), q);
-                    b.setHasQueue("building");
-                    if (a.isVisible("building")) {
-                        var t = parseInt(b.getQueue("tech2")[s][4]) / parseInt(b.getQueue("tech2")[s][5]) + ((unixtime() - parseInt(b.getQueue("tech2")[s][2])) / (parseInt(b.getQueue("tech2")[s][3]) - parseInt(b.getQueue("tech2")[s][2]))) * ((parseInt(b.getQueue("tech2")[s][5]) - parseInt(b.getQueue("tech2")[s][4])) / parseInt(b.getQueue("tech2")[s][5]));
-                        var o = seed.updateHelpResearch2["city" + currentcityid];
-                        var p = o ? o["t" + b.getQueue("tech2")[s][0]] : false;
-                        var v = p && parseInt(p.n) > 0 ? p.n : "0";
-                        var r = p && parseInt(p.a) > 0 ? p.a : "0";
-                        a.pushOutBuffer("building", a.renderBuildQueue({
-                            queueTitle: techcost2["tch" + b.getQueue("tech2")[s][0]][0] + " (" + g_js_strings.commonstr.lv + b.getQueue("tech2")[s][1] + ")",
-                            timeLeft: timestr(q),
-                            linkName: b.getQueue("tech2")[s][0],
-                            speedupJs: "cm.ResearchSpeedupController.queueClick(event, 'wks' );",
-                            percentComplete: t,
-                            helpCount1: v,
-                            helpCount2: r
+            for (var t = 0; t < b.getQueue("tech2").length; t++) {
+                var r = parseInt(b.getQueue("tech2")[t][3]) - unixtime();
+                if (r > 0) {
+                    cm.speedUpModalTimer.update("wks", cm.log.convertToHMS(r, false), r, t);
+                    b.setHasQueue("research");
+                    if (a.isVisible("research")) {
+                        var u = parseInt(b.getQueue("tech2")[t][4]) / parseInt(b.getQueue("tech2")[t][5]) + ((unixtime() - parseInt(b.getQueue("tech2")[t][2])) / (parseInt(b.getQueue("tech2")[t][3]) - parseInt(b.getQueue("tech2")[t][2]))) * ((parseInt(b.getQueue("tech2")[t][5]) - parseInt(b.getQueue("tech2")[t][4])) / parseInt(b.getQueue("tech2")[t][5]));
+                        var p = seed.updateHelpResearch2["city" + currentcityid];
+                        var q = p ? p["t" + b.getQueue("tech2")[t][0]] : false;
+                        var w = q && parseInt(q.n) > 0 ? q.n : "0";
+                        var s = q && parseInt(q.a) > 0 ? q.a : "0";
+                        a.pushOutBuffer("research", a.renderResearchQueue({
+                            queueTitle: techcost2["tch" + b.getQueue("tech2")[t][0]][0] + " (" + g_js_strings.commonstr.lv + b.getQueue("tech2")[t][1] + ")",
+                            timeLeft: timestr(r),
+                            linkName: b.getQueue("tech2")[t][0],
+                            speedupJs: "cm.ResearchSpeedupController.queueClick(event, 'wks', " + t + ");",
+                            percentComplete: u,
+                            helpCount1: w,
+                            helpCount2: s
                         }));
-                        var u = $("alchemymodal_tch" + b.getQueue("tech2")[s][0] + "_queue_timeleft");
-                        if ($("alchemymodal") && u) {
-                            u.innerHTML = timestr(q)
+                        var v = $("alchemymodal_tch" + b.getQueue("tech2")[t][0] + "_queue_timeleft");
+                        if ($("alchemymodal") && v) {
+                            v.innerHTML = timestr(r)
                         }
                     }
                 } else {
                     cm.sounds.play("finished_research");
-                    seed.tech2["tch" + b.getQueue("tech2")[s][0]] = parseInt(b.getQueue("tech2")[s][1]);
-                    seed.tch_hlp2["t" + b.getQueue("tech2")[s][0]] = 0;
-                    seed.queue_tch2["city" + currentcityid].splice(s, 1);
+                    seed.tech2["tch" + b.getQueue("tech2")[t][0]] = parseInt(b.getQueue("tech2")[t][1]);
+                    seed.tch_hlp2["t" + b.getQueue("tech2")[t][0]] = 0;
+                    seed.queue_tch2["city" + currentcityid].splice(t, 1);
                     if (is_workshop_open()) {
                         modal_openBritonWorkshop()
                     }
-                    cm.speedUpModalTimer.endSpeedUpModal("wks")
+                    cm.speedUpModalTimer.endSpeedUpModal("wks", t)
                 }
             }
         };
         var m = function() {
-            var v, u, p, t, o, s, q;
-            for (var r = 0; r < b.getQueue("craft").length; ++r) {
-                v = Number(b.getQueue("craft")[r].craftingUnixTime);
-                u = Number(b.getQueue("craft")[r].craftingEtaUnixTime);
-                p = u - unixtime();
-                q = Number(b.getQueue("craft")[r].craftingId);
-                if (!b.getQueue("craft")[r].categoryId || !b.getQueue("craft")[r].recipeIndex) {
-                    jQuery.each(recipelist, function(w, x) {
-                        jQuery.each(x, function(z, y) {
-                            if (Number(y.recipe_id) == Number(b.getQueue("craft")[r].recipeId)) {
-                                o = y.name;
-                                s = Number(w);
-                                seed.queue_craft["city" + currentcityid][r].categoryId = s;
-                                seed.queue_craft["city" + currentcityid][r].recipeIndex = z;
-                                b.getQueue("craft")[r].categoryId = s;
-                                b.getQueue("craft")[r].recipeIndex = z;
+            var w, v, q, u, p, t, r;
+            for (var s = 0; s < b.getQueue("craft").length; ++s) {
+                w = Number(b.getQueue("craft")[s].craftingUnixTime);
+                v = Number(b.getQueue("craft")[s].craftingEtaUnixTime);
+                q = v - unixtime();
+                r = Number(b.getQueue("craft")[s].craftingId);
+                if (!b.getQueue("craft")[s].categoryId || !b.getQueue("craft")[s].recipeIndex) {
+                    jQuery.each(recipelist, function(x, y) {
+                        jQuery.each(y, function(A, z) {
+                            if (Number(z.recipe_id) == Number(b.getQueue("craft")[s].recipeId)) {
+                                p = z.name;
+                                t = Number(x);
+                                seed.queue_craft["city" + currentcityid][s].categoryId = t;
+                                seed.queue_craft["city" + currentcityid][s].recipeIndex = A;
+                                b.getQueue("craft")[s].categoryId = t;
+                                b.getQueue("craft")[s].recipeIndex = A;
                                 return false
                             }
                         })
                     })
                 }
-                if (p > 0) {
+                if (q > 0) {
                     b.setHasQueue("building");
-                    cm.speedUpModalTimer.update("craft", cm.log.convertToHMS(p, false), p);
+                    cm.speedUpModalTimer.update("craft", cm.log.convertToHMS(q, false), q);
                     if (a.isVisible("building")) {
-                        t = (unixtime() - v) / (u - v);
-                        o = recipelist[Number(b.getQueue("craft")[r].categoryId)][Number(b.getQueue("craft")[r].recipeIndex)].name;
+                        u = (unixtime() - w) / (v - w);
+                        p = recipelist[Number(b.getQueue("craft")[s].categoryId)][Number(b.getQueue("craft")[s].recipeIndex)].name;
                         a.pushOutBuffer("building", a.renderBuildQueue({
-                            queueTitle: o,
-                            timeLeft: timestr(p),
+                            queueTitle: p,
+                            timeLeft: timestr(q),
                             linkName: "",
-                            speedupJs: "modal_speedup('craft', " + q + ", null, '" + o + "');",
-                            percentComplete: t,
+                            speedupJs: "modal_speedup('craft', " + r + ", null, '" + p + "');",
+                            percentComplete: u,
                             helpCount1: 0,
                             helpCount2: 0
                         }))
                     }
                 } else {
                     cm.sounds.play("player_completes_a_craft");
-                    seed.queue_craft["city" + currentcityid].splice(r, 1);
+                    seed.queue_craft["city" + currentcityid].splice(s, 1);
                     cm.speedUpModalTimer.endSpeedUpModal("craft");
                     update_seed_ajax()
                 }
             }
         };
         var i = function() {
-            var o = +(seed.queue_throne.start);
-            var p = +(seed.queue_throne.end);
-            var r = p - unixtime();
-            var q = seed.queue_throne.itemId;
-            if (r > 0) {
-                cm.speedUpModalTimer.update("throne", cm.log.convertToHMS(r, false), r)
+            var p = +(seed.queue_throne.start);
+            var q = +(seed.queue_throne.end);
+            var s = q - unixtime();
+            var r = seed.queue_throne.itemId;
+            if (s > 0) {
+                cm.speedUpModalTimer.update("throne", cm.log.convertToHMS(s, false), s)
             } else {
-                if (q != undefined) {
-                    kocThroneItems[q].status = 1
+                if (r != undefined) {
+                    kocThroneItems[r].status = 1
                 }
                 seed.queue_throne = {};
                 cm.speedUpModalTimer.endSpeedUpModal("throne")
             }
         };
         var l = function() {
-            var v = false;
-            var w = 0;
-            var r = 0;
-            for (var t = 0; t < b.getQueue("train").length; t++) {
-                if (b.getQueue("train")[t][7]) {
-                    r++
+            var w = false;
+            var x = 0;
+            var s = 0;
+            for (var u = 0; u < b.getQueue("train").length; u++) {
+                if (b.getQueue("train")[u][7]) {
+                    s++
                 } else {
-                    w++
+                    x++
                 }
             }
-            if (r > 0) {
-                r--
+            if (s > 0) {
+                s--
             }
-            if (w > 0) {
-                w--
+            if (x > 0) {
+                x--
             }
-            for (var t = 0; t < b.getQueue("train").length; t++) {
-                var o = parseInt(b.getQueue("train")[t][3]) - unixtime();
-                if (o > 0 && (t === 0 || (t > 0 && v !== b.getQueue("train")[t][7]))) {
-                    if (b.getQueue("train")[t][7] === cm.speedUpModalTimer.prestigeQueueSelected) {
-                        cm.speedUpModalTimer.update("trn", cm.log.convertToHMS(o, false), o)
+            for (var u = 0; u < b.getQueue("train").length; u++) {
+                var p = parseInt(b.getQueue("train")[u][3]) - unixtime();
+                if (p > 0 && (u === 0 || (u > 0 && w !== b.getQueue("train")[u][7]))) {
+                    if (b.getQueue("train")[u][7] === cm.speedUpModalTimer.prestigeQueueSelected) {
+                        cm.speedUpModalTimer.update("trn", cm.log.convertToHMS(p, false), p, u)
                     }
                     b.setHasQueue("train");
                     if (a.isVisible("train")) {
-                        var x = parseInt(b.getQueue("train")[t][4]) / parseInt(b.getQueue("train")[t][5]) + ((unixtime() - parseInt(b.getQueue("train")[t][2])) / (parseInt(b.getQueue("train")[t][3]) - parseInt(b.getQueue("train")[t][2]))) * ((parseInt(b.getQueue("train")[t][5]) - parseInt(b.getQueue("train")[t][4])) / parseInt(b.getQueue("train")[t][5]));
-                        var u = unitcost["unt" + b.getQueue("train")[t][0]][0];
-                        var s = (seed.queue_unt["city" + currentcityid].length > 0) ? ('<span class="troop_queue">' + g_js_strings.update_queue.troopqueue + ": " + (b.getQueue("train")[t][7] ? r : w) + "</span>") : "";
+                        var y = parseInt(b.getQueue("train")[u][4]) / parseInt(b.getQueue("train")[u][5]) + ((unixtime() - parseInt(b.getQueue("train")[u][2])) / (parseInt(b.getQueue("train")[u][3]) - parseInt(b.getQueue("train")[u][2]))) * ((parseInt(b.getQueue("train")[u][5]) - parseInt(b.getQueue("train")[u][4])) / parseInt(b.getQueue("train")[u][5]));
+                        var v = unitcost["unt" + b.getQueue("train")[u][0]][0];
+                        var t = (seed.queue_unt["city" + currentcityid].length > 0) ? ('<span class="troop_queue">' + g_js_strings.update_queue.troopqueue + ": " + (b.getQueue("train")[u][7] ? s : x) + "</span>") : "";
                         a.pushOutBuffer("train", a.renderTrainQueue({
-                            queueTitle: u,
-                            timeLeft: timestr(o),
+                            queueTitle: v,
+                            timeLeft: timestr(p),
                             linkName: "",
-                            speedupJs: "cm.speedUpModalTimer.prestigeQueueSelected=" + b.getQueue("train")[t][7] + ";modal_speedup( 'trn'," + b.getQueue("train")[t][0] + ", 2, '" + u + "', 0" + t + ");",
-                            percentComplete: x,
-                            helpCount1: b.getQueue("train")[t][1] + s
+                            speedupJs: "cm.speedUpModalTimer.prestigeQueueSelected=" + b.getQueue("train")[u][7] + ";modal_speedup( 'trn'," + b.getQueue("train")[u][0] + ", 2, '" + v + "', 0" + u + ");",
+                            percentComplete: y,
+                            helpCount1: b.getQueue("train")[u][1] + t
                         }))
                     }
                 } else {
-                    if (o <= 0) {
+                    if (p <= 0) {
                         cm.sounds.play("finished_training");
-                        seed.units["city" + currentcityid]["unt" + b.getQueue("train")[t][0]] = parseInt(seed.units["city" + currentcityid]["unt" + b.getQueue("train")[t][0]]) + parseInt(b.getQueue("train")[t][1]);
-                        for (var q = t + 1; q < b.getQueue("train").length; q++) {
-                            if (b.getQueue("train")[q][7] === b.getQueue("train")[t][7]) {
-                                var p = unixtime() - parseInt(b.getQueue("train")[q][2]);
-                                b.getQueue("train")[q][2] = unixtime();
-                                b.getQueue("train")[q][3] = parseInt(b.getQueue("train")[q][3]) + p;
+                        seed.units["city" + currentcityid]["unt" + b.getQueue("train")[u][0]] = parseInt(seed.units["city" + currentcityid]["unt" + b.getQueue("train")[u][0]]) + parseInt(b.getQueue("train")[u][1]);
+                        for (var r = u + 1; r < b.getQueue("train").length; r++) {
+                            if (b.getQueue("train")[r][7] === b.getQueue("train")[u][7]) {
+                                var q = unixtime() - parseInt(b.getQueue("train")[r][2]);
+                                b.getQueue("train")[r][2] = unixtime();
+                                b.getQueue("train")[r][3] = parseInt(b.getQueue("train")[r][3]) + q;
                                 break
                             }
                         }
-                        seed.queue_unt["city" + currentcityid].splice(t, 1);
-                        t--;
+                        seed.queue_unt["city" + currentcityid].splice(u, 1);
+                        u--;
                         cm.speedUpModalTimer.endSpeedUpModal("trn");
                         if (jQuery("#barracksModalTabs").length > 0 && jQuery("#changeToTab1").hasClass("selected")) {
                             changeBarracksModalTabs(1)
                         }
                     }
                 }
-                if (t > 0 && v !== b.getQueue("train")[t][7]) {
+                if (u > 0 && w !== b.getQueue("train")[u][7]) {
                     break
                 }
-                if (b.getQueue("train")[t]) {
-                    v = b.getQueue("train")[t][7]
+                if (b.getQueue("train")[u]) {
+                    w = b.getQueue("train")[u][7]
                 }
             }
         };
         var e = function() {
-            for (var q = 0; q < Math.min(b.getQueue("wall").length, 1); q++) {
-                var p = parseInt(b.getQueue("wall")[q][3]) - unixtime();
-                if (p > 0) {
-                    cm.speedUpModalTimer.update("frt", cm.log.convertToHMS(p, false), p);
+            for (var r = 0; r < Math.min(b.getQueue("wall").length, 1); r++) {
+                var q = parseInt(b.getQueue("wall")[r][3]) - unixtime();
+                if (q > 0) {
+                    cm.speedUpModalTimer.update("frt", cm.log.convertToHMS(q, false), q);
                     b.setHasQueue("train");
                     if (a.isVisible("train")) {
-                        var r = parseInt(b.getQueue("wall")[q][4]) / parseInt(b.getQueue("wall")[q][5]) + ((unixtime() - parseInt(b.getQueue("wall")[q][2])) / (parseInt(b.getQueue("wall")[q][3]) - parseInt(b.getQueue("wall")[q][2]))) * ((parseInt(b.getQueue("wall")[q][5]) - parseInt(b.getQueue("wall")[q][4])) / parseInt(b.getQueue("wall")[q][5]));
+                        var s = parseInt(b.getQueue("wall")[r][4]) / parseInt(b.getQueue("wall")[r][5]) + ((unixtime() - parseInt(b.getQueue("wall")[r][2])) / (parseInt(b.getQueue("wall")[r][3]) - parseInt(b.getQueue("wall")[r][2]))) * ((parseInt(b.getQueue("wall")[r][5]) - parseInt(b.getQueue("wall")[r][4])) / parseInt(b.getQueue("wall")[r][5]));
                         a.pushOutBuffer("train", a.renderTrainQueue({
-                            queueTitle: fortcost["frt" + b.getQueue("wall")[q][0]][0],
-                            timeLeft: timestr(p),
+                            queueTitle: fortcost["frt" + b.getQueue("wall")[r][0]][0],
+                            timeLeft: timestr(q),
                             linkName: "",
-                            speedupJs: "modal_speedup('frt'," + b.getQueue("wall")[q][0] + "," + 0 + ",'" + g_js_strings.commonstr.fortification + "'," + b.getQueue("wall")[q][2] + ");return false;",
-                            percentComplete: r,
-                            helpCount1: b.getQueue("wall")[q][1]
+                            speedupJs: "modal_speedup('frt'," + b.getQueue("wall")[r][0] + "," + 0 + ",'" + g_js_strings.commonstr.fortification + "',  '');return false;",
+                            percentComplete: s,
+                            helpCount1: b.getQueue("wall")[r][1]
                         }))
                     }
                 } else {
-                    seed.fortifications["city" + currentcityid]["fort" + b.getQueue("wall")[q][0]] = parseInt(seed.fortifications["city" + currentcityid]["fort" + b.getQueue("wall")[q][0]]) + parseInt(b.getQueue("wall")[q][1]);
+                    seed.fortifications["city" + currentcityid]["fort" + b.getQueue("wall")[r][0]] = parseInt(seed.fortifications["city" + currentcityid]["fort" + b.getQueue("wall")[r][0]]) + parseInt(b.getQueue("wall")[r][1]);
                     cityinfo_defenses();
-                    if ((q + 1) < b.getQueue("wall").length) {
-                        var o = unixtime() - parseInt(b.getQueue("wall")[q + 1][2]);
-                        b.getQueue("wall")[q + 1][2] = unixtime();
-                        b.getQueue("wall")[q + 1][3] = parseInt(b.getQueue("wall")[q + 1][3]) + o
+                    if ((r + 1) < b.getQueue("wall").length) {
+                        var p = unixtime() - parseInt(b.getQueue("wall")[r + 1][2]);
+                        b.getQueue("wall")[r + 1][2] = unixtime();
+                        b.getQueue("wall")[r + 1][3] = parseInt(b.getQueue("wall")[r + 1][3]) + p
                     }
-                    seed.queue_fort["city" + currentcityid].splice(q, 1);
-                    q--;
+                    seed.queue_fort["city" + currentcityid].splice(r, 1);
+                    r--;
                     cm.speedUpModalTimer.endSpeedUpModal("frt");
                     if (jQuery("#barracksModalTabs").length > 0 && jQuery("#changeWalls1").hasClass("selected")) {
                         changeWallsModalTabs(1)
@@ -61916,50 +62680,50 @@ function update_queue() {
                 }
             }
         };
-        var n = function() {
+        var o = function() {
             a.pushOutBuffer("train", cm.RevivalQueue.perSecond(a.isVisible("train"), 228))
         };
         var g = function() {
             cm.SacrificeQueue.perSecond()
         };
         var h = function() {
-            jQuery.each(b.getQueue("market"), function(r, u) {
-                for (var s = 0; s < u.length; s++) {
-                    var q = parseInt(u[s].eventUnixTime) - unixtime();
-                    if (q > 0) {
-                        cm.speedUpModalTimer.update("market", cm.log.convertToHMS(q, false), q);
+            jQuery.each(b.getQueue("market"), function(s, v) {
+                for (var t = 0; t < v.length; t++) {
+                    var r = parseInt(v[t].eventUnixTime) - unixtime();
+                    if (r > 0) {
+                        cm.speedUpModalTimer.update("market", cm.log.convertToHMS(r, false), r);
                         b.setHasQueue("market");
                         if (a.isVisible("market")) {
-                            switch (parseInt(u[s].resourceType)) {
+                            switch (parseInt(v[t].resourceType)) {
                             case 1:
-                                var o = resourceinfo.rec1;
+                                var p = resourceinfo.rec1;
                                 break;
                             case 2:
-                                var o = resourceinfo.rec2;
+                                var p = resourceinfo.rec2;
                                 break;
                             case 3:
-                                var o = resourceinfo.rec3;
+                                var p = resourceinfo.rec3;
                                 break;
                             case 4:
-                                var o = resourceinfo.rec4;
+                                var p = resourceinfo.rec4;
                                 break;
                             default:
                             }
-                            var t = 1 - (q / (60 * 30));
-                            var p = (u[s].unitPricex1000) / 1000;
+                            var u = 1 - (r / (60 * 30));
+                            var q = (v[t].unitPricex1000) / 1000;
                             a.pushOutBuffer("market", a.renderMarketQueue({
-                                queueTitle: g_js_strings.update_queue.akbatc.replace("%1$s", u[s].quantityK).replace("%2$s", o).replace("%3$s", p),
-                                timeLeft: timestr(q),
+                                queueTitle: g_js_strings.update_queue.akbatc.replace("%1$s", v[t].quantityK).replace("%2$s", p).replace("%3$s", q),
+                                timeLeft: timestr(r),
                                 linkName: "",
-                                speedupJs: "modal_speedup_market(" + u[s].eventUnixTime + "," + s + "," + u[s].marketDeliveryId + ");return false;",
-                                percentComplete: t
+                                speedupJs: "modal_speedup_market(" + v[t].eventUnixTime + "," + t + "," + v[t].marketDeliveryId + ");return false;",
+                                percentComplete: u
                             }))
                         }
                     } else {
                         cm.speedUpModalTimer.endSpeedUpModal("market");
-                        seed.queue_mkt["city" + currentcityid][r].splice(s, 1);
-                        if (seed.queue_mkt["city" + currentcityid][r].length < 1) {
-                            delete seed.queue_mkt["city" + currentcityid][r]
+                        seed.queue_mkt["city" + currentcityid][s].splice(t, 1);
+                        if (seed.queue_mkt["city" + currentcityid][s].length < 1) {
+                            delete seed.queue_mkt["city" + currentcityid][s]
                         }
                         if (Object.keys(seed.queue_mkt["city" + currentcityid]).length < 1) {
                             seed.queue_mkt["city" + currentcityid] = []
@@ -61967,6 +62731,11 @@ function update_queue() {
                     }
                 }
             })
+        };
+        var n = function(q) {
+            var p = (q === "research" && cm.PrestigeModel.getPrestigeFaction() === "3") ? cm.QueueModel.getNumMaxQueues() * 2 : cm.QueueModel.getNumMaxQueues();
+            var r = "<div style='background:#281b05;text-align:center;font-size:9px;color:white;padding:1px'>" + g_js_strings.queue.totalQueues + ": " + b.getNumQueuesByCat(q) + "/" + p + " </div>";
+            a.pushOutBuffer(q, r)
         };
         return {
             building: f,
@@ -61976,16 +62745,29 @@ function update_queue() {
             throne: i,
             train: l,
             wall: e,
-            revival: n,
+            revival: o,
             sacrifice: g,
-            market: h
+            market: h,
+            openQueueStats: n
         }
     }();
     b.resetHasQueues();
     a.resetOutBuffers();
+    if (jQuery("#queue_head_building").hasClass("sel")) {
+        c.openQueueStats("building")
+    }
+    if (jQuery("#queue_head_train").hasClass("sel")) {}
+    if (jQuery("#queue_head_research").hasClass("sel")) {
+        if (cm.QueueModel.getMultiResearchQueueEnabled()) {
+            c.openQueueStats("research")
+        }
+    }
     c.building();
     c.tech();
     c.tech2();
+    if (cm.QueueModel.getMultiResearchQueueEnabled()) {
+        cm.QueueView.bottomTech(a, cm.QueueModel.getActiveResearchCount() < (cm.QueueModel.getNumMaxQueues() * 2))
+    }
     c.craft();
     c.throne();
     c.train();
@@ -61993,7 +62775,16 @@ function update_queue() {
     c.revival();
     c.sacrifice();
     c.market();
+    jQuery("#queue_head_train").html("<span >" + g_js_strings.commonstr.train + " (" + b.getNumQueuesByCat("train") + ")</span>");
+    jQuery("#queue_head_building").html("<span >" + g_js_strings.commonstr.building + " (" + b.getNumQueuesByCat("building") + ")</span>");
+    jQuery("#queue_head_research").html("<span >" + g_js_strings.commonstr.research + " (" + b.getNumQueuesByCat("research") + ")</span>");
     a.updateQueueDom()
+}
+function realTimeFinishBuildingSound(a) {
+    var b = a[4];
+    if ((unixtime() - b) < 3) {
+        cm.sounds.play("finished_building")
+    }
 }
 var cm = cm || {};
 cm.view = function(a) {
@@ -62147,7 +62938,7 @@ function invite_friends_popup() {
         onSuccess: function(f) {
             var b = ("(" + f.responseText + ")").evalJSON();
             if (!b.ok || !b.invitation || !b.invitation.invitationText || !b.invitation.invitationActionData) {
-                Modal.showAlert(printLocalError((b.error_code || null), (b.msg || null), (b.feedback || null)));
+                Modal.showAlert(printLocalError(b.error_code, b.msg, b.feedback));
                 return
             }
             try {
@@ -62167,6 +62958,11 @@ function invite_friends_popup() {
 }
 function invite_friends_popup_knight() {
     top.location = knightinviteUrl
+}
+function fb_connect_login() {
+    FB.login(function(a) {}, {
+        scope: "email,publish_actions"
+    })
 }
 function test_info_dialog() {
     jQuery.ajax({
@@ -62417,7 +63213,8 @@ function init() {
     cm.BlessingSystemModel.init();
     cm.PrestigeCityView.render();
     cm.PrestigeManagerController.initHud();
-    cm.Gems.update(seed.player.gems)
+    cm.Gems.update(seed.player.gems);
+    cm.sounds.init()
 }
 jQuery(document).ready(function() {
     cm.stopwatch.mark("document_ready")
@@ -62469,9 +63266,15 @@ function createRecipes() {
     })
 }
 function createThroneEffectNames() {
-    jQuery.each(cm.thronestats.effects, function(b, a) {
-        if (g_js_strings.throneRoom["effectName_" + b]) {
-            cm.thronestats.effects[b][1] = g_js_strings.throneRoom["effectName_" + b]
+    jQuery.each(cm.thronestats.effects, function(c, a) {
+        var d = "effectName_" + c,
+            b = "Undefined TR effect name (effectId: " + c + "). Be sure to define this in text_en.";
+        if (g_js_strings.throneRoom[d]) {
+            cm.thronestats.effects[c][1] = g_js_strings.throneRoom[d]
+        } else {
+            cm.log.error(2, cm.ERROR_TYPE.INFORMATION_MISSING, b);
+            cm.log.l(b);
+            cm.thronestats.effects[c][1] = "Effect of No Created Name"
         }
     })
 }
@@ -66434,7 +67237,7 @@ function modal_marketplace_cancel(mid, rtype, postingtype, kremaining, price) {
                     };
                     Modal.showTrackerAlert(msgObj)
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             }
         },
@@ -66516,7 +67319,7 @@ function modal_marketplace_viewtransactions() {
                 }
                 $("market_num_of_transactions").innerHTML = g_js_strings.commonstr.transactions + "<br/>" + numoftransactions
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -66680,7 +67483,7 @@ function modal_marketplace_changerec(recid) {
                 sellhtml.push("</tbody></table>");
                 $("marketmod_selltable").innerHTML = sellhtml.join("")
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -66728,7 +67531,9 @@ function market_update_num_of_transaction() {
                         $("marketmain_maxtransac").hide()
                     }
                 }
-            } else {}
+            } else {
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
+            }
         },
         onFailure: function() {}
     })
@@ -66986,7 +67791,7 @@ function market_dotrade(quantk, price, transac) {
                 getModalResourceBar()
             } else {
                 Modal.hideModal();
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -67081,7 +67886,7 @@ function modal_marketplace_bidoffer() {
                     update_seed(rslt.updateSeed)
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -67264,7 +68069,7 @@ cm.MerlinTutorialSteps = [{
     events: {
         enter: function() {
             if (cm.TutorialProgressChecker.isSawmillBuilding()) {
-                cm.TutorialView.updateArrow([527, 470], "down");
+                cm.TutorialView.updateArrow([527, 400], "down");
                 Modal.showCurtain();
                 $("modalCurtain0").setOpacity(0.3);
                 cm.ConversionTracker.track("biftetracking", 900);
@@ -67621,10 +68426,10 @@ cm.messageController = function($) {
         bind: function() {
             cm.select.bind();
             $(".checkAll").unbind("click").bind("click", function() {
-                modal_messages_inbox_check($(this).attr("checked") ? 1 : 2)
+                modal_messages_inbox_check($(this).prop("checked") ? 1 : 2)
             });
             $(".checkAllReports").unbind("click").bind("click", function() {
-                modal_messages_reports_chk($(this).attr("checked") ? 1 : 2)
+                modal_messages_reports_chk($(this).prop("checked") ? 1 : 2)
             })
         },
         escape: function(str) {
@@ -67785,20 +68590,20 @@ Messages.Methods = {
             rid: p,
             side: a
         };
-        AjaxCall.gPostRequest("ajax/fetchReport.php", b, function(w) {
-            cm.GloryView.set(w);
+        AjaxCall.gPostRequest("ajax/fetchReport.php", b, function(y) {
+            cm.GloryView.set(y);
             if (t == 1) {
                 seed.newReportCount = parseInt(seed.newReportCount) - 1;
                 messages_notify_bug()
             }
-            var v = w.marchType == 2 || w.marchType == 5;
-            if (v) {
-                $("modal_msg_list").innerHTML = MarchReport.getMarchReport(c, w).render();
-                $("modal_msg_list").innerHTML = cm.MarchReportController.getMarchReport(c, w)
+            var x = y.marchType == 2 || y.marchType == 5;
+            if (x) {
+                $("modal_msg_list").innerHTML = MarchReport.getMarchReport(c, y).render();
+                $("modal_msg_list").innerHTML = cm.MarchReportController.getMarchReport(c, y)
             }
             jQuery(".msgTopBar, .reportDeletes, .tradeDeletes, .report_view").hide();
             cm.GloryView.render();
-            var x = {
+            var z = {
                 side0PlayerId: j,
                 side1PlayerId: r,
                 rptid: p,
@@ -67819,12 +68624,32 @@ Messages.Methods = {
                 atkxcoord: e,
                 atkycoord: f
             };
-            if (!v) {
-                var u = jQuery.extend({}, w, x);
+            if (!x) {
+                var u = jQuery.extend({}, y, z);
                 if (u.mercenaryHideoutConflict) {
                     u.darkForestConflict
                 }
                 cm.ReportView.render(u)
+            }
+            if (t == 1) {
+                y.marchtype = s;
+                y.side = parseInt(a) == 0 ? "defender" : "attacker";
+                y.tileType = q;
+                var w = cm.ReportModel.getReportType(y);
+                if (w === "scenes_battle_win01") {
+                    var v = (parseInt(a) === 0) ? r : j;
+                    kraken.network.publishGamesFeed(cm.FB_ACTIONS.DEFEAT, cm.FB_OBJECTS.PROFILE, {
+                        userId: v
+                    })
+                } else {
+                    if (w === "df_win" && g >= 7) {
+                        kraken.network.publishGamesFeed(cm.FB_ACTIONS.DEFEAT, cm.FB_OBJECTS.DARK_FOREST)
+                    } else {
+                        if (w === "wilderness_win") {
+                            kraken.network.publishGamesFeed(cm.FB_ACTIONS.CONQUER, cm.FB_OBJECTS.WILD)
+                        }
+                    }
+                }
             }
         })
     },
@@ -68118,7 +68943,7 @@ Messages.Methods = {
                         }
                     } else {
                         if (e == "blockUser") {
-                            Modal.showAlert(printLocalError((b.error_code || null), (b.msg || null), (b.feedback || null)))
+                            Modal.showAlert(printLocalError(b.error_code, b.msg, b.feedback))
                         }
                     }
                 }
@@ -68128,7 +68953,7 @@ Messages.Methods = {
                 messages_notify_bug()
             }
         } else {
-            Modal.showAlert(printLocalError((b.error_code || null), (b.msg || null), (b.feedback || null)))
+            Modal.showAlert(printLocalError(b.error_code, b.msg, b.feedback))
         }
     }
 };
@@ -68674,7 +69499,7 @@ function modal_messages_viewCityEventReport(reportid, pageno, eventType) {
                 var rslt = message.responseText.evalJSON();
                 $("modal_msg_list_pagination").hide();
                 if (!rslt.ok) {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 } else {
                     var reportDate = formatDateByUnixTime(rslt.index.reportUnixTime);
                     var reportNumber = rslt.index.cityEventReportId;
@@ -69938,7 +70763,7 @@ var cm = function(parent) {
                     }
                     mmb_modal_confirm(rslt.prize)
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -70088,7 +70913,7 @@ Modal.Methods = {
                 knight: [
                     ["216"], "error"],
                 worker: [
-                    ["103", "2", "102"], "error"]
+                    ["2", "102", "103", "106"], "error"]
             }, i = a.type || "",
             g = g_js_strings.modaltitles.error,
             f = a.text || "";
@@ -73323,7 +74148,7 @@ cm.PrestigeCityView = function(d) {
                 p = 216,
                 r = 60,
                 q = "fall";
-            cm.AnimationCreation.toggleAnim(s, p, o, r, q)
+            cm.BlessingSystemView.startAnimation("cityFall", 216, parseInt(o / p))
         } else {
             d("#cityFall").hide();
             cm.AnimationCreation.toggleAnim(null, null, null, null, "fall")
@@ -73801,7 +74626,8 @@ cm.PrestigeManagerController = function(j) {
         cm.ModalManager.closeAll();
         u(G, function() {
             cm.PrestigeManagerView.openCongrats(H);
-            q()
+            q();
+            kraken.network.publishGamesFeed(cm.FB_ACTIONS.ASCEND, cm.FB_OBJECTS.CITY)
         })
     };
     var m = function(G) {
@@ -74880,7 +75706,7 @@ ProgressBar.Methods = {
                         } else {
                             if (!i.ok) {
                                 if (i.error_code && i.error_code != 0 && i.error_code != 1001) {
-                                    Modal.showAlert(printLocalError((i.error_code || null), (i.msg || null), (i.feedback || null)))
+                                    Modal.showAlert(printLocalError(i.error_code, i.msg, i.feedback))
                                 } else {
                                     if (i.error_code && i.error_code == 1001) {
                                         var k = $("progressBar");
@@ -75507,7 +76333,7 @@ function modal_quest_getaward(tgt, share) {
                         };
                         Modal.showTrackerAlert(msgObj)
                     } else {
-                        Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                        Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                     }
                 }
             },
@@ -76117,6 +76943,204 @@ function quests_validquests() {
         recommended: j
     }
 };
+cm = cm || {};
+cm.QueueModel = function(e) {
+    var m;
+    var j = function() {
+        if (cm.WorldSettings.hasSetting("MAXIMUM_QUEUES")) {
+            return parseInt(cm.WorldSettings.getSetting("MAXIMUM_QUEUES"))
+        } else {
+            return 1
+        }
+    };
+    var i = [],
+        d = [];
+    var h = function(p, o) {
+        return p - o
+    };
+    var a = function() {
+        if (i.length == 0) {
+            var p = seed.multiQueue.priceMetaData;
+            for (var o in p) {
+                i.push(parseInt(o));
+                d.push(parseInt(p[o]))
+            }
+            i.sort(h);
+            d.sort(h)
+        }
+    };
+    var b = function(p) {
+        for (var o in i) {
+            if (p <= i[o]) {
+                return d[o]
+            }
+        }
+        return -1
+    };
+    var g = function(p, o) {
+        var r = 0;
+        if (typeof seed.multiQueue !== "undefined") {
+            a();
+            var q = i[i.length - 1];
+            if (p < q) {
+                r = b(p)
+            } else {
+                r = Math.ceil(p / q * d[d.length - 1])
+            }
+        }
+        m = r;
+        return r
+    };
+    var l = function() {
+        var o = false;
+        if ((cm.VipModel.getSubStatus() === "inactive" && cm.VipModel.getExpireTimeLeft() > 0) || cm.VipModel.getSubStatus() !== "inactive") {
+            o = true
+        }
+        return o
+    };
+    var k = function() {
+        return seed.queue_con["city" + currentcityid].length
+    };
+    var c = function() {
+        return seed.queue_tch["city" + currentcityid].length + seed.queue_tch2["city" + currentcityid].length
+    };
+    var f = function() {
+        return cm.WorldSettings.hasSetting("MULTIPLE_RESEARCH_QUEUES_ENABLED") && cm.WorldSettings.getSetting("MULTIPLE_RESEARCH_QUEUES_ENABLED")
+    };
+    var n = function() {
+        return m
+    };
+    return {
+        getNumMaxQueues: j,
+        getQueueCost: g,
+        hasFreeQueue: l,
+        getActiveBuildingCount: k,
+        getActiveResearchCount: c,
+        getMultiResearchQueueEnabled: f,
+        getLastCostEstimate: n
+    }
+}(jQuery);
+cm.QueueView = function(f) {
+    var i = function(k) {
+        k.gembal = g_js_strings.queue.gem_bal + ':  <div class="gem"></div><div class="balance">' + addCommas(seed.player.gems) + "</div>";
+        cm.ModalManager.addSmall({
+            body: cm.Template.renderTemplate("multiQueue", "confPopup", k)
+        });
+        f(".confPopup .startBuilding").on("click", k.callback)
+    };
+    var a = function() {
+        var m = seed.subscriber && seed.subscriber.status == "active";
+        var l = false;
+        var k = cm.QueueModel.getActiveBuildingCount();
+        if (m && k == 1) {
+            l = "free_additional_queue_available"
+        } else {
+            if ((!m && k >= 1) || (m && k >= 2)) {
+                l = "additional_queue_open_for_buy"
+            }
+        }
+        if (k >= cm.WorldSettings.getSetting("MAXIMUM_QUEUES")) {
+            l = "all_build_queues_occupied"
+        }
+        return l
+    };
+    var j = function(l) {
+        if (a() == "all_build_queues_occupied") {
+            return '<div class="allBuild">' + g_js_strings.queue.occupied + "</div>"
+        }
+        var k = parseInt(l) == 0 ? g_js_strings.commonstr.build : g_js_strings.commonstr.upgrade;
+        if (a() == "free_additional_queue_available") {
+            var m = {
+                free: g_js_strings.queue.free,
+                learn: g_js_strings.queue.learn,
+                onclick: "buildingController.buildButtonClicked(event);return false;",
+                upgrade: k,
+                time_estimate: g_js_strings.commonstr.time + ": " + timestr(baseTime_),
+                buttonColor: "",
+                share_a_message: g_js_strings.modal_build.sharemessagebuildorresearch
+            };
+            return cm.Template.renderTemplate("multiQueue", "upgradeSection", m)
+        }
+        if (a() == "additional_queue_open_for_buy") {
+            var m = {
+                free: g_js_strings.queue.open + ":",
+                learn: g_js_strings.queue.learn,
+                onclick: "cm.QueueView.additionalQueueOpenForBuy();return false;",
+                upgrade: k,
+                time_estimate: g_js_strings.commonstr.time + ": " + timestr(baseTime_),
+                buttonColor: "Green",
+                share_a_message: g_js_strings.modal_build.sharemessagebuildorresearch,
+                cost_gems: cm.Template.renderTemplate("multiQueue", "cost_gems", {
+                    cost: parseInt(cm.QueueModel.getQueueCost(e(), cm.QueueModel.getActiveBuildingCount()))
+                })
+            };
+            return cm.Template.renderTemplate("multiQueue", "upgradeSection", m)
+        }
+    };
+    var e = function() {
+        return seed.queue_con["city" + currentcityid][0][4] - unixtime()
+    };
+    var d = function(k) {
+        baseTime_ = k
+    };
+    var h = function() {
+        var l = e();
+        var k = seed.queue_con["city" + currentcityid];
+        var m = parseInt(cm.QueueModel.getQueueCost(l, cm.QueueModel.getActiveBuildingCount()));
+        cm.QueueView.addTo({
+            title: g_js_strings.queue.startb + "?",
+            description: g_js_strings.commonstr.use + " " + addCommas(m) + " " + g_js_strings.commonstr.gems + g_js_strings.queue.tostartbuilding,
+            cost: parseInt(m),
+            callback: buildingController.buildButtonClicked,
+            button: g_js_strings.queue.start + " " + addCommas(m) + '<div class="gem"></div>'
+        })
+    };
+    var c = function() {
+        f(".upgradeSection .learn").unbind("click").bind("click", cm.VipController.onEngagementTabClick)
+    };
+    var b = function(l, m, o) {
+        var k = "";
+        var n = "";
+        if (m) {
+            if (standalone == 1) {
+                k = '<div class="bottom_q"><div class="additional_queue">' + g_js_strings.queue.upper + "</div></div>"
+            } else {
+                k = cm.Template.renderTemplate("multiQueue", "bottom", {
+                    lower: g_js_strings.queue.lower,
+                    more_info: "&nbsp; " + g_js_strings.queue.more,
+                    upper: g_js_strings.queue.upper
+                })
+            }
+        }
+        l.pushOutBuffer("building", n + k)
+    };
+    var g = function(l, m) {
+        var k = "";
+        var n = "";
+        var o = cm.QueueModel.getActiveResearchCount();
+        if (m) {
+            k = cm.Template.renderTemplate("multiQueue", "bottom", {
+                lower: g_js_strings.queue.lower,
+                more_info: "&nbsp; " + g_js_strings.queue.more,
+                upper: g_js_strings.queue.upper
+            })
+        }
+        if (parseInt(o) == 0) {
+            n = '<div class="additional_queue">' + g_js_strings.queue.nothing_res + '</div><div class="helping_alliance_bar"></div>'
+        }
+        l.pushOutBuffer("research", n + k)
+    };
+    return {
+        bottom: b,
+        bottomTech: g,
+        addTo: i,
+        renderButtons: j,
+        additionalQueueOpenForBuy: h,
+        setRenderedBaseTime: d,
+        getMode: a,
+        bind: c
+    }
+}(jQuery);
 
 function modal_openRallypoint() {
     var b = new Array();
@@ -76709,7 +77733,7 @@ cm.ReinforcedReportLoader = function(b) {
                 var y = D.responseText.evalJSON();
                 b("#modal_msg_list_pagination").hide();
                 if (undefined == y.unts) {
-                    Modal.showAlert(printLocalError((y.error_code || null), (y.msg || null), (y.feedback || null)))
+                    Modal.showAlert(printLocalError(y.error_code, y.msg, y.feedback))
                 } else {
                     var t = null;
                     var A = [];
@@ -76839,7 +77863,7 @@ cm.ReinforcedReportController = function(model, view) {
                     }
                     onTroopsSentHome_()
                 } else {
-                    Modal.showAlert(printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -77803,22 +78827,26 @@ cm.ResearchSpeedupController = new function() {
     };
     var a = "Speedup_Research_Click";
     var b = "tch";
-    this.queueClick = function(i, k) {
-        b = k;
-        var j = this.is_workshop_research() ? seed.queue_tch2 : seed.queue_tch;
+    this.queueClick = function(j, l, i) {
+        b = l;
+        var k = this.is_workshop_research() ? seed.queue_tch2 : seed.queue_tch;
         var f = this.is_workshop_research() ? techcost2 : techcost;
-        var d = c(i),
-            g = j["city" + currentcityid][0],
+        var d = c(j),
+            g = k["city" + currentcityid][i],
             h = f["tch" + g[0]][0] + " (" + g_js_strings.commonstr.lv + g[1] + ")";
-        modal_speedup(b, d, undefined, h);
+        modal_speedup(b, d, undefined, h, i);
         cm.MixPanelTracker.track(a, {
             from: "queue"
         })
     };
-    this.popupClick = function(f, g) {
-        b = g;
-        var d = c(f);
-        modal_speedup(b, d);
+    this.popupClick = function(j, l, i) {
+        b = l;
+        var k = this.is_workshop_research() ? seed.queue_tch2 : seed.queue_tch;
+        var f = this.is_workshop_research() ? techcost2 : techcost;
+        var d = c(j),
+            g = k["city" + currentcityid][i],
+            h = f["tch" + g[0]][0] + " (" + g_js_strings.commonstr.lv + g[1] + ")";
+        modal_speedup(b, d, undefined, h, i);
         cm.MixPanelTracker.track(a, {
             from: "popup"
         })
@@ -77829,11 +78857,32 @@ cm.ResearchController = function(b, a) {
     var d = b;
     var e = a;
     this.researchButtonClicked = function(j) {
-        var i = Event.findElement(j, "a");
-        var f = i.name;
-        var g = d.researches[f];
-        var h = g.getHelped() ? 1 : 0;
-        upg_tch(f, g.getCurrentLevel() + 1, h)
+        var k = Event.findElement(j, "a");
+        var l = k.name;
+        var h = d.researches[l];
+        var m = h.getHelped() ? 1 : 0;
+        var n = is_workshop_open();
+        var o = n ? seed.queue_tch2["city" + currentcityid].length : seed.queue_tch["city" + currentcityid].length;
+        var f = n ? techcost2["tch" + l][7] : techcost["tch" + l][7];
+        if ((cm.QueueModel.hasFreeQueue() && o > 1) || (!cm.QueueModel.hasFreeQueue() && o > 0)) {
+            var g = {
+                id: l,
+                level: h.getCurrentLevel() + 1,
+                help: m
+            };
+            var i = {
+                cost: cm.QueueModel.getQueueCost(f, o),
+                title: g_js_strings.queue.start + " " + g_js_strings.commonstr.research,
+                description: (g_js_strings.queue.confdialog).replace("%1$s", cm.QueueModel.getQueueCost(f, o)).replace("%2$s", g_js_strings.commonstr.research),
+                callback: function(p) {
+                    upg_tch(g.id, g.level, g.help)
+                },
+                button: g_js_strings.queue.proceed + " <span class='gems'>" + cm.QueueModel.getQueueCost(f, o) + "</span>"
+            };
+            cm.QueueView.addTo(i)
+        } else {
+            upg_tch(l, h.getCurrentLevel() + 1, m)
+        }
     };
     this.checkboxChanged = function(i) {
         var h = i.srcElement ? i.srcElement : i.target;
@@ -77911,215 +78960,226 @@ Research.Methods = {
             return Research.AlternativeLevels[b] ? Research.AlternativeLevels[b] : 12
         }
     },
-    openAlchemy: function(c) {
-        var r, z, t, q;
-        if (c === 2) {
-            r = seed.queue_tch2;
-            z = techcost2;
-            t = seed.tech2;
-            q = "img/tech2/"
+    openAlchemy: function(C) {
+        var f, l, L, u;
+        if (C === 2) {
+            f = seed.queue_tch2;
+            l = techcost2;
+            L = seed.tech2;
+            u = "img/tech2/"
         } else {
-            r = seed.queue_tch;
-            z = techcost;
-            t = seed.tech;
-            q = "img/tech/"
+            f = seed.queue_tch;
+            l = techcost;
+            L = seed.tech;
+            u = "img/tech/"
         }
         removeTooltip();
-        var C = Math.abs(cm.ThroneController.getBoundedEffect(100));
-        C = (100 - C) / 100;
-        var s = new Array();
-        s.push("<div class='alchemymodal' id='alchemymodal'>");
-        s.push("<div class='tabsbar'>");
-        s.push("<a class='tab selected'><span>" + g_js_strings.modal_openAlchemy.resitms + "</span></a>");
-        s.push("</div>");
-        s.push("<div class='alchemywrap' id='alchemywrap'>");
-        s.push("<div class='tableheader'><table cellpadding='0' cellspacing='0'><thead><tr><td class='tch'><div>" + g_js_strings.commonstr.technology + "</div></td><td class='res'><div>" + g_js_strings.commonstr.resource + "</div></td><td class='req'><div>" + g_js_strings.commonstr.required + "</div></td><td class='own'><div>" + g_js_strings.commonstr.youown + "</div></td></tr></thead></table></div>");
-        s.push("<div class='techlist'>");
-        var f = Object.keys(z);
-        s.push("<table cellpadding='0' cellspacing='0'><tbody>");
-        var J = 0;
-        if (r["city" + currentcityid].length > 0) {
-            J = parseInt(r["city" + currentcityid][0][0])
+        var e = Math.abs(cm.ThroneController.getBoundedEffect(100));
+        e = (100 - e) / 100;
+        var m = new Array();
+        m.push("<div class='alchemymodal' id='alchemymodal'>");
+        m.push("<div class='tabsbar'>");
+        m.push("<a class='tab selected'><span>" + g_js_strings.modal_openAlchemy.resitms + "</span></a>");
+        m.push("</div>");
+        m.push("<div class='alchemywrap' id='alchemywrap'>");
+        m.push("<div class='tableheader'><table cellpadding='0' cellspacing='0'><thead><tr><td class='tch'><div>" + g_js_strings.commonstr.technology + "</div></td><td class='res'><div>" + g_js_strings.commonstr.resource + "</div></td><td class='req'><div>" + g_js_strings.commonstr.required + "</div></td><td class='own'><div>" + g_js_strings.commonstr.youown + "</div></td></tr></thead></table></div>");
+        m.push("<div class='techlist'>");
+        var o = Object.keys(l);
+        m.push("<table cellpadding='0' cellspacing='0'><tbody>");
+        var H = 0;
+        var k = [];
+        if (f["city" + currentcityid].length > 0) {
+            for (var F = 0; F < f["city" + currentcityid].length; F++) {
+                k.push(parseInt(f["city" + currentcityid][F][0]))
+            }
+            H = parseInt(f["city" + currentcityid][0][0])
         }
-        var b = new Array();
-        var e = Object.keys(r);
-        for (var B = 0; B < e.length; B++) {
-            if (e[B] != "city" + currentcityid) {
-                if (r[e[B]].length > 0) {
-                    b.push(parseInt(r[e[B]][0][0]))
+        var p = new Array();
+        var w = Object.keys(f);
+        for (var F = 0; F < w.length; F++) {
+            if (w[F] != "city" + currentcityid) {
+                if (f[w[F]].length > 0) {
+                    p.push(parseInt(f[w[F]][0][0]))
                 }
             }
         }
-        var a = new Object();
-        var G = new Object();
-        var m = false;
-        for (var B = 0; B < f.length; B++) {
-            var H = z[f[B]];
-            var o = parseInt(f[B].split("tch")[1]);
-            var E = parseInt(t[f[B]]);
-            var F = checkreq("tch", o, (parseInt(t[f[B]]) + 1), c);
-            var y = new Array();
-            var n = new Array();
-            var w = new Array();
-            var u = true;
-            if (E < Research.Methods.maxLevel(o, c)) {
-                for (var A = 0; A < F[0].length; A++) {
-                    var v = (parseInt(F[1][A]) > 0) ? Math.round(F[1][A] * C) : -1;
-                    y.push("<div>");
-                    y.push(F[0][A]);
-                    y.push("</div>");
-                    if ((F[3][A] == 0 && v === -1) || F[2][A] < v) {
-                        u = false;
-                        n.push("<div class='unmet'>")
+        var v = new Object();
+        var b = new Object();
+        var s = false;
+        for (var F = 0; F < o.length; F++) {
+            var c = l[o[F]];
+            var q = parseInt(o[F].split("tch")[1]);
+            var g = parseInt(L[o[F]]);
+            var a = checkreq("tch", q, (parseInt(L[o[F]]) + 1), C);
+            var r = new Array();
+            var z = new Array();
+            var d = new Array();
+            var G = true;
+            if (g < Research.Methods.maxLevel(q, C)) {
+                for (var E = 0; E < a[0].length; E++) {
+                    var x = (parseInt(a[1][E]) > 0) ? Math.round(a[1][E] * e) : -1;
+                    r.push("<div>");
+                    r.push(a[0][E]);
+                    r.push("</div>");
+                    if ((a[3][E] == 0 && x === -1) || a[2][E] < x) {
+                        G = false;
+                        z.push("<div class='unmet'>")
                     } else {
-                        n.push("<div class='met'>")
+                        z.push("<div class='met'>")
                     }
-                    if (parseInt(F[1][A]) > 0) {
-                        n.push(addCommas(Math.round(F[1][A] * C)))
+                    if (parseInt(a[1][E]) > 0) {
+                        z.push(addCommas(Math.round(a[1][E] * e)))
                     } else {
-                        n.push(F[1][A])
+                        z.push(a[1][E])
                     }
-                    n.push("</div>");
-                    w.push("<div>");
-                    if (parseInt(F[2][A]) > 0) {
-                        w.push(addCommas(F[2][A]))
+                    z.push("</div>");
+                    d.push("<div>");
+                    if (parseInt(a[2][E]) > 0) {
+                        d.push(addCommas(a[2][E]))
                     } else {
-                        w.push(F[2][A])
+                        d.push(a[2][E])
                     }
-                    w.push("</div>")
+                    d.push("</div>")
                 }
             } else {
-                u = false
+                G = false
             }
-            if (B % 2 == 1) {
-                s.push("<tr class='stripe'>")
+            if (F % 2 == 1) {
+                m.push("<tr class='stripe'>")
             } else {
-                s.push("<tr>")
+                m.push("<tr>")
             }
-            s.push("<td class='tchlist_img'><img src='" + stimgUrl + q + o + "_s33.png'/></td>");
-            s.push("<td class='tchlist_info'>");
-            s.push("<div class='techhd'>");
-            s.push(H[0]);
-            s.push(" (" + g_js_strings.commonstr.lv + " ");
-            s.push(t[f[B]]);
-            s.push(")</div>");
-            s.push("<div class='desc'>");
-            s.push(z[f[B]][10]);
-            s.push("</div>");
-            var p = false;
-            for (var A = 0; A < b.length; A++) {
-                if (o == b[A]) {
-                    p = true;
-                    A = b.length
-                }
-            }
-            if (p) {
-                s.push("<div class='btns clearfix'><b>" + g_js_strings.modal_openAlchemy.currentlyres + "</b></div>")
-            } else {
-                if (parseInt(t[f[B]]) < Research.Methods.maxLevel(o, c) && J == 0 && u) {
-                    var D = 0;
-                    var d = seed.knights["city" + currentcityid];
-                    if (d) {
-                        d = d["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
-                        if (d) {
-                            D = parseInt(d.intelligence);
-                            D = ((parseInt(d.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (D * 1.25) : D
-                        }
-                    }
-                    var x = "";
-                    var k = parseInt(t[f[B]]) + 1;
-                    if (o != 17) {
-                        k = Math.min(k, 11)
-                    }
-                    var h = Math.pow(2, (k - 1));
-                    var I = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().SCIENTIFIC_METHODOLOGIES);
-                    if (typeof c !== "number" || c !== 2 || typeof I !== "number") {
-                        I = 1
-                    }
-                    var g = cm.ThroneController.effectBonus(80);
-                    var l = parseInt(z[f[B]][7] * h * I * (1 / (1 + 0.005 * D)));
-                    l = Math.round(l / (1 + g / 100));
-                    G[o.toString()] = {
-                        buttonId: cm.ResearchView.BUTTON_PREFIX + o,
-                        timeTextId: cm.ResearchView.TIMETEXT_PREFIX + o,
-                        checkboxId: cm.ResearchView.CHECKBOX_PREFIX + o
-                    };
-                    a[o.toString()] = {
-                        currentLevel: E,
-                        baseTime: timestr(l),
-                        speedTime: timestr(Math.max(l - 600, 0)),
-                        helped: m
-                    };
-                    s.push("<div class='buttonRow'>");
-                    s.push("<a class='buttonDown20' id='" + G[o.toString()].buttonId + "' name='" + o + "' onclick='researchController.researchButtonClicked(event);return false'>");
-                    s.push("<span>" + g_js_strings.commonstr.research + "</span></a> ");
-                    s.push("<span>" + g_js_strings.commonstr.time + ": <span class='timeText' id='" + G[o.toString()].timeTextId + "'>" + a[o.toString()].speedTime + "</span></span>");
-                    s.push("</div>");
-                    s.push("<div class='checkboxRow'>");
-                    s.push("<div>");
-                    s.push("<a class='helptext' onclick='Modal.showAlert(\"");
-                    s.push(g_js_strings.modal_build.whatsthiscontent);
-                    s.push("\");return false;'>");
-                    s.push(g_js_strings.modal_build.whatsthis);
-                    s.push("</a>");
-                    s.push("</div>");
-                    s.push("<div>");
-                    s.push("<input id='" + G[o.toString()].checkboxId + "' name='" + o + "' type='checkbox' onclick='researchController.checkboxChanged(event)' />");
-                    s.push("<label for='" + G[o.toString()].checkboxId + "'>");
-                    s.push(cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch));
-                    s.push("</label>");
-                    s.push("</div>");
-                    s.push("</div>")
+            m.push("<td class='tchlist_img'><img src='" + stimgUrl + u + q + "_s33.png'/></td>");
+            m.push("<td class='tchlist_info'>");
+            m.push("<div class='techhd'>");
+            m.push(c[0]);
+            m.push(" (" + g_js_strings.commonstr.lv + " ");
+            m.push(L[o[F]]);
+            m.push(")</div>");
+            m.push("<div class='desc'>");
+            m.push(l[o[F]][10]);
+            m.push("</div>");
+            if (G && k.length > 0 && k.indexOf(q) === -1 && k.length < cm.QueueModel.getNumMaxQueues() && cm.QueueModel.getMultiResearchQueueEnabled()) {
+                var K = "";
+                if (cm.QueueModel.hasFreeQueue()) {
+                    K = "Free Additional Queue Open"
                 } else {
-                    if (o == J) {
-                        s.push("<div class='btns clearfix'><a class='inlineButton20Red' name='" + o + "' onclick=\"cm.ResearchSpeedupController.popupClick(event, 'tch');\">");
-                        s.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div>");
-                        s.push("<div class='timerem'>" + g_js_strings.commonstr.timeremaining + ": <span id='alchemymodal_tch");
-                        s.push(o);
-                        s.push("_queue_timeleft'>");
-                        s.push(timestr(parseInt(r["city" + currentcityid][0][3]) - unixtime()));
-                        s.push("</span></b></div>");
-                        if (getTechHelpEligible(o, currentcityid) == false, c) {
-                            s.push("<div class='btns clearfix'><a class='button20' onclick='tch_gethelp(");
-                            s.push(o + ", " + cm.RESEARCH_TYPES.ALCHEMY_LAB);
-                            s.push(");return false;'><span>" + g_js_strings.modal_quests.askhelp + "</span></a>");
-                            s.push("<a class='helptext' onclick='Modal.showAlert(\"");
-                            s.push(g_js_strings.modal_build.whatsthiscontent);
-                            s.push("\");return false;'>");
-                            s.push(g_js_strings.modal_build.whatsthis);
-                            s.push("</a>");
-                            s.push("</div>")
+                    K = "Additional Queue Open"
+                }
+                m.push("<div class='desc' style='font-weight:bold'>" + K + ": <a onclick='cm.VipController.onEngagementTabClick();'>Learn More</a></div>")
+            }
+            var I = false;
+            for (var E = 0; E < p.length; E++) {
+                if (q == p[E]) {
+                    I = true;
+                    E = p.length
+                }
+            }
+            if (I) {
+                m.push("<div class='btns clearfix'><b>" + g_js_strings.modal_openAlchemy.currentlyres + "</b></div>")
+            } else {
+                if (parseInt(L[o[F]]) < Research.Methods.maxLevel(q, C) && k.length < cm.QueueModel.getNumMaxQueues() && (cm.QueueModel.getMultiResearchQueueEnabled() || k.length < 1) && k.indexOf(q) === -1 && G) {
+                    var J = 0;
+                    var n = seed.knights["city" + currentcityid];
+                    if (n) {
+                        n = n["knt" + seed.leaders["city" + currentcityid].intelligenceKnightId];
+                        if (n) {
+                            J = parseInt(n.intelligence);
+                            J = ((parseInt(n.intelligenceBoostExpireUnixtime) - unixtime()) > 0) ? (J * 1.25) : J
+                        }
+                    }
+                    var A = "";
+                    var D = parseInt(L[o[F]]) + 1;
+                    if (q != 17) {
+                        D = Math.min(D, 11)
+                    }
+                    var y = Math.pow(2, (D - 1));
+                    var h = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().SCIENTIFIC_METHODOLOGIES);
+                    if (typeof C !== "number" || C !== 2 || typeof h !== "number") {
+                        h = 1
+                    }
+                    var t = cm.ThroneController.effectBonus(80);
+                    var B = parseInt(l[o[F]][7] * y * h * (1 / (1 + 0.005 * J)));
+                    B = Math.round(B / (1 + t / 100));
+                    b[q.toString()] = {
+                        buttonId: cm.ResearchView.BUTTON_PREFIX + q,
+                        timeTextId: cm.ResearchView.TIMETEXT_PREFIX + q,
+                        checkboxId: cm.ResearchView.CHECKBOX_PREFIX + q
+                    };
+                    v[q.toString()] = {
+                        currentLevel: g,
+                        baseTime: timestr(B),
+                        speedTime: timestr(Math.max(B - 600, 0)),
+                        helped: s
+                    };
+                    if ((!cm.QueueModel.hasFreeQueue() && k.length > 0) || (cm.QueueModel.hasFreeQueue() && k.length > 1)) {
+                        if (cm.QueueModel.getMultiResearchQueueEnabled()) {
+                            m.push("<div><span class='researchQueueCost'>" + cm.QueueModel.getQueueCost(B, k.length) + "</span></div>")
+                        }
+                    }
+                    m.push("<div class='buttonRow'>");
+                    m.push("<a class='buttonDown20' id='" + b[q.toString()].buttonId + "' name='" + q + "' onclick='researchController.researchButtonClicked(event);return false'>");
+                    m.push("<span>" + g_js_strings.commonstr.research + "</span></a> ");
+                    m.push("<span> " + g_js_strings.commonstr.time + ": <span class='timeText' id='" + b[q.toString()].timeTextId + "'>" + v[q.toString()].speedTime + "</span></span>");
+                    m.push("</div>");
+                    m.push("<div class='checkboxRow'>");
+                    m.push("<div>");
+                    m.push("<input id='" + b[q.toString()].checkboxId + "' name='" + q + "' type='checkbox' onclick='researchController.checkboxChanged(event)' />");
+                    m.push("<label for='" + b[q.toString()].checkboxId + "'>");
+                    m.push(cm.translate.it(g_js_strings.modal_build.sharemessagebuildorresearch));
+                    m.push("</label>");
+                    m.push("</div>");
+                    m.push("</div>")
+                } else {
+                    if (k.indexOf(q) !== -1) {
+                        m.push("<div class='btns clearfix'><a class='inlineButton20Red' name='" + q + "' onclick=\"cm.ResearchSpeedupController.popupClick(event, 'tch'," + k.indexOf(q) + ');">');
+                        m.push("<span>" + g_js_strings.commonstr.speedup + "</span></a></div>");
+                        m.push("<div class='timerem'>" + g_js_strings.commonstr.timeremaining + ": <span id='alchemymodal_tch");
+                        m.push(q);
+                        m.push("_queue_timeleft'>");
+                        m.push(timestr(parseInt(f["city" + currentcityid][k.indexOf(q)][3]) - unixtime()));
+                        m.push("</span></b></div>");
+                        if (!getTechHelpEligible(q, currentcityid, C)) {
+                            m.push("<div class='btns clearfix'><a class='button20' onclick='tch_gethelp(");
+                            m.push(q + ", " + cm.RESEARCH_TYPES.ALCHEMY_LAB);
+                            m.push(");return false;'><span>" + g_js_strings.modal_quests.askhelp + "</span></a>");
+                            m.push("<a class='helptext' onclick='Modal.showAlert(\"");
+                            m.push(g_js_strings.modal_build.whatsthiscontent);
+                            m.push("\");return false;'>");
+                            m.push(g_js_strings.modal_build.whatsthis);
+                            m.push("</a>");
+                            m.push("</div>")
                         }
                     } else {
-                        if (!u) {
-                            if (E < Research.Methods.maxLevel(o, c)) {
-                                s.push("<div class='btns clearfix'><b class='unmet'>" + g_js_strings.modal_openAlchemy.reqnotmet + "</b></div>")
+                        if (!G) {
+                            if (g < Research.Methods.maxLevel(q, C)) {
+                                m.push("<div class='btns clearfix'><b class='unmet'>" + g_js_strings.modal_openAlchemy.reqnotmet + "</b></div>")
                             } else {
-                                s.push("<div class='btns clearfix'><b class='maxlv'>" + g_js_strings.modal_openAlchemy.maxres + "</b></div>")
+                                m.push("<div class='btns clearfix'><b class='maxlv'>" + g_js_strings.modal_openAlchemy.maxres + "</b></div>")
                             }
                         }
                     }
                 }
             }
-            s.push("</td>");
-            s.push("<td class='tchlist_res'>");
-            s.push(y.join(""));
-            s.push("</td>");
-            s.push("<td class='tchlist_req'>");
-            s.push(n.join(""));
-            s.push("</td>");
-            s.push("<td class='tchlist_own'>");
-            s.push(w.join(""));
-            s.push("</td>");
-            s.push("</tr>")
+            m.push("</td>");
+            m.push("<td class='tchlist_res'>");
+            m.push(r.join(""));
+            m.push("</td>");
+            m.push("<td class='tchlist_req'>");
+            m.push(z.join(""));
+            m.push("</td>");
+            m.push("<td class='tchlist_own'>");
+            m.push(d.join(""));
+            m.push("</td>");
+            m.push("</tr>")
         }
-        s.push("</tbody></table>");
-        s.push("</div>");
-        s.push("</div>");
-        s.push("</div>");
-        $("modal_build_content").innerHTML = s.join("");
-        researchCollectionModel = new cm.ResearchCollectionModel(a);
-        researchView = new cm.ResearchView(G, researchCollectionModel);
+        m.push("</tbody></table>");
+        m.push("</div>");
+        m.push("</div>");
+        m.push("</div>");
+        $("modal_build_content").innerHTML = m.join("");
+        researchCollectionModel = new cm.ResearchCollectionModel(v);
+        researchView = new cm.ResearchView(b, researchCollectionModel);
         researchController = new cm.ResearchController(researchCollectionModel, researchView)
     },
     shareBtnTooltip: function(a) {
@@ -78352,8 +79412,10 @@ cm.Resources = function(e) {
                 3: 85,
                 4: 86
             }, t = r[u];
-        s += cm.ThroneController.effectBonus(82);
-        s += cm.ThroneController.effectBonus(t);
+        s += cm.ThroneController.getBoundedEffect(82);
+        if (typeof t !== "undefined") {
+            s += cm.ThroneController.getBoundedEffect(t)
+        }
         return s / 100
     };
     var q = function(u, t) {
@@ -78417,7 +79479,6 @@ cm.RevivalModel = function() {
         }
         var i = +(d[h]["Cost"]) || 2000;
         var g = (100 + cm.ThroneController.getBoundedEffect(98)) / 100;
-        cm.log.l("Gold cost reduced by: " + g);
         return Math.floor(i * g)
     };
     var b = function(k, j) {
@@ -78439,7 +79500,6 @@ cm.RevivalModel = function() {
         var r = o * cm.WorldSettings.getSetting("APOTHECARY_TIME_FACTOR");
         var p = unitcost["unt" + k][7] * j / r;
         p = p >= 5 ? p : 5;
-        cm.log.l("revivalSpeedIncrease = " + o);
         if (q > 1) {
             p = p / 1.2
         }
@@ -78447,9 +79507,7 @@ cm.RevivalModel = function() {
             bonus = cm.ThroneController.effectBonus(96);
             p = p - (p * (bonus / 100))
         }
-        cm.log.l("2. apoth revival time = " + p);
         p = Math.ceil(p - (p * cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().PICK_ME_UP, currentcityid)));
-        cm.log.l("3. with blessing = " + p);
         return {
             time: p,
             cost: g,
@@ -78479,7 +79537,7 @@ cm.RevivalQueue = function() {
                 if (rslt.ok) {
                     do_modal_speedupR(type, typeid, slotid, subjectCurrentlyBuilding, rslt.data.featureInfo, queueNum)
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -78675,7 +79733,7 @@ cm.RevivalQueue = function() {
                             thtml.push('</span><span class="time">');
                             thtml.push(timestr(timeleft));
                             thtml.push("</span>");
-                            thtml.push('<div class="speedup"><a class="inlineButton red14" onclick="cm.RevivalQueue.modal_speedupR(');
+                            thtml.push('<div class="speedup"><a class="buttonv2 red" name="" onclick="cm.RevivalQueue.modal_speedupR(');
                             thtml.push(["'rev" + revivalSlot + "'", q[i][0][0], 0, "'" + g_js_strings.commonstr.revival + "'", q[i][0][2]].join(","));
                             thtml.push("," + revivalSlot + ');return false;"><span>' + g_js_strings.commonstr.speedup + "</span></a></div>");
                             thtml.push('</div><div class="bar" style="width:');
@@ -78690,19 +79748,17 @@ cm.RevivalQueue = function() {
                         if (timeleft != null && cm.WoundedModel.exists()) {
                             cm.speedUpModalTimer.endSpeedUpModal("rev" + (i + 1));
                             seed.units["city" + currentcityid]["unt" + q[i][0][0]] = parseInt(seed.units["city" + currentcityid]["unt" + q[i][0][0]]) + parseInt(q[i][0][1]);
-                            if (cm.speedUpModalTimer.queueNum) {
-                                if (i == 0) {
-                                    seed.queue_revive["city" + currentcityid].splice(0, 1)
-                                } else {
-                                    seed.queue_revive2["city" + currentcityid].splice(0, 1)
-                                }
+                            if (i == 0) {
+                                seed.queue_revive["city" + currentcityid].splice(0, 1)
+                            } else {
+                                seed.queue_revive2["city" + currentcityid].splice(0, 1)
                             }
                         }
                     }
                 }
             }
         }
-        return thtml
+        return thtml.join("")
     };
     var traintab_ = function() {
         var queues = [];
@@ -78862,7 +79918,7 @@ cm.RevivalQueue = function() {
                     }
                     update_queue()
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -79079,11 +80135,11 @@ cm.SacrificeQueue = function() {
                 parameters: params,
                 onSuccess: function(transport) {
                     profiler.stop();
-                    var response = eval("(" + transport.responseText + ")");
-                    if (response.ok) {
+                    var rslt = eval("(" + transport.responseText + ")");
+                    if (rslt.ok) {
                         removeQueue_(cityId, queueNumber)
                     } else {
-                        Modal.showAlert(printLocalError((response.error_code || null), (response.msg || null), (response.feedback || null)))
+                        Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                     }
                 }
             });
@@ -80432,7 +81488,7 @@ cm.sounds = function(g) {
             }
         })
     };
-    g(document).ready(function l() {
+    var l = function() {
         if (cm.WorldSettings.isOn("SOUND_EFFECTS")) {
             _effects = localStorage.getItem("effects") == "true";
             e = localStorage.getItem("music") == "true";
@@ -80452,14 +81508,52 @@ cm.sounds = function(g) {
             });
             c();
             f();
-            setTimeout(function() {}, 4000)
+            setTimeout(function() {}, 4000);
+            (function() {
+                var p, o, n;
+                if (typeof document.hidden !== "undefined") {
+                    p = "hidden";
+                    n = "visibilitychange";
+                    o = "visibilityState"
+                } else {
+                    if (typeof document.mozHidden !== "undefined") {
+                        p = "mozHidden";
+                        n = "mozvisibilitychange";
+                        o = "mozVisibilityState"
+                    } else {
+                        if (typeof document.msHidden !== "undefined") {
+                            p = "msHidden";
+                            n = "msvisibilitychange";
+                            o = "msVisibilityState"
+                        } else {
+                            if (typeof document.webkitHidden !== "undefined") {
+                                p = "webkitHidden";
+                                n = "webkitvisibilitychange";
+                                o = "webkitVisibilityState"
+                            }
+                        }
+                    }
+                }
+                document.addEventListener(n, function() {
+                    if (cm.sounds.isMusicOn()) {
+                        if (document[p]) {
+                            AM_pauseMusic()
+                        } else {
+                            AM_unpauseMusic()
+                        }
+                    }
+                }, false)
+            })()
         }
-    });
+    };
     var h = {
         field: "field",
         map: "map"
     };
     return {
+        isMusicOn: function() {
+            return e
+        },
         music_play: function(o) {
             var n = h[o];
             if (!n) {
@@ -80481,8 +81575,7 @@ cm.sounds = function(g) {
         },
         get: function(n) {
             k[n] = k[n] ? k[n] + 1 : 1;
-            cm.log.l("play: " + n);
-            cm.log.dir(k);
+            cm.log.l("Play sound:", '"' + n + '"', k);
             return a[n] || "end"
         },
         play: function(o) {
@@ -80490,7 +81583,8 @@ cm.sounds = function(g) {
                 var n = cm.sounds.get(o);
                 AM_playSound(n)
             }
-        }
+        },
+        init: l
     }
 }(jQuery);
 
@@ -80504,7 +81598,7 @@ function modal_speedup(type, typeid, slotid, subjectCurrentlyBuilding, qIndex) {
             if (rslt.ok) {
                 do_modal_speedup(type, typeid, slotid, subjectCurrentlyBuilding, rslt.data.featureInfo, qIndex)
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -80516,14 +81610,15 @@ function do_modal_speedup(d, a, b, c, t, l) {
         type: d,
         typeid: a,
         slotid: b,
-        subjectCurrentlyBuilding: c
+        subjectCurrentlyBuilding: c,
+        qIndex: l
     });
     var n = new Array();
     update_queue();
-    var q = cm.speedUpModalTimer.getTimeLeft(d);
+    var q = cm.speedUpModalTimer.getTimeLeft(d, l);
     var r = cm.intelligentOrdering.get(seed.items, q);
     var h = false;
-    cm.speedUpModalTimer.open(d);
+    cm.speedUpModalTimer.open(d, l);
     if (d == "bdg") {
         h = getBuildHelpEligible(a, currentcityid)
     } else {
@@ -80562,6 +81657,9 @@ function do_modal_speedup(d, a, b, c, t, l) {
         n.push("<div class='iteminfo'>");
         n.push("<div class='itemhd'>");
         n.push(itemlist["i" + r[o]].name);
+        if (d == "frt") {
+            l = '""'
+        }
         var k = 'modal_speedup_apply("' + d + '","' + r[o] + '", ' + a + (typeof l !== "undefined" ? "," + l : "") + ");return false;";
         var u = p == 0 ? "return false;" : k;
         var g = p == 0 ? "greyedout" : "";
@@ -80754,13 +81852,20 @@ function modal_speedup_market_apply(tkey, ind, mktid) {
                     seed.queue_mkt["city" + currentcityid][tkey][ind].eventUnixTime = "1"
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
     })
 }
+cm.last_speedup_apply = 0;
+
 function modal_speedup_apply(type, itemid, typeid, qIndex) {
+    var now = new Date().getTime();
+    if ((now - 1000) < cm.last_speedup_apply) {
+        return false
+    }
+    cm.last_speedup_apply = now;
     cm.sounds.play("modal_build_speedup_apply");
     var apoth = false;
     if (type == "rev1" || type == "rev2") {
@@ -80899,7 +82004,7 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
                         var timeredarr = [60, 900, 3600, 9000, 28800, 54000, 86400, 216000, 0, 345600];
                         if (type == "bdg") {
                             for (var i = 0; i < seed.queue_con["city" + currentcityid].length; i++) {
-                                if (parseInt(seed.queue_con["city" + currentcityid][i][0]) == parseInt(typeid)) {
+                                if (parseInt(seed.queue_con["city" + currentcityid][i][2]) == parseInt(typeid)) {
                                     qloc = i;
                                     break
                                 }
@@ -81007,7 +82112,7 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
                         update_queue()
                     } else {
                         if (rslt.error_code != "3016") {
-                            Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                            Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                         }
                     }
                 },
@@ -82677,15 +83782,17 @@ cm.ThroneController = function(g) {
         });
         return E
     };
-    var p = function(C) {
-        var B = {};
+    var p = function(D) {
+        var C = {};
         try {
-            B = new cm.ThroneItemModel(C);
-            kocThroneItems[B.id] = B
+            C = new cm.ThroneItemModel(D);
+            kocThroneItems[C.id] = C
         } catch (A) {
-            cm.log.l("Ignoring Throne Item: " + A, C)
+            var B = "Ignoring Throne Item: " + A;
+            cm.log.l(B, D);
+            cm.log.error(1, cm.ERROR_TYPE.INFORMATION_MISSING, B)
         }
-        return B
+        return C
     };
     var q = function(B) {
         var A = +(cm.WorldSettings.getSetting("TR_MAX_INVENTORY_ROWS")),
@@ -82891,7 +83998,21 @@ cm.ThroneController = function(g) {
     var h = function(B, A) {
         B = +B;
         A = +A;
-        return cm.thronestats.tiers && cm.thronestats.tiers[B] && cm.thronestats.tiers[B][A] ? cm.thronestats.tiers[B][A] : {}
+        if (!cm.thronestats.tiers || !cm.thronestats.tiers[B]) {
+            cm.log.error(1, cm.ERROR_TYPE.INFORMATION_MISSING, "Throne tiers don't exist for this Effect ID.");
+            return {}
+        } else {
+            if (!cm.thronestats.tiers[B][A]) {
+                if (A > 1) {
+                    cm.log.error(2, cm.ERROR_TYPE.INFORMATION_MISSING, "Throne tier doesn't exist for this Effect ID. Trying the next tier down.");
+                    return h(B, A - 1)
+                } else {
+                    cm.log.error(1, cm.ERROR_TYPE.INFORMATION_MISSING, "Throne tier doesn't exist for this Effect ID. All tiers attempted.");
+                    return {}
+                }
+            }
+        }
+        return cm.thronestats.tiers[B][A]
     };
     var y = function(G, C, H) {
         var B = h(G, C),
@@ -82904,12 +84025,21 @@ cm.ThroneController = function(g) {
         }
         return D
     };
-    var m = function(A) {
-        A = +A;
-        return cm.thronestats.effects && cm.thronestats.effects[A] ? cm.thronestats.effects[A] : {}
+    var m = function(D) {
+        D = +D;
+        var C = cm.thronestats.effects,
+            A = {};
+        if (C && C[D]) {
+            A = C[D]
+        } else {
+            var B = "Undefined TR effect (effectId: " + D + "). Be sure to define this in cm.thronestats.effects.";
+            cm.log.error(1, cm.ERROR_TYPE.INFORMATION_MISSING, B);
+            cm.log.l(B)
+        }
+        return A
     };
     var l = function(A) {
-        return m(A)[1] || "Effect"
+        return m(A)[1] || "Effect of Non-Readable Name"
     };
     var s = function(A) {
         return m(A)[4] || "Suffix"
@@ -83107,7 +84237,7 @@ cm.ThroneItemModel = jQueryClass.extend({
         if (jQuery.inArray(a.faction, ["druid", "fey", "briton"]) < 0) {
             throw "Invalid Throne Item faction"
         }
-        if (jQuery.inArray(a.type, ["advisor", "banner", "candelabrum", "chair", "table", "trophy", "window"]) < 0) {
+        if (jQuery.inArray(a.type, ["advisor", "banner", "candelabrum", "chair", "hero", "table", "trophy", "window"]) < 0) {
             throw "Invalid Throne Item type"
         }
         if (isNaN(a.quality) || a.quality < 0) {
@@ -83245,7 +84375,7 @@ cm.ThroneItemModel = jQueryClass.extend({
 cm = cm || {};
 cm.ThronePanelController = function(h) {
     var a = 5,
-        b = 12,
+        b = 13,
         j = null;
     var l = function(x, y) {
         if (x.quality >= a && y == "enhance") {
@@ -83316,7 +84446,7 @@ cm.ThronePanelController = function(h) {
         var C = 0,
             B = v(),
             x = [null, ksoItems[20001], ksoItems[20002], ksoItems[20003], ksoItems[20004]],
-            y = [null, ksoItems[20001], ksoItems[20002], ksoItems[20005], ksoItems[20006], ksoItems[20019]],
+            y = [null, ksoItems[20001], ksoItems[20002], ksoItems[20005], ksoItems[20006], ksoItems[20019], ksoItems[20020]],
             A;
         if (z === "enhance") {
             A = x[B]
@@ -83592,7 +84722,8 @@ cm.ThronePanelController = function(h) {
                         cm.ThronePanelView.statusAnim("success");
                         I.quality = J.item.quality;
                         I.level = J.item.level;
-                        I.name = I.createName()
+                        I.name = I.createName();
+                        kraken.network.publishGamesFeed(cm.FB_ACTIONS.UPGRADE, cm.FB_OBJECTS.THRONE_ROOM_ITEM)
                     } else {
                         cm.sounds.play("tr_fail_build");
                         cm.ThronePanelView.statusAnim("failure");
@@ -83753,7 +84884,20 @@ cm.ThronePanelController = function(h) {
     }
 }(jQuery);
 cm = cm || {};
-cm.ThronePanelView = function(E) {
+cm.ThronePanelView = function(G) {
+    var u = {
+        Lesser: 20001,
+        Normal: 20002
+    };
+    var A = {
+        Lesser: 20003,
+        Normal: 20004
+    };
+    var S = {
+        Lesser: 20005,
+        Normal: 20006,
+        Super: 20019
+    };
     var p = {
         Common: 20007,
         Uncommon: 20008,
@@ -83774,7 +84918,8 @@ cm.ThronePanelView = function(E) {
         Plus9: 20015,
         Plus10: 20016,
         Plus11: 20017,
-        Plus12: 20018
+        Plus12: 20018,
+        Plus13: 20020
     };
     var s = {};
     s[i.Plus3] = 3;
@@ -83784,73 +84929,74 @@ cm.ThronePanelView = function(E) {
     s[i.Plus10] = 10;
     s[i.Plus11] = 11;
     s[i.Plus12] = 12;
+    s[i.Plus13] = 13;
     var g = g_js_strings.throneRoom,
-        z = [{
+        B = [{
             id: 0,
             name: g_js_strings.throneRoom.buff_none
         },
-        ksoItems["20001"], ksoItems["20002"], {},
-        ksoItems["20004"], ksoItems[p.Common], ksoItems[p.Uncommon], ksoItems[p.Rare], ksoItems[p.Epic], ksoItems[p.Wondrous]],
+        ksoItems[u.Lesser], ksoItems[u.Normal], {},
+        ksoItems[A.Normal], ksoItems[p.Common], ksoItems[p.Uncommon], ksoItems[p.Rare], ksoItems[p.Epic], ksoItems[p.Wondrous]],
         n = [{
             id: 0,
             name: g_js_strings.throneRoom.buff_none
         },
-        ksoItems["20001"], ksoItems["20002"], ksoItems["20005"], ksoItems["20006"], ksoItems["20019"], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12]],
+        ksoItems[u.Lesser], ksoItems[u.Normal], ksoItems[S.Lesser], ksoItems[S.Normal], ksoItems[S.Super], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12], ksoItems[i.Plus13]],
         a = [g.buff_none],
         m = "closed",
-        d = {}, u, Q, P, I = "";
-    var G = function(W, Y) {
-        I = W;
-        E("#throneInventoryList .selected").removeClass("selected");
-        var V, R, T, U, S, X;
+        d = {}, v, T, R, K = "";
+    var I = function(Z, ab) {
+        K = Z;
+        G("#throneInventoryList .selected").removeClass("selected");
+        var Y, U, W, X, V, aa;
         cm.ThronePanelView.enhanceOptions = [{
             id: 0,
             name: g_js_strings.throneRoom.buff_none
         },
-        ksoItems["20001"], ksoItems["20002"], {},
-        ksoItems["20004"], ksoItems[p.Common], ksoItems[p.Uncommon], ksoItems[p.Rare], ksoItems[p.Epic], ksoItems[p.Wondrous]];
+        ksoItems[u.Lesser], ksoItems[u.Normal], {},
+        ksoItems[A.Normal], ksoItems[p.Common], ksoItems[p.Uncommon], ksoItems[p.Rare], ksoItems[p.Epic], ksoItems[p.Wondrous]];
         cm.ThronePanelView.upgradeOptions = [{
             id: 0,
             name: g_js_strings.throneRoom.buff_none
         },
-        ksoItems["20001"], ksoItems["20002"], ksoItems["20005"], ksoItems["20006"], ksoItems["20019"], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12]];
-        V = cm.Template.renderTemplate("Throne", "thronePanel", {});
-        E("#thronePanelContainer").html(V);
-        if (Y) {
-            Q = Y.id;
-            P = Y;
-            if (W === "enhance") {
-                U = j(1, Y, "current", W);
-                S = j(2, Y, "next", W);
-                E("#thronePanelStat1").empty();
-                E("#thronePanelStat1").html(U);
-                E("#thronePanelStat2").empty();
-                E("#thronePanelStat2").html(S);
-                E("#thronePanelStat1 li,#thronePanelStat2 li").unbind("mouseenter").bind("mouseenter", function(Z) {
-                    Tooltip.show(Z, E(this).html(), [-180, 5])
+        ksoItems[u.Lesser], ksoItems[u.Normal], ksoItems[S.Lesser], ksoItems[S.Normal], ksoItems[S.Super], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12], ksoItems[i.Plus13]];
+        Y = cm.Template.renderTemplate("Throne", "thronePanel", {});
+        G("#thronePanelContainer").html(Y);
+        if (ab) {
+            T = ab.id;
+            R = ab;
+            if (Z === "enhance") {
+                X = j(1, ab, "current", Z);
+                V = j(2, ab, "next", Z);
+                G("#thronePanelStat1").empty();
+                G("#thronePanelStat1").html(X);
+                G("#thronePanelStat2").empty();
+                G("#thronePanelStat2").html(V);
+                G("#thronePanelStat1 li,#thronePanelStat2 li").unbind("mouseenter").bind("mouseenter", function(ac) {
+                    Tooltip.show(ac, G(this).html(), [-180, 5])
                 })
             } else {
-                if (W === "upgrade") {
-                    U = j(1, Y, "current", W);
-                    S = j(2, Y, "next", W);
-                    E("#thronePanelStat1").empty();
-                    E("#thronePanelStat1").html(U);
-                    E("#thronePanelStat2").empty();
-                    E("#thronePanelStat2").html(S);
-                    E("#thronePanelStat1 li,#thronePanelStat2 li").unbind("mouseenter").bind("mouseenter", function(Z) {
-                        Tooltip.show(Z, E(this).html())
+                if (Z === "upgrade") {
+                    X = j(1, ab, "current", Z);
+                    V = j(2, ab, "next", Z);
+                    G("#thronePanelStat1").empty();
+                    G("#thronePanelStat1").html(X);
+                    G("#thronePanelStat2").empty();
+                    G("#thronePanelStat2").html(V);
+                    G("#thronePanelStat1 li,#thronePanelStat2 li").unbind("mouseenter").bind("mouseenter", function(ac) {
+                        Tooltip.show(ac, G(this).html())
                     })
                 }
             }
-            B(W, Y);
-            t(W);
-            F(Y);
-            if (W == "enhance") {
-                x(Y)
+            D(Z, ab);
+            t(Z);
+            H(ab);
+            if (Z == "enhance") {
+                y(ab)
             }
-            c(W, Y);
+            c(Z, ab);
             if (cm.ThronePanelView.panelStatus == "closed") {
-                E("#thronePanelContainer").animate({
+                G("#thronePanelContainer").animate({
                     right: "+=500"
                 }, {
                     duration: 1000,
@@ -83860,637 +85006,622 @@ cm.ThronePanelView = function(E) {
                     }
                 })
             }
-            E("#thronePanelSlideArrow").click(function() {
-                E("#thronePanelContainer").animate({
+            G("#thronePanelSlideArrow").click(function() {
+                G("#thronePanelContainer").animate({
                     right: "-=500"
                 }, {
                     duration: 1000,
                     easing: "easeOutCirc",
                     complete: function() {
-                        L()
+                        N()
                     }
                 })
             });
-            E("#throneInventoryItem" + Y.id).addClass("selected")
+            G("#throneInventoryItem" + ab.id).addClass("selected")
         }
-        return V
+        return Y
     };
-    var L = function() {
+    var N = function() {
         cm.ThronePanelView.panelStatus = "closed";
-        E("#throneInventoryItem" + Q).removeClass("selected");
+        G("#throneInventoryItem" + T).removeClass("selected");
         currentThroneRoomeItem = null;
-        P = null;
-        I = "";
+        R = null;
+        K = "";
         cm.ThronePanelController.currentBuff = null
     };
-    var B = function(V, W) {
-        var U = E("#thronePanelContainer ul.tabsv2"),
-            X = ["enhance", "upgrade"],
-            S;
-        U.empty();
-        for (var T = 0, R = X.length; T < R; ++T) {
-            S = E("<li/>").html(X[T]).click({
-                id: T
-            }, function(Y) {
-                E(".tabsv2 .selected").removeClass("selected");
-                E(this).addClass("selected");
+    var D = function(Y, Z) {
+        var X = G("#thronePanelContainer ul.tabsv2"),
+            aa = ["enhance", "upgrade"],
+            V;
+        X.empty();
+        for (var W = 0, U = aa.length; W < U; ++W) {
+            V = G("<li/>").html(aa[W]).click({
+                id: W
+            }, function(ab) {
+                G(".tabsv2 .selected").removeClass("selected");
+                G(this).addClass("selected");
                 cm.ThronePanelController.currentBuff = null;
-                G(X[Y.data.id].toLowerCase(), W);
-                I = V
+                I(aa[ab.data.id].toLowerCase(), Z);
+                K = Y
             });
-            if (V === "enhance" && T === 0) {
-                S.addClass("selected")
+            if (Y === "enhance" && W === 0) {
+                V.addClass("selected")
             } else {
-                if (V === "upgrade" && T === 1) {
-                    S.addClass("selected")
+                if (Y === "upgrade" && W === 1) {
+                    V.addClass("selected")
                 }
             }
-            U.append(S)
+            X.append(V)
         }
     };
-    var t = function(U) {
-        var T = [],
-            R = E("#thronePanelInstructions"),
-            V = standalone;
-        R.empty();
-        for (var S = 1; S <= 4; ++S) {
-            if (U == "enhance") {
-                R.append("<li>" + g_js_strings.throneRoom["enhance_instr" + S] + "</li>")
+    var t = function(X) {
+        var W = [],
+            U = G("#thronePanelInstructions"),
+            Y = standalone;
+        U.empty();
+        for (var V = 1; V <= 4; ++V) {
+            if (X == "enhance") {
+                U.append("<li>" + g_js_strings.throneRoom["enhance_instr" + V] + "</li>")
             } else {
-                if (U == "upgrade") {
-                    R.append("<li>" + g_js_strings.throneRoom["upgrade_instr" + S] + "</li>")
+                if (X == "upgrade") {
+                    U.append("<li>" + g_js_strings.throneRoom["upgrade_instr" + V] + "</li>")
                 }
             }
         }
         return false
     };
-    var w = function(S, R) {
-        return "img/throne/icons/" + R + "/" + S.faction + "/" + S.createQualityName().toLowerCase() + "_" + S.faction + "_" + S.type + "_1.png"
+    var x = function(V, U) {
+        return "img/throne/icons/" + U + "/" + V.faction + "/" + V.createQualityName().toLowerCase() + "_" + V.faction + "_" + V.type + "_1.png"
     };
-    var F = function(S) {
-        var R = E("#thronePanelName");
-        R.html(S.name);
-        R.attr("class", "");
-        R.addClass("name " + S.createPrefix().toLowerCase())
+    var H = function(V) {
+        var U = G("#thronePanelName");
+        U.html(V.name);
+        U.attr("class", "");
+        U.addClass("name " + V.createPrefix().toLowerCase())
     };
-    var x = function(Y) {
-        var T = [],
-            Z = ["simple", "common", "uncommon", "rare", "epic", "wondrous", "unique"],
-            U = [g_js_strings.throneRoom.simple, g_js_strings.throneRoom.common, g_js_strings.throneRoom.uncommon, g_js_strings.throneRoom.rare, g_js_strings.throneRoom.epic, g_js_strings.throneRoom.wondrous, g_js_strings.throneRoom.unique],
-            W = document.createDocumentFragment(),
-            X, V = E("#thronePanelProgressBarList");
-        W = E(W);
-        if (Y.quality === 6) {
-            for (var S = 0; S <= 6; ++S) {
-                if (S !== 6) {
-                    T.push("<li class='locked'>" + g_js_strings.throneRoom.locked + "</li>");
-                    X = E("<li/>").addClass("locked").html(g_js_strings.throneRoom.locked);
-                    X.bind("mouseenter", {
-                        idx: S
-                    }, function(aa) {
-                        Tooltip.show(aa, U[aa.data.idx], [0, 0])
+    var y = function(ab) {
+        var W = [],
+            ac = ["simple", "common", "uncommon", "rare", "epic", "wondrous", "unique"],
+            X = [g_js_strings.throneRoom.simple, g_js_strings.throneRoom.common, g_js_strings.throneRoom.uncommon, g_js_strings.throneRoom.rare, g_js_strings.throneRoom.epic, g_js_strings.throneRoom.wondrous, g_js_strings.throneRoom.unique],
+            Z = document.createDocumentFragment(),
+            aa, Y = G("#thronePanelProgressBarList");
+        Z = G(Z);
+        if (ab.quality === 6) {
+            for (var V = 0; V <= 6; ++V) {
+                if (V !== 6) {
+                    W.push("<li class='locked'>" + g_js_strings.throneRoom.locked + "</li>");
+                    aa = G("<li/>").addClass("locked").html(g_js_strings.throneRoom.locked);
+                    aa.bind("mouseenter", {
+                        idx: V
+                    }, function(ad) {
+                        Tooltip.show(ad, X[ad.data.idx], [0, 0])
                     });
-                    X.bind("mouseenter", function(aa) {
-                        Tooltip.remove(0)
-                    });
-                    V.append(X)
+                    Y.append(aa)
                 } else {
-                    T.push("<li class='unique last'>" + g_js_strings.throneRoom.unique + "</li>");
-                    X = E("<li/>").addClass("unique last").html(g_js_strings.throneRoom.unique);
-                    X.bind("mouseenter", {
-                        idx: S
-                    }, function(aa) {
-                        Tooltip.show(aa, U[aa.data.idx], [0, 0])
+                    W.push("<li class='unique last'>" + g_js_strings.throneRoom.unique + "</li>");
+                    aa = G("<li/>").addClass("unique last").html(g_js_strings.throneRoom.unique);
+                    aa.bind("mouseenter", {
+                        idx: V
+                    }, function(ad) {
+                        Tooltip.show(ad, X[ad.data.idx], [0, 0])
                     });
-                    X.bind("mouseenter", function(aa) {
-                        Tooltip.remove(0)
-                    });
-                    V.append(X)
+                    Y.append(aa)
                 }
             }
         } else {
-            for (var R = 0; R <= 6; ++R) {
-                if (R === 6) {
-                    T.push("<li class='locked last'>" + g_js_strings.throneRoom.unique + "</li>");
-                    X = E("<li/>").addClass("locked last").html(g_js_strings.throneRoom.unique);
-                    X.bind("mouseenter", {
-                        idx: R
-                    }, function(aa) {
-                        Tooltip.show(aa, U[aa.data.idx], [0, 0])
+            for (var U = 0; U <= 6; ++U) {
+                if (U === 6) {
+                    W.push("<li class='locked last'>" + g_js_strings.throneRoom.unique + "</li>");
+                    aa = G("<li/>").addClass("locked last").html(g_js_strings.throneRoom.unique);
+                    aa.bind("mouseenter", {
+                        idx: U
+                    }, function(ad) {
+                        Tooltip.show(ad, X[ad.data.idx], [0, 0])
                     });
-                    X.bind("mouseenter", function(aa) {
-                        Tooltip.remove(0)
-                    });
-                    V.append(X)
+                    Y.append(aa)
                 } else {
-                    if (R <= Y.quality) {
-                        T.push("<li class='" + Z[R] + "'>" + U[R] + "</li>");
-                        X = E("<li/>").addClass(Z[R]).html(U[R]);
-                        X.bind("mouseenter", {
-                            idx: R
-                        }, function(aa) {
-                            Tooltip.show(aa, U[aa.data.idx], [0, 0])
+                    if (U <= ab.quality) {
+                        W.push("<li class='" + ac[U] + "'>" + X[U] + "</li>");
+                        aa = G("<li/>").addClass(ac[U]).html(X[U]);
+                        aa.bind("mouseenter", {
+                            idx: U
+                        }, function(ad) {
+                            Tooltip.show(ad, X[ad.data.idx], [0, 0])
                         });
-                        X.bind("mouseenter", function(aa) {
-                            Tooltip.remove(0)
-                        });
-                        V.append(X)
+                        Y.append(aa)
                     } else {
-                        T.push("<li class='empty'>" + U[R] + "</li>");
-                        X = E("<li/>").addClass("empty").html(U[R]);
-                        X.bind("mouseenter", {
-                            idx: R
-                        }, function(aa) {
-                            Tooltip.show(aa, U[aa.data.idx], [0, 0])
+                        W.push("<li class='empty'>" + X[U] + "</li>");
+                        aa = G("<li/>").addClass("empty").html(X[U]);
+                        aa.bind("mouseenter", {
+                            idx: U
+                        }, function(ad) {
+                            Tooltip.show(ad, X[ad.data.idx], [0, 0])
                         });
-                        X.bind("mouseenter", function(aa) {
-                            Tooltip.remove(0)
-                        });
-                        V.append(X)
+                        Y.append(aa)
                     }
                 }
-            }
-        }
-        return T.join("")
-    };
-    var j = function(S, ac, Z, U) {
-        var W = [],
-            V, aa, Y, R = {}, X, T, ab;
-        if (Z == "next") {
-            if (U == "enhance") {
-                ++ac.quality
-            } else {
-                if (U == "upgrade") {
-                    ++ac.level
-                }
-            }
-        }
-        E.each(ac.effects, function(ad, ae) {
-            T = "";
-            V = +(ad.split("slot")[1]);
-            aa = cm.ThroneController.getEffectName(ae.id);
-            Y = cm.ThroneController.getEffectAmount(ae.id, ae.tier, ac.level);
-            R[ae.id] = {};
-            R[ae.id].percent = Y;
-            R[ae.id].name = aa;
-            if (V % 2 == 0) {
-                X = "even"
-            } else {
-                X = "odd"
-            }
-            if (V > ac.quality) {
-                X += " disabled"
-            }
-            if (Y > 0) {
-                T += aa + " +" + Y + "%"
-            } else {
-                T += aa + " " + Y + "%"
-            }
-            W.push("<li class='" + X + "' >" + T + "</li>")
-        });
-        if (Z == "next") {
-            if (U == "enhance") {
-                --ac.quality
-            } else {
-                if (U == "upgrade") {
-                    --ac.level
-                }
-            }
-        }
-        if (Z === "next") {
-            if (cm.ThronePanelController.isLastLevel(ac, U)) {
-                ab = E("<div/>").addClass("lock").attr("id", "lockedStatIcon");
-                E("#nextStatContainer").append(ab)
-            } else {
-                E("#lockedStatIcon").remove()
             }
         }
         return W.join("")
     };
-    var c = function(W, am) {
-        var aa = [],
-            S = E("#thronePanelItemRequirementsContainer"),
-            ap, V, Z, an, U, ad, al, ah, T, X, aq, R, af, ab = ["gems", "aetherstones"],
-            ac = [],
-            ag, ao, ak, ae;
-        if (W === "enhance") {
-            ac = cm.ThronePanelView.enhanceOptions;
-            E.each(ac, function(at, ar) {
-                if (k[ar.id] && (ar.count == 0 || (ar.count > 0 && k[ar.id] <= am.quality))) {
-                    ac[at] = {}
+    var j = function(V, af, ac, X) {
+        var Z = [],
+            Y, ad, ab, U = {}, aa, W, ae;
+        if (ac == "next") {
+            if (X == "enhance") {
+                ++af.quality
+            } else {
+                if (X == "upgrade") {
+                    ++af.level
+                }
+            }
+        }
+        G.each(af.effects, function(ag, ah) {
+            W = "";
+            Y = +(ag.split("slot")[1]);
+            ad = cm.ThroneController.getEffectName(ah.id);
+            ab = cm.ThroneController.getEffectAmount(ah.id, ah.tier, af.level);
+            U[ah.id] = {};
+            U[ah.id].percent = ab;
+            U[ah.id].name = ad;
+            if (Y % 2 == 0) {
+                aa = "even"
+            } else {
+                aa = "odd"
+            }
+            if (Y > af.quality) {
+                aa += " disabled"
+            }
+            if (ab > 0) {
+                W += ad + " +" + ab + "%"
+            } else {
+                W += ad + " " + ab + "%"
+            }
+            Z.push("<li class='" + aa + "' >" + W + "</li>")
+        });
+        if (ac == "next") {
+            if (X == "enhance") {
+                --af.quality
+            } else {
+                if (X == "upgrade") {
+                    --af.level
+                }
+            }
+        }
+        if (ac === "next") {
+            if (cm.ThronePanelController.isLastLevel(af, X)) {
+                ae = G("<div/>").addClass("lock").attr("id", "lockedStatIcon");
+                G("#nextStatContainer").append(ae)
+            } else {
+                G("#lockedStatIcon").remove()
+            }
+        }
+        return Z.join("")
+    };
+    var c = function(Z, ap) {
+        var ad = [],
+            V = G("#thronePanelItemRequirementsContainer"),
+            at, Y, ac, aq, X, ag, ao, ak, W, aa, au, U, ai, ae = ["gems", "aetherstones"],
+            af = [],
+            aj, ar, an, ah;
+        if (Z === "enhance") {
+            af = cm.ThronePanelView.enhanceOptions;
+            G.each(af, function(aw, av) {
+                if (k[av.id] && (av.count == 0 || (av.count > 0 && k[av.id] <= ap.quality))) {
+                    af[aw] = {}
                 }
             })
         } else {
-            if (W === "upgrade") {
-                ac = cm.ThronePanelView.upgradeOptions;
-                E.each(ac, function(at, ar) {
-                    if (s[ar.id] && (ar.count == 0 || (ar.count > 0 && s[ar.id] <= am.level))) {
-                        ac[at] = {}
+            if (Z === "upgrade") {
+                af = cm.ThronePanelView.upgradeOptions;
+                G.each(af, function(aw, av) {
+                    if (s[av.id] && (av.count == 0 || (av.count > 0 && s[av.id] <= ap.level))) {
+                        af[aw] = {}
                     }
                 })
             } else {
-                if (W === "modify") {
-                    ac = a
+                if (Z === "modify") {
+                    af = a
                 }
             }
         }
-        S.empty();
-        ap = E("<div/>");
-        ap.addClass("title");
-        ap.html(g_js_strings.throneRoom.req_title);
-        S.append(ap);
-        V = E("<div/>");
-        V.addClass("costContainer");
-        ad = E("<select/>");
-        ad.attr("id", "costDropDown");
-        if (!cm.ThronePanelController.isLastLevel(am, W)) {
-            ad.append('<option value="0">' + g_js_strings.commonstr.aetherstones + "</option>");
-            ad.append('<option value="1">' + g_js_strings.commonstr.gems + "</option>");
-            ad.bind("change", function(ar) {
-                l(E(this).val(), W, am)
+        V.empty();
+        at = G("<div/>");
+        at.addClass("title");
+        at.html(g_js_strings.throneRoom.req_title);
+        V.append(at);
+        Y = G("<div/>");
+        Y.addClass("costContainer");
+        ag = G("<select/>");
+        ag.attr("id", "costDropDown");
+        if (!cm.ThronePanelController.isLastLevel(ap, Z)) {
+            ag.append('<option value="0">' + g_js_strings.commonstr.aetherstones + "</option>");
+            ag.append('<option value="1">' + g_js_strings.commonstr.gems + "</option>");
+            ag.bind("change", function(av) {
+                l(G(this).val(), Z, ap)
             })
         } else {
-            ad.append('<option value="">--</option>');
-            ad.attr("disabled", "disabled")
+            ag.append('<option value="">--</option>');
+            ag.attr("disabled", "disabled")
         }
-        al = E("<div/>");
-        al.attr("id", "thronePanelCostIcon");
-        if (cm.ThronePanelController.isLastLevel(am, W)) {
-            al.addClass("icon 0")
+        ao = G("<div/>");
+        ao.attr("id", "thronePanelCostIcon");
+        if (cm.ThronePanelController.isLastLevel(ap, Z)) {
+            ao.addClass("icon 0")
         } else {
-            al.addClass("icon aetherstones")
+            ao.addClass("icon aetherstones")
         }
-        al.html("aetherstones");
-        r(al, null, "cost");
-        an = cm.ThronePanelController.calcBuffItem(W);
-        ag = cm.ThronePanelController.calcCost(W, am, an, "stones");
-        var Y = cm.ThronePanelController.currentBuff;
-        ah = E("<div/>");
-        ah.attr("id", "thronePanelCostPrice");
-        ah.addClass("price");
-        if (ag.stones.render) {
-            ah.append("<span class='" + ag.stones.css + "'>" + ag.stones.use + "/<br/>" + ag.stones.total + "</span>")
+        ao.html("aetherstones");
+        r(ao, null, "cost");
+        aq = cm.ThronePanelController.calcBuffItem(Z);
+        aj = cm.ThronePanelController.calcCost(Z, ap, aq, "stones");
+        var ab = cm.ThronePanelController.currentBuff;
+        ak = G("<div/>");
+        ak.attr("id", "thronePanelCostPrice");
+        ak.addClass("price");
+        if (aj.stones.render) {
+            ak.append("<span class='" + aj.stones.css + "'>" + aj.stones.use + "/<br/>" + aj.stones.total + "</span>")
         }
-        if (ag.gems.render) {
-            ah.append("<span class='gems'>" + ag.gems.use + "</span>")
+        if (aj.gems.render) {
+            ak.append("<span class='gems'>" + aj.gems.use + "</span>")
         }
-        V.append(ad);
-        V.append(al);
-        V.append(ah);
-        S.append(V);
-        Z = E("<div/>");
-        Z.addClass("buffContainer");
-        ad = E("<select/>");
-        ad.attr("id", "buffDropDown");
-        if (!cm.ThronePanelController.isLastLevel(am, W)) {
-            for (var aj = 0, ai = ac.length; aj < ai; ++aj) {
-                if (!E.isEmptyObject(ac[aj])) {
-                    if (Y != null || Y != undefined) {
-                        if (Y.id == ac[aj].id) {
-                            ad.append('<option value="' + aj + '" selected>' + ac[aj].name + "</option>")
+        Y.append(ag);
+        Y.append(ao);
+        Y.append(ak);
+        V.append(Y);
+        ac = G("<div/>");
+        ac.addClass("buffContainer");
+        ag = G("<select/>");
+        ag.attr("id", "buffDropDown");
+        if (!cm.ThronePanelController.isLastLevel(ap, Z)) {
+            for (var am = 0, al = af.length; am < al; ++am) {
+                if (!G.isEmptyObject(af[am])) {
+                    if (ab != null || ab != undefined) {
+                        if (ab.id == af[am].id) {
+                            ag.append('<option value="' + am + '" selected>' + af[am].name + "</option>")
                         } else {
-                            ad.append('<option value="' + aj + '">' + ac[aj].name + "</option>")
+                            ag.append('<option value="' + am + '">' + af[am].name + "</option>")
                         }
                     } else {
-                        if (an.id === ac[aj].id) {
-                            ad.append('<option value="' + aj + '" selected>' + ac[aj].name + "</option>")
+                        if (aq.id === af[am].id) {
+                            ag.append('<option value="' + am + '" selected>' + af[am].name + "</option>")
                         } else {
-                            ad.append('<option value="' + aj + '">' + ac[aj].name + "</option>")
+                            ag.append('<option value="' + am + '">' + af[am].name + "</option>")
                         }
                     }
                 }
             }
-            ad.bind("change", function(ar) {
-                y()
+            ag.bind("change", function(av) {
+                z()
             })
         } else {
-            ad.append('<option value="">--</option>');
-            ad.attr("disabled", "disabled")
+            ag.append('<option value="">--</option>');
+            ag.attr("disabled", "disabled")
         }
-        al = E("<div/>");
-        al.attr("id", "thronePanelBuffIcon");
-        if (cm.ThronePanelController.isLastLevel(am, W)) {
-            al.addClass("icon 0")
+        ao = G("<div/>");
+        ao.attr("id", "thronePanelBuffIcon");
+        if (cm.ThronePanelController.isLastLevel(ap, Z)) {
+            ao.addClass("icon 0")
         } else {
-            al.addClass("icon " + an.id)
+            ao.addClass("icon " + aq.id)
         }
-        al.html(an.name);
-        ah = E("<div/>");
-        ah.attr("id", "thronePanelBuffPrice");
-        ah.addClass("price");
-        Z.append(ad);
-        Z.append(al);
-        Z.append(ah);
-        S.append(Z);
-        if (an.id != 0) {
-            y()
+        ao.html(aq.name);
+        ak = G("<div/>");
+        ak.attr("id", "thronePanelBuffPrice");
+        ak.addClass("price");
+        ac.append(ag);
+        ac.append(ao);
+        ac.append(ak);
+        V.append(ac);
+        if (aq.id != 0) {
+            z()
         }
-        U = E("<div/>");
-        U.addClass("riskContainer");
-        ap = E("<div/>");
-        ap.addClass("title");
-        ap.html(g_js_strings.throneRoom.risk_title);
-        X = E("<div/>");
-        X.attr("id", "thronePanelRiskBarContainer");
-        X.addClass("riskBarContainer");
-        if (!cm.ThronePanelController.isLastLevel(am, W)) {
-            X.addClass("active");
-            aq = E("<div/>");
-            aq.attr("id", "thronePanelRiskBar");
-            aq.addClass("riskBar active");
-            X.append(aq)
+        X = G("<div/>");
+        X.addClass("riskContainer");
+        at = G("<div/>");
+        at.addClass("title");
+        at.html(g_js_strings.throneRoom.risk_title);
+        aa = G("<div/>");
+        aa.attr("id", "thronePanelRiskBarContainer");
+        aa.addClass("riskBarContainer");
+        if (!cm.ThronePanelController.isLastLevel(ap, Z)) {
+            aa.addClass("active");
+            au = G("<div/>");
+            au.attr("id", "thronePanelRiskBar");
+            au.addClass("riskBar active");
+            aa.append(au)
         }
-        R = E("<span/>");
-        R.addClass("low");
-        R.html(g_js_strings.throneRoom.label_low);
-        af = E("<span/>");
-        af.addClass("high");
-        af.html(g_js_strings.throneRoom.label_high);
-        U.append(ap);
-        U.append(X);
-        U.append(R);
-        U.append(af);
-        S.append(U);
-        if (an.id != 0) {
-            if (an.count <= 0) {
-                T = b(W, am, ag.gems.use + an.price)
+        U = G("<span/>");
+        U.addClass("low");
+        U.html(g_js_strings.throneRoom.label_low);
+        ai = G("<span/>");
+        ai.addClass("high");
+        ai.html(g_js_strings.throneRoom.label_high);
+        X.append(at);
+        X.append(aa);
+        X.append(U);
+        X.append(ai);
+        V.append(X);
+        if (aq.id != 0) {
+            if (aq.count <= 0) {
+                W = b(Z, ap, aj.gems.use + aq.price)
             } else {
-                T = b(W, am, ag.gems.use)
+                W = b(Z, ap, aj.gems.use)
             }
         } else {
-            T = b(W, am, ag.gems.use)
+            W = b(Z, ap, aj.gems.use)
         }
-        S.append(E(cm.HeatUpView.renderHTML()));
+        V.append(G(cm.HeatUpView.renderHTML()));
         cm.HeatUpView.bindTooltip();
         cm.HeatUpView.update()
     };
-    var b = function(T, V, Y, R) {
-        var X = cm.ThronePanelController.isLastLevel(V, T),
-            S, U = E("#thronePanelItemRequirementsContainer"),
-            W;
-        if (T == "enhance") {
-            W = g_js_strings.throneRoom.button_enhance
+    var b = function(W, Y, ab, U) {
+        var aa = cm.ThronePanelController.isLastLevel(Y, W),
+            V, X = G("#thronePanelItemRequirementsContainer"),
+            Z;
+        if (W == "enhance") {
+            Z = g_js_strings.throneRoom.button_enhance
         } else {
-            if (T == "upgrade") {
-                W = g_js_strings.throneRoom.button_upgrade
+            if (W == "upgrade") {
+                Z = g_js_strings.throneRoom.button_upgrade
             }
         }
-        if (Y == 0) {
-            Y = ""
+        if (ab == 0) {
+            ab = ""
         } else {
-            Y = " <span>" + Y + "</span>"
+            ab = " <span>" + ab + "</span>"
         }
-        if (V.isBroken || R === true) {
-            S = E("<a/>");
-            S.addClass("gemButtonv2 gray");
-            S.html(W + Y)
+        if (Y.isBroken || U === true) {
+            V = G("<a/>");
+            V.addClass("gemButtonv2 gray");
+            V.html(Z + ab)
         } else {
-            if (X) {
-                S = E("<a/>");
-                S.addClass("gemButtonv2 gray");
-                S.html(W + Y)
+            if (aa) {
+                V = G("<a/>");
+                V.addClass("gemButtonv2 gray");
+                V.html(Z + ab)
             } else {
-                S = E("<a/>");
-                S.addClass("gemButtonv2 green");
-                S.html(W + Y);
-                S.click(function() {
-                    A("throneMainContainer");
-                    cm.ThronePanelController.changeItem(T, V)
+                V = G("<a/>");
+                V.addClass("gemButtonv2 green");
+                V.html(Z + ab);
+                V.click(function() {
+                    C("throneMainContainer");
+                    cm.ThronePanelController.changeItem(W, Y)
                 })
             }
         }
-        E("#thronePanelItemRequirementsContainer .gemButtonv2").remove();
-        U.append(S);
-        return S
+        G("#thronePanelItemRequirementsContainer .gemButtonv2").remove();
+        X.append(V);
+        return V
     };
-    var A = function(T) {
-        var S = E("<div/>").attr("id", "throneSpinnyContainer"),
-            R = E("<div/>").addClass("spinny");
-        if (T == "thronePanelBrokenContainer") {
-            R.addClass("brokenContainer")
+    var C = function(W) {
+        var V = G("<div/>").attr("id", "throneSpinnyContainer"),
+            U = G("<div/>").addClass("spinny");
+        if (W == "thronePanelBrokenContainer") {
+            U.addClass("brokenContainer")
         }
-        S.append(R);
-        E("#" + T).append(S)
+        V.append(U);
+        G("#" + W).append(V)
     };
     var q = function() {
-        E("#throneSpinnyContainer").remove()
+        G("#throneSpinnyContainer").remove()
     };
-    var y = function() {
-        var ad = C(),
-            ab = P,
-            ae = cm.ThronePanelView.enhanceOptions,
-            V = cm.ThronePanelView.upgradeOptions,
-            af = +(E("#buffDropDown").val()),
-            U = E("#thronePanelBuffIcon"),
-            Y = E("#thronePanelBuffPrice"),
-            X = E("#thronePanelRiskBarContainer"),
-            S = E("#thronePanelRiskBar"),
-            ag = E("#costDropDown"),
-            aa = [],
-            Z = cm.thronestats[ad],
-            W, ac, T;
-        if (ad === "enhance") {
-            ac = ae[af]
+    var z = function() {
+        var ag = E(),
+            ae = R,
+            ah = cm.ThronePanelView.enhanceOptions,
+            Y = cm.ThronePanelView.upgradeOptions,
+            ai = +(G("#buffDropDown").val()),
+            X = G("#thronePanelBuffIcon"),
+            ab = G("#thronePanelBuffPrice"),
+            aa = G("#thronePanelRiskBarContainer"),
+            V = G("#thronePanelRiskBar"),
+            aj = G("#costDropDown"),
+            ad = [],
+            ac = cm.thronestats[ag],
+            Z, af, W;
+        if (ag === "enhance") {
+            af = ah[ai]
         } else {
-            if (ad === "upgrade") {
-                ac = V[af]
+            if (ag === "upgrade") {
+                af = Y[ai]
             }
         }
-        U.attr("class", "");
-        U.css("backgroundPosition", "0 0");
-        if (cm.ThronePanelController.isLastLevel(ab, ad)) {
-            U.addClass("icon 0");
-            U.unbind("hover")
+        X.attr("class", "");
+        X.css("backgroundPosition", "0 0");
+        if (cm.ThronePanelController.isLastLevel(ae, ag)) {
+            X.addClass("icon 0");
+            X.unbind("hover")
         } else {
-            U.addClass("icon i" + ac.id);
-            if (ksoItems[ac.id]) {
-                U.hover(function(ah) {
-                    Tooltip.show(ah, ksoItems[ac.id].description, [-50, - 90])
-                }, function(ah) {
+            X.addClass("icon i" + af.id);
+            if (ksoItems[af.id]) {
+                X.hover(function(ak) {
+                    Tooltip.show(ak, ksoItems[af.id].description, [-50, - 90])
+                }, function(ak) {
                     removeTooltip()
                 })
             }
-            r(U, null, "buff")
+            r(X, null, "buff")
         }
-        Y.empty();
-        if (ag.val() == 0) {
-            W = cm.ThronePanelController.calcCost(ad, ab, ac, "stones")
+        ab.empty();
+        if (aj.val() == 0) {
+            Z = cm.ThronePanelController.calcCost(ag, ae, af, "stones")
         } else {
-            if (ag.val() == 1) {
-                W = cm.ThronePanelController.calcCost(ad, ab, ac, "gems")
+            if (aj.val() == 1) {
+                Z = cm.ThronePanelController.calcCost(ag, ae, af, "gems")
             }
         }
-        if (!cm.ThronePanelController.isLastLevel(ab, ad)) {
-            if (ac && ksoItems[ac.id]) {
-                if (ac.count > 0) {
-                    aa.push("<span class='items'>" + ksoItems[ac.id].count + "/1</span>")
+        if (!cm.ThronePanelController.isLastLevel(ae, ag)) {
+            if (af && ksoItems[af.id]) {
+                if (af.count > 0) {
+                    ad.push("<span class='items'>" + ksoItems[af.id].count + "/1</span>")
                 } else {
-                    aa.push("<span class='items havent'>" + ksoItems[ac.id].count + "/1</span>");
-                    aa.push("<span class='gems'>" + ksoItems[ac.id].price + "</span>")
+                    ad.push("<span class='items havent'>" + ksoItems[af.id].count + "/1</span>");
+                    ad.push("<span class='gems'>" + ksoItems[af.id].price + "</span>")
                 }
             }
         } else {
-            aa.push("<span class='gems'>--</span>")
+            ad.push("<span class='gems'>--</span>")
         }
-        Y.append(aa.join(""));
-        if (!cm.ThronePanelController.isLastLevel(ab, ad)) {
+        ab.append(ad.join(""));
+        if (!cm.ThronePanelController.isLastLevel(ae, ag)) {
             cm.ThronePanelController.updateRiskBar();
-            S.addClass("riskBar active")
+            V.addClass("riskBar active")
         } else {
-            E("#thronePanelRiskBar").remove();
-            E("#thronePanelRiskBarContainer").removeClass("active")
+            G("#thronePanelRiskBar").remove();
+            G("#thronePanelRiskBarContainer").removeClass("active")
         }
-        if (ksoItems[ac.id]) {
-            if (ksoItems[ac.id].count > 0) {
-                b(ad, ab, W.gems.use)
+        if (ksoItems[af.id]) {
+            if (ksoItems[af.id].count > 0) {
+                b(ag, ae, Z.gems.use)
             } else {
-                var R = parseInt(ac.id) == 20019 ? !cm.ShopItemModel.onSale(ac.id) : undefined;
-                b(ad, ab, (ksoItems[ac.id].price + W.gems.use), R)
+                var U = parseInt(af.id) == 20019 ? !cm.ShopItemModel.onSale(af.id) : undefined;
+                b(ag, ae, (ksoItems[af.id].price + Z.gems.use), U)
             }
         } else {
-            b(ad, ab, (W.gems.use))
+            b(ag, ae, (Z.gems.use))
         }
         return false
     };
-    var M = function(S) {
-        var T = E("#thronePanelRiskBarContainer"),
-            U = 250,
-            R = S * U;
-        T.css("width", R)
+    var O = function(V) {
+        var W = G("#thronePanelRiskBarContainer"),
+            X = 250,
+            U = V * X;
+        W.css("width", U)
     };
-    var l = function(X, S, U) {
-        var R = E("#thronePanelCostIcon"),
-            T = E("#thronePanelCostPrice"),
-            W, V = 0;
-        X = +(X);
-        R.attr("class", "");
-        if (X === 0) {
-            R.addClass("icon aetherstones")
+    var l = function(aa, V, X) {
+        var U = G("#thronePanelCostIcon"),
+            W = G("#thronePanelCostPrice"),
+            Z, Y = 0;
+        aa = +(aa);
+        U.attr("class", "");
+        if (aa === 0) {
+            U.addClass("icon aetherstones")
         } else {
-            if (X === 1) {
-                R.addClass("icon gems")
+            if (aa === 1) {
+                U.addClass("icon gems")
             }
         }
-        if (X === 0) {
-            W = cm.ThronePanelController.calcCost(S, U, null, "stones")
+        if (aa === 0) {
+            Z = cm.ThronePanelController.calcCost(V, X, null, "stones")
         } else {
-            if (X === 1) {
-                W = cm.ThronePanelController.calcCost(S, U, null, "gems")
+            if (aa === 1) {
+                Z = cm.ThronePanelController.calcCost(V, X, null, "gems")
             }
         }
-        T.empty();
-        if (W.stones.render) {
-            T.append("<span class='" + W.stones.css + "'> " + W.stones.use + "/<br/>" + W.stones.total + "</span>")
+        W.empty();
+        if (Z.stones.render) {
+            W.append("<span class='" + Z.stones.css + "'> " + Z.stones.use + "/<br/>" + Z.stones.total + "</span>")
         }
-        if (W.gems.render) {
-            T.append("<span class='gems'>" + W.gems.use + "</span>")
+        if (Z.gems.render) {
+            W.append("<span class='gems'>" + Z.gems.use + "</span>")
         }
-        V = cm.ThronePanelController.calcBuffCost(S);
-        b(S, U, (V + W.gems.use));
+        Y = cm.ThronePanelController.calcBuffCost(V);
+        b(V, X, (Y + Z.gems.use));
         return false
     };
-    var r = function(T, R, S) {
-        if (d[S]) {
-            clearInterval(d[S]);
-            d[S] = null
+    var r = function(W, U, V) {
+        if (d[V]) {
+            clearInterval(d[V]);
+            d[V] = null
         }
-        d[S] = setInterval(function() {
-            var W = T.css("backgroundPosition"),
-                V, X, U;
-            V = parseInt(W.split(" ")[0], 10);
-            X = parseInt(W.split(" ")[1], 10);
-            V = V - 70;
-            if (V <= -6230) {
-                V = 0
+        d[V] = setInterval(function() {
+            var Z = W.css("backgroundPosition"),
+                Y, aa, X;
+            Y = parseInt(Z.split(" ")[0], 10);
+            aa = parseInt(Z.split(" ")[1], 10);
+            Y = Y - 70;
+            if (Y <= -6230) {
+                Y = 0
             }
-            U = V + "px 0px";
-            E(T).css("backgroundPosition", U)
+            X = Y + "px 0px";
+            G(W).css("backgroundPosition", X)
         }, 50)
     };
-    var H = function(Z) {
-        var ad, ac, X, S, W = 0,
-            V = 0.5,
-            R = 0,
-            aa = 0,
-            U = 25,
-            T = "",
-            ab = E.browser.version,
-            Y = +(ab.split(".")[0]);
-        if (E.browser.msie) {
-            T = "ms";
-            if (Y == 8) {
-                U = 10
+    var J = function(ac) {
+        var ag, af, aa, V, Z = 0,
+            Y = 0.5,
+            U = 0,
+            ad = 0,
+            X = 25,
+            W = "",
+            ae = G.browser.version,
+            ab = +(ae.split(".")[0]);
+        if (G.browser.msie) {
+            W = "ms";
+            if (ab == 8) {
+                X = 10
             }
         } else {
-            if (E.browser.mozilla) {
-                T = "moz"
+            if (G.browser.mozilla) {
+                W = "moz"
             } else {
-                if (E.browser.webkit) {
-                    T = "webkit"
+                if (G.browser.webkit) {
+                    W = "webkit"
                 }
             }
         }
-        ad = E("<div/>").attr("id", "statusAnimContainer");
-        ac = E("<div/>").addClass("ray");
-        X = E("<div/>").addClass(Z);
-        ac.append(X);
-        ad.append(ac);
-        E("body").append(ad);
-        S = setInterval(function() {
-            ++R;
-            W += V;
-            aa += 0.1;
-            ad.attr("style", "opacity: " + aa);
-            ac.attr("style", "-" + T + "-transform:rotate(" + W + "deg)");
-            X.attr("style", "-" + T + "-transform:rotate(-" + W + "deg)");
-            if (R >= U) {
-                clearInterval(S);
-                ad.animate({
+        ag = G("<div/>").attr("id", "statusAnimContainer");
+        af = G("<div/>").addClass("ray");
+        aa = G("<div/>").addClass(ac);
+        af.append(aa);
+        ag.append(af);
+        G("body").append(ag);
+        V = setInterval(function() {
+            ++U;
+            Z += Y;
+            ad += 0.1;
+            ag.attr("style", "opacity: " + ad);
+            af.attr("style", "-" + W + "-transform:rotate(" + Z + "deg)");
+            aa.attr("style", "-" + W + "-transform:rotate(-" + Z + "deg)");
+            if (U >= X) {
+                clearInterval(V);
+                ag.animate({
                     opacity: 0
                 }, 1000, function() {
-                    ad.remove()
+                    ag.remove()
                 })
             }
         }, 50)
     };
-    var e = function(ad) {
-        E("#contextMenu").remove();
-        var ab, V = j(null, ad),
-            R = w(ad, 215),
-            X = ad.createPrefix().toLocaleLowerCase(),
-            S = cm.thronestats.breakTime,
-            T = cm.thronestats.instantCost,
-            ac, Y, U, Z = 0;
-        U = cm.ThroneController.hasFactionBonus([ad]);
-        if (ad.brokenType == "quality") {
-            ac = cm.thronestats.repairCostEnhance[ad.quality].Time;
-            Y = cm.thronestats.repairCostEnhance[ad.quality].GemCost
+    var e = function(ag) {
+        G("#contextMenu").remove();
+        var ae, Y = j(null, ag),
+            U = x(ag, 215),
+            aa = ag.createPrefix().toLocaleLowerCase(),
+            V = cm.thronestats.breakTime,
+            W = cm.thronestats.instantCost,
+            af, ab, X, ac = 0;
+        X = cm.ThroneController.hasFactionBonus([ag]);
+        if (ag.brokenType == "quality") {
+            af = cm.thronestats.repairCostEnhance[ag.quality].Time;
+            ab = cm.thronestats.repairCostEnhance[ag.quality].GemCost
         } else {
-            if (ad.brokenType == "level") {
-                ac = cm.thronestats.repairCostUpgrade[ad.level].Time;
-                Y = cm.thronestats.repairCostUpgrade[ad.level].GemCost
+            if (ag.brokenType == "level") {
+                af = cm.thronestats.repairCostUpgrade[ag.level].Time;
+                ab = cm.thronestats.repairCostUpgrade[ag.level].GemCost
             }
         }
-        if (U.hazBonus && U.faction === "briton") {
-            Z = cm.ThroneController.effectBonus(94);
-            ac = Math.ceil(ac - (ac * (Z / 100)))
+        if (X.hazBonus && X.faction === "briton") {
+            ac = cm.ThroneController.effectBonus(94);
+            af = Math.ceil(af - (af * (ac / 100)))
         }
-        Q = ad.id;
-        ab = cm.Template.renderTemplate("Throne", "brokenPanel", {
+        T = ag.id;
+        ae = cm.Template.renderTemplate("Throne", "brokenPanel", {
             title: g_js_strings.throneRoom.title_repairTime,
             labelTimeRemaining: g_js_strings.throneRoom.label_timeRemaining,
             labelInstantRepair: g_js_strings.throneRoom.button_instantRepair,
             labelStartRepair: g_js_strings.throneRoom.button_startRepair,
-            src: R,
-            quality: X,
-            name: ad.name,
-            stats: V,
-            time: timestr(ac),
-            cost: Y
+            src: U,
+            quality: aa,
+            name: ag.name,
+            stats: Y,
+            time: timestr(af),
+            cost: ab
         });
         cm.ModalManager.addMedium({
             title: g_js_strings.throneRoom.title_itemBroken,
-            body: ab,
+            body: ae,
             closeNow: false,
             close: function() {
                 f()
@@ -84502,243 +85633,243 @@ cm.ThronePanelView = function(E) {
             left: 140,
             top: 15
         });
-        if (!E.isEmptyObject(seed.queue_throne)) {
+        if (!G.isEmptyObject(seed.queue_throne)) {
             timeLeft = seed.queue_throne.end - unixtime();
-            if (seed.queue_throne.itemId == ad.id) {
+            if (seed.queue_throne.itemId == ag.id) {
                 if (timeLeft > 0) {
                     CountDown.addCountDown("thronePanelBrokenTime", timeLeft, function() {})
                 } else {
                     CountDown.addCountDown("thronePanelBrokenTime", 1, function() {})
                 }
             }
-            var aa = 0,
-                W = unixtime() - seed.queue_throne.start,
-                ac = seed.queue_throne.end - seed.queue_throne.start,
-                ae = 382;
-            if (seed.queue_throne.itemId == ad.id && !cm.ThronePanelView.repairIntervals) {
+            var ad = 0,
+                Z = unixtime() - seed.queue_throne.start,
+                af = seed.queue_throne.end - seed.queue_throne.start,
+                ah = 382;
+            if (seed.queue_throne.itemId == ag.id && !cm.ThronePanelView.repairIntervals) {
                 cm.ThronePanelView.repairIntervals = setInterval(function() {
-                    if (seed.queue_throne.itemId == Q.id) {
-                        W = unixtime() - seed.queue_throne.start;
-                        D(ad, timeLeft, W)
+                    if (seed.queue_throne.itemId == T.id) {
+                        Z = unixtime() - seed.queue_throne.start;
+                        F(ag, timeLeft, Z)
                     }
                 }, 1000)
             }
         }
-        J(ad, ac, Y)
+        L(ag, af, ab)
     };
-    var J = function(Z, X, U) {
-        var Y = E("#thronePanelBrokenActions"),
-            W, S, aa, T, R, V;
-        W = E("<div/>");
-        W.addClass("instantContainer");
-        S = E("<div/>");
-        S.addClass("startContainer");
-        if (E.isEmptyObject(seed.queue_throne)) {
-            aa = E("<span/>");
-            aa.addClass("gems");
-            aa.html(U);
-            R = E("<a/>");
-            R.attr("id", "thronePanelBrokenInstantButton");
-            R.addClass("buttonv2 h30 green");
-            R.html(g_js_strings.throneRoom.button_instantRepair);
-            R.hover(function() {
-                E("#thronePanelBrokenTimeBar").addClass("done")
+    var L = function(ac, aa, X) {
+        var ab = G("#thronePanelBrokenActions"),
+            Z, V, ad, W, U, Y;
+        Z = G("<div/>");
+        Z.addClass("instantContainer");
+        V = G("<div/>");
+        V.addClass("startContainer");
+        if (G.isEmptyObject(seed.queue_throne)) {
+            ad = G("<span/>");
+            ad.addClass("gems");
+            ad.html(X);
+            U = G("<a/>");
+            U.attr("id", "thronePanelBrokenInstantButton");
+            U.addClass("buttonv2 h30 green");
+            U.html(g_js_strings.throneRoom.button_instantRepair);
+            U.hover(function() {
+                G("#thronePanelBrokenTimeBar").addClass("done")
             }, function() {
-                E("#thronePanelBrokenTimeBar").removeClass("done")
+                G("#thronePanelBrokenTimeBar").removeClass("done")
             });
-            R.click(function() {
-                A("thronePanelBrokenContainer");
-                cm.ThronePanelController.instantRepair(Z)
+            U.click(function() {
+                C("thronePanelBrokenContainer");
+                cm.ThronePanelController.instantRepair(ac)
             });
-            T = E("<span/>");
-            T.addClass("time");
-            T.html(timestr(X));
-            V = E("<a/>");
-            V.attr("id", "thronePanelBrokenRepairButton");
-            V.addClass("buttonv2 h30 blue");
-            V.html(g_js_strings.throneRoom.button_startRepair);
-            V.click(function() {
-                A("thronePanelBrokenContainer");
-                cm.ThronePanelController.standardRepair(E(this), Z, X)
+            W = G("<span/>");
+            W.addClass("time");
+            W.html(timestr(aa));
+            Y = G("<a/>");
+            Y.attr("id", "thronePanelBrokenRepairButton");
+            Y.addClass("buttonv2 h30 blue");
+            Y.html(g_js_strings.throneRoom.button_startRepair);
+            Y.click(function() {
+                C("thronePanelBrokenContainer");
+                cm.ThronePanelController.standardRepair(G(this), ac, aa)
             })
         } else {
-            if (seed.queue_throne.itemId == Z.id) {
-                R = E("<a/>");
-                R.attr("id", "thronePanelBrokenInstantButton");
-                R.addClass("buttonv2 h30 green");
-                R.html(g_js_strings.throneRoom.button_speedUp);
-                R.click(function() {
-                    o(Z)
+            if (seed.queue_throne.itemId == ac.id) {
+                U = G("<a/>");
+                U.attr("id", "thronePanelBrokenInstantButton");
+                U.addClass("buttonv2 h30 green");
+                U.html(g_js_strings.throneRoom.button_speedUp);
+                U.click(function() {
+                    o(ac)
                 });
-                V = E("<a/>");
-                V.attr("id", "thronePanelBrokenRepairButton");
-                V.addClass("buttonv2 h30 brown");
-                V.html(g_js_strings.commonstr.cancel);
-                V.click(function() {
-                    A("thronePanelBrokenContainer");
-                    cm.ThronePanelController.cancelRepair(Z)
+                Y = G("<a/>");
+                Y.attr("id", "thronePanelBrokenRepairButton");
+                Y.addClass("buttonv2 h30 brown");
+                Y.html(g_js_strings.commonstr.cancel);
+                Y.click(function() {
+                    C("thronePanelBrokenContainer");
+                    cm.ThronePanelController.cancelRepair(ac)
                 })
             } else {
-                aa = E("<span/>");
-                aa.addClass("gems");
-                aa.html(U);
-                R = E("<a/>");
-                R.attr("id", "thronePanelBrokenInstantButton");
-                R.addClass("buttonv2 h30 green");
-                R.html(g_js_strings.throneRoom.button_instantRepair);
-                R.hover(function() {
-                    E("#thronePanelBrokenTimeBar").addClass("done")
+                ad = G("<span/>");
+                ad.addClass("gems");
+                ad.html(X);
+                U = G("<a/>");
+                U.attr("id", "thronePanelBrokenInstantButton");
+                U.addClass("buttonv2 h30 green");
+                U.html(g_js_strings.throneRoom.button_instantRepair);
+                U.hover(function() {
+                    G("#thronePanelBrokenTimeBar").addClass("done")
                 }, function() {
-                    E("#thronePanelBrokenTimeBar").removeClass("done")
+                    G("#thronePanelBrokenTimeBar").removeClass("done")
                 });
-                R.click(function() {
-                    cm.ThronePanelController.instantRepair(Z)
+                U.click(function() {
+                    cm.ThronePanelController.instantRepair(ac)
                 });
-                V = E("<a/>");
-                V.attr("id", "thronePanelBrokenRepairButton");
-                V.addClass("buttonv2 h30 gray");
-                V.html(g_js_strings.throneRoom.button_startRepair)
+                Y = G("<a/>");
+                Y.attr("id", "thronePanelBrokenRepairButton");
+                Y.addClass("buttonv2 h30 gray");
+                Y.html(g_js_strings.throneRoom.button_startRepair)
             }
         }
-        W.append(aa).append(R);
-        S.append(T).append(V);
-        Y.empty();
-        Y.append(W);
-        Y.append(S)
+        Z.append(ad).append(U);
+        V.append(W).append(Y);
+        ab.empty();
+        ab.append(Z);
+        ab.append(V)
     };
     var f = function() {
         CountDown.stopCountDown("thronePanelBrokenTime")
     };
-    var O = function(R) {
+    var Q = function(U) {
         q();
-        E("#throneInventoryItem" + R.id).attr("class", "");
-        E("#throneInventoryItem" + R.id).addClass(R.type + " " + R.faction + " quality" + R.quality);
-        E("#throneInventoryItem" + R.id + " .broken").remove();
-        if (E("#thronePanelBrokenContainer").html() != null) {
+        G("#throneInventoryItem" + U.id).attr("class", "");
+        G("#throneInventoryItem" + U.id).addClass(U.type + " " + U.faction + " quality" + U.quality);
+        G("#throneInventoryItem" + U.id + " .broken").remove();
+        if (G("#thronePanelBrokenContainer").html() != null) {
             cm.ModalManager.close()
         }
-        G(I, R)
+        I(K, U)
     };
-    var h = function(U, W, S) {
+    var h = function(X, Z, V) {
         q();
-        var Y = S,
-            R = 0,
-            X = 0,
-            V = 382,
-            T = E("#thronePanelBrokenInstantButton");
-        E("#throneInventoryItem" + W.id).attr("class", "");
-        E("#throneInventoryItem" + W.id).addClass(W.type + " " + W.faction + " quality" + W.quality);
-        E("#throneInventoryItem" + W.id).append("<span class='repair'></span>");
-        E("#throneInventoryItem" + W.id + " .broken").remove();
+        var ab = V,
+            U = 0,
+            aa = 0,
+            Y = 382,
+            W = G("#thronePanelBrokenInstantButton");
+        G("#throneInventoryItem" + Z.id).attr("class", "");
+        G("#throneInventoryItem" + Z.id).addClass(Z.type + " " + Z.faction + " quality" + Z.quality);
+        G("#throneInventoryItem" + Z.id).append("<span class='repair'></span>");
+        G("#throneInventoryItem" + Z.id + " .broken").remove();
         seed.queue_throne.start = unixtime();
-        seed.queue_throne.end = unixtime() + S;
-        seed.queue_throne.itemId = W.id;
-        CountDown.addCountDown("thronePanelBrokenTime", Y, function() {});
+        seed.queue_throne.end = unixtime() + V;
+        seed.queue_throne.itemId = Z.id;
+        CountDown.addCountDown("thronePanelBrokenTime", ab, function() {});
         if (!cm.ThronePanelView.repairIntervals) {
             cm.ThronePanelView.repairIntervals = setInterval(function() {
-                X = unixtime() - seed.queue_throne.start;
-                D(W, Y, X)
+                aa = unixtime() - seed.queue_throne.start;
+                F(Z, ab, aa)
             }, 1000)
         }
-        E("div.instantContainer span.gems").remove();
-        T.html("Speed Up");
-        T.unbind("click");
-        T.click(function() {
-            o(W)
+        G("div.instantContainer span.gems").remove();
+        W.html("Speed Up");
+        W.unbind("click");
+        W.click(function() {
+            o(Z)
         });
-        E("div.startContainer span.time").remove();
-        U.removeClass("blue");
-        U.addClass("brown");
-        U.html("Cancel Repair");
-        U.unbind("click");
-        U.click(function() {
-            cm.ThronePanelController.cancelRepair(W)
+        G("div.startContainer span.time").remove();
+        X.removeClass("blue");
+        X.addClass("brown");
+        X.html("Cancel Repair");
+        X.unbind("click");
+        X.click(function() {
+            cm.ThronePanelController.cancelRepair(Z)
         })
     };
-    var D = function(U, W, V) {
-        var X = W,
-            R = 0,
-            T = 382,
-            S = E("#thronePanelBrokenInstantButton");
-        R = V / W;
-        if (R > 1) {
-            R = 1
+    var F = function(X, Z, Y) {
+        var aa = Z,
+            U = 0,
+            W = 382,
+            V = G("#thronePanelBrokenInstantButton");
+        U = Y / Z;
+        if (U > 1) {
+            U = 1
         }
-        if (seed.queue_throne.itemId == Q) {
-            E("#thronePanelBrokenTimeBar").css("width", (T * R + 8))
+        if (seed.queue_throne.itemId == T) {
+            G("#thronePanelBrokenTimeBar").css("width", (W * U + 8))
         }
-        if (V >= W || E.isEmptyObject(seed.queue_throne)) {
+        if (Y >= Z || G.isEmptyObject(seed.queue_throne)) {
             clearInterval(cm.ThronePanelView.repairIntervals);
             cm.ThronePanelView.repairIntervals = null;
-            U.isBroken = false;
-            U.brokenType = "";
-            if (E("div#thronePanelBrokenContainer").html() != null) {
+            X.isBroken = false;
+            X.brokenType = "";
+            if (G("div#thronePanelBrokenContainer").html() != null) {
                 cm.log.l("TPV1");
                 Modal.hideModalAll();
                 cm.ModalManager.close();
                 cm.log.l("TPV2")
             }
-            E("#throneInventoryItem" + U.id + " .repair").remove();
-            G(I, U)
+            G("#throneInventoryItem" + X.id + " .repair").remove();
+            I(K, X)
         }
     };
-    var o = function(R) {
-        modal_speedup("throne", R.id, undefined, R.name)
+    var o = function(U) {
+        modal_speedup("throne", U.id, undefined, U.name)
     };
-    var K = function() {
-        var R = E("#thronePanelBrokenTime"),
-            S;
-        if (R.html() != null) {
-            S = seed.queue_throne.end - unixtime();
-            CountDown.addCountDown("thronePanelBrokenTime", S, function() {})
+    var M = function() {
+        var U = G("#thronePanelBrokenTime"),
+            V;
+        if (U.html() != null) {
+            V = seed.queue_throne.end - unixtime();
+            CountDown.addCountDown("thronePanelBrokenTime", V, function() {})
         }
     };
-    var N = function(R) {
+    var P = function(U) {
         q();
-        E("#throneInventoryItem" + R.id).attr("class", "");
-        E("#throneInventoryItem" + R.id).addClass(R.type + " " + R.faction + " quality" + R.quality);
-        E("#throneInventoryItem" + R.id + " .repair").remove();
-        E("#throneInventoryItem" + R.id).append("<span class='broken'></span>");
+        G("#throneInventoryItem" + U.id).attr("class", "");
+        G("#throneInventoryItem" + U.id).addClass(U.type + " " + U.faction + " quality" + U.quality);
+        G("#throneInventoryItem" + U.id + " .repair").remove();
+        G("#throneInventoryItem" + U.id).append("<span class='broken'></span>");
         seed.queue_throne = {};
         clearInterval(cm.ThronePanelView.repairIntervals);
         cm.ThronePanelView.repairIntervals = null;
         CountDown.stopCountDown("thronePanelBrokenTime");
         cm.ModalManager.close();
-        e(R)
+        e(U)
     };
-    var C = function() {
-        var S = E("#thronePanelContainer ul.tabsv2 li"),
-            R = ["enhance", "upgrade"],
-            T = "";
-        S.each(function(U) {
-            if (E(this).hasClass("selected")) {
-                T = R[U]
+    var E = function() {
+        var V = G("#thronePanelContainer ul.tabsv2 li"),
+            U = ["enhance", "upgrade"],
+            W = "";
+        V.each(function(X) {
+            if (G(this).hasClass("selected")) {
+                W = U[X]
             }
         });
-        return T
+        return W
     };
-    var v = function() {
-        return P
+    var w = function() {
+        return R
     };
     return {
-        enhanceOptions: z,
+        enhanceOptions: B,
         upgradeOptions: n,
-        renderPanel: G,
-        updateRiskBar: M,
-        closePanel: L,
+        renderPanel: I,
+        updateRiskBar: O,
+        closePanel: N,
         panelStatus: m,
         renderBroken: e,
-        repairInterval: u,
-        doInterval: D,
-        clickInstantRepair: O,
+        repairInterval: v,
+        doInterval: F,
+        clickInstantRepair: Q,
         clickStandardRepair: h,
         clickSpeedUp: o,
-        appliedSpeedUp: K,
-        clickCancelRepair: N,
-        statusAnim: H,
+        appliedSpeedUp: M,
+        clickCancelRepair: P,
+        statusAnim: J,
         removeSpinny: q,
-        getCurrentType: C,
-        getCurrentThroneItemObject: v
+        getCurrentType: E,
+        getCurrentThroneItemObject: w
     }
 }(jQuery);
 cm = cm || {};
@@ -85893,7 +87024,7 @@ function modal_tourny_changetab(newtab) {
                     $("modal_tourny_content").innerHTML = tournyhtml.join("")
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -86144,13 +87275,11 @@ cm.TournamentsView = function(c) {
             p = "<b>" + s + "</b><br/>" + r,
             x = v || p,
             u = "",
-            q = cm.utils.Date("F, d @ H:i", t.startDate),
-            w = cm.utils.Date("F, d @ H:i", t.endDate);
+            q = cm.utils.Date("F d, Y", t.startDate),
+            w = cm.utils.Date("F d, Y", t.endDate);
         if (t.startDate && t.endDate) {
             u = n.start + ": " + q + " -- " + n.end + ": " + w;
-            if (unixtime() < t.endDate) {
-                u += ' <span class="countdown">(' + g_js_strings.vote.timeLeft + ': <span class="timeleft">' + timestr(t.endDate - unixtime()) + "</span>)</span>"
-            }
+            if (unixtime() < t.endDate) {}
             x += "<br/><b>" + u + "</b>"
         }
         return b("event_status", {
@@ -87020,7 +88149,7 @@ function removeTraining(trainingId, cityId, typetrn, numtrptrn, trnETA, trnTmp, 
                     Modal.hideModalAll()
                 }, true)
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -87094,7 +88223,7 @@ function removeFortifications(queueId, cityId, typefrt, numtrpfrt, frtETA, frtTm
                 }
                 Modal.hideModalAll()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -87496,7 +88625,7 @@ function tutorialAdvance(step, state) {
                     update_boosts()
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -88703,10 +89832,8 @@ cm.ScriptVersionUpdater = function(e) {
             var h = i.split("-"),
                 g = h[h.length - 1],
                 f = i ? (g.split(".")[0]) : -1;
-            cm.log.l("We have this version in camelotmain #main_script tag=" + f);
             return f
         } else {
-            cm.log.l("Warning: Could not find src str on the #main_script src tag.");
             return -1
         }
     };
@@ -88895,7 +90022,7 @@ cm.ScriptVersionUpdater = function(e) {
                                 }
                             })
                         } else {
-                            Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                            Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                         }
                     }
                 }
@@ -89562,7 +90689,7 @@ UserEngagement.Methods = {
                     reparr.push(["REPLACE_tOkEnId", rslt.tokenId]);
                     common_postToProfile("118", reparr)
                 } else {
-                    Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                    Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
                 }
             },
             onFailure: function() {}
@@ -89966,7 +91093,7 @@ function getUserSettings() {
                 userHtml.push("</div>");
                 Modal.showModal(500, 400, 130, 75, g_js_strings.modaltitles.usersettings, userHtml.join(""))
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -89984,7 +91111,7 @@ function saveLanguage() {
             if (rslt.ok) {
                 top.location = appUrl + "?lang=" + langco
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -90002,7 +91129,7 @@ function changeDefaultChat(type) {
             if (rslt.ok) {
                 seed.playerSettings.s1 = (type == 0 ? "g" : "a")
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -90019,7 +91146,7 @@ function removeFromBlockList(uid) {
             if (rslt.ok) {
                 $("blList_" + uid).remove()
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -90043,7 +91170,7 @@ function removeFromIgnoreList(uid) {
                     }
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {}
@@ -90397,6 +91524,17 @@ cm.utils.Date = function(j, h) {
                 f[e[0]] = e[1]
             }
             return (typeof d === "undefined") ? f : f[d]
+        },
+        hasOwnProperties: function(d) {
+            var b = Array.prototype.slice.call(arguments),
+                d = b.shift();
+            for (var c = 0; c < b.length; c++) {
+                if (d[b[c]] === undefined) {
+                    return false
+                }
+                d = d[b[c]]
+            }
+            return true
         }
     });
     a.fn.clicks = function(e, b, d) {
@@ -90602,6 +91740,10 @@ cm.VipView = function(j) {
         i = g_js_strings.vipOverview;
     var h = function(p) {
         var q = [];
+        q.push({
+            type: "queueBenefit",
+            string: g_js_strings.vipModal.benefitQueue
+        });
         j.each(p, function(u, r) {
             var s, t;
             switch (u) {
@@ -90908,7 +92050,7 @@ cm.VotingController = function(e) {
                 if (typeof h.enabled !== "undefined" && (!h.enabled)) {
                     cm.ModalManager.alert(h.feedback)
                 } else {
-                    Modal.showAlert(printLocalError((h.error_code || null), (h.msg || null), (h.feedback || null)))
+                    Modal.showAlert(printLocalError(h.error_code, h.msg, h.feedback))
                 }
             }
         })
@@ -90958,7 +92100,7 @@ cm.VotingController = function(e) {
                             cm.VotingController.openVotingModal()
                         } else {
                             cm.ModalManager.close();
-                            Modal.showAlert(printLocalError((o.error_code || null), (o.msg || null), (o.feedback || null)))
+                            Modal.showAlert(printLocalError(o.error_code, o.msg, o.feedback))
                         }
                     })
                 })
@@ -91668,7 +92810,7 @@ function modal_walls_trainingtab() {
         b.push("</b></div>");
         b.push("<div style='float:right;'>");
         b.push('<a class="inlineButton red20" onclick="modal_speedup(');
-        b.push(["'frt'", f[0], 0, "'" + g_js_strings.commonstr.fortification + "'", f[2]].join(","));
+        b.push(["'frt'", f[0], 0, "'" + g_js_strings.commonstr.fortification + "'", "''"].join(","));
         b.push(');return false;">');
         b.push("<span>" + g_js_strings.commonstr.speedup + "</span></a>");
         b.push("</div>");
@@ -91952,7 +93094,7 @@ function walls_train_defense(tid, num, iid) {
                     update_seed(rslt.updateSeed)
                 }
             } else {
-                Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
+                Modal.showAlert(printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
             }
         },
         onFailure: function() {
@@ -92331,7 +93473,7 @@ WildDefense.Methods = {
                     WildDefense.defenseModal(WildDefense.tileId)
                 }
             } else {
-                Modal.showAlert(printLocalError((c.error_code || null), (c.msg || null), (c.feedback || null)))
+                Modal.showAlert(printLocalError(c.error_code, c.msg, c.feedback))
             }
         })
     },
@@ -92398,7 +93540,7 @@ WildDefense.Methods = {
                     WildDefense.defenseModal(WildDefense.tileId)
                 }
             } else {
-                Modal.showAlert(printLocalError((b.error_code || null), (b.msg || null), (b.feedback || null)))
+                Modal.showAlert(printLocalError(b.error_code, b.msg, b.feedback))
             }
         })
     }
