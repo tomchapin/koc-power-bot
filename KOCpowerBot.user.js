@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130726a
+// @version        20130726b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130726a';
+var Version = '20130726b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -13028,7 +13028,7 @@ var RefreshEvery  = {
      //var text = '<FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
      var text = '';
      var Left = parseInt(t.NextRefresh - now);
-     if ( Left < 0){
+     if ( Left < 0 && isAFK){
         Left = 0;
         t.doit();
      }
