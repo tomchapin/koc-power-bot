@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130726c
+// @version        20130727a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130726c';
+var Version = '20130727a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10306,7 +10306,7 @@ Tabs.Barb = {
       ['BThorn', 13],
       ['EXec', 14],
       ['Tower', 15],
-      ['FlmArch', 16],
+      ['FlameArch', 16],
      ],
     
   init : function (div){
@@ -10399,7 +10399,7 @@ Tabs.Barb = {
         saveAttackOptions();
    },
    
-  troopOptions: function(){
+  troopOptionsOld: function(){
        var t = Tabs.Barb;
       var troopDef = t.troopDef;
        if(t.troopselect == null)    
@@ -10423,7 +10423,41 @@ Tabs.Barb = {
       t.troopselect.getMainDiv().innerHTML = z;
       t.troopselect.show(true);
   },
-  
+
+  troopOptions: function(){
+  	 var t = Tabs.Barb;
+         var troopDef = t.troopDef;
+  	 if(t.troopselect == null)	
+         t.troopselect = new pbPopup ('pbtroopselect', 0, 0, 650, 450, true, function(){t.saveTroops();});
+  	 t.troopselect.centerMe (mainPop.getMainDiv());  
+  	 var z= '<DIV id=pbTraderDivD class=pbStat>TROOP SELECTION</div><TABLE width=100%><TR>';
+	 z+='<TD></td>';
+	 for(var j=0; j<10; j++)
+		z+='<TD>Level '+(j+1)+'</td>';
+	 z+='</tr>';		 		
+
+	 for(i=0;i<troopDef.length;i++){
+	 	z += '<TR><TD>'+troopDef[i][0]+': </td>';
+	 	for(var j=0; j<10; j++){
+             z += '<TD><INPUT id="level'+j+'troop'+i+'" type=text size=5 maxlength=6 value="'+(AttackOptions.Troops[j+1][i+1]?AttackOptions.Troops[j+1][i+1]:0)+'" /></td>';
+	 	}
+	 	z+='</tr>';		 		
+	 }
+
+	 z+='<TR><TD>MIN dist</td>';		 		
+	 for(var j=0; j<10; j++){
+	 	z+='<TD><INPUT id=Mindist'+j+' type=text size=3 maxlength=3 value="'+AttackOptions.MinDistance[j+1]+'"</td>';
+	 }
+	 z+='</tr>';		 		
+	 z+='<TR><TD>MAX dist</td>';		 		
+	 for(var j=0; j<10; j++){
+	 	z+='<TD><INPUT id=dist'+j+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[j+1]+'"</td>';
+	 }
+	 z+='</tr>';		 		
+	 z+='</table>';
+	 t.troopselect.getMainDiv().innerHTML = z;
+	 t.troopselect.show(true);
+  },  
   barbOptions: function(){
        var t = Tabs.Barb;
        if(t.barboptions == null)    
