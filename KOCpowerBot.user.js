@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130731a
+// @version        20130731b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130731a';
+var Version = '20130731b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -19936,8 +19936,10 @@ var March = {
             max = (rallypointlevel * 10000) * buff;
             break;
       }
-      return Math.ceil(max); // haven't been able to configure game to determine if this should be floor or ceil
+//      return Math.ceil(max); // haven't been able to configure game to determine if this should be floor or ceil
+      return Math.floor(max+0.0001); 
    },//changed to ceil Apr 8/13.  and added debug log to catch errors -Baos
+     // changed to floor after adding 0.0001, consistent with tools treatment 7/30/2013
    getAscendedStats : function (cityId){
       var t = this;
       var ret = {};
