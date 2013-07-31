@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130727a
+// @version        20130731a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130727a';
+var Version = '20130731a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -9941,6 +9941,10 @@ Tabs.AutoCraft = {
       t.changeCraft ('pbCraftIntervall', 'CraftIntervallMin')
       document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;saveTrainOptions();}, false);
       document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;saveTrainOptions();}, false);
+      var cItems = document.getElementById('pbcraftingqueues').getElementsByTagName('input');
+      for (var i = 0; i < cItems.length; i++) {
+          cItems[i].addEventListener('change', function(){t.saveCraftState()}, false);
+      }
    },
    changeCraft : function (valueId, optionName, callOnChange){
       var t = Tabs.AutoCraft;
@@ -10076,6 +10080,8 @@ Tabs.AutoCraft = {
          if (document.getElementById("Craft_nb_" +h)) TrainOptions.CraftingNb[h] = document.getElementById("Craft_nb_"+h).value;
       }
       saveTrainOptions();
+      document.getElementById('pbCraftingDiv').style.background = '#99FF99';
+      setTimeout(function() {(document.getElementById('pbCraftingDiv').style.background = '');}, 1000);
    },
    toggleStateRunning: function(obj){
       var t = Tabs.AutoCraft;
