@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130731c
+// @version        20130802a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130731c';
+var Version = '20130802a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -17487,21 +17487,60 @@ Tabs.Apothecary = {
   init : function (div){    // called once, upon script startup
     var t = Tabs.Apothecary;
     t.myDiv = div;
-    var m = '<DIV class=pbStat >APOTHECARY TAB</div><table width=100% height=0% class=pbTab><tr align=center >';
-    m += '<td><input type=submit id=pbapothecary_power value="Auto Heal = '+(ApothecaryOptions.Active?'ON':'OFF')+'" /></td>\
-          <td><input type=submit id=pbapothecary_show value="Show" /></td></tr></table>';
-    m += '<DIV class=pbStat id=pbapothecary_options >OPTIONS</div></div><table></tr>\
-          <td>Keep Gold : <INPUT type=text id="pbapothecary_gold" size=6 value='+ApothecaryOptions.goldkeep+' /></td>\
-          <td colspan=4><span id="pbapothecary_citysel"></span></td></tr><tr>\
-          <td>Troop type : <SELECT id="pbapothecary_troops"><option value=0>--Select--</options>';
-    for (y in unsafeWindow.unitcost)
-        m += '<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
+    var cities = unsafeWindow.seed.cities;
+    var unitcost = unsafeWindow.unitcost;
+    var woundedUnits = unsafeWindow.seed.woundedUnits;
+    var m = '<div class="pbStat">APOTHECARY TAB</div>\
+        <table width="100%" height="0%" class="pbTab"><tr align="center">\
+        <td><input type="submit" id="pbapothecary_power" value="Auto Heal = ' + (ApothecaryOptions.Active ? 'ON' : 'OFF') + '" /></td>\
+        <td><input type="submit" id="pbapothecary_show" value="Show" /></td></tr></table>\
+        <div class="pbStat" id="pbapothecary_options">OPTIONS</div>\
+        <table><tr><td>Keep Gold: <input type="text" id="pbapothecary_gold" size="6" value="' + ApothecaryOptions.goldkeep + '" /></td>\
+        <td colspan="4"><span id="pbapothecary_citysel"></span></td></tr>\
+        <tr><td>Troop type: <select id="pbapothecary_troops"><option value="0">--Select--</option>';
+    for (y in unitcost)
+        m += '<option value="' + y.substr(3) + '">' + unitcost[y][0] + '</option>';
     m += '</select></td>\
-          <td>Min.: <INPUT id=pbapothecary_min type=text size=4 \></td>\
-          <td><INPUT type=checkbox id=pbapothecary_maxcheck /> Max.: <INPUT id=pbapothecary_max type=text size=4 DISABLED \></td>\
-          <td><INPUT type=submit id=pbapothecary_save value=Add /></td>';
-    m += '</tr></table>';
+        <td>Min.: <input id="pbapothecary_min" type="text" size="4" /></td>\
+        <td><input type="checkbox" id="pbapothecary_maxcheck" />Max.: <input id="pbapothecary_max" type="text" size="4" disabled="disabled" /></td>\
+        <td><input type="submit" id="pbapothecary_save" value="Add" /></td></tr></table>\
+        <div class="pbStat">STATS</div>\
+        <table width="100%" style ="font-size: 10px;"><thead><tr><th>&nbsp;</th>';
+    for (i = 0; i < cities.length; i ++) {
+        m += '<th>' + cities[i][1] + '</th>';
+    }
+    m += '<th>total</th></tr></thead>\
+        <tbody><tr><td>Building</td>';
+    for (i = 0; i < cities.length; i ++) {
+        var cid = 'city' + cities[i][0];
+        m += '<td id="tdApoBuilding_' + cid + '" style="text-align: center; white-space: nowrap;">&nbsp;</td>';
+    }
+    m += '<td>&nbsp;</td></tr>\
+        <tr><td class="pbStat" colspan="' + (cities.length + 2) + '">' + unsafeWindow.g_js_strings.revive.curintrain + '</td></tr>\
+        <tr><td>Revive Queue 1</td>';
+    for (i = 0; i < cities.length; i ++) {
+        var cid = 'city' + cities[i][0];
+        m += '<td id="tdApoRevQueue1_' + cid + '" style="text-align: right; white-space: nowrap;">&nbsp;</td>';
+    }
+    m += '<td>&nbsp;</td></tr>\
+        <tr><td>Revive Queue 2</td>';
+    for (i = 0; i < cities.length; i ++) {
+        var cid = 'city' + cities[i][0];
+        m += '<td id="tdApoRevQueue2_' + cid + '" style="text-align: right; white-space: nowrap;">&nbsp;</td>';
+    }
+    m += '<td>&nbsp;</td></tr>\
+        <tr><td class="pbStat" colspan="' + (cities.length + 2) + '">' + unsafeWindow.g_js_strings.revive.wounded + '</td></tr>';
+    for (uid in unitcost) {
+        m += '<tr><td style="white-space: nowrap;">' + unitcost[uid][0] + '</td>';
+        for (cid in woundedUnits) {
+            m += '<td id="tdApoWoundedUnits_' + cid + '_' + uid + '" style="text-align: right;">&nbsp;</td>';
+        }
+        m += '<td id="tdApoWoundedUnits_total_' + uid + '" style="text-align: right;">&nbsp;</td></tr>';
+    }
+    m += '</tbody></table>';
+
     div.innerHTML = m;
+    setInterval(t.updateApoStats, 1 * 1000);
     $("pbapothecary_gold").addEventListener('change', function(){
         ApothecaryOptions.goldkeep = parseIntNan(this.value);
     },false);
@@ -17704,6 +17743,82 @@ Tabs.Apothecary = {
   show : function (){
     var t = Tabs.Apothecary;
   },
+
+    updateApoStats : function () {
+        var t = Tabs.Apothecary;
+        var cities = unsafeWindow.seed.cities;
+        var buildings = unsafeWindow.seed.buildings;
+        var buildingcost = unsafeWindow.buildingcost;
+        var unitcost = unsafeWindow.unitcost;
+        var woundedUnits = unsafeWindow.seed.woundedUnits;
+        var total = [];
+        var html = '';
+        for (uid in unitcost) {
+            total[uid] = 0;
+        }
+        for (i = 0; i < cities.length; i ++) {
+            var cid = 'city' + cities[i][0];
+            // building
+            var blvl = [];
+            for (bpos in buildings[cid]) {
+                var btype = parseInt(buildings[cid][bpos][0]);
+                if (btype == 21 || btype == 23) {
+                    var bname = buildingcost['bdg' + buildings[cid][bpos][0]][0];
+                    blvl.push('Lv.' + buildings[cid][bpos][1]);
+                }
+            }
+            html = bname + '<br />(' + blvl.join(', ') + ')'
+            document.getElementById('tdApoBuilding_' + cid).innerHTML = html;
+            // revive queue
+            var q1 = unsafeWindow.seed.queue_revive[cid];
+            var u = '';
+            var uid_q1 = '';
+            if (q1 != null && q1.length > 0) {
+                u = q1[0];
+                uid_q1 = 'unt' + u[0];
+                html = addCommas(u[1]) + ' ' + unitcost[uid_q1][0] + '<br />';
+                if (parseInt(u[3]) > unsafeWindow.unixtime()) {
+                    html += '(' + timestr(parseInt(u[3]) - unsafeWindow.unixtime()) + ')';
+                } else {
+                    html += '(done)';
+                }
+            } else {
+                html = '';
+            }
+            document.getElementById('tdApoRevQueue1_' + cid).innerHTML = html;
+            // revive queue 2
+            var q2 = unsafeWindow.seed.queue_revive2[cid];
+            var u = '';
+            var uid_q2 = '';
+            if (q2 != null && q2.length > 0) {
+                u = q2[0];
+                uid_q2 = 'unt' + u[0]
+                html = addCommas(u[1]) + ' ' + unitcost[uid_q2][0] + '<br />';
+                if (parseInt(u[3]) > unsafeWindow.unixtime()) {
+                    html += '(' + timestr(parseInt(u[3]) - unsafeWindow.unixtime()) + ')';
+                } else {
+                    html += '(done)';
+                }
+            } else {
+                html = '';
+            }
+            document.getElementById('tdApoRevQueue2_' + cid).innerHTML = html;
+            // wounded units
+            for (uid in unitcost) {
+                total[uid] += woundedUnits[cid][uid];
+                html = addCommas(woundedUnits[cid][uid]);
+                document.getElementById('tdApoWoundedUnits_' + cid + '_' + uid).innerHTML = html;
+                if (uid == uid_q1 || uid == uid_q2) {
+                    document.getElementById('tdApoWoundedUnits_' + cid + '_' + uid).style.color = '#006600';
+                }
+            }
+        }
+        // total
+        for (uid in unitcost) {
+            html = addCommas(total[uid]);
+            document.getElementById('tdApoWoundedUnits_total_' + uid).innerHTML = html;
+        }
+    }
 }
 
 /******************* Combat Tab **********************/
