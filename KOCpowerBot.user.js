@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130802a
+// @version        20130803a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130802a';
+var Version = '20130803a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -1846,7 +1846,7 @@ Tabs.Throne = {
   MaxRows:30,
   CompPos:0,
   CardTypes:["ALL","Attack","Defense","Life","Speed","Accuracy","Range","Load","MarchSize","MarchSpeed","CombatSkill","IntelligenceSkill","PoliticsSkill","ResourcefulnessSkill","TrainingSpeed","ConstructionSpeed","ResearchSpeed","CraftingSpeed","Upkeep","ResourceProduction","ResourceCap","Storehouse","Morale","ItemDrop"],
-  EquipType: ["ALL","advisor","banner","chair","table","trophy","window","candelabrum"],//case sensitive for the moment.
+  EquipType: ["ALL","advisor","banner","chair","table","trophy","window","candelabrum","hero"],//case sensitive for the moment.
   Faction: ["ALL","Briton","Fey","Druid"],
 
   init : function (div){
@@ -2253,6 +2253,8 @@ Compare :function (){
     var TableCount = 0;
     var TrophyCount = 0;
     var WindowCount = 0;
+    var CandelCount = 0;
+    var HeroCount = 0;
     var counter = 0;
     ActiveItems = parseInt(Seed.throne.rowNum)*5;
 
@@ -2266,13 +2268,15 @@ Compare :function (){
       if (z.type=="trophy") TrophyCount++;
       if (z.type=="table") TableCount++;
       if (z.type=="window") WindowCount++;
+      if (z.type=="candelabrum") CandelCount++;
+      if (z.type=="hero") HeroCount++;
    }  
 
 
     try {   
      var m = '<DIV id=pbTowrtDivF class=pbStat>Compare Throne Items</div><br><TABLE id=pbCompareStats width=100% height=0% class=pbTab>';
 
-     m+='<TD>Advisor: ' + AdvisorCount + '</td><TD>Banner: ' + BannerCount+ '</td><TD>Throne :' + ChairCount+ '</td><TD>Table: '+ TableCount+'</td><TD>Trophy: ' + TrophyCount + '</td><TD>Window: ' + WindowCount + '</td></table><br>';
+     m+='<TD>Advisor: ' + AdvisorCount + '</td><TD>Banner: ' + BannerCount+ '</td><TD>Throne :' + ChairCount+ '</td><TD>Table: '+ TableCount+'</td><TD>Trophy: ' + TrophyCount + '</td><TD>Window: ' + WindowCount + '</td><TD>Candelabrum: ' + CandelCount + '</td><TD>Hero: ' + HeroCount + '</td></table><br>';
 
      m+= '<DIV id=pbThroneMain class=pbStat>Compare Throne Items</div><br>';
      m+='<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=type type=list></select></td><TD>Card Family: <SELECT id=family type=list></select></td><TD>Effect: <SELECT id=effect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=keyword size=10></td></tr></table>';
