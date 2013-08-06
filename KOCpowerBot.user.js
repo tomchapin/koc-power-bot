@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130806b
+// @version        20130806c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130806b';
+var Version = '20130806c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10868,12 +10868,13 @@ Tabs.Barb = {
                      GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                      saveAttackOptions();
                    } else {
-					   if(rslt.error_code && rslt.msg)document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+Cities.byID[cityID].name+' dark forest failed: '+rslt.msg+'</FONT>';
+                   	var dtime = new Date()
+					   if(rslt.error_code && rslt.msg)document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+dtime.toLocaleString()+' '+Cities.byID[cityID].name+' dark forest failed: '+rslt.msg+'</FONT>';
                      //logit( inspect(rslt,3,1));
                      if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
                      if (rslt.error_code == 213)AttackOptions.BarbsFailedKnight++;
                      if (rslt.error_code == 210) AttackOptions.BarbsFailedRP++;
-                     if (rslt.error_code == 4) actionLog('not enough units to attack darkforest');
+                     if (rslt.error_code == 4)document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+dtime.toLocaleString()+' '+Cities.byID[cityID].name+' dark forest failed: Not enough units</FONT>';
                      if (rslt.error_code == 8) {
 						 AttackOptions.BarbsFailedTraffic++;
 						 t.doBarb(cityID,counter,xcoord,ycoord,level,kid,trps);
@@ -10882,6 +10883,7 @@ Tabs.Barb = {
                      if (rslt.error_code == 104) {
                        AttackOptions.BarbsFailedBog++;
                        GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
+                       new t.barbing();
                        saveAttackOptions();
                      }
                      document.getElementById('pberror2').innerHTML = 'Excess Traffic errors:' + AttackOptions.BarbsFailedTraffic;
@@ -21826,7 +21828,7 @@ function Sendtokofcmon (left,top,mapdata) {
       method: "post",
       parameters: params,
       onSuccess: function (rslt) {
-      	if(rslt.results.emptySet)return;
+      	if(rslt.results && rslt.results.emptySet)return;
       var kofcparams = {};
       kofcparams.server = getServerId();
       kofcparams.tvuid = unsafeWindow.tvuid;
