@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130806e
+// @version        20130806f
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130806e';
+var Version = '20130806f';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -892,7 +892,7 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 };
 
 function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
-	if(Options.detafk)new detafk();
+	if(Options.detAFK)new detafk();
 	new Tabs.Throne.rotatethrone();
 };
 
@@ -10736,6 +10736,7 @@ Tabs.Barb = {
       if (Seed.resources[cityID]["rec5"][0] > Number(AttackOptions.threshold)) {
          return;
       };
+             logit('march barbing res');
        var element1 = 'pddatacity'+(city-1);
        document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
        var element2 = 'pddataarray'+(city-1);
@@ -10743,7 +10744,7 @@ Tabs.Barb = {
        if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(AttackOptions.RallyClip)) return;
        if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
-       
+              logit('march barbing 2');
        if(t.barbArray[city] && t.barbArray[city].length > 0){
         var barbinfo = t.barbArray[city].shift();
        }else if(parseInt(AttackOptions.Update[city][1])==0){
@@ -10751,7 +10752,8 @@ Tabs.Barb = {
         return;
        } else {
         return;
-       }
+       };
+              logit('march barbing 2');
        var check=0;
        var barblevel = parseInt(barbinfo.level);
         
@@ -10763,7 +10765,7 @@ Tabs.Barb = {
             GM_setValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.barbArray[city]));
             return;
         }
-
+       logit('march barbing 3');
          // check troop levels in city
          var trps = AttackOptions.Troops[barblevel];
          var num_troops = 0;
@@ -10778,11 +10780,11 @@ Tabs.Barb = {
         GM_setValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.barbArray[city]));
         return;
        }
-       
+              logit('march barbing 4');
        var element = 'pdtotalcity'+(city-1);
         if (t.barbArray[city] == undefined) document.getElementById(element).innerHTML = 'No Data';
         else document.getElementById(element).innerHTML =  'Forests:' + t.barbArray[city].length;
-       
+              logit('march barbing 5');
        var xcoord = barbinfo['x'];
        var ycoord = barbinfo['y'];
        t.doBarb(citynumber,city,xcoord,ycoord,barblevel,kid,trps);
