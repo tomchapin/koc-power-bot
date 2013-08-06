@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130806d
+// @version        20130806e
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130806d';
+var Version = '20130806e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10725,6 +10725,7 @@ Tabs.Barb = {
   
   barbing : function(){
        var t = Tabs.Barb;
+       logit('march barbing');
        var city = t.city;
        citynumber = Seed.cities[city-1][0];
        cityID = 'city' + citynumber;
@@ -10747,10 +10748,8 @@ Tabs.Barb = {
         var barbinfo = t.barbArray[city].shift();
        }else if(parseInt(AttackOptions.Update[city][1])==0){
         if(!t.searchRunning)t.checkBarbData();
-        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000));
         return;
        } else {
-        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000));
         return;
        }
        var check=0;
