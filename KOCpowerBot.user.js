@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130806c
+// @version        20130806d
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130806c';
+var Version = '20130806d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -10747,8 +10747,10 @@ Tabs.Barb = {
         var barbinfo = t.barbArray[city].shift();
        }else if(parseInt(AttackOptions.Update[city][1])==0){
         if(!t.searchRunning)t.checkBarbData();
+        t.getnextCity();
         return;
        } else {
+       	t.getnextCity();
         return;
        }
        var check=0;
@@ -10839,6 +10841,7 @@ Tabs.Barb = {
     
   doBarb: function(cityID,counter,xcoord,ycoord,level,kid,trps){
           var t = Tabs.Barb;
+                   	var dtime = new Date()
           var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
           params.cid=cityID;
           params.type=4;
@@ -10847,7 +10850,7 @@ Tabs.Barb = {
           params.ycoord = ycoord;
         for (ii=1; ii<parseInt(t.troopDef.length+1); ii++) {
 			if(parseInt(trps[ii]) > Seed.units['city'+cityID]['unt'+ii]){
-				document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+Cities.byID[cityID].name+' dark forest failed: Not doing march, not enough units </FONT>';
+				document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+dtime.toLocaleString()+' '+Cities.byID[cityID].name+' dark forest failed: Not doing march, not enough units </FONT>';
 				return;
 			};
             if(parseInt(trps[ii]) > 0)
@@ -10868,7 +10871,6 @@ Tabs.Barb = {
                      GM_setValue('DF_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.barbArray[counter]));
                      saveAttackOptions();
                    } else {
-                   	var dtime = new Date()
 					   if(rslt.error_code && rslt.msg)document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+dtime.toLocaleString()+' '+Cities.byID[cityID].name+' dark forest failed: '+rslt.msg+'</FONT>';
                      //logit( inspect(rslt,3,1));
                      if (rslt.error_code != 8 && rslt.error_code != 213 && rslt.error_code == 210) AttackOptions.BarbsFailedVaria++;
