@@ -13086,10 +13086,18 @@ var RefreshEvery  = {
      //var text = '<FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
      var text = '';
      var Left = parseInt(t.NextRefresh - now);
+     if(Options.detAFK) {
      if ( Left < 0 && isAFK){
         Left = 0;
         t.doit();
+     }    	
+     } else {
+    if ( Left < 0){
+        Left = 0;
+        t.doit();
      }
+ 
+     };
      if (Left < -1) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
      else if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
      else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
