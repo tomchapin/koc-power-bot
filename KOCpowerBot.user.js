@@ -10808,7 +10808,7 @@ Tabs.Barb = {
     
     if(AttackOptions.Levels[city][0]){
         t.barbing();
-        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000);
+        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000));
     } else {
         t.getnextCity();
     }
