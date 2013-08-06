@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130803a
+// @version        20130806a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130803a';
+var Version = '20130806a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -203,6 +203,7 @@ var Options = {
   GESeverytenmin:0,
   GESeveryhour:0,
   GESeveryday:0,
+  detAFK: true,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -385,6 +386,7 @@ var ThroneOptions = {
     heatup:true,
     ibrokeitems:[],
     autotoggle:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,},
+    savehero: true
 };
 
 var AttackOptions = {
@@ -889,7 +891,7 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 };
 
 function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
-	new detafk();
+	if(Options.detafk)new detafk();
 	new Tabs.Throne.rotatethrone();
 };
 
@@ -926,6 +928,7 @@ function afkwatcher () {
 	document.body.onmousemove = function(){afk++};
 	document.body.onkeypress = function(){afk++};
 };
+
 function detafk () {
 	if (afk == afkb) {
 		actionLog('afk detected');
@@ -936,7 +939,8 @@ function detafk () {
 			isAFK = false;
 			afkb = afk;
 	}
-}
+};
+
 /************** End Afk detector **************/
 
 
@@ -1955,7 +1959,8 @@ Tabs.Throne = {
       m+='<TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all / Fey Spire cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_unique type=checkbox '+ (ThroneOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbheatup type=checkbox '+(ThroneOptions.heatup?'CHECKED ':'')+'/>&nbsp; Upgrade cards before salvaging to increase aetherstone and heat up modifier</TD></TR>';
-      m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR></table>';
+      m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR>';
+      m+='<tr><td colspan=3><INPUT id=shero type=checkbox '+ (ThroneOptions.savehero?'CHECKED ':'') +'/>&nbsp; Save all hero\'s</TD></TR></table>';
       m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
       m+='<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
       m+='<TABLE width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
@@ -2070,6 +2075,7 @@ Tabs.Throne = {
       document.getElementById('ItemDropMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ItemDrop.Min = this.value;saveThroneOptions();},false);
       document.getElementById('pbsalvage_unique').addEventListener ('change', function(){ThroneOptions.SaveUnique = this.checked;saveThroneOptions();},false);
       document.getElementById('pbheatup').addEventListener ('change', function(){ThroneOptions.heatup = this.checked;saveThroneOptions();},false);
+      document.getElementById('shero').addEventListener ('change', function(){ThroneOptions.savehero = this.checked;saveThroneOptions();},false);
 
       document.getElementById('pbthrone_keep').addEventListener ('change', function(){ThroneOptions.thronekeep = parseInt(document.getElementById('pbthrone_keep').value);saveThroneOptions();},false);
 
@@ -3334,10 +3340,12 @@ salvageCheck : function (){
                     level = false;
                MinReq = false;
                IsUnique = false;
+               IsHero = false;
                     if (y.quality > ThroneOptions.SalvageQuality) level=true;
                     if(y.level > 0) level = true;
                     if(ThroneOptions.SaveUnique) if(y.unique > 0) IsUnique = true;
                     if (ThroneOptions.SalvageQuality == 0) level=true;
+					     if (ThroneOptions.savehero && y.type=="hero") IsHero = true;                    
                     
                     for (i=1;i<=5;i++){
                   if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;};
@@ -3384,7 +3392,7 @@ salvageCheck : function (){
                         }
                     }
                     //logit('y.name '+y.name+' level '+level+' number '+number+' ThroneOptions.thronekeep '+ThroneOptions.thronekeep+' NotUpgrading '+NotUpgrading+' isEquiped '+y.isEquipped+' y.isbroken '+y.isBroken+' y.id '+y.id+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+MinReq+' is unique '+IsUnique);
-                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique) {
+                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique && !IsHero) {
                   //logit(y.name);
                         t.SalvageArray.push(y.id);
                     }                     
@@ -11155,7 +11163,8 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbFarmBut type=checkbox '+ (Options.Farmbtns?'CHECKED ':'') +'/></td><TD>'+translate("Farm toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbThroneHUDBut type=checkbox '+ (Options.ThroneHUD?'CHECKED ':'') +'/></td><TD>'+translate("Throne HUD")+'</td></tr>\
         <TR><TD><INPUT id=pbWWclick type=checkbox '+ (Options.WWclick?'CHECKED ':'') +'/></td><TD>'+translate("Hit OK on multiple window warning popup which causes refresh")+'</td></tr>\
-        <TR><TD><INPUT id=pbloginReward type=checkbox '+ (Options.loginReward?'CHECKED ':'') +'/></td><TD>'+translate("Auto click/accept daily login reward")+'</td></tr>';
+        <TR><TD><INPUT id=pbloginReward type=checkbox '+ (Options.loginReward?'CHECKED ':'') +'/></td><TD>'+translate("Auto click/accept daily login reward")+'</td></tr>\
+		<TR><TD><INPUT id=pbdetafk type=checkbox '+ (Options.detAFK?'CHECKED ':'')+ '/></td><TD> Do AFK events</td></tr>';
         
         m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
@@ -11287,6 +11296,7 @@ Tabs.Options = {
       t.togOpt ('pbThroneHUDBut', 'ThroneHUD');
       t.togOpt ('pbWWclick', 'WWclick');
       t.togOpt ('pbloginReward', 'loginReward');
+      t.togOpt ('pbdetafk', 'detAFK');
       t.changeOpt ('pbwhichcity', 'smain');
       t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
       t.changeOpt ('pbfilter','fchar');
