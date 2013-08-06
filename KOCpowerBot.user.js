@@ -10747,10 +10747,10 @@ Tabs.Barb = {
         var barbinfo = t.barbArray[city].shift();
        }else if(parseInt(AttackOptions.Update[city][1])==0){
         if(!t.searchRunning)t.checkBarbData();
-        t.getnextCity();
+        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000));
         return;
        } else {
-       	t.getnextCity();
+        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000));
         return;
        }
        var check=0;
