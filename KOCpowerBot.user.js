@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130806a
+// @version        20130806b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130806a';
+var Version = '20130806b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -831,7 +831,6 @@ function pbStartup (){
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
   killbox();
-  if(Options.mklag)  setInterval(fixkabamlag,1000*60);
   if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
    document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'http://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>\
 <a class="navTab" onclick=" window.open(\'https://kabam.secure.force.com/PKB/pkb_contactUs?game=All&lang=en_US&l=en_US\');"><span>Kabam</span></a>\
@@ -862,6 +861,8 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 	if(atwomin < unixtime) {
 		atwomin = Number(unixtime+2*60);
 		new GESeverytwomin(unixtime);
+		  if(Options.mklag)  new fixkabamlag();
+		  if(AttackOptions.Running) new Tabs.Barb.sendreport();
 	};
 	if(Options.GESeverytenmin < unixtime) {
 	  	Options.GESeverytenmin = Number(unixtime+10*60);
@@ -10331,7 +10332,6 @@ Tabs.Barb = {
     var t = Tabs.Barb;
     if(Options.dfbtns)AddSubTabLink(unsafeWindow.g_js_strings.commonstr.darkForest,t.toggleBarbState, 'DFToggleTab');
     t.myDiv = div;
-    setInterval(t.sendreport, 1*60*1000);
  
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED FOREST FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (AttackOptions.Running == false) {
@@ -10691,7 +10691,6 @@ Tabs.Barb = {
               t.opt.startX = parseInt(Seed.cities[(i-1)][2]);
               t.opt.startY = parseInt(Seed.cities[(i-1)][3]);  
               t.clickedSearch();
-            break;
           }
         if (myarray){
             if(AttackOptions.Method == 'distance') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
@@ -10809,7 +10808,7 @@ Tabs.Barb = {
     
     if(AttackOptions.Levels[city][0]){
         t.barbing();
-        t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3)+AttackOptions.SendInterval)*1000);
+        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000);
     } else {
         t.getnextCity();
     }
