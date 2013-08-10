@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130806f
+// @version        20130809a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130806f';
+var Version = '20130809a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -256,7 +256,7 @@ var CrestOptions = {
   R2Ball    :  0,
   R2Ram        :  0,
   R2Cat        :  0,
-  isWild    :  true,
+  isWild    :  false,
 };
 var GiftDB = {
   people :  {},
