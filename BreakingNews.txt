@@ -1,3 +1,10 @@
+Tired of the post data dialogue screwing up your refresh's?  Help us get the bug in the fast lane to be fixed!  vote and post a comment!
+https://bugzilla.mozilla.org/show_bug.cgi?id=160144
+
+
+Also, starting to think kabam is right and bugs don't matter.  Didn't even break 1000 signatures!
+Which means less than 1% of the people playing koc actually care about the bug.
+
 We've waited for kabam to fix the misted city exploit long enough.  Time for you to take action!  Time to boycott gems until they fix this!
 <br>
 <div style="display:block; clear:both; text-align: left; background: #000 url(http://www.ipetitions.com/assets/images/widgets/black.png) no-repeat top left; width: 200px;">
