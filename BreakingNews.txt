@@ -1,20 +1,13 @@
+For those having issues with firefox 23 and mixed content of bot, go to 
+this link to learn about firefox 23 security and how to disable the mixed 
+content blocker on bot associated pages: 
+https://blog.mozilla.org/tanvi/2013/04/10/mixed-content-blocking-enabled-in-firefox-23
+
+
 Tired of the post data dialogue screwing up your refresh's?  Help us get the bug in the fast lane to be fixed!  vote and post a comment!
 https://bugzilla.mozilla.org/show_bug.cgi?id=160144
 
 
-Also, starting to think kabam is right and bugs don't matter.  Didn't even break 1000 signatures!
-Which means less than 1% of the people playing koc actually care about the bug.
-
-We've waited for kabam to fix the misted city exploit long enough.  Time for you to take action!  Time to boycott gems until they fix this!
-<br>
-<div style="display:block; clear:both; text-align: left; background: #000 url(http://www.ipetitions.com/assets/images/widgets/black.png) no-repeat top left; width: 200px;">
-<iframe src="http://www.ipetitions.com/widget/view/black/604263" marginheight="0" marginwidth="0" style="width: 200px; height:150px; border:0;" scrolling="no"></iframe>
-<div style="text-align:center; font-family:Arial;font-size: 9px; width: 196px; margin-top: -3px; padding: 1px 2px 2px; color: #8a8a8a; font-style: italic;">
-        <a style="color: #fff; text-decoration:none;" href="http://www.ipetitions.com/">Petition by iPetitions</a>
-</div>
-
-</div>
-
-
+Congrats to kabam for finally fixing the misted city exploit!
 
 

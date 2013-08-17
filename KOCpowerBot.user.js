@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130809a
+// @version        20130817a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130809a';
+var Version = '20130817a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -506,15 +506,27 @@ var nHtml={
 readGlobalOptions ();
 readOptions();
 MAP_DELAY = Options.MAP_DELAY;
-
+//hereherehere
 if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
+  loadchecker(true);
   return;
 }
 if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
   kabamStandAlone ();
+  loadchecker(true);
   return;
 }
+function loadchecker (init) {
+	if(init) {
+		GM_setValue ('Load_'+serverID, 0);
+	  setTimeout (function (){
+	  	if(GM_getValue ('Load_'+serverID) == 0)reloadKOC();
+	  	;}, 120*1000);
+	  } else {
+	  	GM_setValue ('Load_'+serverID, 1);
+	  };
+};
 
 var InstallChecker = setTimeout (function(){unsafeWindow.Modal.showAlert(translate('power bot installation is corrupt, please reinstall'))}, 2*60*1000);
 
@@ -842,8 +854,9 @@ function pbStartup (){
   GuardianTT();
 	if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
 	afkwatcher();
-	demist();
+	loadchecker();
 }
+
 
 /*************** Timer ******************/
 var GESeachmin = 0;
@@ -21654,152 +21667,6 @@ function AutoUpdater (prom) {
          },
       });
 };
-/*********** demist *********/
-
-
-
-function demist() {
-
-
-   var uW = unsafeWindow;
-   var CM = uW.cm;
-   var Seed = uW.seed;
-   
-  
-   // add a new option to the context menu
-   uW.cm.ContextMenuMapController.prototype.MapContextMenus.City["5"].push("abcd");
-
-   // add actions to the menu item
-   var mod = new CalterUwFunc('cm.ContextMenuMapController.prototype.calcButtonInfo',
-         [['default:', 'case "abcd":' +
-           '  b.text = "X-ray Vision"; b.color = "green"; ' +
-           '  b.action = function () { ' +
-           '    fetch_bm(e.tile.id,  e.tile.x, e.tile.y); ' +
-           '  }; ' +
-           '  d.push(b); break; ' +
-           ' default: ']]);
-
-   mod.setEnable(true);
-
-   // 
-   uW.fetch_bm = function(tileId, tileX, tileY) {
-      // add bookmark
-      var params = uW.Object.clone(uW.g_ajaxparams);
-      params.requestType = "BOOKMARK_LOCATION";
-      params.tileId = tileId;
-      params.bookmarkName = "City(" + tileX + ", " + tileY + ")";
-      new uW.Ajax.Request(uW.g_ajaxpath + "ajax/tileBookmark.php" + uW.g_ajaxsuffix, {
-         method: "post",
-         parameters: params,
-         onSuccess: function (message) {
-            var rslt = eval("(" + message.responseText + ")");
-
-            if (rslt.ok) {
-
-               // fetch data
-               fetch(tileX, tileY);
-            }
-
-            if (!rslt.ok) {
-               fetch(tileX, tileY);
-            }
-         },
-      });
-   }
-};
-
-//remove the bookmark
-function removeBM(id1) {
-   var uW = unsafeWindow;
-
-   var id = id1.split("a")[1];
-   var params = uW.Object.clone(uW.g_ajaxparams);
-   params.requestType = "REMOVE_BOOKMARK";
-   params.bookmarkId = id;
-   new uW.Ajax.Request(uW.g_ajaxpath + "ajax/tileBookmark.php" + uW.g_ajaxsuffix, {
-      method: "post",
-      parameters: params,
-   });
-};
-
-//get bookmark info
-function fetch (tileX, tileY) {
-   var uW = unsafeWindow;
-   var CM = uW.cm;
-   var Seed = uW.seed;
-   var params = uW.Object.clone(uW.g_ajaxparams);
-   params.requestType = "GET_BOOKMARK_INFO";
-   new uW.Ajax.Request(uW.g_ajaxpath + "ajax/tileBookmark.php" + uW.g_ajaxsuffix, {
-      method: "post",
-      parameters: params,
-      onSuccess: function (message) {
-
-         var cb = function (rslt, bookmark) {
-            // handle the results
-            
-            if (!rslt.ok){
-               return;
-            }
-            
-            var u = rslt.userInfo[0];
-
-            var a = 'None';
-            if (u.allianceName)
-               a = u.allianceName +' ('+ getDiplomacy(u.allianceId) + ')';
-            
-            var status = "";
-            switch (parseInt(bookmark.cityStatus)) {
-               case 1:
-                   status = uW.g_js_strings.commonstr.normal;
-                   break;
-               case 2:
-                   status = uW.g_js_strings.MapObject.begprotect;
-                   break;
-               case 3:
-                   status = uW.g_js_strings.commonstr.truce;
-                   break;
-               case 4:
-                   status = uW.g_js_strings.commonstr.vacation;
-                   break;
-               default:
-                   status = uW.g_js_strings.commonstr.normal;
-           }
-            
-            var n = '<div> <b>Name:</b> ' + u.genderAndName + '<br/><b>Might:</b> ' + addCommas(u.might) +
-                '<br/><b>' + uW.g_js_strings.commonstr.alliance+':</b> '+ a +
-                '<br/><b>Location:</b> ' + bookmark.xCoord + ',' + bookmark.yCoord +
-                '<br/><b>City name:</b> ' + bookmark.cityName + 
-                '<br/><b>Status:</b> ' + status + 
-                "</div>";
-                
-                unsafeWindow.Modal.showAlert(n);
-         };
-
-         var rslt = eval("(" + message.responseText + ")");
-
-         if (rslt.ok) {
-            var bookmarkInfo = rslt.bookmarkInfo;
-            for (id in bookmarkInfo) {
-               var bm = bookmarkInfo[id];
-               if ( (bm.xCoord == tileX) && (bm.yCoord == tileY)) {
-                  if (bm.tileCItyId == null || bm.tileCItyId == 0) {
-                     unsafeWindow.Modal.showAlert("<div>There is no longer a city at this location</div>");
-                  }
-                  else
-                  {
-                     fetchPlayerInfo (bm.tileUserId, function (r) {cb(r,bm);});
-                  }
-                  removeBM(id);
-               }
-            }
-         }
-         if (!rslt.ok) {
-         }
-      },
-      onFailure: function () {}
-   });
-   
-};
 
 function Sendtokofcmon (left,top,mapdata) {
 	if(Math.floor((Math.random()*1000)+1) > throttle)return;
@@ -21881,5 +21748,4 @@ function fetchPlayerInfo(uid, notify){
 };
 
 
-/********* demist end ******/
 pbStartup ();
