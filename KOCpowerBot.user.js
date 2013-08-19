@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130817b
+// @version        20130819a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130817b';
+var Version = '20130819a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21213,15 +21213,19 @@ Tabs.ascension = {
         m += '<TD></td><TD>Percent</td><TD><CENTER>Menu</center></td><TD>Current Level</td><TD>Current Cost</td><TD>'+strButton20(translate('Building Values'), 'id=pbBuildingValues') +'</td><TR>';
         for (i = 0; i < Cities.cities.length; i++) {
             var cityPrestige = Seed.cityData.city[Cities.cities[i].id].cityValue;
+            var cityPrestigeType = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeType;
             var cityPrestigeLevel = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeLevel;
             var isPrestigeCity = Seed.cityData.city[Cities.cities[i].id].isPrestigeCity;
             //alert('city - ' + Cities.cities[i].id + ' prestige= ' + isPrestigeCity )
             var currentGemPrice = null;
-            var fullPrestige = 1200;
-            var progressWidth = parseInt(((cityPrestige / fullPrestige) * 100));
+//            var fullPrestige = 1550;
+//            var gemFullPrice = 2000;
+            var fullPrestige = [1000, 1200, 1200, 1450, 1500, 1550];
+            var gemFullPrice = [1000, 1150, 1250, 2000, 2250, 2500];
+//            var progressWidth = parseInt(((cityPrestige / fullPrestige) * 100));
+            var progressWidth = parseInt(((cityPrestige / fullPrestige[cityPrestigeLevel-1]) * 100));
             if (progressWidth > 100) progressWidth = 100;
             var fullBarWidth = 378;
-            var gemFullPrice = 1250;
             m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
             m += '<TR><TD background="https://koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=' + fullBarWidth + ' height=25">';
             m += '<DIV id=pbGreenBar_' + i + '></div></td><TD align=center><DIV id=pbProgPerc_' + i + '></div></td><TD><INPUT id=pbAscendBtn_' + Cities.cities[i].id + ' type=submit value="Ascend"></td><TD align=center><DIV id=pbCityPrestigeLevel_' + i + '></div></td><TD align=center><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD align=center><CENTER><DIV id=pbAscCurMight_'+i+'></div></center></td>';
@@ -21262,31 +21266,53 @@ Tabs.ascension = {
     paintTab: function () {
         for (i = 0; i < Cities.cities.length; i++) {
             var cityPrestige = Seed.cityData.city[Cities.cities[i].id].cityValue;
+            var cityPrestigeType = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeType;
             var cityPrestigeLevel = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeLevel;
             var isPrestigeCity = Seed.cityData.city[Cities.cities[i].id].isPrestigeCity;
             //alert('city - ' + Cities.cities[i].id + ' prestige= ' + isPrestigeCity )
             var currentGemPrice = null;
-            var fullPrestige = 1200;
-            var progressWidth = parseInt(((cityPrestige / fullPrestige) * 100));
+//            var fullPrestige = 1550;
+//            var gemFullPrice = 2000;
+            var fullPrestige = [1000, 1200, 1200, 1450, 1500, 1550];
+            var gemFullPrice = [1000, 1150, 1250, 2000, 2250, 2500];
+//            var progressWidth = parseInt(((cityPrestige / fullPrestige) * 100));
+	    if (cityPrestigeLevel < 6 )
+              var progressWidth = parseInt(((cityPrestige / fullPrestige[cityPrestigeLevel]) * 100));
+	    else
+	      progressWidth = 100;
             if (progressWidth > 100) progressWidth = 100;
             var fullBarWidth = 378;
-            var gemFullPrice = 1250;
             m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
             m += '<TR><TD style="background:https://koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=100% height=25">';
             if (isPrestigeCity) {
-                if (cityPrestigeLevel < 3) {
+	      if (cityPrestigeType == 2) {
+                if (cityPrestigeLevel < 6) {
                     //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
                     document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
                     document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
-                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/3';
-                    document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/1200';
+                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/6';
+                    document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/' +fullPrestige[cityPrestigeLevel];
                 } else {
                     document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C O M P L E T E &nbsp;&nbsp;&nbsp; (for now)</center>'
                     document.getElementById('pbProgPerc_' + i).innerHTML = 'N/A';
                     document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = 'N/A';
                     document.getElementById('pbAscCurMight_' + i).innerHTML = 'N/A';
                 }
-                m += '<TR>';
+	      } else {
+                if (cityPrestigeLevel < 3) {
+                    //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
+                    document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
+                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/3';
+                    document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/' +fullPrestige[cityPrestigeLevel-1];
+                } else {
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C O M P L E T E &nbsp;&nbsp;&nbsp; (for now)</center>'
+                    document.getElementById('pbProgPerc_' + i).innerHTML = 'N/A';
+                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = 'N/A';
+                    document.getElementById('pbAscCurMight_' + i).innerHTML = 'N/A';
+                }
+	      }
+              m += '<TR>';
             } else {
                 document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C I T Y &nbsp;&nbsp;&nbsp; N O T  &nbsp;&nbsp;&nbsp; A S C E N D E D &nbsp;&nbsp;&nbsp; Y E T</center>'
                 document.getElementById('pbProgPerc_' + i).innerHTML = '<CENTER>N/A</center>';
@@ -21318,8 +21344,27 @@ Tabs.ascension = {
     getGemCost: function (cityId, callback) {
         var t = Tabs.ascension;
         var isPrestigeCity = Seed.cityData.city[cityId].isPrestigeCity;
+        var cityPrestigeType = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeType;
         var cityPrestigeLevel = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeLevel;
-        if (isPrestigeCity && cityPrestigeLevel < 3) {
+//        if (isPrestigeCity && cityPrestigeLevel < 3) {
+//            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+//            params.cid = cityId;
+//            params.prestigeType = 1;
+//            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getPrestigeCost.php" + unsafeWindow.g_ajaxsuffix, {
+//                method: "post",
+//                parameters: params,
+//                onSuccess: function (rslt) {
+//                    if (rslt.ok) {
+//                        callback(cityId, rslt.cost, rslt.original_cost)
+//                    }
+//                }
+//            });
+//        } else {
+//            callback(cityId, null, null)
+//        }
+
+        if (isPrestigeCity) {
+          if (cityPrestigeType != 2 && cityPrestigeLevel < 3) {
             var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
             params.cid = cityId;
             params.prestigeType = 1;
@@ -21332,9 +21377,26 @@ Tabs.ascension = {
                     }
                 }
             });
+	  } else if (cityPrestigeType == 2 && cityPrestigeLevel < 6) {
+            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+            params.cid = cityId;
+            params.prestigeType = 2;
+            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getPrestigeCost.php" + unsafeWindow.g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                onSuccess: function (rslt) {
+                    if (rslt.ok) {
+                        callback(cityId, rslt.cost, rslt.original_cost)
+                    }
+                }
+            });
+	  } else {
+            callback(cityId, null, null)
+          }
         } else {
             callback(cityId, null, null)
         }
+
     },
     show: function () {
         var t = Tabs.ascension;
