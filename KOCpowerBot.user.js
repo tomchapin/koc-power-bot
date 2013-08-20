@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130819b
+// @version        20130820a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130819b';
+var Version = '20130820a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -519,12 +519,22 @@ if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
 }
 function loadchecker (init) {
 	if(init) {
-		GM_setValue ('Loaded', 0);
-setTimeout(function(){if(GM_getValue ('Loaded') == 0)reloadKOC();},60*1000);
+		var squery = /s=\d+/;
+		var dquery = /\d+/;
+		var Sresult=dquery.exec(squery.exec(document.location.search));
+		if(Sresult == null) {
+			GM_setValue ('Loaded', 0);
+			setTimeout(function(){if(GM_getValue ('Loaded') == 0)reloadKOC();},60*1000);
+		} else {
+			GM_setValue (Sresult+'Loaded', 0);
+			setTimeout(function(){if(GM_getValue (Sresult+'Loaded') == 0)reloadKOC();},60*1000);
+		};
 	  } else {
 	  	GM_setValue ('Loaded', 1);
+	  	GM_setValue (getServerId()+'Loaded', 1);
 	  };
 };
+
 
 var InstallChecker = setTimeout (function(){unsafeWindow.Modal.showAlert(translate('power bot installation is corrupt, please reinstall'))}, 2*60*1000);
 
