@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130819a
+// @version        20130819b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130819a';
+var Version = '20130819b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -20002,20 +20002,21 @@ var March = {
       var slots = rallypointlevel; //Set default number of slots to rallypointlevel
       if(slots == 12)slots = 11;// a level 12 rallypoint only allows for 11 marches.  the bonus from 11 to 12 is increased army size.
       if(ascended.isPrestigeCity){
-         switch(ascended.prestigeLevel){//any ascended city has a +3 slot bonus regardless of level.
-            case 1:
-               slots += 3;
-               break;
-            case 2:
-               slots += 3;
-               break;
-            case 3:
-               slots += 3;
-               break;
-            default:
-               //Do nothing
-               break;
-         }
+//         switch(ascended.prestigeLevel){//any ascended city has a +3 slot bonus regardless of level.
+//            case 1:
+//               slots += 3;
+//               break;
+//            case 2:
+//               slots += 3;
+//               break;
+//            case 3:
+//               slots += 3;
+//               break;
+//            default:
+//               //Do nothing
+//               break;
+//         }
+	 slots +=3;
       }
       return slots;
    },
