@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130823a
+// @version        20130824a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130823a';
+var Version = '20130824a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -519,12 +519,12 @@ if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
 }
 function loadchecker (init) {
 	if(init) {
-		var squery = /s=\d+/;
+		var squery = /[\?,\&]s=\d+/;
 		var dquery = /\d+/;
 		var Sresult=dquery.exec(squery.exec(document.location.search));
 		if(Sresult == null) {
 			GM_setValue ('Loaded', 0);
-			setTimeout(function(){if(GM_getValue ('Loaded') == 0)KOCnotFound(10);},3*60*1000);
+			setTimeout(function(){if(GM_getValue ('Loaded') == 0)KOCnotFound(10);},1*60*1000);
 		} else {
 			GM_setValue (Sresult+'Loaded', 0);
 			setTimeout(function(){if(GM_getValue (Sresult+'Loaded') == 0)KOCnotFound(10);},3*60*1000);
