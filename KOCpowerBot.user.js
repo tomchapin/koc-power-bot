@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130824a
+// @version        20130827a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130824a';
+var Version = '20130827a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4921,6 +4921,12 @@ var buildTabTypes = {
     type19: "Wall",
     type20: "FeySpire",
     type21: "Apothecary",
+    type22: "Druid Barracks",
+    type23: "Druid Apothecary",
+    type24: "Fey Barracks",
+    type25: "Fet Altar",
+    type26: "Briton Barracks",
+    type27: "Briton Workshop",
     type0: "Castle",
     type666: "KOCpowerbot"
 };
