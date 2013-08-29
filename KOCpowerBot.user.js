@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130827a
+// @version        20130829a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130827a';
+var Version = '20130829a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -1883,6 +1883,7 @@ Tabs.Throne = {
     unsafeWindow.ActionPopup = t.ActionPopup;
     unsafeWindow.postInfo = t.postInfo;
     unsafeWindow.doEquip = t.doEquip;
+    unsafeWindow.fupgenh = t.fupgenh;
     var a = JSON2.parse(GM_getValue ('ThroneHistory_'+getServerId(), '[]'));
     if (matTypeof(a) == 'array') t.log = a;
     var a = JSON2.parse(GM_getValue ('ThroneSalvageHistory_'+getServerId(), '[]'));
@@ -2574,6 +2575,11 @@ doPreset : function (room, retry) {
         });
 
 },
+fupgenh: function (z){
+var t = Tabs.Throne;
+document.getElementById("ptmrchSubUE").click()
+		 document.getElementById("ThroneItems").value = z;
+},
 
 postInfo : function (z){
 	var y = unsafeWindow.kocThroneItems[z];
@@ -2622,7 +2628,7 @@ paintEquipInfo : function (z,what){
             if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
             else m+='<TR><TD><FONT color=grey>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
       }
-      m+='</table><table align="center"><tr><td><a onclick="doEquip('+z+')">Equip</a></td><td><a onclick="postInfo('+z+')">Post to chat</a></td></tr></table>';
+      m+='</table><table align="center"><tr><td><a onclick="doEquip('+z+')">Equip</a></td><td><a onclick="postInfo('+z+')">Post to chat</a></td><td><a onclick="fupgenh('+z+')">Upgrade/Enhance</a></td></tr></table>';
       document.getElementById('DIV'+what).innerHTML = m;
 },
 
