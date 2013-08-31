@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130831b
+// @version        20130831c
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130831b';
+var Version = '20130831c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3526,7 +3526,7 @@ ThroneHUDinit : function (){
 	div.innerHTML = m;
 	div.style.position="absolute";
 	div.style.top="29px";
-	div.style.right="220px";
+	div.style.right="170px";
 	div.id="ThroneHUD";
 	div.style.zIndex="20000";
 	par=document.getElementById('mod_maparea');
