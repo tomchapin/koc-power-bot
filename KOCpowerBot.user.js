@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130830a
+// @version        20130831a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130830a';
+var Version = '20130831a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -11775,8 +11775,9 @@ var troops = {1:'SupplyTroops',
               12:'Catapult',
               13:'BloodThorn',
               14:'Executioner',
-              15:'SiegeTower'
-              };  
+              15:'SiegeTower' ,
+              16:'FlameArcher'
+             };  
 Tabs.Reassign = {
   tabOrder: 30,
   tabLabel: unsafeWindow.g_js_strings.commonstr.reassign,
@@ -11824,13 +11825,13 @@ Tabs.Reassign = {
       m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("Fill in the number of troops you want to keep in a city:")+'</div>';
       m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
       
-      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
       m += '<TD>'+translate("Supply Troop")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
       m += '<TD>'+translate("Militiaman")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
       m += '<TD>'+translate("Scout")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
       m += '<TD>'+translate("Pikeman")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSupplyTroops type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyTroops disabled=true type=text size=10 maxlength=10 value="0"\></td>';
@@ -11841,13 +11842,13 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbPikeman type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetPikeman disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
       m += '<TD>'+translate("Swordsman")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
       m += '<TD>'+translate("Archer")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
       m += '<TD>'+translate("Cavalry")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
       m += '<TD>'+translate("Heavy Cavalry")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSwordsman type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSwordsman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
@@ -11858,13 +11859,13 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbHeavyCavalry type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetHeavyCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
       m += '<TD>'+translate("Supply Wagon")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50_s34.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
       m += '<TD>'+translate("Ballista")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
       m += '<TD>'+translate("Battering Ram")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
       m += '<TD>'+translate("Catapult")+'</td></tr>'
       
       //http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_13_30_s34.jpg
@@ -11878,19 +11879,23 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbCatapult type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-     m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_13_50_s34.jpg?6545"></td>';
-      m += '<TD>'+translate("BloodThorn")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Executioner")+'</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_15_50_s34.jpg?6545?6545"></td>'
-      m += '<TD>'+translate("Siege Tower")+'</td></tr>'
+     m += '<TR><TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
+      m += '<TD>'+translate("BloodThorn")+'</td>';
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>';
+      m += '<TD>'+translate("Executioner")+'</td>';
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>';
+      m += '<TD>'+translate("Siege Tower")+'</td>';
+      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>';
+      m += '<TD>'+translate("Flame Archer")+'</td></tr>';
 
       m += '<TR><TD><INPUT id=pbBloodThorn type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetBloodThorn disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbExecutioner type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetExecutioner disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbSiegeTower type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetSiegeTower disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+      m += '<INPUT id=pbtargetSiegeTower disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+      m += '<TD><INPUT id=pbFlameArcher type=checkbox unchecked=true\>';
+      m += '<INPUT id=pbtargetFlameArcher disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
    
       
       m+='</table>';
@@ -11963,7 +11968,19 @@ Tabs.Reassign = {
      document.getElementById('pbtargetCatapult').addEventListener('keyup', function(){
          if (isNaN(document.getElementById('pbtargetCatapult').value)) document.getElementById('pbtargetCatapult').value=0 ;
      }, false);
-     
+      document.getElementById('pbtargetBloodThorn').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtargetBloodThorn').value)) document.getElementById('pbtargetBloodThorn').value=0 ;
+      }, false);
+      document.getElementById('pbtargetExecutioner').addEventListener('keyup', function(){
+          if (isNaN(document.getElementById('pbtargetExecutioner').value)) document.getElementById('pbtargetExecutioner').value=0 ;
+      }, false);
+     document.getElementById('pbtargetSiegeTower').addEventListener('keyup', function(){
+         if (isNaN(document.getElementById('pbtargetSiegeTower').value)) document.getElementById('pbtargetSiegeTower').value=0 ;
+     }, false);
+     document.getElementById('pbtargetFlameArcher').addEventListener('keyup', function(){
+         if (isNaN(document.getElementById('pbtargetFlameArcher').value)) document.getElementById('pbtargetFlameArcher').value=0 ;
+     }, false);
+      
       
       document.getElementById('pbSupplyTroops').addEventListener('click', function(){
           if (document.getElementById('pbSupplyTroops').checked==false) {
@@ -12086,7 +12103,15 @@ Tabs.Reassign = {
             document.getElementById('pbtargetSiegeTower').disabled = false;
           }
       },false);
-      
+      document.getElementById('pbFlameArcher').addEventListener('click', function(){
+          if (document.getElementById('pbFlameArcher').checked==false) {
+              document.getElementById('pbtargetFlameArcher').disabled = true;
+          }
+          else {
+            document.getElementById('pbtargetFlameArcher').disabled = false;
+          }
+      },false);
+         
       
       
       
@@ -12168,6 +12193,8 @@ Tabs.Reassign = {
         var SendBloodThorn = document.getElementById('pbBloodThorn').checked;
         var SendExecutioner = document.getElementById('pbExecutioner').checked;
         var SendSiegeTower = document.getElementById('pbSiegeTower').checked;
+        var SendFlameArcher = document.getElementById('pbFlameArcher').checked;
+
         var SupplyTroop = document.getElementById('pbtargetSupplyTroops').value;
         var Militiaman = document.getElementById('pbtargetMilitiaman').value;
         var Scout = document.getElementById('pbtargetScout').value;
@@ -12183,6 +12210,8 @@ Tabs.Reassign = {
         var BloodThorn = document.getElementById('pbtargetBloodThorn').value;
         var Executioner = document.getElementById('pbtargetExecutioner').value;
         var SiegeTower = document.getElementById('pbtargetSiegeTower').value;
+        var FlameArcher = document.getElementById('pbtargetFlameArcher').value;
+
         var target_x = t.tcpto.city.x;
         var target_y = t.tcpto.city.y;
         var target_city = t.tcpto.city.id;
@@ -12223,6 +12252,8 @@ Tabs.Reassign = {
                 Executioner:            Executioner,
                 SendSiegeTower:        SendSiegeTower,
                 SiegeTower:            SiegeTower,
+                SendFlameArcher:        SendFlameArcher,
+                FlameArcher:            FlameArcher,
             });
         document.getElementById('pbReassignDivD').style.background ='#99FF99';
         setTimeout(function(){ (document.getElementById('pbReassignDivD').style.background =''); }, 1000);
@@ -12247,11 +12278,11 @@ Tabs.Reassign = {
                     if ( parseInt(Seed.cities[y][0]) == r[i].city) var cityname = Seed.cities[y][1];
                 }    
                 var queueId = i;
-                t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArchers, r[i].Archers, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagons, r[i].SupplyWagons, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower);
+                t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArchers, r[i].Archers, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagons, r[i].SupplyWagons, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower, r[i].SendFlameArcher, r[i].FlameArcher);
             }
         },
       
-     _addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArchers,Archers,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagons,SupplyWagons,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult,SendBloodThorn,BloodThorn,SendExecutioner,Executioner,SendSiegeTower,SiegeTower){
+     _addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArchers,Archers,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagons,SupplyWagons,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult,SendBloodThorn,BloodThorn,SendExecutioner,Executioner,SendSiegeTower,SiegeTower,SendFlameArcher,FlameArcher){
          var t = Tabs.Reassign;
         var To = target_x+','+target_y;
         for (var y=0; y< Seed.cities.length;y++) {
@@ -12295,7 +12326,9 @@ Tabs.Reassign = {
           row.insertCell(30).innerHTML = addCommas(Executioner);
           row.insertCell(31).innerHTML = SendSiegeTower;
           row.insertCell(32).innerHTML = addCommas(SiegeTower);
-         row.insertCell(33).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
+          row.insertCell(33).innerHTML = SendFlameArcher;
+          row.insertCell(34).innerHTML = addCommas(FlameArcher);
+         row.insertCell(35).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
          document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
             t.cancelQueueElement(queueId);
          }, false);
@@ -12338,7 +12371,9 @@ Tabs.Reassign = {
          row.insertCell(30).innerHTML = "";
          row.insertCell(31).innerHTML = translate("SiegeTower");
          row.insertCell(32).innerHTML = "";
-         row.insertCell(33).innerHTML = translate("Delete");
+         row.insertCell(33).innerHTML = translate("FlameArcher");
+         row.insertCell(34).innerHTML = "";
+         row.insertCell(35).innerHTML = translate("Delete");
        },   
        
      cancelQueueElement: function(queueId){
@@ -12456,6 +12491,7 @@ Tabs.Reassign = {
          params.u13 = 0;
          params.u14 = 0;
          params.u15 = 0;
+	params.u16 = 0;	
       }
         if(!Cities.byID[city]) return;
         var marching = getMarchInfo(cityID);
@@ -12464,8 +12500,8 @@ Tabs.Reassign = {
         totalsend=0;
         
         if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity)
-        var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","BloodThorn","Executioner","SiegeTower"];
-        else var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult"];
+          var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","BloodThorn","Executioner","SiegeTower","FlameArcher"];
+        else var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","","","","FlameArcher"];
         for (k=0; k<troopsselect.length; k++) {
             var citytroops = Seed.units[cityID]['unt'+(parseInt(k)+1)];
             var marchtroops = marching.marchUnits[parseInt(k)+1];
@@ -12513,7 +12549,8 @@ Tabs.Reassign = {
          params.u13 = send[13];
          params.u14 = send[14];
          params.u15 = send[15];
-      }
+	}
+	params.u16 = 0;	
            if (totalsend >0) {
          March.addMarch(params, function(rslt){
             if(rslt.ok){
@@ -12596,9 +12633,19 @@ Tabs.AutoTrain = {
                         }
                     }
                 }
-                if(y == "unt13") faux = 1;
+                if (matTypeof(uc[11]) == 'object'){
+                    for (k in uc[11]){
+                        if (parseInt(Seed.items['i'+k]) < uc[11][k]){
+                            faux = 1;
+                            break;
+                        }
+                    }
+                }
+            if(y == "unt13") faux = 1;
             if(y == "unt14") faux = 1;
             if(y == "unt15") faux = 1;
+            if(y == "unt16") faux = 1;  // prevent for now
+            if(y == "unt17") faux = 1;
             
                 if (faux==0)
                     m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
@@ -19168,31 +19215,31 @@ Tabs.startup = {
     m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Is Wild </td></tr></table>';
    
 		var dude = unsafeWindow.unitnamedesctranslated;
-    m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD>Wave <b>1</b>(initial): </td><TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_30.png alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.png alt='+dude.unt3[0]+'></td><TD><INPUT id=R1Scout type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.png alt='+dude.unt4[0]+'></td><TD><INPUT id=R1Pike type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_30.png alt='+dude.unt5[0]+'></td><TD><INPUT id=R1Sword type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_30.png alt='+dude.unt6[0]+'></td><TD><INPUT id=R1Arch type=text size=7 maxlength=6 value=0></td></tr>';
-    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_30.png alt='+dude.unt7[0]+'></td><TD><INPUT id=R1LC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_30.png alt='+dude.unt8[0]+'></td><TD><INPUT id=R1HC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_30.png alt='+dude.unt9[0]+'></td><TD><INPUT id=R1SW type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png alt='+dude.unt10[0]+'></td><TD><INPUT id=R1Ball type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_30.png alt='+dude.unt11[0]+'></td><TD><INPUT id=R1Ram type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png alt='+dude.unt12[0]+'></td><TD><INPUT id=R1Cat type=text size=7 maxlength=6 value=0></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+    m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD>Wave <b>1</b>(initial): </td><TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R1Scout type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R1Pike type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R1Sword type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R1Arch type=text size=7 maxlength=6 value=0></td></tr>';
+    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R1LC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R1HC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R1SW type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R1Ball type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R1Ram type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R1Cat type=text size=7 maxlength=6 value=0></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
     
-    m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD>Wave <b>2(recurring)</b>: </td><TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_30.png alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_30.png alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.png alt='+dude.unt3[0]+'></td><TD><INPUT id=R2Scout type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.png alt='+dude.unt4[0]+'></td><TD><INPUT id=R2Pike type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_30.png alt='+dude.unt5[0]+'></td><TD><INPUT id=R2Sword type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_30.png alt='+dude.unt6[0]+'></td><TD><INPUT id=R2Arch type=text size=7 maxlength=6 value=0></td></tr>';
-    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_30.png alt='+dude.unt7[0]+'></td><TD><INPUT id=R2LC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_30.png alt='+dude.unt8[0]+'></td><TD><INPUT id=R2HC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_30.png alt='+dude.unt9[0]+'></td><TD><INPUT id=R2SW type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_30.png alt='+dude.unt10[0]+'></td><TD><INPUT id=R2Ball type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_30.png alt='+dude.unt11[0]+'></td><TD><INPUT id=R2Ram type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_30.png alt='+dude.unt12[0]+'></td><TD><INPUT id=R2Cat type=text size=7 maxlength=6 value=0></td></tr></table>';
+    m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD>Wave <b>2(recurring)</b>: </td><TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R2Scout type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R2Pike type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R2Sword type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R2Arch type=text size=7 maxlength=6 value=0></td></tr>';
+    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R2LC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R2HC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R2SW type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R2Ball type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R2Ram type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R2Cat type=text size=7 maxlength=6 value=0></td></tr></table>';
     m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteCrest type=submit value="Add Attack"> <INPUT id=pbimpRoute type=submit value="Mass Add Attacks">(from search tab)</div>';
     
     t.myDiv.innerHTML = m;
