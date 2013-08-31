@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130829a
+// @version        20130830a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130829a';
+var Version = '20130830a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -17511,15 +17511,15 @@ var DeleteReports = {
                if(rslt.detail.loot[5]) {
                   var loot = rslt.detail.loot[5];
                if (matTypeof(loot) == 'object')
-                  for (z in loot) {
+                  for (var z in loot) {
 		    if (rslt.detail.fght.s0.m101 || rslt.detail.fght.s0.m102 || rslt.detail.fght.s0.m103 || rslt.detail.fght.s0.m104 || rslt.detail.fght.s0.m105 || rslt.detail.fght.s0.m106 || rslt.detail.fght.s0.m107 || rslt.detail.fght.s0.m108 || rslt.detail.fght.s0.m109 || rslt.detail.fght.s0.m10 ) {
 		     if(AttackOptions.ItemsFound[z])
-		        AttackOptions.ItemsFound[z] += loot[z];
-		     else AttackOptions.ItemsFound[z] = loot[z];
+		        AttackOptions.ItemsFound[z] += parseInt(loot[z]);
+		     else AttackOptions.ItemsFound[z] = parseInt(loot[z]);
 		    } else {
 		     if(AttackOptions.ItemsFoundCr[z])
-		        AttackOptions.ItemsFoundCr[z] += loot[z];
-		     else AttackOptions.ItemsFoundCr[z] = loot[z];
+		        AttackOptions.ItemsFoundCr[z] += parseInt(loot[z]);
+		     else AttackOptions.ItemsFoundCr[z] = parseInt(loot[z]);
 		    }
                   }
                   saveAttackOptions();
