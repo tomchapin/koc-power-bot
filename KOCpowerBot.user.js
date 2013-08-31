@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130831a
+// @version        20130831b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130831a';
+var Version = '20130831b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -12550,7 +12550,7 @@ Tabs.Reassign = {
          params.u14 = send[14];
          params.u15 = send[15];
 	}
-	params.u16 = 0;	
+	params.u16 = send[16];
            if (totalsend >0) {
          March.addMarch(params, function(rslt){
             if(rslt.ok){
@@ -15664,7 +15664,7 @@ function getMarchInfo (cityID){
   ret.marchUnits = [];
   ret.returnUnits = [];
   ret.resources = [];
-  for (i=0; i<16; i++){
+  for (i=0; i<17; i++){
     ret.marchUnits[i] = 0;
     ret.returnUnits[i] = 0;
   }
