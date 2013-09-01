@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130831c
+// @version        20130901a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130831c';
+var Version = '20130901a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -12644,7 +12644,7 @@ Tabs.AutoTrain = {
             if(y == "unt13") faux = 1;
             if(y == "unt14") faux = 1;
             if(y == "unt15") faux = 1;
-            if(y == "unt16") faux = 1;  // prevent for now
+//            if(y == "unt16") faux = 1;  // prevent for now
             if(y == "unt17") faux = 1;
             
                 if (faux==0)
@@ -13007,9 +13007,14 @@ Tabs.AutoTrain = {
         params.items = tut;
     if(parseInt(TrainOptions.Gamble[t.city]) > 0)
         params.gambleId = TrainOptions.Gamble[t.city];
-   if(params.type < 13)
-      var inPrestige = false;
-   else var inPrestige = true;
+    if(params.type < 13)
+       var inPrestige = false;
+    else var inPrestige = true;
+    if(params.type == 16)
+	if (parseInt(unsafeWindow.seed.items.i34001) < num) {
+	   actionLog('Insufficient amount of special items to train ' +unsafeWindow.unitcost["unt" + unitId][0]);
+	   return;
+	}
     var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "train.php");
     new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
         method: "post",
@@ -13026,6 +13031,8 @@ Tabs.AutoTrain = {
             }
             unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
             unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(num);
+	    if (unitId == 16)
+              unsafeWindow.seed.items.i34001 = parseInt(unsafeWindow.seed.items.i34001) - parseInt(unsafeWindow.unitcost["unt" + unitId][11]["34001"]) * parseInt(num);
             unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null,inPrestige]);
             setTimeout (notify, 10000);
             for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
