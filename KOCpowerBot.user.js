@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130901b
+// @version        20130902a
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130901b';
+var Version = '20130902a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -129,6 +129,7 @@ var Options = {
   pbChatOnRight: false,
   pbWideMap    : false,
   pbFoodAlert  : false,
+  pbFoodAlertInt  : 6,
   alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
@@ -980,24 +981,30 @@ var FoodAlerts = {
     var f = FoodAlerts;
     var now = unixTime();
       row = [];
+      trupkeepreduce = Math.min(equippedthronestats(79), 33);
 
       for(i=0; i < Cities.numCities; i++) {
         var rp = getResourceProduction (Cities.cities[i].id);
+	var upkbase =  unsafeWindow.cm.Resources.getUpkeep (1,Cities.cities[i].id)/(1-trupkeepreduce/100);
         var foodleft = parseInt(Seed.resources["city" + Cities.cities[i].id]['rec1'][0])/3600;
-        var usage = rp[1] - parseInt(Seed.resources["city" + Cities.cities[i].id]['rec1'][3]);
+//        var usage = rp[1] - parseInt(Seed.resources["city" + Cities.cities[i].id]['rec1'][3]);
+        var usage = rp[1] - (parseInt(Seed.resources["city" + Cities.cities[i].id]['rec1'][3] - upkbase*trupkeepreduce/100));
         row[i] = rp[1] - usage;
           var timeLeft = parseInt(Seed.resources["city" + Cities.cities[i].id]['rec1'][0]) / 3600 / (0-usage) * 3600;
           var msg = '';
         if (usage < 0) {
-    if (Options.pbFoodAlert && timeLeft<(6*3600)) {
-                msg += translate("My city")+' '+Cities.cities[i].name.substring(0,10) + ' (' +
+//    if (Options.pbFoodAlert && timeLeft<(6*3600)) {
+    if (Options.pbFoodAlertInt < 1) Options.pbFoodAlertInt = 1;
+    if (Options.pbFoodAlert && timeLeft<(Options.pbFoodAlertInt*3600)) {
+                msg += 'My city ' + Cities.cities[i].name.substring(0,10) + ' (' +
                       Cities.cities[i].x +','+ Cities.cities[i].y + ')';
-                msg += translate("is low on food")+". "+translate("Remaining")+': '+addCommasWhole(foodleft)+' ('+timestrShort(timeLeft)+') '+translate("Upkeep")+': '+addCommas(usage);
+                msg += ' is low on food. Remaining: '+addCommasWhole(foodleft)+' ('+timestrShort(timeLeft)+') Upkeep: '+addCommas(usage);
                 sendChat ("/a " + msg);
           }
     }
       }
-  f.minuteTimer = setTimeout (f.e_eachMinute, 1800000);
+//  f.minuteTimer = setTimeout (f.e_eachMinute, 1800000);
+  f.minuteTimer = setTimeout (f.e_eachMinute, 15*60*1000);
   },
 }
 
@@ -11215,7 +11222,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>'+translate("Put chat on right (requires wide screen)")+'</td></tr>\
         <TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>'+translate("Use WideMap (requires wide screen)")+'</td></tr>\
         <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>'+translate("Auto collect gold when happiness reaches")+' <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
-        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>'+translate("Enable Food Alert (on less than 6 Hours of food. Checked every hour)")+'</td></tr>';
+        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert On less than <INPUT id=pbfoodalertint type=text size=2 maxlength=3 \> Hours of food checked every 15 min)</td></tr>\
  
         m += '<TR><TD><INPUT id=pbmaintoggle type=checkbox /></td><TD>'+translate("auto select city on startup");
          m+='<select id=pbwhichcity>';
@@ -11307,6 +11314,7 @@ Tabs.Options = {
       t.togOpt ('pbGoldEnable', 'pbGoldEnable', CollectGold.setEnable);
       t.changeOpt ('pbgoldLimit', 'pbGoldHappy');
       t.togOpt ('pbFoodToggle', 'pbFoodAlert');
+      t.changeOpt ('pbfoodalertint', 'pbFoodAlertInt');
       t.togOpt ('pblogperms', 'plog');
       t.changeOpt ('pbeverymins', 'pbEveryMins' , RefreshEvery.setTimer);
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
