@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130901a
+// @version        20130901b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130901a';
+var Version = '20130901b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -386,7 +386,8 @@ var ThroneOptions = {
     heatup:true,
     ibrokeitems:[],
     autotoggle:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,},
-    savehero: true
+    savehero: true,
+    tabnames: {}
 };
 
 var AttackOptions = {
@@ -506,7 +507,6 @@ var nHtml={
 readGlobalOptions ();
 readOptions();
 MAP_DELAY = Options.MAP_DELAY;
-//hereherehere
 if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
   loadchecker(true);
@@ -3521,7 +3521,7 @@ ThroneHUDinit : function (){
 	var div = document.createElement('div');
 	var m = '<TABLE height=0% class=pbTab><TR align="center">';
     for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
-       m += '<TD><INPUT id=htra'+k+' type=submit value='+k+' class="pbttabs"></td>';
+       m += '<TD><INPUT id=htra'+k+' type=submit value='+k+' class="pbttabs" title='+ThroneOptions.tabnames[k]+'></td>';
     m += '</table><br>';
 	div.innerHTML = m;
 	div.style.position="absolute";
@@ -3539,14 +3539,19 @@ ThroneHUDinit : function (){
 ThroneT : function (){
         var t = Tabs.Throne;    
      var m = '<DIV  class=pbStat>Throne room toggle</div><center><TABLE height=0% class=pbTab><TR align="center">';
-            for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
-                 m += '<TD><INPUT id=autotr'+k+' type=checkbox '+ (ThroneOptions.autotoggle[k]?'CHECKED ':'') +'/><INPUT id=tra'+k+' type=submit value='+k+'></td>';
-            m += '</table>'+translate('Will auto change to checked Throne rooms and rotate when afk')+'<br><br><button id=ttptc>Post to chat</button> <br>';
+            for (var k=1;k<Number(Seed.throne.slotNum+1);k++) {
+                 m += '<TD><INPUT id=autotr'+k+' type=checkbox '+ (ThroneOptions.autotoggle[k]?'CHECKED ':'') +'/><INPUT id=tra'+k+' type=submit value='+k+'><br><input type="text" id=trt'+k+' size=10 value='+ThroneOptions.tabnames[k]+'></td>';
+                 if(k == 8)m+='</TR><TR>';
+                 
+                 };
+            m += '</TR></table>'+translate('Will auto change to checked Throne rooms and rotate when afk')+'<br><br><button id=ttptc>Post to chat</button> <br>';
             m+='<table><TD><DIV id=ThroneTRS></div></td></table>';
             t.Overv.innerHTML = m;
             for (var k=1;k<Number(Seed.throne.slotNum+1);k++) {
             	document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
-
+            	document.getElementById('trt'+k).addEventListener ('change', function(){ThroneOptions.tabnames[Number(String(this.id).replace(/trt/,""))] = this.value;saveThroneOptions();}, false);
+            	
+//hereherehere
             	document.getElementById('autotr'+k).addEventListener ('click', function(){ThroneOptions.autotoggle[Number(String(this.id).replace(/autotr/,""))] = this.checked; saveThroneOptions();}, false);
          	};
             t.TTpaint(unsafeWindow.seed.throne.activeSlot);

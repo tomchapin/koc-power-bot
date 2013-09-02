@@ -86,8 +86,9 @@ g_js_strings.errorcode.err_608 = "There is something wrong with your request. Ca
 g_js_strings.errorcode.err_609 = "Enter at least 1 troop to dismiss";
 g_js_strings.errorcode.err_807 = "Purchase amount is over the limit.";
 g_js_strings.errorcode.err_1001 = "Your Facebook session has expired. The page will now refresh to restore your session";
-g_js_strings.errorcode.err_3000 = "Cannot proceed because your city is training, upgrading, reviving or marching.";
+g_js_strings.errorcode.err_3000 = "Cannot proceed because your city is training, upgrading, reviving, marching, or has a spell cooldown in progress.";
 g_js_strings.errorcode.err_3008 = "Special Ascension Unit can only Reinforce/Reassign to Ascended Cities";
+g_js_strings.errorcode.err_3015 = "%1$s is already in Sacrifice.";
 g_js_strings.commonstr = new Object();
 g_js_strings.commonstr.abandon = "Abandon";
 g_js_strings.commonstr.aborting = "Aborting";
@@ -250,6 +251,7 @@ g_js_strings.commonstr.intermediates = "Intermediates";
 g_js_strings.commonstr.invalid = "Invalid";
 g_js_strings.commonstr.invite = "Invite";
 g_js_strings.commonstr.invited = "Invited";
+g_js_strings.commonstr.item = "Item";
 g_js_strings.commonstr.items = "Items";
 g_js_strings.commonstr.killed = "Killed";
 g_js_strings.commonstr.knight = "Knight";
@@ -397,6 +399,7 @@ g_js_strings.commonstr.skills = "Skills";
 g_js_strings.commonstr.skip = "Skip";
 g_js_strings.commonstr.sold = "Sold";
 g_js_strings.commonstr.space = "Space";
+g_js_strings.commonstr.special = "Special";
 g_js_strings.commonstr.speed = "Speed";
 g_js_strings.commonstr.speedup = "Speed Up";
 g_js_strings.commonstr.start = "Start";
@@ -576,6 +579,7 @@ g_js_strings.sacrifice_popup.unitdesc13 = "Increase Bloodthorns base stats by %1
 g_js_strings.sacrifice_popup.unitdesc14 = "Increase Executioners base stats by %1$s% by Sacrificing Executioners!";
 g_js_strings.sacrifice_popup.unitdesc15 = "Increase Siege Walls base stats by %1$s% by Sacrificing Siege Walls!";
 g_js_strings.sacrifice_popup.unitdesc16 = "Increase Flame Archers base stats by %1$s% by Sacrificing Flame Archers!";
+g_js_strings.sacrifice_popup.unitdesc17 = "Increase Hussars base stats by %1$s% by Sacrificing Hussars!";
 g_js_strings.sacrifice_tooltip = new Object();
 g_js_strings.sacrifice_tooltip.unitdesc1 = "Supply Troops Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc2 = "Militiamen Empowered by %1$s%";
@@ -593,6 +597,7 @@ g_js_strings.sacrifice_tooltip.unitdesc13 = "Bloodthorns Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc14 = "Executioners Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc15 = "Siege Walls Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.unitdesc16 = "Flame Archers Empowered by %1$s%";
+g_js_strings.sacrifice_tooltip.unitdesc17 = "Hussars Empowered by %1$s%";
 g_js_strings.sacrifice_tooltip.active_rituals = "Active Rituals:";
 g_js_strings.sacrifice_tooltip.duration_left = "%1$s left.";
 g_js_strings.modal_barracks_trainingtab = new Object();
@@ -759,6 +764,7 @@ g_js_strings.cancelTraining = new Object();
 g_js_strings.cancelTraining.canceltrainingtitle = "Cancel Training?";
 g_js_strings.cancelTraining.canceltraining = "Cancel Training";
 g_js_strings.cancelTraining.canceltrainingtakes = "Cancelling this training will get";
+g_js_strings.cancelTraining.specialitemsnonrefundable = "Special items required to construct this unit type will not be refunded.";
 g_js_strings.cancelFortification = new Object();
 g_js_strings.cancelFortification.cancelfortificationtitle = "Cancel Fortification?";
 g_js_strings.cancelFortification.cancelfortification = "Cancel Fortification";
@@ -1198,7 +1204,7 @@ g_js_strings.tutorialCheck.clickforquests = "Complete Quests to build a mighty K
 g_js_strings.tutorialCheck.clickforquests_a = "By building a sawmill you've completed a quest<br/><br/>This has earned you a reward.<br/><br/>Click &#34;Quests&#34; to claim it.";
 g_js_strings.tutorialCheck.clickforfield = "Click here for the Field View where you can build Farms, Sawmills, Quarries, and Mines to gather Resources, which are used to Build your City, Train new Troops, and conduct Research.";
 g_js_strings.tutorialCheck.clickforsawmill = "Click here, then choose the Sawmill";
-g_js_strings.tutorialCheck.clickforsawmill_a = "Generating resources lets you construct buildings and train troops.<br/><br/>Let???s generate wood by constructing a sawmill.<br/><br/>Click here to build a sawmill.";
+g_js_strings.tutorialCheck.clickforsawmill_a = "Generating resources lets you construct buildings and train troops.<br/><br/>Let’s generate wood by constructing a sawmill.<br/><br/>Click here to build a sawmill.";
 g_js_strings.tutorialCheck.clickformyitems = "Click here to view the Items you own.";
 g_js_strings.tutorialCheck.clickopenchest = "Click here to open the Chest and claim your Items. To gain more Items in the future, visit the Shop!";
 g_js_strings.tutorialCheck.clickheresawmill = "Click here to choose a sawmill.";
@@ -1986,7 +1992,7 @@ g_js_strings.modal_auto_attack.reportoptions = "Report Options";
 g_js_strings.modal_auto_attack.reportlifetimedescription = "Barbarian Raid reports will be kept for 3 days unless otherwise specified.";
 g_js_strings.modal_auto_attack.autodeleteallreport = "Automatically delete all Barbarian Raid reports.";
 g_js_strings.modal_auto_attack.whatisabarbarianraid = "What is a Barbarian Raid?";
-g_js_strings.modal_auto_attack.whatisabarbarianraidtooltip = "Barbarian Raids allow you to loot Barbarian Camps automatically. Add a Raid by clicking ???+ Add Raid??? button on the left. You can select save a Knight, Troops, and a Barbarian Camp location to a Raid.";
+g_js_strings.modal_auto_attack.whatisabarbarianraidtooltip = "Barbarian Raids allow you to loot Barbarian Camps automatically. Add a Raid by clicking “+ Add Raid” button on the left. You can select save a Knight, Troops, and a Barbarian Camp location to a Raid.";
 g_js_strings.LevelUp = {};
 g_js_strings.LevelUp.levelUp = "Level Up!";
 g_js_strings.LevelUp.congratulations = "Congratulations! You reached Level %1$s";
@@ -2073,7 +2079,7 @@ g_js_strings.guardian.ore_fullName = "Iron Indrik(Ore Guardian)";
 g_js_strings.guardian.ore_attr = "Attribute: Troop Attack";
 g_js_strings.guardian.ore_res0 = "Resource: Ore";
 g_js_strings.guardian.ore_res1 = "(Production + Cap)";
-g_js_strings.guardian.ore_desc = "Magma flows in the Iron Indrik???s veins and where other creatures would have a streaming mane, the Indrik wears flame.  Black smoke billows and lava drips from his maw.  Spears cannot pierce his hematite hide.  Its fiery retaliation makes it a difficult beast to befriend and a dangerous enemy.";
+g_js_strings.guardian.ore_desc = "Magma flows in the Iron Indrik’s veins and where other creatures would have a streaming mane, the Indrik wears flame.  Black smoke billows and lava drips from his maw.  Spears cannot pierce his hematite hide.  Its fiery retaliation makes it a difficult beast to befriend and a dangerous enemy.";
 g_js_strings.guardian.ore_unlock = "Unlock ore guardian";
 g_js_strings.guardian.ore_unlockCost = "Cost: 1X Obsidian Rune";
 g_js_strings.guardian.food_name = "Viand Kraken";
@@ -2081,7 +2087,7 @@ g_js_strings.guardian.food_fullName = "Viand Kraken(Food Guardian)";
 g_js_strings.guardian.food_attr = "Attribute: Marching Speed";
 g_js_strings.guardian.food_res0 = "Resource: Food";
 g_js_strings.guardian.food_res1 = "(Production + Cap)";
-g_js_strings.guardian.food_desc = "The Viand Kraken rises from the depths, a carapace covering its backside and its many-fanged mouth jutting from a blunt face.  Ink-black eyes dot the sides of the creature???s head, and arm-like tentacles spring from below the head.  The murky water of its pool seems far deeper than any know; investigating the pond enrages the Kraken.";
+g_js_strings.guardian.food_desc = "The Viand Kraken rises from the depths, a carapace covering its backside and its many-fanged mouth jutting from a blunt face.  Ink-black eyes dot the sides of the creature’s head, and arm-like tentacles spring from below the head.  The murky water of its pool seems far deeper than any know; investigating the pond enrages the Kraken.";
 g_js_strings.guardian.food_unlock = "Unlock food guardian";
 g_js_strings.guardian.food_unlockCost = "Cost: 1X Deluge Rune";
 g_js_strings.guardian.stone_name = "Emet Golem";
@@ -2215,6 +2221,7 @@ g_js_strings.report_view.battle_pic = "Battle pics";
 g_js_strings.report_view.troops = "Troops";
 g_js_strings.report_view.troop_stats = "Troop Stats";
 g_js_strings.report_view.troop_bonuses = "Troop Bonuses";
+g_js_strings.report_view.battle_spells = "Battle Spells";
 g_js_strings.throneRoom = {};
 g_js_strings.throneRoom.title_part = "'s Throne Room";
 g_js_strings.throneRoom.simple = "Simple";
@@ -2533,7 +2540,7 @@ g_js_strings.knights = new Object();
 g_js_strings.knights.promptName = "Name your Knight";
 g_js_strings.playerGuide = new Object();
 g_js_strings.playerGuide.throneroom_0_button = "Throne Room Item Basics";
-g_js_strings.playerGuide.throneroom_1_p = "Throne Room Items are items that can be won in battle that provide bonuses to your Kingdom. There are over 300 different bonuses ranging in potency and effect so players are able to use different items to customize their Throne Rooms. Each Throne Room Item is comprised of 5 important pieces of??information: Type, Quality, Suffix, Upgrade, and Effects.";
+g_js_strings.playerGuide.throneroom_1_p = "Throne Room Items are items that can be won in battle that provide bonuses to your Kingdom. There are over 300 different bonuses ranging in potency and effect so players are able to use different items to customize their Throne Rooms. Each Throne Room Item is comprised of 5 important pieces of information: Type, Quality, Suffix, Upgrade, and Effects.";
 g_js_strings.playerGuide.throneroom_2_h = "Item Type";
 g_js_strings.playerGuide.throneroom_3_p = "There are 8 different types of Throne Room Items: Advisor, Banner, Candelabrum, Hero, Table, Throne, Trophy, and Window. Item type is included in the item name and can be seen in the item icon.";
 g_js_strings.playerGuide.throneroom_4_h = "Item Effects";
@@ -2564,7 +2571,7 @@ g_js_strings.playerGuide.throneroom_28_p = "Players will be able to acquire Thro
 g_js_strings.playerGuide.throneroom_29_p = "Wildernesses";
 g_js_strings.playerGuide.throneroom_30_p = "Barbarian Camps (Manual attacks only, not Barbarian Raids)";
 g_js_strings.playerGuide.throneroom_31_p = "Dark Forests";
-g_js_strings.playerGuide.throneroom_32_p = "Other Players??? Cities (Item drops, items can't be stolen from other players)";
+g_js_strings.playerGuide.throneroom_32_p = "Other Players’ Cities (Item drops, items can't be stolen from other players)";
 g_js_strings.playerGuide.throneroom_33_p = "You are more likely to get a Throne Room Item when attacking higher level tiles (Higher level Castles for PVP attacks). You have the best chance of winning Throne room items when attacking high level Dark Forests.";
 g_js_strings.playerGuide.throneroom_34_button = "Item Effects";
 g_js_strings.playerGuide.throneroom_35_p = "Each Throne Room Item has Effects that can be applied to your Kingdom. Each Effect is either a Buff or a Debuff.";
@@ -2591,24 +2598,24 @@ g_js_strings.playerGuide.throneroom_55_h = "NEW! Throne Room Faction Bonus";
 g_js_strings.playerGuide.throneroom_56_p = "Each Throne Room item is aligned with one of the three factions in Kingdoms of Camelot: Briton, Druid or Fey.  Equipping 4 or more of the same faction will update the visual look of Throne Room along with providing the following additional bonus:";
 g_js_strings.playerGuide.throneroom_57_p = "Briton: Having 4 or more Briton items equipped will reduce the Repair time of broken Throne Room items by 15%.";
 g_js_strings.playerGuide.throneroom_58_p = "Druid: Having 4 or more Druid items equipped will reduce the revive time of all Troops in the Apothecary by 15%.";
-g_js_strings.playerGuide.throneroom_59_p = "Fey: Having 4 or more Fey items equipped will increase each City???s Aetherstone cap to 1,150,000.  Note- if unequipped, a user will be unable to gain additional Aetherstones until the amount of Aetherstones in that City is below 1,000,000.";
+g_js_strings.playerGuide.throneroom_59_p = "Fey: Having 4 or more Fey items equipped will increase each City’s Aetherstone cap to 1,150,000.  Note- if unequipped, a user will be unable to gain additional Aetherstones until the amount of Aetherstones in that City is below 1,000,000.";
 g_js_strings.playerGuide.throneroom_60_h = "Salvaging Items";
 g_js_strings.playerGuide.throneroom_61_p = 'If you chose to salvage and Item, the Item will be destroyed and you will receive a certain amount of Aetherstones based on the items quality and upgrade. Salvaging some items will not yield any Aetherstones. To Salvage an item click on the item icon and select "Salvage".';
 g_js_strings.playerGuide.throneroom_62_h = "Unequipping Items";
 g_js_strings.playerGuide.throneroom_63_p = 'If you want to unequip the item, click on the item and select "Unequip". Once an item is unequipped, a player will stop receiving bonuses from its Effects.';
 g_js_strings.playerGuide.throneroom_64_button = "Upgrading an Item";
 g_js_strings.playerGuide.throneroom_65_h = "Upgrading a Throne Room Item";
-g_js_strings.playerGuide.throneroom_66_p = "The power to crush your enemies??? that is what Upgrading a Throne Room item allows you to do. All Throne Room items start at +0 and can be upgraded up to +10. With every upgrade, all Effects on a Throne Room item will become more powerful (including inactive Effects). Power comes at a cost, however, with each Upgrade level becoming increasingly more difficult to achieve. Note- Unlike Enhancing Quality, Upgrading an item can get extremely difficult and will not be maxed out easily.";
+g_js_strings.playerGuide.throneroom_66_p = "The power to crush your enemies… that is what Upgrading a Throne Room item allows you to do. All Throne Room items start at +0 and can be upgraded up to +10. With every upgrade, all Effects on a Throne Room item will become more powerful (including inactive Effects). Power comes at a cost, however, with each Upgrade level becoming increasingly more difficult to achieve. Note- Unlike Enhancing Quality, Upgrading an item can get extremely difficult and will not be maxed out easily.";
 g_js_strings.playerGuide.throneroom_67_p = "A new addition to the Upgrade system is the Activity Bonus. Every time Upgrade or Enhance is used, the Activity Bonus bar will increase, giving an additional success bonus to future attempts. If an item is not Upgraded or Enhanced after a short period of time, the bar will start to decrease, lowering the success bonus.";
 g_js_strings.playerGuide.throneroom_68_h = "Accessing the Upgrade Panel";
 g_js_strings.playerGuide.throneroom_69_p = "Upgrade can be accessed through an item's context menu.";
 g_js_strings.playerGuide.throneroom_70_p = "1. Name - The name of the item being Upgraded";
-g_js_strings.playerGuide.throneroom_71_p = "2. Current - Current Effects on the item being Upgraded. The green check marks represent active Effects and the red X???s represent inactive Effects.";
+g_js_strings.playerGuide.throneroom_71_p = "2. Current - Current Effects on the item being Upgraded. The green check marks represent active Effects and the red X’s represent inactive Effects.";
 g_js_strings.playerGuide.throneroom_72_p = "3. Next - The Effects of the item is the Upgrade is successful. Note- In the example, a successful Upgrade increases the power of each Effect.";
 g_js_strings.playerGuide.throneroom_73_p = "4. Requirements (Resources) - The left portion of the Requirements section lists the amount of Aetherstones needed to Upgrade the item. If you do not have enough Aetherstones, you can spend Gems instead. If you have Aetherstones but do not wish to use them, you can select Gems from the left drop down list to use Gems instead.";
-g_js_strings.playerGuide.throneroom_74_p = "5. Requirements (Items) ??? The right portion of the Requirements section lists optional Items that can be used in the next Upgrade attempt. These items cost Gems and can negate the effects of an unsuccessful Upgrade. If you do not have the Item you wish to use, you can spend Gems to buy and use the Item in the next Upgrade. The specific details of each item are listed in the last section of this guide.";
-g_js_strings.playerGuide.throneroom_75_p = "6. Success Rate ??? Visually represents the difficulty of the next Upgrade. Using a Lesser Lucky Token or Lucky Token (explained below) will increase the success rate.";
-g_js_strings.playerGuide.throneroom_76_p = "7. Upgrade Button ??? Pressing this button begins the Upgrade attempt. In an event that you are spending Gems (from any of the methods listed above) the total amount of Gems that will be deducted is listed in the Upgrade button.";
+g_js_strings.playerGuide.throneroom_74_p = "5. Requirements (Items) – The right portion of the Requirements section lists optional Items that can be used in the next Upgrade attempt. These items cost Gems and can negate the effects of an unsuccessful Upgrade. If you do not have the Item you wish to use, you can spend Gems to buy and use the Item in the next Upgrade. The specific details of each item are listed in the last section of this guide.";
+g_js_strings.playerGuide.throneroom_75_p = "6. Success Rate – Visually represents the difficulty of the next Upgrade. Using a Lesser Lucky Token or Lucky Token (explained below) will increase the success rate.";
+g_js_strings.playerGuide.throneroom_76_p = "7. Upgrade Button – Pressing this button begins the Upgrade attempt. In an event that you are spending Gems (from any of the methods listed above) the total amount of Gems that will be deducted is listed in the Upgrade button.";
 g_js_strings.playerGuide.throneroom_77_h = "Successfully Upgrading an Item";
 g_js_strings.playerGuide.throneroom_78_p = "After pressing the Upgrade button, the attempt will either be successful or unsuccessful.";
 g_js_strings.playerGuide.throneroom_79_h = "Unsuccessfully Upgrading an Item";
@@ -2635,20 +2642,20 @@ g_js_strings.playerGuide.throneroom_99_p = "Cost- 75 Gems";
 g_js_strings.playerGuide.throneroom_100_p = "Increases success rate by 25x and completely prevents an item from breaking if an Upgrade is unsuccessful. This item is consumed with each Upgrade attempt.";
 g_js_strings.playerGuide.throneroom_99_button = "Enhancing an item";
 g_js_strings.playerGuide.throneroom_100_h = "Enhancing a Throne Room Item";
-g_js_strings.playerGuide.throneroom_101_p = "Ever found a Simple Throne Room item that had powerful effects on it? Well with Enhancement, an item???s Quality can now be changed! Using Aetherstones, a user can attempt to increase the Quality of their Throne Room Item using the Enhance panel.";
+g_js_strings.playerGuide.throneroom_101_p = "Ever found a Simple Throne Room item that had powerful effects on it? Well with Enhancement, an item’s Quality can now be changed! Using Aetherstones, a user can attempt to increase the Quality of their Throne Room Item using the Enhance panel.";
 g_js_strings.playerGuide.throneroom_102_p = "A new addition to the Enhance system is the Activity Bonus. Every time Upgrade or Enhance is used, the Activity Bonus bar will increase, giving an additional success bonus to future attempts. If an item is not Upgraded or Enhanced after a short period of time, the bar will start to decrease, lowering the success bonus.";
 g_js_strings.playerGuide.throneroom_103_h = "Accessing the Enhance panel";
-g_js_strings.playerGuide.throneroom_104_p = "Enhance can be accessed through an item???s context menu.";
+g_js_strings.playerGuide.throneroom_104_p = "Enhance can be accessed through an item’s context menu.";
 g_js_strings.playerGuide.throneroom_105_p = "1. Name - The name of the item being Enhanced";
-g_js_strings.playerGuide.throneroom_106_p = "2. Current - Current Effects on the item being Enhanced. The green check marks represent active Effects and the red X???s represent inactive Effects.";
+g_js_strings.playerGuide.throneroom_106_p = "2. Current - Current Effects on the item being Enhanced. The green check marks represent active Effects and the red X’s represent inactive Effects.";
 g_js_strings.playerGuide.throneroom_107_p = "3. Next - The Effects of the item is the Enhance is successful. Note- In the example, a successful Enhance will unlock the third Effect listed.";
 g_js_strings.playerGuide.throneroom_108_p = "4. Quality Progress Bar - Shows the progress of an item from Simple to Wondrous.";
 g_js_strings.playerGuide.throneroom_109_p = "5. Requirements (Resources) - The left portion of the Requirements section lists the amount of Aetherstones needed to Enhance the item. If you do not have enough Aetherstones, you can spend Gems instead. If you have Aetherstones but do not wish to use them, you can select Gems from the left drop down list to use Gems instead.";
-g_js_strings.playerGuide.throneroom_110_p = "6. Requirements (Items) ??? The right portion of the Requirements section lists optional Items that can be used in the next Enhance attempt. These items cost Gems and can negate the effects of an unsuccessful Enhance. If you do not have the Item you wish to use, you can spend Gems to buy and use the Item in the next Enhance. The specific details of each item are listed in the last section of this guide.";
-g_js_strings.playerGuide.throneroom_111_p = "7. Success Rate ??? Visually represents the difficulty of the next Enhance. Using a Mystics Orb (explained below) will increase the success rate.";
-g_js_strings.playerGuide.throneroom_112_p = "8. Enhance Button ??? Pressing this button begins the Enhance attempt. In an event that you are spending Gems (from any of the methods listed above) the total amount of Gems that will be deducted is listed in the Enhance button.";
+g_js_strings.playerGuide.throneroom_110_p = "6. Requirements (Items) – The right portion of the Requirements section lists optional Items that can be used in the next Enhance attempt. These items cost Gems and can negate the effects of an unsuccessful Enhance. If you do not have the Item you wish to use, you can spend Gems to buy and use the Item in the next Enhance. The specific details of each item are listed in the last section of this guide.";
+g_js_strings.playerGuide.throneroom_111_p = "7. Success Rate – Visually represents the difficulty of the next Enhance. Using a Mystics Orb (explained below) will increase the success rate.";
+g_js_strings.playerGuide.throneroom_112_p = "8. Enhance Button – Pressing this button begins the Enhance attempt. In an event that you are spending Gems (from any of the methods listed above) the total amount of Gems that will be deducted is listed in the Enhance button.";
 g_js_strings.playerGuide.throneroom_113_h = "Successfully Enhancing an Item";
-g_js_strings.playerGuide.throneroom_114_p = "After pressing the Enhance button, the attempt will either be successful or unsuccessful. If successful, the item???s Quality will increase by 1.";
+g_js_strings.playerGuide.throneroom_114_p = "After pressing the Enhance button, the attempt will either be successful or unsuccessful. If successful, the item’s Quality will increase by 1.";
 g_js_strings.playerGuide.throneroom_115_h = "Unsuccessfully Enhancing an Item";
 g_js_strings.playerGuide.throneroom_116_p = "Unfortunately, not every Enhance attempt will be successful. When an Enhance attempt is unsuccessful:";
 g_js_strings.playerGuide.throneroom_117_p = "The item breaks. This makes the item unusable until it is repaired. Some items (detailed below) can negate this effect.";
@@ -3053,12 +3060,16 @@ g_js_strings.prestige.revisedDiplomacy_info = "Using a Revised Diplomacy will al
 g_js_strings.prestige.revisedDiplomacy_bullet_1 = "Field View buildings will not be transferred between Factions.";
 g_js_strings.prestige.revisedDiplomacy_bullet_2 = "Normal Apothecaries from other Factions will not transfer to Druid cities.";
 g_js_strings.prestige.revisedDiplomacyDuplicate = "You have Selected the same Faction as the selected city. Are you sure you want to continue?";
+g_js_strings.prestige.revisedDiplomacyLevelDiscrepancy = "You have Selected a Faction with a lower max level than your current level. Are you sure you want to continue?";
 g_js_strings.prestige.revisedDiplomacyCongratsFey = "Your City is Now Fey!";
 g_js_strings.prestige.revisedDiplomacyCongratsDruid = "Your City is Now Druid!";
 g_js_strings.prestige.revisedDiplomacyCongratsBriton = "Your City is Now Briton!";
 g_js_strings.prestige.revisedDiplomacyCongratsTitle = "Congratulations!";
 g_js_strings.prestige.revisedDiplomacyReload = "Click to reload the page.";
 g_js_strings.prestige.revisedDiplomacyCongratsOK = "OK";
+g_js_strings.prestige.actionSplitter = "OR";
+g_js_strings.prestige.crystalDescription = "Ascend for FREE! Owned";
+g_js_strings.prestige.crystalTooltip = "Consume %1$s %2$s to Ascend for Free!";
 g_js_strings.blessingSystem = new Object();
 g_js_strings.blessingSystem.blessing_name_11 = "Fighting Spirit";
 g_js_strings.blessingSystem.blessing_description_11 = "Unlocks the Bloodthorn Unit";
@@ -3082,6 +3093,8 @@ g_js_strings.blessingSystem.blessing_name_112 = "Death from Afar";
 g_js_strings.blessingSystem.blessing_description_112 = "Increases Archer training speed by 10%";
 g_js_strings.blessingSystem.blessing_name_21 = "Summon Death";
 g_js_strings.blessingSystem.blessing_description_21 = "Unlock the ability to train Executioners in the Fey Barracks";
+g_js_strings.blessingSystem.blessing_name_22 = "Blood Magic";
+g_js_strings.blessingSystem.blessing_description_22 = "Unlock Fey Battle Spells";
 g_js_strings.blessingSystem.blessing_name_201 = "Reinforced Walls";
 g_js_strings.blessingSystem.blessing_description_201 = "Doubles the durability of the Wall";
 g_js_strings.blessingSystem.blessing_name_202 = "Expedited Sentencing";
@@ -3131,6 +3144,7 @@ g_js_strings.prestige_bonus.cottage = "Increase Population limit by ";
 g_js_strings.prestige_bonus.rally0 = "Increase maximum number of Marches by ";
 g_js_strings.prestige_bonus.rally0b = " for every Rally Point level.";
 g_js_strings.prestige_bonus.rally1 = "Increase March size cap by ";
+g_js_strings.prestige_bonus.rally2 = "%1$s March spells may be cast.";
 g_js_strings.prestige_bonus.asc = "Ascension Upgrades";
 g_js_strings.multi = new Object();
 g_js_strings.multi.pur = "Purchase Confirmation";
@@ -3232,13 +3246,13 @@ g_js_strings.fb_objects = {};
 g_js_strings.fb_objects.dark_forest_title = "Dark Forest";
 g_js_strings.fb_objects.dark_forest_description = "Dark Forests are the homes of villainous denizens and creatures most foul. Almost certain death awaits novice armies, but bountiful rewards shall be claimed by the victors!";
 g_js_strings.fb_objects.throne_room_item_title = "Throne Room Item";
-g_js_strings.fb_objects.throne_room_item_description = "A power artifact that unleashes the full power of the Kingdom???s potential.";
+g_js_strings.fb_objects.throne_room_item_description = "A power artifact that unleashes the full power of the Kingdom’s potential.";
 g_js_strings.fb_objects.city_title = "City";
-g_js_strings.fb_objects.city_description = "Establish another City to increase your Kingdom???s power and reach across Camelot!";
+g_js_strings.fb_objects.city_description = "Establish another City to increase your Kingdom’s power and reach across Camelot!";
 g_js_strings.fb_objects.ascend_city_title = "Ascension City";
-g_js_strings.fb_objects.ascend_city_description = "Pledge the city???s allegiance to either the Fey, Briton or Druid factions for exclusive Troops, research additional technologies, strategic buffs and powerful Blessings.";
+g_js_strings.fb_objects.ascend_city_description = "Pledge the city’s allegiance to either the Fey, Briton or Druid factions for exclusive Troops, research additional technologies, strategic buffs and powerful Blessings.";
 g_js_strings.fb_objects.castle_title = "Castle";
-g_js_strings.fb_objects.castle_description = "The center of the city, the Castle represents one???s power and influence across the Kingdoms.";
+g_js_strings.fb_objects.castle_description = "The center of the city, the Castle represents one’s power and influence across the Kingdoms.";
 g_js_strings.fb_objects.gift_title = "Gift";
 g_js_strings.fb_objects.gift_description = "A token of appreciation to help the Lord or Lady maintain their Kingdom.";
 g_js_strings.fb_objects.help_construction_title = "Construction";
@@ -3246,7 +3260,15 @@ g_js_strings.fb_objects.help_construction_description = "Building and upgrading 
 g_js_strings.fb_objects.help_research_title = "Research";
 g_js_strings.fb_objects.help_research_description = "Researching technologies is crucial for ruling a Kingdom and provides a competitive edge in battle.";
 g_js_strings.fb_objects.wild_title = "Wild";
-g_js_strings.fb_objects.wild_description = "Expand your Kingdom???s territory and power by claiming wilds for bonus to your current cities or build a new city!";
+g_js_strings.fb_objects.wild_description = "Expand your Kingdom’s territory and power by claiming wilds for bonus to your current cities or build a new city!";
+g_js_strings.spells = {};
+g_js_strings.spells.no = "No spell used.";
+g_js_strings.spells.name_21 = "Lifesteal";
+g_js_strings.spells.desc_21 = "Your wounded troops revive at the battle's end, the Defender's wounded troops are killed.";
+g_js_strings.spells.spells = "Spells";
+g_js_strings.spells.available = "Available";
+g_js_strings.spells.cooldown = "Cooldown";
+g_js_strings.spells.revived = "Revived";
 var buildingcost = {
     bdg0: ["Castle", 0, 0, 0, 0, 0, 0, 0, {
         b19: [0, - 2]
@@ -3436,7 +3458,8 @@ var unitnamedesctranslated = {
     unt13: ["Bloodthorn", "Born of the wilderness, the Bloodthorn unit is an elite warrior that specializes in dealing quick, deadly blows to their enemies."],
     unt14: ["Executioner", "Born of Ice and Steel, the Executioner is an elite unit that specializes in overwhelming their enemies with massive force."],
     unt15: ["Siege Wall", "The Siege Wall guarantees advancement on the battlefield for its army."],
-    unt16: ["Flame Archer", "Flame Archers are extremely adept at slaying troops from a distance. Their flame-tipped arrows wreak extra damage when attacking Dark Forests."]
+    unt16: ["Flame Archer", "Flame Archers are adept at slaying troops from a distance. Their bows use Pristine Yew Branches, which are found in Forests and Dark Forests."],
+    unt17: ["Hussar", "Hussars are agile cavalry that take greatly reduced damage from Ranged and Siege units."]
 };
 var fortcost = {
     frt53: ["Wall-Mounted Crossbows", 250, 2000, 750, 500, 0, 0, 180, {
@@ -4123,6 +4146,14 @@ var itemlist = {
         name: "Lesser Revision",
         description: "Allows the first three Blessings of an Ascended City to be changed",
         price: 40,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
+    i621: {
+        name: "Greater Revision",
+        description: "",
+        price: null,
         tradable: null,
         category: 1,
         subCategory: 0
@@ -6226,6 +6257,38 @@ var itemlist = {
     i1493: {
         name: "1000 Flame Archers",
         description: "Summons 1000 Flame Archers",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1494: {
+        name: "500 Hussars",
+        description: "Summons 500 Hussars",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1495: {
+        name: "750 Hussars",
+        description: "Summons 750 Hussars",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1496: {
+        name: "1000 Hussars",
+        description: "Summons 1000 Hussars",
+        price: null,
+        tradable: null,
+        category: 3,
+        subCategory: 0
+    },
+    i1497: {
+        name: "150 Hussars",
+        description: "Summons 150 Hussars",
         price: null,
         tradable: null,
         category: 3,
@@ -9915,6 +9978,134 @@ var itemlist = {
         name: "The Chest of Valor",
         description: "Take a chance and win great items and support a good cause! Check today's messages for more details!",
         price: 50,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30619: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30620: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30621: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30622: {
+        name: "Grand Chest",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30623: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30624: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30625: {
+        name: "Fey Chest",
+        description: "A prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30626: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30627: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30628: {
+        name: "Druid Chest",
+        description: "A modest prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30629: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30630: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30631: {
+        name: "Briton Chest",
+        description: "A valuable prize won from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30632: {
+        name: "Grand Chest",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30633: {
+        name: "Grand Chest",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        price: null,
+        tradable: null,
+        category: 5,
+        subCategory: 100
+    },
+    i30634: {
+        name: "Grand Chest",
+        description: "Congratulations! This chest contains the grand prize from Summoning Circle.",
+        price: null,
         tradable: null,
         category: 5,
         subCategory: 100
@@ -21286,6 +21477,30 @@ var itemlist = {
         tradable: null,
         category: 5,
         subCategory: 100
+    },
+    i33000: {
+        name: "Lesser Ascension Crystal",
+        description: "This lesser gem of power can completely pay for a city's Ascension to any level from 1-3.",
+        price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 3
+    },
+    i33001: {
+        name: "Greater Ascension Crystal",
+        description: "This greater gem of power can completely pay for a city's Ascension to any level from 4-6.",
+        price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 3
+    },
+    i34001: {
+        name: "Pristine Yew Branch",
+        description: "A pristine yew branch, ready to be turned into a powerful bow. Needed to train Flame Archers in the Barracks.",
+        price: null,
+        tradable: null,
+        category: 1,
+        subCategory: 4
     }
 };
 var shopOrder = [505, 599, 10021, 10029, 401, 911, 912, 924, 361, 362, 363, 231, 923, 355, 221, 922, 351, 941, 1, 211, 241, 2, 3, 4, 5, 6, 7, 8, 10, 9, 26, 49, 276, 277, 278, 273, 274, 275, 261, 262, 271, 272, 55, 57, 931, 901, 1015, 1025, 1035, 1045, 101, 102, 111, 112, 121, 122, 131, 132, 141, 142, 501, 502, 503, 504, 10023, 10027, 942, 10007, 10008, 10009, 10010, 10011, 1202, 1203, 1204, 1205, 1206, 711, 721, 731, 741, 801, 802, 803, 804, 805, 811, 812, 813, 814, 821, 822, 823, 824, 825, 831, 832, 833, 834, 835, 841, 842, 843, 844, 845, 851, 852, 853, 854, 855, 893, 860, 861, 885, 886, 887, 888, 889, 862, 863, 864, 865, 866, 867, 868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879, 880, 881, 882, 883, 884];
@@ -25761,7 +25976,7 @@ var buildingupgradedesc = {
     "22": ["Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units", "Train Bloodthorn units"],
     "23": ["Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle.", "Increases the number of Wounded Troops acquired each battle."],
     "24": ["Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units.", "Train Executioner units."],
-    "25": ["Sacrifice Supply Troops and Militiamen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Scouts and Pikeman. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Swordsmen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Supply Wagons. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Heavy Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Ballista. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Battering Rams. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Catapults, Executioners, Bloodthorn, Siege Walls, and Flame Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours."],
+    "25": ["Sacrifice Supply Troops and Militiamen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Scouts and Pikeman. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Swordsmen. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Archers. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Supply Wagons. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Heavy Cavalry. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Ballista. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Battering Rams. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours.", "Sacrifice Catapults, Executioners, Bloodthorn, Siege Walls, Flame Archers, and Hussars. Also increases the Sacrificial Ritual generated by %1$s% and extends the duration of the Ritual to %2$s hours."],
     "26": ["Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units", "Train Siege Wall Units"],
     "27": ["Research Improved Cartography and raise research cap to Level 1", "Research Into the Wild and raise research cap to Level 2", "Raise research cap to Level 3", "Research Siege Master&#39;s Training and raise research cap to Level 4", "Raise research cap to Level 5", "Research improved Defenses and raise research cap to Level 6", "Raise research cap to Level 7", "Research Strengthen Ranks and raise research cap to Level 8", "Raise research cap to Level 9", "Research Improved Fletching and raise research cap to Level 10"]
 };
@@ -25813,6 +26028,10 @@ cm.FETemplates = {
         voting_item: '<div class="votingItem"><div class="votingItemDescription" lnum="#{listNumber}"><div class="votingItemDescriptionTitle">#{featureTitle}</div><div class="votingItemDescriptionText">#{description}</div></div><div class="votingItemRightColumn"><div class="votingItemSlider"><input id="sliderText#{listNumber}" lnum="#{listNumber}" class="votingItemSliderText" type="text" value="0" onkeyup="cm.VotingController.sliderTextEntered(event,this)" onkeydown="cm.KeyFilter.allowOnlyNumbers(event)"><div id="track#{listNumber}" class="votingSlider"><div id="handle#{listNumber}" class="votingSliderHandle"></div></div></div><div class="votingItemButton" lnum="#{listNumber}"><div class="buttonBgGold_left"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{vote}</a></div></div></div></div></div></div>',
         voting_more_info: "<div class=\"votingMoreInfoPanel\"><div class='bgFramingBorderBeveled'></div><div class='top_voters'>#{top_voters}</div><div class='left_numbers'>#{left_numbers}</div><div class='right_numbers'>#{right_numbers}</div><div class='left_image' style=\"background: url(#{feature_image});\"></div><div class='your_place'>#{your_place}</div><div class='main_description'>#{description}</div><div class='prizes'><div class='img1 img' ></div><div class='text_place prize_description1'>#{prize_description1}</div><div class='img2 img' ></div><div class='text_place prize_description2'>#{prize_description2}</div><div class='img3 img' ></div><div class='text_place prize_description3'>#{prize_description3}</div></div></div>",
         votingConfirmation: '<div class="allocationConfirmation"><div class=\'allocationFrame\'><div class=\'title\'>#{primaryTitle}</div><div class=\'msg1\'></div><div class=\'msg2\'>Use <span style="font-weight:bold">#{numVotes}</span> Voting Points on <span style="font-weight:bold">#{featureTitle}?</span></div><div class="votingConfirmationButtons"><div id="voteCommitButton" class="buttonBgGold_left" nVotes="#{numVotes}" fid="#{featureId}"><div class="buttonBgGold_right"><div class="buttonBgGold_repeat"><a id="minigameRewardBtn" class="buttonv2 h20 blue">#{vote}</a></div></div></div></div></div></div>'
+    },
+    Spells: {
+        spellMarchBlock: '<div class="section boost" id="modal_attack_spells"><div class="section_title">Spells</div><div class="section_content">#{spellItems}</div></div>',
+        spellMarchItem: '<div class="item spellMarchItem clearfix"><input type="checkbox" name="" class="spellcb" id="modal_attack_spell#{spellID}" tabindex="" #{disabled}/><div class="icon_own"><img style="width:30px;height:30px" class="icon" src="#{imgURL}"></div><div class="info"><div>#{spellTitle}</div><div class="desc">#{spellDescription}</div></div><div class="buy "><div class="gem spellSecondCountDown_21"></div><div>#{speedUpButton}</div></div></div>'
     },
     NewGame: {
         modalShell: '<div class="primarytitlebar">#{titleBar}</div><div class="primarycontent clearfix">#{body}</div><div class="#{logoClass}"></div>',
@@ -25928,7 +26147,8 @@ cm.FETemplates = {
         buildContainer0: '<div class="buildContainer">#{info}<div class="buildActionContainer"><div class="share"><input type="checkbox" id="askHelpCheckbox" /><p>Share a message to your wall and alliance chat asking for help reducing your build or research time.</p></div><a id="buildingBuildButton" class="#{buttonClass}"> <span> #{buttonLabel} </span> </a></div></div>',
         buildContainer1: '<div class="buildContainer"><p class="requirement"> #{warning} </p><div class="buildActionContainer"><div class="share"><input type="checkbox" id="askHelpCheckbox" /><p> #{shareContent} </p></div><a id="buildingBuildButton" class="#{buttonClass}"> <span> #{buttonLabel} </span> </a></div></div>',
         buildContainer2: '<div class="buildContainer"><div class="timeLeftContainer"><span class="label"> #{timeLabel}:</span><span id="upgradeTimeLeft">  00m 00s </span><a id="buildingCancelButton" onclick=\'cancelConstruction(#{curlv},#{slotid},#{curlv});\'> <span> #{cancelLabel} </span> </a></div><div class="buildActionContainer"><a id="buildingSpeedButton" class="speed"> <span> #{speedLabel} </span> </a><a id="buildingAskButton" class="ask"> <span> #{askLabel} </span> </a></div></div>',
-        craftFailure: '<div class="craftFailure"><div class="item item#{itemId}_70"><span class="item#{itemId}_70"></span><span class="frame"></span></div><div class="content"><span class="title">#{failure}</span></div></div>'
+        craftFailure: '<div class="craftFailure"><div class="item item#{itemId}_70"><span class="item#{itemId}_70"></span><span class="frame"></span></div><div class="content"><span class="title">#{failure}</span></div></div>',
+        spellView: "<div class=\"spellView\"><div class='img'></div><div class='title'>#{title}</div><div class='description'>#{description}</div><div class='cooldown'>#{cooldown}<span class='spellSecondCountDown_21'></span></div><div class='available'>#{available}</div></div>"
     },
     ChangeDomain: {
         imageRotator: '<div class="image_rotator"><div id="domainChangeRotated" class="image_rotated"></div><div id="domainChangePager" class="pager clearfix"></div></div>',
@@ -25945,9 +26165,9 @@ cm.FETemplates = {
         factionChoice: '<li class="choice #{faction} #{lockedClass} clearfix"><div class="content"><h2 class="type">#{header} <span class="level">#{lvLabel} #{level}</span></h2><ul class="features">#{features}</ul>#{button}</div></li>',
         factionFeature: '<li class="feature">#{main}#{detail}</li>',
         blessingSelection: '<div class="blessing_selection #{factionClass} clearfix"><div class="header"><h1 class="faction">#{factionLabel}</h1><hr /><p class="brief_description">#{description}</p><p class="description">#{subDescription}</p></div><div class="blessings_frame"><div class="wrap"><div class="wrap clearfix"><div class="frame_header"><h2>#{blessingsLabel}</h2>#{respecButton}#{refactionButton}<p class="description">#{blessingsDescription}</p></div><div class="blessings">#{blessings}</div></div></div></div>#{cityValueBar}</div>',
-        cityValueBar: '<div class="city_value #{cityValueClasses}" id="prestige_manager_city_value"><div class="wrapper">#{progressContainer}#{actionButton}</div></div>',
-        progressContainer: '<div class="progress_container"><div class="progress_container_bottom"><div class="progress_container_repeat"><div class="clearfix"><h2 class="status" id="prestige_manager_status">#{status}</h2><div class="progress_bar"><div class="progress_fill" id="prestige_manager_progress"></div><div class="progress_hover" id="prestige_manager_progress_hover"></div><ul class="tick_labels"><li class="tick_label free">#{freeLabel}</li><li class="tick_label">#{threeQuartersOff}</li><li class="tick_label">#{halfOff}</li><li class="tick_label">#{quarterOff}</li><li class="tick_label">#{qualifyLabel}</li></ul></div><div id="prestige_manager_original_price" class="original_price">#{originalPriceLabel}: <span class="gem">#{originalPrice}</span></div></div></div></div></div>',
-        prestigeConfirm: '<!-- CUONG --><div class="confirm clearfix"><div class="details"><div class="last_blessing">#{lastBlessing}</div><h2 class="chosen_text">#{youChoseBlessingText}</h2><h3 class="feature_header">#{youAlsoGetText}</h3></div><p class="disclaimer">#{disclaimer}</p><div class=\'gem_amount\'>#{gems}<div class=\'little_gem\'></div></div>#{button}</div>',
+        cityValueBar: '<div class="city_value #{cityValueClasses}" id="prestige_manager_city_value"><div class="wrapper">#{progressContainer}#{actionButton} <div class="action_splitter" id="prestige_manager_action_splitter">#{actionSplitter}</div> #{actionButton2}</div></div>',
+        progressContainer: '<div class="progress_container"><div class="progress_container_bottom"><div class="progress_container_repeat"><div class="clearfix"><h2 class="status" id="prestige_manager_status">#{status}</h2><div class="progress_bar"><div class="progress_fill" id="prestige_manager_progress"></div><div class="progress_hover" id="prestige_manager_progress_hover"></div><ul class="tick_labels"><li class="tick_label free">#{freeLabel}</li><li class="tick_label">#{threeQuartersOff}</li><li class="tick_label">#{halfOff}</li><li class="tick_label">#{quarterOff}</li><li class="tick_label">#{qualifyLabel}</li></ul></div><div id="prestige_manager_original_price" class="original_price">#{originalPriceLabel}: <span class="gem">#{originalPrice}</span></div><div id="prestige_manager_crystal_price" class="crystal_price"><span id="prestige_manager_crystal_price_text">#{crystalPriceLabel}: </span><span class="gem">#{crystalPrice}</span></div></div></div></div></div>',
+        prestigeConfirm: '<!-- CUONG --><div class="confirm clearfix"><div class="details"><div class="last_blessing">#{lastBlessing}</div><h2 class="chosen_text">#{youChoseBlessingText}</h2><h3 class="feature_header">#{youAlsoGetText}</h3></div><p class="disclaimer">#{disclaimer}</p><div class=\'gem_amount\'>#{gems}<div id="prestigeCurrencyIcon" class="#{gemClass}"></div></div>#{button}</div>',
         congrats: '<div class="#{action}congrats #{faction} clearfix"><h2>#{headline}</h2><div class="content"><h3>#{contentHeader}</h3><p>#{contentDescription}</p></div></div>',
         refactionInfo: '<div class="refactionInfo clearfix"><h2>#{description}</h2><ul>#{bulletPoints}</ul><a class="buttonv2 h20 blue">#{buttonText}</a></div>',
         multiBuy: '<div class="inner_stone_block refactionInfo clearfix"><h2>#{description}</h2><ul>#{bulletPoints}</ul><a class="buttonv2 h20 green">#{buttonText}</a></div>',
@@ -29343,6 +29563,13 @@ cm.ApothecaryView = function(e) {
         MAX_QUANTITY: "max_quantity"
     }
 }(jQuery);
+cm.attack_modal = function() {
+    return {
+        redisplay_spell_speedup: function() {
+            jQuery("#modal_attack_spells .section_content").html(spellItemTemp(21))
+        }
+    }
+}();
 
 function modal_attack(f, l, p, r) {
     var q = f;
@@ -29351,7 +29578,7 @@ function modal_attack(f, l, p, r) {
         f = cm.MARCH_TYPES.MARCH_TYPE_ATTACK
     }
     var n = [];
-    var z = 100;
+    var A = 100;
     n.push("<div id='modal_attack'>");
     n.push('<ul class="marchTypeTabs">');
     n.push('<li id="modal_attack_tab_' + cm.MARCH_TYPES.MARCH_TYPE_ATTACK + '">' + g_js_strings.commonstr.attack + "</li>");
@@ -29380,7 +29607,7 @@ function modal_attack(f, l, p, r) {
     n.push("<div class='available_troops'>" + g_js_strings.modal_attack.availabletroops + "</div>");
     if ("on" == cm.features.AUTO_ATTACK) {
         n.push("<div class='raidfilter' id='modal_attack_raidfilter'><input type='checkbox' id='modal_attack_raidfilter_checkbox' tabindex='");
-        n.push(z++);
+        n.push(A++);
         n.push("' " + ((q == cm.MARCH_TYPES.MARCH_TYPE_BARBARIAN) ? "checked " : " "));
         n.push((seed.player.title >= cm.AutoAttackLevelLock) ? " " : "disabled ");
         n.push('/><a onclick="cm.MarchModal.onAutoAttackHelpClick();return false;">');
@@ -29388,21 +29615,21 @@ function modal_attack(f, l, p, r) {
         n.push("</a></div>")
     }
     n.push("<div class='unitfilter' id='modal_attack_supplyfilter'><input type='checkbox' id='modal_attack_supplyfilter_checkbox' tabindex='");
-    n.push(z++);
+    n.push(A++);
     n.push("' />");
     n.push(g_js_strings.modal_attack.displaysupplyonly);
     n.push("</div>");
     n.push("</div>");
     n.push("<div class='' id='modal_attack_unitlist'>");
     var c = seed.units["city" + currentcityid];
-    var y = Object.keys(c);
-    for (var w = 0; w < y.length; w++) {
-        var j = y[w].split("unt")[1];
-        var g = c[y[w]];
+    var z = Object.keys(c);
+    for (var w = 0; w < z.length; w++) {
+        var j = z[w].split("unt")[1];
+        var g = c[z[w]];
         if (j && !cm.BarracksUnitsTypeMap.canCityHaveUnit(j)) {
             continue
         }
-        if (unitcost[y[w]]) {
+        if (unitcost[z[w]]) {
             n.push("<div class='unit' name='");
             n.push(j);
             n.push("'><img src='");
@@ -29410,7 +29637,7 @@ function modal_attack(f, l, p, r) {
             n.push("img/units/unit_");
             n.push(j);
             n.push("_50.jpg'/><div class='unitinfo'><div class='unitname'>");
-            n.push(unitcost[y[w]][0]);
+            n.push(unitcost[z[w]][0]);
             n.push("</div><div><span class='unitnum'>");
             n.push(g);
             n.push("</span></div><div class='numbox'><input type='text' id='modal_attack_unit_ipt");
@@ -29418,7 +29645,7 @@ function modal_attack(f, l, p, r) {
             n.push("' value='0' onfocus='this.select();' onkeyup='modal_attack_update_num(this);' onkeyDown='cm.KeyFilter.allowOnlyNumbers(event)' onblur='modal_attack_normalize_number(this)' name='");
             n.push(j);
             n.push("' tabindex='");
-            n.push(z++);
+            n.push(A++);
             n.push("' /><a id='maxButton" + j + "'	class='button14'");
             n.push("><span>" + g_js_strings.commonstr.max + "</span></a></div></div></div>")
         } else {
@@ -29429,7 +29656,7 @@ function modal_attack(f, l, p, r) {
     n.push("<div class='unitarmy'>");
     n.push(g_js_strings.modal_attack.selectedtroops + ":");
     n.push(" <span id='modal_attack_selnum'>0</span> / <span id='modal_attack_maxunt'>");
-    var A = getBuildingLevel(12),
+    var C = getBuildingLevel(12),
         u = 1,
         a = unixtime();
     if (seed.playerEffects.aurasExpire) {
@@ -29458,13 +29685,13 @@ function modal_attack(f, l, p, r) {
             u *= k
         }
     }
-    if (A === 11) {
+    if (C === 11) {
         e = (Math.round(150000 * u))
     } else {
-        if (A === 12) {
+        if (C === 12) {
             e = (Math.round(200000 * u))
         } else {
-            e = (Math.round((A * 10000) * u))
+            e = (Math.round((C * 10000) * u))
         }
     }
     if (q != 6) {
@@ -29557,6 +29784,16 @@ function modal_attack(f, l, p, r) {
     cm.MarchModal.rendererBoostSection(n, "modal_attack_defense_boost", g_js_strings.modal_attack.defenseboosts, [271, 272, 281], null, {
         i281: true
     });
+    var y = cm.SpellsModel.getSpellIdsForThisCity();
+    var B = "";
+    if (cm.SpellsModel.haveASpell()) {
+        for (var w = 0; w < y.length; w++) {
+            B += spellItemTemp(y[w])
+        }
+        n.push(cm.Template.renderTemplate("Spells", "spellMarchBlock", {
+            spellItems: B
+        }))
+    }
     n.push("</div><!-- end .right_column -->");
     n.push("</div>");
     n.push("<div id='error_overmarch'></div>");
@@ -29571,6 +29808,17 @@ function modal_attack(f, l, p, r) {
     cm.MarchModal.bind(r);
     cm.MarchModal.changeMarchType(f, q);
     attack_checkOverMarch()
+}
+function spellItemTemp(a) {
+    var b = cm.SpellsModel.cooldownActive(a);
+    return cm.Template.renderTemplate("Spells", "spellMarchItem", {
+        disabled: b ? 'disabled=""' : "",
+        spellTitle: g_js_strings.spells["name_" + a],
+        spellDescription: g_js_strings.spells["desc_" + a],
+        speedUpButton: b ? cm.SpellsView.speedup_html(a) : "",
+        spellID: a,
+        imgURL: stimgUrl + "img/spell_lifesteal_70x70.jpg"
+    })
 }
 function modal_attack_rec_vacancy(h) {
     var f = "gold";
@@ -29837,6 +30085,9 @@ function modal_attack_do() {
     var unitId = null;
     var hasScout = false;
     var i;
+    if (jQuery(".spellcb").prop("checked")) {
+        params.bs = jQuery(".spellcb").attr("id").replace("modal_attack_spell", "")
+    }
     for (i = 0; i < unts.length; i++) {
         unitId = +(unts[i].getAttribute("name"));
         if (unts[i].value > 0) {
@@ -29917,6 +30168,9 @@ function modal_attack_do() {
                 cm.MarchModal.setBackedOff(false);
                 var rslt = eval("(" + transport.responseText + ")");
                 if (rslt.ok) {
+                    if (rslt.bsEndDate) {
+                        cm.SpellsModel.setNewEndDate(parseInt(rslt.bsEndDate))
+                    }
                     cm.sounds.play("player_initiates_march");
                     Modal.hideModalAll();
                     var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
@@ -31151,6 +31405,12 @@ cm.MarchModal = function($) {
     var onMarchTypeChange_ = function(march_type, modal_start_type) {
         if (march_type < 1) {
             return
+        }
+        if (march_type != cm.MARCH_TYPES.MARCH_TYPE_ATTACK) {
+            jQuery(".spellcb").prop("checked", false);
+            jQuery("#modal_attack_spells").hide()
+        } else {
+            jQuery("#modal_attack_spells").show()
         }
         if (undefined != modal_start_type) {
             modal_start_type_ = modal_start_type
@@ -34720,42 +34980,43 @@ function modal_openBarracks() {
     var c = new Array(),
         h = g_js_strings.modal_openBarracks,
         g = cm.cityViewActive && !cm.ApothecaryView.isOpen();
-    var e = function(p, l) {
-        var n = cm.cityViewActive && !cm.ApothecaryView.isOpen(),
-            q = !cm.cityViewActive && cm.PrestigeModel.isPrestige() && !cm.ApothecaryView.isOpen() && !cm.AltarView.isOpen(),
-            k = q && cm.PrestigeModel.isDruid(),
-            m = q && cm.PrestigeModel.isFey(),
-            o = q && cm.PrestigeModel.isBriton(),
-            i = l <= 12,
-            r;
-        if (n) {
-            if (p === 0) {
-                r = l <= 12
+    var e = function(q, m) {
+        var o = cm.cityViewActive && !cm.ApothecaryView.isOpen(),
+            r = !cm.cityViewActive && cm.PrestigeModel.isPrestige() && !cm.ApothecaryView.isOpen() && !cm.AltarView.isOpen(),
+            l = r && cm.PrestigeModel.isDruid(),
+            n = r && cm.PrestigeModel.isFey(),
+            p = r && cm.PrestigeModel.isBriton(),
+            k = (m <= 12) || (m === 16),
+            i = (m === 17),
+            s;
+        if (o) {
+            if (q === 0) {
+                s = k
             } else {
-                if (p === 2) {
-                    r = l === 16
+                if (q === 2) {
+                    s = i
                 }
             }
         } else {
-            if (k) {
-                r = l === 13
+            if (l) {
+                s = m === 13
             } else {
-                if (m) {
-                    r = l === 14
+                if (n) {
+                    s = m === 14
                 } else {
-                    if (o) {
-                        r = l === 15
+                    if (p) {
+                        s = m === 15
                     } else {
                         if (cm.ApothecaryView.isOpen() || cm.AltarView.isOpen()) {
-                            r = true
+                            s = true
                         } else {
-                            r = false
+                            s = false
                         }
                     }
                 }
             }
         }
-        return r
+        return s
     };
     if (cm.ApothecaryView.isOpen()) {
         h = g_js_strings.revive
@@ -34974,6 +35235,9 @@ function render_barracks_troop_stats(a) {
 }
 function modal_barracks_view(b) {
     var c = unitcost["unt" + b][0];
+    if (!cm.ApothecaryView.isOpen() && !cm.AltarView.isOpen()) {
+        cm.sounds.play("modal_barracks_train_" + b)
+    }
     var a = cm.Template.renderTemplate("Barracks", "unit_viewing_modal", {
         unitId: b,
         unitImage: getTroopImage(b, 215),
@@ -35142,10 +35406,18 @@ function createRequirementRows(f) {
             e.push("met")
         }
         e.push("'>");
-        e.push(addCommas(b[1][c]));
+        if (b[4][c] != null && b[4][c] !== "Item") {
+            e.push(addCommas(b[1][c]))
+        } else {
+            e.push(b[1][c])
+        }
         e.push("</td>");
         e.push("<td class='own'>");
-        e.push(addCommas(b[2][c]));
+        if (b[4][c] != null && b[4][c] !== "Item") {
+            e.push(addCommas(b[2][c]))
+        } else {
+            e.push(b[2][c])
+        }
         e.push("</td>");
         e.push("</tr>")
     }
@@ -35239,114 +35511,124 @@ function modal_barracks_traintime(n, p) {
     }
     return h
 }
-function modal_barracks_train_timecalc(E, y) {
-    var E = {};
+function modal_barracks_train_timecalc(H, A) {
+    var H = {};
     var a = ~~ (1 * jQuery("#modal_barracks_num").val()),
-        I = parseInt($("modal_barracks_max_num").innerHTML),
+        L = parseInt($("modal_barracks_max_num").innerHTML),
         g = $("unitGambleOption"),
-        s = $("trainingBoostContainer");
-    if (a > I) {
-        a = I;
-        jQuery("#modal_barracks_num").val(I)
+        t = $("trainingBoostContainer");
+    if (a > L) {
+        a = L;
+        jQuery("#modal_barracks_num").val(L)
     } else {
         if ((a < 0) || (a == null) || (a == undefined)) {
             a = 0;
             jQuery("#modal_barracks_num").val(0)
         }
     }
-    E.value = a;
-    var u = modal_barracks_traintime(y, a),
-        O, t, b, h, l = 1;
+    H.value = a;
+    var v = modal_barracks_traintime(A, a),
+        R, u, b, h, l = 1;
     if (g) {
-        var w;
+        var x;
         if ($("gambleOption0").checked) {
-            w = 0;
+            x = 0;
             l = 1;
-            $("modal_barracks_traintime").innerHTML = timestr(u)
+            $("modal_barracks_traintime").innerHTML = timestr(v)
         } else {
             if ($("gambleOption1").checked) {
-                w = 1;
+                x = 1;
                 l = gambleOptionResults1[2];
-                O = (100 - gambleOptionResults1[0]) / 100;
-                t = (100 - gambleOptionResults1[1]) / 100;
-                b = timestr(Math.ceil(O * u));
-                h = timestr(Math.ceil(t * u));
+                R = (100 - gambleOptionResults1[0]) / 100;
+                u = (100 - gambleOptionResults1[1]) / 100;
+                b = timestr(Math.ceil(R * v));
+                h = timestr(Math.ceil(u * v));
                 $("modal_barracks_traintime").innerHTML = h + " - " + b
             } else {
                 if ($("gambleOption2").checked) {
-                    w = 2;
+                    x = 2;
                     l = gambleOptionResults2[2];
-                    O = (100 - gambleOptionResults2[0]) / 100;
-                    t = (100 - gambleOptionResults2[1]) / 100;
-                    b = timestr(Math.ceil(O * u));
-                    h = timestr(Math.ceil(t * u));
+                    R = (100 - gambleOptionResults2[0]) / 100;
+                    u = (100 - gambleOptionResults2[1]) / 100;
+                    b = timestr(Math.ceil(R * v));
+                    h = timestr(Math.ceil(u * v));
                     $("modal_barracks_traintime").innerHTML = h + " - " + b
                 }
             }
         }
     } else {
-        if (s) {
-            $("modal_barracks_traintime").innerHTML = timestr(u, 1);
-            $("modal_barracks_tutred").innerHTML = timestr(parseInt(u * 0.3, 10), 1);
-            $("modal_barracks_arthurs_tutred").innerHTML = timestr(parseInt(u * 0.5, 10), 1);
-            $("modal_barracks_merlins_tutred").innerHTML = timestr(parseInt(u * 0.7, 10), 1)
+        if (t) {
+            $("modal_barracks_traintime").innerHTML = timestr(v, 1);
+            $("modal_barracks_tutred").innerHTML = timestr(parseInt(v * 0.3, 10), 1);
+            $("modal_barracks_arthurs_tutred").innerHTML = timestr(parseInt(v * 0.5, 10), 1);
+            $("modal_barracks_merlins_tutred").innerHTML = timestr(parseInt(v * 0.7, 10), 1)
         } else {
             if (cm.AltarView.isOpen()) {
                 $("modal_barracks_traintime").innerHTML = timestr((cm.AltarModel.getBuffDuration(null, a, cm.TIME.SECONDS)).toFixed(0))
             }
         }
     }
-    var F = checkreq("unt", y, 1),
-        Q = {}, A = {}, o, P, C;
-    var e, r, B, H, v, k;
-    for (var L = 0, p = F[4].length; L < p; ++L) {
-        switch (F[4][L]) {
+    var I = checkreq("unt", A, a),
+        T = {}, C = {}, p, S, F;
+    var e, s, D, K, w, k, E;
+    for (var O = 0, q = I[4].length; O < q; ++O) {
+        switch (I[4][O]) {
         case "Food":
-            r = L;
+            s = O;
             break;
         case "Wood":
-            B = L;
+            D = O;
             break;
         case "Stone":
-            H = L;
+            K = O;
             break;
         case "Ore":
-            v = L;
+            w = O;
             break;
         case "Population":
-            k = L
+            k = O;
+            break;
+        case "Item":
+            E = O;
+            break
         }
     }
-    var O, t, b, h, G = F[1][r] * a,
-        D = F[1][B] * a,
-        K = F[1][v] * a,
-        z = F[1][k] * a;
-    var M = G * l,
-        N = D * l,
-        j = K * l,
-        d = z * l;
-    var c = (M > F[2][r]) ? "req unmet" : "req met",
-        m = (N > F[2][B]) ? "req unmet" : "req met",
-        f = (j > F[2][v]) ? "req unmet" : "req met",
-        J = (d > F[2][k]) ? "req unmet" : "req met";
-    cm.ApothecaryView.updateRevival(y, a);
+    var R, u, b, h, J = I[1][s],
+        G = I[1][D],
+        N = I[1][w],
+        B = I[1][k],
+        y = I[1][E];
+    var P = J * l,
+        Q = G * l,
+        j = N * l,
+        d = B * l;
+    var c = (P > I[2][s]) ? "req unmet" : "req met",
+        m = (Q > I[2][D]) ? "req unmet" : "req met",
+        f = (j > I[2][w]) ? "req unmet" : "req met",
+        M = (d > I[2][k]) ? "req unmet" : "req met",
+        o = (I[3][E] < 1) ? "req unmet" : "req met";
+    cm.ApothecaryView.updateRevival(A, a);
     if ($("unitTrainModalFoodNeeded")) {
-        $("unitTrainModalFoodNeeded").innerHTML = G * l;
+        $("unitTrainModalFoodNeeded").innerHTML = addCommas(P);
         $("unitTrainModalFoodNeeded").className = c;
-        $("unitTrainModalWoodNeeded").innerHTML = D * l;
+        $("unitTrainModalWoodNeeded").innerHTML = addCommas(Q);
         $("unitTrainModalWoodNeeded").className = m;
-        $("unitTrainModalOreNeeded").innerHTML = K * l;
+        $("unitTrainModalOreNeeded").innerHTML = addCommas(j);
         $("unitTrainModalOreNeeded").className = f;
-        $("unitTrainModalPopulationNeeded").innerHTML = z;
-        $("unitTrainModalPopulationNeeded").className = J
+        $("unitTrainModalPopulationNeeded").innerHTML = addCommas(B);
+        $("unitTrainModalPopulationNeeded").className = M
     }
-    if (H) {
-        var n = F[1][H] * a,
-            x = n * l,
-            q = (x > F[2][H]) ? "req unmet" : "req met";
+    if ($("unitTrainModalItemNeeded")) {
+        $("unitTrainModalItemNeeded").innerHTML = y;
+        $("unitTrainModalItemNeeded").className = o
+    }
+    if (K) {
+        var n = I[1][K],
+            z = n * l,
+            r = (z > I[2][K]) ? "req unmet" : "req met";
         if ($("unitTrainModalStoneNeeded")) {
-            $("unitTrainModalStoneNeeded").innerHTML = n * l;
-            $("unitTrainModalStoneNeeded").className = q
+            $("unitTrainModalStoneNeeded").innerHTML = addCommas(z);
+            $("unitTrainModalStoneNeeded").className = r
         }
     }
 }
@@ -35500,52 +35782,57 @@ function modal_barracks_train_maxbtn(c) {
             }
             chooseGambleOptions(a, c)
         }
-        if (b > 0) {
+        if (b > -1) {
             modal_barracks_train_timecalc($("modal_barracks_num"), c)
         }
     }
 }
-function modal_barracks_train_max(f) {
+function modal_barracks_train_max(a) {
     if (cm.AltarView.isOpen()) {
         return cm.AltarModel.getMax()
     }
-    var a = 1;
+    var h = checkreq("unt", a, 1),
+        c = h[1],
+        f = h[2],
+        d = h[3],
+        g = h[4],
+        i = false,
+        b = 1,
+        e = Infinity;
+    jQuery.each(d, function(k, j) {
+        if (j === 0) {
+            i = true
+        }
+    });
+    if (i) {
+        return 0
+    }
     if (cm.WorldSettings.hasKeyValuePair("TROOP_GAMBLE", "ON")) {
-        if ($("gambleOption0")) {
-            if ($("gambleOption0").checked) {
-                a = 1
-            }
+        if ($("gambleOption0") && $("gambleOption0").checked) {
+            b = 1
         }
-        if ($("gambleOption1")) {
-            var g = $("gambleOption1").checked;
-            if ($("gambleOption1").checked) {
-                a = ~~ (1 * gambleOptionResults1[2])
-            }
+        if ($("gambleOption1") && $("gambleOption1").checked) {
+            b = +gambleOptionResults1[2]
         }
-        if ($("gambleOption2")) {
-            var g = $("gambleOption2").checked;
-            if ($("gambleOption2").checked) {
-                a = ~~ (1 * gambleOptionResults2[2])
-            }
+        if ($("gambleOption2") && $("gambleOption2").checked) {
+            b = +gambleOptionResults2[2]
         }
     }
-    var c = new Array();
-    var b = new Array();
-    for (var e = 1; e < 5; e++) {
-        c.push((parseInt(unitcost["unt" + f][e]) * 3600) * a);
-        b.push(parseInt(seed.resources["city" + currentcityid]["rec" + e][0]))
-    }
-    c.push((parseInt(unitcost["unt" + f][5])) * a);
-    b.push(parseInt(seed.citystats["city" + currentcityid].gold[0]));
-    c.push((parseInt(unitcost["unt" + f][6])));
-    b.push(parseInt(seed.citystats["city" + currentcityid].pop[0]) - parseInt(seed.citystats["city" + currentcityid].pop[3]));
-    var d = b[0] / c[0];
-    for (var e = 1; e < c.length; e++) {
-        if (parseInt(c[e]) != 0) {
-            d = Math.min(d, b[e] / c[e])
+    jQuery.each(unitcost["unt" + a][11], function(l, k) {
+        var j = ksoItems[l].count || 0;
+        e = Math.min(e, j / k)
+    });
+    jQuery.each(c, function(m, l) {
+        var k = f[m],
+            j = g[m];
+        if (typeof l === "number" && typeof k === "number") {
+            if (jQuery.inArray(j, ["Food", "Wood", "Stone", "Ore"])) {
+                l = l * b
+            }
+            e = Math.min(e, k / l)
         }
-    }
-    return Math.max(parseInt(d) || 0, 0)
+    });
+    return Math.max(parseInt(e) || 0, 0)
 }
 function modal_barracks_getmoreshop() {
     Modal.hideModalAll();
@@ -35633,6 +35920,9 @@ function changeBarracksModalTabs(a) {
         break;
     case 2:
         $("modal_build").className = "tab3";
+        break;
+    case 3:
+        $("modal_build").className = "tab4";
         break
     }
 }
@@ -35819,6 +36109,9 @@ function train_unit(tid, num, iid, gambleId) {
                     resourceLost = resourceLost * resourceFactors[i - 1];
                     seed.resources["city" + currentcityid]["rec" + i][0] = parseInt(seed.resources["city" + currentcityid]["rec" + i][0]) - resourceLost
                 }
+                jQuery.each(unitcost["unt" + tid][11], function(itemId, itemQuantity) {
+                    ksoItems[+itemId].subtract(+itemQuantity * num)
+                });
                 var apoth = cm.ApothecaryView.isOpen(),
                     inCity = cm.cityViewActive,
                     inPrestige = cm.PrestigeModel.isPrestige();
@@ -35877,6 +36170,14 @@ function getTroopImage(c, b) {
     } else {
         return stimgUrl + "img/units/unit_" + c + "_" + b + ".jpg"
     }
+}
+function StubHuzzah() {
+    unitcost.unt17 = ["Huzzar", 400, 900, 0, 650, 0, 10, 3000, {
+        b13: [1, 11]
+    }, [], "Huzzar are really fast and strong cavalry units."];
+    unitstats.unt17 = [800, 1700, 30, 140, 1500, 40];
+    cm.UNIT_TYPES.UNIT_TYPE_HUSSAR = 17;
+    seed.units["city" + currentcityid]["unt" + 17] = 209
 };
 cm = cm || {};
 cm.BeginnerPackageView = function(d) {
@@ -36005,9 +36306,17 @@ cm.BlessingSystemController = function(f) {
     var g = function() {
         return cm.BlessingSystemModel.areAllBlessingsSelected()
     };
-    var d = function() {
-        cm.BlessingSystemModel.normalizeBlessing(currentcityid, false);
-        return cm.BlessingSystemView.clearAllBlessingSlots()
+    var d = function(j) {
+        if (j === undefined) {
+            cm.BlessingSystemModel.normalizeBlessing(currentcityid, false);
+            cm.BlessingSystemView.clearAllBlessingSlots()
+        } else {
+            cm.BlessingSystemModel.normalizeRespec();
+            cm.BlessingSystemView.clearSomeBlessingSlots(j);
+            for (var h = j + 1; h <= cm.PrestigeModel.getLevelCapHard(); h++) {
+                f("#blessing-slot-anim-" + h).removeClass("clickable").attr("onclick", "")
+            }
+        }
     };
     var a = function() {
         cm.BlessingSystemModel.normalizeBlessing(currentcityid, true);
@@ -36029,19 +36338,15 @@ cm.BlessingSystemController = function(f) {
         save: c
     }
 }(jQuery);
-cm.BlessingSystemModel = function(x) {
-    var J = {
+cm.BlessingSystemModel = function(z) {
+    var L = {
         DRUID: 1,
         FEY: 2,
         BRITON: 3
     };
-    var y = {
+    var A = {
         FIGHTING_SPIRIT: 11,
-        MYSTICAL_ARTS: 12,
-        NATURE_EFFICIENCY: 13,
-        LIGHTENED_FEET: 14,
-        SWEEPING_STRIKES: 15,
-        QUICK_REFLEXES: 16,
+        NATURE_MAGIC: 12,
         SURROUNDED_BY_NATURE: 101,
         MORE_WITH_LESS: 102,
         EYE_FOR_GEMS: 103,
@@ -36055,6 +36360,7 @@ cm.BlessingSystemModel = function(x) {
         SAVAGE_CONTROL: 111,
         DEATH_FROM_AFAR: 112,
         SUMMON_DEATH: 21,
+        BLOOD_MAGIC: 22,
         REINFORCED_WALLS: 201,
         EXPEDITED_SENTENCING: 202,
         DARK_RITUAL: 203,
@@ -36065,6 +36371,7 @@ cm.BlessingSystemModel = function(x) {
         BLOOD_LUST: 208,
         EMPOWERED_IRON: 209,
         HEAVY_ARMOR: 31,
+        ADVANCED_TACTICS: 32,
         ENHANCED_HORSESHOES: 301,
         REDUCE_FATIGUE: 302,
         ARCHAEOLOGICAL_STUDIES: 303,
@@ -36075,278 +36382,257 @@ cm.BlessingSystemModel = function(x) {
         PRIORITIZED_CONSTRUCTION: 308,
         EMPOWERED_STONE: 309
     };
-    var F = {};
-    F[y.FIGHTING_SPIRIT] = {
+    var H = {};
+    H[A.FIGHTING_SPIRIT] = {
         level: [1],
         name: g_js_strings.blessingSystem.blessing_name_11,
         description: g_js_strings.blessingSystem.blessing_description_11,
         css: "b1",
         faction: "druid"
     };
-    F[y.MYSTICAL_ARTS] = {
+    H[A.NATURE_MAGIC] = {
         level: [4, 7, 10],
-        name: "Mystical Arts",
-        description: "Unlocks the Enchantress Unit",
+        name: "Nature Magic",
+        description: "Unlocks Druid Battle Spells",
         css: "b2",
         faction: "druid"
     };
-    F[y.NATURE_EFFICIENCY] = {
-        level: [4, 7, 10],
-        name: "Nature's Efficiency",
-        description: "Reduces the upkeep of on the Super units (bloodthorn/enchantress) by 25%",
-        css: "b3",
-        faction: "druid"
-    };
-    F[y.LIGHTENED_FEET] = {
-        level: [4, 7, 10],
-        name: "Lightened Feet",
-        description: "Increased marchspeed if the march contains a Bloodthorn/Enchantress by 25%",
-        css: "b4",
-        faction: "druid"
-    };
-    F[y.SWEEPING_STRIKES] = {
-        level: [10],
-        name: "Sweeping Strikes",
-        description: "Bloodthorn unit gains the cleave attack but loses some health.<br/>-Gains Cleave (attacks hit 2 units instead of one)<br/>-Loses 1000 Health",
-        css: "b5",
-        faction: "druid"
-    };
-    F[y.QUICK_REFLEXES] = {
-        level: [10],
-        name: "Quick Reflexes",
-        description: "Bloodthorn unit gains evasion but loses some damage<br/>-Gains 25% evasion<br/>-Loses 500 Damage",
-        css: "b6",
-        faction: "druid"
-    };
-    F[y.SURROUNDED_BY_NATURE] = {
+    H[A.SURROUNDED_BY_NATURE] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_101,
         description: g_js_strings.blessingSystem.blessing_description_101,
         css: "b1",
         faction: "druid"
     };
-    F[y.MORE_WITH_LESS] = {
+    H[A.MORE_WITH_LESS] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_102,
         description: g_js_strings.blessingSystem.blessing_description_102,
         css: "b2",
         faction: "druid"
     };
-    F[y.EYE_FOR_GEMS] = {
+    H[A.EYE_FOR_GEMS] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_103,
         description: g_js_strings.blessingSystem.blessing_description_103,
         css: "b3",
         faction: "druid"
     };
-    F[y.THRIFTY_SPENDING] = {
+    H[A.THRIFTY_SPENDING] = {
         level: [2, 3, 5, 6, 8, 9],
         name: "Thrifty Spending",
         description: "Enchantress costs 10% less resources to make",
         css: "b4",
         faction: "druid"
     };
-    F[y.SPLENDID_OPULENCE] = {
+    H[A.SPLENDID_OPULENCE] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_105,
         description: g_js_strings.blessingSystem.blessing_description_105,
         css: "b5",
         faction: "druid"
     };
-    F[y.ANCIENT_HEALING] = {
+    H[A.ANCIENT_HEALING] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_106,
         description: g_js_strings.blessingSystem.blessing_description_106,
         css: "b6",
         faction: "druid"
     };
-    F[y.QUICK_LEARNER] = {
+    H[A.QUICK_LEARNER] = {
         level: [2, 3, 5, 6, 8, 9],
         name: "Quick Learner",
         description: "Reduced enchantress requirement to enchant units by 5%",
         css: "b7",
         faction: "druid"
     };
-    F[y.NATURAL_TREASURES] = {
+    H[A.NATURAL_TREASURES] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_108,
         description: g_js_strings.blessingSystem.blessing_description_108,
         css: "b8",
         faction: "druid"
     };
-    F[y.NATURE_GIFTS] = {
+    H[A.NATURE_GIFTS] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_109,
         description: g_js_strings.blessingSystem.blessing_description_109,
         css: "b9",
         faction: "druid"
     };
-    F[y.PICK_ME_UP] = {
+    H[A.PICK_ME_UP] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_110,
         description: g_js_strings.blessingSystem.blessing_description_110,
         css: "b10",
         faction: "druid"
     };
-    F[y.SAVAGE_CONTROL] = {
+    H[A.SAVAGE_CONTROL] = {
         level: [2, 3, 5, 6, 8, 9],
         name: "Savage Control",
         description: "Enchantress can enchant troops in wilds",
         css: "b11",
         faction: "druid"
     };
-    F[y.DEATH_FROM_AFAR] = {
+    H[A.DEATH_FROM_AFAR] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_112,
         description: g_js_strings.blessingSystem.blessing_description_112,
         css: "b12",
         faction: "druid"
     };
-    F[y.SUMMON_DEATH] = {
+    H[A.SUMMON_DEATH] = {
         level: [1],
         name: g_js_strings.blessingSystem.blessing_name_21,
         description: g_js_strings.blessingSystem.blessing_description_21,
         css: "b1",
         faction: "fey"
     };
-    F[y.REINFORCED_WALLS] = {
+    H[A.BLOOD_MAGIC] = {
+        level: [4, 7, 10],
+        name: g_js_strings.blessingSystem.blessing_name_22,
+        description: g_js_strings.blessingSystem.blessing_description_22,
+        css: "b2",
+        faction: "fey"
+    };
+    H[A.REINFORCED_WALLS] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_201,
         description: g_js_strings.blessingSystem.blessing_description_201,
         css: "b1",
         faction: "fey"
     };
-    F[y.EXPEDITED_SENTENCING] = {
+    H[A.EXPEDITED_SENTENCING] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_202,
         description: g_js_strings.blessingSystem.blessing_description_202,
         css: "b2",
         faction: "fey"
     };
-    F[y.DARK_RITUAL] = {
+    H[A.DARK_RITUAL] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_203,
         description: g_js_strings.blessingSystem.blessing_description_203,
         css: "b3",
         faction: "fey"
     };
-    F[y.REALLOCATED_LABOR] = {
+    H[A.REALLOCATED_LABOR] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_204,
         description: g_js_strings.blessingSystem.blessing_description_204,
         css: "b4",
         faction: "fey"
     };
-    F[y.RELIC_HUNTER] = {
+    H[A.RELIC_HUNTER] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_205,
         description: g_js_strings.blessingSystem.blessing_description_205,
         css: "b5",
         faction: "fey"
     };
-    F[y.CHANNELED_SUFFERING] = {
+    H[A.CHANNELED_SUFFERING] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_206,
         description: g_js_strings.blessingSystem.blessing_description_206,
         css: "b6",
         faction: "fey"
     };
-    F[y.FILL_THE_RANKS] = {
+    H[A.FILL_THE_RANKS] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_207,
         description: g_js_strings.blessingSystem.blessing_description_207,
         css: "b7",
         faction: "fey"
     };
-    F[y.BLOOD_LUST] = {
+    H[A.BLOOD_LUST] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_208,
         description: g_js_strings.blessingSystem.blessing_description_208,
         css: "b8",
         faction: "fey"
     };
-    F[y.EMPOWERED_IRON] = {
+    H[A.EMPOWERED_IRON] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_209,
         description: g_js_strings.blessingSystem.blessing_description_209,
         css: "b9",
         faction: "fey"
     };
-    F[y.HEAVY_ARMOR] = {
+    H[A.HEAVY_ARMOR] = {
         level: [1],
         name: g_js_strings.blessingSystem.blessing_name_31,
         description: g_js_strings.blessingSystem.blessing_description_31,
         css: "b1",
         faction: "briton"
     };
-    F[y.ENHANCED_HORSESHOES] = {
+    H[A.ENHANCED_HORSESHOES] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_301,
         description: g_js_strings.blessingSystem.blessing_description_301,
         css: "b1",
         faction: "briton"
     };
-    F[y.REDUCE_FATIGUE] = {
+    H[A.REDUCE_FATIGUE] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_302,
         description: g_js_strings.blessingSystem.blessing_description_302,
         css: "b2",
         faction: "briton"
     };
-    F[y.ARCHAEOLOGICAL_STUDIES] = {
+    H[A.ARCHAEOLOGICAL_STUDIES] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_303,
         description: g_js_strings.blessingSystem.blessing_description_303,
         css: "b3",
         faction: "briton"
     };
-    F[y.SCIENTIFIC_METHODOLOGIES] = {
+    H[A.SCIENTIFIC_METHODOLOGIES] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_304,
         description: g_js_strings.blessingSystem.blessing_description_304,
         css: "b4",
         faction: "briton"
     };
-    F[y.GNOMISH_QUARRY_FOREMAN] = {
+    H[A.GNOMISH_QUARRY_FOREMAN] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_305,
         description: g_js_strings.blessingSystem.blessing_description_305,
         css: "b5",
         faction: "briton"
     };
-    F[y.TO_THE_FRONT_LINES] = {
+    H[A.TO_THE_FRONT_LINES] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_306,
         description: g_js_strings.blessingSystem.blessing_description_306,
         css: "b6",
         faction: "briton"
     };
-    F[y.HEIGHTENED_SECURITY] = {
+    H[A.HEIGHTENED_SECURITY] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_307,
         description: g_js_strings.blessingSystem.blessing_description_307,
         css: "b7",
         faction: "briton"
     };
-    F[y.PRIORITIZED_CONSTRUCTION] = {
+    H[A.PRIORITIZED_CONSTRUCTION] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_308,
         description: g_js_strings.blessingSystem.blessing_description_308,
         css: "b8",
         faction: "briton"
     };
-    F[y.EMPOWERED_STONE] = {
+    H[A.EMPOWERED_STONE] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_309,
         description: g_js_strings.blessingSystem.blessing_description_309,
         css: "b9",
         faction: "briton"
     };
-    var K = {};
-    K[J.DRUID] = [y.FIGHTING_SPIRIT, y.SURROUNDED_BY_NATURE, y.MORE_WITH_LESS, y.EYE_FOR_GEMS, y.SPLENDID_OPULENCE, y.ANCIENT_HEALING, y.NATURAL_TREASURES, y.NATURE_GIFTS, y.PICK_ME_UP, y.DEATH_FROM_AFAR];
-    K[J.FEY] = [y.SUMMON_DEATH, y.REINFORCED_WALLS, y.EXPEDITED_SENTENCING, y.DARK_RITUAL, y.REALLOCATED_LABOR, y.RELIC_HUNTER, y.CHANNELED_SUFFERING, y.FILL_THE_RANKS, y.BLOOD_LUST, y.EMPOWERED_IRON];
-    K[J.BRITON] = [y.HEAVY_ARMOR, y.ENHANCED_HORSESHOES, y.REDUCE_FATIGUE, y.ARCHAEOLOGICAL_STUDIES, y.SCIENTIFIC_METHODOLOGIES, y.GNOMISH_QUARRY_FOREMAN, y.TO_THE_FRONT_LINES, y.HEIGHTENED_SECURITY, y.PRIORITIZED_CONSTRUCTION, y.EMPOWERED_STONE];
-    var U = {
+    var M = {};
+    M[L.DRUID] = [A.FIGHTING_SPIRIT, A.SURROUNDED_BY_NATURE, A.MORE_WITH_LESS, A.EYE_FOR_GEMS, A.SPLENDID_OPULENCE, A.ANCIENT_HEALING, A.NATURAL_TREASURES, A.NATURE_GIFTS, A.PICK_ME_UP, A.DEATH_FROM_AFAR];
+    M[L.FEY] = [A.SUMMON_DEATH, A.BLOOD_MAGIC, A.REINFORCED_WALLS, A.EXPEDITED_SENTENCING, A.DARK_RITUAL, A.REALLOCATED_LABOR, A.RELIC_HUNTER, A.CHANNELED_SUFFERING, A.FILL_THE_RANKS, A.BLOOD_LUST, A.EMPOWERED_IRON];
+    M[L.BRITON] = [A.HEAVY_ARMOR, A.ENHANCED_HORSESHOES, A.REDUCE_FATIGUE, A.ARCHAEOLOGICAL_STUDIES, A.SCIENTIFIC_METHODOLOGIES, A.GNOMISH_QUARRY_FOREMAN, A.TO_THE_FRONT_LINES, A.HEIGHTENED_SECURITY, A.PRIORITIZED_CONSTRUCTION, A.EMPOWERED_STONE];
+    var W = {
         major: {
             level: [1, 4, 7, 10],
             blessing: {}
@@ -36356,30 +36642,30 @@ cm.BlessingSystemModel = function(x) {
             blessing: {}
         }
     };
-    var i = {};
-    var c = {};
-    var f = function(W) {
-        var V = [];
-        x.each(J, function(X, Y) {
-            x.each(K[Y], function(Z, aa) {
-                if (b(W, F[aa].level)) {
-                    V.push(aa)
+    var j = {};
+    var d = {};
+    var g = function(Y) {
+        var X = [];
+        z.each(L, function(Z, aa) {
+            z.each(M[aa], function(ab, ac) {
+                if (c(Y, H[ac].level)) {
+                    X.push(ac)
                 }
             })
         });
-        return V
+        return X
     };
-    var w = {};
-    w[y.FIGHTING_SPIRIT] = function(W, V) {
-        if (p(y.FIGHTING_SPIRIT, W)) {
+    var y = {};
+    y[A.FIGHTING_SPIRIT] = function(Y, X) {
+        if (r(A.FIGHTING_SPIRIT, Y)) {
             return true
         } else {
             return false
         }
     };
-    w[y.MORE_WITH_LESS] = function(W, V) {
-        if (p(y.MORE_WITH_LESS, W)) {
-            if (V.unitid == 13) {
+    y[A.MORE_WITH_LESS] = function(Y, X) {
+        if (r(A.MORE_WITH_LESS, Y)) {
+            if (X.unitid == 13) {
                 return 0.9
             } else {
                 return 1
@@ -36388,71 +36674,74 @@ cm.BlessingSystemModel = function(x) {
             return 1
         }
     };
-    w[y.PICK_ME_UP] = function(W, V) {
-        if (p(y.PICK_ME_UP, W)) {
+    y[A.PICK_ME_UP] = function(Y, X) {
+        if (r(A.PICK_ME_UP, Y)) {
             return 0.1
         } else {
             return 0
         }
     };
-    w[y.DEATH_FROM_AFAR] = function(W, V) {
-        if (p(y.DEATH_FROM_AFAR, W)) {
+    y[A.DEATH_FROM_AFAR] = function(Y, X) {
+        if (r(A.DEATH_FROM_AFAR, Y)) {
             return 0.1
         } else {
             return 0
         }
     };
-    w[y.NATURE_GIFTS] = function(W, V) {
-        if (p(y.NATURE_GIFTS, W)) {
+    y[A.NATURE_GIFTS] = function(Y, X) {
+        if (r(A.NATURE_GIFTS, Y)) {
             return 0.25
         } else {
             return 0
         }
     };
-    w[y.SUMMON_DEATH] = function(W, V) {
-        if (p(y.SUMMON_DEATH, W)) {
+    y[A.SUMMON_DEATH] = function(Y, X) {
+        if (r(A.SUMMON_DEATH, Y)) {
             return true
         } else {
             return false
         }
     };
-    w[y.REINFORCED_WALLS] = function(W, V) {
-        if (p(y.REINFORCED_WALLS, W)) {
+    y[A.BLOOD_MAGIC] = function(Y, X) {
+        return r(A.BLOOD_MAGIC, Y)
+    };
+    y[A.REINFORCED_WALLS] = function(Y, X) {
+        if (r(A.REINFORCED_WALLS, Y)) {
             return 2
         } else {
             return 1
         }
     };
-    w[y.EXPEDITED_SENTENCING] = function(W, V) {
-        if (p(y.EXPEDITED_SENTENCING, W) && V.unitid == 14) {
-            if (V.traintime) {
+    y[A.EXPEDITED_SENTENCING] = function(Y, X) {
+        if (r(A.EXPEDITED_SENTENCING, Y) && X.unitid == 14) {
+            if (X.traintime) {
                 return 0.3
             }
-            if (V.upkeepcost) {
+            if (X.upkeepcost) {
                 return 1.15
             }
         } else {
-            if (V.traintime) {
+            if (X.traintime) {
                 return 0
             }
-            if (V.upkeepcost) {
+            if (X.upkeepcost) {
                 return 1
             }
         }
     };
-    w[y.DARK_RITUAL] = function(W, V) {
-        if (p(y.DARK_RITUAL, W)) {
+    y[A.DARK_RITUAL] = function(Y, X) {
+        if (r(A.DARK_RITUAL, Y)) {
             return true
         } else {
             return false
         }
     };
-    w[y.REALLOCATED_LABOR] = function(W, V) {
-        if (p(y.REALLOCATED_LABOR, W)) {
-            if (V.type == 4) {
+    y[A.REALLOCATED_LABOR] = function(Y, X) {
+        if (r(A.REALLOCATED_LABOR, Y)) {
+            if (X.type == 4) {
                 return 2
             }
-            if (V.type == 2) {
+            if (X.type == 2) {
                 return 0.5
             }
             return 1
@@ -36460,81 +36749,81 @@ cm.BlessingSystemModel = function(x) {
             return 1
         }
     };
-    w[y.CHANNELED_SUFFERING] = function(W, V) {
-        if (p(y.CHANNELED_SUFFERING, W)) {
+    y[A.CHANNELED_SUFFERING] = function(Y, X) {
+        if (r(A.CHANNELED_SUFFERING, Y)) {
             return 1.1
         } else {
             return 1
         }
     };
-    w[y.FILL_THE_RANKS] = function(W, V) {
-        if (p(y.FILL_THE_RANKS, W)) {
-            if (V.marchsize) {
+    y[A.FILL_THE_RANKS] = function(Y, X) {
+        if (r(A.FILL_THE_RANKS, Y)) {
+            if (X.marchsize) {
                 return 1.1
             }
-            if (V.marchspeed) {
+            if (X.marchspeed) {
                 return 0.95
             }
         } else {
             return 1
         }
     };
-    w[y.BLOOD_LUST] = function(W, V) {
-        if (p(y.BLOOD_LUST, W)) {
-            if (V.attack) {
+    y[A.BLOOD_LUST] = function(Y, X) {
+        if (r(A.BLOOD_LUST, Y)) {
+            if (X.attack) {
                 return 1.5
             }
-            if (V.speed) {
+            if (X.speed) {
                 return 1.5
             }
-            if (V.hp) {
+            if (X.hp) {
                 return 0.75
             }
-            if (V.accuracy) {
+            if (X.accuracy) {
                 return 0.9
             }
         } else {
             return 1
         }
     };
-    w[y.EMPOWERED_IRON] = function(W, V) {
-        if (p(y.EMPOWERED_IRON, W)) {
+    y[A.EMPOWERED_IRON] = function(Y, X) {
+        if (r(A.EMPOWERED_IRON, Y)) {
             return 1.5
         } else {
             return 0
         }
     };
-    w[y.HEAVY_ARMOR] = function(W, V) {
-        if (p(y.HEAVY_ARMOR, W)) {
+    y[A.HEAVY_ARMOR] = function(Y, X) {
+        if (r(A.HEAVY_ARMOR, Y)) {
             return true
         } else {
             return false
         }
     };
-    w[y.ENHANCED_HORSESHOES] = function(W, V) {
-        if (p(y.ENHANCED_HORSESHOES, W)) {
+    y[A.ENHANCED_HORSESHOES] = function(Y, X) {
+        if (r(A.ENHANCED_HORSESHOES, Y)) {
             return 1.1
         } else {
             return 1
         }
     };
-    w[y.REDUCE_FATIGUE] = function(W, V) {
-        if (p(y.REDUCE_FATIGUE, W)) {
+    y[A.REDUCE_FATIGUE] = function(Y, X) {
+        if (r(A.REDUCE_FATIGUE, Y)) {
             return 1.15
         } else {
             return 1
         }
     };
-    w[y.SCIENTIFIC_METHODOLOGIES] = function(W, V) {
-        if (p(y.SCIENTIFIC_METHODOLOGIES, W)) {
+    y[A.SCIENTIFIC_METHODOLOGIES] = function(Y, X) {
+        if (r(A.SCIENTIFIC_METHODOLOGIES, Y)) {
             return 0.9
         } else {
             return 1
         }
     };
-    w[y.GNOMISH_QUARRY_FOREMAN] = function(W, V) {
-        if (p(y.GNOMISH_QUARRY_FOREMAN, W)) {
-            if (V.type == 3) {
+    y[A.GNOMISH_QUARRY_FOREMAN] = function(Y, X) {
+        if (r(A.GNOMISH_QUARRY_FOREMAN, Y)) {
+            if (X.type == 3) {
                 return 1.5
             }
             return 1
@@ -36542,319 +36831,363 @@ cm.BlessingSystemModel = function(x) {
             return 1
         }
     };
-    w[y.TO_THE_FRONT_LINES] = function(W, V) {
-        if (p(y.TO_THE_FRONT_LINES, W) && V.unitid == 15) {
+    y[A.TO_THE_FRONT_LINES] = function(Y, X) {
+        if (r(A.TO_THE_FRONT_LINES, Y) && X.unitid == 15) {
             return 0.2
         } else {
             return 0
         }
     };
-    w[y.HEIGHTENED_SECURITY] = function(W, V) {
-        if (p(y.HEIGHTENED_SECURITY, W)) {
+    y[A.HEIGHTENED_SECURITY] = function(Y, X) {
+        if (r(A.HEIGHTENED_SECURITY, Y)) {
             return 1.15
         } else {
             return 1
         }
     };
-    w[y.PRIORITIZED_CONSTRUCTION] = function(W, V) {
-        if (p(y.PRIORITIZED_CONSTRUCTION, W) && (V.unittype == cm.UNIT_TYPES.UNIT_TYPE_TRANSPORTER || V.unittype == cm.UNIT_TYPES.UNIT_TYPE_CATAPULT || V.unittype == cm.UNIT_TYPES.UNIT_TYPE_BALLISTA || V.unittype == cm.UNIT_TYPES.UNIT_TYPE_BATTERINGRAM)) {
+    y[A.PRIORITIZED_CONSTRUCTION] = function(Y, X) {
+        if (r(A.PRIORITIZED_CONSTRUCTION, Y) && (X.unittype == cm.UNIT_TYPES.UNIT_TYPE_TRANSPORTER || X.unittype == cm.UNIT_TYPES.UNIT_TYPE_CATAPULT || X.unittype == cm.UNIT_TYPES.UNIT_TYPE_BALLISTA || X.unittype == cm.UNIT_TYPES.UNIT_TYPE_BATTERINGRAM)) {
             return 0.1
         } else {
             return 0
         }
     };
-    w[y.EMPOWERED_STONE] = function(W, V) {
-        if (p(y.EMPOWERED_STONE, W)) {
+    y[A.EMPOWERED_STONE] = function(Y, X) {
+        if (r(A.EMPOWERED_STONE, Y)) {
             return 1.5
         } else {
             return 0
         }
     };
-    var O = function() {
-        x.each(U.major.level, function(W, V) {
-            U.major[V] = f([V])
+    var Q = function() {
+        z.each(W.major.level, function(Y, X) {
+            W.major[X] = g([X])
         });
-        x.each(U.minor.level, function(W, V) {
-            U.minor[V] = f([V])
+        z.each(W.minor.level, function(Y, X) {
+            W.minor[X] = g([X])
         });
-        x.each(J, function(V, W) {
-            x.each(K[W], function(X, Y) {
-                var Z = t(Y);
-                if (!U[Z].blessing[W]) {
-                    U[Z].blessing[W] = []
+        z.each(L, function(X, Y) {
+            z.each(M[Y], function(Z, aa) {
+                var ab = v(aa);
+                if (!W[ab].blessing[Y]) {
+                    W[ab].blessing[Y] = []
                 }
-                U[Z].blessing[W].push(Y)
+                W[ab].blessing[Y].push(aa)
             })
         });
-        E()
+        G()
     };
-    var E = function(Y, V, W) {
-        var X = W ? W : seed.cityData;
-        x.each(X.city, function(aa, Z) {
-            i[aa] = {};
-            i[aa].faction = +(Z.prestigeInfo && Z.prestigeInfo.prestigeType ? Z.prestigeInfo.prestigeType : 0);
-            i[aa].blessing = Z.prestigeInfo && Z.prestigeInfo.blessings ? Z.prestigeInfo.blessings : []
+    var G = function(aa, X, Y) {
+        var Z = Y ? Y : seed.cityData;
+        z.each(Z.city, function(ac, ab) {
+            j[ac] = {};
+            j[ac].faction = +(ab.prestigeInfo && ab.prestigeInfo.prestigeType ? ab.prestigeInfo.prestigeType : 0);
+            j[ac].blessing = ab.prestigeInfo && ab.prestigeInfo.blessings ? ab.prestigeInfo.blessings : []
         });
-        x.each(i, function(ac, aa) {
-            var ab = typeof Y !== "undefined" && typeof V !== "undefined" && ac == Y ? G(ac, V) : G(ac, true);
-            if (!i[ac].blessing) {
-                i[ac].blessing = []
+        z.each(j, function(ae, ac) {
+            var ad;
+            if (typeof aa !== "undefined" && typeof X !== "undefined" && ae == aa) {
+                ad = I(ae, X)
+            } else {
+                ad = I(ae, true)
             }
-            if (!seed.cityData.city[ac].prestigeInfo) {
+            if (!j[ae].blessing) {
+                j[ae].blessing = []
+            }
+            if (!seed.cityData.city[ae].prestigeInfo) {
                 cm.log.l("Fatal error: 306.");
                 return false
             }
-            if (i[ac].blessing.length < ab) {
-                for (var Z = aa.blessing.length; Z < ab; Z++) {
-                    i[ac].blessing.push(null)
+            if (j[ae].blessing.length < ad) {
+                for (var ab = ac.blessing.length; ab < ad; ab++) {
+                    j[ae].blessing.push(null)
                 }
             } else {
-                if (i[ac].blessing.length >= ab) {
-                    i[ac].blessing.splice(ab)
+                if (j[ae].blessing.length >= ad) {
+                    j[ae].blessing.splice(ad)
                 }
             }
-            x.each(i[ac].blessing, function(ad, ae) {
-                if (i[ac].blessing[ad] == 0) {
-                    i[ac].blessing[ad] = null
+            z.each(j[ae].blessing, function(af, ag) {
+                if (j[ae].blessing[af] == 0) {
+                    j[ae].blessing[af] = null
                 }
             })
         });
-        c = x.extend(true, {}, i)
+        d = z.extend(true, {}, j)
     };
-    var B = function(V, Z, W) {
-        var Y = !Z ? currentcityid : Z;
-        var X = typeof W === "undefined" ? {} : W;
-        return w[V](Y, X)
+    var p = function() {
+        var aa = currentcityid,
+            Y = seed.cityData.city[aa].prestigeInfo,
+            Z = Math.min(I(aa, false), cm.PrestigeManagerModel.getLevelCapSoft());
+        j[aa] = {};
+        j[aa].faction = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType");
+        j[aa].blessing = Y && Y.blessings ? Y.blessings : [];
+        if (j[aa].blessing.length < Z) {
+            for (var X = data.blessing.length; X < Z; X++) {
+                j[aa].blessing.push(null)
+            }
+        } else {
+            if (j[aa].blessing.length >= Z) {
+                j[aa].blessing.splice(Z)
+            }
+        }
+        d = z.extend(true, {}, j)
     };
-    var t = function(W) {
-        var V = "";
-        if (F[W]) {
-            x.each(U, function(Y, X) {
-                if (b(X.level, F[W].level)) {
-                    V = Y;
+    var D = function(X, ab, Y) {
+        var aa = !ab ? currentcityid : ab;
+        var Z = typeof Y === "undefined" ? {} : Y;
+        return y[X](aa, Z)
+    };
+    var v = function(Y) {
+        var X = "";
+        if (H[Y]) {
+            z.each(W, function(aa, Z) {
+                if (c(Z.level, H[Y].level)) {
+                    X = aa;
                     return false
                 }
             })
         }
-        return V
+        return X
     };
-    var R = function(W) {
-        var V = "";
-        x.each(U, function(Y, X) {
-            if (x.inArray(W, X.level) > -1) {
-                V = Y;
-                return false
-            }
-        });
-        return V
-    };
-    var P = function(Y, W) {
-        var X = !Y ? currentcityid : Y;
-        var V = n(X, true);
-        return x.inArray(W, V) + 1
-    };
-    var L = function(Y, X) {
-        var W = !Y ? currentcityid : Y;
-        var V = n(W, true);
-        X = X - 1;
-        return V[X] ? V[X] : null
-    };
-    var N = function(X) {
-        var W = !X ? currentcityid : X;
-        var V = n(W, true);
-        return x.inArray(null, V) + 1
-    };
-    var p = function(V, X) {
-        var W = !X ? currentcityid : X;
-        return i[W] && x.inArray(V, i[W].blessing) > -1
-    };
-    var g = function(V, Y) {
-        var X = !Y ? currentcityid : Y;
-        var W = D(F[V].level);
-        return G(X, true) < W
-    };
-    var a = function(X, W, Z) {
-        var Y = !Z ? currentcityid : Z;
-        var V = false;
-        if (W > 0 && W <= c[Y].blessing.length && R(W) === t(X)) {
-            c[Y].blessing[W - 1] = X;
-            V = true
-        } else {}
-        return V
-    };
-    var l = function(W) {
-        var V = !W ? currentcityid : W;
-        return cm.PrestigeModel.isPrestige(V)
-    };
-    var u = function(Z, X) {
-        var Y = !Z ? currentcityid : Z;
-        var V = parseInt(X.city[Y].prestigeInfo.prestigeLevel) + 1;
-        var W = false;
-        if (V <= o()) {
-            seed.cityData.city[Y].prestigeInfo.prestigeLevel = parseInt(X.city[Y].prestigeInfo.prestigeLevel, 10);
-            W = true;
-            E(Y, true, X)
-        }
-        return W
-    };
-    var S = function(W) {
-        var V = !W ? currentcityid : W;
-        x.extend(true, i, c)
-    };
-    var k = function(W) {
-        var V = !W ? currentcityid : W;
-        x.each(c[V].blessing, function(X, Y) {
-            c[V].blessing[X] = null
-        })
-    };
-    var M = function(W) {
-        var V = !W ? currentcityid : W;
-        x.extend(true, c[V], i[V])
-    };
-    var e = function() {
-        var W = true;
-        var V = n(currentcityid, true);
-        for (var X = 0; X < V.length && W; X++) {
-            if (!V[X]) {
-                W = false
-            }
-        }
-        return W
-    };
-    var A = function() {
-        return n(currentcityid, true)
-    };
-    var s = function() {
-        var V = n(currentcityid, true);
-        return V[V.length - 1]
-    };
-    var I = function() {
-        return T(s())
-    };
-    var h = function(X, V) {
-        var W = !X ? currentcityid : X;
-        c[W].faction = V
-    };
-    var n = function(Y, V) {
-        var X = !Y ? currentcityid : Y;
-        var W = V ? c : i;
-        if (W[X]) {
-            return W[X].blessing
-        } else {
-            return []
-        }
-    };
-    var Q = function() {
-        var V = {};
-        jQuery.each(cm.BlessingSystemModel.getArrBlessing(), function(W, X) {
-            if (cm.BlessingSystemModel.getBlessingData()[X]) {
-                V[X] = cm.BlessingSystemModel.getBlessingData()[X].name
-            }
-        });
-        return V
-    };
-    var m = function() {
-        var V = {};
-        jQuery.each(cm.BlessingSystemModel.getArrBlessing(), function(W, X) {
-            if (cm.BlessingSystemModel.getBlessingData()[X]) {
-                V[X] = cm.BlessingSystemModel.getBlessingData()[X].description
-            }
-        });
-        return V
-    };
-    var D = function(V) {
-        var W = Number.POSITIVE_INFINITY;
-        x.each(V, function(X, Y) {
-            W = Math.min(W, Y)
-        });
-        return W
-    };
-    var b = function(W, V) {
-        var X = false;
-        x.each(W, function(Y, Z) {
-            if (x.inArray(Z, V) > -1) {
-                X = true;
+    var T = function(Y) {
+        var X = "";
+        z.each(W, function(aa, Z) {
+            if (z.inArray(Y, Z.level) > -1) {
+                X = aa;
                 return false
             }
         });
         return X
     };
-    var T = function(V) {
-        return F[V] ? F[V].name : "Unknown Blessing"
+    var R = function(aa, Y) {
+        var Z = !aa ? currentcityid : aa;
+        var X = o(Z, true);
+        return z.inArray(Y, X) + 1
+    };
+    var N = function(aa, Z) {
+        var Y = !aa ? currentcityid : aa;
+        var X = o(Y, true);
+        Z = Z - 1;
+        return X[Z] ? X[Z] : null
+    };
+    var P = function(Z) {
+        var Y = !Z ? currentcityid : Z;
+        var X = o(Y, true);
+        return z.inArray(null, X) + 1
+    };
+    var r = function(X, Z) {
+        var Y = !Z ? currentcityid : Z;
+        return j[Y] && z.inArray(X, j[Y].blessing) > -1
+    };
+    var h = function(Y, X, ac) {
+        var ab = !ac ? currentcityid : ac;
+        var aa = F(H[Y].level),
+            Z = z.inArray(cm.PrestigeManagerModel.getPrestigeInfo("action"), ["create", "level"]) > -1;
+        return X < aa
+    };
+    var a = function(Z, Y, ab) {
+        var aa = !ab ? currentcityid : ab;
+        var X = false;
+        if (Y > 0 && Y <= d[aa].blessing.length && T(Y) === v(Z)) {
+            d[aa].blessing[Y - 1] = Z;
+            X = true
+        } else {}
+        return X
+    };
+    var m = function(Y) {
+        var X = !Y ? currentcityid : Y;
+        return cm.PrestigeModel.isPrestige(X)
+    };
+    var w = function(ab, Z) {
+        var aa = !ab ? currentcityid : ab;
+        var X = parseInt(Z.city[aa].prestigeInfo.prestigeLevel) + 1;
+        var Y = false;
+        if (X <= q()) {
+            seed.cityData.city[aa].prestigeInfo.prestigeLevel = parseInt(Z.city[aa].prestigeInfo.prestigeLevel, 10);
+            Y = true;
+            G(aa, true, Z)
+        }
+        return Y
+    };
+    var U = function(Y) {
+        var X = !Y ? currentcityid : Y;
+        z.extend(true, j, d)
+    };
+    var l = function(Y) {
+        var X = !Y ? currentcityid : Y;
+        z.each(d[X].blessing, function(Z, aa) {
+            d[X].blessing[Z] = null
+        })
+    };
+    var b = function(X) {
+        var Y = currentcityid;
+        z.each(d[Y].blessing, function(Z, aa) {
+            if (Z < X) {
+                d[Y].blessing[Z] = null
+            }
+        })
+    };
+    var O = function(Y) {
+        var X = !Y ? currentcityid : Y;
+        z.extend(true, d[X], j[X])
+    };
+    var f = function() {
+        var Y = true;
+        var X = o(currentcityid, true);
+        for (var Z = 0; Z < X.length && Y; Z++) {
+            if (!X[Z]) {
+                Y = false
+            }
+        }
+        return Y
     };
     var C = function() {
-        return y
+        return o(currentcityid, true)
     };
-    var v = function() {
-        return F
+    var u = function() {
+        var X = o(currentcityid, true);
+        return X[X.length - 1]
     };
-    var H = function() {
-        return K
+    var K = function() {
+        return V(u())
     };
-    var z = function() {
-        return i
+    var i = function(Z, X) {
+        var Y = !Z ? currentcityid : Z;
+        d[Y].faction = X
     };
-    var d = function() {
-        return c
+    var o = function(aa, X) {
+        var Z = !aa ? currentcityid : aa;
+        var Y = X ? d : j;
+        if (Y[Z]) {
+            return Y[Z].blessing
+        } else {
+            return []
+        }
     };
-    var r = function() {
-        return U
+    var S = function() {
+        var X = {};
+        jQuery.each(cm.BlessingSystemModel.getArrBlessing(), function(Y, Z) {
+            if (cm.BlessingSystemModel.getBlessingData()[Z]) {
+                X[Z] = cm.BlessingSystemModel.getBlessingData()[Z].name
+            }
+        });
+        return X
     };
-    var o = function() {
-        return cm.PrestigeModel.getLevelCapHard()
+    var n = function() {
+        var X = {};
+        jQuery.each(cm.BlessingSystemModel.getArrBlessing(), function(Y, Z) {
+            if (cm.BlessingSystemModel.getBlessingData()[Z]) {
+                X[Z] = cm.BlessingSystemModel.getBlessingData()[Z].description
+            }
+        });
+        return X
+    };
+    var F = function(X) {
+        var Y = Number.POSITIVE_INFINITY;
+        z.each(X, function(Z, aa) {
+            Y = Math.min(Y, aa)
+        });
+        return Y
+    };
+    var c = function(Y, X) {
+        var Z = false;
+        z.each(Y, function(aa, ab) {
+            if (z.inArray(ab, X) > -1) {
+                Z = true;
+                return false
+            }
+        });
+        return Z
+    };
+    var V = function(X) {
+        return H[X] ? H[X].name : "Unknown Blessing"
+    };
+    var E = function(Y) {
+        var X;
+        if (typeof Y === "undefined") {
+            X = A
+        } else {
+            X = A[Y]
+        }
+        return X
+    };
+    var x = function() {
+        return H
+    };
+    var J = function() {
+        return M
+    };
+    var B = function() {
+        return j
+    };
+    var e = function() {
+        return d
+    };
+    var t = function() {
+        return W
     };
     var q = function() {
-        return cm.PrestigeModel.getLevelCapSoft()
+        return cm.PrestigeModel.getLevelCapHard()
     };
-    var j = function() {
-        return J
+    var s = function() {
+        return cm.PrestigeManagerModel.getLevelCapSoft()
     };
-    var G = function(Y, W) {
-        var V = W ? 1 : 0;
-        var X = !Y ? currentcityid : Y;
-        return (seed.cityData.city[X].prestigeInfo.prestigeLevel ? +(seed.cityData.city[X].prestigeInfo.prestigeLevel) : 0) + V
+    var k = function() {
+        return L
+    };
+    var I = function(ab, Z) {
+        var Y = Z ? 1 : 0,
+            aa = !ab ? currentcityid : ab,
+            X = Y;
+        if (seed.cityData.city[aa].prestigeInfo.prestigeLevel) {
+            X = Y + (+seed.cityData.city[aa].prestigeInfo.prestigeLevel)
+        }
+        return X
     };
     return {
-        init: O,
-        getBlessingGroupFromLevel: R,
-        applyBlessing: B,
-        areAllBlessingsSelected: e,
-        getSelectedBlessingsArray: A,
-        normalizeBlessing: E,
-        getBlessingByFaction: H,
-        getBlessing: C,
-        getBlessingData: v,
-        getActiveBlessing: z,
-        getTempBlessing: d,
-        getBlessingGroup: r,
-        getNumOfBlessingLevels: o,
-        getMaxUnlockedBlessingLevels: q,
-        getFaction: j,
-        getCurrentPrestigeCityLevel: G,
-        getBlessingGroupFromBlessingId: t,
-        getSlotFromBlessingId: P,
-        getBlessingIdFromSlot: L,
-        isBlessingLocked: g,
+        init: Q,
+        getBlessingGroupFromLevel: T,
+        applyBlessing: D,
+        areAllBlessingsSelected: f,
+        getSelectedBlessingsArray: C,
+        normalizeBlessing: G,
+        normalizeRespec: p,
+        getBlessingByFaction: J,
+        getBlessing: E,
+        getBlessingData: x,
+        getActiveBlessing: B,
+        getTempBlessing: e,
+        getBlessingGroup: t,
+        getNumOfBlessingLevels: q,
+        getMaxUnlockedBlessingLevels: s,
+        getFaction: k,
+        getCurrentPrestigeCityLevel: I,
+        getBlessingGroupFromBlessingId: v,
+        getSlotFromBlessingId: R,
+        getBlessingIdFromSlot: N,
+        isBlessingLocked: h,
         updateTempBlessing: a,
-        isBlessingActive: p,
-        isPrestige: l,
-        getArrBlessing: n,
-        getActiveBlessingNames: Q,
-        getActiveBlessingDescriptions: m,
-        saveBlessings: S,
-        clearTempBlessings: k,
-        cancelClearTempBlessings: M,
-        getFirstAvailableSlot: N,
-        levelUp: u,
-        getLastAvailableBlessingId: s,
-        getLastAvailableBlessingName: I,
-        updateTempFaction: h
+        isBlessingActive: r,
+        isPrestige: m,
+        getArrBlessing: o,
+        getActiveBlessingNames: S,
+        getActiveBlessingDescriptions: n,
+        saveBlessings: U,
+        clearTempBlessings: l,
+        clearSomeTempBlessings: b,
+        cancelClearTempBlessings: O,
+        getFirstAvailableSlot: P,
+        levelUp: w,
+        getLastAvailableBlessingId: u,
+        getLastAvailableBlessingName: K,
+        updateTempFaction: i
     }
 }(jQuery);
-cm.BlessingSystemView = function(g) {
-    var l = cm.BlessingSystemModel.getBlessing();
-    var D = cm.BlessingSystemModel.getBlessingData();
-    var y = {
+cm.BlessingSystemView = function(h) {
+    var m = cm.BlessingSystemModel.getBlessing();
+    var E = cm.BlessingSystemModel.getBlessingData();
+    var z = {
         major: "major-blessing",
         minor: "minor-blessing",
         locked: "locked",
@@ -36862,7 +37195,7 @@ cm.BlessingSystemView = function(g) {
         unavailable: "unavailable",
         anim: "anim"
     };
-    var F = {
+    var G = {
         SLOT: "blessing-slot-",
         SELECT: "blessing-select-",
         SLOT_ANIM: "blessing-slot-anim-",
@@ -36870,42 +37203,42 @@ cm.BlessingSystemView = function(g) {
         LAST_AVAILABLE: "blessing-last-available-",
         LAST_AVAILABLE_ANIM: "blessing-last-available-anim-"
     };
-    var s = {
+    var t = {
         CURRENT: 0,
         SELECT: 1,
         LAST_AVAILABLE: 2
     };
-    var n = {};
-    var w = true;
-    var k = function(N, K) {
-        var M = !N ? currentcityid : N;
-        var J = [];
-        var L;
-        var H = cm.BlessingSystemModel.getArrBlessing(M, true);
-        if (typeof K === "boolean") {
-            d(K)
+    var o = {};
+    var x = true;
+    var l = function(O, L) {
+        var N = !O ? currentcityid : O;
+        var K = [];
+        var M;
+        var I = cm.BlessingSystemModel.getArrBlessing(N, true);
+        if (typeof L === "boolean") {
+            e(L)
         }
-        for (L = 1; L <= cm.BlessingSystemModel.getNumOfBlessingLevels(); L++) {
-            J.push(B(s.CURRENT, L, H[L - 1], - 1, L))
+        for (M = 1; M <= cm.BlessingSystemModel.getNumOfBlessingLevels(); M++) {
+            K.push(C(t.CURRENT, M, I[M - 1], - 1, M))
         }
-        var I = cm.Template.renderTemplate("BlessingSystem", "render", {
-            blessingList: J.join("")
+        var J = cm.Template.renderTemplate("BlessingSystem", "render", {
+            blessingList: K.join("")
         });
-        return I
+        return J
     };
-    var e = function() {
-        var H = k(currentcityid, true);
+    var f = function() {
+        var I = l(currentcityid, true);
         cm.ModalManager.addLarge({
             title: "Blessing System",
-            body: H,
+            body: I,
             close: function() {
                 cm.BlessingSystemModel.clearTempBlessings()
             }
         })
     };
-    var z = function(R, N, P, L, O, H) {
-        var J = !O ? -1 : O;
-        var M = {
+    var A = function(S, O, Q, M, P, I) {
+        var K = !P ? -1 : P;
+        var N = {
             group: "",
             type: "",
             status: "",
@@ -36913,297 +37246,303 @@ cm.BlessingSystemView = function(g) {
             arrow: "",
             clickable: ""
         };
-        if (L) {
-            M.group = y[P];
-            var Q = cm.BlessingSystemModel.getSlotFromBlessingId(currentcityid, L);
-            M.type = D[L].css;
-            if (Q > 0 && R === s.SELECT) {
-                M.status = y.anim
+        if (M) {
+            N.group = z[Q];
+            var R = cm.BlessingSystemModel.getSlotFromBlessingId(currentcityid, M);
+            N.type = E[M].css;
+            if (R > 0 && S === t.SELECT) {
+                N.status = z.anim
             }
-            M.faction = D[L].faction;
-            if (cm.BlessingSystemModel.isBlessingLocked(L, currentcityid)) {
-                M.status = y.locked
+            N.faction = E[M].faction;
+            if (cm.BlessingSystemModel.isBlessingLocked(M, I, currentcityid)) {
+                N.status = z.locked
             }
-            switch (R) {
-            case s.CURRENT:
-                if (w) {
-                    M.click = "cm.BlessingSystemView.openSelect('" + P + "'," + L + ", " + Q + ");";
-                    M.clickable = "clickable"
+            switch (S) {
+            case t.CURRENT:
+                if (x) {
+                    N.click = "cm.BlessingSystemView.openSelect('" + Q + "'," + M + ", " + R + ");";
+                    N.clickable = "clickable"
                 }
                 break;
-            case s.SELECT:
-                if (cm.BlessingSystemModel.getBlessingGroupFromLevel(H) === P && !cm.BlessingSystemModel.isBlessingLocked(L, currentcityid)) {
-                    M.click = "cm.BlessingSystemView.selectBlessing(" + L + ", " + H + ");";
-                    M.clickable = "clickable"
+            case t.SELECT:
+                if (cm.BlessingSystemModel.getBlessingGroupFromLevel(I) === Q && !cm.BlessingSystemModel.isBlessingLocked(M, I, currentcityid)) {
+                    N.click = "cm.BlessingSystemView.selectBlessing(" + M + ", " + I + ");";
+                    N.clickable = "clickable"
                 }
                 break
             }
         } else {
-            var I = cm.BlessingSystemModel.getBlessingGroupFromLevel(N),
-                K = g.inArray(cm.PrestigeManagerModel.getPrestigeInfo("action"), ["refaction", "reblessing"]) < 0;
-            M.group = y[I];
-            if (N > cm.BlessingSystemModel.getMaxUnlockedBlessingLevels() || N > cm.BlessingSystemModel.getCurrentPrestigeCityLevel(currentcityid, K)) {
-                M.status = y.unavailable
+            var J = cm.BlessingSystemModel.getBlessingGroupFromLevel(O),
+                L = h.inArray(cm.PrestigeManagerModel.getPrestigeInfo("action"), ["refaction", "reblessing"]) < 0;
+            N.group = z[J];
+            if (O > cm.BlessingSystemModel.getMaxUnlockedBlessingLevels() || O > cm.BlessingSystemModel.getCurrentPrestigeCityLevel(currentcityid, L)) {
+                N.status = z.unavailable
             } else {
-                M.status = y.empty;
-                switch (R) {
-                case s.CURRENT:
-                    if (cm.BlessingSystemModel.getFirstAvailableSlot() === N) {
-                        M.arrow = '<div class="arrow"></div>'
+                N.status = z.empty;
+                switch (S) {
+                case t.CURRENT:
+                    if (cm.BlessingSystemModel.getFirstAvailableSlot() === O) {
+                        N.arrow = '<div class="arrow"></div>'
                     }
-                    if (w) {
-                        M.click = "cm.BlessingSystemView.openSelect('" + I + "', -1, " + N + ");";
-                        M.clickable = "clickable"
+                    if (x) {
+                        N.click = "cm.BlessingSystemView.openSelect('" + J + "', -1, " + O + ");";
+                        N.clickable = "clickable"
                     }
                     break;
-                case s.SELECT:
+                case t.SELECT:
                     break
                 }
             }
         }
-        M.blessingId = L ? L : -1;
-        switch (R) {
-        case s.CURRENT:
-            M.level = cm.Template.renderTemplate("BlessingSystem", "blessing-level", {
-                level: g_js_strings.commonstr.level + " " + N,
-                unavailable: M.status === y.unavailable ? y.unavailable : ""
+        N.blessingId = M ? M : -1;
+        switch (S) {
+        case t.CURRENT:
+            N.level = cm.Template.renderTemplate("BlessingSystem", "blessing-level", {
+                level: g_js_strings.commonstr.level + " " + O,
+                unavailable: N.status === z.unavailable ? z.unavailable : ""
             });
-            M.domId = F.SLOT + N;
-            M.animDomId = F.SLOT_ANIM + N;
+            N.domId = G.SLOT + O;
+            N.animDomId = G.SLOT_ANIM + O;
             break;
-        case s.SELECT:
-            M.level = "";
-            M.domId = F.SELECT + M.blessingId;
-            M.animDomId = F.SELECT_ANIM + M.blessingId;
+        case t.SELECT:
+            N.level = "";
+            N.domId = G.SELECT + N.blessingId;
+            N.animDomId = G.SELECT_ANIM + N.blessingId;
             break;
-        case s.LAST_AVAILABLE:
-            M.level = "";
-            M.animDomId = F.LAST_AVAILABLE_ANIM + M.blessingId;
+        case t.LAST_AVAILABLE:
+            N.level = "";
+            N.animDomId = G.LAST_AVAILABLE_ANIM + N.blessingId;
             break
         }
-        return M
+        return N
     };
-    var B = function(M, O, L, K, I) {
-        var N = "";
-        switch (M) {
-        case s.CURRENT:
-            N = F.SLOT + O;
+    var C = function(N, P, M, L, J) {
+        var O = "";
+        switch (N) {
+        case t.CURRENT:
+            O = G.SLOT + P;
             break;
-        case s.SELECT:
-            N = F.SELECT + (L ? L : -1);
+        case t.SELECT:
+            O = G.SELECT + (M ? M : -1);
             break;
-        case s.LAST_AVAILABLE:
-            N = F.LAST_AVAILABLE + (L ? L : -1);
+        case t.LAST_AVAILABLE:
+            O = G.LAST_AVAILABLE + (M ? M : -1);
             break
         }
-        var H = t(M, O, L, K, I);
-        var J = cm.Template.renderTemplate("BlessingSystem", "blessing", {
-            domId: N,
-            "blessing-dom": H
+        var I = u(N, P, M, L, J);
+        var K = cm.Template.renderTemplate("BlessingSystem", "blessing", {
+            domId: O,
+            "blessing-dom": I
         });
+        return K
+    };
+    var u = function(N, P, L, K, I) {
+        var O = cm.BlessingSystemModel.getBlessingGroupFromBlessingId(L);
+        var M = A(N, P, O, L, K, I);
+        var J = cm.Template.renderTemplate("BlessingSystem", "blessing-dom", M);
         return J
     };
-    var t = function(M, O, K, J, H) {
-        var N = cm.BlessingSystemModel.getBlessingGroupFromBlessingId(K);
-        var L = z(M, O, N, K, J, H);
-        var I = cm.Template.renderTemplate("BlessingSystem", "blessing-dom", L);
-        return I
-    };
-    var c = function(N, M, H) {
-        var J = [];
-        var L = [];
+    var d = function(O, N, I) {
+        var K = [];
+        var M = [];
+        var Q = "";
         var P = "";
-        var O = "";
-        if (N === "major") {
-            O = "inactive"
+        if (O === "major") {
+            P = "inactive"
         } else {
-            if (N === "minor") {
-                P = "inactive"
+            if (O === "minor") {
+                Q = "inactive"
             }
         }
-        var K = cm.BlessingSystemModel.getTempBlessing()[currentcityid].faction;
-        if (g.isArray(cm.BlessingSystemModel.getBlessingGroup().major.blessing[K])) {
-            g.each(cm.BlessingSystemModel.getBlessingGroup().major.blessing[K], function(Q, R) {
-                if (R !== M && (w) && cm.BlessingSystemModel.getSlotFromBlessingId(currentcityid, R) === 0) {
-                    J.push(B(s.SELECT, - 1, R, M, H))
+        var L = cm.BlessingSystemModel.getTempBlessing()[currentcityid].faction;
+        if (h.isArray(cm.BlessingSystemModel.getBlessingGroup().major.blessing[L])) {
+            h.each(cm.BlessingSystemModel.getBlessingGroup().major.blessing[L], function(R, S) {
+                if (S !== N && (x) && cm.BlessingSystemModel.getSlotFromBlessingId(currentcityid, S) === 0) {
+                    K.push(C(t.SELECT, - 1, S, N, I))
                 }
             })
         }
-        if (g.isArray(cm.BlessingSystemModel.getBlessingGroup().minor.blessing[K])) {
-            g.each(cm.BlessingSystemModel.getBlessingGroup().minor.blessing[K], function(Q, R) {
-                if (R !== M && (w) && cm.BlessingSystemModel.getSlotFromBlessingId(currentcityid, R) === 0) {
-                    L.push(B(s.SELECT, - 1, R, M, H))
+        if (h.isArray(cm.BlessingSystemModel.getBlessingGroup().minor.blessing[L])) {
+            h.each(cm.BlessingSystemModel.getBlessingGroup().minor.blessing[L], function(R, S) {
+                if (S !== N && (x) && cm.BlessingSystemModel.getSlotFromBlessingId(currentcityid, S) === 0) {
+                    M.push(C(t.SELECT, - 1, S, N, I))
                 }
             })
         }
-        var I = cm.Template.renderTemplate("BlessingSystem", "renderSelect", {
-            MinorInactive: O,
-            MajorInactive: P,
-            MajorBlessingList: J.join(""),
-            MinorBlessingList: L.join(""),
+        var J = cm.Template.renderTemplate("BlessingSystem", "renderSelect", {
+            MinorInactive: P,
+            MajorInactive: Q,
+            MajorBlessingList: K.join(""),
+            MinorBlessingList: M.join(""),
             MajorBlessingsHeading: g_js_strings.blessingSystem.major_blessings,
             MinorBlessingsHeading: g_js_strings.blessingSystem.minor_blessings
         });
-        return I
+        return J
     };
-    var q = function() {
-        var J = cm.BlessingSystemModel.getLastAvailableBlessingId();
-        var H = B(s.LAST_AVAILABLE, - 1, J, - 1, - 1);
-        var I = "<ul class='list clearfix'>" + H + "</ul>";
-        return I
+    var r = function() {
+        var K = cm.BlessingSystemModel.getLastAvailableBlessingId();
+        var I = C(t.LAST_AVAILABLE, - 1, K, - 1, 10);
+        var J = "<ul class='list clearfix'>" + I + "</ul>";
+        return J
     };
-    var b = function(K, J, H) {
-        var I = c(K, J, H);
-        var L = {
+    var c = function(L, K, I) {
+        var J = d(L, K, I);
+        var M = {
             major: g_js_strings.blessingSystem.choose_major_title,
             minor: g_js_strings.blessingSystem.choose_minor_title
         };
         cm.ModalManager.addMedium({
-            title: L[K],
-            body: I,
+            title: M[L],
+            body: J,
             close: function() {}
         })
     };
-    var v = function() {
-        var H = cm.BlessingSystemModel.getArrBlessing(currentcityid, true);
-        g.each(H, function(J, K) {
-            if (K) {
-                var I = 0;
-                var L = cm.BlessingSystemModel.getBlessingGroupFromBlessingId(K);
-                if (L === "major") {
-                    I = 78
+    var w = function() {
+        var I = cm.BlessingSystemModel.getArrBlessing(currentcityid, true);
+        h.each(I, function(K, L) {
+            if (L) {
+                var J = 0;
+                var M = cm.BlessingSystemModel.getBlessingGroupFromBlessingId(L);
+                if (M === "major") {
+                    J = 78
                 } else {
-                    if (L === "minor") {
-                        I = 61
+                    if (M === "minor") {
+                        J = 61
                     }
                 }
-                C(F.SELECT_ANIM + K, I, 67)
+                D(G.SELECT_ANIM + L, J, 67)
             }
         })
     };
-    var f = function() {
-        var H = cm.BlessingSystemModel.getArrBlessing(currentcityid, true);
-        g.each(H, function(I, J) {
-            if (J) {
-                G(F.SELECT_ANIM + J)
+    var g = function() {
+        var I = cm.BlessingSystemModel.getArrBlessing(currentcityid, true);
+        h.each(I, function(J, K) {
+            if (K) {
+                H(G.SELECT_ANIM + K)
             }
         })
     };
-    var A = function(H) {
-        var I = cm.Template.renderTemplate("BlessingSystem", "renderConfirm", {});
-        return I
+    var B = function(I) {
+        var J = cm.Template.renderTemplate("BlessingSystem", "renderConfirm", {});
+        return J
     };
-    var E = function(H) {
-        var I = A();
+    var F = function(I) {
+        var J = B();
         cm.ModalManager.addMedium({
             title: "Final Confirmation",
-            body: I
+            body: J
         })
     };
-    var m = function() {
+    var n = function() {
         return "all locked blessings"
     };
-    var C = function(L, H, I) {
-        var K = g("#" + L);
-        if (K.length > 0) {
-            var J = parseInt(K.css("backgroundPosition").split(" ")[0], 10);
-            x(g("#" + L), L, H, I, J)
+    var D = function(M, I, J) {
+        var L = h("#" + M);
+        if (L.length > 0) {
+            var K = parseInt(L.css("backgroundPosition").split(" ")[0], 10);
+            y(h("#" + M), M, I, J, K)
         }
     };
-    var G = function(H) {
-        if (n[H]) {
-            clearInterval(n[H]);
-            n[H] = null
+    var H = function(I) {
+        if (o[I]) {
+            clearInterval(o[I]);
+            o[I] = null
         }
     };
-    var x = function(K, L, H, I, J) {
-        G(L);
-        n[L] = setInterval(function() {
-            var O = K.css("backgroundPosition"),
-                N, P, M;
-            N = parseInt(O.split(" ")[0], 10);
-            P = parseInt(O.split(" ")[1], 10);
-            N = N - H;
-            if (N <= -1 * H * I) {
-                N = J
+    var y = function(L, M, I, J, K) {
+        H(M);
+        o[M] = setInterval(function() {
+            var P = L.css("backgroundPosition"),
+                O, Q, N;
+            O = parseInt(P.split(" ")[0], 10);
+            Q = parseInt(P.split(" ")[1], 10);
+            O = O - I;
+            if (O <= -1 * I * J) {
+                O = K
             }
-            M = N + "px " + P + "px";
-            g(K).css("backgroundPosition", M)
+            N = O + "px " + Q + "px";
+            h(L).css("backgroundPosition", N)
         }, 50)
     };
-    var i = function(J, I) {
-        var H = cm.BlessingSystemModel.updateTempBlessing(J, I, currentcityid);
-        if (H) {
+    var j = function(K, J) {
+        var I = cm.BlessingSystemModel.updateTempBlessing(K, J, currentcityid);
+        if (I) {
             cm.PrestigeManagerController.onBlessingSelected();
-            p();
+            q();
             cm.ModalManager.close();
-            g(".tooltip").remove()
+            h(".tooltip").remove()
         }
     };
-    var j = function(J, H) {
-        var K = g("#" + F.SLOT + H);
-        if (K.length > 0) {
-            var I = t(s.CURRENT, H, J, - 1, H);
-            K.html(I)
+    var k = function(K, I) {
+        var L = h("#" + G.SLOT + I);
+        if (L.length > 0) {
+            var J = u(t.CURRENT, I, K, - 1, I);
+            L.html(J)
         }
     };
-    var p = function() {
-        var H;
-        for (H = 1; H <= cm.BlessingSystemModel.getNumOfBlessingLevels(); H++) {
-            j(cm.BlessingSystemModel.getBlessingIdFromSlot(currentcityid, H), H)
+    var q = function() {
+        var I;
+        for (I = 1; I <= cm.BlessingSystemModel.getNumOfBlessingLevels(); I++) {
+            k(cm.BlessingSystemModel.getBlessingIdFromSlot(currentcityid, I), I)
         }
     };
-    var o = function(I) {
-        var H = typeof I === "boolean" ? I : true;
+    var p = function(J) {
+        var I = typeof J === "boolean" ? J : true;
         if (cm.BlessingSystemModel.levelUp()) {
-            d(H);
-            p()
+            e(I);
+            q()
         }
     };
-    var r = function(I) {
-        var H = typeof I === "boolean" ? I : true;
+    var s = function(J) {
+        var I = typeof J === "boolean" ? J : true;
         cm.BlessingSystemModel.clearTempBlessings();
-        d(H);
-        p()
+        e(I);
+        q()
     };
-    var h = function() {
-        var H = typeof reSpec === "boolean" ? reSpec : false;
+    var b = function(I) {
+        cm.BlessingSystemModel.clearSomeTempBlessings(I);
+        e(true);
+        q()
+    };
+    var i = function() {
+        var I = typeof reSpec === "boolean" ? reSpec : false;
         cm.BlessingSystemModel.cancelClearTempBlessings();
-        d(H);
-        p()
+        e(I);
+        q()
     };
-    var a = function(I, H) {
-        if (D[H]) {
-            Tooltip.show(I, "<b>" + D[H].name + '</b><div style="margin-top: 5px;">' + D[H].description + "</div>", [0, 0])
+    var a = function(J, I) {
+        if (E[I]) {
+            Tooltip.show(J, "<b>" + E[I].name + '</b><div style="margin-top: 5px;">' + E[I].description + "</div>", [0, 0])
         }
     };
-    var u = function(I, H) {
-        if (D[H]) {
+    var v = function(J, I) {
+        if (E[I]) {
             removeTooltip()
         }
     };
-    var d = function(H) {
-        w = H
+    var e = function(I) {
+        x = I
     };
     return {
-        render: k,
-        animate: x,
-        renderSelect: c,
-        openSelect: b,
-        renderConfirm: A,
-        openConfirm: E,
-        startAnimation: C,
-        stopAnimation: G,
-        renderLocked: m,
-        selectBlessing: i,
+        render: l,
+        animate: y,
+        renderSelect: d,
+        openSelect: c,
+        renderConfirm: B,
+        openConfirm: F,
+        startAnimation: D,
+        stopAnimation: H,
+        renderLocked: n,
+        selectBlessing: j,
         showTooltip: a,
-        removeTooltip: u,
-        clearAllBlessingSlots: r,
-        cancelClearAllBlessingSlots: h,
-        updateAllBlessingSlots: p,
-        updateReSpecMode: d,
-        levelUp: o,
-        renderLastSelectedBlessing: q
+        removeTooltip: v,
+        clearAllBlessingSlots: s,
+        clearSomeBlessingSlots: b,
+        cancelClearAllBlessingSlots: i,
+        updateAllBlessingSlots: q,
+        updateReSpecMode: e,
+        levelUp: p,
+        renderLastSelectedBlessing: r
     }
 }(jQuery);
 cm.BLTutorialSteps = [{
@@ -39395,7 +39734,7 @@ function deconstructBuilding(a, h) {
             if (parseInt(bldType) < 6 && parseInt(bldType) > 0 && d == 1) {
                 i = 15
             }
-            i = parseInt(i / (1 + 0.005 * b + 0.1 * parseInt(seed.tech.tch16)));
+            i = parseInt(i);
             n.push(g_js_strings.deconstructBuilding.deconstructtakes.replace("%1$s", timestr(i)));
             var m = checkreq("bdg", bldType, bldLvl);
             var g = new Array();
@@ -42943,82 +43282,103 @@ function update_friendlist() {
         onFailure: function() {}
     })
 }
-function checkreq(L, A, n, E) {
-    var z;
-    if (E === 2) {
-        z = techcost2
+function checkreq(M, B, n, F) {
+    F = F || 1;
+    var A;
+    if (F === 2) {
+        A = techcost2
     } else {
-        z = techcost
+        A = techcost
     }
-    var F = n;
-    if (L == "tch" && A != 17) {
-        F = Math.min(n, 11)
+    var G = n,
+        y;
+    if (M == "tch" && B != 17) {
+        G = Math.min(n, 11)
     }
-    var x = Math.pow(2, (F - 1));
+    if (M === "unt") {
+        y = Math.max(n, 1)
+    } else {
+        y = Math.pow(2, (G - 1))
+    }
     var l = new Array();
-    for (var G = 0; G < 5; G++) {
-        l[G] = new Array()
+    for (var H = 0; H < 5; H++) {
+        l[H] = new Array()
     }
+    var v = {};
+    if (M === "unt") {
+        v = unitcost[M + B][11]
+    }
+    jQuery.each(v, function(R, Q) {
+        var i = ksoItems[R],
+            O = Q * y,
+            N = i.count || 0,
+            P = i.name;
+        l[0].push(g_js_strings.commonstr.item);
+        l[1].push(O + " " + P);
+        l[2].push(N + " " + P);
+        l[3].push(i.count >= Q ? 1 : 0);
+        l[4].push("Item")
+    });
     var u = new Array();
-    if (L == "tch") {
-        var D = z["tch" + A][8]
+    if (M == "tch") {
+        var E = A["tch" + B][8]
     } else {
-        if (L == "bdg") {
-            var D = buildingcost["bdg" + A][8]
+        if (M == "bdg") {
+            var E = buildingcost["bdg" + B][8]
         } else {
-            if (L == "unt") {
-                var D = unitcost["unt" + A][8]
+            if (M == "unt") {
+                var E = unitcost["unt" + B][8]
             } else {
-                if (L == "frt") {
-                    var D = fortcost["frt" + A][8]
+                if (M == "frt") {
+                    var E = fortcost["frt" + B][8]
                 }
             }
         }
     }
-    if (L == "bdg" && parseInt(n) > 10 && (parseInt(A) === 19 || parseInt(A) === 12 || parseInt(A) === 16 || parseInt(A) === 15 || parseInt(A) === 17 || parseInt(A) === 11 || parseInt(A) === 18 || parseInt(A) === 8 || parseInt(A) === 9 || parseInt(A) === 1 || parseInt(A) === 2 || parseInt(A) === 3 || parseInt(A) === 4 || parseInt(A) === 13)) {
-        var y = getBuildingLevel(0);
+    if (M == "bdg" && parseInt(n) > 10 && (parseInt(B) === 19 || parseInt(B) === 12 || parseInt(B) === 16 || parseInt(B) === 15 || parseInt(B) === 17 || parseInt(B) === 11 || parseInt(B) === 18 || parseInt(B) === 8 || parseInt(B) === 9 || parseInt(B) === 1 || parseInt(B) === 2 || parseInt(B) === 3 || parseInt(B) === 4 || parseInt(B) === 13)) {
+        var z = getBuildingLevel(0);
         l[0].push(g_js_strings.commonstr.construction);
         l[1].push(g_js_strings.commonstr.lv + n + " " + buildingcost.bdg0[0]);
-        l[2].push(g_js_strings.commonstr.lv + y + " " + buildingcost.bdg0[0]);
-        if (y >= parseInt(n)) {
+        l[2].push(g_js_strings.commonstr.lv + z + " " + buildingcost.bdg0[0]);
+        if (z >= parseInt(n)) {
             l[3].push(1)
         } else {
             l[3].push(0)
         }
     }
-    if (D.length == null) {
-        var e = Object.keys(D);
-        var J = new Array();
-        var v = Object.keys(seed.buildings["city" + currentcityid]);
-        for (var G = 0; G < v.length; G++) {
-            var p = seed.buildings["city" + currentcityid][v[G]];
-            if (J["b" + p[0]] == null) {
-                J["b" + p[0]] = parseInt(p[1])
+    if (E.length == null) {
+        var e = Object.keys(E);
+        var K = new Array();
+        var w = Object.keys(seed.buildings["city" + currentcityid]);
+        for (var H = 0; H < w.length; H++) {
+            var p = seed.buildings["city" + currentcityid][w[H]];
+            if (K["b" + p[0]] == null) {
+                K["b" + p[0]] = parseInt(p[1])
             } else {
-                J["b" + p[0]] = (p[1] > J["b" + p[0]]) ? p[1] : J["b" + p[0]]
+                K["b" + p[0]] = (p[1] > K["b" + p[0]]) ? p[1] : K["b" + p[0]]
             }
         }
-        for (var G = 0; G < e.length; G++) {
+        for (var H = 0; H < e.length; H++) {
             l[0].push(g_js_strings.commonstr.construction);
-            var K = e[G].split("b")[1];
+            var L = e[H].split("b")[1];
             var d = 0;
-            var s = (parseInt(J[e[G]]) > 0) ? (parseInt(J[e[G]])) : 0;
-            var g = buildingcost["bdg" + K][0];
-            if (parseInt(D[e[G]][0]) == 1) {
-                d = parseInt(D[e[G]][1])
+            var s = (parseInt(K[e[H]]) > 0) ? (parseInt(K[e[H]])) : 0;
+            var g = buildingcost["bdg" + L][0];
+            if (parseInt(E[e[H]][0]) == 1) {
+                d = parseInt(E[e[H]][1])
             } else {
-                d = Math.min(buildingmaxlvl[K], n + parseInt(D[e[G]][1]));
-                if (parseInt(A) === 5 && n == 11 && K == 0) {
+                d = Math.min(buildingmaxlvl[L], n + parseInt(E[e[H]][1]));
+                if (parseInt(B) === 5 && n == 11 && L == 0) {
                     d = 11
                 }
             }
-            if (L == "tch") {
+            if (M == "tch") {
                 var t = [9, 15, 16, 17],
-                    H = [5, 9, 12, 14];
-                if (H.indexOf(parseInt(A)) != -1 && t.indexOf(parseInt(K)) != -1 && parseInt(n) == 11) {
+                    I = [5, 9, 12, 14];
+                if (I.indexOf(parseInt(B)) != -1 && t.indexOf(parseInt(L)) != -1 && parseInt(n) == 11) {
                     d--
                 } else {
-                    if (parseInt(K) == 11) {
+                    if (parseInt(L) == 11) {
                         d = Math.max(d, n)
                     }
                 }
@@ -43033,40 +43393,40 @@ function checkreq(L, A, n, E) {
             l[4].push(null)
         }
     }
-    var I = new Array();
-    if (L == "tch") {
-        var a = z["tch" + A][9]
+    var J = new Array();
+    if (M == "tch") {
+        var a = A["tch" + B][9]
     } else {
-        if (L == "bdg") {
-            var a = buildingcost["bdg" + A][9]
+        if (M == "bdg") {
+            var a = buildingcost["bdg" + B][9]
         } else {
-            if (L == "unt") {
-                var a = unitcost["unt" + A][9]
+            if (M == "unt") {
+                var a = unitcost["unt" + B][9]
             } else {
-                if (L == "frt") {
-                    var a = fortcost["frt" + A][9]
+                if (M == "frt") {
+                    var a = fortcost["frt" + B][9]
                 }
             }
         }
     }
     var j = Object.keys(a);
     if (a.length == null) {
-        for (var G = 0; G < j.length; G++) {
+        for (var H = 0; H < j.length; H++) {
             l[0].push(g_js_strings.commonstr.research);
-            var o = j[G].split("t")[1];
+            var o = j[H].split("t")[1];
             var c = 0;
             var r = parseInt(seed.tech["tch" + o]);
-            var B = z["tch" + o][0];
-            if (parseInt(a[j[G]][0]) == 1) {
-                c = parseInt(a[j[G]][1])
+            var C = A["tch" + o][0];
+            if (parseInt(a[j[H]][0]) == 1) {
+                c = parseInt(a[j[H]][1])
             } else {
-                c = n + parseInt(a[j[G]][1])
+                c = n + parseInt(a[j[H]][1])
             }
-            if (L == "bdg" && getBuildingLevel(A) === 10 && parseInt(A, 10) !== 18) {
+            if (M == "bdg" && getBuildingLevel(B) === 10 && parseInt(B, 10) !== 18) {
                 c = 10
             }
-            l[1].push(g_js_strings.commonstr.lv + c + " " + B);
-            l[2].push(g_js_strings.commonstr.lv + r + " " + B);
+            l[1].push(g_js_strings.commonstr.lv + c + " " + C);
+            l[2].push(g_js_strings.commonstr.lv + r + " " + C);
             if (r < c) {
                 l[3].push(0)
             } else {
@@ -43075,55 +43435,55 @@ function checkreq(L, A, n, E) {
             l[4].push(null)
         }
     }
-    if (L == "tch") {
-        var w = parseInt(z["tch" + A][5]) * x
+    if (M == "tch") {
+        var x = parseInt(A["tch" + B][5]) * y
     } else {
-        if (L == "bdg") {
-            var w = parseInt(buildingcost["bdg" + A][5]) * x
+        if (M == "bdg") {
+            var x = parseInt(buildingcost["bdg" + B][5]) * y
         } else {
-            if (L == "unt") {
-                var w = parseInt(unitcost["unt" + A][5]) * x
+            if (M == "unt") {
+                var x = parseInt(unitcost["unt" + B][5]) * y
             } else {
-                if (L == "frt") {
-                    var w = parseInt(fortcost["frt" + A][5]) * x
+                if (M == "frt") {
+                    var x = parseInt(fortcost["frt" + B][5]) * y
                 }
             }
         }
     }
-    if (w > 0) {
+    if (x > 0) {
         l[0].push(resourceinfo.rec0);
         var k = parseInt(seed.citystats["city" + currentcityid].gold[0]);
-        l[1].push(w);
+        l[1].push(x);
         l[2].push(k);
-        if (k < w) {
+        if (k < x) {
             l[3].push(0)
         } else {
             l[3].push(1)
         }
         l[4].push(null)
     }
-    for (var G = 1; G < 5; G++) {
-        if (L == "tch") {
-            var m = parseInt(z["tch" + A][G]) * x * 3600
+    for (var H = 1; H < 5; H++) {
+        if (M == "tch") {
+            var m = parseInt(A["tch" + B][H]) * y * 3600
         } else {
-            if (L == "bdg") {
-                var m = parseInt(buildingcost["bdg" + A][G]) * x * 3600
+            if (M == "bdg") {
+                var m = parseInt(buildingcost["bdg" + B][H]) * y * 3600
             } else {
-                if (L == "unt") {
+                if (M == "unt") {
                     var h = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().MORE_WITH_LESS, currentcityid, {
-                        unitid: A
+                        unitid: B
                     });
-                    var m = Math.ceil(parseInt(unitcost["unt" + A][G]) * h) * x * 3600
+                    var m = Math.ceil(parseInt(unitcost["unt" + B][H]) * h) * y * 3600
                 } else {
-                    if (L == "frt") {
-                        var m = parseInt(fortcost["frt" + A][G]) * x * 3600
+                    if (M == "frt") {
+                        var m = parseInt(fortcost["frt" + B][H]) * y * 3600
                     }
                 }
             }
         }
         if (m > 0) {
-            l[0].push(resourceinfo["rec" + G]);
-            var f = parseInt(seed.resources["city" + currentcityid]["rec" + G][0]);
+            l[0].push(resourceinfo["rec" + H]);
+            var f = parseInt(seed.resources["city" + currentcityid]["rec" + H][0]);
             l[1].push(parseInt(parseInt(m) / 3600));
             l[2].push(parseInt(parseInt(f) / 3600));
             if (f < m) {
@@ -43131,7 +43491,7 @@ function checkreq(L, A, n, E) {
             } else {
                 l[3].push(1)
             }
-            switch (G) {
+            switch (H) {
             case 1:
                 l[4].push("Food");
                 break;
@@ -43147,30 +43507,30 @@ function checkreq(L, A, n, E) {
             }
         }
     }
-    if (L == "tch") {
-        var b = parseInt(z["tch" + A][6]) * x
+    if (M == "tch") {
+        var b = parseInt(A["tch" + B][6]) * y
     } else {
-        if (L == "bdg") {
-            var b = parseInt(buildingcost["bdg" + A][6]) * x
+        if (M == "bdg") {
+            var b = parseInt(buildingcost["bdg" + B][6]) * y
         } else {
-            if (L == "unt") {
+            if (M == "unt") {
                 var q = cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing().MORE_WITH_LESS, currentcityid, {
-                    unitid: A
+                    unitid: B
                 });
-                var b = Math.ceil(parseInt(unitcost["unt" + A][6]) * q) * x
+                var b = Math.ceil(parseInt(unitcost["unt" + B][6]) * q) * y
             } else {
-                if (L == "frt") {
-                    var b = parseInt(fortcost["frt" + A][6]) * x
+                if (M == "frt") {
+                    var b = parseInt(fortcost["frt" + B][6]) * y
                 }
             }
         }
     }
     if (b > 0) {
         l[0].push(g_js_strings.commonstr.population);
-        var C = parseInt(seed.citystats["city" + currentcityid].pop[0]) - parseInt(seed.citystats["city" + currentcityid].pop[3]);
+        var D = parseInt(seed.citystats["city" + currentcityid].pop[0]) - parseInt(seed.citystats["city" + currentcityid].pop[3]);
         l[1].push(b);
-        l[2].push(C);
-        if (C < b) {
+        l[2].push(D);
+        if (D < b) {
             l[3].push(0)
         } else {
             l[3].push(1)
@@ -47842,7 +48202,7 @@ cm.log = function(c) {
             h = h == undefined ? true : false;
             var g = h ? " " : "";
             if (j <= 0) {
-                return "now"
+                return "0"
             }
             var e = parseInt(j / 3600);
             var f = parseInt((j - (e * 3600)) / 60);
@@ -47909,14 +48269,14 @@ cm.FactionSelectionView = function(b) {
                 main: f.generic_feature_customizeCity
             }]
         };
-    var g = function(k, m, j) {
-        var l = "";
-        b.each(k, function(o, n) {
-            l += c(o, m, !n)
+    var g = function(l, k, j) {
+        var m = "";
+        b.each(l, function(o, n) {
+            m += c(o, k[o], !n)
         });
         return e("factionSelection", {
             description: j === "create" ? f.factionSelectionDescription : f.refactionSelectionDescription,
-            choices: l
+            choices: m
         })
     };
     var c = function(k, n, m) {
@@ -54819,7 +55179,7 @@ cm.ItemController = function($) {
                         if ([511, 512, 513, 514].include(itemId)) {
                             useKnightInABox(itemId)
                         } else {
-                            if ([521, 522, 523, 524].include(itemId) || (itemId >= 1300 && itemId <= 1493)) {
+                            if ([521, 522, 523, 524].include(itemId) || (itemId >= 1300 && itemId <= 1497)) {
                                 useUnitsItem(itemId)
                             } else {
                                 if (itemId > 700 && itemId < 900) {
@@ -54857,6 +55217,7 @@ cm.ItemController = function($) {
                                                                     cm.mww.modal_mmb();
                                                                     break;
                                                                 case 620:
+                                                                case 621:
                                                                     cm.PrestigeManagerController.onReblessingUse(itemId);
                                                                     break;
                                                                 case 630:
@@ -55174,7 +55535,7 @@ cm.ItemController = function($) {
                     var allUnitsGained = new Hash(rslt.unitsGained),
                         unitId, unitAmount;
                     allUnitsGained.each(function(pair) {
-                        unitId = pair.key.substring(4);
+                        unitId = pair.key;
                         unitAmount = pair.value;
                         seed.units["city" + currentcityid]["unt" + unitId] = Number(seed.units["city" + currentcityid]["unt" + unitId]) + unitAmount
                     });
@@ -56120,25 +56481,22 @@ cm.ItemModel = jQueryClass.extend({
     },
     canUse: function(e) {
         e = Number(e);
-        var f = [101, 102, 111, 112, 121, 122, 131, 132, 141, 142, 261, 262, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 351, 355, 501, 502, 503, 504, 505, 511, 512, 513, 514, 521, 522, 523, 524, 531, 599, 620, 630, 901, 902, 903, 911, 912, 922, 923, 924, 942, 2000, 10515, 10600, 25001, 30213, 30214],
-            c = [100, 400],
+        var f = [101, 102, 111, 112, 121, 122, 131, 132, 141, 142, 261, 262, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 351, 355, 501, 502, 503, 504, 505, 511, 512, 513, 514, 521, 522, 523, 524, 531, 599, 620, 621, 630, 901, 902, 903, 911, 912, 922, 923, 924, 942, 2000, 10515, 10600, 25001, 30213, 30214],
             a = {
                 5: {
                     100: true,
                     400: true
                 }
+            }, d = [30300, 33000, 33001, 34001],
+            b = function(i, h, g) {
+                return (i >= h && i <= g)
+            }, c = function(g) {
+                return ksoItems[g] && a[ksoItems[g].category] && a[ksoItems[g].category][ksoItems[g].subCategory]
             };
-        var d = c.include(itemlist["i" + e].subCategory),
-            b = ksoItems[e] && a[ksoItems[e].category] && a[ksoItems[e].category][ksoItems[e].subCategory];
-        if (this.isItemExist(e) && (f.include(e) || b)) {
-            return true
-        } else {
-            if ((e >= 1000 && e <= 1050) || (e >= 1300 && e <= 1493) || (e >= 10000 && e <= 10038) || (e >= 10043 && e <= 10133) || (e >= 30000 && e <= 40000 && e !== 30300) || (e >= 50000 && e <= 60000) || (e >= 30301 && e <= 30439) || (e >= 25001 && e <= 25006)) {
-                return true
-            } else {
-                return false
-            }
+        if (!this.isItemExist(e) || d.include(e)) {
+            return false
         }
+        return Boolean(f.include(e) || c(e) || b(e, 1000, 1050) || b(e, 1300, 1497) || b(e, 10000, 10038) || b(e, 10043, 10133) || b(e, 25001, 25006) || b(e, 30000, 40000) || b(e, 30301, 30439) || b(e, 50000, 60000))
     },
     isItemExist: function(a) {
         return Boolean(itemlist["i" + a])
@@ -60257,7 +60615,7 @@ function assign_skill_modal(e) {
     l.push("<div class='title'>" + g_js_strings.commonstr.politics + "</div>");
     l.push("<div class='number clearfix'>");
     l.push("<div class='assignnumber'>" + a.politics + "</div>");
-    if (+a.politics < 255) {
+    if (+a.politics < 300) {
         l.push("<a  class='addbutton " + h + "' onmouseout='removeTooltip();return false;' onmouseover='showTooltip(\"" + g_js_strings.assign_skill_modal.foremantooltip + "\",this,event,\"mainbody\");return false;' onclick='addSkillPoint(this);return false;'></a>")
     }
     if (parseInt(a.politicsBoostExpireUnixtime) - b > 0) {
@@ -60269,7 +60627,7 @@ function assign_skill_modal(e) {
     l.push("<div class='title'>" + g_js_strings.commonstr.combat + "</div>");
     l.push("<div class='number clearfix'>");
     l.push("<div class='assignnumber'>" + a.combat + "</div>");
-    if (+a.combat < 255) {
+    if (+a.combat < 300) {
         l.push("<a  class='addbutton " + h + "' onmouseout='removeTooltip();return false;' onmouseover='showTooltip(\"" + g_js_strings.assign_skill_modal.marshaltooltip + "\",this,event,\"mainbody\");return false;' onclick='addSkillPoint(this);return false;'></a>")
     }
     if (parseInt(a.combatBoostExpireUnixtime) - b > 0) {
@@ -60281,7 +60639,7 @@ function assign_skill_modal(e) {
     l.push("<div class='title'>" + g_js_strings.commonstr.intelligence + "</div>");
     l.push("<div class='number clearfix'>");
     l.push("<div class='assignnumber'>" + a.intelligence + "</div>");
-    if (+a.intelligence < 255) {
+    if (+a.intelligence < 300) {
         l.push("<a  class='addbutton " + h + "' onmouseout='removeTooltip();return false;' onmouseover='showTooltip(\"" + g_js_strings.assign_skill_modal.alchetooltip + "\",this,event,\"mainbody\");return false;' onclick='addSkillPoint(this);return false;'></a>")
     }
     if (parseInt(a.intelligenceBoostExpireUnixtime) - b > 0) {
@@ -60293,7 +60651,7 @@ function assign_skill_modal(e) {
     l.push("<div class='title'>" + g_js_strings.commonstr.resourcefulness + "</div>");
     l.push("<div class='number clearfix'>");
     l.push("<div class='assignnumber'>" + a.resourcefulness + "</div>");
-    if (+a.resourcefulness < 255) {
+    if (+a.resourcefulness < 300) {
         l.push("<a  class='addbutton " + h + "' onmouseout='removeTooltip();return false;' onmouseover='showTooltip(\"" + g_js_strings.assign_skill_modal.stewardtooltip + "\",this,event,\"mainbody\");return false;' onclick='addSkillPoint(this);return false;'></a>")
     }
     if (parseInt(a.resourcefulnessBoostExpireUnixtime) - b > 0) {
@@ -60441,7 +60799,7 @@ function addSkillPoint(g) {
     Element.extend(e);
     var d = parseInt(e.select("div.assignnumber")[0].innerHTML) + 1;
     e.select("div.assignnumber")[0].innerHTML = d;
-    if (d < 255) {
+    if (d < 300) {
         g.show()
     } else {
         g.hide()
@@ -74328,215 +74686,263 @@ cm.PrestigeGroveView = function(d) {
     }
 }(jQuery);
 cm = cm || {};
-cm.PrestigeManagerController = function(j) {
-    var i = g_js_strings.prestige,
-        s = g_js_strings.commonstr;
-    var p = function(G) {
+cm.PrestigeManagerController = function(k) {
+    var j = g_js_strings.prestige,
+        t = g_js_strings.commonstr;
+    var q = function(H) {
         cm.PrestigeManagerModel.initPrestigeCost(function() {
-            w(G)
+            x(H)
         });
-        w(G)
+        x(H)
     };
-    var w = function(G) {
-        G = +G || currentcityid;
-        if (!cm.PrestigeModel.isPrestige(G)) {
-            cm.PrestigeManagerModel.init(G, "create");
-            r(G)
+    var x = function(H) {
+        H = +H || currentcityid;
+        if (!cm.PrestigeModel.isPrestige(H)) {
+            cm.PrestigeManagerModel.init(H, "create");
+            s(H)
         } else {
-            if (cm.PrestigeModel.isPrestige(G) && !cm.PrestigeManagerModel.isMaxLevel(G)) {
-                cm.PrestigeManagerModel.init(G, "level");
-                e()
+            if (cm.PrestigeModel.isPrestige(H) && !cm.PrestigeManagerModel.isMaxLevel(H)) {
+                cm.PrestigeManagerModel.init(H, "level");
+                f()
             } else {
-                cm.PrestigeManagerModel.init(G, "overview");
-                e()
+                cm.PrestigeManagerModel.init(H, "overview");
+                f()
             }
         }
     };
-    var r = function() {
-        var J = cm.PrestigeManagerModel.getAvailableFactions(),
-            L = cm.PrestigeManagerModel.getPrestigeInfo("prestigeLevel"),
-            H = cm.PrestigeManagerModel.getPrestigeInfo("action"),
-            G = cm.PrestigeManagerModel.isCityValueQualified(),
-            I = "",
-            K = "";
-        cm.PrestigeManagerView.openFactionSelection(J, L, H);
-        if (H === "create") {
-            if (G) {
-                I = i.status_minimumRequirementsMet;
-                K = i.selectFaction
-            } else {
-                I = i.status_cityValueNotMet;
-                K = i.cityvaluenotmet
+    var s = function() {
+        var L = cm.PrestigeManagerModel.getAvailableFactions(),
+            N = cm.PrestigeManagerModel.getPrestigeInfo("prestigeLevel"),
+            I = {}, J = cm.PrestigeManagerModel.getPrestigeInfo("action"),
+            H = cm.PrestigeManagerModel.isCityValueQualified(),
+            K = "",
+            M = "";
+        k.each(L, function(P, O) {
+            if (O) {
+                I[P] = Math.min(N, cm.PrestigeModel.getLevelCapSoft(P))
             }
-            F(H, I, K)
+        });
+        cm.PrestigeManagerView.openFactionSelection(L, I, J);
+        if (J === "create") {
+            if (H) {
+                K = j.status_minimumRequirementsMet;
+                M = j.selectFaction
+            } else {
+                K = j.status_cityValueNotMet;
+                M = j.cityvaluenotmet
+            }
+            G(J, K, M)
         } else {
-            if (H === "refaction") {
-                I = "RE-FACTION THAT SHIT";
-                K = i.selectFaction;
-                F(H, I, K)
+            if (J === "refaction") {
+                K = "RE-FACTION THAT";
+                M = j.selectFaction;
+                G(J, K, M)
             } else {
                 return
             }
         }
-        j.each(J, function(N, M) {
-            var O = cm.PrestigeModel.factionClasses[N];
-            if (M) {
-                j(".faction_selection .choices ." + O + " a").click(function() {
-                    v(N)
+        k.each(L, function(P, O) {
+            var Q = cm.PrestigeModel.factionClasses[P];
+            if (O) {
+                k(".faction_selection .choices ." + Q + " a").click(function() {
+                    w(P)
                 })
             }
         })
     };
-    var e = function() {
-        var L = cm.PrestigeManagerModel.getPrestigeInfo("cityId"),
-            G = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType"),
-            K = cm.PrestigeManagerModel.getPrestigeInfo("prestigeLevel"),
-            H = cm.PrestigeManagerModel.getPrestigeInfo("action"),
-            I = "",
-            J = "";
-        switch (H) {
+    var f = function() {
+        var M = cm.PrestigeManagerModel.getPrestigeInfo("cityId"),
+            H = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType"),
+            L = cm.PrestigeManagerModel.getPrestigeInfo("prestigeLevel"),
+            I = cm.PrestigeManagerModel.getPrestigeInfo("action"),
+            J = "",
+            K = "";
+        switch (I) {
         case "overview":
             if (cm.PrestigeManagerModel.isMaxLevel()) {
-                I = i.maxValue.replace("%1$s", cm.PrestigeModel.getLevelCapSoft());
-                J = I
+                J = j.maxValue.replace("%1$s", cm.PrestigeManagerModel.getLevelCapSoft());
+                K = J
             } else {
-                I = i.status_cityValueNotMet;
-                J = i.cityvaluenotmet
+                J = j.status_cityValueNotMet;
+                K = j.cityvaluenotmet
             }
             break;
         case "create":
         case "level":
-            I = i.status_cityValueNotMet;
-            J = i.cityvaluenotmet;
+            J = j.status_cityValueNotMet;
+            K = j.cityvaluenotmet;
             if (cm.PrestigeManagerModel.isCityValueQualified()) {
-                I = i.status_minimumRequirementsMet;
-                J = i.chooseablessing;
+                J = j.status_minimumRequirementsMet;
+                K = j.chooseablessing;
                 if (cm.BlessingSystemController.areAllSlotsSet()) {
-                    J = i.youcanprest
+                    K = j.youcanprest
                 }
             }
             break;
         case "refaction":
         case "reblessing":
-            I = "MAKE SURE ALL BLESSING SLOTS ARE USED";
+            J = "MAKE SURE ALL BLESSING SLOTS ARE USED";
             if (cm.BlessingSystemController.areAllSlotsSet()) {
-                J = i.clickToApplyChanges
+                K = j.clickToApplyChanges
             } else {
-                J = i.chooseablessing
+                K = j.chooseablessing
             }
             break;
         default:
             return;
             break
         }
-        cm.PrestigeManagerView.openBlessingsOverview(L, G, K, H);
-        F(H, I, J)
+        cm.PrestigeManagerView.openBlessingsOverview(M, H, L, I);
+        G(I, J, K)
     };
-    var z = function() {
-        cm.PrestigeManagerView.openConfirmPrestige();
-        j("#prestige_manager_confirm").unbind("click").click(function() {
-            x()
+    var A = function(H) {
+        cm.PrestigeManagerView.openConfirmPrestige(H);
+        k("#prestige_manager_confirm").unbind("click").click(function() {
+            y()
         })
     };
-    var f = function() {
+    var g = function() {
         cm.PrestigeManagerView.openRefactionInfo();
-        j(".refactionInfo a.buttonv2").unbind("click").bind("click", function() {
+        k(".refactionInfo a.buttonv2").unbind("click").bind("click", function() {
             cm.ModalManager.close()
         })
     };
-    var D = function(G) {
+    var E = function(H) {
         cm.PrestigeManagerView.openRefactionDuplicate();
-        j(".refactionDuplicate a.buttonv2").unbind("click").bind("click", function() {
-            if (j(this).hasClass("yes")) {
-                t(G)
+        k(".refactionDuplicate a.buttonv2").unbind("click").bind("click", function() {
+            if (k(this).hasClass("yes")) {
+                u(H)
             }
             cm.ModalManager.close()
         })
     };
-    var F = function(L, J, N) {
-        var P = cm.PrestigeManagerModel.getPrestigeInfo("prestigeLevel"),
-            O = cm.PrestigeManagerModel.getCityValue(),
-            M = cm.PrestigeManagerModel.getCityValueMin(P),
-            R = cm.PrestigeManagerModel.getCityValueMax(P),
-            H = cm.PrestigeManagerModel.isCityValueQualified(),
-            K = cm.PrestigeManagerModel.getCostByAction(L),
-            Q = H ? cm.PrestigeManagerModel.getPrestigeOriginalCost() : null,
-            I = cm.PrestigeManagerModel.isPrestigeInfoReady(),
-            G;
-        if (L === "refaction" || L === "reblessing") {
-            G = s.apply;
-            Q = null
+    var c = function(H) {
+        cm.PrestigeManagerView.openRefactionLevelDiscrepancy();
+        k(".refactionDuplicate a.buttonv2").unbind("click").bind("click", function() {
+            if (k(this).hasClass("yes")) {
+                u(H)
+            }
+            cm.ModalManager.close()
+        })
+    };
+    var G = function(M, K, O) {
+        var Q = cm.PrestigeManagerModel.getPrestigeInfo("prestigeLevel"),
+            P = cm.PrestigeManagerModel.getCityValue(),
+            N = cm.PrestigeManagerModel.getCityValueMin(Q),
+            S = cm.PrestigeManagerModel.getCityValueMax(Q),
+            I = cm.PrestigeManagerModel.isCityValueQualified(),
+            L = cm.PrestigeManagerModel.getCostByAction(M),
+            R = I ? cm.PrestigeManagerModel.getPrestigeOriginalCost() : null,
+            J = cm.PrestigeManagerModel.isPrestigeInfoReady(),
+            H;
+        if (M === "refaction" || M === "reblessing") {
+            H = t.apply;
+            R = null;
+            jQuery("#prestige_manager_submit_crystals").hide();
+            jQuery("#prestige_manager_action_splitter").hide();
+            jQuery("#prestige_manager_crystal_price_text").hide();
+            jQuery("#prestige_manager_submit").css("left", "245px")
         } else {
-            G = s.prestige
+            H = t.prestige
         }
-        cm.PrestigeManagerView.updateCityValueBarStatus(J);
-        cm.PrestigeManagerView.updateCityValueProgress(O, M, R);
-        cm.PrestigeManagerView.updateSubmitButton(G, K, Q, I, N);
-        j("#prestige_manager_submit").unbind("click").click(function() {
-            if (I) {
-                switch (L) {
+        cm.PrestigeManagerView.updateCityValueBarStatus(K);
+        cm.PrestigeManagerView.updateCityValueProgress(P, N, S);
+        cm.PrestigeManagerView.updateSubmitButton(H, L, R, J, O);
+        k("#prestige_manager_submit").unbind("click").click(function() {
+            if (J) {
+                switch (M) {
                 case "reblessing":
-                    d();
+                    e();
                     break;
                 case "refaction":
-                    E();
+                    F();
                     break;
                 default:
                     a();
                     break
                 }
             }
+        });
+        k("#prestige_manager_submit_crystals").unbind("click").click(function() {
+            if (J && cm.PrestigeManagerModel.isAffordableCrystals()) {
+                switch (M) {
+                case "reblessing":
+                    e({
+                        paymentType: "crystals"
+                    });
+                    break;
+                case "refaction":
+                    F({
+                        paymentType: "crystals"
+                    });
+                    break;
+                default:
+                    a({
+                        paymentType: "crystals"
+                    });
+                    break
+                }
+            }
         })
     };
-    var h = function() {
+    var i = function() {
         cm.PrestigeManagerView.initHud();
-        q()
+        r()
     };
-    var q = function() {
-        var G = cm.PrestigeModel.getPrestigeInfo(currentcityid),
-            L = +G.prestigeLevel || 0,
-            K = L + 1,
-            I = cm.PrestigeModel.getCityValue(currentcityid),
-            J = cm.PrestigeManagerModel.getCityValueMin(K),
-            H = cm.PrestigeManagerModel.getCityValueMax(K);
-        cm.PrestigeManagerView.updateHud(I, J, H)
+    var r = function() {
+        var H = cm.PrestigeModel.getPrestigeInfo(currentcityid),
+            M = +H.prestigeLevel || 0,
+            L = M + 1,
+            J = cm.PrestigeModel.getCityValue(currentcityid),
+            K = cm.PrestigeManagerModel.getCityValueMin(L),
+            I = cm.PrestigeManagerModel.getCityValueMax(L);
+        cm.PrestigeManagerView.updateHud(J, K, I)
     };
-    var y = function(G) {
-        cm.PrestigeModel.updateSeed(G);
-        q()
+    var z = function(H) {
+        cm.PrestigeModel.updateSeed(H);
+        r()
     };
-    var o = function() {
+    var p = function() {
         cm.PrestigeManagerView.toggleHud();
-        q()
+        r()
     };
-    var t = function(G) {
-        var H = cm.PrestigeManagerModel.getPrestigeInfo("cityId");
-        cm.PrestigeManagerModel.setFaction(G);
-        cm.BlessingSystemController.setFaction(H, G);
-        e()
+    var u = function(I) {
+        cm.PrestigeManagerModel.setFaction(I);
+        var J = cm.PrestigeManagerModel.getPrestigeInfo("cityId"),
+            H = Math.min(cm.PrestigeManagerModel.getLevelCapSoft(), cm.PrestigeManagerModel.getPrestigeInfo("prestigeLevel") || 0);
+        cm.BlessingSystemController.setFaction(J, I);
+        cm.PrestigeManagerModel.setLevel(H);
+        if (cm.PrestigeManagerModel.getPrestigeInfo("action") === "refaction") {
+            cm.BlessingSystemController.respec(H)
+        }
+        f()
     };
-    var v = function(H) {
-        H = +H;
-        var I = cm.PrestigeManagerModel.getPrestigeInfo("cityId"),
-            G = cm.PrestigeManagerModel.getPrestigeInfo("action");
-        if (G === "refaction" && +cm.PrestigeModel.getPrestigeFaction(I) === H) {
-            D(H)
+    var w = function(I) {
+        I = +I;
+        var J = cm.PrestigeManagerModel.getPrestigeInfo("cityId"),
+            H = cm.PrestigeManagerModel.getPrestigeInfo("action");
+        if (H === "refaction" && +cm.PrestigeModel.getPrestigeFaction(J) === I) {
+            E(I)
         } else {
-            t(H)
+            if (H === "refaction" && cm.PrestigeModel.getPrestigeLevel(J) > cm.PrestigeModel.getLevelCapSoft(I)) {
+                c(I)
+            } else {
+                u(I)
+            }
         }
     };
-    var l = function() {
-        var G = cm.BlessingSystemController.getSelectedBlessings();
-        cm.PrestigeManagerModel.setBlessings(G);
-        e()
+    var m = function() {
+        var H = cm.BlessingSystemController.getSelectedBlessings();
+        cm.PrestigeManagerModel.setBlessings(H);
+        f()
     };
-    var C = function(G, H) {
-        G = G || 0;
-        H = H || currentcityid;
-        if (!cm.PrestigeModel.isPrestige(H)) {
+    var D = function(H, I) {
+        H = H || 0;
+        I = I || currentcityid;
+        if (!cm.PrestigeModel.isPrestige(I)) {
             cm.ModalManager.alert({
                 button_text: g_js_strings.commonstr.ok,
-                text: i.useItemInAscendedCity
+                text: j.useItemInAscendedCity
             });
             return
         } else {
@@ -74548,584 +74954,717 @@ cm.PrestigeManagerController = function(j) {
                 return
             }
         }
-        cm.PrestigeManagerModel.init(H, "refaction", {
-            itemId: G
+        cm.PrestigeManagerModel.init(I, "refaction", {
+            itemId: H
         });
-        r();
+        s();
         cm.BlessingSystemController.respec();
-        f()
+        g()
     };
-    var E = function() {
-        if (cm.PrestigeManagerModel.isPrestigeInfoReady() && cm.PrestigeManagerModel.isAffordable()) {
-            cm.PrestigeManagerModel.save(m, B)
-        }
-    };
-    var b = function(G, H) {
-        G = G || 0;
-        H = H || currentcityid;
-        if (!cm.PrestigeModel.isPrestige(H)) {
+    var b = function(H, I) {
+        H = H || 0;
+        I = I || currentcityid;
+        if (!cm.PrestigeModel.isPrestige(I)) {
             cm.ModalManager.alert({
                 button_text: g_js_strings.commonstr.ok,
-                text: i.useItemInAscendedCity
+                text: j.useItemInAscendedCity
             });
             return
         }
-        cm.PrestigeManagerModel.init(H, "reblessing", {
-            itemId: G
+        cm.PrestigeManagerModel.init(I, "reblessing", {
+            itemId: H
         });
-        e();
-        cm.BlessingSystemController.respec()
-    };
-    var d = function() {
-        if (cm.PrestigeManagerModel.isPrestigeInfoReady() && cm.PrestigeManagerModel.isAffordable()) {
-            cm.PrestigeManagerModel.save(c, B)
-        }
-    };
-    var a = function() {
-        if (cm.PrestigeManagerModel.isPrestigeInfoReady()) {
-            if (cm.PrestigeManagerModel.isAffordable()) {
-                z()
+        f();
+        if (H === 620) {
+            cm.BlessingSystemController.respec(3)
+        } else {
+            if (H === 621) {
+                cm.BlessingSystemController.respec(6)
             } else {
-                cm.ShopView.openGetMoreGemsModal()
+                cm.BlessingSystemController.respec()
             }
         }
     };
-    var x = function() {
-        if (cm.PrestigeManagerModel.isPrestigeInfoReady() && cm.PrestigeManagerModel.isAffordable()) {
-            cm.PrestigeManagerModel.save(n, B)
+    var F = function(H) {
+        if (typeof H !== "undefined" && H.paymentType === "crystals") {
+            cm.PrestigeManagerModel.save(n, C, {
+                paymentType: "crystals"
+            })
+        } else {
+            if (cm.PrestigeManagerModel.isPrestigeInfoReady() && cm.PrestigeManagerModel.isAffordable()) {
+                cm.PrestigeManagerModel.save(n, C)
+            }
         }
     };
-    var u = function(G, J) {
-        if (G.ok) {
-            if (G.updateSeed) {
-                var I = cm.PrestigeManagerModel.getPrestigeInfo("cityId"),
-                    H = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType");
-                if (G.gems !== undefined) {
-                    cm.Gems.update(G.gems);
-                    j("#kochead_gems").html(cm.Gems.count())
+    var e = function(H) {
+        if (typeof H !== "undefined" && H.paymentType === "crystals") {
+            cm.PrestigeManagerModel.save(n, C, {
+                paymentType: "crystals"
+            })
+        } else {
+            if (cm.PrestigeManagerModel.isPrestigeInfoReady() && cm.PrestigeManagerModel.isAffordable()) {
+                cm.PrestigeManagerModel.save(d, C)
+            }
+        }
+    };
+    var a = function(H) {
+        if (typeof H !== "undefined" && H.paymentType === "crystals") {
+            A(H)
+        } else {
+            if (cm.PrestigeManagerModel.isPrestigeInfoReady()) {
+                if (cm.PrestigeManagerModel.isAffordable()) {
+                    A(H)
+                } else {
+                    cm.ShopView.openGetMoreGemsModal()
                 }
-                update_seed(G.updateSeed);
-                cm.BlessingSystemModel.updateTempFaction(I, H);
-                cm.BlessingSystemModel.levelUp(I, G.updateSeed);
+            }
+        }
+    };
+    var y = function() {
+        if (jQuery("#prestigeCurrencyIcon").hasClass("little_crystal")) {
+            cm.PrestigeManagerModel.save(o, C, {
+                paymentType: "crystals"
+            })
+        } else {
+            if (cm.PrestigeManagerModel.isPrestigeInfoReady() && cm.PrestigeManagerModel.isAffordable()) {
+                cm.PrestigeManagerModel.save(o, C)
+            }
+        }
+    };
+    var v = function(H, K) {
+        if (H.ok) {
+            if (H.updateSeed) {
+                var J = cm.PrestigeManagerModel.getPrestigeInfo("cityId"),
+                    I = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType");
+                if (H.gems !== undefined) {
+                    cm.Gems.update(H.gems);
+                    k("#kochead_gems").html(cm.Gems.count())
+                }
+                update_seed(H.updateSeed);
+                cm.BlessingSystemModel.updateTempFaction(J, I);
+                cm.BlessingSystemModel.levelUp(J, H.updateSeed);
                 citysel_click()
             }
-            J()
+            K()
         } else {
-            cm.log.l("cm.PrestigeManagerController.save: " + G.msg);
-            cm.ModalManager.error(G)
+            cm.log.l("cm.PrestigeManagerController.save: " + H.msg);
+            cm.ModalManager.error(H)
         }
     };
-    var A = function(G, H) {
-        u(G, function() {
+    var B = function(H, I) {
+        v(H, function() {
             cm.InventoryView.removeItemFromInventory(cm.PrestigeManagerModel.getPrestigeInfo("itemId"));
-            H()
+            I()
         })
     };
-    var n = function(G) {
-        var H = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType");
+    var o = function(H) {
+        var I = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType");
         cm.ModalManager.closeAll();
-        u(G, function() {
-            cm.PrestigeManagerView.openCongrats(H);
-            q();
+        v(H, function() {
+            var J = cm.PrestigeManagerModel.getLastPrestigePayment();
+            if (J.paymentType === "crystals") {
+                cm.InventoryView.removeItemFromInventory(J.paymentItem, J.paymentCost)
+            }
+            cm.PrestigeManagerView.openCongrats(I);
+            r();
             kraken.network.publishGamesFeed(cm.FB_ACTIONS.ASCEND, cm.FB_OBJECTS.CITY)
         })
     };
-    var m = function(G) {
-        var H = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType");
-        A(G, function() {
-            cm.PrestigeManagerView.openRefactionCongrats(H);
-            j(".prestigeCongratsModal .refactioncongrats a.reload").unbind("click").click(function() {
+    var n = function(H) {
+        var I = cm.PrestigeManagerModel.getPrestigeInfo("prestigeType");
+        B(H, function() {
+            cm.PrestigeManagerView.openRefactionCongrats(I);
+            k(".prestigeCongratsModal .refactioncongrats a.reload").unbind("click").click(function() {
                 cm.ModalManager.close()
             })
         })
     };
-    var c = function(G) {
-        A(G, function() {
+    var d = function(H) {
+        B(H, function() {
             cm.PrestigeManagerView.openReblessingCongrats()
         })
     };
-    var B = function(G) {
+    var C = function(H) {
         cm.log.l("cm.PrestigeManagerController:");
-        cm.log.l(G)
+        cm.log.l(H)
     };
-    var g = function(I, N, K) {
-        var G = "",
-            L = cm.BlessingSystemController.getSelectedBlessings(),
-            J = cm.BlessingSystemModel.getActiveBlessingNames(),
-            M = cm.BlessingSystemModel.getActiveBlessingDescriptions(),
-            O = seed.queue_sacr["city" + currentcityid],
-            H = unixtime();
-        G = '<div id="boosts_tooltip">' + i.boostTooltip_allBuildingsGainMight + '<br/><div class="effect"><b>' + i.boostTooltip_activeBlessings + ": </b></div><ul>";
-        j.each(L, function(Q, R) {
-            if (!R) {
+    var h = function(J, O, L) {
+        var H = "",
+            M = cm.BlessingSystemController.getSelectedBlessings(),
+            K = cm.BlessingSystemModel.getActiveBlessingNames(),
+            N = cm.BlessingSystemModel.getActiveBlessingDescriptions(),
+            P = seed.queue_sacr["city" + currentcityid],
+            I = unixtime();
+        H = '<div id="boosts_tooltip">' + j.boostTooltip_allBuildingsGainMight + '<br/><div class="effect"><b>' + j.boostTooltip_activeBlessings + ": </b></div><ul>";
+        k.each(M, function(R, S) {
+            if (!S) {
                 return
             }
-            var P = J[R],
-                S = M[R];
-            G += '<li class="blessing_ ' + R + '"><b>' + P + "</b><br/>" + S + "</li>"
+            var Q = K[S],
+                T = N[S];
+            H += '<li class="blessing_ ' + S + '"><b>' + Q + "</b><br/>" + T + "</li>"
         });
-        if (O.length > 0) {
-            G += "</ul>";
-            G += '<div class="effect"><b>' + g_js_strings.sacrifice_tooltip.active_rituals + " </b></div><ul>";
-            j.each(O, function(P, R) {
-                var Q = parseInt(R.eta, 10) - H,
-                    S = Math.round((R.multiplier[0] - 1) * 100),
-                    T = R.buffedUnitType[0];
-                G += "<li><b>" + g_js_strings.sacrifice_tooltip["unitdesc" + T].replace("%1$s", S) + "</b><br/>" + g_js_strings.sacrifice_tooltip.duration_left.replace("%1$s", timestr(Q)) + "</li>"
+        if (P.length > 0) {
+            H += "</ul>";
+            H += '<div class="effect"><b>' + g_js_strings.sacrifice_tooltip.active_rituals + " </b></div><ul>";
+            k.each(P, function(Q, S) {
+                var R = parseInt(S.eta, 10) - I,
+                    T = Math.round((S.multiplier[0] - 1) * 100),
+                    U = S.buffedUnitType[0];
+                H += "<li><b>" + g_js_strings.sacrifice_tooltip["unitdesc" + U].replace("%1$s", T) + "</b><br/>" + g_js_strings.sacrifice_tooltip.duration_left.replace("%1$s", timestr(R)) + "</li>"
             })
         }
-        G += "</ul></div>";
-        if (I.id == "maparea_boosts_prestige") {
-            showTooltip(G, I, N, K)
+        H += "</ul></div>";
+        if (J.id == "maparea_boosts_prestige") {
+            showTooltip(H, J, O, L)
         }
     };
-    var k = function() {
-        cm.BlessingSystemController.reset()
+    var l = function() {
+        cm.BlessingSystemController.reset();
+        cm.PrestigeManagerModel.reset()
     };
     return {
-        open: p,
-        initHud: h,
-        updateHud: q,
-        updateSeed: y,
-        onHudClick: o,
-        onBlessingSelected: l,
+        open: q,
+        initHud: i,
+        updateHud: r,
+        updateSeed: z,
+        onHudClick: p,
+        onBlessingSelected: m,
         onReblessingUse: b,
-        onRefactionUse: C,
-        onBoostsHover: g,
+        onRefactionUse: D,
+        onBoostsHover: h,
         onCloseClick: function() {
-            return k()
+            return l()
         }
     }
 }(jQuery);
 cm = cm || {};
-cm.PrestigeManagerModel = function(e) {
-    var C, p, b, i = null,
-        o = null,
-        h = {
+cm.PrestigeManagerModel = function(F) {
+    var o, h, q, N = null,
+        r = null,
+        z = null,
+        t = {}, g = null,
+        G = {
             overview: 0,
             create: 1,
             level: 2,
             refaction: 3,
             reblessing: 4
-        }, z = {
+        }, H = {
             1: true,
             2: true,
             3: true
         };
-    var x = function(F, E, D) {
-        C = F || currentcityid;
-        p = cm.PrestigeModel.getPrestigeInfo(C);
-        b = e.extend(true, p);
-        if (p.prestigeLevel >= cm.PrestigeModel.getLevelCapSoft() && e.inArray(E, ["refaction", "reblessing"]) < 0) {
-            E = "overview"
+    var u = function(S, R, Q) {
+        J(S);
+        if (h.prestigeLevel >= d() && F.inArray(R, ["refaction", "reblessing"]) < 0) {
+            R = "overview"
         }
-        switch (E) {
+        switch (R) {
         case "create":
-            b.prestigeLevel = 1;
-            b.prestigeType = 0;
-            b.blessings = [];
+            q.prestigeLevel = 1;
+            q.prestigeType = 0;
+            q.blessings = [];
             break;
         case "level":
-            b.prestigeLevel = parseInt(p.prestigeLevel) + 1;
+            q.prestigeLevel = parseInt(h.prestigeLevel) + 1;
             break;
         case "refaction":
-            b.prestigeType = 0;
-            b.blessings = [];
-            b.itemId = D.itemId || 0;
+            q.prestigeType = 0;
+            q.blessings = [];
+            q.itemId = Q.itemId || 0;
             break;
         case "reblessing":
-            b.blessings = [];
-            b.itemId = D.itemId || 0;
+            q.blessings = [];
+            q.itemId = Q.itemId || 0;
             break;
         case "overview":
         default:
-            E = "overview";
+            R = "overview";
             break
         }
-        b.action = E
+        q.action = R
     };
-    var B = function(D) {
-        if (D && b && typeof b[D] !== "undefined") {
-            return b[D]
+    var b = function(Q) {
+        if (Q && q && typeof q[Q] !== "undefined") {
+            return q[Q]
         } else {
-            if (D === "cityId") {
-                return C
+            if (Q === "cityId") {
+                return o
             }
         }
-        return b
+        return q
     };
-    var s = function(D, F) {
-        var E = b.action,
-            G = {
-                action: h[E] || 1,
-                cid: C,
-                prestigeLevel: b.prestigeLevel,
-                prestigeType: b.prestigeType,
-                blessings: b.blessings.join(",")
+    var I = function(Q, T, R) {
+        var S = q.action,
+            U = {
+                action: G[S] || 1,
+                cid: o,
+                prestigeLevel: q.prestigeLevel,
+                prestigeType: q.prestigeType,
+                blessings: q.blessings.join(",")
             };
-        if (e.inArray(E, ["reblessing", "refaction"]) > -1) {
-            G.itemId = b.itemId
+        if (F.inArray(S, ["reblessing", "refaction"]) > -1) {
+            U.itemId = q.itemId
         } else {
-            G.cost = a()
+            U.cost = L()
         }
-        AjaxCall.gPostRequest("ajax/createPrestigeCity.php", G, D, F)
+        U.paymentType = "gems";
+        if (typeof R !== "undefined" && R.paymentType === "crystals") {
+            U.paymentType = R.paymentType;
+            U.crystalId = D();
+            U.cost = i();
+            n({
+                paymentType: U.paymentType,
+                paymentCost: U.cost,
+                paymentItem: U.crystalId
+            })
+        } else {
+            n({
+                paymentType: U.paymentType,
+                paymentCost: U.cost
+            })
+        }
+        AjaxCall.gPostRequest("ajax/createPrestigeCity.php", U, Q, T)
     };
-    var u = function() {
-        return z
+    var J = function(Q) {
+        o = Q || currentcityid;
+        h = cm.PrestigeModel.getPrestigeInfo(o);
+        q = F.extend(true, h)
     };
-    var n = function() {
-        return parseInt(cm.PrestigeModel.getCityValue(C))
+    var k = function() {
+        return H
     };
-    var g = function(D) {
-        if (g_env === "dev" && e._GET("test") && e._GET("cityValueMin")) {
-            return e._GET("cityValueMin")
+    var d = function() {
+        var Q = cm.PrestigeModel.factionClasses[b("prestigeType")];
+        return cm.PrestigeModel.getLevelCapSoft(Q)
+    };
+    var P = function() {
+        return parseInt(cm.PrestigeModel.getCityValue(o))
+    };
+    var A = function(Q) {
+        if (g_env === "dev" && F._GET("test") && F._GET("cityValueMin")) {
+            return F._GET("cityValueMin")
         }
         if (cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")) {
-            return cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[D] ? parseInt(cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[D]["min"]) : 999999
+            return cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[Q] ? parseInt(cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[Q]["min"]) : 999999
         }
     };
-    var f = function(D) {
-        if (g_env === "dev" && e._GET("test") && e._GET("cityValueMax")) {
-            return e._GET("cityValueMax")
+    var l = function(Q) {
+        if (g_env === "dev" && F._GET("test") && F._GET("cityValueMax")) {
+            return F._GET("cityValueMax")
         }
         if (cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")) {
-            return cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[D] ? parseInt(cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[D]["max"]) : 9999999
+            return cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[Q] ? parseInt(cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[Q]["max"]) : 9999999
         }
     };
-    var q = function(D) {
-        D = +D || b.prestigeType || 0;
-        if (u()[D]) {
-            b.prestigeType = D;
+    var e = function(Q) {
+        Q = +Q || q.prestigeType || 0;
+        if (k()[Q]) {
+            q.prestigeType = Q;
             return true
         }
         return false
     };
-    var j = function(D) {
-        if (e.isArray(D)) {
-            b.blessings = D;
+    var p = function(Q) {
+        q.prestigeLevel = +Q || 0
+    };
+    var M = function(Q) {
+        if (F.isArray(Q)) {
+            q.blessings = Q;
             return true
         } else {
             return false
         }
     };
-    var a = function(D) {
-        D = D || b.action;
-        var E = "--";
-        switch (D) {
+    var L = function(Q) {
+        Q = Q || q.action;
+        var R = "--";
+        switch (Q) {
         case "refaction":
         case "reblessing":
-            E = null;
+            R = null;
             break;
         case "level":
         case "create":
-            E = d();
+            R = O();
             break
         }
-        return E
+        return R
     };
-    var A = function(D) {
-        r(null);
+    var K = function(Q) {
+        x(null);
         AjaxCall.gPostRequest("ajax/getPrestigeCost.php", {
             cid: currentcityid,
-            prestigeType: "1"
-        }, function(E) {
-            cm.PrestigeManagerModel.setPrestigeCost(E.cost);
-            cm.PrestigeManagerModel.setPrestigeOriginalCost(E.original_cost);
-            D(E)
+            prestigeType: cm.PrestigeModel.getPrestigeFaction()
+        }, function(R) {
+            cm.PrestigeManagerModel.setPrestigeCost(R.cost);
+            cm.PrestigeManagerModel.setPrestigeOriginalCost(R.original_cost);
+            if (typeof R.crystal_cost !== "undefined") {
+                cm.PrestigeManagerModel.setCrystalCost(R.crystal_cost, R.crystal_id)
+            }
+            Q(R)
         })
     };
-    var r = function(D) {
-        i = D
+    var w = function(R, Q) {
+        r = R;
+        z = Q
     };
-    var d = function() {
-        var J = "--";
-        if (i !== null) {
-            J = i
+    var x = function(Q) {
+        N = Q
+    };
+    var i = function() {
+        return r
+    };
+    var c = function() {
+        var Q = 0;
+        if (z !== null && typeof seed.items["i" + z] !== "undefined") {
+            Q = parseInt(seed.items["i" + z])
+        }
+        return Q
+    };
+    var D = function() {
+        return z
+    };
+    var O = function() {
+        var W = "--";
+        if (N !== null) {
+            W = N
         } else {
-            var I = +p.prestigeLevel || 0,
-                G = I + 1,
-                D = cm.PrestigeModel.getCityValue(C),
-                E = g(G),
-                F = f(G),
-                H = v();
-            if (D >= E) {
-                J = Math.max(Math.floor((F - D) * (H / (F - E))), 0)
+            var V = +h.prestigeLevel || 0,
+                T = V + 1,
+                Q = cm.PrestigeModel.getCityValue(o),
+                R = A(T),
+                S = l(T),
+                U = E();
+            if (Q >= R) {
+                W = Math.max(Math.floor((S - Q) * (U / (S - R))), 0)
             }
         }
-        return J
+        return W
     };
-    var m = function(D) {
-        o = D
+    var y = function(Q) {
+        g = Q
     };
-    var v = function() {
-        var F = "--",
-            E = +p.prestigeLevel || 0,
-            D = E + 1;
-        if (o !== null) {
-            F = o
+    var E = function() {
+        var S = "--",
+            R = +h.prestigeLevel || 0,
+            Q = R + 1;
+        if (g !== null) {
+            S = g
         } else {
             if (cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")) {
-                return cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[D] ? parseInt(cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[D]["cost"]) : 9999999
+                return cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[Q] ? parseInt(cm.WorldSettings.getSettingAsObject("ASCENSION_REQS_DRUID")[Q]["cost"]) : 9999999
             }
         }
-        return F
+        return S
     };
-    var w = function() {
-        var I = B("action"),
-            D = e.inArray(I, ["create", "level", "refaction", "reblessing"]) > -1,
-            G = e.inArray(I, ["refaction", "reblessing"]) > -1,
-            H = B("prestigeLevel") > 0,
-            F = B("prestigeType") > 0,
-            E = cm.BlessingSystemController.areAllSlotsSet();
-        return (G || y()) && D && H && F && E
+    var B = function() {
+        var V = b("action"),
+            Q = F.inArray(V, ["create", "level", "refaction", "reblessing"]) > -1,
+            T = F.inArray(V, ["refaction", "reblessing"]) > -1,
+            U = b("prestigeLevel") > 0,
+            S = b("prestigeType") > 0,
+            R = cm.BlessingSystemController.areAllSlotsSet();
+        return (T || j()) && Q && U && S && R
     };
-    var l = function() {
+    var v = function() {
         if (!seed.cityData.city[currentcityid].prestigeInfo || !seed.cityData.city[currentcityid].prestigeInfo.prestigeLevel) {
             return 1
         }
         return parseInt(seed.cityData.city[currentcityid].prestigeInfo.prestigeLevel) + 1
     };
-    var t = function(E) {
-        E = E || cm.PrestigeManagerModel.getPrestigeInfo("cityId") || currentcityid;
-        var D = cm.PrestigeModel.getPrestigeLevel(E);
-        return D >= cm.PrestigeModel.getLevelCapSoft()
+    var C = function(S) {
+        S = S || cm.PrestigeManagerModel.getPrestigeInfo("cityId") || currentcityid;
+        var R = cm.PrestigeModel.getPrestigeLevel(S),
+            Q = cm.PrestigeModel.getPrestigeFaction(S);
+        return R >= cm.PrestigeModel.getLevelCapSoft(Q)
     };
-    var y = function(G) {
-        G = G || B("cityId");
-        var F = l();
-        var D = n(),
-            E = g(F);
-        return D >= E && !t()
+    var j = function(T) {
+        T = T || b("cityId");
+        var S = v();
+        var Q = P(),
+            R = A(S);
+        return Q >= R && !C()
     };
-    var k = function() {
-        var D = B("action");
-        return cm.Gems.count() >= +a(D)
+    var a = function() {
+        var R = false;
+        if (z !== null && r !== null) {
+            var Q = parseInt(seed.items["i" + z]);
+            var S = parseInt(r);
+            if (Q >= S) {
+                R = true
+            }
+        }
+        return R
     };
-    var c = function() {
-        var E = (p.prestigeType !== b.prestigeType),
-            D = false;
-        e.each(b.blessings, function(G, F) {
-            if (F !== p.blessings[G]) {
+    var s = function() {
+        var Q = b("action");
+        return cm.Gems.count() >= +L(Q)
+    };
+    var m = function() {
+        return t
+    };
+    var n = function(Q) {
+        t = Q
+    };
+    var f = function() {
+        var R = (h.prestigeType !== q.prestigeType),
+            Q = false;
+        F.each(q.blessings, function(T, S) {
+            if (S !== h.blessings[T]) {
                 isBlessingChanged = true
             }
         });
-        return E || D
+        return R || Q
     };
     return {
-        init: x,
-        getPrestigeInfo: B,
-        getAvailableFactions: u,
-        getCityValue: n,
-        getCityValueMin: g,
-        getCityValueMax: f,
-        setFaction: q,
-        setBlessings: j,
-        getCostByAction: a,
-        isPrestigeInfoReady: w,
-        isMaxLevel: t,
-        isCityValueQualified: y,
-        isAffordable: k,
-        isEdited: c,
-        save: s,
-        initPrestigeCost: A,
-        setPrestigeCost: r,
-        setPrestigeOriginalCost: m,
-        getPrestigeOriginalCost: v
+        init: u,
+        getPrestigeInfo: b,
+        getAvailableFactions: k,
+        getLevelCapSoft: d,
+        getCityValue: P,
+        getCityValueMin: A,
+        getCityValueMax: l,
+        setFaction: e,
+        setLevel: p,
+        setBlessings: M,
+        getCostByAction: L,
+        isPrestigeInfoReady: B,
+        isMaxLevel: C,
+        isCityValueQualified: j,
+        isAffordable: s,
+        isAffordableCrystals: a,
+        isEdited: f,
+        getLastPrestigePayment: m,
+        setLastPrestigePayment: n,
+        save: I,
+        reset: J,
+        initPrestigeCost: K,
+        setCrystalCost: w,
+        getCrystalCost: i,
+        getCrystalStock: c,
+        getCrystalID: D,
+        setPrestigeCost: x,
+        setPrestigeOriginalCost: y,
+        getPrestigeOriginalCost: E
     }
 }(jQuery);
 cm = cm || {};
-cm.PrestigeManagerView = function(e) {
-    var p = g_js_strings.prestige,
-        x = g_js_strings.commonstr;
-    var s = function() {
-        var y = localStorage.getItem("prestigeHud");
-        if (y === null) {
-            y = 1;
+cm.PrestigeManagerView = function(f) {
+    var q = g_js_strings.prestige,
+        y = g_js_strings.commonstr;
+    var t = function() {
+        var z = localStorage.getItem("prestigeHud");
+        if (z === null) {
+            z = 1;
             localStorage.setItem("prestigeHud", 1)
         }
-        if (+y === 0) {
-            e("#mod_citylist").removeClass("expand")
+        if (+z === 0) {
+            f("#mod_citylist").removeClass("expand")
         } else {
-            e("#mod_citylist").addClass("expand")
+            f("#mod_citylist").addClass("expand")
         }
     };
-    var u = function() {
-        var y = localStorage.getItem("prestigeHud");
-        e("#mod_citylist").animate({
-            height: +y === 0 ? "+=26" : "-=26"
+    var v = function() {
+        var z = localStorage.getItem("prestigeHud");
+        f("#mod_citylist").animate({
+            height: +z === 0 ? "+=26" : "-=26"
         }, {
             duration: 26,
             easing: "easeOutCirc",
-            step: function(z, A) {
-                e("#mod_maparea .announcementContainer").css("top", - (z - 6))
+            step: function(A, B) {
+                f("#mod_maparea .announcementContainer").css("top", - (A - 6))
             },
             complete: function() {
-                if (+y === 0) {
-                    e("#mod_citylist").addClass("expand")
+                if (+z === 0) {
+                    f("#mod_citylist").addClass("expand")
                 } else {
-                    e("#mod_citylist").removeClass("expand")
+                    f("#mod_citylist").removeClass("expand")
                 }
-                e("#mod_maparea .announcementContainer").css("top", - (parseInt(e("#mod_citylist").css("height")) - 6));
-                localStorage.setItem("prestigeHud", e("#mod_citylist").hasClass("expand") ? 1 : 0)
+                f("#mod_maparea .announcementContainer").css("top", - (parseInt(f("#mod_citylist").css("height")) - 6));
+                localStorage.setItem("prestigeHud", f("#mod_citylist").hasClass("expand") ? 1 : 0)
             }
         })
     };
     var a = function() {
-        return f("hudProgressBar", {
+        return g("hudProgressBar", {
             buttonLabel: '<span id="hud_prestige_button"></span>'
         })
     };
-    var l = function(z, A, B) {
-        var C = 378,
-            y = Math.min(Math.floor((z / B) * C), C);
+    var m = function(A, B, C) {
+        var D = 378,
+            z = Math.min(Math.floor((A / C) * D), D);
         if (cm.PrestigeManagerModel.isMaxLevel(currentcityid)) {
-            y = 0;
-            e("#hud_prestige_bar").removeClass("eligible");
-            e("#hud_prestige_button").html(x.status)
+            z = 0;
+            f("#hud_prestige_bar").removeClass("eligible");
+            f("#hud_prestige_button").html(y.status)
         } else {
-            if (z >= A && !cm.PrestigeManagerModel.isMaxLevel(currentcityid)) {
-                e("#hud_prestige_bar").addClass("eligible");
-                e("#hud_prestige_button").html(x.prestige)
+            if (A >= B && !cm.PrestigeManagerModel.isMaxLevel(currentcityid)) {
+                f("#hud_prestige_bar").addClass("eligible");
+                f("#hud_prestige_button").html(y.prestige)
             } else {
-                e("#hud_prestige_bar").removeClass("eligible");
-                e("#hud_prestige_button").html(x.status)
+                f("#hud_prestige_bar").removeClass("eligible");
+                f("#hud_prestige_button").html(y.status)
             }
         }
-        e("#hud_prestige_bar_progress").css("width", y);
-        e("#hud_prestige_bar_status").unbind("mouseenter").mouseenter(function(D) {
-            D.stopPropagation();
-            Tooltip.show(D, "<div>" + p.cityValueDesc + "</div>", [-350, 90])
+        f("#hud_prestige_bar_progress").css("width", z);
+        f("#hud_prestige_bar_status").unbind("mouseenter").mouseenter(function(E) {
+            E.stopPropagation();
+            Tooltip.show(E, "<div>" + q.cityValueDesc + "</div>", [-350, 90])
         })
     };
-    var v = function(A, B, z) {
-        B = +B || 0;
-        var y = cm.FactionSelectionView.renderFactionSelection(A, B, z);
-        if (z === "create") {
-            y += k(z)
+    var w = function(C, B, A) {
+        f.each(B, function(D, E) {
+            B[D] = +E || 0
+        });
+        var z = cm.FactionSelectionView.renderFactionSelection(C, B, A);
+        if (A === "create") {
+            z += l(A)
         }
         c({
-            title: (z === "create") ? p.prestigeYourCity : p.selectFaction,
-            body: y
+            title: (A === "create") ? q.prestigeYourCity : q.selectFaction,
+            body: z
         })
     };
-    var t = function(E, z, D, A) {
-        D = +D || 0;
-        A = A || "overview";
-        var C = cm.PrestigeModel.factionClasses[z],
-            B = p.selectBlessings,
-            y = f("blessingSelection", {
-                factionClass: C,
-                factionLabel: x[C],
-                description: p[C + "_tagline"],
-                subDescription: p[C + "_description"],
-                blessingsLabel: x.blessings,
+    var u = function(F, A, E, B) {
+        E = +E || 0;
+        B = B || "overview";
+        var D = cm.PrestigeModel.factionClasses[A],
+            C = q.selectBlessings,
+            z = g("blessingSelection", {
+                factionClass: D,
+                factionLabel: y[D],
+                description: q[D + "_tagline"],
+                subDescription: q[D + "_description"],
+                blessingsLabel: y.blessings,
                 respecButton: "",
                 refactionButton: "",
-                blessingsDescription: p.blessingsDescription,
-                blessings: cm.BlessingSystemView.render(E, true),
-                level: x.level,
-                cityValueBar: k(A)
+                blessingsDescription: q.blessingsDescription,
+                blessings: cm.BlessingSystemView.render(F, true),
+                level: y.level,
+                cityValueBar: l(B)
             });
         c({
-            title: B,
-            body: y
+            title: C,
+            body: z
         })
     };
-    var q = function() {
-        var B = p.revisedDiplomacy_info,
-            A = [p.revisedDiplomacy_bullet_1, p.revisedDiplomacy_bullet_2],
-            z = "",
-            y = "";
-        e.each(A, function(D, C) {
-            z += "<li>" + C + "</li>"
+    var r = function() {
+        var C = q.revisedDiplomacy_info,
+            B = [q.revisedDiplomacy_bullet_1, q.revisedDiplomacy_bullet_2],
+            A = "",
+            z = "";
+        f.each(B, function(E, D) {
+            A += "<li>" + D + "</li>"
         });
-        y = f("refactionInfo", {
-            description: B,
-            bulletPoints: z,
-            buttonText: x.continuex
-        });
-        cm.ModalManager.addMedium({
-            "class": "prestigeConfirmModal",
-            title: p.revisedDiplomacy,
-            body: y,
-            top: 135
-        })
-    };
-    var h = function() {
-        var y = f("refactionDuplicate", {
-            areYouSure: p.revisedDiplomacyDuplicate,
-            cancelLabel: x.cancel,
-            yesLabel: x.yes
+        z = g("refactionInfo", {
+            description: C,
+            bulletPoints: A,
+            buttonText: y.continuex
         });
         cm.ModalManager.addMedium({
             "class": "prestigeConfirmModal",
-            title: x.warning,
-            body: y,
+            title: q.revisedDiplomacy,
+            body: z,
             top: 135
         })
     };
-    var b = function(z) {
-        var y = "",
-            A;
-        switch (z) {
+    var i = function() {
+        var z = g("refactionDuplicate", {
+            areYouSure: q.revisedDiplomacyDuplicate,
+            cancelLabel: y.cancel,
+            yesLabel: y.yes
+        });
+        cm.ModalManager.addMedium({
+            "class": "prestigeConfirmModal",
+            title: y.warning,
+            body: z,
+            top: 135
+        })
+    };
+    var e = function() {
+        var z = g("refactionDuplicate", {
+            areYouSure: q.revisedDiplomacyLevelDiscrepancy,
+            cancelLabel: y.cancel,
+            yesLabel: y.yes
+        });
+        cm.ModalManager.addMedium({
+            "class": "prestigeConfirmModal",
+            title: y.warning,
+            body: z,
+            top: 135
+        })
+    };
+    var b = function(A) {
+        var z = "",
+            B;
+        switch (A) {
         case 1:
-            y = p.revisedDiplomacyCongratsDruid;
+            z = q.revisedDiplomacyCongratsDruid;
             break;
         case 2:
-            y = p.revisedDiplomacyCongratsFey;
+            z = q.revisedDiplomacyCongratsFey;
             break;
         case 3:
-            y = p.revisedDiplomacyCongratsBriton;
+            z = q.revisedDiplomacyCongratsBriton;
             break
         }
-        A = cm.PrestigeModel.factionClasses[z], body = f("congrats", {
+        B = cm.PrestigeModel.factionClasses[A], body = g("congrats", {
             action: "refaction",
-            faction: A,
-            headline: y,
-            contentDescription: '<a class="buttonv2 h20 blue reload">' + p.revisedDiplomacyCongratsOK + "</a>"
+            faction: B,
+            headline: z,
+            contentDescription: '<a class="buttonv2 h20 blue reload">' + q.revisedDiplomacyCongratsOK + "</a>"
         });
         cm.ModalManager.addMedium({
             "class": "prestigeCongratsModal",
-            title: p.revisedDiplomacyCongratsTitle,
+            title: q.revisedDiplomacyCongratsTitle,
             body: body,
             close: function() {
                 cm.ModalManager.closeAll()
             }
         })
     };
-    var o = function() {
-        var y = f("prestigeConfirm", {
+    var p = function(A) {
+        var C = "little_gem";
+        var B = cm.PrestigeManagerModel.getCostByAction();
+        if (typeof A !== "undefined" && A.paymentType === "crystals") {
+            B = cm.PrestigeManagerModel.getCrystalCost();
+            C = "little_crystal"
+        }
+        var z = g("prestigeConfirm", {
             lastBlessing: cm.BlessingSystemView.renderLastSelectedBlessing(),
             youChoseBlessingText: (g_js_strings.prestige.youhave + " %1$s " + g_js_strings.prestige.blessing + ".").replace("%1$s", cm.BlessingSystemModel.getLastAvailableBlessingName()),
             youAlsoGetText: g_js_strings.prestige.youalsoget + "<span class='normal'> " + g_js_strings.prestige.youalsoget2 + "</span><br><span class='italic'>" + g_js_strings.prestige.youalsoget3 + "</span>",
             disclaimer: g_js_strings.prestige.disclaimer,
-            gems: cm.PrestigeManagerModel.getCostByAction(),
+            gems: B,
+            gemClass: C,
             button: '<a class="gemButtonv2" id="prestige_manager_confirm">' + g_js_strings.prestige.confirm + "</a>"
         });
         cm.ModalManager.addMedium({
             "class": "prestigeConfirmModal",
             title: g_js_strings.prestige.finalConfirmation,
-            body: y
+            body: z
         })
     };
-    var m = function(z) {
-        var A = cm.PrestigeModel.factionClasses[z],
-            y = f("congrats", {
-                faction: A,
-                headline: p.yourCityIsNow.replace("%1$s", x[A]),
-                contentHeader: p.allocateYourResources,
-                contentDescription: p.allocateYourResourcesDescription
+    var n = function(A) {
+        var B = cm.PrestigeModel.factionClasses[A],
+            z = g("congrats", {
+                faction: B,
+                headline: q.yourCityIsNow.replace("%1$s", y[B]),
+                contentHeader: q.allocateYourResources,
+                contentDescription: q.allocateYourResourcesDescription
             });
         cm.ModalManager.addMedium({
             "class": "prestigeCongratsModal",
-            title: x.congratulationsexc,
-            body: y
+            title: y.congratulationsexc,
+            body: z
         })
     };
-    var n = function() {
+    var o = function() {
         cm.ModalManager.alert({
             button_text: g_js_strings.commonstr.ok,
-            text: p.reblessCongrats,
+            text: q.reblessCongrats,
             close: function() {
                 cm.ModalManager.closeAll()
             },
@@ -75134,173 +75673,199 @@ cm.PrestigeManagerView = function(e) {
             }
         })
     };
-    var g = function() {
-        return f("progressContainer", {
+    var h = function() {
+        return g("progressContainer", {
             status: "You shall not pass",
-            cityValueLabel: x.cityvalue,
-            qualifyLabel: x.qualify,
-            quarterOff: x.percentoff.replace("%1$s", "25"),
-            halfOff: x.percentoff.replace("%1$s", "50"),
-            threeQuartersOff: x.percentoff.replace("%1$s", "75"),
-            freeLabel: x.free,
-            originalPriceLabel: p.originalPrice
+            cityValueLabel: y.cityvalue,
+            qualifyLabel: y.qualify,
+            quarterOff: y.percentoff.replace("%1$s", "25"),
+            halfOff: y.percentoff.replace("%1$s", "50"),
+            threeQuartersOff: y.percentoff.replace("%1$s", "75"),
+            freeLabel: y.free,
+            originalPriceLabel: q.originalPrice,
+            crystalPriceLabel: g_js_strings.prestige.crystalDescription,
         })
     };
-    var k = function(z) {
-        var y = e.inArray(z, ["reblessing", "refaction"]) < 0;
-        return f("cityValueBar", {
-            cityValueClasses: y ? "submit" : "submit_only",
-            progressContainer: y ? g() : "",
-            actionButton: '<a class="gemButtonv2" id="prestige_manager_submit">Prestige --</a> '
+    var l = function(A) {
+        var z = f.inArray(A, ["reblessing", "refaction"]) < 0;
+        return g("cityValueBar", {
+            cityValueClasses: z ? "submit" : "submit_only",
+            progressContainer: z ? h() : "",
+            actionButton: '<a class="gemButtonv2" id="prestige_manager_submit">Prestige --</a> ',
+            actionSplitter: g_js_strings.prestige.actionSplitter,
+            actionButton2: '<a class="gemButtonv2" id="prestige_manager_submit_crystals">Prestige --</a> '
         })
     };
-    var w = function(y) {
-        e("#prestige_manager_status").html(y)
+    var x = function(z) {
+        f("#prestige_manager_status").html(z)
     };
-    var j = function(z, D, C, A, B) {
-        var y = "";
-        z = z || "";
-        D = D;
-        if (false) {
-            e("#prestige_manager_city_value").removeClass("submit");
-            return
-        }
-        if (C !== null) {
-            e("#prestige_manager_original_price").css("display", "block");
-            e("#prestige_manager_original_price .gem").html(C)
+    var k = function(E, A, D, F, C) {
+        var H = "";
+        var B = ' <span class="gems">' + (cm.PrestigeManagerModel.getCrystalCost() === null ? "?" : cm.PrestigeManagerModel.getCrystalCost()) + "</span>";
+        E = E || "";
+        A = A;
+        if (D !== null) {
+            f("#prestige_manager_original_price").css("display", "inline-block");
+            f("#prestige_manager_original_price .gem").html(D)
         } else {
-            e("#prestige_manager_original_price").css("display", "none");
-            e("#prestige_manager_original_price .gem").html("/roll it")
+            f("#prestige_manager_original_price").css("opacity", "0");
+            f("#prestige_manager_original_price .gem").html("?")
         }
-        e("#prestige_manager_city_value").addClass("submit");
-        if (D !== null && parseInt(D) >= 0) {
-            y = ' <span class="gems">' + D + "</span>"
+        f("#prestige_manager_crystal_price .gem").html('<span class="gems">' + cm.PrestigeManagerModel.getCrystalStock() + "</span>");
+        f("#prestige_manager_city_value").addClass("submit");
+        if (A !== null && parseInt(A) >= 0) {
+            H = ' <span class="gems">' + A + "</span>"
         }
-        e("#prestige_manager_submit").html(z + y);
-        if (A) {
-            if (D === null) {
-                e("#prestige_manager_submit").addClass("blue").removeClass("gray").removeClass("green")
+        f("#prestige_manager_submit").html(E + H);
+        f("#prestige_manager_submit_crystals").html(E + B);
+        if (F) {
+            if (A === null) {
+                f("#prestige_manager_submit").addClass("blue").removeClass("gray").removeClass("green")
             } else {
-                e("#prestige_manager_submit").addClass("green").removeClass("gray").removeClass("blue")
+                f("#prestige_manager_submit").addClass("green").removeClass("gray").removeClass("blue")
+            }
+            if (!cm.PrestigeManagerModel.isAffordableCrystals()) {
+                f("#prestige_manager_submit_crystals").addClass("gray").removeClass("blue")
+            } else {
+                f("#prestige_manager_submit_crystals").addClass("blue").removeClass("gray")
             }
         } else {
-            e("#prestige_manager_submit").addClass("gray").removeClass("green").removeClass("blue")
+            f("#prestige_manager_submit").addClass("gray").removeClass("green").removeClass("blue");
+            f("#prestige_manager_submit_crystals").addClass("gray").removeClass("blue")
         }
-        e("#prestige_manager_submit").unbind("mouseenter");
-        if (typeof B === "string") {
-            e("#prestige_manager_submit").bind("mouseenter", function(E) {
-                B = B == "h@x0rZ" ? "" : B;
-                Tooltip.show(E, B)
+        f("#prestige_manager_submit").unbind("mouseenter");
+        f("#prestige_manager_submit_crystals").unbind("mouseenter");
+        var G = cm.PrestigeManagerModel.getCrystalCost() || "?";
+        var z = cm.PrestigeManagerModel.getCrystalID() ? itemlist["i" + cm.PrestigeManagerModel.getCrystalID()].name : "?";
+        cm.Tooltip.setTooltip({
+            htmlElement: jQuery("#prestige_manager_crystal_price_text"),
+            tooltip: g_js_strings.prestige.crystalTooltip.replace("%1$s", G).replace("%2$s", z)
+        });
+        if (typeof C === "string") {
+            f("#prestige_manager_submit").bind("mouseenter", function(I) {
+                C = C == "h@x0rZ" ? "" : C;
+                Tooltip.show(I, C)
+            });
+            f("#prestige_manager_submit_crystals").bind("mouseenter", function(I) {
+                C = C == "h@x0rZ" ? "" : C;
+                if (C === g_js_strings.prestige.youcanprest && !cm.PrestigeManagerModel.isAffordableCrystals()) {
+                    C = g_js_strings.prestige.crystalTooltip.replace("%1$s", G).replace("%2$s", z)
+                }
+                Tooltip.show(I, C)
             })
         }
     };
-    var d = function(y, A, z) {
+    var d = function(z, B, A) {
         if (cm.PrestigeManagerModel.isMaxLevel()) {
-            y = 0;
-            e("#prestige_manager_city_value").removeClass("eligible");
-            e("#prestige_manager_city_value .city_value_label").html(x.cityvalue)
+            z = 0;
+            f("#prestige_manager_city_value").removeClass("eligible");
+            f("#prestige_manager_city_value .city_value_label").html(y.cityvalue)
         } else {
-            if (y >= A) {
-                e("#prestige_manager_city_value").addClass("eligible");
-                e("#prestige_manager_city_value .city_value_label").html(x.cityvalue)
+            if (z >= B) {
+                f("#prestige_manager_city_value").addClass("eligible");
+                f("#prestige_manager_city_value .city_value_label").html(y.cityvalue)
             } else {
-                e("#prestige_manager_city_value").removeClass("eligible");
-                e("#prestige_manager_city_value .city_value_label").html(x.cityvalue + ": " + y)
+                f("#prestige_manager_city_value").removeClass("eligible");
+                f("#prestige_manager_city_value .city_value_label").html(y.cityvalue + ": " + z)
             }
         }
-        e("#prestige_manager_progress").css("width", r(y, A, z));
-        e("#prestige_manager_progress_hover").unbind("mouseenter").mouseenter(function(B) {
-            B.stopPropagation();
-            if (!e(this).hasClass("tick_labels") && !e(this).hasClass("tick_label")) {
-                Tooltip.show(B, "<div>" + p.cityValueDesc + "</div>", [-465, 80])
+        f("#prestige_manager_progress").css("width", s(z, B, A));
+        f("#prestige_manager_progress_hover").unbind("mouseenter").mouseenter(function(C) {
+            C.stopPropagation();
+            if (!f(this).hasClass("tick_labels") && !f(this).hasClass("tick_label")) {
+                Tooltip.show(C, "<div>" + q.cityValueDesc + "</div>", [-465, 80])
             }
         })
     };
-    var r = function(F, E, I) {
-        var y = 0,
-            z = 173,
-            C = 601,
-            J = C - z,
-            G, B, D, H, A;
-        if (F < E) {
-            G = F / E;
-            y = G * z
+    var s = function(G, F, J) {
+        var z = 0,
+            A = 173,
+            D = 601,
+            K = D - A,
+            H, C, E, I, B;
+        if (G < F) {
+            H = G / F;
+            z = H * A
         } else {
-            B = I - E;
-            D = F - E;
-            H = D / B;
-            y = z + H * J
+            C = J - F;
+            E = G - F;
+            I = E / C;
+            z = A + I * K
         }
-        return y
+        return z
     };
-    var i = function(F, y, E) {
-        var D = new Array(),
-            A, C, z = {}, B;
-        C = (F.id == "maparea_boosts_throneroom") ? seed.throne.slotEquip[seed.throne.activeSlot] : seed.throne.slotEquip[+(F.innerHTML)];
-        e.each(C, function(G, H) {
-            B = kocThroneItems[H];
-            z[B.id] = B
+    var j = function(G, z, F) {
+        var E = new Array(),
+            B, D, A = {}, C;
+        D = (G.id == "maparea_boosts_throneroom") ? seed.throne.slotEquip[seed.throne.activeSlot] : seed.throne.slotEquip[+(G.innerHTML)];
+        f.each(D, function(H, I) {
+            C = kocThroneItems[I];
+            A[C.id] = C
         });
-        A = getStats(z);
-        D.push("<div id='boosts_tooltip'><b>" + g_js_strings.commonstr.throneroom + "</b><br/><br/>");
-        if (A.length <= 0 || e.isEmptyObject(A)) {
-            D.push("<div>" + g_js_strings.throneRoom.empty_preset + "</div>")
+        B = getStats(A);
+        E.push("<div id='boosts_tooltip'><b>" + g_js_strings.commonstr.throneroom + "</b><br/><br/>");
+        if (B.length <= 0 || f.isEmptyObject(B)) {
+            E.push("<div>" + g_js_strings.throneRoom.empty_preset + "</div>")
         } else {
-            e.each(A, function(G, H) {
-                D.push("<div>" + H.percent + "% " + H.name) + "</div>"
+            f.each(B, function(H, I) {
+                E.push("<div>" + I.percent + "% " + I.name) + "</div>"
             })
         }
-        D.push("</div>");
-        if (F.id == "maparea_boosts_throneroom") {
-            showTooltip(D.join(""), F, y, E)
+        E.push("</div>");
+        if (G.id == "maparea_boosts_throneroom") {
+            showTooltip(E.join(""), G, z, F)
         } else {
-            Tooltip.show(y, D.join(""), [10, 10], null)
+            Tooltip.show(z, E.join(""), [10, 10], null)
         }
     };
-    var f = function(y, z) {
-        return cm.Template.renderTemplate("PrestigeManager", y, z)
+    var g = function(z, A) {
+        return cm.Template.renderTemplate("PrestigeManager", z, A)
     };
-    var c = function(z) {
-        var y = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
+    var c = function(A) {
+        var z = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
             gem: cm.Gems.count(),
-            primaryTitle: z.title
+            primaryTitle: A.title
         });
-        if (e(".prestigeManagerModal").length > 0) {
-            e(".prestigeManagerModal .primarytitlebar .title").html(z.title);
-            e(".prestigeManagerModal .primarycontent").html(z.body)
+        if (f(".prestigeManagerModal").length > 0) {
+            f(".prestigeManagerModal .primarytitlebar .title").html(A.title);
+            f(".prestigeManagerModal .primarycontent").html(A.body)
         } else {
-            z = e.extend(z, {
-                title: y,
+            A = f.extend(A, {
+                title: z,
                 "class": "prestigeManagerModal",
                 close: cm.PrestigeManagerController.onCloseClick
             });
-            cm.ModalManager.addLarge(z);
-            e(".gemContainer .green").unbind("click").bind("click", modal_getgems)
+            cm.ModalManager.addLarge(A);
+            f(".gemContainer .green").unbind("click").bind("click", modal_getgems)
         }
     };
     return {
-        initHud: s,
-        toggleHud: u,
+        initHud: t,
+        toggleHud: v,
         renderHud: a,
-        updateHud: l,
-        openFactionSelection: v,
-        openBlessingsOverview: t,
-        openConfirmPrestige: o,
-        openRefactionInfo: q,
-        openRefactionDuplicate: h,
+        updateHud: m,
+        openFactionSelection: w,
+        openBlessingsOverview: u,
+        openConfirmPrestige: p,
+        openRefactionInfo: r,
+        openRefactionDuplicate: i,
+        openRefactionLevelDiscrepancy: e,
         openRefactionCongrats: b,
-        openCongrats: m,
-        openReblessingCongrats: n,
-        updateCityValueBarStatus: w,
+        openCongrats: n,
+        openReblessingCongrats: o,
+        updateCityValueBarStatus: x,
         updateCityValueProgress: d,
-        updateSubmitButton: j,
-        boostsTooltip: i
+        updateSubmitButton: k,
+        boostsTooltip: j
     }
 }(jQuery);
 cm = cm || {};
 cm.PrestigeModel = function(g) {
-    var k = 3,
-        a = 10,
+    var k = {
+        druid: 3,
+        fey: 6,
+        briton: 3
+    }, a = 10,
         o = {
             1: "druid",
             2: "fey",
@@ -75350,7 +75915,7 @@ cm.PrestigeModel = function(g) {
     };
     var p = function(q) {
         g.each(q, function(s, r) {
-            if (!r || parseInt(r.cityValue) == 0) {
+            if (!r) {
                 return
             }
             if (r.cityValue !== undefined) {
@@ -75364,8 +75929,11 @@ cm.PrestigeModel = function(g) {
             }
         })
     };
-    var i = function() {
-        return k
+    var i = function(q) {
+        if (+q > 0) {
+            q = o[q]
+        }
+        return k[q]
     };
     var n = function() {
         return a
@@ -75415,23 +75983,30 @@ cm.PrestigeTextView = function() {
             return ""
         }
     };
-    var d = function(l, j) {
+    var d = function(f, l) {
+        var h = g_js_strings.prestige_bonus;
         if (b()) {
-            if (l == 13) {
-                var f = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_BARRACKS_BOOST")).values[j - 1][1] - 0;
-                var h = Math.round(((1 / f) * 100) - 100);
-                return a(g_js_strings.prestige_bonus.barracks + h + "%")
+            if (f == 13) {
+                var m = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_BARRACKS_BOOST")).values[l - 1][1] - 0,
+                    i = Math.round(((1 / m) * 100) - 100);
+                return a(h.barracks + i + "%")
             }
-            if (l == 12) {
-                var f = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST")).values[j - 1][1] - 0;
-                var i = Math.round((f - 1) * 100) + "%";
-                var g = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST")).values[j - 1][2];
-                return a(g_js_strings.prestige_bonus.rally0 + g + ".") + a(g_js_strings.prestige_bonus.rally1 + i + g_js_strings.prestige_bonus.rally0b)
+            if (f == 12) {
+                var m = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST")).values[l - 1][1] - 0,
+                    n = Math.round((m - 1) * 100) + "%",
+                    g = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST")).values[l - 1][2],
+                    o = a(h.rally0 + g + "."),
+                    k = a(h.rally1 + n + h.rally0b),
+                    p = "";
+                if (cm.SpellsModel.haveASpell()) {
+                    p = a(h.rally2.replace("%1$s", g_js_strings.commonstr[cm.PrestigeModel.getPrestigeFactionClass()]))
+                }
+                return o + k + p
             }
-            if (l == 5) {
-                var f = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_COTTAGE_BOOST")).values[j - 1][1] - 0;
-                var k = Math.round((f - 1) * 100) + "%";
-                return a(g_js_strings.prestige_bonus.cottage + k)
+            if (f == 5) {
+                var m = jQuery.parseJSON(cm.WorldSettings.getSetting("ASCENSION_COTTAGE_BOOST")).values[l - 1][1] - 0;
+                var j = Math.round((m - 1) * 100) + "%";
+                return a(h.cottage + j)
             }
         }
         return ""
@@ -76106,6 +76681,10 @@ function modal_quests_viewquest(b) {
     var a = $("modal_quests_questlist").select(".questsel");
     if (a.length > 0) {
         a[0].removeClassName("questsel")
+    }
+    if (jQuery("#modal_quests_questlist").children().length < 1) {
+        jQuery("#modal_quests_questbody").html(g_js_strings.commonstr.no_quests ? g_js_strings.commonstr.no_quests : "No additional quests are currently available.");
+        return
     }
     $("modal_quests_questlist_q" + b).addClassName("questsel");
     $("modal_quests_qbdy_nm").innerHTML = questlist["q" + b].name;
@@ -77029,7 +77608,7 @@ cm.QueueView = function(f) {
         f(".confPopup .startBuilding").on("click", k.callback)
     };
     var a = function() {
-        var m = seed.subscriber && seed.subscriber.status == "active";
+        var m = cm.VipModel.getSubStatus() == "active" || cm.VipModel.getSubStatus() == "pending" || (cm.VipModel.getSubStatus() == "inactive" && cm.VipModel.getExpireTimeLeft() > 0);
         var l = false;
         var k = cm.QueueModel.getActiveBuildingCount();
         if (m && k == 1) {
@@ -77148,6 +77727,9 @@ function modal_openRallypoint() {
     b.push("<div class='tabsbar' id='modal_rallypoint_tabs'>");
     b.push("<a class='tab selected' onclick='modal_openRallypoint_tab(\"mytroops\",1);return false;' id='modal_rallypoint_tab_mytroops'><span>" + g_js_strings.modal_openRallypoint.mytroops + "</span></a>");
     b.push("<a class='tab' onclick='modal_openRallypoint_tab(\"movement\",2);return false;' id='modal_rallypoint_tab_movement'><span>" + g_js_strings.modal_openRallypoint.troopmove + "</span></a>");
+    if (cm.SpellsModel.haveASpell()) {
+        b.push("<a class='tab' onclick='modal_openRallypoint_tab(\"spells\",3);return false;' id='modal_rallypoint_tab_spells'><span>" + g_js_strings.spells.spells + "</span></a>")
+    }
     b.push("<a class='button20' onclick='Modal.hideModalAll();modal_attack(4,\"\",\"\");return false;'><span>" + g_js_strings.modal_openRallypoint.marchtroops + "</span></a>");
     b.push("</div>");
     b.push("<div class='rallypointwrap'>");
@@ -77174,6 +77756,8 @@ function modal_openRallypoint() {
     b.push("</div>");
     b.push("<div class='troopmovement' id='modal_rallypoint_movement' style='display:none;'>");
     b.push("</div>");
+    b.push("<div class='spells' id='modal_rallypoint_spells' style='display:none;'>");
+    b.push("</div>");
     b.push("</div>");
     b.push("</div>");
     $("modal_build_content").innerHTML = b.join("");
@@ -77193,6 +77777,9 @@ function modal_openRallypoint_tab(b, a) {
     switch (a) {
     case 2:
         modal_openRallypoint_movement();
+        break;
+    case 3:
+        cm.SpellsView.render();
         break
     }
 }
@@ -77895,7 +78482,8 @@ cm.ToggleIds = {
     BATTLE_PIC: "battle_pic",
     TROOP_COUNTS: "troop_count",
     TROOP_STATS: "troop_stats",
-    TROOP_BONUS: "troop_bonus"
+    TROOP_BONUS: "troop_bonus",
+    BATTLE_SPELLS: "battle_spells"
 };
 cm.ReportController = function(c) {
     var b = function(l, m) {
@@ -77910,7 +78498,7 @@ cm.ReportController = function(c) {
                 c(".battle_pic_holder").hide()
             }
         }
-        if (k === cm.ToggleIds.TROOP_COUNTS || k === cm.ToggleIds.TROOP_STATS || k === cm.ToggleIds.TROOP_BONUS) {
+        if (k === cm.ToggleIds.TROOP_COUNTS || k === cm.ToggleIds.TROOP_STATS || k === cm.ToggleIds.TROOP_BONUS || k === cm.ToggleIds.BATTLE_SPELLS) {
             if (j) {
                 c(".subsection_" + k + " .sub_body").hide()
             } else {
@@ -77952,6 +78540,7 @@ cm.ReportController = function(c) {
     g[cm.ToggleIds.TROOP_COUNTS] = g_js_strings.report_view.troops;
     g[cm.ToggleIds.TROOP_STATS] = g_js_strings.report_view.troop_stats;
     g[cm.ToggleIds.TROOP_BONUS] = g_js_strings.report_view.troop_bonuses;
+    g[cm.ToggleIds.BATTLE_SPELLS] = g_js_strings.report_view.battle_spells;
     var h = function() {
         return g
     };
@@ -78039,6 +78628,7 @@ cm.ReportModel = function(g) {
             r.showrightWounded = true
         }
         r.showleftWounded = true;
+        r.spell = s.s1spell;
         return r
     };
     var h = function(t) {
@@ -78111,6 +78701,7 @@ cm.ReportModel = function(g) {
             s.showrightWounded = true
         }
         s.showleftWounded = true;
+        s.spell = t.s0spell;
         return s
     };
     var n = function(r) {
@@ -78203,7 +78794,7 @@ cm.ReportModel = function(g) {
                         v[v.length] = {
                             pic: l(t + (u.marchtype == 10 || u.marchtype == 4 ? ".jpg" : ".png")),
                             name: "" + s,
-                            details: 1,
+                            details: u.loot[5][t] || 0,
                             is_regular_item: true
                         }
                     }
@@ -78329,211 +78920,212 @@ cm.ReportModel = function(g) {
         percent: j
     }
 }(jQuery);
-cm.ReportView = function(k) {
-    var C = [];
-    var l = function(F) {
-        C = [];
-        switch (F.marchtype) {
+cm.ReportView = function(l) {
+    var D = [];
+    var m = function(G) {
+        D = [];
+        switch (G.marchtype) {
         case 1:
-            C.push(g_js_strings.modal_messages_viewreports_view.from + " ");
-            var G = new cm.utils.CoordinateLink(F.atkxcoord, F.atkycoord);
-            G.setClassName("light_blue");
-            C.push(" " + G.getHTML());
-            C.push(" - " + g_js_strings.modal_messages_viewreports_view.transpto + " ");
+            D.push(g_js_strings.modal_messages_viewreports_view.from + " ");
+            var H = new cm.utils.CoordinateLink(G.atkxcoord, G.atkycoord);
+            H.setClassName("light_blue");
+            D.push(" " + H.getHTML());
+            D.push(" - " + g_js_strings.modal_messages_viewreports_view.transpto + " ");
             break;
         case 3:
         case 11:
-            if (F.side == "attacker") {
-                C.push(g_js_strings.modal_messages_viewreports_view.scoutingat + " ")
+            if (G.side == "attacker") {
+                D.push(g_js_strings.modal_messages_viewreports_view.scoutingat + " ")
             } else {
-                C.push(g_js_strings.modal_messages_viewreports_view.antiscoutingat + " ")
+                D.push(g_js_strings.modal_messages_viewreports_view.antiscoutingat + " ")
             }
             break;
         case 4:
         case 10:
-            C.push(g_js_strings.modal_messages_viewreports_view.battleat + " ");
+            D.push(g_js_strings.modal_messages_viewreports_view.battleat + " ");
             break
         }
-        if (F.tileType == 55) {
-            C.push(g_js_strings.commonstr.mercenaryHideout)
+        if (G.tileType == 55) {
+            D.push(g_js_strings.commonstr.mercenaryHideout)
         } else {
-            if (F.tileType == 54) {
-                C.push(g_js_strings.commonstr.darkForest);
-                C.push(" " + g_js_strings.commonstr.lv + F.tileLevel)
+            if (G.tileType == 54) {
+                D.push(g_js_strings.commonstr.darkForest);
+                D.push(" " + g_js_strings.commonstr.lv + G.tileLevel)
             } else {
-                if (F.tileType != 51) {
-                    C.push(g_mapObject.types[parseInt(F.tileType)].capitalize());
-                    C.push(" " + g_js_strings.commonstr.lv + F.tileLevel)
+                if (G.tileType != 51) {
+                    D.push(g_mapObject.types[parseInt(G.tileType)].capitalize());
+                    D.push(" " + g_js_strings.commonstr.lv + G.tileLevel)
                 } else {
-                    if (F.defenderId == 0) {
-                        C.push(g_js_strings.commonstr.barbariancamp);
-                        C.push(" " + g_js_strings.commonstr.lv + F.tileLevel)
+                    if (G.defenderId == 0) {
+                        D.push(g_js_strings.commonstr.barbariancamp);
+                        D.push(" " + g_js_strings.commonstr.lv + G.tileLevel)
                     }
                 }
             }
         }
-        var G = new cm.utils.CoordinateLink(F.xcoord, F.ycoord);
-        G.setClassName("light_blue");
-        C.push(" " + G.getHTML());
-        if (F.marchType != 1 && F.conquered == 1) {
-            C.push(" - <span>" + g_js_strings.commonstr.conquered + "</span>")
+        var H = new cm.utils.CoordinateLink(G.xcoord, G.ycoord);
+        H.setClassName("light_blue");
+        D.push(" " + H.getHTML());
+        if (G.marchType != 1 && G.conquered == 1) {
+            D.push(" - <span>" + g_js_strings.commonstr.conquered + "</span>")
         }
-        F.attackerUnits = F.fght ? F.fght.s1 : {};
-        F.defenderUnits = F.fght ? F.fght.s0 : {};
-        return o(F) + D(F) + u(F) + g(F)
+        G.attackerUnits = G.fght ? G.fght.s1 : {};
+        G.defenderUnits = G.fght ? G.fght.s0 : {};
+        return p(G) + E(G) + v(G) + h(G)
     };
-    var D = function(F) {
-        return "<span class='details'>" + C.join(" ") + " - " + formatDateByUnixTime(F.timestamp) + "  Report No: " + F.rptid + "</span><br>"
+    var E = function(G) {
+        return "<span class='details'>" + D.join(" ") + " - " + formatDateByUnixTime(G.timestamp) + "  Report No: " + G.rptid + "</span><br>"
     };
-    var o = function(H) {
-        var G = (H.side == "attacker" && H.winner > 0) || (H.side == "defender" && H.winner == 0);
-        var F = "";
-        if (H.marchtype == 1) {
-            F = g_js_strings.report_view.transport_success
+    var p = function(I) {
+        var H = (I.side == "attacker" && I.winner > 0) || (I.side == "defender" && I.winner == 0);
+        var G = "";
+        if (I.marchtype == 1) {
+            G = g_js_strings.report_view.transport_success
         } else {
-            if (H.darkForestConflict) {
-                F = H.mercenaryHideoutConflict ? g_js_strings.returned.gone_cold : g_js_strings.report_view.darkForestConflict
+            if (I.darkForestConflict) {
+                G = I.mercenaryHideoutConflict ? g_js_strings.returned.gone_cold : g_js_strings.report_view.darkForestConflict
             } else {
-                F = G ? g_js_strings.report_view.won : g_js_strings.report_view.lost
+                G = H ? g_js_strings.report_view.won : g_js_strings.report_view.lost
             }
         }
-        if (G) {
+        if (H) {
             cm.sounds.play("player_views_battle_report_and_won")
         } else {
             cm.sounds.play("player_views_battle_report_and_lost")
         }
-        return "<h2>" + F + "</h2>"
+        return "<h2>" + G + "</h2>"
     };
-    var u = function(F) {
-        return (F.tileType == 54 ? cm.MarchReportView.renderEffectiveHint(F) : "")
+    var v = function(G) {
+        return (G.tileType == 54 ? cm.MarchReportView.renderEffectiveHint(G) : "")
     };
-    var g = function(I) {
-        var H = "";
-        if (I.lstlgn) {
-            H = "<div class='lastLogin'>" + g_js_strings.report_view.enemies_last_login + ": " + formatDateByUnixTime(I.lstlgn) + "</div>"
+    var h = function(J) {
+        var I = "";
+        if (J.lstlgn) {
+            I = "<div class='lastLogin'>" + g_js_strings.report_view.enemies_last_login + ": " + formatDateByUnixTime(J.lstlgn) + "</div>"
         }
-        var G = cm.GloryView.render();
-        if (!G) {
-            G = ""
+        var H = cm.GloryView.render();
+        if (!H) {
+            H = ""
         }
-        var F = I.scrbrkdwn ? g_js_strings.report_view.knight_level + ": " + I.scrbrkdwn.knghtntl + "   " + g_js_strings.report_view.scout_level + ": " + I.scrbrkdwn.sctlvl : "";
-        return H + (I.marchtype == 3 && I.score ? "<div class='scouting_score' title='" + F + "'>" + g_js_strings.report_view.scout_score + ": " + I.score + "</div>" : "") + G
+        var G = J.scrbrkdwn ? g_js_strings.report_view.knight_level + ": " + J.scrbrkdwn.knghtntl + "   " + g_js_strings.report_view.scout_level + ": " + J.scrbrkdwn.sctlvl : "";
+        return I + (J.marchtype == 3 && J.score ? "<div class='scouting_score' title='" + G + "'>" + g_js_strings.report_view.scout_score + ": " + J.score + "</div>" : "") + H
     };
-    var A = function(K) {
-        var M = "";
-        for (var L = 0; L < K.length; L++) {
-            var I = K[L];
-            var H = "";
-            var F = I.is_regular_item ? "item" : "";
-            var N = "<img class='" + F + "' src='" + I.pic + "' />";
-            var J = "";
-            if (I.isThroneRoomItem) {
-                var G = I.throne_room_item;
-                var P = kocThroneItems[G.id];
-                if (typeof P != "object") {
-                    cm.ThroneController.addItem(G);
-                    var P = kocThroneItems[G.id];
+    var B = function(L) {
+        var N = "";
+        for (var M = 0; M < L.length; M++) {
+            var J = L[M];
+            var I = "";
+            var G = J.is_regular_item ? "item" : "";
+            var O = "<img class='" + G + "' src='" + J.pic + "' />";
+            var K = "";
+            if (J.isThroneRoomItem) {
+                var H = J.throne_room_item;
+                var Q = kocThroneItems[H.id];
+                if (typeof Q != "object") {
+                    cm.ThroneController.addItem(H);
+                    var Q = kocThroneItems[H.id];
                     cm.log.l("Could not find throne room item definition.  So I'm adding the throne room item definition now.  I guess updateSeed hasn't fired yet.")
                 }
-                if (typeof P == "object") {
-                    I.name = P.name;
-                    N = "<span class='throne_item_box " + G.faction + " " + G.type + "'  />";
-                    J = "throne_right"
+                if (typeof Q == "object") {
+                    J.name = Q.name;
+                    O = "<span class='throne_item_box " + H.faction + " " + H.type + "'  />";
+                    K = "throne_right"
                 } else {
                     cm.log.l("Warning: kocThroneItems is not returning an object.  Perhaps it's a bad throne_room_item.id ?")
                 }
             } else {
-                H = ":<br><span class='num'>" + addCommas(Math.floor(parseInt(I.details, 10))) + "</span>"
+                I = ":<br><span class='num'>" + addCommas(Math.floor(parseInt(J.details, 10))) + "</span>"
             }
-            if (I.is_regular_item) {
-                J = "item_right"
+            if (J.is_regular_item) {
+                K = "item_right"
             }
-            M += "<div class='section'>" + N + "<div class='right " + J + "'><strong>" + I.name + "</strong>" + H + "</div></div>"
+            N += "<div class='section'>" + O + "<div class='right " + K + "'><strong>" + J.name + "</strong>" + I + "</div></div>"
         }
-        var O = "<div class='title'>" + g_js_strings.report_view.loot_acquired + "</div>";
-        return "<div class='lootBody'>" + M + "</div>"
+        var P = "<div class='title'>" + g_js_strings.report_view.loot_acquired + "</div>";
+        return "<div class='lootBody'>" + N + "</div>"
     };
-    var z = function(J, F, G) {
-        var I = {};
-        var H = {
+    var A = function(K, G, H) {
+        var J = {};
+        var I = {
             "53": "d1",
             "61": "d4",
             "62": "d5",
             "55": "d2",
             "60": "d3"
         };
-        if (J.charAt(0) == "u") {
-            I.unitId = J.split("u")[1] || J;
-            I.image = G ? stimgUrl + "img/units/unit_" + I.unitId + "_68.jpg" : stimgUrl + "img/units/unit_" + I.unitId + "_30.jpg";
-            I.unitsInfoValue = F["u" + I.unitId] || F[I.unitId];
-            I.name = unitcost["unt" + I.unitId] ? unitcost["unt" + I.unitId][0] : "Troops"
+        if (K.charAt(0) == "u") {
+            J.unitId = K.split("u")[1] || K;
+            J.image = H ? stimgUrl + "img/units/unit_" + J.unitId + "_68.jpg" : stimgUrl + "img/units/unit_" + J.unitId + "_30.jpg";
+            J.unitsInfoValue = G["u" + J.unitId] || G[J.unitId];
+            J.name = unitcost["unt" + J.unitId] ? unitcost["unt" + J.unitId][0] : "Troops"
         } else {
-            if (J.charAt(0) == "m") {
-                I.unitId = J.split("m")[1] || J;
-                I.image = G ? stimgUrl + "img/L" + I.unitId + ".png" : stimgUrl + "img/units/unit_" + I.unitId + "_30.jpg";
-                I.unitsInfoValue = F["m" + I.unitId] || F[I.unitId];
-                I.name = g_js_strings.monsterUnitsNames["m" + I.unitId]
+            if (K.charAt(0) == "m") {
+                J.unitId = K.split("m")[1] || K;
+                J.image = H ? stimgUrl + "img/L" + J.unitId + ".png" : stimgUrl + "img/units/unit_" + J.unitId + "_30.jpg";
+                J.unitsInfoValue = G["m" + J.unitId] || G[J.unitId];
+                J.name = g_js_strings.monsterUnitsNames["m" + J.unitId]
             } else {
-                if (J.charAt(0) == "f") {
-                    I.unitId = J.split("f")[1] || J;
-                    I.image = G && H["" + I.unitId] ? stimgUrl + "img/" + H["" + I.unitId] + ".png" : stimgUrl + "img/units/unit_" + I.unitId + "_30.jpg";
-                    I.unitsInfoValue = F["f" + I.unitId] || F[I.unitId];
-                    I.name = fortcost["frt" + I.unitId] ? fortcost["frt" + I.unitId][0] : "Defenses"
+                if (K.charAt(0) == "f") {
+                    J.unitId = K.split("f")[1] || K;
+                    J.image = H && I["" + J.unitId] ? stimgUrl + "img/" + I["" + J.unitId] + ".png" : stimgUrl + "img/units/unit_" + J.unitId + "_30.jpg";
+                    J.unitsInfoValue = G["f" + J.unitId] || G[J.unitId];
+                    J.name = fortcost["frt" + J.unitId] ? fortcost["frt" + J.unitId][0] : "Defenses"
                 }
             }
         }
-        return I
+        return J
     };
-    var j = function(F) {
-        for (var G in F) {
-            if (F && F[G] && F[G][2] !== undefined) {
+    var k = function(G) {
+        for (var H in G) {
+            if (G && G[H] && G[H][2] !== undefined) {
                 return true
             }
         }
         return false
     };
-    var s = function(G, J) {
-        var I = j(G);
-        var H = f({
+    var t = function(H, L, K) {
+        var J = k(H);
+        var I = g({
             top_row: true,
             troop_src: "",
             troop_type: g_js_strings.report_view.troops,
             troop_fought: g_js_strings.report_view.fought,
             troop_survived: g_js_strings.report_view.survived,
-            wounded: I ? g_js_strings.report_view.wounded : false
-        }, I);
-        for (var L in G) {
-            if (G.hasOwnProperty(L)) {
-                var F = z(L, G);
-                if (F.image === undefined) {
-                    cm.log.l("TroopLoss_(): Troop type: " + L + "  Troop image not defined.")
+            wounded: J ? (K ? g_js_strings.spells.revived : g_js_strings.report_view.wounded) : false
+        }, J);
+        for (var N in H) {
+            if (H.hasOwnProperty(N)) {
+                var G = A(N, H);
+                if (G.image === undefined) {
+                    cm.log.l("TroopLoss_(): Troop type: " + N + "  Troop image not defined.")
                 } else {
-                    if (F.name === undefined) {
-                        cm.log.l("TroopLoss_(): Troop type: " + L + "  Troop name not defined.")
+                    if (G.name === undefined) {
+                        cm.log.l("TroopLoss_(): Troop type: " + N + "  Troop name not defined.")
                     } else {
-                        var K = {
-                            troop_src: F.image,
-                            troop_type: F.name,
-                            troop_fought: ~~ (1 * G[L][0]),
-                            troop_survived: ~~ (1 * G[L][1]),
-                            wounded: I ? G[L][2] : false
+                        var M = {
+                            troop_src: G.image,
+                            troop_type: G.name,
+                            troop_fought: ~~ (1 * H[N][0]),
+                            troop_survived: ~~ (1 * H[N][1]),
+                            wounded: J ? H[N][2] : false,
+                            changeWoundedToRevived: K
                         };
-                        H += f(K, I)
+                        I += g(M, J)
                     }
                 }
             }
         }
-        return "<table class='troop_lost_table' cellpadding='0' cellspacing='0'>" + H + "</table>"
+        return "<table class='troop_lost_table' cellpadding='0' cellspacing='0'>" + I + "</table>"
     };
-    var f = function(G, F) {
-        var H = (G.top_row ? "top_row" : "middle_row");
-        if (F == false) {
-            return "<tr class='" + H + "'>" + (G.top_row ? "<td></td>" : "<td><img class='troop_src' src='" + G.troop_src + "' /></td>") + "<td class='col0'>" + addCommas(G.troop_type) + "</td><td class='col1'>" + addCommas(G.troop_fought) + "</td><td class='col2'>" + addCommas(G.troop_survived) + "</td></tr>"
+    var g = function(H, G) {
+        var I = (H.top_row ? "top_row" : "middle_row");
+        if (G == false) {
+            return "<tr class='" + I + "'>" + (H.top_row ? "<td></td>" : "<td><img class='troop_src' src='" + H.troop_src + "' /></td>") + "<td class='col0'>" + addCommas(H.troop_type) + "</td><td class='col1'>" + addCommas(H.troop_fought) + "</td><td class='col2'>" + addCommas(H.troop_survived) + "</td></tr>"
         } else {
-            return "<tr class='" + H + "'>" + (G.top_row ? "<td></td>" : "<td><img class='troop_src' title='" + G.troop_type + "' src='" + G.troop_src + "' /></td>") + "<td class='col1'>" + addCommas(G.troop_fought) + "</td><td class='col2'>" + addCommas(G.troop_survived) + "</td><td class='col3'>" + addCommas(G.wounded) + "</td></tr>"
+            return "<tr class='" + I + "'>" + (H.top_row ? "<td></td>" : "<td><img class='troop_src' title='" + H.troop_type + "' src='" + H.troop_src + "' /></td>") + "<td class='col1'>" + addCommas(H.troop_fought) + "</td><td class='col2'>" + addCommas(H.troop_survived) + "</td><td class='col3 " + (H.changeWoundedToRevived ? "toRevivedGreen" : "") + "'>" + addCommas(H.wounded) + "</td></tr>"
         }
     };
-    var q = {
+    var r = {
         atk: "Attack",
         def: "Defense",
         hp: "Life",
@@ -78549,267 +79141,279 @@ cm.ReportView = function(k) {
         sr: "Strengthen Ranks",
         "if": "Improved Fletching"
     };
-    var m = function(J) {
-        var G = "";
-        for (var I in J) {
-            var H = Math.round(J[I][0]);
-            var K = Math.round(J[I][1]);
-            var F = K > H ? "green" : (K < H ? "red" : "");
-            if (J.hasOwnProperty(I)) {
-                G += "<div class='mini_stat' title='Base Stat: " + H + "'><b>" + (q[I] || I) + ":</b> <span class='" + F + "'>" + K + "</span></div>"
-            }
-        }
-        return G
-    };
-    var y = function(G) {
-        var F = (G * 100) < 100;
-        return F ? parseInt(G * 100) + "%" : G
-    };
-    var h = function(L, K) {
+    var n = function(K) {
         var H = "";
-        var J = 0;
-        if (!K) {
-            K = " goliath_div"
-        }
-        K = "wide_stat";
-        var I = [];
-        var G = [];
-        for (var M in L) {
-            if (L.hasOwnProperty(M)) {
-                I[J] = q[M] || M;
-                G[J] = y(L[M]);
-                J++
+        for (var J in K) {
+            var I = Math.round(K[J][0]);
+            var L = Math.round(K[J][1]);
+            var G = L > I ? "green" : (L < I ? "red" : "");
+            if (K.hasOwnProperty(J)) {
+                H += "<div class='mini_stat' title='Base Stat: " + I + "'><b>" + (r[J] || J) + ":</b> <span class='" + G + "'>" + L + "</span></div>"
             }
-        }
-        for (var F = 0; F < J; F += 2) {
-            if (K == "wide_stat") {
-                if (I[F] && G[F]) {
-                    H += "<div class='mini_stat wide_stat' >" + I[F] + ": " + G[F] + "</div>"
-                }
-                if (I[F + 1] && G[F + 1]) {
-                    H += "<div class='mini_stat stripe_light wide_stat' >" + I[F + 1] + ": " + G[F + 1] + "</div>"
-                }
-            } else {
-                if (I[F] && G[F]) {
-                    H += "<div class='grel'><div class='mini_stat goliath_inl' >" + I[F] + ": " + G[F] + "</div></div>"
-                }
-                if (I[F + 1] && G[F + 1]) {
-                    H += "<div class='mini_stat goliath_inl' >" + I[F + 1] + ": " + G[F + 1] + "</div>"
-                }
-            }
-        }
-        if (J % 2 == 1 && false) {
-            H += "<div class='mini_stat goliath_div odd_row back_color'>_</div>"
         }
         return H
     };
-    var n = function(G) {
-        var F = "";
-        var I = {};
-        var H = true;
-        for (var K in G) {
-            if (G.hasOwnProperty(K)) {
-                var J = z(K, I, true);
-                H = !H;
-                if (J.image === undefined) {
-                    cm.log.l("Troop type: " + K + "  Troop image not defined.")
+    var z = function(H) {
+        var G = (H * 100) < 100;
+        return G ? parseInt(H * 100) + "%" : H
+    };
+    var i = function(M, L) {
+        var I = "";
+        var K = 0;
+        if (!L) {
+            L = " goliath_div"
+        }
+        L = "wide_stat";
+        var J = [];
+        var H = [];
+        for (var N in M) {
+            if (M.hasOwnProperty(N)) {
+                J[K] = r[N] || N;
+                H[K] = z(M[N]);
+                K++
+            }
+        }
+        for (var G = 0; G < K; G += 2) {
+            if (L == "wide_stat") {
+                if (J[G] && H[G]) {
+                    I += "<div class='mini_stat wide_stat' >" + J[G] + ": " + H[G] + "</div>"
+                }
+                if (J[G + 1] && H[G + 1]) {
+                    I += "<div class='mini_stat stripe_light wide_stat' >" + J[G + 1] + ": " + H[G + 1] + "</div>"
+                }
+            } else {
+                if (J[G] && H[G]) {
+                    I += "<div class='grel'><div class='mini_stat goliath_inl' >" + J[G] + ": " + H[G] + "</div></div>"
+                }
+                if (J[G + 1] && H[G + 1]) {
+                    I += "<div class='mini_stat goliath_inl' >" + J[G + 1] + ": " + H[G + 1] + "</div>"
+                }
+            }
+        }
+        if (K % 2 == 1 && false) {
+            I += "<div class='mini_stat goliath_div odd_row back_color'>_</div>"
+        }
+        return I
+    };
+    var o = function(H) {
+        var G = "";
+        var J = {};
+        var I = true;
+        for (var L in H) {
+            if (H.hasOwnProperty(L)) {
+                var K = A(L, J, true);
+                I = !I;
+                if (K.image === undefined) {
+                    cm.log.l("Troop type: " + L + "  Troop image not defined.")
                 } else {
-                    if (J.name === undefined) {
-                        cm.log.l("Troop type: " + K + "  Troop name not defined.")
+                    if (K.name === undefined) {
+                        cm.log.l("Troop type: " + L + "  Troop name not defined.")
                     } else {
-                        F += "<div class='troop_section " + (H ? "odd" : "") + "'><img src='" + J.image + "'><div class='st'><div class='name'>" + J.name + "</div><div class='v_stats'>" + m(G[K]) + "</div></div></div>"
+                        G += "<div class='troop_section " + (I ? "odd" : "") + "'><img src='" + K.image + "'><div class='st'><div class='name'>" + K.name + "</div><div class='v_stats'>" + n(H[L]) + "</div></div></div>"
                     }
                 }
             }
         }
-        return F
-    };
-    var t = function(F) {
-        var G = "";
-        if (F.throne_room) {
-            G += "<div class='b_header'>" + g_js_strings.report_view.throne_room + "</div>";
-            G += h(F.throne_room, "wide_stat")
-        }
-        if (F.knights_attack_defense) {
-            G += "<div class='b_header'>" + g_js_strings.report_view.knights + "</div>";
-            G += h(F.knights_attack_defense)
-        }
-        if (F.research) {
-            G += "<div class='b_header'>" + g_js_strings.report_view.research + "</div>";
-            G += h(F.research)
-        }
-        if (F.items) {
-            G += "<div class='b_header'>" + g_js_strings.report_view.items + "</div>";
-            G += h(F.items)
-        }
-        if (F.guardians) {
-            G += "<div class='b_header'>" + g_js_strings.report_view.guardian + "</div>";
-            G += h(F.guardians)
-        }
         return G
     };
-    var v = function(H, G) {
-        var I = (G == "right" && H.side == "defender") || (G == "left" && H.side == "attacker");
-        var F = (G == "right" && H.side == "attacker") || (G == "left" && H.side == "defender");
-        var J = "";
+    var u = function(G) {
+        var H = "";
+        if (G.throne_room) {
+            H += "<div class='b_header'>" + g_js_strings.report_view.throne_room + "</div>";
+            H += i(G.throne_room, "wide_stat")
+        }
+        if (G.knights_attack_defense) {
+            H += "<div class='b_header'>" + g_js_strings.report_view.knights + "</div>";
+            H += i(G.knights_attack_defense)
+        }
+        if (G.research) {
+            H += "<div class='b_header'>" + g_js_strings.report_view.research + "</div>";
+            H += i(G.research)
+        }
+        if (G.items) {
+            H += "<div class='b_header'>" + g_js_strings.report_view.items + "</div>";
+            H += i(G.items)
+        }
+        if (G.guardians) {
+            H += "<div class='b_header'>" + g_js_strings.report_view.guardian + "</div>";
+            H += i(G.guardians)
+        }
+        return H
+    };
+    var w = function(I, H) {
+        var J = (H == "right" && I.side == "defender") || (H == "left" && I.side == "attacker");
+        var G = (H == "right" && I.side == "attacker") || (H == "left" && I.side == "defender");
+        var K = "";
         if (!cm.WorldSettings.isOn("TR_KILLSWITCH")) {
-            if ((G == "right" && H.id != 0) || G == "left") {
-                J = "<a class='buttonv2 blue h15 throne_room_button'>" + g_js_strings.report_view.throne_room + "</a>"
+            if ((H == "right" && I.id != 0) || H == "left") {
+                K = "<a class='buttonv2 blue h15 throne_room_button'>" + g_js_strings.report_view.throne_room + "</a>"
             }
         }
-        return "<div class='report_middle_text'>" + H.text + "</div>" + J + (I ? "<a class='buttonv2 brown h15 inventory_button'>" + g_js_strings.report_view.inventory + "</a>" : "") + (F ? "<a class='buttonv2 brown h15 attack_button'>" + g_js_strings.report_view.attack + "</a>" : "")
+        return "<div class='report_middle_text'>" + I.text + "</div>" + K + (J ? "<a class='buttonv2 brown h15 inventory_button'>" + g_js_strings.report_view.inventory + "</a>" : "") + (G ? "<a class='buttonv2 brown h15 attack_button'>" + g_js_strings.report_view.attack + "</a>" : "")
     };
-    var a = function(I, F) {
-        var H = I.bottom_troop_count ? "<div class='overwhelmed'>" + I.bottom_troop_count + "</div>" : "";
-        var G = I.noTroops ? "<div class='notroops'>" + g_js_strings.report_view.noTroops + "</div>" : "";
-        return s(I.troops, F) + H + G
+    var b = function(J, G) {
+        var I = J.bottom_troop_count ? "<div class='overwhelmed'>" + J.bottom_troop_count + "</div>" : "";
+        var H = J.noTroops ? "<div class='notroops'>" + g_js_strings.report_view.noTroops + "</div>" : "";
+        return t(J.troops, G, parseInt(J.spell) == 21) + I + H
     };
-    var b = function(F, I, H) {
-        var G = cm.ReportController.titles();
-        var J = G[H];
-        return "<div class='subsection subsection_" + H + "'><div class='wooden'><span>" + J + "</span>" + cm.ReportController.widget(H) + "</div><div class='sub_body'><div class='sub_div sub_left'>" + F + "</div><div class='sub_div sub_right'>" + I + "</div></div></div>"
+    var c = function(G, J, I) {
+        var H = cm.ReportController.titles();
+        var K = H[I];
+        return "<div class='subsection subsection_" + I + "'><div class='wooden'><span>" + K + "</span>" + cm.ReportController.widget(I) + "</div><div class='sub_body'><div class='sub_div sub_left'>" + G + "</div><div class='sub_div sub_right'>" + J + "</div></div></div>"
     };
-    var e = function(G, F) {
-        return b(a(G, "left"), a(F, "right"), cm.ToggleIds.TROOP_COUNTS) + b(n(G.stats, "left"), n(F.stats, "right"), cm.ToggleIds.TROOP_STATS) + b(t(G.bonus_tab, "left"), t(F.bonus_tab, "right"), cm.ToggleIds.TROOP_BONUS)
+    var f = function(H, G) {
+        return c(b(H, "left"), b(G, "right"), cm.ToggleIds.TROOP_COUNTS) + c(o(H.stats, "left"), o(G.stats, "right"), cm.ToggleIds.TROOP_STATS) + c(u(H.bonus_tab, "left"), u(G.bonus_tab, "right"), cm.ToggleIds.TROOP_BONUS) + c(a(H.spell), a(G.spell), cm.ToggleIds.BATTLE_SPELLS)
     };
-    var d = function(F) {
+    var a = function(H) {
+        var G = "";
+        if (H == undefined || parseInt(H) == 0) {
+            G = g_js_strings.spells.no
+        } else {
+            if (!g_js_strings.spells["name_" + H] || !g_js_strings.spells["desc_" + H]) {
+                G = "spell text not defined."
+            }
+            G = "<strong>" + g_js_strings.spells["name_" + H] + "</strong>: " + g_js_strings.spells["desc_" + H]
+        }
+        return '<div class="padded stripe_light">' + G + "</div>"
+    };
+    var e = function(G) {
         return ""
     };
-    var c = function() {
-        var G = k(this).attr("side");
-        var F = k(this).attr("tab");
-        k("." + G + "_details .tab").removeClass("active");
-        k("." + G + "_details .tab" + F).addClass("active");
-        k("." + G + "_details .detail_main").hide();
-        k("." + G + "_details .detail_main" + F).show()
+    var d = function() {
+        var H = l(this).attr("side");
+        var G = l(this).attr("tab");
+        l("." + H + "_details .tab").removeClass("active");
+        l("." + H + "_details .tab" + G).addClass("active");
+        l("." + H + "_details .detail_main").hide();
+        l("." + H + "_details .detail_main" + G).show()
     };
-    var p = function(G) {
-        var F = "";
-        F += "<div class='scout_tab_section'>";
-        F += "<div class='black_tab'>";
-        F += "<div class='tab tab0' tab='0'>" + g_js_strings.report_view.troop0 + "</div>";
-        F += "<div class='tab tab1' tab='1'>" + g_js_strings.report_view.defenses + "</div>";
-        F += "<div class='tab tab2' tab='2'>" + g_js_strings.report_view.buildings + "</div>";
-        F += "<div class='tab tab3' tab='3'>" + g_js_strings.report_view.research + "</div>";
-        F += "<div class='tab tab4' tab='4'>" + g_js_strings.report_view.resources + "</div>";
-        F += "</div>";
-        F += "<div class='scout_detail_main scout_detail_main0'>" + w(G.unts, "Troop type", "count") + "</div>";
-        F += "<div class='scout_detail_main scout_detail_main1'>" + w(G.frt, "Defense type", "count") + "</div>";
-        F += "<div class='scout_detail_main scout_detail_main2'>" + w(G.blds, "Building type", "level") + "</div>";
-        if (typeof G.tch2 !== "undefined") {
-            F += "<div class='scout_detail_main scout_detail_main3'>" + w(G.tch, "Research type", "level", G.tch2) + "</div>"
+    var q = function(H) {
+        var G = "";
+        G += "<div class='scout_tab_section'>";
+        G += "<div class='black_tab'>";
+        G += "<div class='tab tab0' tab='0'>" + g_js_strings.report_view.troop0 + "</div>";
+        G += "<div class='tab tab1' tab='1'>" + g_js_strings.report_view.defenses + "</div>";
+        G += "<div class='tab tab2' tab='2'>" + g_js_strings.report_view.buildings + "</div>";
+        G += "<div class='tab tab3' tab='3'>" + g_js_strings.report_view.research + "</div>";
+        G += "<div class='tab tab4' tab='4'>" + g_js_strings.report_view.resources + "</div>";
+        G += "</div>";
+        G += "<div class='scout_detail_main scout_detail_main0'>" + x(H.unts, "Troop type", "count") + "</div>";
+        G += "<div class='scout_detail_main scout_detail_main1'>" + x(H.frt, "Defense type", "count") + "</div>";
+        G += "<div class='scout_detail_main scout_detail_main2'>" + x(H.blds, "Building type", "level") + "</div>";
+        if (typeof H.tch2 !== "undefined") {
+            G += "<div class='scout_detail_main scout_detail_main3'>" + x(H.tch, "Research type", "level", H.tch2) + "</div>"
         } else {
-            F += "<div class='scout_detail_main scout_detail_main3'>" + w(G.tch, "Research type", "level") + "</div>"
+            G += "<div class='scout_detail_main scout_detail_main3'>" + x(H.tch, "Research type", "level") + "</div>"
         }
-        F += "<div class='scout_detail_main scout_detail_main4'>" + w(G.rsc, "Resource", "Amount") + "</div>";
-        F += "</div>";
-        return F
+        G += "<div class='scout_detail_main scout_detail_main4'>" + x(H.rsc, "Resource", "Amount") + "</div>";
+        G += "</div>";
+        return G
     };
-    var w = function(J, I, H, F) {
-        var G = 0;
-        var M = 1;
-        var K = "";
-        K += "<div class='quarter stripe_dark'>" + cm.translate.it(I) + "</div><div class='quarter stripe_dark'>" + cm.translate.it(H) + "</div>";
-        K += "<div class='quarter stripe_dark'>" + cm.translate.it(I) + "</div><div class='quarter stripe_dark'>" + cm.translate.it(H) + "</div>";
-        for (var L in J) {
-            if (J.hasOwnProperty(L)) {
-                var N = G % 4 == 2 || G % 4 == 3 ? "stripe_light" : "";
-                G++;
-                K += "<div class='quarter " + N + "'>" + cm.translate.it(L) + "</div><div class='quarter " + N + "'>" + addCommas(J[L]) + "</div>"
+    var x = function(K, J, I, G) {
+        var H = 0;
+        var N = 1;
+        var L = "";
+        L += "<div class='quarter stripe_dark'>" + cm.translate.it(J) + "</div><div class='quarter stripe_dark'>" + cm.translate.it(I) + "</div>";
+        L += "<div class='quarter stripe_dark'>" + cm.translate.it(J) + "</div><div class='quarter stripe_dark'>" + cm.translate.it(I) + "</div>";
+        for (var M in K) {
+            if (K.hasOwnProperty(M)) {
+                var O = H % 4 == 2 || H % 4 == 3 ? "stripe_light" : "";
+                H++;
+                L += "<div class='quarter " + O + "'>" + cm.translate.it(M) + "</div><div class='quarter " + O + "'>" + addCommas(K[M]) + "</div>"
             }
         }
-        if (typeof F !== "undefined") {
-            for (var L in F) {
-                if (F.hasOwnProperty(L)) {
-                    var N = G % 4 == 2 || G % 4 == 3 ? "stripe_light" : "";
-                    G++;
-                    K += "<div class='quarter " + N + "'>" + techcost2["tch" + M][0] + "</div><div class='quarter " + N + "'>" + addCommas(F[L]) + "</div>";
-                    M++
+        if (typeof G !== "undefined") {
+            for (var M in G) {
+                if (G.hasOwnProperty(M)) {
+                    var O = H % 4 == 2 || H % 4 == 3 ? "stripe_light" : "";
+                    H++;
+                    L += "<div class='quarter " + O + "'>" + techcost2["tch" + N][0] + "</div><div class='quarter " + O + "'>" + addCommas(G[M]) + "</div>";
+                    N++
                 }
             }
         }
-        if (G == 0) {
+        if (H == 0) {
             return "<div class='padding5'>" + g_js_strings.report_view.no_scouting_info + "</div>"
         } else {
-            return K
+            return L
         }
     };
-    var r = function() {
-        var F = k(this).attr("tab");
-        k(".scout_tab_section .tab").removeClass("active");
-        k(".scout_tab_section .tab" + F).addClass("active");
-        k(".scout_detail_main").hide();
-        k(".scout_detail_main" + F).show()
+    var s = function() {
+        var G = l(this).attr("tab");
+        l(".scout_tab_section .tab").removeClass("active");
+        l(".scout_tab_section .tab" + G).addClass("active");
+        l(".scout_detail_main").hide();
+        l(".scout_detail_main" + G).show()
     };
-    var E = function(F) {
-        return F.marchtype == 3 && F.side == "attacker" && F.winner == 1
+    var F = function(G) {
+        return G.marchtype == 3 && G.side == "attacker" && G.winner == 1
     };
-    var B = function(G) {
-        var F = cm.ReportModel.getReportType(G) + ".jpg";
-        var I = "<a class='buttonv2 blue h15 blueGlow back_to_reports transport_back'>" + g_js_strings.report_view.back_to_reports + "</a><div class='transport_bottom_block'></div>";
-        var H = (E(G) ? p(G) : "");
-        k(".report_view").remove();
-        k(".modal_msg_listwrap").append("<div class='outer_report_area'><div class='report_view " + (E(G) ? "scouting_report" : "") + "'><div class='top_container_report'><img class='main_battle_pic' src='" + stimgUrl + "img/" + F + "' /><div class='battle_pic_holder'></div>" + cm.ReportController.widget(cm.ToggleIds.BATTLE_PIC) + "<div class='top_message'>" + l(G) + "</div></div>" + (G.marchtype == 3 || G.darkForestConflict ? "" : A(cm.ReportModel.parseLoot(G, G.marchtype == 1))) + (G.marchtype == 1 ? I : "<div class='bottom_report'><div class='knight_coordinate_attacker'><div class='left_details detail_section'>" + v(cm.ReportModel.parseLeft(G), "left") + "<div class='gold_bottom'></div></div><div class='right_details detail_section'>" + v(cm.ReportModel.parseRight(G), "right") + "<div class='gold_bottom'></div></div></div><div class='research_resources'>" + d(G) + "</div>" + H + e(cm.ReportModel.parseLeft(G), cm.ReportModel.parseRight(G)) + "<a class='buttonv2 blue h15 blueGlow back_to_reports'>" + g_js_strings.report_view.back_to_reports + "</a><div class='bottom_block'></div></div>") + "</div></div>");
-        cm.GloryView.set(G);
-        k(".modal_msg_listwrap").css("height", "50px");
-        k(".modal_msg_list").hide();
-        k(".left_details .throne_room_button").unbind("click").bind("click", function() {
-            var J = G.side == "attacker",
-                L = G.side1PlayerId,
-                K = {};
-            K.self = J;
-            K.id = L;
-            K.name = G.atknm;
-            cm.ThroneController.getThroneItems(K)
+    var C = function(H) {
+        var G = cm.ReportModel.getReportType(H) + ".jpg";
+        var J = "<a class='buttonv2 blue h15 blueGlow back_to_reports transport_back'>" + g_js_strings.report_view.back_to_reports + "</a><div class='transport_bottom_block'></div>";
+        var I = (F(H) ? q(H) : "");
+        l(".report_view").remove();
+        l(".modal_msg_listwrap").append("<div class='outer_report_area'><div class='report_view " + (F(H) ? "scouting_report" : "") + "'><div class='top_container_report'><img class='main_battle_pic' src='" + stimgUrl + "img/" + G + "' /><div class='battle_pic_holder'></div>" + cm.ReportController.widget(cm.ToggleIds.BATTLE_PIC) + "<div class='top_message'>" + m(H) + "</div></div>" + (H.marchtype == 3 || H.darkForestConflict ? "" : B(cm.ReportModel.parseLoot(H, H.marchtype == 1))) + (H.marchtype == 1 ? J : "<div class='bottom_report'><div class='knight_coordinate_attacker'><div class='left_details detail_section'>" + w(cm.ReportModel.parseLeft(H), "left") + "<div class='gold_bottom'></div></div><div class='right_details detail_section'>" + w(cm.ReportModel.parseRight(H), "right") + "<div class='gold_bottom'></div></div></div><div class='research_resources'>" + e(H) + "</div>" + I + f(cm.ReportModel.parseLeft(H), cm.ReportModel.parseRight(H)) + "<a class='buttonv2 blue h15 blueGlow back_to_reports'>" + g_js_strings.report_view.back_to_reports + "</a><div class='bottom_block'></div></div>") + "</div></div>");
+        cm.GloryView.set(H);
+        l(".modal_msg_listwrap").css("height", "50px");
+        l(".modal_msg_list").hide();
+        l(".left_details .throne_room_button").unbind("click").bind("click", function() {
+            var K = H.side == "attacker",
+                M = H.side1PlayerId,
+                L = {};
+            L.self = K;
+            L.id = M;
+            L.name = H.atknm;
+            cm.ThroneController.getThroneItems(L)
         });
-        k(".right_details .throne_room_button").unbind("click").bind("click", function() {
-            var J = G.side == "defender",
-                L = G.side0PlayerId,
-                K = {};
-            K.self = J;
-            K.id = L;
-            K.name = G.defnm;
-            cm.ThroneController.getThroneItems(K)
+        l(".right_details .throne_room_button").unbind("click").bind("click", function() {
+            var K = H.side == "defender",
+                M = H.side0PlayerId,
+                L = {};
+            L.self = K;
+            L.id = M;
+            L.name = H.defnm;
+            cm.ThroneController.getThroneItems(L)
         });
-        k(".scout_tab_section .tab").unbind("click").bind("click", r);
-        k(".detail_section .tab").unbind("click").bind("click", c);
-        k(".left_details .tab0").trigger("click");
-        k(".right_details .tab0").trigger("click");
-        k(".scout_tab_section .tab0").trigger("click");
-        k(".back_to_reports").unbind("click").bind("click", function() {
-            var J = k("#navCur").val();
-            loadPage_pagination("modal_msg_list_pagination", J, "modal_messages_viewreports", J)
+        l(".scout_tab_section .tab").unbind("click").bind("click", s);
+        l(".detail_section .tab").unbind("click").bind("click", d);
+        l(".left_details .tab0").trigger("click");
+        l(".right_details .tab0").trigger("click");
+        l(".scout_tab_section .tab0").trigger("click");
+        l(".back_to_reports").unbind("click").bind("click", function() {
+            var K = l("#navCur").val();
+            loadPage_pagination("modal_msg_list_pagination", K, "modal_messages_viewreports", K)
         });
-        k(".inventory_button").unbind("click").bind("click", cm.InventoryView.openInventory);
-        k(".attack_button").unbind("click").bind("click", {
-            data: G
-        }, x);
+        l(".inventory_button").unbind("click").bind("click", cm.InventoryView.openInventory);
+        l(".attack_button").unbind("click").bind("click", {
+            data: H
+        }, y);
         cm.ReportController.init();
         cm.ReportController.bind()
     };
-    var x = function(G) {
-        var F = (G.data.xcoord) ? G.data.xcoord : 0,
-            H = (G.data.ycoord) ? G.data.ycoord : H;
-        modal_attack(cm.MARCH_TYPES.MARCH_TYPE_ATTACK, F, H)
+    var y = function(H) {
+        var G = (H.data.xcoord) ? H.data.xcoord : 0,
+            I = (H.data.ycoord) ? H.data.ycoord : I;
+        modal_attack(cm.MARCH_TYPES.MARCH_TYPE_ATTACK, G, I)
     };
-    var i = function() {
-        var F = false;
-        if (F) {
+    var j = function() {
+        var G = false;
+        if (G) {
             modal_messages();
             setTimeout(function() {
                 AjaxCall.gPostRequest("ajax/fetchReport.php", {
                     rid: 2529,
                     side: 1,
                     testLoot: 0
-                }, function(G) {
-                    cm.ReportView.render(G)
+                }, function(H) {
+                    cm.ReportView.render(H)
                 })
             }, 2000)
         }
     };
     return {
-        render: B,
-        development: i
+        render: C,
+        development: j
     }
 }(jQuery);
 var cm = cm || {};
@@ -79994,7 +80598,13 @@ cm.SacrificeQueue = function() {
                     changeBarracksModalTabs(1);
                     Modal.hideModal()
                 } else {
-                    Modal.showAlert(response.feedback)
+                    var alertString = "Undefined Error";
+                    if (response.error_code === cm.ERROR_TYPE.SACRIFICE_DUPLICATE) {
+                        alertString = g_js_strings.errorcode["err_" + response.error_code].replace("%1$s", unitcost["unt" + unitid][0])
+                    } else {
+                        alertString = g_js_strings.errorcode["err_" + response.error_code] || alertString
+                    }
+                    cm.ModalManager.alert(alertString)
                 }
             }
         })
@@ -81639,7 +82249,7 @@ function do_modal_speedup(d, a, b, c, t, l) {
         }
     }
     n.push("<div id='modal_speedup'>");
-    n.push("<div class='itemlist'><div class='speedUpModalTimeLeft'></div>");
+    n.push("<div class='itemlist'><div class='speedUpModalTimeLeft " + d + "'></div>");
     var o = 0;
     for (o = 0; o < r.length; o++) {
         r[o] = r[o].substr(1);
@@ -81951,37 +82561,42 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
             params.cid = currentcityid;
             params.iid = itemid;
             var phppg = "";
-            if (type == "bdg") {
-                params.bid = typeid;
-                phppg = "speedupConstruction"
+            if (type == "spell") {
+                params.sid = typeid;
+                phppg = "speedupBattleSpellCooldown"
             } else {
-                if (type == "tch") {
-                    params.tid = typeid;
-                    phppg = "speedupResearch"
+                if (type == "bdg") {
+                    params.bid = typeid;
+                    phppg = "speedupConstruction"
                 } else {
-                    if (type == "wks") {
+                    if (type == "tch") {
                         params.tid = typeid;
-                        params.workshop = true;
-                        phppg = "speedupResearchWorkshop"
+                        phppg = "speedupResearch"
                     } else {
-                        if (type == "trn") {
-                            params.uid = typeid;
-                            phppg = "speedupTraining"
+                        if (type == "wks") {
+                            params.tid = typeid;
+                            params.workshop = true;
+                            phppg = "speedupResearchWorkshop"
                         } else {
-                            if (type == "frt") {
-                                params.fid = typeid;
-                                phppg = "speedupFortify"
+                            if (type == "trn") {
+                                params.uid = typeid;
+                                phppg = "speedupTraining"
                             } else {
-                                if (type == "mkt") {
-                                    params.mid = typeid;
-                                    phppg = "speedupTrade"
+                                if (type == "frt") {
+                                    params.fid = typeid;
+                                    phppg = "speedupFortify"
                                 } else {
-                                    if (type.match(/^m\d+,\d+$/)) {
-                                        var march_info = type.split(",");
-                                        params.mid = type.split(",")[0].split("m")[1];
-                                        phppg = "speedupMarch"
+                                    if (type == "mkt") {
+                                        params.mid = typeid;
+                                        phppg = "speedupTrade"
                                     } else {
-                                        return
+                                        if (type.match(/^m\d+,\d+$/)) {
+                                            var march_info = type.split(",");
+                                            params.mid = type.split(",")[0].split("m")[1];
+                                            phppg = "speedupMarch"
+                                        } else {
+                                            return
+                                        }
                                     }
                                 }
                             }
@@ -81996,6 +82611,9 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
                 onSuccess: function(message) {
                     var rslt = eval("(" + message.responseText + ")");
                     if (rslt.ok) {
+                        if (rslt.endDate) {
+                            cm.SpellsModel.setNewEndDate(parseInt(rslt.endDate))
+                        }
                         var reduced = cm.intelligentOrdering.getReduceTime(itemid);
                         seed.items["i" + itemid] = parseInt(seed.items["i" + itemid]) - 1;
                         ksoItems[itemid].subtract();
@@ -82105,7 +82723,13 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
                         }
                         var lastHourGlassFinished = reduced > cm.speedUpModalTimer.getCurrentModalTimeLeft();
                         if (lastHourGlassFinished) {
-                            Modal.hideModalAll()
+                            if (type == "spell") {
+                                Modal.hideModal();
+                                cm.attack_modal.redisplay_spell_speedup()
+                            } else {
+                                Modal.hideModalAll()
+                            }
+                            cm.SpellsView.rerender_spell_countdown_area()
                         } else {
                             cm.speedUpModalTimer.redisplayModal()
                         }
@@ -82121,6 +82745,99 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
         }
     }
 };
+cm.SpellsModel = function() {
+    var c = function() {
+        return cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing("BLOOD_MAGIC"))
+    };
+    var e = function(g) {
+        return seed.cityData && seed.cityData.city && seed.cityData.city[currentcityid].spells && seed.cityData.city[currentcityid].spells[g]
+    };
+    var d = function() {
+        return [21]
+    };
+    var f = function(g) {
+        if (e(g) && parseInt(seed.cityData.city[currentcityid].spells[g].endDate) > unixtime()) {
+            return true
+        }
+        return false
+    };
+    var b = function(g, h) {
+        if (!e(g)) {
+            return ""
+        }
+        var i = seed.cityData.city[currentcityid].spells[g].endDate - unixtime();
+        return h ? i : cm.log.convertToHMS(i)
+    };
+    var a = function(g) {
+        seed.cityData.city[currentcityid].spells = {};
+        seed.cityData.city[currentcityid].spells[21] = {
+            endDate: g
+        }
+    };
+    return {
+        haveASpell: c,
+        cooldownActive: f,
+        setNewEndDate: a,
+        getRemainingSpellDuration: b,
+        getSpellIdsForThisCity: d
+    }
+}();
+var STUB_spell_cooldown = function(b) {
+    var a = b || 2000;
+    cm.SpellsModel.setNewEndDate(unixtime() + a)
+};
+cm.SpellsView = function(e) {
+    var g = function(h) {
+        do_modal_speedup("spell", h, "", undefined, [], 0)
+    };
+    var f = function(h) {
+        return '<a class="inlineButton20Red" name="spell" onclick="cm.SpellsView.speedup(' + h + ');"><span>' + g_js_strings.commonstr.speedup + "</span></a>"
+    };
+    var c = function() {
+        var k = cm.SpellsModel.getSpellIdsForThisCity();
+        var i = k.length;
+        for (var h = 0; h < i; h++) {
+            var j = k[h];
+            var n = f(j);
+            var m = !cm.SpellsModel.cooldownActive(j);
+            var l = cm.Template.renderTemplate("Building", "spellView", {
+                title: g_js_strings.spells["name_" + j],
+                description: g_js_strings.spells["desc_" + j],
+                cooldown: m ? "" : g_js_strings.spells.cooldown + ": ",
+                available: m ? g_js_strings.spells.available : n
+            })
+        }
+        e("#modal_rallypoint_spells").html(l)
+    };
+
+    function a() {
+        return e("#modal_rallypoint_tabs").length > 0
+    }
+    function d() {
+        if (a()) {
+            modal_openRallypoint_tab("spells", 3)
+        }
+    }
+    cm.timer.register("spellCountdown", function b() {
+        if (cm.SpellsModel.cooldownActive(21)) {
+            var i = cm.SpellsModel.getRemainingSpellDuration(21, true);
+            cm.speedUpModalTimer.update("spell", "", i, 0);
+            var j = cm.log.convertToHMS(i);
+            var h = parseInt(i) > 0 ? j : "";
+            e(".spellSecondCountDown_21").html(h);
+            e(".spell.speedUpModalTimeLeft").html(h);
+            if (parseInt(i) == 1) {
+                setTimeout(d, 2000)
+            }
+        }
+    });
+    return {
+        render: c,
+        speedup: g,
+        speedup_html: f,
+        rerender_spell_countdown_area: d
+    }
+}(jQuery);
 cm = cm || {};
 cm.SummoningCircleController = function(f) {
     var u = function() {
@@ -85517,7 +86234,7 @@ cm.ThronePanelView = function(G) {
             W.append("<span class='gems'>" + Z.gems.use + "</span>")
         }
         Y = cm.ThronePanelController.calcBuffCost(V);
-        b(V, X, (Y + Z.gems.use));
+        z();
         return false
     };
     var r = function(W, U, V) {
@@ -85745,6 +86462,9 @@ cm.ThronePanelView = function(G) {
         G("#throneInventoryItem" + U.id).attr("class", "");
         G("#throneInventoryItem" + U.id).addClass(U.type + " " + U.faction + " quality" + U.quality);
         G("#throneInventoryItem" + U.id + " .broken").remove();
+        if (U.unique > 0) {
+            G("#throneInventoryItem" + U.id).addClass("unique" + U.unique)
+        }
         if (G("#thronePanelBrokenContainer").html() != null) {
             cm.ModalManager.close()
         }
@@ -85759,8 +86479,11 @@ cm.ThronePanelView = function(G) {
             W = G("#thronePanelBrokenInstantButton");
         G("#throneInventoryItem" + Z.id).attr("class", "");
         G("#throneInventoryItem" + Z.id).addClass(Z.type + " " + Z.faction + " quality" + Z.quality);
-        G("#throneInventoryItem" + Z.id).append("<span class='repair'></span>");
         G("#throneInventoryItem" + Z.id + " .broken").remove();
+        if (Z.unique > 0) {
+            G("#throneInventoryItem" + Z.id).addClass("unique" + Z.unique)
+        }
+        G("#throneInventoryItem" + Z.id).append("<span class='repair'></span>");
         seed.queue_throne.start = unixtime();
         seed.queue_throne.end = unixtime() + V;
         seed.queue_throne.itemId = Z.id;
@@ -85920,6 +86643,23 @@ cm.ThroneView = function(e) {
         e("#throneStatTab").click(function(I) {
             v("stat", this, H)
         });
+        e("#throneMainContainer").click(function(I) {
+            if (e(I.target).is("#throneMainContainer, #throneItemContainer div")) {
+                e("div#throneInfoContainer ul.tabNavigation li.active").removeClass("active").addClass("inactive");
+                e("#throneInfoContainer").stop().animate({
+                    left: "-190"
+                }, 500, "easeOutCirc");
+                e("#thronePanelContainer").animate({
+                    right: "-508"
+                }, {
+                    duration: 1000,
+                    easing: "easeOutCirc",
+                    complete: function() {
+                        cm.ThronePanelView.closePanel()
+                    }
+                })
+            }
+        });
         d(H);
         if (D) {
             t(kocThroneItems)
@@ -86053,7 +86793,7 @@ cm.ThroneView = function(e) {
     };
     var w = function() {
         var F = [],
-            J, I, E = 8,
+            J, I, E = 16,
             K = seed.throne.activeSlot,
             G = seed.throne.slotNum;
         for (var H = 0; H < E; ++H) {
@@ -88046,52 +88786,59 @@ function viral_tracking(serverId, tracking_code, userid, other) {
     })
 };
 
-function cancelTraining(o, p, c, l, g, b, t, a, e) {
-    var s = new Array();
+function cancelTraining(p, q, c, l, g, b, u, a, e) {
+    var t = new Array();
     var h = new Array();
     var d = cm.ApothecaryView.isOpen();
-    s.push("<div id='modal_lv10'>");
-    s.push("<div class='lv10 clearfix'>");
-    s.push("<div class='info' style='margin-left: 10px; width: 340px;'><div class='ttl'>");
-    s.push(d ? g_js_strings.revive.canceltrainingtakes : g_js_strings.cancelTraining.canceltrainingtakes);
-    s.push("<table cellpadding='2' cellspacing='0'><tbody><tr>");
+    t.push("<div id='modal_lv10'>");
+    t.push("<div class='lv10 clearfix'>");
+    t.push("<div class='info' style='margin-left: 10px; width: 340px;'><div class='ttl'>");
+    t.push(d ? g_js_strings.revive.canceltrainingtakes : g_js_strings.cancelTraining.canceltrainingtakes);
+    t.push("<table cellpadding='2' cellspacing='0'><tbody><tr>");
     var k = ["Food", "Wood", "Stone", "Ore"];
-    var n = 1;
-    var r = checkreq("unt", c, 1);
-    var q = cm.RevivalModel.getRevivalStats(c, l).cost / 2;
+    var o = 1;
+    var s = checkreq("unt", c, 1);
+    var r = cm.RevivalModel.getRevivalStats(c, l).cost / 2,
+        m = false;
     if (d) {
         var i = new Array();
         i.push("<td class='rec'>" + g_js_strings.commonstr.gold + "</td>");
-        i.push("<td class='rec'>" + addCommas(q) + "</td>");
-        s.push(i.join(""))
+        i.push("<td class='rec'>" + addCommas(r) + "</td>");
+        t.push(i.join(""))
     } else {
-        for (var m = 0; m < r[0].length; m++) {
-            if (k.indexOf(r[0][m]) != -1) {
+        for (var n = 0; n < s[4].length; n++) {
+            if (k.indexOf(s[4][n]) != -1) {
                 var i = new Array();
-                i.push("<td class='rec'>" + r[0][m] + "</td>");
-                if (parseInt(r[1][m]) > 0) {
-                    i.push("<td class='rec'>" + addCommas(r[1][m] * l / 2) + "</td>")
+                i.push("<td class='rec'>" + s[4][n] + "</td>");
+                if (parseInt(s[1][n]) > 0) {
+                    i.push("<td class='rec'>" + addCommas(s[1][n] * l / 2) + "</td>")
                 } else {
-                    i.push("<td class='rec'>" + r[1][m] * l / 2 + "</td>")
+                    i.push("<td class='rec'>" + s[1][n] * l / 2 + "</td>")
                 }
-                if (n % 2 == 0) {
-                    s.push(i.join("") + "</tr>")
+                if (o % 2 == 0) {
+                    t.push(i.join("") + "</tr>")
                 } else {
-                    s.push(i.join(""))
+                    t.push(i.join(""))
                 }
-                n++
+                o++
+            }
+            if (s[4][n] === "Item") {
+                m = true
             }
         }
     }
-    s.push("</tbody></table>");
-    s.push("</div></div>");
-    s.push("</div>");
-    s.push("<div class='btns clearfix'>");
+    t.push("</tbody></table>");
+    t.push("</div></div>");
+    t.push("</div>");
+    if (m) {
+        t.push("<div class='red'>" + g_js_strings.cancelTraining.specialitemsnonrefundable + "</div>")
+    }
+    t.push("<div class='btns clearfix'>");
     var f = d ? g_js_strings.revive.cancel : g_js_strings.cancelTraining.canceltraining;
-    s.push("<a  class='button20' onclick='removeTraining(" + o + "," + p + "," + c + "," + l + "," + g + "," + b + "," + t + ', false, "' + e + "\");return false;'><span>" + f + "</span></a>");
-    s.push("<a  class='cancel' onclick='Modal.hideModal();return false;'>" + g_js_strings.commonstr.cancel + "</a>");
-    s.push("</div></div>");
-    Modal.showModal(400, 400, 130, 130, d ? g_js_strings.revive.canceltrainingtitle : g_js_strings.cancelTraining.canceltrainingtitle, s.join(""))
+    t.push("<a  class='button20' onclick='removeTraining(" + p + "," + q + "," + c + "," + l + "," + g + "," + b + "," + u + ', false, "' + e + "\");return false;'><span>" + f + "</span></a>");
+    t.push("<a  class='cancel' onclick='Modal.hideModal();return false;'>" + g_js_strings.commonstr.cancel + "</a>");
+    t.push("</div></div>");
+    Modal.showModal(400, 400, 130, 130, d ? g_js_strings.revive.canceltrainingtitle : g_js_strings.cancelTraining.canceltrainingtitle, t.join(""))
 }
 function removeTraining(trainingId, cityId, typetrn, numtrptrn, trnETA, trnTmp, trnNeeded, speedUpTraining, reviveNum) {
     var params = Object.clone(g_ajaxparams);
@@ -88140,11 +88887,6 @@ function removeTraining(trainingId, cityId, typetrn, numtrptrn, trnETA, trnTmp, 
                     if (apoth) {
                         update_gold();
                         cm.WoundedModel.add(troop_type, troop_num)
-                    } else {
-                        for (var i = 1; i < 5; i++) {
-                            var totalReturn = parseInt(unitcost["unt" + typetrn][i]) * parseInt(numtrptrn) * 3600 / 2;
-                            seed.resources["city" + cityId]["rec" + i][0] = parseInt(seed.resources["city" + cityId]["rec" + i][0]) + totalReturn
-                        }
                     }
                     Modal.hideModalAll()
                 }, true)
