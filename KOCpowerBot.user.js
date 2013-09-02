@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130902a
+// @version        20130902b
 // @namespace      mat
 // @homepage       http://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130902a';
+var Version = '20130902b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -11222,7 +11222,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>'+translate("Put chat on right (requires wide screen)")+'</td></tr>\
         <TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>'+translate("Use WideMap (requires wide screen)")+'</td></tr>\
         <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>'+translate("Auto collect gold when happiness reaches")+' <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
-        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert On less than <INPUT id=pbfoodalertint type=text size=2 maxlength=3 \> Hours of food checked every 15 min)</td></tr>\
+        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert On less than <INPUT id=pbfoodalertint type=text size=2 maxlength=3 \> Hours of food checked every 15 min)</td></tr>;'
  
         m += '<TR><TD><INPUT id=pbmaintoggle type=checkbox /></td><TD>'+translate("auto select city on startup");
          m+='<select id=pbwhichcity>';
