@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130903c
+// @version        20130903d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130903c';
+var Version = '20130903d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4152,6 +4152,7 @@ Tabs.tower = {
           if (!Options.alertConfig.lastatkarr[m.tocity] || march > Options.alertConfig.lastatkarr[m.tocity]){
             Options.alertConfig.lastatkarr[m.tocity] = march;
             t.newIncoming (m);
+             saveOptions();
           }
           incomming = true;
           if (Options.alertConfig.raid){
