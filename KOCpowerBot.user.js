@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130903b
+// @version        20130903c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130903b';
+var Version = '20130903c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -130,7 +130,7 @@ var Options = {
   pbWideMap    : false,
   pbFoodAlert  : false,
   pbFoodAlertInt  : 6,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:{}},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -4146,10 +4146,11 @@ Tabs.tower = {
     var incomming = false;
     if (matTypeof(Seed.queue_atkinc) != 'array'){
       for (var k in Seed.queue_atkinc){   // check each incoming march
+;      var march = /\d+/.exec(k);
         var m = Seed.queue_atkinc[k];
         if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
-          if (m.departureTime > Options.alertConfig.lastAttack){
-            setTimeout(function(){Options.alertConfig.lastAttack = m.departureTime;saveOptions()},500);//potential fix for ghosted incoming attacks of the exact same second.
+          if (!Options.alertConfig.lastatkarr[m.tocity] || march > Options.alertConfig.lastatkarr[m.tocity]){
+            Options.alertConfig.lastatkarr[m.tocity] = march;
             t.newIncoming (m);
           }
           incomming = true;
@@ -4559,9 +4560,11 @@ Tabs.tower = {
              + ', AH Lv'+ parseInt(Seed.tech.tch12);
         }
       }
-    t.sendalert(m); 
+    new t.sendalert(m); 
     }
-   if(Options.alertConfig.email) {
+    if (Options.alertConfig.aChat)
+      sendChat ("/a "+  msg);                          // Alliance chat
+    if(Options.alertConfig.email) {
 	  var x = window.open();
 	  x.location="https://baos.kocscripters.com/kocalert/index.php?PING=1";
 	  setTimeout(function(){
@@ -4580,12 +4583,6 @@ Tabs.tower = {
       });x.close();
    },10000);
    };
-    if (!Options.alertConfig.aChat) return;
-    if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
-    if (SEND_ALERT_AS_WHISPER)
-      sendChat ("/"+ Seed.player.name +' '+ msg);    // Whisper to myself
-    else
-      sendChat ("/a "+  msg);                        // Alliance chat
   },
 
       handleTowerData: function(m){
