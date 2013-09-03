@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130903d
+// @version        20130903e
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130903d';
+var Version = '20130903e';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -8714,6 +8714,11 @@ Tabs.transport = {
       case 'unt10': params.u10 = parseInt(document.getElementById ('TroopsToSend').value);break;
       case 'unt11': params.u11 = parseInt(document.getElementById ('TroopsToSend').value);break;
       case 'unt12': params.u12 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt13': params.u13 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt14': params.u14 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt15': params.u15 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt16': params.u16 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt17': params.u17 = parseInt(document.getElementById ('TroopsToSend').value);break;
     }
    if (tt)
    params.tt = tt;
