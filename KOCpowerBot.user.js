@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130903a
+// @version        20130903b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130903a';
+var Version = '20130903b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -9966,7 +9966,7 @@ Tabs.AutoCraft = {
          t.craftinfo[h].requirements = unsafeWindow.recipelist[1][i].requirements;
          t.craftinfo[h].inputItems = unsafeWindow.recipelist[1][i].input.items;
          t.craftinfo[h].astone = unsafeWindow.recipelist[1][i].input.resources;
-         m += "<td ><center><img src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
+         m += "<td ><center><img src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
          m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
          if ((count+1)%2 == 0) m += "</tr><tr>";
          count++;
@@ -9980,7 +9980,7 @@ Tabs.AutoCraft = {
          t.craftinfo[h].requirements = unsafeWindow.recipelist[3][i].requirements;
          t.craftinfo[h].inputItems = unsafeWindow.recipelist[3][i].input.items;
          t.craftinfo[h].astone = unsafeWindow.recipelist[3][i].input.resources;
-         m += "<td ><center><img src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
+         m += "<td ><center><img src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
          m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
          if ((count+1)%2 == 0) m += "</tr><tr>";
          count++;
@@ -11838,13 +11838,13 @@ Tabs.Reassign = {
       m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("Fill in the number of troops you want to keep in a city:")+'</div>';
       m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
       
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
       m += '<TD>'+translate("Supply Troop")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
       m += '<TD>'+translate("Militiaman")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
       m += '<TD>'+translate("Scout")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
       m += '<TD>'+translate("Pikeman")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSupplyTroops type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyTroops disabled=true type=text size=10 maxlength=10 value="0"\></td>';
@@ -11855,13 +11855,13 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbPikeman type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetPikeman disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
       m += '<TD>'+translate("Swordsman")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
       m += '<TD>'+translate("Archer")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
       m += '<TD>'+translate("Cavalry")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
       m += '<TD>'+translate("Heavy Cavalry")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSwordsman type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSwordsman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
@@ -11872,16 +11872,16 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbHeavyCavalry type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetHeavyCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
       m += '<TD>'+translate("Supply Wagon")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
       m += '<TD>'+translate("Ballista")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
       m += '<TD>'+translate("Battering Ram")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
       m += '<TD>'+translate("Catapult")+'</td></tr>'
       
-      //https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_13_30_s34.jpg
+      //https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30_s34.jpg
       
       m += '<TR><TD><INPUT id=pbSupplyWagon type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyWagon disabled=true type=text size=10 maxlength=10 value="0"\></td>';
@@ -11892,13 +11892,13 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbCatapult type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-     m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
+     m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
       m += '<TD>'+translate("BloodThorn")+'</td>';
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>';
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>';
       m += '<TD>'+translate("Executioner")+'</td>';
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>';
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>';
       m += '<TD>'+translate("Siege Tower")+'</td>';
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>';
+      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>';
       m += '<TD>'+translate("Flame Archer")+'</td></tr>';
 
       m += '<TR><TD><INPUT id=pbBloodThorn type=checkbox unchecked=true\>';
@@ -18441,7 +18441,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_general' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_general_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18475,7 +18475,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_combat' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_combat_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18509,7 +18509,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_resources' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_resources_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18543,7 +18543,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_chest' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_chest_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18577,7 +18577,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_court' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_court_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -19235,31 +19235,31 @@ Tabs.startup = {
     m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Is Wild </td></tr></table>';
    
 		var dude = unsafeWindow.unitnamedesctranslated;
-    m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD>Wave <b>1</b>(initial): </td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R1Scout type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R1Pike type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R1Sword type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R1Arch type=text size=7 maxlength=6 value=0></td></tr>';
-    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R1LC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R1HC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R1SW type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R1Ball type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R1Ram type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R1Cat type=text size=7 maxlength=6 value=0></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+    m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD>Wave <b>1</b>(initial): </td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R1Scout type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R1Pike type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R1Sword type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R1Arch type=text size=7 maxlength=6 value=0></td></tr>';
+    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R1LC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R1HC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R1SW type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R1Ball type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R1Ram type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R1Cat type=text size=7 maxlength=6 value=0></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
     
-    m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD>Wave <b>2(recurring)</b>: </td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R2Scout type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R2Pike type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R2Sword type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R2Arch type=text size=7 maxlength=6 value=0></td></tr>';
-    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R2LC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R2HC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R2SW type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R2Ball type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R2Ram type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R2Cat type=text size=7 maxlength=6 value=0></td></tr></table>';
+    m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD>Wave <b>2(recurring)</b>: </td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R2Scout type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R2Pike type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R2Sword type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R2Arch type=text size=7 maxlength=6 value=0></td></tr>';
+    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R2LC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R2HC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R2SW type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R2Ball type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R2Ram type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R2Cat type=text size=7 maxlength=6 value=0></td></tr></table>';
     m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteCrest type=submit value="Add Attack"> <INPUT id=pbimpRoute type=submit value="Mass Add Attacks">(from search tab)</div>';
     
     t.myDiv.innerHTML = m;
