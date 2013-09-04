@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130903f
+// @version        20130904a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130903f';
+var Version = '20130904a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3885,7 +3885,7 @@ Tabs.tower = {
             <TR><TD align=right>'+translate("Display defend status")+': &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
             </table></td></tr>\
         <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>'+translate("Stop raids on impending")+'.</td></tr>\
-    <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=1 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending");
+    <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=2 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending");
     m+= '<INPUT id=pbalertTRAFK type=checkbox '+ (Options.alertConfig.AFK?'CHECKED ':'') +'/> Only when AFK</td></tr>\
     <TR><TD><INPUT id=pbalerttoff type=checkbox '+ (Options.alertConfig.alertTRtoff?'CHECKED ':'') +'/></td><td>'+translate("Stop auto outgoing marches on impending")+'</td></tr>\
     <TR><TD align=right><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Toggle TR and marches back after: ")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>\
@@ -5000,7 +5000,7 @@ Tabs.build = {
             <OPTION value=destruct>' + translate("destruct") + '</option>\
             </select></td>';
         m += '<TD><INPUT id=pbHelpRequest type=checkbox ' + (t.buildStates.help ? ' CHECKED' : '') + '\></td><TD>' + translate("Ask for help") + '?</td>';
-        m += '<td><INPUT id=pbbuildtr type=checkbox '+(t.buildStates.tr?'CHECKED':'')+'> '+translate('Only build when throne room set')+' <INPUT id=pbbuildtrset type=text size=2 maxlength=1 value="'+ t.buildStates.trset +'">  '+translate('is equiped')+'</td></table>';
+        m += '<td><INPUT id=pbbuildtr type=checkbox '+(t.buildStates.tr?'CHECKED':'')+'> '+translate('Only build when throne room set')+' <INPUT id=pbbuildtrset type=text size=2 maxlength=2 value="'+ t.buildStates.trset +'">  '+translate('is equiped')+'</td></table>';
         m += '<DIV id=pbBuildDivF class=pbStat>' + translate("QUICK ADD") + '</div>'
         m += '<TABLE id=pbbuildtools width=100% height=0% class=pbTab><TR>';
         m += '<DIV id=cityBuild></div>';
@@ -9953,7 +9953,7 @@ Tabs.AutoCraft = {
          t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
       }
       m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr>';
-      m += '<tr><td align=left><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=1 value="'+ TrainOptions.actrset +'">  is equiped</td></table></div>';
+      m += '<tr><td align=left><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=2 value="'+ TrainOptions.actrset +'">  is equiped</td></table></div>';
       m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
 
       m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td>";
@@ -12609,7 +12609,7 @@ Tabs.AutoTrain = {
     var m = '<DIV class=pbStat>AUTO TRAIN</div><TABLE width=100% height=0% class=pbTab><TR><TD width=200></td>';
         m += '<TD align=center><INPUT id=pbAutoTrainState type=submit value="'+translate("AutoTrain")+' = '+ (TrainOptions.Running?'ON':'OFF')+'"></td>';
         m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value='+translate("HELP")+'></td></tr></table>';
-        m += '<table><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> '+translate('Only train when throne room set')+' <INPUT id=pbatTRset type=text size=2 maxlength=1 value="'+ TrainOptions.trset +'">  '+translate('is equiped')+'</td>';
+        m += '<table><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> '+translate('Only train when throne room set')+' <INPUT id=pbatTRset type=text size=2 maxlength=2 value="'+ TrainOptions.trset +'">  '+translate('is equiped')+'</td>';
         m += '</tr></table></div>';
         m += '<DIV class=pbStat>TRAIN OPTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
     for (i=0;i<Seed.cities.length;i++){
@@ -12958,16 +12958,19 @@ Tabs.AutoTrain = {
     if ((t.stone/cost[3]) < t.amt) t.amt = Math.floor(t.stone/cost[3]);
     if ((t.ore/cost[4]) < t.amt) t.amt = Math.floor(t.ore/cost[4]);
     if (unitId < 13) {
-    if(TrainOptions.SelectMax[t.city]){
+      if(TrainOptions.SelectMax[t.city]){
         if(parseInt(t.amt) > parseInt(TrainOptions.Max[t.city])) t.amt = TrainOptions.Max[t.city];
-    }
-    if(parseInt(t.amt) < parseInt(TrainOptions.Threshold[t.city])) t.amt = 0;
-   } else {
+      }
+      if(parseInt(t.amt) < parseInt(TrainOptions.Threshold[t.city])) t.amt = 0;
+    } else if (unitId == 16) {
+      if (parseInt(unsafeWindow.seed.items.i34001)/cost[11]["34001"] < t.amt) t.amt = Math.floor(parseInt(unsafeWindow.seed.items.i34001)/cost[11]["34001"]);
+      if(parseInt(t.amt) < parseInt(TrainOptions.Threshold[t.city])) t.amt = 0;
+    } else {
       if(TrainOptions.AsSelectMax[t.city])
         if(parseInt(t.amt) > parseInt(TrainOptions.AsMax[t.city])) t.amt = TrainOptions.AsMax[t.city];
       
       if(parseInt(t.amt) < parseInt(TrainOptions.AsTroops[t.city])) t.amt = 0;
-   }
+    }
     
     return t.amt>0?true:false;
   },
