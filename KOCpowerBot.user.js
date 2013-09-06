@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130904a
+// @version        20130906b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130904a';
+var Version = '20130906b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -130,7 +130,7 @@ var Options = {
   pbWideMap    : false,
   pbFoodAlert  : false,
   pbFoodAlertInt  : 6,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:{}},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:[]},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -4144,23 +4144,22 @@ Tabs.tower = {
     }
       var now = unixTime();
     var incomming = false;
-    if (matTypeof(Seed.queue_atkinc) != 'array'){
       for (var k in Seed.queue_atkinc){   // check each incoming march
-;      var march = /\d+/.exec(k);
         var m = Seed.queue_atkinc[k];
-        if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
-          if (!Options.alertConfig.lastatkarr[m.tocity] || march > Options.alertConfig.lastatkarr[m.tocity]){
-            Options.alertConfig.lastatkarr[m.tocity] = march;
+        if (m.marchType==3 || m.marchType==4){
+			if(Options.alertConfig.lastatkarr.indexOf(k) == -1) {
+				Options.alertConfig.lastatkarr.push(k);
             t.newIncoming (m);
-             saveOptions();
-          }
+			};
           incomming = true;
-          if (Options.alertConfig.raid){
-            Options.alertConfig.raidautoswitch[m.toCityId] = true;
-          }
+
         }
-      }
-    }
+      }      
+			if (Options.alertConfig.raid && incomming){
+            Options.alertConfig.raidautoswitch[m.toCityId] = true;
+          };
+          if(!incoming) Options.alertConfig.lastatkarr = new Array();
+      saveOptions();
     if(Options.alertConfig.RecentActivity) {
       if(Options.alertConfig.alertTR2) {
          if(!incomming) {
@@ -10773,7 +10772,6 @@ Tabs.Barb = {
   
   barbing : function(){
        var t = Tabs.Barb;
-       logit('march barbing');
        var city = t.city;
        citynumber = Seed.cities[city-1][0];
        cityID = 'city' + citynumber;
@@ -10784,7 +10782,6 @@ Tabs.Barb = {
       if (Seed.resources[cityID]["rec5"][0] > Number(AttackOptions.threshold)) {
          return;
       };
-             logit('march barbing res');
        var element1 = 'pddatacity'+(city-1);
        document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
        var element2 = 'pddataarray'+(city-1);
@@ -10792,7 +10789,6 @@ Tabs.Barb = {
        if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(AttackOptions.RallyClip)) return;
        if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
-              logit('march barbing 2');
        if(t.barbArray[city] && t.barbArray[city].length > 0){
         var barbinfo = t.barbArray[city].shift();
        }else if(parseInt(AttackOptions.Update[city][1])==0){
@@ -10801,7 +10797,6 @@ Tabs.Barb = {
        } else {
         return;
        };
-              logit('march barbing 2');
        var check=0;
        var barblevel = parseInt(barbinfo.level);
         
@@ -10813,7 +10808,6 @@ Tabs.Barb = {
             GM_setValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.barbArray[city]));
             return;
         }
-       logit('march barbing 3');
          // check troop levels in city
          var trps = AttackOptions.Troops[barblevel];
          var num_troops = 0;
@@ -10828,11 +10822,9 @@ Tabs.Barb = {
         GM_setValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.barbArray[city]));
         return;
        }
-              logit('march barbing 4');
        var element = 'pdtotalcity'+(city-1);
         if (t.barbArray[city] == undefined) document.getElementById(element).innerHTML = 'No Data';
         else document.getElementById(element).innerHTML =  'Forests:' + t.barbArray[city].length;
-              logit('march barbing 5');
        var xcoord = barbinfo['x'];
        var ycoord = barbinfo['y'];
        t.doBarb(citynumber,city,xcoord,ycoord,barblevel,kid,trps);
@@ -15733,14 +15725,14 @@ function strButton20 (label, tags){
 
 function reloadKOC (){
   var serverId = getServerId();
-  if(serverId == '??') {
-  	window.location.reload(true);
-	return;
-  };
+
   var goto = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+serverId;
-  if(document.URL.match(/standalone=1/i)){
+  if(serverId == '??') {
+    goto = window.location;href;
+  } else if(document.URL.match(/standalone=1/i)){
     goto = window.location.protocol+'//www.kabam.com/games/kingdoms-of-camelot/play?s='+serverId;
-  }
+  };
+
   var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ serverId +'"</form>';
   var e = document.createElement ('div');
   e.innerHTML = t;
