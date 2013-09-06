@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130906b
+// @version        20130906c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130906b';
+var Version = '20130906c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -4147,8 +4147,8 @@ Tabs.tower = {
       for (var k in Seed.queue_atkinc){   // check each incoming march
         var m = Seed.queue_atkinc[k];
         if (m.marchType==3 || m.marchType==4){
-			if(Options.alertConfig.lastatkarr.indexOf(k) == -1) {
-				Options.alertConfig.lastatkarr.push(k);
+			if(Options.alertConfig.lastatkarr.indexOf(m.mid) == -1) {
+				Options.alertConfig.lastatkarr.push(m.mid);
             t.newIncoming (m);
 			};
           incomming = true;
