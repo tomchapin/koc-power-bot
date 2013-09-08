@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130908a
+// @version        20130908b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130908a';
+var Version = '20130908b';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -134,7 +134,7 @@ var Options = {
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
-  celltext     : {atext:false, provider:0, num1:"000", num2:"000", num3:"0000"},
+  celltext     : {atext:false, provider:0, num1:"000", num2:"000", num3:"0000", extended:false},
   giftDelete   : 'e',
   currentTab   : null,
   hideOnGoto   : true,
@@ -3875,6 +3875,8 @@ Tabs.tower = {
     }
 
     m += '</select></td></tr>';
+    m += '<tr><td align=left><INPUT id=pbcellextended type=checkbox '+ (Options.celltext.extended?'CHECKED ':'') +'/></td>\
+    <td align=left>'+translate("Send troop info in text")+'<span style="color:#800; font-weight:bold"><sup>*'+translate("Multiple text messages per attack. Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>';
     m += '<TR><td align=center>-</td><TD align=left>'+translate("Minimum # of troops to trigger tower options")+':<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> <span style="color:#800; font-weight:bold"><sup>*NEW! Controls All Tower Options</sup></span></td></tr>';
 
     m += '<TR><TD><INPUT id=pbalertemail type=checkbox '+ (Options.alertConfig.email?'CHECKED ':'') +'/></td><TD>'+translate("e-mail on incoming attack")+'<INPUT id=pbathemail type=submit value='+translate("Authenticate")+' >.</td></tr>\
@@ -3920,6 +3922,7 @@ Tabs.tower = {
     document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
     document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
     document.getElementById('pbcellenable').addEventListener ('change', function (e){Options.celltext.atext = e.target.checked;}, false);
+    document.getElementById('pbcellextended').addEventListener ('change', function (e){Options.celltext.extended = e.target.checked;}, false);
     document.getElementById('pbSoundStop').disabled = true;
     document.getElementById('pbalertemail').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
@@ -4446,6 +4449,15 @@ Tabs.tower = {
         }
       }
     }
+    
+    var inctroops = '';
+    if (Options.celltext.extended) {
+        for (k in m.unts){
+            var uid = parseInt(k.substr (1));
+            inctroops += String(m.unts[k]) +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
+        }
+    }
+    inctroops = inctroops.slice (0, -2);
     data.provider = Options.celltext.provider;
     data.num1 = Options.celltext.num1;
     data.num2 = Options.celltext.num2;
@@ -4453,6 +4465,8 @@ Tabs.tower = {
     data.serverId = getServerId();
     data.player = Seed.player['name'];
     data.city = city.name;
+    data.troops = inctroops;
+    data.extended = Options.celltext.extended;
 
   GM_xmlhttpRequest({
     method: 'POST',
