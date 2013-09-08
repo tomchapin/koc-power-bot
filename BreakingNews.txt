@@ -1,15 +1,15 @@
-For those having issues with firefox 23 and mixed content of bot, go to 
-this link to learn about firefox 23 security and how to disable the mixed 
-content blocker on bot associated pages: 
-https://blog.mozilla.org/tanvi/2013/04/10/mixed-content-blocking-enabled-in-firefox-23
+Tired of the user prompt screwing up your refresh's?  Help us get the bug in the fast lane to be fixed!  vote and post a comment!
+<a href=https://bugzilla.mozilla.org/show_bug.cgi?id=913907>https://bugzilla.mozilla.org/show_bug.cgi?id=913907</a>
 
-or you can change the following options in about:config
-security.mixed_content.block_active_content --> false
-security.mixed_content.block_display_content --> true
+Added some easy links for you to find your favorite scripts!  
+fyi, just because they are sublinked, does not mean they are trusted.  You 
+too can have a script.kocscripters.com link for your site from 
+http://www.afraid.org
 
-Tired of the post data dialogue screwing up your refresh's?  Help us get the bug in the fast lane to be fixed!  vote and post a comment!
-https://bugzilla.mozilla.org/show_bug.cgi?id=160144
-
+http://tools.kocscripters.com
+http://bot.kocscripters.com
+http://battle.kocscripters.com
+http://tro.kocscripters.com
 
 Congrats to kabam for finally fixing the misted city exploit!
 
