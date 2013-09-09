@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130908b
+// @version        20130908c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130908b';
+var Version = '20130908c';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -519,20 +519,18 @@ if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
   return;
 }
 function loadchecker (init) {
+var Sresult = getServerId();
 	if(init) {
-		var squery = /[\?,\&]s=\d+/;
-		var dquery = /\d+/;
-		var Sresult=dquery.exec(squery.exec(document.location.search));
-		if(Sresult == null) {
+		if(Sresult == '??') {
 			GM_setValue ('Loaded', 0);
-			setTimeout(function(){if(GM_getValue ('Loaded') == 0)KOCnotFound(10);},1*60*1000);
+			setTimeout(function(){if(GM_getValue ('Loaded') == 0)KOCnotFound(10);},2*60*1000);
 		} else {
 			GM_setValue (Sresult+'Loaded', 0);
-			setTimeout(function(){if(GM_getValue (Sresult+'Loaded') == 0)KOCnotFound(10);},3*60*1000);
+			setTimeout(function(){if(GM_getValue (Sresult+'Loaded') == 0)KOCnotFound(10);},2*60*1000);
 		};
 	  } else {
 	  	GM_setValue ('Loaded', 1);
-	  	GM_setValue (getServerId()+'Loaded', 1);
+	  	GM_setValue (Sresult+'Loaded', 1);
 	  };
 };
 
@@ -13283,14 +13281,13 @@ function KOCnotFound(secs){
   div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>KOC Power Bot has detected that KOC is not loaded<BR>Refreshing in <SPAN id=pbwdsecs></span><BR><INPUT id=pbwdcan type=submit value="Cancel Refresh"><BR><BR></div>';
   document.body.insertBefore (div, document.body.firstChild);
   document.getElementById('pbwdcan').addEventListener('click', cancel, false);
-  countdown();
+    countdownTimer = setInterval (countdown, 1000);
       
   function countdown (){
     var secsLeft = endSecs - (new Date().getTime()/1000);
     document.getElementById('pbwdsecs').innerHTML = timestr(secsLeft);
     if (secsLeft < 0)
       reloadKOC();
-    countdownTimer = setTimeout (countdown, 1000);
   }
   function cancel (){
     clearTimeout (countdownTimer);
@@ -14944,7 +14941,13 @@ function getServerId() {
     var m=/^[a-zA-Z]+([0-9]+)\./.exec(document.location.hostname);
     if (m)
       myServerId = m[1];
-    else
+	else {
+		var squery = /[\?,\&]s=\d+/;
+		var dquery = /\d+/;
+		var Sresult=dquery.exec(squery.exec(document.location.search));
+		if(Sresult)myServerId = Sresult;
+	}
+   if(myServerId == null)
       myServerId = '??';
   }
   return myServerId;
@@ -15740,14 +15743,10 @@ function strButton20 (label, tags){
 
 function reloadKOC (){
   var serverId = getServerId();
-
   var goto = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+serverId;
-  if(serverId == '??') {
-    goto = window.location;href;
-  } else if(document.URL.match(/standalone=1/i)){
+  if(document.URL.match(/standalone=1/i)){
     goto = window.location.protocol+'//www.kabam.com/games/kingdoms-of-camelot/play?s='+serverId;
   };
-
   var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ serverId +'"</form>';
   var e = document.createElement ('div');
   e.innerHTML = t;
