@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130908c
+// @version        20130909a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130908c';
+var Version = '20130909a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -6532,6 +6532,7 @@ Tabs.Search = {
       }
         m += '</table></div>';
         m += '<BR><input type=checkbox id="pbskip">Skip targets when errors occur';
+        m += '<BR><input type=checkbox id="pbsallcities">Scout from all cities';
         m += '<BR><CENTER>'+ strButton20(translate('Start Scout'), 'id=pbSrcStartScout') +'</center>';
         m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
     popScout.getMainDiv().innerHTML = m;
@@ -6580,8 +6581,13 @@ Tabs.Search = {
         t.clickedStartScout();
         return;
     }
-    logit('first '+Number(March.getTotalSlots(city.id))+' second: '+Number(March.getMarchSlots(city.id)));
+    //logit('first '+Number(March.getTotalSlots(city.id))+' second: '+Number(March.getMarchSlots(city.id)));
      if (Number(Number(March.getTotalSlots(city.id))-Number(March.getMarchSlots(city.id))) <= 0){
+     	if(document.getElementById('pbsallcities').checked) { 
+     		var newcity = Number(city.idx)+1;
+     		if(newcity > Number(Cities.numCities)) newcity = 0;
+     		city = Cities.cities[newcity];
+     	};
         setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
         document.getElementById('pbSrcScoutResult').innerHTML += translate('Waiting for rally point to clear')+'...';
         return;
