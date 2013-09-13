@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130909b
+// @version        20130913a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130909b';
+var Version = '20130913a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -3556,8 +3556,6 @@ ThroneT : function (){
             for (var k=1;k<Number(Seed.throne.slotNum+1);k++) {
             	document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
             	document.getElementById('trt'+k).addEventListener ('change', function(){ThroneOptions.tabnames[Number(String(this.id).replace(/trt/,""))] = this.value;saveThroneOptions();}, false);
-            	
-//hereherehere
             	document.getElementById('autotr'+k).addEventListener ('click', function(){ThroneOptions.autotoggle[Number(String(this.id).replace(/autotr/,""))] = this.checked; saveThroneOptions();}, false);
          	};
             t.TTpaint(unsafeWindow.seed.throne.activeSlot);
@@ -6569,6 +6567,7 @@ Tabs.Search = {
     
   },
   doScoutCount : function(list, city, total, count){
+  	logit('city is '+city);
     var t = Tabs.Search;
     if(!t.scouting){
         document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>'+translate("Scouting stopped by user")+'</span><BR>';
@@ -6581,13 +6580,9 @@ Tabs.Search = {
         t.clickedStartScout();
         return;
     }
-    //logit('first '+Number(March.getTotalSlots(city.id))+' second: '+Number(March.getMarchSlots(city.id)));
+    logit('first '+Number(March.getTotalSlots(city.id))+' second: '+Number(March.getMarchSlots(city.id)));
      if (Number(Number(March.getTotalSlots(city.id))-Number(March.getMarchSlots(city.id))) <= 0){
-     	if(document.getElementById('pbsallcities').checked) { 
-     		var newcity = Number(city.idx)+1;
-     		if(newcity > Number(Cities.numCities)-1) newcity = 0;
-     		city = Cities.cities[newcity];
-     	};
+     	//if(document.getElementById('pbsallcities').checked) city = 
         setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
         document.getElementById('pbSrcScoutResult').innerHTML += translate('Waiting for rally point to clear')+'...';
         return;
@@ -11034,8 +11029,8 @@ Tabs.Barb = {
     
     t.opt.maxDistance = parseInt(AttackOptions.MaxDistance);
     t.opt.searchDistance = (t.opt.maxDistance*2);
-    if(t.opt.maxDistance > 40){
-        t.opt.searchDistance = 40;
+    if(t.opt.maxDistance > 15){
+        t.opt.searchDistance = 15;
     }
     t.opt.searchShape = 'circle';
     t.mapDat = [];
@@ -14210,7 +14205,7 @@ function CMapAjax (){
           bl.push ('bl_'+ xx +'_bt_'+ yy);
         }
       }
-      return bl.join(",");
+      return bl.join("%2C");
     }
   }
  
@@ -14877,7 +14872,11 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
     //if ( (x = rslt.errorMsg.indexOf ('<br><br>')) > 0)
      // rslt.errorMsg = rslt.errorMsg.substr (0, x-1);
     if (!noRetry && (rslt.error_code==0 || rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
+    	if (matTypeof(rslt.errorMsg) == 'object') {
       dialogRetry (inspect(rslt.errorMsg), delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
+		} else {
+			dialogRetry (rslt.errorMsg, delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
+		};
     } else if (!noRetry && rslt.error_code==9) {
         silentTimer = setTimeout(silentRetry, delay*1000);
     } else {
@@ -21840,7 +21839,7 @@ function AutoUpdater (prom) {
 };
 
 function Sendtokofcmon (left,top,mapdata) {
-	if(Math.floor((Math.random()*1000)+1) > throttle)return;
+	//if(Math.floor((Math.random()*1000)+1) > throttle)return;
    var params = {};
 	params.mapdata=  btoa(RawDeflate.deflate(JSON.stringify(mapdata)));
 	params.server = getServerId();
@@ -21859,6 +21858,7 @@ function Sendtokofcmon (left,top,mapdata) {
             if(message.status != 200) throttle = 0;
             else {
       			var rslt = eval("(" + message.responseText + ")");
+      			//alert(inspect(rslt));
             	if(rslt.ok)throttle = Number(rslt.throttle);
             	if(rslt.glb) {
             		kofcmonLeaderboard(rslt.glbperpage,rslt.glbpage,rslt.glbtype);
