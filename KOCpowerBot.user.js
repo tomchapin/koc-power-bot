@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130913a
+// @version        20130914a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130913a';
+var Version = '20130914a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -6340,7 +6340,7 @@ Tabs.Search = {
     var xxx = t.MapAjax.normalize(t.curX);
     var yyy = t.MapAjax.normalize(t.curY);
     document.getElementById ('pastatStatus').innerHTML = translate('Searching at ')+ xxx +','+ yyy;
-    t.MapAjax.request (xxx, yyy, 40, t.eventgetplayeronline);
+    t.MapAjax.request (xxx, yyy, 15, t.eventgetplayeronline);
   },
 
   hideShowClicked : function (){
@@ -6757,14 +6757,14 @@ Tabs.Search = {
       }
     }
     
-    t.tilesSearched += (40*40);
+    t.tilesSearched += (15*15);
     document.getElementById('pastatSearched').innerHTML = translate('Searched: ')+ t.tilesSearched;
     t.dispMapTable();
 
-    t.curX += 40;
+    t.curX += 15;
     if (t.curX > t.lastX){
       t.curX = t.firstX;
-      t.curY += 40;
+      t.curY += 15;
       if (t.curY > t.lastY){
         t.stopSearch (translate('Done!'));
         return;
@@ -6773,7 +6773,7 @@ Tabs.Search = {
     var x = t.MapAjax.normalize(t.curX);
     var y = t.MapAjax.normalize(t.curY);
     document.getElementById ('pastatStatus').innerHTML = 'Searching at '+ x +','+ y;
-    setTimeout (function(){t.MapAjax.request (x, y, 40, t.eventgetplayeronline)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (x, y, 15, t.eventgetplayeronline)}, MAP_DELAY);
   },
   
   eventgetplayeronline : function (left, top, width, rslt){
