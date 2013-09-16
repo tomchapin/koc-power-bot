@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130915a
+// @version        20130916a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130915a';
+var Version = '20130916a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -6567,7 +6567,7 @@ Tabs.Search = {
     
   },
   doScoutCount : function(list, city, total, count){
-  	logit('city is '+city);
+  	logit('city is '+city.id);
     var t = Tabs.Search;
     if(!t.scouting){
         document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>'+translate("Scouting stopped by user")+'</span><BR>';
@@ -6582,7 +6582,11 @@ Tabs.Search = {
     }
     logit('first '+Number(March.getTotalSlots(city.id))+' second: '+Number(March.getMarchSlots(city.id)));
      if (Number(Number(March.getTotalSlots(city.id))-Number(March.getMarchSlots(city.id))) <= 0){
-     	//if(document.getElementById('pbsallcities').checked) city = 
+     	if(document.getElementById('pbsallcities').checked) { 
+     		var newcity = Number(city.idx)+1;
+     		if(newcity > Number(Cities.numCities)) newcity = 0;
+     		city = Cities.cities[newcity];
+     	};
         setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
         document.getElementById('pbSrcScoutResult').innerHTML += translate('Waiting for rally point to clear')+'...';
         return;
