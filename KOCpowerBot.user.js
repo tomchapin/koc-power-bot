@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130916c
+// @version        20130916d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130916c';
+var Version = '20130916d';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -21401,7 +21401,7 @@ Tabs.ascension = {
             m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
             m += '<TR><TD style="background:https://koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=100% height=25">';
             if (isPrestigeCity) {
-	      if (cityPrestigeType == 2) {
+	      if (cityPrestigeType <= 2) {
                 if (cityPrestigeLevel < 6) {
                     //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
                     document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
@@ -21480,10 +21480,10 @@ Tabs.ascension = {
 //        }
 
         if (isPrestigeCity) {
-          if (cityPrestigeType != 2 && cityPrestigeLevel < 3) {
+          if (cityPrestigeType == 3 && cityPrestigeLevel < 3) {
             var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
             params.cid = cityId;
-            params.prestigeType = 1;
+            params.prestigeType = 3;
             new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getPrestigeCost.php" + unsafeWindow.g_ajaxsuffix, {
                 method: "post",
                 parameters: params,
@@ -21493,7 +21493,7 @@ Tabs.ascension = {
                     }
                 }
             });
-	  } else if (cityPrestigeType == 2 && cityPrestigeLevel < 6) {
+	  } else if (cityPrestigeType <= 2 && cityPrestigeLevel < 6) {
             var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
             params.cid = cityId;
             params.prestigeType = 2;
