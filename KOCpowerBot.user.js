@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130917b
+// @version        20130918a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130917b';
+var Version = '20130918a';
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -1735,7 +1735,8 @@ Tabs.farm = {
                        unitsarr[i] = params["u"+i];
                    var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
                    var currentcityid = params.cid;
-                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+ 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                  var slots=0;
                  for(var k in Seed.queue_atkp['city'+cityID]) slots++;
@@ -6629,7 +6630,8 @@ Tabs.Search = {
                 unitsarr[i] = params["u"+i];
              var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
              var currentcityid = params.cid;
-             unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+ 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+             unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
              if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
              document.getElementById('pbSrcScoutResult').innerHTML += translate('Sent!')+'<BR>';
              if (notify)
@@ -8678,7 +8680,8 @@ Tabs.transport = {
                     resources[i] = params["r"+i];
                  }
                  var currentcityid = city;
-                 unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+ 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+                 unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
                  var t = Tabs.transport;
@@ -8767,7 +8770,8 @@ Tabs.transport = {
                               resources[i] = params["r"+i];
                           }
                           var currentcityid = t.tcp.city.id;
-                          unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+ 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+                          unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
                           if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                           document.getElementById ('errorSpace').innerHTML = 'Send: ' + addCommas(params.r1+params.r2+params.r3+params.r4+params.r5+params.gold) + ' Resources with ' + addCommas(parseInt(document.getElementById ('TroopsToSend').value)) + ' ' + unsafeWindow.unitcost[unitType][0];
                           document.getElementById ('pbtradeamountFood').value = 0;
@@ -20295,7 +20299,8 @@ var March = {
 
 
                     var currentcityid = params.cid;
-                    unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+ 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+                    unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
                   
                     if (rslt.updateSeed) {
                         unsafeWindow.update_seed(rslt.updateSeed);
