@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130918a
+// @version        20130918b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,8 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130918a';
+var Version = '20130918b';
+var http =  window.location.protocol+"\:\/\/";
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
@@ -56,8 +57,8 @@ var SEND_ALERT_AS_WHISPER = false;
 var throttle = 10;
 var MAP_DELAY = 4000;
 var MAP_DELAY_WATCH = Number(0);
-var DEFAULT_ALERT_SOUND_URL = 'https://koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
-var SWF_PLAYER_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
+var DEFAULT_ALERT_SOUND_URL = http+'koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
+var SWF_PLAYER_URL = http+'koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
 
 var URL_CASTLE_BUT = "data:image/png;base64,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";
 var URL_CASTLE_BUT_SEL = "data:image/png;base64,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";
@@ -1103,37 +1104,37 @@ Tabs.farm = {
     
      m += '<DIV id=pbTraderDivD class=pbStat>FARMING TROOPS</div>';
      m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
-        m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+        m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
         m += '<TD>Supply Troop</td>'
-        m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
         m += '<TD>Militiaman</td>'
-        m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
         m += '<TD>Scout</td>'
-        m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
         m += '<TD>Pikeman</td></tr>'
         m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop1  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[1] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop2  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[2] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop3  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[3] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop4  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[4] +'\></td></tr>';
-        m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+        m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
         m += '<TD>Swordsman</td>'
-        m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
         m += '<TD>Archer</td>'
-        m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
         m += '<TD>Cavalry</td>'
-        m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
         m += '<TD>Heavy Cavalry</td></tr>'
         m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop5  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[5] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop6  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[6] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop7  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[7] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop8  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[8] +'\></td></tr>';
-        m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+        m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
         m += '<TD>Supply Wagon</td>'
-        m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
         m += '<TD>Ballista</td>'
-        m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
         m += '<TD>Battering Ram</td>'
-        m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
         m += '<TD>Catapult</td></tr>'
         m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop9  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[9] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop10  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[10] +'\></td>';
@@ -2611,7 +2612,7 @@ paintEquipInfo : function (z,what){
         var id =0;
         var tier=0;
         var Current=0;
-        var icon = 'https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type +'_normal_1_'+ y.quality+'.png';
+        var icon = ''+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type +'_normal_1_'+ y.quality+'.png';
         if (y.isEquipped)m='<TABLE width=80% height=0% align="center" class=ThroneEQ  ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         else m='<TABLE width=80% height=0% align="center" class=Throne ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         switch(parseInt(y["quality"])){
@@ -4069,7 +4070,7 @@ Tabs.tower = {
   },
   e_authenticate: function (){
 	  var x = window.open();
-	  x.location="https://baos.kocscripters.com/kocalert/index.php";
+	  x.location=http+"baos.kocscripters.com/kocalert/index.php";
   },
   e_alertOptChanged : function (){
     var t = Tabs.tower;
@@ -4467,7 +4468,7 @@ Tabs.tower = {
 
   GM_xmlhttpRequest({
     method: 'POST',
-    url: 'https://baos.kocscripters.com/index.php',
+    url: http+'baos.kocscripters.com/index.php',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
@@ -4578,7 +4579,8 @@ Tabs.tower = {
       sendChat ("/a "+  msg);                          // Alliance chat
     if(Options.alertConfig.email) {
 	  var x = window.open();
-	  x.location="https://baos.kocscripters.com/kocalert/index.php?PING=1";
+	  var y = http+"baos.kocscripters.com/kocalert/index.php?PING=1";
+	  x.location=y;
 	  setTimeout(function(){
      var data = {};
       data.Subject ='kocalaert'+getServerId()+' ';
@@ -4587,7 +4589,7 @@ Tabs.tower = {
       data.Message = msg.replace(eval('/'+fchar+'/g'),'');
       GM_xmlhttpRequest({
          method: 'POST',
-         url: 'https://baos.kocscripters.com/kocalert/index.php',
+         url: http+'baos.kocscripters.com/kocalert/index.php',
          headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
          },
@@ -4846,11 +4848,11 @@ Tabs.tower = {
                         s3 += '<TABLE cellspacing=0 width=100%><TR>';
                         
                         if (t.towerMarches[k].atkType == 'attacked') {
-                            s3 += '<TD rowspan=2 width=5%><B><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_30.jpg?6545"></b></td>';
+                            s3 += '<TD rowspan=2 width=5%><B><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_30.jpg?6545"></b></td>';
                         }
                         else
                             if (t.towerMarches[k].atkType == 'scouted') {
-                                s3 += '<TD rowspan=2 width=5%><B><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_30.jpg?6545"></b></td>';
+                                s3 += '<TD rowspan=2 width=5%><B><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_30.jpg?6545"></b></td>';
                             }
                         s3 += '<TD width=15%><B>'+translate("Location")+'</b></td>';
                         s3 += '<TD width=15%><B>'+translate("Name")+'</b></td>';
@@ -5829,9 +5831,9 @@ Tabs.build = {
         row.vAlign = 'top';
         row.insertCell(0).innerHTML = queueId;
         if (buildingMode == "destruct") {
-            row.insertCell(1).innerHTML = '<img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/bonus_att.png">';
+            row.insertCell(1).innerHTML = '<img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/bonus_att.png">';
         } else {
-            row.insertCell(1).innerHTML = '<img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/bonus_prod.png">';
+            row.insertCell(1).innerHTML = '<img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/bonus_prod.png">';
         }
         row.insertCell(2).innerHTML = unsafeWindow.buildingcost['bdg' + buildingType][0];
         row.insertCell(3).innerHTML = timestr(buildingTime);
@@ -6834,39 +6836,39 @@ Tabs.Search = {
     pop.getTopDiv().innerHTML = '<CENTER><B>'+translate("Export to Raid")+'</b></center>';
     
       var m = '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
       m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="0"></td>';
       m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="0"></td>';
       m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="0"></td>';
       m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="0"></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
       m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="0"></td>';
       m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="0"></td>';
       m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="0"></td>';
       m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="0"></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
       m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
       m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="0"></td>';
       m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="0"></td>';
@@ -7011,7 +7013,7 @@ Tabs.Search = {
       prov.push(unsafeWindow.provincenames['p'+pids[i]]);
     m += '<TR><TD class=pbDetLeft>'+translate("Player Name")+':</td><TD>'+ p.genderAndName +'</td></tr>\
       <TR><TD class=pbDetLeft>'+translate("Might")+':</td><TD>'+ p.might +'</td></tr>\
-      <TR><TD class=pbDetLeft>'+translate("Facebook profile")+':</td><TD><A target="_tab" href="https://www.facebook.com/profile.php?id='+ p.fbuid +'">'+translate("Click to open in new tab")+'</a></td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Facebook profile")+':</td><TD><A target="_tab" href="'+http+'www.facebook.com/profile.php?id='+ p.fbuid +'">'+translate("Click to open in new tab")+'</a></td></tr>\
       <TR><TD class=pbDetLeft>'+translate("Alliance")+':</td><TD>'+ p.allianceName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
       <TR valign=top><TD class=pbDetLeft>'+translate("Provinces")+':</td><TD style="white-space:normal">'+ prov.join(', ') +'</td></tr>';
     span.innerHTML = m + '</table>';
@@ -7337,7 +7339,7 @@ Tabs.News = {
    div.innerHTML = '<DIV class=pbStat>Breaking News!</div><br>';
       GM_xmlhttpRequest({
          method: 'GET',
-         url: 'https://koc-power-bot.googlecode.com/svn/trunk/BreakingNews.txt',
+         url: http+'koc-power-bot.googlecode.com/svn/trunk/BreakingNews.txt',
          headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
          },
@@ -7590,7 +7592,7 @@ Tabs.transport = {
         m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
         m += '<TD id=Calc colspan=3></td></tr>';
         m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="center">';
-        m += '<TD width=5%><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png" alt="Food"></td>';
+        m += '<TD width=5%><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png" alt="Food"></td>';
         m += '<TD id=TransRec1 align=right width=110px></td>';
         m += '<TD id=HaveRec1 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
@@ -7598,7 +7600,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png" alt="Wood"></td>';
+        m += '<TD width=5%><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png" alt="Wood"></td>';
         m += '<TD id=TransRec2 align=right width=110px></td>';
         m += '<TD id=HaveRec2 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
@@ -7606,7 +7608,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png" alt="Stone"></td>';
+        m += '<TD width=5%><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png" alt="Stone"></td>';
         m += '<TD id=TransRec3 align=right width=110px></td>';
         m += '<TD id=HaveRec3 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
@@ -7614,7 +7616,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png" alt="Iron"></td>';
+        m += '<TD width=5%><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png" alt="Iron"></td>';
         m += '<TD id=TransRec4 align=right width=110px></td>';
         m += '<TD id=HaveRec4 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
@@ -7622,7 +7624,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png" alt="Aether"></td>';
+        m += '<TD width=5%><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png" alt="Aether"></td>';
         m += '<TD id=TransRec5 align=right width=110px></td>';
         m += '<TD id=HaveRec5 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
@@ -7630,7 +7632,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/gold_30.png" alt="Gold"></td>';
+        m += '<TD width=5%><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/gold_30.png" alt="Gold"></td>';
         m += '<TD id=TransGold align=right width=110px></td>';
         m += '<TD id=HaveGold align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
@@ -8221,12 +8223,12 @@ Tabs.transport = {
             m += '<TR><TD width=20px>' + (i + 1) + '</td><TD width=175px>' + translate("From:") + '&nbsp;&nbsp;' + cityname + '</TD><TD width=175px>' + translate("To:") + '&nbsp;&nbsp;' + TO + '</td><TD width=175px>' + status + '</td>';
             m += '<TD width=60px><A onclick="traceEdit(' + queueId + ')">' + translate("Edit") + '</a></td><TD width=60px><A onclick="traceDelete(' + queueId + ')">Delete</a></td></tr>';
             m += '<TR><TD></td><TD>Troops:&nbsp;&nbsp;' + unsafeWindow.unitcost[unit][0] + '</td></tr>';
-            if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png" alt="Food"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Food) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Food) + '</td>';
-            if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png" alt="Wood"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Wood) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Wood) + '</td>';
-            if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png" alt="Stone"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Stone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Stone) + '</td>';
-            if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png" alt="Iron"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Ore) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Ore) + '</td>';
-            if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png" alt="Aether"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Astone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Astone) + '</td>';
-            if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/gold_30.png" alt="Gold"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Gold) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Gold) + '</td>';
+            if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png" alt="Food"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Food) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Food) + '</td>';
+            if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png" alt="Wood"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Wood) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Wood) + '</td>';
+            if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png" alt="Stone"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Stone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Stone) + '</td>';
+            if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png" alt="Iron"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Ore) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Ore) + '</td>';
+            if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png" alt="Aether"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Astone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Astone) + '</td>';
+            if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/gold_30.png" alt="Gold"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Gold) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Gold) + '</td>';
         }
         m += '</table>';
         document.getElementById('pbRoutesQueue')
@@ -8258,7 +8260,7 @@ Tabs.transport = {
         n += '</select></td></table><BR><TABLE  id=editRoutes class=pbTab>';
         for (var i = 0; i < Types.length; i++) {
             var icon = Types[i];
-            n += '<TR><TD width=50px align=center><img alt="' + icon + '" src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/' + icon + '_30.png"></td>';
+            n += '<TR><TD width=50px align=center><img alt="' + icon + '" src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/' + icon + '_30.png"></td>';
             n += '<TD width=50px align=center><INPUT id=pbbship' + icon + ' type=checkbox></td>';
             n += '<TD width=125px>' + translate("Keep:") + ' <INPUT id=pbbtargetamount' + icon + ' type=text size=11 maxlength=11 value="0"></td>';
             n += '<TD width=125px>' + translate("Trade:") + ' <INPUT id=pbbtradeamount' + icon + ' type=text size=11 maxlength=11 value="0"\></td></tr>';
@@ -9065,13 +9067,13 @@ cm.MARCH_TYPES = {
                           now = unixTime();
                           //z+='<TR><TD>('+ botMarchStatus +'/'+ MarchStatus +')</td>';
                           z+='<TR>';
-                          //if (destinationUnixTime > now && botMarchStatus !=3) z+='<TD align=center><img src=https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
-                          if (MarchStatus ==1) z+='<TD align=center><img src=https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
-                          //if ((destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src=https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
-                          if (MarchStatus ==8 && (destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src=https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
-                          if (MarchStatus == 3) z+='<TD align=center><img src=https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
-                          //if (returnUnixTime < now  && botMarchStatus !=3) z+='<TD align=center><img src=https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
-                          if (MarchStatus == 4 || (returnUnixTime < now  && botMarchStatus !=3)) z+='<TD align=center><img src=https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
+                          //if (destinationUnixTime > now && botMarchStatus !=3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
+                          if (MarchStatus ==1) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
+                          //if ((destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
+                          if (MarchStatus ==8 && (destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
+                          if (MarchStatus == 3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
+                          //if (returnUnixTime < now  && botMarchStatus !=3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
+                          if (MarchStatus == 4 || (returnUnixTime < now  && botMarchStatus !=3)) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
                           
                           if (destinationUnixTime >= now) z+='<TD>'+ timestr(Seed.queue_atkp['city' + t.cityId][k]['destinationUnixTime'] - unixTime())+'</td>';
                           if (destinationUnixTime <= now) {
@@ -9153,39 +9155,39 @@ cm.MARCH_TYPES = {
           m+='<TD width=25px></td><TD>Round Trip: '+ timestr((t.save[y]['returnUnixTime'] - t.save[y]['destinationUnixTime'])*2)+ '</td></tr></table>';
 
           m += '<BR><TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-          m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+          m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
-          m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
-          m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
-          m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
           m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="'+ t.save[y]['unit1Count']+'"></td>';
           m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="'+ t.save[y]['unit2Count']+'"></td>';
           m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="'+ t.save[y]['unit3Count']+'"></td>';
           m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="'+ t.save[y]['unit4Count']+'"></td></tr>';
           
-          m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+          m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
-          m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
-          m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
-          m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
           m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="'+ t.save[y]['unit5Count']+'"></td>';
           m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="'+ t.save[y]['unit6Count']+'"></td>';
           m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="'+ t.save[y]['unit7Count']+'"></td>';
           m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="'+ t.save[y]['unit8Count']+'"></td></tr>';
           
-          m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+          m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
-          m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
-          m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
-          m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
           m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="'+ t.save[y]['unit9Count']+'"></td>';
           m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="'+ t.save[y]['unit10Count']+'"></td>';
@@ -9240,39 +9242,39 @@ cm.MARCH_TYPES = {
             m+='<TD width=25px></td><TD>Round Trip: '+ timestr((t.rslt['queue'][y]['botMarches']['returnUnixTime'] - t.rslt['queue'][y]['botMarches']['destinationUnixTime'])*2)+ '</td></tr></table>';
 
             m += '<BR><TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-            m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+            m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
-            m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
-            m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
-            m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
             m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit1Count']+'"></td>';
             m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit2Count']+'"></td>';
             m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit3Count']+'"></td>';
             m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit4Count']+'"></td></tr>';
             
-            m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+            m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
-            m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
-            m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
-            m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
             m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit5Count']+'"></td>';
             m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit6Count']+'"></td>';
             m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit7Count']+'"></td>';
             m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit8Count']+'"></td></tr>';
             
-            m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+            m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
-            m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
-            m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
-            m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
             m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit9Count']+'"></td>';
             m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit10Count']+'"></td>';
@@ -9753,7 +9755,7 @@ cm.MARCH_TYPES = {
                                  }
                                  pop.getTopDiv().innerHTML = '<CENTER><B>ERROR</b></center>';
                                  var m= '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-                               m +=  '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/merlin_img.jpg"></td>';
+                               m +=  '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/merlin_img.jpg"></td>';
                                m+='<TD style="align;left; max-width:200px; text-wrap:normal;word-wrap:break-word"><B>'+ rslt.msg+'</b></td>';
                                  m+='<TD><CENTER>'+ strButton20('OK', 'id=pbOK') +'</center></td></tr>';
                                  pop.getMainDiv().innerHTML = m;
@@ -9993,7 +9995,7 @@ Tabs.AutoCraft = {
          t.craftinfo[h].requirements = unsafeWindow.recipelist[1][i].requirements;
          t.craftinfo[h].inputItems = unsafeWindow.recipelist[1][i].input.items;
          t.craftinfo[h].astone = unsafeWindow.recipelist[1][i].input.resources;
-         m += "<td ><center><img src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
+         m += "<td ><center><img src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
          m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
          if ((count+1)%2 == 0) m += "</tr><tr>";
          count++;
@@ -10007,7 +10009,7 @@ Tabs.AutoCraft = {
          t.craftinfo[h].requirements = unsafeWindow.recipelist[3][i].requirements;
          t.craftinfo[h].inputItems = unsafeWindow.recipelist[3][i].input.items;
          t.craftinfo[h].astone = unsafeWindow.recipelist[3][i].input.resources;
-         m += "<td ><center><img src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
+         m += "<td ><center><img src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
          m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
          if ((count+1)%2 == 0) m += "</tr><tr>";
          count++;
@@ -10118,8 +10120,8 @@ Tabs.AutoCraft = {
          }
 
       }
-      str += _row ('<img height=18 src=https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png>', rows[5], false, 0);
-      str +='<tr style="background: #e8e8e8" align=right><td><img height=20 src=https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg title="Crafting"></b></td><td>&nbsp;</td>';
+      str += _row ('<img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png>', rows[5], false, 0);
+      str +='<tr style="background: #e8e8e8" align=right><td><img height=20 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg title="Crafting"></b></td><td>&nbsp;</td>';
       for(i=0; i<Cities.numCities; i++) {
          var totTime = 0;
          // the last item in the queue should be the item in progress
@@ -11859,13 +11861,13 @@ Tabs.Reassign = {
       m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("Fill in the number of troops you want to keep in a city:")+'</div>';
       m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
       
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
       m += '<TD>'+translate("Supply Troop")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
       m += '<TD>'+translate("Militiaman")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
       m += '<TD>'+translate("Scout")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
       m += '<TD>'+translate("Pikeman")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSupplyTroops type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyTroops disabled=true type=text size=10 maxlength=10 value="0"\></td>';
@@ -11876,13 +11878,13 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbPikeman type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetPikeman disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
       m += '<TD>'+translate("Swordsman")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
       m += '<TD>'+translate("Archer")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
       m += '<TD>'+translate("Cavalry")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
       m += '<TD>'+translate("Heavy Cavalry")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSwordsman type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSwordsman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
@@ -11893,16 +11895,16 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbHeavyCavalry type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetHeavyCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
       m += '<TD>'+translate("Supply Wagon")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
       m += '<TD>'+translate("Ballista")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
       m += '<TD>'+translate("Battering Ram")+'</td>'
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
       m += '<TD>'+translate("Catapult")+'</td></tr>'
       
-      //https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30_s34.jpg
+      //'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30_s34.jpg
       
       m += '<TR><TD><INPUT id=pbSupplyWagon type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyWagon disabled=true type=text size=10 maxlength=10 value="0"\></td>';
@@ -11913,13 +11915,13 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbCatapult type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-     m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
+     m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
       m += '<TD>'+translate("BloodThorn")+'</td>';
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>';
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>';
       m += '<TD>'+translate("Executioner")+'</td>';
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>';
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>';
       m += '<TD>'+translate("Siege Tower")+'</td>';
-      m += '<TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>';
+      m += '<TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>';
       m += '<TD>'+translate("Flame Archer")+'</td></tr>';
 
       m += '<TR><TD><INPUT id=pbBloodThorn type=checkbox unchecked=true\>';
@@ -11931,7 +11933,7 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbFlameArcher type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetFlameArcher disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
    
-      m += '<TR><TD rowspan="2"><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_50.jpg?6545?6545"></td>';
+      m += '<TR><TD rowspan="2"><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_50.jpg?6545?6545"></td>';
       m += '<TD>'+translate("Hussar")+'</td></tr>';
       m += '<TR><TD><INPUT id=pbHussar type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetHussar disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
@@ -12725,13 +12727,13 @@ Tabs.AutoTrain = {
         <option value=38>'+unsafeWindow.itemlist.i38.name+'</option></select>';
         m+='</td></tr></table></td><tr>';
         m += '<TD></td><TD><TABLE><TR>';
-        m += '<TD width=5%><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png"></td>';
+        m += '<TD width=5%><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepFood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
-        m += '<TD width=20px><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png"></td>';
+        m += '<TD width=20px><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepWood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
-        m += '<TD width=20px><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png"></td>';
+        m += '<TD width=20px><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepStone'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
-        m += '<TD width=20px><img src="https://kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png"></td>';
+        m += '<TD width=20px><img src=http+"kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepOre'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
         m += '<TD><SELECT class='+city+' id="Resource'+city+'"><option value="true">'+translate("Keep")+'</options>';
         m+='<option value="false">'+translate("Use")+'</option>';
@@ -13579,18 +13581,18 @@ Tabs.Chat = {
         <TR><TD><b>'+translate("Impending Attack")+'</b></td></tr></table>';
     m+='<TABLE class=ptTab><TR><TD align="center">'+translate("Troops")+'</td><TD align="center">'+translate("Amount")+'</td></tr>';
     
-    if(u1) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_1_30.png></td><TD align="center">'+parseInt(u1)+'</td></tr>';
-    if(u2) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_2_30.png></td><TD align="center">'+parseInt(u2)+'</td></tr>';
-    if(u3) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_3_30.png></td><TD align="center">'+parseInt(u3)+'</td></tr>';
-    if(u4) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_4_30.png></td><TD align="center">'+parseInt(u4)+'</td></tr>';
-    if(u5) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_5_30.png></td><TD align="center">'+parseInt(u5)+'</td></tr>';
-    if(u6) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_6_30.png></td><TD align="center">'+parseInt(u6)+'</td></tr>';
-    if(u7) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_7_30.png></td><TD align="center">'+parseInt(u7)+'</td></tr>';
-    if(u8) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_8_30.png></td><TD align="center">'+parseInt(u8)+'</td></tr>';
-    if(u9) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_9_30.png></td><TD align="center">'+parseInt(u9)+'</td></tr>';
-    if(u10) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_10_30.png></td><TD align="center">'+parseInt(u10)+'</td></tr>';
-    if(u11) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_11_30.png></td><TD align="center">'+parseInt(u11)+'</td></tr>';
-    if(u12) m+='<TR><TD align="center"><img src=https://koc.god-like.info/img/unit_12_30.png></td><TD align="center">'+parseInt(u12)+'</td></tr>';
+    if(u1) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_1_30.png></td><TD align="center">'+parseInt(u1)+'</td></tr>';
+    if(u2) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_2_30.png></td><TD align="center">'+parseInt(u2)+'</td></tr>';
+    if(u3) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_3_30.png></td><TD align="center">'+parseInt(u3)+'</td></tr>';
+    if(u4) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_4_30.png></td><TD align="center">'+parseInt(u4)+'</td></tr>';
+    if(u5) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_5_30.png></td><TD align="center">'+parseInt(u5)+'</td></tr>';
+    if(u6) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_6_30.png></td><TD align="center">'+parseInt(u6)+'</td></tr>';
+    if(u7) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_7_30.png></td><TD align="center">'+parseInt(u7)+'</td></tr>';
+    if(u8) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_8_30.png></td><TD align="center">'+parseInt(u8)+'</td></tr>';
+    if(u9) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_9_30.png></td><TD align="center">'+parseInt(u9)+'</td></tr>';
+    if(u10) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_10_30.png></td><TD align="center">'+parseInt(u10)+'</td></tr>';
+    if(u11) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_11_30.png></td><TD align="center">'+parseInt(u11)+'</td></tr>';
+    if(u12) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_12_30.png></td><TD align="center">'+parseInt(u12)+'</td></tr>';
     
       m+='<TR><TD></TD></TR><TR><TD></TD></TR></table>';
     
@@ -17223,10 +17225,10 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   var div = document.createElement ('div');
   this.onSwfLoaded = onLoad;
   if (navigator.appName.toLowerCase().indexOf('microsoft')+1) {
-    div.innerHTML = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="https://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"><param name="movie" value="'+playerUrl+'"><param name="quality" value="high"></object>';
+    div.innerHTML = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="'+http+'download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"><param name="movie" value="'+playerUrl+'"><param name="quality" value="high"></object>';
     this.player = div.getElementsByTagName('object')[0];
   } else {
-    div.innerHTML = '<embed src="'+playerUrl+'"  bgcolor="#eeeeee" allowfullscreen=false FlashVars="'+ flashVars +'" quality="high" allowscriptaccess="always" pluginspage="https://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" ></embed>';
+    div.innerHTML = '<embed src="'+playerUrl+'"  bgcolor="#eeeeee" allowfullscreen=false FlashVars="'+ flashVars +'" quality="high" allowscriptaccess="always" pluginspage="'+http+'www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" ></embed>';
     this.player = div.getElementsByTagName('embed')[0].wrappedJSObject;
   }
   if (container)
@@ -18494,7 +18496,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_general' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_general_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18528,7 +18530,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_combat' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_combat_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18562,7 +18564,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_resources' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_resources_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18596,7 +18598,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_chest' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_chest_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18630,7 +18632,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_court' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_court_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -19071,10 +19073,10 @@ Tabs.startup = {
         t.where = "City";
         var counter = 0;
    	var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
-        var cityGrid = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/CityTileIDs.jpg">';
-   	var asccityGrid = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/AscCityTileIDs.jpg">';
-	var asccityfeyGrid = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/AscCityFeyTileIDs.jpg">';
-	var asccitybritGrid = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/AscCityBritonTileIDs.jpg">';
+        var cityGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/CityTileIDs.jpg">';
+   	var asccityGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/AscCityTileIDs.jpg">';
+	var asccityfeyGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/AscCityFeyTileIDs.jpg">';
+	var asccitybritGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/AscCityBritonTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
 	if(AscCityInd == true) {
 		varAscCityType=Seed.cityData.city[t.city.city.id].prestigeInfo.prestigeType;
@@ -19184,7 +19186,7 @@ Tabs.startup = {
         var counter = 0;
         var fields = 13;
         var max = t.getCastleLevel();
-        var fieldGrid = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/FieldsTileIDs.jpg">';
+        var fieldGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/FieldsTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
         document.getElementById('gridPicture').innerHTML = fieldGrid;
         var mess='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showFieldDefaults type=submit value="Load Defaults"><INPUT id=setFieldDefaults type=submit value="Set Defaults">';
@@ -19288,31 +19290,31 @@ Tabs.startup = {
     m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Is Wild </td></tr></table>';
    
 		var dude = unsafeWindow.unitnamedesctranslated;
-    m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD>Wave <b>1</b>(initial): </td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R1Scout type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R1Pike type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R1Sword type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R1Arch type=text size=7 maxlength=6 value=0></td></tr>';
-    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R1LC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R1HC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R1SW type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R1Ball type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R1Ram type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R1Cat type=text size=7 maxlength=6 value=0></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
+    m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD>Wave <b>1</b>(initial): </td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R1Scout type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R1Pike type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R1Sword type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R1Arch type=text size=7 maxlength=6 value=0></td></tr>';
+    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R1LC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R1HC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R1SW type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R1Ball type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R1Ram type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R1Cat type=text size=7 maxlength=6 value=0></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
     
-    m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD>Wave <b>2(recurring)</b>: </td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R2Scout type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R2Pike type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R2Sword type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R2Arch type=text size=7 maxlength=6 value=0></td></tr>';
-    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R2LC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R2HC type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R2SW type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R2Ball type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R2Ram type=text size=7 maxlength=6 value=0></td>';
-    m += '<TD>&nbsp;&nbsp;<img src=https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R2Cat type=text size=7 maxlength=6 value=0></td></tr></table>';
+    m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD>Wave <b>2(recurring)</b>: </td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R2Scout type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R2Pike type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R2Sword type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R2Arch type=text size=7 maxlength=6 value=0></td></tr>';
+    m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R2LC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R2HC type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R2SW type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R2Ball type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R2Ram type=text size=7 maxlength=6 value=0></td>';
+    m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R2Cat type=text size=7 maxlength=6 value=0></td></tr></table>';
     m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteCrest type=submit value="Add Attack"> <INPUT id=pbimpRoute type=submit value="Mass Add Attacks">(from search tab)</div>';
     
     t.myDiv.innerHTML = m;
@@ -19537,7 +19539,7 @@ Tabs.startup = {
     helpText += 'So make sure u have 1 FREE SLOT in your castle for a wild!<BR>';
     helpText += 'Just fill in the coordinates, troops and hit "ON".<BR><BR>';
     helpText += 'Troop numers (from KOC WIKI):<BR>';
-    helpText += '<A target="_tab" href="https://koc.wikia.com/wiki/Wilderness">More can be found on Koc Wikia</a>';
+    helpText += '<A target="_tab" href="'+http+'koc.wikia.com/wiki/Wilderness">More can be found on Koc Wikia</a>';
     helpText += '<TABLE width=100%><TR><TD>Level</td><TD>Wave 1</td><TD>Wave 2</td><TD>Troop loses</td><TD>Min. Fletching</td></tr>';
     helpText += '<TR><TD>1</td><TD>n/a</td><TD>160 MM</td><TD>12 MM</td><TD>0</td></tr>';
     helpText += '<TR><TD>1</td><TD>n/a</td><TD>80 archers</td><TD>None</td><TD>1+</td></tr>';
@@ -21380,7 +21382,7 @@ Tabs.ascension = {
             if (progressWidth > 100) progressWidth = 100;
             var fullBarWidth = 378;
             m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
-            m += '<TR><TD background="https://koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=' + fullBarWidth + ' height=25">';
+            m += '<TR><TD background="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=' + fullBarWidth + ' height=25">';
             m += '<DIV id=pbGreenBar_' + i + '></div></td><TD align=center><DIV id=pbProgPerc_' + i + '></div></td><TD><INPUT id=pbAscendBtn_' + Cities.cities[i].id + ' type=submit value="Ascend"></td><TD align=center><DIV id=pbCityPrestigeLevel_' + i + '></div></td><TD align=center><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD align=center><CENTER><DIV id=pbAscCurMight_'+i+'></div></center></td>';
         }
         div.innerHTML = m;
@@ -21436,12 +21438,12 @@ Tabs.ascension = {
             if (progressWidth > 100) progressWidth = 100;
             var fullBarWidth = 378;
             m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
-            m += '<TR><TD style="background:https://koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=100% height=25">';
+            m += '<TR><TD style="background:'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=100% height=25">';
             if (isPrestigeCity) {
 	      if (cityPrestigeType <= 2) {
                 if (cityPrestigeLevel < 6) {
                     //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
-                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
                     document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
                     document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/6';
                     document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/' +fullPrestige[cityPrestigeLevel];
@@ -21454,7 +21456,7 @@ Tabs.ascension = {
 	      } else {
                 if (cityPrestigeLevel < 3) {
                     //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
-                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="https://koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
                     document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
                     document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/3';
                     document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/' +fullPrestige[cityPrestigeLevel-1];
@@ -21721,7 +21723,7 @@ function scripterdebuglog (a,x) {
    logit('sending debug data '+data.info);
   GM_xmlhttpRequest({
     method: 'POST',
-    url: 'https://baos.kocscripters.com/debuglog.php',
+    url: http+'baos.kocscripters.com/debuglog.php',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
@@ -21820,8 +21822,8 @@ function GuardianTT () {
 
 
 function AutoUpdater (prom) {
-	var userscripts = 'https://userscripts.org/scripts/source/101052.user.js';
-	var googlecode = 'https://koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
+	var userscripts = http+'userscripts.org/scripts/source/101052.user.js';
+	var googlecode = http+'koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
 	switch(GlobalOptions.pbupdatebeta)
 	{
 		case "0":
@@ -21892,7 +21894,7 @@ function Sendtokofcmon (left,top,mapdata) {
 	params.top = top;
   GM_xmlhttpRequest({
     method: 'POST',
-    url: 'https://kocscripters.com/mapdat.php',
+    url: http+'kocscripters.com/mapdat.php',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
@@ -21931,7 +21933,7 @@ function Sendtokofcmon (left,top,mapdata) {
 		kofcparams.type=params.type;
           GM_xmlhttpRequest({
     method: 'POST',
-    url: 'https://kocscripters.com/leaderdat.php',
+    url: http+'kocscripters.com/leaderdat.php',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
