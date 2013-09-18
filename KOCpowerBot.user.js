@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130918c
+// @version        20130918d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130918c';//
+var Version = '20130918d';//
 var http =  window.location.protocol+"\:\/\/";
 
 var http =  window.location.protocol+"\/\/";
@@ -2438,6 +2438,7 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
                     case 3:a = unsafeWindow.g_js_strings.throneRoom.rare;break;
                 case 4:a = unsafeWindow.g_js_strings.throneRoom.epic;break;
                 case 5:a = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+                case 6:a = unsafeWindow.g_js_strings.throneRoom.unique;break;
                 default:a = unsafeWindow.g_js_strings.throneRoom.simple;break;
         }
         switch (qualityto) {
@@ -2447,6 +2448,7 @@ _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,
                    case 3:b = unsafeWindow.g_js_strings.throneRoom.rare;break;
                    case 4:b = unsafeWindow.g_js_strings.throneRoom.epic;break;
                 case 5:b = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+                case 6:b = unsafeWindow.g_js_strings.throneRoom.unique;break;
                 default:b = unsafeWindow.g_js_strings.throneRoom.simple;break;
         }
          var row = document.getElementById('ShowQueue').insertRow(0);
@@ -2616,6 +2618,8 @@ paintEquipInfo : function (z,what){
         var tier=0;
         var Current=0;
         var icon = ''+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type +'_normal_1_'+ y.quality+'.png';
+	if (y["unique"]>0)
+          var icon = ''+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type + '_unique_normal_' + y.unique+'.png';
         if (y.isEquipped)m='<TABLE width=80% height=0% align="center" class=ThroneEQ  ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         else m='<TABLE width=80% height=0% align="center" class=Throne ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         switch(parseInt(y["quality"])){
@@ -2633,6 +2637,7 @@ paintEquipInfo : function (z,what){
             id = y["effects"]["slot"+i]["id"];
             tier = parseInt(y["effects"]["slot"+i]["tier"]);
             level = y["level"];
+	if (y["unique"]==30286 && i==5) p = unsafeWindow.cm.thronestats.tiers[id][4]; else  // temporary patch
             p = unsafeWindow.cm.thronestats.tiers[id][tier];
             Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
             var quality = parseInt(y["quality"]);
