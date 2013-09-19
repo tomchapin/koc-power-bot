@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130918d
+// @version        20130919a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130918d';//
+var Version = '20130919a';//
 var http =  window.location.protocol+"\:\/\/";
 
 var http =  window.location.protocol+"\/\/";
@@ -10616,8 +10616,8 @@ Tabs.Barb = {
         saveAttackOptions();
     },false);
     document.getElementById('pbsendint').addEventListener('change', function(){
-        if(parseInt(document.getElementById('pbsendint').value) <5) //Set minimum attack interval to 5 seconds
-            document.getElementById('pbsendint').value = 5;
+        if(parseInt(document.getElementById('pbsendint').value) <5) 
+            document.getElementById('pbsendint').value = 5; //Set minimum attack interval to 5 seconds
         AttackOptions.SendInterval=parseInt(document.getElementById('pbsendint').value);
         saveAttackOptions();
     },false);
@@ -10874,6 +10874,15 @@ Tabs.Barb = {
     if (city>Seed.cities.length){
         city=1;
     }
+
+    for (i=city; i<=Seed.cities.length; i++) {
+	if (!AttackOptions.Levels[i][0]) continue; //Skip city if not selected
+	else {
+	  city=i;
+	  break;
+	}
+    }
+
     t.city = city;
     if(AttackOptions.UpdateEnabled){
         var now = unixTime();
@@ -11050,8 +11059,8 @@ Tabs.Barb = {
     
     t.opt.maxDistance = parseInt(AttackOptions.MaxDistance);
     t.opt.searchDistance = (t.opt.maxDistance*2);
-    if(t.opt.maxDistance > 15){
-        t.opt.searchDistance = 15;
+    if(t.opt.maxDistance > 20){
+        t.opt.searchDistance = 20;
     }
     t.opt.searchShape = 'circle';
     t.mapDat = [];
@@ -17637,6 +17646,7 @@ var DeleteReports = {
             method: "post",
             parameters: params,
             onSuccess: function (rslt) {
+	      if (rslt.detail.winner)
                if(rslt.detail.loot[5]) {
                   var loot = rslt.detail.loot[5];
                if (matTypeof(loot) == 'object')
