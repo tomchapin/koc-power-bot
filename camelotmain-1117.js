@@ -467,6 +467,7 @@ g_js_strings.commonstr.wood = "Wood";
 g_js_strings.commonstr.inventory = "Inventory";
 g_js_strings.commonstr.reload = "Please Reload the Page";
 g_js_strings.commonstr.yourScriptVersionIsOut = "Your script version is out of date.";
+g_js_strings.commonstr.no_quests = "No additional quests are currently available.";
 g_js_strings.modaltitles = new Object();
 g_js_strings.modaltitles.abandoncity = "Abandon City";
 g_js_strings.modaltitles.alliance = "Alliance";
@@ -2321,6 +2322,11 @@ g_js_strings.throneRoom.unique_table30283 = "Healer's Shrine";
 g_js_strings.throneRoom.unique_hero30284 = "Guileful Ranger";
 g_js_strings.throneRoom.unique_hero30285 = "Elite Guard";
 g_js_strings.throneRoom.unique_hero30286 = "Grand Siegemaster";
+g_js_strings.throneRoom.unique_trophy30287 = "Sir Galahad's Shield";
+g_js_strings.throneRoom.unique_window30288 = "Window of the Chalice";
+g_js_strings.throneRoom.unique_hero30289 = "Robin the Courageous";
+g_js_strings.throneRoom.unique_advisor30290 = "Dagonet the Court Jester";
+g_js_strings.throneRoom.unique_advisor30291 = "Minstrel";
 g_js_strings.throneRoom.might1 = "TR Might";
 g_js_strings.throneRoom.statCapNear = "You are approaching the capacity for this stat.";
 g_js_strings.throneRoom.statCapLimit = "You have reached the capacity for this stat.";
@@ -3073,6 +3079,8 @@ g_js_strings.prestige.crystalTooltip = "Consume %1$s %2$s to Ascend for Free!";
 g_js_strings.blessingSystem = new Object();
 g_js_strings.blessingSystem.blessing_name_11 = "Fighting Spirit";
 g_js_strings.blessingSystem.blessing_description_11 = "Unlocks the Bloodthorn Unit";
+g_js_strings.blessingSystem.blessing_name_12 = "Nature Magic";
+g_js_strings.blessingSystem.blessing_description_12 = "Unlock Druid Battle Spells";
 g_js_strings.blessingSystem.blessing_name_101 = "Surrounded by Nature";
 g_js_strings.blessingSystem.blessing_description_101 = "Increased Attack damage to Woods and Dark Forests";
 g_js_strings.blessingSystem.blessing_name_102 = "More with Less";
@@ -3265,6 +3273,8 @@ g_js_strings.spells = {};
 g_js_strings.spells.no = "No spell used.";
 g_js_strings.spells.name_21 = "Lifesteal";
 g_js_strings.spells.desc_21 = "Your wounded troops revive at the battle's end, the Defender's wounded troops are killed.";
+g_js_strings.spells.name_11 = "Hidden Paths";
+g_js_strings.spells.desc_11 = "March time to the target is reduced by 99%, to a minimum of 30 seconds. Return March time remains the same.";
 g_js_strings.spells.spells = "Spells";
 g_js_strings.spells.available = "Available";
 g_js_strings.spells.cooldown = "Cooldown";
@@ -7854,6 +7864,14 @@ var itemlist = {
         category: 1,
         subCategory: 0
     },
+    i20022: {
+        name: "Apprentice Token",
+        description: "Prevents an item from breaking and increases the chance of success by 50x. Will be consumed with each Upgrade attempt.",
+        price: 150,
+        tradable: null,
+        category: 1,
+        subCategory: 0
+    },
     i25001: {
         name: "Mercenaries Cursed Chest N",
         description: "Contains some of Camelots most powerful items. Each Cursed Chest requires a Merlin's Incantation to open.",
@@ -8600,6 +8618,46 @@ var itemlist = {
     },
     i30286: {
         name: "Grand Siegemaster",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30287: {
+        name: "Sir Galahad's Shield",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30288: {
+        name: "Window of the Chalice",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30289: {
+        name: "Robin the Courageous",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30290: {
+        name: "Dagonet the Court Jester",
+        description: "",
+        price: null,
+        tradable: null,
+        category: 0,
+        subCategory: 2
+    },
+    i30291: {
+        name: "Minstrel",
         description: "",
         price: null,
         tradable: null,
@@ -25960,7 +26018,7 @@ var buildingupgradedesc = {
     "10": ["Engage in one transaction at a time", "Engage in two transaction at a time", "Engage in three transaction at a time", "Engage in four transaction at a time", "Engage in five transaction at a time", "Engage in six transaction at a time", "Engage in seven transaction at a time", "Engage in eight transaction at a time", "Engage in nine transaction at a time", "Engage in ten transaction at a time"],
     "11": ["Research Fertilizer, Logging, Stoneworking, and Mining, and raise your research cap to Level 1", "Research Poisoned Edged, and raise your research cap to Level 2", "Research Geometry, Eagle Eyes, and Metal Alloys, and raise your research cap to Level 3", "Research Featherweight Powder, Magical Mapping, and Fletching, and raise your research cap to Level 4", "Research Alloy Horseshoes and Giant&#39;s Strength, and raise your research cap to Level 5", "Research Shrinking Powder and Healing Potions, and raise your research cap to Level 6", "Raise your research cap to Level 7", "Raise your research cap to Level 8", "Raise your research cap to Level 9", "Raise your research cap to Level 10", "Raise your research cap to Level 11", "Raise your research cap to Level 12"],
     "12": ["Send one army at a time, with up to 10,000 troops", "Send two armies at a time, with up to 20,000 troops each", "Send three armies at a time, with up to 30,000 troops each", "Send four armies at a time, with up to 40,000 troops each", "Send five armies at a time, with up to 50,000 troops each", "Send six armies at a time, with up to 60,000 troops each", "Send seven armies at a time, with up to 70,000 troops each", "Send eight armies at a time, with up to 80,000 troops each", "Send nine armies at a time, with up to 90,000 troops each", "Send ten armies at a time, with up to 100,000 troops each", "Send eleven armies at a time, with up to 150,000 troops each", "Send eleven armies at a time, with up to 200,000 troops each"],
-    "13": ["Train Supply Troopers and Militiamen", "Train Scouts and Pikemen, and increase your training speed", "Train Swordsmen, and increase your training speed", "Train Archers, and increase your training speed", "Train Cavalry, and increase your training speed", "Train Supply Wagons, and increase your training speed", "Train Heavy Cavalry, and increase your training speed", "Train Ballistae, and increase your training speed", "Train Battering Rams, and increase your training speed", "Train Catapults, and increase your training speed", "Increase your training speed."],
+    "13": ["Train Supply Troopers and Militiamen", "Train Scouts and Pikemen, and increase your training speed", "Train Swordsmen, and increase your training speed", "Train Archers, and increase your training speed", "Train Cavalry, and increase your training speed", "Train Supply Wagons, and increase your training speed", "Train Heavy Cavalry, and increase your training speed", "Train Ballistae, and increase your training speed", "Train Battering Rams, and increase your training speed", "Train Catapults, and increase your training speed", "Train Flame Archers, and increase training speed"],
     "14": ["Warns you of an impending attack", "Tells you the purpose of an impending attack (Plunder or Scout)", "Tells you the arrival time of an impending attack", "Tells you the Title and Alliance of the Player sending an impending attack", "Gives you an estimate of the total Troops in an impending attack", "Tells you the Troop types in an impending attack", "Gives you an estimate of how many of each Troop type in an impending attack", "Tells you the exact number of Troops in an impending attack", "Tells you the Combat Skill of the Knight leading an impending attack", "Tells you the Research levels of the Player sending an impending attack"],
     "15": ["Allows you to research Level 1 Metal Alloys and Train Swordsmen", "Allows you to research Level 2 Metal Alloys", "Allows you to research Level 3 Metal Alloys", "Allows you to research Level 4 Metal Alloys", "Allows you to research Level 5 Metal Alloys and Train Battering Rams and Heavy Cavalry", "Allows you to research Level 6 Metal Alloys", "Allows you to research Level 7 Metal Alloys", "Allows you to research Level 8 Metal Alloys", "Allows you to research Level 9 Metal Alloys", "Allows you to research Level 10 and 11 Metal Alloys", "Allows you to research Level 11 Metal Alloys", "Allows you to research Level 12 Metal Alloys"],
     "16": ["Research Level 1 Geometry and Build Level 2 Walls", "Research Level 2 Geometry and Build Level 3 Walls", "Research Level 3 Geometry and Build Level 4 Walls and Train Supply Wagons", "Research Level 4 Geometry and Build Level 5 Walls", "Research Level 5 Geometry and Build Level 6 Walls and Train Ballistae", "Research Level 6 Geometry and Build Level 7 Walls", "Research Level 7 Geometry and Build Level 8 Walls and Train Battering Rams", "Research Level 8 Geometry and Build Level 9 Walls", "Research Level 9 Geometry and Build Level 10 Walls and Train Catapults", "Research Level 10 Geometry", "Research Level 11 Geometry", "Research Level 12 Geometry"],
@@ -26031,7 +26089,7 @@ cm.FETemplates = {
     },
     Spells: {
         spellMarchBlock: '<div class="section boost" id="modal_attack_spells"><div class="section_title">Spells</div><div class="section_content">#{spellItems}</div></div>',
-        spellMarchItem: '<div class="item spellMarchItem clearfix"><input type="checkbox" name="" class="spellcb" id="modal_attack_spell#{spellID}" tabindex="" #{disabled}/><div class="icon_own"><img style="width:30px;height:30px" class="icon" src="#{imgURL}"></div><div class="info"><div>#{spellTitle}</div><div class="desc">#{spellDescription}</div></div><div class="buy "><div class="gem spellSecondCountDown_21"></div><div>#{speedUpButton}</div></div></div>'
+        spellMarchItem: '<div class="item spellMarchItem clearfix"><input type="checkbox" name="" class="spellcb" id="modal_attack_spell#{spellID}" tabindex="" #{disabled}/><div class="icon_own"><img style="width:30px;height:30px" class="icon" src="#{imgURL}"></div><div class="info"><div>#{spellTitle}</div><div class="desc">#{spellDescription}</div></div><div class="buy "><div class="gem spellSecondCountDown"></div><div>#{speedUpButton}</div></div></div>'
     },
     NewGame: {
         modalShell: '<div class="primarytitlebar">#{titleBar}</div><div class="primarycontent clearfix">#{body}</div><div class="#{logoClass}"></div>',
@@ -26148,7 +26206,7 @@ cm.FETemplates = {
         buildContainer1: '<div class="buildContainer"><p class="requirement"> #{warning} </p><div class="buildActionContainer"><div class="share"><input type="checkbox" id="askHelpCheckbox" /><p> #{shareContent} </p></div><a id="buildingBuildButton" class="#{buttonClass}"> <span> #{buttonLabel} </span> </a></div></div>',
         buildContainer2: '<div class="buildContainer"><div class="timeLeftContainer"><span class="label"> #{timeLabel}:</span><span id="upgradeTimeLeft">  00m 00s </span><a id="buildingCancelButton" onclick=\'cancelConstruction(#{curlv},#{slotid},#{curlv});\'> <span> #{cancelLabel} </span> </a></div><div class="buildActionContainer"><a id="buildingSpeedButton" class="speed"> <span> #{speedLabel} </span> </a><a id="buildingAskButton" class="ask"> <span> #{askLabel} </span> </a></div></div>',
         craftFailure: '<div class="craftFailure"><div class="item item#{itemId}_70"><span class="item#{itemId}_70"></span><span class="frame"></span></div><div class="content"><span class="title">#{failure}</span></div></div>',
-        spellView: "<div class=\"spellView\"><div class='img'></div><div class='title'>#{title}</div><div class='description'>#{description}</div><div class='cooldown'>#{cooldown}<span class='spellSecondCountDown_21'></span></div><div class='available'>#{available}</div></div>"
+        spellView: "<div class=\"spellView\"><div class='img sp#{spellId}'></div><div class='title'>#{title}</div><div class='description'>#{description}</div><div class='cooldown'>#{cooldown}<span class='spellSecondCountDown_#{spellId}'></span></div><div class='available'>#{available}</div></div>"
     },
     ChangeDomain: {
         imageRotator: '<div class="image_rotator"><div id="domainChangeRotated" class="image_rotated"></div><div id="domainChangePager" class="pager clearfix"></div></div>',
@@ -26179,12 +26237,13 @@ cm.FETemplates = {
     },
     Throne: {
         mainThroneTitle: '<div class="gemContainer"><span class="amount">#{gem}</span><a class="buttonv2 green h20">Get More</a></div><span class="title">#{primaryTitle}</span>',
-        mainThrone: '<div id="throneMainContainer"><div id="throneItemContainer"></div><div id="throneInfoContainer"><div id="throneInfoContent" class="infoContainer"><ul id="throneStatList" class="presetList"></ul><div id="throneInventoryContainer" class="inventoryContainer"><ul id="throneInventoryList"></ul></div><div id="throneStatContainer" class="statContainer"><div class="stats"><ul id="throneStatDisplay"></ul></div></div></div><ul class="tabNavigation"><li id="throneInventoryTab" class="inactive"> Inventory </li><li id="throneStatTab" class="inactive"> Stats </li></ul></div><div id="thronePanelContainer"></div></div>',
+        mainThrone: '<div id="throneMainContainer">#{style}<div id="throneItemContainer"></div><div id="throneInfoContainer"><div id="throneInfoContent" class="infoContainer"><ul id="throneStatList" class="presetList"></ul><div id="throneInventoryContainer" class="inventoryContainer"><ul id="throneInventoryList"></ul></div><div id="throneStatContainer" class="statContainer"><div class="stats"><ul id="throneStatDisplay"></ul></div></div></div><ul class="tabNavigation"><li id="throneInventoryTab" class="inactive"> Inventory </li><li id="throneStatTab" class="inactive"> Stats </li></ul></div><div id="thronePanelContainer"></div></div>',
         throneInfo: '<div id="throneInfoContainer"><ul><li>Inventory</li><li>Bonus Stats</li></ul><div id="throneInventoryContainer"></div><div id="throneStatContainer"></div></div>',
         thronePanel: '<div class="thronePanelContainer"><div class="navigation"><ul class="tabsv2"><li class="selected"> Enhance </li><li> Upgrade </li></ul><a id="thronePanelSlideArrow" class="slideArrow"></a></div><div class="thronePanelInfoContainer"><div class="instructions"><ul id="thronePanelInstructions"></ul></div><div class="thronePanelItemContainer"><div class="thronePanelItemInfoContainer"><!--<div class="imageContainer"><div class="image"><img id="thronePanelPortrait" src="img/throne/icons/100/britton/common_britton_advisor_1.png"/></div></div>--><div id="thronePanelName" class="name common">Common Throne of Leadership +1</div><div class="statsContainer"><div class="currentStat"><span> Current </span><ul id="thronePanelStat1"><li>stat 1 100%</li><li>stat 1 100%</li><li>stat 1 100%</li><li>stat 1 100%</li><li>stat 1 100%</li></ul></div><span class="arrow"></span><div id="nextStatContainer" class="nextStat"><span> Next </span><ul id="thronePanelStat2"><li>stat 1 100%</li><li>stat 1 100%</li><li>stat 1 100%</li><li>stat 1 100%</li><li>stat 1 100%</li></ul></div></div><div class="progressBarContainer"><ul id="thronePanelProgressBarList"><!--<li class="simple">simple</li><li class="common">common</li><li class="uncommon">uncommon</li><li class="rare">rare</li><li class="epic">epic</li><li class="wondrous">wonderous</li><li class="unique last">unique</li>--></ul></div></div><div class="thronePanelItemRequirementsContainer" id="thronePanelItemRequirementsContainer"><div class="title"> Requirements </div><div class="costContainer"><select id="costDropDown"><option>Aetherstones</option><option>Gems</option></select><div id="thronePanelCostIcon" class="icon"> icon 1 </div><div id="thronePanelCostPrice" class="price"> Aetherstones <br/> 50/50 </div></div><div class="buffContainer"><select id="buffDropDown"><option>Buff 1</option><option>Buff 2</option></select><div id="thronePanelBuffIcon" class="icon"> buff 1 </div><div id="thronePanelBuffPrice" class="price"> 400 </div></div><div class="riskContainer"><div class="title"> Success Rate </div><div id="thronePanelRiskBarContainer" class="riskBarContainer active"><div id="thronePanelRiskBar" class="riskBar active"></div></div><span class="low">Low</span><span class="high">High</span></div><a class="gemButtonv2 green"> Enhance <span>100</span> </a></div></div></div></div>',
         brokenPanel: '<div id="thronePanelBrokenContainer"><div class="infoContainer"><div class="imageContainer"><div class="fail"></div><img src="#{src}" /></div><div class="info"><span class="name #{quality}"> #{name} </span><ul>#{stats}</ul></div></div><div class="timeContainer"><div class="title">#{title}</div><div class="time"><div id="thronePanelBrokenTimeBar" class="bar"></div><div class="labelContainer"><div class="label"> #{labelTimeRemaining}: <span id=\'thronePanelBrokenTime\'>#{time}</span></div></div></div><div id=\'thronePanelBrokenActions\' class="action"><div class="instantContainer"><span class="gems"> #{cost} </span><a id="thronePanelBrokenInstantButton" class="buttonv2 h30 green"> #{labelInstantRepair} </a></div><div class="startContainer"><span class="time">#{time}</span><a id="thronePanelBrokenRepairButton" class="buttonv2 h30 blue"> #{labelStartRepair} </a></div></div></div></div>',
         massSalvage: '<div id="massSalvageContainer"><p> #{instructions} </p><ul id="massSalvageQualityList">#{qualityList}</ul><a id="massSalvageButton" class="buttonv2 h20 blue"><span>#{button}</span></a></div>',
-        massSalvageConfirm: '<div id="massSalvageConfirmContainer"><p> #{notify} </p><div><span>#{label}</span><span>#{amount}</span></div><a id="massSalvageConfirmButton" class="buttonv2 h20 blue"><span>#{button}</span></a></div>'
+        massSalvageConfirm: '<div id="massSalvageConfirmContainer"><p> #{notify} </p><div><span>#{label}</span><span>#{amount}</span></div><a id="massSalvageConfirmButton" class="buttonv2 h20 blue"><span>#{button}</span></a></div>',
+        throneItemStyles: "div#throneMainContainer div##{type}Container.#{faction}.unique#{itemId} {background: transparent url('img/throne/items/#{type}/#{faction}_unique_#{itemId}.png') top left no-repeat;}div#throneMainContainer div##{type}Container.#{faction}.unique#{itemId}:hover {background: transparent url('img/throne/items/#{type}/#{faction}_unique_hover_#{itemId}.png') top left no-repeat;}div.report_view .#{faction}.#{type}.quality6.unique#{itemId},div#throneMainContainer div#throneInfoContainer div.infoContainer div.inventoryContainer ul li > .#{faction}.#{type}.quality6.unique#{itemId} {background: transparent url('img/throne/icons/30/#{faction}/#{faction}_#{type}_unique_normal_#{itemId}.png') top left no-repeat;}div#throneMainContainer div#throneInfoContainer div.infoContainer div.inventoryContainer ul li > .#{faction}.#{type}.equip.unique#{itemId} {background: transparent url('img/throne/icons/30/#{faction}/#{faction}_#{type}_unique_equip_#{itemId}.png') top left no-repeat;}div#throneMainContainer div#throneInfoContainer div.infoContainer div.inventoryContainer ul li.buy > .#{faction}.#{type}.unique#{itemId},div#throneMainContainer div#throneInfoContainer div.infoContainer div.inventoryContainer ul li.inactive > .#{faction}.#{type}.unique#{itemId} {background: transparent url('img/throne/icons/30/#{faction}/#{faction}_#{type}_unique_locked_#{itemId}.png') top left no-repeat;}div#throneInventoryItemTooltip div.description div.#{faction}.#{type}.quality6.unique#{itemId} {background: transparent url('img/throne/icons/70/#{faction}_#{type}_unique_#{itemId}.png') top left no-repeat;}"
     },
     Crafting: {
         openCrafting: '<div class="craftFrame"><div class="titleContainer"><span class="title"> #{title}</span></div><div class="craftContainer"><div class="navigationContainer"><ul id="recipeNavigationList"><li onclick="cm.CraftingView.changeCraftingCategory(1, this);" class="selected"> #{tabGeneral} </li><li onclick="cm.CraftingView.changeCraftingCategory(3, this);"> #{tabCombat} </li></ul></div><div class="craftDisplay"><div class="recipesContainer"><ul id="recipesList">#{recipesList}</ul></div><div class="displayContainer"><div class="insuranceContainer"><div class="label"> #{insuranceLabel} </div><span id="recipeRateIndicator" class="rate #{failureRate}"> #{failureRate} </span><div class="insuranceInfo"><input type="checkbox" id="insuranceCheckbox" /><div class="cost"><span class="label"> Insurance </span><span class="amount" id="recipeInsuranceAmount"> #{insurancePrice} </span></div><p> #{insuranceHint} </p></div></div><ul id="ingredientsList">#{ingredientsList}</ul><div class="output item"><span id="itemFrame" class="frame"></span><span id="recipeOutputItem" class="item#{outputItem}_70 outputItem"> output </span><span id="recipeConsolationItem" class="consolation item#{consolationItem}_30"> consolation </span></div><div class="buttonContainer"><a id="recipeCraftButton" class="gemButton #{craftButtonType}"> Craft </a></div></div></div></div></div>'
@@ -29566,7 +29625,19 @@ cm.ApothecaryView = function(e) {
 cm.attack_modal = function() {
     return {
         redisplay_spell_speedup: function() {
-            jQuery("#modal_attack_spells .section_content").html(spellItemTemp(21))
+            var c = cm.SpellsModel.getSpellIdsForThisCity();
+            var a = "";
+            if (cm.SpellsModel.haveASpell()) {
+                for (var b = 0; b < c.length; b++) {
+                    a += spellItemTemp(c[b])
+                }
+                jQuery("#modal_attack_spells .section_content").html(a);
+                if (jQuery("#modal_attack_spell11").length > 0 && !jQuery("#modal_attack_spell11").prop("disabled")) {
+                    jQuery("#modal_attack_spell11").unbind().click(function() {
+                        modal_attack_update_time()
+                    })
+                }
+            }
         }
     }
 }();
@@ -29805,19 +29876,32 @@ function modal_attack(f, l, p, r) {
     Modal.showModal(740, 400, 10, 10, g_js_strings.modaltitles.marchtroops, n.join(""), undefined, undefined, undefined, {
         additionalClass: "nodecoration"
     });
+    jQuery("#modal_attack_spell11").unbind().click(function() {
+        modal_attack_update_time()
+    });
     cm.MarchModal.bind(r);
     cm.MarchModal.changeMarchType(f, q);
     attack_checkOverMarch()
 }
-function spellItemTemp(a) {
-    var b = cm.SpellsModel.cooldownActive(a);
+function spellItemTemp(b) {
+    var c = cm.SpellsModel.cooldownActive(b);
+    var a = "img/";
+    if (b == 21) {
+        a += "spell_lifesteal_70x70.jpg"
+    } else {
+        if (b == 11) {
+            a += "spell_hidden_path_70x70.jpg"
+        } else {
+            a += "spell_lifesteal_70x70.jpg"
+        }
+    }
     return cm.Template.renderTemplate("Spells", "spellMarchItem", {
-        disabled: b ? 'disabled=""' : "",
-        spellTitle: g_js_strings.spells["name_" + a],
-        spellDescription: g_js_strings.spells["desc_" + a],
-        speedUpButton: b ? cm.SpellsView.speedup_html(a) : "",
-        spellID: a,
-        imgURL: stimgUrl + "img/spell_lifesteal_70x70.jpg"
+        disabled: c ? 'disabled=""' : "",
+        spellTitle: g_js_strings.spells["name_" + b],
+        spellDescription: g_js_strings.spells["desc_" + b],
+        speedUpButton: c ? cm.SpellsView.speedup_html(b) : "",
+        spellID: b,
+        imgURL: stimgUrl + a
     })
 }
 function modal_attack_rec_vacancy(h) {
@@ -30174,8 +30258,9 @@ function modal_attack_do() {
                     cm.sounds.play("player_initiates_march");
                     Modal.hideModalAll();
                     var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+                    var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
                     var ut = unixtime();
-                    attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
+                    attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true, ut + rtimediff);
                     if (rslt.updateSeed) {
                         update_seed(rslt.updateSeed)
                     }
@@ -30258,53 +30343,53 @@ function selectAttackBookmark(b) {
         modal_attack_update_time()
     }
 }
-function attack_addqueue(p, a, f, e, n, l, o, g, c, d, k, m, j) {
+function attack_addqueue(q, a, g, f, o, m, p, h, d, e, l, n, k, c) {
     var b = new Object(),
-        h;
-    b.destinationUnixTime = parseInt(f);
+        j;
+    b.destinationUnixTime = parseInt(g);
     b.marchUnixTime = parseInt(a);
-    b.returnUnixTime = b.destinationUnixTime - b.marchUnixTime + b.destinationUnixTime;
-    b.toXCoord = e;
-    b.toYCoord = n;
-    b.marchType = o;
-    b.knightId = g;
+    b.returnUnixTime = parseInt(c);
+    b.toXCoord = f;
+    b.toYCoord = o;
+    b.marchType = p;
+    b.knightId = h;
     b.marchStatus = 1;
-    b.gold = c[0];
-    if (d) {
-        b.toTileId = d;
-        b.toTileType = k;
-        b.toTileLevel = m
+    b.gold = d[0];
+    if (e) {
+        b.toTileId = e;
+        b.toTileType = l;
+        b.toTileLevel = n
     }
-    for (h = 1; h < 5; h++) {
-        b["resource" + h] = c[h]
+    for (j = 1; j < 5; j++) {
+        b["resource" + j] = d[j]
     }
-    for (h in l) {
-        b["unit" + h + "Count"] = l[h];
-        b["unit" + h + "Return"] = 0
+    for (j in m) {
+        b["unit" + j + "Count"] = m[j];
+        b["unit" + j + "Return"] = 0
     }
-    if (Object.isArray(seed.queue_atkp["city" + j])) {
-        seed.queue_atkp["city" + j] = new Object()
+    if (Object.isArray(seed.queue_atkp["city" + k])) {
+        seed.queue_atkp["city" + k] = new Object()
     }
-    seed.queue_atkp["city" + j]["m" + p] = b
+    seed.queue_atkp["city" + k]["m" + q] = b
 }
-function attach_addoutgoingmarch(r, a, g, e, o, m, p, h, c, d, l, n, k, q) {
-    var j;
-    k = k || currentcityid;
-    if (q) {
-        var f = seed.units["city" + k];
-        for (j in m) {
-            var b = parseInt(m[j]);
-            if (!isNaN(b) && (b > 0)) {
-                f["unt" + j] = parseInt(f["unt" + j]) - b
+function attach_addoutgoingmarch(j, b, d, h, k, l, a, r, s, q, o, c, m, e, f) {
+    var p;
+    m = m || currentcityid;
+    if (e) {
+        var n = seed.units["city" + m];
+        for (p in l) {
+            var g = parseInt(l[p]);
+            if (!isNaN(g) && (g > 0)) {
+                n["unt" + p] = parseInt(n["unt" + p]) - g
             }
         }
     }
-    if (parseInt(h) != 0) {
-        seed.knights["city" + k]["knt" + h].knightStatus = 10
+    if (parseInt(r) != 0) {
+        seed.knights["city" + m]["knt" + r].knightStatus = 10
     }
-    attack_addqueue(r, a, g, e, o, m, p, h, c, d, l, n, k);
+    attack_addqueue(j, b, d, h, k, l, a, r, s, q, o, c, m, f);
     cityinfo_army();
-    cm.MarchProgressBar.forceOn(k);
+    cm.MarchProgressBar.forceOn(m);
     attack_generatequeue()
 }
 var g_ftdpromo = false;
@@ -31204,6 +31289,11 @@ cm.MarchModal = function($) {
         if (is_round_trip) {
             time *= 2
         }
+        if (jQuery("#modal_attack_spell11").prop("checked")) {
+            time *= 0.01;
+            time = time < 30 ? 30 : time
+        }
+        time = Math.ceil(time);
         var minimum_time = 173;
         if (time < minimum_time && barbarian_raid && attack_selected) {
             time = minimum_time
@@ -31406,7 +31496,7 @@ cm.MarchModal = function($) {
         if (march_type < 1) {
             return
         }
-        if (march_type != cm.MARCH_TYPES.MARCH_TYPE_ATTACK) {
+        if (march_type != cm.MARCH_TYPES.MARCH_TYPE_ATTACK && jQuery("#modal_attack_spell21").length > 0) {
             jQuery(".spellcb").prop("checked", false);
             jQuery("#modal_attack_spells").hide()
         } else {
@@ -36392,8 +36482,8 @@ cm.BlessingSystemModel = function(z) {
     };
     H[A.NATURE_MAGIC] = {
         level: [4, 7, 10],
-        name: "Nature Magic",
-        description: "Unlocks Druid Battle Spells",
+        name: g_js_strings.blessingSystem.blessing_name_12,
+        description: g_js_strings.blessingSystem.blessing_description_12,
         css: "b2",
         faction: "druid"
     };
@@ -36565,6 +36655,13 @@ cm.BlessingSystemModel = function(z) {
         css: "b1",
         faction: "briton"
     };
+    H[A.ADVANCED_TACTICS] = {
+        level: [4, 7, 10],
+        name: "Advanced",
+        description: "Unlocks Briton Battle Spells",
+        css: "b2",
+        faction: "briton"
+    };
     H[A.ENHANCED_HORSESHOES] = {
         level: [2, 3, 5, 6, 8, 9],
         name: g_js_strings.blessingSystem.blessing_name_301,
@@ -36629,7 +36726,7 @@ cm.BlessingSystemModel = function(z) {
         faction: "briton"
     };
     var M = {};
-    M[L.DRUID] = [A.FIGHTING_SPIRIT, A.SURROUNDED_BY_NATURE, A.MORE_WITH_LESS, A.EYE_FOR_GEMS, A.SPLENDID_OPULENCE, A.ANCIENT_HEALING, A.NATURAL_TREASURES, A.NATURE_GIFTS, A.PICK_ME_UP, A.DEATH_FROM_AFAR];
+    M[L.DRUID] = [A.FIGHTING_SPIRIT, A.NATURE_MAGIC, A.SURROUNDED_BY_NATURE, A.MORE_WITH_LESS, A.EYE_FOR_GEMS, A.SPLENDID_OPULENCE, A.ANCIENT_HEALING, A.NATURAL_TREASURES, A.NATURE_GIFTS, A.PICK_ME_UP, A.DEATH_FROM_AFAR];
     M[L.FEY] = [A.SUMMON_DEATH, A.BLOOD_MAGIC, A.REINFORCED_WALLS, A.EXPEDITED_SENTENCING, A.DARK_RITUAL, A.REALLOCATED_LABOR, A.RELIC_HUNTER, A.CHANNELED_SUFFERING, A.FILL_THE_RANKS, A.BLOOD_LUST, A.EMPOWERED_IRON];
     M[L.BRITON] = [A.HEAVY_ARMOR, A.ENHANCED_HORSESHOES, A.REDUCE_FATIGUE, A.ARCHAEOLOGICAL_STUDIES, A.SCIENTIFIC_METHODOLOGIES, A.GNOMISH_QUARRY_FOREMAN, A.TO_THE_FRONT_LINES, A.HEIGHTENED_SECURITY, A.PRIORITIZED_CONSTRUCTION, A.EMPOWERED_STONE];
     var W = {
@@ -36662,6 +36759,9 @@ cm.BlessingSystemModel = function(z) {
         } else {
             return false
         }
+    };
+    y[A.NATURE_MAGIC] = function(Y, X) {
+        return r(A.NATURE_MAGIC, Y)
     };
     y[A.MORE_WITH_LESS] = function(Y, X) {
         if (r(A.MORE_WITH_LESS, Y)) {
@@ -36799,6 +36899,9 @@ cm.BlessingSystemModel = function(z) {
         } else {
             return false
         }
+    };
+    y[A.ADVANCED_TACTICS] = function(Y, X) {
+        return false
     };
     y[A.ENHANCED_HORSESHOES] = function(Y, X) {
         if (r(A.ENHANCED_HORSESHOES, Y)) {
@@ -44081,14 +44184,32 @@ function fteConversionTracker(a) {
         distinct_id: user_id
     })
 }
-function iframe_modal(c, b) {
-    var a = new Element("div");
-    a.addClassName("con_ifr");
-    a.update("<div class='iframe_body' id='iframe_body'><iframe src='" + c + "' id='iframe_win' class='" + (b ? "fit_win" : "") + "'></iframe></div><div class='close_iframe' id='close_iframe'></div>");
-    $("mainbody").insert(a);
-    jQuery(".close_iframe").unbind("click").bind("click", function() {
-        jQuery(".iframe_body").remove();
-        jQuery(".close_iframe").remove()
+function iframe_modal(d, c) {
+    var b = new Element("div"),
+        a = 650;
+    b.addClassName("con_ifr");
+    b.update("<div class='iframe_body' id='iframe_body'><iframe src='" + d + "' id='iframe_win' class='" + (c ? "fit_win" : "") + "'></iframe></div><div class='close_iframe' id='close_iframe'></div>");
+    $("mainbody").insert(b);
+    jQuery("#iframe_win, #close_iframe").css({
+        right: "-=" + a + "px"
+    }).animate({
+        right: "+=" + a
+    }, {
+        duration: 500,
+        easing: "easeOutCirc"
+    });
+    jQuery("#close_iframe, #iframe_body").unbind("click").bind("click", function(e) {
+        if (jQuery(this).hasClass("iframe_body") || jQuery(this).hasClass("close_iframe")) {
+            jQuery("#iframe_win, #close_iframe").animate({
+                right: "-=" + a
+            }, {
+                duration: 500,
+                easing: "easeOutCirc",
+                complete: function() {
+                    jQuery("#iframe_body, #close_iframe").remove()
+                }
+            })
+        }
     })
 }
 function tpDotDServer() {
@@ -48171,32 +48292,39 @@ function kickout_allies(mid, cid, fromUid, fromCid, upkeep) {
     })
 };
 var cm = cm || {};
-cm.log = function(c) {
-    var a = (window.console = window.console || {});
-    var b = function(e) {
-        var d;
-        if (window.g_env === "prod" || a[e] === undefined) {
-            d = function() {}
+cm.log = function(d) {
+    var a = {};
+    var b = (window.console = window.console || {});
+    var c = function(f) {
+        var e;
+        if (window.g_env === "prod" || b[f] === undefined) {
+            e = function() {}
         } else {
-            if (Function.prototype.bind && a[e].bind) {
-                d = a[e].bind(a)
+            if (Function.prototype.bind && b[f].bind) {
+                e = b[f].bind(b)
             } else {
-                d = function() {
-                    a[e].apply(a, arguments)
+                e = function() {
+                    b[f].apply(b, arguments)
                 }
             }
         }
-        return d
+        return e
     };
     return {
-        dir: b("dir"),
-        l: b("log"),
-        error: function(f, d, e) {
-            AjaxCall.gPostRequest("ajax/feError.php", {
-                level: +f,
-                type: +d,
-                message: e
-            }, c.noop, c.noop)
+        dir: c("dir"),
+        l: c("log"),
+        error: function(h, e, f) {
+            var g = {
+                level: +h,
+                type: +e,
+                message: f
+            };
+            if (a[f]) {
+                a[f] += 1
+            } else {
+                a[f] = 1;
+                AjaxCall.gPostRequest("ajax/feError.php", g, d.noop, d.noop)
+            }
         },
         convertToHMS: function(j, h) {
             h = h == undefined ? true : false;
@@ -51404,65 +51532,91 @@ cm.HUDDealOfTheDayIcon = function(k) {
     };
     i()
 };
-cm.HUDDealSpot = function(j) {
+cm.HUDDealSpot = function(k) {
     var a;
-    var e;
-    var i;
-    var b = "dealSpotSwfStub";
-    var k;
-    var d;
     var f;
-    var h = function() {
+    var j;
+    var b = "dealSpotSwfStub";
+    var l;
+    var e;
+    var g;
+    var i = function() {
         a = document.createElement("a");
-        a.className = j.cssClass;
-        i = document.createElement("div");
-        i.id = b;
-        a.appendChild(i);
+        a.className = k.cssClass;
+        j = document.createElement("div");
+        j.id = b;
+        a.appendChild(j);
+        FB.login(function(m) {
+            if (m.authResponse) {
+                console.log("Access Token: " + m.authResponse.accessToken);
+                var n = {
+                    fields: "third_party_id",
+                    access_token: m.authResponse.accessToken
+                };
+                FB.api("/me", n, function(o) {
+                    d(o)
+                })
+            } else {
+                console.log("User cancelled login or did not fully authorize.")
+            }
+        })
+    };
+    var d = function(n) {
+        var m = n.third_party_id;
         setTimeout(function() {
-            var l = {
+            var p = {
+                serverid: g_server,
+                gameid: 1,
+                userid: kabamuid
+            };
+            var o = {
                 id: b,
                 onOfferUnavailable: "TRIALPAY.social.delete_dealspot_swf",
                 onTransact: "cm.HUDDealSpot.handleTransactions",
-                mode: (+standalone === 1) ? "tpdirect" : "fbpayments",
-                sid: (+standalone === 1) ? kabamuid : tpuid,
+                mode: (+standalone === 1) ? "tpdirect" : "fbdirect",
+                sid: (+standalone === 1) ? kabamuid : m,
+                order_info: JSON.stringify(p),
                 width: 50,
                 height: 50
             };
             if (+standalone === 0) {
-                l.app_id = appSettings.appId;
-                l.currency_url = g_paymentHost + "/payment/cog?gameid=1";
+                o.app_id = appSettings.appId;
+                o.tp_vendor_id = "7G7G7G8E";
+                o.currency_url = g_paymentHost + "/payment/fbproduct?offer=1&gameid=1";
+                o.callback_url = g_paymentHost + "/callback/fblcoffer";
                 if (cm.WorldSettings.isOn("TRIALPAY_DEALSPOT_NEW_PAYER")) {
-                    l.touchpoint = 9
+                    o.touchpoint = 9
                 }
             }
             if (+standalone === 1) {
-                l.vic = "493f2eff9a0b07c9451d5fc9b185a557";
-                l.zIndex = 20000000;
-                l.position_top = 80;
-                l.userid = kabamuid
+                o.vic = "493f2eff9a0b07c9451d5fc9b185a557";
+                o.zIndex = 20000000;
+                o.position_top = 80;
+                o.userid = kabamuid
             }
+            console.dir(o);
             try {
-                TRIALPAY.social.render_dealspot_swf(l);
+                TRIALPAY.social.render_dealspot_swf(o);
                 return
-            } catch (m) {}
+            } catch (q) {}
         }, 0);
         Event.observe(a, "mouseover", c);
         Event.observe(a, "mouseout", c);
-        k = j.tooltip;
-        d = j.mapContainerId
+        l = k.tooltip;
+        e = k.mapContainerId
     };
-    this.setParentElement = function(l) {
-        $(l).appendChild(a)
+    this.setParentElement = function(m) {
+        $(m).appendChild(a)
     };
-    var c = function(l) {
-        if (k && k != "") {
-            showTooltip(k, a, l, d)
+    var c = function(m) {
+        if (l && l != "") {
+            showTooltip(l, a, m, e)
         }
     };
-    var g = function(l) {
+    var h = function(m) {
         removeTooltip()
     };
-    h()
+    i()
 };
 cm.HUDDealSpot.handleTransactions = function() {
     modal_getgems_check()
@@ -75862,7 +76016,7 @@ cm.PrestigeManagerView = function(f) {
 cm = cm || {};
 cm.PrestigeModel = function(g) {
     var k = {
-        druid: 3,
+        druid: 6,
         fey: 6,
         briton: 3
     }, a = 10,
@@ -82747,36 +82901,50 @@ function modal_speedup_apply(type, itemid, typeid, qIndex) {
 };
 cm.SpellsModel = function() {
     var c = function() {
-        return cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing("BLOOD_MAGIC"))
+        var h = {
+            1: cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing("NATURE_MAGIC")),
+            2: cm.BlessingSystemModel.applyBlessing(cm.BlessingSystemModel.getBlessing("BLOOD_MAGIC")),
+            3: false
+        };
+        return h[f()]
     };
-    var e = function(g) {
-        return seed.cityData && seed.cityData.city && seed.cityData.city[currentcityid].spells && seed.cityData.city[currentcityid].spells[g]
+    var f = function() {
+        return parseInt(seed.cityData.city[currentcityid].prestigeInfo.prestigeType)
+    };
+    var e = function(h) {
+        return seed.cityData && seed.cityData.city && seed.cityData.city[currentcityid].spells && seed.cityData.city[currentcityid].spells[h]
     };
     var d = function() {
-        return [21]
+        var h = {
+            1: 11,
+            2: 21,
+            3: 31
+        };
+        return [h[f()]]
     };
-    var f = function(g) {
-        if (e(g) && parseInt(seed.cityData.city[currentcityid].spells[g].endDate) > unixtime()) {
+    var g = function(h) {
+        if (e(h) && parseInt(seed.cityData.city[currentcityid].spells[h].endDate) > unixtime()) {
             return true
         }
         return false
     };
-    var b = function(g, h) {
-        if (!e(g)) {
+    var b = function(h, i) {
+        if (!e(h)) {
             return ""
         }
-        var i = seed.cityData.city[currentcityid].spells[g].endDate - unixtime();
-        return h ? i : cm.log.convertToHMS(i)
+        var j = seed.cityData.city[currentcityid].spells[h].endDate - unixtime();
+        return i ? j : cm.log.convertToHMS(j)
     };
-    var a = function(g) {
+    var a = function(h) {
+        var i = d()[0];
         seed.cityData.city[currentcityid].spells = {};
-        seed.cityData.city[currentcityid].spells[21] = {
-            endDate: g
+        seed.cityData.city[currentcityid].spells[i] = {
+            endDate: h
         }
     };
     return {
         haveASpell: c,
-        cooldownActive: f,
+        cooldownActive: g,
         setNewEndDate: a,
         getRemainingSpellDuration: b,
         getSpellIdsForThisCity: d
@@ -82804,7 +82972,8 @@ cm.SpellsView = function(e) {
                 title: g_js_strings.spells["name_" + j],
                 description: g_js_strings.spells["desc_" + j],
                 cooldown: m ? "" : g_js_strings.spells.cooldown + ": ",
-                available: m ? g_js_strings.spells.available : n
+                available: m ? g_js_strings.spells.available : n,
+                spellId: j
             })
         }
         e("#modal_rallypoint_spells").html(l)
@@ -82819,14 +82988,15 @@ cm.SpellsView = function(e) {
         }
     }
     cm.timer.register("spellCountdown", function b() {
-        if (cm.SpellsModel.cooldownActive(21)) {
-            var i = cm.SpellsModel.getRemainingSpellDuration(21, true);
-            cm.speedUpModalTimer.update("spell", "", i, 0);
-            var j = cm.log.convertToHMS(i);
-            var h = parseInt(i) > 0 ? j : "";
-            e(".spellSecondCountDown_21").html(h);
-            e(".spell.speedUpModalTimeLeft").html(h);
-            if (parseInt(i) == 1) {
+        var i = cm.SpellsModel.getSpellIdsForThisCity()[0];
+        if (cm.SpellsModel.cooldownActive(i)) {
+            var j = cm.SpellsModel.getRemainingSpellDuration(i, true);
+            cm.speedUpModalTimer.update("spell", "", j, 0);
+            var k = cm.log.convertToHMS(j);
+            var h = parseInt(j) > 0 ? k : "";
+            e(".spellSecondCountDown_" + i).html(h);
+            e(".spell.speedUpModalTimeLeft, .spellSecondCountDown").html(h);
+            if (parseInt(j) == 1) {
                 setTimeout(d, 2000)
             }
         }
@@ -84503,6 +84673,7 @@ cm.ThroneController = function(g) {
         var C = {};
         try {
             C = new cm.ThroneItemModel(D);
+            if (!kocThroneItems[C.id]) {}
             kocThroneItems[C.id] = C
         } catch (A) {
             var B = "Ignoring Throne Item: " + A;
@@ -84713,18 +84884,18 @@ cm.ThroneController = function(g) {
         }
     };
     var h = function(B, A) {
-        B = +B;
-        A = +A;
+        B = +B || 0;
+        A = +A || 0;
         if (!cm.thronestats.tiers || !cm.thronestats.tiers[B]) {
-            cm.log.error(1, cm.ERROR_TYPE.INFORMATION_MISSING, "Throne tiers don't exist for this Effect ID.");
+            cm.log.error(1, cm.ERROR_TYPE.INFORMATION_MISSING, "Throne tiers don't exist for Effect ID {effectId}.".replace("{effectId}", B));
             return {}
         } else {
             if (!cm.thronestats.tiers[B][A]) {
                 if (A > 1) {
-                    cm.log.error(2, cm.ERROR_TYPE.INFORMATION_MISSING, "Throne tier doesn't exist for this Effect ID. Trying the next tier down.");
+                    cm.log.error(2, cm.ERROR_TYPE.INFORMATION_MISSING, "Throne tier {tier} doesn't exist for Effect ID {effectId}. Trying the next tier down.".replace("{effectId}", B).replace("{tier}", A));
                     return h(B, A - 1)
                 } else {
-                    cm.log.error(1, cm.ERROR_TYPE.INFORMATION_MISSING, "Throne tier doesn't exist for this Effect ID. All tiers attempted.");
+                    cm.log.error(1, cm.ERROR_TYPE.INFORMATION_MISSING, "Throne tier doesn't exist for Effect ID {effectId}. All tiers attempted.".replace("{effectId}", B));
                     return {}
                 }
             }
@@ -85163,7 +85334,7 @@ cm.ThronePanelController = function(h) {
         var C = 0,
             B = v(),
             x = [null, ksoItems[20001], ksoItems[20002], ksoItems[20003], ksoItems[20004]],
-            y = [null, ksoItems[20001], ksoItems[20002], ksoItems[20005], ksoItems[20006], ksoItems[20019], ksoItems[20020]],
+            y = [null, ksoItems[20001], ksoItems[20002], ksoItems[20005], ksoItems[20006], ksoItems[20019], ksoItems[20020], ksoItems[20022]],
             A;
         if (z === "enhance") {
             A = x[B]
@@ -85466,7 +85637,8 @@ cm.ThronePanelController = function(h) {
                     }
                     cm.ThroneView.renderInventory(kocThroneItems);
                     cm.ThronePanelView.renderPanel(E, I);
-                    cm.HeatUpModel.attemptCallback(+(J.heatupModifier))
+                    cm.HeatUpModel.attemptCallback(+(J.heatupModifier));
+                    cm.ThronePanelView.changeBuff()
                 } else {
                     cm.ModalManager.alert({
                         close: function() {
@@ -85610,7 +85782,7 @@ cm.ThronePanelView = function(G) {
         Lesser: 20003,
         Normal: 20004
     };
-    var S = {
+    var T = {
         Lesser: 20005,
         Normal: 20006,
         Super: 20019
@@ -85622,6 +85794,7 @@ cm.ThronePanelView = function(G) {
         Epic: 20010,
         Wondrous: 20011
     };
+    var Q = 20022;
     var k = {};
     k[p.Common] = 1;
     k[p.Uncommon] = 2;
@@ -85658,14 +85831,14 @@ cm.ThronePanelView = function(G) {
             id: 0,
             name: g_js_strings.throneRoom.buff_none
         },
-        ksoItems[u.Lesser], ksoItems[u.Normal], ksoItems[S.Lesser], ksoItems[S.Normal], ksoItems[S.Super], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12], ksoItems[i.Plus13]],
+        ksoItems[u.Lesser], ksoItems[u.Normal], ksoItems[T.Lesser], ksoItems[T.Normal], ksoItems[T.Super], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12], ksoItems[i.Plus13], ksoItems[Q]],
         a = [g.buff_none],
         m = "closed",
-        d = {}, v, T, R, K = "";
-    var I = function(Z, ab) {
-        K = Z;
+        d = {}, v, U, S, K = "";
+    var J = function(aa, ac) {
+        K = aa;
         G("#throneInventoryList .selected").removeClass("selected");
-        var Y, U, W, X, V, aa;
+        var Z, V, X, Y, W, ab;
         cm.ThronePanelView.enhanceOptions = [{
             id: 0,
             name: g_js_strings.throneRoom.buff_none
@@ -85676,42 +85849,42 @@ cm.ThronePanelView = function(G) {
             id: 0,
             name: g_js_strings.throneRoom.buff_none
         },
-        ksoItems[u.Lesser], ksoItems[u.Normal], ksoItems[S.Lesser], ksoItems[S.Normal], ksoItems[S.Super], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12], ksoItems[i.Plus13]];
-        Y = cm.Template.renderTemplate("Throne", "thronePanel", {});
-        G("#thronePanelContainer").html(Y);
-        if (ab) {
-            T = ab.id;
-            R = ab;
-            if (Z === "enhance") {
-                X = j(1, ab, "current", Z);
-                V = j(2, ab, "next", Z);
+        ksoItems[u.Lesser], ksoItems[u.Normal], ksoItems[T.Lesser], ksoItems[T.Normal], ksoItems[T.Super], ksoItems[i.Plus3], ksoItems[i.Plus5], ksoItems[i.Plus7], ksoItems[i.Plus9], ksoItems[i.Plus10], ksoItems[i.Plus11], ksoItems[i.Plus12], ksoItems[i.Plus13], ksoItems[Q]];
+        Z = cm.Template.renderTemplate("Throne", "thronePanel", {});
+        G("#thronePanelContainer").html(Z);
+        if (ac) {
+            U = ac.id;
+            S = ac;
+            if (aa === "enhance") {
+                Y = j(1, ac, "current", aa);
+                W = j(2, ac, "next", aa);
                 G("#thronePanelStat1").empty();
-                G("#thronePanelStat1").html(X);
+                G("#thronePanelStat1").html(Y);
                 G("#thronePanelStat2").empty();
-                G("#thronePanelStat2").html(V);
-                G("#thronePanelStat1 li,#thronePanelStat2 li").unbind("mouseenter").bind("mouseenter", function(ac) {
-                    Tooltip.show(ac, G(this).html(), [-180, 5])
+                G("#thronePanelStat2").html(W);
+                G("#thronePanelStat1 li,#thronePanelStat2 li").unbind("mouseenter").bind("mouseenter", function(ad) {
+                    Tooltip.show(ad, G(this).html(), [-180, 5])
                 })
             } else {
-                if (Z === "upgrade") {
-                    X = j(1, ab, "current", Z);
-                    V = j(2, ab, "next", Z);
+                if (aa === "upgrade") {
+                    Y = j(1, ac, "current", aa);
+                    W = j(2, ac, "next", aa);
                     G("#thronePanelStat1").empty();
-                    G("#thronePanelStat1").html(X);
+                    G("#thronePanelStat1").html(Y);
                     G("#thronePanelStat2").empty();
-                    G("#thronePanelStat2").html(V);
-                    G("#thronePanelStat1 li,#thronePanelStat2 li").unbind("mouseenter").bind("mouseenter", function(ac) {
-                        Tooltip.show(ac, G(this).html())
+                    G("#thronePanelStat2").html(W);
+                    G("#thronePanelStat1 li,#thronePanelStat2 li").unbind("mouseenter").bind("mouseenter", function(ad) {
+                        Tooltip.show(ad, G(this).html())
                     })
                 }
             }
-            D(Z, ab);
-            t(Z);
-            H(ab);
-            if (Z == "enhance") {
-                y(ab)
+            D(aa, ac);
+            t(aa);
+            I(ac);
+            if (aa == "enhance") {
+                y(ac)
             }
-            c(Z, ab);
+            c(aa, ac);
             if (cm.ThronePanelView.panelStatus == "closed") {
                 G("#thronePanelContainer").animate({
                     right: "+=500"
@@ -85734,611 +85907,620 @@ cm.ThronePanelView = function(G) {
                     }
                 })
             });
-            G("#throneInventoryItem" + ab.id).addClass("selected")
+            G("#throneInventoryItem" + ac.id).addClass("selected")
         }
-        return Y
+        return Z
     };
     var N = function() {
         cm.ThronePanelView.panelStatus = "closed";
-        G("#throneInventoryItem" + T).removeClass("selected");
+        G("#throneInventoryItem" + U).removeClass("selected");
         currentThroneRoomeItem = null;
-        R = null;
+        S = null;
         K = "";
         cm.ThronePanelController.currentBuff = null
     };
-    var D = function(Y, Z) {
-        var X = G("#thronePanelContainer ul.tabsv2"),
-            aa = ["enhance", "upgrade"],
-            V;
-        X.empty();
-        for (var W = 0, U = aa.length; W < U; ++W) {
-            V = G("<li/>").html(aa[W]).click({
-                id: W
-            }, function(ab) {
+    var D = function(Z, aa) {
+        var Y = G("#thronePanelContainer ul.tabsv2"),
+            ab = ["enhance", "upgrade"],
+            W;
+        Y.empty();
+        for (var X = 0, V = ab.length; X < V; ++X) {
+            W = G("<li/>").html(ab[X]).click({
+                id: X
+            }, function(ac) {
                 G(".tabsv2 .selected").removeClass("selected");
                 G(this).addClass("selected");
                 cm.ThronePanelController.currentBuff = null;
-                I(aa[ab.data.id].toLowerCase(), Z);
-                K = Y
+                J(ab[ac.data.id].toLowerCase(), aa);
+                K = Z
             });
-            if (Y === "enhance" && W === 0) {
-                V.addClass("selected")
+            if (Z === "enhance" && X === 0) {
+                W.addClass("selected")
             } else {
-                if (Y === "upgrade" && W === 1) {
-                    V.addClass("selected")
+                if (Z === "upgrade" && X === 1) {
+                    W.addClass("selected")
                 }
             }
-            X.append(V)
+            Y.append(W)
         }
     };
-    var t = function(X) {
-        var W = [],
-            U = G("#thronePanelInstructions"),
-            Y = standalone;
-        U.empty();
-        for (var V = 1; V <= 4; ++V) {
-            if (X == "enhance") {
-                U.append("<li>" + g_js_strings.throneRoom["enhance_instr" + V] + "</li>")
+    var t = function(Y) {
+        var X = [],
+            V = G("#thronePanelInstructions"),
+            Z = standalone;
+        V.empty();
+        for (var W = 1; W <= 4; ++W) {
+            if (Y == "enhance") {
+                V.append("<li>" + g_js_strings.throneRoom["enhance_instr" + W] + "</li>")
             } else {
-                if (X == "upgrade") {
-                    U.append("<li>" + g_js_strings.throneRoom["upgrade_instr" + V] + "</li>")
+                if (Y == "upgrade") {
+                    V.append("<li>" + g_js_strings.throneRoom["upgrade_instr" + W] + "</li>")
                 }
             }
         }
         return false
     };
-    var x = function(V, U) {
-        return "img/throne/icons/" + U + "/" + V.faction + "/" + V.createQualityName().toLowerCase() + "_" + V.faction + "_" + V.type + "_1.png"
+    var x = function(W, V) {
+        return "img/throne/icons/" + V + "/" + W.faction + "/" + W.createQualityName().toLowerCase() + "_" + W.faction + "_" + W.type + "_1.png"
     };
-    var H = function(V) {
-        var U = G("#thronePanelName");
-        U.html(V.name);
-        U.attr("class", "");
-        U.addClass("name " + V.createPrefix().toLowerCase())
+    var I = function(W) {
+        var V = G("#thronePanelName");
+        V.html(W.name);
+        V.attr("class", "");
+        V.addClass("name " + W.createPrefix().toLowerCase())
     };
-    var y = function(ab) {
-        var W = [],
-            ac = ["simple", "common", "uncommon", "rare", "epic", "wondrous", "unique"],
-            X = [g_js_strings.throneRoom.simple, g_js_strings.throneRoom.common, g_js_strings.throneRoom.uncommon, g_js_strings.throneRoom.rare, g_js_strings.throneRoom.epic, g_js_strings.throneRoom.wondrous, g_js_strings.throneRoom.unique],
-            Z = document.createDocumentFragment(),
-            aa, Y = G("#thronePanelProgressBarList");
-        Z = G(Z);
-        if (ab.quality === 6) {
-            for (var V = 0; V <= 6; ++V) {
-                if (V !== 6) {
-                    W.push("<li class='locked'>" + g_js_strings.throneRoom.locked + "</li>");
-                    aa = G("<li/>").addClass("locked").html(g_js_strings.throneRoom.locked);
-                    aa.bind("mouseenter", {
-                        idx: V
-                    }, function(ad) {
-                        Tooltip.show(ad, X[ad.data.idx], [0, 0])
+    var y = function(ac) {
+        var X = [],
+            ad = ["simple", "common", "uncommon", "rare", "epic", "wondrous", "unique"],
+            Y = [g_js_strings.throneRoom.simple, g_js_strings.throneRoom.common, g_js_strings.throneRoom.uncommon, g_js_strings.throneRoom.rare, g_js_strings.throneRoom.epic, g_js_strings.throneRoom.wondrous, g_js_strings.throneRoom.unique],
+            aa = document.createDocumentFragment(),
+            ab, Z = G("#thronePanelProgressBarList");
+        aa = G(aa);
+        if (ac.quality === 6) {
+            for (var W = 0; W <= 6; ++W) {
+                if (W !== 6) {
+                    X.push("<li class='locked'>" + g_js_strings.throneRoom.locked + "</li>");
+                    ab = G("<li/>").addClass("locked").html(g_js_strings.throneRoom.locked);
+                    ab.bind("mouseenter", {
+                        idx: W
+                    }, function(ae) {
+                        Tooltip.show(ae, Y[ae.data.idx], [0, 0])
                     });
-                    Y.append(aa)
+                    Z.append(ab)
                 } else {
-                    W.push("<li class='unique last'>" + g_js_strings.throneRoom.unique + "</li>");
-                    aa = G("<li/>").addClass("unique last").html(g_js_strings.throneRoom.unique);
-                    aa.bind("mouseenter", {
-                        idx: V
-                    }, function(ad) {
-                        Tooltip.show(ad, X[ad.data.idx], [0, 0])
+                    X.push("<li class='unique last'>" + g_js_strings.throneRoom.unique + "</li>");
+                    ab = G("<li/>").addClass("unique last").html(g_js_strings.throneRoom.unique);
+                    ab.bind("mouseenter", {
+                        idx: W
+                    }, function(ae) {
+                        Tooltip.show(ae, Y[ae.data.idx], [0, 0])
                     });
-                    Y.append(aa)
+                    Z.append(ab)
                 }
             }
         } else {
-            for (var U = 0; U <= 6; ++U) {
-                if (U === 6) {
-                    W.push("<li class='locked last'>" + g_js_strings.throneRoom.unique + "</li>");
-                    aa = G("<li/>").addClass("locked last").html(g_js_strings.throneRoom.unique);
-                    aa.bind("mouseenter", {
-                        idx: U
-                    }, function(ad) {
-                        Tooltip.show(ad, X[ad.data.idx], [0, 0])
+            for (var V = 0; V <= 6; ++V) {
+                if (V === 6) {
+                    X.push("<li class='locked last'>" + g_js_strings.throneRoom.unique + "</li>");
+                    ab = G("<li/>").addClass("locked last").html(g_js_strings.throneRoom.unique);
+                    ab.bind("mouseenter", {
+                        idx: V
+                    }, function(ae) {
+                        Tooltip.show(ae, Y[ae.data.idx], [0, 0])
                     });
-                    Y.append(aa)
+                    Z.append(ab)
                 } else {
-                    if (U <= ab.quality) {
-                        W.push("<li class='" + ac[U] + "'>" + X[U] + "</li>");
-                        aa = G("<li/>").addClass(ac[U]).html(X[U]);
-                        aa.bind("mouseenter", {
-                            idx: U
-                        }, function(ad) {
-                            Tooltip.show(ad, X[ad.data.idx], [0, 0])
+                    if (V <= ac.quality) {
+                        X.push("<li class='" + ad[V] + "'>" + Y[V] + "</li>");
+                        ab = G("<li/>").addClass(ad[V]).html(Y[V]);
+                        ab.bind("mouseenter", {
+                            idx: V
+                        }, function(ae) {
+                            Tooltip.show(ae, Y[ae.data.idx], [0, 0])
                         });
-                        Y.append(aa)
+                        Z.append(ab)
                     } else {
-                        W.push("<li class='empty'>" + X[U] + "</li>");
-                        aa = G("<li/>").addClass("empty").html(X[U]);
-                        aa.bind("mouseenter", {
-                            idx: U
-                        }, function(ad) {
-                            Tooltip.show(ad, X[ad.data.idx], [0, 0])
+                        X.push("<li class='empty'>" + Y[V] + "</li>");
+                        ab = G("<li/>").addClass("empty").html(Y[V]);
+                        ab.bind("mouseenter", {
+                            idx: V
+                        }, function(ae) {
+                            Tooltip.show(ae, Y[ae.data.idx], [0, 0])
                         });
-                        Y.append(aa)
+                        Z.append(ab)
                     }
                 }
             }
         }
-        return W.join("")
+        return X.join("")
     };
-    var j = function(V, af, ac, X) {
-        var Z = [],
-            Y, ad, ab, U = {}, aa, W, ae;
-        if (ac == "next") {
-            if (X == "enhance") {
-                ++af.quality
+    var j = function(W, ag, ad, Y) {
+        var aa = [],
+            Z, ae, ac, V = {}, ab, X, af;
+        if (ad == "next") {
+            if (Y == "enhance") {
+                ++ag.quality
             } else {
-                if (X == "upgrade") {
-                    ++af.level
+                if (Y == "upgrade") {
+                    ++ag.level
                 }
             }
         }
-        G.each(af.effects, function(ag, ah) {
-            W = "";
-            Y = +(ag.split("slot")[1]);
-            ad = cm.ThroneController.getEffectName(ah.id);
-            ab = cm.ThroneController.getEffectAmount(ah.id, ah.tier, af.level);
-            U[ah.id] = {};
-            U[ah.id].percent = ab;
-            U[ah.id].name = ad;
-            if (Y % 2 == 0) {
-                aa = "even"
+        G.each(ag.effects, function(ah, ai) {
+            X = "";
+            Z = +(ah.split("slot")[1]);
+            ae = cm.ThroneController.getEffectName(ai.id);
+            ac = cm.ThroneController.getEffectAmount(ai.id, ai.tier, ag.level);
+            V[ai.id] = {};
+            V[ai.id].percent = ac;
+            V[ai.id].name = ae;
+            if (Z % 2 == 0) {
+                ab = "even"
             } else {
-                aa = "odd"
+                ab = "odd"
             }
-            if (Y > af.quality) {
-                aa += " disabled"
+            if (Z > ag.quality) {
+                ab += " disabled"
             }
-            if (ab > 0) {
-                W += ad + " +" + ab + "%"
+            if (ac > 0) {
+                X += ae + " +" + ac + "%"
             } else {
-                W += ad + " " + ab + "%"
+                X += ae + " " + ac + "%"
             }
-            Z.push("<li class='" + aa + "' >" + W + "</li>")
+            aa.push("<li class='" + ab + "' >" + X + "</li>")
         });
-        if (ac == "next") {
-            if (X == "enhance") {
-                --af.quality
+        if (ad == "next") {
+            if (Y == "enhance") {
+                --ag.quality
             } else {
-                if (X == "upgrade") {
-                    --af.level
+                if (Y == "upgrade") {
+                    --ag.level
                 }
             }
         }
-        if (ac === "next") {
-            if (cm.ThronePanelController.isLastLevel(af, X)) {
-                ae = G("<div/>").addClass("lock").attr("id", "lockedStatIcon");
-                G("#nextStatContainer").append(ae)
+        if (ad === "next") {
+            if (cm.ThronePanelController.isLastLevel(ag, Y)) {
+                af = G("<div/>").addClass("lock").attr("id", "lockedStatIcon");
+                G("#nextStatContainer").append(af)
             } else {
                 G("#lockedStatIcon").remove()
             }
         }
-        return Z.join("")
+        return aa.join("")
     };
-    var c = function(Z, ap) {
-        var ad = [],
-            V = G("#thronePanelItemRequirementsContainer"),
-            at, Y, ac, aq, X, ag, ao, ak, W, aa, au, U, ai, ae = ["gems", "aetherstones"],
-            af = [],
-            aj, ar, an, ah;
-        if (Z === "enhance") {
-            af = cm.ThronePanelView.enhanceOptions;
-            G.each(af, function(aw, av) {
-                if (k[av.id] && (av.count == 0 || (av.count > 0 && k[av.id] <= ap.quality))) {
-                    af[aw] = {}
+    var c = function(aa, ar) {
+        var ae = [],
+            W = G("#thronePanelItemRequirementsContainer"),
+            av, Z, ad, at, Y, ai, aq, am, X, ab, aw, V, ak, ag = ["gems", "aetherstones"],
+            ah = [],
+            al, au, ap, aj;
+        if (aa === "enhance") {
+            ah = cm.ThronePanelView.enhanceOptions;
+            G.each(ah, function(ay, ax) {
+                if (k[ax.id] && (ax.count == 0 || (ax.count > 0 && k[ax.id] <= ar.quality))) {
+                    ah[ay] = {}
                 }
             })
         } else {
-            if (Z === "upgrade") {
-                af = cm.ThronePanelView.upgradeOptions;
-                G.each(af, function(aw, av) {
-                    if (s[av.id] && (av.count == 0 || (av.count > 0 && s[av.id] <= ap.level))) {
-                        af[aw] = {}
+            if (aa === "upgrade") {
+                ah = cm.ThronePanelView.upgradeOptions;
+                G.each(ah, function(ay, ax) {
+                    if (s[ax.id] && (ax.count == 0 || (ax.count > 0 && s[ax.id] <= ar.level))) {
+                        ah[ay] = {}
                     }
                 })
             } else {
-                if (Z === "modify") {
-                    af = a
+                if (aa === "modify") {
+                    ah = a
                 }
             }
         }
-        V.empty();
-        at = G("<div/>");
-        at.addClass("title");
-        at.html(g_js_strings.throneRoom.req_title);
-        V.append(at);
-        Y = G("<div/>");
-        Y.addClass("costContainer");
-        ag = G("<select/>");
-        ag.attr("id", "costDropDown");
-        if (!cm.ThronePanelController.isLastLevel(ap, Z)) {
-            ag.append('<option value="0">' + g_js_strings.commonstr.aetherstones + "</option>");
-            ag.append('<option value="1">' + g_js_strings.commonstr.gems + "</option>");
-            ag.bind("change", function(av) {
-                l(G(this).val(), Z, ap)
+        W.empty();
+        av = G("<div/>");
+        av.addClass("title");
+        av.html(g_js_strings.throneRoom.req_title);
+        W.append(av);
+        Z = G("<div/>");
+        Z.addClass("costContainer");
+        ai = G("<select/>");
+        ai.attr("id", "costDropDown");
+        if (!cm.ThronePanelController.isLastLevel(ar, aa)) {
+            ai.append('<option value="0">' + g_js_strings.commonstr.aetherstones + "</option>");
+            ai.append('<option value="1">' + g_js_strings.commonstr.gems + "</option>");
+            ai.bind("change", function(ax) {
+                l(G(this).val(), aa, ar)
             })
         } else {
-            ag.append('<option value="">--</option>');
-            ag.attr("disabled", "disabled")
+            ai.append('<option value="">--</option>');
+            ai.attr("disabled", "disabled")
         }
-        ao = G("<div/>");
-        ao.attr("id", "thronePanelCostIcon");
-        if (cm.ThronePanelController.isLastLevel(ap, Z)) {
-            ao.addClass("icon 0")
+        aq = G("<div/>");
+        aq.attr("id", "thronePanelCostIcon");
+        if (cm.ThronePanelController.isLastLevel(ar, aa)) {
+            aq.addClass("icon 0")
         } else {
-            ao.addClass("icon aetherstones")
+            aq.addClass("icon aetherstones")
         }
-        ao.html("aetherstones");
-        r(ao, null, "cost");
-        aq = cm.ThronePanelController.calcBuffItem(Z);
-        aj = cm.ThronePanelController.calcCost(Z, ap, aq, "stones");
-        var ab = cm.ThronePanelController.currentBuff;
-        ak = G("<div/>");
-        ak.attr("id", "thronePanelCostPrice");
-        ak.addClass("price");
-        if (aj.stones.render) {
-            ak.append("<span class='" + aj.stones.css + "'>" + aj.stones.use + "/<br/>" + aj.stones.total + "</span>")
+        aq.html("aetherstones");
+        r(aq, null, "cost");
+        at = cm.ThronePanelController.calcBuffItem(aa);
+        al = cm.ThronePanelController.calcCost(aa, ar, at, "stones");
+        var ac = cm.ThronePanelController.currentBuff;
+        am = G("<div/>");
+        am.attr("id", "thronePanelCostPrice");
+        am.addClass("price");
+        if (al.stones.render) {
+            am.append("<span class='" + al.stones.css + "'>" + al.stones.use + "/<br/>" + al.stones.total + "</span>")
         }
-        if (aj.gems.render) {
-            ak.append("<span class='gems'>" + aj.gems.use + "</span>")
+        if (al.gems.render) {
+            am.append("<span class='gems'>" + al.gems.use + "</span>")
         }
-        Y.append(ag);
-        Y.append(ao);
-        Y.append(ak);
-        V.append(Y);
-        ac = G("<div/>");
-        ac.addClass("buffContainer");
-        ag = G("<select/>");
-        ag.attr("id", "buffDropDown");
-        if (!cm.ThronePanelController.isLastLevel(ap, Z)) {
-            for (var am = 0, al = af.length; am < al; ++am) {
-                if (!G.isEmptyObject(af[am])) {
-                    if (ab != null || ab != undefined) {
-                        if (ab.id == af[am].id) {
-                            ag.append('<option value="' + am + '" selected>' + af[am].name + "</option>")
+        Z.append(ai);
+        Z.append(aq);
+        Z.append(am);
+        W.append(Z);
+        ad = G("<div/>");
+        ad.addClass("buffContainer");
+        ai = G("<select/>");
+        ai.attr("id", "buffDropDown");
+        if (!cm.ThronePanelController.isLastLevel(ar, aa)) {
+            var af;
+            for (var ao = 0, an = ah.length; ao < an; ++ao) {
+                af = ao;
+                if (!G.isEmptyObject(ah[ao])) {
+                    if (ac != null || ac != undefined) {
+                        if (ac.id == ah[ao].id) {
+                            ai.append('<option value="' + af + '" selected>' + ah[ao].name + "</option>")
                         } else {
-                            ag.append('<option value="' + am + '">' + af[am].name + "</option>")
+                            ai.append('<option value="' + af + '">' + ah[ao].name + "</option>")
                         }
                     } else {
-                        if (aq.id === af[am].id) {
-                            ag.append('<option value="' + am + '" selected>' + af[am].name + "</option>")
+                        if (at.id === ah[ao].id) {
+                            ai.append('<option value="' + af + '" selected>' + ah[ao].name + "</option>")
                         } else {
-                            ag.append('<option value="' + am + '">' + af[am].name + "</option>")
+                            ai.append('<option value="' + af + '">' + ah[ao].name + "</option>")
                         }
                     }
                 }
             }
-            ag.bind("change", function(av) {
+            ai.bind("change", function(ax) {
                 z()
             })
         } else {
-            ag.append('<option value="">--</option>');
-            ag.attr("disabled", "disabled")
+            ai.append('<option value="">--</option>');
+            ai.attr("disabled", "disabled")
         }
-        ao = G("<div/>");
-        ao.attr("id", "thronePanelBuffIcon");
-        if (cm.ThronePanelController.isLastLevel(ap, Z)) {
-            ao.addClass("icon 0")
+        aq = G("<div/>");
+        aq.attr("id", "thronePanelBuffIcon");
+        if (cm.ThronePanelController.isLastLevel(ar, aa)) {
+            aq.addClass("icon 0")
         } else {
-            ao.addClass("icon " + aq.id)
+            aq.addClass("icon " + at.id)
         }
-        ao.html(aq.name);
-        ak = G("<div/>");
-        ak.attr("id", "thronePanelBuffPrice");
-        ak.addClass("price");
-        ac.append(ag);
-        ac.append(ao);
-        ac.append(ak);
-        V.append(ac);
-        if (aq.id != 0) {
+        aq.html(at.name);
+        am = G("<div/>");
+        am.attr("id", "thronePanelBuffPrice");
+        am.addClass("price");
+        ad.append(ai);
+        ad.append(aq);
+        ad.append(am);
+        W.append(ad);
+        if (at.id != 0) {
             z()
         }
-        X = G("<div/>");
-        X.addClass("riskContainer");
-        at = G("<div/>");
-        at.addClass("title");
-        at.html(g_js_strings.throneRoom.risk_title);
-        aa = G("<div/>");
-        aa.attr("id", "thronePanelRiskBarContainer");
-        aa.addClass("riskBarContainer");
-        if (!cm.ThronePanelController.isLastLevel(ap, Z)) {
-            aa.addClass("active");
-            au = G("<div/>");
-            au.attr("id", "thronePanelRiskBar");
-            au.addClass("riskBar active");
-            aa.append(au)
+        Y = G("<div/>");
+        Y.addClass("riskContainer");
+        av = G("<div/>");
+        av.addClass("title");
+        av.html(g_js_strings.throneRoom.risk_title);
+        ab = G("<div/>");
+        ab.attr("id", "thronePanelRiskBarContainer");
+        ab.addClass("riskBarContainer");
+        if (!cm.ThronePanelController.isLastLevel(ar, aa)) {
+            ab.addClass("active");
+            aw = G("<div/>");
+            aw.attr("id", "thronePanelRiskBar");
+            aw.addClass("riskBar active");
+            ab.append(aw)
         }
-        U = G("<span/>");
-        U.addClass("low");
-        U.html(g_js_strings.throneRoom.label_low);
-        ai = G("<span/>");
-        ai.addClass("high");
-        ai.html(g_js_strings.throneRoom.label_high);
-        X.append(at);
-        X.append(aa);
-        X.append(U);
-        X.append(ai);
-        V.append(X);
-        if (aq.id != 0) {
-            if (aq.count <= 0) {
-                W = b(Z, ap, aj.gems.use + aq.price)
+        V = G("<span/>");
+        V.addClass("low");
+        V.html(g_js_strings.throneRoom.label_low);
+        ak = G("<span/>");
+        ak.addClass("high");
+        ak.html(g_js_strings.throneRoom.label_high);
+        Y.append(av);
+        Y.append(ab);
+        Y.append(V);
+        Y.append(ak);
+        W.append(Y);
+        if (at.id != 0) {
+            if (at.count <= 0 && !cm.ShopItemModel.onSale(at.id)) {
+                X = b(aa, ar, al.gems.use + at.price, true)
             } else {
-                W = b(Z, ap, aj.gems.use)
+                if (at.count <= 0) {
+                    X = b(aa, ar, al.gems.use + at.price)
+                } else {
+                    X = b(aa, ar, al.gems.use)
+                }
             }
         } else {
-            W = b(Z, ap, aj.gems.use)
+            X = b(aa, ar, al.gems.use)
         }
-        V.append(G(cm.HeatUpView.renderHTML()));
+        W.append(G(cm.HeatUpView.renderHTML()));
         cm.HeatUpView.bindTooltip();
         cm.HeatUpView.update()
     };
-    var b = function(W, Y, ab, U) {
-        var aa = cm.ThronePanelController.isLastLevel(Y, W),
-            V, X = G("#thronePanelItemRequirementsContainer"),
-            Z;
-        if (W == "enhance") {
-            Z = g_js_strings.throneRoom.button_enhance
+    var b = function(X, Z, ac, V) {
+        var ab = cm.ThronePanelController.isLastLevel(Z, X),
+            W, Y = G("#thronePanelItemRequirementsContainer"),
+            aa;
+        if (X == "enhance") {
+            aa = g_js_strings.throneRoom.button_enhance
         } else {
-            if (W == "upgrade") {
-                Z = g_js_strings.throneRoom.button_upgrade
+            if (X == "upgrade") {
+                aa = g_js_strings.throneRoom.button_upgrade
             }
         }
-        if (ab == 0) {
-            ab = ""
+        if (ac == 0) {
+            ac = ""
         } else {
-            ab = " <span>" + ab + "</span>"
+            ac = " <span>" + ac + "</span>"
         }
-        if (Y.isBroken || U === true) {
-            V = G("<a/>");
-            V.addClass("gemButtonv2 gray");
-            V.html(Z + ab)
+        if (Z.isBroken || V === true) {
+            W = G("<a/>");
+            W.addClass("gemButtonv2 gray");
+            W.html(aa + ac)
         } else {
-            if (aa) {
-                V = G("<a/>");
-                V.addClass("gemButtonv2 gray");
-                V.html(Z + ab)
+            if (ab) {
+                W = G("<a/>");
+                W.addClass("gemButtonv2 gray");
+                W.html(aa + ac)
             } else {
-                V = G("<a/>");
-                V.addClass("gemButtonv2 green");
-                V.html(Z + ab);
-                V.click(function() {
+                W = G("<a/>");
+                W.addClass("gemButtonv2 green");
+                W.html(aa + ac);
+                W.click(function() {
                     C("throneMainContainer");
-                    cm.ThronePanelController.changeItem(W, Y)
+                    cm.ThronePanelController.changeItem(X, Z)
                 })
             }
         }
         G("#thronePanelItemRequirementsContainer .gemButtonv2").remove();
-        X.append(V);
-        return V
+        Y.append(W);
+        return W
     };
-    var C = function(W) {
-        var V = G("<div/>").attr("id", "throneSpinnyContainer"),
-            U = G("<div/>").addClass("spinny");
-        if (W == "thronePanelBrokenContainer") {
-            U.addClass("brokenContainer")
+    var C = function(X) {
+        var W = G("<div/>").attr("id", "throneSpinnyContainer"),
+            V = G("<div/>").addClass("spinny");
+        if (X == "thronePanelBrokenContainer") {
+            V.addClass("brokenContainer")
         }
-        V.append(U);
-        G("#" + W).append(V)
+        W.append(V);
+        G("#" + X).append(W)
     };
     var q = function() {
         G("#throneSpinnyContainer").remove()
     };
     var z = function() {
-        var ag = E(),
-            ae = R,
-            ah = cm.ThronePanelView.enhanceOptions,
-            Y = cm.ThronePanelView.upgradeOptions,
-            ai = +(G("#buffDropDown").val()),
-            X = G("#thronePanelBuffIcon"),
-            ab = G("#thronePanelBuffPrice"),
-            aa = G("#thronePanelRiskBarContainer"),
-            V = G("#thronePanelRiskBar"),
-            aj = G("#costDropDown"),
-            ad = [],
-            ac = cm.thronestats[ag],
-            Z, af, W;
-        if (ag === "enhance") {
-            af = ah[ai]
+        var ah = E(),
+            af = S,
+            ai = cm.ThronePanelView.enhanceOptions,
+            Z = cm.ThronePanelView.upgradeOptions,
+            aj = +(G("#buffDropDown").val()),
+            Y = G("#thronePanelBuffIcon"),
+            ac = G("#thronePanelBuffPrice"),
+            ab = G("#thronePanelRiskBarContainer"),
+            W = G("#thronePanelRiskBar"),
+            ak = G("#costDropDown"),
+            ae = [],
+            ad = cm.thronestats[ah],
+            aa, ag, X;
+        if (ah === "enhance") {
+            ag = ai[aj]
         } else {
-            if (ag === "upgrade") {
-                af = Y[ai]
+            if (ah === "upgrade") {
+                ag = Z[aj]
             }
         }
-        X.attr("class", "");
-        X.css("backgroundPosition", "0 0");
-        if (cm.ThronePanelController.isLastLevel(ae, ag)) {
-            X.addClass("icon 0");
-            X.unbind("hover")
+        Y.attr("class", "");
+        Y.css("backgroundPosition", "0 0");
+        if (cm.ThronePanelController.isLastLevel(af, ah)) {
+            Y.addClass("icon 0");
+            Y.unbind("hover")
         } else {
-            X.addClass("icon i" + af.id);
-            if (ksoItems[af.id]) {
-                X.hover(function(ak) {
-                    Tooltip.show(ak, ksoItems[af.id].description, [-50, - 90])
-                }, function(ak) {
+            Y.addClass("icon i" + ag.id);
+            if (ksoItems[ag.id]) {
+                Y.hover(function(al) {
+                    Tooltip.show(al, ksoItems[ag.id].description, [-50, - 90])
+                }, function(al) {
                     removeTooltip()
                 })
             }
-            r(X, null, "buff")
+            r(Y, null, "buff")
         }
-        ab.empty();
-        if (aj.val() == 0) {
-            Z = cm.ThronePanelController.calcCost(ag, ae, af, "stones")
+        ac.empty();
+        if (ak.val() == 0) {
+            aa = cm.ThronePanelController.calcCost(ah, af, ag, "stones")
         } else {
-            if (aj.val() == 1) {
-                Z = cm.ThronePanelController.calcCost(ag, ae, af, "gems")
+            if (ak.val() == 1) {
+                aa = cm.ThronePanelController.calcCost(ah, af, ag, "gems")
             }
         }
-        if (!cm.ThronePanelController.isLastLevel(ae, ag)) {
-            if (af && ksoItems[af.id]) {
-                if (af.count > 0) {
-                    ad.push("<span class='items'>" + ksoItems[af.id].count + "/1</span>")
+        if (!cm.ThronePanelController.isLastLevel(af, ah)) {
+            if (ag && ksoItems[ag.id]) {
+                if (ag.count > 0) {
+                    ae.push("<span class='items'>" + ksoItems[ag.id].count + "/1</span>")
                 } else {
-                    ad.push("<span class='items havent'>" + ksoItems[af.id].count + "/1</span>");
-                    ad.push("<span class='gems'>" + ksoItems[af.id].price + "</span>")
+                    ae.push("<span class='items havent'>" + ksoItems[ag.id].count + "/1</span>");
+                    ae.push("<span class='gems'>" + ksoItems[ag.id].price + "</span>")
                 }
             }
         } else {
-            ad.push("<span class='gems'>--</span>")
+            ae.push("<span class='gems'>--</span>")
         }
-        ab.append(ad.join(""));
-        if (!cm.ThronePanelController.isLastLevel(ae, ag)) {
+        ac.append(ae.join(""));
+        if (!cm.ThronePanelController.isLastLevel(af, ah)) {
             cm.ThronePanelController.updateRiskBar();
-            V.addClass("riskBar active")
+            W.addClass("riskBar active")
         } else {
             G("#thronePanelRiskBar").remove();
             G("#thronePanelRiskBarContainer").removeClass("active")
         }
-        if (ksoItems[af.id]) {
-            if (ksoItems[af.id].count > 0) {
-                b(ag, ae, Z.gems.use)
+        if (ksoItems[ag.id]) {
+            if (ksoItems[ag.id].count > 0) {
+                b(ah, af, aa.gems.use)
             } else {
-                var U = parseInt(af.id) == 20019 ? !cm.ShopItemModel.onSale(af.id) : undefined;
-                b(ag, ae, (ksoItems[af.id].price + Z.gems.use), U)
+                var V;
+                if (parseInt(ag.id) == 20019 || parseInt(ag.id) == 20022) {
+                    V = !cm.ShopItemModel.onSale(ag.id)
+                }
+                b(ah, af, (ksoItems[ag.id].price + aa.gems.use), V)
             }
         } else {
-            b(ag, ae, (Z.gems.use))
+            b(ah, af, (aa.gems.use))
         }
         return false
     };
-    var O = function(V) {
-        var W = G("#thronePanelRiskBarContainer"),
-            X = 250,
-            U = V * X;
-        W.css("width", U)
+    var O = function(W) {
+        var X = G("#thronePanelRiskBarContainer"),
+            Y = 250,
+            V = W * Y;
+        X.css("width", V)
     };
-    var l = function(aa, V, X) {
-        var U = G("#thronePanelCostIcon"),
-            W = G("#thronePanelCostPrice"),
-            Z, Y = 0;
-        aa = +(aa);
-        U.attr("class", "");
-        if (aa === 0) {
-            U.addClass("icon aetherstones")
+    var l = function(ab, W, Y) {
+        var V = G("#thronePanelCostIcon"),
+            X = G("#thronePanelCostPrice"),
+            aa, Z = 0;
+        ab = +(ab);
+        V.attr("class", "");
+        if (ab === 0) {
+            V.addClass("icon aetherstones")
         } else {
-            if (aa === 1) {
-                U.addClass("icon gems")
+            if (ab === 1) {
+                V.addClass("icon gems")
             }
         }
-        if (aa === 0) {
-            Z = cm.ThronePanelController.calcCost(V, X, null, "stones")
+        if (ab === 0) {
+            aa = cm.ThronePanelController.calcCost(W, Y, null, "stones")
         } else {
-            if (aa === 1) {
-                Z = cm.ThronePanelController.calcCost(V, X, null, "gems")
+            if (ab === 1) {
+                aa = cm.ThronePanelController.calcCost(W, Y, null, "gems")
             }
         }
-        W.empty();
-        if (Z.stones.render) {
-            W.append("<span class='" + Z.stones.css + "'> " + Z.stones.use + "/<br/>" + Z.stones.total + "</span>")
+        X.empty();
+        if (aa.stones.render) {
+            X.append("<span class='" + aa.stones.css + "'> " + aa.stones.use + "/<br/>" + aa.stones.total + "</span>")
         }
-        if (Z.gems.render) {
-            W.append("<span class='gems'>" + Z.gems.use + "</span>")
+        if (aa.gems.render) {
+            X.append("<span class='gems'>" + aa.gems.use + "</span>")
         }
-        Y = cm.ThronePanelController.calcBuffCost(V);
+        Z = cm.ThronePanelController.calcBuffCost(W);
         z();
         return false
     };
-    var r = function(W, U, V) {
-        if (d[V]) {
-            clearInterval(d[V]);
-            d[V] = null
+    var r = function(X, V, W) {
+        if (d[W]) {
+            clearInterval(d[W]);
+            d[W] = null
         }
-        d[V] = setInterval(function() {
-            var Z = W.css("backgroundPosition"),
-                Y, aa, X;
-            Y = parseInt(Z.split(" ")[0], 10);
-            aa = parseInt(Z.split(" ")[1], 10);
-            Y = Y - 70;
-            if (Y <= -6230) {
-                Y = 0
+        d[W] = setInterval(function() {
+            var aa = X.css("backgroundPosition"),
+                Z, ab, Y;
+            Z = parseInt(aa.split(" ")[0], 10);
+            ab = parseInt(aa.split(" ")[1], 10);
+            Z = Z - 70;
+            if (Z <= -6230) {
+                Z = 0
             }
-            X = Y + "px 0px";
-            G(W).css("backgroundPosition", X)
+            Y = Z + "px 0px";
+            G(X).css("backgroundPosition", Y)
         }, 50)
     };
-    var J = function(ac) {
-        var ag, af, aa, V, Z = 0,
-            Y = 0.5,
-            U = 0,
-            ad = 0,
-            X = 25,
-            W = "",
-            ae = G.browser.version,
-            ab = +(ae.split(".")[0]);
+    var H = function(ad) {
+        var ah, ag, ab, W, aa = 0,
+            Z = 0.5,
+            V = 0,
+            ae = 0,
+            Y = 25,
+            X = "",
+            af = G.browser.version,
+            ac = +(af.split(".")[0]);
         if (G.browser.msie) {
-            W = "ms";
-            if (ab == 8) {
-                X = 10
+            X = "ms";
+            if (ac == 8) {
+                Y = 10
             }
         } else {
             if (G.browser.mozilla) {
-                W = "moz"
+                X = "moz"
             } else {
                 if (G.browser.webkit) {
-                    W = "webkit"
+                    X = "webkit"
                 }
             }
         }
-        ag = G("<div/>").attr("id", "statusAnimContainer");
-        af = G("<div/>").addClass("ray");
-        aa = G("<div/>").addClass(ac);
-        af.append(aa);
-        ag.append(af);
-        G("body").append(ag);
-        V = setInterval(function() {
-            ++U;
-            Z += Y;
-            ad += 0.1;
-            ag.attr("style", "opacity: " + ad);
-            af.attr("style", "-" + W + "-transform:rotate(" + Z + "deg)");
-            aa.attr("style", "-" + W + "-transform:rotate(-" + Z + "deg)");
-            if (U >= X) {
-                clearInterval(V);
-                ag.animate({
+        ah = G("<div/>").attr("id", "statusAnimContainer");
+        ag = G("<div/>").addClass("ray");
+        ab = G("<div/>").addClass(ad);
+        ag.append(ab);
+        ah.append(ag);
+        G("body").append(ah);
+        W = setInterval(function() {
+            ++V;
+            aa += Z;
+            ae += 0.1;
+            ah.attr("style", "opacity: " + ae);
+            ag.attr("style", "-" + X + "-transform:rotate(" + aa + "deg)");
+            ab.attr("style", "-" + X + "-transform:rotate(-" + aa + "deg)");
+            if (V >= Y) {
+                clearInterval(W);
+                ah.animate({
                     opacity: 0
                 }, 1000, function() {
-                    ag.remove()
+                    ah.remove()
                 })
             }
         }, 50)
     };
-    var e = function(ag) {
+    var e = function(ah) {
         G("#contextMenu").remove();
-        var ae, Y = j(null, ag),
-            U = x(ag, 215),
-            aa = ag.createPrefix().toLocaleLowerCase(),
-            V = cm.thronestats.breakTime,
-            W = cm.thronestats.instantCost,
-            af, ab, X, ac = 0;
-        X = cm.ThroneController.hasFactionBonus([ag]);
-        if (ag.brokenType == "quality") {
-            af = cm.thronestats.repairCostEnhance[ag.quality].Time;
-            ab = cm.thronestats.repairCostEnhance[ag.quality].GemCost
+        var af, Z = j(null, ah),
+            V = x(ah, 215),
+            ab = ah.createPrefix().toLocaleLowerCase(),
+            W = cm.thronestats.breakTime,
+            X = cm.thronestats.instantCost,
+            ag, ac, Y, ad = 0;
+        Y = cm.ThroneController.hasFactionBonus([ah]);
+        if (ah.brokenType == "quality") {
+            ag = cm.thronestats.repairCostEnhance[ah.quality].Time;
+            ac = cm.thronestats.repairCostEnhance[ah.quality].GemCost
         } else {
-            if (ag.brokenType == "level") {
-                af = cm.thronestats.repairCostUpgrade[ag.level].Time;
-                ab = cm.thronestats.repairCostUpgrade[ag.level].GemCost
+            if (ah.brokenType == "level") {
+                ag = cm.thronestats.repairCostUpgrade[ah.level].Time;
+                ac = cm.thronestats.repairCostUpgrade[ah.level].GemCost
             }
         }
-        if (X.hazBonus && X.faction === "briton") {
-            ac = cm.ThroneController.effectBonus(94);
-            af = Math.ceil(af - (af * (ac / 100)))
+        if (Y.hazBonus && Y.faction === "briton") {
+            ad = cm.ThroneController.effectBonus(94);
+            ag = Math.ceil(ag - (ag * (ad / 100)))
         }
-        T = ag.id;
-        ae = cm.Template.renderTemplate("Throne", "brokenPanel", {
+        U = ah.id;
+        af = cm.Template.renderTemplate("Throne", "brokenPanel", {
             title: g_js_strings.throneRoom.title_repairTime,
             labelTimeRemaining: g_js_strings.throneRoom.label_timeRemaining,
             labelInstantRepair: g_js_strings.throneRoom.button_instantRepair,
             labelStartRepair: g_js_strings.throneRoom.button_startRepair,
-            src: U,
-            quality: aa,
-            name: ag.name,
-            stats: Y,
-            time: timestr(af),
-            cost: ab
+            src: V,
+            quality: ab,
+            name: ah.name,
+            stats: Z,
+            time: timestr(ag),
+            cost: ac
         });
         cm.ModalManager.addMedium({
             title: g_js_strings.throneRoom.title_itemBroken,
-            body: ae,
+            body: af,
             closeNow: false,
             close: function() {
                 f()
@@ -86352,269 +86534,270 @@ cm.ThronePanelView = function(G) {
         });
         if (!G.isEmptyObject(seed.queue_throne)) {
             timeLeft = seed.queue_throne.end - unixtime();
-            if (seed.queue_throne.itemId == ag.id) {
+            if (seed.queue_throne.itemId == ah.id) {
                 if (timeLeft > 0) {
                     CountDown.addCountDown("thronePanelBrokenTime", timeLeft, function() {})
                 } else {
                     CountDown.addCountDown("thronePanelBrokenTime", 1, function() {})
                 }
             }
-            var ad = 0,
-                Z = unixtime() - seed.queue_throne.start,
-                af = seed.queue_throne.end - seed.queue_throne.start,
-                ah = 382;
-            if (seed.queue_throne.itemId == ag.id && !cm.ThronePanelView.repairIntervals) {
+            var ae = 0,
+                aa = unixtime() - seed.queue_throne.start,
+                ag = seed.queue_throne.end - seed.queue_throne.start,
+                ai = 382;
+            if (seed.queue_throne.itemId == ah.id && !cm.ThronePanelView.repairIntervals) {
                 cm.ThronePanelView.repairIntervals = setInterval(function() {
-                    if (seed.queue_throne.itemId == T.id) {
-                        Z = unixtime() - seed.queue_throne.start;
-                        F(ag, timeLeft, Z)
+                    if (seed.queue_throne.itemId == U.id) {
+                        aa = unixtime() - seed.queue_throne.start;
+                        F(ah, timeLeft, aa)
                     }
                 }, 1000)
             }
         }
-        L(ag, af, ab)
+        L(ah, ag, ac)
     };
-    var L = function(ac, aa, X) {
-        var ab = G("#thronePanelBrokenActions"),
-            Z, V, ad, W, U, Y;
-        Z = G("<div/>");
-        Z.addClass("instantContainer");
-        V = G("<div/>");
-        V.addClass("startContainer");
+    var L = function(ad, ab, Y) {
+        var ac = G("#thronePanelBrokenActions"),
+            aa, W, ae, X, V, Z;
+        aa = G("<div/>");
+        aa.addClass("instantContainer");
+        W = G("<div/>");
+        W.addClass("startContainer");
         if (G.isEmptyObject(seed.queue_throne)) {
-            ad = G("<span/>");
-            ad.addClass("gems");
-            ad.html(X);
-            U = G("<a/>");
-            U.attr("id", "thronePanelBrokenInstantButton");
-            U.addClass("buttonv2 h30 green");
-            U.html(g_js_strings.throneRoom.button_instantRepair);
-            U.hover(function() {
+            ae = G("<span/>");
+            ae.addClass("gems");
+            ae.html(Y);
+            V = G("<a/>");
+            V.attr("id", "thronePanelBrokenInstantButton");
+            V.addClass("buttonv2 h30 green");
+            V.html(g_js_strings.throneRoom.button_instantRepair);
+            V.hover(function() {
                 G("#thronePanelBrokenTimeBar").addClass("done")
             }, function() {
                 G("#thronePanelBrokenTimeBar").removeClass("done")
             });
-            U.click(function() {
+            V.click(function() {
                 C("thronePanelBrokenContainer");
-                cm.ThronePanelController.instantRepair(ac)
+                cm.ThronePanelController.instantRepair(ad)
             });
-            W = G("<span/>");
-            W.addClass("time");
-            W.html(timestr(aa));
-            Y = G("<a/>");
-            Y.attr("id", "thronePanelBrokenRepairButton");
-            Y.addClass("buttonv2 h30 blue");
-            Y.html(g_js_strings.throneRoom.button_startRepair);
-            Y.click(function() {
+            X = G("<span/>");
+            X.addClass("time");
+            X.html(timestr(ab));
+            Z = G("<a/>");
+            Z.attr("id", "thronePanelBrokenRepairButton");
+            Z.addClass("buttonv2 h30 blue");
+            Z.html(g_js_strings.throneRoom.button_startRepair);
+            Z.click(function() {
                 C("thronePanelBrokenContainer");
-                cm.ThronePanelController.standardRepair(G(this), ac, aa)
+                cm.ThronePanelController.standardRepair(G(this), ad, ab)
             })
         } else {
-            if (seed.queue_throne.itemId == ac.id) {
-                U = G("<a/>");
-                U.attr("id", "thronePanelBrokenInstantButton");
-                U.addClass("buttonv2 h30 green");
-                U.html(g_js_strings.throneRoom.button_speedUp);
-                U.click(function() {
-                    o(ac)
+            if (seed.queue_throne.itemId == ad.id) {
+                V = G("<a/>");
+                V.attr("id", "thronePanelBrokenInstantButton");
+                V.addClass("buttonv2 h30 green");
+                V.html(g_js_strings.throneRoom.button_speedUp);
+                V.click(function() {
+                    o(ad)
                 });
-                Y = G("<a/>");
-                Y.attr("id", "thronePanelBrokenRepairButton");
-                Y.addClass("buttonv2 h30 brown");
-                Y.html(g_js_strings.commonstr.cancel);
-                Y.click(function() {
+                Z = G("<a/>");
+                Z.attr("id", "thronePanelBrokenRepairButton");
+                Z.addClass("buttonv2 h30 brown");
+                Z.html(g_js_strings.commonstr.cancel);
+                Z.click(function() {
                     C("thronePanelBrokenContainer");
-                    cm.ThronePanelController.cancelRepair(ac)
+                    cm.ThronePanelController.cancelRepair(ad)
                 })
             } else {
-                ad = G("<span/>");
-                ad.addClass("gems");
-                ad.html(X);
-                U = G("<a/>");
-                U.attr("id", "thronePanelBrokenInstantButton");
-                U.addClass("buttonv2 h30 green");
-                U.html(g_js_strings.throneRoom.button_instantRepair);
-                U.hover(function() {
+                ae = G("<span/>");
+                ae.addClass("gems");
+                ae.html(Y);
+                V = G("<a/>");
+                V.attr("id", "thronePanelBrokenInstantButton");
+                V.addClass("buttonv2 h30 green");
+                V.html(g_js_strings.throneRoom.button_instantRepair);
+                V.hover(function() {
                     G("#thronePanelBrokenTimeBar").addClass("done")
                 }, function() {
                     G("#thronePanelBrokenTimeBar").removeClass("done")
                 });
-                U.click(function() {
-                    cm.ThronePanelController.instantRepair(ac)
+                V.click(function() {
+                    cm.ThronePanelController.instantRepair(ad)
                 });
-                Y = G("<a/>");
-                Y.attr("id", "thronePanelBrokenRepairButton");
-                Y.addClass("buttonv2 h30 gray");
-                Y.html(g_js_strings.throneRoom.button_startRepair)
+                Z = G("<a/>");
+                Z.attr("id", "thronePanelBrokenRepairButton");
+                Z.addClass("buttonv2 h30 gray");
+                Z.html(g_js_strings.throneRoom.button_startRepair)
             }
         }
-        Z.append(ad).append(U);
-        V.append(W).append(Y);
-        ab.empty();
-        ab.append(Z);
-        ab.append(V)
+        aa.append(ae).append(V);
+        W.append(X).append(Z);
+        ac.empty();
+        ac.append(aa);
+        ac.append(W)
     };
     var f = function() {
         CountDown.stopCountDown("thronePanelBrokenTime")
     };
-    var Q = function(U) {
+    var R = function(V) {
         q();
-        G("#throneInventoryItem" + U.id).attr("class", "");
-        G("#throneInventoryItem" + U.id).addClass(U.type + " " + U.faction + " quality" + U.quality);
-        G("#throneInventoryItem" + U.id + " .broken").remove();
-        if (U.unique > 0) {
-            G("#throneInventoryItem" + U.id).addClass("unique" + U.unique)
+        G("#throneInventoryItem" + V.id).attr("class", "");
+        G("#throneInventoryItem" + V.id).addClass(V.type + " " + V.faction + " quality" + V.quality);
+        G("#throneInventoryItem" + V.id + " .broken").remove();
+        if (V.unique > 0) {
+            G("#throneInventoryItem" + V.id).addClass("unique" + V.unique)
         }
         if (G("#thronePanelBrokenContainer").html() != null) {
             cm.ModalManager.close()
         }
-        I(K, U)
+        J(K, V)
     };
-    var h = function(X, Z, V) {
+    var h = function(Y, aa, W) {
         q();
-        var ab = V,
-            U = 0,
-            aa = 0,
-            Y = 382,
-            W = G("#thronePanelBrokenInstantButton");
-        G("#throneInventoryItem" + Z.id).attr("class", "");
-        G("#throneInventoryItem" + Z.id).addClass(Z.type + " " + Z.faction + " quality" + Z.quality);
-        G("#throneInventoryItem" + Z.id + " .broken").remove();
-        if (Z.unique > 0) {
-            G("#throneInventoryItem" + Z.id).addClass("unique" + Z.unique)
+        var ac = W,
+            V = 0,
+            ab = 0,
+            Z = 382,
+            X = G("#thronePanelBrokenInstantButton");
+        G("#throneInventoryItem" + aa.id).attr("class", "");
+        G("#throneInventoryItem" + aa.id).addClass(aa.type + " " + aa.faction + " quality" + aa.quality);
+        G("#throneInventoryItem" + aa.id + " .broken").remove();
+        if (aa.unique > 0) {
+            G("#throneInventoryItem" + aa.id).addClass("unique" + aa.unique)
         }
-        G("#throneInventoryItem" + Z.id).append("<span class='repair'></span>");
+        G("#throneInventoryItem" + aa.id).append("<span class='repair'></span>");
         seed.queue_throne.start = unixtime();
-        seed.queue_throne.end = unixtime() + V;
-        seed.queue_throne.itemId = Z.id;
-        CountDown.addCountDown("thronePanelBrokenTime", ab, function() {});
+        seed.queue_throne.end = unixtime() + W;
+        seed.queue_throne.itemId = aa.id;
+        CountDown.addCountDown("thronePanelBrokenTime", ac, function() {});
         if (!cm.ThronePanelView.repairIntervals) {
             cm.ThronePanelView.repairIntervals = setInterval(function() {
-                aa = unixtime() - seed.queue_throne.start;
-                F(Z, ab, aa)
+                ab = unixtime() - seed.queue_throne.start;
+                F(aa, ac, ab)
             }, 1000)
         }
         G("div.instantContainer span.gems").remove();
-        W.html("Speed Up");
-        W.unbind("click");
-        W.click(function() {
-            o(Z)
-        });
-        G("div.startContainer span.time").remove();
-        X.removeClass("blue");
-        X.addClass("brown");
-        X.html("Cancel Repair");
+        X.html("Speed Up");
         X.unbind("click");
         X.click(function() {
-            cm.ThronePanelController.cancelRepair(Z)
+            o(aa)
+        });
+        G("div.startContainer span.time").remove();
+        Y.removeClass("blue");
+        Y.addClass("brown");
+        Y.html("Cancel Repair");
+        Y.unbind("click");
+        Y.click(function() {
+            cm.ThronePanelController.cancelRepair(aa)
         })
     };
-    var F = function(X, Z, Y) {
-        var aa = Z,
-            U = 0,
-            W = 382,
-            V = G("#thronePanelBrokenInstantButton");
-        U = Y / Z;
-        if (U > 1) {
-            U = 1
+    var F = function(Y, aa, Z) {
+        var ab = aa,
+            V = 0,
+            X = 382,
+            W = G("#thronePanelBrokenInstantButton");
+        V = Z / aa;
+        if (V > 1) {
+            V = 1
         }
-        if (seed.queue_throne.itemId == T) {
-            G("#thronePanelBrokenTimeBar").css("width", (W * U + 8))
+        if (seed.queue_throne.itemId == U) {
+            G("#thronePanelBrokenTimeBar").css("width", (X * V + 8))
         }
-        if (Y >= Z || G.isEmptyObject(seed.queue_throne)) {
+        if (Z >= aa || G.isEmptyObject(seed.queue_throne)) {
             clearInterval(cm.ThronePanelView.repairIntervals);
             cm.ThronePanelView.repairIntervals = null;
-            X.isBroken = false;
-            X.brokenType = "";
+            Y.isBroken = false;
+            Y.brokenType = "";
             if (G("div#thronePanelBrokenContainer").html() != null) {
                 cm.log.l("TPV1");
                 Modal.hideModalAll();
                 cm.ModalManager.close();
                 cm.log.l("TPV2")
             }
-            G("#throneInventoryItem" + X.id + " .repair").remove();
-            I(K, X)
+            G("#throneInventoryItem" + Y.id + " .repair").remove();
+            J(K, Y)
         }
     };
-    var o = function(U) {
-        modal_speedup("throne", U.id, undefined, U.name)
+    var o = function(V) {
+        modal_speedup("throne", V.id, undefined, V.name)
     };
     var M = function() {
-        var U = G("#thronePanelBrokenTime"),
-            V;
-        if (U.html() != null) {
-            V = seed.queue_throne.end - unixtime();
-            CountDown.addCountDown("thronePanelBrokenTime", V, function() {})
+        var V = G("#thronePanelBrokenTime"),
+            W;
+        if (V.html() != null) {
+            W = seed.queue_throne.end - unixtime();
+            CountDown.addCountDown("thronePanelBrokenTime", W, function() {})
         }
     };
-    var P = function(U) {
+    var P = function(V) {
         q();
-        G("#throneInventoryItem" + U.id).attr("class", "");
-        G("#throneInventoryItem" + U.id).addClass(U.type + " " + U.faction + " quality" + U.quality);
-        G("#throneInventoryItem" + U.id + " .repair").remove();
-        G("#throneInventoryItem" + U.id).append("<span class='broken'></span>");
+        G("#throneInventoryItem" + V.id).attr("class", "");
+        G("#throneInventoryItem" + V.id).addClass(V.type + " " + V.faction + " quality" + V.quality);
+        G("#throneInventoryItem" + V.id + " .repair").remove();
+        G("#throneInventoryItem" + V.id).append("<span class='broken'></span>");
         seed.queue_throne = {};
         clearInterval(cm.ThronePanelView.repairIntervals);
         cm.ThronePanelView.repairIntervals = null;
         CountDown.stopCountDown("thronePanelBrokenTime");
         cm.ModalManager.close();
-        e(U)
+        e(V)
     };
     var E = function() {
-        var V = G("#thronePanelContainer ul.tabsv2 li"),
-            U = ["enhance", "upgrade"],
-            W = "";
-        V.each(function(X) {
+        var W = G("#thronePanelContainer ul.tabsv2 li"),
+            V = ["enhance", "upgrade"],
+            X = "";
+        W.each(function(Y) {
             if (G(this).hasClass("selected")) {
-                W = U[X]
+                X = V[Y]
             }
         });
-        return W
+        return X
     };
     var w = function() {
-        return R
+        return S
     };
     return {
         enhanceOptions: B,
         upgradeOptions: n,
-        renderPanel: I,
+        renderPanel: J,
         updateRiskBar: O,
         closePanel: N,
         panelStatus: m,
         renderBroken: e,
         repairInterval: v,
         doInterval: F,
-        clickInstantRepair: Q,
+        clickInstantRepair: R,
         clickStandardRepair: h,
         clickSpeedUp: o,
         appliedSpeedUp: M,
         clickCancelRepair: P,
-        statusAnim: J,
+        statusAnim: H,
         removeSpinny: q,
         getCurrentType: E,
-        getCurrentThroneItemObject: w
+        getCurrentThroneItemObject: w,
+        changeBuff: z
     }
 }(jQuery);
 cm = cm || {};
 cm.ThroneView = function(e) {
     var B = 1,
         j, m = {}, l;
-    var q = function(F) {
+    var q = function(G) {
         cm.ShopItemModel.init();
-        var H = (F) ? F.items : undefined,
-            D = true;
-        if (F) {
-            D = (F.id == tvuid) ? true : false
+        var I = (G) ? G.items : undefined,
+            E = true;
+        if (G) {
+            E = (G.id == tvuid) ? true : false
         }
-        var E = cm.Template.renderTemplate("Throne", "mainThrone", {}),
-            G = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
+        var F = cm.Template.renderTemplate("Throne", "mainThrone", {}),
+            H = cm.Template.renderTemplate("Throne", "mainThroneTitle", {
                 gem: cm.Gems.count(),
-                primaryTitle: (!D) ? (F.name + g_js_strings.throneRoom.title_part) : g_js_strings.throneRoom.title_throneRoom
+                primaryTitle: (!E) ? (G.name + g_js_strings.throneRoom.title_part) : g_js_strings.throneRoom.title_throneRoom
             });
         cm.ModalManager.addLarge({
             gem: cm.Gems.count(),
-            title: G,
-            body: E,
+            title: H,
+            body: F,
             closeNow: false,
             close: function() {
                 e("#contextMenu").remove();
@@ -86633,18 +86816,18 @@ cm.ThroneView = function(e) {
         e(".buttonv2.green.h20").click(function() {
             modal_getgems()
         });
-        if (D) {
-            e("#throneInventoryTab").click(function(I) {
+        if (E) {
+            e("#throneInventoryTab").click(function(J) {
                 v("inventory", this)
             })
         } else {
             e("#throneInventoryTab").attr("class", "deactive")
         }
-        e("#throneStatTab").click(function(I) {
-            v("stat", this, H)
+        e("#throneStatTab").click(function(J) {
+            v("stat", this, I)
         });
-        e("#throneMainContainer").click(function(I) {
-            if (e(I.target).is("#throneMainContainer, #throneItemContainer div")) {
+        e("#throneMainContainer").click(function(J) {
+            if (e(J.target).is("#throneMainContainer, #throneItemContainer div")) {
                 e("div#throneInfoContainer ul.tabNavigation li.active").removeClass("active").addClass("inactive");
                 e("#throneInfoContainer").stop().animate({
                     left: "-190"
@@ -86660,212 +86843,234 @@ cm.ThroneView = function(e) {
                 })
             }
         });
-        d(H);
-        if (D) {
+        d(I);
+        if (E) {
             t(kocThroneItems)
         }
-        r(H);
-        if (D) {
+        r(I);
+        if (E) {
             w()
         }
         return false
     };
-    var d = function(I) {
-        var D, J = seed.throne.activeSlot,
-            L = seed.throne.slotEquip[J],
-            M, F, E, H = "",
-            G = 0,
-            K = 0;
-        if (!I) {
-            I = {};
-            e.each(L, function(N, O) {
-                M = kocThroneItems[O];
-                I[M.id] = M
+    var D = function(E) {
+        var G = {
+            "div#throneMainContainer div##{type}Container.#{faction}.unique#{itemId}": "background: transparent url('img/throne/items/#{type}/#{faction}_unique_#{itemId}.png') top left no-repeat;",
+            "div#throneMainContainer div##{type}Container.#{faction}.unique#{itemId}:hover": "background: transparent url('img/throne/items/#{type}/#{faction}_unique_hover_#{itemId}.png') top left no-repeat;",
+            "div.report_view .#{faction}.#{type}.quality6.unique#{itemId}": "background: transparent url('img/throne/icons/30/#{faction}/#{faction}_#{type}_unique_normal_#{itemId}.png') top left no-repeat;",
+            "div#throneMainContainer div#throneInfoContainer div.infoContainer div.inventoryContainer ul li > .#{faction}.#{type}.quality6.unique#{itemId}": "background: transparent url('img/throne/icons/30/#{faction}/#{faction}_#{type}_unique_normal_#{itemId}.png') top left no-repeat;",
+            "div#throneMainContainer div#throneInfoContainer div.infoContainer div.inventoryContainer ul li > .#{faction}.#{type}.equip.unique#{itemId}": "background: transparent url('img/throne/icons/30/#{faction}/#{faction}_#{type}_unique_equip_#{itemId}.png') top left no-repeat;",
+            "div#throneMainContainer div#throneInfoContainer div.infoContainer div.inventoryContainer ul li.buy > .#{faction}.#{type}.unique#{itemId}, div#throneMainContainer div#throneInfoContainer div.infoContainer div.inventoryContainer ul li.inactive > .#{faction}.#{type}.unique#{itemId}": "background: transparent url('img/throne/icons/30/#{faction}/#{faction}_#{type}_unique_locked_#{itemId}.png') top left no-repeat;",
+            "div#throneInventoryItemTooltip div.description div.#{faction}.#{type}.quality6.unique#{itemId}": "background: transparent url('img/throne/icons/70/#{faction}_#{type}_unique_#{itemId}.png') top left no-repeat;"
+        }, F = {};
+        e.each(E, function(H, I) {
+            var J = function(L, K) {
+                return L.replace(/#{type}/g, K.type).replace(/#{faction}/g, K.faction).replace(/#{itemId}/g, K.unique)
+            };
+            if (I.unique > 0) {
+                e.each(G, function(K, L) {
+                    F[J(K, I)] = J(L, I)
+                })
+            }
+        });
+        e.createCssRules(F)
+    };
+    var d = function(J) {
+        var E, K = seed.throne.activeSlot,
+            M = seed.throne.slotEquip[K],
+            N, G, F, I = "",
+            H = 0,
+            L = 0;
+        if (!J) {
+            J = {};
+            e.each(M, function(O, P) {
+                N = kocThroneItems[P];
+                J[N.id] = N
             })
         }
-        E = cm.ThroneController.hasFactionBonus(I);
+        F = cm.ThroneController.hasFactionBonus(J);
         e("#throneItemContainer").empty();
-        e.each(I, function(N, O) {
-            M = O;
-            F = e("<div/>");
-            F.attr("id", M.type + "Container");
-            F.addClass(M.faction);
-            if (M.unique > 0) {
-                F.addClass("unique" + M.unique)
+        e.each(J, function(O, P) {
+            N = P;
+            G = e("<div/>");
+            G.attr("id", N.type + "Container");
+            G.addClass(N.faction);
+            if (N.unique > 0) {
+                G.addClass("unique" + N.unique)
             }
-            F.bind("mouseenter", {
-                item: M
-            }, function(P) {
-                P.stopPropagation();
-                cm.ThroneView.hoverItem(P, this, P.data.item)
+            G.bind("mouseenter", {
+                item: N
+            }, function(Q) {
+                Q.stopPropagation();
+                cm.ThroneView.hoverItem(Q, this, Q.data.item)
             });
-            F.bind("mouseleave", {
-                item: M
-            }, function(P) {
-                P.stopPropagation()
+            G.bind("mouseleave", {
+                item: N
+            }, function(Q) {
+                Q.stopPropagation()
             });
-            e("#throneItemContainer").append(F)
+            e("#throneItemContainer").append(G)
         });
-        if (E.hazBonus) {
-            switch (E.faction) {
+        if (F.hazBonus) {
+            switch (F.faction) {
             case "briton":
-                G = 94;
-                K = cm.ThroneController.effectBonus(G);
+                H = 94;
+                L = cm.ThroneController.effectBonus(H);
                 break;
             case "fey":
-                G = 95;
-                K = cm.ThroneController.effectBonus(G);
+                H = 95;
+                L = cm.ThroneController.effectBonus(H);
                 break;
             case "druid":
-                G = 96;
-                K = cm.ThroneController.effectBonus(G);
+                H = 96;
+                L = cm.ThroneController.effectBonus(H);
                 break
             }
-            F = e("<div/>");
-            F.attr("id", "reliefContainer");
-            F.addClass(E.faction);
-            H = g_js_strings.throneRoom["faction_bonus_" + E.faction] + " " + K + "%";
-            F.bind("mouseenter", function(N) {
-                N.stopPropagation();
-                Tooltip.show(N, H, [0, - 70])
+            G = e("<div/>");
+            G.attr("id", "reliefContainer");
+            G.addClass(F.faction);
+            I = g_js_strings.throneRoom["faction_bonus_" + F.faction] + " " + L + "%";
+            G.bind("mouseenter", function(O) {
+                O.stopPropagation();
+                Tooltip.show(O, I, [0, - 70])
             });
-            e("#throneItemContainer").append(F)
+            e("#throneItemContainer").append(G)
         }
     };
-    var t = function(D) {
-        var F = cm.ThroneController.createItems(D),
-            E = cm.ThroneController.createRows(F);
+    var t = function(E) {
+        var G = cm.ThroneController.createItems(E),
+            F = cm.ThroneController.createRows(G);
         e("#throneInventoryList").empty();
-        e.each(E, function(G, H) {
-            e("#throneInventoryList").append(H)
+        e.each(F, function(H, I) {
+            e("#throneInventoryList").append(I)
         })
     };
-    var r = function(H) {
-        var E = [],
-            F = "odd",
-            L, G = 0,
-            D = {}, I = seed.throne.activeSlot,
-            J = seed.throne.slotEquip[I],
-            K;
+    var r = function(I) {
+        var F = [],
+            G = "odd",
+            M, H = 0,
+            E = {}, J = seed.throne.activeSlot,
+            K = seed.throne.slotEquip[J],
+            L;
         e("#throneStatDisplay").html("");
-        if (!H) {
-            H = {};
-            e.each(J, function(M, N) {
-                K = kocThroneItems[N];
-                H[K.id] = K
+        if (!I) {
+            I = {};
+            e.each(K, function(N, O) {
+                L = kocThroneItems[O];
+                I[L.id] = L
             });
-            L = e("<li/>");
-            L.html(g_js_strings.throneRoom.might1 + ": " + cm.ThroneController.calcMight(H));
-            e("#throneStatDisplay").append(L)
+            M = e("<li/>");
+            M.html(g_js_strings.throneRoom.might1 + ": " + cm.ThroneController.calcMight(I));
+            e("#throneStatDisplay").append(M)
         }
-        D = h(H);
-        e.each(D, function(M, N) {
-            G++;
-            F = (G % 2 === 0) ? "even" : "odd";
-            L = e("<li/>");
-            L.addClass(F);
-            L.html((N.percent).toFixed(2) + "% " + N.name);
-            e("#throneStatDisplay").append(L)
+        E = h(I);
+        e.each(E, function(N, O) {
+            H++;
+            G = (H % 2 === 0) ? "even" : "odd";
+            M = e("<li/>");
+            M.addClass(G);
+            M.html((O.percent).toFixed(2) + "% " + O.name);
+            e("#throneStatDisplay").append(M)
         })
     };
-    var h = function(D) {
-        var F, E = {};
-        e.each(D, function(G, I) {
-            var H = I.effects;
-            e.each(H, function(J, M) {
-                var O = M.id,
-                    L = +(J.split("slot")[1]),
-                    K = cm.ThroneController.getBoostCap(O);
-                if (I.quality >= L && !I.isBroken) {
-                    var N = cm.ThroneController.getEffectAmount(O, M.tier, I.level);
-                    if (!E[O]) {
-                        E[O] = {
+    var h = function(E) {
+        var G, F = {};
+        e.each(E, function(H, J) {
+            var I = J.effects;
+            e.each(I, function(K, N) {
+                var P = N.id,
+                    M = +(K.split("slot")[1]),
+                    L = cm.ThroneController.getBoostCap(P);
+                if (J.quality >= M && !J.isBroken) {
+                    var O = cm.ThroneController.getEffectAmount(P, N.tier, J.level);
+                    if (!F[P]) {
+                        F[P] = {
                             percent: 0,
                             name: ""
                         }
                     }
-                    E[O].percent = Math.min((E[O].percent + N), K);
-                    E[O].name = cm.ThroneController.getEffectName(O)
+                    F[P].percent = Math.min((F[P].percent + O), L);
+                    F[P].name = cm.ThroneController.getEffectName(P)
                 }
             })
         });
-        return E
+        return F
     };
     var w = function() {
-        var F = [],
-            J, I, E = 16,
-            K = seed.throne.activeSlot,
-            G = seed.throne.slotNum;
-        for (var H = 0; H < E; ++H) {
-            I = H + 1;
-            J = e("<li/>");
-            if (I === K) {
-                J.attr("id", "throneInventoryPreset" + I);
-                J.addClass("selected");
-                J.html(I);
-                J.bind("click", function() {
+        var G = [],
+            K, J, F = 16,
+            L = seed.throne.activeSlot,
+            H = seed.throne.slotNum;
+        for (var I = 0; I < F; ++I) {
+            J = I + 1;
+            K = e("<li/>");
+            if (J === L) {
+                K.attr("id", "throneInventoryPreset" + J);
+                K.addClass("selected");
+                K.html(J);
+                K.bind("click", function() {
                     u(this);
                     removeTooltip()
                 })
             } else {
-                if (I === (G + 1)) {
-                    J.attr("id", "throneInventoryPreset" + I);
-                    J.addClass("buy");
-                    J.html(I);
-                    J.bind("click", function() {
+                if (J === (H + 1)) {
+                    K.attr("id", "throneInventoryPreset" + J);
+                    K.addClass("buy");
+                    K.html(J);
+                    K.bind("click", function() {
                         s(this);
                         removeTooltip()
                     })
                 } else {
-                    if (I <= G) {
-                        J.attr("id", "throneInventoryPreset" + I);
-                        J.addClass("active");
-                        J.html(I);
-                        J.bind("click", {
-                            idx: H
-                        }, function(L) {
-                            var M = L.data.idx + 1;
-                            cm.ThroneController.setPreset(this, M);
+                    if (J <= H) {
+                        K.attr("id", "throneInventoryPreset" + J);
+                        K.addClass("active");
+                        K.html(J);
+                        K.bind("click", {
+                            idx: I
+                        }, function(M) {
+                            var N = M.data.idx + 1;
+                            cm.ThroneController.setPreset(this, N);
                             removeTooltip()
                         });
-                        J.bind("mouseenter", function(L) {
-                            z(this, L, L.target.id)
+                        K.bind("mouseenter", function(M) {
+                            z(this, M, M.target.id)
                         });
-                        J.bind("mouseleave", function(L) {
+                        K.bind("mouseleave", function(M) {
                             removeTooltip()
                         })
                     } else {
-                        J.attr("id", "throneInventoryPreset" + I);
-                        J.addClass("locked");
-                        J.html(I)
+                        K.attr("id", "throneInventoryPreset" + J);
+                        K.addClass("locked");
+                        K.html(J)
                     }
                 }
             }
-            F.push(J)
+            G.push(K)
         }
-        var D = e("#throneStatList");
-        e.each(F, function(L, M) {
-            D.append(M)
+        var E = e("#throneStatList");
+        e.each(G, function(M, N) {
+            E.append(N)
         })
     };
-    var v = function(F, H, E) {
-        var G = e("div#throneInfoContainer ul.tabNavigation li.active"),
-            D = e("#throneInfoContainer");
-        if (e(H).hasClass("active")) {
-            e(H).removeClass("active");
-            e(H).addClass("inactive");
-            D.stop().animate({
+    var v = function(G, I, F) {
+        var H = e("div#throneInfoContainer ul.tabNavigation li.active"),
+            E = e("#throneInfoContainer");
+        if (e(I).hasClass("active")) {
+            e(I).removeClass("active");
+            e(I).addClass("inactive");
+            E.stop().animate({
                 left: "-190"
             }, 500, "easeOutCirc")
         } else {
-            G.removeClass("active");
-            G.addClass("inactive");
-            e(H).removeClass("inactive");
-            e(H).addClass("active");
-            D.stop().animate({
+            H.removeClass("active");
+            H.addClass("inactive");
+            e(I).removeClass("inactive");
+            e(I).addClass("active");
+            E.stop().animate({
                 left: "0"
             }, 500, "easeOutCirc");
-            switch (F) {
+            switch (G) {
             case "inventory":
                 e("#throneInventoryContainer").show();
                 e("#throneStatContainer").hide();
@@ -86873,70 +87078,70 @@ cm.ThroneView = function(e) {
             case "stat":
                 e("#throneInventoryContainer").hide();
                 e("#throneStatContainer").show();
-                r(E);
+                r(F);
                 break;
             default:
                 break
             }
         }
     };
-    var s = function(D) {
-        cm.ContextualMenuThrone.renderMenu(D, null)
+    var s = function(E) {
+        cm.ContextualMenuThrone.renderMenu(E, null)
     };
-    var C = function(H) {
-        var I = e("#throneStatList li"),
-            F = +(e(H).html()),
-            E = F - 1,
-            D = F,
-            G;
-        G = e(I[E]);
-        G.removeClass("buy");
-        G.addClass("active");
-        G.unbind("click");
-        G.bind("click", function() {
-            var J = F;
-            cm.ThroneController.setPreset(this, J)
+    var C = function(I) {
+        var J = e("#throneStatList li"),
+            G = +(e(I).html()),
+            F = G - 1,
+            E = G,
+            H;
+        H = e(J[F]);
+        H.removeClass("buy");
+        H.addClass("active");
+        H.unbind("click");
+        H.bind("click", function() {
+            var K = G;
+            cm.ThroneController.setPreset(this, K)
         });
-        G.bind("mouseenter", function(J) {
-            z(this, J, J.target.id)
+        H.bind("mouseenter", function(K) {
+            z(this, K, K.target.id)
         });
-        G.bind("mouseleave", function(J) {
+        H.bind("mouseleave", function(K) {
             removeTooltip()
         });
-        G = e(I[D]);
-        G.removeClass("locked");
-        G.addClass("buy");
-        G.unbind("click");
-        G.bind("click", function() {
+        H = e(J[E]);
+        H.removeClass("locked");
+        H.addClass("buy");
+        H.unbind("click");
+        H.bind("click", function() {
             s(this)
         });
         seed.throne.slotNum = +(seed.throne.slotNum) + 1;
-        seed.throne.slotEquip[E + 1] = []
+        seed.throne.slotEquip[F + 1] = []
     };
-    var u = function(H) {
-        var G = e(H),
-            F = e("#throneStatList .selected"),
-            E = +(e(H).html()),
-            I = seed.throne.slotEquip[E],
-            D;
-        F.removeClass("selected");
-        F.addClass("active");
-        F.bind("mouseenter", function(J) {
-            z(this, J, J.target.id)
+    var u = function(I) {
+        var H = e(I),
+            G = e("#throneStatList .selected"),
+            F = +(e(I).html()),
+            J = seed.throne.slotEquip[F],
+            E;
+        G.removeClass("selected");
+        G.addClass("active");
+        G.bind("mouseenter", function(K) {
+            z(this, K, K.target.id)
         });
-        F.bind("mouseleave", function(J) {
+        G.bind("mouseleave", function(K) {
             removeTooltip()
         });
-        G.removeClass("active");
-        G.addClass("selected");
-        G.unbind("mouseenter").unbind("mouseleave");
-        seed.throne.activeSlot = E;
-        e.each(kocThroneItems, function(J, K) {
-            D = e.inArray(K.id, I) > -1;
-            if (D) {
-                K.isEquipped = true
+        H.removeClass("active");
+        H.addClass("selected");
+        H.unbind("mouseenter").unbind("mouseleave");
+        seed.throne.activeSlot = F;
+        e.each(kocThroneItems, function(K, L) {
+            E = e.inArray(L.id, J) > -1;
+            if (E) {
+                L.isEquipped = true
             } else {
-                K.isEquipped = false
+                L.isEquipped = false
             }
         });
         cm.ThroneView.equipTimer();
@@ -86944,273 +87149,273 @@ cm.ThroneView = function(e) {
         r();
         t(kocThroneItems)
     };
-    var a = function(D) {
-        cm.ContextualMenuThrone.renderMenu(D, null)
+    var a = function(E) {
+        cm.ContextualMenuThrone.renderMenu(E, null)
     };
-    var y = function(D) {
+    var y = function(E) {
         seed.throne.rowNum = +(seed.throne.rowNum) + 1;
         t(kocThroneItems)
     };
-    var p = function(F) {
+    var p = function(G) {
         x();
-        var D = +(seed.throne.activeSlot),
-            H = seed.throne.slotEquip[D],
-            E = [],
-            G = cm.ThroneController.checkType(F);
-        if (e.isEmptyObject(G)) {
-            kocThroneItems[F.id].isEquipped = true;
-            e("#throneInventoryItem" + F.id).addClass("equip");
-            H.push(F.id);
-            seed.throne.slotEquip[D] = H;
-            e("#throneInventoryItem" + F.id).unbind("click");
-            e("#throneInventoryItem" + F.id).bind("click", function() {
-                cm.ContextualMenuThrone.renderMenu(this, F)
+        var E = +(seed.throne.activeSlot),
+            I = seed.throne.slotEquip[E],
+            F = [],
+            H = cm.ThroneController.checkType(G);
+        if (e.isEmptyObject(H)) {
+            kocThroneItems[G.id].isEquipped = true;
+            e("#throneInventoryItem" + G.id).addClass("equip");
+            I.push(G.id);
+            seed.throne.slotEquip[E] = I;
+            e("#throneInventoryItem" + G.id).unbind("click");
+            e("#throneInventoryItem" + G.id).bind("click", function() {
+                cm.ContextualMenuThrone.renderMenu(this, G)
             })
         } else {
-            G.item2.isEquipped = false;
-            e("#throneInventoryItem" + G.item2.id).removeClass("equip");
-            seed.throne.slotEquip[D] = H.splice(G.idx, 1);
-            e("#throneInventoryItem" + G.item2.id).unbind("click");
-            e("#throneInventoryItem" + G.item2.id).bind("click", function() {
-                cm.ContextualMenuThrone.renderMenu(this, G.item2)
+            H.item2.isEquipped = false;
+            e("#throneInventoryItem" + H.item2.id).removeClass("equip");
+            seed.throne.slotEquip[E] = I.splice(H.idx, 1);
+            e("#throneInventoryItem" + H.item2.id).unbind("click");
+            e("#throneInventoryItem" + H.item2.id).bind("click", function() {
+                cm.ContextualMenuThrone.renderMenu(this, H.item2)
             });
-            kocThroneItems[G.item1.id].isEquipped = true;
-            e("#throneInventoryItem" + G.item1.id).addClass("equip");
-            kocThroneItems[F.id].presetId = D;
-            H.push(G.item1.id);
-            seed.throne.slotEquip[D] = H;
-            e("#throneInventoryItem" + G.item1.id).unbind("click");
-            e("#throneInventoryItem" + G.item1.id).bind("click", function() {
-                cm.ContextualMenuThrone.renderMenu(this, G.item1)
+            kocThroneItems[H.item1.id].isEquipped = true;
+            e("#throneInventoryItem" + H.item1.id).addClass("equip");
+            kocThroneItems[G.id].presetId = E;
+            I.push(H.item1.id);
+            seed.throne.slotEquip[E] = I;
+            e("#throneInventoryItem" + H.item1.id).unbind("click");
+            e("#throneInventoryItem" + H.item1.id).bind("click", function() {
+                cm.ContextualMenuThrone.renderMenu(this, H.item1)
             })
         }
         d();
         r()
     };
-    var f = function(F) {
-        var D = +(seed.throne.activeSlot),
-            G = seed.throne.slotEquip[D],
-            E = [];
-        e("#throneInventoryItem" + F.id).removeClass("equip");
-        e("#throneInventoryItem" + F.id).unbind("click");
-        e("#throneInventoryItem" + F.id).bind("click", function() {
-            cm.ContextualMenuThrone.renderMenu(this, F)
+    var f = function(G) {
+        var E = +(seed.throne.activeSlot),
+            H = seed.throne.slotEquip[E],
+            F = [];
+        e("#throneInventoryItem" + G.id).removeClass("equip");
+        e("#throneInventoryItem" + G.id).unbind("click");
+        e("#throneInventoryItem" + G.id).bind("click", function() {
+            cm.ContextualMenuThrone.renderMenu(this, G)
         });
         x();
-        kocThroneItems[F.id].presetId = 0;
-        F.isEquipped = false;
-        e.each(G, function(H, I) {
-            if (I !== F.id) {
-                E.push(I)
+        kocThroneItems[G.id].presetId = 0;
+        G.isEquipped = false;
+        e.each(H, function(I, J) {
+            if (J !== G.id) {
+                F.push(J)
             }
         });
-        seed.throne.slotEquip[D] = E;
+        seed.throne.slotEquip[E] = F;
         d();
         r()
     };
-    var o = function(G, H, F) {
-        G.stopPropagation();
-        var E = i(F),
-            I = b(H, F),
-            D = {
+    var o = function(H, I, G) {
+        H.stopPropagation();
+        var F = i(G),
+            J = b(I, G),
+            E = {
                 maxWidth: "430px"
             };
-        Tooltip.show(G, E, I, D)
+        Tooltip.show(H, F, J, E)
     };
-    var i = function(L) {
-        var J = false;
-        e.each(kocThroneItems, function(M, N) {
-            if (L.id == N.id) {
-                J = true
+    var i = function(M) {
+        var K = false;
+        e.each(kocThroneItems, function(N, O) {
+            if (M.id == O.id) {
+                K = true
             }
         });
-        var G = [],
-            I = +(seed.throne.activeSlot),
-            K = seed.throne.slotEquip[I],
-            H, F, D = cm.thronestats.mightByQuality,
-            E = cm.thronestats.mightByLevel;
-        if (!L.isEquipped) {
-            e.each(K, function(M, N) {
-                H = kocThroneItems[N];
-                if (L.type === H.type) {
-                    H = H;
+        var H = [],
+            J = +(seed.throne.activeSlot),
+            L = seed.throne.slotEquip[J],
+            I, G, E = cm.thronestats.mightByQuality,
+            F = cm.thronestats.mightByLevel;
+        if (!M.isEquipped) {
+            e.each(L, function(N, O) {
+                I = kocThroneItems[O];
+                if (M.type === I.type) {
+                    I = I;
                     return false
                 } else {
-                    H = null
+                    I = null
                 }
             })
         }
-        G.push(" <div id='throneInventoryItemTooltip'> ");
-        G.push("<div class='section'>");
-        G.push(" <div class='title " + L.createQualityName().toLowerCase() + "' style='text-transform: capitalize;'> ");
-        G.push(L.name);
-        G.push(" </div> ");
-        G.push(" <div class='description'> ");
-        G.push(" <div class='portrait " + L.faction + " " + L.type + " quality" + L.quality + " unique" + L.unique + "'> </div> ");
-        G.push("<ul>");
-        G.push("<li>" + g_js_strings.commonstr.faction + ": " + L.faction + "</li>");
-        G.push("<li>" + g_js_strings.commonstr.quality + ": " + L.createPrefix() + "</li>");
-        G.push("<li>" + g_js_strings.commonstr.type + ": " + g_js_strings.throneRoom[L.type] + "</li>");
-        G.push("<li>" + g_js_strings.commonstr.level + ": " + L.level + "</li>");
-        G.push("<li>" + g_js_strings.commonstr.might + ": " + A(L) + "</li>");
-        G.push("</ul>");
-        G.push(" </div> ");
-        G.push(" <ul> ");
-        e.each(L.effects, function(N, P) {
-            var M = cm.ThroneController.getEffectName(P.id),
-                O = cm.ThroneController.getEffectAmount(P.id, P.tier, L.level);
-            O = (O > 0) ? "+" + O : O;
-            css = (N % 2 === 0) ? "even" : "odd";
-            F = +(N.split("slot")[1]);
-            if (F <= L.quality) {
-                G.push(" <li class='effect " + css + "'> " + O + "% " + M + " </li> ")
+        H.push(" <div id='throneInventoryItemTooltip'> ");
+        H.push("<div class='section'>");
+        H.push(" <div class='title " + M.createQualityName().toLowerCase() + "' style='text-transform: capitalize;'> ");
+        H.push(M.name);
+        H.push(" </div> ");
+        H.push(" <div class='description'> ");
+        H.push(" <div class='portrait " + M.faction + " " + M.type + " quality" + M.quality + " unique" + M.unique + "'> </div> ");
+        H.push("<ul>");
+        H.push("<li>" + g_js_strings.commonstr.faction + ": " + M.faction + "</li>");
+        H.push("<li>" + g_js_strings.commonstr.quality + ": " + M.createPrefix() + "</li>");
+        H.push("<li>" + g_js_strings.commonstr.type + ": " + g_js_strings.throneRoom[M.type] + "</li>");
+        H.push("<li>" + g_js_strings.commonstr.level + ": " + M.level + "</li>");
+        H.push("<li>" + g_js_strings.commonstr.might + ": " + A(M) + "</li>");
+        H.push("</ul>");
+        H.push(" </div> ");
+        H.push(" <ul> ");
+        e.each(M.effects, function(O, Q) {
+            var N = cm.ThroneController.getEffectName(Q.id),
+                P = cm.ThroneController.getEffectAmount(Q.id, Q.tier, M.level);
+            P = (P > 0) ? "+" + P : P;
+            css = (O % 2 === 0) ? "even" : "odd";
+            G = +(O.split("slot")[1]);
+            if (G <= M.quality) {
+                H.push(" <li class='effect " + css + "'> " + P + "% " + N + " </li> ")
             } else {
-                G.push(" <li class='effect disabled " + css + "'> " + O + "% " + M + " </li> ")
+                H.push(" <li class='effect disabled " + css + "'> " + P + "% " + N + " </li> ")
             }
         });
-        G.push(" </ul> ");
-        G.push(" </div> ");
-        if (H && J) {
-            G.push("<div class='section'>");
-            G.push(" <div class='title equip " + H.createQualityName().toLowerCase() + "' style='text-transform: capitalize;'> ");
-            G.push(H.name);
-            G.push("<span class='icon'></span>");
-            G.push(" </div> ");
-            G.push(" <div class='description'> ");
-            G.push(" <div class='portrait " + H.faction + " quality" + H.quality + " " + H.type + " unique" + H.unique + "'> </div> ");
-            G.push("<ul>");
-            G.push("<li>" + g_js_strings.commonstr.faction + ": " + H.faction + "</li>");
-            G.push("<li>" + g_js_strings.commonstr.quality + ": " + H.createPrefix() + "</li>");
-            G.push("<li>" + g_js_strings.commonstr.type + ": " + g_js_strings.throneRoom[H.type] + "</li>");
-            G.push("<li>" + g_js_strings.commonstr.level + ": " + H.level + "</li>");
-            G.push("<li>" + g_js_strings.commonstr.might + ": " + A(H) + "</li>");
-            G.push("</ul>");
-            G.push(" </div> ");
-            G.push(" <ul> ");
-            e.each(H.effects, function(N, P) {
-                var M = cm.ThroneController.getEffectName(P.id),
-                    O = cm.ThroneController.getEffectAmount(P.id, P.tier, H.level);
-                O = (O > 0) ? "+" + O : O;
-                css = (N % 2 === 0) ? "even" : "odd";
-                F = +(N.split("slot")[1]);
-                if (F <= H.quality) {
-                    G.push(" <li class='effect " + css + "'> " + O + "% " + M + " </li> ")
+        H.push(" </ul> ");
+        H.push(" </div> ");
+        if (I && K) {
+            H.push("<div class='section'>");
+            H.push(" <div class='title equip " + I.createQualityName().toLowerCase() + "' style='text-transform: capitalize;'> ");
+            H.push(I.name);
+            H.push("<span class='icon'></span>");
+            H.push(" </div> ");
+            H.push(" <div class='description'> ");
+            H.push(" <div class='portrait " + I.faction + " quality" + I.quality + " " + I.type + " unique" + I.unique + "'> </div> ");
+            H.push("<ul>");
+            H.push("<li>" + g_js_strings.commonstr.faction + ": " + I.faction + "</li>");
+            H.push("<li>" + g_js_strings.commonstr.quality + ": " + I.createPrefix() + "</li>");
+            H.push("<li>" + g_js_strings.commonstr.type + ": " + g_js_strings.throneRoom[I.type] + "</li>");
+            H.push("<li>" + g_js_strings.commonstr.level + ": " + I.level + "</li>");
+            H.push("<li>" + g_js_strings.commonstr.might + ": " + A(I) + "</li>");
+            H.push("</ul>");
+            H.push(" </div> ");
+            H.push(" <ul> ");
+            e.each(I.effects, function(O, Q) {
+                var N = cm.ThroneController.getEffectName(Q.id),
+                    P = cm.ThroneController.getEffectAmount(Q.id, Q.tier, I.level);
+                P = (P > 0) ? "+" + P : P;
+                css = (O % 2 === 0) ? "even" : "odd";
+                G = +(O.split("slot")[1]);
+                if (G <= I.quality) {
+                    H.push(" <li class='effect " + css + "'> " + P + "% " + N + " </li> ")
                 } else {
-                    G.push(" <li class='effect disabled " + css + "'> " + O + "% " + M + " </li> ")
+                    H.push(" <li class='effect disabled " + css + "'> " + P + "% " + N + " </li> ")
                 }
             });
-            G.push(" </ul> ")
+            H.push(" </ul> ")
         }
-        G.push(" </div> ");
-        return G.join("")
+        H.push(" </div> ");
+        return H.join("")
     };
-    var b = function(F, E) {
-        var D = c(F),
-            G = [0, 30];
-        if (D === "item") {
-            switch (E.type) {
+    var b = function(G, F) {
+        var E = c(G),
+            H = [0, 30];
+        if (E === "item") {
+            switch (F.type) {
             case "advisor":
-                G = [-300, 250];
+                H = [-300, 250];
                 break;
             case "candelabrum":
-                G = [-380, - 25];
+                H = [-380, - 25];
                 break;
             case "table":
-                G = [0, 150];
+                H = [0, 150];
                 break;
             case "window":
-                G = [-40, 30]
+                H = [-40, 30]
             }
         }
-        return G
+        return H
     };
-    var c = function(E) {
-        var F = e(E).attr("id"),
-            D = "error";
-        if (F.indexOf("throne") > -1) {
-            D = "icon"
+    var c = function(F) {
+        var G = e(F).attr("id"),
+            E = "error";
+        if (G.indexOf("throne") > -1) {
+            E = "icon"
         } else {
-            D = "item"
+            E = "item"
         }
-        return D
+        return E
     };
-    var A = function(H) {
-        if (!(H instanceof cm.ThroneItemModel)) {
+    var A = function(I) {
+        if (!(I instanceof cm.ThroneItemModel)) {
             return 0
         }
-        var E = cm.thronestats.mightByQuality || {}, G = cm.thronestats.mightByLevel || {}, F = E[H.quality] && E[H.quality].Might ? +E[H.quality].Might : 0,
-            D = E[H.level] && E[H.level].Might ? +E[H.level].Might : 0;
-        return (E[H.quality].Might + G[H.level].Might)
+        var F = cm.thronestats.mightByQuality || {}, H = cm.thronestats.mightByLevel || {}, G = F[I.quality] && F[I.quality].Might ? +F[I.quality].Might : 0,
+            E = F[I.level] && F[I.level].Might ? +F[I.level].Might : 0;
+        return (F[I.quality].Might + H[I.level].Might)
     };
     var x = function() {
-        var D = 5;
+        var E = 5;
         e("#throneInfoContent").append("<div id='shitbox'></div>");
-        e("#shitbox").html("Time left is " + D);
-        var E = setInterval(function() {
-            D--;
-            e("#shitbox").html("Time left is " + D);
-            if (D === 0) {
-                clearInterval(E);
+        e("#shitbox").html("Time left is " + E);
+        var F = setInterval(function() {
+            E--;
+            e("#shitbox").html("Time left is " + E);
+            if (E === 0) {
+                clearInterval(F);
                 e("#shitbox").remove()
             }
         }, 1000)
     };
-    var z = function(K, D, J) {
-        var I = new Array(),
-            F, H, E = {}, G;
-        H = (K.id == "maparea_boosts_throneroom") ? seed.throne.slotEquip[seed.throne.activeSlot] : seed.throne.slotEquip[+(K.innerHTML)];
-        e.each(H, function(L, M) {
-            G = kocThroneItems[M];
-            E[G.id] = G
+    var z = function(L, E, K) {
+        var J = new Array(),
+            G, I, F = {}, H;
+        I = (L.id == "maparea_boosts_throneroom") ? seed.throne.slotEquip[seed.throne.activeSlot] : seed.throne.slotEquip[+(L.innerHTML)];
+        e.each(I, function(M, N) {
+            H = kocThroneItems[N];
+            F[H.id] = H
         });
-        F = h(E);
-        I.push("<div id='boosts_tooltip'><b>" + g_js_strings.commonstr.throneroom + "</b><br/><br/>");
-        if (F.length <= 0 || e.isEmptyObject(F)) {
-            I.push("<div>" + g_js_strings.throneRoom.empty_preset + "</div>")
+        G = h(F);
+        J.push("<div id='boosts_tooltip'><b>" + g_js_strings.commonstr.throneroom + "</b><br/><br/>");
+        if (G.length <= 0 || e.isEmptyObject(G)) {
+            J.push("<div>" + g_js_strings.throneRoom.empty_preset + "</div>")
         } else {
-            e.each(F, function(L, M) {
-                I.push("<div>" + M.percent + "% " + M.name) + "</div>"
+            e.each(G, function(M, N) {
+                J.push("<div>" + N.percent + "% " + N.name) + "</div>"
             })
         }
-        I.push("</div>");
-        if (K.id == "maparea_boosts_throneroom") {
-            showTooltip(I.join(""), K, D, J)
+        J.push("</div>");
+        if (L.id == "maparea_boosts_throneroom") {
+            showTooltip(J.join(""), L, E, K)
         } else {
-            Tooltip.show(D, I.join(""), [10, 10], null)
+            Tooltip.show(E, J.join(""), [10, 10], null)
         }
     };
     var k = function() {
-        var E = g_js_strings.mass_salvage.instructions,
-            F = n(),
-            D = cm.Template.renderTemplate("Throne", "massSalvage", {
-                qualityList: F,
-                instructions: E,
+        var F = g_js_strings.mass_salvage.instructions,
+            G = n(),
+            E = cm.Template.renderTemplate("Throne", "massSalvage", {
+                qualityList: G,
+                instructions: F,
                 button: g_js_strings.commonstr.salvage
             });
         cm.ModalManager.addMedium({
             title: g_js_strings.mass_salvage.title,
-            body: D
+            body: E
         });
         e("#massSalvageButton").bind("click", function() {
-            var G = e("#massSalvageQualityList").find("input"),
-                K = [],
-                H, I, J = [];
+            var H = e("#massSalvageQualityList").find("input"),
+                L = [],
+                I, J, K = [];
             cm.ModalManager.close();
-            e.each(G, function(L, M) {
-                if (e(M).is(":checked")) {
-                    K.push(M)
+            e.each(H, function(M, N) {
+                if (e(N).is(":checked")) {
+                    L.push(N)
                 }
             });
-            e.each(K, function(M, L) {
-                I = e(L).attr("id");
-                J.push(+(I.split("massSalvageQualityItem")[1]))
+            e.each(L, function(N, M) {
+                J = e(M).attr("id");
+                K.push(+(J.split("massSalvageQualityItem")[1]))
             });
-            H = cm.ThroneController.calcMassSalvagableItems(J).items, g(H, J)
+            I = cm.ThroneController.calcMassSalvagableItems(K).items, g(I, K)
         })
     };
     var n = function() {
-        var D = [],
-            E = {
+        var E = [],
+            F = {
                 0: g_js_strings.throneRoom.simple,
                 1: g_js_strings.throneRoom.common,
                 2: g_js_strings.throneRoom.uncommon,
@@ -87218,45 +87423,46 @@ cm.ThroneView = function(e) {
                 4: g_js_strings.throneRoom.epic,
                 5: g_js_strings.throneRoom.wondrous
             };
-        e.each(E, function(G, F) {
-            D.push("<li id='massSalvageQualityItem" + G + "'>");
-            D.push("<input type='checkbox' id='massSalvageQualityItem" + G + "' />");
-            D.push("<label for='massSalvageQualityItem" + G + "'>" + F + "</label>");
-            D.push("</li>")
+        e.each(F, function(H, G) {
+            E.push("<li id='massSalvageQualityItem" + H + "'>");
+            E.push("<input type='checkbox' id='massSalvageQualityItem" + H + "' />");
+            E.push("<label for='massSalvageQualityItem" + H + "'>" + G + "</label>");
+            E.push("</li>")
         });
-        return D.join("")
+        return E.join("")
     };
-    var g = function(F, K) {
-        var I, J = [],
-            H = 0,
-            D, G, E = [];
-        H = cm.ThroneController.calcMassSalvagableAetherstones(F);
-        e.each(F, function(M, L) {
-            E.push(L.id)
+    var g = function(G, L) {
+        var J, K = [],
+            I = 0,
+            E, H, F = [];
+        I = cm.ThroneController.calcMassSalvagableAetherstones(G);
+        e.each(G, function(N, M) {
+            F.push(M.id)
         });
-        G = H + " " + g_js_strings.commonstr.aetherstones;
-        D = cm.Template.renderTemplate("Throne", "massSalvageConfirm", {
+        H = I + " " + g_js_strings.commonstr.aetherstones;
+        E = cm.Template.renderTemplate("Throne", "massSalvageConfirm", {
             notify: g_js_strings.mass_salvage.confirm_notify,
             label: g_js_strings.mass_salvage.confirm_label,
-            amount: G,
+            amount: H,
             button: g_js_strings.commonstr.salvage
         });
         cm.ModalManager.addMedium({
-            title: typeof K === "undefined" ? g_js_strings.commonstr.salvage : g_js_strings.mass_salvage.title,
-            body: D
+            title: typeof L === "undefined" ? g_js_strings.commonstr.salvage : g_js_strings.mass_salvage.title,
+            body: E
         });
-        e("#massSalvageConfirmButton").click(function(L) {
-            if (K == undefined) {
+        e("#massSalvageConfirmButton").click(function(M) {
+            if (L == undefined) {
                 cm.ModalManager.close();
-                cm.ThroneController.salvageItem(F[0])
+                cm.ThroneController.salvageItem(G[0])
             } else {
                 cm.ModalManager.close();
-                cm.ThroneController.massSalvageItems(E, K)
+                cm.ThroneController.massSalvageItems(F, L)
             }
         })
     };
     return {
         openThrone: q,
+        renderThroneCss: D,
         renderInventory: t,
         renderThrone: d,
         renderItemTooltip: i,
@@ -92107,16 +92313,16 @@ cm.utils.BuildingStatPopulator = function(d) {
         }
     }
 };
-cm.utils.Date = function(j, h) {
+cm.utils.Date = function(k, h) {
     var g = this,
-        i, e, b = /\\?([a-z])/gi,
-        a = function(f, k) {
-            return e[f] ? e[f]() : k
-        }, c = function(k, f) {
-            if ((k = k + "").length < f) {
-                return new Array((++f) - k.length).join("0") + k
+        j, e, b = /\\?([a-z])/gi,
+        a = function(f, l) {
+            return e[f] ? e[f]() : l
+        }, c = function(l, f) {
+            if ((l = l + "").length < f) {
+                return new Array((++f) - l.length).join("0") + l
             }
-            return k
+            return l
         }, d = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     e = {
         d: function() {
@@ -92126,7 +92332,7 @@ cm.utils.Date = function(j, h) {
             return e.l().slice(0, 3)
         },
         j: function() {
-            return i.getDate()
+            return j.getDate()
         },
         l: function() {
             return d[e.w()] + "day"
@@ -92139,17 +92345,17 @@ cm.utils.Date = function(j, h) {
             return f < 4 | f > 20 && ["st", "nd", "rd"][f % 10 - 1] || "th"
         },
         w: function() {
-            return i.getDay()
+            return j.getDay()
         },
         z: function() {
-            var k = new Date(e.Y(), e.n() - 1, e.j()),
+            var l = new Date(e.Y(), e.n() - 1, e.j()),
                 f = new Date(e.Y(), 0, 1);
-            return Math.round((k - f) / 86400000) + 1
+            return Math.round((l - f) / 86400000) + 1
         },
         W: function() {
-            var k = new Date(e.Y(), e.n() - 1, e.j() - e.N() + 3),
-                f = new Date(k.getFullYear(), 0, 4);
-            return c(1 + Math.round((k - f) / 86400000 / 7), 2)
+            var l = new Date(e.Y(), e.n() - 1, e.j() - e.N() + 3),
+                f = new Date(l.getFullYear(), 0, 4);
+            return c(1 + Math.round((l - f) / 86400000 / 7), 2)
         },
         F: function() {
             return d[6 + e.n()]
@@ -92161,7 +92367,7 @@ cm.utils.Date = function(j, h) {
             return e.F().slice(0, 3)
         },
         n: function() {
-            return i.getMonth() + 1
+            return j.getMonth() + 1
         },
         t: function() {
             return (new Date(e.Y(), e.n(), 0)).getDate()
@@ -92171,34 +92377,34 @@ cm.utils.Date = function(j, h) {
             return f % 4 == 0 & f % 100 != 0 | f % 400 == 0
         },
         o: function() {
-            var l = e.n(),
+            var m = e.n(),
                 f = e.W(),
-                k = e.Y();
-            return k + (l === 12 && f < 9 ? -1 : l === 1 && f > 9)
+                l = e.Y();
+            return l + (m === 12 && f < 9 ? -1 : m === 1 && f > 9)
         },
         Y: function() {
-            return i.getFullYear()
+            return j.getFullYear()
         },
         y: function() {
             return (e.Y() + "").slice(-2)
         },
         a: function() {
-            return i.getHours() > 11 ? "pm" : "am"
+            return j.getHours() > 11 ? "pm" : "am"
         },
         A: function() {
             return e.a().toUpperCase()
         },
         B: function() {
-            var k = i.getUTCHours() * 3600,
-                f = i.getUTCMinutes() * 60,
-                l = i.getUTCSeconds();
-            return c(Math.floor((k + f + l + 3600) / 86.4) % 1000, 3)
+            var l = j.getUTCHours() * 3600,
+                f = j.getUTCMinutes() * 60,
+                m = j.getUTCSeconds();
+            return c(Math.floor((l + f + m + 3600) / 86.4) % 1000, 3)
         },
         g: function() {
             return e.G() % 12 || 12
         },
         G: function() {
-            return i.getHours()
+            return j.getHours()
         },
         h: function() {
             return c(e.g(), 2)
@@ -92207,28 +92413,28 @@ cm.utils.Date = function(j, h) {
             return c(e.G(), 2)
         },
         i: function() {
-            return c(i.getMinutes(), 2)
+            return c(j.getMinutes(), 2)
         },
         s: function() {
-            return c(i.getSeconds(), 2)
+            return c(j.getSeconds(), 2)
         },
         u: function() {
-            return c(i.getMilliseconds() * 1000, 6)
+            return c(j.getMilliseconds() * 1000, 6)
         },
         e: function() {
             throw "Not supported (see source code of date() for timezone on how to add support)"
         },
         I: function() {
-            var k = new Date(e.Y(), 0),
-                m = Date.UTC(e.Y(), 0),
+            var l = new Date(e.Y(), 0),
+                n = Date.UTC(e.Y(), 0),
                 f = new Date(e.Y(), 6),
-                l = Date.UTC(e.Y(), 6);
-            return 0 + ((k - m) !== (f - l))
+                m = Date.UTC(e.Y(), 6);
+            return 0 + ((l - n) !== (f - m))
         },
         O: function() {
-            var k = i.getTimezoneOffset(),
-                f = Math.abs(k);
-            return (k > 0 ? "-" : "+") + c(Math.floor(f / 60) * 100 + f % 60, 4)
+            var l = j.getTimezoneOffset(),
+                f = Math.abs(l);
+            return (l > 0 ? "-" : "+") + c(Math.floor(f / 60) * 100 + f % 60, 4)
         },
         P: function() {
             var f = e.O();
@@ -92238,7 +92444,7 @@ cm.utils.Date = function(j, h) {
             return "UTC"
         },
         Z: function() {
-            return -i.getTimezoneOffset() * 60
+            return -j.getTimezoneOffset() * 60
         },
         c: function() {
             return "Y-m-d\\Th:i:sP".replace(b, a)
@@ -92247,15 +92453,15 @@ cm.utils.Date = function(j, h) {
             return "D, d M Y H:i:s O".replace(b, a)
         },
         U: function() {
-            return i / 1000 | 0
+            return j / 1000 | 0
         }
     };
-    this.date = function(k, f) {
+    this.date = function(l, f) {
         g = this;
-        i = (f == null ? new Date() : (f instanceof Date) ? new Date(f) : new Date(f * 1000));
-        return k.replace(b, a)
+        j = (f == null ? new Date() : (f instanceof Date) ? new Date(f) : new Date(f * 1000));
+        return l.replace(b, a)
     };
-    return this.date(j, h)
+    return this.date(k, h)
 };
 (function(a) {
     a.extend({
@@ -92277,6 +92483,72 @@ cm.utils.Date = function(j, h) {
                 d = d[b[c]]
             }
             return true
+        },
+        createCssRules: function(d) {
+            if (!document.styleSheets) {
+                return
+            }
+            if (document.getElementsByTagName("head").length == 0) {
+                return
+            }
+            var e, b;
+            if (document.styleSheets.length > 0) {
+                for (i = 0; i < document.styleSheets.length; i++) {
+                    if (document.styleSheets[i].disabled) {
+                        continue
+                    }
+                    var c = document.styleSheets[i].media;
+                    b = typeof c;
+                    if (b == "string") {
+                        if (c == "" || (c.indexOf("screen") != -1)) {
+                            e = document.styleSheets[i]
+                        }
+                    } else {
+                        if (b == "object") {
+                            if (c.mediaText == "" || (c.mediaText.indexOf("screen") != -1)) {
+                                e = document.styleSheets[i]
+                            }
+                        }
+                    }
+                    if (typeof e != "undefined") {
+                        break
+                    }
+                }
+            }
+            if (typeof e == "undefined") {
+                styleSheetElement = document.createElement("style");
+                styleSheetElement.type = "text/css";
+                document.getElementsByTagName("head")[0].appendChild(styleSheetElement);
+                for (i = 0; i < document.styleSheets.length; i++) {
+                    if (document.styleSheets[i].disabled) {
+                        continue
+                    }
+                    e = document.styleSheets[i]
+                }
+                var c = e.media;
+                b = typeof c
+            }
+            a.each(d, function(f, g) {
+                if (b == "string") {
+                    for (i = 0; i < e.rules.length; i++) {
+                        if (e.rules[i].selectorText.toLowerCase() == f.toLowerCase()) {
+                            e.rules[i].style.cssText = g;
+                            return
+                        }
+                    }
+                    e.addRule(f, g)
+                } else {
+                    if (b == "object") {
+                        for (i = 0; i < e.cssRules.length; i++) {
+                            if (e.cssRules[i].selectorText.toLowerCase() == f.toLowerCase()) {
+                                e.cssRules[i].style.cssText = g;
+                                return
+                            }
+                        }
+                        e.insertRule(f + "{" + g + "}", e.cssRules.length)
+                    }
+                }
+            })
         }
     });
     a.fn.clicks = function(e, b, d) {
