@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130919a
+// @version        20130919b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130919a';//
+var Version = '20130919b';//
 var http =  window.location.protocol+"\:\/\/";
 
 var http =  window.location.protocol+"\/\/";
@@ -2601,7 +2601,8 @@ postInfo : function (z){
 		id = y["effects"]["slot"+i]["id"];
 		tier = parseInt(y["effects"]["slot"+i]["tier"]);
 		level = y["level"];
-		p = unsafeWindow.cm.thronestats.tiers[id][tier];
+		if (y.unique == 30286 && id == 9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else
+		  p = unsafeWindow.cm.thronestats.tiers[id][tier];
 		Current = p.base + ((level * level + level) * p.growth * 0.5);
 		m+='||'+Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"];
 	};
@@ -2637,8 +2638,8 @@ paintEquipInfo : function (z,what){
             id = y["effects"]["slot"+i]["id"];
             tier = parseInt(y["effects"]["slot"+i]["tier"]);
             level = y["level"];
-	if (y["unique"]==30286 && i==5) p = unsafeWindow.cm.thronestats.tiers[id][4]; else  // temporary patch
-            p = unsafeWindow.cm.thronestats.tiers[id][tier];
+	    if (y["unique"]==30286 && id==9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else  // temporary patch
+              p = unsafeWindow.cm.thronestats.tiers[id][tier];
             Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
             var quality = parseInt(y["quality"]);
             if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
@@ -3258,7 +3259,8 @@ PaintSalvageHistory : function() {
                id = y["effects"]["slot"+i]["id"];
                tier = parseInt(y["effects"]["slot"+i]["tier"]);
                level = y["level"];
-               p = unsafeWindow.cm.thronestats.tiers[id][tier];
+	       if (y.unique == 30286 && id == 9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else
+                 p = unsafeWindow.cm.thronestats.tiers[id][tier];
                Current = p.base + ((level * level + level) * p.growth * 0.5);
                level++;
                Next = p.base + ((level * level + level) * p.growth * 0.5);;
@@ -3293,7 +3295,8 @@ paintHoover : function (){
         id = y["effects"]["slot"+i]["id"];
         tier = parseInt(y["effects"]["slot"+i]["tier"]);
         level = y["level"];
-        p = unsafeWindow.cm.thronestats.tiers[id][tier];
+	if (y.unique == 30286 && id == 9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else
+          p = unsafeWindow.cm.thronestats.tiers[id][tier];
         Current = p.base + ((level * level + level) * p.growth * 0.5);
         var quality = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]["quality"]);
         if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
@@ -7953,7 +7956,8 @@ Tabs.transport = {
                 if (id == StatID) {
                     var tier = parseInt(item["effects"]["slot" + i]["tier"]);
                     var level = item["level"];
-                    var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+		    if (item.unique == 30286 && id == 9) var p = unsafeWindow.cm.thronestats.tiers[id][4]; else
+                      var p = unsafeWindow.cm.thronestats.tiers[id][tier];
                     var Percent = p.base + ((level * level + level) * p.growth * 0.5);
                     total += Percent;
                 }
@@ -11005,9 +11009,11 @@ Tabs.Barb = {
       var totaldf = 0;
     for (q=1;q<=Seed.cities.length;q++){
         var cityID = 'city' + Seed.cities[q-1][0];
+
         totaldf += Number(AttackOptions.BarbsDone[q]);
-        message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks on ' + t.barbArray[q].length +' forests' + '%0A';        
-  		  var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOptions.AetherStatus[q];
+	if (t.barbArray[q]) var dfhits = t.barbArray[q].length; else var dfhits = 0;
+        message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks on ' + dfhits +' forests' + '%0A';        
+  	var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOptions.AetherStatus[q];
         message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.AetherStatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec5'][0] )) + ' Gain: ';
         message += addCommas(gain)  + '%0A';
         total += gain;
@@ -21719,7 +21725,8 @@ function equippedthronestats (stat_id){
             if(id == stat_id){
                var tier = parseInt(item["effects"]["slot"+i]["tier"]);
                var level = item["level"];
-               var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+	       if (item.unique == 30286 && id == 9) var p = unsafeWindow.cm.thronestats.tiers[id][4]; else
+                 var p = unsafeWindow.cm.thronestats.tiers[id][tier];
                var Percent = p.base + ((level * level + level) * p.growth * 0.5);
                total += Percent;
             }
