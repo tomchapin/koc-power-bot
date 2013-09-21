@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130919b
+// @version        20130921a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130919b';//
+var Version = '20130921a';//
 var http =  window.location.protocol+"\:\/\/";
 
 var http =  window.location.protocol+"\/\/";
@@ -6133,6 +6133,11 @@ Tabs.Search = {
     t.opt.startY = parseInt(document.getElementById ('pasrchY').value);
     t.opt.maxDistance = parseInt(document.getElementById ('pasrcDist').value);
     t.opt.searchShape = Options.srcdisttype;
+    if(t.opt.maxDistance > 20){
+        t.opt.searchDistance = 20;
+    } else {
+	t.opt.searchDistance = t.opt.maxDistance
+    }
     errMsg = '';
 
     if (isNaN (t.opt.startX) ||t.opt.startX<0 || t.opt.startX>749)
@@ -6355,7 +6360,7 @@ Tabs.Search = {
     var xxx = t.MapAjax.normalize(t.curX);
     var yyy = t.MapAjax.normalize(t.curY);
     document.getElementById ('pastatStatus').innerHTML = translate('Searching at ')+ xxx +','+ yyy;
-    t.MapAjax.request (xxx, yyy, 15, t.eventgetplayeronline);
+    t.MapAjax.request (xxx, yyy, t.opt.searchDistance, t.eventgetplayeronline);
   },
 
   hideShowClicked : function (){
@@ -6777,14 +6782,14 @@ Tabs.Search = {
       }
     }
     
-    t.tilesSearched += (15*15);
+    t.tilesSearched += (t.opt.searchDistance*t.opt.searchDistance);
     document.getElementById('pastatSearched').innerHTML = translate('Searched: ')+ t.tilesSearched;
     t.dispMapTable();
 
-    t.curX += 15;
+    t.curX += t.opt.searchDistance;
     if (t.curX > t.lastX){
       t.curX = t.firstX;
-      t.curY += 15;
+      t.curY += t.opt.searchDistance;
       if (t.curY > t.lastY){
         t.stopSearch (translate('Done!'));
         return;
@@ -6793,7 +6798,7 @@ Tabs.Search = {
     var x = t.MapAjax.normalize(t.curX);
     var y = t.MapAjax.normalize(t.curY);
     document.getElementById ('pastatStatus').innerHTML = 'Searching at '+ x +','+ y;
-    setTimeout (function(){t.MapAjax.request (x, y, 15, t.eventgetplayeronline)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (x, y, t.opt.searchDistance, t.eventgetplayeronline)}, MAP_DELAY);
   },
   
   eventgetplayeronline : function (left, top, width, rslt){
@@ -10676,6 +10681,7 @@ Tabs.Barb = {
      },
       paintBarbs: function(i,cityname){
             var t = Tabs.Barb;
+		if (t.barbArray[i] == undefined) return;
                 for (k=(t.barbArray[i].length-1);k>=0;k--){t._addTab(i,cityname,k+1,t.barbArray[i][k]['x'], t.barbArray[i][k]['y'],t.barbArray[i][k]['dist'], t.barbArray[i][k]['level']);}
         },
       
@@ -11011,8 +11017,7 @@ Tabs.Barb = {
         var cityID = 'city' + Seed.cities[q-1][0];
 
         totaldf += Number(AttackOptions.BarbsDone[q]);
-	if (t.barbArray[q]) var dfhits = t.barbArray[q].length; else var dfhits = 0;
-        message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks on ' + dfhits +' forests' + '%0A';        
+	message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks' + '%0A';        
   	var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOptions.AetherStatus[q];
         message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.AetherStatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec5'][0] )) + ' Gain: ';
         message += addCommas(gain)  + '%0A';
