@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130921b
+// @version        20130922a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130921b';//
+var Version = '20130922a';//
 var http =  window.location.protocol+"\:\/\/";
 
 var http =  window.location.protocol+"\/\/";
@@ -226,6 +226,7 @@ var GlobalOptions = {
   version : 0,
   pbNoMoreKabam : false,
   escapeurl : null,
+  cellpin : 0,
 };
 
 var CrestOptions = {
@@ -3884,7 +3885,7 @@ Tabs.tower = {
        }
     }
 
-    m += '</select></td></tr>';
+    m += '</select> <FONT COLOR=RED>REQUIRED </FONT> PIN:<INPUT id=pbcellpin type=text size=6 maxlength=5 value="'+ (GlobalOptions.cellpin?GlobalOptions.cellpin:'') +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <INPUT id=pbgetpin type=submit value="'+translate("GET PIN CODE")+'" ></td></tr>';
     m += '<tr><td align=left><INPUT id=pbcellextended type=checkbox '+ (Options.celltext.extended?'CHECKED ':'') +'/></td>\
     <td align=left>'+translate("Send troop info in text")+'<span style="color:#800; font-weight:bold"><sup>*'+translate("Multiple text messages per attack. Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>';
     m += '<TR><td align=center>-</td><TD align=left>'+translate("Minimum # of troops to trigger tower options")+':<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> <span style="color:#800; font-weight:bold"><sup>*NEW! Controls All Tower Options</sup></span></td></tr>';
@@ -3924,6 +3925,10 @@ Tabs.tower = {
 
     t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
     t.volSlider.setChangeListener(t.e_volChanged);
+		document.getElementById('pbcellpin').addEventListener ('change', function(){
+              GlobalOptions.cellpin = this.value;
+            GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);  
     document.getElementById('pbPlayNow').addEventListener ('click', function (){t.playSound(false)}, false);
     document.getElementById('pbathemail').addEventListener ('click', t.e_authenticate, false);
     document.getElementById('pbSoundStop').addEventListener ('click', t.stopSoundAlerts, false);
@@ -3954,6 +3959,7 @@ Tabs.tower = {
     document.getElementById('pbalertTRsetmin').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRAFK').addEventListener ('click', t.e_alertOptChanged, false);
     document.getElementById('pboldattacks').addEventListener ('click', t.oldIncoming, false);
+    document.getElementById('pbgetpin').addEventListener ('click', t.getpinauth, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
         t.loadUrl (Options.alertSound.soundUrl);
@@ -3994,7 +4000,24 @@ Tabs.tower = {
   
   hide : function (){
   },
- 
+ getpinauth : function () {
+ 	var dt = {};
+    dt.provider = Options.celltext.provider;
+    dt.num1 = Options.celltext.num1;
+    dt.num2 = Options.celltext.num2;
+    dt.num3 = Options.celltext.num3;
+
+  GM_xmlhttpRequest({
+    method: 'POST',
+    url: http+'baos.kocscripters.com/getpin.php',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    },
+    data: implodeUrlArgs(dt),
+
+    });
+    alert("check for text containing pin code");
+ },
   cityBtnColor : function () {
 
      // override update_citylist function
@@ -4486,7 +4509,7 @@ Tabs.tower = {
     },
     data: implodeUrlArgs(data),
 
-    })
+    });
   },
   
   postToChat : function (m){
