@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130921a
+// @version        20130921b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130921a';//
+var Version = '20130921b';//
 var http =  window.location.protocol+"\:\/\/";
 
 var http =  window.location.protocol+"\/\/";
@@ -58,6 +58,7 @@ var SEND_ALERT_AS_WHISPER = false;
 
 var throttle = 10;
 var MAP_DELAY = 4000;
+var MAP_SFIELD = 20;
 var MAP_DELAY_WATCH = Number(0);
 var DEFAULT_ALERT_SOUND_URL = http+'koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
 var SWF_PLAYER_URL = http+'koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
@@ -1791,7 +1792,7 @@ Tabs.farm = {
     var element = 'pddataFarm'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ xxx +','+ yyy;
    
-    setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (xxx, yyy, MAP_SFIELD, t.mapCallback)}, MAP_DELAY);
   },
   
   mapCallback : function (left, top, width, rslt){
@@ -1822,12 +1823,12 @@ Tabs.farm = {
             t.mapDat.push ({time:0,empty:0,lost:false,enabled:'true',attacked:0,DaysInactive:"?",LastCheck:0,Diplomacy:Diplomacy,UserId:map[k].tileUserId,AllianceName:AllianceName,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel,PlayerName:rslt.userInfo[who].n,cityName:map[k].cityName,might:rslt.userInfo[who].m,cityNumber:map[k].cityNum});
       }
     }
-    t.tilesSearched += (15*15);
+    t.tilesSearched += (MAP_SFIELD*MAP_SFIELD);
 
-    t.curX += 15;
+    t.curX += MAP_SFIELD;
     if (t.curX > t.lastX){
       t.curX = t.firstX;
-      t.curY += 15;
+      t.curY += MAP_SFIELD;
       if (t.curY > t.lastY){
         var element = 'pdtotalFarm'+(t.lookup-1);
         document.getElementById(element).innerHTML = 'Found: ' + t.mapDat.length;
@@ -1844,7 +1845,7 @@ Tabs.farm = {
     var y = t.MapAjax.normalize(t.curY);
     var element = 'pddataFarm'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
-    setTimeout (function(){t.MapAjax.request (x, y, 15, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (x, y, MAP_SFIELD, t.mapCallback)}, MAP_DELAY);
   },
   
   stopSearch : function (msg){
@@ -6134,7 +6135,7 @@ Tabs.Search = {
     t.opt.maxDistance = parseInt(document.getElementById ('pasrcDist').value);
     t.opt.searchShape = Options.srcdisttype;
     if(t.opt.maxDistance > 20){
-        t.opt.searchDistance = 20;
+        t.opt.searchDistance = MAP_SFIELD;
     } else {
 	t.opt.searchDistance = t.opt.maxDistance
     }
@@ -11070,8 +11071,8 @@ Tabs.Barb = {
     
     t.opt.maxDistance = parseInt(AttackOptions.MaxDistance);
     t.opt.searchDistance = (t.opt.maxDistance*2);
-    if(t.opt.maxDistance > 20){
-        t.opt.searchDistance = 20;
+    if(t.opt.maxDistance > MAP_SFIELD){
+        t.opt.searchDistance = MAP_SFIELD;
     }
     t.opt.searchShape = 'circle';
     t.mapDat = [];
