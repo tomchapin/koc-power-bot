@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130923a
+// @version        20130923b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130923a';
+var Version = '20130923b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -10862,7 +10862,8 @@ Tabs.Barb = {
          return;
       };
        var element1 = 'pddatacity'+(city-1);
-       document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
+       if (t.barbArray[city].length == 0) document.getElementById(element1).innerHTML = 'In search mode'; else
+         document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
        var element2 = 'pddataarray'+(city-1);
        document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + March.getTotalSlots(citynumber) +')';
        if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(AttackOptions.RallyClip)) return;
@@ -10933,6 +10934,7 @@ Tabs.Barb = {
         if(now > parseInt(AttackOptions.Update[city][0] + (AttackOptions.UpdateInterval*60))){
             AttackOptions.Update[city][1]=0;
             t.barbArray[city] = []; //Clears data if last update was more than X minutes
+            GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId())
             GM_setValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.barbArray[city]));
         }
     }
