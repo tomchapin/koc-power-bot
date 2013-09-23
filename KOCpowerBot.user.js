@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130922b
+// @version        20130923a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130922b';
+var Version = '20130923a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -4013,9 +4013,19 @@ Tabs.tower = {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
     data: implodeUrlArgs(dt),
+		onload: function (message) {
+            if(message.status != 200) alert('request failed, try again');
+            else {
+      			var rslt = eval("(" + message.responseText + ")");
+      			//alert(inspect(rslt));
+            	if(rslt.ok) alert("check for text containing pin code");
+            	else if(rslt.dup) alert('duplicate record, pin already sent');
+            	else if(rslt.inv) alert('Invalid request');
+            	else alert('Bad Mojo going on, try again later');
+				};
+		  },
 
     });
-    alert("check for text containing pin code");
  },
   cityBtnColor : function () {
 
