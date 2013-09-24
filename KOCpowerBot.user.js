@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130924a
+// @version        20130924b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130924a';
+var Version = '20130924b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -6217,7 +6217,7 @@ Tabs.Search = {
         }
     if (t.opt.searchType == 1){
       m += '<TR><TD class=xtab align=right>'+translate("Wilderness Type")+':</td><TD class=xtab><SELECT id=pafilWildType>';
-      m += htmlOptions ( {1:translate('Grassland/Lake'), 3:translate('Woodlands'), 4:translate('Hills'), 5:translate('Mountain'), 6:translate('Plain'), 8:translate('Dark Forest'), 9:translate('Ruin'), 10:translate('Merc'), 0:translate('ALL')}, Options.wildType );
+      m += htmlOptions ( {1:translate('Grassland/Lake'), 3:translate('Woodlands'), 4:translate('Hills'), 5:translate('Mountain'), 6:translate('Plain'), 8:translate('Dark Forest'), 9:translate('Ruin'), 10:translate('Merc'), 11:translate('Bog'), 0:translate('ALL')}, Options.wildType );
       m+= '</select></td></tr>';
       // m+= '<TR><TD class=xtab align=right>Grassland/Lake:</td><TD class=xtab><INPUT name=pbfil id=pafilGrass type=CHECKBOX '+ (Options.GrassOnly?' CHECKED':'') +'\><td></tr>';
       // m+= '<TR><TD class=xtab align=right>Woodlands:</td><TD class=xtab><INPUT name=pbfil id=pafilWood type=CHECKBOX '+ (Options.WoodOnly?' CHECKED':'') +'\><td></tr>';
@@ -6409,7 +6409,7 @@ Tabs.Search = {
   },
   
   dispMapTable : function (){
-    var tileNames = ['Barb Camp', 'Grassland', 'Lake', 'Woodlands', 'Hills', 'Mountain', 'Plain', null, 'Dark Forest', 'Ruin', 'Merc' ];
+    var tileNames = ['Barb Camp', 'Grassland', 'Lake', 'Woodlands', 'Hills', 'Mountain', 'Plain', null, 'Dark Forest', 'Ruin', 'Merc', 'Bog' ];
     var t = Tabs.Search;
     var coordsOnly = document.getElementById('pacoordsOnly').checked;
     if (DEBUG_SEARCH) DebugTimer.start();
@@ -6768,6 +6768,8 @@ Tabs.Search = {
           type = (map[k].tileType/10) + 1;
       } else if (t.opt.searchType==1 && map[k].tileType==54) {
             type = 8;
+      } else if (t.opt.searchType==1 && map[k].tileType==0) {
+            type = 11;
       } else if (t.opt.searchType==1 && map[k].tileType==55) {
             type = 10;
       } else if (t.opt.searchType==1 && map[k].tileType==52) {
@@ -6776,7 +6778,7 @@ Tabs.Search = {
             type = 7;
       } else
         continue;
-        //    var tileNames = ['Barb Camp', 'Grassland', 'Lake', 'Woodlands', 'Hills', 'Mountain', 'Plain', null, 'Dark Forest', 'Ruin', 'Merc' ];
+        //    var tileNames = ['Barb Camp', 'Grassland', 'Lake', 'Woodlands', 'Hills', 'Mountain', 'Plain', null, 'Dark Forest', 'Ruin', 'Merc', 'Bog' ];
       var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
       if ((t.opt.searchShape=='circle' && dist <= t.opt.maxDistance)
       ||  (t.opt.searchShape=='square' && map[k].xCoord>=t.firstX && map[k].xCoord<=t.lastX && map[k].yCoord>=t.firstY && map[k].yCoord<=t.lastY)){
