@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130923c
+// @version        20130923d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130923c';
+var Version = '20130923d';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -10827,7 +10827,7 @@ Tabs.Barb = {
         AttackOptions.Update[i][1] = 0;
         saveAttackOptions();
       }
-      t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+2000));
+        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000));
   },
   
   toggleBarbState: function(obj){
@@ -10845,7 +10845,7 @@ Tabs.Barb = {
         if(document.getElementById('DFToggleTab'))document.getElementById('DFToggleTab').innerHTML = '<span style="color: #FFFF00">'+unsafeWindow.g_js_strings.commonstr.darkForest+': On</span>';
         saveAttackOptions();
         t.checkBarbData();
-        t.nextattack = setTimeout(t.getnextCity, parseInt((Math.random()*3000)+2000));
+        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000));
     }
   },
   
@@ -10861,6 +10861,7 @@ Tabs.Barb = {
       if (Seed.resources[cityID]["rec5"][0] > Number(AttackOptions.threshold)) {
          return;
       };
+      logit('march baring 1');
        var element1 = 'pddatacity'+(city-1);
        if (t.barbArray[city].length == 0) document.getElementById(element1).innerHTML = 'In search mode'; else
          document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
@@ -10869,6 +10870,8 @@ Tabs.Barb = {
        if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(AttackOptions.RallyClip)) return;
        if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
+       
+       
        if(t.barbArray[city] && t.barbArray[city].length > 0){
         var barbinfo = t.barbArray[city].shift();
        }else if(parseInt(AttackOptions.Update[city][1])==0){
@@ -10877,9 +10880,11 @@ Tabs.Barb = {
        } else {
         return;
        };
+      logit('march baring 2');
        var check=0;
        var barblevel = parseInt(barbinfo.level);
         
+      logit('march baring 3');
         if (AttackOptions.Levels[city][barbinfo.level])
             check=1;
         
