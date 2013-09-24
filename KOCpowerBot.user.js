@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130923d
+// @version        20130924a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130923d';
+var Version = '20130924a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -11293,7 +11293,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away from Kabam!")+'</td></tr>\
         <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
         <TR><TD>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
-        <TR><td>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Throttle Map Requests:")+' '+ htmlSelector({1200:translate('Fast'), 4000:translate('Normal'), 8000:translate('Slow'), 12000:translate('Extra Slow')},Options.MAP_DELAY,'id=pbMAP_DELAY')+'</td></tr>\
+        <TR><td>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Throttle Map Requests:")+' '+ htmlSelector({1200:translate('1.2x Fast'), 4000:translate('4x Normal'), 8000:translate('8x Slow'), 15000:translate('15x Slow'), 20000:translate('20x Slow'), 30000:translate('30x Slow')},Options.MAP_DELAY,'id=pbMAP_DELAY')+'</td></tr>\
       <TR><TD><INPUT id=pblogperms type=checkbox '+ (Options.plog?'CHECKED ':'') +'/></td><TD>'+translate("Occasional logging of data to help with script development")+'</td></tr>\
         <TR><TD><INPUT id=pbRaidBut type=checkbox '+ (Options.raidbtns?'CHECKED ':'') +'/></td><TD>'+translate("Raid toggle buttons on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbTransBut type=checkbox '+ (Options.transbtns?'CHECKED ':'') +'/></td><TD>'+translate("Transport toggle button on top of screen")+'</td></tr>\
