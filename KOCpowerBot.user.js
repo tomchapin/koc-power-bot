@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130926a
+// @version        20130927a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130926a';
+var Version = '20130927a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -80,6 +80,8 @@ unsafeWindow.arthurCheck = function (a) {
 	logit('arthurCheck intercepted');
 	return;
 };
+
+
 
 var isAFK = false;
 
@@ -210,6 +212,7 @@ var Options = {
   GESeveryhour:0,
   GESeveryday:0,
   detAFK: true,
+
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -339,11 +342,16 @@ var TrainOptions = {
   UseIdlePop : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true},
   CraftingRunning : false,
   CraftIntervallMin : 3,
+  CraftMinAether : 50000,
   CraftingActif : {3000:false,3001:false,3002:false,3003:false,3004:false,3005:false,3006:false,3007:false,3008:false,3009:false,3010:false,3011:false},
   CraftingNb : {3000:0,3001:0,3002:0,3003:0,3004:0,3005:0,3006:0,3007:0,3008:0,3009:0,3010:0,3011:0},
+  CraftingNbFix : {3000:false,3001:false,3002:false,3003:false,3004:false,3005:false,3006:false,3007:false,3008:false,3009:false,3010:false,3011:false},
+  CraftingStats : {3000:[0,0],3001:[0,0],3002:[0,0],3003:[0,0],3004:[0,0],3005:[0,0],3006:[0,0],3007:[0,0],3008:[0,0],3009:[0,0],3010:[0,0],3011:[0,0]},
+  CraftingCities : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true},
   tr  :  false,
   trset  :  0,
   actr:     false,
+  actrbase: false,
   actrset : 0,
   AsTroops     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   AsEnabled  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
@@ -786,7 +794,9 @@ function pbStartup (){
     .pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
     div.indent25 {padding-left:25px}\
     .pbttabs {background-color:#A68064; font-weight:bold; color:white}\
-    .pbttabsdis {background-color:#603311; font-weight:bold; color:white}';    
+    .pbttabsdis {background-color:#603311; font-weight:bold; color:white}\
+	.craftdesc:hover span.crafttip { display:block; position:absolute; background: #FFFFAA; border: 1px solid #FFAD33; padding: 0.5em 0.5em;}\
+	.craftdesc span.crafttip { display:none;}';    
 
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
@@ -7681,6 +7691,7 @@ Tabs.transport = {
         m += '<TD colspan=4>' + translate("Check transport every:") + ' <INPUT id=pbtransportinterval type=text size=2 value="' + Options.transportinterval + '"\> ' + translate("minutes") + '</td></tr></table>';
         m += '<TD colspan=4>' + translate("Do not send transport out if less than") + ' <INPUT id=pbminwagons type=text size=8 value="' + Options.minwagons + '"\> ' + translate("troops are needed. (Needless transports are skipped this way)") + '</td></tr></table>';
         m += '<DIV style="margin-top:10px;margin-bottom:5px;">' + translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...") + '</div></table>';
+
         m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRANSPORTS") + '</div>';
         m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
         m += '<TR align="left"><TD>' + translate("From City:") + '</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
@@ -7703,6 +7714,7 @@ Tabs.transport = {
         m += '<TD id=HaveRec1 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
         m += '<TD width=180px  align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountFood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7711,6 +7723,7 @@ Tabs.transport = {
         m += '<TD id=HaveRec2 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountWood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7719,6 +7732,7 @@ Tabs.transport = {
         m += '<TD id=HaveRec3 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountStone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7727,6 +7741,7 @@ Tabs.transport = {
         m += '<TD id=HaveRec4 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountOre type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7735,6 +7750,7 @@ Tabs.transport = {
         m += '<TD id=HaveRec5 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountAstone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7743,6 +7759,7 @@ Tabs.transport = {
         m += '<TD id=HaveGold align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountGold type=text size=11 maxlength=20 value="0" disabled=true\></td>';
+
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountGold type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxGold type=submit value="Max"></td></tr>';
         m += '</table>';
@@ -7927,6 +7944,42 @@ Tabs.transport = {
                 .value)) document.getElementById('pbtargetamountGold')
                 .value = 0;
         }, false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         document.getElementById('pbtradeamountFood')
             .addEventListener('change', function () {
             if (isNaNCommas(document.getElementById('pbtradeamountFood')
@@ -8239,6 +8292,18 @@ Tabs.transport = {
             .value);
         var target_Gold = parseIntCommas(document.getElementById('pbtargetamountGold')
             .value);
+
+
+
+
+
+
+
+
+
+
+
+
         var trade_Food = parseIntCommas(document.getElementById('pbtradeamountFood')
             .value);
         var trade_Wood = parseIntCommas(document.getElementById('pbtradeamountWood')
@@ -8265,21 +8330,27 @@ Tabs.transport = {
                 city: city,
                 ship_Food: ship_Food,
                 target_Food: target_Food,
+
                 trade_Food: trade_Food,
                 ship_Wood: ship_Wood,
                 target_Wood: target_Wood,
+
                 trade_Wood: trade_Wood,
                 ship_Stone: ship_Stone,
                 target_Stone: target_Stone,
+
                 trade_Stone: trade_Stone,
                 ship_Ore: ship_Ore,
                 target_Ore: target_Ore,
+
                 trade_Ore: trade_Ore,
                 ship_Astone: ship_Astone,
                 target_Astone: target_Astone,
+
                 trade_Astone: trade_Astone,
                 ship_Gold: ship_Gold,
                 target_Gold: target_Gold,
+
                 trade_Gold: trade_Gold,
                 target_x: target_x,
                 target_y: target_y,
@@ -8370,6 +8441,7 @@ Tabs.transport = {
             n += '<TR><TD width=50px align=center><img alt="' + icon + '" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/' + icon + '_30.png"></td>';
             n += '<TD width=50px align=center><INPUT id=pbbship' + icon + ' type=checkbox></td>';
             n += '<TD width=125px>' + translate("Keep:") + ' <INPUT id=pbbtargetamount' + icon + ' type=text size=11 maxlength=11 value="0"></td>';
+
             n += '<TD width=125px>' + translate("Trade:") + ' <INPUT id=pbbtradeamount' + icon + ' type=text size=11 maxlength=11 value="0"\></td></tr>';
         }
         n += '</table><BR><TABLE id=editRoutes class=pbTab><TR><TD><a class="button20" id="Cancel"><span>' + translate("Cancel") + '</span></a></td>';
@@ -8407,6 +8479,18 @@ Tabs.transport = {
             .value = r[queueId].target_Astone;
         document.getElementById('pbbtargetamountgold')
             .value = r[queueId].target_Gold;
+
+
+
+
+
+
+
+
+
+
+
+
         document.getElementById('pbbtradeamountfood')
             .value = r[queueId].trade_Food;
         document.getElementById('pbbtradeamountwood')
@@ -8453,6 +8537,18 @@ Tabs.transport = {
                 .value);
             r[queueId].target_Gold = parseIntCommas(document.getElementById('pbbtargetamountgold')
                 .value);
+
+
+
+
+
+
+
+
+
+
+
+
             r[queueId].trade_Food = parseIntCommas(document.getElementById('pbbtradeamountfood')
                 .value);
             r[queueId].trade_Wood = parseIntCommas(document.getElementById('pbbtradeamountwood')
@@ -8533,6 +8629,7 @@ Tabs.transport = {
     if(!t.traderState.running) return;
     if(t.tradeRoutes.length==0) return;
     t.doTrades(t.count);
+
     t.count++;
     if(t.count < t.tradeRoutes.length){
               t.checkdotradetimeout = setTimeout(function() { t.checkdoTrades();}, 5000);
@@ -8562,11 +8659,33 @@ Tabs.transport = {
         var carry_amount= 0;
         var wagons_needed=0;
         var citymax = 0;
+
+
         var city = t.tradeRoutes[count]["city"];
         var cityID = 'city' + city;
         if(!Cities.byID[city]) return;
+
+
         var xcoord = t.tradeRoutes[count]["target_x"];
         var ycoord = t.tradeRoutes[count]["target_y"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         var trade_Food = t.tradeRoutes[count]["trade_Food"];
         var trade_Wood = t.tradeRoutes[count]["trade_Wood"];
         var trade_Stone = t.tradeRoutes[count]["trade_Stone"];
@@ -8579,6 +8698,12 @@ Tabs.transport = {
         var target_Ore = t.tradeRoutes[count]["target_Ore"];
         var target_Astone = t.tradeRoutes[count]["target_Astone"];
         var target_Gold = t.tradeRoutes[count]["target_Gold"];
+
+
+
+
+
+
         var ship_Food = t.tradeRoutes[count]["ship_Food"];
         var ship_Wood = t.tradeRoutes[count]["ship_Wood"];
         var ship_Stone = t.tradeRoutes[count]["ship_Stone"];
@@ -8591,22 +8716,38 @@ Tabs.transport = {
         var citymax_Ore = parseIntNan(Seed.resources[cityID]['rec4'][0] / 3600);
         var citymax_Astone = parseIntNan(Seed.resources[cityID]['rec5'][0]);
         var citymax_Gold = parseIntNan(Seed.citystats[cityID]['gold']);
+
+
         var carry_Food = parseIntNan(citymax_Food - target_Food);
         var carry_Wood = parseIntNan(citymax_Wood - target_Wood);
         var carry_Stone = parseIntNan(citymax_Stone - target_Stone);
         var carry_Ore = parseIntNan(citymax_Ore - target_Ore);
         var carry_Astone = parseIntNan(citymax_Astone - target_Astone);
         var carry_Gold = 0;
+
+
+
+
+
+
+
+
+
+
+
         if (carry_Food < 0 || ship_Food == false) carry_Food = 0;
         if (carry_Wood < 0 || ship_Wood == false) carry_Wood = 0;
         if (carry_Stone < 0 || ship_Stone == false) carry_Stone = 0;
         if (carry_Ore < 0 || ship_Ore == false) carry_Ore = 0;
         if (carry_Astone < 0 || ship_Astone == false) carry_Astone = 0;
+
+
         if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseIntNan(trade_Food);
         if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseIntNan(trade_Wood);
         if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseIntNan(trade_Stone);
         if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseIntNan(trade_Ore);
         if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
+
         carry_Astone *= 5; //Multiply by 5 to account for 5 times less carrying capacity
       
       if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]);
@@ -8723,12 +8864,22 @@ Tabs.transport = {
             carry_Astone = shift_Astone;
         }
         if (maxload > (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone) && ship_Gold == true) {
+
             if ((maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (citymax_Gold - target_Gold)) {
                 carry_Gold = (citymax_Gold - target_Gold);
                 if (carry_Gold < 0) carry_Gold = 0;
             } else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
             if (trade_Gold > 0 && (carry_Gold > trade_Gold)) carry_Gold = parseInt(trade_Gold);
         }
+
+
+
+
+
+
+
+
+
         wagons_needed = ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon);
         wagons_needed = wagons_needed.toFixed(0);
         if (wagons_needed < ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon)) wagons_needed++;
@@ -8774,9 +8925,17 @@ Tabs.transport = {
                  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
+
                  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
+
+
                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                  var ut = unsafeWindow.unixtime();
+
+
+
+
+
             var unitsarr = [];
             for (j in unsafeWindow.unitcost)
                unitsarr.push(0);
@@ -8802,10 +8961,14 @@ Tabs.transport = {
                         setTimeout (function(){t.doTrades(count,rslt.tt);}, wait*1000);
                         return;
                  };
+
                   actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
+
+
                   }
                   },
                   onFailure: function () {profiler.stop();}
+
           });
         }
     },
@@ -10055,415 +10218,429 @@ cm.MARCH_TYPES = {
  
 /*************************** Auto Craft Tab *************************************/
 Tabs.AutoCraft = {
-   tabOrder: 20, //CHECKTHIS ?
-   tabLabel: unsafeWindow.g_js_strings.commonstr.craft,
-   myDiv: null,
-   timer: null,
-   craftIntervall  : TrainOptions.CraftIntervallMin,
-   crafting: [],
-   myDiv: null,
-   timer: null,
-   timerStat: null,
-   numcity :-1,
-   craftinfo : {},
-   retrycount : 0,
+	tabOrder: 20, //CHECKTHIS ?
+	tabLabel: unsafeWindow.g_js_strings.commonstr.craft,
+	myDiv: null,
+	timerStat: null,
+	crafting: [],
+	craftLoop : 0,
+	craftInterval  : 5, // seconds
+	craftMinAether : 50000,
+	craftinfo : {},
+	retrycount : 0,
+	totaether : 0,
 
-   init: function(div){
-      var t = Tabs.AutoCraft;
-      t.myDiv = div;   
-      t.crafting = {
-         running: TrainOptions.CraftingRunning,
-      };
+	init: function(div){
+		var t = Tabs.AutoCraft;
+		t.myDiv = div;
+		
+		t.crafting = {	running: TrainOptions.CraftingRunning, };
 
-      // set this after TrainOptions has been read in
-      t.craftIntervall =TrainOptions.CraftIntervallMin;
+		// set this after TrainOptions has been read in
+		t.CraftMinAether =TrainOptions.CraftMinAether;
+		
+		var m = '<div class="pbStat">CRAFTING TAB</div>\
+				<table width="100%" height="0%" class="pbTab"><tr align="center">\
+				<td><input type="submit" id="pbCraftRunning" value="Crafting = ' + (t.crafting.running ? 'ON' : 'OFF') + '" /></td>\
+				<td><input type="submit" id="Crafting_Save" value="Save Settings" /></td></tr></table>\
+				<div class="pbStat" id=pbCraftingDiv>OPTIONS</div>';
 
-      var m = '<DIV id=pbCraftingDiv class=pbStat>AUTO CRAFTING - SETTINGS</div><TABLE id=pbcraftingfunc width=100% height=0% class=pbTab><TR><TD width="10%">Interval: <input type=text value="'+TrainOptions.CraftIntervallMin+'" size=2  maxlength=2 id=pbCraftIntervall> Minute(s)<span class=boldRed><sup>*Refresh Required</sup></span></td>';
-      if (t.crafting.running == false) {
-         m += '<TD  width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = OFF"></td>';
-      }            else {
-         m += '<TD width="33%"><INPUT id=pbCraftRunning type=submit value="Crafting = ON"></td>';
-         t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
-      }
-      m += '<td width="17%"><input type=button value="Save Settings" id="Crafting_Save"></td></tr>';
-      m += '<tr><td align=left><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=2 value="'+ TrainOptions.actrset +'">  is equiped</td></table></div>';
-      m += '<DIV id=pbCraftingList class=pbStat>AUTO CRAFTING - LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
+		m += '<table width="100%" height="0%" class="pbTab">';
+		m += '<tr><td><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=2 value="'+ TrainOptions.actrset +'">  is equiped&nbsp;&nbsp;&nbsp;(ignore for "base" crafts&nbsp;<INPUT id=pbacTRbase type=checkbox '+(TrainOptions.actrbase?'CHECKED':'')+'>)</td><td align=right>Minimum Aetherstone: <input type=text value="'+TrainOptions.CraftMinAether+'" size=4  maxlength=6 id=pbCraftMinAether>&nbsp;&nbsp;</td></tr>';
+		m += '</table>';
+		m += '<DIV id=pbCraftingStats class=pbStat>CITIES</div><span id="CraftStat"></span>';
+		m += '<DIV id=pbCraftingList class=pbStat>RECIPE LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
 
-      m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td>";
-      m += "<td colspan=2><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td>";
-      m += "</tr><tr>";
-      var count = 0;
-      for(var i=0; i < unsafeWindow.recipelist[1].length; i++){
-         var h = parseInt(unsafeWindow.recipelist[1][i].output_item_id);
-         t.craftinfo[h] = {};
-         t.craftinfo[h].recipe_id = unsafeWindow.recipelist[1][i].recipe_id;
-         t.craftinfo[h].category = unsafeWindow.recipelist[1][i].category;
-         t.craftinfo[h].input = unsafeWindow.recipelist[1][i].input;
-         t.craftinfo[h].requirements = unsafeWindow.recipelist[1][i].requirements;
-         t.craftinfo[h].inputItems = unsafeWindow.recipelist[1][i].input.items;
-         t.craftinfo[h].astone = unsafeWindow.recipelist[1][i].input.resources;
-         m += "<td ><center><img src='"+http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
-         m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
-         if ((count+1)%2 == 0) m += "</tr><tr>";
-         count++;
-      }
-      for(var i=0; i < unsafeWindow.recipelist[3].length; i++){
-         var h = parseInt(unsafeWindow.recipelist[3][i].output_item_id);
-         t.craftinfo[h] = {};
-         t.craftinfo[h].recipe_id = unsafeWindow.recipelist[3][i].recipe_id;
-         t.craftinfo[h].category = unsafeWindow.recipelist[3][i].category;
-         t.craftinfo[h].input = unsafeWindow.recipelist[3][i].input;
-         t.craftinfo[h].requirements = unsafeWindow.recipelist[3][i].requirements;
-         t.craftinfo[h].inputItems = unsafeWindow.recipelist[3][i].input.items;
-         t.craftinfo[h].astone = unsafeWindow.recipelist[3][i].input.resources;
-         m += "<td ><center><img src='"+http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></center></td><td><center>"+unsafeWindow.itemlist["i"+h].name+"</center></td><td><center><span class=boldGreen>"+parseIntNan(Seed.items["i"+h])+"</span></center></td>";
-         m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td>";
-         if ((count+1)%2 == 0) m += "</tr><tr>";
-         count++;
-      }
+		m += "<td>&nbsp;</td><td><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td><td><b>Lock</b></td><td><b>Success</b></td>";
+		m += "<td>&nbsp;</td><td><center><b>Items</b></center></td><td><center><b>Inventory</b></center></td><td><b>Amount</b></td><td><b>Lock</b></td><td><b>Success</b></td>";
+		m += "</tr><tr>";
 
-      m+="</table><b>Note:</b> If you complete more than one Item, the creation will be done randomly. <BR> <b>Important: Min. 50 000 Aethestones and Refresh to Update the Inventory!</b> ";
-      m += '<DIV id=pbCraftingStats class=pbStat>AETHERSTONES AND CRAFTING TIME</div><span id="CraftStat"></span>';
+		var count = 0;
+		for(var i=0; i < unsafeWindow.recipelist[1].length; i++){
+			var h = parseInt(unsafeWindow.recipelist[1][i].output_item_id);
+			t.craftinfo[h] = {};
+			t.craftinfo[h].recipe_id = unsafeWindow.recipelist[1][i].recipe_id;
+			t.craftinfo[h].name = unsafeWindow.recipelist[1][i].name;
+			t.craftinfo[h].category = unsafeWindow.recipelist[1][i].category;
+			t.craftinfo[h].input = unsafeWindow.recipelist[1][i].input;
+			t.craftinfo[h].requirements = unsafeWindow.recipelist[1][i].requirements;
+			t.craftinfo[h].inputItems = unsafeWindow.recipelist[1][i].input.items;
+			t.craftinfo[h].astone = unsafeWindow.recipelist[1][i].input.resources;
+			t.craftinfo[h].odds = unsafeWindow.recipelist[1][i].failure_chance;
+			var craftingstr = "";
+			var crafting = t.checkCraftQueues(h);
+			if (crafting != 0) craftingstr = " ("+crafting+")";
+			m += "<td align=center><img src='"+http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></td><td align=center class=craftdesc id=craftdes"+h+" >"+unsafeWindow.itemlist["i"+h].name+"</td><td align=center><span id='Craft_inv_"+h+"' class=boldGreen>"+parseIntNan(Seed.items["i"+h])+craftingstr+"</span></td>";
+			m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td><td><INPUT id='Craft_nbfix_"+h+"' type=checkbox "+(TrainOptions.CraftingNbFix[h]?'CHECKED':'')+"></td><td id='Craft_stats_"+h+"'>"+t.getCraftPercent(TrainOptions.CraftingStats[h])+"</td>";
+			if ((count+1)%2 == 0) m += "</tr><tr>";
+			count++;
+		}
+		for(var i=0; i < unsafeWindow.recipelist[3].length; i++){
+			var h = parseInt(unsafeWindow.recipelist[3][i].output_item_id);
+			t.craftinfo[h] = {};
+			t.craftinfo[h].recipe_id = unsafeWindow.recipelist[3][i].recipe_id;
+			t.craftinfo[h].name = unsafeWindow.recipelist[3][i].name;
+			t.craftinfo[h].category = unsafeWindow.recipelist[3][i].category;
+			t.craftinfo[h].input = unsafeWindow.recipelist[3][i].input;
+			t.craftinfo[h].requirements = unsafeWindow.recipelist[3][i].requirements;
+			t.craftinfo[h].inputItems = unsafeWindow.recipelist[3][i].input.items;
+			t.craftinfo[h].astone = unsafeWindow.recipelist[3][i].input.resources;
+			t.craftinfo[h].odds = unsafeWindow.recipelist[3][i].failure_chance;
+			var craftingstr = "";
+			var crafting = t.checkCraftQueues(h);
+			if (crafting != 0) craftingstr = " ("+crafting+")";
+			m += "<td align=center><img src='"+http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></td><td align=center class=craftdesc id=craftdes"+h+" >"+unsafeWindow.itemlist["i"+h].name+"</td><td align=center><span id='Craft_inv_"+h+"' class=boldGreen>"+parseIntNan(Seed.items["i"+h])+craftingstr+"</span></td>";
+			m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td><td><INPUT id='Craft_nbfix_"+h+"' type=checkbox "+(TrainOptions.CraftingNbFix[h]?'CHECKED':'')+"></td><td id='Craft_stats_"+h+"'>"+t.getCraftPercent(TrainOptions.CraftingStats[h])+"</td>";
+			if ((count+1)%2 == 0) m += "</tr><tr>";
+			count++;
+		}
 
-      t.myDiv.innerHTML = m;
+		m+="</table><center><b>Notes:</b> If you select more than one recipe, the crafting order will be done randomly.<br>Lock means that the craft amount will not reduce, and crafting will continue until you have that number in your inventory.<br>The success column shows you the crafting success percentage of each recipe.<br>&nbsp;</center>";
 
+		t.myDiv.innerHTML = m;
 
-      window.addEventListener('unload', t.onUnload, false);
+		var cities = unsafeWindow.seed.cities;
+		var str='<table width="100%" style ="font-size: 10px;"><thead><tr><th>&nbsp;</th>';
+		for (i = 0; i < cities.length; i ++) {
+			str += '<th id=craftcity'+i+'>' + cities[i][1] + '</th>';
+		}
+		str += '<th>total</th></tr></thead><tbody><tr><td>&nbsp;</td>';
+		for (i = 0; i < cities.length; i ++) {
+			var city = i+1;
+			str += '<td align=center><INPUT class='+city+' id=CraftCity'+city+' type=checkbox '+(TrainOptions.CraftingCities[city]?'CHECKED':'')+'></td>';
+		}
+		str += '<td>&nbsp;</td></tr>';
 
-      document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
-      document.getElementById("pbCraftRunning").addEventListener ('click', function (){t.toggleStateRunning(this)}, false);     
-      t.changeCraft ('pbCraftIntervall', 'CraftIntervallMin')
-      document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;saveTrainOptions();}, false);
-      document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;saveTrainOptions();}, false);
-      var cItems = document.getElementById('pbcraftingqueues').getElementsByTagName('input');
-      for (var i = 0; i < cItems.length; i++) {
-          cItems[i].addEventListener('change', function(){t.saveCraftState()}, false);
-      }
-   },
-   changeCraft : function (valueId, optionName, callOnChange){
-      var t = Tabs.AutoCraft;
-      var e = document.getElementById(valueId);
-      e.value = TrainOptions[optionName];
-      e.addEventListener ('change', eventHandler, false);
-      function eventHandler (){
-         TrainOptions[optionName] = this.value;
-         saveTrainOptions();
-         if (callOnChange)
-            callOnChange (this.value);
-      }
-   },
-   updateStat: function() {
-      var t = Tabs.AutoCraft;
-      var rownum = 0;
-      function _row (name, row, noTotal, typee){
-         if (rownum++ % 2)
-            style = '';
-         else
-            style = ' style = "background: #e8e8e8"';
-         var tot = 0;
-         var m = [];
-         m.push ('<TR style="background: #fff" align=right');
-         m.push (style);
-         m.push ('><TD');
-         m.push (style);
-         m.push ('><B>');
-         m.push (name);
-         m.push ('</td>');
-         if (noTotal){
-            m.push ('<TD');
-            m.push (style);
-            m.push ('>&nbsp;</td>');
-         } else {
-            for (i=0; i<row.length; i++)
-               tot += row[i];
-            m.push ('<TD style="background: #ffc">');
-            if (tot<0) {
-               m.push ("<SPAN class=boldRed>"+addCommas(tot)+"</span>");
-            } else {
-               m.push (addCommas(tot));
-            }
-            m.push ('</td>');
-         }
-         for (i=0; i<row.length; i++){
-            m.push ('<TD');
-            m.push (style);
-            m.push ('>');
-            if (row[i]<50000) {
-               m.push ("<SPAN class=boldRed>"+addCommas(row[i])+"</span>");
-            } else {
-               m.push (addCommas(row[i]));
-            }
-            m.push ('</td>');
-         }
+		str +='<tr style="background: #e8e8e8" align=right><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png title="Aether"></td>';
+		t.totaether = 0;
+		for(i=0; i<Cities.numCities; i++) {
+			str +="<td align=center id=cityaether"+i+">"+ addCommas(t.getCityAether(i)) + "</td>";  
+		}
+		str +="<td align=center id=totaether>"+ addCommas(t.totaether) + "</td>";  
+		str +='<tr style="background: #e8e8e8" align=right><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg title="Crafting"></td>';
+		for(i=0; i<Cities.numCities; i++) {
+			str +="<td align=center id=citycraft"+i+">"+ t.getCityCrafting(i) + "</td>";  
+		}    
+		str +="<td>&nbsp;</td></tr></tbody></table>";    
 
-         m.push ('</tr>');
-         return m.join('');
-      }
+		document.getElementById("CraftStat").innerHTML=str;
+	  
+		for (i = 0; i < cities.length; i ++) {
+			var city = i+1;
+			document.getElementById('CraftCity'+city).addEventListener('change', function(e){
+				TrainOptions.CraftingCities[e.target['className']] = e.target.checked;
+				t.saveCraftState();	}, false);
+		}
 
-      clearTimeout(t.timerStat);
-      var str="<TABLE class=pbTabOverview cellpadding=0 cellspacing=0><TR  align=center><TD width=55 align=center></td><TD width=88 style='background: #ffc; font-size:150%' align=center><SPAN class=oohfancy>TOTAL</SPAN></td>";
-      for(i=0; i<Cities.numCities; i++) {
-         cityID = 'city'+ Cities.cities[i].id;
+		window.addEventListener('unload', t.onUnload, false);
 
-         str += "<TD width=81><SPAN class=oohfancy>"+ Cities.cities[i].name.substring(0,10) +"</SPAN></td>";
+		document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
+		document.getElementById("pbCraftRunning").addEventListener ('click', function (){t.toggleStateRunning(this)}, false);     
+		t.changeCraft ('pbCraftMinAether', 'CraftMinAether')
+		document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;saveTrainOptions();}, false);
+		document.getElementById('pbacTRbase').addEventListener ('change', function() {TrainOptions.actrbase = this.checked;saveTrainOptions();}, false);
+		document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;saveTrainOptions();}, false);
+		var cItems = document.getElementById('pbcraftingqueues').getElementsByTagName('input');
+		for (var i = 0; i < cItems.length; i++) {
+			cItems[i].addEventListener('change', function(){t.saveCraftState()}, false);
+		}
+		var cItems = document.getElementById('pbcraftingqueues').getElementsByClassName('craftdesc');
+		for (var i = 0; i < cItems.length; i++) { t.createToolTip(cItems[i]); }
+		
+		t.updateStat(); // start timer on init..
+	},
 
-      }
-      rows = [];
-      var now = unixTime();
-      rows[0] = [];
-      for(i=0; i<Cities.numCities; i++) {
-         cityID = 'city'+ Cities.cities[i].id;
-         rows[0][i] = parseInt(Seed.citystats[cityID].gold[0]);
-      }
-      for (r=1; r<6; r++){
-         rows[r] = [];
-         for(i=0; i<Cities.numCities; i++) {
-            cityID = 'city'+ Cities.cities[i].id;
-            if (r==5)
-               rows[r][i] = parseInt(Seed.resources[cityID]['rec'+r][0]);
-            else
-               rows[r][i] = parseInt(Seed.resources[cityID]['rec'+r][0] / 3600);
+	createToolTip : function (elem) {
+		var t = Tabs.AutoCraft;
+		var h = elem.id.substring(8);
+		var recipeId = t.craftinfo[h].recipe_id;
+		var name = t.craftinfo[h].name;
+		var category = t.craftinfo[h].category;
+		var input = t.craftinfo[h].input;
+		var requirements = t.craftinfo[h].requirements.building;
+		var inputitems = t.craftinfo[h].inputItems;
+		var astone = t.craftinfo[h].astone[1];
+		var odds = t.craftinfo[h].odds;
+		
+		var ingredients = '';
+   	 	for (var i in inputitems) {
+      	 	if (i>0) {
+				span = '<span>';
+				if (parseInt(Seed.items['i'+i]) < inputitems[i]) span = '<span style="color:#f00">';
+				ingredients += span + unsafeWindow.itemlist['i'+i].name +' : '+inputitems[i]+'</span><br>';
+			}
+		}
+		if (ingredients != '') ingredients = '<b>Ingredients</b><br>' + ingredients;
 
-         }
+		unsafeWindow.jQuery('#'+elem.id).children("span").remove();
+		unsafeWindow.jQuery('#'+elem.id).append('<span class="crafttip"><b>Recipe Name</b><br>' +name+' ('+odds+')<br><b>Requirements</b><br>Spire Lv.'+requirements+'<br>Aetherstone : '+addCommas(astone)+'<br>'+ingredients + '</div>');
+	},
+	
+	getCityAether : function (i) {
+		var t = Tabs.AutoCraft;
+		cityID = 'city'+ Cities.cities[i].id;
+		cityaether = parseInt(Seed.resources[cityID]['rec5'][0]);
+		t.totaether = t.totaether+cityaether;
+		return cityaether;
+	},
+	
+	getCityCrafting : function (i) {
+		var t = Tabs.AutoCraft;
+		var now = unixTime();
+		var gotSpire = (getCityBuilding(Cities.cities[i].id,20).count != 0);
+		if (gotSpire) {
+			var str = '<span>Spire (Lv.'+getCityBuilding(Cities.cities[i].id,20).maxLevel+')</span><BR>';
+			var totTime = 0;
+			// the last item in the queue should be the item in progress
+			var len = Seed.queue_craft["city" + Cities.cities[i].id].length;
+			if ( len > 0) {
+				var q=Seed.queue_craft["city" + Cities.cities[i].id][len-1];
+				totTime = q.craftingEtaUnixTime - now;
+				if (totTime < 0) totTime = 0;
+			}	
+			if (totTime == 0) {	str += '<span>&nbsp;</span><BR><SPAN class=boldRed><B>Idle</b></span>'; t.cityCraft(i); }
+			else { str += '<span>'+t.getRecipeName(q.recipeId)+'</span><BR><span>'+timestr(totTime)+'</span>'; }	
+		}
+		else {
+			var str = '<SPAN class=boldRed><B>No Spire</b></span><br>';
+		}
+		return str;
+	},
 
-      }
-      str += _row ('<img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png>', rows[5], false, 0);
-      str +='<tr style="background: #e8e8e8" align=right><td><img height=20 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg title="Crafting"></b></td><td>&nbsp;</td>';
-      for(i=0; i<Cities.numCities; i++) {
-         var totTime = 0;
-         // the last item in the queue should be the item in progress
-         var len = Seed.queue_craft["city" + Cities.cities[i].id].length;
-         if ( len > 0) {
-            var q=Seed.queue_craft["city" + Cities.cities[i].id][len-1];
-            var totTime = 0;
-            totTime = q.craftingEtaUnixTime - now;
-            if (totTime < 0)
-               totTime = 0;
-            if (getCityBuilding(Cities.cities[i].id,20).count>0 && totTime == 0)
-               affuichage = '<SPAN class=boldRed><B>'+ timestr(totTime) +'</b></span>';
-            else
-               affuichage = timestr(totTime);
+	getCraftPercent : function (item) {
+		if (item) {
+			var succ = item[0];
+			var tot = item[1];
+			if (parseIntNan(tot) != 0) {
+				return parseInt((parseIntNan(succ)/parseIntNan(tot))*10000)/100+'%';
+			}
+			else { return "&nbsp;"; }
+		}
+		else {return "&nbsp;"; }
+	},
 
-            str +="<td><span onclick='Crafting("+Cities.cities[i].id+");'>"+ affuichage + "</span></td>";  
+	changeCraft : function (valueId, optionName, callOnChange){
+		var t = Tabs.AutoCraft;
+		var e = document.getElementById(valueId);
+		e.value = TrainOptions[optionName];
+		e.addEventListener ('change', eventHandler, false);
+		function eventHandler (){
+			TrainOptions[optionName] = this.value;
+			saveTrainOptions();
+			if (callOnChange)
+				callOnChange (this.value);
+		}
+	},
+	
+	updateStat: function() {
+		var t = Tabs.AutoCraft;
+		clearTimeout(t.timerStat);
+		t.craftLoop ++;
+		t.totaether = 0;
+		for(i=0; i<Cities.numCities; i++) {
+			document.getElementById("cityaether"+i).innerHTML = addCommas(t.getCityAether(i));  
+			document.getElementById("citycraft"+i).innerHTML = t.getCityCrafting(i);  
+		}
+		document.getElementById("totaether").innerHTML = addCommas(t.totaether);  
+		
+		t.timerStat = setTimeout(function() { t.updateStat(); }, 1000);
+	},
 
-         } else {
-            affuichage = timestr(totTime);
-            if (getCityBuilding(Cities.cities[i].id,20).count>0)
-               affuichage = '<SPAN class=boldRed><B>'+ timestr(totTime) +'</b></span>';
+	RefreshCraftNumbers : function() {
+		var t = Tabs.AutoCraft;
+		for(var h in t.craftinfo) {
+			var craftingstr = "";
+			var crafting = t.checkCraftQueues(h);
+			if (crafting != 0) craftingstr = " ("+crafting+")";
+			if (document.getElementById("Craft_nb_" +h)) document.getElementById("Craft_nb_"+h).value=parseInt(TrainOptions.CraftingNb[h]) ;
+			if (document.getElementById("Craft_stats_"+h)) document.getElementById("Craft_stats_"+h).innerHTML=t.getCraftPercent(TrainOptions.CraftingStats[h]);
+			if (document.getElementById("Craft_inv_"+h)) document.getElementById("Craft_inv_"+h).innerHTML=parseIntNan(Seed.items["i"+h])+craftingstr;
+		}
+		var cItems = document.getElementById('pbcraftingqueues').getElementsByClassName('craftdesc');
+		for (var i = 0; i < cItems.length; i++) { t.createToolTip(cItems[i]); }
+	},
 
-            str +="<td><span onclick='Crafting("+Cities.cities[i].id+");'>"+affuichage+"</span></td>";
-         }
-      }    
-      str +="</tr>";    
+	checkCraftQueues : function (h) {
+		var t = Tabs.AutoCraft;
+		var result = 0;
+		for (var i=0;i<Seed.cities.length;i++) {
+			var len = Seed.queue_craft["city" + Seed.cities[i][0]].length;
+			if (len>0) {
+				var q=Seed.queue_craft["city" + Seed.cities[i][0]][len-1];
+				if (parseInt(q.recipeId) == parseInt(t.craftinfo[h].recipe_id)) {result++;}
+			}	
+		}
+		return result;
+	},
+	
+	getRecipeName : function(recipeId) {
+		var name = "";
+		var t = Tabs.AutoCraft;
+		for(var h in t.craftinfo) {
+			if (parseInt(t.craftinfo[h].recipe_id) == parseInt(recipeId)) {
+				name = t.craftinfo[h].name;
+				break;
+			}	
+		}
+		return name;
+	},
+	
+	saveCraftState : function() {
+		var t = Tabs.AutoCraft;
+		TrainOptions.CraftingRunning =  t.crafting.running;
+		for(var h in t.craftinfo) {
+			if (document.getElementById("Craft_nb_" +h)) TrainOptions.CraftingNb[h] = document.getElementById("Craft_nb_"+h).value;
+			if (document.getElementById("Craft_nbfix_" +h)) TrainOptions.CraftingNbFix[h] = document.getElementById("Craft_nbfix_"+h).checked;
+		}
+		saveTrainOptions();
+		document.getElementById('pbCraftingDiv').style.background = '#99FF99';
+		setTimeout(function() {(document.getElementById('pbCraftingDiv').style.background = '');}, 1000);
+	},
+	
+	toggleStateRunning: function(obj){
+		var t = Tabs.AutoCraft;
+		obj = document.getElementById('pbCraftRunning');
+		if (t.crafting.running == true) {
+			t.crafting.running = false;
+			t.saveCraftState();
+			if (obj) obj.value = "Crafting = OFF";
+		}
+		else {
+			t.crafting.running = true;
+			t.saveCraftState();
+			if (obj) obj.value  = "Crafting = ON";
+		}
+		t.RefreshCraftNumbers();
+	},
+	
+	cityCraft: function(c) {
+		var t = Tabs.AutoCraft;
+		var cityId=Cities.cities[c].id;
 
-      document.getElementById("CraftStat").innerHTML=str;
-      t.timerStat = setTimeout(function() { t.updateStat(); }, 2000);
+		if  ((t.craftLoop % t.craftInterval) != 1) return; // only check every 5 loops
 
+		if(!TrainOptions.CraftingRunning) return; // crafting was turned off
+		if (TrainOptions.actr && !TrainOptions.actrbase && (Number(Seed.throne.activeSlot) != Number(TrainOptions.actrset))) return; // incorrect TR
+		if (!TrainOptions.CraftingCities[c+1]) return; // no autocraft in this city
+		if (getCityBuilding(cityId,20).count==0) return; // no spire in this city
+		if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<t.CraftMinAether) return;  // not enough a-stone
 
-   },
-   updateCraftnb : function() {
-      var t = Tabs.AutoCraft;
-      for(var h in t.craftinfo) {
-         if (document.getElementById("Craft_nb_" +h)) document.getElementById("Craft_nb_"+h).value=parseInt(TrainOptions.CraftingNb[h]) ;
-      }
-   },
-   saveCraftState : function() {
-      var t = Tabs.AutoCraft;
-      TrainOptions.CraftingRunning =  t.crafting.running;
-      for(var h in t.craftinfo) {
-         if (document.getElementById("Craft_nb_" +h)) TrainOptions.CraftingNb[h] = document.getElementById("Craft_nb_"+h).value;
-      }
-      saveTrainOptions();
-      document.getElementById('pbCraftingDiv').style.background = '#99FF99';
-      setTimeout(function() {(document.getElementById('pbCraftingDiv').style.background = '');}, 1000);
-   },
-   toggleStateRunning: function(obj){
-      var t = Tabs.AutoCraft;
-      obj = document.getElementById('pbCraftRunning');
-      if (t.crafting.running == true) {
-         t.crafting.running = false;
-         t.saveCraftState();
-         if (obj) obj.value = "Crafting = OFF";
-         clearInterval(t.timer);
-      }
-      else {
-         t.crafting.running = true;
-         t.saveCraftState();
-         if (obj) obj.value  = "Crafting = ON";
-              t.timer=setInterval(t.Start,parseInt(t.craftIntervall*60000));
-         t.Start();
-      }
-      t.updateCraftnb();
-   },
-   Start: function() {
-      var t = Tabs.AutoCraft;
-      if(!TrainOptions.CraftingRunning) {
-         // crafting was turned off
-         clearInterval(t.timer);
-         return;
-      }
+		var tableau = [];
+		for(var d in TrainOptions.CraftingNb) {
+			if ((!TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>0)) || (TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>parseIntNan(Seed.items["i"+d])+t.checkCraftQueues(d)))) {
+				if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
+					if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(getCityBuilding(cityId,20).maxLevel))
+						if(t.craftinfo[d].inputItems == "") { // "base items"
+							tableau.push (d);
+						} else {
+							if (!TrainOptions.actr || (Number(Seed.throne.activeSlot) == Number(TrainOptions.actrset))) { // if no TR restriction, or correct TR
+								for(var i in t.craftinfo[d].inputItems) {
+									if (parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
+										break;
+								}  
+								if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
+									tableau.push (d);
+							}		
+						}
+			}
+		}
+		if (tableau.length == 0) return ; // nothing to craft
 
-      if (t.numcity<Cities.numCities-1) {
-         t.numcity++;
-      } else {
-         t.numcity=-1;
-         // finished with all cities / end of loop
-         return;
-      }
-      var c=t.numcity;
-      var cityId=Cities.cities[c].id;
+		var itemId = tableau[Math.floor(Math.random()*tableau.length)];
+		var recipeId = t.craftinfo[itemId].recipe_id;
+		var category = t.craftinfo[itemId].category;
 
-      var ret=getCityBuilding(cityId,20).count;
-      if (ret==0) {
-         // no spire in this city
-         t.Start();
-         return;
-      }
-      if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<5000) {
-         // not enough a-stone
-         t.Start();
-         return;
-      }
-      var tableau = [];
-      for(var d in TrainOptions.CraftingNb) {
-         if (parseInt(TrainOptions.CraftingNb[d])>0) {
-            if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
-               if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(getCityBuilding(cityId,20).maxLevel))
-                  if(t.craftinfo[d].inputItems == "") {
-                     tableau.push (d);
-                  } else {
-                     for(var i in t.craftinfo[d].inputItems) {
-                        if(parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
-                           break;
-                     }  
-                     if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
-                        tableau.push (d);
-                  }
-         }
-      }
-      if (tableau.length == 0) {
-         // nothing to craft
-         t.Start();
-         return;
-      }
-      var itemId = tableau[Math.floor(Math.random()*tableau.length)];
-      var recipeId = t.craftinfo[itemId].recipe_id;
-      var category = t.craftinfo[itemId].category;
-      var que=Seed.queue_craft["city"+cityId];
+		unsafeWindow.jQuery('#craftcity'+c).css('color', 'red');
 
-      while (que.length >1)
-      {
-         que.splice(0,1);
-      }
-      if(que.length>0) {
-         var q=que[ que.length-1];
-         var totTime = 0;
-         var now = unixTime();
-         totTime = q.craftingEtaUnixTime - now;
-         if (totTime > -1) {
-            // item still crafting
-            t.Start();
-            return;
-         }
-         else
-         {
-            que.splice(0,1);
-         }
-      }
+		t.CraftAJAX(c, cityId, itemId, recipeId, category);
+	},
 
-      if (TrainOptions.actr) {
-         if (Number(Seed.throne.activeSlot) == Number(TrainOptions.actrset)) {
-            t.CraftingItem(cityId,  itemId, recipeId, category);
-         };
-      } else t.CraftingItem(cityId,  itemId, recipeId, category);
-   },
-   CraftingItem: function (currentcity, itemId, recipeId, category) {
+	CraftAJAX: function (c, currentcity, itemId, recipeId, category) {
+		var t = Tabs.AutoCraft;
+		// set up success stats if first time crafted this item..
+		if (!TrainOptions.CraftingStats[itemId]) {
+			TrainOptions.CraftingStats[itemId] = [0,0];	
+			saveTrainOptions();
+		}	
 
-      var t = Tabs.AutoCraft;
-      if (!isNaN(t.craftinfo[itemId].astone[1]))
-         Seed.resources['city'+currentcity].rec5[0]=parseInt(Seed.resources['city'+currentcity].rec5[0] - t.craftinfo[itemId].astone[1]);
-      else 
-         logit("NAN: " + t.craftinfo[itemId].astone[1]);
-      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-      params.action="craft";
-      params.ctrl="Crafting";
-      params.cityId=currentcity;
-      params.insurance=false;
-      params.itemId=itemId;
-      params.recipeId=recipeId;
-      params.categoryId=category;
-      new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, { method: "post", parameters: params,loading: true,
-         onSuccess: function (transport) {
-            var o=eval("("+transport.responseText+")");
-            if (o.updateSeed)
-               unsafeWindow.update_seed(o.updateSeed);
-            if(o.ok===true){
-               //alert(inspect(o));
-               if (o.status=="error") {
-                  // crafting error
-                  if (o.errorCode == 2)
-                     t.numcity--;
-                  t.retrycount++;
-                  if(t.retrycount > 4)
-                     return;
-                  t.Start();
-                  return;
-               } else if(o.status=="failure"){
-                  // craft failed
-                  setTimeout(function() {
-                     t.CraftingItem(currentcity,  itemId, recipeId);
-                  }, 5000);
-               } else if (o.status=="success"){
-                  // sucessful
-                  t.retrycount == 0;
-                  //actionLog ('<b>'+culang.auto+' '+culang.crafting+'</b>:  <span class=boldGreen>OK</span> #'+ (TrainOptions.CraftingNb[itemId] -1)+' ');
-                  TrainOptions.CraftingNb[itemId] =  TrainOptions.CraftingNb[itemId] -1;
-                  saveTrainOptions();
-                  t.updateCraftnb();
-                  if(!Seed.queue_craft["city"+currentcity]) {
-                     Seed.queue_craft["city"+currentcity]=[];
-                  }
-                  var n={};
-                  n.recipeId=recipeId;
-                  n.craftingUnixTime=o.time.startTime;
-                  n.craftingEtaUnixTime=o.time.endTime;
-                  n.craftingId=o.craftingId;
-                  n.categoryId=null;
-                  n.recipeIndex=null;
-                  unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
+		if (!isNaN(t.craftinfo[itemId].astone[1]))
+			Seed.resources['city'+currentcity].rec5[0]=parseInt(Seed.resources['city'+currentcity].rec5[0] - t.craftinfo[itemId].astone[1]);
+		else 
+			logit("NAN: " + t.craftinfo[itemId].astone[1]);
+			
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.action="craft";
+		params.ctrl="Crafting";
+		params.cityId=currentcity;
+		params.insurance=false;
+		params.itemId=itemId;
+		params.recipeId=recipeId;
+		params.categoryId=category;
+		new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, { method: "post", parameters: params,loading: true,
+			onSuccess: function (transport) {
+				var o=eval("("+transport.responseText+")");
+				if (o.updateSeed)
+					unsafeWindow.update_seed(o.updateSeed);
+				if(o.ok===true){
+					if (o.status=="error") { // crafting error
+						actionLog ('Crafting Error ('+o.errorCode+') in '+Cities.cities[c].name+' when attempting to craft '+unsafeWindow.itemlist["i"+itemId].name);
+						if (o.errorCode == 2) { // server busy?
+							t.retrycount++;
+							if (t.retrycount < 4) { t.cityCraft(c); } else {t.retrycount = 0; }
+						}	
+					} else if (o.status=="failure") { //craft failed
+						actionLog ('Crafting of '+unsafeWindow.itemlist["i"+itemId].name+' FAILED in '+Cities.cities[c].name);
+						t.retrycount = 0;
+						// increment total craft attempts
+						TrainOptions.CraftingStats[itemId][1] = TrainOptions.CraftingStats[itemId][1] + 1;
+						saveTrainOptions();
+					} else if (o.status=="success") { // craft successful
+						actionLog ('Successfully crafting '+unsafeWindow.itemlist["i"+itemId].name+' in '+Cities.cities[c].name);
+						t.retrycount = 0;
+						// increment total craft attempts and successful craft attempts
+						TrainOptions.CraftingStats[itemId][1] = TrainOptions.CraftingStats[itemId][1] + 1;
+						TrainOptions.CraftingStats[itemId][0] = TrainOptions.CraftingStats[itemId][0] + 1;
+						if (!TrainOptions.CraftingNbFix[itemId])
+							TrainOptions.CraftingNb[itemId] = TrainOptions.CraftingNb[itemId] -1;
+						saveTrainOptions();
+						if(!Seed.queue_craft["city"+currentcity]) { Seed.queue_craft["city"+currentcity]=[]; }
+						var n={};
+						n.recipeId=recipeId;
+						n.craftingUnixTime=o.time.startTime;
+						n.craftingEtaUnixTime=o.time.endTime;
+						n.craftingId=o.craftingId;
+						n.categoryId=null;
+						n.recipeIndex=null;
+						unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
+						// If this item started crafting in the city the player has open, rebuild the building tab
+						if (unsafeWindow.currentcityid == currentcity) {
+							// if the building tab is selected, rebuild it
+							if (unsafeWindow.jQuery("#queue_head_building").hasClass("sel") ) {
+								unsafeWindow.queue_changetab_building();
+							}
+						}
+					}
+				}
+				t.RefreshCraftNumbers();
+				unsafeWindow.jQuery('#craftcity'+c).css('color', 'rgb(66, 39, 20)')
+				return;
+			},
+			onFailure: function () { }
+		});
+	},
 
-                  // If this item started crafting in the city the player has open, rebuild the building tab
-                  if (unsafeWindow.currentcityid == currentcity) {
-                     // if the building tab is selected, rebuild it
-                     if (unsafeWindow.jQuery("#queue_head_building").hasClass("sel") )
-                     {
-                        unsafeWindow.queue_changetab_building();
-                     }
-                  }
-                  t.Start();
-               }
-            }
-         },
-         onFailure: function () {  t.Start();  }
-      });
-   },
-
-   show : function (){
-      var t = Tabs.AutoCraft;
-      clearTimeout(t.timerStat);
-      t.updateStat();
-   },
-   hide: function(){
-      var t = Tabs.AutoCraft;
-      clearTimeout(t.timerStat);
-   },
-   onUnload: function(){
-      var t = Tabs.AutoCraft;
-      t.saveCraftState();
-   },
+	show : function (){
+		var t = Tabs.AutoCraft;
+		t.updateStat();
+	},
+	hide: function(){
+		var t = Tabs.AutoCraft;
+	},
+	onUnload: function(){
+		var t = Tabs.AutoCraft;
+		t.saveCraftState();
+	},
 };
-
- 
   
  /*********************************  Barbing Tab - now the Dark Forest Tab ***********************************/
 Tabs.Barb = {
@@ -13154,6 +13331,13 @@ Tabs.AutoTrain = {
             return;
             };
         };
+
+
+
+
+
+
+
     t.city++;
     if(t.city > Seed.cities.length) t.city = 1;
     var cityId = Seed.cities[t.city-1][0];
@@ -13386,6 +13570,14 @@ var RefreshEvery  = {
 var FairieKiller  = {
   saveFunc : null,
   init : function (tf){
+
+
+
+
+
+
+
+
     if (firefoxVersion.substring(0,4) == '4.0b')  // bug in firefox 4.0b10 causes syntax error with: "var func = eval ('function (){}');"
       return;
     FairieKiller.saveFunc = unsafeWindow.Modal.showModalUEP;
@@ -22090,6 +22282,104 @@ function fetchPlayerInfo(uid, notify){
      },
    });
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
