@@ -10546,6 +10546,8 @@ Tabs.AutoCraft = {
 		}
 		if (tableau.length == 0) return ; // nothing to craft
 
+		t.craftLoop++;
+		
 		var itemId = tableau[Math.floor(Math.random()*tableau.length)];
 		var recipeId = t.craftinfo[itemId].recipe_id;
 		var category = t.craftinfo[itemId].category;
