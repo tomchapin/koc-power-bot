@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130924b
+// @version        20130926a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130924b';
+var Version = '20130926a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -203,6 +203,7 @@ var Options = {
   colorCityTabs: true,
   ThroneHUD: false,
   WWclick: false,
+  TreasureChest: false,
   loginReward: false,
   CrestRand: false,
   GESeverytenmin:0,
@@ -843,6 +844,7 @@ function pbStartup (){
   ChatPane.init();
   ChatStuff.init();
   DeleteReports.init();
+  TreasureChestClik.init();
   //DeleteThrone.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
@@ -970,6 +972,58 @@ function detafk () {
 
 /************** End Afk detector **************/
 
+var TreasureChestClik = {
+  clikTreasureChest : null,
+
+  init : function (){
+    t = TreasureChestClik;
+
+      t.clikTreasureChest = new CalterUwFunc ('pop_treasure_chest_modal', [[/if/im, 'treasure_chest_post_hook(a); return; if']]);
+      unsafeWindow.treasure_chest_post_hook = t.hook;
+      t.clikTreasureChest.setEnable(Options.TreasureChest);
+  },
+
+  setEnable : function (tf){
+	var t = TreasureChestClik;
+	t.clikTreasureChest.setEnable (tf);
+  },
+
+
+  isAvailable : function (){
+	var t = TreasureChestClik;
+	return t.clikTreasureChest.isAvailable();
+  },
+
+  hook : function (tid) {
+	actionLog('Treasure Chest found');
+	var mid = tid;
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);	
+	params.tid = tid;
+	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/postFriendVictoryTokenShare.php" + unsafeWindow.g_ajaxsuffix, {
+		method: "post",
+		parameters: params,
+		onSuccess: function (transport) {
+			var rslt = eval("(" + transport.responseText + ")");
+			if (rslt.ok) {
+				var reparr = new Array();
+				for (k in Seed.queue_atkp) {
+					if (Seed.queue_atkp[k]['m'+mid]) city = k;
+				}
+				var tileName = (Seed.queue_atkp[city]["m" + mid].toTileType == 51) ? "Barbarian Camp" : unsafeWindow.g_mapObject.types[parseInt(Seed.queue_atkp[city]["m" + mid].toTileType)];
+				reparr.push(["REPLACE_TiLeNaMe", tileName]);
+				reparr.push(["REPLACE_fEeDiD", rslt.feedId]);
+				reparr.push(["REPLACE_tOkEnId", rslt.tokenId]);
+				unsafeWindow.common_postToProfile("118", reparr);
+			} else {
+				actionLog('treasure chest error: ' +rslt.error_code+ ',' +rslt.msg+ ',' +rslt.feedback)
+			}
+		},
+		onFailure: function () {
+		},
+	});
+  },
+
+}
 
 /************************ Food Alerts *************************/
 var FoodAlerts = {
@@ -10618,7 +10672,7 @@ Tabs.Barb = {
      y +='<TR><TD>Max search distance: </td><td><INPUT id=pbmaxdist type=text size=4 maxlength=3 value='+ AttackOptions.MaxDistance +' \></td></tr>';
      y +='<TR><TD>Keep rallypoint slot(s) free: </td><Td><INPUT id=rallyclip type=text size=3 maxlength=2 value="'+AttackOptions.RallyClip+'" \> </td></tr>';
      y +='<TR><TD><INPUT id=pbreset type=checkbox '+(AttackOptions.UpdateEnabled?'CHECKED':'')+'\> Reset search every </td><td><INPUT id=pbresetint type=text size=4 maxlength=3 value='+AttackOptions.UpdateInterval+' \>minutes</td></tr>';
-     y +='<TR><TD> Skip city after </td><td><INPUT id=barbstopsearch type=text size=3 value='+AttackOptions.stopsearch+' \> tries.</td></tr>';
+     y +='<TR><TD> Skip city search after </td><td><INPUT id=barbstopsearch type=text size=3 value='+AttackOptions.stopsearch+' \> tries.</td></tr>';
      y +='<TR><TD>Method : </td><Td> '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
      y +='<TR><TD>Knight priority : </td><td>'+htmlSelector({0:'Lowest combat skill', 1:'Highest combat skill'}, AttackOptions.knightselector, 'id=barbknight')+'</td></tr>';
      y +='<tr><td>Minimum knight Combat level to send: </td><td><input id=barbMinKnight type=text size=3 value='+AttackOptions.barbMinKnight+' \></td></tr>';
@@ -11305,6 +11359,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbFarmBut type=checkbox '+ (Options.Farmbtns?'CHECKED ':'') +'/></td><TD>'+translate("Farm toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbThroneHUDBut type=checkbox '+ (Options.ThroneHUD?'CHECKED ':'') +'/></td><TD>'+translate("Throne HUD")+'</td></tr>\
         <TR><TD><INPUT id=pbWWclick type=checkbox '+ (Options.WWclick?'CHECKED ':'') +'/></td><TD>'+translate("Hit OK on multiple window warning popup which causes refresh")+'</td></tr>\
+        <TR><TD><INPUT id=pbTreasureChest type=checkbox '+ (Options.TreasureChest?'CHECKED ':'') +'/></td><TD>'+translate("Auto click Treasure Chest finds - Use with Auto publish FB posts")+'</td></tr>\
         <TR><TD><INPUT id=pbloginReward type=checkbox '+ (Options.loginReward?'CHECKED ':'') +'/></td><TD>'+translate("Auto click/accept daily login reward")+'</td></tr>\
 		<TR><TD><INPUT id=pbdetafk type=checkbox '+ (Options.detAFK?'CHECKED ':'')+ '/></td><TD> Do AFK events</td></tr>';
         
@@ -11438,6 +11493,7 @@ Tabs.Options = {
       t.togOpt ('pbFarmBut', 'Farmbtns');
       t.togOpt ('pbThroneHUDBut', 'ThroneHUD');
       t.togOpt ('pbWWclick', 'WWclick');
+      t.togOpt ('pbTreasureChest', 'TreasureChest', TreasureChestClik.setEnable, TreasureChestClik.isAvailable);
       t.togOpt ('pbloginReward', 'loginReward');
       t.togOpt ('pbdetafk', 'detAFK');
       t.changeOpt ('pbwhichcity', 'smain');
