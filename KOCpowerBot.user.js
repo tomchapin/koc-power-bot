@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130929a
+// @version        20130929b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130929a';
+var Version = '20130929b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2601,6 +2601,7 @@ FillEquipCheckboxes: function(){
 doPreset : function (room, retry) {
         var t = Tabs.Throne;    
         actionLog('changing to tr '+room);
+	var div;
    if(isNaN(retry))retry=0;
    if(retry > 15) {if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Giving Up</font>";return;};
    /***
@@ -2624,9 +2625,9 @@ doPreset : function (room, retry) {
 			if(document.getElementById('tra'+params.presetId)) {
 				for(a = 1;a <= Seed.throne.slotNum;a++)
 				document.getElementById('tra'+a).disabled = false;
-               document.getElementById('tra'+params.presetId).disabled = true;
+               			document.getElementById('tra'+params.presetId).disabled = true;
 			};
-			 if(document.getElementById('ThroneHUD')) {
+			if(document.getElementById('ThroneHUD')) {
 				for(a = 1;a <= Seed.throne.slotNum;a++) {
 				document.getElementById('htra'+a).disabled = false;
 				document.getElementById('htra'+a).className = "pbttabs";
@@ -2634,20 +2635,30 @@ doPreset : function (room, retry) {
 				document.getElementById('htra'+params.presetId).disabled = true;
 				document.getElementById('htra'+params.presetId).className = "pbttabsdis";
 			};
-               t.TTpaint(params.presetId);
-               if(document.getElementById('throneInventoryPreset'+params.presetId))
-                  button = document.getElementById('throneInventoryPreset'+params.presetId);
-               else
-                  button = '<li id="throneInventoryPreset' + params.presetId + '" class="selected">'+params.presetId+'</li>';
-               unsafeWindow.cm.ThroneView.clickActivePreset(button);
-                }
+               		t.TTpaint(params.presetId);
+               		if(document.getElementById('throneInventoryPreset'+params.presetId))
+               		   button = document.getElementById('throneInventoryPreset'+params.presetId);
+               		else
+               		   button = '<li id="throneInventoryPreset' + params.presetId + '" class="selected">'+params.presetId+'</li>';
+               		   unsafeWindow.cm.ThroneView.clickActivePreset(button);
+                	}
                 else {
                     if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
+		    else {
+		      div = document.createElement('div');
+		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change throne room..Trying Again<BR></div>';
+		      document.body.insertBefore (div, document.body.firstChild);
+		    }
                     setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
                 }
             },
             onFailure: function () {
                     if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
+		    else {
+		      div = document.createElement('div');
+		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change throne room..Trying Again<BR></div>';
+		      document.body.insertBefore (div, document.body.firstChild);
+		    }
                setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
             },
         });
