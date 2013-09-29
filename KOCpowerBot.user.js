@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20130928a
+// @version        20130929a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130928a';
+var Version = '20130929a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -80,7 +80,6 @@ unsafeWindow.arthurCheck = function (a) {
 	logit('arthurCheck intercepted');
 	return;
 };
-
 
 
 var isAFK = false;
@@ -2811,7 +2810,7 @@ PaintSalvageHistory : function() {
                     ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
                     ThroneOptions.Items[k]["qualityto"] = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
                      ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
-                    if (ThroneOptions.Items[k]["qualityto"]>5 && !firstRun) {ThroneOptions.Items.splice (k,1);if(document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then quality 5!</font>";return;}
+                    if (ThroneOptions.Items[k]["qualityto"]>6 && !firstRun) {ThroneOptions.Items.splice (k,1);if(document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then quality 6!</font>";return;}
                 }
                 if (ThroneOptions.Items[k]["action"] == "Enhance") var lvl = parseInt(ThroneOptions.Items[k]["qualityfrom"]) +1;
                 if (ThroneOptions.Items[k]["action"] == "Upgrade") var lvl = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
@@ -16107,7 +16106,7 @@ function strButton20 (label, tags){
 function reloadKOC (){
   var serverId = getServerId();
   var goto = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+serverId;
-  if(document.URL.match(/standalone=1/i)){
+  if(document.URL.match(/standalone=1/i) || document.URL.match(/kingdomsofcamelot.com/i)){
     goto = window.location.protocol+'//www.kabam.com/games/kingdoms-of-camelot/play?s='+serverId;
   };
   var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ serverId +'"</form>';
