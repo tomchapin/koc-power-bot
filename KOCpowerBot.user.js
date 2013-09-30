@@ -82,7 +82,6 @@ unsafeWindow.arthurCheck = function (a) {
 };
 
 
-
 var isAFK = false;
 
 var upgradeData = {
@@ -212,7 +211,6 @@ var Options = {
   GESeveryhour:0,
   GESeveryday:0,
   detAFK: true,
-
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -7738,7 +7736,6 @@ Tabs.transport = {
         m += '<TD colspan=4>' + translate("Check transport every:") + ' <INPUT id=pbtransportinterval type=text size=2 value="' + Options.transportinterval + '"\> ' + translate("minutes") + '</td></tr></table>';
         m += '<TD colspan=4>' + translate("Do not send transport out if less than") + ' <INPUT id=pbminwagons type=text size=8 value="' + Options.minwagons + '"\> ' + translate("troops are needed. (Needless transports are skipped this way)") + '</td></tr></table>';
         m += '<DIV style="margin-top:10px;margin-bottom:5px;">' + translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...") + '</div></table>';
-
         m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRANSPORTS") + '</div>';
         m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
         m += '<TR align="left"><TD>' + translate("From City:") + '</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
@@ -7761,7 +7758,6 @@ Tabs.transport = {
         m += '<TD id=HaveRec1 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
         m += '<TD width=180px  align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountFood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7770,7 +7766,6 @@ Tabs.transport = {
         m += '<TD id=HaveRec2 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountWood type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7779,7 +7774,6 @@ Tabs.transport = {
         m += '<TD id=HaveRec3 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountStone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7788,7 +7782,6 @@ Tabs.transport = {
         m += '<TD id=HaveRec4 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountOre type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7797,7 +7790,6 @@ Tabs.transport = {
         m += '<TD id=HaveRec5 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountAstone type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
@@ -7806,7 +7798,6 @@ Tabs.transport = {
         m += '<TD id=HaveGold align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
         m += '<TD width=180px align=left>' + translate("Keep:") + ' <INPUT id=pbtargetamountGold type=text size=11 maxlength=20 value="0" disabled=true\></td>';
-
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountGold type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxGold type=submit value="Max"></td></tr>';
         m += '</table>';
@@ -7991,42 +7982,6 @@ Tabs.transport = {
                 .value)) document.getElementById('pbtargetamountGold')
                 .value = 0;
         }, false);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         document.getElementById('pbtradeamountFood')
             .addEventListener('change', function () {
             if (isNaNCommas(document.getElementById('pbtradeamountFood')
@@ -8339,18 +8294,6 @@ Tabs.transport = {
             .value);
         var target_Gold = parseIntCommas(document.getElementById('pbtargetamountGold')
             .value);
-
-
-
-
-
-
-
-
-
-
-
-
         var trade_Food = parseIntCommas(document.getElementById('pbtradeamountFood')
             .value);
         var trade_Wood = parseIntCommas(document.getElementById('pbtradeamountWood')
@@ -8377,27 +8320,21 @@ Tabs.transport = {
                 city: city,
                 ship_Food: ship_Food,
                 target_Food: target_Food,
-
                 trade_Food: trade_Food,
                 ship_Wood: ship_Wood,
                 target_Wood: target_Wood,
-
                 trade_Wood: trade_Wood,
                 ship_Stone: ship_Stone,
                 target_Stone: target_Stone,
-
                 trade_Stone: trade_Stone,
                 ship_Ore: ship_Ore,
                 target_Ore: target_Ore,
-
                 trade_Ore: trade_Ore,
                 ship_Astone: ship_Astone,
                 target_Astone: target_Astone,
-
                 trade_Astone: trade_Astone,
                 ship_Gold: ship_Gold,
                 target_Gold: target_Gold,
-
                 trade_Gold: trade_Gold,
                 target_x: target_x,
                 target_y: target_y,
@@ -8488,7 +8425,6 @@ Tabs.transport = {
             n += '<TR><TD width=50px align=center><img alt="' + icon + '" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/' + icon + '_30.png"></td>';
             n += '<TD width=50px align=center><INPUT id=pbbship' + icon + ' type=checkbox></td>';
             n += '<TD width=125px>' + translate("Keep:") + ' <INPUT id=pbbtargetamount' + icon + ' type=text size=11 maxlength=11 value="0"></td>';
-
             n += '<TD width=125px>' + translate("Trade:") + ' <INPUT id=pbbtradeamount' + icon + ' type=text size=11 maxlength=11 value="0"\></td></tr>';
         }
         n += '</table><BR><TABLE id=editRoutes class=pbTab><TR><TD><a class="button20" id="Cancel"><span>' + translate("Cancel") + '</span></a></td>';
@@ -8526,18 +8462,6 @@ Tabs.transport = {
             .value = r[queueId].target_Astone;
         document.getElementById('pbbtargetamountgold')
             .value = r[queueId].target_Gold;
-
-
-
-
-
-
-
-
-
-
-
-
         document.getElementById('pbbtradeamountfood')
             .value = r[queueId].trade_Food;
         document.getElementById('pbbtradeamountwood')
@@ -8584,18 +8508,6 @@ Tabs.transport = {
                 .value);
             r[queueId].target_Gold = parseIntCommas(document.getElementById('pbbtargetamountgold')
                 .value);
-
-
-
-
-
-
-
-
-
-
-
-
             r[queueId].trade_Food = parseIntCommas(document.getElementById('pbbtradeamountfood')
                 .value);
             r[queueId].trade_Wood = parseIntCommas(document.getElementById('pbbtradeamountwood')
@@ -8676,7 +8588,6 @@ Tabs.transport = {
     if(!t.traderState.running) return;
     if(t.tradeRoutes.length==0) return;
     t.doTrades(t.count);
-
     t.count++;
     if(t.count < t.tradeRoutes.length){
               t.checkdotradetimeout = setTimeout(function() { t.checkdoTrades();}, 5000);
@@ -8707,7 +8618,6 @@ Tabs.transport = {
         var wagons_needed=0;
         var citymax = 0;
 
-
         var city = t.tradeRoutes[count]["city"];
         var cityID = 'city' + city;
         if(!Cities.byID[city]) return;
@@ -8715,22 +8625,6 @@ Tabs.transport = {
 
         var xcoord = t.tradeRoutes[count]["target_x"];
         var ycoord = t.tradeRoutes[count]["target_y"];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         var trade_Food = t.tradeRoutes[count]["trade_Food"];
@@ -8745,12 +8639,6 @@ Tabs.transport = {
         var target_Ore = t.tradeRoutes[count]["target_Ore"];
         var target_Astone = t.tradeRoutes[count]["target_Astone"];
         var target_Gold = t.tradeRoutes[count]["target_Gold"];
-
-
-
-
-
-
         var ship_Food = t.tradeRoutes[count]["ship_Food"];
         var ship_Wood = t.tradeRoutes[count]["ship_Wood"];
         var ship_Stone = t.tradeRoutes[count]["ship_Stone"];
@@ -8764,7 +8652,6 @@ Tabs.transport = {
         var citymax_Astone = parseIntNan(Seed.resources[cityID]['rec5'][0]);
         var citymax_Gold = parseIntNan(Seed.citystats[cityID]['gold']);
 
-
         var carry_Food = parseIntNan(citymax_Food - target_Food);
         var carry_Wood = parseIntNan(citymax_Wood - target_Wood);
         var carry_Stone = parseIntNan(citymax_Stone - target_Stone);
@@ -8772,29 +8659,17 @@ Tabs.transport = {
         var carry_Astone = parseIntNan(citymax_Astone - target_Astone);
         var carry_Gold = 0;
 
-
-
-
-
-
-
-
-
-
-
         if (carry_Food < 0 || ship_Food == false) carry_Food = 0;
         if (carry_Wood < 0 || ship_Wood == false) carry_Wood = 0;
         if (carry_Stone < 0 || ship_Stone == false) carry_Stone = 0;
         if (carry_Ore < 0 || ship_Ore == false) carry_Ore = 0;
         if (carry_Astone < 0 || ship_Astone == false) carry_Astone = 0;
 
-
         if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseIntNan(trade_Food);
         if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseIntNan(trade_Wood);
         if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseIntNan(trade_Stone);
         if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseIntNan(trade_Ore);
         if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
-
         carry_Astone *= 5; //Multiply by 5 to account for 5 times less carrying capacity
       
       if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]);
@@ -8911,21 +8786,12 @@ Tabs.transport = {
             carry_Astone = shift_Astone;
         }
         if (maxload > (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone) && ship_Gold == true) {
-
             if ((maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (citymax_Gold - target_Gold)) {
                 carry_Gold = (citymax_Gold - target_Gold);
                 if (carry_Gold < 0) carry_Gold = 0;
             } else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
             if (trade_Gold > 0 && (carry_Gold > trade_Gold)) carry_Gold = parseInt(trade_Gold);
         }
-
-
-
-
-
-
-
-
 
         wagons_needed = ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon);
         wagons_needed = wagons_needed.toFixed(0);
@@ -8972,16 +8838,9 @@ Tabs.transport = {
                  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
-
                  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
-
-
                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
                  var ut = unsafeWindow.unixtime();
-
-
-
-
 
             var unitsarr = [];
             for (j in unsafeWindow.unitcost)
@@ -9008,14 +8867,10 @@ Tabs.transport = {
                         setTimeout (function(){t.doTrades(count,rslt.tt);}, wait*1000);
                         return;
                  };
-
                   actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
-
-
                   }
                   },
                   onFailure: function () {profiler.stop();}
-
           });
         }
     },
@@ -10270,11 +10125,11 @@ Tabs.AutoCraft = {
 	myDiv: null,
 	timerStat: null,
 	crafting: [],
+	citydelay: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
 	craftLoop : 0,
 	craftInterval  : 5, // seconds
 	craftMinAether : 50000,
 	craftinfo : {},
-	retrycount : 0,
 	totaether : 0,
 
 	init: function(div){
@@ -10293,7 +10148,8 @@ Tabs.AutoCraft = {
 				<div class="pbStat" id=pbCraftingDiv>OPTIONS</div>';
 
 		m += '<table width="100%" height="0%" class="pbTab">';
-		m += '<tr><td><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when throne room set <INPUT id=pbacTRset type=text size=2 maxlength=2 value="'+ TrainOptions.actrset +'">  is equiped&nbsp;&nbsp;&nbsp;(ignore for "base" crafts&nbsp;<INPUT id=pbacTRbase type=checkbox '+(TrainOptions.actrbase?'CHECKED':'')+'>)</td><td align=right>Minimum Aetherstone: <input type=text value="'+TrainOptions.CraftMinAether+'" size=4  maxlength=6 id=pbCraftMinAether>&nbsp;&nbsp;</td></tr>';
+		m += '<tr><td><INPUT id=pbacTR type=checkbox '+(TrainOptions.actr?'CHECKED':'')+'> Only craft when crafting speed is at least <INPUT id=pbacTRset type=text size=3 maxlength=4 value="'+ TrainOptions.actrset +'">%</td><td align=right>Minimum Aetherstone: <input type=text value="'+TrainOptions.CraftMinAether+'" size=4  maxlength=6 id=pbCraftMinAether>&nbsp;&nbsp;</td></tr>';
+		m += '<tr><td><INPUT id=pbacTRbase type=checkbox '+(TrainOptions.actrbase?'CHECKED':'')+'> Ignore above setting for basic crafts (e.g. Bloodstones)</td><td align=right>Current Crafting Speed:&nbsp;<span id=currcs></span>&nbsp;&nbsp;</td></tr>';
 		m += '</table>';
 		m += '<DIV id=pbCraftingStats class=pbStat>CITIES</div><span id="CraftStat"></span>';
 		m += '<DIV id=pbCraftingList class=pbStat>RECIPE LIST</div><TABLE id=pbcraftingqueues width=100% height=0% class=pbTabLined><TR>';
@@ -10361,7 +10217,7 @@ Tabs.AutoCraft = {
 		str +='<tr style="background: #e8e8e8" align=right><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png title="Aether"></td>';
 		t.totaether = 0;
 		for(i=0; i<Cities.numCities; i++) {
-			str +="<td align=center id=cityaether"+i+">"+ addCommas(t.getCityAether(i)) + "</td>";  
+			str +="<td align=center id=cityaether"+i+">"+t.getCityAether(i)+"</td>";  
 		}
 		str +="<td align=center id=totaether>"+ addCommas(t.totaether) + "</td>";  
 		str +='<tr style="background: #e8e8e8" align=right><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg title="Crafting"></td>';
@@ -10384,9 +10240,9 @@ Tabs.AutoCraft = {
 		document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
 		document.getElementById("pbCraftRunning").addEventListener ('click', function (){t.toggleStateRunning(this)}, false);     
 		t.changeCraft ('pbCraftMinAether', 'CraftMinAether')
-		document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;saveTrainOptions();}, false);
-		document.getElementById('pbacTRbase').addEventListener ('change', function() {TrainOptions.actrbase = this.checked;saveTrainOptions();}, false);
-		document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;saveTrainOptions();}, false);
+		document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;saveCraftState();}, false);
+		document.getElementById('pbacTRbase').addEventListener ('change', function() {TrainOptions.actrbase = this.checked;saveCraftState();}, false);
+		document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;saveCraftState();}, false);
 		var cItems = document.getElementById('pbcraftingqueues').getElementsByTagName('input');
 		for (var i = 0; i < cItems.length; i++) {
 			cItems[i].addEventListener('change', function(){t.saveCraftState()}, false);
@@ -10428,7 +10284,9 @@ Tabs.AutoCraft = {
 		cityID = 'city'+ Cities.cities[i].id;
 		cityaether = parseInt(Seed.resources[cityID]['rec5'][0]);
 		t.totaether = t.totaether+cityaether;
-		return cityaether;
+		var span = '<span>';
+		if (cityaether < TrainOptions.CraftMinAether) span = '<span style="color:#f00">';
+		return span+addCommas(cityaether)+'</span>';
 	},
 	
 	getCityCrafting : function (i) {
@@ -10445,8 +10303,12 @@ Tabs.AutoCraft = {
 				totTime = q.craftingEtaUnixTime - now;
 				if (totTime < 0) totTime = 0;
 			}	
-			if (totTime == 0) {	str += '<span>&nbsp;</span><BR><SPAN class=boldRed><B>Idle</b></span>'; t.cityCraft(i); }
-			else { str += '<span>'+t.getRecipeName(q.recipeId)+'</span><BR><span>'+timestr(totTime)+'</span>'; }	
+			if (totTime > 0) {	str += '<span>'+t.getRecipeName(q.recipeId)+'</span><BR><span>'+timestr(totTime)+'</span>'; }
+			else {  	
+				if (t.citydelay[i+1] > 0) { str += '<span>&nbsp;</span><BR><SPAN class=boldRed><B>Busy!</b></span>'; }
+				else { str += '<span>&nbsp;</span><BR><SPAN class=boldRed><B>Idle</b></span>'; }
+				t.cityCraft(i); 
+			}
 		}
 		else {
 			var str = '<SPAN class=boldRed><B>No Spire</b></span><br>';
@@ -10485,10 +10347,16 @@ Tabs.AutoCraft = {
 		t.craftLoop ++;
 		t.totaether = 0;
 		for(i=0; i<Cities.numCities; i++) {
-			document.getElementById("cityaether"+i).innerHTML = addCommas(t.getCityAether(i));  
+			document.getElementById("cityaether"+i).innerHTML = t.getCityAether(i);  
 			document.getElementById("citycraft"+i).innerHTML = t.getCityCrafting(i);  
 		}
 		document.getElementById("totaether").innerHTML = addCommas(t.totaether);  
+		var cs = Math.floor(equippedthronestats(81));
+		document.getElementById("currcs").innerHTML = cs+'%';
+		if (TrainOptions.actr && (cs < Number(TrainOptions.actrset)))
+			unsafeWindow.jQuery('#currcs').css('color', 'red');
+		else	
+			unsafeWindow.jQuery('#currcs').css('color', 'black');
 		
 		t.timerStat = setTimeout(function() { t.updateStat(); }, 1000);
 	},
@@ -10566,9 +10434,12 @@ Tabs.AutoCraft = {
 
 		if  ((t.craftLoop % t.craftInterval) != 1) return; // only check every 5 loops
 
+		var cs = Math.floor(equippedthronestats(81));
+		
 		if(!TrainOptions.CraftingRunning) return; // crafting was turned off
-		if (TrainOptions.actr && !TrainOptions.actrbase && (Number(Seed.throne.activeSlot) != Number(TrainOptions.actrset))) return; // incorrect TR
+		if (TrainOptions.actr && !TrainOptions.actrbase && (cs < Number(TrainOptions.actrset))) return; // not enough crafting speed
 		if (!TrainOptions.CraftingCities[c+1]) return; // no autocraft in this city
+		if (t.citydelay[c+1] > 0) { t.citydelay[c+1]--; return; } // city being delayed due to error, reduce delay number and skip city
 		if (getCityBuilding(cityId,20).count==0) return; // no spire in this city
 		if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<t.CraftMinAether) return;  // not enough a-stone
 
@@ -10580,7 +10451,7 @@ Tabs.AutoCraft = {
 						if(t.craftinfo[d].inputItems == "") { // "base items"
 							tableau.push (d);
 						} else {
-							if (!TrainOptions.actr || (Number(Seed.throne.activeSlot) == Number(TrainOptions.actrset))) { // if no TR restriction, or correct TR
+							if (!TrainOptions.actr || (Number(cs) >= Number(TrainOptions.actrset))) { // if no craft speed restriction or enough crafting speed
 								for(var i in t.craftinfo[d].inputItems) {
 									if (parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
 										break;
@@ -10633,19 +10504,19 @@ Tabs.AutoCraft = {
 				if(o.ok===true){
 					if (o.status=="error") { // crafting error
 						actionLog ('Crafting Error ('+o.errorCode+') in '+Cities.cities[c].name+' when attempting to craft '+unsafeWindow.itemlist["i"+itemId].name);
-						if (o.errorCode == 2) { // server busy?
-							t.retrycount++;
-							if (t.retrycount < 4) { t.cityCraft(c); } else {t.retrycount = 0; }
+						if (o.errorCode == 2) { // server busy? delay 2 loops
+							t.citydelay[c+1] = 2;
+						}	
+						if (o.errorCode == 6) { // city already crafting? delay 10 loops
+							t.citydelay[c+1] = 10;
 						}	
 					} else if (o.status=="failure") { //craft failed
 						actionLog ('Crafting of '+unsafeWindow.itemlist["i"+itemId].name+' FAILED in '+Cities.cities[c].name);
-						t.retrycount = 0;
 						// increment total craft attempts
 						TrainOptions.CraftingStats[itemId][1] = TrainOptions.CraftingStats[itemId][1] + 1;
 						saveTrainOptions();
 					} else if (o.status=="success") { // craft successful
 						actionLog ('Successfully crafting '+unsafeWindow.itemlist["i"+itemId].name+' in '+Cities.cities[c].name);
-						t.retrycount = 0;
 						// increment total craft attempts and successful craft attempts
 						TrainOptions.CraftingStats[itemId][1] = TrainOptions.CraftingStats[itemId][1] + 1;
 						TrainOptions.CraftingStats[itemId][0] = TrainOptions.CraftingStats[itemId][0] + 1;
@@ -13382,11 +13253,6 @@ Tabs.AutoTrain = {
         };
 
 
-
-
-
-
-
     t.city++;
     if(t.city > Seed.cities.length) t.city = 1;
     var cityId = Seed.cities[t.city-1][0];
@@ -13619,12 +13485,6 @@ var RefreshEvery  = {
 var FairieKiller  = {
   saveFunc : null,
   init : function (tf){
-
-
-
-
-
-
 
 
     if (firefoxVersion.substring(0,4) == '4.0b')  // bug in firefox 4.0b10 causes syntax error with: "var func = eval ('function (){}');"
