@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130930a
+// @version        20130930b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130930a';
+var Version = '20130930b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -357,24 +357,25 @@ var TrainOptions = {
   AsMax        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
 };
 var FarmOptions = {
-   RallyClip: 0,
+	RallyClip: 0,
     Running: false,
-    MinMight: 0,
-    MaxMight: 999999999,
-    Interval: 0,
-    SendInterval: 10,
+    MinMight: 30000000,
+    MaxMight: 75000000,
+    Interval: 1,
+    SendInterval: 14,
     MaxDistance: 20,
-    Inactive:30,
-   DeleteReports:false,
-   Troops: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,10: 0,11: 0,12: 0},
-   FarmNumber: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0},
+    Inactive:25,
+	MinFarmRes:12,
+	DeleteReports:true,
+	Troops: {1: 0,2: 20000,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,10: 0,11: 0,12: 0},
+	FarmNumber: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0},
     CityEnable: {1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true},
-    CityLevel: {0: true,1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true,9: true,10: true,11: true,12: true},
+    CityLevel: {0: false,1: false,2: false,3: false,4: false,5: false,6: false,7: false,8: true,9: true,10: true,11: true,12: true},
     Diplomacy: {friendly: true,hostile: true,friendlyToThem: true,friendlyToYou: true,neutral:true,unallied:true},
     FarmMarches: [],
     farmMarches: {},
     Attacks:0,
-   Checks:0,
+	Checks:0,
 };
 var ThroneOptions = {
     Active:false,
@@ -1074,10 +1075,10 @@ var FoodAlerts = {
   },
 }
 
-/*********************************  Farm Tab ***********************************/
+/*********************************  Farm Tab ****************autofarm*******************/
 
 Tabs.farm = {
-  tabLabel: unsafeWindow.g_js_strings.grove.farms,
+  tabLabel: 'Farm',
   tabOrder : 612,
   myDiv : null,
   MapAjax : new CMapAjax(),
@@ -1103,7 +1104,7 @@ Tabs.farm = {
   city:0,
   deleting:false,
   DipArray: ["friendly","hostile","friendlyToThem","friendlyToYou","neutral","unallied"],
-  interval: ["Continuously","1 Hour","2 Hours","3 Hours","6 Hours","12 Hours","24 Hours"],
+  interval: ["Continuously","1 Hour","2 Hours","3 Hours","6 Hours","12 Hours","24 Hours","29 Hours","36 Hours","2 Days","4 Days"],
     
   init : function (div){
     var t = Tabs.farm;
@@ -1145,15 +1146,31 @@ Tabs.farm = {
 
     m += '<DIV id=pbTraderDivD class=pbStat>FARMING OPTIONS</div>';
     m += '<TABLE id=pbfarmstats width=90% height=0% class=pbTab>';
-    m += '<TR><TD width=180>Keep rallypoint slot(s) free: </td><TD><INPUT id=FarmRallyClip type=text size=2 maxlength=2 value=' + FarmOptions.RallyClip +'></td></tr>';
-    m += '<TR><TD>Farm Interval</td><TD><SELECT id=FarmInterval type=list></td></tr>';
-    m += '<TR><TD>Delete reports:</td><TD><INPUT id=FarmReports type=checkbox '+(FarmOptions.DeleteReports?'CHECKED':'')+'></td><tr>';
-    m += '<TR><TD>Search distance:</td><TD><INPUT type=text id=FarmRadius size=3 maxlength=3 value='+ FarmOptions.MaxDistance +'><INPUT id=FarmSearch type=submit value="Search again"></td><tr>';
+    m += '<TR><TD width=90>Keep rallypoint slot(s) free: </td><TD><INPUT id=FarmRallyClip type=text size=2 maxlength=2 value=' + FarmOptions.RallyClip +' >';
+    m += '  Attacks interval:<INPUT id=FarmAttacksInterval type=text size=2 maxlength=2 value=' + FarmOptions.SendInterval +' sec.></td>';
+	
+    m += '<TD>Farm Interval:<SELECT id=FarmInterval type=list>';
+    m += '  <INPUT id=FarmReports type=checkbox '+(FarmOptions.DeleteReports?'CHECKED':'')+'> - Delete reports</td></tr>';
+
+    m += '<TR><TD>Search distance:</td><TD><INPUT type=text id=FarmRadius size=3 maxlength=3 value='+ FarmOptions.MaxDistance +'>'; 
+	m += '<INPUT id=FarmSearch type=submit value="Search ALL again" style="background-color:#DEDEDE;color:#fff">';
+	m +='</td>';
+	m +='<TD><INPUT id=pbcompactFarms1 type=submit value="Remove NOT Farms"></td>'
+	m +='</tr>';
     m += '<TR><TD>Might:</td>';
     m += '<TD width=50>Min.:<INPUT type=text id=FarmMinMight size=8 maxlength=8 value='+ FarmOptions.MinMight +'></td>';
     m += '<TD>Max.:<INPUT type=text id=FarmMaxMight size=9 maxlength=9 value='+ FarmOptions.MaxMight +'></td></tr>';
     m += '<TR><TD>Farm if inactive for more then: </td>';
-    m += '<TD><INPUT type=text id=FarmInactive size=3 value='+ FarmOptions.Inactive +'> days (checked every 6 hours)</td></table>';
+    m += '<TD><INPUT type=text id=FarmInactive size=2 value='+ FarmOptions.Inactive +'>days(checked every 23 hours).</td>';
+	m += '<TD> Farm is BAD if brought less then: ';
+	m += '<INPUT type=text id=FarmBadRess size=2 value='+ FarmOptions.MinFarmRes +'> millions of resources</td>'
+	m += '</tr></table></tr>';
+	m +='<TABLE id=pbfarmstats width=90% height=0% class=pbTabLined3>'
+	m +='<TR><TD>Works only for DISABLED cities:</td>';
+	m +='<TD><INPUT id=pbFarmSearch2 type=submit value="Search again"></td>';
+    m +='<TD><INPUT id=pbcompactFarms2 type=submit value="Remove BAD Farms"></td>';
+    m +='<TD><INPUT id=pbcompactFarms3 type=submit value="Reset collected resources info"></td>'
+	m +='</tr></table>';
     m += '<TABLE id=pbfarmstats width=90% height=0% class=pbTab><TR align="left"><TR><TD width=100>City:</td>';
     for (i=1;i<=Seed.cities.length;i++) {
          m+='<TD class=pbCityEn><INPUT id=CityEnable'+ i +'  type=checkbox '+(FarmOptions.CityEnable[i]?'CHECKED':'')+'>'+ Seed.cities[i-1][1] +'</td>';
@@ -1168,39 +1185,41 @@ Tabs.farm = {
      }
     m+='</tr></table>';
     
+    var icon_link = 'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/';
+	var dude = unsafeWindow.unitnamedesctranslated;
      m += '<DIV id=pbTraderDivD class=pbStat>FARMING TROOPS</div>';
      m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
-        m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+        m += '<TR><TD rowspan="2"><img src='+http+icon_link+'unit_1_50.jpg alt='+dude.unt1[0]+'></td>';
         m += '<TD>Supply Troop</td>'
-        m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_2_50.jpg alt='+dude.unt2[0]+'></td>'
         m += '<TD>Militiaman</td>'
-        m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_3_50.jpg alt='+dude.unt3[0]+'></td>'
         m += '<TD>Scout</td>'
-        m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_4_50.jpg alt='+dude.unt4[0]+'></td>'
         m += '<TD>Pikeman</td></tr>'
         m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop1  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[1] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop2  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[2] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop3  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[3] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop4  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[4] +'\></td></tr>';
-        m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+        m += '<TR><TD rowspan="2"><img src='+http+icon_link+'unit_5_50.jpg alt='+dude.unt5[0]+'></td>';
         m += '<TD>Swordsman</td>'
-        m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_6_50.jpg alt='+dude.unt6[0]+'></td>'
         m += '<TD>Archer</td>'
-        m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_7_50.jpg alt='+dude.unt7[0]+'></td>'
         m += '<TD>Cavalry</td>'
-        m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_8_50.jpg alt='+dude.unt8[0]+'></td>'
         m += '<TD>Heavy Cavalry</td></tr>'
         m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop5  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[5] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop6  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[6] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop7  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[7] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop8  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[8] +'\></td></tr>';
-        m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+        m += '<TR><TD rowspan="2"><img src='+http+icon_link+'unit_9_50.jpg alt='+dude.unt9[0]+'></td>';
         m += '<TD>Supply Wagon</td>'
-        m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_10_50.jpg alt='+dude.unt10[0]+'></td>'
         m += '<TD>Ballista</td>'
-        m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_11_50.jpg alt='+dude.unt11[0]+'></td>'
         m += '<TD>Battering Ram</td>'
-        m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_12_50.jpg alt='+dude.unt12[0]+'></td>'
         m += '<TD>Catapult</td></tr>'
         m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop9  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[9] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop10  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[10] +'\></td>';
@@ -1209,9 +1228,11 @@ Tabs.farm = {
     
      t.myDiv.innerHTML = m;
       t.checkFarmData();
-       if(t.nextattack == null) t.nextattack = setInterval(t.getnextCity, FarmOptions.SendInterval*1000);
-     setInterval(t.startdeletereports,(120000));
-     setInterval( t.checkMarches ,2000);
+       if(t.nextattack == null) t.nextattack = setInterval(t.getnextCity, parseInt(Math.random()*3)+FarmOptions.SendInterval*1000);
+	 if (FarmOptions.Running == true)  {
+	 setInterval(t.startdeletereports,(120000));
+     setInterval( t.checkMarches ,parseInt(Math.random()*3)+14*1000);
+	 }
      document.getElementById('pbFarmcity').options.length=0;
         for (i=0;i<Seed.cities.length;i++){
             var o = document.createElement("option");
@@ -1230,7 +1251,13 @@ Tabs.farm = {
     for(i=0;i<Seed.cities.length;i++){
             var elem = 'pdtotalFarm'+i;
             if (t.FarmArray[i+1] == undefined) document.getElementById(elem).innerHTML = 'No Data';
-            else document.getElementById(elem).innerHTML =  'Farms :' + t.FarmArray[i+1].length +'/'+ t.helpArray[i+1].length;
+            else {
+					var l_ok_farms =0;
+			                 for (a=0;a<t.helpArray[i+1].length;a++){
+							 if ((t.helpArray[i+1][a]['DaysInactive']=='?') ||(t.helpArray[i+1][a]['DaysInactive']> FarmOptions.Inactive)) l_ok_farms++;
+							 }
+			document.getElementById(elem).innerHTML =  '' + l_ok_farms+'/'+t.FarmArray[i+1].length +'/'+ t.helpArray[i+1].length+'';
+			}
     }
     document.getElementById('FarmInterval').addEventListener('change', function(){
             FarmOptions.Interval = document.getElementById('FarmInterval').value;
@@ -1240,6 +1267,12 @@ Tabs.farm = {
             FarmOptions.RallyClip = document.getElementById('FarmRallyClip').value;
             saveFarmOptions();
     } , false);
+    document.getElementById('FarmAttacksInterval').addEventListener('change', function(){
+            FarmOptions.SendInterval = document.getElementById('FarmAttacksInterval').value;
+            saveFarmOptions();
+    } , false);
+	
+	
     document.getElementById('FarmReports').addEventListener('change', function(){
             FarmOptions.DeleteReports = document.getElementById('FarmReports').checked;
             saveFarmOptions();
@@ -1256,6 +1289,39 @@ Tabs.farm = {
                 document.getElementById(elem).innerHTML = 'No Data';
         }
         t.checkFarmData();
+    } , false);
+
+    document.getElementById('pbFarmSearch2').addEventListener('click', function(){
+	        for (i=1;i<=Seed.cities.length;i++) {
+			if (FarmOptions.CityEnable[i] == false)
+			  GM_deleteValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId());}
+        for(i=0;i<Seed.cities.length;i++){
+                var elem = 'pdtotalFarm'+i;
+                	if (FarmOptions.CityEnable[i+1] == false)document.getElementById(elem).innerHTML = 'No Data';
+        }
+        t.checkFarmData();
+    } , false);
+	    document.getElementById('pbcompactFarms1').addEventListener('click', function(){
+
+        for(i=0;i<Seed.cities.length;i++){
+                var elem = 'pdtotalFarm'+i;
+               if (FarmOptions.CityEnable[i] == false) document.getElementById(elem).innerHTML = 'No Data';
+        }
+        t.compactFarmData();
+    } , false);
+	    document.getElementById('pbcompactFarms2').addEventListener('click', function(){
+        for(i=0;i<Seed.cities.length;i++){
+                var elem = 'pdtotalFarm'+i;
+                document.getElementById(elem).innerHTML = 'No Data';
+        }
+        t.compactFarmData2();
+    } , false);
+	    document.getElementById('pbcompactFarms3').addEventListener('click', function(){
+        for(i=0;i<Seed.cities.length;i++){
+                var elem = 'pdtotalFarm'+i;
+                document.getElementById(elem).innerHTML = 'No Data';
+        }
+        t.compactFarmData3();
     } , false);
     document.getElementById('pbpaintFarms').addEventListener('click', function(){t.showFarms(document.getElementById("pbFarmcity").value,Seed.cities[document.getElementById("pbFarmcity").value -1][1]);},false);  
   
@@ -1274,6 +1340,13 @@ Tabs.farm = {
             t.FilterFarms();
             saveFarmOptions();
     } , false);
+    document.getElementById('FarmBadRess').addEventListener('change', function(){
+            FarmOptions.MinFarmRes = parseInt(document.getElementById('FarmBadRess').value);
+            t.FilterFarms();
+            saveFarmOptions();
+    } , false);
+    
+  
   
     var element = document.getElementsByClassName('pbTroopOpt');
      for (k=0;k<element.length;k++){
@@ -1326,46 +1399,42 @@ Tabs.farm = {
         var t = Tabs.farm;
         for (i=0;i<FarmOptions.FarmMarches.length;i++){
                 var cityId = "city"+ FarmOptions.FarmMarches[i]["cityId"];
-                var city = FarmOptions.FarmMarches[i]["city"];
-                var marchId = "m" + FarmOptions.FarmMarches[i]["marchId"];
+                var cityNo = FarmOptions.FarmMarches[i]["city"];
+				var marchID = FarmOptions.FarmMarches[i]["marchId"];
+				var farmNo  = FarmOptions.FarmMarches[i]["number"]
+				var marchId = "m" + marchID;
                 if (Seed.queue_atkp[cityId][marchId] !=undefined){
-                            if (Seed.queue_atkp[cityId][marchId].marchStatus == 8  && Seed.queue_atkp[cityId][marchId].hasUpdated) {
-                                    FarmOptions.Checks++;
-                                    saveFarmOptions();
-                                    document.getElementById('FarmCheck').innerHTML = "Attacks: " + FarmOptions.Attacks + " - Checks:" + FarmOptions.Checks;
-                                    for(u=1;u<=12;u++) if (parseInt(Seed.queue_atkp[cityId][marchId]["unit"+u+"Return"]) < parseInt(Seed.queue_atkp[cityId][marchId]["unit"+u+"Count"])){
-                                                t.FarmArray[FarmOptions.FarmMarches[i]["city"]][FarmOptions.FarmMarches[i]["number"]]["lost"] = true;
-                                                t.FarmArray[FarmOptions.FarmMarches[i]["city"]][FarmOptions.FarmMarches[i]["number"]]["enabled"] = false;
-                                    }
-                                    for (a=0;a<t.helpArray[FarmOptions.FarmMarches[i]["city"]].length;a++){
-                                            for (b=0;b<t.FarmArray[FarmOptions.FarmMarches[i]["city"]].length;b++){
-                                                 if (parseInt(t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['x']) == parseInt(t.helpArray[FarmOptions.FarmMarches[i]["city"]][b]['x']) && parseInt(t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['y']) == parseInt(t.helpArray[FarmOptions.FarmMarches[i]["city"]][b]['y'])){
-                                                           t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['gold'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['gold'];
-                                                           t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['resource1'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['resource1'];
-                                                        t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['resource2'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['resource2'];
-                                                        t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['resource3'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['resource3'];
-                                                        t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['resource4'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['resource4'];
-                                                        t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['empty'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['empty'];
-                                                        t.helpArray[FarmOptions.FarmMarches[i]["city"]][a]['lost'] = t.FarmArray[FarmOptions.FarmMarches[i]["city"]][b]['lost'];
-                                                       }    
-                                            }
-                                    }
-                                    GM_setValue('Farms_' + Seed.player['name'] + '_city_' + FarmOptions.FarmMarches[i]["city"] + '_' + getServerId(), JSON2.stringify(t.helpArray[FarmOptions.FarmMarches[i]["city"]]));
-                                    FarmOptions.FarmMarches.splice(i,1);
-                                    saveFarmOptions();
+					var l_marchStatus = Seed.queue_atkp[cityId][marchId].marchStatus;
+				     if (Seed.queue_atkp[cityId][marchId].marchType==4) {
+                            if ((l_marchStatus==8 &&Seed.queue_atkp[cityId][marchId].hasUpdated)||(l_marchStatus==5)){
+			//actionLog('CityNo '+cityNo + '; i ='+i+'; farmNo'+farmNo+';marchID-'+marchID+';marchstatus'+l_marchStatus+'. '+Seed.queue_atkp[cityId][marchId].hasUpdated);
+
+            FarmOptions.Checks++;
+            FarmOptions.FarmMarches.splice(i,1);
+			saveFarmOptions();
+            //document.getElementById('FarmCheck').innerHTML = "Attacks: " + FarmOptions.Attacks + " - Checks:" +			FarmOptions.Checks+' (Last city '+cityNo+')';
+
+			t.getRetMarchInfo (marchID,cityNo,farmNo,
+			parseInt(t.FarmArray[cityNo][farmNo]["Gold"]),
+			parseInt(t.FarmArray[cityNo][farmNo]["Food"]),
+			parseInt(t.FarmArray[cityNo][farmNo]["Wood"]),parseInt(t.FarmArray[cityNo][farmNo]["Stone"]),
+			parseInt(t.FarmArray[cityNo][farmNo]["Ore"]),0,parseInt(t.helpArray[cityNo][farmNo]["empty"]));
+
+            saveFarmOptions();
                             }
+						}
                 } else {
                     FarmOptions.FarmMarches.splice(i,1);
                     saveFarmOptions();
                 }    
         }
      },    
-    
+
    checkInactives : function (citynumber,city,FarmNumber,xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12){
         var t = Tabs.farm;
         var now = new Date().getTime()/1000.0;
-        var hours = (now - t.FarmArray[city][FarmOptions.FarmNumber[city]]['LastCheck']) / 3600;
-        if (t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive'] == "?" || hours > 6){
+        var hours = (now - t.FarmArray[city][FarmNumber]['LastCheck']) / 3600;
+        if (t.FarmArray[city][FarmNumber]['DaysInactive'] == "?" || hours > 12){
                 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
                 params.pid = uid;
                 new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/viewCourt.php" + unsafeWindow.g_ajaxsuffix, {
@@ -1377,14 +1446,37 @@ Tabs.farm = {
                                     var fullDate = lastLogin.substr(0,4) +", "+ lastLogin.substr(5,2) +", "+ lastLogin.substr(8,2) ;
                                     var time = new Date (fullDate).getTime()/1000;
                                     var days = Math.floor((now - time) / 86400);
-                                    t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive'] = days;
+                                    t.FarmArray[city][FarmNumber]['DaysInactive'] = days;
+			var AllianceName = rslt.playerInfo.allianceName;
+           t.FarmArray[city][FarmNumber]["AllianceName"] = AllianceName;
+		   if (!(!!AllianceName)) {t.FarmArray[city][FarmNumber]["Diplomacy"] = 'unallied';t.FarmArray[city][FarmNumber]["AllianceName"]="";}
+		   else { if (t.FarmArray[city][FarmNumber]["Diplomacy"] == 'unallied') t.FarmArray[city][FarmNumber]["Diplomacy"]='neutral' };
+	       t.FarmArray[city][FarmNumber]["might"] = rslt.playerInfo.might;
                                     for (i=0;i<t.helpArray[city].length;i++){
                                                  if (xcoord == parseInt(t.helpArray[city][i]['x']) && ycoord == parseInt(t.helpArray[city][i]['y'])){
                                                     t.helpArray[city][i]['DaysInactive'] = days;
                                                     t.helpArray[city][i]['LastCheck'] = now;
+													t.helpArray[city][i] ["AllianceName"] = rslt.playerInfo.allianceName;
+	                                                t.helpArray[city][i] ["might"] = rslt.playerInfo.might;
                                                    }    
+  //
+  /*Arch Angels ReUKnighted		28 cCc__alparslan__cCc		24
+Death to Strangers		5
+family pride		90
+Family Pride II		100
+Fierce Knights		82
+Hostile Rogues		41
+Hulles_Rache		17
+InSaNe AsYlUm		93
+INSANE SAVAGES		26
+SAVAGE KNIGHTS		91* /
+  var not_hit_list = 'family pride';//"The Highlanders"
+  if (t.helpArray[city][i]["AllianceName"] == not_hit_list && t.helpArray[city][i]["enabled"]!='true'&&days>2) t.helpArray[city][i]["enabled"] = false;
+	//if (parseInt(t.helpArray[city][i]["attacked"]) >1) t.helpArray[city][i]["attacked"] = 1;*/
+
                                     }
                                     GM_setValue('Farms_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.helpArray[city]));
+									
                                     if (days > FarmOptions.Inactive) {
                                         t.doBarb(citynumber,city,FarmNumber,xcoord,ycoord,kid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
                                     } else     {
@@ -1398,7 +1490,10 @@ Tabs.farm = {
                           },
                 });
         } else {
-            if (t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive'] > FarmOptions.Inactive) {
+			var l_inactive_days_koef =1;
+			var Diplomacy = t.FarmArray[city][FarmNumber]['Diplomacy'];
+	        if (Diplomacy=='unallied') l_inactive_days_koef=0.2;
+            if (t.FarmArray[city][FarmNumber]['DaysInactive'] >= FarmOptions.Inactive*l_inactive_days_koef) {
                 t.doBarb(citynumber,city,FarmNumber,xcoord,ycoord,kid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
              }     else{
                     FarmOptions.FarmNumber[city]++;
@@ -1407,7 +1502,79 @@ Tabs.farm = {
                 }
         }
     },
-    
+ getRetMarchInfo: function (marchIDs,cityNum,farmNum,l_g,l_f,l_w,l_s,l_o,l_a,l_got_info_times) {
+  var t = Tabs.farm;
+  var ret = {};
+  var l_lost = false;
+  var l_enabled = true;
+  var ll_got_info = l_got_info_times;
+  ret.marchUnits = [];
+  ret.returnUnits = [];
+  ret.Coords = [];
+  ret.reso = [];
+ // ret.Coords[0]=-1;ret.Coords[0]=-1;
+ // for (ik=0; ik<15; ik++){ ret.marchUnits[ik] = 0;ret.returnUnits[ik] = 0;}
+ // for (il=0; il<=5; il++){ret.reso[il] = 0;}
+  
+   var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+   params.rid = marchIDs;
+   new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/fetchMarch.php" + unsafeWindow.g_ajaxsuffix, {
+                         method: "post",
+                          parameters: params,
+                          onSuccess: function (message) {
+                                    var rslt = eval("(" + message.responseText + ")");
+
+/* rslt.march["knightName"]   parseInt(rslt.march["marchType"]) {1: transport;2: reinforce;3: scout;4: attack;5: reassign}
+switch (parseInt(rslt.march["marchStatus"])){1: marching;2: defending;8: returning;9: aborting; default:undefined}
+ rslt.march["unit" + i + "Return"]
+ for (i=0; i<15; i++){ ret.returnUnits[i] = parseInt(rslt.march["unit" + i + "Return"]);//ret.marchUnits[i] = parseInt(rslt.march["unit" + i + "Count"]);
+ }*/ 
+    var l_debug_on =0;
+    var  marchStatus = rslt.march["marchStatus"];
+     ret.Coords[0]= parseInt(rslt.march["xCoord"]);ret.Coords[1]=parseInt(rslt.march["yCoord"]);
+    ret.reso[0] = parseInt(rslt.march["gold"]);
+    for (var j = 1; j <= 5; j++) {ret.reso[j] = parseInt(rslt.march["resource" +j]);}
+
+	                        for (a=0;a<t.helpArray[cityNum].length;a++){
+							if (ret.Coords[0] == parseInt(t.helpArray[cityNum][a]['x']) && ret.Coords[1] == parseInt(t.helpArray[cityNum][a]['y'])){
+							
+	if (l_debug_on==1 &&(ll_got_info>0||marchStatus ==1)) actionLog('City-'+cityNum+' Farm('+farmNum+')'+marchIDs+'('+ ret.Coords[0]+','+ret.Coords[1]+')'+ '; Res-'+Math.round((ret.reso[0]+ret.reso[1]+ret.reso[2]+ret.reso[3]+ret.reso[4])/1000)+'!!!MARCH_STATUS=' + marchStatus+'. ll_got_info-'+ll_got_info);
+								if (marchStatus ==1) {myVar2 = setTimeout(function(){t.getRetMarchInfo(marchIDs,cityNum,farmNum,l_g,l_f,l_w,l_s,l_o,l_a,ll_got_info)},10*1000); return;}
+                                    for(u=1;u<=12;u++) {
+									  var l_ret_units = parseInt(rslt.march["unit"+u+"Return"]);
+									  var l_sent_units = parseInt(rslt.march["unit"+u+"Count"]);
+										if (l_ret_units < l_sent_units){
+                                                l_lost = true;
+												actionLog('City-'+cityNum+' Farm('+farmNum+')('+ ret.Coords[0]+','+ret.Coords[1]+')'+'.l_ret_units'+u+'+sent: '+l_ret_units+'/'+l_sent_units);
+												if (l_ret_units < (l_sent_units*75/100)) l_enabled = false;
+										}
+									}
+
+if (l_debug_on==1) actionLog('City-'+cityNum+'||FOOD-'+  Math.round(ret.reso[1]/1000000)+ 'M; ORE-'+ Math.round(ret.reso[4]/1000000)+ 'M||;wood-'+ Math.round(ret.reso[2]/1000000)+'M;stone-'+ Math.round(ret.reso[3]/1000000)+'M.'+' Farm('+farmNum+',marchno'+marchIDs+')('+ ret.Coords[0]+','+ret.Coords[1]+')'); // Before food1-'+t.FarmArray[cityNum][farmNum]["Food"] );
+	l_g += ret.reso[0]; l_f += ret.reso[1]; l_w += ret.reso[2]; l_s += ret.reso[3]; l_o += ret.reso[4]; 
+
+  if (l_f+l_w+l_s+l_o < 1.5*1000*1000) l_enabled = false; // disable farm because it have only less then 1.5 mil res.
+  if (ret.reso[5]>0) { actionLog('City-'+cityNum+' Farm have astone ['+ret.reso[5]+'] at ('+ ret.Coords[0]+','+ret.Coords[1]+') !!! :)');}
+  if ((ret.reso[0]+ret.reso[1]+ret.reso[2]+ret.reso[3]+ret.reso[4])/1000000>=(FarmOptions.MinFarmRes*2)) { //actionLog('City-'+cityNum+' Send wags to that FAT Farm ['+parseInt((ret.reso[0]+ret.reso[1]+ret.reso[2]+ret.reso[3]+ret.reso[4])/1000000)+' mil res ] at ('+ ret.Coords[0]+','+ret.Coords[1]+') !!! :)');
+   var now = new Date().getTime()/1000.0;
+   now = now.toFixed(0);
+				     					t.helpArray[cityNum][a]['time'] = now-55*3600;
+   }
+  										t.helpArray[cityNum][a]['Ore'] = l_o;
+										t.helpArray[cityNum][a]["Wood"] = l_w;
+                                        t.helpArray[cityNum][a]['Stone'] = l_s;
+										t.helpArray[cityNum][a]["Food"] = l_f;
+                                        t.helpArray[cityNum][a]["Gold"] = l_g;
+                                        t.helpArray[cityNum][a]['enabled'] = l_enabled;
+                                        t.helpArray[cityNum][a]['lost'] = l_lost;
+										t.helpArray[cityNum][a]['empty'] ++;
+								GM_setValue('Farms_' + Seed.player['name'] + '_city_' + cityNum + '_' + getServerId(), JSON2.stringify(t.helpArray[cityNum]));
+  }}
+
+		   },
+                          onFailure: function (rslt) { }
+    })
+	},
       showFarms: function (citynumber,cityname) {
         var t = Tabs.farm;
         var popTradeRoutes = null;
@@ -1431,7 +1598,7 @@ Tabs.farm = {
                   if (ele.checked) {
                 t.FarmArray[citynumber][id].enabled = true;
                 t.FarmArray[citynumber][id].lost = false;
-                t.FarmArray[citynumber][id].empty = 0;   
+                //t.FarmArray[citynumber][id].empty = 0;   
             }
                         else t.FarmArray[citynumber][id].enabled = false;
                 }
@@ -1445,17 +1612,39 @@ Tabs.farm = {
         
      paintFarms: function(i,cityname){
             var t = Tabs.farm;
-            for (k=(t.FarmArray[i].length-1);k>=0;k--){t._addTab(i,cityname,k+1,t.FarmArray[i][k]['enabled'], t.FarmArray[i][k]['x'], t.FarmArray[i][k]['y'],t.FarmArray[i][k]['dist'], t.FarmArray[i][k]['level'],t.FarmArray[i][k]['AllianceName'], t.FarmArray[i][k]['Diplomacy'], t.FarmArray[i][k]['PlayerName'], t.FarmArray[i][k]['cityName'],t.FarmArray[i][k]['might'], t.FarmArray[i][k]['cityNumber'], t.FarmArray[i][k]['attacked'],t.FarmArray[i][k]['DaysInactive'],t.FarmArray[i][k]['lost'],t.FarmArray[i][k]['empty'],t.FarmArray[i][k]['gold'],t.FarmArray[i][k]['resource1'],t.FarmArray[i][k]['resource2'],t.FarmArray[i][k]['resource3'],t.FarmArray[i][k]['resource4']);}
+			var now = new Date().getTime()/1000.0;
+			now = now.toFixed(0);
+            for (k=(t.FarmArray[i].length-1);k>=0;k--)
+			{
+            var Hourss = 0;
+			//if (t.FarmArray[i][k]['DaysInactive'] > 5 || t.FarmArray[i][k]['DaysInactive']=='?') {
+			if (parseInt(t.FarmArray[i][k]['time'])>0)	Hourss = Math.round((now - parseInt(t.FarmArray[i][k]['time'])) / 3600);
+			
+			t._addTab(i,cityname,k+1,t.FarmArray[i][k]['enabled'], t.FarmArray[i][k]['x'], t.FarmArray[i][k]['y'],t.FarmArray[i][k]['dist'], t.FarmArray[i][k]['level'],t.FarmArray[i][k]['AllianceName'], t.FarmArray[i][k]['Diplomacy'], t.FarmArray[i][k]['PlayerName'], t.FarmArray[i][k]['cityName'],t.FarmArray[i][k]['might'], t.FarmArray[i][k]['cityNumber'], t.FarmArray[i][k]['attacked'],t.FarmArray[i][k]['DaysInactive'],t.FarmArray[i][k]['lost'],t.FarmArray[i][k]['empty'],t.FarmArray[i][k]['Ore'],t.FarmArray[i][k]['Wood'],t.FarmArray[i][k]['Stone'],t.FarmArray[i][k]['Food'],t.FarmArray[i][k]['Gold'],
+			Hourss
+			);
+			//}
+			}
         },
 
 
-          _addTab: function(citynumber,cityname,queueId,status,X,Y,dist,level,AllianceName,diplomacy,playerName,cityName,might,cityNumber,attacked,DaysInactive,lost,empty,gold,rec1,rec2,rec3,rec4){
+          _addTab: function(citynumber,cityname,queueId,status,X,Y,dist,level,AllianceName,diplomacy,playerName,cityName,might,cityNumber,attacked,DaysInactive,lost,empty,Ore,Wood,Stone,Food,Gold, last_hit_time){
              var t = Tabs.farm;
              var row = document.getElementById('pbBars').insertRow(0);
              row.vAlign = 'top';     
-              if (lost) row.style.color = "red";
-             if (!lost && empty == 0) row.style.color = "black";
-                if (FarmOptions.Inactive > DaysInactive) row.style.color = "orange";
+              if (lost) {row.style.color = "red";
+			  }else{
+             if (!lost) {row.style.color = "brown"; row.style.background = "rgb(246,243,236)";
+		 
+			 if  (Math.round(Ore /1000000,1) +Math.round(Food /1000000,1)+Math.round(Stone/1000000,1)+Math.round(Wood/1000000,1)+Math.round(Gold/1000000,1)<FarmOptions.MinFarmRes) row.style.color = "lightblue";
+ 			 if  (Math.round(Ore /1000000,1)+Math.round(Food /1000000,1)>FarmOptions.MinFarmRes*0.70) {row.style.color = "darkgreen";row.style.backgroundColor = "#BDD1A7";}
+
+			 }
+			 var l_inactive_days_koef =1;
+			 if (diplomacy=='unallied') l_inactive_days_koef=0.2;
+             if (FarmOptions.Inactive*l_inactive_days_koef > DaysInactive) row.style.color = "#E8C384"; //"orange";
+			 if (!lost &&!status) row.style.color = "gray";}
+			 
              row.insertCell(0).innerHTML = queueId;
              row.insertCell(1).innerHTML = coordLink(X,Y);
              row.insertCell(2).innerHTML = dist;
@@ -1468,6 +1657,12 @@ Tabs.farm = {
                 row.insertCell(9).innerHTML = DaysInactive;
                  row.insertCell(10).innerHTML = attacked;
              row.insertCell(11).innerHTML = '<INPUT class=Farm id="FarmToggle' + queueId + '" type=checkbox>';
+                 row.insertCell(12).innerHTML = Math.round(Ore /1000000,1) +'|';
+                 row.insertCell(13).innerHTML = Math.round(Food /1000000,1) +'|';
+				 row.insertCell(14).innerHTML = Math.round(Stone/1000000,1)+'||';
+                 row.insertCell(15).innerHTML = Math.round(Wood/1000000,1)+'|';
+                row.insertCell(16).innerHTML = Math.round(Gold /1000000,1)+'|';
+				row.insertCell(17).innerHTML = '('+empty +'-' +last_hit_time+'h)'; //Math.round(last_hit_time,2);
              
             var element_class = document.getElementsByClassName('Farm');
                    for (c = 0; c < element_class.length; c++) {
@@ -1491,6 +1686,14 @@ Tabs.farm = {
             row.insertCell(8).innerHTML = "Might";
             row.insertCell(9).innerHTML = "Inactive";
               row.insertCell(10).innerHTML = "# Attacks";
+                 row.insertCell(11).innerHTML = " [on/off] ";
+                 row.insertCell(12).innerHTML = "Ore";
+                row.insertCell(13).innerHTML = "Food";
+                row.insertCell(14).innerHTML = "Stone";
+                 row.insertCell(15).innerHTML = "Wood";
+                row.insertCell(16).innerHTML = "Gold";
+				row.insertCell(17).innerHTML = "Visited";
+
            },
         
         
@@ -1499,7 +1702,7 @@ Tabs.farm = {
     if (!FarmOptions.DeleteReports) return;
     if(!t.deleting){
         t.deleting = true;
-        t.fetchbarbreports(2, t.checkbarbreports);
+        t.fetchbarbreports(0, t.checkbarbreports);
     }
   },
   fetchbarbreports : function (pageNo, callback){
@@ -1526,6 +1729,9 @@ Tabs.farm = {
         return;
     }
     var reports = rslt.arReports;
+	var now = new Date().getTime()/1000.0;
+     now = now.toFixed(0);
+// t.helpArray[cityNum][a]['time'] = now-55*3600;
     var totalPages = rslt.totalPages;
         var deletes1 = new Array();
         for(k in reports){
@@ -1533,7 +1739,11 @@ Tabs.farm = {
                     var x=Seed.cities[i-1]["2"];
                     var y=Seed.cities[i-1]["3"];
                     for (j=0;j<t.FarmArray[i].length;j++){
-                                if (reports[k].side1XCoord == x && reports[k].side1YCoord == y && reports[k].side0XCoord == t.FarmArray[i][j]["x"] && reports[k].side0YCoord == t.FarmArray[i][j]["y"]) deletes1.push(k.substr(2));
+                                if (reports[k].side1XCoord == x && reports[k].side1YCoord == y && reports[k].side0XCoord == t.FarmArray[i][j]["x"] && reports[k].side0YCoord == t.FarmArray[i][j]["y"]&&(!(t.FarmArray[i][j]['lost']))
+								&&(t.FarmArray[i][j]['enabled']||(!(t.FarmArray[i][j]['enabled'])&&(now-t.FarmArray[i][j]['time']<10*60)))
+								) {
+								deletes1.push(k.substr(2));
+								}
                     }
             }    
         }
@@ -1556,7 +1766,7 @@ Tabs.farm = {
         parameters: params,
         onSuccess: function (rslt) {
             Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length);
-            t.fetchbarbreports(2, t.checkbarbreports);
+            t.fetchbarbreports(0, t.checkbarbreports);
         },
         onFailure: function () {
         },
@@ -1578,7 +1788,7 @@ Tabs.farm = {
       var t = Tabs.farm;
       for (i=1;i<=Seed.cities.length;i++){
         t.helpArray[i] = [];
-        if(!FarmOptions.CityEnable[i])continue;
+		  //if(!FarmOptions.CityEnable[i])continue;
           var myarray = (GM_getValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
         if (myarray == undefined && t.searchRunning==false) {
             t.searchRunning = true;
@@ -1589,16 +1799,88 @@ Tabs.farm = {
           }
         if (myarray != undefined){
             myarray = JSON2.parse(myarray);
-            //if(AttackOptions.Method == 'distance')
+            //if(Method == 'distance')
             t.helpArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
-            //if(AttackOptions.Method == 'level') t.helpArray[i] = myarray.sort(function function (a,b) {a = parseInt(a['level']);b = parseInt(b['level']);return (a > b )? -1 : ((a < b ? 1 : t.SortDist(a,b)));});
-            //if(AttackOptions.Method == 'lowlevel') t.helpArray[i] = myarray.sort(function function (a,b) {a = parseInt(a['level']);b = parseInt(b['level']);return (a < b )? -1 : ((a > b ? 1 : t.SortDist(a,b)));});
               GM_setValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(), JSON2.stringify(t.helpArray[i]));
               }
           }
     t.FilterFarms();
   },
-  
+ compactFarmData: function(){
+      var t = Tabs.farm;
+      for (cityNum=1;cityNum<=Seed.cities.length;cityNum++){
+	  var n =0;
+	  var max_attacks = 0;
+	  t.FarmArray[cityNum] = [];
+
+		for (a=0;a<t.helpArray[cityNum].length;a++){
+			if ((t.helpArray[cityNum][a]['might']< FarmOptions.MaxMight)&&(
+            t.helpArray[cityNum][a]['DaysInactive']=='?'
+			|| parseInt(t.helpArray[cityNum][a]['DaysInactive'])>2)) {
+			 t.FarmArray[cityNum][n++] = t.helpArray[cityNum][a];
+			 }
+		}
+
+              GM_setValue('Farms_' + Seed.player['name'] + '_city_' + cityNum + '_' + getServerId(), JSON2.stringify(t.FarmArray[cityNum]));
+    }
+    t.FilterFarms();
+	reloadKOC();
+  },
+compactFarmData2: function(){
+      var t = Tabs.farm;
+	  var l_min_res = FarmOptions.MinFarmRes * 1000000;
+      for (cityNum=1;cityNum<=Seed.cities.length;cityNum++){
+	   if (!(FarmOptions.CityEnable[cityNum])){
+	    var n =0;
+	    var max_attacks = 0;
+	  	for (a=0;a<t.helpArray[cityNum].length;a++){
+			 if (max_attacks < t.helpArray[cityNum][a]['attacked'] ) max_attacks=t.helpArray[cityNum][a]['attacked'];
+			}
+		if (max_attacks>0) {
+		 t.FarmArray[cityNum] = [];
+		 for (a=0;a<t.helpArray[cityNum].length;a++){
+			var l_o = parseInt(t.helpArray[cityNum][a]['Ore'])
+			var l_w = parseInt(t.helpArray[cityNum][a]["Wood"]);
+			var l_s = parseInt(t.helpArray[cityNum][a]['Stone']);
+			var l_f = parseInt(t.helpArray[cityNum][a]["Food"]);
+			var l_g = parseInt(t.helpArray[cityNum][a]["Gold"]);
+			var l_attacked = parseInt(t.helpArray[cityNum][a]['empty']);
+			if (t.helpArray[cityNum][a]['enabled']&&t.helpArray[cityNum][a]['DaysInactive']!='?' &&(l_attacked<1&&parseInt(t.helpArray[cityNum][a]['DaysInactive'])>3 || (l_attacked>0 && ((l_o+l_w+l_s+l_f+l_g)>l_min_res||(l_o+l_f)>l_min_res*0.70)) )) {
+			 t.FarmArray[cityNum][n++] = t.helpArray[cityNum][a];
+			}
+		 }
+              GM_setValue('Farms_' + Seed.player['name'] + '_city_' + cityNum + '_' + getServerId(), JSON2.stringify(t.FarmArray[cityNum]));
+		}
+	  }
+     }
+    t.FilterFarms();
+	reloadKOC();
+  },
+compactFarmData3: function(){
+    var t = Tabs.farm;
+    for (cityNum=1;cityNum<=Seed.cities.length;cityNum++){
+		if (!(FarmOptions.CityEnable[cityNum])){
+		 var n =0;
+		 t.FarmArray[cityNum] = [];
+			for (a=0;a<t.helpArray[cityNum].length;a++){
+				if (t.helpArray[cityNum][a]['enabled']){
+					t.helpArray[cityNum][a]['Ore']=0;
+					t.helpArray[cityNum][a]["Wood"]=0;
+					t.helpArray[cityNum][a]['Stone']=0;
+					t.helpArray[cityNum][a]["Food"]=0;
+					t.helpArray[cityNum][a]["Gold"]=0;
+					t.helpArray[cityNum][a]['attacked']=0;
+					t.helpArray[cityNum][a]['empty']=0;
+				}
+				t.FarmArray[cityNum][n++] = t.helpArray[cityNum][a];
+			}
+            GM_setValue('Farms_' + Seed.player['name'] + '_city_' + cityNum + '_' + getServerId(), JSON2.stringify(t.FarmArray[cityNum]));
+		}
+    }
+    t.FilterFarms();
+	reloadKOC();
+  },
+
   FilterFarms: function() {
     var t = Tabs.farm;
     if (t.searchRunning) return;
@@ -1627,7 +1909,14 @@ Tabs.farm = {
         }
         var elem = 'pdtotalFarm'+(u-1);
         if (t.FarmArray[u] == undefined) document.getElementById(elem).innerHTML = 'No Data';
-        else document.getElementById(elem).innerHTML =  'Farms :' + t.FarmArray[u].length +'/'+ t.helpArray[u].length;
+        else {
+				var l_ok_farms =0;
+			    for (a=0;a<t.helpArray[u].length;a++){
+					 if (t.helpArray[u][a]['enabled']&&((t.helpArray[u][a]['DaysInactive']=='?') ||(t.helpArray[u][a]['DaysInactive']> FarmOptions.Inactive))) l_ok_farms++;
+				 }
+			document.getElementById(elem).innerHTML =  '' + l_ok_farms+'/'+t.FarmArray[u].length +'/'+ t.helpArray[u].length+'';
+			}
+
     }
   },
 
@@ -1650,11 +1939,13 @@ Tabs.farm = {
     t.updateSeedTimer = null;
     } else {
         FarmOptions.Running = true;
+		FarmOptions.DeleteReports = true;
         obj.value = "Farm = ON";
-      if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #FFFF00">'+unsafeWindow.g_js_strings.grove.farms+': On</span>';
+		if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #FFFF00">'+unsafeWindow.g_js_strings.grove.farms+': On</span>';
         saveFarmOptions();
         t.checkFarmData();
-        t.nextattack = setInterval(t.getnextCity,(FarmOptions.SendInterval*1000));
+        t.nextattack = setInterval(t.getnextCity,(parseInt(Math.random()*3)*100+FarmOptions.SendInterval*1000));
+		reloadKOC();
     }
   },
   
@@ -1679,21 +1970,22 @@ Tabs.farm = {
        cityID = 'city' + citynumber;
        
        t.getAtkKnight(cityID);
+	   //t.rallypointlevel = March.getRallypointLevel(cityID);
        t.rallypointlevel = March.getTotalSlots(citynumber);
-       var slots = March.getMarchSlots(citynumber);
-       var element2 = 'pddataFarmarray'+(city-1);
-       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
+       numMarches = t.rallypointlevel;
+       var slots= March.getMarchSlots(citynumber);
        
-       if (!FarmOptions.CityEnable[city]) return;
-		if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(FarmOptions.RallyClip)) return;
-		
-
+       var element2 = 'pddataFarmarray'+(city-1);
+       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + numMarches +')';
+       
+       if (!FarmOptions.CityEnable[city]) { document.getElementById(element2).innerHTML ='Disabled';return;}
+      if (Number(Number(numMarches)-Number(slots)) <= Number(FarmOptions.RallyClip)) return;
+	    var Farms_count=t.FarmArray[city].length;
+	   if (Farms_count==0) {document.getElementById(element2).innerHTML = 'No Farms'; return;}
        if (t.knt.toSource() == "[]") return;
         if (u1 > parseInt(Seed.units[cityID]['unt1']) || u2 > parseInt(Seed.units[cityID]['unt2']) || u3 > parseInt(Seed.units[cityID]['unt3']) || u4 > parseInt(Seed.units[cityID]['unt4']) || u5 > parseInt(Seed.units[cityID]['unt5']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u11 > parseInt(Seed.units[cityID]['unt11']) || u12 > parseInt(Seed.units[cityID]['unt12'])) return;
-        if (FarmOptions.FarmNumber[city]>=t.FarmArray[city].length) FarmOptions.FarmNumber[city]=0;
-
+        if (FarmOptions.FarmNumber[city]>=Farms_count) FarmOptions.FarmNumber[city]=0;
         var kid = t.knt[0].ID;
-
 
          var interval = 0;
          switch(FarmOptions.Interval){
@@ -1703,37 +1995,67 @@ Tabs.farm = {
                 case "4":interval = 6;break;
                 case "5":interval = 12;break;
                 case "6":interval = 24;break;
+				case "7":interval = 29;break;
+				case "8":interval = 36;break;
+				case "9":interval = 48;break;
+				case "10":interval = 94;break;
         }
         
-         var check=0;
-         while (check == 0){
-         check=1;
-               for (i=1;i<=12;i++){
-                      if (FarmOptions.Troops[i] > parseInt(Seed.units[cityID]['unt'+i])) check=0;
+         var checkas=0;
+		 var tmp_loop =0;
+		 var Hourss_max=0;
+         while (checkas == 0){
+		 var Hourss =0;
+         checkas=1;
+		 for (i=1;i<=12;i++){
+                      if (FarmOptions.Troops[i] > parseInt(Seed.units[cityID]['unt'+i])) checkas=0;
                }
-           if (FarmOptions.Troops[1] == 0 && FarmOptions.Troops[2] == 0 && FarmOptions.Troops[3] == 0 && FarmOptions.Troops[4] == 0 && FarmOptions.Troops[5] == 0 && FarmOptions.Troops[6] == 0 && FarmOptions.Troops[7] == 0 && FarmOptions.Troops[8] == 0 && FarmOptions.Troops[9] == 0 &&FarmOptions.Troops[10] == 0 && FarmOptions.Troops[11] == 0 && FarmOptions.Troops[12] == 0) check=0;
-           if (!t.FarmArray[city][FarmOptions.FarmNumber[city]]['enabled']) check=0;
-               if (now < (parseInt(t.FarmArray[city][FarmOptions.FarmNumber[city]]['time']) + (3600 * interval))) check=0;
-           if (check ==0) FarmOptions.FarmNumber[city]++;
-           if (FarmOptions.FarmNumber[city]>=t.FarmArray[city].length) {
+           if (FarmOptions.Troops[1] == 0 && FarmOptions.Troops[2] == 0 && FarmOptions.Troops[3] == 0 && FarmOptions.Troops[4] == 0 && FarmOptions.Troops[5] == 0 && FarmOptions.Troops[6] == 0 && FarmOptions.Troops[7] == 0 && FarmOptions.Troops[8] == 0 && FarmOptions.Troops[9] == 0 &&FarmOptions.Troops[10] == 0 && FarmOptions.Troops[11] == 0 && FarmOptions.Troops[12] == 0) checkas=0;
+
+           if (!t.FarmArray[city][FarmOptions.FarmNumber[city]]['enabled']) checkas=0;
+    var farmtime = parseInt(t.FarmArray[city][FarmOptions.FarmNumber[city]]['time']);
+	var AllianceName = t.FarmArray[city][FarmOptions.FarmNumber[city]]['AllianceName'];
+	var l_inactive_days_koef =1;
+	 if (!(!!AllianceName)) l_inactive_days_koef=0.2;
+        if (farmtime>0)	{Hourss = Math.round((now - farmtime) / 3600);} else{
+		    if (t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive'] =="?"||(farmtime==0&&t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive']>=FarmOptions.Inactive*l_inactive_days_koef) ) Hourss=interval+1;}
+		
+        if (Hourss < interval) {checkas=0;}
+		
+		 if (Hourss >= interval && t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive']<FarmOptions.Inactive*l_inactive_days_koef)  {checkas=0;}
+			  
+        if (farmtime>0&&Hourss > Hourss_max&&t.FarmArray[city][FarmOptions.FarmNumber[city]]['enabled']&& t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive']>=FarmOptions.Inactive*l_inactive_days_koef) {Hourss_max=Hourss;}
+
+	  //if (checkas ==0)
+        var l_farm_no = FarmOptions.FarmNumber[city];
+		if (checkas == 0) {FarmOptions.FarmNumber[city]++; saveFarmOptions();}
+        if (FarmOptions.FarmNumber[city]>=Farms_count) {
                    FarmOptions.FarmNumber[city]=0;
-                    break;
+				   saveFarmOptions();
+				   document.getElementById(element2).innerHTML =  'Checked all '+ (Farms_count) + ' farms';
+                    //return; //
+					break;
             }
        }
-           if (check == 0) return;
-       
-
-        var xcoord = t.FarmArray[city][FarmOptions.FarmNumber[city]]['x'];
-        var ycoord = t.FarmArray[city][FarmOptions.FarmNumber[city]]['y'];
-        var uid = t.FarmArray[city][FarmOptions.FarmNumber[city]]['UserId'];
-        saveFarmOptions();
-        t.checkInactives(citynumber,city,FarmOptions.FarmNumber[city],xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+//if (t.FarmArray[city] == undefined) {document.getElementById(element2).innerHTML = 'No Data'; return;}
+           if (checkas == 0) {
+         //{actionLog(' Nothing to farm from city'+city+' next hit after:' + (interval-Hourss_max) +'hours.')};
+		document.getElementById(element2).innerHTML =  'Wait.Next '+ (interval-Hourss_max) + 'h';
+		   saveFarmOptions();
+		 return;} else{
+		
+        var xcoord = t.FarmArray[city][l_farm_no]['x'];
+        var ycoord = t.FarmArray[city][l_farm_no]['y'];
+        var uid = t.FarmArray[city][l_farm_no]['UserId'];
+           if ((numMarches - FarmOptions.RallyClip) > slots) 
+		   t.checkInactives(citynumber,city,l_farm_no,xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+  }
   },
   
   getnextCity: function(){
     var t = Tabs.farm;
     if (!FarmOptions.Running) return;
-    //if(t.searchRunning) return;
+    if(t.searchRunning) return;
     var city = t.city+1;
     if (city>Seed.cities.length){
         city=1;
@@ -1745,7 +2067,7 @@ Tabs.farm = {
   getAtkKnight : function(cityID){
      var t = Tabs.farm;
      t.knt = new Array();
-       t.rallypointlevel = March.getRallypointLevel(cityID);
+
      for (k in Seed.knights[cityID]){
              if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
                  t.knt.push ({
@@ -1759,66 +2081,46 @@ Tabs.farm = {
   },
   
   doBarb: function(cityID,counter,number,xcoord,ycoord,kid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12){
-          var t = Tabs.farm;
-          var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-          params.cid=cityID;
-          params.type=4;
-        params.kid=kid;
-          params.xcoord = xcoord;
-          params.ycoord = ycoord;
-          if (u1>0) params.u1=u1;
-          if (u2>0)params.u2=u2;
-          if (u3>0)params.u3=u3;
-          if (u4>0)params.u4=u4;
-          if (u5>0)params.u5=u5;
-          if (u6>0)params.u6=u6;
-          if (u7>0)params.u7=u7;
-          if (u8>0)params.u8=u8;
-          if (u9>0)params.u9=u9;
-          if (u10>0)params.u10=u10;
-          if (u11>0)params.u11=u11;
-          if (u12>0)params.u12=u12;
-          params.gold =0;
+        var t = Tabs.farm;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.cid=cityID;
+        params.type=4;
+		params.kid=kid;
+        params.xcoord = xcoord;
+        params.ycoord = ycoord;
+        if (u1>0) params.u1=u1;
+        if (u2>0)params.u2=u2;
+        if (u3>0)params.u3=u3;
+        if (u4>0)params.u4=u4;
+        if (u5>0)params.u5=u5;
+        if (u6>0)params.u6=u6;
+        if (u7>0)params.u7=u7;
+        if (u8>0)params.u8=u8;
+        if (u9>0)params.u9=u9;
+        if (u10>0)params.u10=u10;
+        if (u11>0)params.u11=u11;
+        if (u12>0)params.u12=u12;
+        params.gold =0;
       params.r1=0;
-      params.r2=0,
+      params.r2=0;
       params.r3=0;
       params.r4=0;
       params.r5=0;
       
-          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-                   method: "post",
-                   parameters: params,
-                   loading: true,
-                   onSuccess: function (transport) {
-                   var rslt = eval("(" + transport.responseText + ")");
-                 if (rslt.ok) {
-                   var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                   var ut = unsafeWindow.unixtime();
-            var unitsarr = [];
-            for (j in unsafeWindow.unitcost)
-               unitsarr.push(0);
-            for(i = 0; i <= unitsarr.length; i++)
-               if(params["u"+i])
-                       unitsarr[i] = params["u"+i];
-                   var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-                   var currentcityid = params.cid;
- 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
-                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
-                 if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-                 var slots=0;
-                 for(var k in Seed.queue_atkp['city'+cityID]) slots++;
-                 if(Seed.queue_atkp['city'+cityID].toSource() == "[]") slots = 0;
-                 var element1 = 'pddataFarmarray'+(counter-1);
-                 document.getElementById(element1).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
-                   var now = new Date().getTime()/1000.0;
-                   now = now.toFixed(0);
-                   t.FarmArray[counter][number]['time'] = now;
-                 t.FarmArray[counter][number]['attacked']++;
-                 FarmOptions.FarmMarches.push ({city:counter,cityId:cityID,marchId:rslt.marchId,number:number});
-                 FarmOptions.FarmNumber[counter]++;
-                 FarmOptions.Attacks++;
-                 saveFarmOptions();
-                 document.getElementById('FarmCheck').innerHTML = "Attacks: " + FarmOptions.Attacks + " - Checks:" + FarmOptions.Checks;
+	           March.addMarch(params, function(rslt){
+                  if (rslt.ok) {
+					var slots=March.getMarchSlots(cityID);
+					var element1 = 'pddataFarmarray'+(counter-1);
+					document.getElementById(element1).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
+					var now = new Date().getTime()/1000.0;
+					now = now.toFixed(0);
+					t.FarmArray[counter][number]['time'] = now;
+					t.FarmArray[counter][number]['attacked']++;
+					FarmOptions.FarmMarches.push ({city:counter,cityId:cityID,marchId:rslt.marchId,number:number});
+					FarmOptions.FarmNumber[counter]++;
+					FarmOptions.Attacks++;
+					saveFarmOptions();
+					document.getElementById('FarmCheck').innerHTML = "Attacks: " + FarmOptions.Attacks + " - Checks:" + FarmOptions.Checks + ' (Sent last march from city -' +counter+' Farm No.'+(number+1)+')';
                  for (i=0;i<t.helpArray[counter].length;i++){
                         for (j=0;j<t.FarmArray[counter].length;j++){
                              if (parseInt(t.FarmArray[counter][j]['x']) == parseInt(t.helpArray[counter][i]['x']) && parseInt(t.FarmArray[counter][j]['y']) == parseInt(t.helpArray[counter][i]['y'])){
@@ -1828,11 +2130,15 @@ Tabs.farm = {
                         }
                 }
                 GM_setValue('Farms_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.helpArray[counter]));
-               }
-                   },
-                   onFailure: function () {}
-           });
-       saveFarmOptions();
+				saveFarmOptions();
+				
+				} else { //onFailure
+                  actionLog('Send farm march FAIL :' + Seed.cities[counter-1][1] + "   To: (" + xcoord + ',' + ycoord +')'
+				  +'    -> ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
+                  }
+          });
+		  
+
   },
 
   clickedSearch : function (){
@@ -1854,7 +2160,7 @@ Tabs.farm = {
     var element = 'pddataFarm'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ xxx +','+ yyy;
    
-    setTimeout (function(){t.MapAjax.request (xxx, yyy, MAP_SFIELD, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.mapCallback)}, MAP_DELAY);
   },
   
   mapCallback : function (left, top, width, rslt){
@@ -1882,15 +2188,17 @@ Tabs.farm = {
             }
             if (rslt.allianceNames[AllianceId] != undefined) AllianceName = rslt.allianceNames[AllianceId];
             if (Diplomacy == "neutral" && AllianceName =="") Diplomacy = "unallied";
-            t.mapDat.push ({time:0,empty:0,lost:false,enabled:'true',attacked:0,DaysInactive:"?",LastCheck:0,Diplomacy:Diplomacy,UserId:map[k].tileUserId,AllianceName:AllianceName,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel,PlayerName:rslt.userInfo[who].n,cityName:map[k].cityName,might:rslt.userInfo[who].m,cityNumber:map[k].cityNum});
+			//AudriusPPP: have added it to avoid to big list/array witch slows down computer later
+			if (map[k].tileLevel>8 && rslt.userInfo[who].m>FarmOptions.MinMight && rslt.userInfo[who].m<FarmOptions.MaxMight){
+            t.mapDat.push ({time:0,empty:0,lost:false,enabled:'true',attacked:0,DaysInactive:"?",LastCheck:0,Diplomacy:Diplomacy,UserId:map[k].tileUserId,AllianceName:AllianceName,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel,PlayerName:rslt.userInfo[who].n,cityName:map[k].cityName,might:rslt.userInfo[who].m,cityNumber:map[k].cityNum,Ore:0,Wood:0,Stone:0,Food:0,Gold:0});};
       }
     }
-    t.tilesSearched += (MAP_SFIELD*MAP_SFIELD);
+    t.tilesSearched += (15*15);
 
-    t.curX += MAP_SFIELD;
+    t.curX += 15;
     if (t.curX > t.lastX){
       t.curX = t.firstX;
-      t.curY += MAP_SFIELD;
+      t.curY += 15;
       if (t.curY > t.lastY){
         var element = 'pdtotalFarm'+(t.lookup-1);
         document.getElementById(element).innerHTML = 'Found: ' + t.mapDat.length;
@@ -1907,7 +2215,7 @@ Tabs.farm = {
     var y = t.MapAjax.normalize(t.curY);
     var element = 'pddataFarm'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
-    setTimeout (function(){t.MapAjax.request (x, y, MAP_SFIELD, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (x, y, 15, t.mapCallback)}, MAP_DELAY);
   },
   
   stopSearch : function (msg){
