@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130929b
+// @version        20130929c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130929b';
+var Version = '20130929c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -3630,7 +3630,43 @@ ThroneHUDinit : function (){
 		document.getElementById('htra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
 	document.getElementById('htra'+unsafeWindow.seed.throne.activeSlot).disabled = true;
 	document.getElementById('htra'+unsafeWindow.seed.throne.activeSlot).className = "pbttabsdis";
+
+	try {
+	    function hudSlotWatcher(id, oldval, newval) {
+	        try {
+	            setTimeout(Tabs.Throne.throneHUDredraw,200);
+	        } catch (e) {}
+	        return newval;
+	    };
+
+
+	    // If the preset is changed, update the displays
+	    Seed.throne.multiWatch("activeSlot", hudSlotWatcher);
+
+	    // some of the seed updates replace the seed.throne value.  when this happens reinstall the watcher
+	    Seed.multiWatch("throne", function (id, oldval, newval) {
+	        // register with the seed so we know when the throne object is replaced
+	        try {
+	            // add a new watcher / remove the old one
+	            if (oldval.multiUnwatch) oldval.multiUnwatch("activeSlot", hudSlotWatcher);
+
+	            // if another script create this object, the prototypes won't be defined.  If so, add the functions manually
+	            if (!newval.multiWatch) {
+	                newval.multiWatch = Object.prototype.multiWatch;
+	                newval.multiUnwatch = Object.prototype.multiUnwatch;
+	            }
+
+	            newval.multiWatch("activeSlot", hudSlotWatcher);
+	        } catch (e) {
+	            logit( " Error in handler for throne watch" + e.toString());
+	        }
+
+	        return newval;
+	    });
+	} catch (e) { }
+
 },
+
 ThroneT : function (){
         var t = Tabs.Throne;    
      var m = '<DIV  class=pbStat>Throne room toggle</div><center><TABLE height=0% class=pbTab><TR align="center">';
@@ -22297,103 +22333,129 @@ function fetchPlayerInfo(uid, notify){
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*
+ * Modifiedd from object.watch polyfill
+ *
+ * 2012-04-03
+ *
+ * By Eli Grey, http://eligrey.com
+ * Public Domain.
+ * NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+ */
+
+// This version has been updated to allow more than one updater
+
+// This function injects a script into the main window
+function contentEval(source) {
+    // Check for function input.
+    if ('function' == typeof source) {
+      // Execute this function with no arguments, by adding parentheses.
+      // One set around the function, required for valid syntax, and a
+      // second empty set calls the surrounded function.
+      source = '(' + source + ')();'
+    }
+
+    // Create a script node holding this  source code.
+    var script = document.createElement('script');
+    script.setAttribute("type", "application/javascript");
+    script.textContent = source;
+
+    // Insert the script node into the page, so it will run, and immediately
+    // remove it to clean up.
+    document.body.appendChild(script);
+    document.body.removeChild(script);
+  }
+
+function addWatchFunctions() {
+//  object.watch
+    if (!Object.prototype.multiWatch) {
+	Object.defineProperty(Object.prototype, "multiWatch", {
+	    enumerable: false,
+	    configurable: true,
+	    writable: false,
+	    value: function (prop, watcher) {
+		var obj = this,
+		oldval = this[prop],
+		newval = oldval,
+		getter = function () {
+		    return newval;
+		},
+		setter = function (val) {
+
+		    oldval = newval;
+
+		    for (var f=0; f < obj.watchers[prop].length; f++) {
+			obj.watchers[prop][f](prop, oldval, val);
+		    }
+		    newval = val;
+		    return newval;
+		};
+
+		if (delete obj[prop]) { // can't watch constants
+		    Object.defineProperty(this, prop, {
+			get: getter,
+			set: setter,
+			enumerable: true,
+			configurable: true
+		    });
+
+		    if (!obj.watchers) obj.watchers = {};
+		   
+		    if (!obj.watchers[prop]) obj.watchers[prop] = [];
+
+		    // check for duplicates
+		    for (var i=0; i < obj.watchers[prop].length; i++){
+			if(obj.watchers[prop][i] === watcher){
+			    return;
+			}
+		    }
+
+		    //obj.watchers[prop].push( eval(watcher)); //add the new watcher in the watchers array
+		    obj.watchers[prop].push(watcher);
+		}
+
+	    }
+	});
+    }
+
+//  object.unwatch
+    if (!Object.prototype.multiUnwatch) {
+	Object.defineProperty(Object.prototype, "multiUnwatch", {
+	    enumerable: false,
+	    configurable: true,
+	    writable: false,
+	    value: function (prop, watcher) {
+		var obj = this;
+
+		// if a watcher is supplied, just remove it 
+		if(arguments.length == 2) {
+		    for(var i=0; i < obj.watchers[prop].length; i++){
+			var w = obj.watchers[prop][i];
+
+			if(w == watcher) {
+			    obj.watchers[prop].splice(i, 1);
+			}
+		    }
+		} else {
+		    obj.watchers[prop] = [];
+		}
+
+		if (obj.watchers[prop].length == 0 )
+		{
+		    delete obj.watchers[prop];
+		    var val = this[prop];
+		    delete this[prop]; // remove accessors
+		    this[prop] = val;
+		}
+	    }
+	});
+    }
+}
+
+// add the new functions to the main window
+contentEval(addWatchFunctions);
+
+// add the new functions to this script
+addWatchFunctions();
 
 pbStartup ();
