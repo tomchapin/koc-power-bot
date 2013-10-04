@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130930b';
+var Version = '20131004a';
 
 var http =  window.location.protocol+"\/\/";
 
