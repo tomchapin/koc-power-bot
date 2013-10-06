@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20130930b
+// @version        20131006a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20130930b';
+var Version = '20131006a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -10913,6 +10913,7 @@ Tabs.Barb = {
       ['EXec', 14],
       ['Tower', 15],
       ['FlameArch', 16],
+      ['Hussar', 17],
      ],
     
   init : function (div){
@@ -11358,7 +11359,7 @@ Tabs.Barb = {
          // check troop levels in city
          var trps = AttackOptions.Troops[barblevel];
          var num_troops = 0;
-         for (var ii=1; ii<16; ii++) {
+         for (var ii=1; ii<t.troopDef.length+1; ii++) {
             if (parseInt(trps[ii]) > Seed.units[cityID]['unt'+ii]) check = 0;
             num_troops += trps[ii];
          }
