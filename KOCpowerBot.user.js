@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131007a
+// @version        20131009a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131007a';
+var Version = '20131009a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2971,22 +2971,22 @@ doPreset : function (room, retry) {
                		   unsafeWindow.cm.ThroneView.clickActivePreset(button);
                 	}
                 else {
-                    if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
-		    else {
-		      div = document.createElement('div');
-		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change throne room..Trying Again<BR></div>';
-		      document.body.insertBefore (div, document.body.firstChild);
-		    }
+//                    if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
+//		    else {
+//		      div = document.createElement('div');
+//		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change throne room..Trying Again<BR></div>';
+//		      document.body.insertBefore (div, document.body.firstChild);
+//		    }
                     setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
                 }
             },
             onFailure: function () {
-                    if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
-		    else {
-		      div = document.createElement('div');
-		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change throne room..Trying Again<BR></div>';
-		      document.body.insertBefore (div, document.body.firstChild);
-		    }
+//                    if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Trying Again</font>";
+//		    else {
+//		      div = document.createElement('div');
+//		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change throne room..Trying Again<BR></div>';
+//		      document.body.insertBefore (div, document.body.firstChild);
+//		    }
                setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
             },
         });
