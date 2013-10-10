@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131009a
+// @version        20131009b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131009a';
+var Version = '20131009b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2298,7 +2298,8 @@ Tabs.Throne = {
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubUE type=submit value="Upgrade/Enhance"></td>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubEQ type=submit value="Compare"></td>';
     main +='<TD><input class=pbSubtab ID=ptmrchSubTC type=submit value="Caps"></TD>';
-    main +='<TD><input class=pbSubtab ID=ptmrchSubTR type=submit value="Throne"></TD>';
+    main +='<TD><input class=pbSubtab ID=ptmrchSubTR type=submit value="Throne"></TD></tr>';
+    main +='<tr><TD><input class=pbSubtab ID=ptmrchSubUN type=submit value="Uniques"></TD>';
     main += '</tr></table><HR class=ptThin>';
     main +='<DIV id=ThroneOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
 
@@ -2310,7 +2311,7 @@ Tabs.Throne = {
    document.getElementById('ptmrchSubEQ').addEventListener('click', e_butSubtab, false);
    document.getElementById('ptmrchSubTC').addEventListener('click', e_butSubtab, false);
    document.getElementById('ptmrchSubTR').addEventListener('click', e_butSubtab, false);
-    
+   document.getElementById('ptmrchSubUN').addEventListener('click', e_butSubtab, false); 
 
     changeSubtab (document.getElementById('ptmrchSubUE'));
     
@@ -2345,6 +2346,145 @@ Tabs.Throne = {
          }     
       saveThroneOptions();
    },
+   
+    Uniques : function () {
+        var t = Tabs.Throne;
+        var UniqueItems = {
+            Advisors : {
+                "Wynn"                  : "http://i.imgur.com/qUxIZcn.png",
+                "Mordred"               : "http://i.imgur.com/itn5Nfn.png",
+                "Kay"                   : "http://i.imgur.com/CF0S1YL.png",
+                "Warhorse"              : "http://i.imgur.com/770yicI.png",
+                "The Harbinger"         : "http://i.imgur.com/O2l15bY.png",
+                "Father Winter"         : "http://i.imgur.com/4D9wijD.png",
+                "Advisor Of Magnitude A" : "http://i.imgur.com/FXg8zbK.png",
+                "Advisor of Magnitude B" : "http://i.imgur.com/KbGP3QR.png",
+                "Advisor of Discipline"  : "http://i.imgur.com/5Yrhp8F.png",
+                "Dagoney The Court Jester"  : "http://img545.imageshack.us/img545/8323/c7h6.jpg",
+            },
+            Thrones : {
+                "Valor"             : "http://i.imgur.com/fIeZMXM.png",
+                "Hallowed Throne"   : "http://i.imgur.com/m8ORCW8.png",
+                "Dominance"         : "http://i.imgur.com/5R4RYuT.png",
+                "Harmony"           : "http://i.imgur.com/HGcEHiF.png",
+                "Stalwart Throne"   : "http://i.imgur.com/3pI3OZj.jpg",
+                "Throne of Fortune" : "http://i.imgur.com/ykrqzP9.jpg",
+            },
+            Banners : {
+                "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
+                "Relief Banner"         : "http://i.imgur.com/A60lVgd.png",
+                "Champions Shroud"      : "http://community.kabam.com/forums/attachment.php?attachmentid=60451&d=1372433759",
+                "Banner of Magnitude"   : "http://i.imgur.com/IoIEG95.png",
+                "Banner Of The Cause"   : "http://i40.tinypic.com/o0wg42.jpg",
+                "Unyielding Banner"     : "http://imageshack.us/a/img138/3130/ykgb.png",
+            
+            },
+            Windows : {
+                "Window Of Shalott"     : "http://i.imgur.com/uJD0fOU.png",
+                "Window Of Resistance"  : "http://i.imgur.com/34hIEq5.png",
+                "Superbe Window Deal Du Jour Confusion" : "http://i.imgur.com/biLx6Am.jpg",
+                "Window Of The Swing"   : "http://i.imgur.com/7JdqyiG.jpg",
+                "Window of Persistence" : "http://i.imgur.com/s0IXGUo.jpg",
+                "Persevering Window"    : "http://i.imgur.com/HGGbe5Q.jpg",
+                "Warfarers Portal"     : "http://i.imgur.com/8z4wNcn.jpg",
+                
+            },
+            Candles : {
+                "Merry Chandelier"                  : "http://i.imgur.com/iBzYUh5.png",
+                "Chandelier Of The Green Knight"    : "http://i.imgur.com/MEVEjPM.png",
+                "Maganimous Chandelier"             : "http://i.imgur.com/CJWVQEh.jpg",
+                
+            },
+            Tables : {
+                "Dark Master Jack"      : "http://i.imgur.com/2ThozSy.png",
+                "Healers Shrine"       : "http://i.imgur.com/clPMfAQ.png",
+                "Skillful Table"        : "http://i.imgur.com/xtRTCEU.jpg",
+                
+            },
+            Trophies : {
+                "Courageous Trophy"     : "http://i.imgur.com/ODDVqwD.png",
+                "Sir Galahads Shield"   : "http://img268.imageshack.us/img268/5116/m9n2.jpg",
+                
+            },
+            Heros : {
+                "Guileful Ranger"       : "http://i.imgur.com/uQ8YSwV.jpg",
+                "Grand Siegemaster"     : "http://i.imgur.com/YIdZF6M.jpg",
+                "Elite Guard"           : "http://i.imgur.com/3gRUVuo.jpg",
+                "Robin The Courageous"  : "http://i.imgur.com/DT0Zw2y.jpg",
+            },
+        }
+
+        unsafeWindow.pbshowunique = showUnique;
+        
+        m =  '<table><tr><td width=400px>Uniques</td><td width=400px>Panel A</td><td width=400px>Panel B</td></tr>';
+        m += '<tr><td style="vertical-align:top"><div><b>Advisors</b><br><table>';
+        for (var k in UniqueItems.Advisors) {
+            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Advisors")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Advisors")\'>B</a></td><td>'+k+'</td></tr>';
+        }
+        m += '</table></div>';
+        
+        m += '<div><b>Thrones</b><br><table>';
+        for (var k in UniqueItems.Thrones) {
+            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Thrones")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Thrones")\'>B</a></td><td>'+k+'</td></tr>';
+        }
+        m += '</table></div>';
+        
+        m += '<div><b>Banners</b><br><table>';
+        for (var k in UniqueItems.Banners) {
+            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Banners")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Banners")\'>B</a></td><td>'+k+'</td></tr>';
+        }
+        m += '</table></div>';
+        
+        m += '<div><b>Windows</b><br><table>';
+        for (var k in UniqueItems.Windows) {
+            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Windows")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Windows")\'>B</a></td><td>'+k+'</td></tr>';
+        }
+        m += '</table></div>';
+        
+        m += '<div><b>Candles</b><br><table>';
+        for (var k in UniqueItems.Candles) {
+            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Candles")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Candles")\'>B</a></td><td>'+k+'</td></tr>';
+        }
+        m += '</table></div>';
+
+        m += '<div><b>Tables</b><br><table>';
+        for (var k in UniqueItems.Tables) {
+            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Tables")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Tables")\'>B</a></td><td>'+k+'</td></tr>';
+        }
+        m += '</table></div>';
+
+        m += '<div><b>Trophies</b><br><table>';
+        for (var k in UniqueItems.Trophies) {
+            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Trophies")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Trophies")\'>B</a></td><td>'+k+'</td></tr>';
+        }
+        m += '</table></div>';
+
+        m += '<div><b>Heros</b><br><table>';
+        for (var k in UniqueItems.Heros) {
+            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Heros")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Heros")\'>B</a></td><td>'+k+'</td></tr>';
+        }
+        m += '</table></div>';
+
+        
+        m += '</div></td><td id=panelA style="vertical-align:top"></td><td id=panelB style="vertical-align:top"></td></tr>';
+        m += '</table>';
+        t.Overv.innerHTML = m;
+        
+        function showUnique(panel,name,type) {
+            switch (type) {
+                case "Advisors" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Advisors[name]+'>'; break;
+                case "Thrones"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Thrones[name]+'>'; break;
+                case "Banners"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Banners[name]+'>'; break;
+                case "Windows"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Windows[name]+'>'; break;
+                case "Candles"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Candles[name]+'>'; break;
+                case "Tables"   : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Tables[name]+'>'; break;
+                case "Trophies" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Trophies[name]+'>'; break;
+                case "Heros"    : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Heros[name]+'>'; break;
+            }
+        }
+    },
+    
+
    
    Caps : function (){
       var t =Tabs.Throne;
@@ -4131,6 +4271,8 @@ show : function (){
       t.Caps();
     else if (t.curTabName == 'TR')
       t.ThroneT();
+    else if (t.curTabName == 'UN')
+      t.Uniques();
   }, 
 }
 
