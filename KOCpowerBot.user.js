@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131009b
+// @version        201310011
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131009b';
+var Version = '201310011';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -817,7 +817,12 @@ function pbStartup (){
     .pbttabs {background-color:#A68064; font-weight:bold; color:white}\
     .pbttabsdis {background-color:#603311; font-weight:bold; color:white}\
 	.craftdesc:hover span.crafttip { display:block; position:absolute; background: #FFFFAA; border: 1px solid #FFAD33; padding: 0.5em 0.5em;}\
-	.craftdesc span.crafttip { display:none;}';    
+	.craftdesc span.crafttip { display:none;}\
+    .pbdivHeader       {transparent;height: 16px;border-bottom:0px solid #000000;font-weight:bold;font-size:11px;opacity:0.75;margin-left:0px;margin-right:0px;margin-top:1px;margin-bottom:0px;padding-top:4px;padding-right:10px;vertical-align:text-top;align:left;background-color:#335577;}\
+    .pbdivLink         {color:#000;text-decoration:none;}\
+    .pbdivLink:Hover   {color:#000;text-decoration:none;}\
+    .pbdivLink:Active  {color:#000;text-decoration:none;}\
+    .pbdivHide         {display:none}';    
 
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
@@ -2410,63 +2415,25 @@ Tabs.Throne = {
                 "Guileful Ranger"       : "http://i.imgur.com/uQ8YSwV.jpg",
                 "Grand Siegemaster"     : "http://i.imgur.com/YIdZF6M.jpg",
                 "Elite Guard"           : "http://i.imgur.com/3gRUVuo.jpg",
-                "Robin The Courageous"  : "http://i.imgur.com/DT0Zw2y.jpg",
+                "Robin The Courageous"  : "http://i.imgur.com/wWxlfWv.png",
             },
         }
 
         unsafeWindow.pbshowunique = showUnique;
         
-        m =  '<table><tr><td width=400px>Uniques</td><td width=400px>Panel A</td><td width=400px>Panel B</td></tr>';
-        m += '<tr><td style="vertical-align:top"><div><b>Advisors</b><br><table>';
-        for (var k in UniqueItems.Advisors) {
-            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Advisors")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Advisors")\'>B</a></td><td>'+k+'</td></tr>';
-        }
-        m += '</table></div>';
+        m =  '<table><tr><td width=400px>Uniques</td><td width=400px>Panel A</td><td width=400px>Panel B</td></tr><tr><td style="vertical-align:top">';
         
-        m += '<div><b>Thrones</b><br><table>';
-        for (var k in UniqueItems.Thrones) {
-            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Thrones")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Thrones")\'>B</a></td><td>'+k+'</td></tr>';
-        }
-        m += '</table></div>';
+        for (var i in UniqueItems) {
         
-        m += '<div><b>Banners</b><br><table>';
-        for (var k in UniqueItems.Banners) {
-            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Banners")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Banners")\'>B</a></td><td>'+k+'</td></tr>';
+            m += '<div class="pbdivHeader" align=left><a id='+i+'Hdr class=pbdivLink >'+i+'&nbsp;<img id='+i+'Arrow height="10" src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/down_arrow.png"></a></div>'
+            m += '<div id='+i+' align=left class=""><table>';
+            for (var k in UniqueItems[i]) {
+                m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","'+i+'")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","'+i+'")\'>B</a></td><td>'+k+'</td></tr>';
+            }
+            m += '</table></div>';
         }
-        m += '</table></div>';
-        
-        m += '<div><b>Windows</b><br><table>';
-        for (var k in UniqueItems.Windows) {
-            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Windows")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Windows")\'>B</a></td><td>'+k+'</td></tr>';
-        }
-        m += '</table></div>';
-        
-        m += '<div><b>Candles</b><br><table>';
-        for (var k in UniqueItems.Candles) {
-            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Candles")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Candles")\'>B</a></td><td>'+k+'</td></tr>';
-        }
-        m += '</table></div>';
-
-        m += '<div><b>Tables</b><br><table>';
-        for (var k in UniqueItems.Tables) {
-            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Tables")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Tables")\'>B</a></td><td>'+k+'</td></tr>';
-        }
-        m += '</table></div>';
-
-        m += '<div><b>Trophies</b><br><table>';
-        for (var k in UniqueItems.Trophies) {
-            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Trophies")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Trophies")\'>B</a></td><td>'+k+'</td></tr>';
-        }
-        m += '</table></div>';
-
-        m += '<div><b>Heros</b><br><table>';
-        for (var k in UniqueItems.Heros) {
-            m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","Heros")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","Heros")\'>B</a></td><td>'+k+'</td></tr>';
-        }
-        m += '</table></div>';
-
-        
-        m += '</div></td><td id=panelA style="vertical-align:top"></td><td id=panelB style="vertical-align:top"></td></tr>';
+               
+        m += '</td><td id=panelA style="vertical-align:top"></td><td id=panelB style="vertical-align:top"></td></tr>';
         m += '</table>';
         t.Overv.innerHTML = m;
         
@@ -2482,6 +2449,14 @@ Tabs.Throne = {
                 case "Heros"    : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Heros[name]+'>'; break;
             }
         }
+        
+        for (var j in UniqueItems) {
+            (function(j){
+                document.getElementById(j+'Hdr').addEventListener ('click', function () {ToggleDivDisplay(500,500,j);}, false);
+            })(j);
+        }
+        
+        
     },
     
 
@@ -15077,6 +15052,21 @@ var tabManager = {
     }
     newTab.obj.show();
   },
+}
+
+function ToggleDivDisplay(h,w,div) {
+    var dc = unsafeWindow.jQuery('#'+div).attr('class');
+    if (dc) {
+        if (dc.indexOf('pbdivHide') >= 0) {
+            unsafeWindow.jQuery('#'+div).attr('class','');
+            unsafeWindow.jQuery('#'+div+'Arrow').attr('src','https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/down_arrow.png');
+        }
+    }
+    else
+    {
+        unsafeWindow.jQuery('#'+div).attr('class','pbdivHide');
+        unsafeWindow.jQuery('#'+div+'Arrow').attr('src','https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/across_arrow.png');
+    }
 }
 
 function onUnload (){
