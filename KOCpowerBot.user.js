@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201310014b
+// @version        201310014c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '201310014b';
+var Version = '201310014c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -4058,9 +4058,11 @@ ThroneHUDinit : function (){
 	var t = Tabs.Throne;
 	var div = document.createElement('div');
 	var m = '<TABLE height=0% class=pbTab><TR align="center">';
-    for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
+    for (var k=1;k<Number(Seed.throne.slotNum+1);k++) {
+		if(k == 9)m+='</TR><TR align="center">';
        m += '<TD><INPUT id=htra'+k+' type=submit value='+k+' class="pbttabs" title='+ThroneOptions.tabnames[k]+'></td>';
-    m += '</table><br>';
+    };
+    m += '</TR></table><br>';
 	div.innerHTML = m;
 	div.style.position="absolute";
 	div.style.top="29px";
