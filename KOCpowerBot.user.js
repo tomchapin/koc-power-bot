@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201310013a
+// @version        201310014a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '201310013a';
+var Version = '201310014a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -8296,7 +8296,7 @@ Tabs.transport = {
         document.getElementById('MaxFood')
             .addEventListener('click', function () {
             t.Food = 0;
-            if(t.MaxLoad == 0) {
+            if(t.MaxLoad <= 0) {
             	var a = this;
             	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
             	setTimeout(function(){a.click()},1000);
@@ -8311,7 +8311,7 @@ Tabs.transport = {
         document.getElementById('MaxWood')
             .addEventListener('click', function () {
             t.Wood = 0;
-            if(t.MaxLoad == 0) {
+            if(t.MaxLoad <= 0) {
             	var a = this;
             	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
             	setTimeout(function(){a.click()},1000);
@@ -8326,7 +8326,7 @@ Tabs.transport = {
         document.getElementById('MaxStone')
             .addEventListener('click', function () {
             t.Stone = 0;
-            if(t.MaxLoad == 0) {
+            if(t.MaxLoad <= 0) {
             	var a = this;
             	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
             	setTimeout(function(){a.click()},1000);
@@ -8341,7 +8341,7 @@ Tabs.transport = {
         document.getElementById('MaxOre')
             .addEventListener('click', function () {
             t.Ore = 0;
-            if(t.MaxLoad == 0) {
+            if(t.MaxLoad <= 0) {
             	var a = this;
             	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
             	setTimeout(function(){a.click()},1000);
@@ -8356,7 +8356,7 @@ Tabs.transport = {
         document.getElementById('MaxGold')
             .addEventListener('click', function () {
             t.Gold = 0;
-            if(t.MaxLoad == 0) {
+            if(t.MaxLoad <= 0) {
             	var a = this;
             	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
             	setTimeout(function(){a.click()},1000);
@@ -8370,7 +8370,7 @@ Tabs.transport = {
         }, false);
         document.getElementById('MaxAstone').addEventListener('click', function () {
             t.Astone = 0;
-            if(t.MaxLoad == 0) {
+            if(t.MaxLoad <= 0) {
             	var a = this;
             	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
             	setTimeout(function(){a.click()},1000);
