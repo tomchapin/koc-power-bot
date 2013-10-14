@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        201310014a
+// @version        201310014b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '201310014a';
+var Version = '201310014b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -8652,6 +8652,7 @@ Tabs.transport = {
         var GlobalMaxLoad = t.Troops * LoadUnit ;
         t.MaxLoad = parseInt(document.getElementById('TroopsToSend').value) * LoadUnit;
 	t.MaxLoad = Math.floor(t.MaxLoad) -1;  // Lessen issues with roundoff errors
+	if(t.MaxLoad < 0)t.MaxLoad=0;
         t.TroopsNeeded = (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit;
         t.TroopsNeeded = t.TroopsNeeded.toFixed(0);
         if (t.TroopsNeeded < ((t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit)) t.TroopsNeeded++;
