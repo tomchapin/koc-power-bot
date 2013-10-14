@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        201310011
+// @version        201310013a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '201310011';
+var Version = '201310013a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -8614,7 +8614,6 @@ Tabs.transport = {
                         loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
                     };
         var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
-        
         /**
         from camelotmain
         var total_units = 0;
@@ -8643,14 +8642,18 @@ Tabs.transport = {
         }
         11,792,500,000 12292500000   35734.8  37250
         **/
-                if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100))
+                if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100)) {
         loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
+     };
+     loadBoostBase += featherweight; //Should be done after throne room max check to get max boost?
+        logit('load '+loadBoostBase);
+        logit('load max '+unsafeWindow.cm.thronestats.boosts.Load.Max/100);
         loadBoostBase += 1;
-        loadBoostBase += featherweight; //Should be done after throne room max check to get max boost?
+
         var LoadUnit = Math.floor(loadBoostBase*Load);
-        var GlobalMaxLoad = t.Troops * LoadUnit;
+        var GlobalMaxLoad = t.Troops * LoadUnit ;
         t.MaxLoad = parseInt(document.getElementById('TroopsToSend').value) * LoadUnit;
-	t.MaxLoad = Math.floor(t.MaxLoad);  // Lessen issues with roundoff errors
+	t.MaxLoad = Math.floor(t.MaxLoad) -1;  // Lessen issues with roundoff errors
         t.TroopsNeeded = (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit;
         t.TroopsNeeded = t.TroopsNeeded.toFixed(0);
         if (t.TroopsNeeded < ((t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit)) t.TroopsNeeded++;
@@ -11462,7 +11465,6 @@ Tabs.Barb = {
       if (Seed.resources[cityID]["rec5"][0] > Number(AttackOptions.threshold)) {
          return;
       };
-      logit('march baring 1');
        var element1 = 'pddatacity'+(city-1);
        if (t.barbArray[city].length == 0) document.getElementById(element1).innerHTML = 'In search mode'; else
          document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
@@ -11481,11 +11483,9 @@ Tabs.Barb = {
        } else {
         return;
        };
-      logit('march baring 2');
        var check=0;
        var barblevel = parseInt(barbinfo.level);
         
-      logit('march baring 3');
         if (AttackOptions.Levels[city][barbinfo.level])
             check=1;
         
