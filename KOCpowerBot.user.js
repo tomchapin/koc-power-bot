@@ -8646,8 +8646,6 @@ Tabs.transport = {
         loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
      };
      loadBoostBase += featherweight; //Should be done after throne room max check to get max boost?
-        logit('load '+loadBoostBase);
-        logit('load max '+unsafeWindow.cm.thronestats.boosts.Load.Max/100);
         loadBoostBase += 1;
 
         var LoadUnit = Math.floor(loadBoostBase*Load);
