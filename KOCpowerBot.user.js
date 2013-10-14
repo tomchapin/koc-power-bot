@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        201310014c
+// @version        20131014d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '201310014c';
+var Version = '20131014d';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -5855,19 +5855,20 @@ Tabs.build = {
 
     e_autoBuild: function () {
         var t = Tabs.build;
-      var buildInterval = 5000+t.UASlowDown; // 2 seconds between checks by default
+        var buildInterval = 5000+t.UASlowDown; // 2 seconds between checks by default
         document.getElementById('pbbuildError').innerHTML = '';
       
         if (t.buildStates.running == true) {
             var now = unixTime()-5;//lets give some error room
             //logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
-			var itime = 1000;
+	    var itime = 1000;
             for (var i = 0; i < Cities.cities.length; i++) {
-				itime += 2000;
                 var cityId = Cities.cities[i].id;
+	      	if(t["bQ_" + cityId][0])
+		  itime += 2000;
                 var isBusy = false;
                 var qcon = Seed.queue_con["city" + cityId];
-             if(t['build'+Cities.byID[cityId].idx] == true)continue;//so we don't get overloaded with slowed down requests
+             	if(t['build'+Cities.byID[cityId].idx] == true) continue;//so we don't get overloaded with slowed down requests
                 if (qcon.length > 0) {
 				/***
 				string) 0 = buildingtype
@@ -5879,18 +5880,18 @@ Tabs.build = {
 				(number) 6 = 76
 				(number) 7 = position
 				* ***/
-                 if (parseInt(qcon[0][4]) > now) isBusy = true;
+                  if (parseInt(qcon[0][4]) > now) isBusy = true;
                   else {
                   	if(qcon[0][1] == 0) {//if it is destruct
                   		delete Seed.buildings["city" + cityId]['pos'+qcon[0][7]];
-               	   } else {
-								Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
-								logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
-							};
-							qcon.shift(); // remove expired build from queue
-							unsafeWindow.modal_build_show_state();
-							if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
-						};
+               	   	} else {
+				Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
+				logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
+			};
+			qcon.shift(); // remove expired build from queue
+			unsafeWindow.modal_build_show_state();
+			if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+		  };
                 }
                 //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
                 if (isBusy) {
@@ -5898,12 +5899,11 @@ Tabs.build = {
 					//0 = 5,9,7222643,1365086688,1365087900,0,3840,8
                     //TODO add info of remaining build time and queue infos
                 } else {
-				      if(t.buildStates.tr && t.buildStates.trset != Seed.throne.activeSlot) continue;//check just before we start building.  lets the other enhancements keep working.                	
-                    if (t["bQ_" + cityId].length > 0) { // something to do?
-                                    
-							t['build'+Cities.byID[cityId].idx] = true;
-                        t.doOneSlowdown(cityId,itime);
-                    }
+			if(t.buildStates.tr && t.buildStates.trset != Seed.throne.activeSlot) continue;//check just before we start building.  lets the other enhancements keep working.                	
+                    	if (t["bQ_" + cityId].length > 0) { // something to do?
+                       	  t['build'+Cities.byID[cityId].idx] = true;
+                       	  t.doOneSlowdown(cityId,itime);
+                    	}
                 }
             }
         }
@@ -5948,8 +5948,9 @@ Tabs.build = {
     },
     doOne: function (cityId) {
         var t = Tabs.build;
-			var bQi = t["bQ_" + cityId][0]; //take first queue item to build
-			if(!bQi)return;
+	if(!t["bQ_" + cityId][0])return;
+	var bQi = t["bQ_" + cityId][0]; //take first queue item to build
+	if(!bQi)return;
         var currentcityid = parseInt(bQi.cityId);
         t['build'+Cities.byID[currentcityid].idx] = false;
         var cityName = t.getCityNameById(currentcityid);
@@ -20421,24 +20422,28 @@ Tabs.Attack = {
 		new t.abandonWilderness();
 
 		if (CrestData[CrestDataNum].Paused) {
-			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+//			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
 			return;
 		};
 		
 		if (!t.checkCityTroops(r,CrestDataNum)) {
-			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+//			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
 			return;
 		};
 			
 		var march_slots = Number(Number(March.getEmptySlots(cityID.split("city")[1]))-Number(Options.CrestSlots));
 		if (march_slots < 1) {
-			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+//			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
 			return;
 		};
         
 		t.getAtkKnight(cityID);
 		if  (t.knt.toSource() == "[]") {
-			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+//			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
 			return;
 		}
 		var kid = t.knt[0].ID;
