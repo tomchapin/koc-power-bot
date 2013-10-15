@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131014d
+// @version        20131015a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131014d';
+var Version = '20131015a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -8563,6 +8563,7 @@ Tabs.transport = {
                 }
             }
         }
+        logit(total);
         return total;
     },
     updateResources: function () {
@@ -8607,7 +8608,7 @@ Tabs.transport = {
         if (Seed.playerEffects.loadExpire > unsafeWindow.unixtime()) {
             loadEffectBoost = 0.25;
         };
-        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01) + loadEffectBoost;
+        var loadBoostBase = (Math.floor(unsafeWindow.cm.ThroneController.effectBonus(6)) * 0.01) + loadEffectBoost;
                // if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
                     //loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
                     //bugged, wagons do not count, lets just disable it for now
@@ -8645,8 +8646,8 @@ Tabs.transport = {
         }
         11,792,500,000 12292500000   35734.8  37250
         **/
-                if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100)) {
-        loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
+                if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max)/100) {
+        loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max)/100;
      };
      loadBoostBase += featherweight; //Should be done after throne room max check to get max boost?
         loadBoostBase += 1;
@@ -9141,7 +9142,7 @@ Tabs.transport = {
         };
         var tboost = unsafeWindow.cm.ThroneController.effectBonus(6)+loadEffectBoost;
         if(tboost > unsafeWindow.cm.thronestats.boosts['Load'].Max) tboost = unsafeWindow.cm.thronestats.boosts['Load'].Max;
-        var loadBoostBase = (Number(tboost) * 0.01) +featherweight;
+        var loadBoostBase = (Math.floor(Number(tboost)) * 0.01) +featherweight;
         
                // if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
                //     loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
@@ -9153,7 +9154,7 @@ Tabs.transport = {
         var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
 
         loadBoostBase += 1;
-        var LoadUnit = Math.floor(loadBoostBase*Load);
+        var LoadUnit = Math.floor(loadBoostBase*Load)-1;
         var maxloadperwagon = LoadUnit;
           var maxload = (maxloadperwagon * Troops);
           if(wagons <= 0) {return; }
