@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131015a
+// @version        20131015b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131015a';
+var Version = '20131015b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -6726,7 +6726,7 @@ Tabs.Search = {
     t.opt.startY = parseInt(document.getElementById ('pasrchY').value);
     t.opt.maxDistance = parseInt(document.getElementById ('pasrcDist').value);
     t.opt.searchShape = Options.srcdisttype;
-    if(t.opt.maxDistance > 20){
+    if(t.opt.maxDistance > MAP_SFIELD){
         t.opt.searchDistance = MAP_SFIELD;
     } else {
 	t.opt.searchDistance = t.opt.maxDistance
