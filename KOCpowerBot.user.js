@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131015b
+// @version        20131015c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131015b';
+var Version = '20131015c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2366,12 +2366,13 @@ Tabs.Throne = {
                 "Advisor of Magnitude B" : "http://i.imgur.com/KbGP3QR.png",
                 "Advisor of Discipline"  : "http://i.imgur.com/5Yrhp8F.png",
                 "Dagoney The Court Jester"  : "http://img545.imageshack.us/img545/8323/c7h6.jpg",
+                "Minstrel"              : "http://i.imgur.com/hUIXhca.png",
             },
             Thrones : {
                 "Valor"             : "http://i.imgur.com/fIeZMXM.png",
                 "Hallowed Throne"   : "http://i.imgur.com/m8ORCW8.png",
                 "Dominance"         : "http://i.imgur.com/5R4RYuT.png",
-                "Harmony"           : "http://i.imgur.com/HGcEHiF.png",
+                "Harmony"           : "http://i.imgur.com/XdpulbB.png",
                 "Stalwart Throne"   : "http://i.imgur.com/3pI3OZj.jpg",
                 "Throne of Fortune" : "http://i.imgur.com/ykrqzP9.jpg",
             },
@@ -2402,8 +2403,8 @@ Tabs.Throne = {
             },
             Tables : {
                 "Dark Master Jack"      : "http://i.imgur.com/2ThozSy.png",
-                "Healers Shrine"       : "http://i.imgur.com/clPMfAQ.png",
-                "Skillful Table"        : "http://i.imgur.com/xtRTCEU.jpg",
+                "Healers Shrine"        : "http://i.imgur.com/clPMfAQ.png",
+                "Skillful Table"        : "http://i.imgur.com/zk18k12.png",
                 
             },
             Trophies : {
