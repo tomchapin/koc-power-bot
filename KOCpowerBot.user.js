@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131017a
+// @version        20131017b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131017a';
+var Version = '20131017b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2392,8 +2392,8 @@ Tabs.Throne = {
                 "Window Of The Swing"   : "http://i.imgur.com/7JdqyiG.jpg",
                 "Window of Persistence" : "http://i.imgur.com/s0IXGUo.jpg",
                 "Persevering Window"    : "http://i.imgur.com/HGGbe5Q.jpg",
-                "Warfarers Portal"     : "http://i.imgur.com/8z4wNcn.jpg",
-                
+                "Warfarers Portal"      : "http://i.imgur.com/8z4wNcn.jpg",
+                "Window of Chalice"     : "http://i.imgur.com/qO7GiAu.png",
             },
             Candles : {
                 "Merry Chandelier"                  : "http://i.imgur.com/iBzYUh5.png",
