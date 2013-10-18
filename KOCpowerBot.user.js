@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131015c
+// @version        20131017a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131015c';
+var Version = '20131017a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -18471,7 +18471,7 @@ Tabs.Apothecary = {
     if(t.pop == null)
         t.pop = new pbPopup('pbapothecary_pop',0,0,400,500,true,function(){t.pop.destroy(); t.pop = null;});
     t.pop.getTopDiv().innerHTML = '<DIV><center>Auto Heal Array</center></div>';
-    var m = '<table><tr>';
+    var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><table><tr>';
     for (var city in ApothecaryOptions.city){
         if(!Cities.cities[city] || ApothecaryOptions.city[city].length < 1) continue;
         m += '<td colspan=2><b>'+Cities.cities[city].name+'</b></td>\
@@ -18482,7 +18482,7 @@ Tabs.Apothecary = {
                   <td>'+info.min+'</td><td>'+info.max+'</td><td>'+strButton20('Edit','title="Apothecary edit" onclick="pbapo(this,'+i+','+city+')"')+'</td><td>'+strButton20('Delete','title="Apothecary delete" onclick="pbapo(this,'+i+','+city+')"')+'</td>';
             m += '</tr><tr>';
         }
-        m += '</tr><tr>';
+        m += '</tr><tr></table></div>';
     }
     t.pop.getMainDiv().innerHTML = m;
     unsafeWindow.pbapo = t.display_action;
