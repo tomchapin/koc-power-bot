@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131017b
+// @version        20131018a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131017b';
+var Version = '20131018a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -18482,8 +18482,9 @@ Tabs.Apothecary = {
                   <td>'+info.min+'</td><td>'+info.max+'</td><td>'+strButton20('Edit','title="Apothecary edit" onclick="pbapo(this,'+i+','+city+')"')+'</td><td>'+strButton20('Delete','title="Apothecary delete" onclick="pbapo(this,'+i+','+city+')"')+'</td>';
             m += '</tr><tr>';
         }
-        m += '</tr><tr></table></div>';
+        m += '</tr><tr>';
     }
+    m += '</table></div>';
     t.pop.getMainDiv().innerHTML = m;
     unsafeWindow.pbapo = t.display_action;
     t.pop.show(true);
