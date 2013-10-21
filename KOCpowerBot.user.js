@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131021a
+// @version        20131021b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131021a';
+var Version = '20131021b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -418,6 +418,8 @@ var ThroneOptions = {
     Cityrand:false,
     SalvageLevel:1,
     UseTokens:false,
+    UseMO:false,
+    UseLT:false,
     SaveUnique:true,
     heatup:true,
     ibrokeitems:[],
@@ -2739,8 +2741,10 @@ Upgrade_Enhance :function (){
           }
       m += '<TD><INPUT id=ShowHistory type=submit value="History"></td></table>';
       m += '<table><tr><INPUT id=pbUseTokens type=checkbox '+ (ThroneOptions.UseTokens?'CHECKED ':'') +'/>&nbsp;Use Tokens/Stones when available</tr>';
-      m += '<tr><br>Will use Mystic Orb/Lesser Mystic Orb/Protection Stone/Lesser Protection stone for Enhance</tr>';
-      m += '<tr><br>Will use Lucky Token/Lesser Lucky Token for Upgrade</tr>';
+      m += '<tr><br>Will use Protection Stone/Lesser Protection stone for Enhance';
+      m += ' <INPUT id=pbUseMO type=checkbox '+ (ThroneOptions.UseMO?'CHECKED ':'') +'/> Also use Mystic Orb/Lesser Mystic Orb</tr>';
+      m += '<tr><br>Will use Lesser Lucky Token for Upgrade';
+      m += ' <INPUT id=pbUseLT type=checkbox '+ (ThroneOptions.UseLT?'CHECKED ':'') +'/> Also use Lucky Tokens</tr>';
       m += '</table>';
      m+= '<DIV id=pbTowrtDivF class=pbStat>ADD UPGRADE OR ENHANCE TO QUEUE</div><TABLE class=ptTab><br/>';
       m+='<TR><TD>Throne items:</td><TD><SELECT id=ThroneItems type=list></select></td>';
@@ -2770,6 +2774,8 @@ Upgrade_Enhance :function (){
 
     document.getElementById('ThroneItems').addEventListener ('change', function (){t.paintHoover();},false);
       document.getElementById('pbUseTokens').addEventListener('change', function(){ThroneOptions.UseTokens = document.getElementById('pbUseTokens').checked;saveThroneOptions();} , false);
+      document.getElementById('pbUseMO').addEventListener('change', function(){ThroneOptions.UseMO = document.getElementById('pbUseMO').checked;saveThroneOptions();} , false);
+      document.getElementById('pbUseLT').addEventListener('change', function(){ThroneOptions.UseLT = document.getElementById('pbUseLT').checked;saveThroneOptions();} , false);
       document.getElementById('Enable').addEventListener('click', function(){t.toggleThroneState()} , false);
       document.getElementById('ShowHistory').addEventListener('click', function(){t.PaintHistory()} , false);
   
@@ -3358,10 +3364,12 @@ PaintSalvageHistory : function() {
       Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ThroneOptions.Items["0"]["cost"]));
         var buffItem = 0;
         if(ThroneOptions.UseTokens) {
-         if(parseInt(unsafeWindow.seed.items['i20004'])>0)//mystic orb
-            buffItem = 20004;
-         if(parseInt(unsafeWindow.seed.items['i20003'])>0)//lesser mystic orb
-            buffItem = 20003;
+         if(ThroneOptions.UseMO) {
+          if(parseInt(unsafeWindow.seed.items['i20004'])>0)//mystic orb
+             buffItem = 20004;
+          if(parseInt(unsafeWindow.seed.items['i20003'])>0)//lesser mystic orb
+             buffItem = 20003;
+	 }
          if(parseInt(unsafeWindow.seed.items['i20002'])>0)//protection stone
             buffItem = 20002;
          if(parseInt(unsafeWindow.seed.items['i20001'])>0)//lesser protection stone
@@ -3459,8 +3467,10 @@ PaintSalvageHistory : function() {
       Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ThroneOptions.Items["0"]["cost"]));
         var buffItem = 0;
         if(ThroneOptions.UseTokens) {
-         if(parseInt(unsafeWindow.seed.items['i20006'])>0)//lucky token
-            buffItem = 20006;
+         if(ThroneOptions.UseLT) {
+          if(parseInt(unsafeWindow.seed.items['i20006'])>0)//lucky token
+             buffItem = 20006;
+	 }
          if(parseInt(unsafeWindow.seed.items['i20005'])>0)//lesser lucky token
             buffItem = 20005;
          if(buffItem)
