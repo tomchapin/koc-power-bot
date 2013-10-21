@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131020a
+// @version        20131021a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131020a';
+var Version = '20131021a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -6659,13 +6659,13 @@ Tabs.Search = {
   citySelNotify : function (city){
     var t = Tabs.Search;
     t.selectedCity = city;
-    t.JumpCity(city.name);
+    t.JumpCity(city.id);
   },
   
   JumpCity:function(city) {
     var t = Tabs.Search;
     for (i=0;i<Seed.cities.length;i++) {
-        if (Seed.cities[i][1]==city) var cityNum=i;
+        if (Seed.cities[i][0]==city) var cityNum=i;
     }
     cityNum++;
     var obj = document.getElementById('citysel_'+cityNum);
