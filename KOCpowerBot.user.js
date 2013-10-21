@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131018b
+// @version        20131020a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131018b';
+var Version = '20131020a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2739,7 +2739,7 @@ Upgrade_Enhance :function (){
           }
       m += '<TD><INPUT id=ShowHistory type=submit value="History"></td></table>';
       m += '<table><tr><INPUT id=pbUseTokens type=checkbox '+ (ThroneOptions.UseTokens?'CHECKED ':'') +'/>&nbsp;Use Tokens/Stones when available</tr>';
-      m += '<tr><br>Will use Protection Stone/Lesser Protection stone for Enhance</tr>';
+      m += '<tr><br>Will use Mystic Orb/Lesser Mystic Orb/Protection Stone/Lesser Protection stone for Enhance</tr>';
       m += '<tr><br>Will use Lucky Token/Lesser Lucky Token for Upgrade</tr>';
       m += '</table>';
      m+= '<DIV id=pbTowrtDivF class=pbStat>ADD UPGRADE OR ENHANCE TO QUEUE</div><TABLE class=ptTab><br/>';
@@ -3358,6 +3358,10 @@ PaintSalvageHistory : function() {
       Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ThroneOptions.Items["0"]["cost"]));
         var buffItem = 0;
         if(ThroneOptions.UseTokens) {
+         if(parseInt(unsafeWindow.seed.items['i20004'])>0)//mystic orb
+            buffItem = 20004;
+         if(parseInt(unsafeWindow.seed.items['i20003'])>0)//lesser mystic orb
+            buffItem = 20003;
          if(parseInt(unsafeWindow.seed.items['i20002'])>0)//protection stone
             buffItem = 20002;
          if(parseInt(unsafeWindow.seed.items['i20001'])>0)//lesser protection stone
