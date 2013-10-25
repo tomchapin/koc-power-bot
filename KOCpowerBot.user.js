@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131023a
+// @version        20131025a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131023a';
+var Version = '20131025a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2191,7 +2191,7 @@ compactFarmData3: function(){
     var element = 'pddataFarm'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ xxx +','+ yyy;
    
-    setTimeout (function(){t.MapAjax.request (xxx, yyy, 15, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (xxx, yyy, MAP_SFIELD, t.mapCallback)}, MAP_DELAY);
   },
   
   mapCallback : function (left, top, width, rslt){
@@ -2224,12 +2224,12 @@ compactFarmData3: function(){
             t.mapDat.push ({time:0,empty:0,lost:false,enabled:'true',attacked:0,DaysInactive:"?",LastCheck:0,Diplomacy:Diplomacy,UserId:map[k].tileUserId,AllianceName:AllianceName,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel,PlayerName:rslt.userInfo[who].n,cityName:map[k].cityName,might:rslt.userInfo[who].m,cityNumber:map[k].cityNum,Ore:0,Wood:0,Stone:0,Food:0,Gold:0});};
       }
     }
-    t.tilesSearched += (15*15);
+    t.tilesSearched += (MAP_SFIELD*MAP_SFIELD);
 
-    t.curX += 15;
+    t.curX += MAP_SFIELD;
     if (t.curX > t.lastX){
       t.curX = t.firstX;
-      t.curY += 15;
+      t.curY += MAP_SFIELD;
       if (t.curY > t.lastY){
         var element = 'pdtotalFarm'+(t.lookup-1);
         document.getElementById(element).innerHTML = 'Found: ' + t.mapDat.length;
@@ -2246,7 +2246,7 @@ compactFarmData3: function(){
     var y = t.MapAjax.normalize(t.curY);
     var element = 'pddataFarm'+(t.lookup-1);
     document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
-    setTimeout (function(){t.MapAjax.request (x, y, 15, t.mapCallback)}, MAP_DELAY);
+    setTimeout (function(){t.MapAjax.request (x, y, MAP_SFIELD, t.mapCallback)}, MAP_DELAY);
   },
   
   stopSearch : function (msg){
@@ -10746,7 +10746,7 @@ Tabs.AutoCraft = {
 		if (ingredients != '') ingredients = '<b>Ingredients</b><br>' + ingredients;
 
 		unsafeWindow.jQuery('#'+elem.id).children("span").remove();
-		unsafeWindow.jQuery('#'+elem.id).append('<span class="crafttip"><b>Recipe Name</b><br>' +name+' ('+odds+')<br><b>Requirements</b><br>Spire Lv.'+requirements+'<br>Aetherstone : '+addCommas(astone)+'<br>'+ingredients + '</div>');
+		unsafeWindow.jQuery('#'+elem.id).append('<span class="crafttip"><b>Recipe Name</b><br>' +name+' ('+odds+')<br><b>Requirements</b><br>Spire Lv.'+requirements+'<br>Aetherstone : '+addCommas(astone)+'<br>'+ingredients + '</span>');
 	},
 	
 	getCityAether : function (i) {
@@ -13845,7 +13845,7 @@ Tabs.AutoTrain = {
    
 		if (((t.slots_free > 0) || NearlyDone) && (t.cur_mm != 0) ) {
 			t.log("Generating Tournament Population");
-			t.dismiss_mm(cityId);
+			t.dismiss_mm(cityId,true); // no retry
 		}	
 	},
 
@@ -21483,7 +21483,7 @@ Tabs.popcontrol = {
       t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 1500);
       },
 
-   dismiss_mm : function (cityId)
+   dismiss_mm : function (cityId,noretry)
       {
       var t = Tabs.popcontrol;
       t.disable_btns();
@@ -21526,7 +21526,7 @@ Tabs.popcontrol = {
                t.busy = false;
                }
             },
-         });      
+         },noretry);      
       setTimeout(unsafeWindow.update_seed_ajax, 250);
       },
 
