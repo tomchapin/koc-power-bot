@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131025a
+// @version        20131025b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131025a';
+var Version = '20131025b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2403,6 +2403,7 @@ Tabs.Throne = {
                 "Merry Chandelier"                  : "http://i.imgur.com/iBzYUh5.png",
                 "Chandelier Of The Green Knight"    : "http://i.imgur.com/MEVEjPM.png",
                 "Maganimous Chandelier"             : "http://i.imgur.com/CJWVQEh.jpg",
+                "Candelabrum of Cruelty"            : "http://i.imgur.com/Iu2BCQ8.png",
                 
             },
             Tables : {
