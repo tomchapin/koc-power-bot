@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131025b
+// @version        20131025c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131025b';
+var Version = '20131025c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -13007,7 +13007,7 @@ Tabs.Reassign = {
         var t = Tabs.Reassign;
         var popReassignRoutes = null;
         t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
-        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
+        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto; max-width:1100px; width:1100px; overflow-x:scroll"><TABLE align=center cellpadding=1 cellspacing=1 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
         t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
         t.popReassignRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Reassign routes")+'</center></td>';
         t.paintReassignRoutes();
@@ -13088,7 +13088,7 @@ Tabs.Reassign = {
          row.insertCell(0).innerHTML = "ID";
          row.insertCell(1).innerHTML = translate("From");
          row.insertCell(2).innerHTML = translate("To");
-         row.insertCell(3).innerHTML = translate("Sup. Tr.");
+         row.insertCell(3).innerHTML = translate("SupplyTr");
          row.insertCell(4).innerHTML = "";
          row.insertCell(5).innerHTML = translate("MM");
          row.insertCell(6).innerHTML = "";
