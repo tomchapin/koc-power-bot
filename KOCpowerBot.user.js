@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131025c
+// @version        20131027a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131025c';
+var Version = '20131027a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -135,7 +135,7 @@ var Options = {
   pbWideMap    : false,
   pbFoodAlert  : false,
   pbFoodAlertInt  : 6,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:[]},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:[],guardian:false,guardautoswitch:{}},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -199,7 +199,7 @@ var Options = {
   dfbtns: false,
   crestbtns: false,
   Farmbtns: false,
-  SaveState: {},
+  SaveState: {guardian:{}},
   CrestSlots: 0,
   colorCityTabs: true,
   ThroneHUD: false,
@@ -4477,7 +4477,8 @@ Tabs.tower = {
     <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=2 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending");
     m+= '<INPUT id=pbalertTRAFK type=checkbox '+ (Options.alertConfig.AFK?'CHECKED ':'') +'/> Only when AFK</td></tr>\
     <TR><TD><INPUT id=pbalerttoff type=checkbox '+ (Options.alertConfig.alertTRtoff?'CHECKED ':'') +'/></td><td>'+translate("Stop auto outgoing marches on impending")+'</td></tr>\
-    <TR><TD align=right><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Toggle TR and marches back after: ")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>\
+    <TR><TD align=right><INPUT id=pbalertguard type=checkbox '+ (Options.alertConfig.guardian?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to wood guardian on impending (uses same afk setting as TR toggle)")+'</td></tr>\
+    <TR><TD align=right><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Toggle TR, guardian, and marches back after: ")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>\
     <TR><TD></TD><TD><INPUT id=pboldattacks type=submit value="'+unsafeWindow.g_js_strings.commonstr.post+' '+unsafeWindow.g_js_strings.ImpendingAttacks.incoming+' '+unsafeWindow.g_js_strings.commonstr.totx+' '+unsafeWindow.g_js_strings.commonstr.chat+'"/><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
         <TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
@@ -4529,6 +4530,7 @@ Tabs.tower = {
     document.getElementById('pbalertraid').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTR').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRset').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertguard').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTR2').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalerttoff').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRsetmin').addEventListener ('change', t.e_alertOptChanged, false);
@@ -4704,6 +4706,7 @@ Tabs.tower = {
     Options.alertConfig.alertTR=document.getElementById('pbalertTR').checked;
     Options.alertConfig.alertTR2=document.getElementById('pbalertTR2').checked;
     Options.alertConfig.alertTRtoff=document.getElementById('pbalerttoff').checked;
+    Options.alertConfig.guardian=document.getElementById('pbalertguard').checked;
     Options.alertConfig.AFK=document.getElementById('pbalertTRAFK').checked;
     var trset = parseInt(document.getElementById('pbalertTRset').value);
     Options.alertConfig.alertTRset = trset;
@@ -4763,6 +4766,7 @@ Tabs.tower = {
         t.displayDefMode (cityId);
       }
       Options.alertConfig.raidautoswitch[cityId] = false;
+      Options.alertConfig.guardautoswitch[cityId] = false;
     }
       var now = unixTime();
     var incomming = false;
@@ -4771,16 +4775,20 @@ Tabs.tower = {
         if (m.marchType==3 || m.marchType==4){
 			if(Options.alertConfig.lastatkarr.indexOf(m.mid) == -1) {
 				Options.alertConfig.lastatkarr.push(m.mid);
+            setTimeout(function(){Options.alertConfig.lastAttack = m.departureTime;saveOptions},500);
             t.newIncoming (m);
 			};
           incomming = true;
 
         }
       }      
-			if (Options.alertConfig.raid && incomming){
-            Options.alertConfig.raidautoswitch[m.toCityId] = true;
-          };
-          if(!incomming) Options.alertConfig.lastatkarr = new Array();
+      if (Options.alertConfig.raid && incomming){
+        Options.alertConfig.raidautoswitch[m.toCityId] = true;
+      };
+      if (Options.alertConfig.guard && incomming){
+	Options.alertConfig.guardautoswitch[m.toCityId] = true;
+      }
+        if(!incomming) Options.alertConfig.lastatkarr = new Array();
       saveOptions();
     if(Options.alertConfig.RecentActivity) {
       if(Options.alertConfig.alertTR2) {
@@ -4795,8 +4803,22 @@ Tabs.tower = {
                };
                if (Options.SaveState.trset != Seed.throne.activeSlot)
                if(Options.alertConfig.AFK) {
-                  if(isAFK)Tabs.Throne.doPreset(Options.SaveState.trset);
-               } else Tabs.Throne.doPreset(Options.SaveState.trset);
+                  if(isAFK) {
+		     Tabs.Throne.doPreset(Options.SaveState.trset);
+	             for (var cityId in Cities.byID){
+                        if(Options.SaveState.guardian[cityId] && Seed.buildings["city"+ cityId].pos500[0] != Options.SaveState.guardian[cityId]) 
+			   t.changeGuardian(cityId,parseInt(Options.SaveState.guardian[cityId]));
+		        Options.alertConfig.guardautoswitch[cityId] = false;
+	             }
+		   }
+               } else {
+		  Tabs.Throne.doPreset(Options.SaveState.trset);
+	          for (var cityId in Cities.byID){
+                     if(Options.SaveState.guardian[cityId] && Seed.buildings["city"+ cityId].pos500[0] != Options.SaveState.guardian[cityId]) 
+		        t.changeGuardian(cityId,parseInt(Options.SaveState.guardian[cityId]));
+		     Options.alertConfig.guardautoswitch[cityId] = false;
+	          }
+	       }
                Options.alertConfig.RecentActivity = false;
                saveOptions();
             }
@@ -4910,6 +4932,7 @@ Tabs.tower = {
                if(Options.SaveState.crest)Tabs.Attack.toggleCrestState();
             };
             Options.SaveState.trset = Seed.throne.activeSlot;
+            if(Seed.buildings["city"+ m.toCityId].pos500 && Seed.buildings["city"+ m.toCityId].pos500[0] !=50) Options.SaveState.guardian[m.toCityId]=Seed.buildings["city"+ m.toCityId].pos500[0];
          };
          Options.alertConfig.RecentActivity = true;
          saveOptions();
@@ -4917,11 +4940,16 @@ Tabs.tower = {
       var currentset = Seed.throne.activeSlot;
       if (Options.alertConfig.alertTRset != currentset){
             var preset = Options.alertConfig.alertTRset
-          if(Options.alertConfig.AFK) {
-            if(isAFK)Tabs.Throne.doPreset(preset);
-         }else Tabs.Throne.doPreset(preset);
+         if(Options.alertConfig.AFK) {
+            if(isAFK) Tabs.Throne.doPreset(preset);
+         } else Tabs.Throne.doPreset(preset);
       }
-   }
+    }
+    if (Options.alertConfig.guardian){
+         if(Options.alertConfig.AFK) {
+            if(isAFK) if(Seed.buildings["city"+ m.toCityId].pos500 ) t.changeGuardian(m.toCityId,50);
+         } else if(Seed.buildings["city"+ m.toCityId].pos500 ) t.changeGuardian(m.toCityId,50);
+    }
   },
   
   oldIncoming : function () {
@@ -4965,6 +4993,40 @@ Tabs.tower = {
      };
      msg = msg.substring(0, Number(msg.length-5));
      sendChat ("/a "+  msg);
+  },
+
+  changeGuardian : function (cityId,guardiantype){
+    var t = Tabs.tower;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.ctrl = "Guardian";
+    params.action = "summon";
+    params.cityId = cityId;
+    switch(guardiantype) {
+      case 50:
+	params.type = "wood";
+	break;
+      case 51:
+	params.type = "ore";
+	break;
+      case 52:
+	params.type = "food";
+	break;
+      case 53:
+	params.type = "stone";
+	break;
+    }
+    new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
+	method: "post",
+	parameters: params,
+	onSuccess: function (rslt) {
+		if (rslt.ok) {
+			unsafeWindow.seed.buildings["city"+ cityId].pos500[0]=guardiantype;
+		} 
+	},
+	onFailure: function () {
+                return;
+	}
+    })
   },
   
   sendalert : function (m){
