@@ -10777,9 +10777,9 @@ Tabs.AutoCraft = {
 		document.getElementById("Crafting_Save").addEventListener ('click', function (){t.saveCraftState()}, false);
 		document.getElementById("pbCraftRunning").addEventListener ('click', function (){t.toggleStateRunning(this)}, false);     
 		t.changeCraft ('pbCraftMinAether', 'CraftMinAether')
-		document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;saveCraftState();}, false);
-		document.getElementById('pbacTRbase').addEventListener ('change', function() {TrainOptions.actrbase = this.checked;saveCraftState();}, false);
-		document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;saveCraftState();}, false);
+		document.getElementById('pbacTR').addEventListener ('change', function() {TrainOptions.actr = this.checked;t.saveCraftState();}, false);
+		document.getElementById('pbacTRbase').addEventListener ('change', function() {TrainOptions.actrbase = this.checked;t.saveCraftState();}, false);
+		document.getElementById('pbacTRset').addEventListener ('change', function() {TrainOptions.actrset = this.value;t.saveCraftState();}, false);
 		var cItems = document.getElementById('pbcraftingqueues').getElementsByTagName('input');
 		for (var i = 0; i < cItems.length; i++) {
 			cItems[i].addEventListener('change', function(){t.saveCraftState()}, false);
