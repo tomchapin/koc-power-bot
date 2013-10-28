@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131027a
+// @version        20131028a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131027a';
+var Version = '20131028a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -10664,6 +10664,9 @@ Tabs.AutoCraft = {
 	craftMinAether : 50000,
 	craftinfo : {},
 	totaether : 0,
+	spires: [],
+	csok: true,
+	lastcsok: true,
 
 	init: function(div){
 		var t = Tabs.AutoCraft;
@@ -10755,6 +10758,7 @@ Tabs.AutoCraft = {
 		str +="<td align=center id=totaether>"+ addCommas(t.totaether) + "</td>";  
 		str +='<tr style="background: #e8e8e8" align=right><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg title="Crafting"></td>';
 		for(i=0; i<Cities.numCities; i++) {
+			t.spires.push(getUniqueCityBuilding(Cities.cities[i].id,20));
 			str +="<td align=center id=citycraft"+i+">"+ t.getCityCrafting(i) + "</td>";  
 		}    
 		str +="<td>&nbsp;</td></tr></tbody></table>";    
@@ -10825,9 +10829,10 @@ Tabs.AutoCraft = {
 	getCityCrafting : function (i) {
 		var t = Tabs.AutoCraft;
 		var now = unixTime();
-		var gotSpire = (getCityBuilding(Cities.cities[i].id,20).count != 0);
+		t.spires[i] = getUniqueCityBuilding(Cities.cities[i].id,20);
+		var gotSpire = (t.spires[i].count != 0);
 		if (gotSpire) {
-			var str = '<span>Spire (Lv.'+getCityBuilding(Cities.cities[i].id,20).maxLevel+')</span><BR>';
+			var str = '<span>Spire (Lv.'+t.spires[i].maxLevel+')</span><BR>';
 			var totTime = 0;
 			// the last item in the queue should be the item in progress
 			var len = Seed.queue_craft["city" + Cities.cities[i].id].length;
@@ -10884,12 +10889,19 @@ Tabs.AutoCraft = {
 			document.getElementById("citycraft"+i).innerHTML = t.getCityCrafting(i);  
 		}
 		document.getElementById("totaether").innerHTML = addCommas(t.totaether);  
+		
 		var cs = Math.floor(equippedthronestats(81));
 		document.getElementById("currcs").innerHTML = cs+'%';
-		if (TrainOptions.actr && (cs < Number(TrainOptions.actrset)))
-			unsafeWindow.jQuery('#currcs').css('color', 'red');
-		else	
-			unsafeWindow.jQuery('#currcs').css('color', 'black');
+		t.csok = (!TrainOptions.actr || (cs >= Number(TrainOptions.actrset)));
+		if (t.csok != t.lastcsok) {
+			if (!t.csok) {
+				unsafeWindow.jQuery('#currcs').css('color', 'red');
+			}	
+			else {	
+				unsafeWindow.jQuery('#currcs').css('color', 'black');
+			}
+		}		
+		t.lastcsok = t.csok;
 		
 		t.timerStat = setTimeout(function() { t.updateStat(); }, 1000);
 	},
@@ -10973,14 +10985,14 @@ Tabs.AutoCraft = {
 		if (TrainOptions.actr && !TrainOptions.actrbase && (cs < Number(TrainOptions.actrset))) return; // not enough crafting speed
 		if (!TrainOptions.CraftingCities[c+1]) return; // no autocraft in this city
 		if (t.citydelay[c+1] > 0) { t.citydelay[c+1]--; return; } // city being delayed due to error, reduce delay number and skip city
-		if (getCityBuilding(cityId,20).count==0) return; // no spire in this city
+		if (t.spires[c].count==0) return; // no spire in this city
 		if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<t.CraftMinAether) return;  // not enough a-stone
 
 		var tableau = [];
 		for(var d in TrainOptions.CraftingNb) {
 			if ((!TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>0)) || (TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>parseIntNan(Seed.items["i"+d])+t.checkCraftQueues(d)))) {
 				if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
-					if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(getCityBuilding(cityId,20).maxLevel))
+					if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(t.spires[c].maxLevel))
 						if(t.craftinfo[d].inputItems == "") { // "base items"
 							tableau.push (d);
 						} else {
@@ -15794,6 +15806,21 @@ function getCityBuilding (cityId, buildingId){
       ++ret.count;
       if(parseInt(b[k][1]) > ret.maxLevel)
          ret.maxLevel = parseInt(b[k][1]);
+   }
+  }
+  return ret;
+}
+
+// this one is for building types where more than one is not allowed - so it returns when building found (faster!?)
+function getUniqueCityBuilding (cityId, buildingId){
+  var b = Seed.buildings['city'+cityId];
+  var ret = {count:0, maxLevel:0};
+  for( var k in b){
+   if(b[k] && b[k][0] == buildingId){
+      ++ret.count;
+      if(parseInt(b[k][1]) > ret.maxLevel)
+         ret.maxLevel = parseInt(b[k][1]);
+	  return ret;
    }
   }
   return ret;
