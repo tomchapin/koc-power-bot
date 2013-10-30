@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131028b
+// @version        20131029a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131028b';
+var Version = '20131029a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2410,7 +2410,7 @@ Tabs.Throne = {
                 "Dark Master Jack"      : "http://i.imgur.com/2ThozSy.png",
                 "Healers Shrine"        : "http://i.imgur.com/clPMfAQ.png",
                 "Skillful Table"        : "http://i.imgur.com/zk18k12.png",
-                
+                "Bombardment Table"     : "http://i.imgur.com/o4slc5U.png",
             },
             Trophies : {
                 "Courageous Trophy"     : "http://i.imgur.com/ODDVqwD.png",
