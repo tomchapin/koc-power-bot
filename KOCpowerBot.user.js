@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131029a
+// @version        20131029b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131029a';
+var Version = '20131029b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -13330,7 +13330,7 @@ Tabs.Reassign = {
         else var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","","","","FlameArcher","Hussar"];
         for (k=0; k<troopsselect.length; k++) {
             var citytroops = Seed.units[cityID]['unt'+(parseInt(k)+1)];
-            var marchtroops = marching.marchUnits[parseInt(k)+1];
+            var marchtroops = marching.marchUnits[k];
             citytotal = parseInt(citytroops) + parseInt(marchtroops);
             //alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
             //if(k== 5) GM_log(citytotal +'  ' + t.reassignRoutes[count][troopsselect[k]]);
@@ -16605,9 +16605,9 @@ function getMarchInfo (cityID){
       march = Seed.queue_atkp[cityID][k];
       if(march.marchType != 5){
           if (typeof (march) == 'object'){
-            for (ii=0; ii<16; ii++){
-              ret.marchUnits[ii] += parseInt (march['unit'+ ii +'Count']);
-              ret.returnUnits[ii] += parseInt (march['unit'+ ii +'Return']);
+            for (ii=0; ii<17; ii++){
+              ret.marchUnits[ii] += parseInt (march['unit'+ (ii+1) +'Count']);
+              ret.returnUnits[ii] += parseInt (march['unit'+ (ii+1) +'Return']);
             }
             for (ii=1; ii<5; ii++){
               ret.resources[ii] += parseInt (march['resource'+ ii]);
