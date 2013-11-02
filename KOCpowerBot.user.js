@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131029b
+// @version        20131102a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131029b';
+var Version = '20131102a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -4892,7 +4892,7 @@ Tabs.tower = {
   soundTheAlert : function (){
     var t = Tabs.tower;
     Options.alertSound.alarmActive = true;
-    t.playSound(true);
+    new t.playSound(true);
   },
      
   stopSoundAlerts : function (){
@@ -5267,7 +5267,7 @@ Tabs.tower = {
 	  x.location=y;
 	  setTimeout(function(){
      var data = {};
-      data.Subject ='kocalaert'+getServerId()+' ';
+      data.Subject ='kocalert '+getServerId()+' ';
       if(m.marchStatus == 9) data.Subject += attackrecalled;
       data.Subject += scoutingat+' '+target;
       data.Message = msg.replace(eval('/'+fchar+'/g'),'');
