@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131102a
+// @version        20131104a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131102a';
+var Version = '20131104a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -214,6 +214,8 @@ var Options = {
   TourneyModeActive:false,
   UseTourneyMM:false,
   CrestList    : {"i1101":0,"i1102":0,"i1103":0,"i1104":0,"i1105":0,"i1106":0,"i1107":0,"i1108":0,"i1109":0,"i1110":0,"i1111":0,"i1112":0,"i1113":0,"i1114":0,"i1115":0,"i1120":0,"i1121":0,"i1122":0},
+  ReverseTransport:false,
+  ReverseTransportPercent:90,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -8263,10 +8265,11 @@ Tabs.transport = {
         m += '<TD><INPUT id=pbTradeReset type=submit value="' + translate("Delete Routes") + '"></td>';
         m += '</tr></table></div>';
         m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRADE ROUTE OPTIONS") + '</div>';
-        m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center"><TR align="left">';
-        m += '<TD colspan=4>' + translate("Check transport every:") + ' <INPUT id=pbtransportinterval type=text size=2 value="' + Options.transportinterval + '"\> ' + translate("minutes") + '</td></tr></table>';
-        m += '<TD colspan=4>' + translate("Do not send transport out if less than") + ' <INPUT id=pbminwagons type=text size=8 value="' + Options.minwagons + '"\> ' + translate("troops are needed. (Needless transports are skipped this way)") + '</td></tr></table>';
-        m += '<DIV style="margin-top:10px;margin-bottom:5px;">' + translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...") + '</div></table>';
+        m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="left">';
+        m += '<TD >&nbsp;' + translate("Check transport every:") + ' <INPUT id=pbtransportinterval type=text size=2 value="' + Options.transportinterval + '"\> ' + translate("minutes") + '</td></tr>';
+        m += '<TD >&nbsp;' + translate("Do not send transport out if less than") + ' <INPUT id=pbminwagons type=text size=8 value="' + Options.minwagons + '"\> ' + translate("troops are needed. (Needless transports are skipped this way)") + '</td></tr>';
+        m += '<TD >&nbsp;' + translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...") + '</td></tr>';
+        m += '<TD ><INPUT id=pbrevtrans type=checkbox '+(Options.ReverseTransport?'CHECKED':'')+'> Reverse transport if resource amount falls below <INPUT id=pbrevtranspc type=text size=2 value="' + Options.ReverseTransportPercent + '"\> % of the "Keep" value.</td></tr></table>';
         m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRANSPORTS") + '</div>';
         m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
         m += '<TR align="left"><TD>' + translate("From City:") + '</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
@@ -8474,6 +8477,21 @@ Tabs.transport = {
                     .value = 60;
             }
             Options.transportinterval = document.getElementById('pbtransportinterval')
+                .value;
+            saveOptions();
+        }, false);
+		document.getElementById('pbrevtrans').addEventListener('change', function(){
+			Options.ReverseTransport = document.getElementById('pbrevtrans').checked;
+			saveOptions();
+		}, false);
+        document.getElementById('pbrevtranspc')
+            .addEventListener('keyup', function () {
+            if (isNaN(document.getElementById('pbrevtranspc')
+                .value)) {
+                document.getElementById('pbrevtranspc')
+                    .value = 0;
+            }
+            Options.ReverseTransportPercent = document.getElementById('pbrevtranspc')
                 .value;
             saveOptions();
         }, false);
@@ -9121,7 +9139,8 @@ Tabs.transport = {
     var t = Tabs.transport;
     if(!t.traderState.running) return;
     if(t.tradeRoutes.length==0) return;
-    t.doTrades(t.count);
+    t.doTrades(t.count,false);
+    if (Options.ReverseTransport) {setTimeout(t.doTrades,2500,t.count,true);}
     t.count++;
     if(t.count < t.tradeRoutes.length){
               t.checkdotradetimeout = setTimeout(function() { t.checkdoTrades();}, 5000);
@@ -9134,7 +9153,7 @@ Tabs.transport = {
             }
     },
     
-  doTrades: function(count,tt){
+  doTrades: function(count,rev,tt){
     var t = Tabs.transport;
     if(!t.traderState.running) return;
        if(t.tradeRoutes.length==0) return;
@@ -9152,15 +9171,30 @@ Tabs.transport = {
         var wagons_needed=0;
         var citymax = 0;
 
-        var city = t.tradeRoutes[count]["city"];
-        var cityID = 'city' + city;
-        if(!Cities.byID[city]) return;
+        if (!rev) { 
+			var city = t.tradeRoutes[count]["city"];
+			var cityID = 'city' + city;
+			var xcoord = t.tradeRoutes[count]["target_x"];
+			var ycoord = t.tradeRoutes[count]["target_y"];
+		}
+		else
+		{
+			var city = t.tradeRoutes[count]["target_city"];
+			var tgtcityID = 'city' + city;
+			var revcity = t.tradeRoutes[count]["city"];
+			var cityID = 'city' + revcity;
+			if(!Cities.byID[revcity]) return;
+			var xcoord = Cities.byID[revcity].x;
+			var ycoord = Cities.byID[revcity].y;
+		}
+		if(!Cities.byID[city]) return;
 
-
-        var xcoord = t.tradeRoutes[count]["target_x"];
-        var ycoord = t.tradeRoutes[count]["target_y"];
-
-
+		if (rev) { // only allow one reverse transport at a time
+			if (t.tradeRoutes[count]["rev_eta"]) {
+				if (parseInt(t.tradeRoutes[count]["rev_eta"]) > unsafeWindow.unixtime()) return;
+			} 
+		}
+		
         var trade_Food = t.tradeRoutes[count]["trade_Food"];
         var trade_Wood = t.tradeRoutes[count]["trade_Wood"];
         var trade_Stone = t.tradeRoutes[count]["trade_Stone"];
@@ -9173,6 +9207,13 @@ Tabs.transport = {
         var target_Ore = t.tradeRoutes[count]["target_Ore"];
         var target_Astone = t.tradeRoutes[count]["target_Astone"];
         var target_Gold = t.tradeRoutes[count]["target_Gold"];
+		var revpc = parseIntNan(Options.ReverseTransportPercent);
+		var min_Food = t.tradeRoutes[count]["target_Food"] * revpc /100;
+		var min_Wood = t.tradeRoutes[count]["target_Wood"] * revpc /100;
+		var min_Stone = t.tradeRoutes[count]["target_Stone"] * revpc /100;
+		var min_Ore = t.tradeRoutes[count]["target_Ore"] * revpc /100;
+		var min_Astone = t.tradeRoutes[count]["target_Astone"] * revpc /100;
+		var min_Gold = t.tradeRoutes[count]["target_Gold"] * revpc /100;
         var ship_Food = t.tradeRoutes[count]["ship_Food"];
         var ship_Wood = t.tradeRoutes[count]["ship_Wood"];
         var ship_Stone = t.tradeRoutes[count]["ship_Stone"];
@@ -9186,35 +9227,61 @@ Tabs.transport = {
         var citymax_Astone = parseIntNan(Seed.resources[cityID]['rec5'][0]);
         var citymax_Gold = parseIntNan(Seed.citystats[cityID]['gold']);
 
-        var carry_Food = parseIntNan(citymax_Food - target_Food);
-        var carry_Wood = parseIntNan(citymax_Wood - target_Wood);
-        var carry_Stone = parseIntNan(citymax_Stone - target_Stone);
-        var carry_Ore = parseIntNan(citymax_Ore - target_Ore);
-        var carry_Astone = parseIntNan(citymax_Astone - target_Astone);
-        var carry_Gold = 0;
-
+		if (!rev) {
+			var carry_Food = parseIntNan(citymax_Food - target_Food);
+			var carry_Wood = parseIntNan(citymax_Wood - target_Wood);
+			var carry_Stone = parseIntNan(citymax_Stone - target_Stone);
+			var carry_Ore = parseIntNan(citymax_Ore - target_Ore);
+			var carry_Astone = parseIntNan(citymax_Astone - target_Astone);
+			var carry_Gold = 0;
+		}
+		else
+		{
+			var carry_Food = parseIntNan(min_Food - citymax_Food);
+			var carry_Wood = parseIntNan(min_Wood - citymax_Wood);
+			var carry_Stone = parseIntNan(min_Stone - citymax_Stone);
+			var carry_Ore = parseIntNan(min_Ore - citymax_Ore);
+			var carry_Astone = parseIntNan(min_Astone - citymax_Astone);
+			var carry_Gold = 0;
+		}
+		
         if (carry_Food < 0 || ship_Food == false) carry_Food = 0;
         if (carry_Wood < 0 || ship_Wood == false) carry_Wood = 0;
         if (carry_Stone < 0 || ship_Stone == false) carry_Stone = 0;
         if (carry_Ore < 0 || ship_Ore == false) carry_Ore = 0;
         if (carry_Astone < 0 || ship_Astone == false) carry_Astone = 0;
 
-        if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseIntNan(trade_Food);
-        if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseIntNan(trade_Wood);
-        if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseIntNan(trade_Stone);
-        if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseIntNan(trade_Ore);
-        if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
+		if (!rev) {
+			if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseIntNan(trade_Food);
+			if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseIntNan(trade_Wood);
+			if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseIntNan(trade_Stone);
+			if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseIntNan(trade_Ore);
+			if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
+		}
+		else { // reverse trans up to keep value (not min value)
+			if (carry_Food > 0 && (target_Food > min_Food)) carry_Food = parseIntNan(target_Food - citymax_Food);
+			if (carry_Wood > 0 && (target_Wood > min_Wood)) carry_Wood = parseIntNan(target_Wood - citymax_Wood);
+			if (carry_Stone > 0 && (target_Stone > min_Stone)) carry_Stone = parseIntNan(target_Stone - citymax_Stone);
+			if (carry_Ore > 0 && (target_Ore > min_Ore)) carry_Ore = parseIntNan(target_Ore - citymax_Ore);
+			if (carry_Astone > 0 && (target_Astone > min_Astone)) carry_Astone = parseIntNan(target_Astone - citymax_Astone);
+		}
         carry_Astone *= 5; //Multiply by 5 to account for 5 times less carrying capacity
       
-      if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]);
-      else var wagons =  parseInt(Seed.units[cityID][t.tradeRoutes[count]['TroopType']]);
-      var rallypointlevel = March.getMaxSize(city);
-        if (parseInt(wagons) > parseInt(rallypointlevel)){ wagons = (rallypointlevel); }
-        
       if (t.tradeRoutes[count]['TroopType'] == undefined) var unit = 'unt9';
       else var unit = t.tradeRoutes[count]['TroopType'];
-      var Troops = parseInt(Seed.units[cityID][unit]);
-      if(parseInt(Troops)>parseInt(wagons)) Troops = wagons;
+
+	  if (!rev) {
+		var Troops = parseInt(Seed.units[cityID][unit]); 
+		var slots = Number(March.getEmptySlots(cityID.split("city")[1]));
+	  }	
+	  else {
+		 var Troops = parseInt(Seed.units[tgtcityID][unit]); 
+ 		 var slots = Number(March.getEmptySlots(tgtcityID.split("city")[1]));
+	  }	 
+      if (parseInt(slots) <=0){ if (DEBUG_TRACE) {logit('Transport - No free slots');} return; } // no free slots - don't bother server!
+	  
+      var rallypointlevel = March.getMaxSize(city);
+        if (parseInt(Troops) > parseInt(rallypointlevel)){ Troops = (rallypointlevel); }
       
       var featherweight = parseInt(Seed.tech.tch10) * 0.1;
         var loadEffectBoost = 0;
@@ -9238,7 +9305,7 @@ Tabs.transport = {
         var LoadUnit = Math.floor(loadBoostBase*Load)-1;
         var maxloadperwagon = LoadUnit;
           var maxload = (maxloadperwagon * Troops);
-          if(wagons <= 0) {return; }
+          if(Troops <= 0) {return; }
 
            for (var t=0; t< Seed.cities.length;t++) {
                if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
@@ -9320,13 +9387,22 @@ Tabs.transport = {
             carry_Astone = shift_Astone;
         }
         if (maxload > (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone) && ship_Gold == true) {
-            if ((maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (citymax_Gold - target_Gold)) {
-                carry_Gold = (citymax_Gold - target_Gold);
-                if (carry_Gold < 0) carry_Gold = 0;
-            } else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
-            if (trade_Gold > 0 && (carry_Gold > trade_Gold)) carry_Gold = parseInt(trade_Gold);
+			if (!rev) {
+				if ((maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (citymax_Gold - target_Gold)) {
+					carry_Gold = (citymax_Gold - target_Gold);
+					if (carry_Gold < 0) carry_Gold = 0;
+				} else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
+				if (trade_Gold > 0 && (carry_Gold > trade_Gold)) carry_Gold = parseInt(trade_Gold);
+			}
+			else
+			{
+				if ((maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (min_Gold - citymax_Gold)) {
+					carry_Gold = (min_Gold - citymax_Gold);
+					if (carry_Gold < 0) carry_Gold = 0;
+				} else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
+			
+			}
         }
-
         wagons_needed = ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon);
         wagons_needed = wagons_needed.toFixed(0);
         if (wagons_needed < ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon)) wagons_needed++;
@@ -9358,6 +9434,11 @@ Tabs.transport = {
       case 'unt10': params.u10 = wagons_needed;break;
       case 'unt11': params.u11 = wagons_needed;break;
       case 'unt12': params.u12 = wagons_needed;break;
+      case 'unt13': params.u13 = wagons_needed;break;
+      case 'unt14': params.u14 = wagons_needed;break;
+      case 'unt15': params.u15 = wagons_needed;break;
+      case 'unt16': params.u16 = wagons_needed;break;
+      case 'unt17': params.u17 = wagons_needed;break;
     }
         
            if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
@@ -9372,10 +9453,17 @@ Tabs.transport = {
                  profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
-                 actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
-                 var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-                 var ut = unsafeWindow.unixtime();
-
+						if (!rev)
+							actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
+						else	
+							actionLog('Reverse Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
+						var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+						var ut = unsafeWindow.unixtime();
+				 
+						if (rev) {
+							var t = Tabs.transport;
+							t.tradeRoutes[count]["rev_eta"] = parseInt(rslt.eta);
+						}
             var unitsarr = [];
             for (j in unsafeWindow.unitcost)
                unitsarr.push(0);
@@ -9398,13 +9486,18 @@ Tabs.transport = {
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.doTrades(count,rslt.tt);}, wait*1000);
+							setTimeout (function(){t.doTrades(count,rev,rslt.tt);}, wait*1000);
                         return;
                  };
-                  actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
-                  }
+						if (!rslt.msg) {rslt.msg = 'Error Code ('+rslt.error_code+')';}
+						if (!rev)
+							actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
+						else	
+							actionLog(''+translate("REVERSE TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
+					}
                   },
-                  onFailure: function () {profiler.stop();}
+                  onFailure: function () {profiler.stop();
+				  }
           });
         }
     },
@@ -10904,7 +10997,7 @@ Tabs.AutoCraft = {
 		}		
 		t.lastcsok = t.csok;
 		
-		t.timerStat = setTimeout(function() { t.updateStat(); }, 1000);
+		t.timerStat = setTimeout(function() { t.updateStat(); }, 2000);
 	},
 
 	RefreshCraftNumbers : function() {
