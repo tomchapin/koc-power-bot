@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131104a
+// @version        20131108a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131104a';
+var Version = '20131108a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -7399,7 +7399,7 @@ Tabs.Search = {
     var alliance = rslt.allianceNames;
     
     for (k in map){
-      if (t.opt.searchType==0 && map[k].tileType==51 && !map[k].tileCityId ) {  // if barb
+      if (t.opt.searchType==0 && map[k].tileType==51 && (!map[k].tileCityId || (map[k].tileCityId==0))) {  // if barb
         type = 0;
       } else if (t.opt.searchType==1 && map[k].tileType>=10 &&  map[k].tileType<=50) { // if wild
         if (map[k].tileType == 10)
