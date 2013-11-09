@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131108a
+// @version        20131108b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131108a';
+var Version = '20131108b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2364,14 +2364,14 @@ Tabs.Throne = {
             Advisors : {
                 "Wynn"                  : "http://i.imgur.com/qUxIZcn.png",
                 "Mordred"               : "http://i.imgur.com/itn5Nfn.png",
-                "Kay"                   : "http://i.imgur.com/CF0S1YL.png",
+                "Kay"                   : "http://i.imgur.com/mD3fWtb.png",
                 "Warhorse"              : "http://i.imgur.com/770yicI.png",
                 "The Harbinger"         : "http://i.imgur.com/O2l15bY.png",
                 "Father Winter"         : "http://i.imgur.com/4D9wijD.png",
                 "Advisor Of Magnitude A" : "http://i.imgur.com/FXg8zbK.png",
                 "Advisor of Magnitude B" : "http://i.imgur.com/KbGP3QR.png",
                 "Advisor of Discipline"  : "http://i.imgur.com/5Yrhp8F.png",
-                "Dagoney The Court Jester"  : "http://img545.imageshack.us/img545/8323/c7h6.jpg",
+                "Dagonet The Court Jester"  : "http://i.imgur.com/29bAH99.png",
                 "Minstrel"              : "http://i.imgur.com/hUIXhca.png",
             },
             Thrones : {
@@ -2399,7 +2399,7 @@ Tabs.Throne = {
                 "Window of Persistence" : "http://i.imgur.com/s0IXGUo.jpg",
                 "Persevering Window"    : "http://i.imgur.com/HGGbe5Q.jpg",
                 "Warfarers Portal"      : "http://i.imgur.com/8z4wNcn.jpg",
-                "Window of Chalice"     : "http://i.imgur.com/qO7GiAu.png",
+                "Window of Chalice"     : "http://i.imgur.com/ZelfCuL.png",
             },
             Candles : {
                 "Merry Chandelier"                  : "http://i.imgur.com/iBzYUh5.png",
@@ -2417,7 +2417,6 @@ Tabs.Throne = {
             Trophies : {
                 "Courageous Trophy"     : "http://i.imgur.com/ODDVqwD.png",
                 "Sir Galahads Shield"   : "http://img268.imageshack.us/img268/5116/m9n2.jpg",
-                
             },
             Heros : {
                 "Guileful Ranger"       : "http://i.imgur.com/uQ8YSwV.jpg",
