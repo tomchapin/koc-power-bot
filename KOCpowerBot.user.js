@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131111a
+// @version        20131111b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131111a';
+var Version = '20131111b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -18462,7 +18462,6 @@ var DeleteReports = {
         });
     },
     faketower : function(rpId,x) {
-    	logit('fake tower');
         var t = DeleteReports;
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
       params.rid=rpId;
@@ -18478,28 +18477,7 @@ var DeleteReports = {
             	for (i in rslt.detail.fght.s1) {
             		x.unts[i] = rslt.detail.fght.s1[i][0];
             	};
-            	alert(inspect(x));
-Seed.queue_atkinc['m'+x.mid] = x;
-            	/*****
-	      if (rslt.detail.winner)
-               if(rslt.detail.loot[5]) {
-                  var loot = rslt.detail.loot[5];
-               if (matTypeof(loot) == 'object')
-                  for (var z in loot) {
-		    if (rslt.detail.fght.s0.m101 || rslt.detail.fght.s0.m102 || rslt.detail.fght.s0.m103 || rslt.detail.fght.s0.m104 || rslt.detail.fght.s0.m105 || rslt.detail.fght.s0.m106 || rslt.detail.fght.s0.m107 || rslt.detail.fght.s0.m108 || rslt.detail.fght.s0.m109 || rslt.detail.fght.s0.m10 ) {
-		     if(AttackOptions.ItemsFound[z])
-		        AttackOptions.ItemsFound[z] += parseInt(loot[z]);
-		     else AttackOptions.ItemsFound[z] = parseInt(loot[z]);
-		    } else {
-		     if(AttackOptions.ItemsFoundCr[z])
-		        AttackOptions.ItemsFoundCr[z] += parseInt(loot[z]);
-		     else AttackOptions.ItemsFoundCr[z] = parseInt(loot[z]);
-		    }
-                  }
-                  saveAttackOptions();
-               };
-               
-               ******/
+					Seed.queue_atkinc['m'+x.mid] = x;
             },
             onFailure: function (rslt) {
                
@@ -18539,7 +18517,16 @@ Seed.queue_atkinc['m'+x.mid] = x;
         		x.departureTime = reports[k].reportUnixTime;
         		x.marchType = reports[k].marchType;
         		x.toCityId = reports[k].side0CityId;
-        		x.toTileId = 0;
+        		if(reports[k].side0TileType > 50){
+        			x.toTileId = Cities.byID[x.toCityId].tileId;
+        		} else {
+					for (k in Seed.wilderness['city'+x.toCityId]){
+						if(Seed.wilderness['city'+x.toCityId][k].xCoord == reports[k].side0XCoord && Seed.wilderness['city'+x.toCityId][k].yCoord == reports[k].side0YCoord) {
+							x.toTileId = Seed.wilderness['city'+x.toCityId][k].tileId;
+							break;
+						}
+      			}
+				};
         		x.score = 9;
         		x.mid = reports[k].reportId;
         		t.faketower(k.substr(2),x);
