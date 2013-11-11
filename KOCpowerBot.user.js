@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131111b
+// @version        20131111c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131111b';
+var Version = '20131111c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -964,6 +964,7 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
 	if(Options.detAFK)new detafk();
 	new Tabs.Throne.rotatethrone();
+	new DeleteReports.startdeletereports();
 };
 
 function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
@@ -18433,13 +18434,14 @@ var DeleteReports = {
     deleting : false,
     init : function(){
         var t = DeleteReports;
-        setInterval(t.startdeletereports, 2*60*1000);
+        //setInterval(t.startdeletereports, 2*60*1000);
+        // now done in global timer
         setTimeout(t.startdeletereports, 10);
     },
     
     startdeletereports : function(){
         var t = DeleteReports;
-          if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2 || Options.DeleteMsgs3)){
+          if(!t.deleting){
               t.deleting = true;
               t.fetchreport(0, t.checkreports);
           }
@@ -18469,9 +18471,6 @@ var DeleteReports = {
             method: "post",
             parameters: params,
             onSuccess: function (rslt) {
-            	//alert(inspect(rslt.index));
-            	//alert(inspect(rslt.detail));
-            	//alert(inspect(rslt.errorMsg));
             	x.knt['cbt'] = rslt.detail.s1KCombatLv;
             	x.klv = rslt.detail.s1KLv;
             	for (i in rslt.detail.fght.s1) {
@@ -18482,7 +18481,7 @@ var DeleteReports = {
             onFailure: function (rslt) {
                
             },
-         }, false);
+         }, true);
    
    },
     checkreports : function(rslt){
@@ -18496,6 +18495,7 @@ var DeleteReports = {
             t.deleting = false;
             return;
         }
+        var lasttenmin = unixTime() -600;
         var reports = rslt.arReports;
         var totalPages = rslt.totalPages;
         if (rslt.totalPages > 30)
@@ -18503,7 +18503,8 @@ var DeleteReports = {
         var deletes1 = new Array();
         var deletes0 = new Array();
         for(k in reports){
-        	if((reports[k].marchType==4 || reports[k].marchType==3) && (Options.alertConfig.lastAttack < Number(reports[k].reportUnixTime)) && t.isMyself(reports[k].side0PlayerId)) {
+        	logit(lasttenmin+" and "+reports[k].reportUnixTime+" and it is "+(lasttenmin < Number(reports[k].reportUnixTime)));
+        	if((reports[k].marchType==4 || reports[k].marchType==3) && (Options.alertConfig.lastAttack < Number(reports[k].reportUnixTime)) && (lasttenmin < Number(reports[k].reportUnixTime)) && t.isMyself(reports[k].side0PlayerId)) {
         		var x = {};
         		x.knt = {};
         		x.kLv = 1;
@@ -18520,16 +18521,16 @@ var DeleteReports = {
         		if(reports[k].side0TileType > 50){
         			x.toTileId = Cities.byID[x.toCityId].tileId;
         		} else {
-					for (k in Seed.wilderness['city'+x.toCityId]){
-						if(Seed.wilderness['city'+x.toCityId][k].xCoord == reports[k].side0XCoord && Seed.wilderness['city'+x.toCityId][k].yCoord == reports[k].side0YCoord) {
-							x.toTileId = Seed.wilderness['city'+x.toCityId][k].tileId;
+					for (i in Seed.wilderness['city'+x.toCityId]){
+						if(Seed.wilderness['city'+x.toCityId][i].xCoord == reports[k].side0XCoord && Seed.wilderness['city'+x.toCityId][i].yCoord == reports[k].side0YCoord) {
+							x.toTileId = Seed.wilderness['city'+x.toCityId][i].tileId;
 							break;
 						}
       			}
 				};
         		x.score = 9;
         		x.mid = reports[k].reportId;
-        		t.faketower(k.substr(2),x);
+        		new t.faketower(k.substr(2),x);
         	};
         	
         	
@@ -18601,6 +18602,7 @@ var DeleteReports = {
                 t.fetchreport(0, t.checkreports);
             },
             onFailure: function () {
+            t.deleting = false;
             },
         });
     },
