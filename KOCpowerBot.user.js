@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131108b
+// @version        20131110a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131108b';
+var Version = '20131110a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -20571,7 +20571,10 @@ Tabs.Attack = {
 					setTimeout (function(){callback(r,0,parseInt(CrestDataNum));}, (Options.Crestinterval*1000));
 				} else {
 					Options.Crest2Count++;
-					setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Options.Crestinterval*1000));
+			if(CrestData[CrestDataNum].isWild){
+					setTimeout (function(){callback(r,0,parseInt(CrestDataNum));}, (Options.Crestinterval*1000));
+				} else
+					setTimeout (function(){callback(r,0,parseInt(CrestDataNum+1));}, (Options.Crestinterval*1000));
 				}
 				saveCrestData();
 			} else { //onFailure
