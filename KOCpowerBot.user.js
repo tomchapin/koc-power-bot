@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131111e
+// @version        20131112a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131111e';
+var Version = '20131112a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -135,7 +135,7 @@ var Options = {
   pbWideMap    : false,
   pbFoodAlert  : false,
   pbFoodAlertInt  : 6,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:[],guardian:false,guardautoswitch:{}},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:[],guardian:false,guardautoswitch:{},lastarrtime:[]},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -974,6 +974,14 @@ function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
 	new GESeveryhour(unixtime);
   };
   if(GiftDB.adgift) new Tabs.gifts.scangifts(4);
+  
+	var lasttenmin = unixTime() -600;
+	for(var i = Options.alertConfig.lastarrtime.length - 1; i >= 0; i--) {
+    if(Number(Options.alertConfig.lastarrtime[i]) < lasttenmin) {
+       Options.alertConfig.lastarrtime.splice(i, 1);
+    }
+	;}
+	saveOptions();
 };
 
 function GESeveryhour (unixtime) {//put functions here to execute every hour
@@ -4777,7 +4785,7 @@ Tabs.tower = {
         if (m.marchType==3 || m.marchType==4){
 			if(Options.alertConfig.lastatkarr.indexOf(m.mid) == -1) {
 				Options.alertConfig.lastatkarr.push(m.mid);
-				Options.alertConfig.lastAttack = unixTime();
+				Options.alertConfig.lastarrtime.push(m.arrivalTime);
             saveOptions();
             t.newIncoming (m);
 			};
@@ -18504,7 +18512,8 @@ var DeleteReports = {
         var deletes0 = new Array();
         for(k in reports){
         	//logit(lasttenmin+" and "+reports[k].reportUnixTime+" and it is "+(lasttenmin < Number(reports[k].reportUnixTime)));
-        	if((reports[k].marchType==4 || reports[k].marchType==3) && (Options.alertConfig.lastAttack < Number(reports[k].reportUnixTime)) && (lasttenmin < Number(reports[k].reportUnixTime)) && t.isMyself(reports[k].side0PlayerId)) {
+        	var reportUnixTime = Number(reports[k].reportUnixTime);
+        	if((reports[k].marchType==4 || reports[k].marchType==3) && (lasttenmin < reportUnixTime) && t.isMyself(reports[k].side0PlayerId) && (Options.alertConfig.lastarrtime.indexOf(String(reportUnixTime)) == -1)) {
         		var x = {};
         		x.knt = {};
         		x.kLv = 1;
