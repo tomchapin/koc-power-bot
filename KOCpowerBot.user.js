@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131111d
+// @version        20131111e
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131111d';
+var Version = '20131111e';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -18503,7 +18503,7 @@ var DeleteReports = {
         var deletes1 = new Array();
         var deletes0 = new Array();
         for(k in reports){
-        	logit(lasttenmin+" and "+reports[k].reportUnixTime+" and it is "+(lasttenmin < Number(reports[k].reportUnixTime)));
+        	//logit(lasttenmin+" and "+reports[k].reportUnixTime+" and it is "+(lasttenmin < Number(reports[k].reportUnixTime)));
         	if((reports[k].marchType==4 || reports[k].marchType==3) && (Options.alertConfig.lastAttack < Number(reports[k].reportUnixTime)) && (lasttenmin < Number(reports[k].reportUnixTime)) && t.isMyself(reports[k].side0PlayerId)) {
         		var x = {};
         		x.knt = {};
@@ -18514,6 +18514,7 @@ var DeleteReports = {
         		x.unts = {};
         		x.cnt = "unknown";
         		x.pid = reports[k].side1PlayerId;
+        		x.aid = reports[k].side1AllianceId
         		x.arrivalTime = reports[k].reportUnixTime;
         		x.departureTime = reports[k].reportUnixTime;
         		x.marchType = reports[k].marchType;
