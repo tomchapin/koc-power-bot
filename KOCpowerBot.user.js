@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131119c
+// @version        20131119d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131119c';
+var Version = '20131119d';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -22873,15 +22873,15 @@ Tabs.Champion = {
       document.getElementById('chRangeMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Range.Min = this.value;saveChampionOptions();},false);
       document.getElementById('chLoadMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Load.Min = this.value;saveChampionOptions();},false);
 
-      document.getElementById('DamageMin').addEventListener ('change', function(){ChampionOptions.Salvage.DamageMin = document.getElementById('DamageMin').checked;saveChampionOptions();},false);
-      document.getElementById('BonusDamageMin').addEventListener ('change', function(){ChampionOptions.Salvage.BonusDamageMin = document.getElementById('BonusDamageMin').checked;saveChampionOptions();},false);
-      document.getElementById('ArmorMin').addEventListener ('change', function(){ChampionOptions.Salvage.ArmorMin = document.getElementById('ArmorMin').checked;saveChampionOptions();},false);
-      document.getElementById('StrengthMin').addEventListener ('change', function(){ChampionOptions.Salvage.StrengthMin = document.getElementById('StrengthMin').checked;saveChampionOptions();},false);
-      document.getElementById('DexterityMin').addEventListener ('change', function(){ChampionOptions.Salvage.DexterityMin = document.getElementById('DexterityMin').checked;saveChampionOptions();},false);
-      document.getElementById('HealthMin').addEventListener ('change', function(){ChampionOptions.Salvage.HealthMin = document.getElementById('HealthMin').checked;saveChampionOptions();},false);
-      document.getElementById('HitMin').addEventListener ('change', function(){ChampionOptions.Salvage.HitMin = document.getElementById('HitMin').checked;saveChampionOptions();},false);
-      document.getElementById('CritMin').addEventListener ('change', function(){ChampionOptions.Salvage.CritMin = document.getElementById('CritMin').checked;saveChampionOptions();},false);
-      document.getElementById('BlockMin').addEventListener ('change', function(){ChampionOptions.Salvage.BlockMin = document.getElementById('BlockMin').checked;saveChampionOptions();},false);
+      document.getElementById('DamageMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Damage.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('BonusDamageMin').addEventListener ('change', function(){ChampionOptions.SalvageA.BonusDamage.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('ArmorMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Armor.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('StrengthMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Strength.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('DexterityMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Dexterity.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('HealthMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Health.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('HitMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Hit.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('CritMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Crit.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('BlockMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Block.Min = this.value;saveChampionOptions();},false);
 
       document.getElementById('pbchsalvage_unique').addEventListener ('change', function(){ChampionOptions.SaveUnique = this.checked;saveChampionOptions();},false);
 //      document.getElementById('pbheatup').addEventListener ('change', function(){ChampionOptions.heatup = this.checked;saveChampionOptions();},false);
