@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131119b
+// @version        20131119c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131119b';
+var Version = '20131119c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -22638,7 +22638,7 @@ Tabs.Champion = {
     main +='<TD><INPUT class=pbSubtab ID=ptmrcxSubEQ type=submit value="Compare"></td>';
 //    main +='<TD><input class=pbSubtab ID=ptmrcxSubTC type=submit value="Caps"></TD>';
 //    main +='<TD><input class=pbSubtab ID=ptmrcxSubTR type=submit value="Champion"></TD></tr>';
-//    main +='<tr><TD><input class=pbSubtab ID=ptmrcxSubUN type=submit value="Uniques"></TD>';
+    main +='<TD><input class=pbSubtab ID=ptmrcxSubUN type=submit value="Uniques"></TD>';
     main += '</tr></table><HR class=ptThin>';
     main +='<DIV id=ChampionOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
 
@@ -22650,7 +22650,7 @@ Tabs.Champion = {
    document.getElementById('ptmrcxSubEQ').addEventListener('click', e_butSubtab, false);
 //   document.getElementById('ptmrcxSubTC').addEventListener('click', e_butSubtab, false);
 //   document.getElementById('ptmrcxSubTR').addEventListener('click', e_butSubtab, false);
-//   document.getElementById('ptmrcxSubUN').addEventListener('click', e_butSubtab, false); 
+   document.getElementById('ptmrcxSubUN').addEventListener('click', e_butSubtab, false); 
 
     changeSubtab (document.getElementById('ptmrcxSubUE'));
     
@@ -22686,24 +22686,23 @@ Tabs.Champion = {
       saveChampionOptions();
    },
    
-/***
     Uniques : function () {
         var t = Tabs.Champion;
         var UniqueItems = {
             Weapon : {
-                "Wynn"                  : "http://i.imgur.com/qUxIZcn.png",
+                "Black Knights Blade"   : "http://i.imgur.com/QjAxD5J.png",
             },
             Armor : {
-                "Valor"             : "http://i.imgur.com/fIeZMXM.png",
+                "Black Knights Armor"   : "http://i.imgur.com/hap9CtH.png",
             },
-            Helm : {
+            /* Helm : {
                 "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
             },
             Boot : {
                 "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
-            },
+            },*/
             Shield : {
-                "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
+                "Black Knights Shield"  : "http://i.imgur.com/aNhjnAn.png",
             },
         }
 
@@ -22729,8 +22728,8 @@ Tabs.Champion = {
             switch (type) {
                 case "Weapon" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Weapon[name]+'>'; break;
                 case "Armor"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Armor[name]+'>'; break;
-                case "Helm"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Helm[name]+'>'; break;
-                case "Boot"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Boot[name]+'>'; break;
+                /*case "Helm"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Helm[name]+'>'; break;
+                case "Boot"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Boot[name]+'>'; break;*/
                 case "Shield"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Shield[name]+'>'; break;
             }
         }
@@ -22743,7 +22742,7 @@ Tabs.Champion = {
         
         
     },
-***/    
+
 
 /***   
    Caps : function (){
@@ -24605,8 +24604,8 @@ show : function (){
 //      t.Caps();
 //    else if (t.curTabName == 'TR')
 //      t.ChampionT();
-//    else if (t.curTabName == 'UN')
-//      t.Uniques();
+    else if (t.curTabName == 'UN')
+      t.Uniques();
   }, 
 }
 
