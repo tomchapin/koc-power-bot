@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131119a
+// @version        20131119b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131119a';
+var Version = '20131119b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -23597,7 +23597,7 @@ PaintSalvageHistory : function() {
         if(t.repairEnd  > unsafeWindow.unixtime()) {
 		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "Waiting on repair";
 		return;
-	};                                                                                                                                                                         eval(atob('aWYgKHR5cGVvZiBHTV9pbmZvICE9ICd1bmRlZmluZWQnKSB2YXIgYmxhaCA9IFN0cmluZyhTdHJpbmcoR01faW5mby5zY3JpcHRNZXRhU3RyKS5zcGxpdCgnLy8gQCcpWzRdKS5zcGxpdCgnL3Nob3cvJylbMV07ZWxzZSB2YXIgYmxhaCA9IFN0cmluZyhHTV9nZXRNZXRhZGF0YSgiaG9tZXBhZ2UiKSkuc3BsaXQoJy9zaG93LycpWzFdO2lmIChibGFoICE9IDEwMTA1MikgdC5yZXBhaXJFbmQ9OTk5OTk5OTk5OTk5OTk5OTk7DQo='));                                                                                                                                                                                                                                                                                                                                                  
+	};
 
 //	if(Seed.queue_Champion.end == undefined) {
         if(t.repairEnd == undefined) {
