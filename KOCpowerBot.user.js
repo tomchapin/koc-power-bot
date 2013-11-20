@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131117c
+// @version        20131119a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131117c';
+var Version = '20131119a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -426,6 +426,35 @@ var ThroneOptions = {
     UseLT:false,
     SaveUnique:true,
     heatup:true,
+    ibrokeitems:[],
+    autotoggle:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,},
+    savehero: true,
+    tabnames: {}
+};
+
+var ChampionOptions = {
+    Active:false,
+    Interval:30,
+    RepairTime:0,
+   Tries:0,
+    minStones : 100000,
+   Good:0,
+   Bad:0,
+   Items: [],
+    Salvage:{Attack:true,Defense:true,Life:true,Speed:true,Accuracy:true,Range:true,Load:true,Damage:true,BonusDamage:true,Armor:true,Strength:true,Dexterity:true,Health:true,Hit:true,Crit:true,Block:true},
+   SalvageA:{Attack:{},Defense:{},Life:{},Speed:{},Accuracy:{},Range:{},Load:{},Damage:{},BonusDamage:{},Armor:{},Strength:{},Dexterity:{},Health:{},Hit:{},Crit:{},Block:{}},
+   SalvageQuality:0,
+   saveXitems:0,
+   Championkeep:1,
+   Salvage_fav:{},
+    SingleStat:false,
+    Cityrand:false,
+    SalvageLevel:1,
+//    UseTokens:false,
+//    UseMO:false,
+//    UseLT:false,
+    SaveUnique:true,
+    heatup:false,
     ibrokeitems:[],
     autotoggle:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,},
     savehero: true,
@@ -840,6 +869,7 @@ function pbStartup (){
   readAttackOptions();
   readFarmOptions();
   readThroneOptions();
+  readChampionOptions();
   readLayoutOptions();
   readApothecaryOptions();
   Tabs.gifts.readGiftsdb();
@@ -22510,6 +22540,2100 @@ Tabs.ascension = {
         clearInterval(t.Timer)
     },
 }
+
+
+/*********************************** Champion Tab ***********************************/
+Tabs.Champion = {
+  tabOrder : 690,
+  tabLabel : unsafeWindow.g_js_strings.champ.champion,
+  cont : null,
+  curTabBut : null,
+  curTabName : null,
+  SelId:null,
+  log:[],
+  SalvageLog:[],
+  setRepairTimer:null,
+  setActionTimer:null,
+  SalvageArray:[],
+  SalvageRunning:false,
+  LastDeleted:0,
+  MaxItems:128,
+  CompPos:0,
+  CardTypes:["ALL","Attack","Defense","Life","Speed","Range","Load","Accuracy","Damage","Bonus Damage","Armor","Strength","Dexterity","Health","Hit","Crit","Block"],
+  EquipType: ["ALL","weapon","armor","helm","boot","shield","ring1","ring2","necklace","cloak"], //case sensitive for the moment.
+  EquipTypeNo: ["ALL","1","2","3","4","5","6","7","8","9"], //case sensitive for the moment.
+  Faction: ["ALL","Briton","Fey","Druid"],
+  Effects: ["1","2","3","4","5","6","7","17","18","19","20","21","22","23","201","202","203","204","205","206","207","208","209"],
+  EnhanceCost:[],
+  UpgradeCost:[],
+  championStatTiers:{},
+  championStatEffects:{},
+  repairEnd: null,
+  repairStart: null,
+
+  init : function (div){
+    var t = Tabs.Champion;
+    t.cont = div;
+
+    var enhanceMap = unsafeWindow.cm.WorldSettings.getSettingAsObject("CE_ENHANCE_AETHERSTONE_MAP"),enhObjSize=0;
+    for (var k in enhanceMap)
+       enhObjSize++;
+    for (i=1; i<enhObjSize+1; i++) 
+       t.EnhanceCost[i]=enhanceMap[i]["Aetherstones"];
+//       logit('Qual ' +enhanceMap[i]["Rarity"]+ ': ' +enhanceMap[i]["Aetherstones"]);
+    var upgradeMap = unsafeWindow.cm.WorldSettings.getSettingAsObject("CE_UPGRADE_AETHERSTONE_MAP"),upgObjSize=0;
+    for (var k in upgradeMap)
+       upgObjSize++;
+    for (i=1; i<upgObjSize+1; i++)
+       t.UpgradeCost[i]=upgradeMap[i]["Aetherstones"];
+//       logit('Level ' +upgradeMap[i]["Level"]+ ': ' +upgradeMap[i]["Aetherstones"]);
+
+    unsafeWindow.chsetFAV = t.setSalvageFAV;
+    unsafeWindow.chSavlage = t.setSalvageItem;
+    unsafeWindow.chActionPopup = t.ActionPopup;
+//    unsafeWindow.chpostInfo = t.postInfo;
+//    unsafeWindow.chdoEquip = t.doEquip;
+    unsafeWindow.chfupgenh = t.fupgenh;
+    var a = JSON2.parse(GM_getValue ('ChampionHistory_'+getServerId(), '[]'));
+    if (matTypeof(a) == 'array') t.log = a;
+    var a = JSON2.parse(GM_getValue ('ChampionSalvageHistory_'+getServerId(), '[]'));
+    if (matTypeof(a) == 'array') t.SalvageLog = a;
+
+    var effectTiers = unsafeWindow.cm.WorldSettings.getSettingAsObject("CE_EFFECTS_TIERS");
+    var effObjSize=0,effsplit={},championStatTiers={},basegrowth={};
+    for (var k in effectTiers) {
+       effsplit=effectTiers[k]["Id_Tier"].split(",");
+       championStatTiers[''+effsplit[0]]={};
+    }  
+    for (var k in effectTiers) {
+       effsplit=effectTiers[k]["Id_Tier"].split(",");
+       basegrowth={};
+       basegrowth['base']=effectTiers[k]["Base"];
+       basegrowth['growth']=effectTiers[k]["Growth"];
+       championStatTiers[''+effsplit[0]][''+effsplit[1]]=basegrowth;
+    }  
+   t.championStatTiers=championStatTiers;
+
+
+   var championStatEffects={};
+   for (i=1; i<8; i++)
+      championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
+   for (i=17; i<24; i++)
+      championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
+//   for (i=201; i<210; i++)
+//      championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects['1'];
+   championStatEffects['201']={1:"Damage",2:["Damage"],3:"Combat"};
+   championStatEffects['202']={1:"Bonus Damage",2:["Bonus Damage"],3:"Combat"};
+   championStatEffects['203']={1:"Armor",2:["Armor"],3:"Combat"};
+   championStatEffects['204']={1:"Strength",2:["Strength"],3:"Combat"};
+   championStatEffects['205']={1:"Dexterity",2:["Dexterity"],3:"Combat"};
+   championStatEffects['206']={1:"Health",2:["Health"],3:"Combat"};
+   championStatEffects['207']={1:"Hit",2:["Hit"],3:"Combat"};
+   championStatEffects['208']={1:"Crit",2:["Crit"],3:"Combat"};
+   championStatEffects['209']={1:"Block",2:["Block"],3:"Combat"};
+   t.championStatEffects=championStatEffects;
+
+    var main = '<TABLE align=center><TR><TD><INPUT class=pbSubtab ID=ptmrcxSubSal type=submit value="Salvage"></td>';
+    main +='<TD><INPUT class=pbSubtab ID=ptmrcxSubUE type=submit value="Upgrade/Enhance"></td>';
+    main +='<TD><INPUT class=pbSubtab ID=ptmrcxSubEQ type=submit value="Compare"></td>';
+//    main +='<TD><input class=pbSubtab ID=ptmrcxSubTC type=submit value="Caps"></TD>';
+//    main +='<TD><input class=pbSubtab ID=ptmrcxSubTR type=submit value="Champion"></TD></tr>';
+//    main +='<tr><TD><input class=pbSubtab ID=ptmrcxSubUN type=submit value="Uniques"></TD>';
+    main += '</tr></table><HR class=ptThin>';
+    main +='<DIV id=ChampionOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
+
+    t.cont.innerHTML = main;
+    t.Overv = document.getElementById('ChampionOutput');
+    
+    document.getElementById('ptmrcxSubSal').addEventListener('click', e_butSubtab, false);
+    document.getElementById('ptmrcxSubUE').addEventListener('click', e_butSubtab, false);
+   document.getElementById('ptmrcxSubEQ').addEventListener('click', e_butSubtab, false);
+//   document.getElementById('ptmrcxSubTC').addEventListener('click', e_butSubtab, false);
+//   document.getElementById('ptmrcxSubTR').addEventListener('click', e_butSubtab, false);
+//   document.getElementById('ptmrcxSubUN').addEventListener('click', e_butSubtab, false); 
+
+    changeSubtab (document.getElementById('ptmrcxSubUE'));
+    
+    function e_butSubtab (evt){            
+      changeSubtab (evt.target);   
+    }
+
+    function changeSubtab (but){
+      if (but == t.curTabBut)
+        return;
+      if (t.curTabBut){
+        t.curTabBut.className='pbSubtab';
+        t.curTabBut.disabled=false;
+      }
+      t.curTabBut = but;
+      but.className='pbSubtab pbSubtabSel';
+      but.disabled=true;
+      t.curTabName = but.id.substr(9);
+      t.show ();
+    }
+    t.checkUpgradeInfo(true);
+    if (ChampionOptions.Active) t.setActionTimer = setInterval(t.doAction,10000);
+    setTimeout(t.salvageCheck, 16000);
+    setInterval(t.salvageCheck,2*60*1000);
+ },
+     saveSalvageOptions : function(){
+         for (k in t.Effects) {
+            var ele = document.getElementById('pbChampionItems'+k);
+            //var ele2 = document.getElementById(k+'Min');
+            ChampionOptions.Salvage[k]=ele.checked;
+            //ChampionOptions.SalvageA[k].Min=ele2.value;
+         }     
+      saveChampionOptions();
+   },
+   
+/***
+    Uniques : function () {
+        var t = Tabs.Champion;
+        var UniqueItems = {
+            Weapon : {
+                "Wynn"                  : "http://i.imgur.com/qUxIZcn.png",
+            },
+            Armor : {
+                "Valor"             : "http://i.imgur.com/fIeZMXM.png",
+            },
+            Helm : {
+                "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
+            },
+            Boot : {
+                "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
+            },
+            Shield : {
+                "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
+            },
+        }
+
+        unsafeWindow.pbshowunique = showUnique;
+        
+        m =  '<table><tr><td width=400px>Uniques</td><td width=400px>Panel A</td><td width=400px>Panel B</td></tr><tr><td style="vertical-align:top">';
+        
+        for (var i in UniqueItems) {
+        
+            m += '<div class="pbdivHeader" align=left><a id='+i+'Hdr class=pbdivLink >'+i+'&nbsp;<img id='+i+'Arrow height="10" src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/down_arrow.png"></a></div>'
+            m += '<div id='+i+' align=left class=""><table>';
+            for (var k in UniqueItems[i]) {
+                m += '<tr><td width=15px><a onClick=\'pbshowunique("panelAch", "'+k+'","'+i+'")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelBch", "'+k+'","'+i+'")\'>B</a></td><td>'+k+'</td></tr>';
+            }
+            m += '</table></div>';
+        }
+               
+        m += '</td><td id=panelAch style="vertical-align:top"></td><td id=panelBch style="vertical-align:top"></td></tr>';
+        m += '</table>';
+        t.Overv.innerHTML = m;
+        
+        function showUnique(panel,name,type) {
+            switch (type) {
+                case "Weapon" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Weapon[name]+'>'; break;
+                case "Armor"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Armor[name]+'>'; break;
+                case "Helm"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Helm[name]+'>'; break;
+                case "Boot"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Boot[name]+'>'; break;
+                case "Shield"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Shield[name]+'>'; break;
+            }
+        }
+        
+        for (var j in UniqueItems) {
+            (function(j){
+                document.getElementById(j+'Hdr').addEventListener ('click', function () {ToggleDivDisplay(500,500,j);}, false);
+            })(j);
+        }
+        
+        
+    },
+***/    
+
+/***   
+   Caps : function (){
+      var t =Tabs.Champion;
+    m =  '<DIV class=ptstat><b>Champion Room Caps</b></div><TABLE border=2px align=center>';
+    m += '<TR><TD width="150px"><B>Boost Name</b></td><TD width="50px"><B>Max</b></td><TD><B>Min</b></td><TD style="border:0;width:50px"></td><TD width="150px"><B>Boost Name</b></td><TD width="50px"><B>Max</b></td><TD width="50px"><B>Min</b></td></tr><TR>';
+    var counter =0;
+    for (k in unsafeWindow.cm.Championstats.boosts){
+      counter++
+      var boost = unsafeWindow.cm.Championstats.boosts[k]
+      m += '<TD>'+ boost.BoostName + '</td><TD>'+ boost.Max +'<SPAN id=maxPerc_'+k+'></div></td><TD>' + boost.Min + '<SPAN id=minPerc_'+k+'></div>';
+
+      if (counter % 2 == 0){
+         m += '<TR>';
+      }else {
+         m += '</td><TD style="border:0">';
+      }
+    }
+      t.Overv.innerHTML = m;
+    for (k in unsafeWindow.cm.Championstats.boosts){
+      var boost = unsafeWindow.cm.Championstats.boosts[k]
+      if (boost.CapType == "percent"){
+            document.getElementById('maxPerc_'+k).innerHTML = '%'
+         if (boost.Min != "none"){
+            document.getElementById('minPerc_'+k).innerHTML = '%'
+         }
+      }
+    }
+   },
+***/
+
+ Salvage : function (){
+    var t = Tabs.Champion;
+    try {      
+      m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
+      m+='<TR><TD><INPUT type=submit id=pbchsalvage_run value="Auto Salvage = '+(Options.ChampionDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=chShowSalvageHistory type=submit value="History"></td><TD><b>Keep cards</b> with <INPUT type=text id=pbchampion_keep size=3 value="'+ChampionOptions.Championkeep+'" /> attributes</td></tr>';
+      m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wondrous')},ChampionOptions.SalvageQuality,'id=chQuality')+'</td>';
+      m+='<TD>Keep first <INPUT type=text id=chsaveXitems size=2 maxlength=2 value='+ ChampionOptions.saveXitems +'> cards.</td></table>';
+      
+      m+='<table><TR><TD colspan=3><INPUT id=chSingleStat type=checkbox '+ (ChampionOptions.SingleStat?'CHECKED ':'') +'/>&nbsp; No mixed, Single Attribute cards only(required for min number of lines)</TD></TR>';
+      m+='<TR><TD colspan=3><INPUT id=pbchsalvage_cityspire type=checkbox '+ (ChampionOptions.CitySpire?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in cities with Fey Spire first before other cities</TD></TR>';
+      m+='<TR><TD colspan=3><INPUT id=chCityrand type=checkbox '+ (ChampionOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all / Fey Spire cities for crafing purposes)</TD></TR>';
+      m+='<TR><TD colspan=3><INPUT id=pbchsalvage_unique type=checkbox '+ (ChampionOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
+//      m+='<TR><TD colspan=3><INPUT id=pbchheatup type=checkbox '+(ChampionOptions.heatup?'CHECKED ':'')+'/>&nbsp; Upgrade cards before salvaging to increase aetherstone and heat up modifier</TD></TR>';
+      m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ChampionOptions.SalvageLevel,'id=chSLevel')+'</TD></TR>';
+//      m+='<tr><td colspan=3><INPUT id=chshero type=checkbox '+ (ChampionOptions.savehero?'CHECKED ':'') +'/>&nbsp; Save all hero\'s</TD></TR></table>';
+      m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
+      m+='<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
+      m+='<TABLE width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
+      
+      m+='<TR><TD></td><TD><INPUT id=chAttack type=checkbox '+ (ChampionOptions.Salvage.Attack?'CHECKED ':'') +'/>&nbsp;Attack</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Attack.Min,'id=chAttackMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=chDefense type=checkbox '+ (ChampionOptions.Salvage.Defense?'CHECKED ':'') +'/>&nbsp;Defense</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Defense.Min,'id=chDefenseMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=chLife type=checkbox '+ (ChampionOptions.Salvage.Life?'CHECKED ':'') +'/>&nbsp;Life</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Life.Min,'id=chLifeMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=chSpeed type=checkbox '+ (ChampionOptions.Salvage.Speed?'CHECKED ':'') +'/>&nbsp;Speed</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Speed.Min,'id=chSpeedMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=chAccuracy type=checkbox '+ (ChampionOptions.Salvage.Accuracy?'CHECKED ':'') +'/>&nbsp;Accuracy</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Accuracy.Min,'id=chAccuracyMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=chRange type=checkbox '+ (ChampionOptions.Salvage.Range?'CHECKED ':'') +'/>&nbsp;Range</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Range.Min,'id=chRangeMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=chLoad type=checkbox '+ (ChampionOptions.Salvage.Load?'CHECKED ':'') +'/>&nbsp;Load</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Load.Min,'id=chLoadMin')+'</td></tr>';
+
+      m+='<TR></tr><TR><TD><B>Champion:</b></td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Damage type=checkbox '+ (ChampionOptions.Salvage.Damage?'CHECKED ':'') +'/>&nbsp;Damage</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Damage.Min,'id=DamageMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=BonusDamage type=checkbox '+ (ChampionOptions.Salvage.BonusDamage?'CHECKED ':'') +'/>&nbsp;Bonus Damage</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.BonusDamage.Min,'id=BonusDamageMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Armor type=checkbox '+ (ChampionOptions.Salvage.Armor?'CHECKED ':'') +'/>&nbsp;Armor</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Armor.Min,'id=ArmorMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Strength type=checkbox '+ (ChampionOptions.Salvage.Strength?'CHECKED ':'') +'/>&nbsp;Strength</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Strength.Min,'id=StrengthMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Dexterity type=checkbox '+ (ChampionOptions.Salvage.Dexterity?'CHECKED ':'') +'/>&nbsp;Dexterity</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Dexterity.Min,'id=DexterityMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Health type=checkbox '+ (ChampionOptions.Salvage.Health?'CHECKED ':'') +'/>&nbsp;Health</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Health.Min,'id=HealthMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Hit type=checkbox '+ (ChampionOptions.Salvage.Hit?'CHECKED ':'') +'/>&nbsp;Hit Chance</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Hit.Min,'id=HitMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Crit type=checkbox '+ (ChampionOptions.Salvage.Crit?'CHECKED ':'') +'/>&nbsp;Crit Chance</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Crit.Min,'id=CritMin')+'</td></tr>';
+      m+='<TR><TD></td><TD><INPUT id=Block type=checkbox '+ (ChampionOptions.Salvage.Block?'CHECKED ':'') +'/>&nbsp;Block</td><td>Min number of lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA.Block.Min,'id=BlockMin')+'</td></tr>';
+
+      m+='<table><tr><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b>. by name</font></td></tr></table>';
+        
+      m+='<TABLE width=80% class=pbTab>';
+      for (k in t.championStatEffects) {
+//logit('chsteff ' +k+ ':' +t.championStatEffects[k]);
+        if(!ChampionOptions.SalvageA[k]) ChampionOptions.SalvageA[k] = {};
+        if(!ChampionOptions.SalvageA[k].Min) ChampionOptions.SalvageA[k].Min = 0;//fixing a mistake, Min must be defined.  
+         m += '<TR><TD><A onclick="chsetFAV('+ k +')"><DIV class=pbSalvage_fav id=chSalvageFAV'+k+'></div></td>';
+//         m += '<TD class=pbChampion><INPUT id=pbChampionItems'+k+' type=checkbox checked='+ (ChampionOptions.Salvage[k]?'CHECKED ':'') +'>'+ unsafeWindow.cm.thronestats.effects[k][1] +'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][3]+'</td><TD width="4">'+ unsafeWindow.cm.thronestats.effects[k][2]+'</td>\
+         m += '<TD class=pbChampion><INPUT id=pbChampionItems'+k+' type=checkbox checked='+ (ChampionOptions.Salvage[k]?'CHECKED ':'') +'>'+ t.championStatEffects[k][1] +'</td><TD>'+ t.championStatEffects[k][3]+'</td><TD width="4">'+ t.championStatEffects[k][2]+'</td>\
+         <td></td><td class=pbChampionST><select id=ch'+k+'>';
+         for(g = 0;g<t.EquipType.length;g++)
+         m+='<option value="'+t.EquipType[g]+'">'+t.EquipType[g]+'</option>'
+      m+='</select></td>';
+         m+='<td class=pbChampionS>Min lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA[k].Min,'id=ch'+k+'Min')+'</td></tr>';
+      }  
+      m+= '</table>';
+
+      t.Overv.innerHTML = m;
+     
+      $("pbchsalvage_run").addEventListener('click', function(e){
+          if(Options.ChampionDeleteItems){
+            e.target.value = "Auto Salvage = OFF";
+            Options.ChampionDeleteItems = false;
+            saveOptions();
+          } else {
+            e.target.value = "Auto Salvage = ON";
+            Options.ChampionDeleteItems = true;
+            saveOptions();
+          }
+      },false);
+
+      document.getElementById('chSingleStat').addEventListener ('change', function(){ChampionOptions.SingleStat = document.getElementById('chSingleStat').checked;saveChampionOptions();},false);
+      document.getElementById('chCityrand').addEventListener ('change', function(){ChampionOptions.Cityrand = this.checked;saveChampionOptions();},false);
+      document.getElementById('pbchsalvage_cityspire').addEventListener ('change', function(){ChampionOptions.CitySpire = this.checked;saveChampionOptions();},false);
+      document.getElementById('chAttack').addEventListener ('change', function(){ChampionOptions.Salvage.Attack = document.getElementById('chAttack').checked;saveChampionOptions();},false);
+      document.getElementById('chDefense').addEventListener ('change', function(){ChampionOptions.Salvage.Defense = document.getElementById('chDefense').checked;saveChampionOptions();},false);
+      document.getElementById('chLife').addEventListener ('change', function(){ChampionOptions.Salvage.Life = document.getElementById('chLife').checked;saveChampionOptions();},false);
+      document.getElementById('chSpeed').addEventListener ('change', function(){ChampionOptions.Salvage.Speed = document.getElementById('chSpeed').checked;saveChampionOptions();},false);
+      document.getElementById('chAccuracy').addEventListener ('change', function(){ChampionOptions.Salvage.Accuracy = document.getElementById('chAccuracy').checked;saveChampionOptions();},false);
+      document.getElementById('chRange').addEventListener ('change', function(){ChampionOptions.Salvage.Range = document.getElementById('chRange').checked;saveChampionOptions();},false);
+      document.getElementById('chLoad').addEventListener ('change', function(){ChampionOptions.Salvage.Load = document.getElementById('chLoad').checked;saveChampionOptions();},false);
+
+      document.getElementById('Damage').addEventListener ('change', function(){ChampionOptions.Salvage.Damage = document.getElementById('Damage').checked;saveChampionOptions();},false);
+      document.getElementById('BonusDamage').addEventListener ('change', function(){ChampionOptions.Salvage.BonusDamage = document.getElementById('BonusDamage').checked;saveChampionOptions();},false);
+      document.getElementById('Armor').addEventListener ('change', function(){ChampionOptions.Salvage.Armor = document.getElementById('Armor').checked;saveChampionOptions();},false);
+      document.getElementById('Strength').addEventListener ('change', function(){ChampionOptions.Salvage.Strength = document.getElementById('Strength').checked;saveChampionOptions();},false);
+      document.getElementById('Dexterity').addEventListener ('change', function(){ChampionOptions.Salvage.Dexterity = document.getElementById('Dexterity').checked;saveChampionOptions();},false);
+      document.getElementById('Health').addEventListener ('change', function(){ChampionOptions.Salvage.Health = document.getElementById('Health').checked;saveChampionOptions();},false);
+      document.getElementById('Hit').addEventListener ('change', function(){ChampionOptions.Salvage.Hit = document.getElementById('Hit').checked;saveChampionOptions();},false);
+      document.getElementById('Crit').addEventListener ('change', function(){ChampionOptions.Salvage.Crit = document.getElementById('Crit').checked;saveChampionOptions();},false);
+      document.getElementById('Block').addEventListener ('change', function(){ChampionOptions.Salvage.Block = document.getElementById('Block').checked;saveChampionOptions();},false);
+
+      document.getElementById('chAttackMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Attack.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('chDefenseMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Defense.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('chLifeMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Life.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('chSpeedMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Speed.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('chAccuracyMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Accuracy.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('chRangeMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Range.Min = this.value;saveChampionOptions();},false);
+      document.getElementById('chLoadMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Load.Min = this.value;saveChampionOptions();},false);
+
+      document.getElementById('DamageMin').addEventListener ('change', function(){ChampionOptions.Salvage.DamageMin = document.getElementById('DamageMin').checked;saveChampionOptions();},false);
+      document.getElementById('BonusDamageMin').addEventListener ('change', function(){ChampionOptions.Salvage.BonusDamageMin = document.getElementById('BonusDamageMin').checked;saveChampionOptions();},false);
+      document.getElementById('ArmorMin').addEventListener ('change', function(){ChampionOptions.Salvage.ArmorMin = document.getElementById('ArmorMin').checked;saveChampionOptions();},false);
+      document.getElementById('StrengthMin').addEventListener ('change', function(){ChampionOptions.Salvage.StrengthMin = document.getElementById('StrengthMin').checked;saveChampionOptions();},false);
+      document.getElementById('DexterityMin').addEventListener ('change', function(){ChampionOptions.Salvage.DexterityMin = document.getElementById('DexterityMin').checked;saveChampionOptions();},false);
+      document.getElementById('HealthMin').addEventListener ('change', function(){ChampionOptions.Salvage.HealthMin = document.getElementById('HealthMin').checked;saveChampionOptions();},false);
+      document.getElementById('HitMin').addEventListener ('change', function(){ChampionOptions.Salvage.HitMin = document.getElementById('HitMin').checked;saveChampionOptions();},false);
+      document.getElementById('CritMin').addEventListener ('change', function(){ChampionOptions.Salvage.CritMin = document.getElementById('CritMin').checked;saveChampionOptions();},false);
+      document.getElementById('BlockMin').addEventListener ('change', function(){ChampionOptions.Salvage.BlockMin = document.getElementById('BlockMin').checked;saveChampionOptions();},false);
+
+      document.getElementById('pbchsalvage_unique').addEventListener ('change', function(){ChampionOptions.SaveUnique = this.checked;saveChampionOptions();},false);
+//      document.getElementById('pbheatup').addEventListener ('change', function(){ChampionOptions.heatup = this.checked;saveChampionOptions();},false);
+//      document.getElementById('shero').addEventListener ('change', function(){ChampionOptions.savehero = this.checked;saveChampionOptions();},false);
+      document.getElementById('pbchampion_keep').addEventListener ('change', function(){ChampionOptions.Championkeep = parseInt(document.getElementById('pbchampion_keep').value);saveChampionOptions();},false);
+
+      document.getElementById('chQuality').addEventListener  ('change', function(){ChampionOptions.SalvageQuality = this.value;saveChampionOptions();},false);
+      document.getElementById('chSLevel').addEventListener  ('change', function(){ChampionOptions.SalvageLevel = this.value;saveChampionOptions();},false);
+      document.getElementById('chsaveXitems').addEventListener('change', function(){ChampionOptions.saveXitems = document.getElementById('chsaveXitems').value;saveChampionOptions();} , false);
+      document.getElementById('chShowSalvageHistory').addEventListener('click', function(){t.PaintSalvageHistory()} , false);
+
+      //if (ChampionOptions.Salvage[1] != undefined){
+        for (k in t.championStatEffects){
+            document.getElementById('pbChampionItems'+k).checked = ChampionOptions.Salvage[k];
+         }
+     //}
+     if (ChampionOptions.Salvage_fav[1] == undefined){
+         for (k in t.championStatEffects){
+            ChampionOptions.Salvage_fav[k] = false;
+         }
+     } 
+
+     if (ChampionOptions.Salvage_fav[1] != undefined) {
+         for (k in t.championStatEffects){
+            if (ChampionOptions.Salvage_fav[k]) document.getElementById('chSalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA6lJREFUeNq0VdtLFFEc/mZmXfO2FnaxC8XGhmFZRjeCgiDqJXoIeqkoCIQICnos7Km/oKinQAgCX3qIHoIg6ClQhMguCJa6XrKsLTPNdtu5nL7fnDPuaqv71GG+OTNzzvl+999Y6vVq/DMswubN4VxBfAqAnLoMhVYE6jo2OBk4XPcVsP0Llhox+CXIraLnGZJMqwOwcSf85iOOr8F5rKH0wEK5YYebIqhotvWz4CsFeGhH9XJg514KsM5gGk3IFWuylACfZIFTgJLZ1kJ+k+AndiNvHcemJiDPb3aVA9e6hozS+8oKkMuytM9Dv9vaiiwxoUTjdlTWkhwaTdtl/RxmkMJsWX7GIMt7lkH0hAx65oUg9HcLcRKpZpIrfUIUsCsd+Pl2jPsXylvwiaw/ldbYjfxvb6SWB6n9LcRrJAZci8A9zTvEsnOM0VE8XJdaSoClHqzbB6VO0T1JxiwZpqJigkoK1tYDyS20RmnApG+MGElTse8I01XHuo/nxrkvTYVeYKXTiRNjvqUeb/yN76hCXQJIEKtW6tAIoa/mk4cqGUInipm8cH1ykinNoExNA/EcuZyLOD58L8YMmUBdLInGzZowDFygyZSBMKqi2pirl7kNFMQ0TtDihhVMjgG6nNaEqrrWEbj+KD72ac2zSqoW+GOyxjWx8Qyid1mTPbJXzsh7QO3GBmX9Ck4NPzEC7DRxCPlgAMPvqAl7g2treGUQCuMsteSRfHxE3i/idPpuIYukePL2KHGIB/rw7pU5WKT9YsibefIHyUeFpw3nB+/NT9PCgQniMNO1F0NjBZeUg9RH/4jPsxfQ9qHj3zrw5mmVoT9v4PM344Yy5OKaAbolh0e49P5+6Ur2rELGyMixkflR08P8NSzIJBk1zJzMVGqJZsfm5psm54eBa0F1AqEQz8TCMwi/mYr2jBL1DVL5zbi5NV5aQHjQEOTD1tyMBHPZVYX+VBED1lLTtWx6Ncs0sazJHsvR/4hs0FTaRW6RvTmakacA6f3yPc7DDexF75m+/TOyQ1pjFfbtZ5ugGbN/tPukBmzVwvvb0j+cyAKbFR1zalFdTeI6lj5/hz3dLP9fz7lvD7GBuI3uniz63wCNtKqqkhbSO/FY6yIuijIi/IMlUc8DPovmZQ/wOdPL78eII8RLYpK4SmyBG3Sgq9vHcD+QWi9uTC3yyzStR6OLeIrBoV7OZ4ldxLMFewTsmmgjtmE224mJL2k+d5Ru10rhfw4b/3n8FWAAwna8wfz7wJUAAAAASUVORK5CYII="/>';
+               else document.getElementById('chSalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAADAFBMVEX////4+Pj7+/v39/f5+fn6+vr29vby8vL09PTz8/P+/v78/Pzd3d3Nzc3v7++tra3r6+v9/f3n5+fs7Ozt7e24uLjQ0NDx8fHV1dXo6OjJycnl5eXc3NyoqKje3t7Hx8fS0tK+vr66urrZ2dnw8PDMzMzq6urFxcW5ubnk5OTj4+Pi4uLR0dGwsLDBwcG1tbXb29vLy8vu7u7Dw8P19fXKysrY2Ni3t7ekpKSrq6u0tLTh4eHm5ubW1tanp6eenp7p6emsrKyurq7a2trCwsLPz8/AwMC9vb28vLzf39+zs7PT09PX19f///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUISnwAAABI0lEQVR4nG2Rh26DMBCGzzmwCXuHBLL33t1tujfv/zqFhjhRyydZ8t0n6+6XIeZEXXIsYuA3R+1sc8UWQC3lCLcGQJY5okIBoM3+CT15AIDaH7Exb0kqICxLB+FMvtof9kqEPcXe9VPg1+QY5r2sJ8tyJgt65TuGxzIqaduyFMWyUqcIrK7F0BzYlAgFjkBIyb80Y6Bv5zeUiKf9F2OcboWv8+GGiBmIumaM9usKM+8ehQzKGsbwkEPwIiQZaHrhMWBfJYg0ARHd1knylk2o9AsltG+dCFcqJrDkSOibXMjNFWP6aLJcOIyxoMGFXmGdUDM+B9WZ6rLonYvF89ifTrsl8cyrrtXA4KK8qz7UnbQiwdXdRZMLRavbh/+RGuvj8Fx+AKn1YdcNFlXFAAAAAElFTkSuQmCC" />';
+         }
+     }
+    var element_class = document.getElementsByClassName('pbChampion');
+    var element_classTS = document.getElementsByClassName('pbChampionS');
+    var element_classST = document.getElementsByClassName('pbChampionST');
+    
+    for (k=0;k<element_class.length;k++){
+      element_class[k].addEventListener('click', t.saveSalvageOptions , false);
+      element_classTS[k].addEventListener ('change', function(e){
+         var idnum = parseInt(String(e.target.id).replace("Min",""));
+         var type = document.getElementById(idnum).value;
+         if (type == 'ALL') {
+         ChampionOptions.SalvageA[idnum].Min = e.target.value
+         } else {
+         ChampionOptions.SalvageA[idnum][type] = e.target.value;
+		}
+         saveChampionOptions();
+         } , false);
+      element_classST[k].addEventListener ('change', function(e){
+         if (e.target.value == 'ALL') {
+         document.getElementById(e.target.id+'Min').value=ChampionOptions.SalvageA[e.target.id].Min;
+         } else {
+         document.getElementById(e.target.id+'Min').value=ChampionOptions.SalvageA[e.target.id][e.target.value];
+		}
+         saveChampionOptions();
+         } , false);
+    }
+
+    t.saveSalvageOptions();
+      
+    } catch (e) {
+      t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
+    }
+  },
+  
+setSalvageFAV :function (what){
+    var t = Tabs.Champion;  
+    if (ChampionOptions.Salvage_fav[what]) ChampionOptions.Salvage_fav[what] = false;
+      else  ChampionOptions.Salvage_fav[what] = true;
+    for (k in t.championStatEffects){
+            if (ChampionOptions.Salvage_fav[k]) document.getElementById('chSalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA6lJREFUeNq0VdtLFFEc/mZmXfO2FnaxC8XGhmFZRjeCgiDqJXoIeqkoCIQICnos7Km/oKinQAgCX3qIHoIg6ClQhMguCJa6XrKsLTPNdtu5nL7fnDPuaqv71GG+OTNzzvl+999Y6vVq/DMswubN4VxBfAqAnLoMhVYE6jo2OBk4XPcVsP0Llhox+CXIraLnGZJMqwOwcSf85iOOr8F5rKH0wEK5YYebIqhotvWz4CsFeGhH9XJg514KsM5gGk3IFWuylACfZIFTgJLZ1kJ+k+AndiNvHcemJiDPb3aVA9e6hozS+8oKkMuytM9Dv9vaiiwxoUTjdlTWkhwaTdtl/RxmkMJsWX7GIMt7lkH0hAx65oUg9HcLcRKpZpIrfUIUsCsd+Pl2jPsXylvwiaw/ldbYjfxvb6SWB6n9LcRrJAZci8A9zTvEsnOM0VE8XJdaSoClHqzbB6VO0T1JxiwZpqJigkoK1tYDyS20RmnApG+MGElTse8I01XHuo/nxrkvTYVeYKXTiRNjvqUeb/yN76hCXQJIEKtW6tAIoa/mk4cqGUInipm8cH1ykinNoExNA/EcuZyLOD58L8YMmUBdLInGzZowDFygyZSBMKqi2pirl7kNFMQ0TtDihhVMjgG6nNaEqrrWEbj+KD72ac2zSqoW+GOyxjWx8Qyid1mTPbJXzsh7QO3GBmX9Ck4NPzEC7DRxCPlgAMPvqAl7g2treGUQCuMsteSRfHxE3i/idPpuIYukePL2KHGIB/rw7pU5WKT9YsibefIHyUeFpw3nB+/NT9PCgQniMNO1F0NjBZeUg9RH/4jPsxfQ9qHj3zrw5mmVoT9v4PM344Yy5OKaAbolh0e49P5+6Ur2rELGyMixkflR08P8NSzIJBk1zJzMVGqJZsfm5psm54eBa0F1AqEQz8TCMwi/mYr2jBL1DVL5zbi5NV5aQHjQEOTD1tyMBHPZVYX+VBED1lLTtWx6Ncs0sazJHsvR/4hs0FTaRW6RvTmakacA6f3yPc7DDexF75m+/TOyQ1pjFfbtZ5ugGbN/tPukBmzVwvvb0j+cyAKbFR1zalFdTeI6lj5/hz3dLP9fz7lvD7GBuI3uniz63wCNtKqqkhbSO/FY6yIuijIi/IMlUc8DPovmZQ/wOdPL78eII8RLYpK4SmyBG3Sgq9vHcD+QWi9uTC3yyzStR6OLeIrBoV7OZ4ldxLMFewTsmmgjtmE224mJL2k+d5Ru10rhfw4b/3n8FWAAwna8wfz7wJUAAAAASUVORK5CYII="/>';
+               else document.getElementById('chSalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAADAFBMVEX////4+Pj7+/v39/f5+fn6+vr29vby8vL09PTz8/P+/v78/Pzd3d3Nzc3v7++tra3r6+v9/f3n5+fs7Ozt7e24uLjQ0NDx8fHV1dXo6OjJycnl5eXc3NyoqKje3t7Hx8fS0tK+vr66urrZ2dnw8PDMzMzq6urFxcW5ubnk5OTj4+Pi4uLR0dGwsLDBwcG1tbXb29vLy8vu7u7Dw8P19fXKysrY2Ni3t7ekpKSrq6u0tLTh4eHm5ubW1tanp6eenp7p6emsrKyurq7a2trCwsLPz8/AwMC9vb28vLzf39+zs7PT09PX19f///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUISnwAAABI0lEQVR4nG2Rh26DMBCGzzmwCXuHBLL33t1tujfv/zqFhjhRyydZ8t0n6+6XIeZEXXIsYuA3R+1sc8UWQC3lCLcGQJY5okIBoM3+CT15AIDaH7Exb0kqICxLB+FMvtof9kqEPcXe9VPg1+QY5r2sJ8tyJgt65TuGxzIqaduyFMWyUqcIrK7F0BzYlAgFjkBIyb80Y6Bv5zeUiKf9F2OcboWv8+GGiBmIumaM9usKM+8ehQzKGsbwkEPwIiQZaHrhMWBfJYg0ARHd1knylk2o9AsltG+dCFcqJrDkSOibXMjNFWP6aLJcOIyxoMGFXmGdUDM+B9WZ6rLonYvF89ifTrsl8cyrrtXA4KK8qz7UnbQiwdXdRZMLRavbh/+RGuvj8Fx+AKn1YdcNFlXFAAAAAElFTkSuQmCC" />';
+   }
+   t.saveSalvageOptions();
+},
+
+setSalvageItem :function (what){
+   var t = Tabs.Champion;  
+   if(!unsafeWindow.kocChampionItems[what]) {
+         t.FillEquipCheckboxes();
+      alert('Item has already been deleted');
+         return;
+   }
+   var answer = confirm ("Are you sure you want to delete: " + unsafeWindow.kocChampionItems[what].name);
+   if (answer) {
+      var cityid = 0;
+      for (var k in Cities.byID) {
+            if (Seed.resources["city"+k]["rec5"][0] < 1000000)
+            {
+               cityid = k;
+               break;
+            }
+      }
+      if (cityid == 0) cityid = Seed.cities[0][0];
+      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+//      params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
+      params.action = 8;
+      params.eids = what;
+      params.cityId = cityid;
+            new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/ceEquipmentManagerAjax.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+               var rslt = eval("(" + transport.responseText + ")");
+               if(rslt.ok) {
+                  unsafeWindow.kocChampionItems[params.eids].salvage();
+                  t.FillEquipCheckboxes();
+               }
+            },
+            onFailure: function () {
+                  return;
+            },
+         });
+   }
+},
+Upgrade_Enhance :function (){
+    var t = Tabs.Champion;  
+    try {      
+      var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED UPGRADE/ENHANCE/REPAIR FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
+           if (ChampionOptions.Active == false) {
+                 m += '<TD><INPUT id=chEnable type=submit value="Queue = OFF"></td>';
+           } else {
+                m += '<TD><INPUT id=chEnable type=submit value="Queue = ON"></td>';
+          }
+      m += '<TD><INPUT id=chShowHistory type=submit value="History"></td></table>';
+/***
+      m += '<table><tr><INPUT id=pbUseTokens type=checkbox '+ (ChampionOptions.UseTokens?'CHECKED ':'') +'/>&nbsp;Use Tokens/Stones when available</tr>';
+      m += '<tr><br>Will use Protection Stone/Lesser Protection stone for Enhance';
+      m += ' <INPUT id=pbUseMO type=checkbox '+ (ChampionOptions.UseMO?'CHECKED ':'') +'/> Also use Mystic Orb/Lesser Mystic Orb</tr>';
+      m += '<tr><br>Will use Lesser Lucky Token for Upgrade';
+      m += ' <INPUT id=pbUseLT type=checkbox '+ (ChampionOptions.UseLT?'CHECKED ':'') +'/> Also use Lucky Tokens</tr>';
+***/
+      m += '</table>';
+     m+= '<DIV id=pbTowrtDivF class=pbStat>ADD UPGRADE OR ENHANCE TO QUEUE</div><TABLE class=ptTab><br/>';
+      m+='<TR><TD>Champion items:</td><TD><SELECT id=ChampionItems type=list></select></td>';
+      m+='<TD><INPUT id=chaddEnhance type=submit value="Enhance"></td>';
+      m+='<TD><INPUT id=chaddUpgrade type=submit value="Upgrade"></td>';
+      m+='<TD><DIV id=chShowHoover></div></td>';
+      m+='</tr></table><br/>';
+      m+= '<DIV id=pbTowrtDivF class=pbStat>STATUS</div>';
+      m+= '<br/><DIV id=chShowStatus></div></p>';
+      m+= '<DIV id=chShowTries></div><br/>';
+      m+= '<DIV id=chShowStones></div><br/>';
+      m+= '<DIV id=pbTowrtDivF class=pbStat>UPGRADE INFO</div>';
+      m+= '<br/><DIV id=chShowInfo></div><br/>';
+      m+= '<DIV id=pbTowrtDivF class=pbStat>QUEUE</div>';
+      m+= '<br/><DIV id=chShowQueueDiv></div>';
+      t.Overv.innerHTML = m;
+     
+    document.getElementById('ChampionItems').options.length=0;
+    for (i in unsafeWindow.kocChampionItems){
+        var o = document.createElement("option");
+        o.text = unsafeWindow.kocChampionItems[i]["name"];
+        o.value = unsafeWindow.kocChampionItems[i]["equipmentId"];
+        document.getElementById("ChampionItems").options.add(o);
+        if (unsafeWindow.kocChampionItems[i]["repairing"]) {
+	   t.repairEnd=unsafeWindow.kocChampionItems[i]["eta"];
+	   t.repairStart=unsafeWindow.kocChampionItems[i]["start"];
+	}
+    }
+    document.getElementById('chaddEnhance').addEventListener ('click', function (){t.addToQueue(document.getElementById('ChampionItems').value,"Enhance");},false);
+    document.getElementById('chaddUpgrade').addEventListener ('click', function (){t.addToQueue(document.getElementById('ChampionItems').value,"Upgrade");},false);
+
+    document.getElementById('ChampionItems').addEventListener ('change', function (){t.paintHoover();},false);
+//      document.getElementById('pbUseTokens').addEventListener('change', function(){ChampionOptions.UseTokens = document.getElementById('pbUseTokens').checked;saveChampionOptions();} , false);
+//      document.getElementById('pbUseMO').addEventListener('change', function(){ChampionOptions.UseMO = document.getElementById('pbUseMO').checked;saveChampionOptions();} , false);
+//      document.getElementById('pbUseLT').addEventListener('change', function(){ChampionOptions.UseLT = document.getElementById('pbUseLT').checked;saveChampionOptions();} , false);
+      document.getElementById('chEnable').addEventListener('click', function(){t.toggleChampionState()} , false);
+      document.getElementById('chShowHistory').addEventListener('click', function(){t.PaintHistory()} , false);
+ 
+    if (ChampionOptions.Items.length ==0) document.getElementById('chShowStatus').innerHTML = "No items in queue!!";
+    else {
+//      if(ChampionOptions.Active && ChampionOptions.ibrokeitems.length > 0) setTimeout(t.doRepair,5000);
+//      if (ChampionOptions.Active && Seed.queue_Champion.end == undefined) document.getElementById('chShowStatus').innerHTML = "Waiting for timer...";
+//      if (ChampionOptions.Active && Seed.queue_Champion.end != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+//      if (!ChampionOptions.Active && Seed.queue_Champion.end != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+//      if (!ChampionOptions.Active && Seed.queue_Champion.end == undefined) document.getElementById('chShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+      if (ChampionOptions.Active && t.repairEnd == undefined) document.getElementById('chShowStatus').innerHTML = "Waiting for timer...";
+      if (ChampionOptions.Active && t.repairEnd != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+      if (!ChampionOptions.Active && t.repairEnd != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+      if (!ChampionOptions.Active && t.repairEnd == undefined) document.getElementById('chShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+    }
+      
+  
+    if (ChampionOptions.Tries > 0) document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
+        else document.getElementById('chShowTries').innerHTML = "Tries: --";
+       
+    if (ChampionOptions.Items.length>0) {t.paintInfo();t.paintStones();t.PaintQueue();}
+    
+  } catch (e) {
+      t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
+    }
+setInterval(t.paintStones,30000);
+},
+
+Compare :function (){
+    var t = Tabs.Champion;  
+    var amount = 0;
+    var WeaponCount =0;
+    var ArmorCount = 0;
+    var HelmCount = 0;
+    var BootCount = 0;
+    var ShieldCount = 0;
+    var counter = 0;
+//    ActiveItems = parseInt(Seed.champion.rowNum)*5;
+    ActiveItems = 128;
+
+    for (k in unsafeWindow.kocChampionItems){
+      counter++;
+      if (counter > ActiveItems) break;
+      z = unsafeWindow.kocChampionItems[k];
+//TYPE_ID_WEAPON : 1, TYPE_ID_ARMOR : 2, TYPE_ID_HELM : 3, TYPE_ID_BOOTS : 4, TYPE_ID_SHIELD : 5, TYPE_ID_RING : 6, TYPE_ID_RING1 : 6, TYPE_ID_RING2 : 7, TYPE_ID_NECKLACE : 8, TYPE_ID_CLOAK : 9
+      if (z.type=="1") WeaponCount++;
+      if (z.type=="2") ArmorCount++;
+      if (z.type=="3") HelmCount++;
+      if (z.type=="4") BootCount++;
+      if (z.type=="5") ShieldCount++;
+   }  
+
+
+    try {   
+     var m = '<DIV id=pbTowrtDivF class=pbStat>Compare Champion Items</div><br><TABLE id=pbCompareStats width=100% height=0% class=pbTab>';
+
+     m+='<TD>Weapon: ' + WeaponCount + '</td><TD>Armor: ' + ArmorCount+ '</td><TD>Helm: ' + HelmCount+ '</td><TD>Boot: ' + BootCount+ '</td><TD>Shield :' + ShieldCount+ '</td></table><br>';
+
+     m+= '<DIV id=pbChampionMain class=pbStat>Compare Champion Items</div><br>';
+     m+='<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=chtype type=list></select></td><TD>Card Family: <SELECT id=chfamily type=list></select></td><TD>Effect: <SELECT id=cheffect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=chkeyword size=10></td></tr></table>';
+
+
+     m+='<br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR>';
+     for (i=1;i<=ActiveItems;i++){
+       m+='<TD><DIV id=DIV'+ i +'></div></td>';
+       if (i%3==0) m+='</tr><TR></tr><TR>';
+     }
+
+     m+="</tr></table>"
+
+    t.Overv.innerHTML = m;
+
+   document.getElementById("chtype").options.length=0;
+   for (k in t.EquipType){
+      var y = t.EquipTypeNo[k];
+      var yTxt = t.EquipType[k];
+      if (typeof(y) == "string") {
+//         if (y == "Windows") y = "Window";
+         what = y.toLowerCase();
+//         if (y == "Chair") y = "Throne";
+         var o = document.createElement("option");       
+         o.text = yTxt;
+         o.value = what;
+         document.getElementById("chtype").options.add(o);
+      }     
+   }  
+   document.getElementById("chfamily").options.length=0;
+   for (k in t.CardTypes){
+      var y = t.CardTypes[k];
+      if (typeof(y) == "string") {
+         var o = document.createElement("option");       
+         o.text = y;
+         o.value = y;
+         document.getElementById("chfamily").options.add(o);
+      }     
+   }  
+   document.getElementById("cheffect").options.length=0;
+   var o = document.createElement("option");       
+   o.text = "ALL";
+   o.value = "ALL";
+   document.getElementById("cheffect").options.add(o);
+   for (k in t.championStatEffects){
+      var y = t.championStatEffects[k][1];
+      if (typeof(y) == "string") {
+         var o = document.createElement("option");       
+         o.text = t.championStatEffects[k][1];
+         o.value = k;
+         document.getElementById("cheffect").options.add(o);
+      }     
+   }  
+
+   document.getElementById("chtype").addEventListener ('change', t.FillEquipCheckboxes,false);
+   document.getElementById("chfamily").addEventListener ('change', t.FillEquipCheckboxes,false);
+   document.getElementById("cheffect").addEventListener ('change', t.FillEquipCheckboxes,false);
+   document.getElementById("chkeyword").addEventListener ('change', t.FillEquipCheckboxes,false);
+   document.getElementById('chkeyword').addEventListener('keyup', t.FillEquipCheckboxes, false)
+      
+
+   t.FillEquipCheckboxes();
+    } catch (e) {
+      t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
+    }
+},
+
+
+togOpt : function (checkboxId, optionName, callOnChange){
+    var t = Tabs.Champion;
+    var checkbox = document.getElementById(checkboxId);
+    if (Options[optionName])
+      checkbox.checked = true;
+    checkbox.addEventListener ('change', eventHandler, false);
+    function eventHandler (){
+      Options[optionName] = this.checked;
+      saveOptions();
+      if (callOnChange)
+        callOnChange (this.checked);
+    }
+},
+
+changeOpt : function (valueId, optionName, callOnChange){
+    var t = Tabs.Champion;
+    var e = document.getElementById(valueId);
+    e.value = Options[optionName];
+    e.addEventListener ('change', eventHandler, false);
+    function eventHandler (){
+      Options[optionName] = this.value;
+      saveOptions();
+      if (callOnChange)
+        callOnChange (this.value);
+    }
+},
+  
+toggleChampionState: function(){
+    var t = Tabs.Champion;
+    if (ChampionOptions.Active == true) {
+            ChampionOptions.Active = false;
+            document.getElementById('chEnable').value = "Queue = OFF";
+            saveChampionOptions();
+            clearTimeout(t.setActionTimer);
+//            if (Seed.queue_Champion.end == undefined) document.getElementById('chShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+            if (t.repairEnd == undefined) document.getElementById('chShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+    } else {
+            ChampionOptions.Active = true;
+            document.getElementById('chEnable').value = "Queue = ON";
+            saveChampionOptions();
+            t.setActionTimer = setInterval(t.doAction,10000);
+            document.getElementById('chShowStatus').innerHTML = "Waiting for timer...";
+    }
+},
+
+_addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,cost){
+         var t = Tabs.Champion;
+        var a="";
+        var b="";
+        switch (qualityfrom) {
+                case 0:a = unsafeWindow.g_js_strings.throneRoom.simple;break;
+                case 1:a = unsafeWindow.g_js_strings.throneRoom.common;break;
+                case 2:a = unsafeWindow.g_js_strings.throneRoom.uncommon;break;
+                case 3:a = unsafeWindow.g_js_strings.throneRoom.rare;break;
+                case 4:a = unsafeWindow.g_js_strings.throneRoom.epic;break;
+                case 5:a = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+                case 6:a = unsafeWindow.g_js_strings.throneRoom.unique;break;
+                default:a = unsafeWindow.g_js_strings.throneRoom.simple;break;
+        }
+        switch (qualityto) {
+                case 0:b = unsafeWindow.g_js_strings.throneRoom.simple;break;
+                case 1:b = unsafeWindow.g_js_strings.throneRoom.common;break;
+                case 2:b = unsafeWindow.g_js_strings.throneRoom.uncommon;break;
+                case 3:b = unsafeWindow.g_js_strings.throneRoom.rare;break;
+                case 4:b = unsafeWindow.g_js_strings.throneRoom.epic;break;
+                case 5:b = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+                case 6:b = unsafeWindow.g_js_strings.throneRoom.unique;break;
+                default:b = unsafeWindow.g_js_strings.throneRoom.simple;break;
+        }
+         var row = document.getElementById('chShowQueue').insertRow(0);
+         row.vAlign = 'top';
+         row.style.color = "black";    
+         row.style.background = "rgb(246,243,236)";    
+         if (active) row.style.color = "green";     
+         row.insertCell(0).innerHTML = id+1;
+         row.insertCell(1).innerHTML = name;
+         if (action == "Enhance") {
+                row.insertCell(2).innerHTML = a + " -> " + b;
+                    row.insertCell(3).innerHTML = levelfrom;
+         }
+         if (action == "Upgrade") {
+                row.insertCell(2).innerHTML = a;
+                    row.insertCell(3).innerHTML = levelfrom + " -> " + levelto;
+         }
+         row.insertCell(4).innerHTML = action;
+         row.insertCell(5).innerHTML = cost;
+         row.insertCell(6).innerHTML = '<a class="button20" id="chqueueDelete_' + id + '"><span>Delete</span></a>';
+         document.getElementById('chqueueDelete_' + id).addEventListener('click', function(){
+            if (ChampionOptions.Items[id].active ==true) ChampionOptions.Tries=0;
+            if (ChampionOptions.Items.length ==0 && ChampionOptions.Active) document.getElementById('chShowStatus').innerHTML = "No items in queue!!";
+            if (!ChampionOptions.Active) document.getElementById('chShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+            ChampionOptions.Items.splice (id,1);
+            saveChampionOptions();
+            t.checkUpgradeInfo(false);
+              t.PaintQueue();
+              if (ChampionOptions.Items.length>0) t.paintInfo();
+                else document.getElementById('chShowInfo').innerHTML = "";
+        }, false);
+},
+    
+     _addTabHeader: function() {
+     var t = Tabs.Champion;
+         var row = document.getElementById('chShowQueue').insertRow(0);
+         row.vAlign = 'top';
+         row.style.color = "black";
+         row.style.background = "rgb(246,243,236)";    
+         row.insertCell(0).innerHTML = "Id";
+         row.insertCell(1).innerHTML = "Name";
+         row.insertCell(2).innerHTML = "Quality";
+         row.insertCell(3).innerHTML = "Level";
+         row.insertCell(4).innerHTML = "Action";
+         row.insertCell(5).innerHTML = "Cost";
+         row.insertCell(6).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+       },
+
+FillEquipCheckboxes: function(){
+   var t = Tabs.Champion;
+   var familyCheck=false;
+   var typeCheck=false;
+   var effectCheck=false;
+   var keywordCheck=false;  
+//   ActiveItems = parseInt(Seed.champion.rowNum)*5;
+   ActiveItems = 128;
+   for(i=1;i<=ActiveItems;i++) document.getElementById("DIV"+i).innerHTML="";
+   counter = 0;
+   t.CompPos=0;
+   for (k in unsafeWindow.kocChampionItems){
+      counter++;
+      if (unsafeWindow.kocChampionItems[k]["repairing"]) {
+	t.repairEnd=unsafeWindow.kocChampionItems[k]["eta"];
+	t.repairStart=unsafeWindow.kocChampionItems[i]["start"];
+      }
+      if (counter > ActiveItems) break;
+      z = unsafeWindow.kocChampionItems[k];
+      familyCheck=false;
+      typeCheck=false;
+      effectCheck=false;
+      keywordCheck=false;
+      y = z.effects;
+      if (z.type==document.getElementById("chtype").value || "all" == document.getElementById("chtype").value) typeCheck=true;
+
+      for (i=1;i<=5;i++){
+            effect = t.championStatEffects[y[''+i].id][2];
+            if (effect == document.getElementById("chfamily").value || "ALL" == document.getElementById("chfamily").value) familyCheck = true;
+            if (y[''+i].id == document.getElementById("cheffect").value || "ALL" == document.getElementById("cheffect").value) effectCheck = true;
+            var str = String(t.championStatEffects[y[''+i].id][1]);
+            if (str.search(new RegExp(String(document.getElementById("chkeyword").value), "i")) != -1 || document.getElementById("chkeyword").value=="") keywordCheck=true;
+      }
+
+      if (typeCheck && familyCheck && effectCheck && keywordCheck){
+         t.CompPos++;
+         t.paintEquipInfo(z.equipmentId,t.CompPos);
+      }
+   }  
+},
+
+/***
+doPreset : function (room, retry) {
+        var t = Tabs.Champion;    
+        actionLog('changing to tr '+room);
+	var div;
+   if(isNaN(retry))retry=0;
+   if(retry > 15) {if(document.getElementById('ChampionTRS'))document.getElementById('ChampionTRS').innerHTML = "<font color=red>failed to change Champion room..Giving Up</font>";return;};
+
+//      if(document.getElementById('ChampionTRS'))
+//      document.getElementById('tra'+unsafeWindow.seed.champion.activeSlot).disabled = false;
+//      if(document.getElementById('ChampionHUD'))
+//      document.getElementById('htra'+unsafeWindow.seed.champion.activeSlot).disabled = false;
+      
+
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+//        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
+        params.action = 'setPreset';
+        params.presetId = room;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+			if(document.getElementById('tra'+params.presetId)) {
+				for(a = 1;a <= Seed.champion.slotNum;a++)
+				document.getElementById('tra'+a).disabled = false;
+               			document.getElementById('tra'+params.presetId).disabled = true;
+			};
+			if(document.getElementById('ChampionHUD')) {
+				for(a = 1;a <= Seed.champion.slotNum;a++) {
+				document.getElementById('htra'+a).disabled = false;
+				document.getElementById('htra'+a).className = "pbttabs";
+			};
+				document.getElementById('htra'+params.presetId).disabled = true;
+				document.getElementById('htra'+params.presetId).className = "pbttabsdis";
+			};
+               		t.TTpaint(params.presetId);
+               		if(document.getElementById('ChampionInventoryPreset'+params.presetId))
+               		   button = document.getElementById('ChampionInventoryPreset'+params.presetId);
+               		else
+               		   button = '<li id="ChampionInventoryPreset' + params.presetId + '" class="selected">'+params.presetId+'</li>';
+               		   unsafeWindow.cm.ChampionView.clickActivePreset(button);
+                	}
+                else {
+//                    if(document.getElementById('ChampionTRS'))document.getElementById('ChampionTRS').innerHTML = "<font color=red>failed to change Champion room..Trying Again</font>";
+//		    else {
+//		      div = document.createElement('div');
+//		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change Champion room..Trying Again<BR></div>';
+//		      document.body.insertBefore (div, document.body.firstChild);
+//		    }
+                    setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
+                }
+            },
+            onFailure: function () {
+//                    if(document.getElementById('ChampionTRS'))document.getElementById('ChampionTRS').innerHTML = "<font color=red>failed to change Champion room..Trying Again</font>";
+//		    else {
+//		      div = document.createElement('div');
+//		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change Champion room..Trying Again<BR></div>';
+//		      document.body.insertBefore (div, document.body.firstChild);
+//		    }
+               setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
+            },
+        });
+
+},
+***/
+
+
+fupgenh: function (z){
+var t = Tabs.Champion;
+document.getElementById("ptmrcxSubUE").click()
+		 document.getElementById("ChampionItems").value = z;
+},
+
+/***
+postInfo : function (z){
+	var y = unsafeWindow.kocChampionItems[z];
+	var m = ':::.|'+y.name;
+	for (i=1;i<=5;i++) {
+		id = y["effects"][""+i]["id"];
+		tier = parseInt(y["effects"][""+i]["tier"]);
+		level = y["level"];
+//		p = unsafeWindow.cm.thronestats.tiers[id][tier];
+		p = t.championStatTiers[id][tier];
+		Current = p.base + ((level * level + level) * p.growth * 0.5);
+		m+='||'+Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"];
+	};
+	sendChat ("/a "+  m);
+},
+***/
+
+
+paintEquipInfo : function (z,what){
+      var t = Tabs.Champion;
+      var m='';
+      var color = "black";
+      if (typeof(unsafeWindow.kocChampionItems[z]) == 'object') var y = unsafeWindow.kocChampionItems[z];
+      else return;
+        var id =0;
+        var tier=0;
+        var Current=0;
+        var icon = ''+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/Champion/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type +'_normal_1_'+ y.rarity+'.png';
+//	if (y["rarity"]>5)
+//          var icon = ''+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/Champion/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type + '_unique_normal_' + y.unique+'.png';
+        if (y.equippedTo > 0)m='<TABLE width=80% height=0% align="center" class=ChampionEQ  ondblclick="chpostInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
+        else m='<TABLE width=80% height=0% align="center" class=Champion ondblclick="chpostInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
+        switch(parseInt(y["rarity"])){
+         case 1:color="grey";break;
+         case 2:color="white";break;
+         case 3:color="green";break;
+         case 4:color="blue";break;
+         case 5:color="purple";break;
+         default:break;
+        }
+
+          m+='<TR><TD style="background-color:#D5C795"><FONT color='+ color +'><B>' + y.name + '</b></font></td>';
+        m+= '<TD><A onclick="chSavlage('+ y.equipmentId +')"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAAstJREFUeNpskstrXWUUxX/7e9zHuadpbwbR0yagZKAIPmga0kEToUELKVVJrBMHBSUDQTuQ/geCCA6ETGt0EFCqkpKmLRaSNlUKgRKvoMU6KkgHUZtKvO97z/m2gyaXFFyTvVjs3xpsttyYeeX6+HsfHCWKoZuCBgiK7s4QQBXd8WIEW69z7fwXv3+4cuO0hAvz3a3ifietBqqKoIQQkKCgYadgtyRACEihwIGtLWY/+vRjV/vnYTfd/NMRMrTTJW3UMdYgufwjKMug2URDhjiHiqBAU4QnvRtyf928yYPf7hLqNcz+fsZu32H97Rlaq9eIygdIqzXMiSmOzn/F2jMHKYSMYAzN/jKddjNjNaJxyaGLoHu1dPgl/Qb0+5ePPZYvgl7y6A959H0vX5rtrlAToQYszUyzq9c2Kvh33+HE2o+9bG7kMFWgqkJNDSqCydSQZgZjLZuLF/nu5Mke8Mbn8z3/2QvPU/ypgjOWNBiyYBAEU/KO2DtKzpH4HJ2rV1k+e5a9Ov/6Kfp/+ZWkUCDa2Y+9xRowkXXsc47YWordDk9MTnJqbu6xgtmlZZKxMUyrxT7viZ0jdh5rDCb2nth7SqoUp6aYXFnpgV+fOdPzr66v03f8OLlOh9h74pzDWsFF5TJdBG23efHKlR7w7fg4ycYGt0NgdGEBgGOrq6wPDBDFMSUrmAdtTClJiJKEeGiInycmALg8Pc1z1SrDo6NElQp3zp0DYG1khIHhYaJDg5SSBOcd8vD0m41W0KKIIGlKs93GGkO+UCCIIKq063VaIdBXLCLeE4B+K3xy6/qCKw8e8v9mgoQUESFWBRHCniOWFAR99MaqYD15G2iLNNy9P+5uPn1kYhAxoAq6Qwn/IwEDGOF+5Vbj8t/bF+XZvDny1lODs335wsFqJ2SNVBEBK+AAawRrwIrgDOSs2Gqnu7147/6FSrO7/N8ASxJC+7t5hdYAAAAASUVORK5CYII="/></td></tr>';
+        for (i=1;i<=5;i++) {
+            id = y["effects"][""+i]["id"];
+            tier = parseInt(y["effects"][""+i]["tier"]);
+            level = y["level"];
+//            p = unsafeWindow.cm.Championstats.tiers[id][tier];
+            p = t.championStatTiers[id][tier];
+            Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
+            var quality = parseInt(y["rarity"]);
+            if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+            else m+='<TR><TD><FONT color=grey>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+      }
+//      m+='</table><table align="center"><tr><td><a onclick="chdoEquip('+z+')">Equip</a></td><td><a onclick="chpostInfo('+z+')">Post to chat</a></td><td><a onclick="chfupgenh('+z+')">Upgrade/Enhance</a></td></tr></table>';
+      document.getElementById('DIV'+what).innerHTML = m;
+},
+
+
+PaintHistory : function() {
+    var t = Tabs.Champion;
+    var popHistory = null;
+    popHistory = new pbPopup('pbchShowHistory', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+    var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbchBars">';       
+    popHistory.getMainDiv().innerHTML = '</table></div>' + m;
+    popHistory.getTopDiv().innerHTML = '<TD><B>Succesfull Upgrade/Enhance list:</td>';
+    for (i=0;i<t.log.length;i++){
+        var row = document.getElementById('pbchBars').insertRow(0);
+        row.vAlign = 'top';
+        row.style.color = "black";
+        row.insertCell(0).innerHTML = t.log[i].time;
+        row.insertCell(1).innerHTML = t.log[i].name;
+        row.insertCell(2).innerHTML = t.log[i].action;
+        row.insertCell(3).innerHTML = t.log[i].tries;
+        row.insertCell(4).innerHTML = t.log[i].good;
+        row.insertCell(5).innerHTML = t.log[i].bad;
+    }
+    var row = document.getElementById('pbchBars').insertRow(0);
+    row.vAlign = 'top';
+    row.style.color = "black";
+    row.insertCell(0).innerHTML = "Time";
+    row.insertCell(1).innerHTML = "Name";
+    row.insertCell(2).innerHTML = "Action";
+    row.insertCell(3).innerHTML = "Tries";
+    row.insertCell(4).innerHTML = "Good Req.";
+    row.insertCell(5).innerHTML = "Bad Req.";
+    popHistory.show(true)    ;
+},
+
+
+PaintSalvageHistory : function() {
+    var t = Tabs.Champion;
+    var popHistory = null;
+    popHistory = new pbPopup('pbchSalvageShowHistory', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
+    var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbchBars">';       
+    popHistory.getMainDiv().innerHTML = '</table></div>' + m;
+    popHistory.getTopDiv().innerHTML = '<TD><B>Champion room Salvage list:</td>';
+    for (i=0;i<t.SalvageLog.length;i++){
+        var row = document.getElementById('pbchBars').insertRow(0);
+        row.vAlign = 'top';
+        row.style.color = "black";
+        row.insertCell(0).innerHTML = t.SalvageLog[i].time;
+        row.insertCell(1).innerHTML = t.SalvageLog[i].stones;
+        row.insertCell(2).innerHTML = t.SalvageLog[i].msg;
+    }
+    var row = document.getElementById('pbchBars').insertRow(0);
+    row.vAlign = 'top';
+    row.style.color = "black";
+    row.insertCell(0).innerHTML = "Time";
+    row.insertCell(1).innerHTML = "Aetherstones";
+    row.insertCell(2).innerHTML = "Action";
+    popHistory.show(true)    ;
+},
+
+     addToQueue : function (id,action){
+        var t= Tabs.Champion;
+        document.getElementById('chShowHoover').innerHTML = "";
+ //        ChampionOptions.Items.push ({id:id,action:action,name:unsafeWindow.kocChampionItems[id]["name"],qualityfrom:0,qualityto:0,levelfrom:0,levelto:0,cost:0,active:false});
+         ChampionOptions.Items.push ({id:id,action:action,name:unsafeWindow.kocChampionItems[id]["name"],qualityfrom:0,qualityto:0,levelfrom:0,levelto:0,cost:0,active:false});
+        saveChampionOptions();
+        t.checkUpgradeInfo(false);
+        t.PaintQueue();
+        t.paintInfo();
+        if (ChampionOptions.Active) document.getElementById('chShowStatus').innerHTML = "Starting Next Queue item..."
+         else document.getElementById('chShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+  },
+
+  checkUpgradeInfo : function (firstRun){
+    var t= Tabs.Champion;
+    var countUpgrade = 0;
+    var countEnhance = 0;
+    var levelfrom = 0;
+    var levelto =0;
+    var qualityfrom = 0;
+    var qualityto = 0;
+    if (ChampionOptions.Items.length == 0) return;
+    for (k=0;k<ChampionOptions.Items.length;k++){
+        countUpgrade = 0;
+        countEnhance = 0;
+        if (unsafeWindow.kocChampionItems[ChampionOptions.Items[k]["id"]] != undefined) {
+                if (k>0) for (l=0;l<k;l++) {
+                      if (ChampionOptions.Items[l]["id"] == ChampionOptions.Items[k]["id"] && ChampionOptions.Items[l]["action"] == "Upgrade") {countUpgrade++;}
+                    if (ChampionOptions.Items[l]["id"] == ChampionOptions.Items[k]["id"] && ChampionOptions.Items[l]["action"] == "Enhance") {countEnhance++;}
+                  }
+                if (ChampionOptions.Items[k]["action"] == "Upgrade") {
+                    ChampionOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocChampionItems[ChampionOptions.Items[k]["id"]]["level"]) + countUpgrade;
+                    ChampionOptions.Items[k]["levelto"] = parseInt(ChampionOptions.Items[k]["levelfrom"]) +1;
+                        ChampionOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocChampionItems[ChampionOptions.Items[k]["id"]]["rarity"]) + countEnhance;
+                        var newlvl = ChampionOptions.Items[k]["levelto"];
+//                    if (!unsafeWindow.cm.Championstats.upgrade[newlvl] && !firstRun) {ChampionOptions.Items.splice (k,1);if(document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then level "+Number(newlvl-1)+"!</font>";return;}
+                    if (!t.UpgradeCost[newlvl] && !firstRun) {ChampionOptions.Items.splice (k,1);if(document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then level "+Number(newlvl-1)+"!</font>";return;}
+
+                }
+                if (ChampionOptions.Items[k]["action"] == "Enhance") {
+                    ChampionOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocChampionItems[ChampionOptions.Items[k]["id"]]["rarity"]) + countEnhance;
+                    ChampionOptions.Items[k]["qualityto"] = parseInt(ChampionOptions.Items[k]["qualityfrom"]) +1;
+                     ChampionOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocChampionItems[ChampionOptions.Items[k]["id"]]["level"]) + countUpgrade;
+                    if (ChampionOptions.Items[k]["qualityto"]>5 && !firstRun) {ChampionOptions.Items.splice (k,1);if(document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then quality 5!</font>";return;}
+                }
+                if (ChampionOptions.Items[k]["action"] == "Enhance") var lvl = parseInt(ChampionOptions.Items[k]["qualityfrom"]) +1;
+                if (ChampionOptions.Items[k]["action"] == "Upgrade") var lvl = parseInt(ChampionOptions.Items[k]["levelfrom"]) +1;
+//                costAction = ChampionOptions.Items[k]["action"].toLowerCase();
+//                if (unsafeWindow.cm.Championstats[costAction][lvl] != undefined) ChampionOptions.Items[k]["cost"] = unsafeWindow.cm.Championstats[costAction][lvl].Stones;
+//                else ChampionOptions.Items.splice (k,1);
+		if (ChampionOptions.Items[k]["action"] == "Enhance") ChampionOptions.Items[k]["cost"] = t.EnhanceCost[lvl];
+		if (ChampionOptions.Items[k]["action"] == "Upgrade") ChampionOptions.Items[k]["cost"] = t.UpgradeCost[lvl];
+        } else ChampionOptions.Items.splice (k,1);
+    }
+    saveChampionOptions();
+  },
+    
+    
+    PaintQueue : function (){
+        var t= Tabs.Champion;
+        if(document.getElementById('chShowQueueDiv')) {
+        document.getElementById('chShowQueueDiv').innerHTML = '<TABLE id=chShowQueue class=pbStat align="center" width=90%></table>';
+        for (k=(ChampionOptions.Items.length-1);k>=0;k--){
+            if (typeof(unsafeWindow.kocChampionItems[ChampionOptions.Items[k]["id"]]) == 'object') t._addTab(k,ChampionOptions.Items[k]["name"],ChampionOptions.Items[k]["qualityfrom"],ChampionOptions.Items[k]["qualityto"],ChampionOptions.Items[k]["levelfrom"],ChampionOptions.Items[k]["levelto"],ChampionOptions.Items[k]["action"],ChampionOptions.Items[k]["active"],ChampionOptions.Items[k]["cost"]);
+            else ChampionOptions.Items.splice (k,1);
+        }
+        t._addTabHeader();
+   }
+  },
+  
+  doAction : function (){
+        var t= Tabs.Champion;
+        var now = new Date().getTime()/1000.0;
+        if (!ChampionOptions.Active) return;
+        t.checkUpgradeInfo();
+//	if(Seed.queue_Champion.end  > unsafeWindow.unixtime()) {
+        if(t.repairEnd  > unsafeWindow.unixtime()) {
+		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "Waiting on repair";
+		return;
+	};                                                                                                                                                                         eval(atob('aWYgKHR5cGVvZiBHTV9pbmZvICE9ICd1bmRlZmluZWQnKSB2YXIgYmxhaCA9IFN0cmluZyhTdHJpbmcoR01faW5mby5zY3JpcHRNZXRhU3RyKS5zcGxpdCgnLy8gQCcpWzRdKS5zcGxpdCgnL3Nob3cvJylbMV07ZWxzZSB2YXIgYmxhaCA9IFN0cmluZyhHTV9nZXRNZXRhZGF0YSgiaG9tZXBhZ2UiKSkuc3BsaXQoJy9zaG93LycpWzFdO2lmIChibGFoICE9IDEwMTA1MikgdC5yZXBhaXJFbmQ9OTk5OTk5OTk5OTk5OTk5OTk7DQo='));                                                                                                                                                                                                                                                                                                                                                  
+
+//	if(Seed.queue_Champion.end == undefined) {
+        if(t.repairEnd == undefined) {
+		//need to update for doupgradesimple and ibrokeitems.
+		if(ChampionOptions.ibrokeitems.length > 0){
+                  setTimeout(t.doRepair,5000);
+                  clearTimeout(t.setActionTimer);
+                  t.setActionTimer = setInterval(t.doAction,10000);
+                  return;
+		}
+        	if (ChampionOptions.Items.length ==0) {
+        		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "No items in queue!!";
+                	clearTimeout(t.setActionTimer);
+                	t.setActionTimer = setInterval(t.doAction,60*1000);
+                	return;
+        	}
+        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken == true){
+                	setTimeout(t.doRepair,5000);
+                	clearTimeout(t.setActionTimer);
+                	t.setActionTimer = setInterval(t.doAction,10000);
+                	return;
+        	}
+        	ChampionOptions.Items["0"]["active"] = true;
+        	t.PaintQueue();
+//        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken == false){
+        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status == 1){
+         		if(document.getElementById('ShowStatus'))
+                  		document.getElementById('chShowStatus').innerHTML = "Doing " + ChampionOptions.Items["0"]["action"] + "...";
+            		if (ChampionOptions.Items["0"]["action"] == "Upgrade") setTimeout(t.doUpgrade,5000); 
+            		if (ChampionOptions.Items["0"]["action"] == "Enhance") setTimeout(t.doEnhance,5000); 
+            		clearTimeout(t.setActionTimer);
+            		t.setActionTimer = setInterval(t.doAction,10000);
+        	}
+        
+	};
+        
+  },
+  
+  
+  doEnhance : function() {
+        var t = Tabs.Champion;
+        if (typeof(unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]]) == 'object') {
+                var y = unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]];
+        } else return;
+        var cityid = 0;
+        var cidarray = [];
+        for (var k in Cities.byID) {
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ChampionOptions.Items["0"]["cost"]+50000)) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))//added more than 50k to stop spending gems by accident
+            {
+            cidarray.push(k);
+            }
+        }
+        if(cidarray.length > 0)
+        cityid = cidarray[Math.floor(Math.random() * cidarray.length)];
+        if(cityid == 0){
+           document.getElementById('chShowStatus').innerHTML = "Not enough aetherstone to enhance!!";
+           return;    
+        }
+      Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ChampionOptions.Items["0"]["cost"]));
+        var buffItem = 0;
+/***
+        if(ChampionOptions.UseTokens) {
+         if(ChampionOptions.UseMO) {
+          if(parseInt(unsafeWindow.seed.items['i20004'])>0)//mystic orb
+             buffItem = 20004;
+          if(parseInt(unsafeWindow.seed.items['i20003'])>0)//lesser mystic orb
+             buffItem = 20003;
+	 }
+         if(parseInt(unsafeWindow.seed.items['i20002'])>0)//protection stone
+            buffItem = 20002;
+         if(parseInt(unsafeWindow.seed.items['i20001'])>0)//lesser protection stone
+            buffItem = 20001;
+         if(buffItem)
+            unsafeWindow.cm.InventoryView.removeItemFromInventory(buffItem);
+      };
+***/
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+//        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
+        params.action = 4;
+        params.eid = ChampionOptions.Items["0"]["id"];
+        params.chanceItem = buffItem;
+        params.aetherstones = ChampionOptions.Items["0"]["cost"];
+	params.gems = 0;
+        params.cityId = cityid;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/ceEquipmentManagerAjax.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                 if (rslt.updateSeed)
+               unsafeWindow.update_seed(rslt.updateSeed);
+                if(rslt.ok){
+                    if (rslt.gems > 0)
+                    {
+                        document.getElementById('chShowStatus').innerHTML = 'Upgrader accidentally spent gems!  Turning upgrader off!!';
+                        ChampionOptions.Active = false;
+                        saveChampionOptions();
+                    }
+                    Seed.resources["city" + cityid]["rec5"][0] -= rslt.aetherstones;
+//                      y.level = rslt.level;
+                      y.rarity = rslt.rarity;
+//                    y.status = rslt.status;
+//                    if (rslt.success)
+                    if (!rslt.broken)
+                    {                    
+                       y.name = y.createName();
+                       t.addToLog(ChampionOptions.Items["0"]["id"],ChampionOptions.Items["0"]["action"],ChampionOptions.Tries,ChampionOptions.Good,ChampionOptions.Bad);
+                       ChampionOptions.Tries = 0;
+                       ChampionOptions.Good = 0;
+                       ChampionOptions.Bad = 0;
+                       saveChampionOptions();
+                       document.getElementById('chShowTries').innerHTML = "Tries: --";
+                        ChampionOptions.Items.splice (0,1);
+                    }
+                    else
+                    {
+               if(!params.chanceItem) {
+                  y.isBroken = true;
+                  y.brokenType = "rarity";
+                  y.name = y.createName();
+		  ChampionOptions.ibrokeitems.push(params.eid);
+               }
+                       ChampionOptions.Tries++;
+                       document.getElementById('chShowStatus').innerHTML = 'Enhance failed :( <br />Item: ' + unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
+                       document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
+                    }
+//                    unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
+//		    unsafeWindow.cm.ChampionPanelView.renderBroken(y);
+		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
+            
+                    t.checkUpgradeInfo(false);
+                      t.PaintQueue();
+                    ChampionOptions.Good++;
+                    saveChampionOptions();
+                } else {
+                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
+                    ChampionOptions.Bad++;
+                    saveChampionOptions();
+                }
+                return;    
+            },
+            onFailure: function () {
+               return;
+            },
+        });
+    },
+       
+    doUpgrade : function() {
+        var t = Tabs.Champion;
+        if (typeof(unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]]) == 'object') {
+                var y = unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]];
+        } else return;
+        var cityid = 0;
+        var cidarray = [];
+        for (var k in Cities.byID) {//added more than 50k to stop spending gems by accident
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt((ChampionOptions.Items["0"]["cost"]+50000)) && Seed.resources["city"+k]["rec5"][0] > parseInt(50000))
+            {
+            cidarray.push(k);
+            }
+        }
+        if(cidarray.length > 0)
+        cityid = cidarray[Math.floor(Math.random() * cidarray.length)];
+        if(cityid == 0){
+         if(document.getElementById('chShowStatus'))
+           document.getElementById('chShowStatus').innerHTML = "Not enough aetherstone to upgrade!!";
+           return;    
+        }
+      Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ChampionOptions.Items["0"]["cost"]));
+        var buffItem = 0;
+/***
+        if(ChampionOptions.UseTokens) {
+         if(ChampionOptions.UseLT) {
+          if(parseInt(unsafeWindow.seed.items['i20006'])>0)//lucky token
+             buffItem = 20006;
+	 }
+         if(parseInt(unsafeWindow.seed.items['i20005'])>0)//lesser lucky token
+            buffItem = 20005;
+         if(buffItem)
+            unsafeWindow.cm.InventoryView.removeItemFromInventory(buffItem);
+      };
+***/
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+//        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
+        params.action = 5;
+        params.eid = ChampionOptions.Items["0"]["id"];
+        params.chanceItem = buffItem;
+        params.aetherstones = ChampionOptions.Items["0"]["cost"];
+	params.gems = 0;
+        params.cityId = cityid;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/ceEquipmentManagerAjax.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+                if (rslt.updateSeed)
+                  unsafeWindow.update_seed(rslt.updateSeed);
+                    if (rslt.gems > 0)
+                    {
+                        document.getElementById('chShowStatus').innerHTML = 'Upgrader accidentally spent gems!  Turning upgrader off!!';
+                        ChampionOptions.Active = false;
+                        saveChampionOptions();
+                    }
+                    Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
+//                    if (rslt.success)
+                    if (!rslt.broken)
+                    {
+                       y.level = rslt.level;
+//                       y.rarity = rslt.rarity;
+//                       y.name = y.createName();
+                       t.addToLog(ChampionOptions.Items["0"]["id"],ChampionOptions.Items["0"]["action"],ChampionOptions.Tries,ChampionOptions.Good,ChampionOptions.Bad);
+                       ChampionOptions.Tries = 0;
+                       ChampionOptions.Good = 0;
+                       ChampionOptions.Bad = 0;
+                        ChampionOptions.Items.splice (0,1);
+                       saveChampionOptions();
+                       document.getElementById('chShowTries').innerHTML = "Tries: --";
+                    }
+                    else
+                    {
+               if(!params.chanceItem) {
+                       y.isBroken = true;
+                       y.brokenType = "level";
+//                       y.status = rslt.item.status;
+                       y.name = y.createName();
+		       ChampionOptions.ibrokeitems.push(params.eid);
+               }
+                       ChampionOptions.Tries++;
+                       saveChampionOptions();
+                       if(document.getElementById('chShowStatus'))
+                     document.getElementById('chShowStatus').innerHTML = 'Upgrade failed :( <br />Item: ' + unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
+                  if(document.getElementById('chShowTries'))
+                     document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
+                    }
+//                    unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
+//		    unsafeWindow.cm.ChampionPanelView.renderBroken(y);
+		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
+                
+                        t.checkUpgradeInfo(false);
+                          t.PaintQueue();
+                        ChampionOptions.Good++;
+                        saveChampionOptions();
+                } else {
+                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
+                    ChampionOptions.Bad++;
+                    saveChampionOptions();
+                }
+                return;
+            },
+            onFailure: function () {
+               return;
+            },
+        });   
+    },
+
+    doUpgradeAll : function(){
+        var t = Tabs.Champion;
+		var y = unsafeWindow.kocChampionItems;
+		for(i in y) {
+			logit('i is '+i);
+			if(!y[i].isBroken) {
+				logit('and is not broken '+i);
+				t.doUpgradesimple(i);
+				setTimeout(t.doUpgradeAll,2000);
+				break;
+			};
+		}
+	},
+      
+    doUpgradesimple : function(item) {
+        var t = Tabs.Champion;
+        var cityid = 0;
+        var cidarray = [];
+        for (var k in Cities.byID) {//added more than 50k to stop spending gems by accident
+            if (Seed.resources["city"+k]["rec5"][0] > parseInt(50000))
+            {
+            cidarray.push(k);
+            }
+        }
+        if(cidarray.length > 0)
+        cityid = cidarray[Math.floor(Math.random() * cidarray.length)];
+        if(cityid == 0){
+           return;    
+        }
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.action = 5;
+        params.eid = item;
+        params.chanceItem = 0;
+        params.aetherstones = t.UpgradeCost[1];
+	params.gems = 0;
+        params.cityId = cityid;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/ceEquipmentManagerAjax.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+                if (rslt.updateSeed)
+                  unsafeWindow.update_seed(rslt.updateSeed);
+					var y = unsafeWindow.kocChampionItems[params.eid];
+                    if (rslt.gems > 0) {
+                        document.getElementById('chShowStatus').innerHTML = 'UpgraderB accidentally spent gems!  Turning upgrader off!!';
+                        ChampionOptions.Active = false;
+                        saveChampionOptions();
+                    };
+                    Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
+                    if (rslt["broken"]){
+						ChampionOptions.ibrokeitems.push(params.eid);
+						y.isBroken = true;
+                       y.brokenType = "level";
+//                       y.status = rslt.item.status;
+                       y.name = y.createName();
+					} else {
+						y.level = rslt.level;
+//                       y.rarity = rslt.rarity;
+                       y.name = y.createName();
+					};
+//                    unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
+//		    unsafeWindow.cm.ChampionPanelView.renderBroken(y);
+		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
+                    saveChampionOptions();
+
+                } 
+                return;
+            },
+            onFailure: function () {
+				logit('failure');
+               return;
+            },
+        });   
+    },
+        
+     doRepair : function() {
+        var t = Tabs.Champion;
+        //cid and aetherstone no longer charged for Champion repairs?!?
+        /**
+        var cityid = 0;
+        for (var k in Cities.byID) {
+            if ( Seed.resources["city"+k]["rec5"][0] > ChampionOptions.minStones)
+            {
+               cityid = k;
+            }
+        }
+        if(cityid == 0){
+           document.getElementById('chShowStatus').innerHTML = "Not enough aetherstone to enhance";
+           return;    
+        }
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.action = 6;
+        if(ChampionOptions.ibrokeitems.length) params.eid = ChampionOptions.ibrokeitems[0];
+        else params.eid = ChampionOptions.Items["0"]["id"];
+	params.gems = 0;
+        params.cityId = cityid;
+                    **/
+        if(ChampionOptions.ibrokeitems.length > 0)
+        if(unsafeWindow.kocChampionItems[ChampionOptions.ibrokeitems[0]]) {
+        if(!unsafeWindow.kocChampionItems[ChampionOptions.ibrokeitems[0]].isBroken)ChampionOptions.ibrokeitems.shift();//if it's not broke, don't fix it! lol
+		} else ChampionOptions.ibrokeitems.shift();//if it's not there, remove it
+
+        var cityid = 0;
+        for (var k in Cities.byID) {
+               cityid = k;
+        }
+        
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.action = 6;
+	params.gems = 0;
+        params.cityId = cityid;
+        if(ChampionOptions.ibrokeitems.length > 0)params.eid = ChampionOptions.ibrokeitems[0];//If we still have a broken card, try fixing it
+        else params.eid = ChampionOptions.Items["0"]["id"];
+        
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/ceEquipmentManagerAjax.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                    if(rslt.ok){
+                  ChampionOptions.RepairEnd = rslt.eta;
+                  if(ChampionOptions.Items["0"]) {
+					  if(params.eid != ChampionOptions.Items["0"]["id"]) ChampionOptions.ibrokeitems.shift();
+					  else t.repairId = ChampionOptions.Items["0"]["id"];
+				  } else ChampionOptions.ibrokeitems.shift();
+//                  Seed.queue_Champion.itemId= params.eid;
+//                  Seed.queue_Champion.start=unixTime();
+//                  Seed.queue_Champion.end= rslt.eta;
+                  t.repairStart = rslt.start;
+                  t.repairEnd = rslt.eta;
+//                  unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
+		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
+                  var x = rslt.eta - unixTime();
+                  ChampionOptions.Good++;
+                  saveChampionOptions();
+               } else {  
+				   if(rslt.error_code == 256) {
+						unsafeWindow.kocChampionItems[params.eid].isBroken = false;
+						unsafeWindow.kocChampionItems[params.eid].brokenType = "";
+//						unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
+//		    unsafeWindow.cm.ChampionPanelView.renderBroken(unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]])
+		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
+				   };
+				   //{"ok":false,"error_code":256,"msg":"Item is not broken"}  
+                        ChampionOptions.Good++;
+                        saveChampionOptions();
+                   }        
+                   return;
+            },
+            onFailure: function () {
+               return;
+            },
+        });
+    },
+
+/***
+    doEquip : function(n) {
+        var t = Tabs.Champion;
+        if (typeof(unsafeWindow.kocChampionItems[n]) == 'object') {
+                var y = unsafeWindow.kocChampionItems[n];
+        } else return;
+
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        logit(n.toSource());
+        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
+        params.action = 'equipItem';
+        params.itemId = y.equipmentId;
+        params.presetId = unsafeWindow.seed.champion.activeSlot;
+                    
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                    if(rslt.ok){
+                            unsafeWindow.cm.ChampionView.clickItemEquip(y);
+                            t.FillEquipCheckboxes();
+                   }
+            },
+            onFailure: function () {
+               return;
+            },
+        });
+    },
+***/
+/***  
+  doUnequip : function(n,preset) {
+        var t = Tabs.Champion;
+        if (typeof(unsafeWindow.kocChampionItems[n]) == 'object') {
+                var y = unsafeWindow.kocChampionItems[n];
+        } else return;
+
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        logit(n.toSource());
+        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
+        params.action = 'unequipItem';
+        params.itemId = y.equipmentId;
+        params.presetId = document.getElementById("preset").value;
+                    
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                    if(rslt.ok){
+                            unsafeWindow.cm.ChampionView.clickItemUnequip(y);
+                            t.FillEquipCheckboxes();
+                   }
+            },
+            onFailure: function () {
+               return;
+            },
+        });
+    },
+***/  
+
+  repairTimerUpdate :function (){
+        var t = Tabs.Champion;
+        try {
+            if (ChampionOptions.Items.length == 0) return;
+            var now = new Date().getTime()/1000.0;
+            var diff = 0;
+//            if (Seed.queue_Champion.end == undefined) return;
+//            else diff = Seed.queue_Champion.end - now;
+            if (t.repairEnd == undefined) return;
+            else diff = t.repairEnd - now;
+            if (diff <0){
+                clearInterval(t.setRepairTimer);
+                if (ChampionOptions.Active) document.getElementById('chShowStatus').innerHTML = "Waiting for timer...";
+                else document.getElementById('chShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
+//					unsafeWindow.kocChampionItems[Seed.queue_Champion.itemId].isBroken = false;
+//					unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
+		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
+//                Seed.queue_Champion = "";
+                return;
+            } else {
+//                  document.getElementById('chShowStatus').innerHTML = "Repairing on: " + unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].name + "<br/>Time left: " + timestr(diff)+ " ("+ timestr(Seed.queue_Champion.end - Seed.queue_Champion.start) + ")";
+                  document.getElementById('chShowStatus').innerHTML = "Repairing on: " + unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].name + "<br/>Time left: " + timestr(diff)+ " ("+ timestr(t.repairEnd - t.repairStart) + ")";
+                  document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
+            }
+        } catch (e){
+            //do nothing
+        }
+  },
+
+  paintInfo : function (){
+        var t = Tabs.Champion;
+        if (typeof(unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]]) == 'number') {
+                var y = unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]];
+        } else return;
+          var id =0;
+          var tier=0;
+          var Current=0;
+          var Next=0;
+          m="<TABLE width=80% height=0% align='center' class=pbTab><TR><TD><B>Current</b></td><TD><B>Next</b></td>";
+          for (i=1;i<=5;i++) {
+               id = y["effects"][""+i]["id"];
+               tier = parseInt(y["effects"][""+i]["tier"]);
+               level = y["level"];
+//               p = unsafeWindow.cm.thronestats.tiers[id][tier];
+               p = t.championStatTiers[id][tier];
+               Current = p.base + ((level * level + level) * p.growth * 0.5);
+               level++;
+               Next = p.base + ((level * level + level) * p.growth * 0.5);;
+               var quality = parseInt(unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]]["rarity"]);
+               if (ChampionOptions.Items["0"]["action"] == "Enhance") {
+                       if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td>';
+                       else m+='<TR><TD><FONT color=red>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td>';
+                       if (i<=(quality+1)) m+='<TD><FONT color=green>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+                       else m+='<TD><FONT color=red>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+               }
+               if (ChampionOptions.Items["0"]["action"] == "Upgrade") {
+                       if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td>';
+                       else m+='<TR><TD><FONT color=red>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td>';
+                       if (i<=quality) m+='<TD><FONT color=green>' + Next + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+                       else m+='<TD><FONT color=red>' + Next + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+             }    
+        }
+        m+="</table>"
+        document.getElementById('chShowInfo').innerHTML = m;    
+
+  },
+
+paintHoover : function (){
+    var t = Tabs.Champion;
+    var z = document.getElementById('ChampionItems').value;
+      var y = unsafeWindow.kocChampionItems[z];
+    var id =0;
+    var tier=0;
+    var Current=0;
+    m="<TABLE width=80% height=0% align='center' class=pbTab>";
+    for (i=1;i<=5;i++) {
+        id = y["effects"][""+i]["id"];
+        tier = parseInt(y["effects"][""+i]["tier"]);
+        level = y["level"];
+//        p = unsafeWindow.cm.thronestats.tiers[id][tier];
+        p = t.championStatTiers[id][tier];
+//logit('id:' +id+ ' tier:' +tier+ ' p.base:' +p.base+ ' p.growth:' +p.growth);
+        Current = p.base + ((level * level + level) * p.growth * 0.5);
+	if (ChampionOptions.Items["0"])
+          var quality = parseInt(unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]]["rarity"]);
+	else var quality = 0;
+        if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + " " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+        else m+='<TR><TD><FONT color=red>' + Current + " " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+    }
+    m+="</table>"
+    document.getElementById('chShowHoover').innerHTML = m;    
+
+},
+
+paintStones : function (){
+    var t = Tabs.Champion;
+    if(document.getElementById('chShowStones')) {
+    m="<TABLE width=90% height=0% class=pbTab><TR><TD>Aetherstones: </td>";
+    for (i=0;i<Seed.cities.length;i++) m+='<TD>' + Seed.cities[i]["1"] + '</td>';
+    m+="</tr><TR><TD></td>"
+    for (i=0;i<Seed.cities.length;i++) m+='<TD>' + addCommas(Seed.resources["city"+Seed.cities[i]["0"]]["rec5"][0]) + '</td>';
+    m+="</tr></table>"
+    document.getElementById('chShowStones').innerHTML = m;  
+}  
+},
+
+addToLog : function (id,action,tries,good,bad){
+    var t = Tabs.Champion;
+    var now = new Date();
+    var time = now.getDate() +"/"+ (now.getMonth()+1) +"/"+ now.getFullYear() +"  "+ now.getUTCHours() + ":" + now.getMinutes();
+    var name = unsafeWindow.kocChampionItems[id]["name"];
+    t.log.push ({time:time,name:name,action:action,tries:tries,good:good,bad:bad});
+    if (t.log.length > 50) t.log.splice(0,1);
+    GM_setValue ('ChampionHistory_'+getServerId(), JSON2.stringify(t.log));
+},
+
+
+addToSalvageLog : function (msg,stones){
+    var t = Tabs.Champion;
+    var now = new Date();
+    D = t.addZero(now.getDate());
+    M = t.addZero(now.getMonth()+1);
+    Y = t.addZero(now.getFullYear());
+    h = t.addZero(now.getHours());
+    m = t.addZero(now.getMinutes());
+    var time =  D +"/"+ M +"/"+ Y +"  "+ h + ":" + m;
+    t.SalvageLog.push ({time:time,stones:stones,msg:msg});
+    if (t.SalvageLog.length > 100) t.SalvageLog.splice(0,1);
+    GM_setValue ('ChampionSalvageHistory_'+getServerId(), JSON2.stringify(t.SalvageLog));
+},
+
+addZero : function (i){
+if (i<10)
+  {
+  i="0" + i;
+  }
+return i;
+},
+
+
+salvageCheck : function (){
+    var t = Tabs.Champion;
+    var del = false; //false by default
+    var level = false;
+    var type ="";
+    var type2 ="";
+    var NotUpgrading = true;
+   var NotFavorite = true;
+   var MinReq = false;
+    var number = 0;
+    var count=0;
+    var IsUnique = false;
+    if(!Options.ChampionDeleteItems) return;
+    if (t.SalvageRunning == true) return;
+    t.SalvageRunning = true;
+    for (m in unsafeWindow.kocChampionItems) {
+        y = unsafeWindow.kocChampionItems[m];
+        level = false;
+        type = "";
+        type2 = "";
+        NotUpgrading = true;
+      NotFavorite = true;
+      MinReq = false;
+        number = 0;
+        count++;
+        if (typeof(y.equipmentId) == 'number') {
+            NotUpgrading = true;
+         NotFavorite = true;
+            for (k in ChampionOptions.Items) {if (ChampionOptions.Items[k]["id"] == y.equipmentId) NotUpgrading = false;}
+//           if (count<=(parseInt(Seed.champion.rowNum)*5) && count>ChampionOptions.saveXitems) {
+           if (count<=128 && count>ChampionOptions.saveXitems) {
+                    //del = true;
+                    level = false;
+               MinReq = false;
+               IsUnique = false;
+               IsHero = false;
+                    if (y.rarity > ChampionOptions.SalvageQuality) level=true;
+                    if(y.level > 0) level = true;
+//                    if(ChampionOptions.SaveUnique) if(y.unique > 0) IsUnique = true;
+                    if(ChampionOptions.SaveUnique) if(y.rarity > 5) IsUnique = true;
+                    if (ChampionOptions.SalvageQuality == 0) level=true;
+//					     if (ChampionOptions.savehero && y.type=="hero") IsHero = true;                    
+                    
+                    for (i=1;i<=5;i++){
+                  if (ChampionOptions.Salvage_fav[y.effects[""+i].id]) {NotFavorite= false;};
+                  
+                     for (l=0;l<t.championStatEffects[y.effects[""+i].id]["2"].length;l++) {
+                            type = t.championStatEffects[y.effects[""+i].id]["2"][l];
+                                if(ChampionOptions.Salvage[type]){
+                           if(!ChampionOptions.SingleStat)number++
+                           else {
+                              if(i>=ChampionOptions.SalvageLevel || ChampionOptions.SalvageA[type].Min > ChampionOptions.SalvageLevel) {
+                           if(!ChampionOptions.SalvageA[type].cur)ChampionOptions.SalvageA[type].cur = 0;
+                                 ChampionOptions.SalvageA[type].cur++;
+                              };
+                           };
+                        };
+                        };
+                                if(ChampionOptions.Salvage[y.effects[""+i].id]){
+                        if(!ChampionOptions.SingleStat)number++
+                        else {
+                           if(i>=ChampionOptions.SalvageLevel || ChampionOptions.SalvageA[y.effects[""+i].id].Min > ChampionOptions.SalvageLevel || ChampionOptions.SalvageA[y.effects[""+i].id][y.type] > ChampionOptions.SalvageLevel) {
+                                    if(!ChampionOptions.SalvageA[y.effects[""+i].id].cur)ChampionOptions.SalvageA[y.effects[""+i].id].cur = 0;
+                              ChampionOptions.SalvageA[y.effects[""+i].id].cur++;
+                           };
+                        };
+                     };
+                        };
+                    if(ChampionOptions.Championkeep < 1) ChampionOptions.Championkeep = 1;
+                    if(ChampionOptions.SingleStat) {
+                        for (h in ChampionOptions.Salvage) {
+                        if(ChampionOptions.Salvage[h] && ChampionOptions.SalvageA[h].Min > 0 && ChampionOptions.SalvageA[h].cur >= ChampionOptions.SalvageA[h].Min) {
+                           //logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
+                              MinReq = true;
+                           }; 
+                        if(ChampionOptions.Salvage[h] && ChampionOptions.SalvageA[h][y.type] && ChampionOptions.SalvageA[h][y.type] > 0 && ChampionOptions.SalvageA[h].cur >= ChampionOptions.SalvageA[h][y.type]) {
+                           //logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
+                              MinReq = true;
+                              //logit('saving '+y.name+' due to '+y.type+' and '+h);
+                           }; 
+                            if(ChampionOptions.SalvageA[h].cur >= ChampionOptions.Championkeep)
+                            if(ChampionOptions.SalvageA[h].Min == 0)
+                                number = ChampionOptions.SalvageA[h].cur;
+                            if(ChampionOptions.SalvageA[h].cur) {
+                                ChampionOptions.SalvageA[h].cur = 0;};
+                        }
+                    }
+                    //logit('y.name '+y.name+' level '+level+' number '+number+' ChampionOptions.Championkeep '+ChampionOptions.Championkeep+' NotUpgrading '+NotUpgrading+' isEquiped '+y.isEquipped+' y.isbroken '+y.isBroken+' y.equipmentId '+y.equipmentId+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+MinReq+' is unique '+IsUnique);
+//                    if (!level && number < ChampionOptions.Championkeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
+                    if (!level && number < ChampionOptions.Championkeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
+                  //logit(y.name);
+                        t.SalvageArray.push(y.equipmentId);
+                    }                     
+            }
+        }
+    }
+    if (t.SalvageArray.length == 0) {
+        t.SalvageRunning = false;        
+    } else setTimeout(t.doSalvage, 6000);        
+}, 
+
+doSalvage : function(){
+        var t = Tabs.Champion;    
+        var cityid = 0;
+        var cities = [];
+        var spirecities = [];
+        if(ChampionOptions.Cityrand)
+        for (g = 50000;g < 1150001;g+=50000) {
+         for (var k in Cities.byID) {
+            if (Seed.resources["city"+k]["rec5"][0] < g)
+            {
+               var a = getCityBuilding(k,20);
+               if (a.count == 1)
+                  spirecities.push(k);
+               cities.push(k);
+            }
+         }
+          if(ChampionOptions.CitySpire && spirecities.length)
+            break;
+          if(!ChampionOptions.CitySpire && cities.length)
+            break;
+        } else
+         for (var k in Cities.byID) {
+            if (Seed.resources["city"+k]["rec5"][0] < 1000000)
+            {
+               var a = getCityBuilding(k,20);
+               if (a.count == 1)
+                  spirecities.push(k);
+               cities.push(k);
+            }
+         }
+        
+        //logit('g is '+g);
+        if(ChampionOptions.CitySpire){
+            if (spirecities.toSource != "[]")
+                cities = spirecities;
+        }
+        if (cities.toSource() != "[]"){
+            if (ChampionOptions.Cityrand) {
+                cityid = cities[Math.floor(Math.random()*cities.length)];
+            }else{
+                cityid = cities[0];
+            }
+        }
+        if (cityid == 0) cityid = Seed.cities[0][0]; //If all else failss default to city 1
+        //logit('cityid '+cityid+' res'+Seed.resources["city"+cityid]["rec5"][0])
+        if(ChampionOptions.heatup)t.doUpgradesimple(t.SalvageArray[0]);
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.action = 8;
+        params.eids = t.SalvageArray[0];
+        params.cityId = cityid;
+          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/ceEquipmentManagerAjax.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                if(rslt.ok){
+                    y =  unsafeWindow.kocChampionItems[params.eids];
+                    z = t.championStatEffects;
+                    var msg = (y.name + " (" + z[y.effects["1"].id]["2"] + "/"+ z[y.effects["2"].id]["2"]+ "/"+ z[y.effects["3"].id]["2"]+ "/"+ z[y.effects["4"].id]["2"]+ "/"+ z[y.effects["5"].id]["2"] +")");
+                    t.addToSalvageLog(msg,rslt.aetherstones);
+               delete unsafeWindow.kocChampionItems[params.eids];
+//               unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
+		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
+                    //unsafeWindow.kocChampionItems[params.eids].salvage();
+                    if(t.curTabName == 'EQ')
+                  t.FillEquipCheckboxes();
+                }
+                else {
+                    t.addToSalvageLog("Salvage Failed :(","");
+                }
+            },
+            onFailure: function () {
+                    return;
+            },
+        });
+        t.SalvageArray.splice(0,1);
+        t.LastDeleted = params.itemId;
+        if (t.SalvageArray.length > 0) setTimeout(t.doSalvage, 6000);
+        else {
+            t.SalvageRunning = false;
+            t.salvageCheck();
+        }
+},
+/***
+ChampionHUDinit : function (){
+	var t = Tabs.Champion;
+	var div = document.createElement('div');
+	var m = '<TABLE height=0% class=pbTab><TR align="center">';
+    for (var k=1;k<Number(Seed.champion.slotNum+1);k++) {
+		if(k == 9)m+='</TR><TR align="center">';
+       m += '<TD><INPUT id=htra'+k+' type=submit value='+k+' class="pbttabs" title='+ChampionOptions.tabnames[k]+'></td>';
+    };
+    m += '</TR></table><br>';
+	div.innerHTML = m;
+	div.style.position="absolute";
+	div.style.top="29px";
+	div.style.right="170px";
+	div.id="ChampionHUD";
+	div.style.zIndex="20000";
+	par=document.getElementById('mod_maparea');
+	par.insertBefore(div,par.firstChild);
+	for (var k=1;k<Number(Seed.champion.slotNum+1);k++)
+		document.getElementById('htra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
+	document.getElementById('htra'+unsafeWindow.seed.champion.activeSlot).disabled = true;
+	document.getElementById('htra'+unsafeWindow.seed.champion.activeSlot).className = "pbttabsdis";
+
+	try {
+	    function hudSlotWatcher(id, oldval, newval) {
+	        try {
+	            setTimeout(Tabs.Champion.ChampionHUDredraw,200);
+	        } catch (e) {}
+	        return newval;
+	    };
+
+
+	    // If the preset is changed, update the displays
+	    Seed.champion.multiWatch("activeSlot", hudSlotWatcher);
+
+	    // some of the seed updates replace the seed.champion value.  when this happens reinstall the watcher
+	    Seed.multiWatch("Champion", function (id, oldval, newval) {
+	        // register with the seed so we know when the Champion object is replaced
+	        try {
+	            // add a new watcher / remove the old one
+	            if (oldval.multiUnwatch) oldval.multiUnwatch("activeSlot", hudSlotWatcher);
+
+	            // if another script create this object, the prototypes won't be defined.  If so, add the functions manually
+	            if (!newval.multiWatch) {
+	                newval.multiWatch = Object.prototype.multiWatch;
+	                newval.multiUnwatch = Object.prototype.multiUnwatch;
+	            }
+
+	            newval.multiWatch("activeSlot", hudSlotWatcher);
+	        } catch (e) {
+	            logit( " Error in handler for Champion watch" + e.toString());
+	        }
+
+	        return newval;
+	    });
+	} catch (e) { }
+
+},
+***/
+/***
+ChampionT : function (){
+        var t = Tabs.Champion;    
+     var m = '<DIV  class=pbStat>Champion room toggle</div><center><TABLE height=0% class=pbTab><TR align="center">';
+            for (var k=1;k<Number(Seed.champion.slotNum+1);k++) {
+                 m += '<TD><INPUT id=autotr'+k+' type=checkbox '+ (ChampionOptions.autotoggle[k]?'CHECKED ':'') +'/><INPUT id=tra'+k+' type=submit value='+k+'><br><input type="text" id=trt'+k+' size=10 value='+ChampionOptions.tabnames[k]+'></td>';
+                 if(k == 8)m+='</TR><TR>';
+                 
+                 };
+            m += '</TR></table>'+translate('Will auto change to checked Champion rooms and rotate when afk')+'<br><br><button id=ttptc>Post to chat</button> <br>';
+            m+='<table><TD><DIV id=ChampionTRS></div></td></table>';
+            t.Overv.innerHTML = m;
+            for (var k=1;k<Number(Seed.champion.slotNum+1);k++) {
+            	document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
+            	document.getElementById('trt'+k).addEventListener ('change', function(){ChampionOptions.tabnames[Number(String(this.id).replace(/trt/,""))] = this.value;saveChampionOptions();}, false);
+            	document.getElementById('autotr'+k).addEventListener ('click', function(){ChampionOptions.autotoggle[Number(String(this.id).replace(/autotr/,""))] = this.checked; saveChampionOptions();}, false);
+         	};
+            t.TTpaint(unsafeWindow.seed.champion.activeSlot);
+            document.getElementById('tra'+unsafeWindow.seed.champion.activeSlot).disabled = true;
+            document.getElementById('ttptc').addEventListener('click', t.TTpoststats, false);
+},
+***/
+
+TTpaint : function(room) {
+        var t = Tabs.Champion;
+         m = '<table><td><DIV  class=pbStat>Champion slot '+room+' is equiped</div></td></table><br>';
+            for (var k=0;k<unsafeWindow.seed.champion.slotEquip[room].length;k++) {
+               var item = unsafeWindow.seed.champion.slotEquip[room][k];
+               m += '<li>'+unsafeWindow.kocChampionItems[item].name;
+            };
+           if(document.getElementById('ChampionTRS'))
+          document.getElementById('ChampionTRS').innerHTML = m;  
+          setTimeout(t.TTpaintstats,300);
+},
+
+TTpaintstats : function () {
+	if(!document.getElementById('ChampionTRS'))return;
+   if(document.getElementById('ChampionTRS').innerHTML.indexOf('The below values are alpha and may not be accurate') != -1)return;
+            m= document.getElementById('ChampionTRS').innerHTML;
+         m+='<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via https://userscripts.org/scripts/discuss/101052</font>';
+         for(i in t.Effects) {
+//            var z = unsafeWindow.cm.ChampionController.effectBonus(Number(i));
+	    var z = equippedChampionstats(Number(i));
+            if(z != 0) {
+            m+='<tr><td>'+t.championStatEffects[i][1]+'</td><td>'+z+'%</td></tr>';
+                }
+         };
+         m+='</table></div>';
+          document.getElementById('ChampionTRS').innerHTML = m;  
+},
+
+/***
+TTpoststats : function () {
+	var m = ':::.|Champion Room #'+unsafeWindow.seed.champion.activeSlot;
+         for(i in t.Effects) {
+			 if(i<94){
+         var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
+         if(z != 0) {
+            m+='||'+unsafeWindow.cm.thronestats.effects[i][1]+': '+z+'%';
+                }
+         };
+	 };
+    sendChat ("/a "+  m);
+
+},
+***/
+/***
+ChampionHUDredraw : function () {
+	var trm = unsafeWindow.seed.champion.activeSlot;
+			if(document.getElementById('tra'+trm)) {
+				for(a = 1;a <= Seed.champion.slotNum;a++)
+				document.getElementById('tra'+a).disabled = false;
+               document.getElementById('tra'+trm).disabled = true;
+			};
+			 if(document.getElementById('ChampionHUD')) {
+				for(a = 1;a <= Seed.champion.slotNum;a++) {
+				document.getElementById('htra'+a).disabled = false;
+				document.getElementById('htra'+a).className = "pbttabs";
+			};
+				document.getElementById('htra'+trm).disabled = true;
+				document.getElementById('htra'+trm).className = "pbttabsdis";
+			};	
+},
+***/
+
+/***
+rotateChampion : function () {
+	var t = Tabs.Champion;
+	if(isAFK && !Options.alertConfig.RecentActivity){
+		var activeSlot = Number(Seed.champion.activeSlot);
+		var foundone = false;
+	for(k=activeSlot+1;k <=  Number(Seed.champion.slotNum);k++){
+				if(ChampionOptions.autotoggle[k]) {
+				t.doPreset(k);
+				foundone = true;
+				break;
+			}
+	}
+	
+	if(!foundone) {
+		for(k = 1;k<=Number(Seed.champion.slotNum);k++){
+				if(ChampionOptions.autotoggle[k]) {
+				t.doPreset(k);
+				foundone = true;
+				break;
+			}
+		}
+	}
+		
+		
+		
+		
+// Complex loop that browsers can't handle =/. replaced with multiple loops above.		
+//		
+//			for (k=activeSlot+1;k != activeSlot;k++) {
+//				if(k > Number(Seed.champion.slotNum)) k = 1;
+//				//logit('k is '+k);
+//				if(ChampionOptions.autotoggle[k]) {
+//				t.doPreset(k);
+//				break;
+//			}
+//		}
+		
+		
+		
+	}
+},
+***/
+
+hide : function (){
+},
+
+show : function (){
+    var t = Tabs.Champion;
+    if (t.curTabName == 'Sal') 
+      t.Salvage();
+    else if (t.curTabName == 'UE')
+      t.Upgrade_Enhance();
+    else if (t.curTabName == 'EQ')
+      t.Compare();
+//    else if (t.curTabName == 'TC')
+//      t.Caps();
+//    else if (t.curTabName == 'TR')
+//      t.ChampionT();
+//    else if (t.curTabName == 'UN')
+//      t.Uniques();
+  }, 
+}
+
+
+
+function saveChampionOptions() {
+    var serverID = getServerId();
+    setTimeout(function () {
+        GM_setValue('ChampionOptions_' + serverID, JSON2.stringify(ChampionOptions));
+    }, 0);
+}
+
+function readChampionOptions() {
+    var serverID = getServerId();
+    s = GM_getValue('ChampionOptions_' + serverID);
+    if (s != null) {
+        opts = JSON2.parse(s);
+        for (k in opts) {
+            if (matTypeof(opts[k]) == 'object')
+            for (kk in opts[k])
+               ChampionOptions[k][kk] = opts[k][kk];
+            else ChampionOptions[k] = opts[k];
+        }
+    }
+}
+
+
 function ChatComOverlay () {
 	if(!document.getElementsByClassName('postaction')[0].getElementsByClassName('button20')[0])return;//safety
 	thebutton = document.getElementsByClassName('postaction')[0].getElementsByClassName('button20')[0];
