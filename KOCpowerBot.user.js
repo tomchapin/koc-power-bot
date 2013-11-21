@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131119d
+// @version        20131120a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131119d';
+var Version = '20131120a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -23034,9 +23034,9 @@ Upgrade_Enhance :function (){
         o.text = unsafeWindow.kocChampionItems[i]["name"];
         o.value = unsafeWindow.kocChampionItems[i]["equipmentId"];
         document.getElementById("ChampionItems").options.add(o);
-        if (unsafeWindow.kocChampionItems[i]["repairing"]) {
-	   t.repairEnd=unsafeWindow.kocChampionItems[i]["eta"];
-	   t.repairStart=unsafeWindow.kocChampionItems[i]["start"];
+        if (unsafeWindow.seed.champion.equipment[i]["repairing"]) {
+	   t.repairEnd=unsafeWindow.seed.champion.equipment[i]["eta"];
+	   t.repairStart=unsafeWindow.seed.champion.equipment[i]["start"];
 	}
     }
     document.getElementById('chaddEnhance').addEventListener ('click', function (){t.addToQueue(document.getElementById('ChampionItems').value,"Enhance");},false);
@@ -23299,9 +23299,9 @@ FillEquipCheckboxes: function(){
    t.CompPos=0;
    for (k in unsafeWindow.kocChampionItems){
       counter++;
-      if (unsafeWindow.kocChampionItems[k]["repairing"]) {
-	t.repairEnd=unsafeWindow.kocChampionItems[k]["eta"];
-	t.repairStart=unsafeWindow.kocChampionItems[i]["start"];
+      if (unsafeWindow.seed.champion.equipment[i]["repairing"]) {
+	 t.repairEnd=unsafeWindow.seed.champion.equipment[i]["eta"];
+	 t.repairStart=unsafeWindow.seed.champion.equipment[i]["start"];
       }
       if (counter > ActiveItems) break;
       z = unsafeWindow.kocChampionItems[k];
@@ -23595,8 +23595,9 @@ PaintSalvageHistory : function() {
 //	if(Seed.queue_Champion.end  > unsafeWindow.unixtime()) {
         if(t.repairEnd  > unsafeWindow.unixtime()) {
 		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "Waiting on repair";
+		t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
 		return;
-	};
+	} else t.repairEnd == null;
 
 //	if(Seed.queue_Champion.end == undefined) {
         if(t.repairEnd == undefined) {
