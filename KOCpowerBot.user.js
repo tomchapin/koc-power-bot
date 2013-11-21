@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131120e
+// @version        20131121a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131120e';
+var Version = '20131121a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -24289,13 +24289,13 @@ salvageCheck : function (){
                     if(ChampionOptions.SingleStat) {
                         for (h in ChampionOptions.Salvage) {
                         if(ChampionOptions.Salvage[h] && ChampionOptions.SalvageA[h].Min > 0 && ChampionOptions.SalvageA[h].cur >= ChampionOptions.SalvageA[h].Min) {
-                           //logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
+                          // logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
                               MinReq = true;
                            }; 
                         if(ChampionOptions.Salvage[h] && ChampionOptions.SalvageA[h][y.type] && ChampionOptions.SalvageA[h][y.type] > 0 && ChampionOptions.SalvageA[h].cur >= ChampionOptions.SalvageA[h][y.type]) {
-                           //logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
-                              MinReq = true;
-                              //logit('saving '+y.name+' due to '+y.type+' and '+h);
+                         //  logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
+                             // MinReq = true;
+                              logit('saving '+y.name+' due to '+y.type+' and '+h);
                            }; 
                             if(ChampionOptions.SalvageA[h].cur >= ChampionOptions.Championkeep)
                             if(ChampionOptions.SalvageA[h].Min == 0)
@@ -24304,10 +24304,12 @@ salvageCheck : function (){
                                 ChampionOptions.SalvageA[h].cur = 0;};
                         }
                     }
-                    //logit('y.name '+y.name+' level '+level+' number '+number+' ChampionOptions.Championkeep '+ChampionOptions.Championkeep+' NotUpgrading '+NotUpgrading+' isEquiped '+y.isEquipped+' y.isbroken '+y.isBroken+' y.equipmentId '+y.equipmentId+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+MinReq+' is unique '+IsUnique);
+//                    [09:01:07.833] "[KOCPowerBot@mat]" "373 @ 09:01:07.833: y.name Common Sword of Lethargy +0 level true number 0 ChampionOptions.Championkeep 2 NotUpgrading true isEquiped undefined y.isbroken undefined y.equipmentId 283043 last deleted 0 NotFavorite true MinReq false is unique false"
+                 //   logit('y.name '+y.name+' level '+level+' number '+number+' ChampionOptions.Championkeep '+ChampionOptions.Championkeep+' NotUpgrading '+NotUpgrading+' isEquiped '+(y.equippedTo == 0)+' y.isbroken '+(y.status == 1)+' y.equipmentId '+y.equipmentId+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+!MinReq+' is unique '+!IsUnique);
 //                    if (!level && number < ChampionOptions.Championkeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
-                    if (!level && number < ChampionOptions.Championkeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
-                  //logit(y.name);
+	                  //  logit ((!level) +'&&'+ (number < ChampionOptions.Championkeep) +'&&'+ (NotUpgrading) +'&&'+ (y.equippedTo == 0) +'&&'+ (y.status == 1) +'&&'+ (t.LastDeleted != y.equipmentId) +'&&'+ NotFavorite +'&&'+ (!MinReq) +'&&'+ (!IsUnique) +'&&'+ (!IsHero));
+                    if (!level && number < ChampionOptions.Championkeep && NotUpgrading && y.equippedTo == 0 && y.status == 1 && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
+               //   logit(y.name);
                         t.SalvageArray.push(y.equipmentId);
                     }                     
             }
