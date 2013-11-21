@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131120d
+// @version        20131120e
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131120d';
+var Version = '20131120e';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -22677,7 +22677,8 @@ Tabs.Champion = {
     setInterval(t.salvageCheck,2*60*1000);
  },
      saveSalvageOptions : function(){
-         for (k in t.Effects) {
+	var t = Tabs.Champion;
+         for (k in t.championStatEffects) {
             var ele = document.getElementById('pbChampionItems'+k);
             //var ele2 = document.getElementById(k+'Min');
             ChampionOptions.Salvage[k]=ele.checked;
@@ -22816,17 +22817,16 @@ Tabs.Champion = {
         
       m+='<TABLE width=80% class=pbTab>';
       for (k in t.championStatEffects) {
-//logit('chsteff ' +k+ ':' +t.championStatEffects[k]);
         if(!ChampionOptions.SalvageA[k]) ChampionOptions.SalvageA[k] = {};
         if(!ChampionOptions.SalvageA[k].Min) ChampionOptions.SalvageA[k].Min = 0;//fixing a mistake, Min must be defined.  
          m += '<TR><TD><A onclick="chsetFAV('+ k +')"><DIV class=pbSalvage_fav id=chSalvageFAV'+k+'></div></td>';
 //         m += '<TD class=pbChampion><INPUT id=pbChampionItems'+k+' type=checkbox checked='+ (ChampionOptions.Salvage[k]?'CHECKED ':'') +'>'+ unsafeWindow.cm.thronestats.effects[k][1] +'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][3]+'</td><TD width="4">'+ unsafeWindow.cm.thronestats.effects[k][2]+'</td>\
          m += '<TD class=pbChampion><INPUT id=pbChampionItems'+k+' type=checkbox checked='+ (ChampionOptions.Salvage[k]?'CHECKED ':'') +'>'+ t.championStatEffects[k][1] +'</td><TD>'+ t.championStatEffects[k][3]+'</td><TD width="4">'+ t.championStatEffects[k][2]+'</td>\
-         <td></td><td class=pbChampionST><select id=ch'+k+'>';
+         <td></td><td class=pbChampionST><select id='+k+'>';
          for(g = 0;g<t.EquipType.length;g++)
          m+='<option value="'+t.EquipType[g]+'">'+t.EquipType[g]+'</option>'
       m+='</select></td>';
-         m+='<td class=pbChampionS>Min lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA[k].Min,'id=ch'+k+'Min')+'</td></tr>';
+         m+='<td class=pbChampionS>Min lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA[k].Min,'id='+k+'Min')+'</td></tr>';
       }  
       m+= '</table>';
 
