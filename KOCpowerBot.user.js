@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131120c
+// @version        20131120d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131120c';
+var Version = '20131120d';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -23034,7 +23034,7 @@ Upgrade_Enhance :function (){
         o.text = unsafeWindow.kocChampionItems[i]["name"];
         o.value = unsafeWindow.kocChampionItems[i]["equipmentId"];
         document.getElementById("ChampionItems").options.add(o);
-        if (unsafeWindow.seed.champion.equipment[i]["repairing"]) {
+        if (unsafeWindow.seed.champion.equipment[i]) if (unsafeWindow.seed.champion.equipment[i]["repairing"]) {
 	   t.repairEnd=unsafeWindow.seed.champion.equipment[i]["eta"];
 	   t.repairStart=unsafeWindow.seed.champion.equipment[i]["start"];
 	}
@@ -23299,7 +23299,7 @@ FillEquipCheckboxes: function(){
    t.CompPos=0;
    for (k in unsafeWindow.kocChampionItems){
       counter++;
-      if (unsafeWindow.seed.champion.equipment[k]["repairing"]) {
+      if (unsafeWindow.seed.champion.equipment[k]) if (unsafeWindow.seed.champion.equipment[k]["repairing"]) {
 	 t.repairEnd=unsafeWindow.seed.champion.equipment[k]["eta"];
 	 t.repairStart=unsafeWindow.seed.champion.equipment[k]["start"];
       }
