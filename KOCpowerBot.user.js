@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131120a
+// @version        20131120b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131120a';
+var Version = '20131120b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -23595,7 +23595,7 @@ PaintSalvageHistory : function() {
 //	if(Seed.queue_Champion.end  > unsafeWindow.unixtime()) {
         if(t.repairEnd  > unsafeWindow.unixtime()) {
 		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "Waiting on repair";
-		t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+		t.setRepairTimer = setTimeout (t.repairTimerUpdate,1000);
 		return;
 	} else t.repairEnd == null;
 
