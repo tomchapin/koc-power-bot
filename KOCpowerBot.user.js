@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131122a
+// @version        20131122b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131122a';
+var Version = '20131122b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -23627,7 +23627,8 @@ PaintSalvageHistory : function() {
                 	t.setActionTimer = setInterval(t.doAction,60*1000);
                 	return;
         	}
-        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken == true){
+//        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken == true){
+        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status < 0){
                 	setTimeout(t.doRepair,5000);
                 	clearTimeout(t.setActionTimer);
                 	t.setActionTimer = setInterval(t.doAction,10000);
@@ -23713,7 +23714,7 @@ PaintSalvageHistory : function() {
                     Seed.resources["city" + cityid]["rec5"][0] -= rslt.aetherstones;
 //                      y.level = rslt.level;
                       y.rarity = rslt.rarity;
-//                    y.status = rslt.status;
+                      y.status = 1;
 //                    if (rslt.success)
                     if (!rslt.broken)
                     {                    
@@ -23729,7 +23730,8 @@ PaintSalvageHistory : function() {
                     else
                     {
                if(!params.chanceItem) {
-                  y.isBroken = true;
+//                  y.isBroken = true;
+                  y.status = -2;
                   y.brokenType = "rarity";
                   y.name = y.createName();
 		  ChampionOptions.ibrokeitems.push(params.eid);
@@ -23747,7 +23749,8 @@ PaintSalvageHistory : function() {
                     ChampionOptions.Good++;
                     saveChampionOptions();
                 } else {
-                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
+//                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
+                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status = -2;
                     ChampionOptions.Bad++;
                     saveChampionOptions();
                 }
@@ -23823,6 +23826,7 @@ PaintSalvageHistory : function() {
                        y.level = rslt.level;
 //                       y.rarity = rslt.rarity;
 //                       y.name = y.createName();
+			y.status = 1;
                        t.addToLog(ChampionOptions.Items["0"]["id"],ChampionOptions.Items["0"]["action"],ChampionOptions.Tries,ChampionOptions.Good,ChampionOptions.Bad);
                        ChampionOptions.Tries = 0;
                        ChampionOptions.Good = 0;
@@ -23834,9 +23838,9 @@ PaintSalvageHistory : function() {
                     else
                     {
                if(!params.chanceItem) {
-                       y.isBroken = true;
+//                       y.isBroken = true;
                        y.brokenType = "level";
-//                       y.status = rslt.item.status;
+                       y.status = -3;
                        y.name = y.createName();
 		       ChampionOptions.ibrokeitems.push(params.eid);
                }
@@ -23856,7 +23860,8 @@ PaintSalvageHistory : function() {
                         ChampionOptions.Good++;
                         saveChampionOptions();
                 } else {
-                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
+//                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
+                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = -3;
                     ChampionOptions.Bad++;
                     saveChampionOptions();
                 }
@@ -23873,7 +23878,8 @@ PaintSalvageHistory : function() {
 		var y = unsafeWindow.kocChampionItems;
 		for(i in y) {
 			logit('i is '+i);
-			if(!y[i].isBroken) {
+//			if(!y[i].isBroken) {
+			if(y[i].status == 1) {
 				logit('and is not broken '+i);
 				t.doUpgradesimple(i);
 				setTimeout(t.doUpgradeAll,2000);
@@ -23922,9 +23928,9 @@ PaintSalvageHistory : function() {
                     Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
                     if (rslt["broken"]){
 						ChampionOptions.ibrokeitems.push(params.eid);
-						y.isBroken = true;
+//						y.isBroken = true;
                        y.brokenType = "level";
-//                       y.status = rslt.item.status;
+                       y.status = -3;
                        y.name = y.createName();
 					} else {
 						y.level = rslt.level;
@@ -23970,7 +23976,8 @@ PaintSalvageHistory : function() {
                     **/
         if(ChampionOptions.ibrokeitems.length > 0)
         if(unsafeWindow.kocChampionItems[ChampionOptions.ibrokeitems[0]]) {
-        if(!unsafeWindow.kocChampionItems[ChampionOptions.ibrokeitems[0]].isBroken)ChampionOptions.ibrokeitems.shift();//if it's not broke, don't fix it! lol
+//        if(!unsafeWindow.kocChampionItems[ChampionOptions.ibrokeitems[0]].isBroken)ChampionOptions.ibrokeitems.shift();//if it's not broke, don't fix it! lol
+        if(unsafeWindow.kocChampionItems[ChampionOptions.ibrokeitems[0]].status == 1)ChampionOptions.ibrokeitems.shift();//if it's not broke, don't fix it! lol
 		} else ChampionOptions.ibrokeitems.shift();//if it's not there, remove it
 
         var cityid = 0;
@@ -23997,11 +24004,14 @@ PaintSalvageHistory : function() {
 					  if(params.eid != ChampionOptions.Items["0"]["id"]) ChampionOptions.ibrokeitems.shift();
 					  else t.repairId = ChampionOptions.Items["0"]["id"];
 				  } else ChampionOptions.ibrokeitems.shift();
-//                  Seed.queue_Champion.itemId= params.eid;
+                  unsafeWindow.seed.queue_champion = {};
+                  unsafeWindow.seed.queue_champion.itemId= params.eid;
 //                  Seed.queue_Champion.start=unixTime();
 //                  Seed.queue_Champion.end= rslt.eta;
                   t.repairStart = rslt.start;
                   t.repairEnd = rslt.eta;
+		  unsafeWindow.kocChampionItems[params.eid].status = 2;
+		  t.setRepairTimer = setTimeout (t.repairTimerUpdate,1000);
 //                  unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
 		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
                   var x = rslt.eta - unixTime();
