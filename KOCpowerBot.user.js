@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131122b
+// @version        20131122c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131122b';
+var Version = '20131122c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -5224,7 +5224,10 @@ Tabs.tower = {
    var orderdefend = unsafeWindow.g_js_strings.openCastle.orderdefend;
    var technology = unsafeWindow.g_js_strings.commonstr.technology;
    var chEffect1 = {201:"Damage",202:"Bonus Damage",203:"Armor",204:"Strength",205:"Dexterity",206:"Health",207:"Hit Chance",208:"Crit Chance",209:"Block"};
+   var chEff1Base = {"Damage":30,"Bonus Damage":0,"Armor":7,"Strength":27,"Dexterity":27,"Health":60,"Hit Chance":4,"Crit Chance":3,"Block":3};
    var chEffect2 = {1:"Attack",2:"Defense",3:"Life",4:"Combat Speed",5:"Range",6:"Load",7:"Accuracy",17:"Attack Debuff",18:"Defense Debufff",19:"Life Debuff",20:"Combat Speed Debuff",21:"Range Debuff",22:"Load Debuff",23:"Accuracy Debuff"};
+   var chEff1Net;
+
     if (m.marchType == 3){
       if (!Options.alertConfig.scouting)
         return;
@@ -5264,16 +5267,19 @@ Tabs.tower = {
         msg = '..:.|'+Options.alertConfig.aPrefix +' || '+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
         //msg = Options.alertConfig.aPrefix +' My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';        
         
-   var fchar = Filter[Options.fchar];
+    var fchar = Filter[Options.fchar];
     for (k in m.unts){
       var uid = parseInt(k.substr (1));
       var UNTCOUNT = String(String(m.unts[k]).split("")).replace(/,/g,fchar)// forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
       msg += '|'+UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
     }
     if (m.championInfo) {
-      msg += ' || Champion Data:';
-      for (k in m.championInfo.effects[1])
-	msg += '|' +chEffect1[k]+ ': ' +m.championInfo.effects[1][k]+', ';
+      msg += ' || Champion Item Stats:';
+      for (k in m.championInfo.effects[1]) {
+        chEff1Net = m.championInfo.effects[1][k]-chEff1Base[chEffect1[k]];
+        chEff1Net = chEff1Net.toFixed(1);
+	if (chEff1Net > 0.0) msg += '|' +chEffect1[k]+ ': +' +chEff1Net+', ';
+      }
       for (k in m.championInfo.effects[2])
 	msg += '|' +chEffect2[k]+ ': ' +m.championInfo.effects[2][k]+', ';
     }
