@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131122c
+// @version        20131123a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131122c';
+var Version = '20131123a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -23612,11 +23612,11 @@ PaintSalvageHistory : function() {
         if (!ChampionOptions.Active) return;
         t.checkUpgradeInfo();
 //	if(Seed.queue_Champion.end  > unsafeWindow.unixtime()) {
-        if(t.repairEnd  > unsafeWindow.unixtime()) {
+        if(t.repairEnd  > now) {
 		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "Waiting on repair";
-		t.setRepairTimer = setTimeout (t.repairTimerUpdate,1000);
+		 t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
 		return;
-	} else t.repairEnd == null;
+	} else t.repairEnd = null;
 
 //	if(Seed.queue_Champion.end == undefined) {
         if(t.repairEnd == undefined) {
@@ -23625,20 +23625,20 @@ PaintSalvageHistory : function() {
                   setTimeout(t.doRepair,5000);
                   clearTimeout(t.setActionTimer);
                   t.setActionTimer = setInterval(t.doAction,10000);
-                  return;
+		return;
 		}
         	if (ChampionOptions.Items.length ==0) {
         		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "No items in queue!!";
                 	clearTimeout(t.setActionTimer);
                 	t.setActionTimer = setInterval(t.doAction,60*1000);
-                	return;
+		return;
         	}
 //        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken == true){
         	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status < 0){
                 	setTimeout(t.doRepair,5000);
                 	clearTimeout(t.setActionTimer);
                 	t.setActionTimer = setInterval(t.doAction,10000);
-                	return;
+		return;
         	}
         	ChampionOptions.Items["0"]["active"] = true;
         	t.PaintQueue();
@@ -23653,7 +23653,6 @@ PaintSalvageHistory : function() {
         	}
         
 	};
-        
   },
   
   
@@ -24016,8 +24015,8 @@ PaintSalvageHistory : function() {
 //                  Seed.queue_Champion.end= rslt.eta;
                   t.repairStart = rslt.start;
                   t.repairEnd = rslt.eta;
-		  unsafeWindow.kocChampionItems[params.eid].status = 2;
-		  t.setRepairTimer = setTimeout (t.repairTimerUpdate,1000);
+		  unsafeWindow.kocChampionItems[params.eid].status = -2;
+		   t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
 //                  unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
 		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
                   var x = rslt.eta - unixTime();
