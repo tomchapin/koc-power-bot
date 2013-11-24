@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131123b
+// @version        20131123c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131123b';
+var Version = '20131123c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -23624,7 +23624,11 @@ PaintSalvageHistory : function() {
 		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "Waiting on repair";
 		 t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
 		return;
-	} else t.repairEnd = null;
+	} 
+//// Repairs so reset status
+	  ChampionOptions.ibrokeitems.pop(ChampionOptions.Items["0"]["id"]);
+	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status = 1;
+	  t.repairEnd = null;
 
 //	if(Seed.queue_Champion.end == undefined) {
         if(t.repairEnd == undefined) {
@@ -23657,7 +23661,7 @@ PaintSalvageHistory : function() {
             		if (ChampionOptions.Items["0"]["action"] == "Upgrade") setTimeout(t.doUpgrade,5000); 
             		if (ChampionOptions.Items["0"]["action"] == "Enhance") setTimeout(t.doEnhance,5000); 
             		clearTimeout(t.setActionTimer);
-            		t.setActionTimer = setInterval(t.doAction,10000);
+            		t.setActionTimer = setInterval(t.doAction,30000);
         	}
         
 	};
@@ -23752,6 +23756,7 @@ PaintSalvageHistory : function() {
                        ChampionOptions.Tries++;
                        document.getElementById('chShowStatus').innerHTML = 'Enhance failed :( <br />Item: ' + unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
                        document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
+		       setTimeout(t.doRepair,5000);
                     }
 //                    unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
 //		    unsafeWindow.cm.ChampionPanelView.renderBroken(y);
@@ -23764,6 +23769,7 @@ PaintSalvageHistory : function() {
                 } else {
 //                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
                 	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status = -2;
+			  setTimeout(t.doRepair,5000);
                     ChampionOptions.Bad++;
                     saveChampionOptions();
                 }
@@ -23861,8 +23867,9 @@ PaintSalvageHistory : function() {
                        saveChampionOptions();
                        if(document.getElementById('chShowStatus'))
                      document.getElementById('chShowStatus').innerHTML = 'Upgrade failed :( <br />Item: ' + unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
-                  if(document.getElementById('chShowTries'))
-                     document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
+                     if(document.getElementById('chShowTries'))
+                       document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
+		     setTimeout(t.doRepair,5000);
                     }
 //                    unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
 //		    unsafeWindow.cm.ChampionPanelView.renderBroken(y);
@@ -23875,6 +23882,7 @@ PaintSalvageHistory : function() {
                 } else {
 //                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
                 	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = -3;
+			  setTimeout(t.doRepair,5000);
                     ChampionOptions.Bad++;
                     saveChampionOptions();
                 }
@@ -23945,6 +23953,7 @@ PaintSalvageHistory : function() {
                        y.brokenType = "level";
                        y.status = -3;
                        y.name = y.createName();
+		       setTimeout(t.doRepair,5000);
 					} else {
 						y.level = rslt.level;
 //                       y.rarity = rslt.rarity;
@@ -24023,7 +24032,7 @@ PaintSalvageHistory : function() {
 //                  Seed.queue_Champion.end= rslt.eta;
                   t.repairStart = rslt.start;
                   t.repairEnd = rslt.eta;
-		  unsafeWindow.kocChampionItems[params.eid].status = -2;
+		  unsafeWindow.kocChampionItems[params.eid].status = 2; //2 for repair of enhance, 3 for repair of upgrade
 		   t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
 //                  unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
 		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
