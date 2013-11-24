@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131123c
+// @version        20131124a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131123c';
+var Version = '20131124a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -22723,9 +22723,11 @@ Tabs.Champion = {
         var UniqueItems = {
             Weapon : {
                 "Black Knights Blade"   : "http://i.imgur.com/QjAxD5J.png",
+                "Blade of Radiance"     : "http://img443.imageshack.us/img443/5593/dk9v.png",
             },
             Armor : {
                 "Black Knights Armor"   : "http://i.imgur.com/hap9CtH.png",
+                "Armor of the Wild"     : "http://img819.imageshack.us/img819/5202/hs99.png",
             },
             /* Helm : {
                 "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
