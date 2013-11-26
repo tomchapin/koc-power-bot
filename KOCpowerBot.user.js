@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131125a
+// @version        20131126a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131125a';
+var Version = '20131126a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -80,6 +80,7 @@ unsafeWindow.arthurCheck = function (a) {
 	logit('arthurCheck intercepted');
 	return;
 };
+
 
 
 var isAFK = false;
@@ -166,6 +167,7 @@ var Options = {
   LastCrestReport   : 0,
   MsgInterval  : 1,
   CrestMsgInterval  : 1,
+
   foodreport   : false,
   crestreport  : true,
   Crest1Count  : 0,                            
@@ -280,6 +282,7 @@ var CrestOptions = {
   R2Flame      :  0,
   R2Huss       :  0,
   isWild       :  false,
+
   Paused       :  false,
 };
 var GiftDB = {
@@ -340,6 +343,7 @@ var CrestData = new Array();
       this.R2Flame      =  Arr.R2Flame;
       this.R2Huss       =  Arr.R2Huss;
       this.isWild       =  Arr.isWild;
+
 	  this.Paused       =  Arr.Paused;
    };
 
@@ -14230,6 +14234,12 @@ var FairieKiller  = {
   init : function (tf){
 
 
+
+
+
+
+
+
     if (firefoxVersion.substring(0,4) == '4.0b')  // bug in firefox 4.0b10 causes syntax error with: "var func = eval ('function (){}');"
       return;
     FairieKiller.saveFunc = unsafeWindow.Modal.showModalUEP;
@@ -16274,9 +16284,9 @@ unsafeWindow.pbGotoMap = function (x, y){
     unsafeWindow.reCenterMapWithCoor();
     var a = document.getElementById("mod_views").getElementsByTagName("a");
     for (var b = 0; b < a.length; b++) {
-        a[b].className = ""
+        a[b].className = "buttonv2 nav h20"
     }
-    document.getElementById('mod_views_map').className = "sel";
+    document.getElementById('mod_views_map').className = "buttonv2 nav h20 sel";
     document.getElementById("maparea_city").style.display = 'none';
     document.getElementById("maparea_fields").style.display = 'none';
     document.getElementById("maparea_map").style.display = 'block';
@@ -20308,6 +20318,7 @@ Tabs.Attack = {
 	trooparray:{1:"ST",2:"MM",3:"Scout",4:"Pike",5:"Sword",6:"Arch",7:"LC",8:"HC",9:"SW",10:"Ball",11:"Ram",12:"Cat",13:"Blood",14:"Exec",15:"Siege",16:"Flame",17:"Huss",},
 	msgtimer : null,
 
+
 	/** window display **/
 	init : function (div) {
 		var t = Tabs.Attack;
@@ -20348,6 +20359,7 @@ Tabs.Attack = {
 		m += '<TABLE class=ptTab><TR><TD>Target Co-ords:&nbsp;&nbsp;X:&nbsp;<INPUT id=pbcrestx type=text size=3 maxlength=3 value=""></td>';
 		m += '<TD>Y:&nbsp;<INPUT id=pbcresty type=text size=3 maxlength=3 value=""></td></tr>';
 		m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Target is Wilderness</td><td>(if ticked will abandon wild and reduce wave 1 MM for subsequent attacks)</td></tr></table>';
+
    
 		var dude = unsafeWindow.unitnamedesctranslated;
 		m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD><b>Wave 1</b>&nbsp;(initial):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
@@ -20403,6 +20415,16 @@ Tabs.Attack = {
 			saveOptions();
 		},false);
     
+
+
+
+
+
+
+
+
+
+
 		$("pbcrestslots").addEventListener('change', function(e){
 			Options.CrestSlots = parseIntNan(e.target.value);
 			saveOptions();
@@ -20415,6 +20437,12 @@ Tabs.Attack = {
 			}
 		}
         
+
+
+
+
+
+
 		t.tcp = new CdispCityPicker ('crestcityselect', document.getElementById('crestcity'), true, t.clickCitySelect, selbut);
     
 		if (CrestOptions.CrestCity == 0) {
@@ -20425,6 +20453,10 @@ Tabs.Attack = {
 			CrestOptions.isWild = this.checked;
 		},false);
     
+
+
+
+
 		$('pbRattacks').addEventListener('click', function(){
 			Options.CrestRand = this.checked;
 			saveOptions();
@@ -20445,6 +20477,7 @@ Tabs.Attack = {
 		document.getElementById('pbcresty').addEventListener('keyup', function(){ if (isNaN(document.getElementById('pbcresty').value)) document.getElementById('pbcresty').value='';}, false);
 
 		document.getElementById('pbcrest_iswild').addEventListener('click', function(){CrestOptions.isWild = this.checked;} , false);
+
 		document.getElementById('crestcity').addEventListener('click', function(){CrestOptions.CrestCity = t.tcp.city.id;} , false);
 		document.getElementById('Cresttoggle').addEventListener('click', function(){t.toggleCrestState(this)} , false);
 		document.getElementById('pbcrestx').addEventListener('change', function(){CrestOptions.X = document.getElementById('pbcrestx').value;;} , false);
@@ -20799,6 +20832,17 @@ Tabs.Attack = {
 			return;
 		};
 		
+
+
+
+
+
+
+
+
+
+
+
 		if (!t.checkCityTroops(r,CrestDataNum)) {
 //			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
