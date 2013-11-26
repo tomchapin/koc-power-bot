@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131124a
+// @version        20131125a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131124a';
+var Version = '20131125a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -22603,6 +22603,7 @@ Tabs.Champion = {
 //    main +='<TD><input class=pbSubtab ID=ptmrcxSubTC type=submit value="Caps"></TD>';
 //    main +='<TD><input class=pbSubtab ID=ptmrcxSubTR type=submit value="Champion"></TD></tr>';
     main +='<TD><input class=pbSubtab ID=ptmrcxSubUN type=submit value="Uniques"></TD>';
+    main +='<TD><INPUT class=pbSubtab ID=ptmrcxSubAS type=submit value="Assign"></td>';
     main += '</tr></table><HR class=ptThin>';
     main +='<DIV id=ChampionOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
 
@@ -22615,6 +22616,7 @@ Tabs.Champion = {
 //   document.getElementById('ptmrcxSubTC').addEventListener('click', e_butSubtab, false);
 //   document.getElementById('ptmrcxSubTR').addEventListener('click', e_butSubtab, false);
    document.getElementById('ptmrcxSubUN').addEventListener('click', e_butSubtab, false); 
+    document.getElementById('ptmrcxSubAS').addEventListener('click', e_butSubtab, false);
 
     changeSubtab (document.getElementById('ptmrcxSubUE'));
     
@@ -22777,6 +22779,61 @@ Tabs.Champion = {
         
     },
 
+   Assign : function (){
+	var t =Tabs.Champion;
+	m =  '<DIV class=pbstat><b>Champion Assignments (EXPERIMENTAL)</b></div><TABLE border=2px align=center>';
+	m += '<TR><TD width="150px"><B>Champion Name</b></td><TD><B>Assigned to</b></td><TD></td></tr>';
+
+	var assignCity = "Not assigned to city";
+        for (var i = 0; i < Seed.champion.champions.length; i++) {
+	    if (Seed.champion.champions[i].assignedCity != 0) assignCity = Cities.byID[Seed.champion.champions[i].assignedCity].name;
+      	    m += '<TR><TD>'+ Seed.champion.champions[i].name + '</td><TD>'+ assignCity +'</td>';
+	    if (Seed.champion.champions[i].assignedCity != 0)
+		m += '<TD><INPUT id=unAssign' +i+' type=submit value="Un-Assign" \></td>';
+	    else
+		m += '<TD>Not assigned</td>';
+	    m += '</tr>';
+        }
+        m += '</table>';
+	t.Overv.innerHTML = m;
+
+	for(var i = 0; i < Seed.champion.champions.length; i++) {
+	    var btnName = 'unAssign'+i;	
+	    if (Seed.champion.champions[i].assignedCity != 0) addNewEventListener(btnName,Seed.champion.champions[i]);
+	}
+
+        function addNewEventListener(btnName, champion) {
+	      document.getElementById(btnName).addEventListener ('click', function(){
+                t.doUnassign(champion.championId,champion.assignedCity);
+	      }, false);
+        }
+   },
+
+    doUnassign : function(championId,assignedCity) {
+        var t = Tabs.Champion;
+	logit ('champion number:' +championId+ ' city:' +assignedCity);
+	t.Overv.innerHTML += "<font size='2px'><B>Unassign attempt: </b></font>"; 
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.champid = championId;
+        params.cid0 = assignedCity;
+        params.cid = 0;
+        new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/assignChampion.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            loading: true,
+            onSuccess: function (transport) {
+                var rslt = eval("(" + transport.responseText + ")");
+                   if(rslt.ok){
+			t.Overv.innerHTML += "<font size='2px'><B>Unassign successful - Refresh to see</b></font>";
+                   } else {
+			t.Overv.innerHTML += "<font color=red size='2px'><B>Unassign fail</b></font>";
+		   }
+            },
+            onFailure: function () {
+               return;
+            },
+        });
+    },
 
 /***   
    Caps : function (){
@@ -24656,6 +24713,8 @@ show : function (){
 //      t.ChampionT();
     else if (t.curTabName == 'UN')
       t.Uniques();
+    else if (t.curTabName == 'AS')
+      t.Assign();
   }, 
 }
 
