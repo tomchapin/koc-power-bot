@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131127a
+// @version        20131128a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131127a';
+var Version = '20131128a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2330,7 +2330,7 @@ Tabs.Throne = {
   MaxRows:30,
   CompPos:0,
   CardTypes:["ALL","Attack","Defense","Life","Speed","Accuracy","Range","Load","MarchSize","MarchSpeed","CombatSkill","IntelligenceSkill","PoliticsSkill","ResourcefulnessSkill","TrainingSpeed","ConstructionSpeed","ResearchSpeed","CraftingSpeed","Upkeep","ResourceProduction","ResourceCap","Storehouse","Morale","ItemDrop"],
-  EquipType: ["ALL","advisor","banner","chair","table","trophy","window","candelabrum","hero"],//case sensitive for the moment.
+  EquipType: ["ALL","advisor","banner","chair","table","trophy","window","candelabrum","hero","statue"],//case sensitive for the moment.
   Faction: ["ALL","Briton","Fey","Druid"],
 
   init : function (div){
@@ -2468,6 +2468,11 @@ Tabs.Throne = {
                 "Elite Guard"           : "http://i.imgur.com/3gRUVuo.jpg",
                 "Robin The Courageous"  : "http://i.imgur.com/wWxlfWv.png",
             },
+            Statues : {
+//                "Monument to Llamrei" : "http://i.imgur.com/xxxxxx.jpg",
+//                "The Huntress"     	: "http://i.imgur.com/xxxxxx.jpg",
+//                "Castle Tauroc"       : "http://i.imgur.com/xxxxxx.jpg",
+            },
         }
 
         unsafeWindow.pbshowunique = showUnique;
@@ -2498,6 +2503,7 @@ Tabs.Throne = {
                 case "Tables"   : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Tables[name]+'>'; break;
                 case "Trophies" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Trophies[name]+'>'; break;
                 case "Heros"    : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Heros[name]+'>'; break;
+                case "Statues"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Statues[name]+'>'; break;
             }
         }
         
@@ -2553,7 +2559,7 @@ Tabs.Throne = {
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_unique type=checkbox '+ (ThroneOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbheatup type=checkbox '+(ThroneOptions.heatup?'CHECKED ':'')+'/>&nbsp; Upgrade cards before salvaging to increase aetherstone and heat up modifier</TD></TR>';
       m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR>';
-      m+='<tr><td colspan=3><INPUT id=shero type=checkbox '+ (ThroneOptions.savehero?'CHECKED ':'') +'/>&nbsp; Save all hero\'s</TD></TR></table>';
+      m+='<tr><td colspan=3><INPUT id=shero type=checkbox '+ (ThroneOptions.savehero?'CHECKED ':'') +'/>&nbsp; Save all heroes</TD></TR></table>';
       m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
       m+='<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
       m+='<TABLE width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
@@ -2813,7 +2819,7 @@ Upgrade_Enhance :function (){
     document.getElementById('ThroneItems').options.length=0;
     for (i in unsafeWindow.kocThroneItems){
         var o = document.createElement("option");
-        o.text = unsafeWindow.kocThroneItems[i]["name"];
+        o.text = unsafeWindow.kocThroneItems[i]["name"]+' ['+unsafeWindow.kocThroneItems[i]["id"]+']';
         o.value = unsafeWindow.kocThroneItems[i]["id"];
         document.getElementById("ThroneItems").options.add(o);
     }
@@ -2858,6 +2864,7 @@ Compare :function (){
     var WindowCount = 0;
     var CandelCount = 0;
     var HeroCount = 0;
+    var StatueCount = 0;
     var counter = 0;
     ActiveItems = parseInt(Seed.throne.rowNum)*5;
 
@@ -2873,13 +2880,14 @@ Compare :function (){
       if (z.type=="window") WindowCount++;
       if (z.type=="candelabrum") CandelCount++;
       if (z.type=="hero") HeroCount++;
+      if (z.type=="statue") StatueCount++;
    }  
 
 
     try {   
      var m = '<DIV id=pbTowrtDivF class=pbStat>Compare Throne Items</div><br><TABLE id=pbCompareStats width=100% height=0% class=pbTab>';
 
-     m+='<TD>Advisor: ' + AdvisorCount + '</td><TD>Banner: ' + BannerCount+ '</td><TD>Throne :' + ChairCount+ '</td><TD>Table: '+ TableCount+'</td><TD>Trophy: ' + TrophyCount + '</td><TD>Window: ' + WindowCount + '</td><TD>Candelabrum: ' + CandelCount + '</td><TD>Hero: ' + HeroCount + '</td></table><br>';
+     m+='<TD>Advisor: ' + AdvisorCount + '</td><TD>Banner: ' + BannerCount+ '</td><TD>Throne :' + ChairCount+ '</td><TD>Table: '+ TableCount+'</td><TD>Trophy: ' + TrophyCount + '</td><TD>Window: ' + WindowCount + '</td><TD>Candelabrum: ' + CandelCount + '</td><TD>Hero: ' + HeroCount + '</td><TD>Statue: ' + StatueCount + '</td></table><br>';
 
      m+= '<DIV id=pbThroneMain class=pbStat>Compare Throne Items</div><br>';
      m+='<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=type type=list></select></td><TD>Card Family: <SELECT id=family type=list></select></td><TD>Effect: <SELECT id=effect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=keyword size=10></td></tr></table>';
@@ -3208,6 +3216,7 @@ paintEquipInfo : function (z,what){
 
           m+='<TR><TD style="background-color:#D5C795"><FONT color='+ color +'><B>' + y.name + '</b></font></td>';
         m+= '<TD><A onclick="Savlage('+ y.id +')"><img src="data:image/png;base64,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"/></td></tr>';
+          m+='<TR><TD style="background-color:#D5C795"><FONT color='+ color +'><B>[' + y.id + ']</b></font></td>';
         for (i=1;i<=5;i++) {
             id = y["effects"]["slot"+i]["id"];
             tier = parseInt(y["effects"]["slot"+i]["tier"]);
@@ -3338,7 +3347,7 @@ PaintSalvageHistory : function() {
         if(document.getElementById('ShowQueueDiv')) {
         document.getElementById('ShowQueueDiv').innerHTML = '<TABLE id=ShowQueue class=pbStat align="center" width=90%></table>';
         for (k=(ThroneOptions.Items.length-1);k>=0;k--){
-            if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]) == 'object') t._addTab(k,ThroneOptions.Items[k]["name"],ThroneOptions.Items[k]["qualityfrom"],ThroneOptions.Items[k]["qualityto"],ThroneOptions.Items[k]["levelfrom"],ThroneOptions.Items[k]["levelto"],ThroneOptions.Items[k]["action"],ThroneOptions.Items[k]["active"],ThroneOptions.Items[k]["cost"]);
+            if (typeof(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]) == 'object') t._addTab(k,ThroneOptions.Items[k]["name"]+' ['+ThroneOptions.Items[k]["id"]+']',ThroneOptions.Items[k]["qualityfrom"],ThroneOptions.Items[k]["qualityto"],ThroneOptions.Items[k]["levelfrom"],ThroneOptions.Items[k]["levelto"],ThroneOptions.Items[k]["action"],ThroneOptions.Items[k]["active"],ThroneOptions.Items[k]["cost"]);
             else ThroneOptions.Items.splice (k,1);
         }
         t._addTabHeader();
@@ -23587,6 +23596,7 @@ paintEquipInfo : function (z,what){
             else m+='<TR><TD><FONT color=grey>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
       }
 //      m+='</table><table align="center"><tr><td><a onclick="chdoEquip('+z+')">Equip</a></td><td><a onclick="chpostInfo('+z+')">Post to chat</a></td><td><a onclick="chfupgenh('+z+')">Upgrade/Enhance</a></td></tr></table>';
+      m+='</table><table align="center"><tr><td><a onclick="chpostInfo('+z+')">Post to chat</a></td><td><a onclick="chfupgenh('+z+')">Upgrade/Enhance</a></td></tr></table>';
       document.getElementById('DIV'+what).innerHTML = m;
 },
 
