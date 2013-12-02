@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131202c
+// @version        20131202d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131202c';
+var Version = '20131202d';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -18592,36 +18592,37 @@ var DeleteReports = {
         for(k in reports){
         	//logit(lasttenmin+" and "+reports[k].reportUnixTime+" and it is "+(lasttenmin < Number(reports[k].reportUnixTime)));
         	var reportUnixTime = Number(reports[k].reportUnixTime);
-        	if((reports[k].marchType==4 || reports[k].marchType==3) && (lasttenmin < reportUnixTime) && t.isMyself(reports[k].side0PlayerId) && (Options.alertConfig.lastarrtime.indexOf(String(reportUnixTime)) == -1)) {
-        		var x = {};
-        		x.knt = {};
-        		x.kLv = 1;
-        		x.fromCityId = reports[k].side1CityId;
-        		x.fromXCoord = reports[k].side1XCoord;
-        		x.fromYCoord = reports[k].side1YCoord;
-        		x.unts = {};
-        		x.cnt = "unknown";
-        		x.pid = reports[k].side1PlayerId;
-        		x.aid = reports[k].side1AllianceId
-        		x.arrivalTime = reports[k].reportUnixTime;
-        		x.departureTime = reports[k].reportUnixTime;
-        		x.marchType = reports[k].marchType;
-        		x.toCityId = reports[k].side0CityId;
-        		if(reports[k].side0TileType > 50){
-        			x.toTileId = Cities.byID[x.toCityId].tileId;
-        		} else {
-					for (i in Seed.wilderness['city'+x.toCityId]){
-						if(Seed.wilderness['city'+x.toCityId][i].xCoord == reports[k].side0XCoord && Seed.wilderness['city'+x.toCityId][i].yCoord == reports[k].side0YCoord) {
-							x.toTileId = Seed.wilderness['city'+x.toCityId][i].tileId;
-							break;
-						}
-      			}
-				};
-        		x.score = 9;
-        		x.mid = reports[k].reportId;
-        		new t.faketower(k.substr(2),x);
+        	if(Options.expinc) {
+	        	if((reports[k].marchType==4 || reports[k].marchType==3) && (lasttenmin < reportUnixTime) && t.isMyself(reports[k].side0PlayerId) && (Options.alertConfig.lastarrtime.indexOf(String(reportUnixTime)) == -1)) {
+   	     		var x = {};
+      	  		x.knt = {};
+        			x.kLv = 1;
+        			x.fromCityId = reports[k].side1CityId;
+        			x.fromXCoord = reports[k].side1XCoord;
+        			x.fromYCoord = reports[k].side1YCoord;
+        			x.unts = {};
+        			x.cnt = "unknown";
+        			x.pid = reports[k].side1PlayerId;
+        			x.aid = reports[k].side1AllianceId
+        			x.arrivalTime = reports[k].reportUnixTime;
+        			x.departureTime = reports[k].reportUnixTime;
+        			x.marchType = reports[k].marchType;
+        			x.toCityId = reports[k].side0CityId;
+        			if(reports[k].side0TileType > 50){
+        				x.toTileId = Cities.byID[x.toCityId].tileId;
+        			} else {
+						for (i in Seed.wilderness['city'+x.toCityId]){
+							if(Seed.wilderness['city'+x.toCityId][i].xCoord == reports[k].side0XCoord && Seed.wilderness['city'+x.toCityId][i].yCoord == reports[k].side0YCoord) {
+								x.toTileId = Seed.wilderness['city'+x.toCityId][i].tileId;
+								break;
+							}
+      				}
+					};
+        			x.score = 9;
+        			x.mid = reports[k].reportId;
+        			new t.faketower(k.substr(2),x);
+        		};
         	};
-        	
         	
             if(Options.DeleteMsg){
                 if((reports[k].marchType==4 || reports[k].marchType==9) && reports[k].side0PlayerId==0 && reports[k].side0TileType > 50)
