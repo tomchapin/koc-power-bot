@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131202a
+// @version        20131202b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -2559,7 +2559,9 @@ Tabs.Throne = {
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_unique type=checkbox '+ (ThroneOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbheatup type=checkbox '+(ThroneOptions.heatup?'CHECKED ':'')+'/>&nbsp; Upgrade cards before salvaging to increase aetherstone and heat up modifier</TD></TR>';
       m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR>';
-      m+='<tr><td colspan=3><INPUT id=shero type=checkbox '+ (ThroneOptions.savehero?'CHECKED ':'') +'/>&nbsp; Save all heroes</TD></TR></table>';
+      m+='<tr><td colspan=3><INPUT id=shero type=checkbox '+ (ThroneOptions.savehero?'CHECKED ':'') +'/>&nbsp; Save all heroes</TD></TR>';
+		m+='<tr><td colspan=3><INPUT id=sstatue type=checkbox '+ (ThroneOptions.savestatue?'CHECKED ':'') +'/>&nbsp; Save all statues</TD></TR>';
+      m+= '</table>';
       m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
       m+='<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
       m+='<TABLE width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
@@ -2675,6 +2677,7 @@ Tabs.Throne = {
       document.getElementById('pbsalvage_unique').addEventListener ('change', function(){ThroneOptions.SaveUnique = this.checked;saveThroneOptions();},false);
       document.getElementById('pbheatup').addEventListener ('change', function(){ThroneOptions.heatup = this.checked;saveThroneOptions();},false);
       document.getElementById('shero').addEventListener ('change', function(){ThroneOptions.savehero = this.checked;saveThroneOptions();},false);
+      document.getElementById('sstatue').addEventListener ('change', function(){ThroneOptions.savestatue = this.checked;saveThroneOptions();},false);
 
       document.getElementById('pbthrone_keep').addEventListener ('change', function(){ThroneOptions.thronekeep = parseInt(document.getElementById('pbthrone_keep').value);saveThroneOptions();},false);
 
@@ -3981,11 +3984,13 @@ salvageCheck : function (){
                MinReq = false;
                IsUnique = false;
                IsHero = false;
+               IsStatue = false;
                     if (y.quality > ThroneOptions.SalvageQuality) level=true;
                     if(y.level > 0) level = true;
                     if(ThroneOptions.SaveUnique) if(y.unique > 0) IsUnique = true;
                     if (ThroneOptions.SalvageQuality == 0) level=true;
-					     if (ThroneOptions.savehero && y.type=="hero") IsHero = true;                    
+					     if (ThroneOptions.savehero && y.type=="hero") IsHero = true;   
+					     if (ThroneOptions.savestatue && y.type=="statue") IsStatue = true;                    
                     
                     for (i=1;i<=5;i++){
                   if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;};
@@ -4032,7 +4037,7 @@ salvageCheck : function (){
                         }
                     }
                     //logit('y.name '+y.name+' level '+level+' number '+number+' ThroneOptions.thronekeep '+ThroneOptions.thronekeep+' NotUpgrading '+NotUpgrading+' isEquiped '+y.isEquipped+' y.isbroken '+y.isBroken+' y.id '+y.id+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+MinReq+' is unique '+IsUnique);
-                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique && !IsHero) {
+                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique && !IsHero && !IsStatue) {
                   //logit(y.name);
                         t.SalvageArray.push(y.id);
                     }                     
