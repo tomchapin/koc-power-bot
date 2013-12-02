@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131202b
+// @version        20131202c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131128a';
+var Version = '20131202c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -213,6 +213,7 @@ var Options = {
   GESeveryhour:0,
   GESeveryday:0,
   detAFK: true,
+  expinc: true,
   TourneyModeActive:false,
   UseTourneyMM:false,
   CrestList    : {"i1101":0,"i1102":0,"i1103":0,"i1104":0,"i1105":0,"i1106":0,"i1107":0,"i1108":0,"i1109":0,"i1110":0,"i1111":0,"i1112":0,"i1113":0,"i1114":0,"i1115":0,"i1120":0,"i1121":0,"i1122":0},
@@ -12169,8 +12170,9 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbThroneHUDBut type=checkbox '+ (Options.ThroneHUD?'CHECKED ':'') +'/></td><TD>'+translate("Throne HUD")+'</td></tr>\
         <TR><TD><INPUT id=pbWWclick type=checkbox '+ (Options.WWclick?'CHECKED ':'') +'/></td><TD>'+translate("Hit OK on multiple window warning popup which causes refresh")+'</td></tr>\
         <TR><TD><INPUT id=pbTreasureChest type=checkbox '+ (Options.TreasureChest?'CHECKED ':'') +'/></td><TD>'+translate("Auto click Treasure Chest finds - Use with Auto publish FB posts")+'</td></tr>\
-        <TR><TD><INPUT id=pbloginReward type=checkbox '+ (Options.loginReward?'CHECKED ':'') +'/></td><TD>'+translate("Auto click/accept daily login reward")+'</td></tr>\
-		<TR><TD><INPUT id=pbdetafk type=checkbox '+ (Options.detAFK?'CHECKED ':'')+ '/></td><TD> Do AFK events</td></tr>';
+        <TR><TD><INPUT id=pbloginReward type=checkbox '+ (Options.loginReward?'CHECKED ':'') +'/></td><TD>'+translate("Auto click/accept daily login reward")+'</td></tr>';
+		m+= '<TR><TD><INPUT id=pbdetafk type=checkbox '+ (Options.detAFK?'CHECKED ':'')+ '/></td><TD> Do AFK events</td></tr>';
+		m+= '<TR><TD><INPUT id=pbexpinc type=checkbox '+ (Options.expinc?'CHECKED ':'')+ '/></td><TD> Post missed and expired incoming marches</td></tr>';
         
         m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
@@ -12305,6 +12307,7 @@ Tabs.Options = {
       t.togOpt ('pbTreasureChest', 'TreasureChest', TreasureChestClik.setEnable, TreasureChestClik.isAvailable);
       t.togOpt ('pbloginReward', 'loginReward');
       t.togOpt ('pbdetafk', 'detAFK');
+      t.togOpt ('pbexpinc', 'expinc');
       t.changeOpt ('pbwhichcity', 'smain');
       t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
       t.changeOpt ('pbfilter','fchar');
@@ -18526,12 +18529,11 @@ var DeleteReports = {
     
     startdeletereports : function(){
         var t = DeleteReports;
-          if(!t.deleting){
+          if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2 || Options.DeleteMsgs3 || Options.expinc)){
               t.deleting = true;
               t.fetchreport(0, t.checkreports);
           }
     },
-    
     fetchreport : function(pageNo, callback){
         var t = DeleteReports;
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
