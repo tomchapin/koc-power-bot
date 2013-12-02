@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131128a
+// @version        20131202a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131128a';
+var Version = '20131202a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -81,7 +81,7 @@ unsafeWindow.arthurCheck = function (a) {
 	return;
 };
 
-
+unsafeWindow.actionLog = function(msg) { sendChat ("/a "+  msg); actionLog(msg); logit(msg);};
 
 var isAFK = false;
 
@@ -4826,18 +4826,20 @@ Tabs.tower = {
     }
       var now = unixTime();
     var incomming = false;
-      for (var k in Seed.queue_atkinc){   // check each incoming march
-        var m = Seed.queue_atkinc[k];
-        if (m.marchType==3 || m.marchType==4){
+	for (var k in Seed.queue_atkinc) {   // check each incoming march
+		var m = Seed.queue_atkinc[k];
+		if (m.arrivalTime < now) continue; // ignore arrival times already happened - barbarossa 2/12/13
+		if (m.marchType==3 || m.marchType==4) {
 			if(Options.alertConfig.lastatkarr.indexOf(m.mid) == -1) {
 				Options.alertConfig.lastatkarr.push(m.mid);
 				Options.alertConfig.lastarrtime.push(m.arrivalTime);
-				if (m.departureTime > Options.alertConfig.lastAttack) Options.alertConfig.lastAttack = m.departureTime;//for tr toggle back
-            saveOptions();
-            t.newIncoming (m);
+				// Below code changed to from Departure Time to Arrival Time - barbarossa 2/12/13
+				// I think sometimes this code ran too quickly following a refresh and it reverted back prematurely (incomming is false because seed hasn't set atkinc up yet).
+				if (m.arrivalTime > Options.alertConfig.lastAttack) Options.alertConfig.lastAttack = m.arrivalTime;//for tr toggle back
+				saveOptions();
+				t.newIncoming (m);
 			};
-          incomming = true;
-
+			incomming = true;
         }
       }      
       if (Options.alertConfig.raid && incomming){
@@ -4905,7 +4907,6 @@ Tabs.tower = {
                 var m = Seed.queue_atkinc[k];
                 if ((m.marchType == 3 || m.marchType == 4) && parseIntNan(m.arrivalTime) > now) {
                     t.handleTowerData(m);
-
                 }
             }
         }
