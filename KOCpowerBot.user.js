@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131202e
+// @version        20131202f
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131202e';
+var Version = '20131202f';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -5287,13 +5287,16 @@ Tabs.tower = {
     else
         msg = '..:.|'+Options.alertConfig.aPrefix +' || '+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
         //msg = Options.alertConfig.aPrefix +' My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';        
-        
     var fchar = Filter[Options.fchar];
     for (k in m.unts){
       var uid = parseInt(k.substr (1));
       var UNTCOUNT = String(String(m.unts[k]).split("")).replace(/,/g,fchar)// forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
       msg += '|'+UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
     }
+     if(m.reportId) {
+     		setTimeout(function(){delete Seed.queue_atkinc['m'+m.reportId]},15000);//cleanup for fake tower attack
+     		msg += '||Report No: '+m.reportId;//added spaces for strange bug removing 2 characters
+		};
     if (m.championInfo) {
       msg += ' || Champion Item Stats:';
       for (k in m.championInfo.effects[1]) {
@@ -5304,7 +5307,6 @@ Tabs.tower = {
       for (k in m.championInfo.effects[2])
 	msg += '|' +chEffect2[k]+ ': ' +m.championInfo.effects[2][k]+', ';
     }
-    msg = msg.slice (0, -2);
     //msg += '  || ';
     if(m.marchStatus != 9) {
       if ( city.tileId == m.toTileId ){
@@ -18620,7 +18622,8 @@ var DeleteReports = {
 					};
         			x.score = 9;
         			x.mid = reports[k].reportId;
-        			new t.faketower(k.substr(2),x);
+        			x.reportId = x.mid;
+        			new t.faketower(x.reportId,x);
         		};
         	};
         	
@@ -21370,30 +21373,34 @@ var March = {
                     //lets start telling kabam their server sucks! 
                     
 						var a = null;
-						var g = rslt.error_code;
+						var g = Number(rslt.error_code);
 						var g_server = unsafeWindow.g_server;
 						switch (g) {
-							case "0":
+							case 0:
 								a = "Unexpected Error.";
 								break;
-							case "8":
+							case 8:
 								a = "Excess traffic.";
 								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server);
 								break;
-							case "3":
+							case 3:
 								//game out of sync
 								break;
-							case "4":
+							case 4:
 								//not enough units
 								break;
-							case "104":
+							case 104:
 								//unable to attack target
 								break;
-							case "208":
+							case 208:
 								// beginner protection
 								break;
-							case "210":
+							case 210:
 								// Max marches
+							case 213:
+								//logit('march params.cid is '+params.cid+' and params.kid is '+params.kid+' and knight status is '+Seed.knights['city'+params.cid]['knt'+params.kid].knightStatus);
+								  Seed.knights['city'+params.cid]['knt'+params.kid].knightStatus = 10;//remove knight from list, set to 1 to make available again.
+								//{"ok":false,"error_code":213,"msg":"Unable to dispatch march. Knight must be idle in the city and not assigned to any role, must have enough units."}
 								break;
 							default:
 								a = "Something has gone wrong.";
