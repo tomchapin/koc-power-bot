@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131202f
+// @version        20131202g
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131202f';
+var Version = '20131202g';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -136,7 +136,7 @@ var Options = {
   pbWideMap    : false,
   pbFoodAlert  : false,
   pbFoodAlertInt  : 6,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:[],guardian:false,guardautoswitch:{},lastarrtime:[]},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:[],guardian:false,guardautoswitch:{},lastarrtime:[],towercitytext:{}},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -4482,9 +4482,13 @@ Tabs.tower = {
     m += '</tr><TR align=center>';
       for (var cityId in Cities.byID)
         m += '<TD><INPUT type=submit id=pbtabut_'+ cityId +' value=""></td>';
-    m += '</tr><TR align=center>';
+  		  m += '</tr><TR align=center>';
       for (var cityId in Cities.byID)
        m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
+  		  m += '</tr><TR align=center>';
+      for (var cityId in Cities.byID) {
+      m+= '<TD><CENTER><INPUT id=towertext_'+cityId+' type=text size=10 name='+cityId+' value='+(Options.alertConfig.towercitytext[cityId]?Options.alertConfig.towercitytext[cityId]:"")+'></CENTER></TD>';
+       };
     m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="'+translate("Stop Sound Alert")+'"></center></div><DIV id=pbSwfPlayer></div>';
     m += '<BR><DIV class=pbStat>'+translate("SETUP")+'</div><TABLE class=pbTab>\
     <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
@@ -4610,6 +4614,12 @@ Tabs.tower = {
       }, false);
 
     for (var cityId in Cities.byID){
+    	
+      //m+= '<TD><CENTER><INPUT id=towertext_'+cityId+' type=text size=10 value='+(Options.alertConfig.towercitytext[cityId]?Options.alertConfig.towercitytext[cityId]:"")+'></CENTER></TD>';
+    	document.getElementById ('towertext_'+ cityId).addEventListener('change',function(e){Options.alertConfig.towercitytext[e.target.name] = e.target.value;saveOptions();},false);
+    	
+    	
+    	
         var but = document.getElementById ('pbtabut_'+ cityId);
         addListener (but, cityId);
         t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
@@ -5248,7 +5258,6 @@ Tabs.tower = {
    var chEff1Base = {"Damage":30,"Bonus Damage":0,"Armor":7,"Strength":27,"Dexterity":27,"Health":60,"Hit Chance":4,"Crit Chance":3,"Block":3};
    var chEffect2 = {1:"Attack",2:"Defense",3:"Life",4:"Combat Speed",5:"Range",6:"Load",7:"Accuracy",17:"Attack Debuff",18:"Defense Debufff",19:"Life Debuff",20:"Combat Speed Debuff",21:"Range Debuff",22:"Load Debuff",23:"Accuracy Debuff"};
    var chEff1Net;
-
     if (m.marchType == 3){
       if (!Options.alertConfig.scouting)
         return;
@@ -5258,9 +5267,14 @@ Tabs.tower = {
       return;
     }
     var city = Cities.byID[m.toCityId];
-    if ( city.tileId == m.toTileId )
+    if ( city.tileId == m.toTileId ) {
       target = unsafeWindow.g_js_strings.commonstr.city+ ' '+city.name+' ('+ city.x +','+ city.y + ')';
-    else {
+		if(Options.alertConfig.towercitytext[m.toCityId]) {
+   	 	target += '|'+Options.alertConfig.towercitytext[m.toCityId];
+ 	   };
+      
+      
+   } else {
       if (!Options.alertConfig.wilds)
         return;
       target = wilderness;
