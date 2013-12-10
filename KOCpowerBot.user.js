@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131202g
+// @version        20131210a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131202g';
+var Version = '20131210a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -4845,8 +4845,8 @@ Tabs.tower = {
       for (var k in Seed.queue_atkinc){   // check each incoming march
         var m = Seed.queue_atkinc[k];
         if (m.marchType==3 || m.marchType==4){
-			if(Options.alertConfig.lastatkarr.indexOf(m.mid) == -1) {
-				Options.alertConfig.lastatkarr.push(m.mid);
+			if(Options.alertConfig.lastatkarr.indexOf(Number(m.mid)) == -1) {
+				Options.alertConfig.lastatkarr.push(Number(m.mid));
 				Options.alertConfig.lastarrtime.push(m.arrivalTime);
 				if (m.arrivalTime > Options.alertConfig.lastAttack) Options.alertConfig.lastAttack = m.arrivalTime;//for tr toggle back
             saveOptions();
@@ -18600,6 +18600,7 @@ var DeleteReports = {
         }
         var lasttenmin = unixTime() -600;
         var reports = rslt.arReports;
+        var players = rslt.arPlayerNames;
         var totalPages = rslt.totalPages;
         if (rslt.totalPages > 30)
         var totalPages = 30;
@@ -18609,8 +18610,9 @@ var DeleteReports = {
         	//logit(lasttenmin+" and "+reports[k].reportUnixTime+" and it is "+(lasttenmin < Number(reports[k].reportUnixTime)));
         	var reportUnixTime = Number(reports[k].reportUnixTime);
         	if(Options.expinc) {
-	        	if((reports[k].marchType==4 || reports[k].marchType==3) && (lasttenmin < reportUnixTime) && t.isMyself(reports[k].side0PlayerId) && (Options.alertConfig.lastarrtime.indexOf(String(reportUnixTime)) == -1)) {
+	        	if((reports[k].marchType==4 || reports[k].marchType==3) && (lasttenmin < reportUnixTime) && t.isMyself(reports[k].side0PlayerId) && (Options.alertConfig.lastarrtime.indexOf(reportUnixTime) == -1)) {
    	     		var x = {};
+   	     		var euid = reports[k].side1PlayerId;
       	  		x.knt = {};
         			x.kLv = 1;
         			x.fromCityId = reports[k].side1CityId;
@@ -18620,8 +18622,8 @@ var DeleteReports = {
         			x.cnt = "unknown";
         			x.pid = reports[k].side1PlayerId;
         			x.aid = reports[k].side1AllianceId
-        			x.arrivalTime = reports[k].reportUnixTime;
-        			x.departureTime = reports[k].reportUnixTime;
+        			x.arrivalTime = Number(reports[k].reportUnixTime);
+        			x.departureTime = Number(reports[k].reportUnixTime);
         			x.marchType = reports[k].marchType;
         			x.toCityId = reports[k].side0CityId;
         			if(reports[k].side0TileType > 50){
@@ -18635,8 +18637,12 @@ var DeleteReports = {
       				}
 					};
         			x.score = 9;
-        			x.mid = reports[k].reportId;
+        			x.mid = Number(reports[k].reportId);
         			x.reportId = x.mid;
+        		if(!Seed.players['u'+euid]) {
+        			Seed.players['u'+euid] = {};
+        			Seed.players['u'+euid].n = players['p'+euid];
+        		};
         			new t.faketower(x.reportId,x);
         		};
         	};
