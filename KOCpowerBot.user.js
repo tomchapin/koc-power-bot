@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131210a
+// @version        20131215a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131210a';
+var Version = '20131215a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -819,6 +819,7 @@ function pbStartup (){
     table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
     table.pbTabBR tr td {border:none; background:none;}\
     table.pbTabLined tr td {border:1px none none solid none; padding: 2px 5px; white-space:nowrap;}\
+    table.pbTabLined3 tr td {border:3px none none solid lightgreen; background:lightblue; padding: 2px 5px; white-space:nowrap;}\
     table.pbOptions tr td {border:1px none none solid none; padding: 1px 3px; white-space:nowrap;}\
     table.pbSrchResults tr td {border:1px none none solid none; padding: 1px 3px; white-space:nowrap;}\
     table.pbTabSome tr td {border:none; background:none; padding: 1px 3px; white-space:nowrap;}\
@@ -1817,7 +1818,7 @@ if (l_debug_on==1) actionLog('City-'+cityNum+'||FOOD-'+  Math.round(ret.reso[1]/
                     var y=Seed.cities[i-1]["3"];
                     for (j=0;j<t.FarmArray[i].length;j++){
                                 if (reports[k].side1XCoord == x && reports[k].side1YCoord == y && reports[k].side0XCoord == t.FarmArray[i][j]["x"] && reports[k].side0YCoord == t.FarmArray[i][j]["y"]&&(!(t.FarmArray[i][j]['lost']))
-								&&(t.FarmArray[i][j]['enabled']||(!(t.FarmArray[i][j]['enabled'])&&(now-t.FarmArray[i][j]['time']<10*60)))
+								&&(t.FarmArray[i][j]['enabled']||(!(t.FarmArray[i][j]['enabled'])&&(now-t.FarmArray[i][j]['time']<25*60)))
 								) {
 								deletes1.push(k.substr(2));
 								}
