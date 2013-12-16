@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131215a
+// @version        20131216a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131215a';
+var Version = '20131216a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -153,6 +153,7 @@ var Options = {
   DeleteRequest: false,
   DeletegAl    : false,
   MapShowExtra : false,
+  MapShowLevel : false,
   RaidRunning  : false,
   RaidReset    : 0,
   DeleteMsg    : false,
@@ -12217,6 +12218,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>'+translate("Auto publish Facebook posts for")+' '+ htmlSelector({0:'----', 80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' '+translate("(For all domains)")+'<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
         <TR><TD><INPUT id=cancelReq type=checkbox '+ (GlobalOptions.autoCancelGamePopups?'CHECKED ':'') + '/></td><TD>'+translate("Auto cancel Facebook posts")+'<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
         <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>'+translate("Show Player & Might in map")+'.</td></tr>\
+		<tr><TD><INPUT id=MapLevel type=checkbox /></td><TD>'+translate("Show Tile Level in map")+'.</td></tr>\
         <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> '+translate("Auto delete barb/transport reports from you")+'</td></tr>\
         <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> '+translate("Auto delete transport reports to you")+'</td></tr>\
         <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> '+translate("Auto delete wild reports")+'</td></tr>\
@@ -12302,6 +12304,7 @@ Tabs.Options = {
       t.togOpt ('DelAC', 'DeletegAl');
       t.togOpt ('pbRaidBut', 'raidbtns');
       t.togOpt ('MapExtra', 'MapShowExtra');
+      t.togOpt ('MapLevel', 'MapShowLevel');
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
       t.togOpt ('deletes1toggle', 'DeleteMsgs1');
@@ -18363,11 +18366,11 @@ function DrawLevelIcons() {
     var maptileRe = /modal_maptile.([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)/;
     var mapwindow=document.getElementById('mapwindow');
     if(!mapwindow) return;
-    var levelIcons=document.getElementById('levelIcons');
-    if(levelIcons) return;
+    var mapinfo=document.getElementById('mapinfodone');
+    if(mapinfo) {return;};
 
     var ss=document.evaluate(".//a[contains(@class,'slot')]",mapwindow,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
-    var idDone=false;
+    var mapinfodone=false;
     for(var s=0; s<ss.snapshotLength; s++) {
         var a=ss.snapshotItem(s);
         var onclick=a.getAttribute('id');
@@ -18387,24 +18390,21 @@ function DrawLevelIcons() {
         var sp=a.getElementsByTagName('span');
         if(sp.length==0) continue;
 
-        if(!idDone) { a.id='levelIcons'; idDone=true; }
-        sp[0].style.color='#cc0';
+        if (!mapinfodone) { sp[0].id='mapinfodone'; mapinfodone=true; }
+        spancol='#cc0';
         
-        if (alliance == 'null' && tileinfo.type=="city") sp[0].style.color='#33CCFF';
-        if (dip == 'hostile' && tileinfo.type=="city") sp[0].style.color='#FF0000';
-        if (tileinfo.type!="city" &&  tileinfo.tileuserid!="null") sp[0].style.color='#FF9900';
-        if (tileinfo.type!="city" &&  tileinfo.tileuserid=="null") sp[0].style.color='#CC0033';
+        if (alliance == 'null' && tileinfo.type=="city") spancol='#33CCFF';
+        if (dip == 'hostile' && tileinfo.type=="city") spancol='#FF0000';
+        if (tileinfo.type!="city" &&  tileinfo.tileuserid!="null") spancol='#FF9900';
+        if (tileinfo.type!="city" &&  tileinfo.tileuserid=="null") spancol='#CC0033';
+
         if (Options.MapShowExtra) {
             if (tileinfo.username!="null")
-            sp[0].innerHTML = tileinfo.type+': '+ tileinfo.level +'<br />'+owner+'<br />Might:'+addCommas(might); //+'<br />Alliance:'+tileinfo.alliance
-         else
-            sp[0].innerHTML = tileinfo.type+': '+ tileinfo.level;
+				sp[0].outerHTML = sp[0].outerHTML +'<div style="color:'+spancol+';font-size:11px;text-shadow: 2px 2px 2px #000;" align="left">&nbsp;&nbsp;'+owner+'</div><div style="color:'+spancol+';font-size:10px;text-shadow: 2px 2px 2px #000;" align="left">&nbsp;&nbsp;Might:'+addCommas(might)+'</div>';
         }
-        else {
-            // if (onclickM && onclickM[7]!='"null"' ) sp[0].innerHTML='&nbsp;';
-            // else sp[0].innerHTML='&nbsp;'+addCommas(owner);
-        }
-        
+        if (Options.MapShowLevel && (parseIntNan(tileinfo.level) != 0)) {
+			sp[0].outerHTML = sp[0].outerHTML+'<div style="color:'+spancol+';text-shadow: 2px 2px 2px #000;" align="left">&nbsp;&nbsp;'+tileinfo.level+'&nbsp;&nbsp;</div>';
+		}
     }
 
 }
@@ -18644,7 +18644,7 @@ var DeleteReports = {
         			Seed.players['u'+euid] = {};
         			Seed.players['u'+euid].n = players['p'+euid];
         		};
-        			new t.faketower(x.reportId,x);
+        			new t.faketower(x.reportId,x)
         		};
         	};
         	
@@ -25066,7 +25066,8 @@ var OreAlert = {
 
 
 function GuardianTT () {
-	var z = new CalterUwFunc("showCityTooltip",[[/showTooltip/,'a += "<div>"+g_js_strings.guardian[seed.guardian[j].type+"_fullName"]+"</div>";showTooltip']]);
+	var z = new CalterUwFunc("showCityTooltip",[[/showTooltip/,'a += "<div>"+g_js_strings.guardian[seed.guardian[j].type+"_fullName"]+"</div>";showTooltip'],
+												['g_js_strings.showPopTooltip.currpop','provincenames[\'p\'+seed.cities[j][4]] + "</div><div>" + g_js_strings.showPopTooltip.currpop']]);
    z.setEnable(true); 
 };
 
