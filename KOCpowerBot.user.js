@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131216a
+// @version        20131220a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131216a';
+var Version = '20131220a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -22119,12 +22119,16 @@ Tabs.gifts = {
       };
       m+='<option value="-1">Delete</option>';
         m+='</select> </td><td> <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available </td><td> <INPUT id=pbadgift type=checkbox '+ (GiftDB.adgift?' CHECKED':'') +'\> Scan and delete gift messages</td><td> Total sent:</td><td id=giftnumber></td></tr></table></DIV>';
+	m+='<table><TR><TD><INPUT id=resetlist type=submit value="Reset Gift List"> Reset gifting list (may take a day to re-populate)</td></tr></table></DIV>';
         m += '<DIV class=pbStat></DIV>';
         m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.  You may update us on working scenarios <a href=https://userscripts.org/scripts/discuss/101052>here</a></DIV>';
         m += '<DIV class=pbStat></DIV>';
         m += '<DIV style="height:250px; max-height:250px; overflow-y:auto" id=GiftsTAB></DIV>';
         div.innerHTML = m;
       t.populatepeople();
+      document.getElementById('resetlist').addEventListener('click', function(){
+         t.clearGiftsdb();
+                  } , false);
       document.getElementById('giftssend').addEventListener('click', function(){
          t.sendgifts();
          setTimeout(t.populatepeople,1000);
@@ -22322,6 +22326,12 @@ Tabs.gifts = {
             },
             onFailure: function () {}
         });
+   },
+   clearGiftsdb : function (){
+        var t = Tabs.gifts;
+	GiftDB={};
+	t.saveGiftsdb();
+        t.populatepeople;
    },
    saveGiftsdb : function (){
         var t = Tabs.gifts;
