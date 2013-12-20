@@ -1,16 +1,15 @@
-Tired of the user prompt screwing up your refresh's?  Help us get the bug in the fast lane to be fixed!  vote and post a comment!
+Keep up with the status of the Gem Ban initiative at The KOC Players Council: http://www.facebook.com/KOCPlayerCouncil
+
+Tired of the user prompt screwing up your refresh's? Help us get the bug in the fast lane to be fixed! vote and post a comment!
 <a href=https://bugzilla.mozilla.org/show_bug.cgi?id=913907>https://bugzilla.mozilla.org/show_bug.cgi?id=913907</a>
 
-Added some easy links for you to find your favorite scripts!  
-fyi, just because they are sublinked, does not mean they are trusted.  You 
-too can have a script.kocscripters.com link for your site from 
+Added some easy links for you to find your favorite scripts!
+fyi, just because they are sublinked, does not mean they are trusted. You
+too can have a script.kocscripters.com link for your site from
 http://www.afraid.org
 
 http://tools.kocscripters.com
 http://bot.kocscripters.com
 http://battle.kocscripters.com
 http://tro.kocscripters.com
-
-Congrats to kabam for finally fixing the misted city exploit!
-
-
+http://userscripts.org/scripts/show/183854 (Champion Organizer)
