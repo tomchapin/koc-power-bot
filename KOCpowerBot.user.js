@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131220a
+// @version        20131221a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131220a';
+var Version = '20131221a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -23765,9 +23765,12 @@ PaintSalvageHistory : function() {
         if(document.getElementById('chShowQueueDiv')) {
         document.getElementById('chShowQueueDiv').innerHTML = '<TABLE id=chShowQueue class=pbStat align="center" width=90%></table>';
         for (k=(ChampionOptions.Items.length-1);k>=0;k--){
-            if (typeof(unsafeWindow.kocChampionItems[ChampionOptions.Items[k]["id"]]) == 'object') t._addTab(k,ChampionOptions.Items[k]["name"]+' ['+ChampionOptions.Items[k]["id"]+']',ChampionOptions.Items[k]["qualityfrom"],ChampionOptions.Items[k]["qualityto"],ChampionOptions.Items[k]["levelfrom"],ChampionOptions.Items[k]["levelto"],ChampionOptions.Items[k]["action"],ChampionOptions.Items[k]["active"],ChampionOptions.Items[k]["cost"]);
-            else ChampionOptions.Items.splice (k,1);
+            if (typeof(unsafeWindow.kocChampionItems[ChampionOptions.Items[k]["id"]]) == 'object') {
+		ChampionOptions.Items[k]["name"] = unsafeWindow.kocChampionItems[ChampionOptions.Items[k]["id"]]["name"];
+		t._addTab(k,ChampionOptions.Items[k]["name"]+' ['+ChampionOptions.Items[k]["id"]+']',ChampionOptions.Items[k]["qualityfrom"],ChampionOptions.Items[k]["qualityto"],ChampionOptions.Items[k]["levelfrom"],ChampionOptions.Items[k]["levelto"],ChampionOptions.Items[k]["action"],ChampionOptions.Items[k]["active"],ChampionOptions.Items[k]["cost"]);
+            } else ChampionOptions.Items.splice (k,1);
         }
+    	saveChampionOptions();
         t._addTabHeader();
    }
   },
