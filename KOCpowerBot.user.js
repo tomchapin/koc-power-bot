@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131221a
+// @version        20131230a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131221a';
+var Version = '20131230a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -3229,6 +3229,7 @@ paintEquipInfo : function (z,what){
             level = y["level"];
 	    if (y["unique"]==30286 && id==9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else  // temporary patch
               p = unsafeWindow.cm.thronestats.tiers[id][tier];
+              if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
             Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
             var quality = parseInt(y["quality"]);
             if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
