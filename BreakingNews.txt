@@ -1,5 +1,3 @@
-Keep up with the status of the Gem Ban initiative at The KOC Players Council: http://www.facebook.com/KOCPlayerCouncil
-
 Tired of the user prompt screwing up your refresh's? Help us get the bug in the fast lane to be fixed! vote and post a comment!
 <a href=https://bugzilla.mozilla.org/show_bug.cgi?id=913907>https://bugzilla.mozilla.org/show_bug.cgi?id=913907</a>
 
