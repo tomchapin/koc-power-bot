@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20131230b
+// @version        20140121a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20131230b';
+var Version = '20140121a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -220,6 +220,11 @@ var Options = {
   CrestList    : {"i1101":0,"i1102":0,"i1103":0,"i1104":0,"i1105":0,"i1106":0,"i1107":0,"i1108":0,"i1109":0,"i1110":0,"i1111":0,"i1112":0,"i1113":0,"i1114":0,"i1115":0,"i1120":0,"i1121":0,"i1122":0},
   ReverseTransport:false,
   ReverseTransportPercent:90,
+  UseTourneyST:true,
+  UseTourneySC:false,
+  UseTourneyPK:false,
+  UseTourneySW:false,
+  UseTourneyAR:false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -14087,7 +14092,39 @@ Tabs.AutoTrain = {
 		num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
 		if (num == 0) return; // max pop
    
-		t.poptab_troop_dismiss = 1; // First try ST
+		var trooptype = 0; 
+		if (Options.UseTourneyST) {
+			trooptype = 1; // ST
+		}	
+		else {
+			if (Options.UseTourneyMM) {
+				trooptype = 2; // MM
+			}	
+			else {
+				if (Options.UseTourneySC) {
+					trooptype = 3; // SC
+				}	
+				else {
+					if (Options.UseTourneyPK) {
+						trooptype = 4; // PK
+					}	
+					else {
+						if (Options.UseTourneySW) {
+							trooptype = 5; // SW
+						}	
+						else {
+							if (Options.UseTourneyAR) {
+								trooptype = 6; // AR
+							}	
+						}
+					}
+				}
+			}
+		}	
+
+		if (trooptype == 0) return; // none selected
+
+		t.poptab_troop_dismiss = trooptype;
 		t.show_city(cityId);
 
 		// if no slots free, check if less than a min to go in current training queue...
@@ -14105,9 +14142,24 @@ Tabs.AutoTrain = {
 			if (NearlyDone) {t.log("Nearly Done...");}
 		}	
    
-   
-		if ((t.cur_mm == 0) && (Options.UseTourneyMM)) {
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 1) && (Options.UseTourneyMM)) {
 			t.poptab_troop_dismiss = 2; // Then try MM
+			t.show_city(cityId);
+		}   
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 2) && (Options.UseTourneySC)) {
+			t.poptab_troop_dismiss = 3; // Then try SC
+			t.show_city(cityId);
+		}   
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 3) && (Options.UseTourneyPK)) {
+			t.poptab_troop_dismiss = 4; // Then try PK
+			t.show_city(cityId);
+		}   
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 4) && (Options.UseTourneySW)) {
+			t.poptab_troop_dismiss = 5; // Then try SW
+			t.show_city(cityId);
+		}   
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 5) && (Options.UseTourneyAR)) {
+			t.poptab_troop_dismiss = 6; // Then try AR
 			t.show_city(cityId);
 		}   
    
@@ -21529,8 +21581,8 @@ Tabs.popcontrol = {
       m += '</table>';
    
       m += '<DIV class=pbStat>Tournament Mode</div>';
-	  m += '<DIV align="center"><b>Converts Supply Troops and MM to Idle Population</b><br>Turn this on during a tournament to automatically convert supply troops or MM to maximum idle population in each city.<br>The idea is that they will be retrained as scouts, pikes or swordsmen - i.e. more might!<br>This only works if auto-training is active for the city, and there are training slots available. (or less than 1 minute to go)</div>';      
-	  m += '<table border="0" width="100%"><tr><td align="center"><INPUT id=pbtourney type=submit value="Tournament Mode : OFF" \></td><td align="center"><INPUT id=pbtourneymm type=checkbox '+(Options.UseTourneyMM?'CHECKED':'')+'\> Use MM when no more Supply Troops </td><td></tr></table>';      
+	  m += '<DIV align="center"><b>Converts Surplus Troops into Idle Population</b><br>Turn this on during a tournament to automatically convert supply troops or MM to maximum idle population in each city.<br>The idea is that they will be retrained as scouts, pikes or swordsmen - i.e. more might!<br>Between tournaments, use this to convert surplus swords, pikes or archers back to idle population to be retrained as supply troops.<br>This only works if auto-training is active for the city, and there are training slots available. (or less than 1 minute to go)</div>';      
+	  m += '<table border="0" width="100%"><tr><td align="center"><INPUT id=pbtourney type=submit value="Tournament Mode : OFF" \></td><td align="center"><INPUT id=pbtourneyst type=checkbox '+(Options.UseTourneyST?'CHECKED':'')+'\>Supply Troops&nbsp;<INPUT id=pbtourneymm type=checkbox '+(Options.UseTourneyMM?'CHECKED':'')+'\>Militiamen&nbsp;<INPUT id=pbtourneysc type=checkbox '+(Options.UseTourneySC?'CHECKED':'')+'\>Scouts&nbsp;<INPUT id=pbtourneypk type=checkbox '+(Options.UseTourneyPK?'CHECKED':'')+'\>Pikes&nbsp;<INPUT id=pbtourneysw type=checkbox '+(Options.UseTourneySW?'CHECKED':'')+'\>Swords&nbsp;<INPUT id=pbtourneyar type=checkbox '+(Options.UseTourneyAR?'CHECKED':'')+'\>Archers&nbsp;</td><td></tr></table>';      
 	  
       m += '<DIV class=pbStat>Action Log:</div>';
 
@@ -21563,6 +21615,11 @@ Tabs.popcontrol = {
   
       document.getElementById('pbtourney').addEventListener ('click', function() {t.toggleTourneyMode()}, false);
 	  t.togOpt('pbtourneymm','UseTourneyMM');
+	  t.togOpt('pbtourneyst','UseTourneyST');
+	  t.togOpt('pbtourneysc','UseTourneySC');
+	  t.togOpt('pbtourneypk','UseTourneyPK');
+	  t.togOpt('pbtourneysw','UseTourneySW');
+	  t.togOpt('pbtourneyar','UseTourneyAR');
       t.setTourneyText(false);
 
    },
