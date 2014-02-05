@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140202a
+// @version        20140205a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140202a';
+var Version = '20140205a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -9343,6 +9343,13 @@ Tabs.transport = {
 			var carry_Ore = parseIntNan(min_Ore - citymax_Ore);
 			var carry_Astone = parseIntNan(min_Astone - citymax_Astone);
 			var carry_Gold = 0;
+
+			var tgtcitymax_Food = parseIntNan(Seed.resources[tgtcityID]['rec1'][0] / 3600);
+			var tgtcitymax_Wood = parseIntNan(Seed.resources[tgtcityID]['rec2'][0] / 3600);
+			var tgtcitymax_Stone = parseIntNan(Seed.resources[tgtcityID]['rec3'][0] / 3600);
+			var tgtcitymax_Ore = parseIntNan(Seed.resources[tgtcityID]['rec4'][0] / 3600);
+			var tgtcitymax_Astone = parseIntNan(Seed.resources[tgtcityID]['rec5'][0]);
+			var tgtcitymax_Gold = parseIntNan(Seed.citystats[tgtcityID]['gold']);
 		}
 		
         if (carry_Food < 0 || ship_Food == false) carry_Food = 0;
@@ -9364,6 +9371,13 @@ Tabs.transport = {
 			if (carry_Stone > 0 && (target_Stone > min_Stone)) carry_Stone = parseIntNan(target_Stone - citymax_Stone);
 			if (carry_Ore > 0 && (target_Ore > min_Ore)) carry_Ore = parseIntNan(target_Ore - citymax_Ore);
 			if (carry_Astone > 0 && (target_Astone > min_Astone)) carry_Astone = parseIntNan(target_Astone - citymax_Astone);
+
+			// don't attempt to reverse transport more than you actually have available...
+			if (carry_Food > tgtcitymax_Food) carry_Food = parseIntNan(tgtcitymax_Food);
+			if (carry_Wood > tgtcitymax_Wood) carry_Wood = parseIntNan(tgtcitymax_Wood);
+			if (carry_Stone > tgtcitymax_Stone) carry_Stone = parseIntNan(tgtcitymax_Stone);
+			if (carry_Ore > tgtcitymax_Ore) carry_Ore = parseIntNan(tgtcitymax_Ore);
+			if (carry_Astone > tgtcitymax_Astone) carry_Astone = parseIntNan(tgtcitymax_Astone);
 		}
         carry_Astone *= 5; //Multiply by 5 to account for 5 times less carrying capacity
       
@@ -9500,7 +9514,7 @@ Tabs.transport = {
 					carry_Gold = (min_Gold - citymax_Gold);
 					if (carry_Gold < 0) carry_Gold = 0;
 				} else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
-			
+				if (carry_Gold > tgtcitymax_Gold) carry_Gold = parseIntNan(tgtcitymax_Gold);
 			}
         }
         wagons_needed = ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon);
