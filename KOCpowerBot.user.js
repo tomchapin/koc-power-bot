@@ -1,17 +1,16 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20131128aenh
+// @version        20140215a
 // @namespace      mat
-// @homepage       http://userscripts.org/scripts/show/137507
+// @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
 // @include        *.kingdomsofcamelot.com/*platforms/kabam*
 // @include        *apps.facebook.com/kingdomsofcamelot/*
 // @include        *kabam.com/games/kingdoms-of-camelot/play*
 // @include        *facebook.com/dialog/feed*
-// @include        *kabam1-a.akamaihd.net/kingdomsofcamelot/*
 // @grant       GM_getValue
-// @grant		unsafeWindow
-// @grant		GM_deleteValue
+// @grant       unsafeWindow
+// @grant       GM_deleteValue
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_listValues
@@ -19,50 +18,50 @@
 // @grant       GM_xmlhttpRequest
 // @grant       GM_log
 // @grant       GM_registerMenuCommand
+
 // @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
 
 //Fixed weird bug with koc game
 if(window.self.location != window.top.location){
-	try{
-	if(window.self.location.href == window.parent.location.href){
-		return; //If iframe source is same as the parent don't load script
-	}
-	} catch (e){
-		//logit(inspect(e,2,1));
-	}
+   try{
+      if(window.self.location.href == window.parent.location.href){
+         return; //If iframe source is same as the parent don't load script
+      }
+   } catch (e){
+      //logit(inspect(e,2,1));
+   }
 }
 
-var Version = '20131128aenh';
+var Version = '20140215a';
 
 var http =  window.location.protocol+"\/\/";
 
 //bandaid to stop loading in advertisements containing the @include urls
 if(document.URL.indexOf('sharethis') != -1) {
-	GM_log('sharethis:'+document.URL);
-	return;
-}
-
+   GM_log('sharethis:'+document.URL);
+   return;
+};
+//raw deflate code
+(function(e){var t=32768;var n=0;var r=1;var i=2;var s=6;var o=true;var u=32768;var a=64;var f=1024*8;var l=2*t;var c=3;var h=258;var p=16;var d=8192;var v=13;if(d>u)alert("error: zip_INBUFSIZ is too small");if(t<<1>1<<p)alert("error: zip_WSIZE is too large");if(v>p-1)alert("error: zip_HASH_BITS is too large");if(v<8||h!=258)alert("error: Code too clever");var m=d;var g=1<<v;var y=g-1;var b=t-1;var w=0;var E=4096;var S=h+c+1;var x=t-S;var T=1;var N=15;var C=7;var k=29;var L=256;var A=256;var O=L+1+k;var M=30;var _=19;var D=16;var P=17;var H=18;var B=2*O+1;var j=parseInt((v+c-1)/c);var F;var I,q;var R;var U=null;var z,W;var X;var V;var $;var J;var K;var Q;var G;var Y;var Z;var et;var tt;var nt;var rt;var it;var st;var ot;var ut;var at;var ft;var lt;var ct;var ht;var pt;var dt;var vt;var mt;var gt;var yt;var bt;var wt;var Et;var St;var xt;var Tt;var Nt;var Ct;var kt;var Lt;var At;var Ot;var Mt;var _t;var Dt;var Pt;var Ht;var Bt;var jt;var Ft;var It;var qt;var Rt=function(){this.fc=0;this.dl=0};var Ut=function(){this.dyn_tree=null;this.static_tree=null;this.extra_bits=null;this.extra_base=0;this.elems=0;this.max_length=0;this.max_code=0};var zt=function(e,t,n,r){this.good_length=e;this.max_lazy=t;this.nice_length=n;this.max_chain=r};var Wt=function(){this.next=null;this.len=0;this.ptr=new Array(f);this.off=0};var Xt=new Array(0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0);var Vt=new Array(0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13);var $t=new Array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,3,7);var Jt=new Array(16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15);var Kt=new Array(new zt(0,0,0,0),new zt(4,4,8,4),new zt(4,5,16,8),new zt(4,6,32,32),new zt(4,4,16,16),new zt(8,16,32,32),new zt(8,16,128,128),new zt(8,32,128,256),new zt(32,128,258,1024),new zt(32,258,258,4096));var Qt=function(e){var t;if(!e)e=s;else if(e<1)e=1;else if(e>9)e=9;ct=e;R=false;ut=false;if(U!=null)return;F=I=q=null;U=new Array(f);V=new Array(l);$=new Array(m);J=new Array(u+a);K=new Array(1<<p);dt=new Array(B);for(t=0;t<B;t++)dt[t]=new Rt;vt=new Array(2*M+1);for(t=0;t<2*M+1;t++)vt[t]=new Rt;mt=new Array(O+2);for(t=0;t<O+2;t++)mt[t]=new Rt;gt=new Array(M);for(t=0;t<M;t++)gt[t]=new Rt;yt=new Array(2*_+1);for(t=0;t<2*_+1;t++)yt[t]=new Rt;bt=new Ut;wt=new Ut;Et=new Ut;St=new Array(N+1);xt=new Array(2*O+1);Ct=new Array(2*O+1);kt=new Array(h-c+1);Lt=new Array(512);At=new Array(k);Ot=new Array(M);Mt=new Array(parseInt(d/8))};var Gt=function(){F=I=q=null;U=null;V=null;$=null;J=null;K=null;dt=null;vt=null;mt=null;gt=null;yt=null;bt=null;wt=null;Et=null;St=null;xt=null;Ct=null;kt=null;Lt=null;At=null;Ot=null;Mt=null};var Yt=function(e){e.next=F;F=e};var Zt=function(){var e;if(F!=null){e=F;F=F.next}else e=new Wt;e.next=null;e.len=e.off=0;return e};var en=function(e){return K[t+e]};var tn=function(e,n){return K[t+e]=n};var nn=function(e){U[W+z++]=e;if(W+z==f)Hn()};var rn=function(e){e&=65535;if(W+z<f-2){U[W+z++]=e&255;U[W+z++]=e>>>8}else{nn(e&255);nn(e>>>8)}};var sn=function(){Z=(Z<<j^V[st+c-1]&255)&y;et=en(Z);K[st&b]=et;tn(Z,st)};var on=function(e,t){_n(t[e].fc,t[e].dl)};var un=function(e){return(e<256?Lt[e]:Lt[256+(e>>7)])&255};var an=function(e,t,n){return e[t].fc<e[n].fc||e[t].fc==e[n].fc&&Ct[t]<=Ct[n]};var fn=function(e,t,n){var r;for(r=0;r<n&&qt<It.length;r++)e[t+r]=It.charCodeAt(qt++)&255;return r};var ln=function(){var e;for(e=0;e<g;e++)K[t+e]=0;lt=Kt[ct].max_lazy;ht=Kt[ct].good_length;if(!o)pt=Kt[ct].nice_length;ft=Kt[ct].max_chain;st=0;Y=0;at=fn(V,0,2*t);if(at<=0){ut=true;at=0;return}ut=false;while(at<S&&!ut)hn();Z=0;for(e=0;e<c-1;e++){Z=(Z<<j^V[e]&255)&y}};var cn=function(e){var t=ft;var n=st;var r;var i;var s=it;var u=st>x?st-x:w;var a=st+h;var f=V[n+s-1];var l=V[n+s];if(it>=ht)t>>=2;do{r=e;if(V[r+s]!=l||V[r+s-1]!=f||V[r]!=V[n]||V[++r]!=V[n+1]){continue}n+=2;r++;do{}while(V[++n]==V[++r]&&V[++n]==V[++r]&&V[++n]==V[++r]&&V[++n]==V[++r]&&V[++n]==V[++r]&&V[++n]==V[++r]&&V[++n]==V[++r]&&V[++n]==V[++r]&&n<a);i=h-(a-n);n=a-h;if(i>s){ot=e;s=i;if(o){if(i>=h)break}else{if(i>=pt)break}f=V[n+s-1];l=V[n+s]}}while((e=K[e&b])>u&&--t!=0);return s};var hn=function(){var e,n;var r=l-at-st;if(r==-1){r--}else if(st>=t+x){for(e=0;e<t;e++)V[e]=V[e+t];ot-=t;st-=t;Y-=t;for(e=0;e<g;e++){n=en(e);tn(e,n>=t?n-t:w)}for(e=0;e<t;e++){n=K[e];K[e]=n>=t?n-t:w}r+=t}if(!ut){e=fn(V,st+at,r);if(e<=0)ut=true;else at+=e}};var pn=function(){while(at!=0&&I==null){var e;sn();if(et!=w&&st-et<=x){rt=cn(et);if(rt>at)rt=at}if(rt>=c){e=An(st-ot,rt-c);at-=rt;if(rt<=lt){rt--;do{st++;sn()}while(--rt!=0);st++}else{st+=rt;rt=0;Z=V[st]&255;Z=(Z<<j^V[st+1]&255)&y}}else{e=An(0,V[st]&255);at--;st++}if(e){Ln(0);Y=st}while(at<S&&!ut)hn()}};var dn=function(){while(at!=0&&I==null){sn();it=rt;tt=ot;rt=c-1;if(et!=w&&it<lt&&st-et<=x){rt=cn(et);if(rt>at)rt=at;if(rt==c&&st-ot>E){rt--}}if(it>=c&&rt<=it){var e;e=An(st-1-tt,it-c);at-=it-1;it-=2;do{st++;sn()}while(--it!=0);nt=0;rt=c-1;st++;if(e){Ln(0);Y=st}}else if(nt!=0){if(An(0,V[st-1]&255)){Ln(0);Y=st}st++;at--}else{nt=1;st++;at--}while(at<S&&!ut)hn()}};var vn=function(){if(ut)return;Q=0;G=0;yn();ln();I=null;z=0;W=0;nt=0;if(ct<=3){it=c-1;rt=0}else{rt=c-1;nt=0;nt=0}X=false};var mn=function(e,t,n){var r;if(!R){vn();R=true;if(at==0){X=true;return 0}}if((r=gn(e,t,n))==n)return n;if(X)return r;if(ct<=3)pn();else dn();if(at==0){if(nt!=0)An(0,V[st-1]&255);Ln(1);X=true}return r+gn(e,r+t,n-r)};var gn=function(e,t,n){var r,i,s;r=0;while(I!=null&&r<n){i=n-r;if(i>I.len)i=I.len;for(s=0;s<i;s++)e[t+r+s]=I.ptr[I.off+s];I.off+=i;I.len-=i;r+=i;if(I.len==0){var o;o=I;I=I.next;Yt(o)}}if(r==n)return r;if(W<z){i=n-r;if(i>z-W)i=z-W;for(s=0;s<i;s++)e[t+r+s]=U[W+s];W+=i;r+=i;if(z==W)z=W=0}return r};var yn=function(){var e;var t;var n;var r;var i;if(gt[0].dl!=0)return;bt.dyn_tree=dt;bt.static_tree=mt;bt.extra_bits=Xt;bt.extra_base=L+1;bt.elems=O;bt.max_length=N;bt.max_code=0;wt.dyn_tree=vt;wt.static_tree=gt;wt.extra_bits=Vt;wt.extra_base=0;wt.elems=M;wt.max_length=N;wt.max_code=0;Et.dyn_tree=yt;Et.static_tree=null;Et.extra_bits=$t;Et.extra_base=0;Et.elems=_;Et.max_length=C;Et.max_code=0;n=0;for(r=0;r<k-1;r++){At[r]=n;for(e=0;e<1<<Xt[r];e++)kt[n++]=r}kt[n-1]=r;i=0;for(r=0;r<16;r++){Ot[r]=i;for(e=0;e<1<<Vt[r];e++){Lt[i++]=r}}i>>=7;for(;r<M;r++){Ot[r]=i<<7;for(e=0;e<1<<Vt[r]-7;e++)Lt[256+i++]=r}for(t=0;t<=N;t++)St[t]=0;e=0;while(e<=143){mt[e++].dl=8;St[8]++}while(e<=255){mt[e++].dl=9;St[9]++}while(e<=279){mt[e++].dl=7;St[7]++}while(e<=287){mt[e++].dl=8;St[8]++}Sn(mt,O+1);for(e=0;e<M;e++){gt[e].dl=5;gt[e].fc=Dn(e,5)}bn()};var bn=function(){var e;for(e=0;e<O;e++)dt[e].fc=0;for(e=0;e<M;e++)vt[e].fc=0;for(e=0;e<_;e++)yt[e].fc=0;dt[A].fc=1;jt=Ft=0;_t=Dt=Pt=0;Ht=0;Bt=1};var wn=function(e,t){var n=xt[t];var r=t<<1;while(r<=Tt){if(r<Tt&&an(e,xt[r+1],xt[r]))r++;if(an(e,n,xt[r]))break;xt[t]=xt[r];t=r;r<<=1}xt[t]=n};var En=function(e){var t=e.dyn_tree;var n=e.extra_bits;var r=e.extra_base;var i=e.max_code;var s=e.max_length;var o=e.static_tree;var u;var a,f;var l;var c;var h;var p=0;for(l=0;l<=N;l++)St[l]=0;t[xt[Nt]].dl=0;for(u=Nt+1;u<B;u++){a=xt[u];l=t[t[a].dl].dl+1;if(l>s){l=s;p++}t[a].dl=l;if(a>i)continue;St[l]++;c=0;if(a>=r)c=n[a-r];h=t[a].fc;jt+=h*(l+c);if(o!=null)Ft+=h*(o[a].dl+c)}if(p==0)return;do{l=s-1;while(St[l]==0)l--;St[l]--;St[l+1]+=2;St[s]--;p-=2}while(p>0);for(l=s;l!=0;l--){a=St[l];while(a!=0){f=xt[--u];if(f>i)continue;if(t[f].dl!=l){jt+=(l-t[f].dl)*t[f].fc;t[f].fc=l}a--}}};var Sn=function(e,t){var n=new Array(N+1);var r=0;var i;var s;for(i=1;i<=N;i++){r=r+St[i-1]<<1;n[i]=r}for(s=0;s<=t;s++){var o=e[s].dl;if(o==0)continue;e[s].fc=Dn(n[o]++,o)}};var xn=function(e){var t=e.dyn_tree;var n=e.static_tree;var r=e.elems;var i,s;var o=-1;var u=r;Tt=0;Nt=B;for(i=0;i<r;i++){if(t[i].fc!=0){xt[++Tt]=o=i;Ct[i]=0}else t[i].dl=0}while(Tt<2){var a=xt[++Tt]=o<2?++o:0;t[a].fc=1;Ct[a]=0;jt--;if(n!=null)Ft-=n[a].dl}e.max_code=o;for(i=Tt>>1;i>=1;i--)wn(t,i);do{i=xt[T];xt[T]=xt[Tt--];wn(t,T);s=xt[T];xt[--Nt]=i;xt[--Nt]=s;t[u].fc=t[i].fc+t[s].fc;if(Ct[i]>Ct[s]+1)Ct[u]=Ct[i];else Ct[u]=Ct[s]+1;t[i].dl=t[s].dl=u;xt[T]=u++;wn(t,T)}while(Tt>=2);xt[--Nt]=xt[T];En(e);Sn(t,o)};var Tn=function(e,t){var n;var r=-1;var i;var s=e[0].dl;var o=0;var u=7;var a=4;if(s==0){u=138;a=3}e[t+1].dl=65535;for(n=0;n<=t;n++){i=s;s=e[n+1].dl;if(++o<u&&i==s)continue;else if(o<a)yt[i].fc+=o;else if(i!=0){if(i!=r)yt[i].fc++;yt[D].fc++}else if(o<=10)yt[P].fc++;else yt[H].fc++;o=0;r=i;if(s==0){u=138;a=3}else if(i==s){u=6;a=3}else{u=7;a=4}}};var Nn=function(e,t){var n;var r=-1;var i;var s=e[0].dl;var o=0;var u=7;var a=4;if(s==0){u=138;a=3}for(n=0;n<=t;n++){i=s;s=e[n+1].dl;if(++o<u&&i==s){continue}else if(o<a){do{on(i,yt)}while(--o!=0)}else if(i!=0){if(i!=r){on(i,yt);o--}on(D,yt);_n(o-3,2)}else if(o<=10){on(P,yt);_n(o-3,3)}else{on(H,yt);_n(o-11,7)}o=0;r=i;if(s==0){u=138;a=3}else if(i==s){u=6;a=3}else{u=7;a=4}}};var Cn=function(){var e;Tn(dt,bt.max_code);Tn(vt,wt.max_code);xn(Et);for(e=_-1;e>=3;e--){if(yt[Jt[e]].dl!=0)break}jt+=3*(e+1)+5+5+4;return e};var kn=function(e,t,n){var r;_n(e-257,5);_n(t-1,5);_n(n-4,4);for(r=0;r<n;r++){_n(yt[Jt[r]].dl,3)}Nn(dt,e-1);Nn(vt,t-1)};var Ln=function(e){var t,s;var o;var u;u=st-Y;Mt[Pt]=Ht;xn(bt);xn(wt);o=Cn();t=jt+3+7>>3;s=Ft+3+7>>3;if(s<=t)t=s;if(u+4<=t&&Y>=0){var a;_n((n<<1)+e,3);Pn();rn(u);rn(~u);for(a=0;a<u;a++)nn(V[Y+a])}else if(s==t){_n((r<<1)+e,3);On(mt,gt)}else{_n((i<<1)+e,3);kn(bt.max_code+1,wt.max_code+1,o+1);On(dt,vt)}bn();if(e!=0)Pn()};var An=function(e,t){J[_t++]=t;if(e==0){dt[t].fc++}else{e--;dt[kt[t]+L+1].fc++;vt[un(e)].fc++;$[Dt++]=e;Ht|=Bt}Bt<<=1;if((_t&7)==0){Mt[Pt++]=Ht;Ht=0;Bt=1}if(ct>2&&(_t&4095)==0){var n=_t*8;var r=st-Y;var i;for(i=0;i<M;i++){n+=vt[i].fc*(5+Vt[i])}n>>=3;if(Dt<parseInt(_t/2)&&n<parseInt(r/2))return true}return _t==d-1||Dt==m};var On=function(e,t){var n;var r;var i=0;var s=0;var o=0;var u=0;var a;var f;if(_t!=0)do{if((i&7)==0)u=Mt[o++];r=J[i++]&255;if((u&1)==0){on(r,e)}else{a=kt[r];on(a+L+1,e);f=Xt[a];if(f!=0){r-=At[a];_n(r,f)}n=$[s++];a=un(n);on(a,t);f=Vt[a];if(f!=0){n-=Ot[a];_n(n,f)}}u>>=1}while(i<_t);on(A,e)};var Mn=16;var _n=function(e,t){if(G>Mn-t){Q|=e<<G;rn(Q);Q=e>>Mn-G;G+=t-Mn}else{Q|=e<<G;G+=t}};var Dn=function(e,t){var n=0;do{n|=e&1;e>>=1;n<<=1}while(--t>0);return n>>1};var Pn=function(){if(G>8){rn(Q)}else if(G>0){nn(Q)}Q=0;G=0};var Hn=function(){if(z!=0){var e,t;e=Zt();if(I==null)I=q=e;else q=q.next=e;e.len=z-W;for(t=0;t<e.len;t++)e.ptr[t]=U[W+t];z=W=0}};var Bn=function(e,t){var n,r;It=e;qt=0;if(typeof t=="undefined")t=s;Qt(t);var i=new Array(1024);var o=[];while((n=mn(i,0,i.length))>0){var u=new Array(n);for(r=0;r<n;r++){u[r]=String.fromCharCode(i[r])}o[o.length]=u.join("")}It=null;return o.join("")};if(!e.RawDeflate)e.RawDeflate={};e.RawDeflate.deflate=Bn})(this);
 // These switches are for testing, all should be set to false for released version:
 var DEBUG_TRACE = false;
 var DEBUG_SEARCH = false;
 var ENABLE_TEST_TAB = false;
+var ENABLE_ATTACK_TAB = false;
 var ENABLE_SAMPLE_TAB = false;
-var ENABLE_THRONE_TAB = true;
-var ENABLE_INVENTORY_TAB = false;
 var DISABLE_BULKADD_LIST = false;
 var ENABLE_GM_AJAX_TRACE = false;
 var SEND_ALERT_AS_WHISPER = false;
 // end test switches
 
-var MAP_DELAY = 1200;
-
-//var DEFAULT_ALERT_SOUND_URL = 'http://koc.god-like.info/alarm.mp3';
-//var SWF_PLAYER_URL = 'http://koc.god-like.info/alarmplayer.swf';
-//var DEFAULT_ALERT_SOUND_URL = 'http://koc.god-like.org/power/sounds/default/alarm.mp3';
-//var SWF_PLAYER_URL = 'http://koc.god-like.org/power/swf/alarmplayer.swf';
-var DEFAULT_ALERT_SOUND_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
-var SWF_PLAYER_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
+var throttle = 10;
+var MAP_DELAY = 4000;
+var MAP_SFIELD = 20;
+var MAP_DELAY_WATCH = Number(0);
+var DEFAULT_ALERT_SOUND_URL = http+'koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
+var SWF_PLAYER_URL = http+'koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
+//var SWF_PLAYER_URL = 'http://koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
 
 var URL_CASTLE_BUT = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAXCAYAAADk3wSdAAAACXBIWXMAAAsSAAALEgHS3X78AAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAAA+NJREFUeNqclc9uFEcQxn9d3TuzeG3DLiaIOAcT2wdjgeESKeIQ5ZIokXmPXCLlTSLllEeBByCEIBMrlyzkAFxZC7P2zt/+Uznseo0NkZKUNFOlUvXXX898VW2++uaeLvR6ZFkHKxZjDP/VVJWYIm3rKYsC9/G1a/zw/XdYew5QlaSzkGlgZm9jeG9zVSWlyI8//Yzb2Fin9R6J6UyhqqKq8xjOAhljPlAf2dhYx93Y2iLGSErKgwcPMMagquzu7s7yifv3788Bdnd3SSmdyZ/Up6Tc2NrCbW6u09QlqrC4uIiIAZRLl5aoqgrvPRcvLiEipJTo95epqooQAktLixhjiDGxtLRE01Rsbq7jrly5wsHoNQCDwQDnLKqRXq+HCHjvWFkZYK0lxtN8CIHLlweIOEIILCwsAMryxT6uKAoWFhYQEfr9PnneIaVAnneAnCyzrKxMNwshzvJdYowMBgOsdbStJ89zVCNFUeB+3/+Du59/hjGG5eVlut0MSOzv7xFjwFphMFjGuSmj/f0nhKBY26Hf72OMpWkasmy67vGTX3EPf3nEl1/cxRjhwoUL9Hrd2bEzYmzpdIQ8z+ag3W6O94q1GVmWE6MiIlhrca7Dw18e4YbDZ3N5iAhZluGcpdvNUPVYq2SZxVohhA6dTk6MBmM6GCN4H6nrBmMM1sJw+Az34uUrYowYo6SUAHDO4ZwDHNYmrAVjmDGClASwhKB4H+cSC0F58fIV7vDwDW3rMcYQQiDGBCjGCCJ21j1p5hVjLCKGlGbtGSMhBEIIeN9yePgGZ8VSliUiQtM01HVDltnZ4oRIQlVnJxFSOvEJ7yNN09I0DW3bUlU1VixudXWVsixQhaqq6HY7OAcpOUQUa6eA01Y0pGSIceqbJlCWBVVV0TQNZVmwurqK297eYjweI2IpioIsc4hAShnWKnDynI6UlIQQlKYJFEVBURTUdc1kMmF7ewt35/YOR0dHiFjK8hQ0xhYRUD0dGO8OkBihrj2TyRS0qiqOjyfcub2D27l1k7+e/4mIZTR6TdPUlGWPTse9w/C8TcHrumUyKRiPj3n79i2j0YidWzdxa9fX+O3xIwDG4zGqibZtEJH5yHsPcqZr7wNFUXJ8PKEsCyaTY9aur+G6eT7XZwhhJi/5V6AxRrwPM51Odd7Nc9zo4ICUprLxPlDXDarM5+SHhvQJaEqJtm3x3qM6bYDRwQFuOHyOs1NWG59e56OrV+n1FqeXiCrnyZ78K2PkTL4oS1KMDIfPcXt7T/nk2mVSShgRjo6OKMvilKHqWUGdu0ZOLISIiGFv7ynm62/v/dOn+19mDPw9AD29Ua4OIbBVAAAAAElFTkSuQmCC";
 var URL_CASTLE_BUT_SEL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAXCAYAAADk3wSdAAAACXBIWXMAAAsSAAALEgHS3X78AAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Adh5mGLw34MJ4WHhVeGP45wiFga0TGXNXfR3ENz30T6RJZE3ptnMU85ry1KNSo+qi5qPNo3ujS6P8YuZlnM1VidWElsSxw5LiquNm5svt/87fOH4p3iC+N7F5gvyF1weaHOwvSFpxapLhIsOpZATIhOOJTwQRAqqBaMJfITdyWOCnnCHcJnIi/RNtGI2ENcKh5O8kgqTXqS7JG8NXkkxTOlLOW5hCepkLxMDUzdmzqeFpp2IG0yPTq9MYOSkZBxQqohTZO2Z+pn5mZ2y6xlhbL+xW6Lty8elQfJa7OQrAVZLQq2QqboVFoo1yoHsmdlV2a/zYnKOZarnivN7cyzytuQN5zvn//tEsIS4ZK2pYZLVy0dWOa9rGo5sjxxedsK4xUFK4ZWBqw8uIq2Km3VT6vtV5eufr0mek1rgV7ByoLBtQFr6wtVCuWFfevc1+1dT1gvWd+1YfqGnRs+FYmKrhTbF5cVf9go3HjlG4dvyr+Z3JS0qavEuWTPZtJm6ebeLZ5bDpaql+aXDm4N2dq0Dd9WtO319kXbL5fNKNu7g7ZDuaO/PLi8ZafJzs07P1SkVPRU+lQ27tLdtWHX+G7R7ht7vPY07NXbW7z3/T7JvttVAVVN1WbVZftJ+7P3P66Jqun4lvttXa1ObXHtxwPSA/0HIw6217nU1R3SPVRSj9Yr60cOxx++/p3vdy0NNg1VjZzG4iNwRHnk6fcJ3/ceDTradox7rOEH0x92HWcdL2pCmvKaRptTmvtbYlu6T8w+0dbq3nr8R9sfD5w0PFl5SvNUyWna6YLTk2fyz4ydlZ19fi753GDborZ752PO32oPb++6EHTh0kX/i+c7vDvOXPK4dPKy2+UTV7hXmq86X23qdOo8/pPTT8e7nLuarrlca7nuer21e2b36RueN87d9L158Rb/1tWeOT3dvfN6b/fF9/XfFt1+cif9zsu72Xcn7q28T7xf9EDtQdlD3YfVP1v+3Njv3H9qwHeg89HcR/cGhYPP/pH1jw9DBY+Zj8uGDYbrnjg+OTniP3L96fynQ89kzyaeF/6i/suuFxYvfvjV69fO0ZjRoZfyl5O/bXyl/erA6xmv28bCxh6+yXgzMV70VvvtwXfcdx3vo98PT+R8IH8o/2j5sfVT0Kf7kxmTk/8EA5jz/GMzLdsAAAAgY0hSTQAAeiUAAICDAAD5/wAAgOkAAHUwAADqYAAAOpgAABdvkl/FRgAABABJREFUeNqklT1vHGUQx3/Py+7e3tpOYmOBOSQc2S4cK3HSIKEUiIYAUj4GiAaJGiihBlFBPkC+AqGiIYl4cUA0XEKRpEmRWDn77nb39nn2eYbiLmc7QIEYaVajnZn/zOyO/qPeeueqdIuCNE0w2qCU4r+KiBBiwDlPVZbYl9fW+OjDDzDmOUARosxMpoaaPZXib8VFhBgDX3z1NXZzcwPnPTrEE4EigojMbTgJpJT6h/jA5uYG9tz2NiEEYhQ+uXZjHvT5+2/PwT699h3PWv3svStzwI+/+fZEPETObW9jt7Y2aCYVIs/GmyZnmT3W1dGYnU5y1Omx8Y0xGGPZ2trArq6usv/k8cnxFBRFPk84vdTFak0b4/z90fgKEPI8Rylh5YVVbFmWdLtdtNYopQHIMztLno7/6toy1mjaECmKzgxIkXdSJk0LKIqiACJlWWJ//e13Lr/+2rxy3kl4cXmRL69/z0I3o9tJONtbJrEG3wau3/iFsvaMK8dLK6d4PBhRTzx5ngORH279jL156zZvvnEZpTRKwZmlguXTC6yc6rJUZCwWKd08mYOWtWdUeobjhiRJ8CEyaQ5I0xSRwM1bt7H9/t15l9YaFrsdloqc04tdzix1WFpIKXJLmmgaF+lmgTRxGG1ogzCuGqyd7rjWin7/Lvb+g4eEEFBKyBJLllryLKHIUxa6GUtFSpEbkkSTpWB0SxSF95Fx5aY5iSWEAETuP3iIHQye4pyfV9JaYY0iMYrUKhKrSBNNYhWI4OzUZ/VUzSzHOQdEBoOnWKMNVVVN/z6AxGMaUBJREtEolIDiyC8SAUEBVVUBEaMNttfrUVUlIhBCxHtP0zica3BO4xw0JhBajW+FpmlpGkfjGpxr8M4TQmQ8HgORXq+H3dnZ5vDwEK0Nznvq2lHWNaNSk1pBgmdSW6zVtG2kblpGVctoXFNWE6pJg/Oe0WiESGBnZxt76eIuw+EQrQ114xnXNYcjTaIjsXWUnZQsNRilCCI0LlBOHINRw8GwZlzV1I1jNBoSY+DSxV3s7oXz/HnvD7Q2eO85GFZoCbhJzcGhJU8NidVYrWij4NtI7QLVpOWgdByMG7xvefToESDsXjiPXT+7zk8/3gYgxsioakACk4kmSzTZDFBriBHaKLg2MvFC2QTGk5YYhcFggDGa9bPr2E6WEWOckTGEKAyrFudnK2Vma6MgytTfBmhmwGFGj1MMoZNl2Cf7+8QYp9wpM2ARyiZSOYXVoNVUp0WhjTDDmst0+TVP9vex/f49rNGICFfPLyInzskR+59gfEBpzTH6BaXRCvr9e9i9vTu8srYy/wTP3x1E5oXUjLH/7Tgao9nbu4O68u7V55v5X6IU/DUA3uQnItzRr3oAAAAASUVORK5CYII=";
@@ -71,31 +70,21 @@ var CHAT_BG_IMAGE = "data:image/gif;base64,R0lGODlhagHQAvcAAP%2F%2F5v%2F%2F1v%2F
 //var JSON;if(!JSON){JSON={};}(function(){"use strict";function f(n){return n<10?'0'+n:n;}if(typeof Date.prototype.toJSON!=='function'){Date.prototype.toJSON=function(key){return isFinite(this.valueOf())?this.getUTCFullYear()+'-'+f(this.getUTCMonth()+1)+'-'+f(this.getUTCDate())+'T'+f(this.getUTCHours())+':'+f(this.getUTCMinutes())+':'+f(this.getUTCSeconds())+'Z':null;};String.prototype.toJSON=Number.prototype.toJSON=Boolean.prototype.toJSON=function(key){return this.valueOf();};}var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={'\b':'\\b','\t':'\\t','\n':'\\n','\f':'\\f','\r':'\\r','"':'\\"','\\':'\\\\'},rep;function quote(string){escapable.lastIndex=0;return escapable.test(string)?'"'+string.replace(escapable,function(a){var c=meta[a];return typeof c==='string'?c:'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);})+'"':'"'+string+'"';}function str(key,holder){var i,k,v,length,mind=gap,partial,value=holder[key];if(value&&typeof value==='object'&&typeof value.toJSON==='function'){value=value.toJSON(key);}if(typeof rep==='function'){value=rep.call(holder,key,value);}switch(typeof value){case'string':return quote(value);case'number':return isFinite(value)?String(value):'null';case'boolean':case'null':return String(value);case'object':if(!value){return'null';}gap+=indent;partial=[];if(Object.prototype.toString.apply(value)==='[object Array]'){length=value.length;for(i=0;i<length;i+=1){partial[i]=str(i,value)||'null';}v=partial.length===0?'[]':gap?'[\n'+gap+partial.join(',\n'+gap)+'\n'+mind+']':'['+partial.join(',')+']';gap=mind;return v;}if(rep&&typeof rep==='object'){length=rep.length;for(i=0;i<length;i+=1){k=rep[i];if(typeof k==='string'){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}else{for(k in value){if(Object.hasOwnProperty.call(value,k)){v=str(k,value);if(v){partial.push(quote(k)+(gap?': ':':')+v);}}}}v=partial.length===0?'{}':gap?'{\n'+gap+partial.join(',\n'+gap)+'\n'+mind+'}':'{'+partial.join(',')+'}';gap=mind;return v;}}if(typeof JSON.stringify!=='function'){JSON.stringify=function(value,replacer,space){var i;gap='';indent='';if(typeof space==='number'){for(i=0;i<space;i+=1){indent+=' ';}}else if(typeof space==='string'){indent=space;}rep=replacer;if(replacer&&typeof replacer!=='function'&&(typeof replacer!=='object'||typeof replacer.length!=='number')){throw new Error('JSON.stringify');}return str('',{'':value});};}if(typeof JSON.parse!=='function'){JSON.parse=function(text,reviver){var j;function walk(holder,key){var k,v,value=holder[key];if(value&&typeof value==='object'){for(k in value){if(Object.hasOwnProperty.call(value,k)){v=walk(value,k);if(v!==undefined){value[k]=v;}else{delete value[k];}}}}return reviver.call(holder,key,value);}text=String(text);cx.lastIndex=0;if(cx.test(text)){text=text.replace(cx,function(a){return'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);});}if(/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,'@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,']').replace(/(?:^|:|,)(?:\s*\[)+/g,''))){j=eval('('+text+')');return typeof reviver==='function'?walk({'':j},''):j;}throw new SyntaxError('JSON.parse');};}}());
 var JSON2 = JSON;
 
-if(document.URL.match(/standalone=1/i)){
-   unsafeWindow.appUrl = window.location.protocol+'//www.kabam.com/games/kingdoms-of-camelot/play?s='+unsafeWindow.g_server;
-} else {
-   unsafeWindow.appUrl = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+unsafeWindow.g_server;	  
+ if(document.URL.match(/standalone=1/i)){
+    unsafeWindow.appUrl = window.location.protocol+'//www.kabam.com/games/kingdoms-of-camelot/play?s='+unsafeWindow.g_server;
+ } else {
+	unsafeWindow.appUrl = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+unsafeWindow.g_server;	  
+ };
+  
+unsafeWindow.arthurCheck = function (a) {
+	logit('arthurCheck intercepted');
+	return;
 };
 
-//logit ("+++ STARTUP: "+ document.URL);
-//Kabams new cheat detector
-unsafeWindow.arthurCheck = function (a) {
-  var b = false;
-  for (var c = 0; c < a.length; c++) {
-    if ($(unescape(a[c]))) {
-      b = true;
-      break
-    }
-  }
-  if (b) {
-    unsafeWindow.AjaxCall.gPostRequest("ajax/funnelTracking.php", {
-      action: 1300,
-      serverId: unsafeWindow.g_server,
-      uid: unsafeWindow.moderators[Math.floor((Math.random()*unsafeWindow.moderators.length))]
-    })
-  }
-};
-//uid 1729784 is our programmer friend Daniel from kabam
+
+
+var isAFK = false;
+
 var upgradeData = {
   active : false,
   item_upgrade : {},
@@ -117,8 +106,6 @@ var Filter = {
    Space:" ",
    UnicodeLS:"&#8232;",
 };
-
-
 var Options = {
   srcSortBy    : 'level',
   srcMinLevel  : 1,
@@ -148,13 +135,12 @@ var Options = {
   pbChatOnRight: false,
   pbWideMap    : false,
   pbFoodAlert  : false,
-//  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1 },
-//  alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,lastatkarr:[],guardian:false,guardautoswitch:{}},
+  pbFoodAlertInt  : 6,
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,alertTRtoff:false,AFK:true,lastatkarr:[],guardian:false,guardautoswitch:{},lastarrtime:[],towercitytext:{}},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
-  spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'10', atime:2 , spamstate:'a'},
+  spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
-  celltext     : {atext:false, provider:0, num1:"000", num2:"000", num3:"0000"},
+  celltext     : {atext:false, provider:0, num1:"000", num2:"000", num3:"0000", extended:false},
   giftDelete   : 'e',
   currentTab   : null,
   hideOnGoto   : true,
@@ -163,13 +149,14 @@ var Options = {
   lasttransport: 0,
   reassigninterval: 60,
   lastreassign : 0,
-  HelpRequest  : false,
+  HelpRequest  : true,
   DeleteRequest: false,
   DeletegAl    : false,
   MapShowExtra : false,
+  MapShowLevel : false,
   RaidRunning  : false,
   RaidReset    : 0,
-  DeleteMsg	   : false,
+  DeleteMsg    : false,
   DeleteMsgs0  : false,
   DeleteMsgs1  : false,
   DeleteMsgs2  : false,
@@ -181,55 +168,63 @@ var Options = {
   LastCrestReport   : 0,
   MsgInterval  : 1,
   CrestMsgInterval  : 1,
+
   foodreport   : false,
   crestreport  : true,
-  Crest1Count  : 0,
-  Crest2Count  : 0,
-  CrestLevel   : 0,
-  CrestType    : 0,
-  crestRunning   : false,	
-  Crestinterval		: 5,		
-  ThroneDeleteItems	:	false,
-  ThroneDeleteLevel	:	0,
-  throneSaveNum	:	10,
+  Crest1Count  : 0,                            
+  Crest2Count  : 0,                                                                            
+  crestRunning   : false,    
+  Crestinterval        : 5,        
+  ThroneDeleteItems    :    false,
+  ThroneDeleteLevel    :    0,
+  throneSaveNum    :    10,
   throneDeletedNum : 0,
-  astoneSalvageCity  : 0,
-  astoneSourceCity  : 0,
   RangeSaveModeSetting : 0,
-  OtherTRSaveProp : 0,
-  OtherTRSaveProp2 : 5,
-  OtherTRSaveProp3 : 21,
-  OtherTRSaveProp4 : 58,
-  OtherTRSaveProp5 : 63,
-  ItemUpgradeTog  : false,
-  ItemUpgradeNum  : {},
-  ItemUpgradeLevel  : 10,
-  ItemEnhanceTog  : false,
-  ItemEnhanceNum  : {},
-  ItemEnhanceLevel  : 5,
-  ItemRepairEnd   : 1,
-  Opacity :0.9,
+  Opacity : 0.9,
   language : 'en',
   curMarchTab : "transport",
+  BreakingNews : 0,
+  BreakingNewsV : false,
+  ScripterTab : false,
   KMagicBox : false,
   filter : false,
-  mklag : false,
-  fchar:	"Null",
+  mklag  :  false,
+  amain  :  false,
+  smain  :  0,
+  MAP_DELAY :  4000,
+  fchar: "Null",
   toprank:  0,
   botrank:  0,
-  raidbtns: true,
+  plog:  true,
+  raidbtns: false,
   transbtns: false,
   reassgnbtns: false,
+  dfbtns: false,
   crestbtns: false,
+  Farmbtns: false,
   SaveState: {guardian:{}},
+  CrestSlots: 0,
   colorCityTabs: true,
   ThroneHUD: false,
-  TreasureChest: false,
   WWclick: false,
+  TreasureChest: false,
   loginReward: false,
   CrestRand: false,
-  FoodAlertInt: 6,
+  GESeverytenmin:0,
+  GESeveryhour:0,
+  GESeveryday:0,
+  detAFK: true,
+  expinc: true,
+  TourneyModeActive:false,
+  UseTourneyMM:false,
   CrestList    : {"i1101":0,"i1102":0,"i1103":0,"i1104":0,"i1105":0,"i1106":0,"i1107":0,"i1108":0,"i1109":0,"i1110":0,"i1111":0,"i1112":0,"i1113":0,"i1114":0,"i1115":0,"i1120":0,"i1121":0,"i1122":0},
+  ReverseTransport:false,
+  ReverseTransportPercent:90,
+  UseTourneyST:true,
+  UseTourneySC:false,
+  UseTourneyPK:false,
+  UseTourneySW:false,
+  UseTourneyAR:false,
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -242,118 +237,122 @@ var GlobalOptions = {
   autoPublishPrivacySetting : 80,
   pbupdate : true,
   pbupdatebeta : 0,
+  scriptdate : 0,
+  version : 0,
   pbNoMoreKabam : false,
   escapeurl : null,
+  cellpin : 0,
 };
 
 var CrestOptions = {
-  Running   	: 	false,
-  CrestCity 	: 	0,
-  curRound      :  1,
-  RoundOne  	: 	false,
-  RoundTwo  	: 	true,
-  lastRoundOne 	: 	0,
-  lastRoundTwo 	: 	0,
-  isWild	:	true,
-  Paused        :  false,
-  X				:	0,
-  Y				:	0,
-  R1ST			:	0,
-  R1MM			:	0,
-  R1Scout		:	0,
-  R1Pike		:	0,
-  R1Sword		:	0,
-  R1Arch		:	0,
-  R1LC			:	0,
-  R1HC			:	0,
-  R1SW			:	0,
-  R1Ball		:	0,
-  R1Ram			:	0,
-  R1Cat			:	0,
+  Running      :  false,
+  curRound     :  1,
+  CrestCity    :  0,
+  RoundOne     :  false,
+  RoundTwo     :  true,
+  lastRoundOne    :  0,
+  lastRoundTwo    :  0,
+  X            :  0,
+  Y            :  0,
+  R1ST         :  0,
+  R1MM         :  0,
+  R1Scout      :  0,
+  R1Pike    :  0,
+  R1Sword      :  0,
+  R1Arch    :  0,
+  R1LC         :  0,
+  R1HC         :  0,
+  R1SW         :  0,
+  R1Ball    :  0,
+  R1Ram        :  0,
+  R1Cat        :  0,
   R1Blood      :  0,
   R1Exec       :  0,
   R1Siege      :  0,
   R1Flame      :  0,
   R1Huss       :  0,
-  R2ST			:	0,
-  R2MM			:	0,
-  R2Scout		:	0,
-  R2Pike		:	0,
-  R2Sword		:	0,
-  R2Arch		:	0,
-  R2LC			:	0,
-  R2HC			:	0,
-  R2SW			:	0,
-  R2Ball		:	0,
-  R2Ram			:	0,
-  R2Cat			:	0,
+  R2ST         :  0,
+  R2MM         :  0,
+  R2Scout      :  0,
+  R2Pike    :  0,
+  R2Sword      :  0,
+  R2Arch    :  0,
+  R2LC         :  0,
+  R2HC         :  0,
+  R2SW         :  0,
+  R2Ball    :  0,
+  R2Ram        :  0,
+  R2Cat        :  0,
   R2Blood      :  0,
   R2Exec       :  0,
   R2Siege      :  0,
   R2Flame      :  0,
   R2Huss       :  0,
+  isWild       :  false,
+
+  Paused       :  false,
 };
 var GiftDB = {
-  people :	{},
-  giftitems	:	[],
-  agift	:	false,
+  people :  {},
+  giftitems :  [],
+  agift  :  false,
   adgift :  false,
 };
 
 var CrestData = new Array();
 
-	function CrestFunc (Arr) {
-	
-		if (Arr == undefined)
-			Arr = CrestOptions;
+   function CrestFunc (Arr) {
+   
+      if (Arr == undefined)
+         Arr = CrestOptions;
 
-		this.Running 		=  	true;
-  		this.CrestCity 		= 	Arr.CrestCity;
-	        this.curRound     	=  	1,
-		this.RoundOne 		= 	Arr.RoundOne;
-		this.RoundTwo 		= 	true;
-		this.lastRoundTwo 	= 	Arr.lastRoundTwo;
-		this.lastRoundOne 	= 	Arr.lastRoundOne;
-		this.isWild		=	Arr.isWild;
-	  	this.Paused       	=  Arr.Paused;
-		this.X 				= 	Arr.X;
-		this.Y 				= 	Arr.Y;
-		this.R1ST 			= 	Arr.R1ST;
-		this.R1MM 			= 	Arr.R1MM;
-		this.R1Scout 		= 	Arr.R1Scout;
-		this.R1Pike 		= 	Arr.R1Pike;
-		this.R1Sword 		= 	Arr.R1Sword;
-		this.R1Arch 		= 	Arr.R1Arch;
-		this.R1LC 			= 	Arr.R1LC;
-		this.R1HC 			= 	Arr.R1HC;
-		this.R1SW 			= 	Arr.R1SW;
-		this.R1Ball 		= 	Arr.R1Ball;
-		this.R1Ram 			= 	Arr.R1Ram;
-		this.R1Cat 			= 	Arr.R1Cat;
-      		this.R1Blood      =  Arr.R1Blood;
-      		this.R1Exec       =  Arr.R1Exec;
-      		this.R1Siege      =  Arr.R1Siege;
-      		this.R1Flame      =  Arr.R1Flame;
-      		this.R1Huss       =  Arr.R1Huss;
-		this.R2ST 			= 	Arr.R2ST;
-		this.R2MM 			= 	Arr.R2MM;
-		this.R2Scout 		= 	Arr.R2Scout;
-		this.R2Pike 		= 	Arr.R2Pike;
-		this.R2Sword 		= 	Arr.R2Sword;
-		this.R2Arch 		= 	Arr.R2Arch;
-		this.R2LC 			= 	Arr.R2LC;
-		this.R2HC 			= 	Arr.R2HC;
-		this.R2SW 			= 	Arr.R2SW;
-		this.R2Ball 		= 	Arr.R2Ball;
-		this.R2Ram 			= 	Arr.R2Ram;
-		this.R2Cat 			= 	Arr.R2Cat;
-      		this.R2Blood      =  Arr.R2Blood;
-      		this.R2Exec       =  Arr.R2Exec;
-      		this.R2Siege      =  Arr.R2Siege;
-      		this.R2Flame      =  Arr.R2Flame;
-      		this.R2Huss       =  Arr.R2Huss;
-		
-	};
+      this.Running      =     true;
+      this.curRound     =  1,
+      this.CrestCity       =  Arr.CrestCity;
+      this.RoundOne     =  Arr.RoundOne;
+      this.RoundTwo     =  true;
+      this.lastRoundOne    =  0;
+      this.lastRoundTwo    =  0;
+      this.X            =  Arr.X;
+      this.Y            =  Arr.Y;
+      this.R1ST         =  Arr.R1ST;
+      this.R1MM         =  Arr.R1MM;
+      this.R1Scout      =  Arr.R1Scout;
+      this.R1Pike       =  Arr.R1Pike;
+      this.R1Sword      =  Arr.R1Sword;
+      this.R1Arch       =  Arr.R1Arch;
+      this.R1LC         =  Arr.R1LC;
+      this.R1HC         =  Arr.R1HC;
+      this.R1SW         =  Arr.R1SW;
+      this.R1Ball       =  Arr.R1Ball;
+      this.R1Ram        =  Arr.R1Ram;
+      this.R1Cat        =  Arr.R1Cat;
+      this.R1Blood      =  Arr.R1Blood;
+      this.R1Exec       =  Arr.R1Exec;
+      this.R1Siege      =  Arr.R1Siege;
+      this.R1Flame      =  Arr.R1Flame;
+      this.R1Huss       =  Arr.R1Huss;
+      this.R2ST         =  Arr.R2ST;
+      this.R2MM         =  Arr.R2MM;
+      this.R2Scout      =  Arr.R2Scout;
+      this.R2Pike       =  Arr.R2Pike;
+      this.R2Sword      =  Arr.R2Sword;
+      this.R2Arch       =  Arr.R2Arch;
+      this.R2LC         =  Arr.R2LC;
+      this.R2HC         =  Arr.R2HC;
+      this.R2SW         =  Arr.R2SW;
+      this.R2Ball       =  Arr.R2Ball;
+      this.R2Ram        =  Arr.R2Ram;
+      this.R2Cat        =  Arr.R2Cat;
+      this.R2Blood      =  Arr.R2Blood;
+      this.R2Exec       =  Arr.R2Exec;
+      this.R2Siege      =  Arr.R2Siege;
+      this.R2Flame      =  Arr.R2Flame;
+      this.R2Huss       =  Arr.R2Huss;
+      this.isWild       =  Arr.isWild;
+
+	  this.Paused       =  Arr.Paused;
+   };
 
 var TrainOptions = {
   Running    : false,
@@ -393,6 +392,27 @@ var TrainOptions = {
   AsEnabled  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
   AsSelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
   AsMax        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+};
+var FarmOptions = {
+	RallyClip: 0,
+    Running: false,
+    MinMight: 30000000,
+    MaxMight: 75000000,
+    Interval: 1,
+    SendInterval: 14,
+    MaxDistance: 20,
+    Inactive:25,
+	MinFarmRes:12,
+	DeleteReports:true,
+	Troops: {1: 0,2: 20000,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0,9: 0,10: 0,11: 0,12: 0},
+	FarmNumber: {1: 0,2: 0,3: 0,4: 0,5: 0,6: 0,7: 0,8: 0},
+    CityEnable: {1: true,2: true,3: true,4: true,5: true,6: true,7: true,8: true},
+    CityLevel: {0: false,1: false,2: false,3: false,4: false,5: false,6: false,7: false,8: true,9: true,10: true,11: true,12: true},
+    Diplomacy: {friendly: true,hostile: true,friendlyToThem: true,friendlyToYou: true,neutral:true,unallied:true},
+    FarmMarches: [],
+    farmMarches: {},
+    Attacks:0,
+	Checks:0,
 };
 var ThroneOptions = {
     Active:false,
@@ -453,88 +473,45 @@ var ChampionOptions = {
 };
 
 var AttackOptions = {
-  LastReport    		: 0,
-  MsgEnabled          	: true,
-  MsgInterval	      	: 1,
-  Method			    : "distance",
-  SendInterval			: 8,
+  LastReport         : 0,
+  MsgEnabled            : true,
+  MsgInterval           : 1,
+  Method           : "distance",
+  SendInterval       : 8,
   MaxDistance           : 40,
-  RallyClip				: 0,
-  Running       		: false,
-  BarbsFailedKnight		: 0,
-  BarbsFailedRP 		: 0,
-  BarbsFailedTraffic   	: 0,
-  BarbsFailedVaria		: 0,
+  RallyClip          : 0,
+  Running            : false,
+  BarbsFailedKnight     : 0,
+  BarbsFailedRP      : 0,
+  BarbsFailedTraffic    : 0,
+  BarbsFailedVaria      : 0,
   BarbsFailedBog        : 0,
-  BarbsTried    		: 0,
+  BarbsTried         : 0,
   DeleteMsg             : true,
-  DeleteMsgs0			: false,
-  Foodstatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  AetherStatus			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  MsgLevel			    : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
-  BarbsDone     		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  BarbNumber    		: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  Levels    			: {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},8:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
-  Troops    			: {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
-  MinDistance			: {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
+  DeleteMsgs0        : false,
+  Foodstatus         : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  AetherStatus       : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  MsgLevel            : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
+  BarbsDone          : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  BarbNumber         : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
+  Levels             : {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},8:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
+  Troops             : {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
+  MinDistance        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
   Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750},
   Update                : {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0],6:[0,0],7:[0,0],8:[0,0]},
   UpdateEnabled         : true,
-  UpdateInterval	    : 30,
+  UpdateInterval      : 30,
   stopsearch            : 1,
   knightselector        : 0,
-  barbMinKnight         : 50,
-  barbMaxKnight         : 300,
-  startcity		: 1,
-  stopcity		: 8,
-  threshold				: 1500000,
-  ItemsFound			: {},
-  ItemsFoundCr			: {},
+  barbMinKnight         : 56,
+  barbMaxKnight         : 255,
+  threshold          : 750000,
+  ItemsFound         : {},
+  ItemsFoundCr       : {},
 };
 
 var ResetAll=false;
 var deleting=false;
-
-var Colors = {
-ChatAtt:'#FF7D7D',
-ChatAttFont:'#000',
-ChatWildAtt:'#526F35',
-ChatWildAttFont:'#000',
-ChatEcl:'#FFDD7D',
-ChatEclFont:'#000', 
-BGImageURL: 'http://koc-power-pdx.googlecode.com/svn/trunk/img/kocpowerscbg.gif', 
-userBG1 : "#333333",    
-userBG2 : "#584631",    
-userBG3 : "#FF0000",    
-userBG4 : "#CCCCFF",    userBG5 : "#CCCCFF",    
-userBG6 : "#CCCCFF",    
-userBG7 : "#CCCCFF",    
-userBG8 : "#CCCCFF",    
-userBG9 : "#CCCCFF",    
-userBG10 : "#CCCCFF",    userBG11 : "#333333",    
-userBG12 : "#584631",    
-userBG13 : "#FF0000",    
-userBG14 : "#CCCCFF",    
-userBG15 : "#CCCCFF",    
-userBG16 : "#CCCCFF",    userBG17 : "#CCCCFF",    
-userBG18 : "#CCCCFF",    
-userBG19 : "#CCCCFF",    
-userBG20 : "#CCCCFF",    
-userBG21 : "#333333",    
-userBG22 : "#584631",    userBG23 : "#FF0000",    
-userBG24 : "#CCCCFF",    
-userBG25 : "#CCCCFF",    
-userBG26 : "#CCCCFF",    
-userBG27 : "#CCCCFF",    
-userBG28 : "#CCCCFF",    userBG29 : "#CCCCFF",    
-userBG30 : "#CCCCFF", 
-MainTitle:'#FFFFFF', 
-MainTitleHover:'#FF0000',
-MainTitleBackground: '#600000',
-MainTitle2:'#FFFFFF',
-MainTitle2Hover:'#FF0000', 
-MainTitle2Background:'#600000',
-};
 
 var ChatOptions = {
   latestChats               : [],
@@ -545,82 +522,73 @@ var ChatOptions = {
 };
 
 var ApothecaryOptions = {
-	Active : false,
-	goldkeep : 0,
-	city : {0:[],1:[],2:[],3:[],4:[],5:[],6:[],7:[]},
+   Active : false,
+   goldkeep : 0,
+   city : {0:[],1:[],2:[],3:[],4:[],5:[],6:[],7:[]},
 };
 
 var CombatOptions = {
-	research : [{tch8:0,tch9:0,tch13:0,tch15:0}, //Poison Edge, Metal Alloys, Fletching, Healing Potions
-	            {tch8:0,tch9:0,tch13:0,tch15:0}],
-	knt      : [50,50],
-	guardian : [['wood',0],['ore',0]],
-	ratio    : [{unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}},
-	            {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
+   research : [{tch8:0,tch9:0,tch13:0,tch15:0}, //Poison Edge, Metal Alloys, Fletching, Healing Potions
+               {tch8:0,tch9:0,tch13:0,tch15:0}],
+   knt      : [50,50],
+   guardian : [['wood',0],['ore',0]],
+   ratio    : [{unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}},
+               {unt1:{},unt2:{},unt3:{},unt4:{},unt5:{},unt6:{},unt7:{},unt8:{},unt9:{},unt10:{},unt11:{},unt12:{}}],
 }
+
 
 // Get element by id shortform with parent node option
 function $(ID,root) {return (root||document).getElementById(ID);}
 
 var nHtml={
   FindByXPath:function(obj,xpath,nodetype) {
-	if(!nodetype){
-		nodetype = XPathResult.FIRST_ORDERED_NODE_TYPE;
-	}
-	try {
-		var q=document.evaluate(xpath,obj,null,nodetype,null);
-	} catch(e) {
-		GM_log('bad xpath:'+xpath);
-	}
-	if(nodetype == XPathResult.FIRST_ORDERED_NODE_TYPE){
-		if(q && q.singleNodeValue) { return q.singleNodeValue; }
-	}else{
-		if(q){
-			return q;
-		}
-	}
-	return null;
+   if(!nodetype){
+      nodetype = XPathResult.FIRST_ORDERED_NODE_TYPE;
+   }
+   try {
+      var q=document.evaluate(xpath,obj,null,nodetype,null);
+   } catch(e) {
+      GM_log('bad xpath:'+xpath);
+   }
+   if(nodetype == XPathResult.FIRST_ORDERED_NODE_TYPE){
+      if(q && q.singleNodeValue) { return q.singleNodeValue; }
+   }else{
+      if(q){
+         return q;
+      }
+   }
+   return null;
   },
   
   ClickWin:function(win,obj,evtName) {
-	var evt = win.document.createEvent("MouseEvents");
-	evt.initMouseEvent(evtName, true, true, win,
-		0, 0, 0, 0, 0, false, false, false, false, 0, null);
-	return !obj.dispatchEvent(evt);
+   var evt = win.document.createEvent("MouseEvents");
+   evt.initMouseEvent(evtName, true, true, win,
+      0, 0, 0, 0, 0, false, false, false, false, 0, null);
+   return !obj.dispatchEvent(evt);
   },
 
   Click:function(obj) {
-	return this.ClickWin(window,obj,'click');
+   return this.ClickWin(window,obj,'click');
   },
   
   ClickTimeout:function(obj,millisec) {
-	window.setTimeout(function() {
-		return nHtml.ClickWin(window,obj,'click');
-	},millisec+Math.floor(Math.random()*500));
+   window.setTimeout(function() {
+      return nHtml.ClickWin(window,obj,'click');
+   },millisec+Math.floor(Math.random()*500));
   },
 
   SetSelect:function(obj,v) {
-	for(var o=0; o<obj.options.length; o++) {
-		if(v==obj.options[o].value) { obj.options[o].selected=true; return true; }
-	}
-	return false;
+   for(var o=0; o<obj.options.length; o++) {
+      if(v==obj.options[o].value) { obj.options[o].selected=true; return true; }
+   }
+   return false;
   },
 
 }
 
 readGlobalOptions ();
 readOptions();
-
-//if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
-//  facebookInstance ();
-//  return;
-//}
-//if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
-//  kabamStandAlone ();
-//  return;
-//}
-//
-//hereherehere
+MAP_DELAY = Options.MAP_DELAY;
 if (document.URL.search(/apps.facebook.com\/kingdomsofcamelot/i) >= 0){
   facebookInstance ();
   loadchecker(true);
@@ -632,33 +600,27 @@ if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
   return;
 }
 function loadchecker (init) {
+var Sresult = getServerId();
 	if(init) {
-		var squery = /[\?,\&]s=\d+/;
-		var dquery = /\d+/;
-		var Sresult=dquery.exec(squery.exec(document.location.search));
-		if(Sresult == null) {
+		if(Sresult == '??') {
 			GM_setValue ('Loaded', 0);
-//			setTimeout(function(){if(GM_getValue ('Loaded') == 0)KOCnotFound(10);},1*60*1000);
-			setTimeout(function(){if(GM_getValue ('Loaded') == 0){logit ("KOC NOT FOUND!0a");actionLog ("KOC NOT FOUND!0a");KOCnotFound(10);}},1*60*1000);
-        
+			setTimeout(function(){if(GM_getValue ('Loaded') == 0)KOCnotFound(10);},2*60*1000);
 		} else {
 			GM_setValue (Sresult+'Loaded', 0);
-//			setTimeout(function(){if(GM_getValue (Sresult+'Loaded') == 0)KOCnotFound(10);},3*60*1000);
-			setTimeout(function(){if(GM_getValue (Sresult+'Loaded') == 0){logit ("KOC NOT FOUND!0b");actionLog ("KOC NOT FOUND!0b");KOCnotFound(10);}},3*60*1000);
+			setTimeout(function(){if(GM_getValue (Sresult+'Loaded') == 0)KOCnotFound(10);},2*60*1000);
 		};
 	  } else {
 	  	GM_setValue ('Loaded', 1);
-	  	GM_setValue (getServerId()+'Loaded', 1);
+	  	GM_setValue (Sresult+'Loaded', 1);
 	  };
 };
 
-var InstallChecker = setTimeout (function(){unsafeWindow.Modal.showAlert(translate('power bot installation is corrupt, please reinstall'))}, 2*60*1000);
 
+var InstallChecker = setTimeout (function(){unsafeWindow.Modal.showAlert(translate('power bot installation is corrupt, please reinstall'))}, 2*60*1000);
 
 if (document.URL.search(/facebook.com/i) >= 0){
    if(document.URL.search(/dialog\/feed/i) >= 0)
-//      HandlePublishPopup ();
-      setInterval (HandlePublishPopup,5000);
+      HandlePublishPopup ();
   return;
 }
 if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
@@ -667,28 +629,28 @@ if (document.URL.search(/kingdomsofcamelot.com/i) >= 0){
 
 function kocWideScreen(){
   function setWideFb (){
-	//logit(document.getElementById("kocIframes1"));
-	var kocFrame = '';
-	try{
-		kocFrame = parent.document.getElementById('kocIframes1');
-	} catch (e){
-		logit("kocWideScreen "+e);
-		kocFame = document.getElementById("kocIframes1");
-	}
-	if (!kocFrame){
-	  setTimeout (setWideFb, 1000);
-	  return;
-	}
-	kocFrame.style.width = '100%';
-	var style = document.createElement('style')
-	style.innerHTML = 'body {margin:0; width:100%; !important;}';
-	kocFrame.parentNode.appendChild(style);
+   //logit(document.getElementById("kocIframes1"));
+   var kocFrame = '';
+   try{
+      kocFrame = parent.document.getElementById('kocIframes1');
+   } catch (e){
+      logit("kocWideScreen "+e);
+      kocFame = document.getElementById("kocIframes1");
+   }
+   if (!kocFrame){
+     setTimeout (setWideFb, 1000);
+     return;
+   }
+   kocFrame.style.width = '100%';
+   var style = document.createElement('style')
+   style.innerHTML = 'body {margin:0; width:100%; !important;}';
+   kocFrame.parentNode.appendChild(style);
   }
   kocWatchdog ();
   if (GlobalOptions.pbWideScreen)
-		setWideFb();
+      setWideFb();
 }
-    var aj2 = function(c, d, b, a)
+var aj2 = function(c, d, b, a)
     {
         if (d.ctrl && d.ctrl == "Tracking")
         {
@@ -702,22 +664,22 @@ function kocWideScreen(){
             unsafeWindow.AjaxCall.gAjaxRequest(c, d, b, a, "post");
         }
     }
-    if(unsafeWindow.AjaxCall)
+if(unsafeWindow.AjaxCall)
     unsafeWindow.AjaxCall.gPostRequest = aj2
 /***  Run only in "apps.facebook.com" instance ... ***/
 function facebookInstance (){
   function setWide (){
-	var iFrame = document.getElementById('iframe_canvas');
-	if (!iFrame){
-	  setTimeout (setWide, 1000);
-	  return;
-	}
-	iFrame.style.width = '100%';
+   var iFrame = document.getElementById('iframe_canvas');
+   if (!iFrame){
+     setTimeout (setWide, 1000);
+     return;
+   }
+   iFrame.style.width = '100%';
 
-	while ( (iFrame=iFrame.parentNode) != null)
-	  if (iFrame.tagName=='DIV')
-		iFrame.style.width = '100%';
-	document.getElementById('globalContainer').style.left = '0px';
+   while ( (iFrame=iFrame.parentNode) != null)
+     if (iFrame.tagName=='DIV')
+      iFrame.style.width = '100%';
+   document.getElementById('globalContainer').style.left = '0px';
     try{    
       document.getElementById('rightCol').parentNode.removeChild(document.getElementById('rightCol'));
       document.getElementById('leftColContainer').parentNode.removeChild(document.getElementById('leftColContainer'));
@@ -725,27 +687,27 @@ function facebookInstance (){
       // toolkit may have removed them already!
     }
     var e = document.getElementById('mainContainer');
-	if(e){
-		if (GlobalOptions.pbWideScreenStyle=="normal") e.parentNode.style.minWidth = '100%';
-		if (GlobalOptions.pbWideScreenStyle=="wide") e.parentNode.style.width = '1520px';
-		if (GlobalOptions.pbWideScreenStyle=="ultra") e.parentNode.style.width = '1900px';
-		for(i=0; i<e.childNodes.length; i++){
-			if(e.childNodes[i].id == 'contentCol'){
-				e.childNodes[i].style.margin = '0px';
-				e.childNodes[i].style.paddingTop = '5px';
-				break;
-			}
-		}
-	}
-	var e = document.getElementById('pageHead');
-	if(e){
-		e.style.width = '80%';
-		e.style.margin = '0 10%';
-	}
-	var e = document.getElementById('bottomContent');
-	if(e){
-		e.style.padding = "0px 0px 12px 0px";
-	}
+   if(e){
+      if (GlobalOptions.pbWideScreenStyle=="normal") e.parentNode.style.minWidth = '100%';
+      if (GlobalOptions.pbWideScreenStyle=="wide") e.parentNode.style.width = '1520px';
+      if (GlobalOptions.pbWideScreenStyle=="ultra") e.parentNode.style.width = '1900px';
+      for(i=0; i<e.childNodes.length; i++){
+         if(e.childNodes[i].id == 'contentCol'){
+            e.childNodes[i].style.margin = '0px';
+            e.childNodes[i].style.paddingTop = '5px';
+            break;
+         }
+      }
+   }
+   var e = document.getElementById('pageHead');
+   if(e){
+      e.style.width = '80%';
+      e.style.margin = '0 10%';
+   }
+   var e = document.getElementById('bottomContent');
+   if(e){
+      e.style.padding = "0px 0px 12px 0px";
+   }
     
   }
   facebookWatchdog();
@@ -755,17 +717,17 @@ function facebookInstance (){
 
 function kabamStandAlone (){
   function setWide (){
-	var iFrames = $('game_frame');
-	if (!iFrames){
-	  setTimeout (setWide, 1000);
-	  return;
-	}
-	iFrames.style.width = '100%';
-	while ( (iFrames=iFrames.parentNode) != null && iFrames.tagName !== "BODY")
-	  //if (iFrames.tagName=='DIV')
-		iFrames.style.width = '100%';
+   var iFrames = $('game_frame');
+   if (!iFrames){
+     setTimeout (setWide, 1000);
+     return;
+   }
+   iFrames.style.width = '100%';
+   while ( (iFrames=iFrames.parentNode) != null && iFrames.tagName !== "BODY")
+     //if (iFrames.tagName=='DIV')
+      iFrames.style.width = '100%';
 
-	try{    
+   try{    
       document.getElementById('promo-sidebar').parentNode.removeChild(document.getElementById('promo-sidebar'));
     } catch (e){
       logit("Failed to remove sidebar "+e);
@@ -773,60 +735,57 @@ function kabamStandAlone (){
   }
 
   function sendmeaway (){
-	var serverID = /s=([0-9]+)/im.exec (document.location.href);
-	var sr = /value="(.*?)"/im.exec ($("post_form").innerHTML);
-	var goto = $("post_form").action+(serverID?"?s="+serverID[1]:'');
-	var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxxpbutExplode type=submit value=RELOAD><INPUT type=hidden name=signed_request value="'+ sr[1] +'" /><INPUT type=hidden name=platform_req value=A /></form>';
-	var e = document.createElement ('div');
-	e.innerHTML = t;
-	document.body.appendChild (e);
-	setTimeout (function (){document.getElementById('xxxpbutExplode').click();}, 0);
+   var serverID = /s=([0-9]+)/im.exec (document.location.href);
+   var sr = /value="(.*?)"/im.exec ($("post_form").innerHTML);
+   var goto = $("post_form").action+(serverID?"?s="+serverID[1]:'');
+   var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxxpbutExplode type=submit value=RELOAD><INPUT type=hidden name=signed_request value="'+ sr[1] +'" /><INPUT type=hidden name=platform_req value=A /></form>';
+   var e = document.createElement ('div');
+   e.innerHTML = t;
+   document.body.appendChild (e);
+   setTimeout (function (){document.getElementById('xxxpbutExplode').click();}, 0);
   }
   if (GlobalOptions.pbWideScreen)
-	setWide();
+   setWide();
   if(GlobalOptions.pbNoMoreKabam)
-	sendmeaway();
+   sendmeaway();
   }
 
-
 function HandlePublishPopup() {
-	if(GlobalOptions.autoPublishGamePopups || GlobalOptions.autoCancelGamePopups){
-	// Check the app id (we only want to handle the popup for kingdoms of camelot)
-		var FBInputForm = document.getElementById('uiserver_form');
-		//logit("FBInputForm "+FBInputForm);
-		if(FBInputForm){
-			var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
-			//logit("channel_input "+channel_input);
-			if(channel_input){
-				var current_channel_url = channel_input.value;
-				//logit("current_channel_url "+current_channel_url);
-				if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {				
-					var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
-					var cancel_publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'cancel')]");
-							var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
-					//logit("publish_button "+publish_button);
-					//logit("privacy_setting "+privacy_setting);
-					//logit("cancel_button " + cancel_publish_button);
-							if(publish_button && privacy_setting){
-								// 80: Everyone
-								// 50: Friends of Friends
-								// 40: Friends Only
-								// 10: Only Me
-								privacy_setting.innerHTML = '<option value="'+ GlobalOptions.autoPublishPrivacySetting +'"></option>';
-								privacy_setting.selectedIndex = 0;
-						if (GlobalOptions.autoPublishGamePopups && !GlobalOptions.autoCancelGamePopups){
-							nHtml.Click(publish_button);
-						} else if (GlobalOptions.autoCancelGamePopups && !GlobalOptions.autoPublishGamePopups){
-							nHtml.Click(cancel_publish_button);
-							}
-						}
-delete privacy_setting ;
-				}
-			}		
-		}
-delete FBInputForm;
-//		setTimeout(HandlePublishPopup, 1000);
-	}
+   if(GlobalOptions.autoPublishGamePopups || GlobalOptions.autoCancelGamePopups){
+   // Check the app id (we only want to handle the popup for kingdoms of camelot)
+      var FBInputForm = document.getElementById('uiserver_form');
+      //logit("FBInputForm "+FBInputForm);
+      if(FBInputForm){
+         var channel_input = nHtml.FindByXPath(FBInputForm,".//input[contains(@name,'channel')]");
+         //logit("channel_input "+channel_input);
+         if(channel_input){
+            var current_channel_url = channel_input.value;
+            //logit("current_channel_url "+current_channel_url);
+            if (current_channel_url.match(/(http|https):\/\/(.*?)\.kingdomsofcamelot\.com(.*?)/i)) {
+               var publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'publish')]");
+               var cancel_publish_button = nHtml.FindByXPath(FBInputForm,".//input[@type='submit' and contains(@name,'cancel')]");
+               var privacy_setting = nHtml.FindByXPath(FBInputForm,".//select[@name='audience[0][value]']");
+               //logit("publish_button "+publish_button);
+               //logit("privacy_setting "+privacy_setting);
+               //logit("cancel_button " + cancel_publish_button);
+               if(publish_button && privacy_setting){
+                  // 80: Everyone
+                  // 50: Friends of Friends
+                  // 40: Friends Only
+                  // 10: Only Me
+                  privacy_setting.innerHTML = '<option value="'+ GlobalOptions.autoPublishPrivacySetting +'"></option>';
+                  privacy_setting.selectedIndex = 0;
+                  if (GlobalOptions.autoPublishGamePopups && !GlobalOptions.autoCancelGamePopups){
+                     nHtml.Click(publish_button);
+                  }else if (GlobalOptions.autoCancelGamePopups && !GlobalOptions.autoPublishGamePopups){
+                     nHtml.Click(cancel_publish_button);
+                  }
+               }
+            }
+         }     
+      }
+      setTimeout(HandlePublishPopup, 1000);
+   }
 }
 
 var Cities = {};
@@ -839,9 +798,6 @@ var pbPopUpTopClass = 'pbPopTop';
 var firefoxVersion = getFirefoxVersion();
 var TrainCity = 0;
 var CM = unsafeWindow.cm;
-var uW = unsafeWindow;
-
-//String.prototype.capitalize = function () {return this.charAt(0).toUpperCase() + this.substring(1).toLowerCase();};
 
 function pbStartup (){
   clearTimeout (pbStartupTimer);
@@ -854,13 +810,13 @@ function pbStartup (){
     return;
   }
   unsafeWindow.pbLoaded = true;
-  logit ("KofC client version: "+ anticd.getKOCversion());
+  //logit ("KofC client version: "+ anticd.getKOCversion());
   
   Seed = unsafeWindow.seed;
   readOptions();
   var styles = '.xtab {padding-right: 5px; border:none; background:none; white-space:nowrap;}\
     .xtabBR {padding-right: 5px; border:none; background:none;}\
-    table.pbTab tr td {border:none; background:none; white-space:nowrap; padding:0px}\
+    table.pbTab tr td {border:none; background:none; white-space:nowrap; padding:0px z-index:999999;}\
     table.Throne {background-color:#FFFFE3; white-space:nowrap; padding:0px; border-style:solid; border-color:darkgrey; width:250px; max-width:250px; text-wrap:normal;word-wrap:break-word}\
     table.Throne tr td {background:none; white-space:nowrap; padding:0px; border-style:none;}\
     table.ThroneEQ {background-color:#FFFFE3; white-space:nowrap; padding:0px; border-style:solid; border-color:lightred; width:250px; max-width:250px; text-wrap:normal;word-wrap:break-word}\
@@ -869,6 +825,7 @@ function pbStartup (){
     table.pbTabPadNW tr td {border:none; background:none; white-space:nowrap; padding: 2px 4px 2px 8px;}\
     table.pbTabBR tr td {border:none; background:none;}\
     table.pbTabLined tr td {border:1px none none solid none; padding: 2px 5px; white-space:nowrap;}\
+    table.pbTabLined3 tr td {border:3px none none solid lightgreen; background:lightblue; padding: 2px 5px; white-space:nowrap;}\
     table.pbOptions tr td {border:1px none none solid none; padding: 1px 3px; white-space:nowrap;}\
     table.pbSrchResults tr td {border:1px none none solid none; padding: 1px 3px; white-space:nowrap;}\
     table.pbTabSome tr td {border:none; background:none; padding: 1px 3px; white-space:nowrap;}\
@@ -884,11 +841,9 @@ function pbStartup (){
     .castleBut:hover {background-image:url("'+ URL_CASTLE_BUT_SEL +'")}\
     .castleButNon {background-image:url("'+ URL_CASTLE_BUT +'")}\
     .castleButSel {background-image:url("'+ URL_CASTLE_BUT_SEL +'")}\
-    input.pbDefButOn {cursor:pointer; border:1px solid #45d183; -moz-box-shadow:inset 0px 1px 5px #3aef8b; -moz-border-radius:5px;}\
-    input.pbDefButOff {cursor:pointer; border:1px solid #f61646; -moz-box-shadow:inset 0px 1px 5px #f6375f; -moz-border-radius:5px;}\
+    input.pbDefButOn {cursor:pointer; border:1px solid red; -moz-box-shadow:inset 0px 1px 5px #3aef8b; -moz-border-radius:5px;}\
+    input.pbDefButOff {cursor:pointer; border:1px solid blue; -moz-box-shadow:inset 0px 1px 5px #f6375f; -moz-border-radius:5px;}\
     a.ptButton20 {color:#ffff80}\
-    .ptChatAttack {color: '+Colors.ChatAttFont+'; font-weight:bold; background-color: '+Colors.ChatAtt+'; }\
-    .ptChatScout {color: '+Colors.ChatEclFont+'; font-weight:bold; background-color: '+Colors.ChatEcl+'; }\
     table.pbMainTab { empty-cells: show; margin-left: 5px; margin-top: 4px; padding: 1px;  padding-left:5px;}\
     table.pbMainTab tr td a {color:inherit }\
     table.pbMainTab tr td   {height:60%; empty-cells:show; padding: 0px 4px 0px 4px;  margin-top:5px; white-space:nowrap; border: 1px solid; border-style: none none solid none; -moz-border-radius:5px; }\
@@ -901,24 +856,30 @@ function pbStartup (){
     tr.pbMainPopTop td { background-color:#ded; border:none; height: 42px; width:80%; padding:0px; }\
     tr.pbretry_pbMainPopTop td { background-color:#a00; color:#fff; border:none; height: 42px;  padding:0px; }\
     .pbPopMain  { border:1px solid #000000; -moz-box-shadow:inset 0px 0px 10px #6a6a6a; -moz-border-radius-bottomright: 20px; -moz-border-radius-bottomleft: 20px;}\
-    .pbPopup  {border:5px ridge #666; opacity:'+(parseFloat(Options.Opacity)<'0.5'?'0.5':Options.Opacity)+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000; }\
+    .pbPopup  {border:5px ridge #666; opacity:'+(parseFloat(Options.Opacity)<'0.5'?'0.5':Options.Opacity)+'; -moz-border-radius:25px; -moz-box-shadow: 1px 1px 5px #000000; z-index:999999;}\
     span.pbTextFriendly {color: #080}\
     span.pbTextHostile {color: #800}\
-	.pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
+    .pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
     div.indent25 {padding-left:25px}\
     .pbttabs {background-color:#A68064; font-weight:bold; color:white}\
     .pbttabsdis {background-color:#603311; font-weight:bold; color:white}\
 	.craftdesc:hover span.crafttip { display:block; position:absolute; background: #FFFFAA; border: 1px solid #FFAD33; padding: 0.5em 0.5em;}\
-	.craftdesc span.crafttip { display:none;}';    
+	.craftdesc span.crafttip { display:none;}\
+    .pbdivHeader       {transparent;height: 16px;border-bottom:0px solid #000000;font-weight:bold;font-size:11px;opacity:0.75;margin-left:0px;margin-right:0px;margin-top:1px;margin-bottom:0px;padding-top:4px;padding-right:10px;vertical-align:text-top;align:left;background-color:#335577;}\
+    .pbdivLink         {color:#000;text-decoration:none;}\
+    .pbdivLink:Hover   {color:#000;text-decoration:none;}\
+    .pbdivLink:Active  {color:#000;text-decoration:none;}\
+    .pbdivHide         {display:none}';    
 
   window.name = 'PT';
   logit ("* KOC Power Bot v"+ Version +" Loaded");
   readLanguage();
   readChatOptions();
-//  readCrestOptions();
   readCrestData();
   readTrainingOptions();
+  readCombatOptions();
   readAttackOptions();
+  readFarmOptions();
   readThroneOptions();
   readChampionOptions();
   readLayoutOptions();
@@ -926,10 +887,9 @@ function pbStartup (){
   Tabs.gifts.readGiftsdb();
   setCities();
 	if(unsafeWindow.g_ajaxparams.lang == "en")unsafeWindow.g_js_strings.getChat.nobadlang = "No bad language. No personal attacks. No links. Use /username to whisper to another player. Respect the mods, the scripters, and each other and most importantly, have fun!";
-//	if(unsafeWindow.g_js_strings)unsafeWindow.g_js_strings.commonstr.yourScriptVersionIsOut = unsafeWindow.g_js_strings.checkoutofdate.reloadconfirm;
+	if(unsafeWindow.g_js_strings)unsafeWindow.g_js_strings.commonstr.yourScriptVersionIsOut = unsafeWindow.g_js_strings.checkoutofdate.reloadconfirm;
 
 	if(Options.loginReward && Seed.loginReward.show_hud && document.getElementById('dailyRewardHudInside')) unsafeWindow.cm.DailyRewardsView.hudClick();
-
 
 // TODO: Make sure WinPos is visible on-screen ?
   if (Options.pbWinPos==null || Options.pbWinPos.x==null|| Options.pbWinPos.x=='' || isNaN(Options.pbWinPos.x)){
@@ -938,15 +898,17 @@ function pbStartup (){
     Options.pbWinPos.y = c.y+c.height;
     saveOptions ();
   }
-  
+
   // Reset window xPos if the widescreen option is disabled
   if(!GlobalOptions.pbWideScreen && Options.pbWinPos.x > 700){
     var c = getClientCoords (document.getElementById('main_engagement_tabs'));
     Options.pbWinPos.x = c.x+4;
     saveOptions ();
+
+    
   }
-  
-  mainPop = new pbPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 750,600, Options.pbWinDrag,
+
+  mainPop = new pbPopup ('pb', Options.pbWinPos.x, Options.pbWinPos.y, 850,800, Options.pbWinDrag,
       function (){
         tabManager.hideTab();
         Options.pbWinIsOpen=false;
@@ -961,14 +923,13 @@ function pbStartup (){
   
   FairieKiller.init (Options.pbKillFairie);
   RefreshEvery.init ();
-  SpamEvery.init ();
   CollectGold.init();
   FoodAlerts.init();
   ChatPane.init();
   ChatStuff.init();
   DeleteReports.init();
-  TreasureChestPost.init();
-//  DeleteThrone.init();
+  TreasureChestClik.init();
+  //DeleteThrone.init();
   if (Options.pbWinIsOpen && Options.pbTrackOpen){
     mainPop.show (true);
     tabManager.showTab();
@@ -978,81 +939,160 @@ function pbStartup (){
   WideScreen.init ();
   WideScreen.setChatOnRight (Options.pbChatOnRight);
   WideScreen.useWideMap (Options.pbWideMap);
-  setInterval (DrawLevelIcons,1000);
+  setInterval (DrawLevelIcons,1250);
   killbox();
-  if(Options.mklag)  setInterval(fixkabamlag,1000*60);
+  if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
+   document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'https://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>\
+<a class="navTab" onclick=" window.open(\'https://kabam.secure.force.com/PKB/pkb_contactUs?game=All&lang=en_US&l=en_US\');"><span>Kabam</span></a>\
+<a class="navTab" onclick=" window.open(\'https://www.trialpay.com/support/contactus/\');"><span>Trialpay</span></a>';
+
   if(Options.ThroneHUD)Tabs.Throne.ThroneHUDinit();
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
-	loadchecker();
-
+  ChatComOverlay();
   GuardianTT();
-
-//setInterval(updateseedxx, 1*60*1000);
-//var zzzdd = uW.g_server.split("/");
-actionLog ('server:' +uW.g_server.split("/")[0]);
+	if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
+	afkwatcher();
+	loadchecker();
 }
 
-function updateseedxx (){
-   var params = uW.Object.clone(uW.g_ajaxparams);
-   new AjaxRequest(uW.g_ajaxpath + "/fb/e2/src/main_src.php?g=&y=0&n=nan001&l=nl_NL&messagebox=&standalone=0&res=1&iframe=1&lang=en&ts=1304248288.7067&s=250&appBar=" + uW.g_ajaxsuffix, {
-   	method: "POST",
-   	parameters: params,
-   	onSuccess: function (rslt) {
-   	    var mainSrcHTMLCode = rslt.responseText;
-   	    var myregexp = /var seed=\{.*?\};/;
-   	    var match = myregexp.exec(mainSrcHTMLCode);
-   	    if (match != null) {
-   	    	var result = match[0];
-   	    	var result2 = result.substr(4);
-// 	    	var seed = eval(result2);
-   	    	var seed2 = eval(result2);
-		for (jj in seed2) {
-			unsafeWindow.seed[jj] = seed2[jj];
-			}
-		unsafeWindow.kocThroneItems = {};
-		unsafeWindow.createThroneItems();
-		unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
-//
-   	  	uW.document.seed = seed;
-   	  	Seed = seed;
-   	  	uW.seed = seed;
-   	    }
-   	},
-   	onFailure: function () {
-   	    if (notify != null)
-   	    	notify(rslt.errorMsg);
-   	},
-   });
-}
 
-var TreasureChestPost = {
-  postTreasureChest : null,
+/*************** Timer ******************/
+var GESeachmin = 0;
+var atwomin = 0;
+function GlobalEachSecond () {
+	var unixtime = unsafeWindow.unixtime();
+  if(GESeachmin < unixtime) {
+  	GESeachmin = Number(unixtime+60);
+  	new GESeverymin(unixtime);
+  };
+};
+
+function GESeverymin (unixtime) {//put functions here to execute every min
+	if(atwomin == 0) atwomin = Number(unixtime+2*60);
+	if(atwomin < unixtime) {
+		atwomin = Number(unixtime+2*60);
+		new GESeverytwomin(unixtime);
+		  if(Options.mklag)  new fixkabamlag();
+		  if(AttackOptions.Running) new Tabs.Barb.sendreport();
+	};
+	if(Options.GESeverytenmin < unixtime) {
+	  	Options.GESeverytenmin = Number(unixtime+10*60);
+		saveOptions();
+		new GESeverytenmin(unixtime);	
+	};  
+		//start window open in other browser warning auto click//cmModalContainer guardian_generic undefined cmModal1
+		if(Options.WWclick) {
+		//for (z =1;z<5;z++) {
+			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal1');
+			if(!x)
+			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal2');
+			if(!x)
+			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal3');
+			if(x)
+				if(x.length > 0) {
+					for(y = 0; y < x.length;y++) {
+						if(String(x[y].innerHTML).indexOf("You have Kingdoms of Camelot open in a newer window. If you have multiple connections to the same world open, please use your most recent window for the best experience and close this one.") > -1){
+							unsafeWindow.cm.ModalManager.close();
+						}
+					};
+				}
+			//}
+		};
+	//end window open in other browser warning auto click
+		new Tabs.Throne.throneHUDredraw();
+		new unsafeWindow.update_seed_ajax();
+};
+
+function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
+	if(Options.detAFK)new detafk();
+	new Tabs.Throne.rotatethrone();
+	new DeleteReports.startdeletereports();
+};
+
+function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
+  if(Options.GESeveryhour < unixtime){
+  	Options.GESeveryhour = Number(unixtime+60*60);
+	saveOptions();
+	new GESeveryhour(unixtime);
+  };
+  if(GiftDB.adgift) new Tabs.gifts.scangifts(4);
+  
+	var lasttenmin = unixTime() -600;
+	for(var i = Options.alertConfig.lastarrtime.length - 1; i >= 0; i--) {
+    if(Number(Options.alertConfig.lastarrtime[i]) < lasttenmin) {
+       Options.alertConfig.lastarrtime.splice(i, 1);
+    }
+	;}
+	saveOptions();
+};
+
+function GESeveryhour (unixtime) {//put functions here to execute every hour
+  if(Options.GESeveryday < unixtime){
+  	Options.GESeveryday = Number(unixtime+24*60*60);
+	saveOptions();
+	new GESeveryday(unixtime);
+  };
+	if(Options.spamconfig.aspam )Tabs.Spam.Count();
+	MAP_DELAY = Options.MAP_DELAY;
+};
+
+function GESeveryday (unixtime) {//put functions here to execute every day
+  if(GlobalOptions.pbupdate)AutoUpdater();//check for script updates
+};
+
+/************** End Timer **************/
+
+/************** Afk detector **************/
+
+var afk = 0;
+var afkb=-1;
+function afkwatcher () {
+	document.body.onmousemove = function(){afk++};
+	document.body.onkeypress = function(){afk++};
+};
+
+function detafk () {
+	if (afk == afkb) {
+		actionLog('afk detected');
+		isAFK = true;
+	} 
+	else {
+		if(isAFK)Tabs.Whisper.postWhisper();
+			isAFK = false;
+			afkb = afk;
+	}
+};
+
+/************** End Afk detector **************/
+
+var TreasureChestClik = {
+  clikTreasureChest : null,
 
   init : function (){
-    t = TreasureChestPost;
+    t = TreasureChestClik;
 
-      t.postTreasureChest = new CalterUwFunc ('pop_treasure_chest_modal', [[/if/im, 'treasure_chest_post_hook(a); return; if']]);
-      uW.treasure_chest_post_hook = t.hook;
-      t.postTreasureChest.setEnable(Options.TreasureChest);
+      t.clikTreasureChest = new CalterUwFunc ('pop_treasure_chest_modal', [[/if/im, 'treasure_chest_post_hook(a); return; if']]);
+      unsafeWindow.treasure_chest_post_hook = t.hook;
+      t.clikTreasureChest.setEnable(Options.TreasureChest);
   },
 
   setEnable : function (tf){
-	var t = TreasureChestPost;
-	t.postTreasureChest.setEnable (tf);
+	var t = TreasureChestClik;
+	t.clikTreasureChest.setEnable (tf);
   },
 
 
   isAvailable : function (){
-	var t = TreasureChestPost;
-	return t.postTreasureChest.isAvailable();
+	var t = TreasureChestClik;
+	return t.clikTreasureChest.isAvailable();
   },
 
   hook : function (tid) {
 	actionLog('Treasure Chest found');
 	var mid = tid;
-	var params = uW.Object.clone(uW.g_ajaxparams);	
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);	
 	params.tid = tid;
-	new AjaxRequest(uW.g_ajaxpath + "ajax/postFriendVictoryTokenShare.php" + uW.g_ajaxsuffix, {
+	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/postFriendVictoryTokenShare.php" + unsafeWindow.g_ajaxsuffix, {
 		method: "post",
 		parameters: params,
 		onSuccess: function (transport) {
@@ -1062,11 +1102,11 @@ var TreasureChestPost = {
 				for (k in Seed.queue_atkp) {
 					if (Seed.queue_atkp[k]['m'+mid]) city = k;
 				}
-				var tileName = (Seed.queue_atkp[city]["m" + mid].toTileType == 51) ? "Barbarian Camp" : uW.g_mapObject.types[parseInt(Seed.queue_atkp[city]["m" + mid].toTileType)];
+				var tileName = (Seed.queue_atkp[city]["m" + mid].toTileType == 51) ? "Barbarian Camp" : unsafeWindow.g_mapObject.types[parseInt(Seed.queue_atkp[city]["m" + mid].toTileType)];
 				reparr.push(["REPLACE_TiLeNaMe", tileName]);
 				reparr.push(["REPLACE_fEeDiD", rslt.feedId]);
 				reparr.push(["REPLACE_tOkEnId", rslt.tokenId]);
-				uW.common_postToProfile("118", reparr);
+				unsafeWindow.common_postToProfile("118", reparr);
 			} else {
 				actionLog('treasure chest error: ' +rslt.error_code+ ',' +rslt.msg+ ',' +rslt.feedback)
 			}
@@ -1105,8 +1145,8 @@ var FoodAlerts = {
           var msg = '';
         if (usage < 0) {
 //    if (Options.pbFoodAlert && timeLeft<(6*3600)) {
-    if (Options.FoodAlertInt < 1) Options.FoodAlertInt = 1;
-    if (Options.pbFoodAlert && timeLeft<(Options.FoodAlertInt*3600)) {
+    if (Options.pbFoodAlertInt < 1) Options.pbFoodAlertInt = 1;
+    if (Options.pbFoodAlert && timeLeft<(Options.pbFoodAlertInt*3600)) {
                 msg += 'My city ' + Cities.cities[i].name.substring(0,10) + ' (' +
                       Cities.cities[i].x +','+ Cities.cities[i].y + ')';
                 msg += ' is low on food. Remaining: '+addCommasWhole(foodleft)+' ('+timestrShort(timeLeft)+') Upkeep: '+addCommas(usage);
@@ -1118,6 +1158,1167 @@ var FoodAlerts = {
   f.minuteTimer = setTimeout (f.e_eachMinute, 15*60*1000);
   },
 }
+
+/*********************************  Farm Tab ****************autofarm*******************/
+
+Tabs.farm = {
+  tabLabel: 'Farm',
+  tabOrder : 612,
+  myDiv : null,
+  MapAjax : new CMapAjax(),
+  popFirst : true,
+  opt : {},
+  nextattack : null,
+  updateSeedTimer: null,
+  searchRunning : false,
+  tilesSearched : 0,
+  tilesFound : 0,
+  curX : 0,
+  curY : 0,
+  lastX : 0,
+  firstX : 0,
+  firstY : 0,
+  lastY : 0,
+  rallypointlevel:0,
+  knt:{},
+  helpArray:{},
+  FarmArray:{},
+  marchArray:[],
+  lookup:1,
+  city:0,
+  deleting:false,
+  DipArray: ["friendly","hostile","friendlyToThem","friendlyToYou","neutral","unallied"],
+  interval: ["Continuously","1 Hour","2 Hours","3 Hours","6 Hours","12 Hours","24 Hours","29 Hours","36 Hours","2 Days","4 Days"],
+    
+  init : function (div){
+    var t = Tabs.farm;
+    t.myDiv = div;
+  if(Options.Farmbtns)AddSubTabLink(unsafeWindow.g_js_strings.grove.farms,t.toggleBarbState, 'FarmToggleTab');
+    var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED FARMING FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
+     if (FarmOptions.Running == false) {
+           m += '<TD><INPUT id=FarmAttSearch type=submit value="Farming = OFF"></td>';
+           if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #CCC">'+unsafeWindow.g_js_strings.grove.farms+': Off</span>';
+       } else {
+           m += '<TD><INPUT id=FarmAttSearch type=submit value="Farming = ON"></td>';
+           if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #FFFF00">'+unsafeWindow.g_js_strings.grove.farms+': On</span>';
+       }
+      m +='<TD><INPUT id=pbpaintFarms type=submit value="Show Farms">';
+      m += '<SELECT id=pbFarmcity type=list></td></tr></table>';
+      m += '</tr></table></div>';
+      
+      m += '<DIV id=pbTraderDivD class=pbStat>FARMING STATS</div>';
+    
+      m += '<TABLE id=pbfarmstats width=95% height=0% class=pbTab><TR align="left"><TR>';
+      for(i=0;i<Seed.cities.length;i++){
+              m += '<TD>' + Seed.cities[i][1] +'</td>';
+      }
+      m+='</tr><TR>';
+      for(i=0;i<Seed.cities.length;i++){
+              m += '<TD><DIV><span id='+ 'pdtotalFarm' + i +'></span></div></td>';
+      }
+      m+='</tr><TR>';
+      for(i=0;i<Seed.cities.length;i++){
+              m += '<TD><DIV><span id='+ 'pddataFarm' + i +'></span></div></td>';
+      }
+      m+='</tr><TR>'
+       for(i=0;i<Seed.cities.length;i++){
+              m += '<TD><DIV><span id='+ 'pddataFarmarray' + i +'></span></div></td>';
+     }
+     m+='</tr></table>';
+     
+    m+='<DIV id=FarmCheck></div>';
+
+    m += '<DIV id=pbTraderDivD class=pbStat>FARMING OPTIONS</div>';
+    m += '<TABLE id=pbfarmstats width=90% height=0% class=pbTab>';
+    m += '<TR><TD width=90>Keep rallypoint slot(s) free: </td><TD><INPUT id=FarmRallyClip type=text size=2 maxlength=2 value=' + FarmOptions.RallyClip +' >';
+    m += '  Attacks interval:<INPUT id=FarmAttacksInterval type=text size=2 maxlength=2 value=' + FarmOptions.SendInterval +' sec.></td>';
+	
+    m += '<TD>Farm Interval:<SELECT id=FarmInterval type=list>';
+    m += '  <INPUT id=FarmReports type=checkbox '+(FarmOptions.DeleteReports?'CHECKED':'')+'> - Delete reports</td></tr>';
+
+    m += '<TR><TD>Search distance:</td><TD><INPUT type=text id=FarmRadius size=3 maxlength=3 value='+ FarmOptions.MaxDistance +'>'; 
+	m += '<INPUT id=FarmSearch type=submit value="Search ALL again" style="background-color:#DEDEDE;color:#fff">';
+	m +='</td>';
+	m +='<TD><INPUT id=pbcompactFarms1 type=submit value="Remove NOT Farms"></td>'
+	m +='</tr>';
+    m += '<TR><TD>Might:</td>';
+    m += '<TD width=50>Min.:<INPUT type=text id=FarmMinMight size=8 maxlength=8 value='+ FarmOptions.MinMight +'></td>';
+    m += '<TD>Max.:<INPUT type=text id=FarmMaxMight size=9 maxlength=9 value='+ FarmOptions.MaxMight +'></td></tr>';
+    m += '<TR><TD>Farm if inactive for more then: </td>';
+    m += '<TD><INPUT type=text id=FarmInactive size=2 value='+ FarmOptions.Inactive +'>days(checked every 23 hours).</td>';
+	m += '<TD> Farm is BAD if brought less then: ';
+	m += '<INPUT type=text id=FarmBadRess size=2 value='+ FarmOptions.MinFarmRes +'> millions of resources</td>'
+	m += '</tr></table></tr>';
+	m +='<TABLE id=pbfarmstats width=90% height=0% class=pbTabLined3>'
+	m +='<TR><TD>Works only for DISABLED cities:</td>';
+	m +='<TD><INPUT id=pbFarmSearch2 type=submit value="Search again"></td>';
+    m +='<TD><INPUT id=pbcompactFarms2 type=submit value="Remove BAD Farms"></td>';
+    m +='<TD><INPUT id=pbcompactFarms3 type=submit value="Reset collected resources info"></td>'
+	m +='</tr></table>';
+    m += '<TABLE id=pbfarmstats width=90% height=0% class=pbTab><TR align="left"><TR><TD width=100>City:</td>';
+    for (i=1;i<=Seed.cities.length;i++) {
+         m+='<TD class=pbCityEn><INPUT id=CityEnable'+ i +'  type=checkbox '+(FarmOptions.CityEnable[i]?'CHECKED':'')+'>'+ Seed.cities[i-1][1] +'</td>';
+     }
+    m += '</tr></table><TABLE id=pbfarmstats width=90% height=0% class=pbTab><TR align="left"><TD width=100>City Level:</td>';
+    for (i=1;i<=12;i++) {
+         m+='<TD class=pbCityOpt><INPUT id=CityLevel'+ i +'  type=checkbox '+(FarmOptions.CityLevel[i]?'CHECKED':'')+'>'+ i +'</td>';
+     }
+    m += '</tr></table><TABLE id=pbfarmstats width=90% height=0% class=pbTab><TR align="left"><TR><TD width=100>Diplomacy:</td>';
+    for (i=0;i<t.DipArray.length;i++) {
+         m+='<TD class=pbDipOpt><INPUT id=Diplomacy'+ t.DipArray[i] +'  type=checkbox '+(FarmOptions.Diplomacy[t.DipArray[i]]?'CHECKED':'')+'>'+ t.DipArray[i] +'</td>';
+     }
+    m+='</tr></table>';
+    
+    var icon_link = 'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/';
+	var dude = unsafeWindow.unitnamedesctranslated;
+     m += '<DIV id=pbTraderDivD class=pbStat>FARMING TROOPS</div>';
+     m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
+        m += '<TR><TD rowspan="2"><img src='+http+icon_link+'unit_1_50.jpg alt='+dude.unt1[0]+'></td>';
+        m += '<TD>Supply Troop</td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_2_50.jpg alt='+dude.unt2[0]+'></td>'
+        m += '<TD>Militiaman</td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_3_50.jpg alt='+dude.unt3[0]+'></td>'
+        m += '<TD>Scout</td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_4_50.jpg alt='+dude.unt4[0]+'></td>'
+        m += '<TD>Pikeman</td></tr>'
+        m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop1  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[1] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop2  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[2] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop3  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[3] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop4  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[4] +'\></td></tr>';
+        m += '<TR><TD rowspan="2"><img src='+http+icon_link+'unit_5_50.jpg alt='+dude.unt5[0]+'></td>';
+        m += '<TD>Swordsman</td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_6_50.jpg alt='+dude.unt6[0]+'></td>'
+        m += '<TD>Archer</td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_7_50.jpg alt='+dude.unt7[0]+'></td>'
+        m += '<TD>Cavalry</td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_8_50.jpg alt='+dude.unt8[0]+'></td>'
+        m += '<TD>Heavy Cavalry</td></tr>'
+        m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop5  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[5] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop6  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[6] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop7  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[7] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop8  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[8] +'\></td></tr>';
+        m += '<TR><TD rowspan="2"><img src='+http+icon_link+'unit_9_50.jpg alt='+dude.unt9[0]+'></td>';
+        m += '<TD>Supply Wagon</td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_10_50.jpg alt='+dude.unt10[0]+'></td>'
+        m += '<TD>Ballista</td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_11_50.jpg alt='+dude.unt11[0]+'></td>'
+        m += '<TD>Battering Ram</td>'
+        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_12_50.jpg alt='+dude.unt12[0]+'></td>'
+        m += '<TD>Catapult</td></tr>'
+        m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop9  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[9] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop10  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[10] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop11  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[11] +'\></td>';
+        m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop12 type=text size=10 maxlength=10 value='+ FarmOptions.Troops[12] +'\></td></tr></table>';
+    
+     t.myDiv.innerHTML = m;
+      t.checkFarmData();
+       if(t.nextattack == null) t.nextattack = setInterval(t.getnextCity, parseInt(Math.random()*3)+FarmOptions.SendInterval*1000);
+	 if (FarmOptions.Running == true)  {
+	 setInterval(t.startdeletereports,(120000));
+     setInterval( t.checkMarches ,parseInt(Math.random()*3)+14*1000);
+	 }
+     document.getElementById('pbFarmcity').options.length=0;
+        for (i=0;i<Seed.cities.length;i++){
+            var o = document.createElement("option");
+            o.text = Seed.cities[i][1]
+            o.value = i+1;
+            document.getElementById("pbFarmcity").options.add(o);
+    }
+    document.getElementById('FarmInterval').options.length=0;
+        for (i=0;i<t.interval.length;i++){
+            var o = document.createElement("option");
+            o.text = t.interval[i];
+            o.value = i;
+            document.getElementById("FarmInterval").options.add(o);
+    }
+    document.getElementById('FarmInterval').value = FarmOptions.Interval;    
+    for(i=0;i<Seed.cities.length;i++){
+            var elem = 'pdtotalFarm'+i;
+            if (t.FarmArray[i+1] == undefined) document.getElementById(elem).innerHTML = 'No Data';
+            else {
+					var l_ok_farms =0;
+			                 for (a=0;a<t.helpArray[i+1].length;a++){
+							 if ((t.helpArray[i+1][a]['DaysInactive']=='?') ||(t.helpArray[i+1][a]['DaysInactive']> FarmOptions.Inactive)) l_ok_farms++;
+							 }
+			document.getElementById(elem).innerHTML =  '' + l_ok_farms+'/'+t.FarmArray[i+1].length +'/'+ t.helpArray[i+1].length+'';
+			}
+    }
+    document.getElementById('FarmInterval').addEventListener('change', function(){
+            FarmOptions.Interval = document.getElementById('FarmInterval').value;
+            saveFarmOptions();
+    } , false);
+    document.getElementById('FarmRallyClip').addEventListener('change', function(){
+            FarmOptions.RallyClip = document.getElementById('FarmRallyClip').value;
+            saveFarmOptions();
+    } , false);
+    document.getElementById('FarmAttacksInterval').addEventListener('change', function(){
+            FarmOptions.SendInterval = document.getElementById('FarmAttacksInterval').value;
+            saveFarmOptions();
+    } , false);
+	
+	
+    document.getElementById('FarmReports').addEventListener('change', function(){
+            FarmOptions.DeleteReports = document.getElementById('FarmReports').checked;
+            saveFarmOptions();
+    } , false);
+    document.getElementById('FarmRadius').addEventListener('change', function(){
+            FarmOptions.MaxDistance = parseInt(document.getElementById('FarmRadius').value);
+            saveFarmOptions();
+    } , false);
+    document.getElementById('FarmAttSearch').addEventListener('click', function(){t.toggleBarbState(this)} , false);
+    document.getElementById('FarmSearch').addEventListener('click', function(){
+        for (i=1;i<=Seed.cities.length;i++) GM_deleteValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId());
+        for(i=0;i<Seed.cities.length;i++){
+                var elem = 'pdtotalFarm'+i;
+                document.getElementById(elem).innerHTML = 'No Data';
+        }
+        t.checkFarmData();
+    } , false);
+
+    document.getElementById('pbFarmSearch2').addEventListener('click', function(){
+	        for (i=1;i<=Seed.cities.length;i++) {
+			if (FarmOptions.CityEnable[i] == false)
+			  GM_deleteValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId());}
+        for(i=0;i<Seed.cities.length;i++){
+                var elem = 'pdtotalFarm'+i;
+                	if (FarmOptions.CityEnable[i+1] == false)document.getElementById(elem).innerHTML = 'No Data';
+        }
+        t.checkFarmData();
+    } , false);
+	    document.getElementById('pbcompactFarms1').addEventListener('click', function(){
+
+        for(i=0;i<Seed.cities.length;i++){
+                var elem = 'pdtotalFarm'+i;
+               if (FarmOptions.CityEnable[i] == false) document.getElementById(elem).innerHTML = 'No Data';
+        }
+        t.compactFarmData();
+    } , false);
+	    document.getElementById('pbcompactFarms2').addEventListener('click', function(){
+        for(i=0;i<Seed.cities.length;i++){
+                var elem = 'pdtotalFarm'+i;
+                document.getElementById(elem).innerHTML = 'No Data';
+        }
+        t.compactFarmData2();
+    } , false);
+	    document.getElementById('pbcompactFarms3').addEventListener('click', function(){
+        for(i=0;i<Seed.cities.length;i++){
+                var elem = 'pdtotalFarm'+i;
+                document.getElementById(elem).innerHTML = 'No Data';
+        }
+        t.compactFarmData3();
+    } , false);
+    document.getElementById('pbpaintFarms').addEventListener('click', function(){t.showFarms(document.getElementById("pbFarmcity").value,Seed.cities[document.getElementById("pbFarmcity").value -1][1]);},false);  
+  
+    document.getElementById('FarmMinMight').addEventListener('change', function(){
+            FarmOptions.MinMight = parseInt(document.getElementById('FarmMinMight').value);
+            t.FilterFarms();
+            saveFarmOptions();
+    } , false);
+    document.getElementById('FarmMaxMight').addEventListener('change', function(){
+            FarmOptions.MaxMight = parseInt(document.getElementById('FarmMaxMight').value);
+            t.FilterFarms();
+            saveFarmOptions();
+    } , false);
+    document.getElementById('FarmInactive').addEventListener('change', function(){
+            FarmOptions.Inactive = parseInt(document.getElementById('FarmInactive').value);
+            t.FilterFarms();
+            saveFarmOptions();
+    } , false);
+    document.getElementById('FarmBadRess').addEventListener('change', function(){
+            FarmOptions.MinFarmRes = parseInt(document.getElementById('FarmBadRess').value);
+            t.FilterFarms();
+            saveFarmOptions();
+    } , false);
+    
+  
+  
+    var element = document.getElementsByClassName('pbTroopOpt');
+     for (k=0;k<element.length;k++){
+            element[k].addEventListener('change', function(){
+                    for (i=1;i<=10;i++){
+                        FarmOptions.Troops[i] = document.getElementById('FarmTroop' + i).value;
+                        saveFarmOptions();
+                    }
+            }, false);
+      }
+    
+    element = document.getElementsByClassName('pbCityOpt');
+     for (k=0;k<element.length;k++){
+            element[k].addEventListener('change', function(){
+                    for (i=1;i<=12;i++){
+                        FarmOptions.CityLevel[i] = document.getElementById('CityLevel' + i).checked;
+                        saveFarmOptions();
+                    }
+                    t.FilterFarms();
+            }, false);
+      }
+    
+    element = document.getElementsByClassName('pbCityEn');
+     for (k=0;k<element.length;k++){
+            element[k].addEventListener('change', function(){
+                    for (i=1;i<=Seed.cities.length;i++){
+                        FarmOptions.CityEnable[i] = document.getElementById('CityEnable' + i).checked;
+                        saveFarmOptions();
+                    }
+                    t.FilterFarms();
+            }, false);
+      }
+    
+    element = document.getElementsByClassName('pbDipOpt');
+     for (k=0;k<element.length;k++){
+            element[k].addEventListener('change', function(){
+                    for (i=0;i<t.DipArray.length;i++){
+                        FarmOptions.Diplomacy[t.DipArray[i]] = document.getElementById('Diplomacy' + t.DipArray[i]).checked;
+                        saveFarmOptions();
+                    }
+                    t.FilterFarms();
+            }, false);
+      
+      }
+    
+   },
+   
+
+    checkMarches: function () {
+        var t = Tabs.farm;
+        for (i=0;i<FarmOptions.FarmMarches.length;i++){
+                var cityId = "city"+ FarmOptions.FarmMarches[i]["cityId"];
+                var cityNo = FarmOptions.FarmMarches[i]["city"];
+				var marchID = FarmOptions.FarmMarches[i]["marchId"];
+				var farmNo  = FarmOptions.FarmMarches[i]["number"]
+				var marchId = "m" + marchID;
+                if (Seed.queue_atkp[cityId][marchId] !=undefined){
+					var l_marchStatus = Seed.queue_atkp[cityId][marchId].marchStatus;
+				     if (Seed.queue_atkp[cityId][marchId].marchType==4) {
+                            if ((l_marchStatus==8 &&Seed.queue_atkp[cityId][marchId].hasUpdated)||(l_marchStatus==5)){
+			//actionLog('CityNo '+cityNo + '; i ='+i+'; farmNo'+farmNo+';marchID-'+marchID+';marchstatus'+l_marchStatus+'. '+Seed.queue_atkp[cityId][marchId].hasUpdated);
+
+            FarmOptions.Checks++;
+            FarmOptions.FarmMarches.splice(i,1);
+			saveFarmOptions();
+            //document.getElementById('FarmCheck').innerHTML = "Attacks: " + FarmOptions.Attacks + " - Checks:" +			FarmOptions.Checks+' (Last city '+cityNo+')';
+
+			t.getRetMarchInfo (marchID,cityNo,farmNo,
+			parseInt(t.FarmArray[cityNo][farmNo]["Gold"]),
+			parseInt(t.FarmArray[cityNo][farmNo]["Food"]),
+			parseInt(t.FarmArray[cityNo][farmNo]["Wood"]),parseInt(t.FarmArray[cityNo][farmNo]["Stone"]),
+			parseInt(t.FarmArray[cityNo][farmNo]["Ore"]),0,parseInt(t.helpArray[cityNo][farmNo]["empty"]));
+
+            saveFarmOptions();
+                            }
+						}
+                } else {
+                    FarmOptions.FarmMarches.splice(i,1);
+                    saveFarmOptions();
+                }    
+        }
+     },    
+
+   checkInactives : function (citynumber,city,FarmNumber,xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12){
+        var t = Tabs.farm;
+        var now = new Date().getTime()/1000.0;
+        var hours = (now - t.FarmArray[city][FarmNumber]['LastCheck']) / 3600;
+        if (t.FarmArray[city][FarmNumber]['DaysInactive'] == "?" || hours > 12){
+                var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+                params.pid = uid;
+                new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/viewCourt.php" + unsafeWindow.g_ajaxsuffix, {
+                         method: "post",
+                          parameters: params,
+                          onSuccess: function (transport) {
+                                    var rslt = eval("(" + transport.responseText + ")");
+                                    var lastLogin = rslt.playerInfo.lastLogin;
+                                    var fullDate = lastLogin.substr(0,4) +", "+ lastLogin.substr(5,2) +", "+ lastLogin.substr(8,2) ;
+                                    var time = new Date (fullDate).getTime()/1000;
+                                    var days = Math.floor((now - time) / 86400);
+                                    t.FarmArray[city][FarmNumber]['DaysInactive'] = days;
+			var AllianceName = rslt.playerInfo.allianceName;
+           t.FarmArray[city][FarmNumber]["AllianceName"] = AllianceName;
+		   if (!(!!AllianceName)) {t.FarmArray[city][FarmNumber]["Diplomacy"] = 'unallied';t.FarmArray[city][FarmNumber]["AllianceName"]="";}
+		   else { if (t.FarmArray[city][FarmNumber]["Diplomacy"] == 'unallied') t.FarmArray[city][FarmNumber]["Diplomacy"]='neutral' };
+	       t.FarmArray[city][FarmNumber]["might"] = rslt.playerInfo.might;
+                                    for (i=0;i<t.helpArray[city].length;i++){
+                                                 if (xcoord == parseInt(t.helpArray[city][i]['x']) && ycoord == parseInt(t.helpArray[city][i]['y'])){
+                                                    t.helpArray[city][i]['DaysInactive'] = days;
+                                                    t.helpArray[city][i]['LastCheck'] = now;
+													t.helpArray[city][i] ["AllianceName"] = rslt.playerInfo.allianceName;
+	                                                t.helpArray[city][i] ["might"] = rslt.playerInfo.might;
+                                                   }    
+  //
+  /*Arch Angels ReUKnighted		28 cCc__alparslan__cCc		24
+Death to Strangers		5
+family pride		90
+Family Pride II		100
+Fierce Knights		82
+Hostile Rogues		41
+Hulles_Rache		17
+InSaNe AsYlUm		93
+INSANE SAVAGES		26
+SAVAGE KNIGHTS		91* /
+  var not_hit_list = 'family pride';//"The Highlanders"
+  if (t.helpArray[city][i]["AllianceName"] == not_hit_list && t.helpArray[city][i]["enabled"]!='true'&&days>2) t.helpArray[city][i]["enabled"] = false;
+	//if (parseInt(t.helpArray[city][i]["attacked"]) >1) t.helpArray[city][i]["attacked"] = 1;*/
+
+                                    }
+                                    GM_setValue('Farms_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.helpArray[city]));
+									
+                                    if (days > FarmOptions.Inactive) {
+                                        t.doBarb(citynumber,city,FarmNumber,xcoord,ycoord,kid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+                                    } else     {
+                                                FarmOptions.FarmNumber[city]++;
+                                                saveFarmOptions();
+                                                t.barbing();
+                                            }
+                           },
+                          onFailure: function (rslt) {
+                                    notify (rslt);
+                          },
+                });
+        } else {
+			var l_inactive_days_koef =1;
+			var Diplomacy = t.FarmArray[city][FarmNumber]['Diplomacy'];
+	        if (Diplomacy=='unallied') l_inactive_days_koef=0.2;
+            if (t.FarmArray[city][FarmNumber]['DaysInactive'] >= FarmOptions.Inactive*l_inactive_days_koef) {
+                t.doBarb(citynumber,city,FarmNumber,xcoord,ycoord,kid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+             }     else{
+                    FarmOptions.FarmNumber[city]++;
+                    saveFarmOptions();
+                    t.barbing();
+                }
+        }
+    },
+ getRetMarchInfo: function (marchIDs,cityNum,farmNum,l_g,l_f,l_w,l_s,l_o,l_a,l_got_info_times) {
+  var t = Tabs.farm;
+  var ret = {};
+  var l_lost = false;
+  var l_enabled = true;
+  var ll_got_info = l_got_info_times;
+  ret.marchUnits = [];
+  ret.returnUnits = [];
+  ret.Coords = [];
+  ret.reso = [];
+ // ret.Coords[0]=-1;ret.Coords[0]=-1;
+ // for (ik=0; ik<15; ik++){ ret.marchUnits[ik] = 0;ret.returnUnits[ik] = 0;}
+ // for (il=0; il<=5; il++){ret.reso[il] = 0;}
+  
+   var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+   params.rid = marchIDs;
+   new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/fetchMarch.php" + unsafeWindow.g_ajaxsuffix, {
+                         method: "post",
+                          parameters: params,
+                          onSuccess: function (message) {
+                                    var rslt = eval("(" + message.responseText + ")");
+
+/* rslt.march["knightName"]   parseInt(rslt.march["marchType"]) {1: transport;2: reinforce;3: scout;4: attack;5: reassign}
+switch (parseInt(rslt.march["marchStatus"])){1: marching;2: defending;8: returning;9: aborting; default:undefined}
+ rslt.march["unit" + i + "Return"]
+ for (i=0; i<15; i++){ ret.returnUnits[i] = parseInt(rslt.march["unit" + i + "Return"]);//ret.marchUnits[i] = parseInt(rslt.march["unit" + i + "Count"]);
+ }*/ 
+    var l_debug_on =0;
+    var  marchStatus = rslt.march["marchStatus"];
+     ret.Coords[0]= parseInt(rslt.march["xCoord"]);ret.Coords[1]=parseInt(rslt.march["yCoord"]);
+    ret.reso[0] = parseInt(rslt.march["gold"]);
+    for (var j = 1; j <= 5; j++) {ret.reso[j] = parseInt(rslt.march["resource" +j]);}
+
+	                        for (a=0;a<t.helpArray[cityNum].length;a++){
+							if (ret.Coords[0] == parseInt(t.helpArray[cityNum][a]['x']) && ret.Coords[1] == parseInt(t.helpArray[cityNum][a]['y'])){
+							
+	if (l_debug_on==1 &&(ll_got_info>0||marchStatus ==1)) actionLog('City-'+cityNum+' Farm('+farmNum+')'+marchIDs+'('+ ret.Coords[0]+','+ret.Coords[1]+')'+ '; Res-'+Math.round((ret.reso[0]+ret.reso[1]+ret.reso[2]+ret.reso[3]+ret.reso[4])/1000)+'!!!MARCH_STATUS=' + marchStatus+'. ll_got_info-'+ll_got_info);
+								if (marchStatus ==1) {myVar2 = setTimeout(function(){t.getRetMarchInfo(marchIDs,cityNum,farmNum,l_g,l_f,l_w,l_s,l_o,l_a,ll_got_info)},10*1000); return;}
+                                    for(u=1;u<=12;u++) {
+									  var l_ret_units = parseInt(rslt.march["unit"+u+"Return"]);
+									  var l_sent_units = parseInt(rslt.march["unit"+u+"Count"]);
+										if (l_ret_units < l_sent_units){
+                                                l_lost = true;
+												actionLog('City-'+cityNum+' Farm('+farmNum+')('+ ret.Coords[0]+','+ret.Coords[1]+')'+'.l_ret_units'+u+'+sent: '+l_ret_units+'/'+l_sent_units);
+												if (l_ret_units < (l_sent_units*75/100)) l_enabled = false;
+										}
+									}
+
+if (l_debug_on==1) actionLog('City-'+cityNum+'||FOOD-'+  Math.round(ret.reso[1]/1000000)+ 'M; ORE-'+ Math.round(ret.reso[4]/1000000)+ 'M||;wood-'+ Math.round(ret.reso[2]/1000000)+'M;stone-'+ Math.round(ret.reso[3]/1000000)+'M.'+' Farm('+farmNum+',marchno'+marchIDs+')('+ ret.Coords[0]+','+ret.Coords[1]+')'); // Before food1-'+t.FarmArray[cityNum][farmNum]["Food"] );
+	l_g += ret.reso[0]; l_f += ret.reso[1]; l_w += ret.reso[2]; l_s += ret.reso[3]; l_o += ret.reso[4]; 
+
+  if (l_f+l_w+l_s+l_o < 1.5*1000*1000) l_enabled = false; // disable farm because it have only less then 1.5 mil res.
+  if (ret.reso[5]>0) { actionLog('City-'+cityNum+' Farm have astone ['+ret.reso[5]+'] at ('+ ret.Coords[0]+','+ret.Coords[1]+') !!! :)');}
+  if ((ret.reso[0]+ret.reso[1]+ret.reso[2]+ret.reso[3]+ret.reso[4])/1000000>=(FarmOptions.MinFarmRes*2)) { //actionLog('City-'+cityNum+' Send wags to that FAT Farm ['+parseInt((ret.reso[0]+ret.reso[1]+ret.reso[2]+ret.reso[3]+ret.reso[4])/1000000)+' mil res ] at ('+ ret.Coords[0]+','+ret.Coords[1]+') !!! :)');
+   var now = new Date().getTime()/1000.0;
+   now = now.toFixed(0);
+				     					t.helpArray[cityNum][a]['time'] = now-55*3600;
+   }
+  										t.helpArray[cityNum][a]['Ore'] = l_o;
+										t.helpArray[cityNum][a]["Wood"] = l_w;
+                                        t.helpArray[cityNum][a]['Stone'] = l_s;
+										t.helpArray[cityNum][a]["Food"] = l_f;
+                                        t.helpArray[cityNum][a]["Gold"] = l_g;
+                                        t.helpArray[cityNum][a]['enabled'] = l_enabled;
+                                        t.helpArray[cityNum][a]['lost'] = l_lost;
+										t.helpArray[cityNum][a]['empty'] ++;
+								GM_setValue('Farms_' + Seed.player['name'] + '_city_' + cityNum + '_' + getServerId(), JSON2.stringify(t.helpArray[cityNum]));
+  }}
+
+		   },
+                          onFailure: function (rslt) { }
+    })
+	},
+      showFarms: function (citynumber,cityname) {
+        var t = Tabs.farm;
+        var popTradeRoutes = null;
+        t.popTradeRoutes = new pbPopup('pbShowFarms', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
+        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowBarbs" id="pbBars">';       
+        t.popTradeRoutes.getMainDiv().innerHTML = '</table></div>' + m;
+        t.popTradeRoutes.getTopDiv().innerHTML = '<TD><center><B>Farms for city: '+cityname+'</center></td>';
+        t.paintFarms(citynumber,cityname);
+        t._addTabHeader(citynumber,cityname);
+        t.popTradeRoutes.show(true)    ;
+     },
+    
+    
+        ToggleFarms: function(citynumber) {
+            var t = Tabs.farm;
+            var id=0;
+            var element_class = document.getElementsByClassName('Farm');
+                   for (d = 1; d <= t.FarmArray[citynumber].length; d++) {
+                        id = d-1;
+                        var ele = document.getElementById('FarmToggle' + d);
+                  if (ele.checked) {
+                t.FarmArray[citynumber][id].enabled = true;
+                t.FarmArray[citynumber][id].lost = false;
+                //t.FarmArray[citynumber][id].empty = 0;   
+            }
+                        else t.FarmArray[citynumber][id].enabled = false;
+                }
+            for (i=0;i<t.helpArray[citynumber].length;i++){
+                    for (j=0;j<t.FarmArray[citynumber].length;j++){
+                         if (parseInt(t.FarmArray[citynumber][j]['x']) == parseInt(t.helpArray[citynumber][i]['x']) && parseInt(t.FarmArray[citynumber][j]['y']) == parseInt(t.helpArray[citynumber][i]['y'])) t.helpArray[citynumber][i].enabled = t.FarmArray[citynumber][j].enabled;
+                    }
+            }
+            GM_setValue('Farms_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId(), JSON2.stringify(t.helpArray[citynumber]));
+        },
+        
+     paintFarms: function(i,cityname){
+            var t = Tabs.farm;
+			var now = new Date().getTime()/1000.0;
+			now = now.toFixed(0);
+            for (k=(t.FarmArray[i].length-1);k>=0;k--)
+			{
+            var Hourss = 0;
+			//if (t.FarmArray[i][k]['DaysInactive'] > 5 || t.FarmArray[i][k]['DaysInactive']=='?') {
+			if (parseInt(t.FarmArray[i][k]['time'])>0)	Hourss = Math.round((now - parseInt(t.FarmArray[i][k]['time'])) / 3600);
+			
+			t._addTab(i,cityname,k+1,t.FarmArray[i][k]['enabled'], t.FarmArray[i][k]['x'], t.FarmArray[i][k]['y'],t.FarmArray[i][k]['dist'], t.FarmArray[i][k]['level'],t.FarmArray[i][k]['AllianceName'], t.FarmArray[i][k]['Diplomacy'], t.FarmArray[i][k]['PlayerName'], t.FarmArray[i][k]['cityName'],t.FarmArray[i][k]['might'], t.FarmArray[i][k]['cityNumber'], t.FarmArray[i][k]['attacked'],t.FarmArray[i][k]['DaysInactive'],t.FarmArray[i][k]['lost'],t.FarmArray[i][k]['empty'],t.FarmArray[i][k]['Ore'],t.FarmArray[i][k]['Wood'],t.FarmArray[i][k]['Stone'],t.FarmArray[i][k]['Food'],t.FarmArray[i][k]['Gold'],
+			Hourss
+			);
+			//}
+			}
+        },
+
+
+          _addTab: function(citynumber,cityname,queueId,status,X,Y,dist,level,AllianceName,diplomacy,playerName,cityName,might,cityNumber,attacked,DaysInactive,lost,empty,Ore,Wood,Stone,Food,Gold, last_hit_time){
+             var t = Tabs.farm;
+             var row = document.getElementById('pbBars').insertRow(0);
+             row.vAlign = 'top';     
+              if (lost) {row.style.color = "red";
+			  }else{
+             if (!lost) {row.style.color = "brown"; row.style.background = "rgb(246,243,236)";
+		 
+			 if  (Math.round(Ore /1000000,1) +Math.round(Food /1000000,1)+Math.round(Stone/1000000,1)+Math.round(Wood/1000000,1)+Math.round(Gold/1000000,1)<FarmOptions.MinFarmRes) row.style.color = "lightblue";
+ 			 if  (Math.round(Ore /1000000,1)+Math.round(Food /1000000,1)>FarmOptions.MinFarmRes*0.70) {row.style.color = "darkgreen";row.style.backgroundColor = "#BDD1A7";}
+
+			 }
+			 var l_inactive_days_koef =1;
+			 if (diplomacy=='unallied') l_inactive_days_koef=0.2;
+             if (FarmOptions.Inactive*l_inactive_days_koef > DaysInactive) row.style.color = "#E8C384"; //"orange";
+			 if (!lost &&!status) row.style.color = "gray";}
+			 
+             row.insertCell(0).innerHTML = queueId;
+             row.insertCell(1).innerHTML = coordLink(X,Y);
+             row.insertCell(2).innerHTML = dist;
+                row.insertCell(3).innerHTML = level;
+               row.insertCell(4).innerHTML = AllianceName;
+               row.insertCell(5).innerHTML = diplomacy;    
+                row.insertCell(6).innerHTML = playerName;
+               row.insertCell(7).innerHTML = cityName;
+                   row.insertCell(8).innerHTML = addCommas(might);
+                row.insertCell(9).innerHTML = DaysInactive;
+                 row.insertCell(10).innerHTML = attacked;
+             row.insertCell(11).innerHTML = '<INPUT class=Farm id="FarmToggle' + queueId + '" type=checkbox>';
+                 row.insertCell(12).innerHTML = Math.round(Ore /1000000,1) +'|';
+                 row.insertCell(13).innerHTML = Math.round(Food /1000000,1) +'|';
+				 row.insertCell(14).innerHTML = Math.round(Stone/1000000,1)+'||';
+                 row.insertCell(15).innerHTML = Math.round(Wood/1000000,1)+'|';
+                row.insertCell(16).innerHTML = Math.round(Gold /1000000,1)+'|';
+				row.insertCell(17).innerHTML = '('+empty +'-' +last_hit_time+'h)'; //Math.round(last_hit_time,2);
+             
+            var element_class = document.getElementsByClassName('Farm');
+                   for (c = 0; c < element_class.length; c++) {
+                        element_class[c].checked = t.FarmArray[citynumber][c].enabled;
+                        element_class[c].addEventListener('click', function(){t.ToggleFarms(citynumber)}, false);
+                    }
+         },
+        
+         _addTabHeader: function(citynumber,cityname) {
+         var t = Tabs.farm;
+             var row = document.getElementById('pbBars').insertRow(0);
+             row.vAlign = 'top';
+             row.insertCell(0).innerHTML = "Id";
+             row.insertCell(1).innerHTML = "Coords";
+             row.insertCell(2).innerHTML = "Dist.";
+             row.insertCell(3).innerHTML = "Level";
+             row.insertCell(4).innerHTML = "Allaince Name";
+            row.insertCell(5).innerHTML = "Diplomacy";
+            row.insertCell(6).innerHTML = "Player Name";
+            row.insertCell(7).innerHTML = "City Name";
+            row.insertCell(8).innerHTML = "Might";
+            row.insertCell(9).innerHTML = "Inactive";
+              row.insertCell(10).innerHTML = "# Attacks";
+                 row.insertCell(11).innerHTML = " [on/off] ";
+                 row.insertCell(12).innerHTML = "Ore";
+                row.insertCell(13).innerHTML = "Food";
+                row.insertCell(14).innerHTML = "Stone";
+                 row.insertCell(15).innerHTML = "Wood";
+                row.insertCell(16).innerHTML = "Gold";
+				row.insertCell(17).innerHTML = "Visited";
+
+           },
+        
+        
+  startdeletereports : function (){
+    var t = Tabs.farm;
+    if (!FarmOptions.DeleteReports) return;
+    if(!t.deleting){
+        t.deleting = true;
+        t.fetchbarbreports(0, t.checkbarbreports);
+    }
+  },
+  fetchbarbreports : function (pageNo, callback){
+    var t = Tabs.farm;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    if(pageNo > 0)
+        params.pageNo = pageNo;
+    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
+        method: "post",
+        parameters: params,
+        onSuccess: function (rslt) {
+            callback(rslt);
+        },
+        onFailure: function () {
+        },
+    });
+  },
+  checkbarbreports : function (rslt){
+    var t = Tabs.farm;
+    if(!rslt.ok){
+        return;
+    }
+    if(rslt.arReports.length < 1){
+        return;
+    }
+    var reports = rslt.arReports;
+	var now = new Date().getTime()/1000.0;
+     now = now.toFixed(0);
+// t.helpArray[cityNum][a]['time'] = now-55*3600;
+    var totalPages = rslt.totalPages;
+        var deletes1 = new Array();
+        for(k in reports){
+            for (i=1;i<=Seed.cities.length;i++){
+                    var x=Seed.cities[i-1]["2"];
+                    var y=Seed.cities[i-1]["3"];
+                    for (j=0;j<t.FarmArray[i].length;j++){
+                                if (reports[k].side1XCoord == x && reports[k].side1YCoord == y && reports[k].side0XCoord == t.FarmArray[i][j]["x"] && reports[k].side0YCoord == t.FarmArray[i][j]["y"]&&(!(t.FarmArray[i][j]['lost']))
+								&&(t.FarmArray[i][j]['enabled']||(!(t.FarmArray[i][j]['enabled'])&&(now-t.FarmArray[i][j]['time']<25*60)))
+								) {
+								deletes1.push(k.substr(2));
+								}
+                    }
+            }    
+        }
+        if(deletes1.length > 0){
+            t.deletereports(deletes1);
+        } else {
+            t.deleting = false;
+            return;
+        }
+  },
+
+  deletereports : function (deletes1){
+    var t = Tabs.farm;
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.s1rids = deletes1.join(",");
+    params.s0rids = '';
+    params.cityrids = '';
+    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
+        method: "post",
+        parameters: params,
+        onSuccess: function (rslt) {
+            Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length);
+            t.fetchbarbreports(0, t.checkbarbreports);
+        },
+        onFailure: function () {
+        },
+    });
+  },
+
+  isMyself: function(userID){
+    if(!Seed.players["u"+userID])
+        return false;
+    if(Seed.players["u"+userID].n == Seed.player.name)
+        return true;
+    else
+        return false;
+    return false;
+  },
+
+  checkFarmData: function(){
+     if(!FarmOptions.Running)return;
+      var t = Tabs.farm;
+      for (i=1;i<=Seed.cities.length;i++){
+        t.helpArray[i] = [];
+		  //if(!FarmOptions.CityEnable[i])continue;
+          var myarray = (GM_getValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId()));
+        if (myarray == undefined && t.searchRunning==false) {
+            t.searchRunning = true;
+              t.lookup=i;
+              t.opt.startX=parseInt(Seed.cities[(i-1)][2]);
+              t.opt.startY=parseInt(Seed.cities[(i-1)][3]);  
+              t.clickedSearch();
+          }
+        if (myarray != undefined){
+            myarray = JSON2.parse(myarray);
+            //if(Method == 'distance')
+            t.helpArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
+              GM_setValue('Farms_' + Seed.player['name'] + '_city_' + i + '_' + getServerId(), JSON2.stringify(t.helpArray[i]));
+              }
+          }
+    t.FilterFarms();
+  },
+ compactFarmData: function(){
+      var t = Tabs.farm;
+      for (cityNum=1;cityNum<=Seed.cities.length;cityNum++){
+	  var n =0;
+	  var max_attacks = 0;
+	  t.FarmArray[cityNum] = [];
+
+		for (a=0;a<t.helpArray[cityNum].length;a++){
+			if ((t.helpArray[cityNum][a]['might']< FarmOptions.MaxMight)&&(
+            t.helpArray[cityNum][a]['DaysInactive']=='?'
+			|| parseInt(t.helpArray[cityNum][a]['DaysInactive'])>2)) {
+			 t.FarmArray[cityNum][n++] = t.helpArray[cityNum][a];
+			 }
+		}
+
+              GM_setValue('Farms_' + Seed.player['name'] + '_city_' + cityNum + '_' + getServerId(), JSON2.stringify(t.FarmArray[cityNum]));
+    }
+    t.FilterFarms();
+	reloadKOC();
+  },
+compactFarmData2: function(){
+      var t = Tabs.farm;
+	  var l_min_res = FarmOptions.MinFarmRes * 1000000;
+      for (cityNum=1;cityNum<=Seed.cities.length;cityNum++){
+	   if (!(FarmOptions.CityEnable[cityNum])){
+	    var n =0;
+	    var max_attacks = 0;
+	  	for (a=0;a<t.helpArray[cityNum].length;a++){
+			 if (max_attacks < t.helpArray[cityNum][a]['attacked'] ) max_attacks=t.helpArray[cityNum][a]['attacked'];
+			}
+		if (max_attacks>0) {
+		 t.FarmArray[cityNum] = [];
+		 for (a=0;a<t.helpArray[cityNum].length;a++){
+			var l_o = parseInt(t.helpArray[cityNum][a]['Ore'])
+			var l_w = parseInt(t.helpArray[cityNum][a]["Wood"]);
+			var l_s = parseInt(t.helpArray[cityNum][a]['Stone']);
+			var l_f = parseInt(t.helpArray[cityNum][a]["Food"]);
+			var l_g = parseInt(t.helpArray[cityNum][a]["Gold"]);
+			var l_attacked = parseInt(t.helpArray[cityNum][a]['empty']);
+			if (t.helpArray[cityNum][a]['enabled']&&t.helpArray[cityNum][a]['DaysInactive']!='?' &&(l_attacked<1&&parseInt(t.helpArray[cityNum][a]['DaysInactive'])>3 || (l_attacked>0 && ((l_o+l_w+l_s+l_f+l_g)>l_min_res||(l_o+l_f)>l_min_res*0.70)) )) {
+			 t.FarmArray[cityNum][n++] = t.helpArray[cityNum][a];
+			}
+		 }
+              GM_setValue('Farms_' + Seed.player['name'] + '_city_' + cityNum + '_' + getServerId(), JSON2.stringify(t.FarmArray[cityNum]));
+		}
+	  }
+     }
+    t.FilterFarms();
+	reloadKOC();
+  },
+compactFarmData3: function(){
+    var t = Tabs.farm;
+    for (cityNum=1;cityNum<=Seed.cities.length;cityNum++){
+		if (!(FarmOptions.CityEnable[cityNum])){
+		 var n =0;
+		 t.FarmArray[cityNum] = [];
+			for (a=0;a<t.helpArray[cityNum].length;a++){
+				if (t.helpArray[cityNum][a]['enabled']){
+					t.helpArray[cityNum][a]['Ore']=0;
+					t.helpArray[cityNum][a]["Wood"]=0;
+					t.helpArray[cityNum][a]['Stone']=0;
+					t.helpArray[cityNum][a]["Food"]=0;
+					t.helpArray[cityNum][a]["Gold"]=0;
+					t.helpArray[cityNum][a]['attacked']=0;
+					t.helpArray[cityNum][a]['empty']=0;
+				}
+				t.FarmArray[cityNum][n++] = t.helpArray[cityNum][a];
+			}
+            GM_setValue('Farms_' + Seed.player['name'] + '_city_' + cityNum + '_' + getServerId(), JSON2.stringify(t.FarmArray[cityNum]));
+		}
+    }
+    t.FilterFarms();
+	reloadKOC();
+  },
+
+  FilterFarms: function() {
+    var t = Tabs.farm;
+    if (t.searchRunning) return;
+    t.FarmArray = new Array();
+    t.FarmArray["1"] = new Array();
+    t.FarmArray["2"] = new Array();
+    t.FarmArray["3"] = new Array();
+    t.FarmArray["4"] = new Array();
+    t.FarmArray["5"] = new Array();
+    t.FarmArray["6"] = new Array();
+    t.FarmArray["7"] = new Array();
+    t.FarmArray["8"] = new Array();    
+    for (u=1;u<=Seed.cities.length;u++){        
+        for (i=0;i<t.helpArray[u].length;i++){
+            var checkLvl = false;
+            var checkMight = false;
+            var checkDip = false;
+            var checkAlliance = false;
+            var AllianceName = "";
+            for (j=1;j<=12;j++) if (FarmOptions.CityLevel[j] && t.helpArray[u][i].level == j) checkLvl=true;
+            if (Seed.allianceDiplomacies.allianceName != undefined) AllianceName = Seed.allianceDiplomacies.allianceName;
+            if (t.helpArray[u][i].AllianceName != AllianceName) checkAlliance = true;
+            if (t.helpArray[u][i].might >= FarmOptions.MinMight && t.helpArray[u][i].might <= FarmOptions.MaxMight) checkMight = true;
+            for (j in FarmOptions.Diplomacy) if (FarmOptions.Diplomacy[j] && t.helpArray[u][i].Diplomacy == j) checkDip=true;
+            if (checkLvl && checkMight && checkDip && checkAlliance) t.FarmArray[u].push (t.helpArray[u][i]);
+        }
+        var elem = 'pdtotalFarm'+(u-1);
+        if (t.FarmArray[u] == undefined) document.getElementById(elem).innerHTML = 'No Data';
+        else {
+				var l_ok_farms =0;
+			    for (a=0;a<t.helpArray[u].length;a++){
+					 if (t.helpArray[u][a]['enabled']&&((t.helpArray[u][a]['DaysInactive']=='?') ||(t.helpArray[u][a]['DaysInactive']> FarmOptions.Inactive))) l_ok_farms++;
+				 }
+			document.getElementById(elem).innerHTML =  '' + l_ok_farms+'/'+t.FarmArray[u].length +'/'+ t.helpArray[u].length+'';
+			}
+
+    }
+  },
+
+
+  SortDist: function(a,b) {
+      a = parseFloat(a['dist']);
+      b = parseFloat(b['dist']);
+      return (a < b )? -1 : ((a > b ? 1 : 0));
+  },
+  
+  toggleBarbState: function(obj){
+    var t = Tabs.farm;
+    obj = document.getElementById('FarmAttSearch');
+    if (FarmOptions.Running == true) {
+        FarmOptions.Running = false;
+        obj.value = "Farm = OFF";
+        if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #CCC">'+unsafeWindow.g_js_strings.grove.farms+': Off</span>';
+        saveFarmOptions();
+        t.nextattack = null;
+    t.updateSeedTimer = null;
+    } else {
+        FarmOptions.Running = true;
+		FarmOptions.DeleteReports = true;
+        obj.value = "Farm = ON";
+		if(document.getElementById('FarmToggleTab'))document.getElementById('FarmToggleTab').innerHTML = '<span style="color: #FFFF00">'+unsafeWindow.g_js_strings.grove.farms+': On</span>';
+        saveFarmOptions();
+        t.checkFarmData();
+        t.nextattack = setInterval(t.getnextCity,(parseInt(Math.random()*3)*100+FarmOptions.SendInterval*1000));
+		reloadKOC();
+    }
+  },
+  
+  barbing : function(){
+         var t = Tabs.farm;
+       var city = t.city;
+       var u1 = FarmOptions.Troops[1];
+       var u2 = FarmOptions.Troops[2];
+       var u3 = FarmOptions.Troops[3];
+       var u4 = FarmOptions.Troops[4];
+       var u5 = FarmOptions.Troops[5];
+       var u6 = FarmOptions.Troops[6];
+       var u7 = FarmOptions.Troops[7];
+       var u8 = FarmOptions.Troops[8];
+       var u9 = FarmOptions.Troops[9];
+       var u10 = FarmOptions.Troops[10];
+       var u11 = FarmOptions.Troops[11];
+       var u12 = FarmOptions.Troops[12];
+       var now = new Date().getTime()/1000.0;
+       now = now.toFixed(0);
+       citynumber = Seed.cities[city-1][0];
+       cityID = 'city' + citynumber;
+       
+       t.getAtkKnight(cityID);
+	   //t.rallypointlevel = March.getRallypointLevel(cityID);
+       t.rallypointlevel = March.getTotalSlots(citynumber);
+       numMarches = t.rallypointlevel;
+       var slots= March.getMarchSlots(citynumber);
+       
+       var element2 = 'pddataFarmarray'+(city-1);
+       document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + numMarches +')';
+       
+       if (!FarmOptions.CityEnable[city]) { document.getElementById(element2).innerHTML ='Disabled';return;}
+      if (Number(Number(numMarches)-Number(slots)) <= Number(FarmOptions.RallyClip)) return;
+	    var Farms_count=t.FarmArray[city].length;
+	   if (Farms_count==0) {document.getElementById(element2).innerHTML = 'No Farms'; return;}
+       if (t.knt.toSource() == "[]") return;
+        if (u1 > parseInt(Seed.units[cityID]['unt1']) || u2 > parseInt(Seed.units[cityID]['unt2']) || u3 > parseInt(Seed.units[cityID]['unt3']) || u4 > parseInt(Seed.units[cityID]['unt4']) || u5 > parseInt(Seed.units[cityID]['unt5']) || u6 > parseInt(Seed.units[cityID]['unt6']) || u7 > parseInt(Seed.units[cityID]['unt7']) || u8 > parseInt(Seed.units[cityID]['unt8']) || u9 > parseInt(Seed.units[cityID]['unt9']) || u10 > parseInt(Seed.units[cityID]['unt10']) || u11 > parseInt(Seed.units[cityID]['unt11']) || u12 > parseInt(Seed.units[cityID]['unt12'])) return;
+        if (FarmOptions.FarmNumber[city]>=Farms_count) FarmOptions.FarmNumber[city]=0;
+        var kid = t.knt[0].ID;
+
+         var interval = 0;
+         switch(FarmOptions.Interval){
+                case "1":interval = 1;break;
+                case "2":interval = 2;break;
+                case "3":interval = 3;break;
+                case "4":interval = 6;break;
+                case "5":interval = 12;break;
+                case "6":interval = 24;break;
+				case "7":interval = 29;break;
+				case "8":interval = 36;break;
+				case "9":interval = 48;break;
+				case "10":interval = 94;break;
+        }
+        
+         var checkas=0;
+		 var tmp_loop =0;
+		 var Hourss_max=0;
+         while (checkas == 0){
+		 var Hourss =0;
+         checkas=1;
+		 for (i=1;i<=12;i++){
+                      if (FarmOptions.Troops[i] > parseInt(Seed.units[cityID]['unt'+i])) checkas=0;
+               }
+           if (FarmOptions.Troops[1] == 0 && FarmOptions.Troops[2] == 0 && FarmOptions.Troops[3] == 0 && FarmOptions.Troops[4] == 0 && FarmOptions.Troops[5] == 0 && FarmOptions.Troops[6] == 0 && FarmOptions.Troops[7] == 0 && FarmOptions.Troops[8] == 0 && FarmOptions.Troops[9] == 0 &&FarmOptions.Troops[10] == 0 && FarmOptions.Troops[11] == 0 && FarmOptions.Troops[12] == 0) checkas=0;
+
+           if (!t.FarmArray[city][FarmOptions.FarmNumber[city]]['enabled']) checkas=0;
+    var farmtime = parseInt(t.FarmArray[city][FarmOptions.FarmNumber[city]]['time']);
+	var AllianceName = t.FarmArray[city][FarmOptions.FarmNumber[city]]['AllianceName'];
+	var l_inactive_days_koef =1;
+	 if (!(!!AllianceName)) l_inactive_days_koef=0.2;
+        if (farmtime>0)	{Hourss = Math.round((now - farmtime) / 3600);} else{
+		    if (t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive'] =="?"||(farmtime==0&&t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive']>=FarmOptions.Inactive*l_inactive_days_koef) ) Hourss=interval+1;}
+		
+        if (Hourss < interval) {checkas=0;}
+		
+		 if (Hourss >= interval && t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive']<FarmOptions.Inactive*l_inactive_days_koef)  {checkas=0;}
+			  
+        if (farmtime>0&&Hourss > Hourss_max&&t.FarmArray[city][FarmOptions.FarmNumber[city]]['enabled']&& t.FarmArray[city][FarmOptions.FarmNumber[city]]['DaysInactive']>=FarmOptions.Inactive*l_inactive_days_koef) {Hourss_max=Hourss;}
+
+	  //if (checkas ==0)
+        var l_farm_no = FarmOptions.FarmNumber[city];
+		if (checkas == 0) {FarmOptions.FarmNumber[city]++; saveFarmOptions();}
+        if (FarmOptions.FarmNumber[city]>=Farms_count) {
+                   FarmOptions.FarmNumber[city]=0;
+				   saveFarmOptions();
+				   document.getElementById(element2).innerHTML =  'Checked all '+ (Farms_count) + ' farms';
+                    //return; //
+					break;
+            }
+       }
+//if (t.FarmArray[city] == undefined) {document.getElementById(element2).innerHTML = 'No Data'; return;}
+           if (checkas == 0) {
+         //{actionLog(' Nothing to farm from city'+city+' next hit after:' + (interval-Hourss_max) +'hours.')};
+		document.getElementById(element2).innerHTML =  'Wait.Next '+ (interval-Hourss_max) + 'h';
+		   saveFarmOptions();
+		 return;} else{
+		
+        var xcoord = t.FarmArray[city][l_farm_no]['x'];
+        var ycoord = t.FarmArray[city][l_farm_no]['y'];
+        var uid = t.FarmArray[city][l_farm_no]['UserId'];
+           if ((numMarches - FarmOptions.RallyClip) > slots) 
+		   t.checkInactives(citynumber,city,l_farm_no,xcoord,ycoord,kid,uid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12);
+  }
+  },
+  
+  getnextCity: function(){
+    var t = Tabs.farm;
+    if (!FarmOptions.Running) return;
+    if(t.searchRunning) return;
+    var city = t.city+1;
+    if (city>Seed.cities.length){
+        city=1;
+    }
+    t.city = city;
+    t.barbing();
+  },
+  
+  getAtkKnight : function(cityID){
+     var t = Tabs.farm;
+     t.knt = new Array();
+
+     for (k in Seed.knights[cityID]){
+             if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
+                 t.knt.push ({
+                     Name:   Seed.knights[cityID][k]["knightName"],
+                     Combat:    Seed.knights[cityID][k]["combat"],
+                     ID:        Seed.knights[cityID][k]["knightId"],
+                 });
+             }
+     }
+     t.knt = t.knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
+  },
+  
+  doBarb: function(cityID,counter,number,xcoord,ycoord,kid,u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12){
+        var t = Tabs.farm;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.cid=cityID;
+        params.type=4;
+		params.kid=kid;
+        params.xcoord = xcoord;
+        params.ycoord = ycoord;
+        if (u1>0) params.u1=u1;
+        if (u2>0)params.u2=u2;
+        if (u3>0)params.u3=u3;
+        if (u4>0)params.u4=u4;
+        if (u5>0)params.u5=u5;
+        if (u6>0)params.u6=u6;
+        if (u7>0)params.u7=u7;
+        if (u8>0)params.u8=u8;
+        if (u9>0)params.u9=u9;
+        if (u10>0)params.u10=u10;
+        if (u11>0)params.u11=u11;
+        if (u12>0)params.u12=u12;
+        params.gold =0;
+      params.r1=0;
+      params.r2=0;
+      params.r3=0;
+      params.r4=0;
+      params.r5=0;
+      
+	           March.addMarch(params, function(rslt){
+                  if (rslt.ok) {
+					var slots=March.getMarchSlots(cityID);
+					var element1 = 'pddataFarmarray'+(counter-1);
+					document.getElementById(element1).innerHTML =  'RP: (' + slots + '/' + t.rallypointlevel +')';
+					var now = new Date().getTime()/1000.0;
+					now = now.toFixed(0);
+					t.FarmArray[counter][number]['time'] = now;
+					t.FarmArray[counter][number]['attacked']++;
+					FarmOptions.FarmMarches.push ({city:counter,cityId:cityID,marchId:rslt.marchId,number:number});
+					FarmOptions.FarmNumber[counter]++;
+					FarmOptions.Attacks++;
+					saveFarmOptions();
+					document.getElementById('FarmCheck').innerHTML = "Attacks: " + FarmOptions.Attacks + " - Checks:" + FarmOptions.Checks + ' (Sent last march from city -' +counter+' Farm No.'+(number+1)+')';
+                 for (i=0;i<t.helpArray[counter].length;i++){
+                        for (j=0;j<t.FarmArray[counter].length;j++){
+                             if (parseInt(t.FarmArray[counter][j]['x']) == parseInt(t.helpArray[counter][i]['x']) && parseInt(t.FarmArray[counter][j]['y']) == parseInt(t.helpArray[counter][i]['y'])){
+                                       t.helpArray[counter][i]['time'] = t.FarmArray[counter][j]['time'];
+                                       t.helpArray[counter][i]['attacked'] = t.FarmArray[counter][j]['attacked'];
+                                   }    
+                        }
+                }
+                GM_setValue('Farms_' + Seed.player['name'] + '_city_' + counter + '_' + getServerId(), JSON2.stringify(t.helpArray[counter]));
+				saveFarmOptions();
+				
+				} else { //onFailure
+                  actionLog('Send farm march FAIL :' + Seed.cities[counter-1][1] + "   To: (" + xcoord + ',' + ycoord +')'
+				  +'    -> ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
+                  }
+          });
+		  
+
+  },
+
+  clickedSearch : function (){
+    var t = Tabs.farm;
+    t.opt.searchType = 0;
+    t.opt.maxDistance = FarmOptions.MaxDistance;
+    t.opt.searchShape = 'circle';
+    t.mapDat = [];
+    t.firstX =  t.opt.startX - t.opt.maxDistance;
+    t.lastX = t.opt.startX + t.opt.maxDistance;
+    t.firstY =  t.opt.startY - t.opt.maxDistance;
+    t.lastY = t.opt.startY + t.opt.maxDistance;
+    t.tilesSearched = 0;
+    t.tilesFound = 0;
+    t.curX = t.firstX;
+    t.curY = t.firstY;
+    var xxx = t.MapAjax.normalize(t.curX);
+    var yyy = t.MapAjax.normalize(t.curY);
+    var element = 'pddataFarm'+(t.lookup-1);
+    document.getElementById(element).innerHTML = 'Searching at '+ xxx +','+ yyy;
+   
+    setTimeout (function(){t.MapAjax.request (xxx, yyy, MAP_SFIELD, t.mapCallback)}, MAP_DELAY);
+  },
+  
+  mapCallback : function (left, top, width, rslt){
+    var t = Tabs.farm;
+    if (!t.searchRunning)
+      return;
+    if (!rslt.ok){
+      setTimeout (function(){t.MapAjax.request (left, top, width, t.mapCallback)}, MAP_DELAY);
+      return;
+    }
+    map = rslt.data;
+    for (k in map){
+      var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
+      var CityCheck = true;
+      var who = "u" + map[k].tileUserId;
+      var AllianceName = "";
+       if (map[k].cityName == null && map[k].misted ==false) CityCheck = false;
+     if (t.isMyself(map[k].tileUserId)) CityCheck = false;
+     if (map[k].tileType== 51 && CityCheck) {
+            var Diplomacy = "neutral";
+            for (DipStatus in t.DipArray) {
+                var AllianceId = 0;
+                if (rslt.userInfo[who] != undefined) AllianceId = "a" + rslt.userInfo[who].a;                
+                for (alliance in Seed.allianceDiplomacies[t.DipArray[DipStatus]]) if (Seed.allianceDiplomacies[t.DipArray[DipStatus]][AllianceId] != undefined) Diplomacy = t.DipArray[DipStatus];
+            }
+            if (rslt.allianceNames[AllianceId] != undefined) AllianceName = rslt.allianceNames[AllianceId];
+            if (Diplomacy == "neutral" && AllianceName =="") Diplomacy = "unallied";
+			//AudriusPPP: have added it to avoid to big list/array witch slows down computer later
+			if (map[k].tileLevel>8 && rslt.userInfo[who].m>FarmOptions.MinMight && rslt.userInfo[who].m<FarmOptions.MaxMight){
+            t.mapDat.push ({time:0,empty:0,lost:false,enabled:'true',attacked:0,DaysInactive:"?",LastCheck:0,Diplomacy:Diplomacy,UserId:map[k].tileUserId,AllianceName:AllianceName,x:map[k].xCoord,y:map[k].yCoord,dist:dist,level:map[k].tileLevel,PlayerName:rslt.userInfo[who].n,cityName:map[k].cityName,might:rslt.userInfo[who].m,cityNumber:map[k].cityNum,Ore:0,Wood:0,Stone:0,Food:0,Gold:0});};
+      }
+    }
+    t.tilesSearched += (MAP_SFIELD*MAP_SFIELD);
+
+    t.curX += MAP_SFIELD;
+    if (t.curX > t.lastX){
+      t.curX = t.firstX;
+      t.curY += MAP_SFIELD;
+      if (t.curY > t.lastY){
+        var element = 'pdtotalFarm'+(t.lookup-1);
+        document.getElementById(element).innerHTML = 'Found: ' + t.mapDat.length;
+        var element = 'pddataFarm'+(t.lookup-1);
+        document.getElementById(element).innerHTML = "";
+        GM_setValue('Farms_' + Seed.player['name'] + '_city_' + t.lookup + '_' + getServerId(), JSON2.stringify(t.mapDat));
+        t.searchRunning = false;
+        for (y=1;y<=8;y++) FarmOptions.FarmNumber[y] = 0;
+        t.checkFarmData();
+        return;
+      }
+    }
+    var x = t.MapAjax.normalize(t.curX);
+    var y = t.MapAjax.normalize(t.curY);
+    var element = 'pddataFarm'+(t.lookup-1);
+    document.getElementById(element).innerHTML = 'Searching at '+ x +','+ y;
+    setTimeout (function(){t.MapAjax.request (x, y, MAP_SFIELD, t.mapCallback)}, MAP_DELAY);
+  },
+  
+  stopSearch : function (msg){
+    var t = Tabs.farm;
+    var element = 'pddataFarm'+(t.lookup-1);
+        document.getElementById(element).innerHTML = msg;
+    t.searchRunning = false;
+  },
+  
+  hide : function (){
+  
+  },
+
+  show : function (){
+  
+  },
+
+};
+
 /*********************************** Throne Tab ***********************************/
 
 Tabs.Throne = {
@@ -1147,7 +2348,8 @@ Tabs.Throne = {
     unsafeWindow.Savlage = t.setSalvageItem;
     unsafeWindow.ActionPopup = t.ActionPopup;
     unsafeWindow.postInfo = t.postInfo;
-    
+    unsafeWindow.doEquip = t.doEquip;
+    unsafeWindow.fupgenh = t.fupgenh;
     var a = JSON2.parse(GM_getValue ('ThroneHistory_'+getServerId(), '[]'));
     if (matTypeof(a) == 'array') t.log = a;
     var a = JSON2.parse(GM_getValue ('ThroneSalvageHistory_'+getServerId(), '[]'));
@@ -1158,7 +2360,8 @@ Tabs.Throne = {
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubUE type=submit value="Upgrade/Enhance"></td>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrchSubEQ type=submit value="Compare"></td>';
     main +='<TD><input class=pbSubtab ID=ptmrchSubTC type=submit value="Caps"></TD>';
-    main +='<TD><input class=pbSubtab ID=ptmrchSubTR type=submit value="Throne"></TD>';
+    main +='<TD><input class=pbSubtab ID=ptmrchSubTR type=submit value="Throne"></TD></tr>';
+    main +='<tr><TD><input class=pbSubtab ID=ptmrchSubUN type=submit value="Uniques"></TD>';
     main += '</tr></table><HR class=ptThin>';
     main +='<DIV id=ThroneOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
 
@@ -1170,7 +2373,7 @@ Tabs.Throne = {
    document.getElementById('ptmrchSubEQ').addEventListener('click', e_butSubtab, false);
    document.getElementById('ptmrchSubTC').addEventListener('click', e_butSubtab, false);
    document.getElementById('ptmrchSubTR').addEventListener('click', e_butSubtab, false);
-    
+   document.getElementById('ptmrchSubUN').addEventListener('click', e_butSubtab, false); 
 
     changeSubtab (document.getElementById('ptmrchSubUE'));
     
@@ -1206,6 +2409,126 @@ Tabs.Throne = {
       saveThroneOptions();
    },
    
+    Uniques : function () {
+        var t = Tabs.Throne;
+        var UniqueItems = {
+            Advisors : {
+                "Wynn"                  : "http://i.imgur.com/qUxIZcn.png",
+                "Mordred"               : "http://i.imgur.com/itn5Nfn.png",
+                "Kay"                   : "http://i.imgur.com/mD3fWtb.png",
+                "Warhorse"              : "http://i.imgur.com/770yicI.png",
+                "The Harbinger"         : "http://i.imgur.com/O2l15bY.png",
+                "Father Winter"         : "http://i.imgur.com/4D9wijD.png",
+                "Advisor Of Magnitude A" : "http://i.imgur.com/FXg8zbK.png",
+                "Advisor of Magnitude B" : "http://i.imgur.com/KbGP3QR.png",
+                "Advisor of Discipline"  : "http://i.imgur.com/5Yrhp8F.png",
+                "Dagonet The Court Jester"  : "http://i.imgur.com/29bAH99.png",
+                "Minstrel"              : "http://i.imgur.com/hUIXhca.png",
+            },
+            Thrones : {
+                "Valor"             : "http://i.imgur.com/fIeZMXM.png",
+                "Hallowed Throne"   : "http://i.imgur.com/m8ORCW8.png",
+                "Dominance"         : "http://i.imgur.com/5R4RYuT.png",
+                "Harmony"           : "http://i.imgur.com/XdpulbB.png",
+                "Stalwart Throne"   : "http://i.imgur.com/3pI3OZj.jpg",
+                "Throne of Fortune" : "http://i.imgur.com/ykrqzP9.jpg",
+            },
+            Banners : {
+                "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
+                "Relief Banner"         : "http://i.imgur.com/A60lVgd.png",
+                "Champions Shroud"      : "http://i.imgur.com/zP3Zhhs.jpg",
+                "Banner of Magnitude"   : "http://i.imgur.com/IoIEG95.png",
+                "Banner Of The Cause"   : "http://i40.tinypic.com/o0wg42.jpg",
+                "Unyielding Banner"     : "http://imageshack.us/a/img138/3130/ykgb.png",
+                "Banner of Arms"     	: "http://i.imgur.com/cknAh6y.png",
+            
+            },
+            Windows : {
+                "Window Of Shalott"     : "http://i.imgur.com/uJD0fOU.png",
+                "Window Of Resistance"  : "http://i.imgur.com/34hIEq5.png",
+                "Superbe Window Deal Du Jour Confusion" : "http://i.imgur.com/biLx6Am.jpg",
+                "Window Of The Swing"   : "http://i.imgur.com/7JdqyiG.jpg",
+                "Window of Persistence" : "http://i.imgur.com/s0IXGUo.jpg",
+                "Persevering Window"    : "http://i.imgur.com/HGGbe5Q.jpg",
+                "Warfarers Portal"      : "http://i.imgur.com/8z4wNcn.jpg",
+                "Window of Chalice"     : "http://i.imgur.com/ZelfCuL.png",
+                "Beacon of Rosmerta"    : "http://imagizer.imageshack.us/v2/800x600q90/836/y78c.png",
+            },
+            Candles : {
+                "Merry Chandelier"                  : "http://i.imgur.com/iBzYUh5.png",
+                "Chandelier Of The Green Knight"    : "http://i.imgur.com/MEVEjPM.png",
+                "Maganimous Chandelier"             : "http://i.imgur.com/CJWVQEh.jpg",
+                "Candelabrum of Cruelty"            : "http://i.imgur.com/Iu2BCQ8.png",
+                
+            },
+            Tables : {
+                "Dark Master Jack"      : "http://i.imgur.com/2ThozSy.png",
+                "Healers Shrine"        : "http://i.imgur.com/clPMfAQ.png",
+                "Skillful Table"        : "http://i.imgur.com/zk18k12.png",
+                "Bombardment Table"     : "http://i.imgur.com/o4slc5U.png",
+                "Catellans Table"       : "http://i.imgur.com/mQ8s7RS.gif",
+            },
+            Trophies : {
+                "Courageous Trophy"     : "http://i.imgur.com/ODDVqwD.png",
+                "Sir Galahads Shield"   : "http://img268.imageshack.us/img268/5116/m9n2.jpg",
+            },
+            Heros : {
+                "Guileful Ranger"       : "http://i.imgur.com/uQ8YSwV.jpg",
+                "Grand Siegemaster"     : "http://i.imgur.com/YIdZF6M.jpg",
+                "Elite Guard"           : "http://i.imgur.com/3gRUVuo.jpg",
+                "Robin The Courageous"  : "http://i.imgur.com/wWxlfWv.png",
+            },
+            Statues : {
+                "Monument to Llamrei" 	: "http://i.imgur.com/yxe5FM9.jpg",
+                "The Huntress"     	: "http://i.imgur.com/ddzF7Q2.jpg",
+                "Castle Tauroc"       	: "http://i.imgur.com/OI6UP85.jpg",
+                "Effigy of Wasting"    	: "http://i.imgur.com/t8uIVP3.jpg",
+            },
+        }
+
+        unsafeWindow.pbshowunique = showUnique;
+        
+        m =  '<table><tr><td width=400px>Uniques</td><td width=400px>Panel A</td><td width=400px>Panel B</td></tr><tr><td style="vertical-align:top">';
+        
+        for (var i in UniqueItems) {
+        
+            m += '<div class="pbdivHeader" align=left><a id='+i+'Hdr class=pbdivLink >'+i+'&nbsp;<img id='+i+'Arrow height="10" src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/down_arrow.png"></a></div>'
+            m += '<div id='+i+' align=left class=""><table>';
+            for (var k in UniqueItems[i]) {
+                m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "'+k+'","'+i+'")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "'+k+'","'+i+'")\'>B</a></td><td>'+k+'</td></tr>';
+            }
+            m += '</table></div>';
+        }
+               
+        m += '</td><td id=panelA style="vertical-align:top"></td><td id=panelB style="vertical-align:top"></td></tr>';
+        m += '</table>';
+        t.Overv.innerHTML = m;
+        
+        function showUnique(panel,name,type) {
+            switch (type) {
+                case "Advisors" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Advisors[name]+'>'; break;
+                case "Thrones"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Thrones[name]+'>'; break;
+                case "Banners"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Banners[name]+'>'; break;
+                case "Windows"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Windows[name]+'>'; break;
+                case "Candles"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Candles[name]+'>'; break;
+                case "Tables"   : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Tables[name]+'>'; break;
+                case "Trophies" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Trophies[name]+'>'; break;
+                case "Heros"    : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Heros[name]+'>'; break;
+                case "Statues"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Statues[name]+'>'; break;
+            }
+        }
+        
+        for (var j in UniqueItems) {
+            (function(j){
+                document.getElementById(j+'Hdr').addEventListener ('click', function () {ToggleDivDisplay(500,500,j);}, false);
+            })(j);
+        }
+        
+        
+    },
+    
+
+   
    Caps : function (){
       var t =Tabs.Throne;
     m =  '<DIV class=ptstat><b>Throne Room Caps</b></div><TABLE border=2px align=center>';
@@ -1237,7 +2560,7 @@ Tabs.Throne = {
     var t = Tabs.Throne;
     try {      
       m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED SALVAGE FUNCTION</div><TABLE id=pbbarbingfunctions width=100% class=pbTab>';
-      m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD><b>Keep cards</b> with more than <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> attributes</td></tr>';
+      m+='<TR><TD><INPUT type=submit id=pbsalvage_run value="Auto Salvage = '+(Options.ThroneDeleteItems?'ON':'OFF')+'" /></td><TD><INPUT id=ShowSalvageHistory type=submit value="History"></td><TD><b>Keep cards</b> with <INPUT type=text id=pbthrone_keep size=3 value="'+ThroneOptions.thronekeep+'" /> attributes</td></tr>';
       m+='<TR><TD>Keep above: ' + htmlSelector({0:'ALL', 1:translate('Common'), 2:translate('Uncommon'), 3:translate('Rare'), 4:translate('Epic'), 5:translate('Wondrous')},ThroneOptions.SalvageQuality,'id=Quality')+'</td>';
       m+='<TD>Keep first <INPUT type=text id=saveXitems size=2 maxlength=2 value='+ ThroneOptions.saveXitems +'> cards.</td></table>';
       
@@ -1246,7 +2569,10 @@ Tabs.Throne = {
       m+='<TR><TD colspan=3><INPUT id=Cityrand type=checkbox '+ (ThroneOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all / Fey Spire cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbsalvage_unique type=checkbox '+ (ThroneOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbheatup type=checkbox '+(ThroneOptions.heatup?'CHECKED ':'')+'/>&nbsp; Upgrade cards before salvaging to increase aetherstone and heat up modifier</TD></TR>';
-      m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR></table>';
+      m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR>';
+      m+='<tr><td colspan=3><INPUT id=shero type=checkbox '+ (ThroneOptions.savehero?'CHECKED ':'') +'/>&nbsp; Save all heroes</TD></TR>';
+		m+='<tr><td colspan=3><INPUT id=sstatue type=checkbox '+ (ThroneOptions.savestatue?'CHECKED ':'') +'/>&nbsp; Save all statues</TD></TR>';
+      m+= '</table>';
       m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
       m+='<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
       m+='<TABLE width=60% class=pbTab><TR><TD><B>Combat:</b></td></tr>';
@@ -1285,6 +2611,7 @@ Tabs.Throne = {
       m+='<TABLE width=80% class=pbTab>';
       for (k in unsafeWindow.cm.thronestats.effects) {
         if(!ThroneOptions.SalvageA[k]) ThroneOptions.SalvageA[k] = {};
+        if(!ThroneOptions.SalvageA[k].Min) ThroneOptions.SalvageA[k].Min = 0;//fixing a mistake, Min must be defined.  
          m += '<TR><TD><A onclick="setFAV('+ k +')"><DIV class=pbSalvage_fav id=SalvageFAV'+k+'></div></td>';
          m += '<TD class=pbThrone><INPUT id=pbThroneItems'+k+' type=checkbox checked='+ (ThroneOptions.Salvage[k]?'CHECKED ':'') +'>'+ unsafeWindow.cm.thronestats.effects[k][1] +'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][3]+'</td><TD width="4">'+ unsafeWindow.cm.thronestats.effects[k][2]+'</td>\
          <td></td><td class=pbThroneST><select id='+k+'>';
@@ -1360,6 +2687,8 @@ Tabs.Throne = {
       document.getElementById('ItemDropMin').addEventListener ('change', function(){ThroneOptions.SalvageA.ItemDrop.Min = this.value;saveThroneOptions();},false);
       document.getElementById('pbsalvage_unique').addEventListener ('change', function(){ThroneOptions.SaveUnique = this.checked;saveThroneOptions();},false);
       document.getElementById('pbheatup').addEventListener ('change', function(){ThroneOptions.heatup = this.checked;saveThroneOptions();},false);
+      document.getElementById('shero').addEventListener ('change', function(){ThroneOptions.savehero = this.checked;saveThroneOptions();},false);
+      document.getElementById('sstatue').addEventListener ('change', function(){ThroneOptions.savestatue = this.checked;saveThroneOptions();},false);
 
       document.getElementById('pbthrone_keep').addEventListener ('change', function(){ThroneOptions.thronekeep = parseInt(document.getElementById('pbthrone_keep').value);saveThroneOptions();},false);
 
@@ -1388,6 +2717,7 @@ Tabs.Throne = {
     var element_class = document.getElementsByClassName('pbThrone');
     var element_classTS = document.getElementsByClassName('pbThroneS');
     var element_classST = document.getElementsByClassName('pbThroneST');
+    
     for (k=0;k<element_class.length;k++){
       element_class[k].addEventListener('click', t.saveSalvageOptions , false);
       element_classTS[k].addEventListener ('change', function(e){
@@ -1417,7 +2747,7 @@ Tabs.Throne = {
     }
   },
   
-  setSalvageFAV :function (what){
+setSalvageFAV :function (what){
     var t = Tabs.Throne;  
     if (ThroneOptions.Salvage_fav[what]) ThroneOptions.Salvage_fav[what] = false;
       else  ThroneOptions.Salvage_fav[what] = true;
@@ -1426,9 +2756,9 @@ Tabs.Throne = {
                else document.getElementById('SalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAADAFBMVEX////4+Pj7+/v39/f5+fn6+vr29vby8vL09PTz8/P+/v78/Pzd3d3Nzc3v7++tra3r6+v9/f3n5+fs7Ozt7e24uLjQ0NDx8fHV1dXo6OjJycnl5eXc3NyoqKje3t7Hx8fS0tK+vr66urrZ2dnw8PDMzMzq6urFxcW5ubnk5OTj4+Pi4uLR0dGwsLDBwcG1tbXb29vLy8vu7u7Dw8P19fXKysrY2Ni3t7ekpKSrq6u0tLTh4eHm5ubW1tanp6eenp7p6emsrKyurq7a2trCwsLPz8/AwMC9vb28vLzf39+zs7PT09PX19f///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUISnwAAABI0lEQVR4nG2Rh26DMBCGzzmwCXuHBLL33t1tujfv/zqFhjhRyydZ8t0n6+6XIeZEXXIsYuA3R+1sc8UWQC3lCLcGQJY5okIBoM3+CT15AIDaH7Exb0kqICxLB+FMvtof9kqEPcXe9VPg1+QY5r2sJ8tyJgt65TuGxzIqaduyFMWyUqcIrK7F0BzYlAgFjkBIyb80Y6Bv5zeUiKf9F2OcboWv8+GGiBmIumaM9usKM+8ehQzKGsbwkEPwIiQZaHrhMWBfJYg0ARHd1knylk2o9AsltG+dCFcqJrDkSOibXMjNFWP6aLJcOIyxoMGFXmGdUDM+B9WZ6rLonYvF89ifTrsl8cyrrtXA4KK8qz7UnbQiwdXdRZMLRavbh/+RGuvj8Fx+AKn1YdcNFlXFAAAAAElFTkSuQmCC" />';
    }
    t.saveSalvageOptions();
-  },
+},
 
-  setSalvageItem :function (what){
+setSalvageItem :function (what){
    var t = Tabs.Throne;  
    if(!unsafeWindow.kocThroneItems[what]) {
          t.FillEquipCheckboxes();
@@ -1467,8 +2797,8 @@ Tabs.Throne = {
             },
          });
    }
-  },
-  Upgrade_Enhance :function (){
+},
+Upgrade_Enhance :function (){
     var t = Tabs.Throne;  
     try {      
       var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED UPGRADE/ENHANCE/REPAIR FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
@@ -1479,10 +2809,8 @@ Tabs.Throne = {
           }
       m += '<TD><INPUT id=ShowHistory type=submit value="History"></td></table>';
       m += '<table><tr><INPUT id=pbUseTokens type=checkbox '+ (ThroneOptions.UseTokens?'CHECKED ':'') +'/>&nbsp;Use Tokens/Stones when available</tr>';
-//      m += '<tr><br>Will use Mystic Orb/Lesser Mystic Orb/Protection Stone/Lesser Protection stone for Enhance</tr>';
       m += '<tr><br>Will use Protection Stone/Lesser Protection stone for Enhance';
       m += ' <INPUT id=pbUseMO type=checkbox '+ (ThroneOptions.UseMO?'CHECKED ':'') +'/> Also use Mystic Orb/Lesser Mystic Orb</tr>';
-//      m += '<tr><br>Will use Lucky Token/Lesser Lucky Token for Upgrade</tr>';
       m += '<tr><br>Will use Lesser Lucky Token for Upgrade';
       m += ' <INPUT id=pbUseLT type=checkbox '+ (ThroneOptions.UseLT?'CHECKED ':'') +'/> Also use Lucky Tokens</tr>';
       m += '</table>';
@@ -1537,9 +2865,9 @@ Tabs.Throne = {
       t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }
 setInterval(t.paintStones,30000);
-  },
+},
  
-  Compare :function (){
+Compare :function (){
     var t = Tabs.Throne;  
     var amount = 0;
     var AdvisorCount =0;
@@ -1578,8 +2906,8 @@ setInterval(t.paintStones,30000);
      m+= '<DIV id=pbThroneMain class=pbStat>Compare Throne Items</div><br>';
      m+='<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=type type=list></select></td><TD>Card Family: <SELECT id=family type=list></select></td><TD>Effect: <SELECT id=effect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=keyword size=10></td></tr></table>';
 
-     m+='<br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR>';
 
+     m+='<br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR>';
      for (i=1;i<=ActiveItems;i++){
        m+='<TD><DIV id=DIV'+ i +'></div></td>';
        if (i%3==0) m+='</tr><TR></tr><TR>';
@@ -1638,9 +2966,9 @@ setInterval(t.paintStones,30000);
     } catch (e) {
       t.Overv.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }
-  },
+},
 
-  togOpt : function (checkboxId, optionName, callOnChange){
+togOpt : function (checkboxId, optionName, callOnChange){
     var t = Tabs.Throne;
     var checkbox = document.getElementById(checkboxId);
     if (Options[optionName])
@@ -1652,9 +2980,9 @@ setInterval(t.paintStones,30000);
       if (callOnChange)
         callOnChange (this.checked);
     }
-  },
+},
 
-  changeOpt : function (valueId, optionName, callOnChange){
+changeOpt : function (valueId, optionName, callOnChange){
     var t = Tabs.Throne;
     var e = document.getElementById(valueId);
     e.value = Options[optionName];
@@ -1665,9 +2993,9 @@ setInterval(t.paintStones,30000);
       if (callOnChange)
         callOnChange (this.value);
     }
-  },
+},
   
-  toggleThroneState: function(){
+toggleThroneState: function(){
     var t = Tabs.Throne;
     if (ThroneOptions.Active == true) {
             ThroneOptions.Active = false;
@@ -1682,9 +3010,9 @@ setInterval(t.paintStones,30000);
             t.setActionTimer = setInterval(t.doAction,10000);
             document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
     }
-  },
+},
 
-  _addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,cost){
+_addTab: function(id,name,qualityfrom,qualityto,levelfrom,levelto,action,active,cost){
          var t = Tabs.Throne;
         var a="";
         var b="";
@@ -1695,6 +3023,7 @@ setInterval(t.paintStones,30000);
                     case 3:a = unsafeWindow.g_js_strings.throneRoom.rare;break;
                 case 4:a = unsafeWindow.g_js_strings.throneRoom.epic;break;
                 case 5:a = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+                case 6:a = unsafeWindow.g_js_strings.throneRoom.unique;break;
                 default:a = unsafeWindow.g_js_strings.throneRoom.simple;break;
         }
         switch (qualityto) {
@@ -1704,6 +3033,7 @@ setInterval(t.paintStones,30000);
                    case 3:b = unsafeWindow.g_js_strings.throneRoom.rare;break;
                    case 4:b = unsafeWindow.g_js_strings.throneRoom.epic;break;
                 case 5:b = unsafeWindow.g_js_strings.throneRoom.wondrous;break;
+                case 6:b = unsafeWindow.g_js_strings.throneRoom.unique;break;
                 default:b = unsafeWindow.g_js_strings.throneRoom.simple;break;
         }
          var row = document.getElementById('ShowQueue').insertRow(0);
@@ -1735,7 +3065,7 @@ setInterval(t.paintStones,30000);
               if (ThroneOptions.Items.length>0) t.paintInfo();
                 else document.getElementById('ShowInfo').innerHTML = "";
         }, false);
-  },
+},
     
      _addTabHeader: function() {
      var t = Tabs.Throne;
@@ -1753,7 +3083,7 @@ setInterval(t.paintStones,30000);
        },
 
 
-  FillEquipCheckboxes: function(){
+FillEquipCheckboxes: function(){
    var t = Tabs.Throne;
    var familyCheck=false;
    var typeCheck=false;
@@ -1787,16 +3117,20 @@ setInterval(t.paintStones,30000);
          t.paintEquipInfo(z.id,t.CompPos);
       }
    }  
-  },
-  doPreset : function (room, retry) {
-        var t = Tabs.Throne;  
-   var div;  
+},
+doPreset : function (room, retry) {
+        var t = Tabs.Throne;    
+        actionLog('changing to tr '+room);
+	var div;
    if(isNaN(retry))retry=0;
    if(retry > 15) {if(document.getElementById('ThroneTRS'))document.getElementById('ThroneTRS').innerHTML = "<font color=red>failed to change throne room..Giving Up</font>";return;};
+   /***
       if(document.getElementById('ThroneTRS'))
       document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
       if(document.getElementById('ThroneHUD'))
       document.getElementById('htra'+unsafeWindow.seed.throne.activeSlot).disabled = false;
+      
+      ***/
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'setPreset';
@@ -1849,9 +3183,14 @@ setInterval(t.paintStones,30000);
             },
         });
 
-  },
+},
+fupgenh: function (z){
+var t = Tabs.Throne;
+document.getElementById("ptmrchSubUE").click()
+		 document.getElementById("ThroneItems").value = z;
+},
 
-  postInfo : function (z){
+postInfo : function (z){
 	var y = unsafeWindow.kocThroneItems[z];
 	var m = ':::.|'+y.name;
 	for (i=1;i<=5;i++) {
@@ -1864,9 +3203,9 @@ setInterval(t.paintStones,30000);
 		m+='||'+Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"];
 	};
 	sendChat ("/a "+  m);
-  },
+},
 
-  paintEquipInfo : function (z,what){
+paintEquipInfo : function (z,what){
       var t = Tabs.Throne;
       var m='';
       var color = "black";
@@ -1878,7 +3217,7 @@ setInterval(t.paintStones,30000);
         var icon = ''+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type +'_normal_1_'+ y.quality+'.png';
 	if (y["unique"]>0)
           var icon = ''+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_'+ y.type + '_unique_normal_' + y.unique+'.png';
-        if (y.isEquipped) m='<TABLE width=80% height=0% align="center" class=ThroneEQ  ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
+        if (y.isEquipped)m='<TABLE width=80% height=0% align="center" class=ThroneEQ  ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         else m='<TABLE width=80% height=0% align="center" class=Throne ondblclick="postInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         switch(parseInt(y["quality"])){
          case 1:color="grey";break;
@@ -1896,20 +3235,20 @@ setInterval(t.paintStones,30000);
             id = y["effects"]["slot"+i]["id"];
             tier = parseInt(y["effects"]["slot"+i]["tier"]);
             level = y["level"];
-//http://apps.facebook.com/kingdomsofcamelot/convert.php?pl=1&ty=3&si=85&wccc=fcf-feed-85&ln=31&da=20131109&in=731589&ex=cid%3A686%7Cgid%3AREPLACE_AsSeTiD%7Clid%3A90iD%7Cs%3A355%7Csid%3A731589%7Cmid%3AREPLACE_mArCh_RePortiD%7Cside%3AREPLACE_sIdE%7CraidId%3AREPLACE_RaIdId%7Cimg%3Ahttp%3A%2F%2Fwww.kingdomsofcamelot.com%2Ffb%2Fe2%2Fsrc%2Fimg%2Fbronze_vip.png%7C&page=convert
-	    if (y.unique == 30286 && id == 9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else
+	    if (y["unique"]==30286 && id==9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else  // temporary patch
               p = unsafeWindow.cm.thronestats.tiers[id][tier];
-            Current = p.base + ((level * level + level) * p.growth * 0.5);
+              if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
+            Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
             var quality = parseInt(y["quality"]);
             if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
             else m+='<TR><TD><FONT color=grey>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
       }
-      m+="</table>"
+      m+='</table><table align="center"><tr><td><a onclick="doEquip('+z+')">Equip</a></td><td><a onclick="postInfo('+z+')">Post to chat</a></td><td><a onclick="fupgenh('+z+')">Upgrade/Enhance</a></td></tr></table>';
       document.getElementById('DIV'+what).innerHTML = m;
-  },
+},
 
 
-  PaintHistory : function() {
+PaintHistory : function() {
     var t = Tabs.Throne;
     var popHistory = null;
     popHistory = new pbPopup('pbShowHistory', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
@@ -1937,10 +3276,10 @@ setInterval(t.paintStones,30000);
     row.insertCell(4).innerHTML = "Good Req.";
     row.insertCell(5).innerHTML = "Bad Req.";
     popHistory.show(true)    ;
-  },
+},
 
 
-  PaintSalvageHistory : function() {
+PaintSalvageHistory : function() {
     var t = Tabs.Throne;
     var popHistory = null;
     popHistory = new pbPopup('pbSalvageShowHistory', 0, 0, 1100, 500, true, function() {clearTimeout (1000);});
@@ -1962,7 +3301,7 @@ setInterval(t.paintStones,30000);
     row.insertCell(1).innerHTML = "Aetherstones";
     row.insertCell(2).innerHTML = "Action";
     popHistory.show(true)    ;
-  },
+},
 
      addToQueue : function (id,action){
         var t= Tabs.Throne;
@@ -1997,7 +3336,9 @@ setInterval(t.paintStones,30000);
                     ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
                     ThroneOptions.Items[k]["levelto"] = parseInt(ThroneOptions.Items[k]["levelfrom"]) +1;
                         ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
-                    if (ThroneOptions.Items[k]["levelto"]>15 && !firstRun) {ThroneOptions.Items.splice (k,1);if(document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then level 15!</font>";return;}
+                        var newlvl = ThroneOptions.Items[k]["levelto"];
+                    if (!unsafeWindow.cm.thronestats.upgrade[newlvl] && !firstRun) {ThroneOptions.Items.splice (k,1);if(document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then level "+Number(newlvl-1)+"!</font>";return;}
+
                 }
                 if (ThroneOptions.Items[k]["action"] == "Enhance") {
                     ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
@@ -2033,22 +3374,33 @@ setInterval(t.paintStones,30000);
         var now = new Date().getTime()/1000.0;
         if (!ThroneOptions.Active) return;
         t.checkUpgradeInfo();
+        if(Seed.queue_throne.end  > unsafeWindow.unixtime()) {
+			if(document.getElementById('ShowStatus'))document.getElementById('ShowStatus').innerHTML = "Waiting on repair";
+			return;
+		};
+	if(Seed.queue_throne.end == undefined) {
+		//need to update for doupgradesimple and ibrokeitems.
+		if(ThroneOptions.ibrokeitems.length > 0){
+                  setTimeout(t.doRepair,5000);
+                  clearTimeout(t.setActionTimer);
+                  t.setActionTimer = setInterval(t.doAction,10000);
+                return;
+		}
         if (ThroneOptions.Items.length ==0) {
       if(document.getElementById('ShowStatus'))document.getElementById('ShowStatus').innerHTML = "No items in queue!!";
+                  clearTimeout(t.setActionTimer);
+                  t.setActionTimer = setInterval(t.doAction,60*1000);
                  return;
         }
-        ThroneOptions.Items["0"]["active"] = true;
-        t.PaintQueue();
-        // need to update for doupgradesimple and ibrokeitems.
-        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true && Seed.queue_throne.end == undefined){
-                  //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = false;
-                  //unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].brokenType = "";
+        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == true){
                     setTimeout(t.doRepair,5000);
                   clearTimeout(t.setActionTimer);
                   t.setActionTimer = setInterval(t.doAction,10000);
                 return;
         }
-        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == false && Seed.queue_throne.end == undefined){
+        ThroneOptions.Items["0"]["active"] = true;
+        t.PaintQueue();
+        if (unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken == false){
          if(document.getElementById('ShowStatus'))
                   document.getElementById('ShowStatus').innerHTML = "Doing " + ThroneOptions.Items["0"]["action"] + "...";
             if (ThroneOptions.Items["0"]["action"] == "Upgrade") setTimeout(t.doUpgrade,5000);
@@ -2056,6 +3408,9 @@ setInterval(t.paintStones,30000);
             clearTimeout(t.setActionTimer);
             t.setActionTimer = setInterval(t.doAction,10000);
         }
+        
+	};
+        
   },
   
   
@@ -2114,7 +3469,7 @@ setInterval(t.paintStones,30000);
                     {
                         document.getElementById('ShowStatus').innerHTML = 'Upgrader accidentally spent gems!  Turning upgrader off!!';
                         ThroneOptions.Active = false;
-                        saveThroneData();
+                        saveThroneOptions();
                     }
                     Seed.resources["city" + cityid]["rec5"][0] -= rslt.aetherstones;
                       y.level = rslt.item.level;
@@ -2149,6 +3504,7 @@ setInterval(t.paintStones,30000);
                     ThroneOptions.Good++;
                     saveThroneOptions();
                 } else {
+                	  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = true;
                     ThroneOptions.Bad++;
                     saveThroneOptions();
                 }
@@ -2212,7 +3568,7 @@ setInterval(t.paintStones,30000);
                     {
                         document.getElementById('ShowStatus').innerHTML = 'Upgrader accidentally spent gems!  Turning upgrader off!!';
                         ThroneOptions.Active = false;
-                        saveThroneData();
+                        saveThroneOptions();
                     }
                     Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
                     if (rslt.success)
@@ -2250,6 +3606,7 @@ setInterval(t.paintStones,30000);
                         ThroneOptions.Good++;
                         saveThroneOptions();
                 } else {
+                	  unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]].isBroken = true;
                     ThroneOptions.Bad++;
                     saveThroneOptions();
                 }
@@ -2260,7 +3617,19 @@ setInterval(t.paintStones,30000);
             },
         });   
     },
-        
+    doUpgradeAll : function(){
+        var t = Tabs.Throne;
+		var y = unsafeWindow.kocThroneItems;
+		for(i in y) {
+			logit('i is '+i);
+			if(!y[i].isBroken) {
+				logit('and is not broken '+i);
+				t.doUpgradesimple(i);
+				setTimeout(t.doUpgradeAll,2000);
+				break;
+			};
+		}
+	},
       
     doUpgradesimple : function(item) {
         var t = Tabs.Throne;
@@ -2293,22 +3662,32 @@ setInterval(t.paintStones,30000);
                 if(rslt.ok){
                 if (rslt.updateSeed)
                   unsafeWindow.update_seed(rslt.updateSeed);
-                    if (rslt.gems > 0)
-                    {
+					var y = unsafeWindow.kocThroneItems[params.throneRoomItemId];
+                    if (rslt.gems > 0) {
                         document.getElementById('ShowStatus').innerHTML = 'UpgraderB accidentally spent gems!  Turning upgrader off!!';
                         ThroneOptions.Active = false;
-                        saveThroneData();
-                    }
+                        saveThroneOptions();
+                    };
                     Seed.resources["city" +cityid]["rec5"][0] -= rslt.aetherstones;
-                    if (!rslt.success && ThroneOptions.Active)ThroneOptions.ibrokeitems.push(params.throneRoomItemId);
-                    //{
-                    //}
+                    if (rslt["break"]){
+						if(ThroneOptions.Active)ThroneOptions.ibrokeitems.push(params.throneRoomItemId);
+						y.isBroken = true;
+                       y.brokenType = "level";
+                       y.status = rslt.item.status;
+                       y.name = y.createName();
+					} else {
+						y.level = rslt.item.level;
+                       y.quality = rslt.item.quality;
+                       y.name = y.createName();
+					};
                     unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+                    saveThroneOptions();
 
                 } 
                 return;
             },
             onFailure: function () {
+				logit('failure');
                return;
             },
         });   
@@ -2337,16 +3716,16 @@ setInterval(t.paintStones,30000);
         params.cityId = cityid;
                     **/
         if(ThroneOptions.ibrokeitems.length > 0)
+        if(unsafeWindow.kocThroneItems[ThroneOptions.ibrokeitems[0]]) {
         if(!unsafeWindow.kocThroneItems[ThroneOptions.ibrokeitems[0]].isBroken)ThroneOptions.ibrokeitems.shift();//if it's not broke, don't fix it! lol
-        
+		} else ThroneOptions.ibrokeitems.shift();//if it's not there, remove it
         
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'timeRepair';
         if(ThroneOptions.ibrokeitems.length > 0)params.throneRoomItemId = ThroneOptions.ibrokeitems[0];//If we still have a broken card, try fixing it
-        
-        
         else params.throneRoomItemId = ThroneOptions.Items["0"]["id"];
+        
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
             parameters: params,
@@ -2355,8 +3734,10 @@ setInterval(t.paintStones,30000);
                 var rslt = eval("(" + transport.responseText + ")");
                     if(rslt.ok){
                   ThroneOptions.RepairEnd = rslt.eta;
-                  if(params.throneRoomItemId != ThroneOptions.Items["0"]["id"]) ThroneOptions.ibrokeitems.shift();
-                  else t.repairId = ThroneOptions.Items["0"]["id"];
+                  if(ThroneOptions.Items["0"]) {
+					  if(params.throneRoomItemId != ThroneOptions.Items["0"]["id"]) ThroneOptions.ibrokeitems.shift();
+					  else t.repairId = ThroneOptions.Items["0"]["id"];
+				  } else ThroneOptions.ibrokeitems.shift();
                   Seed.queue_throne.itemId= params.throneRoomItemId;
                   Seed.queue_throne.start=unixTime();
                   Seed.queue_throne.end= rslt.eta;
@@ -2365,8 +3746,14 @@ setInterval(t.paintStones,30000);
                   var x = rslt.eta - unixTime();
                   ThroneOptions.Good++;
                   saveThroneOptions();
-               } else {    
-                           ThroneOptions.Good++;
+               } else {  
+				   if(rslt.error_code == 256) {
+						unsafeWindow.kocThroneItems[params.throneRoomItemId].isBroken = false;
+						unsafeWindow.kocThroneItems[params.throneRoomItemId].brokenType = "";
+						unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
+				   };
+				   //{"ok":false,"error_code":256,"msg":"Item is not broken"}  
+                        ThroneOptions.Good++;
                         saveThroneOptions();
                    }        
                    return;
@@ -2378,7 +3765,7 @@ setInterval(t.paintStones,30000);
     },
 
 
-    doEquip : function(n,preset) {
+    doEquip : function(n) {
         var t = Tabs.Throne;
         if (typeof(unsafeWindow.kocThroneItems[n]) == 'object') {
                 var y = unsafeWindow.kocThroneItems[n];
@@ -2389,7 +3776,7 @@ setInterval(t.paintStones,30000);
         params.ctrl = 'throneRoom\\ThroneRoomServiceAjax';
         params.action = 'equipItem';
         params.itemId = y.id;
-        params.presetId = document.getElementById("preset").value;
+        params.presetId = unsafeWindow.seed.throne.activeSlot;
                     
           new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
@@ -2451,7 +3838,8 @@ setInterval(t.paintStones,30000);
                 clearInterval(t.setRepairTimer);
                 if (ThroneOptions.Active) document.getElementById('ShowStatus').innerHTML = "Waiting for timer...";
                 else document.getElementById('ShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
-                //unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
+					unsafeWindow.kocThroneItems[Seed.queue_throne.itemId].isBroken = false;
+					unsafeWindow.cm.ThroneView.renderInventory(unsafeWindow.kocThroneItems);
                 Seed.queue_throne = "";
                 return;
             } else {
@@ -2501,7 +3889,7 @@ setInterval(t.paintStones,30000);
 
   },
 
-  paintHoover : function (){
+paintHoover : function (){
     var t = Tabs.Throne;
     var z = document.getElementById('ThroneItems').value;
       var y = unsafeWindow.kocThroneItems[z];
@@ -2525,9 +3913,9 @@ setInterval(t.paintStones,30000);
     m+="</table>"
     document.getElementById('ShowHoover').innerHTML = m;    
 
-  },
+},
 
-  paintStones : function (){
+paintStones : function (){
     var t = Tabs.Throne;
     if(document.getElementById('ShowStones')) {
     m="<TABLE width=90% height=0% class=pbTab><TR><TD>Aetherstones: </td>";
@@ -2536,10 +3924,10 @@ setInterval(t.paintStones,30000);
     for (i=0;i<Seed.cities.length;i++) m+='<TD>' + addCommas(Seed.resources["city"+Seed.cities[i]["0"]]["rec5"][0]) + '</td>';
     m+="</tr></table>"
     document.getElementById('ShowStones').innerHTML = m;  
-    }  
-  },
+}  
+},
 
-  addToLog : function (id,action,tries,good,bad){
+addToLog : function (id,action,tries,good,bad){
     var t = Tabs.Throne;
     var now = new Date();
     var time = now.getDate() +"/"+ (now.getMonth()+1) +"/"+ now.getFullYear() +"  "+ now.getUTCHours() + ":" + now.getMinutes();
@@ -2547,10 +3935,10 @@ setInterval(t.paintStones,30000);
     t.log.push ({time:time,name:name,action:action,tries:tries,good:good,bad:bad});
     if (t.log.length > 50) t.log.splice(0,1);
     GM_setValue ('ThroneHistory_'+getServerId(), JSON2.stringify(t.log));
-  },
+},
 
 
-  addToSalvageLog : function (msg,stones){
+addToSalvageLog : function (msg,stones){
     var t = Tabs.Throne;
     var now = new Date();
     D = t.addZero(now.getDate());
@@ -2562,18 +3950,18 @@ setInterval(t.paintStones,30000);
     t.SalvageLog.push ({time:time,stones:stones,msg:msg});
     if (t.SalvageLog.length > 100) t.SalvageLog.splice(0,1);
     GM_setValue ('ThroneSalvageHistory_'+getServerId(), JSON2.stringify(t.SalvageLog));
-  },
+},
 
-  addZero : function (i){
+addZero : function (i){
 if (i<10)
   {
   i="0" + i;
   }
 return i;
-  },
+},
 
 
-  salvageCheck : function (){
+salvageCheck : function (){
     var t = Tabs.Throne;
     var del = false; //false by default
     var level = false;
@@ -2607,10 +3995,14 @@ return i;
                     level = false;
                MinReq = false;
                IsUnique = false;
+               IsHero = false;
+               IsStatue = false;
                     if (y.quality > ThroneOptions.SalvageQuality) level=true;
                     if(y.level > 0) level = true;
                     if(ThroneOptions.SaveUnique) if(y.unique > 0) IsUnique = true;
                     if (ThroneOptions.SalvageQuality == 0) level=true;
+					     if (ThroneOptions.savehero && y.type=="hero") IsHero = true;   
+					     if (ThroneOptions.savestatue && y.type=="statue") IsStatue = true;                    
                     
                     for (i=1;i<=5;i++){
                   if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;};
@@ -2657,7 +4049,7 @@ return i;
                         }
                     }
                     //logit('y.name '+y.name+' level '+level+' number '+number+' ThroneOptions.thronekeep '+ThroneOptions.thronekeep+' NotUpgrading '+NotUpgrading+' isEquiped '+y.isEquipped+' y.isbroken '+y.isBroken+' y.id '+y.id+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+MinReq+' is unique '+IsUnique);
-                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique) {
+                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique && !IsHero && !IsStatue) {
                   //logit(y.name);
                         t.SalvageArray.push(y.id);
                     }                     
@@ -2667,9 +4059,9 @@ return i;
     if (t.SalvageArray.length == 0) {
         t.SalvageRunning = false;        
     } else setTimeout(t.doSalvage, 6000);        
-  }, 
+}, 
 
-  doSalvage : function(){
+doSalvage : function(){
         var t = Tabs.Throne;    
         var cityid = 0;
         var cities = [];
@@ -2752,17 +4144,19 @@ return i;
             t.SalvageRunning = false;
             t.salvageCheck();
         }
-  },
-  ThroneHUDinit : function (){
+},
+ThroneHUDinit : function (){
 	var t = Tabs.Throne;
 	var div = document.createElement('div');
 	var m = '<TABLE height=0% class=pbTab><TR align="center">';
-    for (var k=1;k<Number(Seed.throne.slotNum+1);k++)
+    for (var k=1;k<Number(Seed.throne.slotNum+1);k++) {
+		if(k == 9)m+='</TR><TR align="center">';
        m += '<TD><INPUT id=htra'+k+' type=submit value='+k+' class="pbttabs" title='+ThroneOptions.tabnames[k]+'></td>';
-    m += '</table><br>';
+    };
+    m += '</TR></table><br>';
 	div.innerHTML = m;
 	div.style.position="absolute";
-	div.style.top="26px";
+	div.style.top="29px";
 	div.style.right="170px";
 	div.id="ThroneHUD";
 	div.style.zIndex="20000";
@@ -2807,34 +4201,29 @@ return i;
 	    });
 	} catch (e) { }
 
-  },
+},
 
 ThroneT : function (){
         var t = Tabs.Throne;    
      var m = '<DIV  class=pbStat>Throne room toggle</div><center><TABLE height=0% class=pbTab><TR align="center">';
             for (var k=1;k<Number(Seed.throne.slotNum+1);k++) {
                  m += '<TD><INPUT id=autotr'+k+' type=checkbox '+ (ThroneOptions.autotoggle[k]?'CHECKED ':'') +'/><INPUT id=tra'+k+' type=submit value='+k+'><br><input type="text" id=trt'+k+' size=10 value='+ThroneOptions.tabnames[k]+'></td>';
-
                  if(k == 8)m+='</TR><TR>';
                  
                  };
-//            m += '</TR></table>'+translate('Will auto change to checked Throne rooms and rotate when afk')+'<br><br><button id=ttptc>Post to chat</button> <br>';
-            m += '</TR></table>'+translate('Will auto change to checked Throne rooms and rotate')+'<br><br><button id=ttptc>Post to chat</button> <br>';
+            m += '</TR></table>'+translate('Will auto change to checked Throne rooms and rotate when afk')+'<br><br><button id=ttptc>Post to chat</button> <br>';
             m+='<table><TD><DIV id=ThroneTRS></div></td></table>';
             t.Overv.innerHTML = m;
             for (var k=1;k<Number(Seed.throne.slotNum+1);k++) {
             	document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
-
             	document.getElementById('trt'+k).addEventListener ('change', function(){ThroneOptions.tabnames[Number(String(this.id).replace(/trt/,""))] = this.value;saveThroneOptions();}, false);
-
             	document.getElementById('autotr'+k).addEventListener ('click', function(){ThroneOptions.autotoggle[Number(String(this.id).replace(/autotr/,""))] = this.checked; saveThroneOptions();}, false);
-
          	};
             t.TTpaint(unsafeWindow.seed.throne.activeSlot);
             document.getElementById('tra'+unsafeWindow.seed.throne.activeSlot).disabled = true;
             document.getElementById('ttptc').addEventListener('click', t.TTpoststats, false);
 },
-  TTpaint : function(room) {
+TTpaint : function(room) {
         var t = Tabs.Throne;
          m = '<table><td><DIV  class=pbStat>Throne slot '+room+' is equiped</div></td></table><br>';
             for (var k=0;k<unsafeWindow.seed.throne.slotEquip[room].length;k++) {
@@ -2844,12 +4233,12 @@ ThroneT : function (){
            if(document.getElementById('ThroneTRS'))
           document.getElementById('ThroneTRS').innerHTML = m;  
           setTimeout(t.TTpaintstats,300);
-  },
-  TTpaintstats : function () {
+},
+TTpaintstats : function () {
 	if(!document.getElementById('ThroneTRS'))return;
    if(document.getElementById('ThroneTRS').innerHTML.indexOf('The below values are alpha and may not be accurate') != -1)return;
             m= document.getElementById('ThroneTRS').innerHTML;
-         m+='<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via http://userscripts.org/scripts/discuss/101052</font>';
+         m+='<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via https://userscripts.org/scripts/discuss/101052</font>';
          for(i in unsafeWindow.cm.thronestats.effects) {
 //            var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
 	    var z = equippedthronestats(Number(i));
@@ -2859,13 +4248,23 @@ ThroneT : function (){
          };
          m+='</table></div>';
           document.getElementById('ThroneTRS').innerHTML = m;  
-  },
+},
+TTpoststats : function () {
+	var m = ':::.|Throne Room #'+unsafeWindow.seed.throne.activeSlot;
+         for(i in unsafeWindow.cm.thronestats.effects) {
+			 if(i<94){
+         var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
+         if(z != 0) {
+            m+='||'+unsafeWindow.cm.thronestats.effects[i][1]+': '+z+'%';
+                }
+         };
+	 };
+    sendChat ("/a "+  m);
 
+},
 
-  throneHUDredraw : function () {
-
+throneHUDredraw : function () {
 	var trm = unsafeWindow.seed.throne.activeSlot;
-
 			if(document.getElementById('tra'+trm)) {
 				for(a = 1;a <= Seed.throne.slotNum;a++)
 				document.getElementById('tra'+a).disabled = false;
@@ -2883,86 +4282,52 @@ ThroneT : function (){
 
 rotatethrone : function () {
 	var t = Tabs.Throne;
-
-//	if(isAFK && !Options.alertConfig.RecentActivity){
-
-	if(!Options.alertConfig.RecentActivity){
-
+	if(isAFK && !Options.alertConfig.RecentActivity){
 		var activeSlot = Number(Seed.throne.activeSlot);
-
 		var foundone = false;
-
 	for(k=activeSlot+1;k <=  Number(Seed.throne.slotNum);k++){
-
 				if(ThroneOptions.autotoggle[k]) {
-
 				t.doPreset(k);
-
 				foundone = true;
-
 				break;
-
 			}
-
 	}
-
 	
 	if(!foundone) {
-
 		for(k = 1;k<=Number(Seed.throne.slotNum);k++){
-
 				if(ThroneOptions.autotoggle[k]) {
-
 				t.doPreset(k);
-
 				foundone = true;
-
 				break;
-
 			}
-
 		}
-
 	}
-
 		
 		
 		
+		/***
 		
-/***
-
+Complex loop that browsers can't handle =/. replaced with multiple loops above.		
 		
-Complex loop that browsers can't handle =/. replaced with multiple loops above.
-		
-	for (k=activeSlot+1;k != activeSlot;k++) {
-
+			for (k=activeSlot+1;k != activeSlot;k++) {
 				if(k > Number(Seed.throne.slotNum)) k = 1;
-
 				//logit('k is '+k);
-
 				if(ThroneOptions.autotoggle[k]) {
-
 				t.doPreset(k);
-
 				break;
-
 			}
-
 		}
-
+		
+		***/
 		
 		
-***/
-		
-		
-
 	}
 },
 
-  hide : function (){
-  },
+hide : function (){
+},
 
-  show : function (){
+show : function (){
     var t = Tabs.Throne;
     if (t.curTabName == 'Sal') 
       t.Salvage();
@@ -2974,8 +4339,11 @@ Complex loop that browsers can't handle =/. replaced with multiple loops above.
       t.Caps();
     else if (t.curTabName == 'TR')
       t.ThroneT();
+    else if (t.curTabName == 'UN')
+      t.Uniques();
   }, 
 }
+
 
 /****************************  Tower Tab  ******************************/
 Tabs.tower = {
@@ -2993,7 +4361,7 @@ Tabs.tower = {
   updatemarchfunc : null,
   origUCL : null,
   Providers : {
-		0: { 'country': "--Country--", 'provider': "--Provider--" },
+        0: { 'country': "--Country--", 'provider': "--Provider--" },
         1: { 'country': "AUSTRALIA", 'provider': "T-Mobile" },
         2: { 'country': "AUSTRALIA", 'provider': "Optus Zoo" },
         3: { 'country': "AUSTRIA", 'provider': "T-Mobile" },
@@ -3104,9 +4472,9 @@ Tabs.tower = {
         110: { 'country': "Philippines", 'provider': "Smart" },
         111: { 'country': "UNITED STATES", 'provider': "CellularSouth" },
         112: { 'country': "UNITED STATES", 'provider': "Viaero" },
-        113: { 'country': "CANADA", 'provider': "Wind Mobile" }
+        113: { 'country': "CANADA", 'provider': "Wind Mobile" },
+        114: { 'country': "UNITED STATES", 'provider': "Sprint PCS" }
     },
-
   init: function(div){
      var t = Tabs.tower;
     if(unsafeWindow.update_march) {
@@ -3117,84 +4485,91 @@ Tabs.tower = {
     t.myDiv = div;
     if (GM_getValue ('towerMarches_'+getServerId()) != null)
       GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
-    // t.generateIncomingFunc = new CalterUwFunc ('attack_generateincoming', [[/.*} else {\s*e = true;\s*}/im, '} else { e = ptGenerateIncoming_hook(); }']]);
-    // unsafeWindow.ptGenerateIncoming_hook = t.generateIncoming_hook;
  
     var m = '<DIV class=pbStat>TOWER ALERTS</div><TABLE class=pbTab><TR align=center>';
 
-	  for (var i=0; i<Cities.cities.length; i++)
+      for (var i=0; i<Cities.cities.length; i++)
       m += '<TD width=95><SPAN id=pbtacity_'+ i +'>' + Cities.cities[i].name + '</span></td>';
     m += '</tr><TR align=center>';
-	  for (var cityId in Cities.byID)
-		m += '<TD><INPUT type=submit id=pbtabut_'+ cityId +' value=""></td>';
-	m += '</tr><TR align=center>';
-	  for (var cityId in Cities.byID)
-	   m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
-    m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="Stop Sound Alert"></center></div><DIV id=pbSwfPlayer></div>';
+      for (var cityId in Cities.byID)
+        m += '<TD><INPUT type=submit id=pbtabut_'+ cityId +' value=""></td>';
+  		  m += '</tr><TR align=center>';
+      for (var cityId in Cities.byID)
+       m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
+  		  m += '</tr><TR align=center>';
+      for (var cityId in Cities.byID) {
+      m+= '<TD><CENTER><INPUT id=towertext_'+cityId+' type=text size=10 name='+cityId+' value='+(Options.alertConfig.towercitytext[cityId]?Options.alertConfig.towercitytext[cityId]:"")+'></CENTER></TD>';
+       };
+    m += '</tr></table><BR><DIV><CENTER><INPUT id=pbSoundStop type=submit value="'+translate("Stop Sound Alert")+'"></center></div><DIV id=pbSwfPlayer></div>';
     m += '<BR><DIV class=pbStat>'+translate("SETUP")+'</div><TABLE class=pbTab>\
     <tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
-    <td align=left>Text message incoming attack to: <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
+    <td align=left>'+translate("Text message incoming attack to")+': <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
 &nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold">(Standard text messaging rates apply)</span></td></tr><tr><td></td>\
-    <TD align=left>Country: <select id="pbfrmcountry">';
+&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold"><sup>*'+translate("Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>\
+    <TD align=left>'+translate("Country")+': <select id="pbfrmcountry">';
     for (var i in t.Providers) {
        var ret=m.indexOf(t.Providers[i].country);
        if (ret==-1) {
          if(t.Providers[Options.celltext.provider]){
-			 if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
-			   m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
-			 } else {
-			   m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
-			 }
+          if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
+            m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
+          } else {
+            m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
+          }
          } else {
            m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
          }
        }
     }
-
+    
     m += '</select>\
-    <select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--Provider--</option>';
+    <select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--'+translate("Provider")+'--</option>';
     for (var i in t.Providers) {
          if(t.Providers[Options.celltext.provider]){
-			if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
-				if(Options.celltext.provider == i)
-					m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
-				else {
-				   m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
-				}
-		 } else {
-		   m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
-		 }
+         if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
+            if(Options.celltext.provider == i)
+               m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
+            else {
+               m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+            }
+       } else {
+         m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+       }
     }
 
-    m += '</select></td></tr>';
+    m += '</select> <FONT COLOR=RED>REQUIRED </FONT> PIN:<INPUT id=pbcellpin type=text size=6 maxlength=5 value="'+ (GlobalOptions.cellpin?GlobalOptions.cellpin:'') +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <INPUT id=pbgetpin type=submit value="'+translate("GET PIN CODE")+'" ></td></tr>';
+    m += '<tr><td align=left><INPUT id=pbcellextended type=checkbox '+ (Options.celltext.extended?'CHECKED ':'') +'/></td>\
+    <td align=left>'+translate("Send troop info in text")+'<span style="color:#800; font-weight:bold"><sup>*'+translate("Multiple text messages per attack. Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>';
     m += '<TR><td align=center>-</td><TD align=left>'+translate("Minimum # of troops to trigger tower options")+':<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \> <span style="color:#800; font-weight:bold"><sup>*NEW! Controls All Tower Options</sup></span></td></tr>';
 
-    m += '<TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
+    m += '<TR><TD><INPUT id=pbalertemail type=checkbox '+ (Options.alertConfig.email?'CHECKED ':'') +'/></td><TD>'+translate("e-mail on incoming attack")+'<INPUT id=pbathemail type=submit value='+translate("Authenticate")+' >.</td></tr>\
+      <TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
         <TR><TD></td><TD><TABLE cellpadding=0 cellspacing=0>\
-            <TR><TD align=right>Message Prefix: &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
-            <TR><TD align=right>Alert on scouting: &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>Alert on wild attack: &nbsp; </td><TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td></tr>\
-            <TR><TD align=right>Display defend status: &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
+            <TR><TD align=right>'+translate("Message Prefix")+': &nbsp; </td><TD><INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td></tr>\
+            <TR><TD align=right>'+translate("Alert on scouting")+': &nbsp; </td><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td></tr>\
+            <TR><TD align=right>'+translate("Alert on wild attack")+': &nbsp; </td><TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td></tr>\
+            <TR><TD align=right>'+translate("Display defend status")+': &nbsp; </td><TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td></tr>\
             </table></td></tr>\
-        <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>Stop raids on impending.</td></tr>\
-    <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=2 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending")+'</td></tr>\
+        <TR><TD align=right><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><TD>'+translate("Stop raids on impending")+'.</td></tr>\
+    <TR><TD align=right><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=2 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending");
+    m+= '<INPUT id=pbalertTRAFK type=checkbox '+ (Options.alertConfig.AFK?'CHECKED ':'') +'/> Only when AFK</td></tr>\
     <TR><TD><INPUT id=pbalerttoff type=checkbox '+ (Options.alertConfig.alertTRtoff?'CHECKED ':'') +'/></td><td>'+translate("Stop auto outgoing marches on impending")+'</td></tr>\
-    <TR><TD align=right><INPUT id=pbalertguard type=checkbox '+ (Options.alertConfig.guardian?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to wood guardian on impending")+'</td></tr>\
-    <TR><TD align=right><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Toggle TR and marches back after: ")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>\
+    <TR><TD align=right><INPUT id=pbalertguard type=checkbox '+ (Options.alertConfig.guardian?'CHECKED ':'') +'/></td><TD> '+translate("Toggle to wood guardian on impending (uses same afk setting as TR toggle)")+'</td></tr>\
+    <TR><TD align=right><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Toggle TR, guardian, and marches back after: ")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>\
     <TR><TD></TD><TD><INPUT id=pboldattacks type=submit value="'+unsafeWindow.g_js_strings.commonstr.post+' '+unsafeWindow.g_js_strings.ImpendingAttacks.incoming+' '+unsafeWindow.g_js_strings.commonstr.totx+' '+unsafeWindow.g_js_strings.commonstr.chat+'"/><BR></td></tr>\
         <TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
-        <TR><TD></td><TD><DIV id=pbLoadingSwf>Loading SWF player</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
-            <TR><TD align=right>Sound file: &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=55 maxlength=160 value="'+ Options.alertSound.soundUrl +'" \>\
-             &nbsp; </td><TD><INPUT id=pbSoundLoad type=submit value=Load><INPUT id=pbSoundDefault type=submit value=Default></td></tr>\
-            <TR><TD align=right>Volume: &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td><TD align=center><SPAN id=pbLoadStat>xx</span></td></tr>\
-            <TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> Repeat every <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> minutes</td></tr>\
-            <TR><TD></td><TD>Play for <INPUT id=pbSoundLength type=text size=3 maxlength=5 value="'+ Options.alertSound.playLength +'"> seconds</td></tr>\
-            <TR><TD></td><TD><INPUT type=submit value="Play Now" id=pbPlayNow></td></tr></table></div></td></tr>\
+        <TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
+            <TR><TD align=right>'+translate("Sound file")+': &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=40 maxlength=1000 value="'+ Options.alertSound.soundUrl +'" \>\
+             &nbsp; </td><TD><INPUT id=pbSoundLoad type=submit value='+translate("Load")+' ><INPUT id=pbSoundDefault type=submit value='+translate("Default")+' ></td></tr>\
+            <TR><TD align=right>'+translate("Volume")+': &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td><TD align=center><SPAN id=pbLoadStat>xx</span></td></tr>\
+            <TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> '+translate("Repeat every")+' <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> '+translate("minutes")+'</td></tr>\
+            <TR><TD></td><TD>Play for <INPUT id=pbSoundLength type=text size=3 maxlength=5 value="'+ Options.alertSound.playLength +'"> '+translate("seconds")+'</td></tr>\
+            <TR><TD></td><TD><INPUT type=submit value="'+translate("Play Now")+'" id=pbPlayNow></td></tr></table></div></td></tr>\
         </table><BR>';
-  	t.myDiv.innerHTML = m;
+      t.myDiv.innerHTML = m;
 
-//    t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y');
+
+//   t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y');
     t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n');
     //t.mss.swfDebug = function (m){ logit ('SWF: '+ m)};
     t.mss.swfPlayComplete = t.e_soundFinished;
@@ -3203,14 +4578,21 @@ Tabs.tower = {
 
     t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
     t.volSlider.setChangeListener(t.e_volChanged);
+		document.getElementById('pbcellpin').addEventListener ('change', function(){
+              GlobalOptions.cellpin = this.value;
+            GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);  
     document.getElementById('pbPlayNow').addEventListener ('click', function (){t.playSound(false)}, false);
+    document.getElementById('pbathemail').addEventListener ('click', t.e_authenticate, false);
     document.getElementById('pbSoundStop').addEventListener ('click', t.stopSoundAlerts, false);
     document.getElementById('pbSoundRepeat').addEventListener ('change', function (e){Options.alertSound.repeat = e.target.checked}, false);
     document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
     document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
     document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
     document.getElementById('pbcellenable').addEventListener ('change', function (e){Options.celltext.atext = e.target.checked;}, false);
+    document.getElementById('pbcellextended').addEventListener ('change', function (e){Options.celltext.extended = e.target.checked;}, false);
     document.getElementById('pbSoundStop').disabled = true;
+    document.getElementById('pbalertemail').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertScout').addEventListener ('change', t.e_alertOptChanged, false);
@@ -3229,7 +4611,9 @@ Tabs.tower = {
     document.getElementById('pbalertTR2').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalerttoff').addEventListener ('change', t.e_alertOptChanged, false);
     document.getElementById('pbalertTRsetmin').addEventListener ('change', t.e_alertOptChanged, false);
+    document.getElementById('pbalertTRAFK').addEventListener ('click', t.e_alertOptChanged, false);
     document.getElementById('pboldattacks').addEventListener ('click', t.oldIncoming, false);
+    document.getElementById('pbgetpin').addEventListener ('click', t.getpinauth, false);
     document.getElementById('pbsoundFile').addEventListener ('change', function (){
         Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
         t.loadUrl (Options.alertSound.soundUrl);
@@ -3241,28 +4625,34 @@ Tabs.tower = {
       }, false);
 
     for (var cityId in Cities.byID){
-  	  var but = document.getElementById ('pbtabut_'+ cityId);
-  	  addListener (but, cityId);
-  	  t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
-  	  t.displayDefMode (cityId);
-	  var btnNameT = 'pbattackqueue_' + cityId;
+    	
+      //m+= '<TD><CENTER><INPUT id=towertext_'+cityId+' type=text size=10 value='+(Options.alertConfig.towercitytext[cityId]?Options.alertConfig.towercitytext[cityId]:"")+'></CENTER></TD>';
+    	document.getElementById ('towertext_'+ cityId).addEventListener('change',function(e){Options.alertConfig.towercitytext[e.target.name] = e.target.value;saveOptions();},false);
+    	
+    	
+    	
+        var but = document.getElementById ('pbtabut_'+ cityId);
+        addListener (but, cityId);
+        t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
+        t.displayDefMode (cityId);
+      var btnNameT = 'pbattackqueue_' + cityId;
       addTowerEventListener(cityId, btnNameT);
-	  }
+      }
     function addListener (but, i){
       but.addEventListener ('click', function (){t.butToggleDefMode(i)}, false);
     }
-	function addTowerEventListener(cityId, name){
+    function addTowerEventListener(cityId, name){
         document.getElementById(name).addEventListener('click', function(){
             t.showTowerIncoming(cityId);
         }, false);
-    }	
+    }    
     setInterval (t.eachSecond, 2000);
        
-//       GM_addStyle("a.city.defending { border-top: 4px; border-bottom: 4px; border-left: 0px; border-right: 0px; border-style: solid; margin-top: 0px; border-color: red;}");
-//       GM_addStyle("a.city.hiding    { border-top: 4px; border-bottom: 4px; border-left: 0px; border-right: 0px; border-style: solid; margin-top: 0px; border-color: blue;}");
-//       t.origUCL = unsafeWindow.update_citylist;
-//       t.cityBtnColor();
-
+       GM_addStyle("a.city.defending { border-top: 4px; border-bottom: 4px; border-left: 0px; border-right: 0px; border-style: solid; margin-top: 0px; border-color: red;}");
+       GM_addStyle("a.city.hiding    { border-top: 4px; border-bottom: 4px; border-left: 0px; border-right: 0px; border-style: solid; margin-top: 0px; border-color: blue;}");
+       t.origUCL = unsafeWindow.update_citylist;
+       t.cityBtnColor();
+       
   },      
 
   show : function (){
@@ -3270,7 +4660,34 @@ Tabs.tower = {
   
   hide : function (){
   },
- 
+ getpinauth : function () {
+ 	var dt = {};
+    dt.provider = Options.celltext.provider;
+    dt.num1 = Options.celltext.num1;
+    dt.num2 = Options.celltext.num2;
+    dt.num3 = Options.celltext.num3;
+
+  GM_xmlhttpRequest({
+    method: 'POST',
+    url: http+'baos.kocscripters.com/getpin.php',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    },
+    data: implodeUrlArgs(dt),
+		onload: function (message) {
+            if(message.status != 200) alert('request failed, try again');
+            else {
+      			var rslt = eval("(" + message.responseText + ")");
+      			//alert(inspect(rslt));
+            	if(rslt.ok) alert("check for text containing pin code");
+            	else if(rslt.dup) alert('duplicate record, pin already sent');
+            	else if(rslt.inv) alert('Invalid request');
+            	else alert('Bad Mojo going on, try again later');
+				};
+		  },
+
+    });
+ },
   cityBtnColor : function () {
 
      // override update_citylist function
@@ -3294,50 +4711,19 @@ Tabs.tower = {
 
      if (Options.colorCityTabs) {
         unsafeWindow.update_citylist = usl;
-  	setTimeout(Tabs.tower.replace,250);
      }
      else
      {
         unsafeWindow.jQuery("a.city").removeClass("defending");
         unsafeWindow.jQuery("a.city").removeClass("hiding");
         unsafeWindow.update_citylist = Tabs.tower.origUCL;
-	for (i=0;i<Seed.cities.length;i++)
-		document.getElementById('mod_citylist').children[i].innerHTML = "<SPAN><FONT fontFamily='georgia,​arial,​sans-serif' font-weight=700 font-size=11px color=black>"+ unsafeWindow.roman[i] +"</font></span>";
      }
   },
-
-  insert : function (){	
-        var t =Tabs.tower;
-	for (i=0;i<Seed.cities.length;i++){
-//		if (Seed.cities[i][0] == unsafeWindow.currentcityid) Options.ReturnToCity = (i+1);
-		color = "black";
-		cityID = Seed.cities[i][0];
-		if (Seed.cityData.city[cityID].isPrestigeCity) {
-			if (Seed.cityData.city[cityID].prestigeInfo.prestigeType) {
-				switch (parseInt(Seed.cityData.city[cityID].prestigeInfo.prestigeType)){
-	    			case 1: color = "#228b22";break;
-	    			case 3: color = "#E36600";break;
-	    			case 2: color = "#A944DB";break;
-	    		}
-	    	}
-		}
-		document.getElementById('mod_citylist').children[i].innerHTML = "<SPAN><FONT fontFamily='georgia,​arial,​sans-serif' font-weight=700 font-size=11px color="+color+">"+ unsafeWindow.roman[i] +"</font></span>";
-	}
-  },
-
-  replace : function (){
-        var t =Tabs.tower;
-	var oldFunction = unsafeWindow.update_citylist;
-	unsafeWindow.update_citylist = function() {
-			t.insert();
-			return oldFunction();
-	};
-  },
-
+ 
   loadUrl : function (url){
     var t = Tabs.tower;
     t.mss.load (1, url, true);
-    document.getElementById('pbLoadStat').innerHTML = 'Loading';
+    document.getElementById('pbLoadStat').innerHTML = translate('Loading');
   },
   phonenum : function() {
    Options.celltext.num1 = document.getElementById('pbnum1').value;
@@ -3349,31 +4735,31 @@ Tabs.tower = {
   setCountry : function(){
     var t = Tabs.tower;
     var myselect=document.getElementById("pbfrmprovider");
-	myselect.innerHTML = '<option value=0 >--Provider--</option>';
-	myselect.disabled = true;
+    myselect.innerHTML = '<option value=0 >--'+translate("Provider")+'--</option>';
+    myselect.disabled = true;
     for (var i in t.Providers) {
      if (t.Providers[i].country == document.getElementById("pbfrmcountry").value){
-		var addoption = document.createElement('option');
-		addoption.value = i;
-		addoption.text = t.Providers[i].provider;
+        var addoption = document.createElement('option');
+        addoption.value = i;
+        addoption.text = t.Providers[i].provider;
       myselect.add(addoption, null) //add new option to end of "Providers"
      }
     }
-	myselect.disabled = false;
+    myselect.disabled = false;
    },
 
   setProvider : function(){
     var ddProvider = document.getElementById("pbfrmprovider").wrappedJSObject;
      Options.celltext.provider=ddProvider.options[ddProvider.selectedIndex].value;
-	if(ddProvider.selectedIndex > 0){
-		document.getElementById("pbnum1").disabled = false;
-		document.getElementById("pbnum2").disabled = false;
-		document.getElementById("pbnum3").disabled = false;
-	} else {
-		document.getElementById("pbnum1").disabled = true;
-		document.getElementById("pbnum2").disabled = true;
-		document.getElementById("pbnum3").disabled = true;
-	}
+    if(ddProvider.selectedIndex > 0){
+        document.getElementById("pbnum1").disabled = false;
+        document.getElementById("pbnum2").disabled = false;
+        document.getElementById("pbnum3").disabled = false;
+    } else {
+        document.getElementById("pbnum1").disabled = true;
+        document.getElementById("pbnum2").disabled = true;
+        document.getElementById("pbnum3").disabled = true;
+    }
     //alert(Options.celltext.provider);
    },
 
@@ -3382,16 +4768,18 @@ Tabs.tower = {
     document.getElementById('pbLoadingSwf').style.display = 'none';
     document.getElementById('pbSoundOpts').style.display = 'inline';
     t.volSlider.setValue (Options.alertSound.volume/100);
-//    t.loadUrl (Options.alertSound.soundUrl);
-//    setTimeout (function (){t.mss.setVolume (1, Options.alertSound.volume);}, 500);
     setTimeout (function (){t.loadUrl (Options.alertSound.soundUrl);},500);
     setTimeout (function (){t.mss.setVolume (1, Options.alertSound.volume);}, 1000);
     if (Options.alertSound.alarmActive && Options.alertSound.expireTime>unixTime())   
       t.soundTheAlert();
   },
-  
+  e_authenticate: function (){
+	  var x = window.open();
+	  x.location=http+"baos.kocscripters.com/kocalert/index.php";
+  },
   e_alertOptChanged : function (){
     var t = Tabs.tower;
+    Options.alertConfig.email = document.getElementById('pbalertemail').checked;
     Options.alertConfig.aChat = document.getElementById('pbalertEnable').checked;
     Options.alertConfig.aPrefix=document.getElementById('pbalertPrefix').value;      
     Options.alertConfig.scouting=document.getElementById('pbalertScout').checked;      
@@ -3402,19 +4790,20 @@ Tabs.tower = {
     Options.alertConfig.alertTR2=document.getElementById('pbalertTR2').checked;
     Options.alertConfig.alertTRtoff=document.getElementById('pbalerttoff').checked;
     Options.alertConfig.guardian=document.getElementById('pbalertguard').checked;
+    Options.alertConfig.AFK=document.getElementById('pbalertTRAFK').checked;
     var trset = parseInt(document.getElementById('pbalertTRset').value);
     Options.alertConfig.alertTRset = trset;
     var trsetwait = parseInt(document.getElementById('pbalertTRsetmin').value);
     Options.alertConfig.alertTRsetwaittime = trsetwait;
     var mt = parseInt(document.getElementById('pbalertTroops').value);
-    if (mt<1 || mt>120000){
+    if (mt<1 || mt>1500000){
       document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
-      document.getElementById('pbalerterr').innerHTML = '<font color=#600000><B>INVALID</b></font>';
+      document.getElementById('pbalerterr').innerHTML = '<font color=#600000><B>'+translate("INVALID")+'</b></font>';
       setTimeout (function (){document.getElementById('pbalerterr').innerHTML =''}, 2000);
       return;
     }
     Options.alertConfig.minTroops = mt;
-	saveOptions();
+    saveOptions();
   },
   
   e_volChanged : function (val){
@@ -3454,8 +4843,6 @@ Tabs.tower = {
     
   eachSecond : function (){
     var t = Tabs.tower;
-	//Show Player & Might in map.
-//	DrawLevelIcons();
     for (var cityId in Cities.byID){
       if (Seed.citystats["city" + cityId].gate != t.defMode[cityId]){     // user changed def mode
         t.defMode[cityId] = Seed.citystats["city"+ cityId].gate;
@@ -3464,26 +4851,30 @@ Tabs.tower = {
       Options.alertConfig.raidautoswitch[cityId] = false;
       Options.alertConfig.guardautoswitch[cityId] = false;
     }
-  	var now = unixTime();
-	var incomming = false;
-    if (matTypeof(Seed.queue_atkinc) != 'array'){
+      var now = unixTime();
+    var incomming = false;
       for (var k in Seed.queue_atkinc){   // check each incoming march
         var m = Seed.queue_atkinc[k];
-        if ((m.marchType==3 || m.marchType==4) && parseIntNan(m.arrivalTime)>now){
-          if (m.departureTime > Options.alertConfig.lastAttack){
-            setTimeout(function(){Options.alertConfig.lastAttack = m.departureTime;saveOptions},500);//potential fix for ghosted incoming attacks of the exact same second.
+        if (m.marchType==3 || m.marchType==4){
+			if(Options.alertConfig.lastatkarr.indexOf(Number(m.mid)) == -1) {
+				Options.alertConfig.lastatkarr.push(Number(m.mid));
+				Options.alertConfig.lastarrtime.push(Number(m.arrivalTime));
+				if (Number(m.arrivalTime) > Options.alertConfig.lastAttack) Options.alertConfig.lastAttack = Number(m.arrivalTime);//for tr toggle back
+            saveOptions();
             t.newIncoming (m);
-          }
-		  incomming = true;
-		  if (Options.alertConfig.raid){
-			Options.alertConfig.raidautoswitch[m.toCityId] = true;
-		  }
-		  if (Options.alertConfig.guard){
-			Options.alertConfig.guardautoswitch[m.toCityId] = true;
-		  }
+			};
+          incomming = true;
+
         }
+      }      
+      if (Options.alertConfig.raid && incomming){
+        Options.alertConfig.raidautoswitch[m.toCityId] = true;
+      };
+      if (Options.alertConfig.guard && incomming){
+	Options.alertConfig.guardautoswitch[m.toCityId] = true;
       }
-    }
+        if(!incomming) Options.alertConfig.lastatkarr = new Array();
+      saveOptions();
     if(Options.alertConfig.RecentActivity) {
       if(Options.alertConfig.alertTR2) {
          if(!incomming) {
@@ -3491,16 +4882,27 @@ Tabs.tower = {
             if (switchtime < now) {
                if(Options.alertConfig.alertTRtoff) {
                   if(Options.SaveState.transport && !Tabs.transport.traderState.running)Tabs.transport.toggleTraderState();
-//                  if(Options.SaveState.farm && !FarmOptions.Running)Tabs.farm.toggleBarbState();
+                  if(Options.SaveState.farm && !FarmOptions.Running)Tabs.farm.toggleBarbState();
                   if(Options.SaveState.darkforest && !AttackOptions.Running)Tabs.Barb.toggleBarbState();
-                  if(Options.SaveState.crest && !Options.crestRunning)Tabs.Crest.toggleCrestState();
+                  if(Options.SaveState.crest && !Options.crestRunning)Tabs.Attack.toggleCrestState();
                };
                if (Options.SaveState.trset != Seed.throne.activeSlot)
-                  Tabs.Throne.doPreset(Options.SaveState.trset);
-	       for (var cityId in Cities.byID){
-                  if(Options.SaveState.guardian[cityId] && Seed.buildings["city"+ cityId].pos500[0] != Options.SaveState.guardian[cityId]) 
-			t.changeGuardian(cityId,parseInt(Options.SaveState.guardian[cityId]));
-		  Options.alertConfig.guardautoswitch[cityId] = false;
+               if(Options.alertConfig.AFK) {
+                  if(isAFK) {
+		     Tabs.Throne.doPreset(Options.SaveState.trset);
+	             for (var cityId in Cities.byID){
+                        if(Options.SaveState.guardian[cityId] && Seed.buildings["city"+ cityId].pos500[0] != Options.SaveState.guardian[cityId]) 
+			   t.changeGuardian(cityId,parseInt(Options.SaveState.guardian[cityId]));
+		        Options.alertConfig.guardautoswitch[cityId] = false;
+	             }
+		   }
+               } else {
+		  Tabs.Throne.doPreset(Options.SaveState.trset);
+	          for (var cityId in Cities.byID){
+                     if(Options.SaveState.guardian[cityId] && Seed.buildings["city"+ cityId].pos500[0] != Options.SaveState.guardian[cityId]) 
+		        t.changeGuardian(cityId,parseInt(Options.SaveState.guardian[cityId]));
+		     Options.alertConfig.guardautoswitch[cityId] = false;
+	          }
 	       }
                Options.alertConfig.RecentActivity = false;
                saveOptions();
@@ -3537,9 +4939,7 @@ Tabs.tower = {
         for (var i = 0; i < Cities.cities.length; i++) {
             var cId = Cities.cities[i].id;
             document.getElementById('pbattackqueue_' + cId).value = 'A ' + t['attackCount_' + cId] + ' | S ' + t['scoutCount_' + cId];
-        }
-
-	  
+        }    
   },   
   
   e_soundFinished : function (chan){ // called by SWF when sound finishes playing
@@ -3555,9 +4955,9 @@ Tabs.tower = {
     if (chan != 1)
       return;
     if (isError)  
-      document.getElementById('pbLoadStat').innerHTML = 'Error!';
+      document.getElementById('pbLoadStat').innerHTML = translate("Error")+"!";
     else
-      document.getElementById('pbLoadStat').innerHTML = 'Loaded';
+      document.getElementById('pbLoadStat').innerHTML = translate("Loaded");
   },  
   
   playSound : function (doRepeats){
@@ -3576,7 +4976,7 @@ Tabs.tower = {
   soundTheAlert : function (){
     var t = Tabs.tower;
     Options.alertSound.alarmActive = true;
-    t.playSound(true);
+    new t.playSound(true);
   },
      
   stopSoundAlerts : function (){
@@ -3609,12 +5009,12 @@ Tabs.tower = {
             if(Options.alertConfig.alertTRtoff) {
                Options.SaveState.transport = Tabs.transport.traderState.running;
                if(Options.SaveState.transport)Tabs.transport.toggleTraderState();
-//               Options.SaveState.farm = FarmOptions.Running;
-//               if(Options.SaveState.farm)Tabs.farm.toggleBarbState();
+               Options.SaveState.farm = FarmOptions.Running;
+               if(Options.SaveState.farm)Tabs.farm.toggleBarbState();
                Options.SaveState.darkforest = AttackOptions.Running;
                if(Options.SaveState.darkforest)Tabs.Barb.toggleBarbState();
                Options.SaveState.crest = Options.crestRunning;
-               if(Options.SaveState.crest)Tabs.Crest.toggleCrestState();
+               if(Options.SaveState.crest)Tabs.Attack.toggleCrestState();
             };
             Options.SaveState.trset = Seed.throne.activeSlot;
             if(Seed.buildings["city"+ m.toCityId].pos500 && Seed.buildings["city"+ m.toCityId].pos500[0] !=50) Options.SaveState.guardian[m.toCityId]=Seed.buildings["city"+ m.toCityId].pos500[0];
@@ -3625,11 +5025,15 @@ Tabs.tower = {
       var currentset = Seed.throne.activeSlot;
       if (Options.alertConfig.alertTRset != currentset){
             var preset = Options.alertConfig.alertTRset
-            Tabs.Throne.doPreset(preset);
+         if(Options.alertConfig.AFK) {
+            if(isAFK) Tabs.Throne.doPreset(preset);
+         } else Tabs.Throne.doPreset(preset);
       }
     }
     if (Options.alertConfig.guardian){
-      if(Seed.buildings["city"+ m.toCityId].pos500) t.changeGuardian(m.toCityId,50);
+         if(Options.alertConfig.AFK) {
+            if(isAFK) if(Seed.buildings["city"+ m.toCityId].pos500 ) t.changeGuardian(m.toCityId,50);
+         } else if(Seed.buildings["city"+ m.toCityId].pos500 ) t.changeGuardian(m.toCityId,50);
     }
   },
   
@@ -3661,10 +5065,10 @@ Tabs.tower = {
       name = to.name;
       else name = wilderness;
       var who;
-      if (Seed.players['u'+a.pid]) who = Seed.players['u'+a.pid].n;
-      else if (m.players && m.players['u'+a.pid]) who = m.players['u'+a.pid].n;
+      if (Seed.players['u'+a.pid])who = Seed.players['u'+a.pid].n;
+      else if (m.players && m.players['u'+a.pid])who = m.players['u'+a.pid].n;
       else who = barbarians;
-      msg+= target+': '+name+' ('+to.x+','+to.y+')| '+mtype+': '+atype+'| '+sentfrom+': '+who+' ('+a.fromXCoord+','+a.fromYCoord+') ||'+troops+':|';
+      msg+= target+': '+name+' ('+to.x+','+to.y+')| '+mtype+': '+atype+'| '+sentfrom+': '+who+'('+a.fromXCoord+','+a.fromYCoord+') ||'+troops+':|';
       for (k in a.unts){
          var uid = parseInt(k.substr (1));
          var UNTCOUNT = String(String(a.unts[k]).split("")).replace(/,/g,fchar)// forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
@@ -3702,7 +5106,7 @@ Tabs.tower = {
 	onSuccess: function (rslt) {
 		if (rslt.ok) {
 			unsafeWindow.seed.buildings["city"+ cityId].pos500[0]=guardiantype;
-		}
+		} 
 	},
 	onFailure: function () {
                 return;
@@ -3720,28 +5124,29 @@ Tabs.tower = {
       if (m.arrivalTime > Options.alertSound.expireTime)
         Options.alertSound.expireTime = m.arrivalTime;
     }
-	if (Options.alertConfig.raid){
-		Tabs.Raid.StopCityRaids(m.toCityId);
-		Options.alertConfig.raidautoswitch[m.toCityId] = true;
-	}  
+    if (Options.alertConfig.raid){
+        Tabs.Raid.StopCityRaids(m.toCityId);
+        Options.alertConfig.raidautoswitch[m.toCityId] = true;
+    }  
   },
 
+
   ajaxSetDefMode : function (cityId, state, notify){
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.cid = cityId;
-		params.state = state;
-		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/gate.php" + unsafeWindow.g_ajaxsuffix, {
-			method: "post",
-			parameters: params,
-			onSuccess: function (rslt) {
-				if (rslt.ok) {
-					Seed.citystats["city" + cityId].gate = state;
-					notify (state);
-				}
-			},
-			onFailure: function () {
-			}
-		})
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.cid = cityId;
+        params.state = state;
+        new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/gate.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function (rslt) {
+                if (rslt.ok) {
+                    Seed.citystats["city" + cityId].gate = state;
+                    notify (state);
+                }
+            },
+            onFailure: function () {
+            }
+        })
   },
   
   onUnload : function (){
@@ -3763,12 +5168,6 @@ Tabs.tower = {
     } else {
       return;
     }
-
-    var classs = '';
-    if (m.marchType==3) classs = 'ptChatScout';
-    else if (m.marchType==4)  classs = 'ptChatAttack';
-    else return;
-
     var city = Cities.byID[m.toCityId];
     if ( city.tileId == m.toTileId )
       data.target = 'city ('+ city.x +','+ city.y+')';
@@ -3815,6 +5214,15 @@ Tabs.tower = {
         }
       }
     }
+    
+    var inctroops = '';
+    if (Options.celltext.extended) {
+        for (k in m.unts){
+            var uid = parseInt(k.substr (1));
+            inctroops += String(m.unts[k]) +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
+        }
+    }
+    inctroops = inctroops.slice (0, -2);
     data.provider = Options.celltext.provider;
     data.num1 = Options.celltext.num1;
     data.num2 = Options.celltext.num2;
@@ -3822,16 +5230,19 @@ Tabs.tower = {
     data.serverId = getServerId();
     data.player = Seed.player['name'];
     data.city = city.name;
+    data.troops = inctroops;
+    data.extended = Options.celltext.extended;
+    data.pin = GlobalOptions.cellpin;
 
   GM_xmlhttpRequest({
     method: 'POST',
-    url: 'http://hs151.digitalweb.net/index.php',
-	headers: {
-		'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    url: http+'baos.kocscripters.com/index.php',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
-	data: implodeUrlArgs(data),
+    data: implodeUrlArgs(data),
 
-	})
+    });
   },
   
   postToChat : function (m){
@@ -3839,8 +5250,8 @@ Tabs.tower = {
     if (DEBUG_TRACE) logit ("checkTower(): INCOMING at "+ unixTime()  +": \n"+ inspect (m, 8, 1));
     if (m.marchType == null)      // bogus march (returning scouts)
       return;
-    if (ENABLE_TEST_TAB) Tabs.Test.addDiv ("Incoming!<BR><PRE style='margin:0px;'>" + inspect (m, 8, 1) +'</pre>');
-    var target, atkType, who, champstat;
+    if (ENABLE_TEST_TAB) Tabs.Test.addDiv (translate("Incoming")+"!<BR><PRE style='margin:0px;'>" + inspect (m, 8, 1) +'</pre>');
+    var target, atkType, who;
     var attacker = unsafeWindow.g_js_strings.commonstr.attacker;
     var scoutingat = '';
     var attack = unsafeWindow.g_js_strings.commonstr.attacker;
@@ -3858,7 +5269,6 @@ Tabs.tower = {
    var chEff1Base = {"Damage":30,"Bonus Damage":0,"Armor":7,"Strength":27,"Dexterity":27,"Health":60,"Hit Chance":4,"Crit Chance":3,"Block":3};
    var chEffect2 = {1:"Attack",2:"Defense",3:"Life",4:"Combat Speed",5:"Range",6:"Load",7:"Accuracy",17:"Attack Debuff",18:"Defense Debufff",19:"Life Debuff",20:"Combat Speed Debuff",21:"Range Debuff",22:"Load Debuff",23:"Accuracy Debuff"};
    var chEff1Net;
-
     if (m.marchType == 3){
       if (!Options.alertConfig.scouting)
         return;
@@ -3868,9 +5278,14 @@ Tabs.tower = {
       return;
     }
     var city = Cities.byID[m.toCityId];
-    if ( city.tileId == m.toTileId )
+    if ( city.tileId == m.toTileId ) {
       target = unsafeWindow.g_js_strings.commonstr.city+ ' '+city.name+' ('+ city.x +','+ city.y + ')';
-    else {
+		if(Options.alertConfig.towercitytext[m.toCityId]) {
+   	 	target += '|'+Options.alertConfig.towercitytext[m.toCityId];
+ 	   };
+      
+      
+   } else {
       if (!Options.alertConfig.wilds)
         return;
       target = wilderness;
@@ -3886,38 +5301,37 @@ Tabs.tower = {
     else if (m.players && m.players['u'+m.pid])
       who = m.players['u'+m.pid].n;
     else
-      who = 'Unknown';
+      who = translate('Unknown');
   
     if (m.fromXCoord)
       who += '('+ m.fromXCoord +','+ m.fromYCoord + ')';
     who += ' ('+getDiplomacy(m.aid)+')';
     
     if(m.marchStatus == 9)
-        var msg = '.::.|'+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+attackrecalled+' || '+troops+': ';
+        msg = '.::.|'+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+attackrecalled+' || '+troops+': ';
     else
-        var msg = '..:.|'+Options.alertConfig.aPrefix +' || '+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
+        msg = '..:.|'+Options.alertConfig.aPrefix +' || '+scoutingat+' '+target+' || '+attacker+' '+ who +' || '+estimatedarrival+' ('+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') || '+troops+': ';        
         //msg = Options.alertConfig.aPrefix +' My '+ target +' is being '+ atkType  +' by '+ who +' Incoming Troops (arriving in '+ unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())) +') : ';        
-   var fchar = Filter[Options.fchar];
+    var fchar = Filter[Options.fchar];
     for (k in m.unts){
       var uid = parseInt(k.substr (1));
-      var UNTCOUNT = String(String(m.unts[k]).split("")).replace(/,/g,fchar); // forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
+      var UNTCOUNT = String(String(m.unts[k]).split("")).replace(/,/g,fchar)// forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
       msg += '|'+UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
     }
-
-//"championInfo":{"name":"Ida","effects":{"1":{"201":117.5,"206":185,"203":7,"204":27,"205":27,"207":4,"208":3,"209":3},"2":{"5":40.5}}}}}
+     if(m.reportId) {
+     		setTimeout(function(){delete Seed.queue_atkinc['m'+m.reportId]},15000);//cleanup for fake tower attack
+     		msg += '||Report No: '+m.reportId;//added spaces for strange bug removing 2 characters
+		};
     if (m.championInfo) {
-      msg += ' || Champion Data:';
+      msg += ' || Champion Item Stats:';
       for (k in m.championInfo.effects[1]) {
         chEff1Net = m.championInfo.effects[1][k]-chEff1Base[chEffect1[k]];
         chEff1Net = chEff1Net.toFixed(1);
-//	msg += '|' +chEffect1[k]+ ': ' +m.championInfo.effects[1][k]+', ';
 	if (chEff1Net > 0.0) msg += '|' +chEffect1[k]+ ': +' +chEff1Net+', ';
       }
       for (k in m.championInfo.effects[2])
 	msg += '|' +chEffect2[k]+ ': ' +m.championInfo.effects[2][k]+', ';
     }
-
-    msg = msg.slice (0, -2);
     //msg += '  || ';
     if(m.marchStatus != 9) {
       if ( city.tileId == m.toTileId ){
@@ -3931,7 +5345,7 @@ Tabs.tower = {
             availSlots++;
            }
          }
-         msg += ' || My embassy has '+encampall+' '+ availSlots +'/'+ emb.maxLevel +' ';
+         msg += ' || '+encampall+' '+ availSlots +'/'+ emb.maxLevel +' ';
          if (t.defMode[m.toCityId] == 0 && Options.alertConfig.defend==true)
          {
             msg+= '||'+status+': '+hidesanct;
@@ -3948,33 +5362,33 @@ Tabs.tower = {
              + ', AH Lv'+ parseInt(Seed.tech.tch12);
         }
       }
+    new t.sendalert(m); 
     }
-    t.sendalert(m); 
-//   if(Options.alertConfig.email) {
-//     var data = {};
-//      data.Subject ='kocalert'+getServerId()+' ';
-//      if(m.marchStatus == 9) data.Subject += attackrecalled;
-//      data.Subject += scoutingat+' '+target;
-//      data.Message = msg.replace(eval('/'+fchar+'/g'),'');
-//      GM_xmlhttpRequest({
-//         method: 'POST',
-//         url: 'http://hs151.digitalweb.net/kocalert/index.php',
-//         headers: {
-//            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-//         },
-//      data: implodeUrlArgs(data),
-//// onload: function (response) {logit(inspect(data));
-//// },
-//      });
-//   };
-    if (!Options.alertConfig.aChat) return;
-    if (ENABLE_TEST_TAB) Tabs.Test.addDiv (msg);
-    if (SEND_ALERT_AS_WHISPER)
-      sendChat ("/"+ Seed.player.name +' '+ msg);    // Whisper to myself
-    else
-      sendChat ("/a "+  msg);                        // Alliance chat
+    if (Options.alertConfig.aChat)
+      sendChat ("/a "+  msg);                          // Alliance chat
+    if(Options.alertConfig.email) {
+	  var x = window.open();
+	  var y = http+"baos.kocscripters.com/kocalert/index.php?PING=1";
+	  x.location=y;
+	  setTimeout(function(){
+     var data = {};
+      data.Subject ='kocalert '+getServerId()+' ';
+      if(m.marchStatus == 9) data.Subject += attackrecalled;
+      data.Subject += scoutingat+' '+target;
+      data.Message = msg.replace(eval('/'+fchar+'/g'),'');
+      GM_xmlhttpRequest({
+         method: 'POST',
+         url: http+'baos.kocscripters.com/kocalert/index.php',
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+         },
+      data: implodeUrlArgs(data),
+      });x.close();
+   },10000);
+   };
   },
-       handleTowerData: function(m){
+
+      handleTowerData: function(m){
         var t = Tabs.tower;
         var now = unixTime();
         var target, atkType, who, attackermight, allianceId, allianceName, diplomacy;
@@ -4065,7 +5479,7 @@ Tabs.tower = {
                 allianceName = 'n.A.';
                 diplomacy = 'n.A.';
             }
-		//SOURCE
+        //SOURCE
         if (m.fromXCoord)
             var source = m.fromXCoord + ',' + m.fromYCoord;
         else
@@ -4086,7 +5500,7 @@ Tabs.tower = {
             diplomacy: diplomacy,
             rtime: unsafeWindow.timestr(parseInt(m.arrivalTime - unixTime())),
             arrivingDatetime: arrivingDatetime,
-			source:source,
+            source:source,
             units: units,
         };
     },
@@ -4101,11 +5515,11 @@ Tabs.tower = {
         t.popTowerIncoming.show(false);
         var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbTabPad" id="pbCityTowerContent">';
         t.popTowerIncoming.getMainDiv().innerHTML = '</table></div>' + m;
-        t.popTowerIncoming.getTopDiv().innerHTML = '<TD width="200px"><B>Tower Report of ' + cityName + '</b></td></td>';
+        t.popTowerIncoming.getTopDiv().innerHTML = '<TD width="200px"><B>'+translate("Tower Report of")+' ' + cityName + '</b></td></td>';
         t.addCityData2Pop(cityId);
         t.popTowerIncoming.show(true);
-		clearTimeout (t.timer);
-		t.timer = setTimeout (function() {t.showTowerIncoming(cityId)}, 5000);        
+        clearTimeout (t.timer);
+        t.timer = setTimeout (function() {t.showTowerIncoming(cityId)}, 5000);        
     },
     addCityData2Pop: function(cityId){
         var t = Tabs.tower;
@@ -4121,7 +5535,7 @@ Tabs.tower = {
                     ++numSlots;
                     city = march.toCityId;
                     from = march.fromPlayerId;
-					if (!enc[city])
+                    if (!enc[city])
                         enc[city] = {};
                     if (!enc[city][from])
                         enc[city][from] = [];
@@ -4133,17 +5547,17 @@ Tabs.tower = {
                         else
                             k[i] = parseInt(march['unit' + i + 'Count']);
                     }
-					k[14] = parseInt(march.marchStatus);
-					var now = unixTime();
-					k[15] = parseInt(march.destinationUnixTime) - now;
+                    k[14] = parseInt(march.marchStatus);
+                    var now = unixTime();
+                    k[15] = parseInt(march.destinationUnixTime) - now;
                     enc[city][from].push(k);
                 }
             }
         }
         var s1 = '';
-		var s2 = '';
-		var s3 = '';
-		var tot = [];
+        var s2 = '';
+        var s3 = '';
+        var tot = [];
         var atk = [];
         for (i = 0; i < 13; i++) {
             tot[i] = 0;
@@ -4169,18 +5583,18 @@ Tabs.tower = {
                         /*knight = '';
                         if (enc[dest][p][m][0] > 0)
                             knight = ' (' + enc[dest][p][m][0] + ')';
-						*/
-						status = '';
+                        */
+                        status = '';
                         if (enc[dest][p][m][14] == 1) {
-						    status = ' (' + timestr(enc[dest][p][m][15]) + ')';	
-							if (enc[dest][p][m][15] < 0)
-								status = ' (enc)';	
-							else
-								 status = ' (' + timestr(enc[dest][p][m][15]) + ')';	
-						}
-						if (enc[dest][p][m][14] == 2) {
-						    status = ' (enc)';	
-						}
+                            status = ' (' + timestr(enc[dest][p][m][15]) + ')';    
+                            if (enc[dest][p][m][15] < 0)
+                                status = ' (enc)';    
+                            else
+                                 status = ' (' + timestr(enc[dest][p][m][15]) + ')';    
+                        }
+                        if (enc[dest][p][m][14] == 2) {
+                            status = ' (enc)';    
+                        }
 
                         s1 += '<TR align=right><TD align=left class="city">' + player + status +'</td>'
                         for (i = 1; i < 13; i++) {
@@ -4192,14 +5606,14 @@ Tabs.tower = {
                     }
                 }
             } else {
-                s1 += '<TR align=right><TD align=left class="city"><B>Reinforcment:</b></td>'
+                s1 += '<TR align=right><TD align=left class="city"><B>'+translate("Reinforcment")+':</b></td>'
                 for (i = 1; i < 13; i++) {
                     s1 += '<TD class="city">0</td>';
                 }
                 
             }
-			s1 += '<TR align=right><TD colspan=14><BR></tr>';
-            s1 += '<TR align=right><TD class="own" align=left><B>Own Troops:</b></td>';
+            s1 += '<TR align=right><TD colspan=14><BR></tr>';
+            s1 += '<TR align=right><TD class="own" align=left><B>'+translate("Own Troops")+':</b></td>';
             //OWNTROOPS
             var ownTroops = "";
             for (r = 1; r < 13; r++) {
@@ -4208,12 +5622,12 @@ Tabs.tower = {
                 s1 += '<TD class="own">' + num + '</td>';
                 tot[r] += num;
             }
-            s1 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>Defenders:</b></td>';
+            s1 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>'+translate("Defenders")+':</b></td>';
             for (i = 1; i < 13; i++)
                 s1 += '<TD class="tot">' + tot[i] + '</td>';      
-			s3 += '</tr></table>';
+            s3 += '</tr></table>';
         
-        s3 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>Incoming Attacks:</b></td>';
+        s3 += '<TD class="city"></td><TR><TD colspan=14><BR></td></tr><TR align=right><TD class="tot" align=left><B>'+translate("Incoming Attacks")+':</b></td>';
         
         var names = ['Supply', 'Mil', 'Scout', 'Pike', 'Sword', 'Archer', 'Cav', 'Heavy', 'Wagon', 'Balli', 'Ram', 'Cat'];
         if (t.towerMarches.length > 0) {
@@ -4223,22 +5637,22 @@ Tabs.tower = {
                         s3 += '<TABLE cellspacing=0 width=100%><TR>';
                         
                         if (t.towerMarches[k].atkType == 'attacked') {
-                            s3 += '<TD rowspan=2 width=5%><B><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_30.jpg?6545"></b></td>';
+                            s3 += '<TD rowspan=2 width=5%><B><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_30.jpg?6545"></b></td>';
                         }
                         else
                             if (t.towerMarches[k].atkType == 'scouted') {
-                                s3 += '<TD rowspan=2 width=5%><B><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_30.jpg?6545"></b></td>';
+                                s3 += '<TD rowspan=2 width=5%><B><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_30.jpg?6545"></b></td>';
                             }
-                        s3 += '<TD width=15%  ><B>Location</b></td>';
-                        s3 += '<TD width=15%  ><B>Name</b></td>';
-						s3 += '<TD width=10%><B>Source: </b></td><TD width=10%>' + t.towerMarches[k].source + '</td>';
-                        s3 += '<TD width=10%><B>Might: </b></td><TD width=10%>' + t.towerMarches[k].attackermight + '</td>';
-                        s3 += '<TD width=10%><B>Alliance: </b></td><TD width=10%>' + t.towerMarches[k].allianceName + '</td>';
-                        s3 += '<TD width=10%><B>State: </b></td><TD width=10%>' + t.towerMarches[k].diplomacy + '</td></tr>';
+                        s3 += '<TD width=15%><B>'+translate("Location")+'</b></td>';
+                        s3 += '<TD width=15%><B>'+translate("Name")+'</b></td>';
+                        s3 += '<TD width=10%><B>'+translate("Source")+': </b></td><TD width=10%>' + t.towerMarches[k].source + '</td>';
+                        s3 += '<TD width=10%><B>'+translate("Might")+': </b></td><TD width=10%>' + t.towerMarches[k].attackermight + '</td>';
+                        s3 += '<TD width=10%><B>'+translate("Alliance")+': </b></td><TD width=10%>' + t.towerMarches[k].allianceName + '</td>';
+                        s3 += '<TD width=10%><B>'+translate("State")+': </b></td><TD width=10%>' + t.towerMarches[k].diplomacy + '</td></tr>';
                         s3 += '<TR><TD width=10%  >' + t.towerMarches[k].target + '</td>';
                         s3 += '<TD  >' + t.towerMarches[k].who + '</td>';
-                        s3 += '<TD><B>Remaining: </b></td><TD width=10%>' + t.towerMarches[k].rtime + '</td>';
-                        s3 += '<TD><B>Arrival: </b></td><TD  colspan=5 width=10%>' + t.towerMarches[k].arrivingDatetime + '</td></tr>';
+                        s3 += '<TD><B>'+translate("Remaining")+': </b></td><TD width=10%>' + t.towerMarches[k].rtime + '</td>';
+                        s3 += '<TD><B>'+translate("Arrival")+': </b></td><TD  colspan=5 width=10%>' + t.towerMarches[k].arrivingDatetime + '</td></tr>';
                         s3 += '</tr></table>';
                         s3 += '<TABLE cellspacing=0 width=100%><TR align=right><TD align=left width=16%></td>';
                         for (n = 0; n < names.length; n++)
@@ -4249,16 +5663,16 @@ Tabs.tower = {
                             s3 += '<TD class="attack">' + num + '</td>';
                             atk[u] += parseInt(num);
                         }
-						s3 += '</tr></table>';
+                        s3 += '</tr></table>';
                     }
                 }
                 
             }
         }
-		s2 += '<TR><TD colspan=14><BR></td></tr><TR align=right><TD class="attack" align=left><B>Attackers:</b></td>';
+        s2 += '<TR><TD colspan=14><BR></td></tr><TR align=right><TD class="attack" align=left><B>'+translate("Attackers")+':</b></td>';
         for (a = 1; a < 13; a++)
             s2 += '<TD class="attack" width=7%>' + atk[a] + '</td>';
-		var html = s1 + s2 + s3;
+        var html = s1 + s2 + s3;
         document.getElementById('pbCityTowerContent').innerHTML = html;
 
     },
@@ -4296,7 +5710,7 @@ Tabs.tower = {
 }
 
 
-/****************************  Build Tab  ******************************
+/****************************  Build Implementation  ******************************
  TODO:
      visu directly in the game of build queue elements
      <span class="leveltag" style="left:60px;">10</span>
@@ -4306,7 +5720,6 @@ var quickAddBuildings = {
    all:"All",
    barracks:"Barracks",
    cottages:"Cottages",
-   guardians:"Guardians",
 }
 var buildTabTypes = {
     type1: "Farm",
@@ -4329,7 +5742,7 @@ var buildTabTypes = {
     type22: "Druid Barracks",
     type23: "Druid Apothecary",
     type24: "Fey Barracks",
-    type25: "Fet Altar",
+    type25: "Fey Altar",
     type26: "Briton Barracks",
     type27: "Briton Workshop",
     type0: "Castle",
@@ -4500,9 +5913,6 @@ Tabs.build = {
             if (t.buildingSelect == 'cottages'){
                t.allCotsTo(toLevel);
             }
-            if (t.buildingSelect == 'guardians'){
-            	t.allGuardsTo(toLevel);
-            }
             toLevel = null;
         });
         window.addEventListener('unload', t.onUnload, false);
@@ -4557,29 +5967,6 @@ Tabs.build = {
 				//t.clearBuildQueue();
             t.paintBuildQueue(cityId, true);
     },
-    allGuardsTo: function (toLevel) {
-        var t = Tabs.build;
-        var cityId = t.currentCity
-        var builds = Seed.buildings
-        for (pos in builds['city'+cityId]) {
-            if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][0] >= 50 && builds['city'+cityId][pos][1] != 0) {
-                var item = builds['city'+cityId][pos]
-                if (item[1] < 9) {
-                    var buildingType = item[0];
-                    var currentLevel = item[1];
-                    var position = item[2];
-                    if (item[3] != undefined) {
-                        var buildingId = item[3];
-                    } else {
-                        var buildingId = "unknown";
-                    }
-                    t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel) //
-                        //logit(city.substr(4) + ' ' + builds[city][pos][0] + ' ' + builds[city][pos][1] + ' ' + builds[city][pos][2] + ' ' + builds[city][pos][3]);
-                }
-            }
-        }
-        t.paintBuildQueue(cityId, true);
-    },
     allCotsTo: function (toLevel) {
         var t = Tabs.build;
         var cityId = t.currentCity
@@ -4601,8 +5988,7 @@ Tabs.build = {
                 }
             }
         }
-
-	t.paintBuildQueue(cityId, true);
+		t.paintBuildQueue(cityId, true);
     },
     allBarracksTo: function (toLevel) {
         var t = Tabs.build;
@@ -4625,8 +6011,7 @@ Tabs.build = {
                 }
             }
         }
-
-	t.paintBuildQueue(cityId, true);
+			t.paintBuildQueue(cityId, true);
     },
     setBuildMode: function (type) {
         var t = Tabs.build;
@@ -4656,22 +6041,20 @@ Tabs.build = {
 
     e_autoBuild: function () {
         var t = Tabs.build;
-        var buildInterval = 2000+t.UASlowDown; // 2 seconds between checks by default
+        var buildInterval = 5000+t.UASlowDown; // 2 seconds between checks by default
         document.getElementById('pbbuildError').innerHTML = '';
       
         if (t.buildStates.running == true) {
             var now = unixTime()-5;//lets give some error room
-//            var now = unixTime()-3;//lets give some error room
             //logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
 	    var itime = 1000;
             for (var i = 0; i < Cities.cities.length; i++) {
-              	var cityId = Cities.cities[i].id;
+                var cityId = Cities.cities[i].id;
 	      	if(t["bQ_" + cityId][0])
 		  itime += 2000;
                 var isBusy = false;
                 var qcon = Seed.queue_con["city" + cityId];
-
-                if(t['build'+Cities.byID[cityId].idx] == true) continue;//so we don't get overloaded with slowed down requests
+             	if(t['build'+Cities.byID[cityId].idx] == true) continue;//so we don't get overloaded with slowed down requests
                 if (qcon.length > 0) {
 				/***
 				string) 0 = buildingtype
@@ -4683,24 +6066,18 @@ Tabs.build = {
 				(number) 6 = 76
 				(number) 7 = position
 				* ***/
-                   if (parseInt(qcon[0][4]) > now) isBusy = true;
-                   else {
-
+                  if (parseInt(qcon[0][4]) > now) isBusy = true;
+                  else {
                   	if(qcon[0][1] == 0) {//if it is destruct
-
                   		delete Seed.buildings["city" + cityId]['pos'+qcon[0][7]];
-
                	   	} else {
 				Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
 				logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
 			};
 			qcon.shift(); // remove expired build from queue
-
 			unsafeWindow.modal_build_show_state();
-
 			if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
-
-		   };
+		  };
                 }
                 //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
                 if (isBusy) {
@@ -4708,12 +6085,10 @@ Tabs.build = {
 					//0 = 5,9,7222643,1365086688,1365087900,0,3840,8
                     //TODO add info of remaining build time and queue infos
                 } else {
-
 			if(t.buildStates.tr && t.buildStates.trset != Seed.throne.activeSlot) continue;//check just before we start building.  lets the other enhancements keep working.                	
                     	if (t["bQ_" + cityId].length > 0) { // something to do?
-
-                          t['build'+Cities.byID[cityId].idx] = true;
-                          t.doOneSlowdown(cityId,itime);
+                       	  t['build'+Cities.byID[cityId].idx] = true;
+                       	  t.doOneSlowdown(cityId,itime);
                     	}
                 }
             }
@@ -4759,13 +6134,10 @@ Tabs.build = {
     },
     doOne: function (cityId) {
         var t = Tabs.build;
-
 	if(!t["bQ_" + cityId][0])return;
 	var bQi = t["bQ_" + cityId][0]; //take first queue item to build
-
 	if(!bQi)return;
         var currentcityid = parseInt(bQi.cityId);
-
         t['build'+Cities.byID[currentcityid].idx] = false;
         var cityName = t.getCityNameById(currentcityid);
         var time = parseInt(bQi.buildingTime);
@@ -5166,34 +6538,31 @@ Tabs.build = {
         });
       //only post build to FB if they take at least an hour
         if (time > 3600) {
-            var a = Seed.queue_con["city" + currentcityid];
-            var e = 0;
-            var d = 0;
-            for (var c = 0; c < a.length; c++) {
-                if (parseInt(a[c][2]) == parseInt(f)) {
-                    e = parseInt(a[c][0]);
-                    d = parseInt(a[c][1]);
-                    break
-                }
+        var a = Seed.queue_con["city" + currentcityid];
+        var e = 0;
+        var d = 0;
+        for (var c = 0; c < a.length; c++) {
+            if (parseInt(a[c][2]) == parseInt(f)) {
+                e = parseInt(a[c][0]);
+                d = parseInt(a[c][1]);
+                break
             }
-            var b = new Array();
-            b.push(["REPLACE_LeVeLbUiLdInG", d]);
-            b.push(["REPLACE_BuIlDiNgNaMe", unsafeWindow.buildingcost["bdg" + e][0]]);
-            b.push(["REPLACE_LeVeLiD", d]);
-            b.push(["REPLACE_AsSeTiD", f]);
-            var g = function (h, i) {
-                unsafeWindow.continuation_95(h, i);
-                if (!h) {
-                    var j = d > 1 ? unsafeWindow.cm.SpeedUpType.upgrade : unsafeWindow.cm.SpeedUpType.build;
-                    unsafeWindow.cm.ClientSideCookieManager.setCookie(j, false)
-                }
-            };
-//         unsafeWindow.common_postToProfile("95", unsafeWindow.Object.cloneFeed(unsafeWindow.template_data_95), unsafeWindow.Object.cloneFeed(unsafeWindow.actionlink_data_95), g, b);
-             unsafeWindow.common_postToProfile("95", b);
-for (var ii in b)
-   delete b[ii];
-b = null;
         }
+        var b = new Array();
+        b.push(["REPLACE_LeVeLbUiLdInG", d]);
+        b.push(["REPLACE_BuIlDiNgNaMe", unsafeWindow.buildingcost["bdg" + e][0]]);
+        b.push(["REPLACE_LeVeLiD", d]);
+        b.push(["REPLACE_AsSeTiD", f]);
+        var g = function (h, i) {
+            unsafeWindow.continuation_95(h, i);
+            if (!h) {
+                var j = d > 1 ? unsafeWindow.cm.SpeedUpType.upgrade : unsafeWindow.cm.SpeedUpType.build;
+                unsafeWindow.cm.ClientSideCookieManager.setCookie(j, false)
+            }
+        };
+//         unsafeWindow.common_postToProfile("95", unsafeWindow.Object.cloneFeed(unsafeWindow.template_data_95), unsafeWindow.Object.cloneFeed(unsafeWindow.actionlink_data_95), g, b);
+         unsafeWindow.common_postToProfile("95", b);
+      }
     },
     addQueueItem: function (cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode) {
         var t = Tabs.build;
@@ -5252,9 +6621,9 @@ b = null;
         row.vAlign = 'top';
         row.insertCell(0).innerHTML = queueId;
         if (buildingMode == "destruct") {
-            row.insertCell(1).innerHTML = '<img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/bonus_att.png">';
+            row.insertCell(1).innerHTML = '<img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/bonus_att.png">';
         } else {
-            row.insertCell(1).innerHTML = '<img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/bonus_prod.png">';
+            row.insertCell(1).innerHTML = '<img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/bonus_prod.png">';
         }
         row.insertCell(2).innerHTML = unsafeWindow.buildingcost['bdg' + buildingType][0];
         row.insertCell(3).innerHTML = timestr(buildingTime);
@@ -5383,52 +6752,53 @@ Tabs.Search = {
   popFirst : true,
   SearchList : [],
   IgAlly : [],
+  dat : [],  
   
   init : function (div){
     var t = Tabs.Search;
     var Provinces = {1:{'name':"Tintagel",'x':75,'y':75},
-				2:{'name':"Cornwall",'x':225,'y':75},
-				3:{'name':"Astolat",'x':375,'y':75},
-				4:{'name':"Lyonesse",'x':525,'y':75},
-				5:{'name':"Corbenic",'x':675,'y':75},
+                2:{'name':"Cornwall",'x':225,'y':75},
+                3:{'name':"Astolat",'x':375,'y':75},
+                4:{'name':"Lyonesse",'x':525,'y':75},
+                5:{'name':"Corbenic",'x':675,'y':75},
 
-				6:{'name':"Paimpont",'x':75,'y':225},
-				7:{'name':"Cameliard",'x':225,'y':225},
-				8:{'name':"Sarras",'x':375,'y':225},
-				9:{'name':"Canoel",'x':525,'y':225},
-				10:{'name':"Avalon",'x':675,'y':225},
+                6:{'name':"Paimpont",'x':75,'y':225},
+                7:{'name':"Cameliard",'x':225,'y':225},
+                8:{'name':"Sarras",'x':375,'y':225},
+                9:{'name':"Canoel",'x':525,'y':225},
+                10:{'name':"Avalon",'x':675,'y':225},
 
-				11:{'name':"Carmathen",'x':75,'y':375},
-				12:{'name':"Shallot",'x':225,'y':375},
-				//13:{'name':"-------",'x':375,'y':375},
-				14:{'name':"Cadbury",'x':525,'y':375},
-				15:{'name':"Glastonbury",'x':675,'y':375},
+                11:{'name':"Carmathen",'x':75,'y':375},
+                12:{'name':"Shallot",'x':225,'y':375},
+                //13:{'name':"-------",'x':375,'y':375},Search Tab
+                14:{'name':"Cadbury",'x':525,'y':375},
+                15:{'name':"Glastonbury",'x':675,'y':375},
 
-				16:{'name':"Camlamn",'x':75,'y':525},
-				17:{'name':"Orkney",'x':225,'y':525},
-				18:{'name':"Dore",'x':375,'y':525},
-				19:{'name':"Logres",'x':525,'y':525},
-				20:{'name':"Caerleon",'x':675,'y':525},
+                16:{'name':"Camlamn",'x':75,'y':525},
+                17:{'name':"Orkney",'x':225,'y':525},
+                18:{'name':"Dore",'x':375,'y':525},
+                19:{'name':"Logres",'x':525,'y':525},
+                20:{'name':"Caerleon",'x':675,'y':525},
 
-				21:{'name':"Parmenie",'x':75,'y':675},
-				22:{'name':"Bodmin Moor",'x':225,'y':675},
-				23:{'name':"Cellwig",'x':375,'y':675},
-				24:{'name':"Listeneise",'x':525,'y':675},
-				25:{'name':"Albion",'x':675,'y':675}};
+                21:{'name':"Parmenie",'x':75,'y':675},
+                22:{'name':"Bodmin Moor",'x':225,'y':675},
+                23:{'name':"Cellwig",'x':375,'y':675},
+                24:{'name':"Listeneise",'x':525,'y':675},
+                25:{'name':"Albion",'x':675,'y':675}};
     t.selectedCity = Cities.cities[0];
     t.myDiv = div;
     
-    m = '<DIV class=pbentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>Search for: </td><TD width=99%>';
-    m += htmlSelector ({0:"Barb Camp", 1:"Wilderness", 2:"Cities", 3:"Merc Camp"}, null, 'id=pasrcType');
-	m += '&nbsp; &nbsp; &nbsp; <span class=pbDetLeft>Search style: &nbsp;';
-	m += htmlSelector({square:"Square", circle:"Circle"}, Options.srcdisttype, 'id=pbsrcdist');
-    m += '</span></td></tr><TR><TD class=pbDetLeft>At: </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
-      &nbsp; Radius: <INPUT id=pasrcDist size=3 value=10 /> &nbsp; <SPAN id=paspInXY></span></tr>\
-      <TR><TD class=pbDetLeft>Or:</td><TD>Search entire province: <select id="provinceXY"><option>--provinces--</option>';
+    m = '<DIV class=pbentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>'+translate("Search for")+': </td><TD width=99%>';
+    m += htmlSelector ({0:translate("Barb Camp"), 1:translate("Wilderness"), 2:translate("Cities")}, null, 'id=pasrcType');
+    m += '&nbsp; &nbsp; &nbsp; <span class=pbDetLeft>'+translate("Search style")+': &nbsp;';
+    m += htmlSelector({square:translate("Square"), circle:translate("Circle")}, Options.srcdisttype, 'id=pbsrcdist');
+    m += '</span></td></tr><TR><TD class=pbDetLeft>'+translate("At")+': </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
+      &nbsp; '+translate("Radius")+': <INPUT id=pasrcDist size=3 value=10 /> &nbsp; <SPAN id=paspInXY></span></tr>\
+      <TR><TD class=pbDetLeft>Or:</td><TD>'+translate("Search entire province")+': <select id="provinceXY"><option>--'+translate("provinces")+'--</option>';
     for (var i in Provinces)
-    	m += '<option value="'+i+'">'+Provinces[i].name+'</option>';
+        m += '<option value="'+i+'">'+Provinces[i].name+'</option>';
     m += '</select></td></tr>';
-    m += '<TR><TD colspan=2 align=center><INPUT id=pasrcStart type=submit value="Start Search"/></td></tr>';
+    m += '<TR><TD colspan=2 align=center><INPUT id=pasrcStart type=submit value="'+translate("Start Search")+'"/></td></tr>';
     m += '</table></div>\
         <DIV id="pasrcResults" style="height:400px; max-height:400px;"></div>';
     
@@ -5436,13 +6806,13 @@ Tabs.Search = {
     var psearch = document.getElementById ("pasrcType");
     new CdispCityPicker ('pasrchdcp', document.getElementById ('paspInXY'), true, t.citySelNotify).bindToXYboxes(document.getElementById ('pasrchX'), document.getElementById ('pasrchY'));
     document.getElementById ('provinceXY').addEventListener ('click', function() {
-    	  if (this.value >= 1) {
-    		  document.getElementById ('pasrchX').value = Provinces[this.value].x;
-    		  document.getElementById ('pasrchY').value = Provinces[this.value].y;
-    		  document.getElementById ('pasrcDist').value = '75';
-    	  }
-	    }, false);
-	document.getElementById('pbsrcdist').addEventListener ('change', function (){
+          if (this.value >= 1) {
+              document.getElementById ('pasrchX').value = Provinces[this.value].x;
+              document.getElementById ('pasrchY').value = Provinces[this.value].y;
+              document.getElementById ('pasrcDist').value = '75';
+          }
+        }, false);
+    document.getElementById('pbsrcdist').addEventListener ('change', function (){
       Options.srcdisttype = document.getElementById('pbsrcdist').value;
       saveOptions();
       }, false);
@@ -5475,24 +6845,24 @@ Tabs.Search = {
   
   JumpCity:function(city) {
     var t = Tabs.Search;
-	for (i=0;i<Seed.cities.length;i++) {
-		if (Seed.cities[i][0]==city) var cityNum=i;
-	}
-	cityNum++;
-	var obj = document.getElementById('citysel_'+cityNum);
-  	return t.ClickWin(window,obj,'click');
+    for (i=0;i<Seed.cities.length;i++) {
+        if (Seed.cities[i][0]==city) var cityNum=i;
+    }
+    cityNum++;
+    var obj = document.getElementById('citysel_'+cityNum);
+      return t.ClickWin(window,obj,'click');
   },
   
   ClickWin:function(win,obj,evtName) {
-  	var evt = win.document.createEvent("MouseEvents");
-  	evt.initMouseEvent(evtName, true, true, win,
-  		0, 0, 0, 0, 0, false, false, false, false, 0, null);
-  	return !obj.dispatchEvent(evt);
+      var evt = win.document.createEvent("MouseEvents");
+      evt.initMouseEvent(evtName, true, true, win,
+          0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      return !obj.dispatchEvent(evt);
   },
   
   helpPop : function (){
-       var helpText = 'Troop numbers (from KOC WIKI):<BR>';
-       helpText += '<A target="_tab" href="http://koc.wikia.com/wiki/Barbarian_Camps">A lot more can be found on Koc Wikia</a>';
+       var helpText = translate("Raids_Help");
+       helpText += '<A target="_tab" href="https://koc.wikia.com/wiki/Barbarian_Camps">A lot more can be found on Koc Wikia</a>';
        helpText += '<TABLE><TR><TD>Lvl</td><TD>Troops</td></tr>';
        helpText += '<TR><TD>1</td><TD>500 Supply Troops + 500 Archers</td></tr>';
        helpText += '<TR><TD>2</td><TD>500 Supply Troops + 2500 Archers</td></tr>';
@@ -5509,10 +6879,11 @@ Tabs.Search = {
        helpText += '<TR><TD>9</td><TD>56000 Ballista WITH Level 10 fletching and Knight 98+</td></tr>';
        helpText += '<TR><TD>10</td><TD>125000 Catapults (500 Catapults loss!)</td></tr></tr></table>';
   
+  
        var pop = new pbPopup ('giftHelp', 0, 0, 425, 375, true);
        pop.centerMe (mainPop.getMainDiv());  
        pop.getMainDiv().innerHTML = helpText;
-       pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help: Raids</b></center>';
+       pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot '+translate("Help")+': '+translate("Raids")+'</b></center>';
        pop.show (true);
      },
      
@@ -5533,7 +6904,7 @@ Tabs.Search = {
     var t = Tabs.Search;
 
     if (t.searchRunning){
-      t.stopSearch ('SEARCH CANCELLED!');
+      t.stopSearch (translate('SEARCH CANCELLED!'));
       return;
     }
     t.opt.searchType = document.getElementById ('pasrcType').value;
@@ -5541,91 +6912,87 @@ Tabs.Search = {
     t.opt.startY = parseInt(document.getElementById ('pasrchY').value);
     t.opt.maxDistance = parseInt(document.getElementById ('pasrcDist').value);
     t.opt.searchShape = Options.srcdisttype;
-//    if(t.opt.maxDistance > 40){
-//        t.opt.searchDistance = 40;
-    if(t.opt.maxDistance > 20){
-        t.opt.searchDistance = 20;
+    if(t.opt.maxDistance > MAP_SFIELD){
+        t.opt.searchDistance = MAP_SFIELD;
     } else {
 	t.opt.searchDistance = t.opt.maxDistance
     }
     errMsg = '';
 
     if (isNaN (t.opt.startX) ||t.opt.startX<0 || t.opt.startX>749)
-      errMsg = "X must be between 0 and 749<BR>";
+      errMsg = "X "+translate("must be between 0 and 749")+"<BR>";
     if (isNaN (t.opt.startY) ||t.opt.startY<0 || t.opt.startY>749)
-      errMsg += "Y must be between 0 and 749<BR>";
-    if (isNaN (t.opt.maxDistance) ||t.opt.maxDistance<1 || t.opt.maxDistance>120)
-      errMsg += "Radius (distance) must be between 1 and 120<BR>";
+      errMsg += "Y "+translate("must be between 0 and 749")+"<BR>";
+    if (isNaN (t.opt.maxDistance) ||t.opt.maxDistance<1 || t.opt.maxDistance>75)
+      errMsg += translate("Radius (distance) must be between")+" 1 +"+translate("and")+" 75<BR>";
     if (errMsg != ''){
-      document.getElementById('pasrcResults').innerHTML = '<FONT COLOR=#660000>ERROR:</font><BR><BR>'+ errMsg;
+      document.getElementById('pasrcResults').innerHTML = '<FONT COLOR=#660000>'+translate("ERROR")+':</font><BR><BR>'+ errMsg;
       return;
     }
 
     t.searchRunning = true;
-    document.getElementById ('pasrcStart').value = 'Stop Search';
+    document.getElementById ('pasrcStart').value = translate('Stop Search');
     m = '<DIV class=pbStat><TABLE width=100% cellspacing=0><TR><TD class=xtab width=125><DIV id=pastatSearched></div></td>\
         <TD class=xtab align=center><SPAN style="white-space:normal" id=pastatStatus></span></td>\
         <TD class=xtab align=right width=125><DIV id=pastatFound></div></td></tr></table></div>\
           <TABLE width=100%><TR valign=top>\
             <TD width=99% style="max-width:50px"><DIV id=padivOutTab style="height:380px; max-height:380px; overflow-y:auto;"></div></td>\
-            <TD align=center valign=middle><A id=pbAhideShow style="text-decoration:none; cursor:pointer;"><DIV style="width:1em; border:1px solid red; padding:10px 2px; background-color:#fee"><SPAN id=spanHideShow> H I D E</span><BR><BR> L<BR>I<BR>S<BR>T<BR><BR> O<BR>P<BR>T<BR>I<BR>O<BR>N<BR>S </div></a></td>\
+            <TD align=center valign=middle><A id=pbAhideShow style="text-decoration:none; cursor:pointer;"><DIV style="width:1em; border:1px solid red; padding:10px 2px; background-color:#fee"><SPAN id=spanHideShow> '+translate("H I D E")+'</span><BR><BR> '+translate("L<BR>I<BR>S<BR>T<BR><BR> O<BR>P<BR>T<BR>I<BR>O<BR>N<BR>S")+' </div></a></td>\
             <TD width=100% height=100% style="background:#e0e0f0; height:100%; padding:5px"><DIV id=padivOutOpts></div></td>\
           </table>';
       
     document.getElementById('pasrcResults').innerHTML = m;
     if (t.opt.searchType == 0)
-      var typeName = 'Barbarians';
+      var typeName = translate('Barbarians');
     else if (t.opt.searchType == 1)
-      var typeName = 'Wildernesses';
-    else if (t.opt.searchType == 3)
-      var typeName = 'Merc Camps';
+      var typeName = translate('Wildernesses');
     else
-      var typeName = 'Cities';
+      var typeName = translate('Cities');
     if (t.opt.searchShape == 'square')
-      var distName = 'Distance';
+      var distName = translate('Distance');
     else
-      var distName = 'Radius';
-    m = '<CENTER><B>Search for '+ typeName +'<BR>\
-        Center: '+ t.opt.startX +','+ t.opt.startY +'  &nbsp; '+ distName +': '+ t.opt.maxDistance +'<BR></center>\
-        <DIV class=pbentry><TABLE cellspacing=0 width=100%><TR align=center><TD class=xtab colspan=10><B>LIST OPTIONS:</b><BR></td></tr>';
+      var distName = translate('Radius');
+    m = '<CENTER><B>'+translate("Search for")+' '+ typeName +'<BR>\
+        '+translate("Center")+': '+ t.opt.startX +','+ t.opt.startY +'  &nbsp; '+ distName +': '+ t.opt.maxDistance +'<BR></center>\
+        <DIV class=pbentry><TABLE cellspacing=0 width=100%><TR align=center><TD class=xtab colspan=10><B>'+translate("LIST OPTIONS")+':</b><BR></td></tr>';
         
-    if (t.opt.searchType == 1 || t.opt.searchType == 0 || t.opt.searchType == 3) {
-      m += '<TR><TD class=xtab align=right>Min. level to show:</td><TD class=xtab> <INPUT id=pafilMinLvl size=2 value='+ Options.srcMinLevel +' /></td></tr>\
-        <TR><TD class=xtab align=right>Max. level to show:</td><TD class=xtab> <INPUT id=pafilMaxLvl size=2 value='+ Options.srcMaxLevel +' /></td></tr>';
-		}
+    if (t.opt.searchType == 1 || t.opt.searchType == 0) {
+      m += '<TR><TD class=xtab align=right>'+translate("Min")+". "+translate("level to show")+':</td><TD class=xtab> <INPUT id=pafilMinLvl size=2 value='+ Options.srcMinLevel +' /></td></tr>\
+        <TR><TD class=xtab align=right>'+translate("Max")+". "+translate("level to show")+':</td><TD class=xtab> <INPUT id=pafilMaxLvl size=2 value='+ Options.srcMaxLevel +' /></td></tr>';
+        }
     if (t.opt.searchType == 1){
-      m += '<TR><TD class=xtab align=right>Wilderness Type:</td><TD class=xtab><SELECT id=pafilWildType>';
-      m += htmlOptions ( {1:'Glassland/Lake', 3:'Woodlands', 4:'Hills', 5:'Mountain', 6:'Plain', 8:'Dark Forest', 0:'ALL'}, Options.wildType );
-	  m+= '</select></td></tr>';
-	  // m+= '<TR><TD class=xtab align=right>Glassland/Lake:</td><TD class=xtab><INPUT name=pbfil id=pafilGrass type=CHECKBOX '+ (Options.GrassOnly?' CHECKED':'') +'\><td></tr>';
-	  // m+= '<TR><TD class=xtab align=right>Woodlands:</td><TD class=xtab><INPUT name=pbfil id=pafilWood type=CHECKBOX '+ (Options.WoodOnly?' CHECKED':'') +'\><td></tr>';
-	  // m+= '<TR><TD class=xtab align=right>Hills:</td><TD class=xtab><INPUT name=pbfil id=pafilHill type=CHECKBOX '+ (Options.HillOnly?' CHECKED':'') +'\><td></tr>';
-	  // m+= '<TR><TD class=xtab align=right>Mountain:</td><TD class=xtab><INPUT name=pbfil id=pafilMount type=CHECKBOX '+ (Options.MountOnly?' CHECKED':'') +'\><td></tr>';
-	  // m+= '<TR><TD class=xtab align=right>Plain:</td><TD class=xtab><INPUT name=pbfil id=pafilPlain type=CHECKBOX '+ (Options.PlainOnly?' CHECKED':'') +'\><td></tr>';
-	  // m+= '<TR><TD class=xtab align=right>All:</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
-      m += '</select></td></tr><TR><TD class=xtab align=right>Unowned Only:</td><TD class=xtab><INPUT id=pafilUnowned type=CHECKBOX '+ (Options.unownedOnly?' CHECKED':'') +'\><td></tr>';
+      m += '<TR><TD class=xtab align=right>'+translate("Wilderness Type")+':</td><TD class=xtab><SELECT id=pafilWildType>';
+      m += htmlOptions ( {1:translate('Grassland/Lake'), 3:translate('Woodlands'), 4:translate('Hills'), 5:translate('Mountain'), 6:translate('Plain'), 8:translate('Dark Forest'), 9:translate('Ruin'), 10:translate('Merc'), 11:translate('Bog'), 0:translate('ALL')}, Options.wildType );
+      m+= '</select></td></tr>';
+      // m+= '<TR><TD class=xtab align=right>Grassland/Lake:</td><TD class=xtab><INPUT name=pbfil id=pafilGrass type=CHECKBOX '+ (Options.GrassOnly?' CHECKED':'') +'\><td></tr>';
+      // m+= '<TR><TD class=xtab align=right>Woodlands:</td><TD class=xtab><INPUT name=pbfil id=pafilWood type=CHECKBOX '+ (Options.WoodOnly?' CHECKED':'') +'\><td></tr>';
+      // m+= '<TR><TD class=xtab align=right>Hills:</td><TD class=xtab><INPUT name=pbfil id=pafilHill type=CHECKBOX '+ (Options.HillOnly?' CHECKED':'') +'\><td></tr>';
+      // m+= '<TR><TD class=xtab align=right>Mountain:</td><TD class=xtab><INPUT name=pbfil id=pafilMount type=CHECKBOX '+ (Options.MountOnly?' CHECKED':'') +'\><td></tr>';
+      // m+= '<TR><TD class=xtab align=right>Plain:</td><TD class=xtab><INPUT name=pbfil id=pafilPlain type=CHECKBOX '+ (Options.PlainOnly?' CHECKED':'') +'\><td></tr>';
+      // m+= '<TR><TD class=xtab align=right>All:</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
+      m += '</select></td></tr><TR><TD class=xtab align=right>'+translate("Unowned Only")+':</td><TD class=xtab><INPUT id=pafilUnowned type=CHECKBOX '+ (Options.unownedOnly?' CHECKED':'') +'\><td></tr>';
     }
-   if (t.opt.searchType == 1 || t.opt.searchType == 0 || t.opt.searchType == 3) {
+   if (t.opt.searchType == 1 || t.opt.searchType == 0) {
         m+= '<TR><TD class=xtab align=right>Sort By:</td><TD class=xtab><SELECT id=pafilSortBy>\
-          <OPTION value="level" '+ (Options.srcSortBy=='level'?'SELECTED':'')  +'>Level</option>\
-          <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
-			</select></td></tr>\
-			<TR><TD class=xtab align=right>Coordinates only:</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
-			</table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
+          <OPTION value="level" '+ (Options.srcSortBy=='level'?'SELECTED':'')  +'>'+translate("Level")+'</option>\
+          <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>'+translate("Distance")+'</option>\
+            </select></td></tr>\
+            <TR><TD class=xtab align=right>'+translate("Coordinates only")+':</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
+            </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
     } else {
-		m+= '</select></td></tr><TR><TD class=xtab align=right>Misted:</td><TD class=xtab><INPUT name=pbfil id=pafilMisted type=CHECKBOX '+ (Options.mistedOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Hostile:</td><TD class=xtab><INPUT name=pbfil id=pafilHostile type=CHECKBOX '+ (Options.hostileOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Friendly:</td><TD class=xtab><INPUT name=pbfil id=pafilFriendly type=CHECKBOX '+ (Options.friendlyOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Allied:</td><TD class=xtab><INPUT name=pbfil id=pafilAllied type=CHECKBOX '+ (Options.alliedOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Neutral:</td><TD class=xtab><INPUT name=pbfil id=pafilNeutral type=CHECKBOX '+ (Options.neutralOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Unallianced:</td><TD class=xtab><INPUT name=pbfil id=pafilunAllied type=CHECKBOX '+ (Options.unalliedOnly?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>All:</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
-		m+= '<TR><TD class=xtab align=right>Sort By:</td><TD class=xtab><SELECT id=pafilSortBy>\
-          <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>Might</option>\
-             <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>Distance</option>\
+        m+= '</select></td></tr><TR><TD class=xtab align=right>'+translate("Misted")+':</td><TD class=xtab><INPUT name=pbfil id=pafilMisted type=CHECKBOX '+ (Options.mistedOnly?' CHECKED':'') +'\><td></tr>';
+        m+= '<TR><TD class=xtab align=right>'+translate("Hostile")+':</td><TD class=xtab><INPUT name=pbfil id=pafilHostile type=CHECKBOX '+ (Options.hostileOnly?' CHECKED':'') +'\><td></tr>';
+        m+= '<TR><TD class=xtab align=right>'+translate("Friendly")+':</td><TD class=xtab><INPUT name=pbfil id=pafilFriendly type=CHECKBOX '+ (Options.friendlyOnly?' CHECKED':'') +'\><td></tr>';
+        m+= '<TR><TD class=xtab align=right>'+translate("Allied")+':</td><TD class=xtab><INPUT name=pbfil id=pafilAllied type=CHECKBOX '+ (Options.alliedOnly?' CHECKED':'') +'\><td></tr>';
+        m+= '<TR><TD class=xtab align=right>'+translate("Neutral")+':</td><TD class=xtab><INPUT name=pbfil id=pafilNeutral type=CHECKBOX '+ (Options.neutralOnly?' CHECKED':'') +'\><td></tr>';
+        m+= '<TR><TD class=xtab align=right>'+translate("Unallianced")+':</td><TD class=xtab><INPUT name=pbfil id=pafilunAllied type=CHECKBOX '+ (Options.unalliedOnly?' CHECKED':'') +'\><td></tr>';
+        m+= '<TR><TD class=xtab align=right>'+translate("All")+':</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
+        m+= '<TR><TD class=xtab align=right>'+translate("Sort By")+':</td><TD class=xtab><SELECT id=pafilSortBy>\
+          <OPTION value="might" '+ (Options.srcSortBy=='might'?'SELECTED':'')  +'>'+translate("Might")+'</option>\
+             <OPTION value="dist" '+ (Options.srcSortBy=='dist'?'SELECTED':'')  +'>'+translate("Distance")+'</option>\
         </select></td></tr>\
-        <TR><TD class=xtab align=right>'+translate("Min")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=paminmight size=12 value='+ Options.minmight +'>\
-        <TR><TD class=xtab align=right>'+translate("Max")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=pamaxmight size=12 value='+ Options.maxmight +'>\
+        <TR><TD class=xtab align=right>'+translate("Min")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=paminmight size=8 value='+ Options.minmight +'>\
+        <TR><TD class=xtab align=right>'+translate("Max")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=pamaxmight size=8 value='+ Options.maxmight +'>\
         <TR><TD class=xtab align=right>Ignore alliances ranked</td><TD class=xtab><INPUT type=text id=patopra size=4 value='+ Options.toprank +'> - <INPUT type=text id=pabotra size=4 value='+ Options.botrank +'></td>\
         <TR><TD class=xtab align=right>'+translate("Coordinates only")+':</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
@@ -5636,7 +7003,7 @@ Tabs.Search = {
     
     }
     document.getElementById('padivOutOpts').innerHTML = m;
-	 if (t.opt.searchType == 1 || t.opt.searchType == 0 || t.opt.searchType == 3) {
+     if (t.opt.searchType == 1 || t.opt.searchType == 0) {
     document.getElementById('pafilMinLvl').addEventListener ('change', function (){
       Options.srcMinLevel = document.getElementById('pafilMinLvl').value;
       saveOptions();
@@ -5647,7 +7014,7 @@ Tabs.Search = {
       saveOptions();
       t.dispMapTable ();
       }, false);
-	  }
+      }
     document.getElementById('pafilSortBy').addEventListener ('change', function (){
       Options.srcSortBy = document.getElementById('pafilSortBy').value;
       saveOptions();
@@ -5666,70 +7033,70 @@ Tabs.Search = {
         t.dispMapTable ();
         }, false);
     }
-	if (t.opt.searchType == 2){
-		document.getElementById('pafilMisted').addEventListener ('change', function (){
+    if (t.opt.searchType == 2){
+        document.getElementById('pafilMisted').addEventListener ('change', function (){
         Options.mistedOnly = (document.getElementById('pafilMisted').checked);
-		if(!Options.mistedOnly){
-			document.getElementById('pafilAll').checked = false;
-			Options.srcAll = Options.mistedOnly;
-		}
+        if(!Options.mistedOnly){
+            document.getElementById('pafilAll').checked = false;
+            Options.srcAll = Options.mistedOnly;
+        }
         saveOptions();
         t.dispMapTable ();
         }, false);
-		document.getElementById('pafilHostile').addEventListener ('change', function (){
+        document.getElementById('pafilHostile').addEventListener ('change', function (){
         Options.hostileOnly = (document.getElementById('pafilHostile').checked);
-		if(!Options.hostileOnly){
-			document.getElementById('pafilAll').checked = false;
-			Options.srcAll = Options.hostileOnly;
-		}
+        if(!Options.hostileOnly){
+            document.getElementById('pafilAll').checked = false;
+            Options.srcAll = Options.hostileOnly;
+        }
         saveOptions();
         t.dispMapTable ();
         }, false);
-		document.getElementById('pafilFriendly').addEventListener ('change', function (){
+        document.getElementById('pafilFriendly').addEventListener ('change', function (){
         Options.friendlyOnly = (document.getElementById('pafilFriendly').checked);
-		if(!Options.friendlyOnly){
-			document.getElementById('pafilAll').checked = false;
-			Options.srcAll = Options.friendlyOnly;
-		}
+        if(!Options.friendlyOnly){
+            document.getElementById('pafilAll').checked = false;
+            Options.srcAll = Options.friendlyOnly;
+        }
         saveOptions();
         t.dispMapTable ();
         }, false);
-		document.getElementById('pafilAllied').addEventListener ('change', function (){
+        document.getElementById('pafilAllied').addEventListener ('change', function (){
         Options.alliedOnly = (document.getElementById('pafilAllied').checked);
-		if(!Options.alliedOnly){
-			document.getElementById('pafilAll').checked = false;
-			Options.srcAll = Options.alliedOnly;
-		}
+        if(!Options.alliedOnly){
+            document.getElementById('pafilAll').checked = false;
+            Options.srcAll = Options.alliedOnly;
+        }
         saveOptions();
         t.dispMapTable ();
         }, false);
-		document.getElementById('pafilNeutral').addEventListener ('change', function (){
+        document.getElementById('pafilNeutral').addEventListener ('change', function (){
         Options.neutralOnly = (document.getElementById('pafilNeutral').checked);
-		if(!Options.neutralOnly){
-			document.getElementById('pafilAll').checked = false;
-			Options.srcAll = Options.neutralOnly;
-		}
+        if(!Options.neutralOnly){
+            document.getElementById('pafilAll').checked = false;
+            Options.srcAll = Options.neutralOnly;
+        }
         saveOptions();
         t.dispMapTable ();
         }, false);
-		document.getElementById('pafilunAllied').addEventListener ('change', function (){
+        document.getElementById('pafilunAllied').addEventListener ('change', function (){
         Options.unalliedOnly = (document.getElementById('pafilunAllied').checked);
-		if(!Options.unalliedOnly){
-			document.getElementById('pafilAll').checked = false;
-			Options.srcAll = Options.unalliedOnly;
-		}
+        if(!Options.unalliedOnly){
+            document.getElementById('pafilAll').checked = false;
+            Options.srcAll = Options.unalliedOnly;
+        }
         saveOptions();
         t.dispMapTable ();
         }, false);
-		document.getElementById('pafilAll').addEventListener ('change', function (){
+        document.getElementById('pafilAll').addEventListener ('change', function (){
         Options.srcAll = (document.getElementById('pafilAll').checked);
-		for(i in document.getElementsByName('pbfil'))
-			document.getElementsByName('pbfil')[i].checked = Options.srcAll;
-		Options.mistedOnly=Options.hostileOnly=Options.friendlyOnly=Options.alliedOnly=Options.neutralOnly=Options.unalliedOnly=Options.srcAll;
+        for(i in document.getElementsByName('pbfil'))
+            document.getElementsByName('pbfil')[i].checked = Options.srcAll;
+        Options.mistedOnly=Options.hostileOnly=Options.friendlyOnly=Options.alliedOnly=Options.neutralOnly=Options.unalliedOnly=Options.srcAll;
         saveOptions();
         t.dispMapTable ();
         }, false);
-		document.getElementById('paminmight').addEventListener ('change', function (){
+        document.getElementById('paminmight').addEventListener ('change', function (){
         Options.minmight = parseIntNan(document.getElementById('paminmight').value);
         saveOptions();
         t.dispMapTable ();
@@ -5759,7 +7126,7 @@ Tabs.Search = {
     }
     
     document.getElementById('pbAhideShow').addEventListener ('click', t.hideShowClicked, false);
-	
+    
     t.mapDat = [];
     t.firstX =  t.opt.startX - t.opt.maxDistance;
     t.lastX = t.opt.startX + t.opt.maxDistance;
@@ -5771,23 +7138,23 @@ Tabs.Search = {
     t.curY = t.firstY;
     var xxx = t.MapAjax.normalize(t.curX);
     var yyy = t.MapAjax.normalize(t.curY);
-    document.getElementById ('pastatStatus').innerHTML = 'Searching at '+ xxx +','+ yyy;
-    setTimeout (function(){t.MapAjax.request (xxx, yyy, t.opt.searchDistance, t.eventgetplayeronline)}, MAP_DELAY);
+    document.getElementById ('pastatStatus').innerHTML = translate('Searching at ')+ xxx +','+ yyy;
+    t.MapAjax.request (xxx, yyy, t.opt.searchDistance, t.eventgetplayeronline);
   },
 
   hideShowClicked : function (){
     var div = document.getElementById('padivOutOpts');
     if (div.style.display == 'none'){
       div.style.display = 'block';
-      document.getElementById('spanHideShow').innerHTML = 'H I D E';
+      document.getElementById('spanHideShow').innerHTML = translate('H I D E');
     } else {
       div.style.display = 'none';
-      document.getElementById('spanHideShow').innerHTML = 'S H O W';
+      document.getElementById('spanHideShow').innerHTML = translate('S H O W');
     }
   },
   
   dispMapTable : function (){
-    var tileNames = ['Barb Camp', 'Grassland', 'Lake', 'Woodlands', 'Hills', 'Mountain', 'Plain', null, 'Dark Forest','Merc Camp' ];
+    var tileNames = ['Barb Camp', 'Grassland', 'Lake', 'Woodlands', 'Hills', 'Mountain', 'Plain', null, 'Dark Forest', 'Ruin', 'Merc', 'Bog' ];
     var t = Tabs.Search;
     var coordsOnly = document.getElementById('pacoordsOnly').checked;
     if (DEBUG_SEARCH) DebugTimer.start();
@@ -5796,91 +7163,90 @@ Tabs.Search = {
         if ((x = a[4] - b[4]) != 0)
           return x;
       }
-	  if (Options.srcSortBy == 'might'){
+      if (Options.srcSortBy == 'might'){
         if ((x = b[10] - a[10]) != 0)
           return x;
       }
       return a[2] - b[2];
     }
-	
-    dat = [];
-    for (i=0; i<t.mapDat.length; i++){
+    
+    t.dat = [];
+    for (i=0; i<t.mapDat.length; i++){  
       lvl = parseInt (t.mapDat[i][4]);
       type = t.mapDat[i][3];
       if (t.opt.searchType==2 && type==7 ) {
         if((t.mapDat[i][10] >= Options.minmight && t.mapDat[i][10] <= Options.maxmight) || t.mapDat[i][5])
         if(t.mapDat[i][14] == false || t.IgAlly.indexOf(Number(t.mapDat[i][14])) == -1)
-		if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
-		   (Options.mistedOnly && t.mapDat[i][5]===true) ||
-		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
-		   (Options.alliedOnly && t.mapDat[i][12] == 'a') ||
-		   (Options.neutralOnly && t.mapDat[i][12] == 'n') ||
-		   (Options.unalliedOnly && t.mapDat[i][12] == 'u') ||
-		   (Options.srcAll))
-				dat.push(t.mapDat[i]);
+        if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
+           (Options.mistedOnly && t.mapDat[i][5]===true) ||
+           (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
+           (Options.alliedOnly && t.mapDat[i][12] == 'a') ||
+           (Options.neutralOnly && t.mapDat[i][12] == 'n') ||
+           (Options.unalliedOnly && t.mapDat[i][12] == 'u') ||
+           (Options.srcAll))
+               t.dat.push(t.mapDat[i]);
       } else {
        if (lvl>=Options.srcMinLevel && lvl<=Options.srcMaxLevel){
-        if (t.opt.searchType==0 || t.opt.searchType==3 || Options.wildType==0
+        if (t.opt.searchType==0 || Options.wildType==0
         ||  (Options.wildType==1 && (type==1 || type==2))
         ||  (Options.wildType == type)){
           if (!Options.unownedOnly || t.mapDat[i][5]===false)
-            dat.push (t.mapDat[i]);
+           t.dat.push (t.mapDat[i]);
         }
        }
-	  }
+      }
     }
     if (DEBUG_SEARCH) DebugTimer.display('SEACHdraw: FILTER');
 
-    document.getElementById('pastatFound').innerHTML = 'Found: '+ dat.length;
-    if (dat.length == 0){
-      m = '<BR><CENTER>None found</center>';
+    document.getElementById('pastatFound').innerHTML = translate('Found')+': '+t.dat.length;
+    if (t.dat.length == 0){
+      m = '<BR><CENTER>'+translate("None found")+'</center>';
     } else {
-      dat.sort(mySort);
+      t.dat.sort(mySort);
       if (DEBUG_SEARCH) DebugTimer.display('SEACHdraw: SORT');
       if (coordsOnly)
-        m = '<TABLE align=center id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td></tr>';
+        m = '<TABLE align=center id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Location")+'</td></tr>';
       else {
       if (t.opt.searchType == 2) {
-			 m = '<TABLE id=pasrcOutTab class=pbSrchResults cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Loc</td><TD align=right>Dist</td><TD>Player</td><TD align=right>Might</td><TD>Alliance</td><TD>Online</td><TD></td></tr>';
-		} else {
-			m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>Location</td><TD style="padding-left: 10px">Distance</td><TD style="padding-left: 10px;">Lvl</td><TD width=100px> &nbsp; Type</td><TD></td><TD>Export to Raid</td></tr>';
-		}
-	}
-      var numRows = dat.length;
+             m = '<TABLE id=pasrcOutTab class=pbSrchResults cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Loc")+'</td><TD align=right>'+translate("Dist")+'</td><TD>'+translate("Player")+'</td><TD align=right>'+translate("Might")+'</td><TD>'+translate("Alliance")+'</td><TD>'+translate("Online")+'</td><TD></td></tr>';
+        } else {
+            m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Location")+'</td><TD style="padding-left: 10px">'+translate("Distance")+'</td><TD style="padding-left: 10px;">'+translate("Lvl")+'</td><TD width=100px> &nbsp; '+translate("Type")+'</td><TD></td><TD>'+translate("Export to Raid")+'</td></tr>';
+        }
+    }
+      var numRows = t.dat.length;
       if (numRows > t.MAX_SHOW_WHILE_RUNNING && t.searchRunning){
         numRows = t.MAX_SHOW_WHILE_RUNNING;
-        document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>NOTE: Table only shows '+ t.MAX_SHOW_WHILE_RUNNING +' of '+ dat.length +' results until search is complete.</font>';
+        document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>'+translate('NOTE: Table only shows ')+ t.MAX_SHOW_WHILE_RUNNING +' of '+ t.dat.length +translate(' results until search is complete')+'.</font>';
       }
       for (i=0; i<numRows; i++){
-        m += '<TR><TD><DIV onclick="pbGotoMap('+ dat[i][0] +','+ dat[i][1] +')"><A>'+ dat[i][0] +','+ dat[i][1] +'</a></div></td>';
+        m += '<TR><TD><DIV onclick="pbGotoMap('+ t.dat[i][0] +','+ t.dat[i][1] +')"><A>'+ t.dat[i][0] +','+ t.dat[i][1] +'</a></div></td>';
         if (coordsOnly) {
           m += '</tr>';
         } else {
           if (t.opt.searchType == 2) { // city search
-            m += '<TD align="right" >'+ dat[i][2].toFixed(2) +'</td>';
-            if (dat[i][5])
-              m += '<TD colspan=4>* MISTED * &nbsp; &nbsp; <SPAN onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;"><A>Scout</a></span></td></tr>';
+            m += '<TD align="right" >'+ t.dat[i][2].toFixed(2) +'</td>';
+            if ( t.dat[i][5])
+              m += '<TD colspan=4>* '+translate("MISTED")+' * &nbsp; &nbsp; <SPAN onclick="pbSearchScout('+ t.dat[i][0] +','+ t.dat[i][1] +');return false;"><A>'+translate("Scout")+'</a></span></td></tr>';
             else{
               var allStyle = '';
-              if (dat[i][12]=='f')
+              if ( t.dat[i][12]=='f')
                 allStyle = 'class=pbTextFriendly';
-              else if (dat[i][12]=='h')
+              else if ( t.dat[i][12]=='h')
                 allStyle = 'class=pbTextHostile';
-              m += '<TD>'+ dat[i][9]+'</td><TD align=right>'+ dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ dat[i][11]+'</span></td><TD>'+(dat[i][13]?'<SPAN class=boldDarkRed>ONLINE</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ dat[i][7] +')">Lookup</a></td></tr>';
+              m += '<TD>'+ t.dat[i][9]+'</td><TD align=right>'+ t.dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ t.dat[i][11]+'</span></td><TD>'+( t.dat[i][13]?'<SPAN class=boldDarkRed>'+translate("ONLINE")+'</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ t.dat[i][7] +')">'+translate("Lookup")+'</a></td></tr>';
             }
-			} else {
-          m += '<TD align=right  valign="top">'+ dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ dat[i][4] +'</td><TD> &nbsp; '+ tileNames[dat[i][3]]
-            +'</td><TD  valign="top">'+ (dat[i][5]?(dat[i][6]!=0?' <A onclick="pbSearchLookup('+dat[i][6]+')">OWNED</a>':'<A onclick="pbSearchScout('+ dat[i][0] +','+ dat[i][1] +');return false;">MISTED</a>'):'') +'</td>';
-          if (t.opt.searchType == 0) m+= '<TD align=center  valign="top"><A onclick="pbExportToRaid('+ dat[i][0]+','+dat[i][1] +')">Export</a></td>';
+            } else {
+          m += '<TD align=right  valign="top">'+ t.dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ t.dat[i][4] +'</td><TD> &nbsp; '+ tileNames[ t.dat[i][3]]
+            +'</td><TD  valign="top">'+ ( t.dat[i][5]?( t.dat[i][6]!=0?' <A onclick="pbSearchLookup('+ t.dat[i][6]+')">'+translate("OWNED")+'</a>':'<A onclick="pbSearchScout('+ t.dat[i][0] +','+ t.dat[i][1] +');return false;">'+translate("MISTED")+'</a>'):'') +'</td>';
+          if (t.opt.searchType == 0) m+= '<TD align=center  valign="top"><A onclick="pbExportToRaid('+ t.dat[i][0]+','+ t.dat[i][1] +')">'+translate("Export")+'</a></td>';
           m+='</tr>';
-			}
-		}
-			
+            }
+        }
+            
        }
       m += '</table>';
     }
     document.getElementById('padivOutTab').innerHTML = m;
-    dat = null;
     if (DEBUG_SEARCH) DebugTimer.display('SEACHdraw: DRAW');
   },
 
@@ -5889,16 +7255,16 @@ Tabs.Search = {
   stopSearch : function (msg){
     var t = Tabs.Search;
     document.getElementById ('pastatStatus').innerHTML = '<FONT color=#ffaaaa>'+ msg +'</font>';
-    document.getElementById ('pasrcStart').value = 'Start Search';
+    document.getElementById ('pasrcStart').value = translate('Start Search');
     document.getElementById ('pasrchSizeWarn').innerHTML = '';
     if (t.opt.searchType==0 && document.getElementById('KOCAttackToggle')!=null){    
-      document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Export Results', 'id=pbSrcDoExp') +'</center>';
+      document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20(translate('Export Results'), 'id=pbSrcDoExp') +'</center>';
       document.getElementById ('pbSrcDoExp').addEventListener ('click', t.exportKOCattack, false);
     }
     if (t.opt.searchType==2||t.opt.searchType==1){
-	  document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20('Generate Scout List', 'id=pbSrcDoScout') +'</center>';
+      document.getElementById ('pbSrcExp').innerHTML = '<CENTER>'+ strButton20(translate('Generate Scout List'), 'id=pbSrcDoScout') +'</center>';
       document.getElementById ('pbSrcDoScout').addEventListener ('click', t.generateScoutList, false);
-	}
+    }
     t.searchRunning = false;
     t.dispMapTable();
   },
@@ -5920,208 +7286,200 @@ Tabs.Search = {
     var t = Tabs.Search;
     var bulkScout = [];
     for (i=0; i<t.mapDat.length; i++){
-	if(t.opt.searchType==1)
-		if (t.mapDat[i][3] == Options.wildType || Options.wildType==0)
-		if (t.mapDat[i][4]>=Options.srcMinLevel && t.mapDat[i][4]<=Options.srcMaxLevel)
-		if ((Options.unownedOnly && t.mapDat[i][5] == false) || (!Options.unownedOnly))
+   if(t.opt.searchType==1)
+      if (t.mapDat[i][3] == Options.wildType || Options.wildType==0)
+      if (t.mapDat[i][4]>=Options.srcMinLevel && t.mapDat[i][4]<=Options.srcMaxLevel)
+      if ((Options.unownedOnly && t.mapDat[i][5] == false) || (!Options.unownedOnly))
             bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
-     if(t.opt.searchType==2) 
+     if(t.opt.searchType==2)
       if (t.mapDat[i][3] == 7){
         if((t.mapDat[i][10] >= Options.minmight && t.mapDat[i][10] <= Options.maxmight) || t.mapDat[i][5]){
         if(t.mapDat[i][14] == false || t.IgAlly.indexOf(Number(t.mapDat[i][14])) == -1)
-		if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
-		   (Options.mistedOnly && t.mapDat[i][5]===true) ||
-		   (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
-		   (Options.alliedOnly && t.mapDat[i][12] == 'a') ||
-		   (Options.neutralOnly && t.mapDat[i][12] == 'n') ||
-		   (Options.unalliedOnly && t.mapDat[i][12] == 'u') ||
-		   (Options.srcAll))
-			bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
-		}
-	  }
+        if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
+           (Options.mistedOnly && t.mapDat[i][5]===true) ||
+           (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
+           (Options.alliedOnly && t.mapDat[i][12] == 'a') ||
+           (Options.neutralOnly && t.mapDat[i][12] == 'n') ||
+           (Options.unalliedOnly && t.mapDat[i][12] == 'u') ||
+           (Options.srcAll))
+            bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
+        }
+      }
     }
-	if(t.selectedCity == null)
-		t.selectedCity = Cities.cities[0];
+    if(t.selectedCity == null)
+        t.selectedCity = Cities.cities[0];
     t.ShowScoutList (bulkScout, t.selectedCity);
   },
   ShowScoutList : function (coordlist, city){
-	var t = Tabs.Search;
-	var popScout = null;
-	t.scoutcity = city;
-	
-	if(popScout==null){
-	  popScout = new pbPopup ('pbsrcscout', 0,0, 350,500, true, function (){popScout.destroy(); popScout=null;});
+    var t = Tabs.Search;
+    var popScout = null;
+    t.scoutcity = city;
+    
+    if(popScout==null){
+      popScout = new pbPopup ('pbsrcscout', 0,0, 350,500, true, function (){popScout.destroy(); popScout=null;});
       popScout.centerMe (mainPop.getMainDiv());  
     }
-	var m = '<DIV class=pbStat>Auto Scout Options</div>';
-		m += '<DIV>Amount of Scouts to send: <input id=pbsrcScoutAmt value="'+Options.srcScoutAmt+'" /></div><BR>';
-		m += '<DIV>Select City: <span id=pbsrcScoutcitypick> </span></div><BR>';
-		m += '<DIV class=pbStat>Scout from <span id=pbsrcScoutcity>'+city.name+'</span> <BR> Total targets '+coordlist.length+'</div>';
-		m += '<DIV style="max-height:220px; overflow-y:auto;"><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW><TR style="font-weight:bold; background-color:white"><TD width=15><input type=checkbox id=pbsrcScout_All /></td><TD>Target Coords</td></tr>';
-	  for(i=0; i<coordlist.length; i++){
-			m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck id="pbsrcScoutCheck_'+coordlist[i].x+'_'+coordlist[i].y+'" value="'+coordlist[i].x+'_'+coordlist[i].y+'" /></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td></tr>';
-	  }
-	    m += '</table></div>';
+    var m = '<DIV class=pbStat>'+translate("Auto Scout Options")+'</div>';
+        m += '<DIV>'+translate("Amount of Scouts to send")+': <input id=pbsrcScoutAmt value="'+Options.srcScoutAmt+'" /></div><BR>';
+        m += '<DIV>'+translate("Select City")+': <span id=pbsrcScoutcitypick> </span></div><BR>';
+        m += '<DIV class=pbStat>'+translate("Scout from")+' <span id=pbsrcScoutcity>'+city.name+'</span> <BR> '+translate("Total targets ")+coordlist.length+'</div>';
+        m += '<DIV style="max-height:220px; overflow-y:auto;"><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW><TR style="font-weight:bold; background-color:white"><TD width=15><input type=checkbox id=pbsrcScout_All /></td><TD>'+translate("Target Coords")+'</td></tr>';
+      for(i=0; i<coordlist.length; i++){
+            m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck id="pbsrcScoutCheck_'+coordlist[i].x+'_'+coordlist[i].y+'" value="'+coordlist[i].x+'_'+coordlist[i].y+'" /></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td></tr>';
+      }
+        m += '</table></div>';
         m += '<BR><input type=checkbox id="pbskip">Skip targets when errors occur';
-		m += '<BR><CENTER>'+ strButton20('Start Scout', 'id=pbSrcStartScout') +'</center>';
-		m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
-	popScout.getMainDiv().innerHTML = m;
-	new CdispCityPicker ('pbScoutPick', document.getElementById('pbsrcScoutcitypick'), false, function(c,x,y){document.getElementById('pbsrcScoutcity').innerHTML = c.name; t.scoutcity = c; }, city.idx);
-	popScout.getTopDiv().innerHTML = '<CENTER><B>Power Bot Scout List</b></center>';
-	popScout.show(true);
-	
-	document.getElementById('pbsrcScoutAmt').addEventListener('change', function(){
-		Options.srcScoutAmt = parseInt(document.getElementById('pbsrcScoutAmt').value);
-		saveOptions();
-	}, false);
-	document.getElementById('pbsrcScout_All').addEventListener('change', function(){
-		for(k in document.getElementsByName('pbsrcScoutCheck'))
-			document.getElementsByName('pbsrcScoutCheck')[k].checked = document.getElementById('pbsrcScout_All').checked;
-	}, false);
-	document.getElementById('pbSrcStartScout').addEventListener('click', t.clickedStartScout, false);
+        m += '<BR><input type=checkbox id="pbsallcities">Scout from all cities';
+        m += '<BR><CENTER>'+ strButton20(translate('Start Scout'), 'id=pbSrcStartScout') +'</center>';
+        m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
+    popScout.getMainDiv().innerHTML = m;
+    new CdispCityPicker ('pbScoutPick', document.getElementById('pbsrcScoutcitypick'), false, function(c,x,y){document.getElementById('pbsrcScoutcity').innerHTML = c.name; t.scoutcity = c; }, city.idx);
+    popScout.getTopDiv().innerHTML = '<CENTER><B>Power Bot '+translate("Scout List")+'</b></center>';
+    popScout.show(true);
+    
+    document.getElementById('pbsrcScoutAmt').addEventListener('change', function(){
+        Options.srcScoutAmt = parseInt(document.getElementById('pbsrcScoutAmt').value);
+        saveOptions();
+    }, false);
+    document.getElementById('pbsrcScout_All').addEventListener('change', function(){
+        for(k in document.getElementsByName('pbsrcScoutCheck'))
+            document.getElementsByName('pbsrcScoutCheck')[k].checked = document.getElementById('pbsrcScout_All').checked;
+    }, false);
+    document.getElementById('pbSrcStartScout').addEventListener('click', t.clickedStartScout, false);
   },
   scouting : false,
   scoutcity : null,
   doScout : function(list, city){
-	var t = Tabs.Search;
-	document.getElementById('pbSrcScoutResult').innerHTML = '';
-	if(list.length < 1){
-		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>ERROR: No coords selected</span>';
-		t.clickedStartScout();
-		return;
-	}
-	if(parseInt(Seed.units['city'+city.id]['unt'+3]) < Options.srcScoutAmt){
-		document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>ERROR: No scouts available</span>';
-		t.clickedStartScout();
-		return;
-	}
-	t.doScoutCount(list, city, list.length, 0);
-	
+    var t = Tabs.Search;
+    document.getElementById('pbSrcScoutResult').innerHTML = '';
+    if(list.length < 1){
+        document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>'+translate("ERROR")+': '+translate("No coords selected")+'</span>';
+        t.clickedStartScout();
+        return;
+    }
+    if(parseInt(Seed.units['city'+city.id]['unt'+3]) < Options.srcScoutAmt){
+        document.getElementById('pbSrcScoutResult').innerHTML = '<SPAN class=boldRed>'+translate("ERROR")+': '+translate("No scouts available")+'</span>';
+        t.clickedStartScout();
+        return;
+    }
+    t.doScoutCount(list, city, list.length, 0);
+    
   },
   doScoutCount : function(list, city, total, count){
-	var t = Tabs.Search;
-	if(!t.scouting){
-		document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>Scouting stopped by user</span><BR>';
-		document.getElementById('pbSrcStartScout').className = 'button20 ptButton20';
-		document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>Start Scout</span>';
-		return;
-	}
-	if(total <= (count)){
-		document.getElementById('pbSrcScoutResult').innerHTML += 'Done!<BR>';
-		t.clickedStartScout();
-		return;
-	}
-	var rallypointlevel = t.getRallypoint(city.id);
-        if(rallypointlevel == 12) rallypointlevel = 11;
-//
-	var ascendrallybonus = 0;
-        var ascendcheck = Seed.cityData.city[city.id].isPrestigeCity;
-	if (ascendcheck) 
-	  ascendrallybonus = 3;
-	rallypointlevel = rallypointlevel+ascendrallybonus;
-//
-	var slots = 0;
-       for (z in Seed.queue_atkp['city'+city.id]){
-             slots++;
-       }
-    if  (Seed.queue_atkp['city'+city.id].toSource() == "[]") slots=0;
-
-	if(slots >= rallypointlevel){
-		setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
-		document.getElementById('pbSrcScoutResult').innerHTML += 'Waiting for rally point to clear...';
-		return;
-	}
-	var coords = list[count].split("_");
-	if(coords[0] == 'undefined' || coords[1] == 'undefined'){
-		document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>ERROR: Invalid coords</span>';
-		t.clickedStartScout();
-		return;
-	}
-	document.getElementById('pbSrcScoutResult').innerHTML += 'Sending scouts to '+coords[0]+','+coords[1]+'...';
-	document.getElementById('pbsrcScoutCheck_'+coords[0]+'_'+coords[1]).checked = false;
-	t.sendScout(coords[0], coords[1], city, count, function(c){t.doScoutCount(list, city, total, c)});
+  	logit('city is '+city.idx);
+    var t = Tabs.Search;
+    if(!t.scouting){
+        document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>'+translate("Scouting stopped by user")+'</span><BR>';
+        document.getElementById('pbSrcStartScout').className = 'button20 ptButton20';
+        document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>'+translate("Start Scout")+'</span>';
+        return;
+    }
+    if(total <= (count)){
+        document.getElementById('pbSrcScoutResult').innerHTML += translate("Done")+'!<BR>';
+        t.clickedStartScout();
+        return;
+    }
+    logit('first '+Number(March.getTotalSlots(city.id))+' second: '+Number(March.getMarchSlots(city.id)));
+     if (Number(Number(March.getTotalSlots(city.id))-Number(March.getMarchSlots(city.id))) <= 0){
+     	if(document.getElementById('pbsallcities').checked) { 
+     		var newcity = Number(city.idx)+1;
+     		if(newcity > Number(Cities.numCities)-1) newcity = 0;
+     		city = Cities.cities[newcity];
+     	};
+        setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
+        document.getElementById('pbSrcScoutResult').innerHTML += translate('Waiting for rally point to clear')+'...';
+        return;
+    }
+    var coords = list[count].split("_");
+    if(coords[0] == 'undefined' || coords[1] == 'undefined'){
+        document.getElementById('pbSrcScoutResult').innerHTML += '<SPAN class=boldRed>'+translate("ERROR")+': '+translate("Invalid coords")+'</span>';
+        t.clickedStartScout();
+        return;
+    }
+    document.getElementById('pbSrcScoutResult').innerHTML += translate('Sending scouts to ')+coords[0]+','+coords[1]+'...';
+    document.getElementById('pbsrcScoutCheck_'+coords[0]+'_'+coords[1]).checked = false;
+    t.sendScout(coords[0], coords[1], city, count, function(c){t.doScoutCount(list, city, total, c)});
   },
   sendScout : function(x, y, city, count, notify){
-	var t = Tabs.Search;
-	count = parseInt(count);
-	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    var t = Tabs.Search;
+    count = parseInt(count);
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     params.cid = city.id;
-	params.kid = 0;
-	params.type = 3;
-	params.xcoord = x;
-	params.ycoord = y;
-	params.u3 = Options.srcScoutAmt;
-	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-		 method: "post",
-		 parameters: params,
-		 loading: true,
-		 onSuccess: function (rslt) {
-		   rslt = eval("(" + rslt.responseText + ")");
-		   if (rslt.ok) {
-			 var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-			 var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
-			 var ut = unixTime();
-			 var unitsarr = [];
- 			 for (j in unsafeWindow.unitcost)
- 				unitsarr.push(0);
- 			 for(i = 0; i <= unitsarr.length; i++)
- 			 if(params["u"+i])
- 				unitsarr[i] = params["u"+i];
-			 var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-		   var currentcityid = params.cid;
-//		   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                   unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true, ut+rtimediff);
-		   if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-		   document.getElementById('pbSrcScoutResult').innerHTML += 'Sent!<BR>';
-		   if (notify)
-		     setTimeout(function(){ notify(count+1); }, 1000);
-		   } else {
-		     if(document.getElementById('pbskip').checked) {
-             		document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Moving on')+'....<BR>';
-             		if (notify)
-              		  setTimeout(function(){ notify(count+1); }, 1000);
-		     } else {
-             		  document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Retrying')+'....<BR>';
-             		  if (notify)
-              		    setTimeout(function(){ notify(count); }, 1000);
-		     }
-		   }
-		},
-		onFailure: function () {}
-  		});
+    params.kid = 0;
+    params.type = 3;
+    params.xcoord = x;
+    params.ycoord = y;
+    params.u3 = Options.srcScoutAmt;
+    new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+         method: "post",
+         parameters: params,
+         loading: true,
+         onSuccess: function (rslt) {
+         rslt = eval("(" + rslt.responseText + ")");
+         if (rslt.ok) {
+             var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+             var ut = unixTime();
+            var unitsarr = [];
+            for (j in unsafeWindow.unitcost)
+               unitsarr.push(0);
+            for(i = 0; i <= unitsarr.length; i++)
+               if(params["u"+i])
+                unitsarr[i] = params["u"+i];
+             var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
+             var currentcityid = params.cid;
+ 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+             unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
+             if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+             document.getElementById('pbSrcScoutResult').innerHTML += translate('Sent!')+'<BR>';
+             if (notify)
+              setTimeout(function(){ notify(count+1); }, 4000);
+         } else {
+          if(document.getElementById('pbskip').checked) {
+             document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Moving on')+'....<BR>';
+             if (notify)
+              setTimeout(function(){ notify(count+1); }, 4000);
+          } else {
+             document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Retrying')+'....<BR>';
+             if (notify)
+              setTimeout(function(){ notify(count); }, 4000);
+        }
+          }
+        },
+        onFailure: function () {}
+          });
   },
   getRallypoint: function(cityId){
       var t = Tabs.Search;
-	  cityId = 'city'+cityId;
+      cityId = 'city'+cityId;
       for (o in Seed.buildings[cityId]){
-		var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-		var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-		if (buildingType == 12){
-			return parseInt(buildingLevel);
-			break;
-		}
-	   }
-	  return 0;
+        var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+        var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+        if (buildingType == 12){
+            return parseInt(buildingLevel);
+            break;
+        }
+       }
+      return 0;
     },
-	clickedStartScout : function(){
-	var t = Tabs.Search;
-		if(t.scouting == false){
-			t.scouting = true;
-			var ScoutList = [];
-			for(k=0; k<document.getElementsByName('pbsrcScoutCheck').length; k++){
-				if(document.getElementsByName('pbsrcScoutCheck')[k].checked){
-					ScoutList.push(document.getElementsByName('pbsrcScoutCheck')[k].value);
-				}
-			}
-			t.doScout(ScoutList, t.scoutcity);
-			document.getElementById('pbSrcStartScout').className = 'button20 pbButCancel';
-			document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>Stop</span>';
-		} else {
-			t.scouting = false;
-			document.getElementById('pbSrcStartScout').className = 'button20 ptButton20';
-			document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>Start Scout</span>';
-		}
-	},
+    clickedStartScout : function(){
+    var t = Tabs.Search;
+        if(t.scouting == false){
+            t.scouting = true;
+            var ScoutList = [];
+            for(k=0; k<document.getElementsByName('pbsrcScoutCheck').length; k++){
+                if(document.getElementsByName('pbsrcScoutCheck')[k].checked){
+                    ScoutList.push(document.getElementsByName('pbsrcScoutCheck')[k].value);
+                }
+            }
+            t.doScout(ScoutList, t.scoutcity);
+            document.getElementById('pbSrcStartScout').className = 'button20 pbButCancel';
+            document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>'+translate("Stop")+'</span>';
+        } else {
+            t.scouting = false;
+            document.getElementById('pbSrcStartScout').className = 'button20 ptButton20';
+            document.getElementById('pbSrcStartScout').innerHTML = '<SPAN>'+translate("Start Scout")+'</span>';
+        }
+    },
     
   
 /** mapdata.userInfo:
@@ -6138,14 +7496,13 @@ Tabs.Search = {
     var t = Tabs.Search;
 
     var rslt = t.SearchList;
-	map = rslt.data;
-    var Dip = Seed.allianceDiplomacies;	
+    map = rslt.data;
+    var Dip = Seed.allianceDiplomacies;    
     var userInfo = rslt.userInfo;
     var alliance = rslt.allianceNames;
-	
+    
     for (k in map){
-      if (t.opt.searchType==0 && map[k].tileType==51 && !map[k].tileCityId ) {  // if barb
-//      if (t.opt.searchType==0 && map[k].tileType==51 && (!map[k].tileCityId || (map[k].tileCityId==0))) {  // if barb
+      if (t.opt.searchType==0 && map[k].tileType==51 && (!map[k].tileCityId || (map[k].tileCityId==0))) {  // if barb
         type = 0;
       } else if (t.opt.searchType==1 && map[k].tileType>=10 &&  map[k].tileType<=50) { // if wild
         if (map[k].tileType == 10)
@@ -6155,44 +7512,48 @@ Tabs.Search = {
         else
           type = (map[k].tileType/10) + 1;
       } else if (t.opt.searchType==1 && map[k].tileType==54) {
-		    type = 8;
+            type = 8;
+      } else if (t.opt.searchType==1 && map[k].tileType==0) {
+            type = 11;
+      } else if (t.opt.searchType==1 && map[k].tileType==55) {
+            type = 10;
+      } else if (t.opt.searchType==1 && map[k].tileType==52) {
+            type = 9;
       } else if (t.opt.searchType==2 && map[k].tileCityId>=0 && map[k].tileType>50 && map[k].cityName) {
-		    type = 7;
-      } else if (t.opt.searchType==3 && map[k].tileType==55) {
-		    type = 9;
+            type = 7;
       } else
         continue;
-        
+        //    var tileNames = ['Barb Camp', 'Grassland', 'Lake', 'Woodlands', 'Hills', 'Mountain', 'Plain', null, 'Dark Forest', 'Ruin', 'Merc', 'Bog' ];
       var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
       if ((t.opt.searchShape=='circle' && dist <= t.opt.maxDistance)
       ||  (t.opt.searchShape=='square' && map[k].xCoord>=t.firstX && map[k].xCoord<=t.lastX && map[k].yCoord>=t.firstY && map[k].yCoord<=t.lastY)){
-	  	  if (t.opt.searchType==2) {    // if city search
-    			var isMisted = map[k].tileUserId == 0 || false;		
-    			var uu = 'u'+map[k].tileUserId;
-    			var aD = '';
-  				var nameU = '';
-  				var mightU = '';
-  				var aU = '';
-                  		var aID = false;
-    				if (!isMisted && userInfo[uu]) {
-    				nameU = userInfo[uu].n;   // can error, must check if (userInfo[uu])
-    				mightU = userInfo[uu].m;
-    				if (alliance['a'+userInfo[uu].a]) {
-    					aU = alliance['a'+userInfo[uu].a];
-                        		aID = userInfo[uu].a;
-                    		} else {
-                      			aU = '----';
-                      			aID = false;
-               	    		}
-    				aD = '';
-    				if (Dip.friendly && Dip.friendly['a'+userInfo[uu].a]) aD = 'f';
-    				if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) aD = 'h';
-					if (Dip.allianceId && Dip.allianceId==userInfo[uu].a) aD = 'a';
-					if (getDiplomacy(userInfo[uu].a) == 'neutral') aD = 'n';
-					if (!userInfo[uu].a || userInfo[uu].a==0) aD = 'u';
-					
-    			}
-// TODO: save memory, remove city name ?   			
+            if (t.opt.searchType==2) {    // if city search
+                var isMisted = map[k].tileUserId == 0 || false;        
+                var uu = 'u'+map[k].tileUserId;
+                var aD = '';
+                  var nameU = '';
+                  var mightU = '';
+                  var aU = '';
+                  var aID = false;
+                if (!isMisted && userInfo[uu]) {
+                    nameU = userInfo[uu].n;   // can error, must check if (userInfo[uu])
+                    mightU = userInfo[uu].m;
+                    if (alliance['a'+userInfo[uu].a]) {
+                        aU = alliance['a'+userInfo[uu].a];
+                        aID = userInfo[uu].a
+                    } else {
+                      aU = '----';
+                      aID = false;
+               }
+                    aD = '';
+                    if (Dip.friendly && Dip.friendly['a'+userInfo[uu].a]) aD = 'f';
+                    if (Dip.hostile && Dip.hostile['a'+userInfo[uu].a]) aD = 'h';
+                    if (Dip.allianceId && Dip.allianceId==userInfo[uu].a) aD = 'a';
+                    if (getDiplomacy(userInfo[uu].a) == 'neutral') aD = 'n';
+                    if (!userInfo[uu].a || userInfo[uu].a==0) aD = 'u';
+                    
+                }
+// TODO: save memory, remove city name ?               
           t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD, uList.data[map[k].tileUserId]?1:0,aID]);
         } else {
           isOwned = map[k].tileUserId>0 || map[k].misted;
@@ -6203,7 +7564,7 @@ Tabs.Search = {
     }
     
     t.tilesSearched += (t.opt.searchDistance*t.opt.searchDistance);
-    document.getElementById('pastatSearched').innerHTML = 'Searched: '+ t.tilesSearched;
+    document.getElementById('pastatSearched').innerHTML = translate('Searched: ')+ t.tilesSearched;
     t.dispMapTable();
 
     t.curX += t.opt.searchDistance;
@@ -6211,7 +7572,7 @@ Tabs.Search = {
       t.curX = t.firstX;
       t.curY += t.opt.searchDistance;
       if (t.curY > t.lastY){
-        t.stopSearch ('Done!');
+        t.stopSearch (translate('Done!'));
         return;
       }
     }
@@ -6222,22 +7583,23 @@ Tabs.Search = {
   },
   
   eventgetplayeronline : function (left, top, width, rslt){
-	var t = Tabs.Search;
+    var t = Tabs.Search;
     if (!t.searchRunning)
       return;
     if (!rslt.ok){
-      t.stopSearch ('ERROR: '+ rslt.errorMsg);
+    	setTimeout (function(){t.MapAjax.request (left, top, width, t.eventgetplayeronline)}, MAP_DELAY);//we requery if bad ajax request.  could cause flood issues?
+     // t.stopSearch (translate('ERROR')+': '+ rslt.errorMsg);
       return;
     }
-	
-	map = rslt.data;
-	t.SearchList = rslt;
-	var uList = [];
-	for(k in map){
-		if(map[k].tileUserId != null)
-			uList.push(map[k].tileUserId);
-	}
-	t.fetchPlayerStatus (uList, function(r){ t.mapCallback(r)});
+    
+    map = rslt.data;
+    t.SearchList = rslt;
+    var uList = [];
+    for(k in map){
+        if(map[k].tileUserId != null)
+            uList.push(map[k].tileUserId);
+    }
+    t.fetchPlayerStatus (uList, function(r){ t.mapCallback(r)});
   },
 
   clickedScout : function (x, y){
@@ -6252,9 +7614,9 @@ Tabs.Search = {
       pop.centerMe (mainPop.getMainDiv());  
       t.popFirst = false;
     }
-    pop.getTopDiv().innerHTML = '<CENTER><B>Player Lookup</b></center>';
-    pop.getMainDiv().innerHTML = '<DIV class=pbStat>Leaderboard information</div><SPAN id=pblupLB>Looking up leaderboard...</span>\
-      <BR><DIV class=pbStat>Alliance Lookup</div><SPAN id=pblupAI>Looking up alliance info...</span>';
+    pop.getTopDiv().innerHTML = '<CENTER><B>'+translate("Player Lookup")+'</b></center>';
+    pop.getMainDiv().innerHTML = '<DIV class=pbStat>'+translate("Leaderboard information")+'</div><SPAN id=pblupLB>'+translate("Looking up leaderboard")+'...</span>\
+      <BR><DIV class=pbStat>'+translate("Alliance Lookup")+'</div><SPAN id=pblupAI>'+translate("Looking up alliance info")+'...</span>';
     pop.show (true);
     t.fetchLeaderboard (pid, function (r){t.gotPlayerLeaderboard(r, document.getElementById('pblupLB'))});
     t.fetchPlayerInfo (pid, function (r){t.gotPlayerInfo(r, document.getElementById('pblupAI'))});
@@ -6268,50 +7630,50 @@ Tabs.Search = {
       pop.centerMe (mainPop.getMainDiv());  
       t.popFirst = false;
     }
-    pop.getTopDiv().innerHTML = '<CENTER><B>Export to Raid</b></center>';
+    pop.getTopDiv().innerHTML = '<CENTER><B>'+translate("Export to Raid")+'</b></center>';
     
-	  var m = '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-	  m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
-	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
-	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
-	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
-	  m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="0"></td>';
-	  m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="0"></td>';
-	  m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="0"></td>';
-	  m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="0"></td></tr>';
-	  
-	  m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
-	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
-	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
-	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
-	  m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="0"></td>';
-	  m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="0"></td>';
-	  m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="0"></td>';
-	  m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="0"></td></tr>';
-	  
-	  m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
-	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
-	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
-	  m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-	  m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
-	  m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="0"></td>';
-	  m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="0"></td>';
-	  m += '<TD><INPUT id=Unit11 type=text size=6 maxlength=6 value="0"></td>';
-	  m += '<TD><INPUT id=Unit12 type=text size=6 maxlength=6 value="0"></td></tr></table>';
-	  
-	  m += '<BR><CENTER>' +strButton20('Help', 'id=pbHelp')+'<SELECT id=RaidKnights type=list></select></center>';
-	  m+= '<BR><CENTER>'+ strButton20('Raid and save', 'id=pbRaidSave') +'</center>';
+      var m = '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
+      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
+      m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="0"></td>';
+      m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="0"></td>';
+      m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="0"></td>';
+      m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="0"></td></tr>';
+      
+      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
+      m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="0"></td>';
+      m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="0"></td>';
+      m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="0"></td>';
+      m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="0"></td></tr>';
+      
+      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
+      m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="0"></td>';
+      m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="0"></td>';
+      m += '<TD><INPUT id=Unit11 type=text size=6 maxlength=6 value="0"></td>';
+      m += '<TD><INPUT id=Unit12 type=text size=6 maxlength=6 value="0"></td></tr></table>';
+      
+      m += '<BR><CENTER>' +strButton20(translate('Help'), 'id=pbHelp')+'<SELECT id=RaidKnights type=list></select></center>';
+      m+= '<BR><CENTER>'+ strButton20(translate('Raid and save'), 'id=pbRaidSave') +'</center>';
           
     pop.getMainDiv().innerHTML = m;
     
@@ -6319,80 +7681,77 @@ Tabs.Search = {
     
     document.getElementById ('pbHelp').addEventListener ('click', t.helpPop, false);
     document.getElementById ('pbRaidSave').addEventListener ('click', function(){
-    	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-    			  		
-    	params.pf = 0;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+                          
+        params.pf = 0;
         params.ctrl = 'BotManager';
-    	params.action = 'saveMarch';
-    	params.settings = {};
-    	params.settings.cityId = cityId;
-    	params.queue = {0:{botMarches:{botMarchStatus:1,botState:1},cityMarches:{}}};    	
-    	params.queue[0].cityMarches.knightId = parseInt(document.getElementById ('RaidKnights').value);
-    	params.queue[0].cityMarches.toXCoord = X;
-    	params.queue[0].cityMarches.toYCoord = Y;
-    	params.queue[0].cityMarches.unit0Count = 0;
-    	params.queue[0].cityMarches.unit1Count = parseInt(document.getElementById ('Unit1').value);
-    	params.queue[0].cityMarches.unit2Count = parseInt(document.getElementById ('Unit2').value);
-    	params.queue[0].cityMarches.unit3Count = parseInt(document.getElementById ('Unit3').value);
-    	params.queue[0].cityMarches.unit4Count = parseInt(document.getElementById ('Unit4').value);
-    	params.queue[0].cityMarches.unit5Count = parseInt(document.getElementById ('Unit5').value);
-    	params.queue[0].cityMarches.unit6Count = parseInt(document.getElementById ('Unit6').value);
-    	params.queue[0].cityMarches.unit7Count = parseInt(document.getElementById ('Unit7').value);
-    	params.queue[0].cityMarches.unit8Count = parseInt(document.getElementById ('Unit8').value);
-    	params.queue[0].cityMarches.unit9Count = parseInt(document.getElementById ('Unit9').value);
-    	params.queue[0].cityMarches.unit10Count = parseInt(document.getElementById ('Unit10').value);
-    	params.queue[0].cityMarches.unit11Count = parseInt(document.getElementById ('Unit11').value);
-    	params.queue[0].cityMarches.unit12Count = parseInt(document.getElementById ('Unit12').value);
-    	
-    	 new AjaxRequest2(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
-			  		method: "post",
-			         parameters: params,
-					 loading: true,
-					 onSuccess: function(transport){
-						var rslt = eval("(" + transport.responseText + ")");
-	                      if (rslt.ok) {
-	                      		pop.show (false);
-								unsafeWindow.cityinfo_army();
-	                          setTimeout(unsafeWindow.update_seed_ajax, 250);
-						 } else ('Error :' + rslt.msg);
-						 
-					 },
-			 });
-    	}, false);
+        params.action = 'saveMarch';
+        params.settings = {};
+        params.settings.cityId = cityId;
+        params.queue = {0:{botMarches:{botMarchStatus:1,botState:1},cityMarches:{}}};        
+        params.queue[0].cityMarches.knightId = parseInt(document.getElementById ('RaidKnights').value);
+        params.queue[0].cityMarches.toXCoord = X;
+        params.queue[0].cityMarches.toYCoord = Y;
+        params.queue[0].cityMarches.unit0Count = 0;
+        params.queue[0].cityMarches.unit1Count = parseInt(document.getElementById ('Unit1').value);
+        params.queue[0].cityMarches.unit2Count = parseInt(document.getElementById ('Unit2').value);
+        params.queue[0].cityMarches.unit3Count = parseInt(document.getElementById ('Unit3').value);
+        params.queue[0].cityMarches.unit4Count = parseInt(document.getElementById ('Unit4').value);
+        params.queue[0].cityMarches.unit5Count = parseInt(document.getElementById ('Unit5').value);
+        params.queue[0].cityMarches.unit6Count = parseInt(document.getElementById ('Unit6').value);
+        params.queue[0].cityMarches.unit7Count = parseInt(document.getElementById ('Unit7').value);
+        params.queue[0].cityMarches.unit8Count = parseInt(document.getElementById ('Unit8').value);
+        params.queue[0].cityMarches.unit9Count = parseInt(document.getElementById ('Unit9').value);
+        params.queue[0].cityMarches.unit10Count = parseInt(document.getElementById ('Unit10').value);
+        params.queue[0].cityMarches.unit11Count = parseInt(document.getElementById ('Unit11').value);
+        params.queue[0].cityMarches.unit12Count = parseInt(document.getElementById ('Unit12').value);
+        
+         new AjaxRequest2(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
+                      method: "post",
+                     parameters: params,
+                     loading: true,
+                     onSuccess: function(transport){
+                        var rslt = eval("(" + transport.responseText + ")");
+                          if (rslt.ok) {
+                                  pop.show (false);
+                                unsafeWindow.cityinfo_army();
+                              setTimeout(unsafeWindow.update_seed_ajax, 250);
+                         } else ('Error :' + rslt.msg);
+                         
+                     },
+             });
+        }, false);
     
     pop.show (true);
   },
-  
-  
   getKnights : function(){
          var t = Tabs.Search;
          var knt = new Array();
          cityId = t.selectedCity['id'];
          for (k in Seed.knights['city' + cityId]){
-         		if (Seed.knights['city' + cityId][k]["knightStatus"] == 1 && Seed.leaders['city' + cityId]["resourcefulnessKnightId"] != Seed.knights['city' + cityId][k]["knightId"] && Seed.leaders['city' + cityId]["politicsKnightId"] != Seed.knights['city' + cityId][k]["knightId"] && Seed.leaders['city' + cityId]["combatKnightId"] != Seed.knights['city' + cityId][k]["knightId"] && Seed.leaders['city' + cityId]["intelligenceKnightId"] != Seed.knights['city' + cityId][k]["knightId"]){
-         			knt.push ({
-         				Name:   Seed.knights['city' + cityId][k]["knightName"],
-         				Combat:	parseInt(Seed.knights['city' + cityId][k]["combat"]),
-         				ID:		Seed.knights['city' + cityId][k]["knightId"],
-         			});
-         		}
+                 if (Seed.knights['city' + cityId][k]["knightStatus"] == 1 && Seed.leaders['city' + cityId]["resourcefulnessKnightId"] != Seed.knights['city' + cityId][k]["knightId"] && Seed.leaders['city' + cityId]["politicsKnightId"] != Seed.knights['city' + cityId][k]["knightId"] && Seed.leaders['city' + cityId]["combatKnightId"] != Seed.knights['city' + cityId][k]["knightId"] && Seed.leaders['city' + cityId]["intelligenceKnightId"] != Seed.knights['city' + cityId][k]["knightId"]){
+                     knt.push ({
+                         Name:   Seed.knights['city' + cityId][k]["knightName"],
+                         Combat:    parseInt(Seed.knights['city' + cityId][k]["combat"]),
+                         ID:        Seed.knights['city' + cityId][k]["knightId"],
+                     });
+                 }
          }
          knt = knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
          document.getElementById('RaidKnights').options.length=0;
-  		var o = document.createElement("option");
-  		o.text = '--Choose a Knight--';
-  		o.value = 0;
-  		document.getElementById("RaidKnights").options.add(o);
+          var o = document.createElement("option");
+          o.text = '--Choose a Knight--';
+          o.value = 0;
+          document.getElementById("RaidKnights").options.add(o);
          for (k in knt){
-      			if (knt[k]["Name"] !=undefined){
-  	    			var o = document.createElement("option");
-  	    			o.text = (knt[k]["Name"] + ' (' + knt[k]["Combat"] +')')
-  	    			o.value = knt[k]["ID"];
-  	    			document.getElementById("RaidKnights").options.add(o);
-      			}
-      	}
+                  if (knt[k]["Name"] !=undefined){
+                      var o = document.createElement("option");
+                      o.text = (knt[k]["Name"] + ' (' + knt[k]["Combat"] +')')
+                      o.value = knt[k]["ID"];
+                      document.getElementById("RaidKnights").options.add(o);
+                  }
+          }
       },
-  
   
   
   gotPlayerLeaderboard : function (rslt, span){
@@ -6402,7 +7761,7 @@ Tabs.Search = {
       return;
     }
     if (rslt.totalResults == 0){
-      span.innerHTML = '<B>Leaderboard:</b> Not found! (misted?)<BR><BR>';
+      span.innerHTML = '<B>'+translate("Leaderboard")+':</b> '+translate("Not found")+'! ('+translate("misted")+'?)<BR><BR>';
       return;
     }
     var p = rslt.results[0];
@@ -6419,11 +7778,11 @@ Tabs.Search = {
     if (!aName || aName=='')
       aName = 'none';
              
-    var m = '<CENTER><SPAN class=boldRed>NOTE: Leaderboard information is delayed up to 24 hours</span></center><TABLE class=pbTabSome>';
-    m += '<TR><TD class=pbDetLeft>Player Name:</td><TD>'+ name +'</td></tr>\
-      <TR><TD class=pbDetLeft>Might:</td><TD>'+ p.might +' (rank #'+ p.rank +')</td></tr>\
-      <TR><TD class=pbDetLeft>Alliance:</td><TD>'+ aName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
-      <TR valign=top><TD class=pbDetLeft>Cities:</td><TD><TABLE class=pbTabSome><TR style="font-weight:bold"><TD>City Name</td><TD>Coords</td><TD>Level</td><TD>Status</td><TD>Created</td></tr>';
+    var m = '<CENTER><SPAN class=boldRed>'+translate("NOTE: Leaderboard information is delayed up to 24 hours")+'</span></center><TABLE class=pbTabSome>';
+    m += '<TR><TD class=pbDetLeft>'+translate("Player Name")+':</td><TD>'+ name +'</td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Might")+':</td><TD>'+ p.might +' ('+translate("rank")+' #'+ p.rank +')</td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Alliance")+':</td><TD>'+ aName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
+      <TR valign=top><TD class=pbDetLeft>'+translate("Cities")+':</td><TD><TABLE class=pbTabSome><TR style="font-weight:bold"><TD>'+translate("City Name")+'</td><TD>'+translate("Coords")+'</td><TD>'+translate("Level")+'</td><TD>'+translate("Status")+'</td><TD>'+translate("Created")+'</td></tr>';
       
     for (var i=0; i<p.cities.length; i++){
       var c = p.cities[i];
@@ -6449,11 +7808,11 @@ Tabs.Search = {
     var prov = [];
     for (var i=0; i<pids.length; i++)
       prov.push(unsafeWindow.provincenames['p'+pids[i]]);
-    m += '<TR><TD class=pbDetLeft>Player Name:</td><TD>'+ p.genderAndName +'</td></tr>\
-      <TR><TD class=pbDetLeft>Might:</td><TD>'+ p.might +'</td></tr>\
-      <TR><TD class=pbDetLeft>Facebook profile:</td><TD><A target="_tab" href="http://www.facebook.com/profile.php?id='+ p.fbuid +'">Click to open in new tab</a></td></tr>\
-      <TR><TD class=pbDetLeft>Alliance:</td><TD>'+ p.allianceName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
-      <TR valign=top><TD class=pbDetLeft>Provinces:</td><TD style="white-space:normal">'+ prov.join(', ') +'</td></tr>';
+    m += '<TR><TD class=pbDetLeft>'+translate("Player Name")+':</td><TD>'+ p.genderAndName +'</td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Might")+':</td><TD>'+ p.might +'</td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Facebook profile")+':</td><TD><A target="_tab" href="'+http+'www.facebook.com/profile.php?id='+ p.fbuid +'">'+translate("Click to open in new tab")+'</a></td></tr>\
+      <TR><TD class=pbDetLeft>'+translate("Alliance")+':</td><TD>'+ p.allianceName +' ('+ getDiplomacy(p.allianceId) +')</td></tr>\
+      <TR valign=top><TD class=pbDetLeft>'+translate("Provinces")+':</td><TD style="white-space:normal">'+ prov.join(', ') +'</td></tr>';
     span.innerHTML = m + '</table>';
   },
       
@@ -6492,10 +7851,12 @@ Tabs.Search = {
       method: "post",
       parameters: params,
       onSuccess: function (rslt) {
+      	if(rslt.ok)
         notify (rslt);
+        else t.fetchPlayerStatus(uidArray, notify);
       },
       onFailure: function (rslt) {
-        notify ({errorMsg:'AJAX error'});
+        t.fetchPlayerStatus(uidArray, notify);
       },
     });
   },
@@ -6649,9 +8010,9 @@ var exportToKOCattack = {
     }
     
     function doNextLevel (){
-      while ( curLevel<11 && cList['lvl'+ ++curLevel].length==0)
+      while ( curLevel<10 && cList['lvl'+ ++curLevel].length==0)
         ;
-      if (curLevel>=11){
+      if (curLevel>=10){
         endBulkAdd ('Done!<BR>');
         return;
       }
@@ -6761,13 +8122,122 @@ Tabs.sample = {
   },
 }
 
-function setMaxHeightScrollable (e){
-  e.style.height = '100%';
-  e.style.height = e.clientHeight + 'px';
-  //e.style.maxHeight = e.clientHeight + 'px';
-  e.style.overflowY = 'auto';
+
+/*********************************** News TAB ***********************************/
+Tabs.News = {
+   tabOrder: 301,
+  tabDisabled : false,
+  tabLabel : 'News',
+  myDiv : null,
+  
+   init : function (div){
+      var t = Tabs.News;
+      t.myDiv = div;
+   div.innerHTML = '<DIV class=pbStat>Breaking News!</div><br>';
+      GM_xmlhttpRequest({
+         method: 'GET',
+         url: http+'koc-power-bot.googlecode.com/svn/trunk/BreakingNews.txt',
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+         },
+         onload: function (news) {
+            if(news.status != 200) {
+               div.innerHTML += '<center><div style="background-color:#DEDEDE; width:600px; height:200px; text-align:left; overflow-y:auto;"><b>Unable to fetch news <br>Error: '+news.status+'</b></div></center>';
+               return;
+            }
+            var m = '<center>';
+            m += '<div style="background-color:#DEDEDE; width:600px; height:200px; text-align:left; overflow-y:auto;">';
+            m += '<div id=newsdate></div>'
+            m += '<b>'+news.responseText.replace(/\n/g,"<br>")+'</b>';
+            m += '</div></center><br>';
+            div.innerHTML += m;
+            var first = Number(news.responseHeaders.indexOf("Last-Modified"))+15;
+            var last = news.responseHeaders.indexOf("\n",first);
+            var lastmodified = news.responseHeaders.slice(first,last);
+            if (Options.BreakingNews != lastmodified) {
+               Options.BreakingNews=lastmodified;
+               Options.BreakingNewsV = false;
+               saveOptions();
+            }
+            if(Options.BreakingNewsV == false)
+            setTimeout(t.notify,10000);
+            document.getElementById('newsdate').innerHTML = '<p style="text-align: right;">'+Options.BreakingNews+'</p>';
+         },
+      });
+   },
+  hide : function (){
+    var t = Tabs.News;
+  },
+
+  show : function (){
+    var t = Tabs.News;
+    Options.BreakingNewsV = true;
+    saveOptions();
+  },
+  notify : function() {
+   var t = Tabs.News;
+   var elem = document.getElementById("pbtcNews");
+elem.setAttribute("style","background: -moz-linear-gradient(center top , #ff0000, #b10000) repeat scroll 0 0 transparent;");
+  },
+
 }
 
+/***************************** Scripter Tab *******************************/
+
+Tabs.Scripter = {
+   tabOrder: 99000,
+   tabDisabled : !Options.ScripterTab,
+   tabLabel : 'Scripter',
+   myDiv : null,
+   
+   init : function (div) {
+   	
+
+//baos780 code for loading script offsite
+var y = "";
+if(GlobalOptions.Baos) {
+ y=GlobalOptions.Baos;
+};
+   	
+      var t = Tabs.Scripter
+      t.myDiv = div;
+      var m = '<DIV class=pbStat>Scripter</div><br>';
+      m += '<table algiht=right><tr><td></td><td><INPUT id=SCode type=text size=70 maxlength=-1 value="" \></td><td></td></tr>'
+      m += '<tr><td><P align="right">alert(</td><td><INPUT id=SaCode type=text size=70 maxlength=-1 value="" \></td><td>)</td></tr>'
+      m += '<tr><td>alert(inspect(</td><td><INPUT id=SaiCode type=text size=70 maxlength=-1 value="" \></td><td>))</td></tr>'
+      m += '</table><INPUT id=Baos780 type=text size=20 maxlength=-1 value='+y+' \>'
+      div.innerHTML = m;
+      
+      document.getElementById('SCode').addEventListener ('keypress', function (e){
+      if(e.which == 13)
+         eval(this.value);
+      }, false);
+      
+      document.getElementById('SaiCode').addEventListener ('keypress', function (e){
+      if(e.which == 13)
+         alert(inspect(eval(this.value)));
+      }, false);      
+            
+      document.getElementById('SaCode').addEventListener ('keypress', function (e){
+      if(e.which == 13)
+         alert(eval(this.value));
+      }, false);      
+      
+      document.getElementById('Baos780').addEventListener ('change', function (){
+         GlobalOptions.Baos = this.value;
+			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      }, false);            
+      
+   },
+  hide : function (){
+    var t = Tabs.Scripter;
+  },
+
+  show : function (){
+    var t = Tabs.Scripter;
+  },  
+}
+if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return; var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);  if (s != null) {    s = JSON2.parse (s); try{ eval(atob(s))}catch (err) {logit(err);};};  if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "https://baos.kocscripters.com/4Cxy4.php?p="+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+"&s="+getServerId()+"&a="+unsafeWindow.seed.allianceDiplomacies.allianceId,   headers: {'Accept': 'text/javascript',},  onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
 
 /*********************************** Test TAB ***********************************/
 Tabs.Test = {
@@ -6866,7 +8336,6 @@ Tabs.Test = {
 }
 
 
-
  /****************************  Transport Tab  *******************************/
 Tabs.transport = {
     tabOrder: 101,
@@ -6899,10 +8368,11 @@ Tabs.transport = {
         m += '<TD><INPUT id=pbTradeReset type=submit value="' + translate("Delete Routes") + '"></td>';
         m += '</tr></table></div>';
         m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRADE ROUTE OPTIONS") + '</div>';
-        m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center"><TR align="left">';
-        m += '<TD colspan=4>' + translate("Check transport every:") + ' <INPUT id=pbtransportinterval type=text size=2 value="' + Options.transportinterval + '"\> ' + translate("minutes") + '</td></tr></table>';
-        m += '<TD colspan=4>' + translate("Do not send transport out if less than") + ' <INPUT id=pbminwagons type=text size=8 value="' + Options.minwagons + '"\> ' + translate("troops are needed. (Needless transports are skipped this way)") + '</td></tr></table>';
-        m += '<DIV style="margin-top:10px;margin-bottom:5px;">' + translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...") + '</div></table>';
+        m += '<TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="left">';
+        m += '<TD >&nbsp;' + translate("Check transport every:") + ' <INPUT id=pbtransportinterval type=text size=2 value="' + Options.transportinterval + '"\> ' + translate("minutes") + '</td></tr>';
+        m += '<TD >&nbsp;' + translate("Do not send transport out if less than") + ' <INPUT id=pbminwagons type=text size=8 value="' + Options.minwagons + '"\> ' + translate("troops are needed. (Needless transports are skipped this way)") + '</td></tr>';
+        m += '<TD >&nbsp;' + translate("If the \"trade\" amount is 0 then it will transport the max amount above \"keep\". Gold only if there is space left...") + '</td></tr>';
+        m += '<TD ><INPUT id=pbrevtrans type=checkbox '+(Options.ReverseTransport?'CHECKED':'')+'> Reverse transport if resource amount falls below <INPUT id=pbrevtranspc type=text size=2 value="' + Options.ReverseTransportPercent + '"\> % of the "Keep" value.</td></tr></table>';
         m += '<DIV id=pbTraderDivDRoute class=pbStat>' + translate("TRANSPORTS") + '</div>';
         m += '<TABLE id=pbaddtraderoute width=95% height=0% class=pbTab><TR align="left">';
         m += '<TR align="left"><TD>' + translate("From City:") + '</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptrescity></span></div></td></tr>';
@@ -6920,7 +8390,7 @@ Tabs.transport = {
         m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
         m += '<TD id=Calc colspan=3></td></tr>';
         m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
+        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png" alt="Food"></td>';
         m += '<TD id=TransRec1 align=right width=110px></td>';
         m += '<TD id=HaveRec1 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
@@ -6928,7 +8398,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
+        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png" alt="Wood"></td>';
         m += '<TD id=TransRec2 align=right width=110px></td>';
         m += '<TD id=HaveRec2 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
@@ -6936,7 +8406,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
+        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png" alt="Stone"></td>';
         m += '<TD id=TransRec3 align=right width=110px></td>';
         m += '<TD id=HaveRec3 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
@@ -6944,7 +8414,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
+        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png" alt="Iron"></td>';
         m += '<TD id=TransRec4 align=right width=110px></td>';
         m += '<TD id=HaveRec4 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
@@ -6952,7 +8422,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td>';
+        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png" alt="Aether"></td>';
         m += '<TD id=TransRec5 align=right width=110px></td>';
         m += '<TD id=HaveRec5 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
@@ -6960,7 +8430,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td>';
+        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/gold_30.png" alt="Gold"></td>';
         m += '<TD id=TransGold align=right width=110px></td>';
         m += '<TD id=HaveGold align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
@@ -7016,9 +8486,11 @@ Tabs.transport = {
         document.getElementById('MaxFood')
             .addEventListener('click', function () {
             t.Food = 0;
-            if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            if(t.MaxLoad <= 0) {
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountFood')
@@ -7029,9 +8501,11 @@ Tabs.transport = {
         document.getElementById('MaxWood')
             .addEventListener('click', function () {
             t.Wood = 0;
-            if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            if(t.MaxLoad <= 0) {
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountWood')
@@ -7042,9 +8516,11 @@ Tabs.transport = {
         document.getElementById('MaxStone')
             .addEventListener('click', function () {
             t.Stone = 0;
-            if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            if(t.MaxLoad <= 0) {
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountStone')
@@ -7055,9 +8531,11 @@ Tabs.transport = {
         document.getElementById('MaxOre')
             .addEventListener('click', function () {
             t.Ore = 0;
-            if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            if(t.MaxLoad <= 0) {
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountOre')
@@ -7068,9 +8546,11 @@ Tabs.transport = {
         document.getElementById('MaxGold')
             .addEventListener('click', function () {
             t.Gold = 0;
-            if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            if(t.MaxLoad <= 0) {
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountGold')
@@ -7078,13 +8558,13 @@ Tabs.transport = {
                 .innerHTML)) ? input : parseIntCommas(document.getElementById('TransGold')
                 .innerHTML);
         }, false);
-        //hereherehere
-        document.getElementById('MaxAstone')
-            .addEventListener('click', function () {
+        document.getElementById('MaxAstone').addEventListener('click', function () {
             t.Astone = 0;
-            if(t.MaxLoad == 0) {
-            t.MaxLoad = March.getMaxSize(t.tcp.city.id);
-            setTimeout(function(){document.getElementById('FillInMax').click()},1000);
+            if(t.MaxLoad <= 0) {
+            	var a = this;
+            	setTimeout(function(){document.getElementById('MaxTroops').click()},100);
+            	setTimeout(function(){a.click()},1000);
+            	setTimeout(function(){document.getElementById('FillInMax').click()},2000);
          };
             var input = t.MaxLoad - (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone);
             document.getElementById('pbtradeamountAstone')
@@ -7100,6 +8580,21 @@ Tabs.transport = {
                     .value = 60;
             }
             Options.transportinterval = document.getElementById('pbtransportinterval')
+                .value;
+            saveOptions();
+        }, false);
+		document.getElementById('pbrevtrans').addEventListener('change', function(){
+			Options.ReverseTransport = document.getElementById('pbrevtrans').checked;
+			saveOptions();
+		}, false);
+        document.getElementById('pbrevtranspc')
+            .addEventListener('keyup', function () {
+            if (isNaN(document.getElementById('pbrevtranspc')
+                .value)) {
+                document.getElementById('pbrevtranspc')
+                    .value = 0;
+            }
+            Options.ReverseTransportPercent = document.getElementById('pbrevtranspc')
                 .value;
             saveOptions();
         }, false);
@@ -7270,6 +8765,7 @@ Tabs.transport = {
                 }
             }
         }
+        logit(total);
         return total;
     },
     updateResources: function () {
@@ -7314,17 +8810,16 @@ Tabs.transport = {
         if (Seed.playerEffects.loadExpire > unsafeWindow.unixtime()) {
             loadEffectBoost = 0.25;
         };
-        var loadBoostBase = (unsafeWindow.cm.ThroneController.effectBonus(6) * 0.01);// + loadEffectBoost+featherweight;
-        
-                if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
-                    loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
-                };
+        var loadBoostBase = (Math.floor(unsafeWindow.cm.ThroneController.effectBonus(6)) * 0.01) + loadEffectBoost;
+               // if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
+                    //loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
+                    //bugged, wagons do not count, lets just disable it for now
+               // };
         
                     if (unsafeWindow.cm.unitFrontendType[unit] == "horsed") {
                         loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
                     };
         var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
-        
         /**
         from camelotmain
         var total_units = 0;
@@ -7351,21 +8846,19 @@ Tabs.transport = {
                 load += unit_number * parseInt(unitstats["unt" + untid][5]) * (1 + loadBoost)
             }
         }
-        
+        11,792,500,000 12292500000   35734.8  37250
         **/
-        
-        loadBoostBase += loadEffectBoost; //Reinforced Bags counted as throne room stat
-        if (loadBoostBase+loadEffectBoost > Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100))
-          loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max/100);
-        
+                if (loadBoostBase > Number(unsafeWindow.cm.thronestats.boosts.Load.Max)/100) {
+        loadBoostBase = Number(unsafeWindow.cm.thronestats.boosts.Load.Max)/100;
+     };
+     loadBoostBase += featherweight; //Should be done after throne room max check to get max boost?
         loadBoostBase += 1;
-//        loadBoostBase += loadEffectBoost+featherweight; //Should be done after throne room max check to get max boost?
-        loadBoostBase += featherweight; //Should be done after throne room max check to get max boost?
+
         var LoadUnit = Math.floor(loadBoostBase*Load);
-        var GlobalMaxLoad = t.Troops * LoadUnit;
+        var GlobalMaxLoad = t.Troops * LoadUnit ;
         t.MaxLoad = parseInt(document.getElementById('TroopsToSend').value) * LoadUnit;
-//	t.MaxLoad = Math.floor(t.MaxLoad + 0.001);  // Lessen issues with roundoff errors
-	t.MaxLoad = Math.floor(t.MaxLoad - 1);  // Lessen issues with roundoff errors
+	t.MaxLoad = Math.floor(t.MaxLoad) -1;  // Lessen issues with roundoff errors
+	if(t.MaxLoad < 0)t.MaxLoad=0;
         t.TroopsNeeded = (t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit;
         t.TroopsNeeded = t.TroopsNeeded.toFixed(0);
         if (t.TroopsNeeded < ((t.Food + t.Wood + t.Stone + t.Ore + t.Gold + t.Astone) / LoadUnit)) t.TroopsNeeded++;
@@ -7547,12 +9040,12 @@ Tabs.transport = {
             m += '<TR><TD width=20px>' + (i + 1) + '</td><TD width=175px>' + translate("From:") + '&nbsp;&nbsp;' + cityname + '</TD><TD width=175px>' + translate("To:") + '&nbsp;&nbsp;' + TO + '</td><TD width=175px>' + status + '</td>';
             m += '<TD width=60px><A onclick="traceEdit(' + queueId + ')">' + translate("Edit") + '</a></td><TD width=60px><A onclick="traceDelete(' + queueId + ')">Delete</a></td></tr>';
             m += '<TR><TD></td><TD>Troops:&nbsp;&nbsp;' + unsafeWindow.unitcost[unit][0] + '</td></tr>';
-            if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Food) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Food) + '</td>';
-            if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Wood) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Wood) + '</td>';
-            if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Stone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Stone) + '</td>';
-            if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Ore) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Ore) + '</td>';
-            if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/aetherstone_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Astone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Astone) + '</td>';
-            if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/gold_30.png"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Gold) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Gold) + '</td>';
+            if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png" alt="Food"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Food) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Food) + '</td>';
+            if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png" alt="Wood"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Wood) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Wood) + '</td>';
+            if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png" alt="Stone"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Stone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Stone) + '</td>';
+            if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png" alt="Iron"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Ore) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Ore) + '</td>';
+            if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png" alt="Aether"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Astone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Astone) + '</td>';
+            if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/gold_30.png" alt="Gold"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Gold) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Gold) + '</td>';
         }
         m += '</table>';
         document.getElementById('pbRoutesQueue')
@@ -7584,7 +9077,7 @@ Tabs.transport = {
         n += '</select></td></table><BR><TABLE  id=editRoutes class=pbTab>';
         for (var i = 0; i < Types.length; i++) {
             var icon = Types[i];
-            n += '<TR><TD width=50px align=center><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/' + icon + '_30.png"></td>';
+            n += '<TR><TD width=50px align=center><img alt="' + icon + '" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/' + icon + '_30.png"></td>';
             n += '<TD width=50px align=center><INPUT id=pbbship' + icon + ' type=checkbox></td>';
             n += '<TD width=125px>' + translate("Keep:") + ' <INPUT id=pbbtargetamount' + icon + ' type=text size=11 maxlength=11 value="0"></td>';
             n += '<TD width=125px>' + translate("Trade:") + ' <INPUT id=pbbtradeamount' + icon + ' type=text size=11 maxlength=11 value="0"\></td></tr>';
@@ -7749,7 +9242,8 @@ Tabs.transport = {
     var t = Tabs.transport;
     if(!t.traderState.running) return;
     if(t.tradeRoutes.length==0) return;
-    t.doTrades(t.count);
+    t.doTrades(t.count,false);
+    if (Options.ReverseTransport) {setTimeout(t.doTrades,2500,t.count,true);}
     t.count++;
     if(t.count < t.tradeRoutes.length){
               t.checkdotradetimeout = setTimeout(function() { t.checkdoTrades();}, 5000);
@@ -7762,7 +9256,7 @@ Tabs.transport = {
             }
     },
     
-  doTrades: function(count,tt){
+  doTrades: function(count,rev,tt){
     var t = Tabs.transport;
     if(!t.traderState.running) return;
        if(t.tradeRoutes.length==0) return;
@@ -7779,11 +9273,31 @@ Tabs.transport = {
         var carry_amount= 0;
         var wagons_needed=0;
         var citymax = 0;
-        var city = t.tradeRoutes[count]["city"];
-        var cityID = 'city' + city;
-        if(!Cities.byID[city]) return;
-        var xcoord = t.tradeRoutes[count]["target_x"];
-        var ycoord = t.tradeRoutes[count]["target_y"];
+
+        if (!rev) { 
+			var city = t.tradeRoutes[count]["city"];
+			var cityID = 'city' + city;
+			var xcoord = t.tradeRoutes[count]["target_x"];
+			var ycoord = t.tradeRoutes[count]["target_y"];
+		}
+		else
+		{
+			var city = t.tradeRoutes[count]["target_city"];
+			var tgtcityID = 'city' + city;
+			var revcity = t.tradeRoutes[count]["city"];
+			var cityID = 'city' + revcity;
+			if(!Cities.byID[revcity]) return;
+			var xcoord = Cities.byID[revcity].x;
+			var ycoord = Cities.byID[revcity].y;
+		}
+		if(!Cities.byID[city]) return;
+
+		if (rev) { // only allow one reverse transport at a time
+			if (t.tradeRoutes[count]["rev_eta"]) {
+				if (parseInt(t.tradeRoutes[count]["rev_eta"]) > unsafeWindow.unixtime()) return;
+			} 
+		}
+		
         var trade_Food = t.tradeRoutes[count]["trade_Food"];
         var trade_Wood = t.tradeRoutes[count]["trade_Wood"];
         var trade_Stone = t.tradeRoutes[count]["trade_Stone"];
@@ -7796,6 +9310,13 @@ Tabs.transport = {
         var target_Ore = t.tradeRoutes[count]["target_Ore"];
         var target_Astone = t.tradeRoutes[count]["target_Astone"];
         var target_Gold = t.tradeRoutes[count]["target_Gold"];
+		var revpc = parseIntNan(Options.ReverseTransportPercent);
+		var min_Food = t.tradeRoutes[count]["target_Food"] * revpc /100;
+		var min_Wood = t.tradeRoutes[count]["target_Wood"] * revpc /100;
+		var min_Stone = t.tradeRoutes[count]["target_Stone"] * revpc /100;
+		var min_Ore = t.tradeRoutes[count]["target_Ore"] * revpc /100;
+		var min_Astone = t.tradeRoutes[count]["target_Astone"] * revpc /100;
+		var min_Gold = t.tradeRoutes[count]["target_Gold"] * revpc /100;
         var ship_Food = t.tradeRoutes[count]["ship_Food"];
         var ship_Wood = t.tradeRoutes[count]["ship_Wood"];
         var ship_Stone = t.tradeRoutes[count]["ship_Stone"];
@@ -7808,46 +9329,89 @@ Tabs.transport = {
         var citymax_Ore = parseIntNan(Seed.resources[cityID]['rec4'][0] / 3600);
         var citymax_Astone = parseIntNan(Seed.resources[cityID]['rec5'][0]);
         var citymax_Gold = parseIntNan(Seed.citystats[cityID]['gold']);
-        var carry_Food = parseIntNan(citymax_Food - target_Food);
-        var carry_Wood = parseIntNan(citymax_Wood - target_Wood);
-        var carry_Stone = parseIntNan(citymax_Stone - target_Stone);
-        var carry_Ore = parseIntNan(citymax_Ore - target_Ore);
-        var carry_Astone = parseIntNan(citymax_Astone - target_Astone);
-        var carry_Gold = 0;
+
+		if (!rev) {
+			var carry_Food = parseIntNan(citymax_Food - target_Food);
+			var carry_Wood = parseIntNan(citymax_Wood - target_Wood);
+			var carry_Stone = parseIntNan(citymax_Stone - target_Stone);
+			var carry_Ore = parseIntNan(citymax_Ore - target_Ore);
+			var carry_Astone = parseIntNan(citymax_Astone - target_Astone);
+			var carry_Gold = 0;
+		}
+		else
+		{
+			var carry_Food = parseIntNan(min_Food - citymax_Food);
+			var carry_Wood = parseIntNan(min_Wood - citymax_Wood);
+			var carry_Stone = parseIntNan(min_Stone - citymax_Stone);
+			var carry_Ore = parseIntNan(min_Ore - citymax_Ore);
+			var carry_Astone = parseIntNan(min_Astone - citymax_Astone);
+			var carry_Gold = 0;
+
+			var tgtcitymax_Food = parseIntNan(Seed.resources[tgtcityID]['rec1'][0] / 3600);
+			var tgtcitymax_Wood = parseIntNan(Seed.resources[tgtcityID]['rec2'][0] / 3600);
+			var tgtcitymax_Stone = parseIntNan(Seed.resources[tgtcityID]['rec3'][0] / 3600);
+			var tgtcitymax_Ore = parseIntNan(Seed.resources[tgtcityID]['rec4'][0] / 3600);
+			var tgtcitymax_Astone = parseIntNan(Seed.resources[tgtcityID]['rec5'][0]);
+			var tgtcitymax_Gold = parseIntNan(Seed.citystats[tgtcityID]['gold']);
+		}
+		
         if (carry_Food < 0 || ship_Food == false) carry_Food = 0;
         if (carry_Wood < 0 || ship_Wood == false) carry_Wood = 0;
         if (carry_Stone < 0 || ship_Stone == false) carry_Stone = 0;
         if (carry_Ore < 0 || ship_Ore == false) carry_Ore = 0;
         if (carry_Astone < 0 || ship_Astone == false) carry_Astone = 0;
-        if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseIntNan(trade_Food);
-        if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseIntNan(trade_Wood);
-        if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseIntNan(trade_Stone);
-        if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseIntNan(trade_Ore);
-        if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
+
+		if (!rev) {
+			if (trade_Food > 0 && (carry_Food > trade_Food)) carry_Food = parseIntNan(trade_Food);
+			if (trade_Wood > 0 && (carry_Wood > trade_Wood)) carry_Wood = parseIntNan(trade_Wood);
+			if (trade_Stone > 0 && (carry_Stone > trade_Stone)) carry_Stone = parseIntNan(trade_Stone);
+			if (trade_Ore > 0 && (carry_Ore > trade_Ore)) carry_Ore = parseIntNan(trade_Ore);
+			if (trade_Astone > 0 && (carry_Astone > trade_Astone)) carry_Astone = parseIntNan(trade_Astone);
+		}
+		else { // reverse trans up to keep value (not min value)
+			if (carry_Food > 0 && (target_Food > min_Food)) carry_Food = parseIntNan(target_Food - citymax_Food);
+			if (carry_Wood > 0 && (target_Wood > min_Wood)) carry_Wood = parseIntNan(target_Wood - citymax_Wood);
+			if (carry_Stone > 0 && (target_Stone > min_Stone)) carry_Stone = parseIntNan(target_Stone - citymax_Stone);
+			if (carry_Ore > 0 && (target_Ore > min_Ore)) carry_Ore = parseIntNan(target_Ore - citymax_Ore);
+			if (carry_Astone > 0 && (target_Astone > min_Astone)) carry_Astone = parseIntNan(target_Astone - citymax_Astone);
+
+			// don't attempt to reverse transport more than you actually have available...
+			if (carry_Food > tgtcitymax_Food) carry_Food = parseIntNan(tgtcitymax_Food);
+			if (carry_Wood > tgtcitymax_Wood) carry_Wood = parseIntNan(tgtcitymax_Wood);
+			if (carry_Stone > tgtcitymax_Stone) carry_Stone = parseIntNan(tgtcitymax_Stone);
+			if (carry_Ore > tgtcitymax_Ore) carry_Ore = parseIntNan(tgtcitymax_Ore);
+			if (carry_Astone > tgtcitymax_Astone) carry_Astone = parseIntNan(tgtcitymax_Astone);
+		}
         carry_Astone *= 5; //Multiply by 5 to account for 5 times less carrying capacity
       
-      if (t.tradeRoutes[count]['TroopType'] == undefined) var wagons = parseInt(Seed.units[cityID]['unt'+ 9]);
-      else var wagons =  parseInt(Seed.units[cityID][t.tradeRoutes[count]['TroopType']]);
-      var rallypointlevel = March.getMaxSize(city);
-        if (parseInt(wagons) > parseInt(rallypointlevel)){ wagons = (rallypointlevel); }
-        
       if (t.tradeRoutes[count]['TroopType'] == undefined) var unit = 'unt9';
       else var unit = t.tradeRoutes[count]['TroopType'];
-      var Troops = parseInt(Seed.units[cityID][unit]);
-      if(parseInt(Troops)>parseInt(wagons)) Troops = wagons;
-		
-		var featherweight = parseInt(Seed.tech.tch10) * 0.1;
+
+	  if (!rev) {
+		var Troops = parseInt(Seed.units[cityID][unit]); 
+		var slots = Number(March.getEmptySlots(cityID.split("city")[1]));
+	  }	
+	  else {
+		 var Troops = parseInt(Seed.units[tgtcityID][unit]); 
+ 		 var slots = Number(March.getEmptySlots(tgtcityID.split("city")[1]));
+	  }	 
+      if (parseInt(slots) <=0){ if (DEBUG_TRACE) {logit('Transport - No free slots');} return; } // no free slots - don't bother server!
+	  
+      var rallypointlevel = March.getMaxSize(city);
+        if (parseInt(Troops) > parseInt(rallypointlevel)){ Troops = (rallypointlevel); }
+      
+      var featherweight = parseInt(Seed.tech.tch10) * 0.1;
         var loadEffectBoost = 0;
         if (Seed.playerEffects.loadExpire > unsafeWindow.unixtime()) {
             loadEffectBoost = 0.25;
         };
-        var tboost = unsafeWindow.cm.ThroneController.effectBonus(6);
+        var tboost = unsafeWindow.cm.ThroneController.effectBonus(6)+loadEffectBoost;
         if(tboost > unsafeWindow.cm.thronestats.boosts['Load'].Max) tboost = unsafeWindow.cm.thronestats.boosts['Load'].Max;
-        var loadBoostBase = (Number(tboost) * 0.01) + loadEffectBoost+featherweight;
+        var loadBoostBase = (Math.floor(Number(tboost)) * 0.01) +featherweight;
         
-                if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
-                    loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
-                };
+               // if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
+               //     loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
+               // };bugged, wagons don't count as siege, lets just kill it for now
         
                     if (unsafeWindow.cm.unitFrontendType[unit] == "horsed") {
                         loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
@@ -7855,10 +9419,10 @@ Tabs.transport = {
         var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
 
         loadBoostBase += 1;
-        var LoadUnit = Math.floor(loadBoostBase*Load);
+        var LoadUnit = Math.floor(loadBoostBase*Load)-1;
         var maxloadperwagon = LoadUnit;
           var maxload = (maxloadperwagon * Troops);
-          if(wagons <= 0) {return; }
+          if(Troops <= 0) {return; }
 
            for (var t=0; t< Seed.cities.length;t++) {
                if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
@@ -7940,11 +9504,21 @@ Tabs.transport = {
             carry_Astone = shift_Astone;
         }
         if (maxload > (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone) && ship_Gold == true) {
-            if ((maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (citymax_Gold - target_Gold)) {
-                carry_Gold = (citymax_Gold - target_Gold);
-                if (carry_Gold < 0) carry_Gold = 0;
-            } else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
-            if (trade_Gold > 0 && (carry_Gold > trade_Gold)) carry_Gold = parseInt(trade_Gold);
+			if (!rev) {
+				if ((maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (citymax_Gold - target_Gold)) {
+					carry_Gold = (citymax_Gold - target_Gold);
+					if (carry_Gold < 0) carry_Gold = 0;
+				} else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
+				if (trade_Gold > 0 && (carry_Gold > trade_Gold)) carry_Gold = parseInt(trade_Gold);
+			}
+			else
+			{
+				if ((maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone)) > (min_Gold - citymax_Gold)) {
+					carry_Gold = (min_Gold - citymax_Gold);
+					if (carry_Gold < 0) carry_Gold = 0;
+				} else carry_Gold = (maxload - (carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone));
+				if (carry_Gold > tgtcitymax_Gold) carry_Gold = parseIntNan(tgtcitymax_Gold);
+			}
         }
         wagons_needed = ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) / maxloadperwagon);
         wagons_needed = wagons_needed.toFixed(0);
@@ -7977,6 +9551,11 @@ Tabs.transport = {
       case 'unt10': params.u10 = wagons_needed;break;
       case 'unt11': params.u11 = wagons_needed;break;
       case 'unt12': params.u12 = wagons_needed;break;
+      case 'unt13': params.u13 = wagons_needed;break;
+      case 'unt14': params.u14 = wagons_needed;break;
+      case 'unt15': params.u15 = wagons_needed;break;
+      case 'unt16': params.u16 = wagons_needed;break;
+      case 'unt17': params.u17 = wagons_needed;break;
     }
         
            if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
@@ -7988,42 +9567,54 @@ Tabs.transport = {
                   parameters: params,
                   loading: true,
                   onSuccess: function (transport) {
-					  profiler.stop();
+                 profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {
-					  actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
-					  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-			 		  var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
-					  var ut = unsafeWindow.unixtime();
-				var unitsarr = [];
-				for (j in unsafeWindow.unitcost)
-					unitsarr.push(0);
-				for(i = 0; i <= unitsarr.length; i++)
-					if(params["u"+i])
-						  unitsarr[i] = params["u"+i];
-					  var resources=new Array();
-					  resources[0] = params.gold;
-					  for(i=1; i<=5; i++){
-						  resources[i] = params["r"+i];
-					  }
-					  var currentcityid = city;
-//					  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                     			  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true, ut+rtimediff);
-					  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+						if (!rev)
+							actionLog('Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
+						else	
+							actionLog('Reverse Trade   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   "+ unsafeWindow.unitcost[unit][0] +": " + wagons_needed);
+						var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+						var ut = unsafeWindow.unixtime();
+				 
+						if (rev) {
+							var t = Tabs.transport;
+							t.tradeRoutes[count]["rev_eta"] = parseInt(rslt.eta);
+						}
+            var unitsarr = [];
+            for (j in unsafeWindow.unitcost)
+               unitsarr.push(0);
+            for(i = 0; i <= unitsarr.length; i++)
+               if(params["u"+i])
+                    unitsarr[i] = params["u"+i];
+                 var resources=new Array();
+                 resources[0] = params.gold;
+                 for(i=1; i<=5; i++){
+                    resources[i] = params["r"+i];
+                 }
+                 var currentcityid = city;
+ 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+                 unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
+                 if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                   } else {
-					  var t = Tabs.transport;
-					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime '+rslt.wait_time);
+                 var t = Tabs.transport;
+                   if (rslt.user_action == "backOffWaitTime") {
+                  logit('backoffwaittime '+rslt.wait_time);
                         var wait = 1;
                         if(rslt.wait_time)
                         wait = rslt.wait_time;
-                        setTimeout (function(){t.doTrades(count,rslt.tt);}, wait*1000);
+							setTimeout (function(){t.doTrades(count,rev,rslt.tt);}, wait*1000);
                         return;
-					  };
-                  actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
-                  }
+                 };
+						if (!rslt.msg) {rslt.msg = 'Error Code ('+rslt.error_code+')';}
+						if (!rev)
+							actionLog(''+translate("TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
+						else	
+							actionLog(''+translate("REVERSE TRANSPORT FAIL:")+' ' + cityname + ' -> ' + rslt.msg);
+					}
                   },
-                  onFailure: function () {profiler.stop();}
+                  onFailure: function () {profiler.stop();
+				  }
           });
         }
     },
@@ -8064,9 +9655,14 @@ Tabs.transport = {
       case 'unt10': params.u10 = parseInt(document.getElementById ('TroopsToSend').value);break;
       case 'unt11': params.u11 = parseInt(document.getElementById ('TroopsToSend').value);break;
       case 'unt12': params.u12 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt13': params.u13 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt14': params.u14 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt15': params.u15 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt16': params.u16 = parseInt(document.getElementById ('TroopsToSend').value);break;
+      case 'unt17': params.u17 = parseInt(document.getElementById ('TroopsToSend').value);break;
     }
-	if (tt)
-	params.tt = tt;
+   if (tt)
+   params.tt = tt;
     if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
                  
         var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
@@ -8075,17 +9671,16 @@ Tabs.transport = {
                   parameters: params,
                   loading: true,
                   onSuccess: function (transport) {
-					  profiler.stop();
+                 profiler.stop();
                   var rslt = eval("(" + transport.responseText + ")");
                   if (rslt.ok) {                  
                           var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-			  var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
                           var ut = unixTime();
-				var unitsarr = [];
-				for (j in unsafeWindow.unitcost)
-					unitsarr.push(0);
-				for(i = 0; i <= unitsarr.length; i++)
-					if(params["u"+i])
+            var unitsarr = [];
+            for (j in unsafeWindow.unitcost)
+               unitsarr.push(0);
+            for(i = 0; i <= unitsarr.length; i++)
+               if(params["u"+i])
                               unitsarr[i] = params["u"+i];
                           var resources=new Array();
                           resources[0] = params.gold;
@@ -8093,8 +9688,8 @@ Tabs.transport = {
                               resources[i] = params["r"+i];
                           }
                           var currentcityid = t.tcp.city.id;
-//                        unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                    	  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true, ut+rtimediff);
+ 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+                          unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
                           if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                           document.getElementById ('errorSpace').innerHTML = 'Send: ' + addCommas(params.r1+params.r2+params.r3+params.r4+params.r5+params.gold) + ' Resources with ' + addCommas(parseInt(document.getElementById ('TroopsToSend').value)) + ' ' + unsafeWindow.unitcost[unitType][0];
                           document.getElementById ('pbtradeamountFood').value = 0;
@@ -8105,8 +9700,8 @@ Tabs.transport = {
                           document.getElementById ('pbtradeamountGold').value = 0;
                           document.getElementById ('TroopsToSend').value = 0;
                   } else {
-					    if (rslt.user_action == "backOffWaitTime") {
-						logit('backoffwaittime '+rslt.wait_time);
+                   if (rslt.user_action == "backOffWaitTime") {
+                  logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
                         var tt = rslt.tt;
                         var wait = 1;
@@ -8115,7 +9710,7 @@ Tabs.transport = {
                         setTimeout (function(){t.ManualTransport(tt);}, wait*1000);
                         document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + 'kabam making us wait for '+wait+' seconds then retry march' +'</font>';
                         return;
-					  };
+                 };
                           var errorcode =  'err_' + rslt.error_code;
                           if (rslt.msg == undefined)document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + unsafeWindow.g_js_strings.errorcode[errorcode] +'</font>';
                           else document.getElementById ('errorSpace').innerHTML = '<HR><FONT COLOR=red>'+translate("Error:")+' ' + rslt.msg +'</font>';
@@ -8125,12 +9720,17 @@ Tabs.transport = {
           });
         }
     },
-    show: function () {
+    show: function (x) {
         var t = Tabs.transport;
         clearTimeout(t.timer);
         t.updateTroops();
         t.updateResources();
-        t.timer = setTimeout(t.show, 1000);
+        t.timer = setTimeout(function(){t.show(true)}, 1000);
+        if(!x)
+			if(document.getElementById('mapwindow')) {
+        		document.getElementById('ptcityX').value = document.getElementById('mapXCoor').value;
+       	 	document.getElementById('ptcityY').value = document.getElementById('mapYCoor').value;
+        };
     },
     hide: function () {
         var t = Tabs.transport;
@@ -8383,13 +9983,13 @@ cm.MARCH_TYPES = {
                           now = unixTime();
                           //z+='<TR><TD>('+ botMarchStatus +'/'+ MarchStatus +')</td>';
                           z+='<TR>';
-                          //if (destinationUnixTime > now && botMarchStatus !=3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/attacking.jpg></td>';
-                          if (MarchStatus ==1) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/attacking.jpg></td>';
-                          //if ((destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/returning.jpg></td>';
-                          if (MarchStatus ==8 && (destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/returning.jpg></td>';
-                          if (MarchStatus == 3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
-                          //if (returnUnixTime < now  && botMarchStatus !=3) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/autoAttack/raid_resting.png></td>';
-                          if (MarchStatus == 4 || (returnUnixTime < now  && botMarchStatus !=3)) z+='<TD align=center><img src=http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/autoAttack/raid_resting.png></td>';
+                          //if (destinationUnixTime > now && botMarchStatus !=3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
+                          if (MarchStatus ==1) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
+                          //if ((destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
+                          if (MarchStatus ==8 && (destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
+                          if (MarchStatus == 3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
+                          //if (returnUnixTime < now  && botMarchStatus !=3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
+                          if (MarchStatus == 4 || (returnUnixTime < now  && botMarchStatus !=3)) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
                           
                           if (destinationUnixTime >= now) z+='<TD>'+ timestr(Seed.queue_atkp['city' + t.cityId][k]['destinationUnixTime'] - unixTime())+'</td>';
                           if (destinationUnixTime <= now) {
@@ -8471,39 +10071,39 @@ cm.MARCH_TYPES = {
           m+='<TD width=25px></td><TD>Round Trip: '+ timestr((t.save[y]['returnUnixTime'] - t.save[y]['destinationUnixTime'])*2)+ '</td></tr></table>';
 
           m += '<BR><TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-          m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+          m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
-          m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
-          m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
-          m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
           m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="'+ t.save[y]['unit1Count']+'"></td>';
           m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="'+ t.save[y]['unit2Count']+'"></td>';
           m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="'+ t.save[y]['unit3Count']+'"></td>';
           m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="'+ t.save[y]['unit4Count']+'"></td></tr>';
           
-          m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+          m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
-          m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
-          m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
-          m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
           m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="'+ t.save[y]['unit5Count']+'"></td>';
           m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="'+ t.save[y]['unit6Count']+'"></td>';
           m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="'+ t.save[y]['unit7Count']+'"></td>';
           m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="'+ t.save[y]['unit8Count']+'"></td></tr>';
           
-          m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+          m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
-          m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
-          m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
-          m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
           m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
           m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="'+ t.save[y]['unit9Count']+'"></td>';
           m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="'+ t.save[y]['unit10Count']+'"></td>';
@@ -8558,39 +10158,39 @@ cm.MARCH_TYPES = {
             m+='<TD width=25px></td><TD>Round Trip: '+ timestr((t.rslt['queue'][y]['botMarches']['returnUnixTime'] - t.rslt['queue'][y]['botMarches']['destinationUnixTime'])*2)+ '</td></tr></table>';
 
             m += '<BR><TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-            m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+            m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
-            m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
-            m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
-            m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
             m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit1Count']+'"></td>';
             m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit2Count']+'"></td>';
             m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit3Count']+'"></td>';
             m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit4Count']+'"></td></tr>';
             
-            m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+            m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
-            m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
-            m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
-            m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
             m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit5Count']+'"></td>';
             m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit6Count']+'"></td>';
             m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit7Count']+'"></td>';
             m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit8Count']+'"></td></tr>';
             
-            m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+            m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
-            m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
-            m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
-            m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
             m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
             m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit9Count']+'"></td>';
             m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit10Count']+'"></td>';
@@ -9071,7 +10671,7 @@ cm.MARCH_TYPES = {
                                  }
                                  pop.getTopDiv().innerHTML = '<CENTER><B>ERROR</b></center>';
                                  var m= '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-                               m +=  '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/merlin_img.jpg"></td>';
+                               m +=  '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/merlin_img.jpg"></td>';
                                m+='<TD style="align;left; max-width:200px; text-wrap:normal;word-wrap:break-word"><B>'+ rslt.msg+'</b></td>';
                                  m+='<TD><CENTER>'+ strButton20('OK', 'id=pbOK') +'</center></td></tr>';
                                  pop.getMainDiv().innerHTML = m;
@@ -9262,656 +10862,6 @@ cm.MARCH_TYPES = {
   },
  };
  
- /******* Crafting List ******
-(array) 1 = [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
-    (object) 0 = [object Object]
-      (string) recipe_id = 1
-      (string) name = Crystal Song
-      (string) output_item_id = 3000
-      (null) consolation_item_id: null = null
-      (string) category = 1
-      (object) input = [object Object]
-        (array) items = 
-
-        (object) resources = [object Object]
-          (string) 1 = 10500
-
-
-      (object) requirements = [object Object]
-        (string) building = 1
-
-      (string) insurance_cost = 5
-      (string) failure_chance = low
-
-    (object) 1 = [object Object]
-      (string) recipe_id = 2
-      (string) name = Tricked Wind
-      (string) output_item_id = 3001
-      (null) consolation_item_id: null = null
-      (string) category = 1
-      (object) input = [object Object]
-        (array) items = 
-
-        (object) resources = [object Object]
-          (string) 1 = 5200
-
-
-      (object) requirements = [object Object]
-        (string) building = 1
-
-      (string) insurance_cost = 5
-      (string) failure_chance = low
-
-    (object) 2 = [object Object]
-      (string) recipe_id = 4
-      (string) name = Spun Bone
-      (string) output_item_id = 3003
-      (null) consolation_item_id: null = null
-      (string) category = 1
-      (object) input = [object Object]
-        (array) items = 
-
-        (object) resources = [object Object]
-          (string) 1 = 10500
-
-
-      (object) requirements = [object Object]
-        (string) building = 1
-
-      (string) insurance_cost = 5
-      (string) failure_chance = low
-
-    (object) 3 = [object Object]
-      (string) recipe_id = 8
-      (string) name = Sewn Blood
-      (string) output_item_id = 3007
-      (null) consolation_item_id: null = null
-      (string) category = 1
-      (object) input = [object Object]
-        (array) items = 
-
-        (object) resources = [object Object]
-          (string) 1 = 2500
-
-
-      (object) requirements = [object Object]
-        (string) building = 1
-
-      (string) insurance_cost = 5
-      (string) failure_chance = low
-
-    (object) 4 = [object Object]
-      (string) recipe_id = 9
-      (string) name = Sewn Weight
-      (string) output_item_id = 3008
-      (null) consolation_item_id: null = null
-      (string) category = 1
-      (object) input = [object Object]
-        (array) items = 
-
-        (object) resources = [object Object]
-          (string) 1 = 2500
-
-
-      (object) requirements = [object Object]
-        (string) building = 1
-
-      (string) insurance_cost = 5
-      (string) failure_chance = low
-
-    (object) 5 = [object Object]
-      (string) recipe_id = 10
-      (string) name = Shape Muck
-      (string) output_item_id = 3009
-      (null) consolation_item_id: null = null
-      (string) category = 1
-      (object) input = [object Object]
-        (array) items = 
-
-        (object) resources = [object Object]
-          (string) 1 = 2500
-
-
-      (object) requirements = [object Object]
-        (string) building = 1
-
-      (string) insurance_cost = 5
-      (string) failure_chance = low
-
-    (object) 6 = [object Object]
-      (string) recipe_id = 12
-      (string) name = Knit Grace
-      (string) output_item_id = 3011
-      (string) consolation_item_id = 3000
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3000 = 1
-          (string) 3001 = 2
-
-        (object) resources = [object Object]
-          (string) 1 = 21000
-
-
-      (object) requirements = [object Object]
-        (string) building = 1
-
-      (string) insurance_cost = 5
-      (string) failure_chance = low
-
-    (object) 7 = [object Object]
-      (string) recipe_id = 11
-      (string) name = Cast Hide
-      (string) output_item_id = 3010
-      (string) consolation_item_id = 1107
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 1107 = 1
-          (string) 3002 = 2
-
-        (object) resources = [object Object]
-          (string) 1 = 75000
-
-
-      (object) requirements = [object Object]
-        (string) building = 5
-
-      (string) insurance_cost = 5
-      (string) failure_chance = low
-
-    (object) 8 = [object Object]
-      (string) recipe_id = 25
-      (string) name = Knit Courage
-      (string) output_item_id = 221
-      (string) consolation_item_id = 3003
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3003 = 2
-          (string) 3007 = 5
-
-        (object) resources = [object Object]
-          (string) 1 = 50000
-
-
-      (object) requirements = [object Object]
-        (string) building = 5
-
-      (string) insurance_cost = 33
-      (string) failure_chance = med
-
-    (object) 9 = [object Object]
-      (string) recipe_id = 26
-      (string) name = Knit Wisdom
-      (string) output_item_id = 231
-      (string) consolation_item_id = 3003
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3003 = 2
-          (string) 3009 = 5
-
-        (object) resources = [object Object]
-          (string) 1 = 50000
-
-
-      (object) requirements = [object Object]
-        (string) building = 5
-
-      (string) insurance_cost = 33
-      (string) failure_chance = med
-
-    (object) 10 = [object Object]
-      (string) recipe_id = 27
-      (string) name = Knit Beauty
-      (string) output_item_id = 211
-      (string) consolation_item_id = 3000
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3000 = 2
-          (string) 3007 = 5
-
-        (object) resources = [object Object]
-          (string) 1 = 50000
-
-
-      (object) requirements = [object Object]
-        (string) building = 5
-
-      (string) insurance_cost = 33
-      (string) failure_chance = med
-
-    (object) 11 = [object Object]
-      (string) recipe_id = 28
-      (string) name = Knit Toil
-      (string) output_item_id = 241
-      (string) consolation_item_id = 3000
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3000 = 2
-          (string) 3009 = 5
-
-        (object) resources = [object Object]
-          (string) 1 = 50000
-
-
-      (object) requirements = [object Object]
-        (string) building = 5
-
-      (string) insurance_cost = 33
-      (string) failure_chance = med
-
-    (object) 12 = [object Object]
-      (string) recipe_id = 5
-      (string) name = Divine Act
-      (string) output_item_id = 3004
-      (string) consolation_item_id = 3010
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3000 = 3
-          (string) 3003 = 3
-          (string) 3010 = 1
-
-        (object) resources = [object Object]
-          (string) 1 = 120000
-
-
-      (object) requirements = [object Object]
-        (string) building = 6
-
-      (string) insurance_cost = 20
-      (string) failure_chance = med
-
-    (object) 13 = [object Object]
-      (string) recipe_id = 29
-      (string) name = Forge Fury
-      (string) output_item_id = 2002
-      (string) consolation_item_id = 3003
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3003 = 7
-          (string) 3007 = 21
-
-        (object) resources = [object Object]
-          (string) 1 = 400000
-
-
-      (object) requirements = [object Object]
-        (string) building = 6
-
-      (string) insurance_cost = 40
-      (string) failure_chance = high
-
-    (object) 14 = [object Object]
-      (string) recipe_id = 6
-      (string) name = Divine Rite
-      (string) output_item_id = 3005
-      (string) consolation_item_id = 3004
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3000 = 3
-          (string) 3003 = 3
-          (string) 3004 = 1
-
-        (object) resources = [object Object]
-          (string) 1 = 180000
-
-
-      (object) requirements = [object Object]
-        (string) building = 7
-
-      (string) insurance_cost = 40
-      (string) failure_chance = high
-
-    (object) 15 = [object Object]
-      (string) recipe_id = 7
-      (string) name = Divine Toll
-      (string) output_item_id = 3006
-      (string) consolation_item_id = 3005
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3000 = 3
-          (string) 3003 = 3
-          (string) 3005 = 1
-
-        (object) resources = [object Object]
-          (string) 1 = 240000
-
-
-      (object) requirements = [object Object]
-        (string) building = 8
-
-      (string) insurance_cost = 40
-      (string) failure_chance = high
-
-    (object) 16 = [object Object]
-      (string) recipe_id = 13
-      (string) name = Divine Song
-      (string) output_item_id = 401
-      (string) consolation_item_id = 3006
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3000 = 3
-          (string) 3003 = 3
-          (string) 3006 = 1
-
-        (object) resources = [object Object]
-          (string) 1 = 320000
-
-
-      (object) requirements = [object Object]
-        (string) building = 9
-
-      (string) insurance_cost = 40
-      (string) failure_chance = high
-
-    (object) 17 = [object Object]
-      (string) recipe_id = 14
-      (string) name = Divine Hymn
-      (string) output_item_id = 402
-      (string) consolation_item_id = 401
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3000 = 3
-          (string) 3003 = 3
-          (string) 401 = 1
-
-        (object) resources = [object Object]
-          (string) 1 = 500000
-
-
-      (object) requirements = [object Object]
-        (string) building = 10
-
-      (string) insurance_cost = 124
-      (string) failure_chance = high
-
-    (object) 18 = [object Object]
-      (string) recipe_id = 31
-      (string) name = Mist Song
-      (string) output_item_id = 1120
-      (string) consolation_item_id = 1110
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 1110 = 1
-          (string) 261 = 1
-          (string) 3007 = 7
-          (string) 3011 = 2
-
-        (object) resources = [object Object]
-          (string) 1 = 80000
-
-
-      (object) requirements = [object Object]
-        (string) building = 10
-
-      (string) insurance_cost = 18
-      (string) failure_chance = low
-
-    (object) 19 = [object Object]
-      (string) recipe_id = 32
-      (string) name = Mist Dirge
-      (string) output_item_id = 1121
-      (string) consolation_item_id = 1120
-      (string) category = 1
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 1120 = 1
-          (string) 272 = 1
-          (string) 3009 = 3
-          (string) 3008 = 3
-          (string) 3011 = 2
-
-        (object) resources = [object Object]
-          (string) 1 = 85000
-
-
-      (object) requirements = [object Object]
-        (string) building = 10
-
-      (string) insurance_cost = 20
-      (string) failure_chance = med
-
-
-  (array) 3 = [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]
-    (object) 0 = [object Object]
-      (string) recipe_id = 15
-      (string) name = Crimson Act
-      (string) output_item_id = 261
-      (string) consolation_item_id = 3007
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3007 = 5
-
-        (object) resources = [object Object]
-          (string) 1 = 10000
-
-
-      (object) requirements = [object Object]
-        (string) building = 2
-
-      (string) insurance_cost = 9
-      (string) failure_chance = low
-
-    (object) 1 = [object Object]
-      (string) recipe_id = 18
-      (string) name = Aegis Act
-      (string) output_item_id = 271
-      (string) consolation_item_id = 3008
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3008 = 5
-
-        (object) resources = [object Object]
-          (string) 1 = 10000
-
-
-      (object) requirements = [object Object]
-        (string) building = 2
-
-      (string) insurance_cost = 9
-      (string) failure_chance = low
-
-    (object) 2 = [object Object]
-      (string) recipe_id = 20
-      (string) name = Trapped Wind
-      (string) output_item_id = 55
-      (string) consolation_item_id = 1103
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 1103 = 1
-          (string) 3001 = 5
-
-        (object) resources = [object Object]
-          (string) 1 = 25000
-
-
-      (object) requirements = [object Object]
-        (string) building = 2
-
-      (string) insurance_cost = 5
-      (string) failure_chance = low
-
-    (object) 3 = [object Object]
-      (string) recipe_id = 22
-      (string) name = Trick Hunger
-      (string) output_item_id = 273
-      (string) consolation_item_id = 3000
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 3000 = 5
-
-        (object) resources = [object Object]
-          (string) 1 = 160000
-
-
-      (object) requirements = [object Object]
-        (string) building = 2
-
-      (string) insurance_cost = 33
-      (string) failure_chance = med
-
-    (object) 4 = [object Object]
-      (string) recipe_id = 16
-      (string) name = Crimson Rite
-      (string) output_item_id = 262
-      (string) consolation_item_id = 261
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 261 = 1
-          (string) 3007 = 3
-
-        (object) resources = [object Object]
-          (string) 1 = 30000
-
-
-      (object) requirements = [object Object]
-        (string) building = 3
-
-      (string) insurance_cost = 43
-      (string) failure_chance = med
-
-    (object) 5 = [object Object]
-      (string) recipe_id = 19
-      (string) name = Aegis Rite
-      (string) output_item_id = 272
-      (string) consolation_item_id = 271
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 271 = 1
-          (string) 3008 = 3
-
-        (object) resources = [object Object]
-          (string) 1 = 30000
-
-
-      (object) requirements = [object Object]
-        (string) building = 3
-
-      (string) insurance_cost = 43
-      (string) failure_chance = med
-
-    (object) 6 = [object Object]
-      (string) recipe_id = 21
-      (string) name = Poached Wind
-      (string) output_item_id = 57
-      (string) consolation_item_id = 55
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 55 = 1
-          (string) 3001 = 3
-
-        (object) resources = [object Object]
-          (string) 1 = 75000
-
-
-      (object) requirements = [object Object]
-        (string) building = 3
-
-      (string) insurance_cost = 20
-      (string) failure_chance = med
-
-    (object) 7 = [object Object]
-      (string) recipe_id = 23
-      (string) name = Trap Hunger
-      (string) output_item_id = 274
-      (string) consolation_item_id = 273
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 273 = 1
-          (string) 3000 = 3
-
-        (object) resources = [object Object]
-          (string) 1 = 240000
-
-
-      (object) requirements = [object Object]
-        (string) building = 3
-
-      (string) insurance_cost = 60
-      (string) failure_chance = med
-
-    (object) 8 = [object Object]
-      (string) recipe_id = 17
-      (string) name = Crimson Toll
-      (string) output_item_id = 280
-      (string) consolation_item_id = 262
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 262 = 1
-          (string) 3007 = 3
-
-        (object) resources = [object Object]
-          (string) 1 = 90000
-
-
-      (object) requirements = [object Object]
-        (string) building = 4
-
-      (string) insurance_cost = 40
-      (string) failure_chance = high
-
-    (object) 9 = [object Object]
-      (string) recipe_id = 24
-      (string) name = Poach Hunger
-      (string) output_item_id = 275
-      (string) consolation_item_id = 274
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 274 = 1
-          (string) 3000 = 3
-
-        (object) resources = [object Object]
-          (string) 1 = 320000
-
-
-      (object) requirements = [object Object]
-        (string) building = 4
-
-      (string) insurance_cost = 168
-      (string) failure_chance = high
-
-    (object) 10 = [object Object]
-      (string) recipe_id = 30
-      (string) name = Aegis Toll
-      (string) output_item_id = 281
-      (string) consolation_item_id = 272
-      (string) category = 3
-      (object) input = [object Object]
-        (object) items = [object Object]
-          (string) 272 = 1
-          (string) 3008 = 3
-
-        (object) resources = [object Object]
-          (string) 1 = 90000
-
-
-      (object) requirements = [object Object]
-        (string) building = 4
-
-      (string) insurance_cost = 40
-      (string) failure_chance = high
-*******/
 /*************************** Auto Craft Tab *************************************/
 Tabs.AutoCraft = {
 	tabOrder: 20, //CHECKTHIS ?
@@ -9967,7 +10917,6 @@ Tabs.AutoCraft = {
 			t.craftinfo[h].inputItems = unsafeWindow.recipelist[1][i].input.items;
 			t.craftinfo[h].astone = unsafeWindow.recipelist[1][i].input.resources;
 			t.craftinfo[h].odds = unsafeWindow.recipelist[1][i].failure_chance;
-			t.craftinfo[h].consolation = unsafeWindow.recipelist[1][i].consolation_item_id;
 			var craftingstr = "";
 			var crafting = t.checkCraftQueues(h);
 			if (crafting != 0) craftingstr = " ("+crafting+")";
@@ -9987,7 +10936,6 @@ Tabs.AutoCraft = {
 			t.craftinfo[h].inputItems = unsafeWindow.recipelist[3][i].input.items;
 			t.craftinfo[h].astone = unsafeWindow.recipelist[3][i].input.resources;
 			t.craftinfo[h].odds = unsafeWindow.recipelist[3][i].failure_chance;
-			t.craftinfo[h].consolation = unsafeWindow.recipelist[3][i].consolation_item_id;
 			var craftingstr = "";
 			var crafting = t.checkCraftQueues(h);
 			if (crafting != 0) craftingstr = " ("+crafting+")";
@@ -10271,6 +11219,7 @@ Tabs.AutoCraft = {
 			}
 		}
 		if (tableau.length == 0) return ; // nothing to craft
+
 		t.craftLoop++;
 		
 		var itemId = tableau[Math.floor(Math.random()*tableau.length)];
@@ -10322,14 +11271,6 @@ Tabs.AutoCraft = {
 						// increment total craft attempts
 						TrainOptions.CraftingStats[itemId][1] = TrainOptions.CraftingStats[itemId][1] + 1;
 						saveTrainOptions();
-//for (var k in t.craftinfo[itemId].inputItems) {
-//  logit ('item: ' +k+ ': ' +t.craftinfo[itemId].inputItems[k]);
-//  if (k == t.craftinfo[itemId].consolation)
-//   if (parseInt(t.craftinfo[itemId].inputItems[k]-1) > 0)
-//    unsafeWindow.cm.InventoryView.removeItemFromInventory(k,parseInt(t.craftinfo[itemId].inputItems[k]-1));
-//  else
-//    unsafeWindow.cm.InventoryView.removeItemFromInventory(k,parseInt(t.craftinfo[itemId].inputItems[k]));
-//}
 					} else if (o.status=="success") { // craft successful
 						actionLog ('Successfully crafting '+unsafeWindow.itemlist["i"+itemId].name+' in '+Cities.cities[c].name);
 						// increment total craft attempts and successful craft attempts
@@ -10348,10 +11289,6 @@ Tabs.AutoCraft = {
 						n.recipeIndex=null;
 						unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
 						// If this item started crafting in the city the player has open, rebuild the building tab
-//for (var k in t.craftinfo[itemId].inputItems) {
-//  logit ('item: ' +k+ ': ' +t.craftinfo[itemId].inputItems[k]);
-//    unsafeWindow.cm.InventoryView.removeItemFromInventory(k,parseInt(t.craftinfo[itemId].inputItems[k]));
-//}
 						if (unsafeWindow.currentcityid == currentcity) {
 							// if the building tab is selected, rebuild it
 							if (unsafeWindow.jQuery("#queue_head_building").hasClass("sel") ) {
@@ -10380,8 +11317,6 @@ Tabs.AutoCraft = {
 		t.saveCraftState();
 	},
 };
- 
-
   
  /*********************************  Barbing Tab - now the Dark Forest Tab ***********************************/
 Tabs.Barb = {
@@ -10443,7 +11378,6 @@ Tabs.Barb = {
        }
       m += '<TD><INPUT id=troopselect type=submit value="Select troops"></td>';
       m += '<TD><INPUT id=Options type=submit value="Options"></td>';
-      m += '<TD><INPUT id=dfInfo type=submit value="DF Info"></td>';
       m += '</tr></table></div>';
       
       m += '<DIV id=pbTraderDivD class=pbStat>FOREST STATS</div>';
@@ -10499,7 +11433,6 @@ Tabs.Barb = {
     document.getElementById('AttSearch').addEventListener('click', function(){t.toggleBarbState(this)} , false);
     document.getElementById('Options').addEventListener('click', t.barbOptions , false);
     document.getElementById('troopselect').addEventListener('click', t.troopOptions , false);
-    document.getElementById('dfInfo').addEventListener('click', t.dfInfo , false);
     var element_class = document.getElementsByClassName('pblevelopt');
     for (k=0;k<element_class.length;k++){
         element_class[k].addEventListener('click', t.saveLevelOptions , false);
@@ -10592,7 +11525,7 @@ Tabs.Barb = {
      y +='<TR><TD>Attack interval: </td><td><INPUT id=pbsendint type=text size=4 maxlength=3 value='+ AttackOptions.SendInterval +' \> seconds</td></tr>';
      y +='<TR><TD>Max search distance: </td><td><INPUT id=pbmaxdist type=text size=4 maxlength=3 value='+ AttackOptions.MaxDistance +' \></td></tr>';
      y +='<TR><TD>Keep rallypoint slot(s) free: </td><Td><INPUT id=rallyclip type=text size=3 maxlength=2 value="'+AttackOptions.RallyClip+'" \> </td></tr>';
-     y +='<TR><TD><INPUT id=pbreset type=checkbox '+(AttackOptions.UpdateEnabled?'CHECKED':'')+'\> Reset search every </td><td><INPUT id=pbresetint type=text size=3 maxlength=3 value='+AttackOptions.UpdateInterval+' \>minutes</td></tr>';
+     y +='<TR><TD><INPUT id=pbreset type=checkbox '+(AttackOptions.UpdateEnabled?'CHECKED':'')+'\> Reset search every </td><td><INPUT id=pbresetint type=text size=4 maxlength=3 value='+AttackOptions.UpdateInterval+' \>minutes</td></tr>';
      y +='<TR><TD> Skip city search after </td><td><INPUT id=barbstopsearch type=text size=3 value='+AttackOptions.stopsearch+' \> tries.</td></tr>';
      y +='<TR><TD>Method : </td><Td> '+htmlSelector({distance:'Closest first', level:'Highest level first', lowlevel:'Lowest level first'}, AttackOptions.Method, 'id=pbmethod')+'</td></tr>';
      y +='<TR><TD>Knight priority : </td><td>'+htmlSelector({0:'Lowest combat skill', 1:'Highest combat skill'}, AttackOptions.knightselector, 'id=barbknight')+'</td></tr>';
@@ -10642,8 +11575,8 @@ Tabs.Barb = {
         saveAttackOptions();
     },false);
     document.getElementById('pbmaxdist').addEventListener('change', function(){
-//        if(parseInt(document.getElementById('pbmaxdist').value) > 75)
-//            document.getElementById('pbmaxdist').value = 75;
+        if(parseInt(document.getElementById('pbmaxdist').value) > 75)
+            document.getElementById('pbmaxdist').value = 75;
         AttackOptions.MaxDistance=parseInt(document.getElementById('pbmaxdist').value);
         saveAttackOptions();
     },false);
@@ -10746,7 +11679,7 @@ Tabs.Barb = {
       var t = Tabs.Barb;
       var queueId = parseInt(queueId);
       AttackOptions.Update[citynumber][1] = 0;
-      GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId());
+      GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + citynumber + '_' + getServerId())
       t.checkBarbData();
       t.showBarbs(citynumber,cityname);
       //reloadKOC();
@@ -10769,7 +11702,7 @@ Tabs.Barb = {
    deletebarbs: function(){
     for (i=1;i<=Seed.cities.length;i++){
         AttackOptions.Update[i][1] = 0;
-        GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId());
+        GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + i + '_' + getServerId())
     }
     //reloadKOC();
    },
@@ -10804,7 +11737,7 @@ Tabs.Barb = {
         AttackOptions.Update[i][1] = 0;
         saveAttackOptions();
       }
-      t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000));
+        t.nextattack = setTimeout(t.getnextCity, parseInt((1+AttackOptions.SendInterval)*1000));
   },
   
   toggleBarbState: function(obj){
@@ -10839,14 +11772,15 @@ Tabs.Barb = {
          return;
       };
        var element1 = 'pddatacity'+(city-1);
-//     if (t.searchRunning) document.getElementById(element1).innerHTML = 'In search mode'; else
-     if (t.barbArray[city].length == 0) document.getElementById(element1).innerHTML = 'In search mode'; else
-       document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
+       if (t.barbArray[city].length == 0) document.getElementById(element1).innerHTML = 'In search mode'; else
+         document.getElementById(element1).innerHTML = 'Sent: ' + AttackOptions.BarbsDone[city];
        var element2 = 'pddataarray'+(city-1);
        document.getElementById(element2).innerHTML =  'RP: (' + slots + '/' + March.getTotalSlots(citynumber) +')';
        if (Number(Number(March.getTotalSlots(citynumber))-Number(slots)) <= Number(AttackOptions.RallyClip)) return;
        if (t.knt.toSource() == "[]") return;
        var kid = t.knt[0].ID;
+       
+       
        if(t.barbArray[city] && t.barbArray[city].length > 0){
         var barbinfo = t.barbArray[city].shift();
        }else if(parseInt(AttackOptions.Update[city][1])==0){
@@ -10912,7 +11846,7 @@ Tabs.Barb = {
         if(now > parseInt(AttackOptions.Update[city][0] + (AttackOptions.UpdateInterval*60))){
             AttackOptions.Update[city][1]=0;
             t.barbArray[city] = []; //Clears data if last update was more than X minutes
-            GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId());
+            GM_deleteValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId())
             GM_setValue('DF_' + Seed.player['name'] + '_city_' + city + '_' + getServerId(), JSON2.stringify(t.barbArray[city]));
         }
     }
@@ -11030,7 +11964,8 @@ Tabs.Barb = {
     for (q=1;q<=Seed.cities.length;q++){
         var cityID = 'city' + Seed.cities[q-1][0];
 
-        message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks' + '%0A';        
+        totaldf += Number(AttackOptions.BarbsDone[q]);
+	message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks' + '%0A';        
   	var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOptions.AetherStatus[q];
         message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.AetherStatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec5'][0] )) + ' Gain: ';
         message += addCommas(gain)  + '%0A';
@@ -11038,7 +11973,7 @@ Tabs.Barb = {
         AttackOptions.AetherStatus[q] = parseInt(Seed.resources[cityID]['rec5'][0] );
     }
     message += '%0A Total Aetherstone gain : '+addCommas(total)+'%0A';
-//    message += '%0A Total outgoing attacks : '+addCommas(totaldf)+'%0A';
+    message += '%0A Total outgoing attacks : '+addCommas(totaldf)+'%0A';
    for (z in AttackOptions.ItemsFound){
       message += '%0A'+unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFound[z];
    }
@@ -11082,10 +12017,9 @@ Tabs.Barb = {
     var t = Tabs.Barb;
     
     t.opt.maxDistance = parseInt(AttackOptions.MaxDistance);
-//    t.opt.searchDistance = (t.opt.maxDistance*2);
     t.opt.searchDistance = t.opt.maxDistance;
-    if(t.opt.maxDistance > 20){
-        t.opt.searchDistance = 20;
+    if(t.opt.maxDistance > MAP_SFIELD){
+        t.opt.searchDistance = MAP_SFIELD;
     }
     t.opt.searchShape = 'circle';
     t.mapDat = [];
@@ -11113,11 +12047,11 @@ Tabs.Barb = {
     if (rslt.ok){
     map = rslt.data;
     var cityID = 'city' + Seed.cities[t.lookup-1][0];
-    var tiles = [];
+   var tiles = [];
     for(x in Seed.queue_atkp[cityID]) {
       tiles.push(Seed.queue_atkp[cityID][x].toTileId);
-    }
-
+   }
+   
     for (k in map){
       if (map[k].tileType==54 && AttackOptions.Levels[t.lookup][map[k].tileLevel]){
          var dist = distance (t.opt.startX, t.opt.startY, map[k].xCoord, map[k].yCoord);
@@ -11128,7 +12062,8 @@ Tabs.Barb = {
              //else logit('skipping '+map[k].xCoord+','+map[k].yCoord);
       }
     }
-
+    
+    
     t.tilesSearched += (t.opt.searchDistance*t.opt.searchDistance);
 
     t.curX += t.opt.searchDistance;
@@ -11170,27 +12105,7 @@ Tabs.Barb = {
     t.checkBarbData();
     return;
   },
-
-  dfInfo : function (){
-    var helpText = '<BR><b>Dark Forest Info:</b>\
-      <table border=1><tr><td>Level</td><td>Experience Points</td><td>Total Population Value</td><td>Aetherstone</td><td>Gold</td></tr>\
-      <tr><td> 1</td><td>3,000</td><td>1,000</td><td>1,000</td><td>1,150</td></tr>\
-      <tr><td> 2</td><td>6,000</td><td>2,000</td><td>2,000</td><td>2,300</td></tr>\
-      <tr><td> 3</td><td>12,000</td><td>4,000</td><td>4,000</td><td>4,600</td></tr>\
-      <tr><td> 4</td><td>24,000</td><td>8,000</td><td>8,000</td><td>9,200</td></tr>\
-      <tr><td> 5</td><td>48,000</td><td>16,000</td><td>16,000</td><td>18,400</td></tr>\
-      <tr><td> 6</td><td>96,000</td><td>32,000</td><td>32,000</td><td>36,800</td></tr>\
-      <tr><td> 7</td><td>192,000</td><td>64,000</td><td>64,000</td><td>73,600</td></tr>\
-      <tr><td> 8</td><td>384,000</td><td>128,000</td><td>128,000</td><td>147,200</td></tr>\
-      <tr><td> 9</td><td>768,000</td><td>256,000</td><td>256,000</td><td>294,400</td></tr>\
-      <tr><td>10</td><td>1,536,000</td><td>512,000</td><td>512,000</td><td>588,800</td></tr></table>';
-    var pop = new pbPopup ('dfInfo', 0, 0, 550, 280, true);
-    pop.centerMe (mainPop.getMainDiv());  
-    pop.getMainDiv().innerHTML = helpText;
-    pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot </b>:  '+translate("Dark Forest Info")+'</center>';
-    pop.show (true);
-  },
-   
+  
   hide : function (){
   
   },
@@ -11277,68 +12192,85 @@ Tabs.Options = {
     t.myDiv = div;
     try {      
       m = '<DIV style="height:500px; max-height:500px; overflow-y:auto"><TABLE width=100% class=pbOptions cellspacing=0 cellpadding=0>\
-        <TR><TD colspan=2><B>Power Bot Config:</b></td></tr>\
-        <TR><TD><INPUT id=pballowWinMove type=checkbox /></td><TD>Enable window drag (move window by dragging top bar with mouse)</td></tr>\
-        <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>Remember window open state on refresh</td></tr>\
-        <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>Hide window when clicking on map coordinates</td></tr>\
-        <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>Enable widescreen style: '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' (all domains, requires refresh)</td></tr>\
+        <TR><TD colspan=2><B>'+translate("Power Bot Config:")+'</b></td></tr>\
+        <TR><TD><INPUT id=pballowWinMove type=checkbox /></td><TD>'+translate("Enable window drag (move window by dragging top bar with mouse)")+'</td></tr>\
+        <TR><TD><INPUT id=pbTrackWinOpen type=checkbox /></td><TD>'+translate("Remember window open state on refresh")+'</td></tr>\
+        <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>'+translate("Hide window when clicking on map coordinates")+'</td></tr>\
+        <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>'+translate("Enable widescreen style:")+' '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' '+translate("(all domains, requires refresh)")+'</td></tr>\
         <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away from Kabam!")+'</td></tr>\
-        <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>Check updates on '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' (all domains) &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="Update Now" /></td></tr>\
+        <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
         <TR><TD>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
+        <TR><td>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Throttle Map Requests:")+' '+ htmlSelector({1200:translate('1.2x Fast'), 4000:translate('4x Normal'), 8000:translate('8x Slow'), 15000:translate('15x Slow'), 20000:translate('20x Slow'), 30000:translate('30x Slow')},Options.MAP_DELAY,'id=pbMAP_DELAY')+'</td></tr>\
+      <TR><TD><INPUT id=pblogperms type=checkbox '+ (Options.plog?'CHECKED ':'') +'/></td><TD>'+translate("Occasional logging of data to help with script development")+'</td></tr>\
         <TR><TD><INPUT id=pbRaidBut type=checkbox '+ (Options.raidbtns?'CHECKED ':'') +'/></td><TD>'+translate("Raid toggle buttons on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbTransBut type=checkbox '+ (Options.transbtns?'CHECKED ':'') +'/></td><TD>'+translate("Transport toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbReassignBut type=checkbox '+ (Options.reassgnbtns?'CHECKED ':'') +'/></td><TD>'+translate("Reassign toggle button on top of screen")+'</td></tr>\
+        <TR><TD><INPUT id=pbDFBut type=checkbox '+ (Options.dfbtns?'CHECKED ':'') +'/></td><TD>'+translate("Dark Forest toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbCrestBut type=checkbox '+ (Options.crestbtns?'CHECKED ':'') +'/></td><TD>'+translate("Crest toggle button on top of screen")+'</td></tr>\
+        <TR><TD><INPUT id=pbFarmBut type=checkbox '+ (Options.Farmbtns?'CHECKED ':'') +'/></td><TD>'+translate("Farm toggle button on top of screen")+'</td></tr>\
         <TR><TD><INPUT id=pbThroneHUDBut type=checkbox '+ (Options.ThroneHUD?'CHECKED ':'') +'/></td><TD>'+translate("Throne HUD")+'</td></tr>\
         <TR><TD><INPUT id=pbWWclick type=checkbox '+ (Options.WWclick?'CHECKED ':'') +'/></td><TD>'+translate("Hit OK on multiple window warning popup which causes refresh")+'</td></tr>\
         <TR><TD><INPUT id=pbTreasureChest type=checkbox '+ (Options.TreasureChest?'CHECKED ':'') +'/></td><TD>'+translate("Auto click Treasure Chest finds - Use with Auto publish FB posts")+'</td></tr>\
         <TR><TD><INPUT id=pbloginReward type=checkbox '+ (Options.loginReward?'CHECKED ':'') +'/></td><TD>'+translate("Auto click/accept daily login reward")+'</td></tr>';
-
-        m+='<TR><TD colspan=2><BR><B>KofC Features:</b></td></tr>\
+		m+= '<TR><TD><INPUT id=pbdetafk type=checkbox '+ (Options.detAFK?'CHECKED ':'')+ '/></td><TD> Do AFK events</td></tr>';
+		m+= '<TR><TD><INPUT id=pbexpinc type=checkbox '+ (Options.expinc?'CHECKED ':'')+ '/></td><TD> Post missed and expired incoming marches</td></tr>';
+        
+        m+='<TR><TD colspan=2><BR><B>'+translate("KofC Features:")+'</b></td></tr>\
         <TR><TD><INPUT id=pbFairie type=checkbox /></td><TD>'+translate("Disable annoying Faire and Court popups")+'</td></tr>\
-        <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>Refresh if KOC not loaded within 1 minute (all domains)</td></tr>\
-        <TR><TD><INPUT id=pbEveryEnable type=checkbox /></td><TD>Refresh KOC every <INPUT id=pbeverymins type=text size=2 maxlength=3 \> minutes</td></tr>\
-        <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>Put chat on right (requires wide screen)</td></tr>\
-		<TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>Use WideMap (requires wide screen)</td></tr>\
-        <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>Auto collect gold when happiness reaches <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
-<!-- \
-        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert (On less then 6 Hours of food checked every hour)</td></tr>\
---> \
-        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert On less than <INPUT id=pbfoodalertint type=text size=2 maxlength=3 \> Hours of food checked every 15 min)</td></tr>\
-        <TR><TD colspan=2><BR><B>Extra Features:</b></td></tr>\
-        <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>Help alliance build/research posts</td></tr>\
-        <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>Hide alliance requests in chat</td></tr>\
+        <TR><TD><INPUT id=pbWatchEnable type=checkbox '+ (GlobalOptions.pbWatchdog?'CHECKED ':'') +'/></td><TD>'+translate("Refresh if KOC not loaded within 1 minute (all domains)")+'</td></tr>\
+        <TR><TD><INPUT id=pbEveryEnable type=checkbox /></td><TD>'+translate("Refresh KOC every")+' <INPUT id=pbeverymins type=text size=2 maxlength=3 \> '+translate("minutes")+'</td></tr>\
+        <TR><TD><INPUT id=pbChatREnable type=checkbox /></td><TD>'+translate("Put chat on right (requires wide screen)")+'</td></tr>\
+        <TR><TD><INPUT id=pbWMapEnable type=checkbox /></td><TD>'+translate("Use WideMap (requires wide screen)")+'</td></tr>\
+        <TR><TD><INPUT id=pbGoldEnable type=checkbox /></td><TD>'+translate("Auto collect gold when happiness reaches")+' <INPUT id=pbgoldLimit type=text size=2 maxlength=3 \>%</td></tr>\
+        <TR><TD><INPUT id=pbFoodToggle type=checkbox /></td><TD>Enable Food Alert On less than <INPUT id=pbfoodalertint type=text size=2 maxlength=3 \> Hours of food checked every 15 min)</td></tr>;'
+ 
+        m += '<TR><TD><INPUT id=pbmaintoggle type=checkbox /></td><TD>'+translate("auto select city on startup");
+         m+='<select id=pbwhichcity>';
+         for(h =0;h < unsafeWindow.seed.cities.length;h++) {
+          if(h == Options.smain) 
+          m+='<option value='+h+' selected="selected">'+unsafeWindow.seed.cities[h][1]+'</option>';
+          else
+          m+='<option value='+h+'>'+unsafeWindow.seed.cities[h][1]+'</option>';
+       }
+      m+='</select>'+'</td></tr>';
+
+        m += '<TR><TD colspan=2><BR><B>'+translate("Extra Features")+':</b></td></tr>\
+        <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>'+translate("Help alliance build/research posts")+'</td></tr>\
+        <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>'+translate("Hide alliance requests in chat")+'</td></tr>\
         <TR><TD><INPUT id=DelAC type=checkbox /></td><TD>'+translate("Hide alliance chat from global chat")+'</td></tr>\
-        <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>Auto publish Facebook posts for '+ htmlSelector({0:'----', 80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me', 1322662699586:'partial'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' (For all domains)</td>\
+        <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>'+translate("Auto publish Facebook posts for")+' '+ htmlSelector({0:'----', 80:'Everyone', 50:'Friends of Friends', 40:'Friends Only', 10:'Only Me'},GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' '+translate("(For all domains)")+'<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
         <TR><TD><INPUT id=cancelReq type=checkbox '+ (GlobalOptions.autoCancelGamePopups?'CHECKED ':'') + '/></td><TD>'+translate("Auto cancel Facebook posts")+'<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
-        <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>Show Player & Might in map.</td></tr>\
-        <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> Auto delete barb/transport reports from you</td></tr>\
-        <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> Auto delete transport reports to you</td></tr>\
-        <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> Auto delete wild reports</td></tr>\
+        <TR><TD><INPUT id=MapExtra type=checkbox /></td><TD>'+translate("Show Player & Might in map")+'.</td></tr>\
+		<tr><TD><INPUT id=MapLevel type=checkbox /></td><TD>'+translate("Show Tile Level in map")+'.</td></tr>\
+        <TR><TD><INPUT id=deletetoggle type=checkbox /></td><TD> '+translate("Auto delete barb/transport reports from you")+'</td></tr>\
+        <TR><TD><INPUT id=deletes0toggle type=checkbox /></td><TD> '+translate("Auto delete transport reports to you")+'</td></tr>\
+        <TR><TD><INPUT id=deletes1toggle type=checkbox /></td><TD> '+translate("Auto delete wild reports")+'</td></tr>\
         <TR><TD><INPUT id=deletesDFtoggle type=checkbox /></td><TD> '+translate("Auto delete DarkForest reports(and log items for DF report)")+'</td></tr>\
-        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> Auto delete crest target regardless of type</td></tr>\
+        <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest reports regardless of target type")+'</td></tr>\
         <TR><TD><INPUT id=deletes3toggle type=checkbox /></td><TD> '+translate("Auto delete incoming attack reports from alliances I'm friendly to")+'</td></tr>\
+        <TR><TD><INPUT id=advanced type=checkbox /></td><TD> '+translate("Scripters tab")+'</td></tr>\
         <TR><TD><INPUT id=MAgicBOx type=checkbox /></td><TD> '+translate("Kill merlins magic box's on startup")+'</td></tr>\
         <TR><TD><INPUT id=CFilter type=checkbox /></td><TD><select id=pbfilter>';
         for(c in Filter) {
-			if(c == Options.fchar)
-				m+='<option value='+c+' selected="selected">'+c+': '+Filter[c]+'</option>';
-			else 
-				m+='<option value='+c+'>'+c+': '+Filter[c]+'</option>';
-		};
+         if(c == Options.fchar)
+            m+='<option value='+c+' selected="selected">'+c+': '+Filter[c]+'</option>';
+         else 
+            m+='<option value='+c+'>'+c+': '+Filter[c]+'</option>';
+      };
         m+='</select>'+translate("Defeat kabam chat filter so some words can be said.  ex \'deSCRIPTion\'")+'</td></tr>\
        <TR><TD><INPUT id=MKLag type=checkbox /></td><TD> '+translate("Fix stalled marches and missing knights.  EXPERIMENTAL")+'</td></tr>\
-        </table><BR><BR><HR>Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable.</div>';
-        m += strButton20('Reset ALL Options', 'id=ResetALL');
+       <TR><TD><INPUT id=pbColorTab type=checkbox ' + (Options.colorCityTabs?'CHECKED ':'')+ '/></td><TD> Outline city tabs with defense status </td></tr>\
+        </table><BR><BR><HR>'+translate("Note that if a checkbox is greyed out there has probably been a change of KofC\'s code, rendering the option inoperable")+'.</div>';
+        m += strButton20(translate('Reset ALL Options'), 'id=ResetALL');
       div.innerHTML = m;
 
       document.getElementById('selectScreenMode').addEventListener ('change', function(){
-      		GlobalOptions.pbWideScreenStyle = document.getElementById('selectScreenMode').value;
-      		GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-      },false);	
+              GlobalOptions.pbWideScreenStyle = document.getElementById('selectScreenMode').value;
+              GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);    
       document.getElementById('selectprivacymode').addEventListener ('change', function(){
-      		GlobalOptions.autoPublishPrivacySetting = document.getElementById('selectprivacymode').value;
-			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+              GlobalOptions.autoPublishPrivacySetting = document.getElementById('selectprivacymode').value;
+            GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);
         
       document.getElementById('PubReq').addEventListener ('change', function(){
@@ -11346,17 +12278,16 @@ Tabs.Options = {
             GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);    
       document.getElementById('cancelReq').addEventListener ('change', function(){
-      		GlobalOptions.autoCancelGamePopups = document.getElementById('cancelReq').checked;
-			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-      },false);	
-	  document.getElementById('pbupdatebeta').addEventListener ('change', function(){
-      		GlobalOptions.pbupdatebeta = document.getElementById('pbupdatebeta').value;
-			AutoUpdater_137507.beta = GlobalOptions.pbupdatebeta;
-			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-      },false);	
-	  document.getElementById('pbupdatenow').addEventListener ('click', function(){
-			AutoUpdater_137507.call(true,true);
-      },false);	
+            GlobalOptions.autoCancelGamePopups = document.getElementById('cancelReq').checked;
+         GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);   
+      document.getElementById('pbupdatebeta').addEventListener ('change', function(){
+              GlobalOptions.pbupdatebeta = document.getElementById('pbupdatebeta').value;
+            GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+      },false);    
+      document.getElementById('pbupdatenow').addEventListener ('click', function(){
+            AutoUpdater(true);
+      },false);    
       document.getElementById('pbsendmeaway').addEventListener ('click', function(){
             GlobalOptions.pbNoMoreKabam = document.getElementById('pbsendmeaway').checked;
             GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
@@ -11384,8 +12315,9 @@ Tabs.Options = {
       t.togOpt ('pbGoldEnable', 'pbGoldEnable', CollectGold.setEnable);
       t.changeOpt ('pbgoldLimit', 'pbGoldHappy');
       t.togOpt ('pbFoodToggle', 'pbFoodAlert');
+      t.changeOpt ('pbfoodalertint', 'pbFoodAlertInt');
+      t.togOpt ('pblogperms', 'plog');
       t.changeOpt ('pbeverymins', 'pbEveryMins' , RefreshEvery.setTimer);
-      t.changeOpt ('pbfoodalertint', 'FoodAlertInt');
       t.togOpt ('pbEveryEnable', 'pbEveryEnable', RefreshEvery.setEnable);
       t.togOpt ('pbChatREnable', 'pbChatOnRight', WideScreen.setChatOnRight);
       t.togOpt ('pbWMapEnable', 'pbWideMap', WideScreen.useWideMap);
@@ -11395,26 +12327,33 @@ Tabs.Options = {
       t.togOpt ('DelAC', 'DeletegAl');
       t.togOpt ('pbRaidBut', 'raidbtns');
       t.togOpt ('MapExtra', 'MapShowExtra');
+      t.togOpt ('MapLevel', 'MapShowLevel');
       t.togOpt ('deletetoggle', 'DeleteMsg');
       t.togOpt ('deletes0toggle', 'DeleteMsgs0');
       t.togOpt ('deletes1toggle', 'DeleteMsgs1');
       t.togOpt ('deletes2toggle', 'DeleteMsgs2');    
       t.togOpt ('deletes3toggle', 'DeleteMsgs3');    
       t.togOpt ('deletesDFtoggle', 'DeleteMsgsdf');      
-      t.togOpt ('MAgicBOx', 'KMagicBox');
-//      t.togOpt ('pbTreasureChestFB', 'TreasureChestFB');
-      t.togOpt ('pbTreasureChest', 'TreasureChest', TreasureChestPost.setEnable, TreasureChestPost.isAvailable);
-//      t.togOpt ('pbColorTab', 'colorCityTabs', Tabs.tower.cityBtnColor);
+      t.togOpt ('advanced', 'ScripterTab');          
+      t.togOpt ('MAgicBOx', 'KMagicBox');       
+      t.togOpt ('pbColorTab', 'colorCityTabs', Tabs.tower.cityBtnColor);
       t.togOpt ('CFilter', 'filter');
       t.togOpt ('MKLag', 'mklag');
+      t.togOpt ('pbmaintoggle', 'amain');
       t.togOpt ('pbTransBut', 'transbtns');
       t.togOpt ('pbReassignBut', 'reassgnbtns');
+      t.togOpt ('pbDFBut', 'dfbtns');
       t.togOpt ('pbCrestBut', 'crestbtns');
+      t.togOpt ('pbFarmBut', 'Farmbtns');
       t.togOpt ('pbThroneHUDBut', 'ThroneHUD');
       t.togOpt ('pbWWclick', 'WWclick');
+      t.togOpt ('pbTreasureChest', 'TreasureChest', TreasureChestClik.setEnable, TreasureChestClik.isAvailable);
       t.togOpt ('pbloginReward', 'loginReward');
+      t.togOpt ('pbdetafk', 'detAFK');
+      t.togOpt ('pbexpinc', 'expinc');
+      t.changeOpt ('pbwhichcity', 'smain');
+      t.changeOpt ('pbMAP_DELAY','MAP_DELAY');
       t.changeOpt ('pbfilter','fchar');
-	  	
     } catch (e) {
       div.innerHTML = '<PRE>'+ e.name +' : '+ e.message +'</pre>';  
     }      
@@ -11471,6 +12410,373 @@ Tabs.Options = {
 }
 
 
+/*********************************** Export Tab ***********************************/
+Tabs.Export = {
+    tabOrder: 800,
+    tabLabel: 'Export',
+    myDiv : null,
+
+    init : function (div){
+        var t = Tabs.Export;
+        t.myDiv = div;
+        var m = '<div class="pbStat">OPTIONS EXPORT TOOL FOR DOMAIN MERGER</div>\
+                 <table>\
+                    <tr><td>Move from: <input type="text" value="'+getServerId()+'" id="pbexport_from" /></td>\
+                        <td>To: <input type="text" id="pbexport_to" /></td>\
+                        <td><input type="submit" value="Copy" id="pbexport_submit" /></td>\
+                        <td><input type="checkbox" id="pbexport_overwrite" /> Force overwrite</td>\
+                    </tr>\
+                 </table>\
+                 <div class="pbStat" id="pbexport_status" >SELECT OPTIONS TO MOVE</div>\
+                 <table>\
+                    <tr><td><input type="checkbox" id="pbexport_general" /></td><td>General Options (Tower/Raid)</td>\
+                        <td><input type="checkbox" id="pbexport_throne" /></td><td>Throne Options</td></tr>\
+                    <tr><td><input type="checkbox" id="pbexport_crest" /></td><td>Crest Options</td>\
+                        <td><input type="checkbox" id="pbexport_train" /></td><td>Train/Craft Options</td></tr>\
+                    <tr><td><input type="checkbox" id="pbexport_reassign" /></td><td>Reassign Options</td>\
+                        <td><input type="checkbox" id="pbexport_tower" DISABLED /></td><td>Tower Options</td></tr>\
+                    <tr><td><input type="checkbox" id="pbexport_build" /></td><td>Build Options</td>\
+                        <td><input type="checkbox" id="pbexport_craft" DISABLED /></td><td>Craft Options</td></tr>\
+                    <tr><td><input type="checkbox" id="pbexport_transport" /></td><td>Transport Options</td>\
+                        <td><input type="checkbox" id="pbexport_raid" /></td><td>Saved Raid Routes</td></tr>\
+                    <tr><td><input type="checkbox" id="pbexport_df" /></td><td>DF Options</td>\
+                        <td><input type="checkbox" id="pbexport_log" /></td><td>Logs</td></tr>\
+                    <tr><td><input type="checkbox" id="pbexport_chat" /></td><td>Chat Options</td>\
+                        <td><input type="checkbox" id="pbexport_apothecary" /></td><td>Apothecary Options</td></tr>\
+                    <tr><td><input type="checkbox" id="pbexport_farm" /></td><td>Farm Options</td>\
+                    <tr><td><input type="checkbox" id="pbexport_thronehistory" /></td><td>Throne Upgrade/Enhance History</td>\
+                        <td><input type="checkbox" id="pbexport_thronesalvagehistory" /></td><td>Throne Salvage History</td></tr>\
+                 </table>';
+        t.myDiv.innerHTML = m;
+        $('pbexport_submit').addEventListener('click', function(){
+            t.checkexport();
+        }, false);
+    },
+    
+    checkexport : function (){
+        var t = Tabs.Export;
+        var rslt = t.check();
+        if(!rslt.ok){
+            if(rslt.err){
+                var msg = 'The following options already have previously saved data. Continue? <br \>';
+                for(var k in rslt.err){
+                    switch(rslt.err[k]){
+                        case 'general':
+                            msg += "General Options, ";
+                            break;
+                        case 'throne':
+                            msg += "Throne Options, ";
+                            break;
+                        case 'crest':
+                            msg += "Crest Options, ";
+                            break;
+                        case 'train':
+                            msg += "Train Options, ";
+                            break;
+                        case 'reassign':
+                            msg += "Reassign Options, ";
+                            break;
+                        case 'build':
+                            msg += "Build Options, ";
+                            break;
+                        case 'transport':
+                            msg += "Transport Options, ";
+                            break;
+                        case 'raid':
+                            msg += "Raid Options, ";
+                            break;
+                        case 'df':
+                            msg += "DF Options, ";
+                            break;
+                        case 'log':
+                            msg += "Logs, ";
+                            break;
+                        case 'chat':
+                            msg += "Chat Options, ";
+                            break;
+                        case 'apothecary':
+                            msg += "Apothecary Options, ";
+                            break;
+                        case 'Farm':
+                            msg += "Farm Options, ";
+                            break;
+                        case 'thronesalvage':
+                            msg += "Throne Salvage History, ";
+                            break;
+                        case 'thronehistory':
+                            msg += "Throne Upgrade/Enhance History, ";
+                            break;
+                    }
+                }
+                new CdialogConfirm ('<SPAN class=boldRed>'+msg+'</span>', t.startexport, null, mainPop.getMainDiv);
+            } else if (rslt.errMsg) {
+                new CdialogCancelContinue('<SPAN class=boldRed>ERROR! <br />'+rslt.errMsg+'</span>', null, null, mainPop.getMainDiv);
+            } else {
+                alert('Something went wrong! Please contact the developer immediately');
+            }
+        } else {
+            t.startexport();
+        }
+    },
+    
+    startexport : function(obj){
+        var t = Tabs.Export;
+        if(obj){
+            if(obj.id == 'pbcancel'){
+                return;
+            }
+        }
+        var serverFrom = parseIntNan($('pbexport_from').value);
+        var serverID = parseIntNan($('pbexport_to').value);
+        if(serverID === 0 || serverFrom === 0){
+            $('pbexport_status').style.background = '#FF0000';
+            setTimeout(function(){$('pbexport_status').style.background = '';},1000);
+            return {ok:false,errMsg:"Invalid destination server"};
+        }
+        if($('pbexport_overwrite').checked == false){
+            if($('pbexport_general').checked){
+                s = GM_getValue ('Options_'+serverFrom);
+                if (s != null){
+                    GM_setValue('Options_'+serverID, s);
+                }
+            }
+            if($('pbexport_throne').checked){
+                s = GM_getValue('ThroneOptions_' + serverFrom);
+                if (s != null){
+                    GM_setValue('ThroneOptions_'+serverID, s);
+                }
+            }
+            if($('pbexport_crest').checked){
+                s = GM_getValue ('CrestData_' + Seed.player['name'] + '_' +serverFrom);
+                if (s != null){
+                    GM_setValue('CrestData_'+ Seed.player['name'] +'_'+serverID, s);
+                }
+            }
+            if($('pbexport_train').checked){
+                s = GM_getValue ('TrainOptions_' + Seed.player['name'] + '_' +serverFrom);
+                if (s != null){
+                    GM_setValue('TrainOptions_'+ Seed.player['name'] +'_'+serverID, s);
+                }
+            }
+            if($('pbexport_reassign').checked){
+                s = GM_getValue('reassignRoutes_' + serverFrom);
+                if (s != null){
+                    GM_setValue('reassignRoutes_'+serverID, s);
+                }
+            }
+            if($('pbexport_build').checked){
+                s = GM_getValue('buildStates_' + serverFrom);
+                if (s != null){
+                    GM_setValue('buildStates_'+serverID, s);
+                }
+                /****
+                for (var i = 0; i < Cities.cities.length; i++) {
+                t["bQ_" + Cities.cities[i].id] = JSON2.parse(GM_getValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, '[]'));
+                if (typeof t["bQ_" + Cities.cities[i].id] == 'undefined' || (t["bQ_" + Cities.cities[i].id]) == "") {
+                    t["bQ_" + Cities.cities[i].id] = [];
+                }
+            }
+            *****/
+            }
+            if($('pbexport_transport').checked){
+                s = GM_getValue('tradeRoutes_' + serverFrom);
+                if (s != null){
+                    GM_setValue('tradeRoutes_'+serverID, s);
+                }
+            }
+            if($('pbexport_raid').checked){
+                s = GM_getValue ('SavedRaids_'+serverFrom);
+                if (s != null){
+                    GM_setValue('SavedRaids_'+serverID, s);
+                }
+            }
+            if($('pbexport_df').checked){
+                s = GM_getValue ('AttackOptions_'+serverFrom);
+                if (s != null){
+                    GM_setValue('AttackOptions_'+serverID, s);
+                }
+            }
+            if($('pbexport_log').checked){
+                s = GM_getValue ('log_'+serverFrom);
+                if (s != null){
+                    GM_setValue('log_'+serverID, s);
+                }
+            }
+            if($('pbexport_chat').checked){
+                s = GM_getValue ('ChatOptions_'+serverFrom);
+                if (s != null){
+                    GM_setValue('ChatOptions_'+serverID, s);
+                }
+            }
+            if($('pbexport_apothecary').checked){
+                s = GM_getValue ('ApothecaryOptions_'+Seed.player['name']+'_'+serverFrom);
+                if (s != null){
+                    GM_setValue('ApothecaryOptions_'+ Seed.player['name'] +'_'+serverID, s);
+                }
+            }
+            if($('pbexport_farm').checked){
+                s = GM_getValue('FarmOptions_' + serverFrom);
+                if (s != null){
+                    GM_setValue('FarmOptions_'+serverID, s);
+                }
+            }
+            if($('pbexport_thronesalvagehistory').checked){
+                s = GM_getValue('ThroneSalvageHistory_' + serverFrom);
+                if (s != null){
+                    GM_setValue('ThroneSalvageHistory_'+serverID, s);
+                }
+            }
+            if($('pbexport_thronehistory').checked){
+                s = GM_getValue('ThroneHistory_' + serverFrom);
+                if (s != null){
+                    GM_setValue('ThroneHistory_'+serverID, s);
+                }
+            }
+        }
+        $('pbexport_status').style.background = '#99FF99';
+        setTimeout(function(){$('pbexport_status').style.background = '';},1000);
+        return {ok:true};
+        
+    },
+    
+    check : function (){
+        var t = Tabs.Export;
+        var flag = {ok:true};
+        var serverID = parseIntNan($('pbexport_to').value);
+        if(serverID === 0){
+            return {ok:false,errMsg:"Invalid destination server"};
+        }
+        if($('pbexport_overwrite').checked == false){
+            if($('pbexport_general').checked){
+                s = GM_getValue ('Options_'+serverID);
+                if (s != null){
+                    flag.general = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_throne').checked){
+                s = GM_getValue('ThroneOptions_' + serverID);
+                if (s != null){
+                    flag.throne = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_crest').checked){
+                s = GM_getValue ('CrestData_' + Seed.player['name'] + '_' +serverID);
+                if (s != null){
+                    flag.crest = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_train').checked){
+                s = GM_getValue ('TrainOptions_' + Seed.player['name'] + '_' +serverID);
+                if (s != null){
+                    flag.train = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_reassign').checked){
+                s = GM_getValue('reassignRoutes_' + serverID);
+                if (s != null){
+                    flag.reassign = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_build').checked){
+                s = GM_getValue('buildStates_' + serverID);
+                if (s != null){
+                    flag.build = true;
+                    flag.ok = false;
+                }
+                /****
+                for (var i = 0; i < Cities.cities.length; i++) {
+                t["bQ_" + Cities.cities[i].id] = JSON2.parse(GM_getValue('bQ_' + getServerId() + '_' + Cities.cities[i].id, '[]'));
+                if (typeof t["bQ_" + Cities.cities[i].id] == 'undefined' || (t["bQ_" + Cities.cities[i].id]) == "") {
+                    t["bQ_" + Cities.cities[i].id] = [];
+                }
+            }
+            *****/
+            }
+            if($('pbexport_transport').checked){
+                s = GM_getValue('tradeRoutes_' + serverID);
+                if (s != null){
+                    flag.transport = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_raid').checked){
+                s = GM_getValue ('SavedRaids_'+serverID);
+                if (s != null){
+                    flag.raid = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_df').checked){
+                s = GM_getValue ('AttackOptions_'+serverID);
+                if (s != null){
+                    flag.df = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_log').checked){
+                s = GM_getValue ('log_'+serverID);
+                if (s != null){
+                    flag.log = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_chat').checked){
+                s = GM_getValue ('ChatOptions_'+serverID);
+                if (s != null){
+                    flag.chat = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_apothecary').checked){
+                s = GM_getValue ('ApothecaryOptions_'+Seed.player['name']+'_'+serverID);
+                if (s != null){
+                    flag.apothecary = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_farm').checked){
+                s = GM_getValue('FarmOptions_' + serverID);
+                if (s != null){
+                    flag.farm = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_thronesalvagehistory').checked){
+                s = GM_getValue('ThroneSalvageHistory_' + serverID);
+                if (s != null){
+                    flag.thronesalvage = true;
+                    flag.ok = false;
+                }
+            }
+            if($('pbexport_thronehistory').checked){
+                s = GM_getValue('ThroneHistory_' + serverID);
+                if (s != null){
+                    flag.thronehistory = true;
+                    flag.ok = false;
+                }
+            }
+        }
+        if(flag.ok){
+            return {ok:true};
+        } else {
+            return {ok:false,err:flag};
+        }
+    },
+    
+    show: function (){
+    
+    },
+    
+    hide : function (){
+    
+    }
+}
+
 /****************************  Reassign Tab  *******************************/
 var troops = {1:'SupplyTroops',
               2:'Militiaman',
@@ -11487,9 +12793,9 @@ var troops = {1:'SupplyTroops',
               13:'BloodThorn',
               14:'Executioner',
               15:'SiegeTower' ,
-              16:'FlameArcher',
-              17:'Hussar'
-              };  
+              16:'FlameArcher' ,
+              17:'Hussar' ,
+             };  
 Tabs.Reassign = {
   tabOrder: 30,
   tabLabel: unsafeWindow.g_js_strings.commonstr.reassign,
@@ -11503,17 +12809,17 @@ Tabs.Reassign = {
   check:false,
 
     init: function(div){
-		var t = Tabs.Reassign;
+        var t = Tabs.Reassign;
         t.myDiv = div;
-		t.reassignState = {
+        t.reassignState = {
             running: false,
         };
         if(Options.reassgnbtns)AddSubTabLink('Reassign',t.toggleReassignState, 'ReasignToggleTab');
         t.readReassignState();
-		t.readReassignRoutes();
-		t.e_reassignRoutes();
+        t.readReassignRoutes();
+        t.e_reassignRoutes();
 
-      var m = '<DIV id=pbReMainDivF class=pbStat>AUTOMATED REASSIGN FUNCTION</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
+      var m = '<DIV id=pbReMainDivF class=pbStat>'+translate("AUTOMATED REASSIGN FUNCTION")+'</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
       if (t.reassignState.running == false) {
           m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = OFF"></td>';
          if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #CCC">Reassign: Off</span>';
@@ -11523,28 +12829,27 @@ Tabs.Reassign = {
       }
       m += '<TD><INPUT id=pbReassShowRoutes type=submit value="Show Routes"></td>';
       m += '</tr></table></div>';
-      m += '<DIV id=pbReassignDivD class=pbStat>ADD REASSIGN ROUTE</div>';
+      m += '<DIV id=pbReassignDivD class=pbStat>'+translate("ADD REASSIGN ROUTE")+'</div>';
 
       m += '<TABLE id=pbaddreasignroute width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TD width=20px>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncity></span></div></td></tr>';
+      m += '<TD width=20px>'+translate("From City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncity></span></div></td></tr>';
 
       m += '<TR align="left">';
-      m += '<TD width=20px>To City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncityTo></span></div></td>';
-	  
-	    m += '<TR align="left">';
-	    m += '<TD colspan=4>Time inbetween to check reassign: <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> minutes</td></tr>';
-	    m += '<TR><TD><INPUT id=autofilloff type=checkbox unchecked=true\> Lock troop values</TR></TD></table>';
-      m += '<DIV style="margin-top:10px;margin-bottom:5px;">Fill in the number of troops you want to keep in a city:</div>';
-      m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
+      m += '<TD width=20px>'+translate("To City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncityTo></span></div></td>';
       
-      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-      m += '<TD>Supply Troop</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-      m += '<TD>Militiaman</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-      m += '<TD>Scout</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-      m += '<TD>Pikeman</td></tr>'
+        m += '<TR align="left">';
+        m += '<TD colspan=4>'+translate("Check reassign every:")+' <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> '+translate("minutes")+'</td></tr>';
+        m += '<TR><TD><INPUT id=autofilloff type=checkbox unchecked=true\> '+translate("Lock troop values")+'</TR></TD></table>';
+      m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("Fill in the number of troops you want to keep in a city:")+'</div>';
+      m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
+      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+      m += '<TD>'+translate("Supply Troop")+'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Militiaman")+'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Scout")+'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Pikeman")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSupplyTroops type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyTroops disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbMilitiaman type=checkbox unchecked=true\>';
@@ -11554,14 +12859,14 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbPikeman type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetPikeman disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-      m += '<TD>Swordsman</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-      m += '<TD>Archer</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-      m += '<TD>Cavalry</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-      m += '<TD>Heavy Cavalry</td></tr>'
+      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+      m += '<TD>'+translate("Swordsman")+'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Archer")+'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Cavalry")+'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Heavy Cavalry")+'</td></tr>'
       m += '<TR><TD><INPUT id=pbSwordsman type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSwordsman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbArcher type=checkbox unchecked=true\>';
@@ -11571,14 +12876,17 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbHeavyCavalry type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetHeavyCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-      m += '<TD>Supply Wagon</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-      m += '<TD>Ballista</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-      m += '<TD>Battering Ram</td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-      m += '<TD>Catapult</td></tr>'
+      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+      m += '<TD>'+translate("Supply Wagon")+'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Ballista")+'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Battering Ram")+'</td>'
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+      m += '<TD>'+translate("Catapult")+'</td></tr>'
+      
+      //'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30_s34.jpg
+      
       m += '<TR><TD><INPUT id=pbSupplyWagon type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetSupplyWagon disabled=true type=text size=10 maxlength=10 value="0"\></td>';
       m += '<TD><INPUT id=pbBallista type=checkbox unchecked=true\>';
@@ -11588,14 +12896,14 @@ Tabs.Reassign = {
       m += '<TD><INPUT id=pbCatapult type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m += '<TR><TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
-      m += '<TD>'+translate("BloodThorn")+'</td>'
-      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Executioner")+'</td>'
-      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>'
-      m += '<TD>'+translate("Siege Tower")+'</td>'
-      m += '<TD rowspan="2"><img src="http://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>'
-      m += '<TD>'+translate("Flame Archer")+'</td></tr>'
+     m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
+      m += '<TD>'+translate("BloodThorn")+'</td>';
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>';
+      m += '<TD>'+translate("Executioner")+'</td>';
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>';
+      m += '<TD>'+translate("Siege Tower")+'</td>';
+      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>';
+      m += '<TD>'+translate("Flame Archer")+'</td></tr>';
 
       m += '<TR><TD><INPUT id=pbBloodThorn type=checkbox unchecked=true\>';
       m += '<INPUT id=pbtargetBloodThorn disabled=true type=text size=10 maxlength=10 value="0"\></td>';
@@ -11618,19 +12926,19 @@ Tabs.Reassign = {
       t.myDiv.innerHTML = m;
       
       t.tcp = new CdispCityPicker ('ptreassign', document.getElementById('ptassigncity'), true, null, 0);
-	  t.tcpto = new CdispCityPicker ('ptreassignTo', document.getElementById('ptassigncityTo'), true);
-	  for(var k in troops){
+      t.tcpto = new CdispCityPicker ('ptreassignTo', document.getElementById('ptassigncityTo'), true);
+      for(var k in troops){
       document.getElementById('pbtarget'+troops[k]).value = parseInt(Seed.units['city' + t.tcp.city.id]['unt'+k]);
-	  }
+      }
 
       document.getElementById('ptassigncity').addEventListener('click', function(){
-		  if(document.getElementById('autofilloff').checked == false)
-	    for(var k in troops)
+          if(document.getElementById('autofilloff').checked == false)
+        for(var k in troops)
         document.getElementById('pbtarget'+troops[k]).value = parseInt(Seed.units['city' + t.tcp.city.id]['unt'+k]);
       }, false);
       
       document.getElementById('pbReassignState').addEventListener('click', function(){
-      	t.toggleReassignState(this);
+          t.toggleReassignState(this);
       }, false);
       document.getElementById('pbSaveRouteReassign').addEventListener('click', function(){
       t.addReassignRoute();
@@ -11640,9 +12948,9 @@ Tabs.Reassign = {
       }, false);
       
       document.getElementById('pbreassigninterval').addEventListener('keyup', function(){
-		if (isNaN(document.getElementById('pbreassigninterval').value)){ document.getElementById('pbreassigninterval').value=0 ;}
-		Options.reassigninterval = document.getElementById('pbreassigninterval').value;
-		saveOptions();
+        if (isNaN(document.getElementById('pbreassigninterval').value)){ document.getElementById('pbreassigninterval').value=0 ;}
+        Options.reassigninterval = document.getElementById('pbreassigninterval').value;
+        saveOptions();
       }, false);
       
       document.getElementById('pbtargetSupplyTroops').addEventListener('keyup', function(){
@@ -11696,8 +13004,7 @@ Tabs.Reassign = {
      document.getElementById('pbtargetHussar').addEventListener('keyup', function(){
          if (isNaN(document.getElementById('pbtargetHussar').value)) document.getElementById('pbtargetHussar').value=0 ;
      }, false);
-     
-     
+      
       
       document.getElementById('pbSupplyTroops').addEventListener('click', function(){
           if (document.getElementById('pbSupplyTroops').checked==false) {
@@ -11803,7 +13110,7 @@ Tabs.Reassign = {
           else {
             document.getElementById('pbtargetBloodThorn').disabled = false;
           }
-      },false);
+      },false);      
       document.getElementById('pbExecutioner').addEventListener('click', function(){
           if (document.getElementById('pbExecutioner').checked==false) {
               document.getElementById('pbtargetExecutioner').disabled = true;
@@ -11836,7 +13143,7 @@ Tabs.Reassign = {
             document.getElementById('pbtargetHussar').disabled = false;
           }
       },false);
-      
+         
       
       
       
@@ -11847,170 +13154,168 @@ Tabs.Reassign = {
     getRallypoint: function(cityId){
       var t = Tabs.Reassign;
       for (var o in Seed.buildings[cityId]){
-		var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-		var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-		if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
-	   }  
-	},
-      	  
+        var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+        var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+        if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
+       }  
+    },
+            
     
 
-	e_reassignRoutes: function(){
+    e_reassignRoutes: function(){
       var t = Tabs.Reassign;
       var now = new Date();
       if (t.reassignState.running == true)    {
-      	var now = new Date().getTime()/1000.0;
-      	now = now.toFixed(0);
-      	var last = Options.lastreassign;
-       		if ( now > (parseInt(last) + (Options.reassigninterval*60))){
-    			  t.checkdoReassign();
-      		}
+          var now = new Date().getTime()/1000.0;
+          now = now.toFixed(0);
+          var last = Options.lastreassign;
+               if ( now > (parseInt(last) + (Options.reassigninterval*60))){
+                  t.checkdoReassign();
+              }
       }
       setTimeout(function(){ t.e_reassignRoutes();}, Options.reassigninterval*1000);
       
     },
-    	
-	delReassignRoutes: function() {
-    	
-		var t = Tabs.Reassign;
-    	
-		t.reassignRoutes= [];
+        
+    delReassignRoutes: function() {
+        
+        var t = Tabs.Reassign;
+        
+        t.reassignRoutes= [];
     
-	},
-	checkcoords : function (obj){
-		var t = Tabs.Reassign;
-		if(obj.id == 'pbok'){
-			t.check = true;
-			t.addReassignRoute();
-		}
-		return;			
-	},
-	addReassignRoute: function () {
-		var t = Tabs.Reassign;
-		var city = t.tcp.city.id;
-		if(t.tcpto.city == null){
-			new CdialogCancelContinue('<SPAN class=boldRed>No destination selected!</span>', null, null, mainPop.getMainDiv);
-			return;
-		}
-		if(t.tcp.city.id == t.tcpto.city.id){
-			new CdialogCancelContinue('<SPAN class=boldRed>Can\'t reassign to same city!</span>', null, null, mainPop.getMainDiv);
-			return;
-		}
-		if ((t.tcpto.city.x == 0 && t.tcpto.city.y == 0)&& !t.check)
-		{
-			new CdialogConfirm ('<SPAN class=boldRed>You are about to set a route to location 0,0!</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv); 
-			return;
-		}
-		t.check = false;
-		
-		var SendSupplyTroop = document.getElementById('pbSupplyTroops').checked;
-		var SendMilitiaman = document.getElementById('pbMilitiaman').checked;
-		var SendScout = document.getElementById('pbScout').checked;
-		var SendPikeman = document.getElementById('pbPikeman').checked;
-		var SendSwordsman = document.getElementById('pbSwordsman').checked;
-		var SendArchers = document.getElementById('pbArcher').checked;
-		var SendCavalry = document.getElementById('pbCavalry').checked;
-		var SendHeavyCavalry = document.getElementById('pbHeavyCavalry').checked;
-		var SendSupplyWagons = document.getElementById('pbSupplyWagon').checked;
-		var SendBallista = document.getElementById('pbBallista').checked;
-		var SendBatteringRam = document.getElementById('pbBatteringRam').checked;
-		var SendCatapult = document.getElementById('pbCatapult').checked;
-        	var SendBloodThorn = document.getElementById('pbBloodThorn').checked;
-		var SendExecutioner = document.getElementById('pbExecutioner').checked;
-        	var SendSiegeTower = document.getElementById('pbSiegeTower').checked;
-        	var SendFlameArcher = document.getElementById('pbFlameArcher').checked;
-        	var SendHussar = document.getElementById('pbHussar').checked;
-
-		var SupplyTroop = document.getElementById('pbtargetSupplyTroops').value;
-		var Militiaman = document.getElementById('pbtargetMilitiaman').value;
-		var Scout = document.getElementById('pbtargetScout').value;
-		var Pikeman = document.getElementById('pbtargetPikeman').value;
-		var Swordsman = document.getElementById('pbtargetSwordsman').value;
-		var Archers = document.getElementById('pbtargetArcher').value;
-		var Cavalry = document.getElementById('pbtargetCavalry').value;
-		var HeavyCavalry = document.getElementById('pbtargetHeavyCavalry').value;
-		var SupplyWagons = document.getElementById('pbtargetSupplyWagon').value;
-		var Ballista = document.getElementById('pbtargetBallista').value;
-		var BatteringRam = document.getElementById('pbtargetBatteringRam').value;
-		var Catapult = document.getElementById('pbtargetCatapult').value;
-        	var BloodThorn = document.getElementById('pbtargetBloodThorn').value;
-		var Executioner = document.getElementById('pbtargetExecutioner').value;
-        	var SiegeTower = document.getElementById('pbtargetSiegeTower').value;
-        	var FlameArcher = document.getElementById('pbtargetFlameArcher').value;
-	        var Hussar = document.getElementById('pbtargetHussar').value;
-
-		var target_x = t.tcpto.city.x;
-		var target_y = t.tcpto.city.y;
-        	var target_city = t.tcpto.city.id;
+    },
+    checkcoords : function (obj){
+        var t = Tabs.Reassign;
+        if(obj.id == 'pbok'){
+            t.check = true;
+            t.addReassignRoute();
+        }
+        return;            
+    },
+    addReassignRoute: function () {
+        var t = Tabs.Reassign;
+        var city = t.tcp.city.id;
+        if(t.tcpto.city == null){
+            new CdialogCancelContinue('<SPAN class=boldRed>'+translate("No destination selected!")+'</span>', null, null, mainPop.getMainDiv);
+            return;
+        }
+        if(t.tcp.city.id == t.tcpto.city.id){
+            new CdialogCancelContinue('<SPAN class=boldRed>'+translate("Can\'t reassign to same city!")+'</span>', null, null, mainPop.getMainDiv);
+            return;
+        }
+        if ((t.tcpto.city.x == 0 && t.tcpto.city.y == 0)&& !t.check)
+        {
+            new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv);
+            return;
+        }
+        t.check = false;
+        
+        var SendSupplyTroop = document.getElementById('pbSupplyTroops').checked;
+        var SendMilitiaman = document.getElementById('pbMilitiaman').checked;
+        var SendScout = document.getElementById('pbScout').checked;
+        var SendPikeman = document.getElementById('pbPikeman').checked;
+        var SendSwordsman = document.getElementById('pbSwordsman').checked;
+        var SendArchers = document.getElementById('pbArcher').checked;
+        var SendCavalry = document.getElementById('pbCavalry').checked;
+        var SendHeavyCavalry = document.getElementById('pbHeavyCavalry').checked;
+        var SendSupplyWagons = document.getElementById('pbSupplyWagon').checked;
+        var SendBallista = document.getElementById('pbBallista').checked;
+        var SendBatteringRam = document.getElementById('pbBatteringRam').checked;
+        var SendCatapult = document.getElementById('pbCatapult').checked;
+        var SendBloodThorn = document.getElementById('pbBloodThorn').checked;
+        var SendExecutioner = document.getElementById('pbExecutioner').checked;
+        var SendSiegeTower = document.getElementById('pbSiegeTower').checked;
+        var SendFlameArcher = document.getElementById('pbFlameArcher').checked;
+        var SendHussar = document.getElementById('pbHussar').checked;
+        var SupplyTroop = document.getElementById('pbtargetSupplyTroops').value;
+        var Militiaman = document.getElementById('pbtargetMilitiaman').value;
+        var Scout = document.getElementById('pbtargetScout').value;
+        var Pikeman = document.getElementById('pbtargetPikeman').value;
+        var Swordsman = document.getElementById('pbtargetSwordsman').value;
+        var Archers = document.getElementById('pbtargetArcher').value;
+        var Cavalry = document.getElementById('pbtargetCavalry').value;
+        var HeavyCavalry = document.getElementById('pbtargetHeavyCavalry').value;
+        var SupplyWagons = document.getElementById('pbtargetSupplyWagon').value;
+        var Ballista = document.getElementById('pbtargetBallista').value;
+        var BatteringRam = document.getElementById('pbtargetBatteringRam').value;
+        var Catapult = document.getElementById('pbtargetCatapult').value;
+        var BloodThorn = document.getElementById('pbtargetBloodThorn').value;
+        var Executioner = document.getElementById('pbtargetExecutioner').value;
+        var SiegeTower = document.getElementById('pbtargetSiegeTower').value;
+        var FlameArcher = document.getElementById('pbtargetFlameArcher').value;
+        var Hussar = document.getElementById('pbtargetHussar').value;
+        var target_x = t.tcpto.city.x;
+        var target_y = t.tcpto.city.y;
+        var target_city = t.tcpto.city.id;
                 
-		var lRE = t.reassignRoutes;
-			lRE.push({
-				city:				city,
-				target_x:			target_x,
-				target_y:			target_y,
-                		target_city:        target_city,
-				SendSupplyTroop:	SendSupplyTroop,
-				SupplyTroop:		SupplyTroop,
-				SendMilitiaman:		SendMilitiaman,
-				Militiaman:			Militiaman,
-				SendScout:			SendScout,
-				Scout:				Scout,
-				SendPikeman: 		SendPikeman,
-				Pikeman: 			Pikeman,
-				SendSwordsman:		SendSwordsman,
-				Swordsman:			Swordsman,
-				SendArchers:		SendArchers,
-				Archers:			Archers,
-				SendCavalry: 		SendCavalry,
-				Cavalry: 			Cavalry,
-				SendHeavyCavalry:	SendHeavyCavalry,
-				HeavyCavalry:		HeavyCavalry,
-				SendSupplyWagons:	SendSupplyWagons,
-				SupplyWagons:		SupplyWagons,
-				SendBallista: 		SendBallista,
-				Ballista: 			Ballista,
-				SendBatteringRam:	SendBatteringRam,
-				BatteringRam:		BatteringRam,
-				SendCatapult:		SendCatapult,
-				Catapult:			Catapult,
-                		SendBloodThorn:        SendBloodThorn,
-                		BloodThorn:            BloodThorn,
-				SendExecutioner:		SendExecutioner,
-				Executioner:			Executioner,
-                		SendSiegeTower:        SendSiegeTower,
-                		SiegeTower:            SiegeTower,
-                		SendFlameArcher:        SendFlameArcher,
-                		FlameArcher:            FlameArcher,
-	        	        SendHussar:        SendHussar,
-        	        	Hussar:            Hussar,
-			});
-		document.getElementById('pbReassignDivD').style.background ='#99FF99';
-		setTimeout(function(){ (document.getElementById('pbReassignDivD').style.background =''); }, 1000);
-	},
-	showReassignRoutes: function () {
-		var t = Tabs.Reassign;
-		var popReassignRoutes = null;
-        	t.popReassignRoutes = new pbPopup('pbShowReassign', 0, 0, 700, 485, true, function() {clearTimeout (1000);});
-		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto; max-width:700px; width:700px; overflow-x:scroll"><TABLE align=center cellpadding=1 cellspacing=1 class="pbShowReassignRoutes" id="pbRoutesQueue">';       
-		t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><B>Reassign routes:</td>';
-		t.paintReassignRoutes();
-		t._addTabHeader();
-		t.popReassignRoutes.show(true)	;
-	},
-	paintReassignRoutes: function(){
-	        var t = Tabs.Reassign;
-	        var r = t.reassignRoutes;
-	        var cityname;
-		for (var i = (r.length-1); i>=0; i--) {
-			for (var y=0; y< Seed.cities.length;y++) {
-				if ( parseInt(Seed.cities[y][0]) == r[i].city) var cityname = Seed.cities[y][1];
-			}    
-			var queueId = i;
-                	t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArchers, r[i].Archers, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagons, r[i].SupplyWagons, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower, r[i].SendFlameArcher, r[i].FlameArcher, r[i].SendHussar, r[i].Hussar);
-	        }
-	    },
-	  
+        var lRE = t.reassignRoutes;
+            lRE.push({
+                city:                city,
+                target_x:            target_x,
+                target_y:            target_y,
+                target_city:        target_city,
+                SendSupplyTroop:    SendSupplyTroop,
+                SupplyTroop:        SupplyTroop,
+                SendMilitiaman:        SendMilitiaman,
+                Militiaman:            Militiaman,
+                SendScout:            SendScout,
+                Scout:                Scout,
+                SendPikeman:         SendPikeman,
+                Pikeman:             Pikeman,
+                SendSwordsman:        SendSwordsman,
+                Swordsman:            Swordsman,
+                SendArchers:        SendArchers,
+                Archers:            Archers,
+                SendCavalry:         SendCavalry,
+                Cavalry:             Cavalry,
+                SendHeavyCavalry:    SendHeavyCavalry,
+                HeavyCavalry:        HeavyCavalry,
+                SendSupplyWagons:    SendSupplyWagons,
+                SupplyWagons:        SupplyWagons,
+                SendBallista:         SendBallista,
+                Ballista:             Ballista,
+                SendBatteringRam:    SendBatteringRam,
+                BatteringRam:        BatteringRam,
+                SendCatapult:        SendCatapult,
+                Catapult:            Catapult,
+                SendBloodThorn:        SendBloodThorn,
+                BloodThorn:            BloodThorn,
+                SendExecutioner:        SendExecutioner,
+                Executioner:            Executioner,
+                SendSiegeTower:        SendSiegeTower,
+                SiegeTower:            SiegeTower,
+                SendFlameArcher:        SendFlameArcher,
+                FlameArcher:            FlameArcher,
+                SendHussar:        SendHussar,
+                Hussar:            Hussar,
+            });
+        document.getElementById('pbReassignDivD').style.background ='#99FF99';
+        setTimeout(function(){ (document.getElementById('pbReassignDivD').style.background =''); }, 1000);
+    },
+    showReassignRoutes: function () {
+        var t = Tabs.Reassign;
+        var popReassignRoutes = null;
+        t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
+        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto; max-width:1100px; width:1100px; overflow-x:scroll"><TABLE align=center cellpadding=1 cellspacing=1 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
+        t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
+        t.popReassignRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Reassign routes")+'</center></td>';
+        t.paintReassignRoutes();
+        t._addTabHeader();
+        t.popReassignRoutes.show(true)    ;
+    },
+    paintReassignRoutes: function(){
+            var t = Tabs.Reassign;
+            var r = t.reassignRoutes;
+            var cityname;
+            for (var i = (r.length-1); i>=0; i--) {
+                for (var y=0; y< Seed.cities.length;y++) {
+                    if ( parseInt(Seed.cities[y][0]) == r[i].city) var cityname = Seed.cities[y][1];
+                }    
+                var queueId = i;
+                t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArchers, r[i].Archers, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagons, r[i].SupplyWagons, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower, r[i].SendFlameArcher, r[i].FlameArcher, r[i].SendHussar, r[i].Hussar);
+            }
+        },
+      
      _addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArchers,Archers,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagons,SupplyWagons,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult,SendBloodThorn,BloodThorn,SendExecutioner,Executioner,SendSiegeTower,SiegeTower,SendFlameArcher,FlameArcher,SendHussar,Hussar){
          var t = Tabs.Reassign;
         var To = target_x+','+target_y;
@@ -12020,104 +13325,104 @@ Tabs.Reassign = {
                 break;
             }
         }
-	     var row = document.getElementById('pbRoutesQueue').insertRow(0);
-	     row.vAlign = 'top';
-	     row.insertCell(0).innerHTML = queueId;
-	     row.insertCell(1).innerHTML = cityname;
+         var row = document.getElementById('pbRoutesQueue').insertRow(0);
+         row.vAlign = 'top';
+         row.insertCell(0).innerHTML = queueId;
+         row.insertCell(1).innerHTML = cityname;
          row.insertCell(2).innerHTML = To;
-	     row.insertCell(3).innerHTML = SendSupplyTroop;
-	     row.insertCell(4).innerHTML = addCommas(SupplyTroop);
-	     row.insertCell(5).innerHTML = SendMilitiaman;
-	     row.insertCell(6).innerHTML = addCommas(Militiaman);
-	 	 row.insertCell(7).innerHTML = SendScout;
-	 	 row.insertCell(8).innerHTML = addCommas(Scout);
-	 	 row.insertCell(9).innerHTML = SendPikeman;
-	 	 row.insertCell(10).innerHTML = addCommas(Pikeman);
-	 	 row.insertCell(11).innerHTML = SendSwordsman;
-	 	 row.insertCell(12).innerHTML = addCommas(Swordsman);
-	 	 row.insertCell(13).innerHTML = SendArchers;
-	 	 row.insertCell(14).innerHTML = addCommas(Archers);
-	 	 row.insertCell(15).innerHTML = SendCavalry;
-	 	 row.insertCell(16).innerHTML = addCommas(Cavalry);
-	 	 row.insertCell(17).innerHTML = SendHeavyCavalry;
-	 	 row.insertCell(18).innerHTML = addCommas(HeavyCavalry);
-	 	 row.insertCell(19).innerHTML = SendSupplyWagons;
-	 	 row.insertCell(20).innerHTML = addCommas(SupplyWagons);
-	 	 row.insertCell(21).innerHTML = SendBallista;
-	 	 row.insertCell(22).innerHTML = addCommas(Ballista);
-	 	 row.insertCell(23).innerHTML = SendBatteringRam;
-	 	 row.insertCell(24).innerHTML = addCommas(BatteringRam);
-	 	 row.insertCell(25).innerHTML = SendCatapult;
-	 	 row.insertCell(26).innerHTML = addCommas(Catapult);
-         	 row.insertCell(27).innerHTML = SendBloodThorn;
-          	 row.insertCell(28).innerHTML = addCommas(BloodThorn);
-	 	 row.insertCell(29).innerHTML = SendExecutioner;
-	 	 row.insertCell(30).innerHTML = addCommas(Executioner);
-          	 row.insertCell(31).innerHTML = SendSiegeTower;
-          	 row.insertCell(32).innerHTML = addCommas(SiegeTower);
-          	 row.insertCell(33).innerHTML = SendFlameArcher;
-          	 row.insertCell(34).innerHTML = addCommas(FlameArcher);
-          	 row.insertCell(35).innerHTML = SendHussar;
-          	 row.insertCell(36).innerHTML = addCommas(Hussar);
-         	 row.insertCell(37).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
-	     document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
-	        t.cancelQueueElement(queueId);
-	     }, false);
-	 },
-	 
-	 _addTabHeader: function() {
-	 var t = Tabs.transport;
-	     var row = document.getElementById('pbRoutesQueue').insertRow(0);
-	     row.vAlign = 'top';
-	     row.insertCell(0).innerHTML = "ID";
-	     row.insertCell(1).innerHTML = "From";
-	     row.insertCell(2).innerHTML = "To";
-	     row.insertCell(3).innerHTML = "SupplyTrp";
-	     row.insertCell(4).innerHTML = "";
-	     row.insertCell(5).innerHTML = "MM";
-	     row.insertCell(6).innerHTML = "";
-	 	 row.insertCell(7).innerHTML = "Scouts";
-	     row.insertCell(8).innerHTML = "";
-	     row.insertCell(9).innerHTML = "Pike";
-	     row.insertCell(10).innerHTML = "";
-	     row.insertCell(11).innerHTML = "Swords";
-	     row.insertCell(12).innerHTML = "";
-	     row.insertCell(13).innerHTML = "Archers";
-	     row.insertCell(14).innerHTML = "";
-	     row.insertCell(15).innerHTML = "Cav.";
-	     row.insertCell(16).innerHTML = "";
-	     row.insertCell(17).innerHTML = "HC";
-	     row.insertCell(18).innerHTML = "";
-	     row.insertCell(19).innerHTML = "Wagons";
-	     row.insertCell(20).innerHTML = "";
-	     row.insertCell(21).innerHTML = "Ballista";
-	     row.insertCell(22).innerHTML = "";
-	     row.insertCell(23).innerHTML = "Rams";
-	     row.insertCell(24).innerHTML = "";
-	     row.insertCell(25).innerHTML = "Catapults";
-	     row.insertCell(26).innerHTML = "";
-             row.insertCell(27).innerHTML = translate("BloodThorn");
-	     row.insertCell(28).innerHTML = "";
-             row.insertCell(29).innerHTML = translate("Executioner");
-	     row.insertCell(30).innerHTML = "";
-             row.insertCell(31).innerHTML = translate("SiegeTower");
-             row.insertCell(32).innerHTML = "";
-             row.insertCell(33).innerHTML = translate("FlameArcher");
-             row.insertCell(34).innerHTML = "";
-             row.insertCell(35).innerHTML = translate("Hussar");
-             row.insertCell(36).innerHTML = "";
-             row.insertCell(37).innerHTML = translate("Delete");
-	   },   
-	   
-	 cancelQueueElement: function(queueId){
-	     var t = Tabs.Reassign;
-	     var queueId = parseInt(queueId);
-	     t.reassignRoutes.splice(queueId, 1);
-	     t.showReassignRoutes();
-	 },
-	   
-	saveReassignRoutes: function(){
-		var t = Tabs.Reassign;
+         row.insertCell(3).innerHTML = SendSupplyTroop;
+         row.insertCell(4).innerHTML = addCommas(SupplyTroop);
+         row.insertCell(5).innerHTML = SendMilitiaman;
+         row.insertCell(6).innerHTML = addCommas(Militiaman);
+          row.insertCell(7).innerHTML = SendScout;
+          row.insertCell(8).innerHTML = addCommas(Scout);
+          row.insertCell(9).innerHTML = SendPikeman;
+          row.insertCell(10).innerHTML = addCommas(Pikeman);
+          row.insertCell(11).innerHTML = SendSwordsman;
+          row.insertCell(12).innerHTML = addCommas(Swordsman);
+          row.insertCell(13).innerHTML = SendArchers;
+          row.insertCell(14).innerHTML = addCommas(Archers);
+          row.insertCell(15).innerHTML = SendCavalry;
+          row.insertCell(16).innerHTML = addCommas(Cavalry);
+          row.insertCell(17).innerHTML = SendHeavyCavalry;
+          row.insertCell(18).innerHTML = addCommas(HeavyCavalry);
+          row.insertCell(19).innerHTML = SendSupplyWagons;
+          row.insertCell(20).innerHTML = addCommas(SupplyWagons);
+          row.insertCell(21).innerHTML = SendBallista;
+          row.insertCell(22).innerHTML = addCommas(Ballista);
+          row.insertCell(23).innerHTML = SendBatteringRam;
+          row.insertCell(24).innerHTML = addCommas(BatteringRam);
+          row.insertCell(25).innerHTML = SendCatapult;
+          row.insertCell(26).innerHTML = addCommas(Catapult);
+          row.insertCell(27).innerHTML = SendBloodThorn;
+          row.insertCell(28).innerHTML = addCommas(BloodThorn);
+          row.insertCell(29).innerHTML = SendExecutioner;
+          row.insertCell(30).innerHTML = addCommas(Executioner);
+          row.insertCell(31).innerHTML = SendSiegeTower;
+          row.insertCell(32).innerHTML = addCommas(SiegeTower);
+          row.insertCell(33).innerHTML = SendFlameArcher;
+          row.insertCell(34).innerHTML = addCommas(FlameArcher);
+         row.insertCell(35).innerHTML = SendHussar;
+          row.insertCell(36).innerHTML = addCommas(Hussar);
+         row.insertCell(37).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
+          document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
+            t.cancelQueueElement(queueId);
+         }, false);
+     },
+     
+     _addTabHeader: function() {
+     var t = Tabs.transport;
+         var row = document.getElementById('pbRoutesQueue').insertRow(0);
+         row.vAlign = 'top';
+         row.insertCell(0).innerHTML = "ID";
+         row.insertCell(1).innerHTML = translate("From");
+         row.insertCell(2).innerHTML = translate("To");
+         row.insertCell(3).innerHTML = translate("SupplyTr");
+         row.insertCell(4).innerHTML = "";
+         row.insertCell(5).innerHTML = translate("MM");
+         row.insertCell(6).innerHTML = "";
+          row.insertCell(7).innerHTML = translate("Scouts");
+         row.insertCell(8).innerHTML = "";
+         row.insertCell(9).innerHTML = translate("Pikes");
+         row.insertCell(10).innerHTML = "";
+         row.insertCell(11).innerHTML = translate("Swords");
+         row.insertCell(12).innerHTML = "";
+         row.insertCell(13).innerHTML = translate("Archers");
+         row.insertCell(14).innerHTML = "";
+         row.insertCell(15).innerHTML = translate("Cav");
+         row.insertCell(16).innerHTML = "";
+         row.insertCell(17).innerHTML = translate("HC");
+         row.insertCell(18).innerHTML = "";
+         row.insertCell(19).innerHTML = translate("Wagons");
+         row.insertCell(20).innerHTML = "";
+         row.insertCell(21).innerHTML = translate("Ballista");
+         row.insertCell(22).innerHTML = "";
+         row.insertCell(23).innerHTML = translate("Rams");
+         row.insertCell(24).innerHTML = "";
+         row.insertCell(25).innerHTML = translate("Catapults");
+         row.insertCell(26).innerHTML = "";
+         row.insertCell(27).innerHTML = translate("BloodThorn");
+         row.insertCell(28).innerHTML = "";
+         row.insertCell(29).innerHTML = translate("Executioner");
+         row.insertCell(30).innerHTML = "";
+         row.insertCell(31).innerHTML = translate("SiegeTower");
+         row.insertCell(32).innerHTML = "";
+         row.insertCell(33).innerHTML = translate("FlameArcher");
+         row.insertCell(34).innerHTML = "";
+         row.insertCell(35).innerHTML = translate("Hussar");
+         row.insertCell(36).innerHTML = "";
+         row.insertCell(37).innerHTML = translate("Delete");
+       },   
+       
+     cancelQueueElement: function(queueId){
+         var t = Tabs.Reassign;
+         var queueId = parseInt(queueId);
+         t.reassignRoutes.splice(queueId, 1);
+         t.showReassignRoutes();
+     },
+       
+    saveReassignRoutes: function(){
+        var t = Tabs.Reassign;
         var serverID = getServerId();
         GM_setValue('reassignRoutes_' + serverID, JSON2.stringify(t.reassignRoutes));
     },
@@ -12149,7 +13454,7 @@ Tabs.Reassign = {
         }
     },
     saveReassignState: function(){
-		var t = Tabs.Reassign;
+        var t = Tabs.Reassign;
         var serverID = getServerId();
         GM_setValue('reassignState_' + serverID, JSON2.stringify(t.reassignState));
     },
@@ -12181,907 +13486,134 @@ Tabs.Reassign = {
             t.e_reassignRoutes();
         }
     },
-	
-	checkdoReassign: function(){
-	var t = Tabs.Reassign;
-	t.doReassign(t.count);
-	t.count++;
-		if(t.count < t.reassignRoutes.length && t.reassignState.running){
-		  t.checkdoreassigntimeout = setTimeout(function() { t.checkdoReassign();}, 5000);
-		} else {
-		  var now = new Date().getTime()/1000.0;
-		  now = now.toFixed(0);
-		  Options.lastreassign = now;
-		  saveOptions();	
-		  t.count = 0;
-		}
-	},
+    
+    checkdoReassign: function(){
+    var t = Tabs.Reassign;
+    t.doReassign(t.count);
+    t.count++;
+        if(t.count < t.reassignRoutes.length && t.reassignState.running){
+          t.checkdoreassigntimeout = setTimeout(function() { t.checkdoReassign();}, 5000);
+        } else {
+          var now = new Date().getTime()/1000.0;
+          now = now.toFixed(0);
+          Options.lastreassign = now;
+          saveOptions();    
+          t.count = 0;
+        }
+    },
     
     doReassign: function(count){
-    	var t = Tabs.Reassign;
-   		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-   		if(t.reassignRoutes.length==0) return;
-   		var send=[];
-   		var citytotal=0;
-   		var totalsend=0;
+        var t = Tabs.Reassign;
+           var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+           if(t.reassignRoutes.length==0) return;
+           var send=[];
+           var citytotal=0;
+           var totalsend=0;
             var city = t.reassignRoutes[count]["city"];
-			var cityID = 'city' + city;
+         var cityID = 'city' + city;
             var xcoord = t.reassignRoutes[count]["target_x"];
             var ycoord = t.reassignRoutes[count]["target_y"];
-		params.u1 = 0;
-		params.u2 = 0;
-		params.u3 = 0;
-		params.u4 = 0;
-		params.u5 = 0;
-		params.u6 = 0;
-		params.u7 = 0;
-		params.u8 = 0;
-		params.u9 = 0;
-		params.u10 = 0;
-		params.u11 = 0;
-		params.u12 = 0;	
-//        	if(Seed.cityData.city[city].isPrestigeCity){
-			params.u13 = 0;
-			params.u14 = 0;
-			params.u15 = 0;
-//		}
-		params.u16 = 0;	
-		params.u17 = 0;	
-		if(!Cities.byID[city]) return;
-		var marching = getMarchInfo(cityID);
+        params.u1 = 0;
+        params.u2 = 0;
+        params.u3 = 0;
+        params.u4 = 0;
+        params.u5 = 0;
+        params.u6 = 0;
+        params.u7 = 0;
+        params.u8 = 0;
+        params.u9 = 0;
+        params.u10 = 0;
+        params.u11 = 0;
+        params.u12 = 0;    
+        if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity){
+         params.u13 = 0;
+         params.u14 = 0;
+         params.u15 = 0;
+      }
+	params.u16 = 0;	
+	params.u17 = 0;	
+
+        if(!Cities.byID[city]) return;
+        var marching = getMarchInfo(cityID);
         
         var maxsend = March.getMaxSize(city);
         totalsend=0;
-    	
-        if(Seed.cityData.city[city].isPrestigeCity)
+        
+        if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity)
           var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","BloodThorn","Executioner","SiegeTower","FlameArcher","Hussar"];
         else var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","","","","FlameArcher","Hussar"];
-    	for (k=0; k<troopsselect.length; k++) {
-			var citytroops = Seed.units[cityID]['unt'+(parseInt(k)+1)];
-//			var marchtroops = marching.marchUnits[parseInt(k)+1];
-			var marchtroops = marching.marchUnits[k];
-			citytotal = parseInt(citytroops) + parseInt(marchtroops);
-			//alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
-			//if(k== 5) GM_log(citytotal +'  ' + t.reassignRoutes[count][troopsselect[k]]);
-			if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
-			if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
-				var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]);
-				if (parseInt(sendtroops) > parseInt(citytroops)) sendtroops = citytroops;
-				if (parseInt(sendtroops) < 0) sendtroops = 0;
-				send[(parseInt(k)+1)] = sendtroops;
-				totalsend += send[(parseInt(k)+1)];
-				//alert(parseInt(k)+1 + ' - ' + citytotal+ ' : ' + troopsselect[k] + ' / ' + t.reassignRoutes[0][troopsselect[k]]);    			
-				
-			}
-			if(totalsend > maxsend){
-				totalsend -= send[(parseInt(k)+1)];
-				send[(parseInt(k)+1)] = parseInt(maxsend-totalsend);
-				totalsend += send[(parseInt(k)+1)];
-				break;
-			}
-       	}
-    	
-    	for (var t=0; t< Seed.cities.length;t++) {
-    		if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
-    	}
-    	
-  		params.cid= city;
-		params.type = "5";
-		params.kid=0;
-		params.xcoord = xcoord;
-		params.ycoord = ycoord;
-		params.u1 = send[1];
-		params.u2 = send[2];
-		params.u3 = send[3];
-		params.u4 = send[4];
-		params.u5 = send[5];
-		params.u6 = send[6];
-		params.u7 = send[7];
-		params.u8 = send[8];
-		params.u9 = send[9];
-		params.u10 = send[10];
-		params.u11 = send[11];
-		params.u12 = send[12];	
-        	if(Seed.cityData.city[city].isPrestigeCity){
-			params.u13 = send[13];
-			params.u14 = send[14];
-			params.u15 = send[15];
-		}
-		params.u16 = send[16];	
-		params.u17 = send[17];
-   		if (totalsend >0) {
+        for (k=0; k<troopsselect.length; k++) {
+            var citytroops = Seed.units[cityID]['unt'+(parseInt(k)+1)];
+            var marchtroops = marching.marchUnits[k];
+            citytotal = parseInt(citytroops) + parseInt(marchtroops);
+            //alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
+            //if(k== 5) GM_log(citytotal +'  ' + t.reassignRoutes[count][troopsselect[k]]);
+            if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
+            if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
+                var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]);
+                if (parseInt(sendtroops) > parseInt(citytroops)) sendtroops = citytroops;
+                if (parseInt(sendtroops) < 0) sendtroops = 0;
+                send[(parseInt(k)+1)] = sendtroops;
+                totalsend += send[(parseInt(k)+1)];
+                //alert(parseInt(k)+1 + ' - ' + citytotal+ ' : ' + troopsselect[k] + ' / ' + t.reassignRoutes[0][troopsselect[k]]);                
+                
+            }
+            if(totalsend > maxsend){
+                totalsend -= send[(parseInt(k)+1)];
+                send[(parseInt(k)+1)] = parseInt(maxsend-totalsend);
+                totalsend += send[(parseInt(k)+1)];
+                break;
+            }
+           }
+        for (var t=0; t< Seed.cities.length;t++) {
+            if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
+        }
+          params.cid= city;
+        params.type = "5";
+        params.kid=0;
+        params.xcoord = xcoord;
+        params.ycoord = ycoord;
+        params.u1 = send[1];
+        params.u2 = send[2];
+        params.u3 = send[3];
+        params.u4 = send[4];
+        params.u5 = send[5];
+        params.u6 = send[6];
+        params.u7 = send[7];
+        params.u8 = send[8];
+        params.u9 = send[9];
+        params.u10 = send[10];
+        params.u11 = send[11];
+        params.u12 = send[12];    
+        if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity){
+         params.u13 = send[13];
+         params.u14 = send[14];
+         params.u15 = send[15];
+	}
+	params.u16 = send[16];
+	params.u17 = send[17];
+           if (totalsend >0) {
          March.addMarch(params, function(rslt){
-                  if (rslt.ok) {
+            if(rslt.ok){
                   actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
             } else { //onFailure
                   actionLog('REASSIGN FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
                   }
           });
-   	 }      
-	},
-	
-	show: function(){
-		var t = Tabs.Reassign;
+        }      
     },
-	hide: function(){
+    
+    show: function(){
+        var t = Tabs.Reassign;
+    },
+    hide: function(){
         var t = Tabs.Reassign;
     },
     onUnload: function(){
         var t = Tabs.Reassign;
         if (!ResetAll) t.saveReassignRoutes();
-		if (!ResetAll) t.saveReassignState();
+        if (!ResetAll) t.saveReassignState();
         
-    },
-}
-
-
-/************************  Reinforce Tab ************************/
-Tabs.Reinforce = {
-  tabOrder: 40,
-  tabLabel: unsafeWindow.g_js_strings.commonstr.reinforce,
-  myDiv: null,
-  cityID: null,
-  rallypointlevel:null,
-  maxsend:0,
-  dist:0,
-  ETAstr:null,
-  ETAType:null,
-  checkETA:null,
-
-    init: function(div){
-		var t = Tabs.Reinforce;
-        t.myDiv = div;
-
-      var m = '<DIV id=pbReinfMain class=pbStat>REINFORCE</div><TABLE id=pireinforce width=100% height=0% class=pbTab><TR align="center">';
-      
-      m += '<TABLE id=pbReinf width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TD width=20px>From City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptRfcityFrom></span></div></td></tr>';
-
-      m += '<TR align="left">';
-      m += '<TD>To City:</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptRfcityTo></span></div></td>';
-      m += '<TD>OR</td>';
-      m += '<TD>X:<INPUT id=pfToX type=text size=3\></td>';
-      m += '<TD>Y:<INPUT id=pfToY type=text size=3\></td></tr></table>';
-      
-      m += '<TABLE id=pbReinfETA width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TD><DIV id=pbdistance>Distance N/A</div></td>';
-      m += '<TD><DIV id=pbETA>ETA N/A</div></td>';
-      m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
-      m += '<TD><INPUT id=pisendfood type=text size=11 maxlength=11 value="0"\><INPUT id=MaxFood type=submit value="Max"></td></tr></table>';
-            
-      m += '<TABLE id=pbaddreinfroute width=100% height=0% class=pbTab><TR align="center">';
-      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-      m += '<TD id=unt1></td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-      m += '<TD id=unt2></td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-      m += '<TD id=unt3></td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-      m += '<TD id=unt4></td>'
-      m += '<TR><TD><INPUT id=pitargetSupplyTroops type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyTroops type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetMilitiaman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxMilitiaman type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetScout type=text size=6 maxlength=6 value="0"\><INPUT id=MaxScout type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetPikeman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxPikeman type=submit value="Max"></td></tr>';
-      
-      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-      m += '<TD id=unt5></td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-      m += '<TD id=unt6></td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-      m += '<TD id=unt7></td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-      m += '<TD id=unt8></td>'
-      m += '<TR><TD><INPUT id=pitargetSwordsman type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSwordsman type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetArcher type=text size=6 maxlength=6 value="0"\><INPUT id=MaxArcher type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCavalry type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetHeavyCavalry type=text size=6 maxlength=6 value="0"\><INPUT id=MaxHeavyCavalry type=submit value="Max"></td></tr>';
-      
-      m += '<TR><TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-      m += '<TD id=unt9></td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-      m += '<TD id=unt10></td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-      m += '<TD id=unt11></td>'
-      m += '<TD rowspan="2"><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-      m += '<TD id=unt12></td>'
-      m += '<TR><TD><INPUT id=pitargetSupplyWagon type=text size=6 maxlength=6 value="0"\><INPUT id=MaxSupplyWagon type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetBallista type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBallista type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetBatteringRam type=text size=6 maxlength=6 value="0"\><INPUT id=MaxBatteringRam type=submit value="Max"></td>';
-      m += '<TD><INPUT id=pitargetCatapult type=text size=6 maxlength=6 value="0"\><INPUT id=MaxCatapult type=submit value="Max"></td></tr></table>';
-      
-      m += '<TABLE id=pbReinfETA width=95% height=0% class=pbTab><TR align="center">';
-      m += '<TD><SELECT id=piKnight type=list></select></td>';
-      m += '<TD><INPUT id=piDoreinforce type=submit value="Reinforce"></td>';
-      
-      t.myDiv.innerHTML = m;
-      
-      
-      t.from = new CdispCityPicker ('prfrom', document.getElementById('ptRfcityFrom'), true, t.ClickCitySelect, 0);
-      t.to = new CdispCityPicker ('ptto', document.getElementById('ptRfcityTo'), true, t.clickcityselect,0);
-      
-	  t.getKnights();
-	  
-      document.getElementById('pfToX').value = t.to.city.x;
-      document.getElementById('pfToY').value = t.to.city.y;
-      
-	 document.getElementById('ptRfcityTo').addEventListener('click', function(){
-  	 document.getElementById('pfToX').value = t.to.city.x;
-     document.getElementById('pfToY').value = t.to.city.y;
- 	 }, false);
-      
-      document.getElementById('ptRfcityTo').addEventListener('click', function(){
-       t.dist = distance (t.from.city.x, t.from.city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
-          	document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
-          	t.ETA(t.dist);
-          	document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      
-      
-      document.getElementById('pfToX').addEventListener('keyup', function(){
-       t.dist = distance (t.from.city.x, t.from.city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
-       		document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
-       		t.ETA(t.dist);
-       		document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      
-      document.getElementById('pfToY').addEventListener('keyup', function(){
-       t.dist = distance (t.from.city.x, t.from.city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
-       		document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
-       		t.ETA(t.dist);
-       		document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      
-      document.getElementById('piDoreinforce').addEventListener('click', function(){
-      		t.doReinforce();
-      }, false);
-      
-     document.getElementById('MaxFood').addEventListener('click', function(){
-     		var maxfood =0;
-     		var featherweight = parseInt(Seed.tech.tch10);
-     		maxfood += ( (200 + (200/10*featherweight)) * parseInt(document.getElementById('pitargetSupplyTroops').value));
-     		maxfood += ( (20 + (20/10*featherweight)) *parseInt(document.getElementById('pitargetMilitiaman').value));
-     		maxfood += ( (5 + (5/10*featherweight)) *parseInt(document.getElementById('pitargetScout').value));
-     		maxfood += ((40 + (40/10*featherweight))*parseInt(document.getElementById('pitargetPikeman').value));
-     		maxfood += ( (30 + (30/10*featherweight))*parseInt(document.getElementById('pitargetSwordsman').value));
-     		maxfood += ((25 + (25/10*featherweight))*parseInt(document.getElementById('pitargetArcher').value));
-     		maxfood += ((100 + (100/10*featherweight))*parseInt(document.getElementById('pitargetCavalry').value));
-     		maxfood += (80*parseInt(document.getElementById('pitargetHeavyCavalry').value));
-     		maxfood += ((5000 + (5000/10*featherweight))*parseInt(document.getElementById('pitargetSupplyWagon').value));
-     		maxfood += ((35 + (35/10*featherweight))*parseInt(document.getElementById('pitargetBallista').value));
-     		maxfood += ((45 + (45/10*featherweight))*parseInt(document.getElementById('pitargetBatteringRam').value));
-     		maxfood += ((75 + (75/10*featherweight))*parseInt(document.getElementById('pitargetCatapult').value));
-     		document.getElementById('pisendfood').value = maxfood;
-     }, false);
-         
-      document.getElementById('MaxSupplyTroops').addEventListener('click', function(){
-      		t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetSupplyTroops').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+1]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+1]);
-      		document.getElementById('pitargetSupplyTroops').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      
-      document.getElementById('MaxMilitiaman').addEventListener('click', function(){
-      		t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetMilitiaman').value == 0) t.maxsend = t.maxsend - othertroops;
-          
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+2]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+2]);
-      		document.getElementById('pitargetMilitiaman').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      
-      document.getElementById('MaxScout').addEventListener('click', function(){
-      	t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetScout').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+3]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+3]);
-      		document.getElementById('pitargetScout').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
- 
- 	  document.getElementById('MaxPikeman').addEventListener('click', function(){
- 	  	t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetPikeman').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+4]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+4]);
-      		document.getElementById('pitargetPikeman').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
- 	  }, false);
- 	  
- 	  document.getElementById('MaxSwordsman').addEventListener('click', function(){
- 	  		t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetSwordsman').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+5]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+5]);
-      		document.getElementById('pitargetSwordsman').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
- 	  }, false);
- 	  
- 	  document.getElementById('MaxArcher').addEventListener('click', function(){
- 	  	t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetArcher').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+6]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+6]);
-      		document.getElementById('pitargetArcher').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
- 	  }, false);
- 	  
- 	  document.getElementById('MaxCavalry').addEventListener('click', function(){
- 	  	t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetCavalry').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+7]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+7]);
-      		document.getElementById('pitargetCavalry').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
- 	  }, false);
- 	  
- 	  document.getElementById('MaxHeavyCavalry').addEventListener('click', function(){
- 	  		t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetHeavyCavalry').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+8]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+8]);
-      		document.getElementById('pitargetHeavyCavalry').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
- 	  }, false);
- 	  
- 	  document.getElementById('MaxSupplyWagon').addEventListener('click', function(){
- 	  		t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetSupplyWagon').value == 0) t.maxsend = t.maxsend - othertroops;
-           if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+9]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+9]);
-      		document.getElementById('pitargetSupplyWagon').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
- 	  }, false);
- 	  
- 	  document.getElementById('MaxBallista').addEventListener('click', function(){
- 	  	t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetBallista').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+10]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+10]);
-      		document.getElementById('pitargetBallista').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
- 	  }, false);
- 	  
- 	  document.getElementById('MaxBatteringRam').addEventListener('click', function(){
- 	  		t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetBatteringRam').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+11]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+11]);
-      		document.getElementById('pitargetBatteringRam').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
- 	  }, false);
- 	  
- 	  document.getElementById('MaxCatapult').addEventListener('click', function(){
- 	  		t.maxsend = (t.rallypointlevel * 10000);
-      		var othertroops = (parseInt(document.getElementById('pitargetSupplyTroops').value) + parseInt(document.getElementById('pitargetMilitiaman').value) + parseInt(document.getElementById('pitargetScout').value) + parseInt(document.getElementById('pitargetPikeman').value) + parseInt(document.getElementById('pitargetSwordsman').value) + parseInt(document.getElementById('pitargetArcher').value) + parseInt(document.getElementById('pitargetCavalry').value) + parseInt(document.getElementById('pitargetHeavyCavalry').value) + parseInt(document.getElementById('pitargetSupplyWagon').value) + parseInt(document.getElementById('pitargetBallista').value) + parseInt(document.getElementById('pitargetBatteringRam').value) + parseInt(document.getElementById('pitargetCatapult').value));
-          if ( othertroops >= (t.rallypointlevel * 10000) ) {
-             document.getElementById('pitargetSupplyTroops').value =0;
-             document.getElementById('pitargetMilitiaman').value =0;
-             document.getElementById('pitargetScout').value =0;
-             document.getElementById('pitargetPikeman').value =0;
-             document.getElementById('pitargetSwordsman').value =0;
-             document.getElementById('pitargetArcher').value =0;
-             document.getElementById('pitargetCavalry').value =0;
-             document.getElementById('pitargetHeavyCavalry').value =0;
-             document.getElementById('pitargetSupplyWagon').value =0;
-             document.getElementById('pitargetBallista').value =0;
-             document.getElementById('pitargetBatteringRam').value =0;
-             document.getElementById('pitargetCatapult').value =0;
-          }
-          if (document.getElementById('pitargetCatapult').value == 0) t.maxsend = t.maxsend - othertroops;
-          if (t.maxsend ==0) t.maxsend = (t.rallypointlevel * 10000);
-          if (parseInt(Seed.units['city' + t.from.city.id]['unt'+12]) < t.maxsend) t.maxsend = parseInt(Seed.units['city' + t.from.city.id]['unt'+12]);
-      		document.getElementById('pitargetCatapult').value = t.maxsend;
-      		t.SetETAType();
-      		t.ETA(t.dist);
-      		document.getElementById('pbETA').innerHTML = (t.ETAstr);
- 	  }, false);
- 	  
-      document.getElementById('pitargetSupplyTroops').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetSupplyTroops').value)) document.getElementById('pitargetSupplyTroops').value=0 ;
-          t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      document.getElementById('pitargetMilitiaman').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetMilitiaman').value)) document.getElementById('pitargetMilitiaman').value=0 ;
-          t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      document.getElementById('pitargetScout').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetScout').value)) document.getElementById('pitargetScout').value=0 ;
-          t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      document.getElementById('pitargetPikeman').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetPikeman').value)) document.getElementById('pitargetPikeman').value=0 ;
-          t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      document.getElementById('pitargetSwordsman').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetSwordsman').value)) document.getElementById('pitargetSwordsman').value=0 ;
-         t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      document.getElementById('pitargetArcher').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetArcher').value)) document.getElementById('pitargetArcher').value=0 ;
-         t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      document.getElementById('pitargetCavalry').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetCavalry').value)) document.getElementById('pitargetCavalry').value=0 ;
-         t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      document.getElementById('pitargetHeavyCavalry').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetHeavyCavalry').value)) document.getElementById('pitargetHeavyCavalry').value=0 ;
-         t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      document.getElementById('pitargetSupplyWagon').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetSupplyWagon').value)) document.getElementById('pitargetSupplyWagon').value=0 ;
-         t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-      document.getElementById('pitargetBallista').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pitargetBallista').value)) document.getElementById('pitargetBallista').value=0 ;
-         t.SetETAType();
-          document.getElementById('pbETA').innerHTML = (t.ETAstr);
-      }, false);
-     document.getElementById('pitargetBatteringRam').addEventListener('keyup', function(){
-         if (isNaN(document.getElementById('pitargetBatteringRam').value)) document.getElementById('pitargetBatteringRam').value=0 ;
-        t.SetETAType();
-         document.getElementById('pbETA').innerHTML = (t.ETAstr);
-     }, false);
-     document.getElementById('pitargetCatapult').addEventListener('keyup', function(){
-         if (isNaN(document.getElementById('pitargetCatapult').value)) document.getElementById('pitargetCatapult').value=0 ;
-        	t.SetETAType();
-         document.getElementById('pbETA').innerHTML = (t.ETAstr);
-     }, false);
-
-        
-      window.addEventListener('unload', t.onUnload, false);
-    },
-    
-    ClickCitySelect: function(city){
-    		var t = Tabs.Reinforce;
-    		t.getKnights();	 
-    		t.clearbox();
-    		t.dist = distance (city.x, city.y, document.getElementById('pfToX').value, document.getElementById('pfToY').value);
-    		document.getElementById('pbdistance').innerHTML = ('Distance: '+t.dist);
-    		t.SetETAType();
-    		t.ETA(t.dist);
-    		for (var i=1;i<=12;i++) document.getElementById('unt'+i).innerHTML = addCommas(Seed.units['city'+city.id]['unt'+i]) 
-    		document.getElementById('pbETA').innerHTML = (t.ETAstr);
-    },
-     		
-    getKnights : function(){
-       var t = Tabs.Reinforce;
-       var knt = new Array();
-       t.getRallypoint('city' +t.from.city.id);
-       for (k in Seed.knights['city' + t.from.city.id]){
-       		if (Seed.knights['city' + t.from.city.id][k]["knightStatus"] == 1 && Seed.leaders['city' + t.from.city.id]["resourcefulnessKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"] && Seed.leaders['city' + t.from.city.id]["politicsKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"] && Seed.leaders['city' + t.from.city.id]["combatKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"] && Seed.leaders['city' + t.from.city.id]["intelligenceKnightId"] != Seed.knights['city' + t.from.city.id][k]["knightId"]){
-       			knt.push ({
-       				Name:   Seed.knights['city' + t.from.city.id][k]["knightName"],
-       				Combat:	parseInt(Seed.knights['city' + t.from.city.id][k]["combat"]),
-       				ID:		Seed.knights['city' + t.from.city.id][k]["knightId"],
-       			});
-       		}
-       }
-       knt = knt.sort(function sort(a,b) {a = a['Combat'];b = b['Combat'];return a == b ? 0 : (a > b ? -1 : 1);});
-       document.getElementById('piKnight').options.length=0;
-		var o = document.createElement("option");
-		o.text = '--Choose a Knight--';
-		o.value = 0;
-		document.getElementById("piKnight").options.add(o);
-       for (k in knt){
-    			if (knt[k]["Name"] !=undefined){
-	    			var o = document.createElement("option");
-	    			o.text = (knt[k]["Name"] + ' (' + knt[k]["Combat"] +')')
-	    			o.value = knt[k]["ID"];
-	    			document.getElementById("piKnight").options.add(o);
-    			}
-    	}
-    },
-    
-    
-    SetETAType :function(){
-    	var t = Tabs.Reinforce;
-    	if (document.getElementById('pitargetSupplyTroops').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetMilitiaman').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetScout').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetPikeman').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetSwordsman').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetArcher').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetCavalry').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetHeavyCavalry').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetSupplyWagon').value == 0 )t.checkETA=null;
-    	if (document.getElementById('pitargetBallista').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetBatteringRam').value == 0 ) t.checkETA=null;
-    	if (document.getElementById('pitargetCatapult').value == 0 ) t.checkETA=null;
-    	if (t.checkETA==null) t.ETAType=null;
-    	t.ETA(t.dist);
-    	if (document.getElementById('pitargetSupplyTroops').value >0 ) {t.ETAType="0,180";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetMilitiaman').value >0 ) {t.ETAType="0,200";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetScout').value >0 ) {t.ETAType="0,3000";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetPikeman').value >0 ) {t.ETAType="0,300";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetSwordsman').value >0 ) {t.ETAType="0,275";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetArcher').value >0 ) {t.ETAType="0,250";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetCavalry').value >0 ) {t.ETAType="1,1000";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetHeavyCavalry').value >0 ) {t.ETAType="1,750";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetSupplyWagon').value >0 ) {t.ETAType="1,150";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetBallista').value >0 ) {t.ETAType="1,100";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetBatteringRam').value >0 ) {t.ETAType="1,120";t.ETA(t.dist);}
-    	if (document.getElementById('pitargetCatapult').value >0 ) {t.ETAType="1,80";t.ETA(t.dist);}
-    },
-    
-    
-    getRallypoint: function(cityId){
-      var t = Tabs.Reinforce;
-      for (var o in Seed.buildings[cityId]){
-		var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-		var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-		if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
-	   }
-     if(t.rallypointlevel == 11) t.rallypointlevel = 15;
-     if(t.rallypointlevel == 12) t.rallypointlevel = 20;
-     t.maxsend = (t.rallypointlevel * 10000);       
- },
- 
- clearbox: function(){
-      var t = Tabs.Reinforce;
-      document.getElementById('pitargetSupplyTroops').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+1]) == 0) document.getElementById('pitargetSupplyTroops').disabled = true;
-      else document.getElementById('pitargetSupplyTroops').disabled = false;  
-      document.getElementById('pitargetMilitiaman').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+2]) == 0) document.getElementById('pitargetMilitiaman').disabled = true;
-      else document.getElementById('pitargetMilitiaman').disabled = false;     
-      document.getElementById('pitargetScout').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+3]) == 0) document.getElementById('pitargetScout').disabled = true;
-      else document.getElementById('pitargetScout').disabled = false;
-      document.getElementById('pitargetPikeman').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+4]) == 0) document.getElementById('pitargetPikeman').disabled = true;
-      else document.getElementById('pitargetPikeman').disabled = false;
-      document.getElementById('pitargetSwordsman').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+5]) == 0) document.getElementById('pitargetSwordsman').disabled = true;
-      else document.getElementById('pitargetSwordsman').disabled = false;
-      document.getElementById('pitargetArcher').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+6]) == 0) document.getElementById('pitargetArcher').disabled = true;
-      else document.getElementById('pitargetArcher').disabled = false;
-      document.getElementById('pitargetCavalry').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+7]) == 0) document.getElementById('pitargetCavalry').disabled = true;
-      else document.getElementById('pitargetCavalry').disabled = false;
-      document.getElementById('pitargetHeavyCavalry').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+8]) == 0) document.getElementById('pitargetHeavyCavalry').disabled = true;
-      else document.getElementById('pitargetHeavyCavalry').disabled = false;
-      document.getElementById('pitargetSupplyWagon').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+9]) == 0) document.getElementById('pitargetSupplyWagon').disabled = true;
-      else document.getElementById('pitargetSupplyWagon').disabled = false;
-      document.getElementById('pitargetBallista').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+10]) == 0) document.getElementById('pitargetBallista').disabled = true;
-      else document.getElementById('pitargetBallista').disabled = false;
-      document.getElementById('pitargetBatteringRam').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+11]) == 0) document.getElementById('pitargetBatteringRam').disabled = true;
-      else document.getElementById('pitargetBatteringRam').disabled = false;
-      document.getElementById('pitargetCatapult').value = 0;
-      if (parseInt(Seed.units['city' + t.from.city.id]['unt'+12]) == 0) document.getElementById('pitargetCatapult').disabled = true;
-      else document.getElementById('pitargetCatapult').disabled = false;
-          
- },
- 
-  ETA : function(dist) { // Need Relief Station Levels to estimate transport, reinf, or reassign times.
-   var t = Tabs.Reinforce;
-   t.cityID = t.from.city.id;
-   if (dist == 0) {t.ETAstr = "Reinforce ETA: Distance is 0";return;}
-   if (t.ETAType == null) {t.ETAstr = "Reinforce ETA: No troops selected";return;}
-   var baseSpeedSel = t.ETAType;
-   var m = baseSpeedSel.split(',');
-   var horse = parseInt(m[0]);
-   var baseSpeed = parseInt(m[1]);
-   if (baseSpeed == 0) {t.ETAstr = "ETA: unknown";return;}
-   var mmLvl = parseInt(Seed.tech.tch11);//Magical Mapping
-   var Speed = 0;
-   if (horse){
-   //HorsesSiegeSpeed = Base * (1 + MM/10) * (1 + AH/20)
-     var hsLvl = parseInt(Seed.tech.tch12);//Alloy Horse Shoes
-     Speed = baseSpeed * (1 + mmLvl/10) * (1 + hsLvl/20);
-   }
-   else {
-   //FootSpeed = Base * (1 + MM/10)
-     Speed = baseSpeed * (1 + mmLvl/10);
-   }
-   //Grid Speed (tiles/second) = Speed (100ths/min) / 6000
-   var gSpeed = 0;
-   var estSec = 0;
-   if (Speed>0) {
-     gSpeed = Speed/6000;
-     estSec = (dist/gSpeed).toFixed(0);
-   }
-   //RS - Cities Relief Station Level
-   //Friendly Speed = Speed * (1 + RS/2)
-    var building = getCityBuilding (t.cityID, 18);
-    fSpeed = Speed * (1 + parseInt(building.maxLevel)/2);
-       gSpeed = fSpeed/6000;
-       estSec = (dist/gSpeed).toFixed(0);
-       if (t.checkETA == null || t.checkETA < (parseInt((estSec+''))+30)){
-       		 t.ETAstr = 'Reinforce ETA: ' + timestr ((parseInt((estSec+''))+30));
-       		 t.checkETA = (parseInt((estSec+''))+30);
-       }
- },
- 
-  
-    doReinforce: function(){
-    	var t = Tabs.Reinforce;
-   		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-   		params.r1 = 0;
-		params.u1 = 0;
-		params.u2 = 0;
-		params.u3 = 0;
-		params.u4 = 0;
-		params.u5 = 0;
-		params.u6 = 0;
-		params.u7 = 0;
-		params.u8 = 0;
-		params.u9 = 0;
-		params.u10 = 0;
-		params.u11 = 0;
-		params.u12 = 0;
-    	
-  		params.cid= t.from.city.id;
-		params.type = "2";
-		params.kid= document.getElementById("piKnight").value;
-		params.xcoord = document.getElementById('pfToX').value;
-		params.ycoord = document.getElementById('pfToY').value;
-		params.u1 = document.getElementById('pitargetSupplyTroops').value;
-		params.u2 = document.getElementById('pitargetMilitiaman').value;
-		params.u3 = document.getElementById('pitargetScout').value;
-		params.u4 = document.getElementById('pitargetPikeman').value;
-		params.u5 = document.getElementById('pitargetSwordsman').value;
-		params.u6 = document.getElementById('pitargetArcher').value;
-		params.u7 = document.getElementById('pitargetCavalry').value;
-		params.u8 = document.getElementById('pitargetHeavyCavalry').value;
-		params.u9 = document.getElementById('pitargetSupplyWagon').value;
-		params.u10 = document.getElementById('pitargetBallista').value;
-		params.u11 = document.getElementById('pitargetBatteringRam').value;
-		params.u12 = document.getElementById('pitargetCatapult').value;	
-		params.food = document.getElementById('pisendfood').value;
-		
-      	new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
-                  method: "post",
-                  parameters: params,
-                  loading: true,
-                  onSuccess: function (transport) {
-                  var rslt = eval("(" + transport.responseText + ")");
-                  if (rslt.ok) {
-                  var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-		  var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
-                  var ut = unixTime();
- 		  var unitsarr = [];
- 		  for (j in unsafeWindow.unitcost)
- 			unitsarr.push(0);
- 		  for(i = 0; i <= unitsarr.length; i++)
- 			if(params["u"+i])
- 				unitsarr[i] = params["u"+i];
-                  var resources=new Array();
-                  resources[0] = params.gold;
-                  for(i=1; i<=4; i++){
-                  	resources[i] = params["r"+i];
-                  }
-                  var currentcityid = params.cid;
-//                unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true, ut+rtimediff);
-                  if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-                  t.getKnights();
-                  t.clearbox();
-                  document.getElementById('pbReinfMain').style.background ='#99FF99';
-		              setTimeout(function(){ (document.getElementById('pbReinfMain').style.background =''); }, 1000);
-                  } else {
-                  document.getElementById('pbReinfMain').style.background ='#FF0000';
-		              setTimeout(function(){ (document.getElementById('pbReinfMain').style.background =''); }, 1000);
-                  //actionLog('FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
-                  //unsafeWindow.Modal.showAlert(printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null)))
-                  }
-                  },
-                  onFailure: function () {}
-          });
-   	        
-	},
-	
-	
-	show: function(){
-		var t = Tabs.Reinforce;
-    },
-	hide: function(){
-        var t = Tabs.Reinforce;
-    },
-    onUnload: function(){
     },
 }
 
@@ -13102,11 +13634,11 @@ Tabs.AutoTrain = {
     var m = '<DIV class=pbStat>AUTO TRAIN</div><TABLE width=100% height=0% class=pbTab><TR><TD width=200></td>';
         m += '<TD align=center><INPUT id=pbAutoTrainState type=submit value="'+translate("AutoTrain")+' = '+ (TrainOptions.Running?'ON':'OFF')+'"></td>';
         m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value='+translate("HELP")+'></td></tr></table>';
-        m += '<table><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> Only train when throne room set <INPUT id=pbatTRset type=text size=2 maxlength=2 value="'+ TrainOptions.trset +'">  is equiped</td>';
+        m += '<table><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> '+translate('Only train when throne room set')+' <INPUT id=pbatTRset type=text size=2 maxlength=2 value="'+ TrainOptions.trset +'">  '+translate('is equiped')+'</td>';
         m += '</tr></table></div>';
         m += '<DIV class=pbStat>TRAIN OPTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
     for (i=0;i<Seed.cities.length;i++){
-		var citynum = Seed.cities[i][0];
+      var citynum = Seed.cities[i][0];
         city = i+1;
           m += '<TABLE width=100% height=0% class=pbTab><TR align="left">';
           m+='<TR><TD width=30px><INPUT type=checkbox class='+city+' id="SelectCity'+city+'"></td>';
@@ -13116,24 +13648,24 @@ Tabs.AutoTrain = {
             for (y in unsafeWindow.unitcost) {
                 var faux = 0;
                 var uc = unsafeWindow.unitcost[y];
-				if (matTypeof(uc[8]) == 'object'){
-					if(!Seed.cityData.city[citynum].isPrestigeCity) {
-						for (k in uc[8]){
-							var b = getCityBuilding (Seed.cities[i][0], k.substr(1));
-							if (b.maxLevel < uc[8][k][1]){
-								faux = 1;
-								break;
-							}
-						}
-					}else {
-						if(uc[8]['b13']) {
-							var b = getCityBuilding (Seed.cities[i][0], 13);
-							if (b.maxLevel < uc[8]['b13'][1]){
-								faux = 1;
-							}
-						}
-					}	
-				}
+            if (matTypeof(uc[8]) == 'object'){
+               if(!Seed.cityData.city[citynum].isPrestigeCity) {
+                  for (k in uc[8]){
+                     var b = getCityBuilding (Seed.cities[i][0], k.substr(1));
+                     if (b.maxLevel < uc[8][k][1]){
+                        faux = 1;
+                        break;
+                     }
+                  }
+               }else {
+                  if(uc[8]['b13']) {
+                     var b = getCityBuilding (Seed.cities[i][0], 13);
+                     if (b.maxLevel < uc[8]['b13'][1]){
+                        faux = 1;
+                     }
+                  }
+               }  
+            }
                 if (matTypeof(uc[9]) == 'object'){
                     for (k in uc[9]){
                         if (parseInt(Seed.tech['tch'+k.substr(1)]) < uc[9][k][1]){
@@ -13150,18 +13682,18 @@ Tabs.AutoTrain = {
 //                        }
 //                    }
 //                }
-                if(y == "unt13") faux = 1;
-				if(y == "unt14") faux = 1;
-				if(y == "unt15") faux = 1;
-//				if(y == "unt16") faux = 1;  // prevent auto for now
-				if(y == "unt17") faux = 1;
-				
+            if(y == "unt13") faux = 1;
+            if(y == "unt14") faux = 1;
+            if(y == "unt15") faux = 1;
+//            if(y == "unt16") faux = 1;  // prevent for now
+            if(y == "unt17") faux = 1;
+            
                 if (faux==0)
                     m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
             }
         m+='</select></td>';
-        m+='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=4 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
-        m+='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=max'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
+        m+='<TD width=100px>Min.: <INPUT class='+city+' id=treshold'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.Threshold[city]+'"\></td>';
+        m+='<TD width=130px><INPUT type=checkbox class='+city+' id="SelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=max'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.Max[city]+'"\></td>';
         m +='<TD>'+translate("Use Workers")+': ';
         m+='<SELECT class='+city+' id="workers'+city+'"><option value="0">0%</options>';
         m+='<option value="25">25%</options>';
@@ -13176,13 +13708,13 @@ Tabs.AutoTrain = {
         <option value=38>'+unsafeWindow.itemlist.i38.name+'</option></select>';
         m+='</td></tr></table></td><tr>';
         m += '<TD></td><TD><TABLE><TR>';
-        m += '<TD width=5%><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/food_30.png"></td>';
+        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepFood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
-        m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/wood_30.png"></td>';
+        m += '<TD width=20px><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepWood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
-        m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/stone_30.png"></td>';
+        m += '<TD width=20px><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepStone'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
-        m += '<TD width=20px><img src="http://cdn1.kingdomsofcamelot.com/fb/e2/src/img/iron_30.png"></td>';
+        m += '<TD width=20px><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepOre'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
         m += '<TD><SELECT class='+city+' id="Resource'+city+'"><option value="true">'+translate("Keep")+'</options>';
         m+='<option value="false">'+translate("Use")+'</option>';
@@ -13192,18 +13724,18 @@ Tabs.AutoTrain = {
         <option value=0><CENTER>--- '+unsafeWindow.g_js_strings.commonstr.speedup+' ---</center></option>\
         <option value=1>'+ t.gamble[1].cost+'x res ('+ t.gamble[1].min+' - '+t.gamble[1].max+'%)</option>\
         <option value=2>'+ t.gamble[2].cost+'x res ('+ t.gamble[2].min+' - '+t.gamble[2].max+'%)</option></select>';
-        m+='</td></tr></table>';       
+        m+='</td></tr></table>';        
         if(Seed.cityData.city[citynum].prestigeInfo.blessings) {
-        	if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(11) != -1) {
-			m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt13'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
-		};
-		if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(21) != -1) {
-			m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt14'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
-		};
-		if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(31) != -1) {
-			m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt15'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=4 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=5 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
-		};
-	}; 
+        if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(11) != -1) {
+         m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt13'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=6 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+      };
+      if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(21) != -1) {
+         m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt14'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=6 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+      };
+      if(Seed.cityData.city[citynum].prestigeInfo.blessings.indexOf(31) != -1) {
+         m += '<tr><td></td><td align=left><INPUT class='+city+' id=AsEnabled'+city+' type=checkbox '+(TrainOptions.AsEnabled[city]?'CHECKED':'')+'> Auto train '+unsafeWindow.unitcost['unt15'][0]+' '+translate("Min")+'.: <INPUT class='+city+' id=AsTroops'+city+' type=text size=6 maxlength=6 value="'+TrainOptions.AsTroops[city]+'"><INPUT type=checkbox class='+city+' id="AsSelectMax'+city+'"> '+translate("Max")+'.: <INPUT class='+city+' id=Asmax'+city+' type=text size=6 maxlength=6 value="'+ TrainOptions.AsMax[city]+'"\></td>';
+      };
+   }; 
         m+='</td></tr></table>';
     }
       
@@ -13220,11 +13752,11 @@ Tabs.AutoTrain = {
         document.getElementById('TrainSpeedItem_'+city).value = TrainOptions.Item[city];
         if (!TrainOptions.SelectMax[city]) document.getElementById('max'+city).disabled=true;
         if(document.getElementById('AsEnabled'+city)) {
-			document.getElementById('AsEnabled'+city).checked = TrainOptions.AsEnabled[city];
-			document.getElementById('AsTroops'+city).value = TrainOptions.AsTroops[city];
-			document.getElementById('AsSelectMax'+city).checked = TrainOptions.AsSelectMax[city];
-			if (!TrainOptions.AsSelectMax[city]) document.getElementById('Asmax'+city).disabled=true;
-		};
+         document.getElementById('AsEnabled'+city).checked = TrainOptions.AsEnabled[city];
+         document.getElementById('AsTroops'+city).value = TrainOptions.AsTroops[city];
+         document.getElementById('AsSelectMax'+city).checked = TrainOptions.AsSelectMax[city];
+         if (!TrainOptions.AsSelectMax[city]) document.getElementById('Asmax'+city).disabled=true;
+      };
         
         
         
@@ -13339,7 +13871,7 @@ Tabs.AutoTrain = {
             }
             saveTrainOptions();
          }, false);
-		};
+      };
                
           
           
@@ -13404,34 +13936,27 @@ Tabs.AutoTrain = {
     if(TrainOptions.Workers[t.city] == 0)
         t.idle = parseInt(Seed.citystats['city'+cityId].pop[0]) - parseInt(Seed.citystats['city'+cityId].pop[3]);
     else
-//        t.idle = ((TrainOptions.Workers[t.city]/100)*parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-        t.idle = ( parseInt(Seed.citystats['city'+cityId].pop[0]) - (1-TrainOptions.Workers[t.city]/100)*parseInt(Seed.citystats['city'+cityId].pop[3]) ).toFixed(0);
+        t.idle = ((TrainOptions.Workers[t.city]/100)*parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
     return t.idle>0?true:false;
   },
   checktrainslots : function(cityId,prest){
-     var t = Tabs.AutoTrain;
-     if(!prest) {
-        t.barracks = getCityBuilding(cityId, 13).count;
-        t.slots = 0;
-        for (k in Seed.queue_unt['city'+cityId]) 
-           //   right now this is taking a normal and a special barrack
-           if(Seed.queue_unt['city'+cityId][k][7] == false)
-             t.slots += 1;
-
-//actionLog('barracks ' +t.barracks+ ' slots ' +t.slots+ ' length '+Seed.queue_unt['city'+cityId].length);
-//	t.slots = Seed.queue_unt['city'+cityId].length;
-        t.empty = parseInt(t.barracks - t.slots);
-        return t.empty>0?true:false;
+    var t = Tabs.AutoTrain;
+    if(!prest) {
+    t.barracks = getCityBuilding(cityId, 13).count;
+    t.slots = 0;
+    for (k in Seed.queue_unt['city'+cityId])
+    if(Seed.queue_unt['city'+cityId][k][7] == false)
+    t.slots += 1;
+    t.empty = parseInt(t.barracks - t.slots);
+    return t.empty>0?true:false;
      } else {
-        t.barracks = Number(getCityBuilding(cityId, 22).count + getCityBuilding(cityId, 24).count + getCityBuilding(cityId, 26).count);//26 briton barracks, 24 fey barracks, 22 druid barracks
-        t.slots = 0;
-        for (k in Seed.queue_unt['city'+cityId])
-           if(Seed.queue_unt['city'+cityId][k][7] == true)
-              t.slots += 1;
-//actionLog('barracks ' +t.barracks+ ' slots ' +t.slots+ ' length '+Seed.queue_unt['city'+cityId].length);
-//	t.slots = Seed.queue_unt['city'+cityId].length;
-        t.empty = parseInt(t.barracks - t.slots);
-        return t.empty>0?true:false;
+        t.barracks = Number(getCityBuilding(cityId, 22).count + getCityBuilding(cityId, 24).count + getCityBuilding(cityId, 26).count);//24 fey barracks, 22 druid barracks 26 briton barracks
+    t.slots = 0;
+    for (k in Seed.queue_unt['city'+cityId])
+    if(Seed.queue_unt['city'+cityId][k][7] == true)
+    t.slots += 1;
+    t.empty = parseInt(t.barracks - t.slots);
+    return t.empty>0?true:false;
      }
   },
   checkresources : function(cityId){
@@ -13468,8 +13993,10 @@ Tabs.AutoTrain = {
     } else {
       if(TrainOptions.AsSelectMax[t.city])
         if(parseInt(t.amt) > parseInt(TrainOptions.AsMax[t.city])) t.amt = TrainOptions.AsMax[t.city];
+      
       if(parseInt(t.amt) < parseInt(TrainOptions.AsTroops[t.city])) t.amt = 0;
     }
+    
     return t.amt>0?true:false;
   },
   
@@ -13478,35 +14005,42 @@ Tabs.AutoTrain = {
     if (!TrainOptions.Running) return;
     if (TrainOptions.tr && TrainOptions.trset != 0) {
         if (Seed.throne.activeSlot != TrainOptions.trset) {
+           setTimeout(t.nextcity, 20*000);
             return;
             };
         };
-     t.city++;
-   if(t.city > Seed.cities.length) t.city = 1;
+
+    // get more population in previous city ready for next time
+    if (t.city !=0) {
+		if (TrainOptions.Enabled[t.city] && Options.TourneyModeActive) {
+			t.GetMorePopulation(t.city-1); }
+	}
+
+    t.city++;
+    if(t.city > Seed.cities.length) t.city = 1;
     var cityId = Seed.cities[t.city-1][0];
     var idle = t.checkidlepopulation(cityId);
     var resources = t.checkresources(cityId);
-	if(Seed.cityData.city[cityId].isPrestigeCity) {
-		var ptrainslots = t.checktrainslots(cityId,true);
-		var punit = false;
-		if(getCityBuilding(cityId, 22).count)
-			punit = 13;
-		if(getCityBuilding(cityId, 24).count)
-			punit = 14;
-		if(getCityBuilding(cityId, 26).count)
-			punit = 15;
-		if(punit)	
-			var ptrain = t.trainamt(cityId, punit);
-		if(TrainOptions.AsEnabled[t.city] && idle && ptrainslots && resources && ptrain) {
-				t.doTrain(cityId, punit, t.amt, t.nextcity, TrainOptions.Item[t.city]);
-				t.city--;
-				return;
-		};
-	};
+   if(Seed.cityData.city[cityId].isPrestigeCity) {
+      var ptrainslots = t.checktrainslots(cityId,true);
+      var punit = false;
+      if(getCityBuilding(cityId, 22).count)
+         punit = 13;
+      if(getCityBuilding(cityId, 24).count)
+         punit = 14;
+      if(getCityBuilding(cityId, 26).count)
+         punit = 15;
+      if(punit)   
+         var ptrain = t.trainamt(cityId, punit);
+      if(TrainOptions.AsEnabled[t.city] && idle && ptrainslots && resources && ptrain) {
+            t.doTrain(cityId, punit, t.amt, t.nextcity, TrainOptions.Item[t.city]);
+            t.city--;
+            return;
+      };
+   };
     var trainslots = t.checktrainslots(cityId);
     var train = t.trainamt(cityId, TrainOptions['Troops'][t.city]);
     
-
     if(!TrainOptions.Enabled[t.city] || TrainOptions['Troops'][t.city]==0 || !idle || !trainslots || !resources || !train){
         setTimeout(t.nextcity, 5000);
         return;
@@ -13525,7 +14059,7 @@ Tabs.AutoTrain = {
     if(parseInt(TrainOptions.Gamble[t.city]) > 0)
         params.gambleId = TrainOptions.Gamble[t.city];
     if(params.type < 13)
-    	var inPrestige = false;
+       var inPrestige = false;
     else var inPrestige = true;
     if(params.type == 16)
 	if (parseInt(unsafeWindow.seed.items.i34001) < num) {
@@ -13561,6 +14095,97 @@ Tabs.AutoTrain = {
       onFailure: function () {profiler.stop();}
     });
   },
+  
+	GetMorePopulation: function (cityidx) {
+		var t = Tabs.popcontrol;
+		if (!t.tcp) return; // not loaded yet
+		var cityId = Seed.cities[cityidx][0]
+
+		t.tcp.selectBut(cityidx);
+		t.show_city(cityId);
+
+		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
+		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
+		num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
+		if (num == 0) return; // max pop
+   
+		var trooptype = 0; 
+		if (Options.UseTourneyST) {
+			trooptype = 1; // ST
+		}	
+		else {
+			if (Options.UseTourneyMM) {
+				trooptype = 2; // MM
+			}	
+			else {
+				if (Options.UseTourneySC) {
+					trooptype = 3; // SC
+				}	
+				else {
+					if (Options.UseTourneyPK) {
+						trooptype = 4; // PK
+					}	
+					else {
+						if (Options.UseTourneySW) {
+							trooptype = 5; // SW
+						}	
+						else {
+							if (Options.UseTourneyAR) {
+								trooptype = 6; // AR
+							}	
+						}
+					}
+				}
+			}
+		}	
+
+		if (trooptype == 0) return; // none selected
+
+		t.poptab_troop_dismiss = trooptype;
+		t.show_city(cityId);
+
+		// if no slots free, check if less than a min to go in current training queue...
+
+		NearlyDone = false;
+		if ((t.slots_free <= 0) && (t.barracks != 0)) {
+			var q = Seed.queue_unt['city'+cityId];
+			for(var i = 0; i<q.length; i++){
+				if(!q[i][7]){
+					cur = q[i][3] - now;
+					break;
+				}
+			}
+			NearlyDone = (cur <= 60);
+			if (NearlyDone) {t.log("Nearly Done...");}
+		}	
+   
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 1) && (Options.UseTourneyMM)) {
+			t.poptab_troop_dismiss = 2; // Then try MM
+			t.show_city(cityId);
+		}   
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 2) && (Options.UseTourneySC)) {
+			t.poptab_troop_dismiss = 3; // Then try SC
+			t.show_city(cityId);
+		}   
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 3) && (Options.UseTourneyPK)) {
+			t.poptab_troop_dismiss = 4; // Then try PK
+			t.show_city(cityId);
+		}   
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 4) && (Options.UseTourneySW)) {
+			t.poptab_troop_dismiss = 5; // Then try SW
+			t.show_city(cityId);
+		}   
+		if ((t.cur_mm == 0) && (t.poptab_troop_dismiss == 5) && (Options.UseTourneyAR)) {
+			t.poptab_troop_dismiss = 6; // Then try AR
+			t.show_city(cityId);
+		}   
+   
+		if (((t.slots_free > 0) || NearlyDone) && (t.cur_mm != 0) ) {
+			t.log("Generating Tournament Population");
+			t.dismiss_mm(cityId,true); // no retry
+		}	
+	},
+
 }
 
 /************************ Gold Collector ************************/
@@ -13638,21 +14263,21 @@ var RefreshEvery  = {
   
   init : function (){
     var t = RefreshEvery;
-	t.creatediv();
-	if (Options.pbEveryMins < 1)
+    t.creatediv();
+    if (Options.pbEveryMins < 1)
         Options.pbEveryMins = 1;
     RefreshEvery.setEnable (Options.pbEveryEnable);
   },
   
   creatediv : function(){
     var t = RefreshEvery;
-	t.target = document.getElementById('comm_tabs');
-	if(t.target == null){
-		setTimeout(t.creatediv, 2000);
-		return;
-	}
-	t.box = document.createElement('div');
-	t.target.appendChild(t.box);
+    t.target = document.getElementById('comm_tabs');
+    if(t.target == null){
+        setTimeout(t.creatediv, 2000);
+        return;
+    }
+    t.box = document.createElement('div');
+    t.target.appendChild(t.box);
     t.box.addEventListener('click', function () {t.setEnable(Options.pbEveryEnable)}, false);
   },
   
@@ -13661,14 +14286,14 @@ var RefreshEvery  = {
     clearTimeout (t.timer);
     if (tf) {
       //t.timer = setTimeout (t.doit, Options.pbEveryMins*60000);
-      t.NextRefresh = unixTime() + (Options.pbEveryMins*60); 
+      t.NextRefresh = unixTime() + (Options.pbEveryMins*60);
       t.timer = setTimeout (t.Paint, 1000);
     } else {
         //t.PaintTimer = null;
-		t.timer = null;
-		t.NextRefresh = 0;
-		t.box.innerHTML = '<BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
-	}
+        t.timer = null;
+        t.NextRefresh = 0;
+        t.box.innerHTML = '<BR><FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
+    }
   },
   
   doit : function (){
@@ -13685,27 +14310,43 @@ var RefreshEvery  = {
   
   Paint : function(){
      var t = RefreshEvery;
-	 if(t.timer == null) return;
+     if(t.timer == null) return;
      now = unixTime();
      //var text = '<FONT color=white><B>&nbsp;&nbsp;&nbsp;&nbsp;'+ getMyAlliance()[1] + ' (' + getServerId() +')</b></font>';
-	 var text = '';
+     var text = '';
      var Left = parseInt(t.NextRefresh - now);
-     if ( Left < 0){
-		Left = 0;
-		t.doit();
-	 }
-     if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
-     else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>Next refresh in: <B>'+ timestr(Left) +'</b></font></div>';
-    
-	 t.box.innerHTML = text;
+     if(Options.detAFK) {
+     if ( Left < 0 && isAFK){
+        Left = 0;
+        t.doit();
+     }    	
+     } else {
+    if ( Left < 0){
+        Left = 0;
+        t.doit();
+     }
+ 
+     };
+     if (Left < -1) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
+     else if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
+     else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
+
+     t.box.innerHTML = text;
      t.timer = setTimeout (t.Paint, 1000);
   },
 }
-
 /************************ Fairie Killer ************************/
 var FairieKiller  = {
   saveFunc : null,
   init : function (tf){
+
+
+
+
+
+
+
+
     if (firefoxVersion.substring(0,4) == '4.0b')  // bug in firefox 4.0b10 causes syntax error with: "var func = eval ('function (){}');"
       return;
     FairieKiller.saveFunc = unsafeWindow.Modal.showModalUEP;
@@ -13719,7 +14360,7 @@ var FairieKiller  = {
   },
 }
 
-/********** facebook watchdog: runs only in 'http://apps.facebook.com/kingdomsofcamelot/*' instance!  ******/
+/********** facebook watchdog: runs only in 'https://apps.facebook.com/kingdomsofcamelot/*' instance!  ******/
 function facebookWatchdog (){
   var INTERVAL = 50000; // wait 50 seconds minute before checking DOM
   if (!GlobalOptions.pbWatchdog)
@@ -13732,12 +14373,10 @@ function facebookWatchdog (){
 //      if (document.getElementById('app_content_130402594779').firstChild.firstChild.childNodes[1].firstChild.tagName!='IFRAME'){
       if (document.getElementById('app_content_130402594779') == null){
         logit ("KOC NOT FOUND!");
-        actionLog ("KOC NOT FOUND!1");
         KOCnotFound(5*60);
       }
     } catch (e){
       logit ("KOC NOT FOUND!");
-      actionLog ("KOC NOT FOUND!2");
       KOCnotFound(4*60);
     }
   }
@@ -13753,9 +14392,8 @@ function kocWatchdog (){
 logit ("KOC WATCHDOG: "+ document.getElementById('mod_maparea')+" "+document.location);    
     if (document.getElementById('mod_maparea')==null){
       logit ("KOC not loaded");
-      actionLog ("KOC not loaded3");
       KOCnotFound(20);
-    }     
+    }    
   }
 }
 
@@ -13764,27 +14402,24 @@ function KOCnotFound(secs){
   var div;
   var countdownTimer = null;
   var endSecs = (new Date().getTime()/1000) + secs;
-    
+  
   div = document.createElement('div');
-  div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>KOC Power Bot has detected that KOC is not loaded<BR>\
-      Refreshing in <SPAN id=pbwdsecs></span><BR><INPUT id=pbwdcan type=submit value="Cancel Refresh"><BR><BR></div>';
+  div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>KOC Power Bot has detected that KOC is not loaded<BR>Refreshing in <SPAN id=pbwdsecs></span><BR><INPUT id=pbwdcan type=submit value="Cancel Refresh"><BR><BR></div>';
   document.body.insertBefore (div, document.body.firstChild);
   document.getElementById('pbwdcan').addEventListener('click', cancel, false);
-  countdown();
+    countdownTimer = setInterval (countdown, 1000);
       
   function countdown (){
     var secsLeft = endSecs - (new Date().getTime()/1000);
     document.getElementById('pbwdsecs').innerHTML = timestr(secsLeft);
     if (secsLeft < 0)
       reloadKOC();
-    countdownTimer = setTimeout (countdown, 1000);
   }
   function cancel (){
     clearTimeout (countdownTimer);
     document.body.removeChild (div);
   }
 }
-
 
 
 var WideScreen = {
@@ -13832,24 +14467,123 @@ var WideScreen = {
   },
   
   useWideMap : function (tf) {
-  	t = WideScreen;
-  	if (tf == t.useWideMap || !GlobalOptions.pbWideScreen)
-  		return;
-  	if (tf){
+      t = WideScreen;
+      if (tf == t.useWideMap || !GlobalOptions.pbWideScreen)
+          return;
+      if (tf){
       t.rail.style.display = 'none';
       document.getElementById('mapwindow').style.height = "436px";
       document.getElementById('mapwindow').style.width = "1220px";
       document.getElementById('mapwindow').style.zIndex = "50";
-  	} else {
+      } else {
       t.rail.style.display = 'block';
       document.getElementById('mapwindow').style.height = "439px";
       document.getElementById('mapwindow').style.width = "760px";
       document.getElementById('mapwindow').style.zIndex = "";
-  	}
+      }
   },
 }
 
-/*******************   Chat tab ****************/
+/*******************  Whisper Tab ****************/
+
+
+Tabs.Whisper = {
+   tabOrder: 199999,
+   tabDisabled : false,
+   tabLabel : 'Whisper',
+   myDiv : null,
+   LoggedWhispers : [],
+   catchwhispers : null,
+   
+   init : function (div) {
+      var t = Tabs.Whisper;      
+		unsafeWindow.whisperlog = t.whisperlog;
+		t.whisperlog();
+      t.myDiv = div;
+      var m = '<DIV class=pbStat>Logged whispers while afk</div><br>';
+		m += '<table><tr><td><INPUT id=pbpostwh type=submit value="Show logged whispers" \></td><td><INPUT id=pbdelwh type=submit value="Delete Logged Whispers" \></td></tr></table>';      
+      div.innerHTML = m;
+      
+      document.getElementById('pbpostwh').addEventListener ('click', function() {t.postWhisper()}, false);
+      
+      document.getElementById('pbdelwh').addEventListener ('click', function() {t.eraseWhisper()} , false);
+      
+   },
+   
+   saveWhisper : function (){
+      var t = Tabs.Whisper;
+  		var serverID = getServerId();
+   	setTimeout (function (){GM_setValue ('Whisper_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(t.LoggedWhispers));}, 0);
+	},
+   
+   readWhisper : function (){
+      var t = Tabs.Whisper;
+ 	   var serverID = getServerId();
+ 		s = GM_getValue ('Whisper_'+Seed.player['name']+'_'+serverID, '[]');
+  		if (s != null){
+    		opts = JSON2.parse (s);
+    		for (k in opts){
+      		if (matTypeof(opts[k]) == 'object')
+        			for (kk in opts[k])
+         			t.LoggedWhispers[k][kk] = opts[k][kk];
+      		else
+        			t.LoggedWhispers[k] = opts[k];
+    		}
+  		}
+	},
+   
+   postWhisper : function () {
+      var t = Tabs.Whisper;
+		var mod_comm_list2 = document.getElementById('mod_comm_list2');
+		var mod_comm_list1 = document.getElementById('mod_comm_list1')
+		for(k = 0;k<t.LoggedWhispers.length;k++) {
+      	var chatwrap1 = document.createElement("div");
+            chatwrap1.className = "chatwrap clearfix direct";
+            chatwrap1.innerHTML = t.LoggedWhispers[k];		
+       	var chatwrap2 = document.createElement("div");
+            chatwrap2.className = "chatwrap clearfix direct";
+            chatwrap2.innerHTML = t.LoggedWhispers[k];
+			mod_comm_list2.insertBefore(chatwrap2,mod_comm_list2.firstChild);
+			mod_comm_list1.insertBefore(chatwrap1,mod_comm_list1.firstChild);
+		};
+	},
+	
+   eraseWhisper : function() {
+      var t = Tabs.Whisper;
+		t.LoggedWhispers = [];
+		t.saveWhisper();
+	},
+	
+	whisperlog : function(innerHTML) {
+   	var t = Tabs.Whisper;
+		if(!innerHTML) {
+			t.readWhisper();
+     		t.catchwhispers = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap.innerHTML);if']]);
+     		t.catchwhispers.setEnable(true);
+		} else {
+			if(isAFK) {
+				t.LoggedWhispers.push(innerHTML);
+				t.saveWhisper();
+				//logit(inspect(chatwrap));
+			};
+		};
+  },	
+	
+   
+  hide : function (){
+    var t = Tabs.Whisper;
+  },
+
+  show : function (){
+    var t = Tabs.Whisper;
+  },  
+}
+
+/*******************  End Whisper ****************/
+
+
+
+/*******************  Chat tab ****************/
 Tabs.Chat = {
   tabOrder : 300,
   tabLabel : unsafeWindow.g_js_strings.commonstr.chat,
@@ -13860,41 +14594,41 @@ Tabs.Chat = {
     var t = Tabs.Chat;
     t.myDiv = div;
     unsafeWindow.pbviewtroops = t.viewtroops;
-    t.myDiv.innerHTML = '<DIV class=pbStat>Chat Answer/Reply Info</div><TABLE><TR>\
-						<TD><input type=checkbox id=pbchatqaenable /></td><TD>Enable chat functions </td></tr>\
-						<TR><TD><input type=checkbox id=pbchatpassenable /></td><TD>Enable password: <input type=text id=pbchatpass value="'+ ChatOptions.password +'"/></td>\
-						<TD width=10px>&nbsp;</td><TD><input type=checkbox id=pbautoblacklist />Auto blacklist players if 1st attempt fails</td></tr>\
-						<TR><TD></td><TD valign=top>Allowed Players: <br><textarea cols=30 rows=1 id=allowUserBox></textarea></td>\
-						<TD width=10px>&nbsp;</td><TD> Blacklisted Players <br><textarea cols=30 rows=1 id=blacklistUserBox ></textarea></td></tr>\
-						<TR><TD colspan=3>Type "/[Player] units?" to get a unit count <br> Type "/[Player] attacks? to get impending attacks <br> Player name is cAsE-SeNsItIvE </td></tr></table>';
-	t.togtext('allowUserBox', 'AllowUsersRemoteControl');
-	t.togtext('blacklistUserBox', 'BlacklistUsersRemoteControl');
-	t.togOpt('pbchatqaenable', 'Chatenable', ChatStuff.init);
-	t.togOpt('pbchatpassenable', 'Chatpassenable');
-	t.togOpt('pbautoblacklist', 'Chatautoblacklist');
-	document.getElementById('pbchatpass').addEventListener('change', function(e){
-		ChatOptions.password = e.target.value;
-		GM_log(e.target.value);
-		saveChatOptions();
-	}, false);
+    t.myDiv.innerHTML = '<DIV class=pbStat>'+translate("Chat Answer/Reply Info")+'</div><TABLE><TR>\
+                        <TD><input type=checkbox id=pbchatqaenable /></td><TD>'+translate("Enable chat functions")+' </td></tr>\
+                        <TR><TD><input type=checkbox id=pbchatpassenable /></td><TD>'+translate("Enable password:")+'  <input type=text id=pbchatpass value="'+ ChatOptions.password +'"/></td>\
+                        <TD width=10px>&nbsp;</td><TD><input type=checkbox id=pbautoblacklist />'+translate("Auto blacklist players if 1st attempt fails")+'</td></tr>\
+                        <TR><TD></td><TD valign=top>'+translate("Allowed Players:")+' <br><textarea cols=30 rows=1 id=allowUserBox></textarea></td>\
+                        <TD width=10px>&nbsp;</td><TD> '+translate("Blacklisted Players")+' <br><textarea cols=30 rows=1 id=blacklistUserBox ></textarea></td></tr>\
+                        <TR><TD colspan=3>'+translate("Type \"/[Player] units? [password]\" to get a unit count <br> Type \"/[Player] attacks? [password]\" to get impending attacks")+' <br> '+translate("Type \"/[Player] tr? [password] [preset]\" to switch to a specific TR preset.")+'<br>' +translate("Player name is cAsE-SeNsItIvE")+' </td></tr></table>';
+    t.togtext('allowUserBox', 'AllowUsersRemoteControl');
+    t.togtext('blacklistUserBox', 'BlacklistUsersRemoteControl');
+    t.togOpt('pbchatqaenable', 'Chatenable', ChatStuff.init);
+    t.togOpt('pbchatpassenable', 'Chatpassenable');
+    t.togOpt('pbautoblacklist', 'Chatautoblacklist');
+    document.getElementById('pbchatpass').addEventListener('change', function(e){
+        ChatOptions.password = e.target.value;
+        GM_log(e.target.value);
+        saveChatOptions();
+    }, false);
   },
   
   togtext : function(boxId, optionName){
     var t = Tabs.Chat;
-	var e = document.getElementById(boxId);
-	var text = '';
-	for(i=0; i<ChatOptions[optionName].length; i++)
-		text += ChatOptions[optionName][i]+'\n';
-	e.value = text;
-	e.addEventListener('change', new eventToggle(boxId, optionName).handler, false);
-	function eventToggle (boxId, optionName){
+    var e = document.getElementById(boxId);
+    var text = '';
+    for(i=0; i<ChatOptions[optionName].length; i++)
+        text += ChatOptions[optionName][i]+'\n';
+    e.value = text;
+    e.addEventListener('change', new eventToggle(boxId, optionName).handler, false);
+    function eventToggle (boxId, optionName){
       this.handler = handler;
       var optName = optionName;
       function handler(event){
-	    ChatOptions[optionName] = [];
-		var values = this.value.split('\n');
+        ChatOptions[optionName] = [];
+        var values = this.value.split('\n');
         for(var i=0; i<values.length; i++)
-			ChatOptions[optionName][i] = values[i];
+            ChatOptions[optionName][i] = values[i];
         saveChatOptions();
       }
     }
@@ -13925,34 +14659,34 @@ Tabs.Chat = {
   },
   
   viewtroops : function (u1,u2,u3,u4,u5,u6,u7,u8,u9,u10,u11,u12){
-	var t = Tabs.Chat;
-  	t.popReport = new pbPopup('pbShowTroops', 0, 0, 500, 300, true);
-  	t.popReport.centerMe (mainPop.getMainDiv());  
-  	var m = '<DIV style="max-height:275px; height:275px; overflow-y:scroll">'; 
-  	
-  	m+='<TABLE class=ptTab>\
-		<TR><TD><b>Impending Attack</b></td></tr></table>';
-	m+='<TABLE class=ptTab><TR><TD align="center">Troops</td><TD align="center">Amount</td></tr>';
-	
-	if(u1) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_1_30.png></td><TD align="center">'+parseInt(u1)+'</td></tr>';
-	if(u2) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_2_30.png></td><TD align="center">'+parseInt(u2)+'</td></tr>';
-	if(u3) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_3_30.png></td><TD align="center">'+parseInt(u3)+'</td></tr>';
-	if(u4) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_4_30.png></td><TD align="center">'+parseInt(u4)+'</td></tr>';
-	if(u5) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_5_30.png></td><TD align="center">'+parseInt(u5)+'</td></tr>';
-	if(u6) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_6_30.png></td><TD align="center">'+parseInt(u6)+'</td></tr>';
-	if(u7) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_7_30.png></td><TD align="center">'+parseInt(u7)+'</td></tr>';
-	if(u8) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_8_30.png></td><TD align="center">'+parseInt(u8)+'</td></tr>';
-	if(u9) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_9_30.png></td><TD align="center">'+parseInt(u9)+'</td></tr>';
-	if(u10) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_10_30.png></td><TD align="center">'+parseInt(u10)+'</td></tr>';
-	if(u11) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_11_30.png></td><TD align="center">'+parseInt(u11)+'</td></tr>';
-	if(u12) m+='<TR><TD align="center"><img src=http://koc.god-like.info/img/unit_12_30.png></td><TD align="center">'+parseInt(u12)+'</td></tr>';
-	
-  	m+='<TR><TD></TD></TR><TR><TD></TD></TR></table>';
-	
-	m+='</div>';
-  	t.popReport.getMainDiv().innerHTML = m;
-  	t.popReport.getTopDiv().innerHTML = '<TD><CENTER><B>Incoming</b></center></td>';
-  	t.popReport.show(true)	;
+    var t = Tabs.Chat;
+      t.popReport = new pbPopup('pbShowTroops', 0, 0, 500, 300, true);
+      t.popReport.centerMe (mainPop.getMainDiv());  
+      var m = '<DIV style="max-height:275px; height:275px; overflow-y:scroll">';
+      
+      m+='<TABLE class=ptTab>\
+        <TR><TD><b>'+translate("Impending Attack")+'</b></td></tr></table>';
+    m+='<TABLE class=ptTab><TR><TD align="center">'+translate("Troops")+'</td><TD align="center">'+translate("Amount")+'</td></tr>';
+    
+    if(u1) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_1_30.png></td><TD align="center">'+parseInt(u1)+'</td></tr>';
+    if(u2) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_2_30.png></td><TD align="center">'+parseInt(u2)+'</td></tr>';
+    if(u3) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_3_30.png></td><TD align="center">'+parseInt(u3)+'</td></tr>';
+    if(u4) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_4_30.png></td><TD align="center">'+parseInt(u4)+'</td></tr>';
+    if(u5) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_5_30.png></td><TD align="center">'+parseInt(u5)+'</td></tr>';
+    if(u6) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_6_30.png></td><TD align="center">'+parseInt(u6)+'</td></tr>';
+    if(u7) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_7_30.png></td><TD align="center">'+parseInt(u7)+'</td></tr>';
+    if(u8) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_8_30.png></td><TD align="center">'+parseInt(u8)+'</td></tr>';
+    if(u9) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_9_30.png></td><TD align="center">'+parseInt(u9)+'</td></tr>';
+    if(u10) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_10_30.png></td><TD align="center">'+parseInt(u10)+'</td></tr>';
+    if(u11) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_11_30.png></td><TD align="center">'+parseInt(u11)+'</td></tr>';
+    if(u12) m+='<TR><TD align="center"><img src='+http+'koc.god-like.info/img/unit_12_30.png></td><TD align="center">'+parseInt(u12)+'</td></tr>';
+    
+      m+='<TR><TD></TD></TR><TR><TD></TD></TR></table>';
+    
+    m+='</div>';
+      t.popReport.getMainDiv().innerHTML = m;
+      t.popReport.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Incoming")+'</b></center></td>';
+      t.popReport.show(true)    ;
   },
   
   hide : function (){
@@ -13971,325 +14705,407 @@ processqueue : [],
 latestChats : [],
 
   init:function() {
-	var t=ChatStuff;
-	var comm=document.getElementById('mod_comm_list2');
-	if(comm && ChatOptions.Chatenable) {
-		if(t.timeout == null) {
-			t.GetLatestChat();
-			t.timeout = window.setTimeout(function() {
-				t.IterateChat(t.ChatAdded);
-			},200);
-		} else {
-			logit("Maybe too many chat messages, chat already processing.");
-		}
-	}
-	window.setTimeout(function() {
-		t.init();
-	},5000);
+    var t=ChatStuff;
+    var comm=document.getElementById('mod_comm_list2');
+    if(comm && ChatOptions.Chatenable) {
+        if(t.timeout == null) {
+            t.GetLatestChat();
+            t.timeout = window.setTimeout(function() {
+                t.IterateChat(t.ChatAdded);
+            },200);
+        } else {
+            logit("Maybe too many chat messages, chat already processing.");
+        }
+    }
+    window.setTimeout(function() {
+        t.init();
+    },5000);
   },
 
-  GetLatestChatStr:function(chatObj) { 
-	return chatObj.name+'#'+chatObj.time+'#'+chatObj.text.split(/[\.\?]/)[0]; 
+  GetLatestChatStr:function(chatObj) {
+    return chatObj.name+'#'+chatObj.time+'#'+chatObj.text.split(/[\.\?]/)[0];
   },
 
   GetLatestChat:function() {
-	var t = ChatStuff;
-	t.latestChats = ChatOptions.latestChats;
-	if(t.latestChats.length>25) {
-		t.latestChats.splice(0,1);
-	}
+    var t = ChatStuff;
+    t.latestChats = ChatOptions.latestChats;
+    if(t.latestChats.length>25) {
+        t.latestChats.splice(0,1);
+    }
   },
 
   GetChatTimeNum:function(time) {
-	var tarr=time.split(':');
-	if(!time) return undefined;
-	var timeNum=(tarr[0]*60)+tarr[1];
-	return timeNum;
+    var tarr=time.split(':');
+    if(!time) return undefined;
+    var timeNum=(tarr[0]*60)+tarr[1];
+    return timeNum;
   },
 
   GetChatObj:function(htmlObj) {
-	var t=ChatStuff;
-	var nm=searchDOM(htmlObj,'node.className=="nm"',8);
-	var time=searchDOM(htmlObj,'node.className=="time"',8);
-	var tx=searchDOM(htmlObj,'node.className=="tx"',8);
-	if(!nm || !time || !tx) { return undefined; }
-	var nameArr=nm.innerHTML.split(' ');
-   var Afchar = new RegExp(atob('rQ=='),"g");
-   tx = tx.replace(Afchar,"").replace(/\&\#8232\;/g,"");
-	var fromMe = nameArr[1]==Seed.player.name?true:false;
-	return { 
-		'obj':htmlObj,
-		'textObj':tx,
-		'name':nm.innerHTML,
-		'time':time.innerHTML,
-		'text':tx.innerHTML,
-		'shortName':nameArr[1],
-		'timeNum':t.GetChatTimeNum(time.innerHTML),
-		'fromMe':fromMe?1:0,
-	};
+    var t=ChatStuff;
+    var nm=searchDOM(htmlObj,'node.className=="nm"',8);
+    var time=searchDOM(htmlObj,'node.className=="time"',8);
+    var tx=searchDOM(htmlObj,'node.className=="tx"',8);
+    if(!nm || !time || !tx) { return undefined; }
+    var nameArr=nm.innerHTML.split(' ');
+    //var Afchar = new RegExp(atob('rQ=='),"g");
+    //tx = tx.replace(Afchar,"").replace(/\&\#8232\;/g,"");
+    var fromMe = nameArr[1]==Seed.player.name?true:false;
+    return {
+        'obj':htmlObj,
+        'textObj':tx,
+        'name':nm.innerHTML,
+        'time':time.innerHTML,
+        'text':tx.innerHTML,
+        'shortName':nameArr[1],
+        'timeNum':t.GetChatTimeNum(time.innerHTML),
+        'fromMe':fromMe?1:0,
+    };
   },
 
   IterateChat:function(func) {
-	var t=ChatStuff;
-	var comm = document.getElementById('mod_comm_list2');
-	var directs = searchDOM(comm,'node.className=="chatwrap clearfix direct"',4,true);
-	var chats=[];
-	for(var d=directs.length-1; d>=0; d--) {
-		var direct=directs[d];
-		var chatObj=t.GetChatObj(direct);
-		if(chatObj) {
-			chats.push([direct,chatObj]);
-		}
-	}
-	t.checkProcessed(chats, func);
+    var t=ChatStuff;
+    var comm = document.getElementById('mod_comm_list2');
+    var directs = searchDOM(comm,'node.className=="chatwrap clearfix direct"',4,true);
+    var chats=[];
+    for(var d=directs.length-1; d>=0; d--) {
+        var direct=directs[d];
+        var chatObj=t.GetChatObj(direct);
+        if(chatObj) {
+            chats.push([direct,chatObj]);
+        }
+    }
+    t.checkProcessed(chats, func);
   },
 
   checkProcessed : function(chats, func){
-	var t=ChatStuff;
-	for(var c=0; c<chats.length; c++) {
-		var found = false;
-		var chatObj=chats[c][1];
-		for(var i=0; i<t.latestChats.length; i++){
-			if(t.latestChats[i] == t.GetLatestChatStr(chatObj))
-				found = true;
-		}
-		if(!found){
-		chatObj.notProcessed=true;
-		ChatOptions.latestChats.push(t.GetLatestChatStr(chatObj));
-		}
-		func(chatObj);
-	}
-	saveChatOptions();
-	t.timeout = null;
+    var t=ChatStuff;
+    for(var c=0; c<chats.length; c++) {
+        var found = false;
+        var chatObj=chats[c][1];
+        for(var i=0; i<t.latestChats.length; i++){
+            if(t.latestChats[i] == t.GetLatestChatStr(chatObj))
+                found = true;
+        }
+        if(!found){
+        chatObj.notProcessed=true;
+        ChatOptions.latestChats.push(t.GetLatestChatStr(chatObj));
+        }
+        func(chatObj);
+    }
+    saveChatOptions();
+    t.timeout = null;
   },
 
   GetCitiesHash:function(arr) {
-	var h={};
-	for(var a=0; a<arr.length; a++) {
-		var city=arr[a];
-		var newA=[]
-		Array.prototype.push.apply(newA, city);
+    var h={};
+    for(var a=0; a<arr.length; a++) {
+        var city=arr[a];
+        var newA=[]
+        Array.prototype.push.apply(newA, city);
 
-		h[city[0]]=newA;
-	}
-	return h;
+        h[city[0]]=newA;
+    }
+    return h;
   },
 
   SendChat:function(name,mess) {
-	var inp=document.getElementById('mod_comm_input');
-	inp.value="@"+name+' '+mess;
-	logit('Send chat:'+mess);
-	unsafeWindow.Chat.sendChat();
+    var inp=document.getElementById('mod_comm_input');
+    inp.value="@"+name+' '+mess;
+    logit('Send chat:'+mess);
+    unsafeWindow.Chat.sendChat();
   },
 
   ChatFuncs:{
-	'units':{
-		'question':function(chatObj,info) {
-			if(!chatObj.notProcessed) { return; }
-			var t=ChatStuff;
-			
-			t.SendChat(chatObj.shortName,"units."+JSON2.stringify({
-				'cities':t.GetCitiesHash(Seed.cities),
-				'units':Seed.units,
-			}));
-		},
-		'answer':function(chatObj,info) {
-			var t=ChatStuff;
-			// {"city24479":{"tick":1297589617,"rec1":"[756220044, 2592000000, 7100, 3033]","rec2":"[539696566, 1836000000, 5000, 0]","rec3":"[191319892, 1548000000, 4200, 0]","rec4":"[4512787, 1512000000, 4100, 0]"}}
-			var infoObj=JSON2.parse(info);
-			var res=infoObj.units;
-			var cities=infoObj.cities;
-			
-			chatObj.textObj.innerHTML='';
-			var table=document.createElement('table');
-			//table.className='direct';
-			function AddCell(tr) {
-				var td=tr.insertCell(-1);
-				//td.className='direct';
-				td.style.backgroundColor='#ffde75';
-				td.style.textAlign='right';
-				return td;
-			}
-			for(var city in res) {
-				var resObj=res[city];
+    'units':{
+        'question':function(chatObj,info) {
+            if(!chatObj.notProcessed) { return; }
+            var t=ChatStuff;
+            
+            t.SendChat(chatObj.shortName,"units."+JSON2.stringify({
+                'cities':t.GetCitiesHash(Seed.cities),
+                'units':Seed.units,
+            }));
+        },
+        'answer':function(chatObj,info) {
+            var t=ChatStuff;
+            // {"city24479":{"tick":1297589617,"rec1":"[756220044, 2592000000, 7100, 3033]","rec2":"[539696566, 1836000000, 5000, 0]","rec3":"[191319892, 1548000000, 4200, 0]","rec4":"[4512787, 1512000000, 4100, 0]"}}
+            var infoObj=JSON2.parse(info);
+            var res=infoObj.units;
+            var cities=infoObj.cities;
+            
+            chatObj.textObj.innerHTML='';
+            var table=document.createElement('table');
+            //table.className='direct';
+            function AddCell(tr) {
+                var td=tr.insertCell(-1);
+                //td.className='direct';
+                td.style.backgroundColor='#ffde75';
+                td.style.textAlign='right';
+                return td;
+            }
+            for(var city in res) {
+                var resObj=res[city];
+                
+                var tr=table.insertRow(-1);
+                //var cityTd=tr.insertCell(-1);
+                var cityTd=AddCell(tr);
+                cityTd.colspan='4';
+                cityTd.style.fontWeight='bold';
+                var cityM=/([0-9]+)$/.exec(city);
+                var cityObj=cities[cityM[1]];
+                if(!cityObj) {
+                    logit('Cannot find city:'+cityM[1]);
+                    continue;
+                }
+                
+                cityTd.innerHTML=cityObj[1];
+                //for(var r=1; r<=4; r++ ) {
+                for(var unt in resObj) {
+                    //var rarr=JSON2.parse(resObj['rec'+r].replace(' ',''));
+                    var units=parseInt(resObj[unt]);
+                    
+                    if(units<=0) continue;
+                    var tr=table.insertRow(-1);
+                    AddCell(tr).innerHTML=unsafeWindow.unitcost[unt][0];
+                    AddCell(tr).innerHTML=addCommas(units);
+                }
+            }
+            chatObj.textObj.appendChild(table);
+        },
+    },
+    'attacks':{
+        'question':function(chatObj,info) {
+            if(!chatObj.notProcessed) { return; }
+            var t=ChatStuff;
+            
+            t.SendChat(chatObj.shortName,"attacks."+JSON2.stringify({
+                'cities':t.GetCitiesHash(Seed.cities),
+                'marches':Seed.queue_atkinc,
+                'players':Seed.players,
+                'alliance':Seed.allianceNames,
+            }));
+        },
+        'answer':function(chatObj,info) {
+            var t=ChatStuff;
+            var infoObj=JSON2.parse(info);
+            var res=infoObj.marches;
+            var cities=infoObj.cities;
+            var names=infoObj.players;
+            var alliance=infoObj.alliance;
+            
+            chatObj.textObj.innerHTML='';
+            var div = document.createElement('div');
+            var table=document.createElement('table');
+            div.style.overflow = 'auto';
+            function AddCell(tr) {
+                var td=tr.insertCell(-1);
+                td.style.backgroundColor='#ffde75';
+                td.style.textAlign='right';
+                return td;
+            }
+            var cityTr = {};
+            for(var city in cities) {                
+                cityTr[city]=table.insertRow(-1);
+                cityTd=AddCell(cityTr[city]);
+                cityTd.colspan='4';
+                cityTd.style.fontWeight='bold';
+                cityTd.innerHTML=cities[city][1].substring(0,10)+' '+coordLink(cities[city][2],cities[city][3]);
+            }
+            for(var marches in res){
+                var marchObj = res[marches];
+                if(!marchObj.toCityId) continue;
+                if(marchObj.marchType == 3 || marchObj.marchType ==4){
+                    var tr=table.insertRow(cityTr[marchObj.toCityId].rowIndex+1);//Specify which city to insert
+                    var timeLeft = parseInt(marchObj.arrivalTime-unixTime());
+                    if(timeLeft < 0) continue;
+                    
+                    AddCell(tr).innerHTML = timestr(timeLeft);
+                    AddCell(tr).innerHTML = coordLink(marchObj.fromXCoord,marchObj.fromYCoord);
+                    AddCell(tr).innerHTML = names['u'+marchObj.pid]?names['u'+marchObj.pid].n.substring(0,10):(marchObj.players['u'+marchObj.pid]?marchObj.players['u'+marchObj.pid].n.substring(0,10):'Undefined');
+                    AddCell(tr).innerHTML = (alliance['a'+marchObj.fromAllianceId]?alliance['a'+marchObj.fromAllianceId].substring(0,10):'Undefined')+' ('+getDiplomacy(marchObj.fromAllianceId)+')';
+                    var troops = [];
+                    for(var t = 1; t<15; t++){
+                        troops.push(parseInt(marchObj.unts['u'+t]));
+                    }
+                    AddCell(tr).innerHTML = '<a onclick=pbviewtroops('+ troops.join(',') +')>'+translate("View troops")+'</a>';
+                }
+            }
+            div.appendChild(table);
+            chatObj.textObj.appendChild(div);
+        },
+    },
+   'tr':{
+        'question':function(chatObj,info) {
+                    // This is dangerous and in beta. Chat processor is still not 100% but I'm releasing this bit
+			if(!chatObj.notProcessed || chatObj.fromMe) { return; }
+            var t=ChatStuff;
+			var preset=parseInt(info) || 0;
+			Options.alertConfig.lastAttack = now; // Prevent Tower TR from immediately switching back if no recent incoming
+			var msg = '';
+			if (Options.alertConfig.alertTR) {
+				msg += ' CAUTION: Auto TR toggle on incoming is on and set to change to preset ' + Options.alertConfig.alertTRset +'.';
+			};
+			if (preset>0 && preset<=Seed.throne.slotNum) {
+				Tabs.Throne.doPreset(preset,0);
 				
-				var tr=table.insertRow(-1);
-				//var cityTd=tr.insertCell(-1);
-				var cityTd=AddCell(tr);
-				cityTd.colspan='4';
-				cityTd.style.fontWeight='bold';
-				var cityM=/([0-9]+)$/.exec(city);
-				var cityObj=cities[cityM[1]];
-				if(!cityObj) {
-					logit('Cannot find city:'+cityM[1]);
-					continue; 
-				}
-				
-				cityTd.innerHTML=cityObj[1];
-				//for(var r=1; r<=4; r++ ) {
-				for(var unt in resObj) {
-					//var rarr=JSON2.parse(resObj['rec'+r].replace(' ',''));
-					var units=parseInt(resObj[unt]);
-					
-					if(units<=0) continue;
-					var tr=table.insertRow(-1);
-					AddCell(tr).innerHTML=unsafeWindow.unitcost[unt][0];
-					AddCell(tr).innerHTML=addCommas(units);
-				}
+				t.SendChat(chatObj.shortName,'Throne Room changed to preset '+preset+' per request.\r\n' + msg);
 			}
-			chatObj.textObj.appendChild(table);
-		},
-	},
-	'attacks':{
-		'question':function(chatObj,info) {
-			if(!chatObj.notProcessed) { return; }
-			var t=ChatStuff;
+			else {
+				Tabs.Throne.doPreset('1',0);
+				t.SendChat(chatObj.shortName,'Throne Room changed to preset 1 by default.\r\n' + msg);
+			};
+			// Send message to self to record TR switch action	
+			var message = chatObj.shortName.toString() + ' changed your TR to preset ' + preset.toString() + '.';
 			
-			t.SendChat(chatObj.shortName,"attacks."+JSON2.stringify({
-				'cities':t.GetCitiesHash(Seed.cities),
-				'marches':Seed.queue_atkinc,
-				'players':Seed.players,
-				'alliance':Seed.allianceNames,
-			}));
-		},
-		'answer':function(chatObj,info) {
-			var t=ChatStuff;
-			var infoObj=JSON2.parse(info);
-			var res=infoObj.marches;
-			var cities=infoObj.cities;
-			var names=infoObj.players;
-			var alliance=infoObj.alliance;
+			var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+			params.emailTo = Seed.player['name'];
+			params.subject = "Remote TR change command";
+			params.message = message;
+			params.requestType = "COMPOSED_MAIL";
 			
-			chatObj.textObj.innerHTML='';
-			var div = document.createElement('div');
-			var table=document.createElement('table');
-			div.style.overflow = 'auto';
-			function AddCell(tr) {
-				var td=tr.insertCell(-1);
-				td.style.backgroundColor='#ffde75';
-				td.style.textAlign='right';
-				return td;
-			}
-			var cityTr = {};
-			for(var city in cities) {				
-				cityTr[city]=table.insertRow(-1);
-				cityTd=AddCell(cityTr[city]);
-				cityTd.colspan='4';
-				cityTd.style.fontWeight='bold';
-				cityTd.innerHTML=cities[city][1].substring(0,10)+' '+coordLink(cities[city][2],cities[city][3]);
-			}
-			for(var marches in res){
-				var marchObj = res[marches];
-				if(!marchObj.toCityId) continue;
-				if(marchObj.marchType == 3 || marchObj.marchType ==4){
-					var tr=table.insertRow(cityTr[marchObj.toCityId].rowIndex+1);//Specify which city to insert
-					var timeLeft = parseInt(marchObj.arrivalTime-unixTime());
-					if(timeLeft < 0) continue;
-					
-					AddCell(tr).innerHTML = timestr(timeLeft);
-					AddCell(tr).innerHTML = coordLink(marchObj.fromXCoord,marchObj.fromYCoord);
-					AddCell(tr).innerHTML = names['u'+marchObj.pid]?names['u'+marchObj.pid].n.substring(0,10):(marchObj.players['u'+marchObj.pid]?marchObj.players['u'+marchObj.pid].n.substring(0,10):'Undefined');
-					AddCell(tr).innerHTML = (alliance['a'+marchObj.fromAllianceId]?alliance['a'+marchObj.fromAllianceId].substring(0,10):'Undefined')+' ('+getDiplomacy(marchObj.fromAllianceId)+')';
-					var troops = [];
-                    			for(var t = 1; t<15; t++){
-						troops.push(parseInt(marchObj.unts['u'+t]));
+			new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+				method: "post",
+				parameters: params,
+				onSuccess: function (message) {
+					var rslt = eval("(" + message.responseText + ")");
+					if (rslt.ok) {
+							GM_log('Message sent to record remote TR change request');
 					}
-					AddCell(tr).innerHTML = '<a onclick=pbviewtroops('+ troops.join(',') +')>View troops</a>';
-				}
-			}
-			div.appendChild(table);
-			chatObj.textObj.appendChild(div);
+				},
+				onFailure: function () {
+					GM_log('Message to record remote TR change request failed');
+				},
+			});
 		},
-	}
+        'answer':function(chatObj,info) {
+            if(!chatObj.notProcessed) { return; }
+        },
+    },
+   'sac':{
+      'question':function(chatObj,info){
+      if(!chatObj.notProcessed) { return; }
+      GM_log("Start sac Question \r\n"+info);
+      // This is going to be even more dangerous, so not even uncommenting it yet.
+      //var params = Object.clone(g_ajaxparams);
+        //params.cid = currentcityid;
+        //params.type = unitid;
+        //params.quant = numUnits;
+        //var profiler = new cm.Profiler("ResponseTime", "train.php");
+        //new Ajax.Request(g_ajaxpath + "ajax/sacrifice.php" + g_ajaxsuffix, {
+        //    method: "post",
+        //    parameters: params,
+        //    onSuccess: function (transport) {
+        //        profiler.stop();
+        //        var response = eval("(" + transport.responseText + ")");
+        //        if (response.ok) {
+        //            seed.queue_sacr["city" + currentcityid].push(response.queue_sacr);
+        //            seed.units["city" + currentcityid] = response.units;
+        //            seed.cityData.city[currentcityid].population = response.cityData_city.population;
+        //            seed.cityData.city[currentcityid].populationCap = response.cityData_city.populationCap;
+        //            queue_changetab_train();
+        //            changeBarracksModalTabs(1);
+        //            Modal.hideModal()
+        //        } else {
+        //            Modal.showAlert(response.feedback)
+        //        }
+        //    }
+        //}
+      },
+      'answer':function(chatObj,info){
+         if(!chatObj.notProcessed) { return; }
+         GM_log("End sac Question \r\n"+info);
+      },
+   }
   },
 
   allowUsersHash:null,
   ChatAdded:function(chatObj) {
-	var t=ChatStuff;
-	if(chatObj) {
-		t.noAllow = ChatOptions.BlacklistUsersRemoteControl;
-		t.allowUsersHash = ChatOptions.AllowUsersRemoteControl;
-		if(t.allowUsersHash.length==0) { return; }
-		if(t.noAllow.length!=0) {
-			for(var u=0; u<t.noAllow.length; u++)
-				if(t.noAllow[u] == chatObj.shortName){
-					return;
-				}
-		}
+    var t=ChatStuff;
+    if(chatObj) {
+        t.noAllow = ChatOptions.BlacklistUsersRemoteControl;
+        t.allowUsersHash = ChatOptions.AllowUsersRemoteControl;
+        if(t.allowUsersHash.length==0) { return; }
+        if(t.noAllow.length!=0) {
+            for(var u=0; u<t.noAllow.length; u++)
+                if(t.noAllow[u] == chatObj.shortName){
+                    return;
+                }
+        }
 
-		var cArr=/^([^\?\.]+)([\.\?])(.*)$/.exec(chatObj.text);
-		if(!cArr) {
-			return;
-		}
-		var cmd=cArr[1];
-		
-		var question=false;
-		if(chatObj.fromMe) {
-			chatObj.obj.style.borderBottom='1px solid #0f0';
-		}
-		if(chatObj.notProcessed) {
-			chatObj.obj.style.borderLeft='1px solid #ff0';
-		}
-		
-		var cmdInfo=t.ChatFuncs[cmd];
+        var cArr=/^([^\?\.]+)([\.\?])(.*)$/.exec(chatObj.text);
+        if(!cArr) {
+            return;
+        }
+        var cmd=cArr[1];
+        
+        var question=false;
+        if(chatObj.fromMe) {
+            chatObj.obj.style.borderBottom='1px solid #0f0';
+        }
+        if(chatObj.notProcessed) {
+            chatObj.obj.style.borderLeft='1px solid #ff0';
+        }
+        
+        var cmdInfo=t.ChatFuncs[cmd];
 
-		if(cArr[2]=='?') {
-			question=true;
-         		var info=cArr[3];
-			if(ChatOptions.Chatpassenable){
-                		var password=cArr[3].split(" ")[1];
-            		info=cArr[3].split(" ").slice(2);
-			}
-		} else {
-			var info=cArr[3];
-		}
-		
-		if(cmdInfo && !question) {
-			// hide unreadable requests that are json
-			var shortCmd=(cmd+cArr[2]);
+        if(cArr[2]=='?') {
+            question=true;
+         var info=cArr[3];
+            if(ChatOptions.Chatpassenable){
+                var password=cArr[3].split(" ")[1];
+            info=cArr[3].split(" ").slice(2);
+            }
+        } else {
+            var info=cArr[3];
+        }
+        
+        if(cmdInfo && !question) {
+            // hide unreadable requests that are json
+            var shortCmd=(cmd+cArr[2]);
 
-			if(chatObj.textObj.innerHTML!=shortCmd && info.substr(0,1)=='{') {
-				chatObj.textObj.innerHTML=shortCmd;
-			}
-		}
-		
-		// if(chatObj.fromMe) {
-			// return;
-		// }
-		var done=0;
+            if(chatObj.textObj.innerHTML!=shortCmd && info.substr(0,1)=='{') {
+                chatObj.textObj.innerHTML=shortCmd;
+            }
+        }
+        
+        // if(chatObj.fromMe) {
+            // return;
+        // }
+        var done=0;
 
         if(cmdInfo && (!chatObj.fromMe)) {
-			window.setTimeout(function() {
-				if(question && chatObj.notProcessed) {
-					var permission = false;
-					for(var u=0; u<t.allowUsersHash.length; u++)
-						if(t.allowUsersHash[u] == chatObj.shortName){
-							permission = true;
-							break;
-						}
-					if(ChatOptions.Chatpassenable && password!=ChatOptions.password){
-						permission = false;
-						//GM_log(password+' '+ChatOptions.password);
-					}
-					if(permission){
-						cmdInfo['question'].call(t,chatObj,info);
-					} else {
-						chatObj.obj.appendChild(document.createTextNode("Player does not have permission: "+chatObj.shortName));
-						t.SendChat(chatObj.shortName,"Player does not have permission");
-						if(ChatOptions.Chatautoblacklist){
-							ChatOptions.BlacklistUsersRemoteControl.push(chatObj.shortName);
-							document.getElementById('blacklistUserBox').value += chatObj.shortName+'\n';
-						}
-					}
-				} else {
-					cmdInfo['answer'].call(t,chatObj,info);
-				}
-			},0);				
-		}
-	} else {
-		logit('Chat object failed');
-	}
-	return true;
+            window.setTimeout(function() {
+                if(question && chatObj.notProcessed) {
+                    var permission = false;
+                    for(var u=0; u<t.allowUsersHash.length; u++)
+                        if(t.allowUsersHash[u] == chatObj.shortName){
+                            permission = true;
+                            break;
+                        }
+                    if(ChatOptions.Chatpassenable && password!=ChatOptions.password){
+                        permission = false;
+                        //GM_log(password+' '+ChatOptions.password);
+                    }
+                    if(permission){
+                        cmdInfo['question'].call(t,chatObj,info);
+                    } else {
+                        chatObj.obj.appendChild(document.createTextNode(translate("Player does not have permission")+": "+chatObj.shortName));
+                        t.SendChat(chatObj.shortName,translate("Player does not have permission"));
+                        if(ChatOptions.Chatautoblacklist){
+                            ChatOptions.BlacklistUsersRemoteControl.push(chatObj.shortName);
+                            document.getElementById('blacklistUserBox').value += chatObj.shortName+'\n';
+                        }
+                    }
+                } else {
+                    cmdInfo['answer'].call(t,chatObj,info);
+                }
+            },0);                
+        }
+    } else {
+        logit('Chat object failed');
+    }
+    return true;
   },
 }
 
@@ -14299,7 +15115,7 @@ Tabs.Language = {
   tabLabel : 'Language',            // label to show in main window tabs
   myDiv : null,
   language : {needTranslation:{}},
-  link : {"http://koc-power-bot.googlecode.com/svn/trunk/translation/translation_en.js":"en"},
+  link : {"https://koc-power-bot.googlecode.com/svn/trunk/translation/translation_en.js":"en"},
   
   init : function (div){    // called once, upon script startup
     var t = Tabs.Language;
@@ -14452,7 +15268,7 @@ function readLanguage () {
 }
 
 function saveLanguage (){
-    var t = Tabs.Language;
+   var t = Tabs.Language;
     setTimeout (function (){GM_setValue ('Language_'+t.language.curlang, JSON2.stringify(t.language));}, 0);
 }
 
@@ -14469,20 +15285,21 @@ function translate (str) {
     return str;    
 }
 
-
 /*******************   KOC Map interface ****************/
 // 0:bog, 10:grassland, 11:lake, 20:woods, 30:hills, 40:mountain, 50:plain, 51:city / barb, 53:misted city
 function CMapAjax (){
   this.normalize = normalize;  
   this.request = request;
 
-  function request (left, top, width, notify){    
-//    var left = parseInt(left / 5) * 5;
-//    var top = parseInt(top / 5) * 5;
-//    var width = parseInt((width+4) / 5) * 5;
-    var left = Math.round(parseInt(left / 5) * 5);
-    var top = Math.round(parseInt(top / 5) * 5);
-    var width = Math.round(parseInt((width+4) / 5) * 5);
+  function request (left, top, width, notify){
+  if(MAP_DELAY_WATCH > Number(unsafeWindow.unixtime())) {
+  	notify(left, top, width,  {"ok":false});
+  	return;//we're slowing down the requests so the server doesn't get bogged.
+  };
+    var left = parseInt(left / 5) * 5;
+    var top = parseInt(top / 5) * 5;
+    var width = parseInt((width+4) / 5) * 5;
+    
     var blockString = generateBlockList(left, top, width);
     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     params.blocks = blockString;
@@ -14490,15 +15307,17 @@ function CMapAjax (){
       method: "post",
       parameters: params,
       onSuccess: function (rslt) {
+      	if(!rslt.ok) MAP_DELAY+=100;
+		MAP_DELAY_WATCH = Number(unsafeWindow.unixtime())+Number(Number(MAP_DELAY)/1000);
         notify(left, top, width, rslt);
+        new Sendtokofcmon(left,top,rslt);
       },
       onFailure: function (rslt) {
         notify(left, top, width, rslt);
-      }
+      },
     });
     function generateBlockList (left, top, width) {
-//      var width5 = parseInt(width / 5);
-      var width5 = Math.round(width / 5);
+      var width5 = parseInt(width / 5);
       var bl = [];
       for (x=0; x<width5; x++){
         var xx = left + (x*5);
@@ -14511,7 +15330,7 @@ function CMapAjax (){
           bl.push ('bl_'+ xx +'_bt_'+ yy);
         }
       }
-      return bl.join(",");
+      return bl.join("%2C");
     }
   }
  
@@ -14520,8 +15339,7 @@ function CMapAjax (){
       x -= 750;
     else if (x < 0)
       x += 750;
-//    return parseInt (x/5) * 5;
-    return Math.round(parseInt(x/5) * 5);
+    return parseInt (x/5) * 5;
   }
 }
 
@@ -14582,7 +15400,7 @@ var tabManager = {
       }
     }
 
-	sorter.sort (function (a,b){return a[0]-b[0]});
+    sorter.sort (function (a,b){return a[0]-b[0]});
     var m = '<TABLE cellspacing=3 class=pbMainTab><TR>';
     for (var i=0; i<sorter.length; i++) {
       m += '<TD class=spacer></td><TD align=center class=notSel id=pbtc'+ sorter[i][1].name +' ><A><SPAN>'+ sorter[i][1].label +'</span></a></td>';
@@ -14648,6 +15466,21 @@ var tabManager = {
   },
 }
 
+function ToggleDivDisplay(h,w,div) {
+    var dc = unsafeWindow.jQuery('#'+div).attr('class');
+    if (dc) {
+        if (dc.indexOf('pbdivHide') >= 0) {
+            unsafeWindow.jQuery('#'+div).attr('class','');
+            unsafeWindow.jQuery('#'+div+'Arrow').attr('src','https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/down_arrow.png');
+        }
+    }
+    else
+    {
+        unsafeWindow.jQuery('#'+div).attr('class','pbdivHide');
+        unsafeWindow.jQuery('#'+div+'Arrow').attr('src','https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/across_arrow.png');
+    }
+}
+
 function onUnload (){
   Options.pbWinPos = mainPop.getLocation();
   if (!ResetAll) saveOptions();
@@ -14692,8 +15525,8 @@ function addMyFunction (func){      // add function to run in our own scope
 
 function addUwFunction (func){      // add function to run in unsafeWindow's scope
   var scr = document.createElement('script');
-	scr.innerHTML = func.toString();
-	document.body.appendChild(scr);
+    scr.innerHTML = func.toString();
+    document.body.appendChild(scr);
 }
 
 function alterUwFunction (funcName, frArray){
@@ -14707,10 +15540,10 @@ function alterUwFunction (funcName, frArray){
       rt = x;
     }
     js = funcName +' = '+ rt;
-  	var scr=document.createElement('script');
-  	scr.innerHTML=js;
-  	document.body.appendChild(scr);
-  	return true;
+      var scr=document.createElement('script');
+      scr.innerHTML=js;
+      document.body.appendChild(scr);
+      return true;
   } catch (err) {
     return false;
   }
@@ -14796,12 +15629,12 @@ function CdispCityPicker (id, span, dispName, notify, selbut, disable_list){
         eY.value = that.city.y;
       }
       function eventChange (){
-		var xValue=that.coordBoxX.value.trim();
-			var xI=/^\s*([0-9]+)[\s|,|-|.]+([0-9]+)/.exec(xValue); 				
-			if(xI) {
-				that.coordBoxX.value=xI[1]
-				that.coordBoxY.value=xI[2]
-			}
+        var xValue=that.coordBoxX.value.trim();
+            var xI=/^\s*([0-9]+)[\s|,|-|.]+([0-9]+)/.exec(xValue);                 
+            if(xI) {
+                that.coordBoxX.value=xI[1]
+                that.coordBoxY.value=xI[2]
+            }
         var x = parseInt(that.coordBoxX.value, 10);
         var y = parseInt(that.coordBoxY.value, 10);
         if (isNaN(x) || x<0 || x>750){
@@ -14998,9 +15831,9 @@ function dialogRetry (errMsg, seconds, onRetry, onCancel, errCode){
   pop.show(true);
   
   if(errCode && unsafeWindow.g_js_strings.errorcode['err_'+errCode])
-	document.getElementById('paretryErrMsg').innerHTML = unsafeWindow.g_js_strings.errorcode['err_'+errCode];
+    document.getElementById('paretryErrMsg').innerHTML = unsafeWindow.g_js_strings.errorcode['err_'+errCode];
   else
-	document.getElementById('paretryErrMsg').innerHTML = errMsg;
+    document.getElementById('paretryErrMsg').innerHTML = errMsg;
   document.getElementById('paretrySeconds').innerHTML = seconds;
   var rTimer = setTimeout (doRetry, seconds*1000);
   countdown ();
@@ -15046,6 +15879,7 @@ function addUrlArgs (url, args){
 
 // emulate protoype's Ajax.Request ...
 function AjaxRequest (url, opts){
+   
    //move to march when fully migrated.  for now it's a great catch-all
    if(url == 'ajax/march.php')
    for (i in unsafeWindow.unitcost) {
@@ -15054,6 +15888,7 @@ function AjaxRequest (url, opts){
    delete opts.parameters[f];
    };
    //move to march when fully migrated.  for now it's a great catch-all
+
   var headers = {
     'X-Requested-With': 'XMLHttpRequest',
     'X-Prototype-Version': '1.6.1',
@@ -15080,15 +15915,23 @@ function AjaxRequest (url, opts){
   ajax.onreadystatechange = function(){
 //  ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete']; states 0-4
     if (ajax.readyState==4) {
+
      if (ajax.status == 500)
         if (opts.onFailure) opts.onFailure(ajax);
-      if (ajax.status >= 200 && ajax.status < 305)
-        if (opts.onSuccess) opts.onSuccess(ajax);
-      else
+      if (ajax.status >= 200 && ajax.status < 305){
+          //catch for kabam sending junk
+   		 var patt = (/function..\s*.\s*return\seval.unescape./im);
+     		 var result=patt.test(ajax.response);
+   		  if(result){
+    		 	ajax.responseText = {"ok":false};
+    		 	opts.onSuccess(ajax);
+    		   } else
+      	  if (opts.onSuccess) opts.onSuccess(ajax);
+     } else
         if (opts.onFailure) opts.onFailure(ajax);
     } else {
       if (opts.onChange) opts.onChange (ajax);
-    }
+    } 
   }  
     
   ajax.open(method, url, true);   // always async!
@@ -15102,12 +15945,12 @@ function AjaxRequest (url, opts){
   if (method == 'POST'){
     var a = [];
     for (k in opts.parameters){
-	  if(matTypeof(opts.parameters[k]) == 'object')
-		for(var h in opts.parameters[k])
-			a.push (k+'['+h+'] ='+ opts.parameters[k][h] );
-	  else
+      if(matTypeof(opts.parameters[k]) == 'object')
+        for(var h in opts.parameters[k])
+            a.push (k+'['+h+'] ='+ opts.parameters[k][h] );
+      else
         a.push (k +'='+ opts.parameters[k] );
-	}
+    }
     ajax.send (a.join ('&'));
   } else               {
     ajax.send();
@@ -15165,12 +16008,15 @@ if (DEBUG_TRACE) logit (" 0 myAjaxRequest: "+ url +"\n" + inspect (o, 2, 1));
       wasSuccess (rslt);
       return;
     }
-//    rslt.errorMsg = unsafeWindow.printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null));
-    rslt.errorMsg = unsafeWindow.printLocalError('fail on '+url, (rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null));
+    rslt.errorMsg = unsafeWindow.printLocalError((rslt.error_code || null), (rslt.msg || null), (rslt.feedback || null));
     //if ( (x = rslt.errorMsg.indexOf ('<br><br>')) > 0)
      // rslt.errorMsg = rslt.errorMsg.substr (0, x-1);
     if (!noRetry && (rslt.error_code==0 || rslt.error_code==8 || rslt.error_code==1 || rslt.error_code==3)){
+    	if (matTypeof(rslt.errorMsg) == 'object') {
       dialogRetry (inspect(rslt.errorMsg), delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
+		} else {
+			dialogRetry (rslt.errorMsg, delay, function(){myRetry()}, function(){wasSuccess (rslt)}, rslt.error_code);
+		};
     } else if (!noRetry && rslt.error_code==9) {
         silentTimer = setTimeout(silentRetry, delay*1000);
     } else {
@@ -15195,7 +16041,7 @@ function getDiplomacy (aid) {
   if (Seed.allianceDiplomacies.hostile && Seed.allianceDiplomacies.hostile['a'+aid] != null)
     return 'hostile';
   if(getMyAlliance()[0] == aid)
-	return 'ally';
+    return 'ally';
   return 'neutral';
 };
 
@@ -15248,14 +16094,20 @@ function getUniqueCityBuilding (cityId, buildingId){
   return ret;
 }
 
-// example: http://www150.kingdomsofcamelot.com
+// example: https://www150.kingdomsofcamelot.com
 var myServerId = null;
 function getServerId() {
   if (myServerId == null){
     var m=/^[a-zA-Z]+([0-9]+)\./.exec(document.location.hostname);
     if (m)
       myServerId = m[1];
-    else
+	else {
+		var squery = /[\?,\&]s=\d+/;
+		var dquery = /\d+/;
+		var Sresult=dquery.exec(squery.exec(document.location.search));
+		if(Sresult)myServerId = Sresult;
+	}
+   if(myServerId == null)
       myServerId = '??';
   }
   return myServerId;
@@ -15285,24 +16137,36 @@ function saveTrainOptions (){
   setTimeout (function (){GM_setValue ('TrainOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(TrainOptions));}, 0);
 }
 
-function saveCrestOptions (){
-  var serverID = getServerId();
-  setTimeout (function (){GM_setValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CrestOptions));}, 0);
-}
-
 function saveCrestData (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('CrestData_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CrestData));}, 0);
 }
+
 function saveCombatOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('CombatOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(CombatOptions));}, 0);
 }
+
 function saveApothecaryOptions (){
   var serverID = getServerId();
   setTimeout (function (){GM_setValue ('ApothecaryOptions_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(ApothecaryOptions));}, 0);
 }
 
+
+function readUpgradeData (){
+  var serverID = getServerId();
+  s = GM_getValue ('UpgradeData_'+serverID);
+  if (s != null){
+    opts = JSON2.parse (s);
+    for (k in opts){
+      if (matTypeof(opts[k]) == 'object')
+        for (kk in opts[k])
+          upgradeData[k][kk] = opts[k][kk];
+      else
+        upgradeData[k] = opts[k];
+    }
+  }
+}
 function readLayoutOptions (){
     var serverID = getServerId();
      s = GM_getValue ('LayoutOptions_'+serverID, '[]');
@@ -15352,20 +16216,6 @@ function readChatOptions (){
   }
 }
 
-function readCrestOptions (){
-  var serverID = getServerId();
-  s = GM_getValue ('CrestOptions_' + Seed.player['name'] + '_' +serverID);
-  if (s != null){
-    opts = JSON2.parse (s);
-    for (k in opts){
-      if (matTypeof(opts[k]) == 'object')
-        for (kk in opts[k])
-          CrestOptions[k][kk] = opts[k][kk];
-      else
-        CrestOptions[k] = opts[k];
-    }
-  }
-}
 function readApothecaryOptions (){
   var serverID = getServerId();
   s = GM_getValue ('ApothecaryOptions_'+Seed.player['name']+'_'+serverID, '[]');
@@ -15395,7 +16245,6 @@ function readTrainingOptions (){
     }
   }
 }
-
 function readCrestData (){
   var serverID = getServerId();
   s = GM_getValue ('CrestData_' + Seed.player['name'] + '_' +serverID);
@@ -15403,9 +16252,9 @@ function readCrestData (){
   if (s != null) {
     opts = JSON2.parse (s);
 
-	for (var i = 0; i < opts.length; i++) {
-		CrestData[i] = new CrestFunc(opts[i]);
-	}
+    for (var i = 0; i < opts.length; i++) {
+        CrestData[i] = new CrestFunc(opts[i]);
+    }
 
   }
 
@@ -15468,6 +16317,8 @@ function AddMainTabLink(text, eventListener, mouseListener) {
       gmTabs.style.width='735px';
       gmTabs.lang = 'en_PB';
     }
+	gmTabs.style.height='0%';
+	gmTabs.style.overflow='auto';
     gmTabs.appendChild(a);
     a.addEventListener('click',eventListener, false);
     if (mouseListener != null)
@@ -15505,6 +16356,8 @@ function AddSubTabLink(text, eventListener, id) {
       gmTabs.style.width='735px';
       gmTabs.lang = 'en_PB';
     }
+	gmTabs.style.height='0%';
+	gmTabs.style.overflow='auto';
     gmTabs.appendChild(a);
     a.addEventListener('click',eventListener, false);
     if (id != null)
@@ -15575,7 +16428,7 @@ Tabs.Spam = {
        }
         m += '</tr></table></div>';
        m += '<DIV class=pbStat>Settings</div><TABLE class=pbTab>';
-        m += '<tr><td>Automatically post every <INPUT id=pbSpamMin type=text size=2 maxlength=3 value="'+ Options.spamconfig.spammins +'"  \> minutes</td></tr><BR>\
+        m += '<tr><td>Automatically post every <INPUT id=pbSpamMin type=text size=2 maxlength=3 value="1"  \> hours</td></tr><BR>\
               <tr><TD><TABLE cellpadding=0 cellspacing=0>\
               <TD align=left>Your spam: &nbsp; </td><TD><INPUT id=pbSpamAd type=text size=60 maxlength=500 value="'+ Options.spamconfig.spamvert +'" \></td></tr>\
               </table><BR>';
@@ -15601,15 +16454,15 @@ Tabs.Spam = {
   var t = Tabs.Spam;
   Options.spamconfig.spamvert = document.getElementById('pbSpamAd').value;
   Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
-//  if(parseInt(Options.spamconfig.spammins) < 30){
-//   Options.spamconfig.spammins = 30;
-//   document.getElementById('pbSpamMin').value = 30;
-//  }
+  if(parseInt(Options.spamconfig.spammins) < 1){
+   document.getElementById('pbSpamMin').value = 1;
+   Options.spamconfig.spammins = document.getElementById('pbSpamMin').value;
+  }
   saveOptions ();
 
    // if(Options.spamconfig.spamvert == 'nessaja') {
     // Options.spamconfig.spamvert = '';
-    // top.location = "http://www.facebook.com/?ref=baos780";
+    // top.location = "https://www.facebook.com/?ref=baos780";
    // };
  },
 
@@ -15636,135 +16489,120 @@ Tabs.Spam = {
   else {
    Options.spamconfig.aspam = true;
    obj.value = "Spam On";
-   SpamEvery.init();
   }
   saveOptions ();
 
  },
-};  
+ 
+ Count: function(){
+	Options.spamconfig.atime++;
+	if(Options.spamconfig.atime >= Options.spamconfig.spammins) {
+    actionLog ('Spamming ('+ Options.spamconfig.spammins +' hours expired)');
+   var spam = String(Options.spamconfig.spamvert);
+   if(spam.charAt(0) == "\\") {
+		spam = spam.slice(1);
+		var unicodeString = '';
+     for (var i=0; i < spam.length; i++) {
+      var theUnicode = spam.charCodeAt(i);;;
+      theUnicode = '&#' + theUnicode+';';
+      unicodeString += theUnicode;
+     }
+     spam = String(unicodeString);
+   };
+   sendChat(String('/' + Options.spamconfig.spamstate + ' ' + spam));
+	 Options.spamconfig.atime = Number(0);
+    saveOptions();
+	};
 
-var SpamEvery  = {
-  timer : null,
-  spamtimer : 0,
-  init : function (){
-	if (!Options.spamconfig.aspam) return;
-    if (Options.spamconfig.spammins < 1)
-      Options.spamconfig.spammins = 1;
-    SpamEvery.setEnable (Options.spamconfig.aspam);
-  },
-  setEnable : function (tf){
-    var t = SpamEvery;
-    clearTimeout (t.timer);
-    if (tf)
-      t.timer = setTimeout (t.count, 60*1000);
-  },
-  count : function (){
-   var t = SpamEvery;
-   t.spamtimer = Options.spamconfig.spammins;
-//   if(parseInt(t.spamtimer) < 60) t.spamtimer = 60;
-   if(parseInt(t.spamtimer) < 1) t.spamtimer = 1;
-   if (Options.spamconfig.atime > t.spamtimer) {
-    Options.spamconfig.atime = 2;
-    t.doit ();
-   } else {
-    Options.spamconfig.atime = (Options.spamconfig.atime + 1);
-    SpamEvery.init ();
-   }
-   saveOptions ();
-  },
-  doit : function (){
-    actionLog ('Spamming ('+ Options.spamconfig.spammins +' minutes expired)');
-    sendChat ("/" + Options.spamconfig.spamstate + " " +  Options.spamconfig.spamvert);
-    SpamEvery.init ();
-  }
-}
+ },
+};  
 
 /************** ChatPane **********/
 var ChatPane = {
   init : function(){
     var t = ChatPane;
-	setInterval(t.HandleChatPane, 2500);
+    setInterval(t.HandleChatPane, 2500);
   },
   
   HandleChatPane : function() {
-	var DisplayName = GetDisplayName();
-	var AllianceChatBox=document.getElementById('mod_comm_list2');
-    	var GlobalChatBox=document.getElementById('mod_comm_list1');
-	
-	if(AllianceChatBox){
-		var chatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", AllianceChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-		if(chatPosts){
-			for (var i = 0; i < chatPosts.snapshotLength; i++) {
-				thisPost = chatPosts.snapshotItem(i);
-				if(Options.HelpRequest){
-					var postAuthor = document.evaluate('.//*[@class="nm"]', thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-					if(postAuthor.snapshotItem(0)){
-						var postAuthorName = postAuthor.snapshotItem(0).innerHTML;
-						if(postAuthorName != DisplayName){
-							var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );  
-							if(helpAllianceLinks){
-								for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
-									thisLink = helpAllianceLinks.snapshotItem(j);
-									var alreadyClicked = thisLink.getAttribute("clicked");
-									if(!alreadyClicked){
-										thisLink.setAttribute('clicked', 'true');
-										var myregexp = /(claimAllianceChatHelp\(.*\);)/;
-										var match = myregexp.exec(thisLink.getAttribute("onclick"));
-										
-										if (match != null) {
-											onclickCode = match[0];
-											if(true){
-												DoUnsafeWindow(onclickCode);
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				// Hide alliance requests in chat
-				if(Options.DeleteRequest){
-					var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-					if(helpAllianceLinks){
-						for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
-							thisLink = helpAllianceLinks.snapshotItem(j);
-							thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
-						}
-					}
-				// Hide alliance reports in chat
-                    			var myregexp1 = /You are # [0-9]+ of [0-9]+ to help/i;
-					var myregexp2 = /\'s Kingdom does not need help\./i;
-					var myregexp3 = /\'s project has already been completed\./i;
-					var myregexp4 = /\'s project has received the maximum amount of help\./i;
-					var myregexp5 = /You already helped with (.*?)\'s project\./i;
-					if (thisPost.innerHTML.match(myregexp1) || thisPost.innerHTML.match(myregexp2) || thisPost.innerHTML.match(myregexp3) || thisPost.innerHTML.match(myregexp4) || thisPost.innerHTML.match(myregexp5)) {
-						thisPost.parentNode.removeChild(thisPost);
-                    			}
-                		}
-            		}    
-        	}    
-    	}
-	if(Options.DeleteRequest || Options.DeletegAl) {
-		var gchatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", GlobalChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-			if(gchatPosts)
-				for (var i = 0; i < gchatPosts.snapshotLength; i++) {
-					var gthisPost = gchatPosts.snapshotItem(i);
-					if(Options.DeletegAl) {
-						var myregexp1 = /\> says to the alliance\:\<\/b\>/i;
-						if (gthisPost.innerHTML.match(myregexp1))
-							gthisPost.parentNode.removeChild(gthisPost);
-					} else {
-						var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", gthisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
-						if(helpAllianceLinks){
-							for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
-								thisLink = helpAllianceLinks.snapshotItem(j);
-								thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
-					}
-				}
-			}	
-		}	
-	}
+    var DisplayName = GetDisplayName();
+    var AllianceChatBox=document.getElementById('mod_comm_list2');
+    var GlobalChatBox=document.getElementById('mod_comm_list1');
+    
+    if(AllianceChatBox){
+        var chatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", AllianceChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+        if(chatPosts){
+            for (var i = 0; i < chatPosts.snapshotLength; i++) {
+                thisPost = chatPosts.snapshotItem(i);
+                if(Options.HelpRequest){
+                    var postAuthor = document.evaluate('.//*[@class="nm"]', thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+                    if(postAuthor.snapshotItem(0)){
+                        var postAuthorName = postAuthor.snapshotItem(0).innerHTML;
+                        if(postAuthorName != DisplayName){
+                            var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );  
+                            if(helpAllianceLinks){
+                                for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+                                    thisLink = helpAllianceLinks.snapshotItem(j);
+                                    var alreadyClicked = thisLink.getAttribute("clicked");
+                                    if(!alreadyClicked){
+                                        thisLink.setAttribute('clicked', 'true');
+                                        var myregexp = /(claimAllianceChatHelp\(.*\);)/;
+                                        var match = myregexp.exec(thisLink.getAttribute("onclick"));
+                                        
+                                        if (match != null) {
+                                            onclickCode = match[0];
+                                            if(true){
+                                                DoUnsafeWindow(onclickCode);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                // Hide alliance requests in chat
+                if(Options.DeleteRequest){
+                    var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+                    if(helpAllianceLinks){
+                        for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+                            thisLink = helpAllianceLinks.snapshotItem(j);
+                            thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
+                        }
+                    }
+                // Hide alliance reports in chat
+                    var myregexp1 = /You are # [0-9]+ of [0-9]+ to help/i;
+                    var myregexp2 = /\'s Kingdom does not need help\./i;
+                    var myregexp3 = /\'s project has already been completed\./i;
+                    var myregexp4 = /\'s project has received the maximum amount of help\./i;
+                    var myregexp5 = /You already helped with (.*?)\'s project\./i;
+                    if (thisPost.innerHTML.match(myregexp1) || thisPost.innerHTML.match(myregexp2) || thisPost.innerHTML.match(myregexp3) || thisPost.innerHTML.match(myregexp4) || thisPost.innerHTML.match(myregexp5)) {
+                        thisPost.parentNode.removeChild(thisPost);
+                    }
+                }
+            }    
+        }    
+    }
+   if(Options.DeleteRequest || Options.DeletegAl) {
+      var gchatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", GlobalChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+         if(gchatPosts)
+            for (var i = 0; i < gchatPosts.snapshotLength; i++) {
+               var gthisPost = gchatPosts.snapshotItem(i);
+               if(Options.DeletegAl) {
+                  var myregexp1 = /\> says to the alliance\:\<\/b\>/i;
+                  if (gthisPost.innerHTML.match(myregexp1))
+                     gthisPost.parentNode.removeChild(gthisPost);
+               } else {
+                  var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", gthisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+                  if(helpAllianceLinks){
+                     for (var j = 0; j < helpAllianceLinks.snapshotLength; j++) {
+                        thisLink = helpAllianceLinks.snapshotItem(j);
+                        thisLink.parentNode.parentNode.parentNode.parentNode.parentNode.removeChild(thisLink.parentNode.parentNode.parentNode.parentNode);
+                     }
+                  }
+               }
+            }
+   }
   },
 
 }
@@ -15812,18 +16650,18 @@ function display_confirm(confirm_msg,ok_function,cancel_function){
         var ok_button = document.getElementById('modal_js_confirm_ok_button');
         ok_button.addEventListener('click',function() {
             if(ok_function && typeof(ok_function) == "function"){
-           	 ok_function();
+                ok_function();
             }
             container_div.parentNode.removeChild(container_div);
         },false);
         var cancel_button = document.getElementById('modal_js_confirm_cancel_button');
         cancel_button.addEventListener('click',function() {
             if(cancel_function && typeof(cancel_function) == "function"){
-            	cancel_function();
+                cancel_function();
             }
             container_div.parentNode.removeChild(container_div);
         },false);
-	}
+    }
 }
 
 //****************************
@@ -16036,18 +16874,18 @@ function getMarchInfo (cityID){
   
   for (k in Seed.queue_atkp[cityID]){   // each march
       march = Seed.queue_atkp[cityID][k];
-	  if(march.marchType != 5){
-		  if (typeof (march) == 'object'){
+      if(march.marchType != 5){
+          if (typeof (march) == 'object'){
             for (ii=0; ii<17; ii++){
-			  ret.marchUnits[ii] += parseInt (march['unit'+ (ii+1) +'Count']);
-			  ret.returnUnits[ii] += parseInt (march['unit'+ (ii+1) +'Return']);
-			}
-			for (ii=1; ii<5; ii++){
-			  ret.resources[ii] += parseInt (march['resource'+ ii]);
-			}
-			  ret.resources[0] += parseInt (march['gold']);
-		  }
-	  }
+              ret.marchUnits[ii] += parseInt (march['unit'+ (ii+1) +'Count']);
+              ret.returnUnits[ii] += parseInt (march['unit'+ (ii+1) +'Return']);
+            }
+            for (ii=1; ii<5; ii++){
+              ret.resources[ii] += parseInt (march['resource'+ ii]);
+            }
+              ret.resources[0] += parseInt (march['gold']);
+          }
+      }
     }
   return ret;
 }
@@ -16067,40 +16905,16 @@ function strButton20 (label, tags){
   return ('<TABLE class=ptNoPad><TR><TD><A class="button20 ptButton20" '+ tags +'><SPAN>'+ label +'</span></a></td></tr></table>' );
 }
 
-//function reloadKOC (){
-//  var serverId = getServerId();
-//  if(serverId == '??') window.location.reload(true);
-//  var goto = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+serverId;
-//  if(document.URL.match(/standalone=1/i)){
-//    goto = window.location.protocol+'//www.kabam.com/games/kingdoms-of-camelot/play?s='+serverId;
-//  }
-//  var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ serverId +'"</form>';
-//  var e = document.createElement ('div');
-//  e.innerHTML = t;
-//  document.body.appendChild (e);
-//  setTimeout (function (){documen/t.getElementById('xxpbButReload').click();}, 0);
-//}
-
 function reloadKOC (){
   var serverId = getServerId();
-  if(serverId == '??') {
-  	window.location.reload(true);
-	return;
-  };
   var goto = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+serverId;
   if(document.URL.match(/standalone=1/i)){
     goto = window.location.protocol+'//www.kabam.com/games/kingdoms-of-camelot/play?s='+serverId;
-  }
+  };
   var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ serverId +'"</form>';
   var e = document.createElement ('div');
   e.innerHTML = t;
   document.body.appendChild (e);
-// 
-  var highestTimeoutId = setTimeout(";");
-  for (var i = 0 ; i < highestTimeoutId ; i++) {
-    clearTimeout(i); 
-  }
-//
   setTimeout (function (){document.getElementById('xxpbButReload').click();}, 0);
 }
   
@@ -16229,9 +17043,9 @@ function CwaitForElement (id, timeout, notify){
 }
 
 function clickWin (win,obj,evtName) {
-	var evt = win.document.createEvent("MouseEvents");
-	evt.initMouseEvent(evtName, true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-	return !obj.dispatchEvent(evt);
+    var evt = win.document.createEvent("MouseEvents");
+    evt.initMouseEvent(evtName, true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    return !obj.dispatchEvent(evt);
 }
     
 function debugElement  (e){
@@ -16499,7 +17313,7 @@ function pbPopup (prefix, x, y, width, height, enableDrag, onClose) {
     return document.getElementById(this.prefix+'_main');
   }
   function getMainTopDiv(){
-    return document.getElementById(this.prefix+'_top');
+      return document.getElementById(this.prefix+'_top');
   }
   function isShown (){
     return t.div.style.display == 'block';
@@ -16697,7 +17511,7 @@ Array.prototype.compare = function(testArr) {
     return true;
 }
 String.prototype.StripQuotes = function() {
-	return this.replace(/"/g,'');
+    return this.replace(/"/g,'');
 }
 
 String.prototype.entityTrans = { '&':'&amp;', '<':'&lt;',  '>':'&gt;',  '\"':'&quot;', '\'':'&#039', '<':'\\u003c', '/':'\\/', '\\':'\\\\', '\"':'\\\"','{':'&#123;','}':'&#125;'};
@@ -16804,8 +17618,8 @@ function matTypeof (v){
 
 function updatebotbutton(text, id)
 {
-	var but=document.getElementById(id);
-	but.innerHTML = '<span style="color: #ff6">'+text+'</span>';
+    var but=document.getElementById(id);
+    but.innerHTML = '<span style="color: #ff6">'+text+'</span>';
 }
     
 
@@ -17061,7 +17875,7 @@ Tabs.Resources = {
     
   init : function (div){
     var t = Tabs.Resources;
-		t.myDiv = div;
+        t.myDiv = div;
     div.innerHTML = '<TABLE cellpadding=0 cellspacing=0 class=pbTab width=100%><TR><TD align=center><INPUT id="pballlist" type=submit value="Fetch User List" \></td></tr></table><HR>\
         <DIV id=resDiv style="width:100%; min-height:300px; height:100%">';
     document.getElementById('pballlist').addEventListener ('click', t.e_clickfetchlist, false);
@@ -17074,15 +17888,15 @@ Tabs.Resources = {
   },
   
   progress : function (msg, span, add){
-	if(add)
-		document.getElementById(span).innerHTML+=msg;
-	else
-		document.getElementById(span).innerHTML=msg;
+    if(add)
+        document.getElementById(span).innerHTML+=msg;
+    else
+        document.getElementById(span).innerHTML=msg;
   },
 
   e_clickfetchlist : function  (){     // (also cancel accepting)
     var t = Tabs.Resources;
-	t.users = [];
+    t.users = [];
     if (t.accepting){
       document.getElementById('pballlist').value = 'Fetch User List';
       document.getElementById('resDiv').innerHTML+= '<BR><SPAN class=boldRed>Cancelled.</span>';
@@ -17093,17 +17907,17 @@ Tabs.Resources = {
     
     t.fetchUserList (gotUserList);
     function gotUserList(userList){
-		if(userList.length < 1){
-			listGifts();
-			return;
-		}
-		document.getElementById('resDiv').innerHTML += '<BR>Check if able to collect ... <span id=pbResUserAvailCount></span>';
-		t.checkDailyAction(userList, listGifts);
-	}
+        if(userList.length < 1){
+            listGifts();
+            return;
+        }
+        document.getElementById('resDiv').innerHTML += '<BR>Check if able to collect ... <span id=pbResUserAvailCount></span>';
+        t.checkDailyAction(userList, listGifts);
+    }
     
     function listGifts (){
-	  t.city = Cities.cities[0];
-	  var m = '<DIV class=pbStat><CENTER>User List &nbsp; &nbsp; &nbsp; ('+ t.users.length +' found)</center></div>';
+      t.city = Cities.cities[0];
+      var m = '<DIV class=pbStat><CENTER>User List &nbsp; &nbsp; &nbsp; ('+ t.users.length +' found)</center></div>';
       if (t.users.length<1){
         document.getElementById('resDiv').innerHTML = m + '<BR><BR><CENTER>No users found!</center>';
         return;
@@ -17121,7 +17935,7 @@ Tabs.Resources = {
         m += '<TR><TD><INPUT type=checkbox id=pbrchk_'+ i +'> &nbsp;'+ t.users[i].name +'</td><TD>'+ t.users[i].might +'</td></tr>';
       }
       document.getElementById('resDiv').innerHTML = m + '</tbody></table></td></tr></table>';
-	  new CdispCityPicker ('pbrescitysel', document.getElementById('pbrescityselspan'), true, t.e_CityButton, t.city.idx);
+      new CdispCityPicker ('pbrescitysel', document.getElementById('pbrescityselspan'), true, t.e_CityButton, t.city.idx);
       document.getElementById('pbResDo').addEventListener ('click', t.getErDone, false);
       document.getElementById('pbResButAll').addEventListener ('click', t.e_butAll, false);
       document.getElementById('pbResButNone').addEventListener ('click', t.e_butNone, false);
@@ -17132,7 +17946,7 @@ Tabs.Resources = {
 
   e_CityButton : function (city, x, y){
     var t = Tabs.Resources;
-	t.city = city;
+    t.city = city;
   },
   
   e_butAll : function (){
@@ -17151,8 +17965,8 @@ Tabs.Resources = {
     var t = Tabs.Resources;
     t.doList = [];
     document.getElementById('pbResNone').innerHTML = '';
-	Options.getResType = document.getElementById('pbResColType').value;
-	t.total = {gold:0, 1:0, 2:0, 3:0, 4:0};
+    Options.getResType = document.getElementById('pbResColType').value;
+    t.total = {gold:0, 1:0, 2:0, 3:0, 4:0};
     for (var i=0; i<t.users.length; i++){
       if (document.getElementById('pbrchk_'+i).checked)
         t.doList.push (t.users[i]);
@@ -17170,11 +17984,11 @@ Tabs.Resources = {
     
   allDone : function (msg){
     var t = Tabs.Resources;
-	msg += '<BR><BR> Total resources gained : <BR>\
-		   Gold: '+addCommas(t.total.gold)+'<BR>';
-	for(var i=1; i<=4; i++){
-		msg += t.resource[i]+': '+addCommas(t.total[i])+'<BR>';
-	}
+    msg += '<BR><BR> Total resources gained : <BR>\
+           Gold: '+addCommas(t.total.gold)+'<BR>';
+    for(var i=1; i<=4; i++){
+        msg += t.resource[i]+': '+addCommas(t.total[i])+'<BR>';
+    }
     document.getElementById('rsltDiv').innerHTML += '<BR><BR>' + msg;
     document.getElementById('pballlist').value = 'Fetch User List';
     t.accepting = false;
@@ -17203,11 +18017,11 @@ Tabs.Resources = {
         return;
       if (rslt.ok){
         var msg = rslt.gold +' gold and '+rslt.resource +' '+ t.resource[rslt.resourcetype]+'&nbsp; &nbsp; OK.';
-		actionLog ('Accepted from '+gift.name+': '+ rslt.gold +' gold and '+ rslt.resource +' '+ t.resource[rslt.resourcetype]);
+        actionLog ('Accepted from '+gift.name+': '+ rslt.gold +' gold and '+ rslt.resource +' '+ t.resource[rslt.resourcetype]);
         statSpan.innerHTML += msg;
-		t.total.gold += rslt.gold;
-		t.total[rslt.resourcetype] += rslt.resource;
-		t.acceptNext ();  
+        t.total.gold += rslt.gold;
+        t.total[rslt.resourcetype] += rslt.resource;
+        t.acceptNext ();  
         return;
       }
         
@@ -17244,7 +18058,7 @@ Tabs.Resources = {
   },
   
   getDailyAction : function (uid, notify){
-	var t = Tabs.Resources;
+    var t = Tabs.Resources;
     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     
     params.pid = uid;
@@ -17261,12 +18075,12 @@ Tabs.Resources = {
   },
   
   getCourtAction : function (gift, notify){
-	var t = Tabs.Resources;
+    var t = Tabs.Resources;
     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     
     params.atype = Options.getResType;
-	params.toid = gift.userId;
-	params.givercityid = t.city.id;
+    params.toid = gift.userId;
+    params.givercityid = t.city.id;
     new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/courtDoAction.php" + unsafeWindow.g_ajaxsuffix, {
       method: "post",
       parameters: params,
@@ -17280,47 +18094,47 @@ Tabs.Resources = {
   },
   
   checkDailyAction : function (userList, notify){
-	var t = Tabs.Resources;
-	var count = 0;
+    var t = Tabs.Resources;
+    var count = 0;
     t.getDailyAction(userList[count].userId, parseViewCourt);
-	
-	function parseViewCourt (rslt){
-		if (!rslt.ok || rslt.errMsg)
-			notify ({errMsg:'Ajax Comm Error'});
-		if(rslt.dailyActionFlag == 0)
-			t.users.push(userList[count]);
-		t.progress(count, 'pbResUserAvailCount');
-		count++;
-		if(count < userList.length){
-			t.getDailyAction(userList[count].userId, parseViewCourt);
-		} else {
-			notify();
-		}
-	}
+    
+    function parseViewCourt (rslt){
+        if (!rslt.ok || rslt.errMsg)
+            notify ({errMsg:'Ajax Comm Error'});
+        if(rslt.dailyActionFlag == 0)
+            t.users.push(userList[count]);
+        t.progress(count, 'pbResUserAvailCount');
+        count++;
+        if(count < userList.length){
+            t.getDailyAction(userList[count].userId, parseViewCourt);
+        } else {
+            notify();
+        }
+    }
   },
   
   // notify with gifts[] or: {errMsg:xxx}
   fetchUserList : function (notify){
-	var t = Tabs.Resources;
-	var userList = [];
+    var t = Tabs.Resources;
+    var userList = [];
     t.getMembersInfo(1, parseAlliancePage);
-	
+    
     function parseAlliancePage (rslt){
       if (!rslt.ok || rslt.errMsg)
         notify ({errMsg:'Ajax Comm Error'});
-	  var users = rslt.memberInfo;
+      var users = rslt.memberInfo;
       for(var k in users){
-		userList.push({userId:users[k].userId, name:users[k].name, might:users[k].prestige, type:'alliance'});
-	  }
-	  t.progress(userList.length, 'pbResUserListCount');
-	  if(rslt.currentPage < rslt.noOfPages){
-		t.getMembersInfo((rslt.currentPage+1), parseAlliancePage);
-	  } else {
-		notify(userList);
-	  }
+        userList.push({userId:users[k].userId, name:users[k].name, might:users[k].prestige, type:'alliance'});
+      }
+      t.progress(userList.length, 'pbResUserListCount');
+      if(rslt.currentPage < rslt.noOfPages){
+        t.getMembersInfo((rslt.currentPage+1), parseAlliancePage);
+      } else {
+        notify(userList);
+      }
     }
-	
-	
+    
+    
   },
 }
 
@@ -17403,7 +18217,7 @@ function hexDump (dat){
   }
   function hexDig (d){
     hexdigs = '0123456789ABCDEF';
-    return hexdigs.charAt(d&15);      
+    return hexdigs.charAt(d&15);    
   }
 }
  
@@ -17421,12 +18235,12 @@ function SliderBar (container, width, height, value, classPrefix, margin){
   if (classPrefix == null){
     classPrefix = 'slider';
     var noClass = true;
-  }      
-  var sliderHeight = parseInt(height/2);  
+  }    
+  var sliderHeight = parseInt(height/2);
   var sliderTop = parseInt(height/4);
   this.sliderWidth = width - (margin*2);
     
-  this.div = document.createElement ('div');  
+  this.div = document.createElement ('div');
   this.div.style.height = height +'px';
   this.div.style.width = width +'px';
   this.div.className = classPrefix +'Cont';
@@ -17445,14 +18259,14 @@ function SliderBar (container, width, height, value, classPrefix, margin){
     this.slider.style.backgroundColor='#fff';
   
   this.sliderL = document.createElement ('div');
-  this.sliderL.setAttribute ('style', 'width:100px; height:100%; position:relative; ');
+  this.sliderL.setAttribute ('style', 'width:100px; height:100%; position:relative;');
   this.sliderL.className = classPrefix +'Part';
   this.sliderL.draggable = true;
   if (noClass)
     this.sliderL.style.backgroundColor='#0c0';
   
   this.knob = document.createElement ('div');
-  this.knob.setAttribute ('style', 'width:3px; position:relative; left:0px; background-color:#222');
+  this.knob.setAttribute ('style', 'width:3px; position:relative; left:0px; background-color:#222;');
   this.knob.style.height = height +'px';
   this.knob.style.top = (0-sliderTop) +'px';
   this.knob.className = classPrefix +'Knob';
@@ -17488,14 +18302,14 @@ function SliderBar (container, width, height, value, classPrefix, margin){
       relX = self.sliderWidth;
     self.knob.style.left = (relX - (self.knob.clientWidth/2) ) +'px';   // - half knob width !?!?
     self.sliderL.style.width = relX + 'px';
-    self.value =  relX / self.sliderWidth;   
+    self.value =  relX / self.sliderWidth; 
     if (self.listener)
       self.listener(self.value);
   }
   function doneMoving (){
     self.div.removeEventListener('mousemove', mouseMove, true);
     document.removeEventListener('mouseup', mouseUp, true);
-  }  
+  }
   function mouseUp (me){
     moveKnob (me);
     doneMoving();
@@ -17518,8 +18332,8 @@ function SliderBar (container, width, height, value, classPrefix, margin){
 }
 
 function pause(milliseconds) {
-	var dt = new Date();
-	while ((new Date()) - dt <= milliseconds) { /* Do nothing */ }
+    var dt = new Date();
+    while ((new Date()) - dt <= milliseconds) { /* Do nothing */ }
 }
 
 function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
@@ -17532,10 +18346,10 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   var div = document.createElement ('div');
   this.onSwfLoaded = onLoad;
   if (navigator.appName.toLowerCase().indexOf('microsoft')+1) {
-    div.innerHTML = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"><param name="movie" value="'+playerUrl+'"><param name="quality" value="high"></object>';
+    div.innerHTML = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="'+http+'download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"><param name="movie" value="'+playerUrl+'"><param name="quality" value="high"></object>';
     this.player = div.getElementsByTagName('object')[0];
   } else {
-    div.innerHTML = '<embed src="'+playerUrl+'"  bgcolor="#eeeeee" allowfullscreen=false FlashVars="'+ flashVars +'" quality="high" allowscriptaccess="always" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" ></embed>';
+    div.innerHTML = '<embed src="'+playerUrl+'"  bgcolor="#eeeeee" allowfullscreen=false FlashVars="'+ flashVars +'" quality="high" allowscriptaccess="always" pluginspage="'+http+'www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" ></embed>';
     this.player = div.getElementsByTagName('embed')[0].wrappedJSObject;
   }
   if (container)
@@ -17588,163 +18402,82 @@ function CmatSimpleSound (playerUrl, container, attrs, onLoad, flashVars) {
   this.swfLoadComplete = function (chanNum, isError){    // called by plugin when a sound finishes loading  (overload to be notified)
   }
 }
-	
+    
 function DoUnsafeWindow(func, execute_by_embed) {
-	if(this.isChrome || execute_by_embed) {
-		var scr=document.createElement('script');
-		scr.innerHTML=func;
-		document.body.appendChild(scr);
-	} else {
-		try {  
-			eval("unsafeWindow."+func);
-		} catch (error) {
-			logit("A javascript error has occurred when executing a function via DoUnsafeWindow. Error description: "+error.description);
-		}
-	}
-}	
+    if(this.isChrome || execute_by_embed) {
+        var scr=document.createElement('script');
+        scr.innerHTML=func;
+        document.body.appendChild(scr);
+    } else {
+        try {
+            eval("unsafeWindow."+func);
+        } catch (error) {
+            logit("A javascript error has occurred when executing a function via DoUnsafeWindow. Error description: "+error.description);
+        }
+    }
+}  
 
 function GetDisplayName(){
-	var DisplayName = document.getElementById('topnavDisplayName');
-	if(DisplayName){
-		DisplayName = DisplayName.innerHTML;
-	}else{
-		DisplayName = null;
-	}
-	return DisplayName
+    var DisplayName = document.getElementById('topnavDisplayName');
+    if(DisplayName){
+        DisplayName = DisplayName.innerHTML;
+    }else{
+        DisplayName = null;
+    }
+    return DisplayName
 }
 
 //modal_maptile((tileID),(Name),(X),(Y),(Gender+Avatar),(User),(Might),(Title),(AllianceName),(null),(tileProvinceId),(tilename),(CityState),(TileLevel),(allianceId),(tileCityId),(tileUserId),(TypeName),(misted));
 //modal_maptile(453323,"Heineken4",172,622,"m6","Heineken",3758930,"60","Darkness",null,21,"city","Normal",9,2136,67677,1589067,"City",false);
-/***
-function DrawLevelIconsxx() {
-    var maptileRe = /modal_maptile.([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)/;
-	var mapwindow=document.getElementById('mapwindow');
-	if(!mapwindow) return;
-	var levelIcons=document.getElementById('LevelIcons');
-	if(levelIcons) return;
 
-	var ss=document.evaluate(".//a[contains(@class,'slot')]",mapwindow,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
-	var lvRe=/_([0-9]+)/;
-	var idDone=false;
-	for(var s=0; s<ss.snapshotLength; s++) {
-		var a=ss.snapshotItem(s);
-		var onclick=a.getAttribute('id');
-		//alert(onclick);
-		var owner='';
-		if(onclick) {
-			var onclickM=maptileRe.exec(onclick);
-			if(onclickM && onclickM[6]!='"null"') {
-				var might=onclickM[7].StripQuotes();
-				var alliance=onclickM[15].StripQuotes();
-				var dip=getDiplomacy(alliance);
-				owner=" "+onclickM[6].StripQuotes();
-			}
-		}
-		var m=lvRe.exec(a.className);
-		if(!m) continue;
-		var sp=a.getElementsByTagName('span');
-		if(sp.length==0) continue;
-
-		if(!idDone) { a.id='levelIcons'; idDone=true; }
-		sp[0].style.color='#cc0';
-		if (alliance == 'null' && onclickM[12]=='"city"') sp[0].style.color='#33CCFF';
-		if (dip == 'hostile' && onclickM[12]=='"city"') sp[0].style.color='#FF0000';
-		if (onclickM) {
-			if (onclickM[12]!='"city"' &&  onclickM[6]!='"null"') sp[0].style.color='#FF9900';
-			if (onclickM[12]!='"city"' &&  onclickM[5]=='"null"' && onclickM[6]=='"null"' && onclickM[7]=='"null"' && onclickM[8]=='"null"' && onclickM[15]=='"null"' && onclickM[10]=='"null"') sp[0].style.color='#CC0033';
-		}
-		if (Options.MapShowExtra) {
-			if (onclickM && onclickM[6]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1]+owner+'<br />Might:'+addCommas(might);
-			else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
-		}
-		else {  
-			if (onclickM && onclickM[6]!='"null"' ) sp[0].innerHTML='&nbsp;'+m[1];
-			else sp[0].innerHTML='&nbsp;'+m[1]+addCommas(owner);
-		}
-		
-	}
-
-}
-***/
-
+//koc version-572
+//modal_maptile(this,307227,"NewRetard",698,326,"m8","oftheNOOBS",42318533,"90","Darkness",null,14,"city","Normal",12,2136,26654,1550996,"City",false);return false;
 function DrawLevelIcons() {
-	var maptileRe = /modal_maptile.([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)/;
-	var mapwindow=document.getElementById('mapwindow');
-	if(!mapwindow) return;
-	var levelIcons=document.getElementById('levelIcons');
-	if(levelIcons) return;
+    var maptileRe = /modal_maptile.([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)/;
+    var mapwindow=document.getElementById('mapwindow');
+    if(!mapwindow) return;
+    var mapinfo=document.getElementById('mapinfodone');
+    if(mapinfo) {return;};
 
-	var ss=document.evaluate(".//a[contains(@class,'slot')]",mapwindow,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
-	var idDone=false;
-	for(var s=0; s<ss.snapshotLength; s++) {
-		var a=ss.snapshotItem(s);
-		var onclick=a.getAttribute('id');
-		var owner='';
-		if(onclick) {
-			var tileinfo = unsafeWindow.g_mapObject.model.getTileActions(onclick)["tileClick"];	
-			if(tileinfo) {
-				var might = tileinfo.might;
-				if (might == "--------") might=0;
-				var might = parseInt(might)/1000000;
-				if (might > 1) might = Math.round(might);
-				 else if (might>0) might = might.toFixed(2);
-				var alliance = parseIntNan(tileinfo.allianceId);
-				var dip = getDiplomacy(alliance);
-				owner = tileinfo.username;
-				if (owner.length>10) owner = owner.slice(0,10) + '...';
-			}
+    var ss=document.evaluate(".//a[contains(@class,'slot')]",mapwindow,null,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
+    var mapinfodone=false;
+    for(var s=0; s<ss.snapshotLength; s++) {
+        var a=ss.snapshotItem(s);
+        var onclick=a.getAttribute('id');
+        //alert(onclick);
+        var owner='';
+        if(onclick) {
+         // logit(onclick);
+         var tileinfo = unsafeWindow.g_mapObject.model.getTileActions(onclick)["tileClick"];
+         // logit(inspect(tileinfo));
+            if(tileinfo) {
+                var might = parseInt(tileinfo.might);
+                var alliance = parseIntNan(tileinfo.allianceId);
+                var dip = getDiplomacy(alliance);
+                owner = tileinfo.username;
+            }
+        }
+        var sp=a.getElementsByTagName('span');
+        if(sp.length==0) continue;
+
+        if (!mapinfodone) { sp[0].id='mapinfodone'; mapinfodone=true; }
+        spancol='#cc0';
+        
+        if (alliance == 'null' && tileinfo.type=="city") spancol='#33CCFF';
+        if (dip == 'hostile' && tileinfo.type=="city") spancol='#FF0000';
+        if (tileinfo.type!="city" &&  tileinfo.tileuserid!="null") spancol='#FF9900';
+        if (tileinfo.type!="city" &&  tileinfo.tileuserid=="null") spancol='#CC0033';
+
+        if (Options.MapShowExtra) {
+            if (tileinfo.username!="null")
+				sp[0].outerHTML = sp[0].outerHTML +'<div style="color:'+spancol+';font-size:11px;text-shadow: 2px 2px 2px #000;" align="left">&nbsp;&nbsp;'+owner+'</div><div style="color:'+spancol+';font-size:10px;text-shadow: 2px 2px 2px #000;" align="left">&nbsp;&nbsp;Might:'+addCommas(might)+'</div>';
+        }
+        if (Options.MapShowLevel && (parseIntNan(tileinfo.level) != 0)) {
+			sp[0].outerHTML = sp[0].outerHTML+'<div style="color:'+spancol+';text-shadow: 2px 2px 2px #000;" align="left">&nbsp;&nbsp;'+tileinfo.level+'&nbsp;&nbsp;</div>';
 		}
-		var sp=a.getElementsByTagName('span');
-		if(sp.length==0) continue;
+    }
 
-		if(!idDone) { a.id='levelIcons'; idDone=true; }
-		var LevelColor = 'black';
-		var InfoColor = 'black';
-
-		var Prestige = a.getAttribute('class')
-		if (Prestige.indexOf('Prestige') >=0) LevelColor = "#689C00";
-		if (Prestige.indexOf('Briton') >=0) LevelColor = "#E36600";
-		if (Prestige.indexOf('Fey') >=0) LevelColor = "#A944FF";
-
-		if (tileinfo.type=="city") {
-			if (tileinfo.allianceId == null)  InfoColor = '#C4C4C4'; //sp[0].style.color='#57BEFF'; //City unallied -> grey
-			if (tileinfo.allianceId != null)  InfoColor = '#F5AF36'; //sp[0].style.color='#FF57B6'; //City allied -> orange
-			if (tileinfo.status !="Normal") LevelColor = "white";
-		}
-
-		if (tileinfo.type!="city") {				
-			if (tileinfo.allianceId != null && tileinfo.tileuserid != null)  LevelColor = InfoColor = '#F5AF36'; //Wild owned allied -> orange
-			if (tileinfo.allianceId == null && tileinfo.tileuserid != null && tileinfo.tileuserid != "0" && !tileinfo.mistedflag) LevelColor = InfoColor = '#C4C4C4'; //Wild owned unallied -> grey
-			if (tileinfo.mistedflag) LevelColor = InfoColor = '#F5AF36'; //Wild owned misted -> grey
-			if (tileinfo.allianceId == null && tileinfo.tileuserid == null && !tileinfo.mistedflag) LevelColor = InfoColor = '#000000	'; //Wild un-owned
-		}
-
-		var friendly = hostile = false;
-
-		if (!Seed.allianceDiplomacies) friendly = hostile = false;
-		else {
-		 for (var i in Seed.allianceDiplomacies.friendly) if (Seed.allianceDiplomacies.friendly[i].allianceId == tileinfo.allianceId) friendly = true;
-		 if (Seed.allianceDiplomacies.allianceId == tileinfo.allianceId) friendly = true;
-		 for (var i in Seed.allianceDiplomacies.hostile) if (Seed.allianceDiplomacies.hostile[i].allianceId == tileinfo.allianceId) hostile = true;
-		}
-		if (friendly) InfoColor = '#9ED2FF';
-		if (hostile) InfoColor = '#FF5757'
-
-		if (Options.MapShowExtra && unsafeWindow.tvuid!=tileinfo.tileuserid) {
-			if (tileinfo.username!="null")
-			  sp[0].innerHTML = '<B><FONT color="'+LevelColor+'">' + tileinfo.level + '</b></font><FONT color="'+InfoColor+'"> ('+might+ 'M)<br />'+owner + '</font>';
-			else
-			  sp[0].innerHTML = '<FONT color="'+LevelColor+'">' + tileinfo.level + '</font>';
-		}
-//		else if (unsafeWindow.tvuid==tileinfo.tileuserid) {
-//			if (Prestige.indexOf('city') >=0) LevelColor = "white";
-//			sp[0].style.color=LevelColor;
-//		}
-		else
-   		  	sp[0].innerHTML = '<FONT color="'+LevelColor+'">' + tileinfo.level + '</font>';
-	}
 }
-
 
 function AjaxRequest2 (url, opts){
     var headers = {
@@ -17752,20 +18485,20 @@ function AjaxRequest2 (url, opts){
         'X-Prototype-Version': '1.6.1',
         'Accept': 'text/javascript, text/html, application/xml, text/xml, */*'
     };
-    var ajax = null;   
+    var ajax = null; 
     if (window.XMLHttpRequest)
       ajax=new XMLHttpRequest();
     else
-      ajax=new ActiveXObject("Microsoft.XMLHTTP");   
+      ajax=new ActiveXObject("Microsoft.XMLHTTP"); 
     if (opts.method==null || opts.method=='')
       method = 'GET';
     else
-      method = opts.method.toUpperCase();    
+      method = opts.method.toUpperCase();  
     if (method == 'POST'){
         headers['Content-type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
     } else if (method == 'GET'){
         addUrlArgs (url, opts.parameters);
-    }    
+    }  
     ajax.onreadystatechange = function(){
         // ['Uninitialized', 'Loading', 'Loaded', 'Interactive', 'Complete']; states 0-4
         if (ajax.readyState==4) {
@@ -17776,7 +18509,7 @@ function AjaxRequest2 (url, opts){
             } else {
                 if (opts.onChange) opts.onChange (ajax);
             }
-    }    
+    }  
     ajax.open(method, url, true); // always async!
     for (var k in headers)
       ajax.setRequestHeader (k, headers[k]);
@@ -17795,7 +18528,7 @@ function AjaxRequest2 (url, opts){
                                   a.push (k+'['+h+']['+i+']['+j+'] ='+ opts.parameters[k][h][i][j] );
                               }
                               } else
-                              	a.push (k+'['+h+']['+i+']'+' ='+ opts.parameters[k][h][i]);
+                                  a.push (k+'['+h+']['+i+']'+' ='+ opts.parameters[k][h][i]);
                           }
                       } else
                       a.push (k+'['+h+'] ='+ opts.parameters[k][h] );
@@ -17829,6 +18562,26 @@ function readAttackOptions (){
   }
 }
 
+function saveFarmOptions() {
+    var serverID = getServerId();
+    setTimeout(function () {
+        GM_setValue('FarmOptions_' + serverID, JSON2.stringify(FarmOptions));
+    }, 0);
+}
+
+function readFarmOptions() {
+    var serverID = getServerId();
+    s = GM_getValue('FarmOptions_' + serverID);
+    if (s != null) {
+        opts = JSON2.parse(s);
+        for (k in opts) {
+            if (matTypeof(opts[k]) == 'object') for (kk in opts[k])
+            FarmOptions[k][kk] = opts[k][kk];
+            else FarmOptions[k] = opts[k];
+        }
+    }
+}
+
 function saveThroneOptions() {
     var serverID = getServerId();
     setTimeout(function () {
@@ -17850,102 +18603,163 @@ function readThroneOptions() {
     }
 }
 
+
  
 var DeleteReports = {
-	deleting : false,
-	init : function(){
-		var t = DeleteReports;
-		setInterval(t.startdeletereports, 1*60*1000);
-	},
-	
-    startdeletereports : function(){
-		var t = DeleteReports;
-          if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2 || Options.DeleteMsgs3)){
-	  		t.deleting = true;
-//	  		t.fetchreport(0, t.checkreports);
-		        setTimeout (function() {t.fetchreport(0, t.checkreports)}, 5*1000);
-	  	}
+    deleting : false,
+    init : function(){
+        var t = DeleteReports;
+        //setInterval(t.startdeletereports, 2*60*1000);
+        // now done in global timer
+        setTimeout(t.startdeletereports, 10);
     },
     
-    fetchreport : function(pageNo, callback){
-		var t = DeleteReports;
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		if(pageNo > 1)
-			params.pageNo = pageNo;
-		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
-			method: "post",
-			parameters: params,
-			onSuccess: function (rslt) {
-				callback(rslt);
-			},
-				onFailure: function () {
-				callback();
-			},
-		});
+    startdeletereports : function(){
+        var t = DeleteReports;
+          if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2 || Options.DeleteMsgs3 || Options.expinc)){
+              t.deleting = true;
+              t.fetchreport(0, t.checkreports);
+          }
     },
-	
+    fetchreport : function(pageNo, callback){
+        var t = DeleteReports;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        if(pageNo > 1)
+            params.pageNo = pageNo;
+        new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function (rslt) {
+                callback(rslt);
+            },
+                onFailure: function () {
+                callback();
+            },
+        });
+    },
+    faketower : function(rpId,x) {
+        var t = DeleteReports;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+      params.rid=rpId;
+         new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/fetchReport.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function (rslt) {
+            	x.knt['cbt'] = rslt.detail.s1KCombatLv;
+            	x.klv = rslt.detail.s1KLv;
+            	for (i in rslt.detail.fght.s1) {
+            		x.unts[i] = rslt.detail.fght.s1[i][0];
+            	};
+					Seed.queue_atkinc['m'+x.mid] = x;
+            },
+            onFailure: function (rslt) {
+               
+            },
+         }, true);
+   
+   },
     checkreports : function(rslt){
-		var t = DeleteReports;
-		if(!rslt.ok){
-			t.deleting = false;
-			return;
-		}
-		if(rslt.arReports.length < 1){
-			logit("CR stopped arreports < 1");
-			t.deleting = false;
-			return;
-		}
-		var reports = rslt.arReports;
-		var totalPages = rslt.totalPages;
-		if (rslt.totalPages > 30) 
-			var totalPages = 30;
-		var deletes1 = new Array();
-		var deletes0 = new Array();
-		for(k in reports){
-			if(Options.DeleteMsg){
-				if((reports[k].marchType==4 || reports[k].marchType==9) && reports[k].side0PlayerId==0 && reports[k].side0TileType > 50)
-					deletes1.push(k.substr(2));
-				else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
-					deletes1.push(k.substr(2));
-			}
-			if (Options.DeleteMsgs0){
-				if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
-					deletes0.push(k.substr(2));
-			}
-			if (Options.DeleteMsgs1){
-				if((reports[k].side0TileType <= 50 || reports[k].side0TileType==54)&& reports[k].side0PlayerId==0)
-					deletes1.push(k.substr(2));
-            		} 
-            		if (Options.DeleteMsgsdf){
-//                		if(reports[k].side0TileType==54 && reports[k].side0PlayerId==0) {
-                		if(reports[k].side0TileType==54 && reports[k].side0PlayerId==0 && reports[k].marchType==10) {
-					t.checkreportforitems(k.substr(2));
-                    		deletes1.push(k.substr(2));
-				}
-			}
-			if (Options.DeleteMsgs2){
-				for(i in CrestData) {
-					if(reports[k].side0XCoord == CrestData[i].X && reports[k].side0YCoord == CrestData[i].Y && reports[k].marchType==4 && t.isMyself(reports[k].side1PlayerId)) {
-					t.checkreportforitems(k.substr(2));
-						deletes1.push(k.substr(2));
-					}
-				}
-				if(reports[k].side1PlayerId==1437607)
-					deletes1.push(k.substr(2));
+        var t = DeleteReports;
+        if(!rslt.ok){
+            t.deleting = false;
+            return;
+        }
+        if(rslt.arReports.length < 1){
+        logit("CR stopped arreports < 1");
+            t.deleting = false;
+            return;
+        }
+        var lasttenmin = unixTime() -600;
+        var reports = rslt.arReports;
+        var players = rslt.arPlayerNames;
+        var totalPages = rslt.totalPages;
+        if (rslt.totalPages > 30)
+        var totalPages = 30;
+        var deletes1 = new Array();
+        var deletes0 = new Array();
+        for(k in reports){
+        	//logit(lasttenmin+" and "+reports[k].reportUnixTime+" and it is "+(lasttenmin < Number(reports[k].reportUnixTime)));
+        	var reportUnixTime = Number(reports[k].reportUnixTime);
+        	if(Options.expinc) {
+	        	if((reports[k].marchType==4 || reports[k].marchType==3) && (lasttenmin < reportUnixTime) && t.isMyself(reports[k].side0PlayerId) && (Options.alertConfig.lastarrtime.indexOf(reportUnixTime) == -1)) {
+   	     		var x = {};
+   	     		var euid = reports[k].side1PlayerId;
+      	  		x.knt = {};
+        			x.kLv = 1;
+        			x.fromCityId = reports[k].side1CityId;
+        			x.fromXCoord = reports[k].side1XCoord;
+        			x.fromYCoord = reports[k].side1YCoord;
+        			x.unts = {};
+        			x.cnt = "unknown";
+        			x.pid = reports[k].side1PlayerId;
+        			x.aid = reports[k].side1AllianceId
+        			x.arrivalTime = Number(reports[k].reportUnixTime);
+        			x.departureTime = Number(reports[k].reportUnixTime);
+        			x.marchType = reports[k].marchType;
+        			x.toCityId = reports[k].side0CityId;
+        			if(reports[k].side0TileType > 50){
+        				x.toTileId = Cities.byID[x.toCityId].tileId;
+        			} else {
+						for (i in Seed.wilderness['city'+x.toCityId]){
+							if(Seed.wilderness['city'+x.toCityId][i].xCoord == reports[k].side0XCoord && Seed.wilderness['city'+x.toCityId][i].yCoord == reports[k].side0YCoord) {
+								x.toTileId = Seed.wilderness['city'+x.toCityId][i].tileId;
+								break;
+							}
+      				}
+					};
+        			x.score = 9;
+        			x.mid = Number(reports[k].reportId);
+        			x.reportId = x.mid;
+        		if(!Seed.players['u'+euid]) {
+        			Seed.players['u'+euid] = {};
+        			Seed.players['u'+euid].n = players['p'+euid];
+        		};
+        			new t.faketower(x.reportId,x)
+        		};
+        	};
+        	
+            if(Options.DeleteMsg){
+                if((reports[k].marchType==4 || reports[k].marchType==9) && reports[k].side0PlayerId==0 && reports[k].side0TileType > 50)
+                    deletes1.push(k.substr(2));
+                else if(reports[k].marchType==1 && t.isMyself(reports[k].side1PlayerId))
+                    deletes1.push(k.substr(2));
+            }
+            if (Options.DeleteMsgs0){
+                if(reports[k].marchType==1 && !t.isMyself(reports[k].side1PlayerId))
+                    deletes0.push(k.substr(2));
+            }
+            if (Options.DeleteMsgs1){
+                if(reports[k].side0TileType <= 50 && reports[k].side0PlayerId==0)
+                    deletes1.push(k.substr(2));
 
-            		}
-            		if (Options.DeleteMsgs3){
-               			for(i in CrestData) {
-					for (l in unsafeWindow.seed.allianceDiplomacies.friendlyToThem) {
-						if(reports[k].side1AllianceId == unsafeWindow.seed.allianceDiplomacies.friendlyToThem[l].allianceId)
-                        				deletes1.push(k.substr(2));
-					}
-					for (l in unsafeWindow.seed.allianceDiplomacies.friendly) {
-						if(reports[k].side1AllianceId == unsafeWindow.seed.allianceDiplomacies.friendly[l].allianceId)
-                        				deletes1.push(k.substr(2));
-					}
-                		}
-			}            
+            } 
+            if (Options.DeleteMsgsdf){
+                if(reports[k].side0TileType==54 && reports[k].side0PlayerId==0) {
+               t.checkreportforitems(k.substr(2));
+                    deletes1.push(k.substr(2));
+            }
+            }
+            if (Options.DeleteMsgs2){
+                for(i in CrestData) {
+                    if(reports[k].side0XCoord == CrestData[i].X && reports[k].side0YCoord == CrestData[i].Y && reports[k].marchType==4 && t.isMyself(reports[k].side1PlayerId)) {
+	       t.checkreportforitems(k.substr(2));
+                        deletes1.push(k.substr(2));
+                    }
+                }
+
+            }
+            if (Options.DeleteMsgs3){
+                for(i in CrestData) {
+               for (l in unsafeWindow.seed.allianceDiplomacies.friendlyToThem) {
+                  if(reports[k].side1AllianceId == unsafeWindow.seed.allianceDiplomacies.friendlyToThem[l].allianceId)
+                        deletes1.push(k.substr(2));
+               }
+               for (l in unsafeWindow.seed.allianceDiplomacies.friendly) {
+                  if(reports[k].side1AllianceId == unsafeWindow.seed.allianceDiplomacies.friendly[l].allianceId)
+                        deletes1.push(k.substr(2));
+               }
+                }
+         }            
         }
         if(deletes1.length > 0 || deletes0.length > 0){
             t.deleteCheckedReports(deletes1, deletes0);
@@ -17955,100 +18769,76 @@ var DeleteReports = {
         }
     },
     
-	deleteCheckedReports : function(deletes1, deletes0){
-		var t = DeleteReports;
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.s1rids = deletes1.join(",");
-		params.s0rids = deletes0.join(",");
-		params.cityrids = '';
-		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
-			method: "post",
-			parameters: params,
-			onSuccess: function (rslt) {
-				if(rslt.ok){
-					Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
-					actionLog('Deleted: ' +parseInt(deletes1.length + deletes0.length)+' reports');
-				}
-				t.fetchreport(0, t.checkreports);
-			},
-			onFailure: function () {
-			},
-		});
+    deleteCheckedReports : function(deletes1, deletes0){
+        var t = DeleteReports;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.s1rids = deletes1.join(",");
+        params.s0rids = deletes0.join(",");
+        params.cityrids = '';
+        new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function (rslt) {
+                if(rslt.ok){
+                    Seed.newReportCount = parseInt(Seed.newReportCount) - parseInt(deletes1.length) - parseInt(deletes0.length);
+                    actionLog('Deleted: ' +parseInt(deletes1.length + deletes0.length)+' reports');
+                }
+                t.fetchreport(0, t.checkreports);
+            },
+            onFailure: function () {
+            t.deleting = false;
+            },
+        });
     },
-	
-
-
+    
     isMyself: function(userID){
-		var t = DeleteReports;
-		if(!Seed.players["u"+userID])
-			return false;
-		if(Seed.players["u"+userID].n == Seed.player.name)
-			return true;
-		else
-			return false;
-		return false;
+        var t = DeleteReports;
+        if(!Seed.players["u"+userID])
+            return false;
+        if(Seed.players["u"+userID].n == Seed.player.name)
+            return true;
+        else
+            return false;
+        return false;
     },
+    
     
     checkreportforitems: function(rpId) {
         var t = DeleteReports;
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.rid=rpId;
-			new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/fetchReport.php" + unsafeWindow.g_ajaxsuffix, {
-				method: "post",
-				parameters: params,
-				onSuccess: function (rslt) {
-				   if (rslt.detail.winner)
-					if(rslt.detail.loot[5]) {
-						var loot = rslt.detail.loot[5];
-					if (matTypeof(loot) == 'object')
-						for (var z in loot) {
-						   if (rslt.detail.fght.s0.m101 || rslt.detail.fght.s0.m102 || rslt.detail.fght.s0.m103 || rslt.detail.fght.s0.m104 || rslt.detail.fght.s0.m105 || rslt.detail.fght.s0.m106 || rslt.detail.fght.s0.m107 || rslt.detail.fght.s0.m108 || rslt.detail.fght.s0.m109 || rslt.detail.fght.s0.m10 ) {
-							if(AttackOptions.ItemsFound[z])
-								AttackOptions.ItemsFound[z] += parseInt(loot[z]);
-							else AttackOptions.ItemsFound[z] = parseInt(loot[z]);
-						   } else {
-							if(AttackOptions.ItemsFoundCr[z])
-								AttackOptions.ItemsFoundCr[z] += parseInt(loot[z]);
-							else AttackOptions.ItemsFoundCr[z] = parseInt(loot[z]);
-						   }
-						}
-						saveAttackOptions();
-					};
-				},
-				onFailure: function (rslt) {
-					
-				},
-			}, false);
-	
-	},
+      params.rid=rpId;
+         new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/fetchReport.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function (rslt) {
+	      if (rslt.detail.winner)
+               if(rslt.detail.loot[5]) {
+                  var loot = rslt.detail.loot[5];
+               if (matTypeof(loot) == 'object')
+                  for (var z in loot) {
+		    if (rslt.detail.fght.s0.m101 || rslt.detail.fght.s0.m102 || rslt.detail.fght.s0.m103 || rslt.detail.fght.s0.m104 || rslt.detail.fght.s0.m105 || rslt.detail.fght.s0.m106 || rslt.detail.fght.s0.m107 || rslt.detail.fght.s0.m108 || rslt.detail.fght.s0.m109 || rslt.detail.fght.s0.m10 ) {
+		     if(AttackOptions.ItemsFound[z])
+		        AttackOptions.ItemsFound[z] += parseInt(loot[z]);
+		     else AttackOptions.ItemsFound[z] = parseInt(loot[z]);
+		    } else {
+		     if(AttackOptions.ItemsFoundCr[z])
+		        AttackOptions.ItemsFoundCr[z] += parseInt(loot[z]);
+		     else AttackOptions.ItemsFoundCr[z] = parseInt(loot[z]);
+		    }
+                  }
+                  saveAttackOptions();
+               };
+            },
+            onFailure: function (rslt) {
+               
+            },
+         }, false);
+   
+   },
+    
     
 }
 
-function fetchPlayerData (name, notify){  // at least 3 chars!! 
-    var params = uW.Object.clone(uW.g_ajaxparams);
-    params.searchName = name;
-    params.subType = "ALLIANCE_INVITE";
-    new MyAjaxRequest(uW.g_ajaxpath + "ajax/searchPlayers.php" + uW.g_ajaxsuffix, {
-      method: "post",
-      parameters: params,
-      onSuccess: function (rslt2) {
-        notify (rslt2);
-      },
-       onFailure: function (rslt2) {
-        notify ({errorMsg:'AJAX error'});
-      },
-    });
-}
-  
-function eventGotPlayerData (rslt2){
-    var t = Tabs.AllianceList;
-    if (!rslt2.ok){
-      document.getElementById('allListOut').innerHTML = rslt2.errorMsg;
-      return;
-    }
-    t.playerList = rslt2.matchedUsers;
-}
- 
 /******************* Apothecary Tab **********************/
 Tabs.Apothecary = {
   tabOrder : 591,                    // order to place tab in top bar
@@ -18241,15 +19031,11 @@ Tabs.Apothecary = {
     for (var city in ApothecaryOptions.city){
         if(!Cities.cities[city] || ApothecaryOptions.city[city].length < 1) continue;
         if(t.cities[city]) continue; //Skip if Apothecary doesn't exist
-        var cid = Cities.cities[city].id;
-//logit('blessing106:' +Seed.cityData['city'][cid].prestigeInfo.blessings.indexOf(106));
         if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0) continue; //Skip city if queue is full
-           if(Seed.cityData['city'][cid].prestigeInfo.blessings.indexOf(106) == -1) continue; //Skip city if queue is full and no ancient healing blessing
-          if(Seed.queue_revive['city'+Cities.cities[city].id].length > 1) continue; //Skip city if queue is full
         if(Seed.citystats["city" + Cities.cities[city].id].gold[0] < parseInt(ApothecaryOptions.goldkeep)) continue; //Skip if gold is less than reserve
         for(var i=0; i<ApothecaryOptions.city[city].length; i++){
             var info = ApothecaryOptions.city[city][i];
-//            var cid = Cities.cities[city].id;
+            var cid = Cities.cities[city].id;
             var amt = 0;
             if(Seed.woundedUnits['city'+cid]['unt'+info.troop] < info.min) continue;
             if(Seed.woundedUnits['city'+cid]['unt'+info.troop] > info.max && info.max_sel){
@@ -18804,7 +19590,6 @@ Tabs.Combat = {
 /**************************** Inventory Tab ****************************************/
 Tabs.Inventory = {
    myDiv: null,
-   tabDisabled : !ENABLE_INVENTORY_TAB,         // if true, tab will not be added or initialized
    general: [],
    combat: [],
    tabLabel: unsafeWindow.g_js_strings.commonstr.inventory,
@@ -18894,7 +19679,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_general' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_general_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18928,7 +19713,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_combat' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_combat_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18962,7 +19747,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_resources' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_resources_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -18996,7 +19781,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_chest' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_chest_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -19030,7 +19815,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_court' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src='https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_court_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -19231,18 +20016,6 @@ Tabs.startup = {
         t.myDiv.innerHTML = m;
         t.city = new CdispCityPicker ('pblvlcity', document.getElementById('pblvlcity'), true, t.ClickCitySelect, 0);
 
-        /*
-        document.getElementById('test').addEventListener('click', function () {
-                Options.lvl5FarmDone = "false";
-                Options.lvl3MineDone = "false";
-                Options.lvl2BarracksDone = "false";
-                Options.lvl3WallDone = "false";
-                Options.lvl5CastleDone = "false";
-                Options.lvl2WorkshopDone = "false";
-                saveOptions();
-        });*/
-      
-
         document.getElementById('toggleFieldLayout').addEventListener('click', function () {
                 t.paintFieldGrid();
         });
@@ -19297,9 +20070,9 @@ Tabs.startup = {
 
     addCityToQueue:function(){
         var t = Tabs.startup;
-	var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
+   var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
             for (pos=1;pos<=32;pos++){
-		if(AscCityInd == true) {
+      if(AscCityInd == true) {
                       if  (AscbuildingIDs[document.getElementById('tileID' + pos).value] >0) {
                           if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
                         var buildingMode = "build";
@@ -19315,8 +20088,8 @@ Tabs.startup = {
                         Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);  
                         }                  
                     }
-		} else {
-			if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
+      } else {
+         if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
                           if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
                         var buildingMode = "build";
                         var cityId =  t.city.city.id;
@@ -19331,7 +20104,7 @@ Tabs.startup = {
                         Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode); 
                         }                  
                     }
-		} 
+      } 
             }
     },  
     buildExtraLevels:function(rslt,buildItem){
@@ -19451,29 +20224,6 @@ Tabs.startup = {
                Options.lvl2WorkshopDone = "true";
                saveOptions();
         }
-        /*if (Options.lvl5CastleDone == "false" && buildItem.buildingType == "") {
-            var buildingMode = "build";
-               var cityId = buildItem.cityId;
-               var time = parseInt(buildItem.buildingTime);
-            var mult = parseInt(buildItem.buildingMult);
-            var attempt = parseInt(buildItem.buildingAttempt);
-            var buildingPos   = parseInt(buildItem.buildingPos);
-            var buildingType  = //;
-            var buildingLevel = 1; //parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
-            var buildingId    = Seed.buildings["city" + cityId]["pos0"][3]
-            var buildingAttempts = 0;
-            for (var bL = 1; bL <5; bL++) {
-                var queueId = Tabs.build.loaded_bQ.length;
-                var result = Tabs.build.calculateQueueValues(cityId, bL, buildingType, buildingMode);
-                var buildingMult = result[0];
-                var buildingTime = result[1];
-                queueId = queueId ;
-                Tabs.build.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, bL, buildingAttempts, buildingMult,buildingMode);
-                Tabs.build._addTab(queueId, cityId, buildingType, buildingTime, bL, buildingAttempts, buildingMode);
-               }
-               Options.lvl2BarracksDone = "true";
-               saveOptions();
-        }*/
 
     },
 
@@ -19481,11 +20231,6 @@ Tabs.startup = {
         var t = Tabs.startup;
         var max = t.getCastleLevel();
         Options.lvl5FarmDone = "false";
-        //var skipMain = false;
-        //1=5
-        //4=3
-        //lvl5FarmDone: "false",
-          //lvl3MineDone: "false",
             for (pos=100;pos<=max;pos++){
                     if  (buildingIDs[document.getElementById('tileID' + pos).value] >0) {
                         if (Seed.buildings['city' + t.city.city.id]["pos" + pos] == undefined){
@@ -19510,13 +20255,11 @@ Tabs.startup = {
         t.myDiv = cityDiv;
         t.where = "City";
         var counter = 0;
-	var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
-        var cityGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/CityTileIDs.jpg">';
-	var asccityGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/AscCityTileIDs.jpg">';
-//	var ascfeycityGrid = '<img src="http://i.imgur.com/ALTeS.jpg">';
-//	var ascbritcityGrid = '<img src="http://i.imgur.com/dOZmZ.jpg">';
-	var asccityfeyGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/AscCityFeyTileIDs.jpg">';
-	var asccitybritGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/AscCityBritonTileIDs.jpg">';
+   	var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
+        var cityGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/CityTileIDs.jpg">';
+   	var asccityGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/AscCityTileIDs.jpg">';
+	var asccityfeyGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/AscCityFeyTileIDs.jpg">';
+	var asccitybritGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/AscCityBritonTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
 	if(AscCityInd == true) {
 		varAscCityType=Seed.cityData.city[t.city.city.id].prestigeInfo.prestigeType;
@@ -19537,36 +20280,36 @@ Tabs.startup = {
                 counter++
                 message += '<TD>Tile1<SELECT id=tileID1><OPTION value="Wall">Wall</option>'
             }else{
-            	counter++;
-            	message += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
-		if(AscCityInd == true) {
-			for (kk in AsccityBuildingNames){
-                      		message += '<OPTION value='+kk+'>'+AsccityBuildingNames[kk]+'</option>';
-                	}
-		} else {
-			for (kk in cityBuildingNames){
-                      		message += '<OPTION value='+kk+'>'+cityBuildingNames[kk]+'</option>';
-			}
-		}
-            	message += '</options>';
-        	if (counter % 4 == 0)message+='</tr>';
-        	}
+               counter++;
+               message += '<TD>Tile'+k+'<SELECT id=tileID'+k+'><OPTION value="Nothing">---Select---</option>'
+      if(AscCityInd == true) {
+         for (kk in AsccityBuildingNames){
+                           message += '<OPTION value='+kk+'>'+AsccityBuildingNames[kk]+'</option>';
+                  }
+      } else {
+         for (kk in cityBuildingNames){
+                           message += '<OPTION value='+kk+'>'+cityBuildingNames[kk]+'</option>';
+         }
+      }
+               message += '</options>';
+         if (counter % 4 == 0)message+='</tr>';
+         }
         }
         document.getElementById('layoutBoxes').innerHTML = message;
             for (pos=1;pos<=32;pos++){
-		if(AscCityInd == true) {
-                	if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
-                    	document.getElementById('tileID' + pos).value = AscbuildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
-                   	 document.getElementById('tileID' + pos).disabled = true;
-                    	logit("POS = " + pos + ' ' + AscbuildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
-                	}
-		} else {
-                	if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
-                    	document.getElementById('tileID' + pos).value = buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
-                   	 document.getElementById('tileID' + pos).disabled = true;
-                    	logit("POS = " + pos + ' ' + buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
-                	}
-		}
+      if(AscCityInd == true) {
+                  if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
+                     document.getElementById('tileID' + pos).value = AscbuildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
+                      document.getElementById('tileID' + pos).disabled = true;
+                     logit("POS = " + pos + ' ' + AscbuildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
+                  }
+      } else {
+                  if (Seed.buildings['city' + t.city.city.id]["pos" + pos] != undefined){
+                     document.getElementById('tileID' + pos).value = buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]];
+                      document.getElementById('tileID' + pos).disabled = true;
+                     logit("POS = " + pos + ' ' + buildingTypes["type"+Seed.buildings['city' +t.city.city.id]["pos"+pos][0]] + ' TYPE = ' + Seed.buildings['city' +t.city.city.id]["pos"+pos][0]);
+                  }
+      }
             }
        
         document.getElementById('showDefaults').addEventListener('click', function(){
@@ -19626,7 +20369,7 @@ Tabs.startup = {
         var counter = 0;
         var fields = 13;
         var max = t.getCastleLevel();
-        var fieldGrid = '<img src="http://koc-power-bot.googlecode.com/svn/trunk/FieldsTileIDs.jpg">';
+        var fieldGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/FieldsTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
         document.getElementById('gridPicture').innerHTML = fieldGrid;
         var mess='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showFieldDefaults type=submit value="Load Defaults"><INPUT id=setFieldDefaults type=submit value="Set Defaults">';
@@ -19674,7 +20417,6 @@ Tabs.startup = {
     show : function(){},
     hide : function(){},
 } 
-
 /********************************* ATTACK TAB ***********************************/
 Tabs.Attack = {
 	tabOrder : 70,
@@ -19683,8 +20425,10 @@ Tabs.Attack = {
 	rallypointlevel:null,
 	error_code: 0,
 	knt:{},
+	nTroopType: 17,
 	trooparray:{1:"ST",2:"MM",3:"Scout",4:"Pike",5:"Sword",6:"Arch",7:"LC",8:"HC",9:"SW",10:"Ball",11:"Ram",12:"Cat",13:"Blood",14:"Exec",15:"Siege",16:"Flame",17:"Huss",},
 	msgtimer : null,
+
 
 	/** window display **/
 	init : function (div) {
@@ -19693,7 +20437,7 @@ Tabs.Attack = {
 
 		t.sendCrestReport;	// check this every refresh
 		t.msgtimer = setInterval(t.sendCrestReport, 1*60*1000);  
-		t.timer = setTimeout(function(){ t.Rounds(1,0,0);}, CrestOptions.Crestinterval*1000);
+		t.timer = setTimeout(function(){ t.Rounds(1,0,0);}, CrestOptions.interval*1000);
 
 		t.myDiv = div;
 		var selbut=0;
@@ -19720,12 +20464,13 @@ Tabs.Attack = {
 		for (g in Cities.byID) { m +='<option value="'+Cities.byID[g].id+'">'+Cities.byID[g].name+'</option>'; };
 		m += '</select></td></tr></table>';
 
-		m += '<DIV id=pbOpt class=pbStat>ADD NEW ATTACKS</div><TABLE id=pbcrestopt     width=100% height=0% class=pbTab><TR align="center"></table>';
+		m += '<DIV id=pbNewAttack class=pbStat>ADD NEW ATTACKS</div><TABLE id=pbcrestopt     width=100% height=0% class=pbTab><TR align="center"></table>';
 		m += '<DIV style="margin-bottom:10px;">&nbsp;Attack from City: <span id=crestcity></span></div>';
   
 		m += '<TABLE class=ptTab><TR><TD>Target Co-ords:&nbsp;&nbsp;X:&nbsp;<INPUT id=pbcrestx type=text size=3 maxlength=3 value=""></td>';
 		m += '<TD>Y:&nbsp;<INPUT id=pbcresty type=text size=3 maxlength=3 value=""></td></tr>';
-		m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild CHECKED /> Target is Wilderness</td><td>(if ticked will reduce wave 1 MM for subsequent attacks)</td></tr></table>';
+		m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Target is Wilderness</td><td>(if ticked will abandon wild and reduce wave 1 MM for subsequent attacks)</td></tr></table>';
+
    
 		var dude = unsafeWindow.unitnamedesctranslated;
 		m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD><b>Wave 1</b>&nbsp;(initial):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
@@ -19781,6 +20526,16 @@ Tabs.Attack = {
 			saveOptions();
 		},false);
     
+
+
+
+
+
+
+
+
+
+
 		$("pbcrestslots").addEventListener('change', function(e){
 			Options.CrestSlots = parseIntNan(e.target.value);
 			saveOptions();
@@ -19793,6 +20548,12 @@ Tabs.Attack = {
 			}
 		}
         
+
+
+
+
+
+
 		t.tcp = new CdispCityPicker ('crestcityselect', document.getElementById('crestcity'), true, t.clickCitySelect, selbut);
     
 		if (CrestOptions.CrestCity == 0) {
@@ -19803,6 +20564,10 @@ Tabs.Attack = {
 			CrestOptions.isWild = this.checked;
 		},false);
     
+
+
+
+
 		$('pbRattacks').addEventListener('click', function(){
 			Options.CrestRand = this.checked;
 			saveOptions();
@@ -19810,51 +20575,20 @@ Tabs.Attack = {
     
 		$('pbcrest_rnd1').addEventListener('click', function(){
 			var checked = (!this.checked);
-			CrestOptions.round1 = this.checked;
-			$('R1ST').disabled = checked;
-			$('R1MM').disabled = checked;
-			$('R1Scout').disabled = checked;
-			$('R1Pike').disabled = checked;
-			$('R1Sword').disabled = checked;
-			$('R1Arch').disabled = checked;
-			$('R1LC').disabled = checked;
-			$('R1HC').disabled = checked;
-			$('R1SW').disabled = checked;
-			$('R1Ball').disabled = checked;
-			$('R1Ram').disabled = checked;
-			$('R1Cat').disabled = checked;
-			$('R1Blood').disabled = checked;
-			$('R1Exec').disabled = checked;
-			$('R1Siege').disabled = checked;
-			$('R1Flame').disabled = checked;
-			$('R1Huss').disabled = checked;
+			CrestOptions.RoundOne = this.checked;
+			t.checkDisableRound('1',checked);
 		},false);
 		$('pbcrest_rnd2').addEventListener('click', function(){
 			var checked = (!this.checked);
-			CrestOptions.round2 = this.checked;
-			$('R2ST').disabled = checked;
-			$('R2MM').disabled = checked;
-			$('R2Scout').disabled = checked;
-			$('R2Pike').disabled = checked;
-			$('R2Sword').disabled = checked;
-			$('R2Arch').disabled = checked;
-			$('R2LC').disabled = checked;
-			$('R2HC').disabled = checked;
-			$('R2SW').disabled = checked;
-			$('R2Ball').disabled = checked;
-			$('R2Ram').disabled = checked;
-			$('R2Cat').disabled = checked;
-			$('R2Blood').disabled = checked;
-			$('R2Exec').disabled = checked;
-			$('R2Siege').disabled = checked;
-			$('R2Flame').disabled = checked;
-			$('R2Huss').disabled = checked;
+			CrestOptions.RoundTwo = this.checked;
+			t.checkDisableRound('2',checked);
 		},false);
 		
 		document.getElementById('pbcrestx').addEventListener('keyup', function(){ if (isNaN(document.getElementById('pbcrestx').value)) document.getElementById('pbcrestx').value='';}, false);
 		document.getElementById('pbcresty').addEventListener('keyup', function(){ if (isNaN(document.getElementById('pbcresty').value)) document.getElementById('pbcresty').value='';}, false);
 
 		document.getElementById('pbcrest_iswild').addEventListener('click', function(){CrestOptions.isWild = this.checked;} , false);
+
 		document.getElementById('crestcity').addEventListener('click', function(){CrestOptions.CrestCity = t.tcp.city.id;} , false);
 		document.getElementById('Cresttoggle').addEventListener('click', function(){t.toggleCrestState(this)} , false);
 		document.getElementById('pbcrestx').addEventListener('change', function(){CrestOptions.X = document.getElementById('pbcrestx').value;;} , false);
@@ -19866,34 +20600,31 @@ Tabs.Attack = {
 		document.getElementById('showCrestTargets').addEventListener('click', function(){t.showCrestRoute();}, false);
 		document.getElementById('DelTargets').addEventListener('click', function(){t.MassDelTargets();}, false);
 		
-		t.addListeners('ST');
-		t.addListeners('MM');
-		t.addListeners('Scout');
-		t.addListeners('Pike');
-		t.addListeners('Sword');
-		t.addListeners('Arch');
-		t.addListeners('LC');
-		t.addListeners('HC');
-		t.addListeners('SW');
-		t.addListeners('Ball');
-		t.addListeners('Ram');
-		t.addListeners('Cat');
-		t.addListeners('Blood');
-		t.addListeners('Exec');
-		t.addListeners('Siege');
-		t.addListeners('Flame');
-		t.addListeners('Huss');
+		for (var i=1;i<=t.nTroopType;i++) {	
+			t.addListeners(t.trooparray[i]);
+		}
 	},
 
 	addListeners : function(Troop) {
-		var TT1 = 'R1'+Troop;
-		document.getElementById(TT1).addEventListener('keyup', function(){ if (isNaN(document.getElementById(TT1).value)) document.getElementById(TT1).value=0;}, false);
-		document.getElementById(TT1).addEventListener('change', function(){CrestOptions[TT1] = document.getElementById(TT1).value;} , false);
-		var TT2 = 'R2'+Troop;
-		document.getElementById(TT2).addEventListener('keyup', function(){ if (isNaN(document.getElementById(TT2).value)) document.getElementById(TT2).value=0;}, false);
-		document.getElementById(TT2).addEventListener('change', function(){CrestOptions[TT2] = document.getElementById(TT2).value;} , false);
+		var T1 = 'R1'+Troop;
+		document.getElementById(T1).addEventListener('keyup', function(){ if (isNaN(document.getElementById(T1).value)) document.getElementById(T1).value=0;}, false);
+		document.getElementById(T1).addEventListener('change', function(){CrestOptions[T1] = document.getElementById(T1).value;} , false);
+		var T2 = 'R2'+Troop;
+		document.getElementById(T2).addEventListener('keyup', function(){ if (isNaN(document.getElementById(T2).value)) document.getElementById(T2).value=0;}, false);
+		document.getElementById(T2).addEventListener('change', function(){CrestOptions[T2] = document.getElementById(T2).value;} , false);
 	},
-  
+
+	checkDisableRound : function(r,disabled) {
+		var t = Tabs.Attack;
+		for (var i=1;i<=t.nTroopType;i++) {	
+			$('R'+r+t.trooparray[i]).disabled = disabled;
+			if (disabled) {
+				$('R'+r+t.trooparray[i]).value = 0;
+				CrestOptions['R'+r+t.trooparray[i]] = 0;
+			}	
+		}
+	},
+	
 	helpPop : function (){
 		var helpText = '<BR>The crest tab was originally designed to attack one wild over and over again.<BR>';
 		helpText += 'It will attack a wild in 2 waves, then abandon it and start over.<BR>';
@@ -19925,13 +20656,33 @@ Tabs.Attack = {
 
 	/** Add crest route **/
 	addCrestRoute : function () {
-		if(CrestOptions.X == "" || CrestOptions.Y == "") { alert("Please enter co-ords"); return; }
-
 		var t = Tabs.Attack;
+		if(CrestOptions.X == "" || CrestOptions.Y == "") { alert("Please enter co-ords"); return; }
+		if (!$('pbcrest_rnd1').checked && !$('pbcrest_rnd2').checked) { alert("No attack round selected"); return; }
+
+		var troops = 0;
+		if ($('pbcrest_rnd1').checked) {
+			for (var i=1;i<=t.nTroopType;i++) {	
+				troops = troops + parseIntNan(CrestOptions["R1"+t.trooparray[i]]);
+			}
+			if (troops == 0) { alert("Please enter first wave troops"); return; }
+		}	
+
+		troops = 0;
+		if ($('pbcrest_rnd2').checked) {
+			for (var i=1;i<=t.nTroopType;i++) {	
+				troops = troops + parseIntNan(CrestOptions["R2"+t.trooparray[i]]);
+			}
+			if (troops == 0) { alert("Please enter second wave troops"); return; }
+		}	
+		
 		var CrestLength = CrestData.length;
-       
+		
 		CrestData[CrestLength] = new CrestFunc(CrestOptions);
 		saveCrestData();
+		document.getElementById('pbNewAttack').style.background = '#99FF99';
+		setTimeout(function() {(document.getElementById('pbNewAttack').style.background = '');}, 1000);
+		
     },
     
 	addSearchAttacks : function () {
@@ -19962,7 +20713,7 @@ Tabs.Attack = {
 	showCrestRoute : function () {
 		var t = Tabs.Attack;
 		var popCrestTargets = null;
-		t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
+		t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1100, 485, true, function() {clearTimeout (1000);t.popCrestTargets=null;});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';     
 		t.popCrestTargets.getMainDiv().innerHTML = '</table></div>' + m;
 		t.popCrestTargets.getTopDiv().innerHTML = '<TD><CENTER><B>Attack Targets</center></td>';
@@ -20003,8 +20754,14 @@ Tabs.Attack = {
 		t = Tabs.Attack;
 
 		for(var i = 0; i < CrestData.length; i++) {
-			t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", CrestData[i].R2ST, CrestData[i].R2MM, CrestData[i].R2Scout, CrestData[i].R2Pike, CrestData[i].R2Sword, CrestData[i].R2Arch, CrestData[i].R2LC, CrestData[i].R2HC, CrestData[i].R2SW, CrestData[i].R2Ball, CrestData[i].R2Ram, CrestData[i].R2Cat, CrestData[i].R2Blood, CrestData[i].R2Exec, CrestData[i].R2Siege, CrestData[i].R2Flame, CrestData[i].R2Huss, " ");
-			t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", CrestData[i].R1ST, CrestData[i].R1MM, CrestData[i].R1Scout, CrestData[i].R1Pike, CrestData[i].R1Sword, CrestData[i].R1Arch, CrestData[i].R1LC, CrestData[i].R1HC, CrestData[i].R1SW, CrestData[i].R1Ball, CrestData[i].R1Ram, CrestData[i].R1Cat, CrestData[i].R1Blood, CrestData[i].R1Exec, CrestData[i].R1Siege, CrestData[i].R1Flame, CrestData[i].R1Huss, "Delete");
+			if (t.checkRoundExists(2,i))
+				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", CrestData[i].R2ST, CrestData[i].R2MM, CrestData[i].R2Scout, CrestData[i].R2Pike, CrestData[i].R2Sword, CrestData[i].R2Arch, CrestData[i].R2LC, CrestData[i].R2HC, CrestData[i].R2SW, CrestData[i].R2Ball, CrestData[i].R2Ram, CrestData[i].R2Cat, CrestData[i].R2Blood, CrestData[i].R2Exec, CrestData[i].R2Siege, CrestData[i].R2Flame, CrestData[i].R2Huss, " ");
+			else
+				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ");
+			if (t.checkRoundExists(1,i))
+				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", CrestData[i].R1ST, CrestData[i].R1MM, CrestData[i].R1Scout, CrestData[i].R1Pike, CrestData[i].R1Sword, CrestData[i].R1Arch, CrestData[i].R1LC, CrestData[i].R1HC, CrestData[i].R1SW, CrestData[i].R1Ball, CrestData[i].R1Ram, CrestData[i].R1Cat, CrestData[i].R1Blood, CrestData[i].R1Exec, CrestData[i].R1Siege, CrestData[i].R1Flame, CrestData[i].R1Huss, "Delete");
+			else	
+				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "Delete");
 			t._addTabCrest(i, " "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ");
 		}
 
@@ -20059,8 +20816,7 @@ Tabs.Attack = {
 				});
 			}
 		}
-//		t.knt = t.knt.sort(function sort(a,b) {a = parseInt(a['Combat']);b = parseInt(b['Combat']);return a == b ? 0 : (a > b ? -1 : 1);});
-	        t.knt = t.knt.sort(function sort(a,b) {a = parseInt(a['Combat']);b = parseInt(b['Combat']);return a == b ? 0 : (a < b ? -1 : 1);});
+		t.knt = t.knt.sort(function sort(a,b) {a = parseInt(a['Combat']);b = parseInt(b['Combat']);return a == b ? 0 : (a > b ? -1 : 1);});
 	},
    
 	sendMarch: function(p,callback,r,retry, CrestDataNum){
@@ -20077,8 +20833,10 @@ Tabs.Attack = {
 					setTimeout (function(){callback(r,0,parseInt(CrestDataNum));}, (Options.Crestinterval*1000));
 				} else {
 					Options.Crest2Count++;
-//					setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, (Options.Crestinterval*1000));
-					setTimeout (function(){callback(r,0,parseInt(CrestDataNum)+1);}, ((Math.random()*5+Options.Crestinterval)*1000));
+			if(CrestData[CrestDataNum].isWild){
+					setTimeout (function(){callback(r,0,parseInt(CrestDataNum));}, (Options.Crestinterval*1000));
+				} else
+					setTimeout (function(){callback(r,0,parseInt(CrestDataNum+1));}, (Options.Crestinterval*1000));
 				}
 				saveCrestData();
 			} else { //onFailure
@@ -20159,6 +20917,9 @@ Tabs.Attack = {
 		if (CrestDataNum >= CrestData.length) {
 			CrestDataNum = 0;
 			if(Options.CrestRand){
+				// if we're showing the routes when this happens, need to stop!!! otherwise delete deletes the wrong one..
+				var ShowingRoutes = false;
+				if (t.popCrestTargets) {ShowingRoutes = true; t.popCrestTargets.show(false); }
 				//As per https://osric.com/chris/accidental-developer/2012/07/javascript-array-sort-random-ordering/ sort was not used, this is used instead to get true random results.
 				var n = CrestData.length;
 				var tempArr = [];
@@ -20167,6 +20928,8 @@ Tabs.Attack = {
 				tempArr.push(CrestData[0]);
 				CrestData=tempArr;
 				saveCrestData();
+				// if we were showing attacks, show them again...
+				if (ShowingRoutes) {t.showCrestRoute();}
 			};
 		};
 		r = (typeof CrestData[CrestDataNum].curRound === 'undefined') ? 1 : CrestData[CrestDataNum].curRound;
@@ -20177,19 +20940,26 @@ Tabs.Attack = {
 		if (CrestData[CrestDataNum].Paused) {
 //			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
-//			t.Rounds(1,retry,parseInt(CrestDataNum)+1);
 			return;
-		};		
+		};
 		
+
+
+
+
+
+
+
+
+
+
+
 		if (!t.checkCityTroops(r,CrestDataNum)) {
 //			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
-//			t.Rounds(1,retry,parseInt(CrestDataNum)+1);
 			return;
-		};		
+		};
 			
-		t.getAtkKnight(cityID);
-
 		var march_slots = Number(Number(March.getEmptySlots(cityID.split("city")[1]))-Number(Options.CrestSlots));
 		if (march_slots < 1) {
 //			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
@@ -20197,16 +20967,20 @@ Tabs.Attack = {
 			return;
 		};
         
+		t.getAtkKnight(cityID);
 		if  (t.knt.toSource() == "[]") {
 //			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
 			return;
 		}
 		var kid = t.knt[0].ID;
-		if (CrestData[CrestDataNum].R1ST == 0 && CrestData[CrestDataNum].R1MM == 0 && CrestData[CrestDataNum].R1Scout == 0 && CrestData[CrestDataNum].R1Pike == 0 && CrestData[CrestDataNum].R1Sword == 0 && CrestData[CrestDataNum].R1Arch == 0 && CrestData[CrestDataNum].R1LC == 0 && CrestData[CrestDataNum].R1HC == 0 && CrestData[CrestDataNum].R1SW == 0 && CrestData[CrestDataNum].R1Ball == 0 && CrestData[CrestDataNum].R1Ram == 0 && CrestData[CrestDataNum].R1Cat == 0 && parseIntNan(CrestData[CrestDataNum].R1Blood) == 0 && parseIntNan(CrestData[CrestDataNum].R1Exec) == 0 && parseIntNan(CrestData[CrestDataNum].R1Siege) == 0 && parseIntNan(CrestData[CrestDataNum].R1Flame) == 0 && parseIntNan(CrestData[CrestDataNum].R1Huss) == 0) {
+
+		// if no round 1 go straight for round 2
+		if (!t.checkRoundExists(1,CrestDataNum)) {
 			r=2;
 			CrestData[CrestDataNum].curRound = 2;
 		}else {
+			// do we need another round 1 yet?
 			var now = new Date().getTime()/1000.0;
 			now = now.toFixed(0);
 			if (CrestData[CrestDataNum].RoundOne)
@@ -20217,6 +20991,13 @@ Tabs.Attack = {
 		}
 		if (r == 2) CrestData[CrestDataNum].lastRoundTwo = now;
 		saveCrestData();
+
+		// final check for not marching zero troops...
+		if (!t.checkRoundExists(r,CrestDataNum)) {
+			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+			return;
+		}
+
 		switch (r) {
 			case 1:
 				if ((march_slots) < 2) {
@@ -20309,18 +21090,25 @@ Tabs.Attack = {
 	checkCityTroops : function (round,CrestDataNum) {
 		var t = Tabs.Attack;
 		var result = true;
-		var nTroopType = 17;
-		for (var i=1;i<nTroopType+1;i++) {	
+		for (var i=1;i<=t.nTroopType;i++) {	
 			var needed = 0;
 			for (var r=round;r<=2;r++)
 				needed = needed + parseIntNan(CrestData[CrestDataNum]["R"+r+t.trooparray[i]]);
-//			result = (result && (parseIntNan(Seed.units[cityID]['unt1']) >= needed));
 			result = (result && (parseIntNan(Seed.units[cityID]['unt'+i]) >= needed));
 			if (!result) {return result;}
 		}
 		return result;
 	},
-    
+
+   	checkRoundExists : function (round,CrestDataNum) {
+		var t = Tabs.Attack;
+		var troops = 0;
+		for (var i=1;i<=t.nTroopType;i++) {	
+			troops = troops + parseIntNan(CrestData[CrestDataNum]["R"+round+t.trooparray[i]]);
+		}
+		return (troops != 0);
+	},
+
 	sendCrestReport: function(){
 		var t = Tabs.Attack;
 		if (!Options.crestreport || !Options.crestRunning) {
@@ -20403,6 +21191,7 @@ var March = {
     queue : [],
     lastattack : null,
     timer : null,
+    waittime:0,
   
     //March queue system
     addMarch : function (params, callback){
@@ -20419,8 +21208,8 @@ var March = {
         var t = this;
         if(t.currentrequests < 5){
             var opts = t.queue.shift();
-			if(opts)
-				t.sendMarch(opts.params, opts.callback);
+         if(opts)
+            t.sendMarch(opts.params, opts.callback);
         }
     },
     getQueueLength : function (){
@@ -20428,143 +21217,143 @@ var March = {
         return t.queue.length;
     },
     //End march queue
-	
-	//Call March.RallyPoint(cityId) to get all values
-	RallyPoint : function (cityId){
-		var t = this;
-		var ret = {};
-		ret.level = t.getRallyPointLevel(cityId);
-		ret.maxSlots = t.getTotalSlots(cityId);
-		ret.marching = t.getMarchSlots(cityId);
-		ret.emptySlots = t.getEmptySlots(cityId);
-		ret.maxSize = t.getMaxSize(cityId);
-		return ret;
-	},
-	
-	//Rallypoint
-	getRallypointLevel : function (cityId){
+   
+   //Call March.RallyPoint(cityId) to get all values
+   RallyPoint : function (cityId){
+      var t = this;
+      var ret = {};
+      ret.level = t.getRallyPointLevel(cityId);
+      ret.maxSlots = t.getTotalSlots(cityId);
+      ret.marching = t.getMarchSlots(cityId);
+      ret.emptySlots = t.getEmptySlots(cityId);
+      ret.maxSize = t.getMaxSize(cityId);
+      return ret;
+   },
+   
+   //Rallypoint
+   getRallypointLevel : function (cityId){
         var t = this;
-		cityId = "city"+cityId;
-		rallypointlevel = 0;
-		for (var o in Seed.buildings[cityId]){
-			var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-			var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-			if (buildingType == 12) rallypointlevel=parseInt(buildingLevel);
-		}
-		return rallypointlevel;
-	},
-	getTotalSlots : function (cityId){
+      cityId = "city"+cityId;
+      rallypointlevel = 0;
+      for (var o in Seed.buildings[cityId]){
+         var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+         var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+         if (buildingType == 12) rallypointlevel=parseInt(buildingLevel);
+      }
+      return rallypointlevel;
+   },
+   getTotalSlots : function (cityId){
         var t = this;
-		var ascended = t.getAscendedStats(cityId);
-		var rallypointlevel = t.getRallypointLevel(cityId);
-		var slots = rallypointlevel; //Set default number of slots to rallypointlevel
-		if(slots == 12)slots = 11;// a level 12 rallypoint only allows for 11 marches.  the bonus from 11 to 12 is increased army size.
-		if(ascended.isPrestigeCity){
-//			switch(ascended.prestigeLevel){
-//				case 1:
-//					slots += 1;
-//					break;
-//				case 2:
-//					slots += 2;
-//					break;
-//				case 3:
-//					slots += 3;
-//					break;
-//				default:
-//					//Do nothing
-//					break;
-//			}
-			slots += 3;
-		}
-		return slots;
-	},
-	getMarchSlots : function (cityId){
+      var ascended = t.getAscendedStats(cityId);
+      var rallypointlevel = t.getRallypointLevel(cityId);
+      var slots = rallypointlevel; //Set default number of slots to rallypointlevel
+      if(slots == 12)slots = 11;// a level 12 rallypoint only allows for 11 marches.  the bonus from 11 to 12 is increased army size.
+      if(ascended.isPrestigeCity){
+//         switch(ascended.prestigeLevel){//any ascended city has a +3 slot bonus regardless of level.
+//            case 1:
+//               slots += 3;
+//               break;
+//            case 2:
+//               slots += 3;
+//               break;
+//            case 3:
+//               slots += 3;
+//               break;
+//            default:
+//               //Do nothing
+//               break;
+//         }
+	 slots +=3;
+      }
+      return slots;
+   },
+   getMarchSlots : function (cityId){
         var t = this;
-		cityId = "city"+cityId;
-		var slots=0;
-		if (Seed.queue_atkp[cityId] != undefined){
-			for(var k in Seed.queue_atkp[cityId]){
-				var m = Seed.queue_atkp[cityId][k];
-				if(m.marchType == 9){
-					if(m.botMarchStatus != 3 || m.botState != 3){ //If raid is stopped take it as empty slot
-						slots++;
-					}
-				} else {
-					slots++;				
-				}
-			}
-			if(Seed.queue_atkp[cityId].toSource() == "[]")
-				slots = 0;
-		} else {
+      cityId = "city"+cityId;
+      var slots=0;
+      if (Seed.queue_atkp[cityId] != undefined){
+         for(var k in Seed.queue_atkp[cityId]){
+            var m = Seed.queue_atkp[cityId][k];
+            if(m.marchType == 9) {
+               if(m.botMarchStatus < 3 || m.botMarchStatus > 9)slots++; //If raid is stopped take it as empty slot
+            } else {
+               slots++;          
+            }
+         }
+         if(Seed.queue_atkp[cityId].toSource() == "[]")
+            slots = 0;
+      } else {
             slots=0;
-		}
-		return slots;
-	},
-	getEmptySlots : function (cityId){
+      }
+      return slots;
+   },
+   getEmptySlots : function (cityId){
         var t = this;
-		var slots = t.getTotalSlots(cityId);
-		slots -= t.getMarchSlots(cityId);
-		if(slots < 0) //For the odd chance more waves get sent out than allowed
-			slots = 0;
-		return slots;
-	},
-	getMaxSize : function (cityId){
-		var t = this;
-		var rallypointlevel = getCityBuilding(cityId, 12).maxLevel;
-		var ascended = t.getAscendedStats(cityId);
-		var buff = 1;
-		var max = 0;
-		var now = unixTime();
-		if (Seed.playerEffects.aurasExpire) {
-			if (Seed.playerEffects.aurasExpire > now) {
-				buff += 1.15
-			}
-		}
-		if (Seed.playerEffects.auras2Expire) {
-			if (Seed.playerEffects.auras2Expire > now) {
-				buff += 1.3
-			}
-		}
-		var tr = Math.floor(equippedthronestats(66));
-		if (tr>unsafeWindow.cm.thronestats.boosts.MarchSize.Max)tr=unsafeWindow.cm.thronestats.boosts.MarchSize.Max;
-		if(tr > 0)buff+=(tr/100);
-		
-		if(ascended.isPrestigeCity){
-			var b = ascended.prestigeLevel;
-			var r = unsafeWindow.cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST"),
+      var slots = t.getTotalSlots(cityId);
+      slots -= t.getMarchSlots(cityId);
+      if(slots < 0) //For the odd chance more waves get sent out than allowed
+         slots = 0;
+      return slots;
+   },
+   getMaxSize : function (cityId){
+      var t = this;
+      var rallypointlevel = getCityBuilding(cityId, 12).maxLevel;
+      var ascended = t.getAscendedStats(cityId);
+      var buff = 1;
+      var max = 0;
+      var now = unixTime();
+      if (Seed.playerEffects.aurasExpire) {
+         if (Seed.playerEffects.aurasExpire > now) {
+            buff += 0.15
+         }
+      }
+      if (Seed.playerEffects.auras2Expire) {
+         if (Seed.playerEffects.auras2Expire > now) {
+            buff += 0.3
+         }
+      }
+      var tr = Math.floor(equippedthronestats(66));
+      if (tr>unsafeWindow.cm.thronestats.boosts.MarchSize.Max)tr=unsafeWindow.cm.thronestats.boosts.MarchSize.Max;
+      if(tr > 0)buff+=(tr/100);
+      
+      if(ascended.isPrestigeCity){
+         var b = ascended.prestigeLevel;
+         var r = unsafeWindow.cm.WorldSettings.getSetting("ASCENSION_RALLYPOINT_BOOST"),
                 m = JSON.parse(r),
                 u = m.values[b - 1][1],
                 k = parseFloat(u);
             buff *= k
             if(unsafeWindow.seed.cityData.city[cityId].prestigeInfo.blessings.indexOf(207) != -1)buff *= 1.1;
-		}
-		switch(rallypointlevel){
-			case 11:
-				max = 150000 * buff;
-				break;
-			case 12:
-				max = 200000 * buff;
-				break;
-			default:
-				max = (rallypointlevel * 10000) * buff;
-				break;
-		}
-		return Math.floor(max); // haven't been able to configure game to determine if this should be floor or ceil
-	},
-	getAscendedStats : function (cityId){
-		var t = this;
-		var ret = {};
-		if(Seed.cityData.city[cityId].isPrestigeCity){
-			ret.isPrestigeCity = true;
-			ret.prestigeLevel = parseInt(Seed.cityData.city[cityId].prestigeInfo.prestigeLevel);
-			ret.prestigeType = parseInt(Seed.cityData.city[cityId].prestigeInfo.prestigeType);
-			ret.blessings = parseInt(Seed.cityData.city[cityId].prestigeInfo.blessings);
-		} else {
-			ret.isPrestigeCity = false;
-		}
-		return ret;
-	},
-	//End Rallypoint
+      }
+      switch(rallypointlevel){
+         case 11:
+            max = 150000 * buff;
+            break;
+         case 12:
+            max = 200000 * buff;
+            break;
+         default:
+            max = (rallypointlevel * 10000) * buff;
+            break;
+      }
+//      return Math.ceil(max); // haven't been able to configure game to determine if this should be floor or ceil
+      return Math.floor(max+0.0001); 
+   },//changed to ceil Apr 8/13.  and added debug log to catch errors -Baos
+     // changed to floor after adding 0.0001, consistent with tools treatment 7/30/2013
+   getAscendedStats : function (cityId){
+      var t = this;
+      var ret = {};
+      if(Seed.cityData.city[cityId].isPrestigeCity){
+         ret.isPrestigeCity = true;
+         ret.prestigeLevel = parseInt(Seed.cityData.city[cityId].prestigeInfo.prestigeLevel);
+         ret.prestigeType = parseInt(Seed.cityData.city[cityId].prestigeInfo.prestigeType);
+         ret.blessings = parseInt(Seed.cityData.city[cityId].prestigeInfo.blessings);
+      } else {
+         ret.isPrestigeCity = false;
+      }
+      return ret;
+   },
+   //End Rallypoint
   
     sendMarch : function (params, callback){
       //need to check that march is not oversized!
@@ -20576,9 +21365,14 @@ var March = {
          x+=y;
       };
       if(cids < x) {
-         logit('attempted to send march size '+x+' max allowed is '+cids);
+      	actionLog('attempted to send march size '+x+' max allowed is '+cids);//too many people complaining about broken things that are not broken.  lets give the masses a log to look at.
+         logit('attempted to send march size '+x+' max allowed is '+cids);//lets keep this one for us just in case.
          return;
       };
+      if(March.waittime > unsafeWindow.unixtime()){
+		logit('stalling marches to deal with captcha');
+		return;  
+	  };
         var t = this;
         t.profiler = new unsafeWindow.cm.Profiler("ResponseTime", "march.php");
         t.currentrequests++;
@@ -20596,20 +21390,19 @@ var March = {
                     }
                 if (rslt.ok) {
                     var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-		    var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
                     var ut = unsafeWindow.unixtime();
-				var unitsarr = [];
-				for (j in unsafeWindow.unitcost)
-					unitsarr.push(0);
-				for(i = 0; i <= unitsarr.length; i++)
-					if(params["u"+i])
+            var unitsarr = [];
+            for (j in unsafeWindow.unitcost)
+               unitsarr.push(0);
+            for(i = 0; i <= unitsarr.length; i++)
+               if(params["u"+i])
                             unitsarr[i] = params["u"+i];
                     var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 
                     var currentcityid = params.cid;
-//                  unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true);
-                    unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true, ut+rtimediff);
+ 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+                    unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
                   
                     if (rslt.updateSeed) {
                         unsafeWindow.update_seed(rslt.updateSeed);
@@ -20637,6 +21430,7 @@ var March = {
                     }
                     if (rslt.user_action == "marchCaptcha") {
                         logit('captcha');
+                        March.waittime = Number(unsafeWindow.unixtime()+120);
                         if(!unsafeWindow.Recaptcha){
                             setTimeout (function(){t.sendMarch(params,callback);}, 5*1000);
                             return;
@@ -20666,6 +21460,46 @@ var March = {
                         });
                         return;
                     }
+                    
+                    //lets start telling kabam their server sucks! 
+                    
+						var a = null;
+						var g = Number(rslt.error_code);
+						var g_server = unsafeWindow.g_server;
+						switch (g) {
+							case 0:
+								a = "Unexpected Error.";
+								break;
+							case 8:
+								a = "Excess traffic.";
+								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server);
+								break;
+							case 3:
+								//game out of sync
+								break;
+							case 4:
+								//not enough units
+								break;
+							case 104:
+								//unable to attack target
+								break;
+							case 208:
+								// beginner protection
+								break;
+							case 210:
+								// Max marches
+							case 213:
+								//logit('march params.cid is '+params.cid+' and params.kid is '+params.kid+' and knight status is '+Seed.knights['city'+params.cid]['knt'+params.kid].knightStatus);
+								  Seed.knights['city'+params.cid]['knt'+params.kid].knightStatus = 10;//remove knight from list, set to 1 to make available again.
+								//{"ok":false,"error_code":213,"msg":"Unable to dispatch march. Knight must be idle in the city and not assigned to any role, must have enough units."}
+								break;
+							default:
+								a = "Something has gone wrong.";
+								unsafeWindow.cm.GATracker("Error", a + " (" + g + ")", g_server); 
+         	           rslt.max = cids;
+								//scripterdebuglog(rslt,'march');//For those getting unknown errors, uncomment this line and Baos will also receive your errors live.
+								break;
+							};
                     setTimeout (function(){callback(rslt)}, 5*1000); //return all sever excess traffic error to original function to handle
                     return;
                 }
@@ -20691,10 +21525,10 @@ Tabs.popcontrol = {
   timer : null,
   timer_del : null,
   timer_cycle : null,
-	del_count : 0,
-	cycle_running : false,
-	busy : false,
-	cycle_step : 0,
+   del_count : 0,
+   cycle_running : false,
+   busy : false,
+   cycle_step : 0,
 
   logtable : null,
   logmaxEntries: 300,
@@ -20704,134 +21538,147 @@ Tabs.popcontrol = {
 
 
   init : function (div)
-  	{
-		var t = Tabs.popcontrol;
-		t.myDiv = div;
-		var selbut=0;
-		
-		var m = '<DIV class=pbStat>Population Control</div>';
+   {
+      var t = Tabs.popcontrol;
+      t.myDiv = div;
+      var selbut=0;
+      
+      var m = '<DIV class=pbStat>Population Control</div>';
 
-		m += '<table border=0 width="100%">';	
-		m += '<tr align=center>';
-		m += '<td align=left><input type=submit id=pophelp_button value="HELP!"></td>';
-		m += '<td align=center>Pick City:<span id=popcity></span></td>';
-		m += '<td align=center>Population Gain per cycle: <span id=poptab_cycle_pop></span></td>';
-		m += '<td align=center> Troops to dismiss: <select id=poptab_troop_dismiss><option value=1>ST</option><option value=2>MM</option><option value=3>Scout</option><option value=4>Pike</option><option value=5>Sword</option><option value=6>Archer</option></select>';
-		m += '</tr>';
-		m += '</table>';
-		
-		m += '<DIV class=pbStat>City Requirements:</div>';
-		m += '<table border="0" width="100%">';		
-		m += '<tr>';
-		m += '<td>Current Food: &nbsp<span id=poptab_cur_food></span></td>';
-		m += '<td>Current Wood: &nbsp<span id=poptab_cur_wood></span></td>';
-		m += '<td>Current Ore: &nbsp&nbsp<span id=poptab_cur_ore></span></td>';
-		m += '<td>Current dismissable troops: <span id=poptab_cur_mm></span></td>';
-		m += '</tr>';
-		m += '<tr>';
-		m += '<td>Needed Food: &nbsp<span id=poptab_needed_food></span></td>';
-		m += '<td>Needed Wood: &nbsp<span id=poptab_needed_wood></span></td>';
-		m += '<td>Needed Ore: &nbsp&nbsp<span id=poptab_needed_ore></span></td>';
-		m += '<td>Needed dismissable troops: <span id=poptab_needed_mm></span></td>';
-		m += '</tr>';
-		m += '</table>';
+      m += '<table border=0 width="100%">';  
+      m += '<tr align=center>';
+      m += '<td align=left><input type=submit id=pophelp_button value="HELP!"></td>';
+      m += '<td align=center>Pick City:<span id=popcity></span></td>';
+      m += '<td align=center>Population Gain per cycle: <span id=poptab_cycle_pop></span></td>';
+      m += '<td align=center> Troops to dismiss: <select id=poptab_troop_dismiss><option value=1>ST</option><option value=2>MM</option><option value=3>Scout</option><option value=4>Pike</option><option value=5>Sword</option><option value=6>Archer</option></select>';
+      m += '</tr>';
+      m += '</table>';
+      
+      m += '<DIV class=pbStat>City Requirements:</div>';
+      m += '<table border="0" width="100%">';      
+      m += '<tr>';
+      m += '<td>Current Food: &nbsp<span id=poptab_cur_food></span></td>';
+      m += '<td>Current Wood: &nbsp<span id=poptab_cur_wood></span></td>';
+      m += '<td>Current Ore: &nbsp&nbsp<span id=poptab_cur_ore></span></td>';
+      m += '<td>Current dismissable troops: <span id=poptab_cur_mm></span></td>';
+      m += '</tr>';
+      m += '<tr>';
+      m += '<td>Needed Food: &nbsp<span id=poptab_needed_food></span></td>';
+      m += '<td>Needed Wood: &nbsp<span id=poptab_needed_wood></span></td>';
+      m += '<td>Needed Ore: &nbsp&nbsp<span id=poptab_needed_ore></span></td>';
+      m += '<td>Needed dismissable troops: <span id=poptab_needed_mm></span></td>';
+      m += '</tr>';
+      m += '</table>';
 
-		m += '<DIV class=pbStat>City Status:</div>';
-		m += '<table border="0" width="100%">';	
-		m += '<tr align=center>';
-		m += '<td>Maximum Idle Population: <span id=poptab_max_idle_pop></span></td>';
-		m += '<td># Slots Used: <span id=poptab_slots_used></span><br></td>';
-		m += '<td># of barracks: <span id=poptab_barracks></span></td>';
-		//m += '<td> </td>';
-		m += '</tr>';
-		m += '<tr align=center>';
-		m += '<td>Current Idle Population: <span id=poptab_cur_idle_pop></span></td>';
-		m += '<td># Slots Free: <span id=poptab_slots_free></span></td>';
-		m += '<td># of cottages: <span id=poptab_cottages></span></td>';
-		//m += '<td> </td>';
-		m += '</tr>';		
-		m += '</table>';
+      m += '<DIV class=pbStat>City Status:</div>';
+      m += '<table border="0" width="100%">';   
+      m += '<tr align=center>';
+      m += '<td>Maximum Idle Population: <span id=poptab_max_idle_pop></span></td>';
+      m += '<td># Slots Used: <span id=poptab_slots_used></span><br></td>';
+      m += '<td># of barracks: <span id=poptab_barracks></span></td>';
+      //m += '<td> </td>';
+      m += '</tr>';
+      m += '<tr align=center>';
+      m += '<td>Current Idle Population: <span id=poptab_cur_idle_pop></span></td>';
+      m += '<td># Slots Free: <span id=poptab_slots_free></span></td>';
+      m += '<td># of cottages: <span id=poptab_cottages></span></td>';
+      //m += '<td> </td>';
+      m += '</tr>';     
+      m += '</table>';
 
-		m += '<DIV class=pbStat>Commands:</div>';
-		m += '<table border="0" width="100%">';	
-		m += '<tr align=center>';
-		m += '<td><input type="submit" id="poptab_dismiss_mm" value="Dismiss troops" disabled></td>';
-		m += '<td><input type="submit" id="poptab_queue_st" value="Queue Supply Troops" disabled></td>';
-		m += '<td><input type="submit" id="poptab_del_queues" value="Delete All Queues" disabled></td>';
-		m += '<td><input type="submit" id="poptab_run_cycle" value="Run cycle" disabled></td>';
-		//m += '<td><input type="submit" id="poptab_test" value="Test"></td>';
-		m += '</tr>';		
-		m += '</table>';
-	
-		m += '<DIV class=pbStat>Action Log:</div>';
+      m += '<DIV class=pbStat>Commands:</div>';
+      m += '<table border="0" width="100%">';   
+      m += '<tr align=center>';
+      m += '<td><input type="submit" id="poptab_dismiss_mm" value="Dismiss troops" disabled></td>';
+      m += '<td><input type="submit" id="poptab_queue_st" value="Queue Supply Troops" disabled></td>';
+      m += '<td><input type="submit" id="poptab_del_queues" value="Delete All Queues" disabled></td>';
+      m += '<td><input type="submit" id="poptab_run_cycle" value="Run cycle" disabled></td>';
+      //m += '<td><input type="submit" id="poptab_test" value="Test"></td>';
+      m += '</tr>';     
+      m += '</table>';
+   
+      m += '<DIV class=pbStat>Tournament Mode</div>';
+	  m += '<DIV align="center"><b>Converts Surplus Troops into Idle Population</b><br>Turn this on during a tournament to automatically convert supply troops or MM to maximum idle population in each city.<br>The idea is that they will be retrained as scouts, pikes or swordsmen - i.e. more might!<br>Between tournaments, use this to convert surplus swords, pikes or archers back to idle population to be retrained as supply troops.<br>This only works if auto-training is active for the city, and there are training slots available. (or less than 1 minute to go)</div>';      
+	  m += '<table border="0" width="100%"><tr><td align="center"><INPUT id=pbtourney type=submit value="Tournament Mode : OFF" \></td><td align="center"><INPUT id=pbtourneyst type=checkbox '+(Options.UseTourneyST?'CHECKED':'')+'\>Supply Troops&nbsp;<INPUT id=pbtourneymm type=checkbox '+(Options.UseTourneyMM?'CHECKED':'')+'\>Militiamen&nbsp;<INPUT id=pbtourneysc type=checkbox '+(Options.UseTourneySC?'CHECKED':'')+'\>Scouts&nbsp;<INPUT id=pbtourneypk type=checkbox '+(Options.UseTourneyPK?'CHECKED':'')+'\>Pikes&nbsp;<INPUT id=pbtourneysw type=checkbox '+(Options.UseTourneySW?'CHECKED':'')+'\>Swords&nbsp;<INPUT id=pbtourneyar type=checkbox '+(Options.UseTourneyAR?'CHECKED':'')+'\>Archers&nbsp;</td><td></tr></table>';      
+	  
+      m += '<DIV class=pbStat>Action Log:</div>';
 
-		m += '<DIV style="height:250px; max-height:250px; overflow-y:auto">';
-		m += '<TABLE cellpadding=0 cellspacing=0 id=poptab_log class=pbTabLined>';
-		m += '<TR><TD></td><TD width=95%></td>';
-		m += '</table></div>';
+      m += '<DIV style="height:250px; max-height:250px; overflow-y:auto">';
+      m += '<TABLE cellpadding=0 cellspacing=0 id=poptab_log class=pbTabLined>';
+      m += '<TR><TD></td><TD width=95%></td>';
+      m += '</table></div>';
 
-		t.myDiv.innerHTML = m;
+      t.myDiv.innerHTML = m;
 
-		t.logtable = document.getElementById('poptab_log');  
-		var a = JSON2.parse(GM_getValue ('poptab_log_'+getServerId(), '[]'));
-		if (matTypeof(a) == 'array')
-			{
-			t.loglast99 = a;
-			for (var i=0; i<t.loglast99.length; i++)		t.addlogrow (t.loglast99[i].msg, t.loglast99[i].ts);
-			}
-		window.addEventListener('unload', t.onUnload, false);
+      t.logtable = document.getElementById('poptab_log');  
+      var a = JSON2.parse(GM_getValue ('poptab_log_'+getServerId(), '[]'));
+      if (matTypeof(a) == 'array')
+         {
+         t.loglast99 = a;
+         for (var i=0; i<t.loglast99.length; i++)     t.addlogrow (t.loglast99[i].msg, t.loglast99[i].ts);
+         }
+      window.addEventListener('unload', t.onUnload, false);
 
-		t.tcp = new CdispCityPicker ('popcityselect', document.getElementById('popcity'), true, null, selbut);
-		
-		document.getElementById('pophelp_button').addEventListener		('click', function(){	t.helpPop(this);							} , false);
-		document.getElementById('popcity').addEventListener						('click', function(){	t.show_city	(t.tcp.city.id);	} , false);
-		document.getElementById('poptab_dismiss_mm').addEventListener	('click', function(){	t.dismiss_mm(t.tcp.city.id);	} , false);
-		document.getElementById('poptab_queue_st').addEventListener		('click', function(){	t.queue_st	(t.tcp.city.id);	} , false);
-		document.getElementById('poptab_del_queues').addEventListener	('click', function(){	t.del_queues_start(t.tcp.city.id);	} , false);
-		document.getElementById('poptab_run_cycle').addEventListener	('click', function(){	t.run_cycle	(t.tcp.city.id);	} , false);
-		//document.getElementById('poptab_test').addEventListener	('click', function(){	t.btest	();	} , false);
- 	    	document.getElementById('poptab_troop_dismiss').addEventListener('change', function(){t.poptab_troop_dismiss = document.getElementById('poptab_troop_dismiss').value;} , false);
+      t.tcp = new CdispCityPicker ('popcityselect', document.getElementById('popcity'), true, null, selbut);
+      
+      document.getElementById('pophelp_button').addEventListener     ('click', function(){   t.helpPop(this);                    } , false);
+      document.getElementById('popcity').addEventListener                  ('click', function(){   t.show_city (t.tcp.city.id);  } , false);
+      document.getElementById('poptab_dismiss_mm').addEventListener  ('click', function(){   t.dismiss_mm(t.tcp.city.id);  } , false);
+      document.getElementById('poptab_queue_st').addEventListener    ('click', function(){   t.queue_st  (t.tcp.city.id);  } , false);
+      document.getElementById('poptab_del_queues').addEventListener  ('click', function(){   t.del_queues_start(t.tcp.city.id);  } , false);
+      document.getElementById('poptab_run_cycle').addEventListener   ('click', function(){   t.run_cycle (t.tcp.city.id);  } , false);
+      //document.getElementById('poptab_test').addEventListener   ('click', function(){   t.btest  ();   } , false);
+         document.getElementById('poptab_troop_dismiss').addEventListener('change', function(){t.poptab_troop_dismiss = document.getElementById('poptab_troop_dismiss').value;} , false);
   
-  	},
+      document.getElementById('pbtourney').addEventListener ('click', function() {t.toggleTourneyMode()}, false);
+	  t.togOpt('pbtourneymm','UseTourneyMM');
+	  t.togOpt('pbtourneyst','UseTourneyST');
+	  t.togOpt('pbtourneysc','UseTourneySC');
+	  t.togOpt('pbtourneypk','UseTourneyPK');
+	  t.togOpt('pbtourneysw','UseTourneySW');
+	  t.togOpt('pbtourneyar','UseTourneyAR');
+      t.setTourneyText(false);
 
-	disable_btns : function ()
-		{
-		var t = Tabs.popcontrol;
-		t.busy = true;
-		document.getElementById('poptab_del_queues'	).disabled = true;
-		document.getElementById('poptab_queue_st').disabled = true;
-		document.getElementById('poptab_dismiss_mm').disabled = true;
-		document.getElementById('poptab_run_cycle').disabled = true; 
-		},
+   },
 
-	onUnload : function ()
-		{
-		var t = Tabs.popcontrol;
-		//if (!ResetAll) GM_setValue ('log_'+getServerId(), JSON2.stringify(t.last50));
-		GM_setValue ('poptab_log_'+getServerId(), JSON2.stringify(t.loglast99));
-		},
+   disable_btns : function ()
+      {
+      var t = Tabs.popcontrol;
+      t.busy = true;
+      document.getElementById('poptab_del_queues'  ).disabled = true;
+      document.getElementById('poptab_queue_st').disabled = true;
+      document.getElementById('poptab_dismiss_mm').disabled = true;
+      document.getElementById('poptab_run_cycle').disabled = true; 
+      },
+
+   onUnload : function ()
+      {
+      var t = Tabs.popcontrol;
+      //if (!ResetAll) GM_setValue ('log_'+getServerId(), JSON2.stringify(t.last50));
+      GM_setValue ('poptab_log_'+getServerId(), JSON2.stringify(t.loglast99));
+      },
     
-	addlogrow : function (msg, ts)
-		{
-		var t = Tabs.popcontrol;
-		if (t.logtable.rows.length >= t.maxEntries)	t.logtable.deleteRow(t.maxEntries-1);
-		var row = t.logtable.insertRow(0);
-		row.vAlign = 'top';
-		row.insertCell(0).innerHTML = ts;
-		row.insertCell(1).innerHTML = msg;
-		},
+   addlogrow : function (msg, ts)
+      {
+      var t = Tabs.popcontrol;
+      if (t.logtable.rows.length >= t.maxEntries)  t.logtable.deleteRow(t.maxEntries-1);
+      var row = t.logtable.insertRow(0);
+      row.vAlign = 'top';
+      row.insertCell(0).innerHTML = ts;
+      row.insertCell(1).innerHTML = msg;
+      },
   
-	log : function (msg)
-		{
-		var t = Tabs.popcontrol;
-		var ts = new Date().toTimeString().substring (0,8);
-		for (postcity in Seed.cities) if (Seed.cities[postcity][0] == t.tcp.city.id) logcity = Seed.cities[postcity][1];
-		msg = logcity + ": " + msg;
-		t.addlogrow (msg, ts);
-		while (t.loglast99.length >= 99)
-		t.loglast99.shift();
-		t.loglast99.push ({msg:msg, ts:ts});
-		},
+   log : function (msg)
+      {
+      var t = Tabs.popcontrol;
+      var ts = new Date().toTimeString().substring (0,8);
+      for (postcity in Seed.cities) if (Seed.cities[postcity][0] == t.tcp.city.id) logcity = Seed.cities[postcity][1];
+      msg = logcity + ": " + msg;
+      t.addlogrow (msg, ts);
+      while (t.loglast99.length >= 99)
+      t.loglast99.shift();
+      t.loglast99.push ({msg:msg, ts:ts});
+      },
 
   hide : function (){         // called whenever the main window is hidden, or another tab is selected
     var t = Tabs.popcontrol;
@@ -20842,457 +21689,488 @@ Tabs.popcontrol = {
     var t = Tabs.popcontrol;
     clearTimeout (t.timer);
     t.timer = setTimeout (t.show, 2000);
-		t.show_city(t.tcp.city.id);
+      t.show_city(t.tcp.city.id);
   },
 
-	helpPop : function ()
-		{
-		var helpText = "";
-		
-		helpText += '<p>** This is a work in progress... If it gets stuck, refresh. By ADABman / Lurkin **';
-		helpText += 'Probably a good idea to temporarily turn off auto transport, auto reassign, and auto train, when using this.';
-		
-		helpText += '<p>POPULATION CONTROL tab will help you convert your excess/useless millitiamen ';
-		helpText += 'into massive amounts of idle population. Massive idle population is very useful ';
-		helpText += 'to have before a might tournament starts, or if you want to do a massive siege ';
-		helpText += 'build with a Merlins tutelage.';
-		helpText += '</p>';
-		
-		helpText += '<p>The CITY REQUIREMENTS area displays the amount of resouces and Militiamen ';
-		helpText += 'required for a \'full cycle\' of building massive idle population. If any of these ';
-		helpText += 'requirements are not met, they will be displayed in red.';
-		helpText += '</p>';
-		
-		helpText += '<p>The CITY STATUS area displays the maximum amount of population your cottages ';
-		helpText += 'provide, and the current amount of idle population in your city. This area also ';
-		helpText += 'shows the number of training queue slots total and in use.';
-		helpText += '</p>';
-		
-		helpText += '<p>The COMMANDS area displays the buttons that automate this process:';
-		helpText += '</p>';
+   helpPop : function ()
+      {
+      var helpText = "";
+      
+      helpText += '<p>** This is a work in progress... If it gets stuck, refresh. By ADABman / Lurkin **';
+      helpText += 'Probably a good idea to temporarily turn off auto transport, auto reassign, and auto train, when using this.';
+      
+      helpText += '<p>POPULATION CONTROL tab will help you convert your excess/useless millitiamen ';
+      helpText += 'into massive amounts of idle population. Massive idle population is very useful ';
+      helpText += 'to have before a might tournament starts, or if you want to do a massive siege ';
+      helpText += 'build with a Merlins tutelage.';
+      helpText += '</p>';
+      
+      helpText += '<p>The CITY REQUIREMENTS area displays the amount of resouces and Militiamen ';
+      helpText += 'required for a \'full cycle\' of building massive idle population. If any of these ';
+      helpText += 'requirements are not met, they will be displayed in red.';
+      helpText += '</p>';
+      
+      helpText += '<p>The CITY STATUS area displays the maximum amount of population your cottages ';
+      helpText += 'provide, and the current amount of idle population in your city. This area also ';
+      helpText += 'shows the number of training queue slots total and in use.';
+      helpText += '</p>';
+      
+      helpText += '<p>The COMMANDS area displays the buttons that automate this process:';
+      helpText += '</p>';
 
-		helpText += '<UL>';
-		
-		helpText += 'DISMISS MM BUTTON<BR><li>' + dismissBtn_help1 + '</li>';
-		helpText += '<li>' + dismissBtn_help2 + '</li><BR>';
-		
-		helpText += 'QUEUE SUPPLY TROOP BUTTON<BR><li>' + queueBtn_help1 + '</li>';
-		helpText += '<li>' + queueBtn_help2 + '</li><BR>';
-		
-		helpText += 'DELETE QUEUE BUTTON<BR><li>' + deleteBtn_help1 + '</li>';
-		helpText += '<li>' + deleteBtn_help2 + '</li>';
-		helpText += '<li>' + deleteBtn_help3 + '</li><BR>';
-		
-		helpText += 'RUN CYCLE BUTTON<BR><li>' + runcycleBtn_help1 + '</li>';
-		helpText += '<li>' + runcycleBtn_help2 + '</li>';
-		helpText += '<li>' + runcycleBtn_help3 + '</li><BR>';
-	
-		helpText += '</UL><BR>';
-		
-		//function pbPopup (prefix, x, y, width, height, enableDrag, onClose)
-		var pop = new pbPopup ('popcontrol_Help', 0, 0, 740, 600, true);
-		pop.centerMe (mainPop.getMainDiv());  
-		pop.getMainDiv().innerHTML = helpText;
-		pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help</b>:  Population Control</center>';
-		pop.show (true);
-		},
+      helpText += '<UL>';
+      
+      helpText += 'DISMISS MM BUTTON<BR><li>' + dismissBtn_help1 + '</li>';
+      helpText += '<li>' + dismissBtn_help2 + '</li><BR>';
+      
+      helpText += 'QUEUE SUPPLY TROOP BUTTON<BR><li>' + queueBtn_help1 + '</li>';
+      helpText += '<li>' + queueBtn_help2 + '</li><BR>';
+      
+      helpText += 'DELETE QUEUE BUTTON<BR><li>' + deleteBtn_help1 + '</li>';
+      helpText += '<li>' + deleteBtn_help2 + '</li>';
+      helpText += '<li>' + deleteBtn_help3 + '</li><BR>';
+      
+      helpText += 'RUN CYCLE BUTTON<BR><li>' + runcycleBtn_help1 + '</li>';
+      helpText += '<li>' + runcycleBtn_help2 + '</li>';
+      helpText += '<li>' + runcycleBtn_help3 + '</li><BR>';
+   
+      helpText += '</UL><BR>';
+      
+      //function CPopup (prefix, x, y, width, height, enableDrag, onClose)
+      var pop = new pbPopup ('popcontrol_Help', 0, 0, 740, 600, true);
+      pop.centerMe (mainPop.getMainDiv());  
+      pop.getMainDiv().innerHTML = helpText;
+      pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help</b>:  Population Control</center>';
+      pop.show (true);
+      },
 
-	show_city : function (cityId)
-		{
+   show_city : function (cityId)
+      {
+      var t = Tabs.popcontrol;
+
+      t.st_food = 50;
+      t.st_wood = 150;
+      //t.st_stone = 0;
+      t.st_ore = 10;
+      
+      var green = '#03F003';
+      var red =   '#F0303';
+
+      t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
+      t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
+      document.getElementById('poptab_max_idle_pop').innerHTML = t.max_idle_pop;
+      document.getElementById('poptab_cur_idle_pop').innerHTML = t.cur_idle_pop;
+
+      t.barracks = parseInt(getCityBuilding(cityId, 13).count);
+      t.cottages = parseInt(getCityBuilding(cityId, 5).count);
+	  t.slots_used = 0;
+	  for (k in Seed.queue_unt['city'+cityId])
+        if(Seed.queue_unt['city'+cityId][k][7] == false)
+          t.slots_used += 1;
+//      t.slots_used = parseInt(Seed.queue_unt['city'+cityId].length);
+      t.slots_free = parseInt(t.barracks - t.slots_used);
+      document.getElementById('poptab_barracks').innerHTML = t.barracks;
+      document.getElementById('poptab_cottages').innerHTML = t.cottages;
+      document.getElementById('poptab_slots_used').innerHTML = t.slots_used;
+      document.getElementById('poptab_slots_free').innerHTML = t.slots_free;
+
+      t.cycle_pop = (parseInt(t.barracks) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
+      document.getElementById('poptab_cycle_pop').innerHTML = addCommas( t.cycle_pop / 2 );
+
+      t.cur_food = parseInt(Seed.resources['city'+cityId].rec1[0]/3600);
+      t.cur_wood = parseInt(Seed.resources['city'+cityId].rec2[0]/3600);
+      //t.cur_stone = parseInt(Seed.resources['city'+cityId].rec3[0]/3600);
+      t.cur_ore = parseInt(Seed.resources['city'+cityId].rec4[0]/3600);
+      
+      document.getElementById('poptab_cur_food').innerHTML = addCommas (t.cur_food);
+      document.getElementById('poptab_cur_wood').innerHTML = addCommas (t.cur_wood);
+      //document.getElementById('poptab_cur_stone').innerHTML = addCommas (t.cur_stone);
+      document.getElementById('poptab_cur_ore').innerHTML = addCommas (t.cur_ore);
+      
+      t.needed_food = parseInt(t.cycle_pop) * parseInt(t.st_food);
+      t.needed_wood = parseInt(t.cycle_pop) * parseInt(t.st_wood);
+      //t.needed_stone = 0;//parseInt(t.cycle_pop) * parseInt(t.st_Stone);
+      t.needed_ore = parseInt(t.cycle_pop) * parseInt(t.st_ore);
+      
+      document.getElementById('poptab_needed_food').innerHTML = addCommas (t.needed_food);
+      document.getElementById('poptab_needed_wood').innerHTML = addCommas (t.needed_wood);
+      //document.getElementById('poptab_needed_stone').innerHTML = addCommas (t.needed_stone);
+      document.getElementById('poptab_needed_ore').innerHTML = addCommas (t.needed_ore);
+      
+      document.getElementById('poptab_needed_food').style.color = (t.needed_food  > t.cur_food?'red':'green');
+      document.getElementById('poptab_cur_food').style.color = (t.needed_food  > t.cur_food?'red':'green');
+      document.getElementById('poptab_needed_wood').style.color  = (t.needed_wood  > t.cur_wood?'red':'green');
+      document.getElementById('poptab_cur_wood').style.color = (t.needed_wood  > t.cur_wood?'red':'green');
+      //document.getElementById('poptab_needed_stone').style.color = (t.needed_stone > t.cur_stone?'red':'green');
+      //document.getElementById('poptab_cur_stone').style.color = (t.needed_stone > t.cur_stone?'red':'green');
+      document.getElementById('poptab_needed_ore').style.color = (t.needed_ore  > t.cur_ore?'red':'green');
+      document.getElementById('poptab_cur_ore').style.color = (t.needed_ore  > t.cur_ore?'red':'green');
+
+      t.needed_mm = t.cycle_pop;
+      t.cur_mm = parseInt(Seed.units['city'+cityId]['unt' + t.poptab_troop_dismiss]);
+      document.getElementById('poptab_needed_mm').innerHTML = addCommas(t.needed_mm);
+      document.getElementById('poptab_cur_mm').innerHTML = addCommas(t.cur_mm);
+      
+      document.getElementById('poptab_needed_mm').style.color = (t.needed_mm  > t.cur_mm?'red':'green')
+      document.getElementById('poptab_cur_mm').style.color = (t.needed_mm  > t.cur_mm?'red':'green')
+      
+      dismissBtn_help1 = "This button is used to quickly get your city to its maximum idle population allowed by dismissing just the right amount of militiamen.";
+      dismissBtn_help2 = "This button will only light up when when your city is not at its maximum population, and then only if you have enough MM in your city to dismiss.";
+      need_to_dismiss = parseInt(t.max_idle_pop - t.cur_idle_pop);
+      dismissBtn = document.getElementById('poptab_dismiss_mm');
+      if(parseInt(need_to_dismiss) > 0 && parseInt(need_to_dismiss) <= parseInt(t.cur_mm) && !t.busy && !t.cycle_running)
+         {
+         dismissBtn.disabled = false;
+         dismissBtn.value = "Dismiss " + addCommas(need_to_dismiss) + " Troops";
+         }
+      else
+         {
+         dismissBtn.disabled = true;
+         dismissBtn.value = "Dismiss Troops";
+         }
+
+      queueBtn_help1 = "This button is used to train all the idle population into Supply Troops.";
+      queueBtn_help2 = "This button will only light up when your city is at full idle population, and then only if you have enough resources to train all those Supply Troops and at least 1 free training slot.";
+      unitId = 1; 
+      var res_ok = 0;
+      for (var i = 1; i < 5; i++)
+         {
+         var res_need = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(t.cur_idle_pop);
+         var res_have = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]);
+         if(parseInt(res_need) > parseInt(res_have))  {  res_ok++;   }
+         }
+      queueBtn = document.getElementById('poptab_queue_st');
+      if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
+         {
+         queueBtn.disabled = false;
+         queueBtn.value = "Queue " + addCommas(t.cur_idle_pop) + " Supply Troops";
+         }
+      else
+         {
+         queueBtn.disabled = true;
+         queueBtn.value = "Queue Supply Troops";
+         }
+
+      deleteBtn_help1 = "This button is used to quickly delete all those queued up Supply Troops, returning 1/2 the used population (and resources?).";
+      deleteBtn_help2 = "This button will only light up when there is at least 1 training queue slot used.";
+      //deleteBtn_help3 = "** Due to a bug, you should refresh your game before using this button! **";
+      deleteBtn_help3 = "If you have any problems with this button, refresh and try again.";
+      deletebtn = document.getElementById('poptab_del_queues'  );
+      if(Seed.queue_unt['city'+cityId].length > 0 && !t.busy && !t.cycle_running)
+         {
+         deletebtn.disabled = false;
+         deletebtn.value = " Delete " + Seed.queue_unt['city'+cityId].length + " Queues";
+         }
+      else
+         {
+         deletebtn.disabled = true;
+         deletebtn.value = "Delete All Queues";
+         }
+
+      runcycleBtn_help1 = "This button is used to automate the entire process of repeatedly dismissing Militiamen then queueing Supply Troops, and then finally delete all of those queues.";
+      runcycleBtn_help2 = "This button will only light up when your city has the required amount of resources and Militiamen";
+      //runcycleBtn_help3 = "------ This button is disabled for now. -----";
+      runcycleBtn_help3 = "If the queue slots wont delete, refresh and hit the 'Delete All Queues' button.";
+      res_ok = 0;
+      t.cycle_pop_continue = (parseInt(t.slots_free) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
+      for (var i = 1; i < 5; i++)
+         {
+         var res_need = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(t.cycle_pop_continue);
+         var res_have = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]);
+         if(parseInt(res_need) > parseInt(res_have))  {  res_ok++;   }
+         }
+      runcycleBtn = document.getElementById('poptab_run_cycle');
+      //if(parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
+      t.needed_mm_continue = t.cycle_pop_continue;
+      if(parseInt(t.needed_mm) <= parseInt(t.cur_mm) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
+         {
+         runcycleBtn.disabled = false;
+         }
+      else
+         {
+         runcycleBtn.disabled = true; 
+         }
+      
+      },
+
+   run_cycle : function (cityId)
+      {
+      // Temp disable auto train for this city & auto reassign & auto transport & auto refresh
+      // log all that
+      
+      var t = Tabs.popcontrol;
+      clearTimeout (t.timer);
+      clearTimeout (t.timer_cycle);
+      t.disable_btns();
+      if(!t.cycle_running)
+         {
+         t.log("Starting population build cycle. Population at start: " + t.cur_idle_pop);
+         t.cycle_running = true;
+         t.cycle_step = 1;
+         }
+      
+      //t.actionlog("1");
+      t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
+      t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
+      //num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
+      if(parseInt(t.cur_idle_pop) < parseInt(t.max_idle_pop))  // Need to Dismiss MM
+         {
+         if (t.cycle_running && t.last_ran == 'train') {
+            t.dismiss_mm(cityId);
+            t.last_ran = 'dismiss';
+         } else {
+            t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 1500);
+         }
+            
+         
+         //t.actionlog("2");
+         }
+      else if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop)) // Need to queue supply troops
+         {
+         if (t.cycle_running) {
+            t.queue_st(cityId);
+            t.last_ran = 'train';
+         }
+         //t.actionlog("3");
+         }
+      else if(parseInt(t.slots_free) == 0)   // Delete all the queues
+         {
+         //t.actionlog("4");
+         t.cycle_running = false;
+         setTimeout(unsafeWindow.update_seed_ajax, 250);
+         t.del_queues_start(t.tcp.city.id);
+         t.timer = setTimeout (t.show, 1000);
+         return;
+         }
+      else
+         {
+         t.log("Waiting..."); // Wait
+         }
+      //t.actionlog("5");
+      setTimeout(unsafeWindow.update_seed_ajax, 250);
+      t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 1500);
+      },
+
+   dismiss_mm : function (cityId,noretry)
+      {
+      var t = Tabs.popcontrol;
+      t.disable_btns();
+      
+      unitId = t.poptab_troop_dismiss;
+
+      t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
+      t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
+      num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
+	  if (t.cur_mm < num) num = t.cur_mm;
+
+      //t.log(num);
+      
+      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+      params.cid = cityId;
+      params.type = unitId;
+      params.quant = num;
+
+      new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/dismissUnits.php" + unsafeWindow.g_ajaxsuffix,
+         {
+         method: "post",
+         parameters: params,
+         onSuccess: function(rslt)
+            {
+            if (rslt.ok) 
+               {
+               //t.log("Dismissed "+ addCommas(num) +" "+ troops[unitId]);
+               t.log("Dismissed "+ addCommas(num) +" "+ troops[unitId]);
+               Seed.units['city'+cityId]['unt'+unitId] -= num;
+               if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+               //setTimeout(unsafeWindow.update_seed_ajax, 250);
+               t.busy = false;
+               t.show_city(cityId);
+               
+               }
+            else
+               {
+               //t.log("FAILED to dismiss "+ addCommas(num) +" "+ troops[unitId] + " :(");
+               t.log("FAILED to dismiss "+ addCommas(num) +" "+ troops[unitId] + " :(");
+               t.busy = false;
+               }
+            },
+         },noretry);      
+      setTimeout(unsafeWindow.update_seed_ajax, 250);
+      },
+
+   queue_st : function (cityId)
+      {
+      var t = Tabs.popcontrol;
+      t.disable_btns();
+
+      unitId = 1;
+      num = t.cur_idle_pop;
+      //num = 15;
+      
+      var time = unsafeWindow.modal_barracks_traintime(unitId, num);
+      var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+      params.cid = cityId;
+      params.type = unitId;
+      params.quant = num;
+      params.gambleId = 0;
+
+      new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix,
+         {
+         method: "post",
+         parameters: params,
+         onSuccess: function(rslt)
+            {
+            if (rslt.ok) 
+               {
+               //t.log("Trained "+ addCommas(num) +" "+ troops[unitId]);
+               t.log("Trained "+ addCommas(num) +" Supply Troops");
+               if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+               for (var i = 1; i < 5; i++)
+                  {
+                  var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
+                  if(rslt.gamble) resourceLost = resourceLost*rslt.gamble[i];
+                  unsafeWindow.seed.resources["city" + cityId]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]) - resourceLost;
+                  }
+               unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
+               unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(num);
+               //unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
+               unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, rslt.ticksNeeded, null]);
+               t.busy = false;
+               t.show_city(cityId);
+               }
+            else
+               {
+               //t.log("FAILED to train "+ addCommas(num) +" "+ troops[unitId] + " :(");
+               t.log("FAILED to train "+ addCommas(num) +" Supply Troops :(");
+               t.busy = false;
+               }
+            },
+         });
+      setTimeout(unsafeWindow.update_seed_ajax, 250);
+      },
+
+
+   del_queues_start : function (cityId)
+      {
+      var t = Tabs.popcontrol;
+      t.disable_btns();
+
+      t.del_count = Seed.queue_unt['city'+cityId].length;
+      t.log("Attempting to delete " + t.del_count + " Queue slots...");
+      t.del_queues(cityId);
+      },
+
+   del_queues : function (cityId)
+      {
+      var t = Tabs.popcontrol;
+      clearTimeout (t.timer_del);
+
+      var q = Seed.queue_unt['city'+cityId];
+      var qs = q.toString();
+
+      if(q.length > 0 || t.del_count > 0)
+         {
+         t.del_count -= 1;
+         typetrn =      q[0][0];
+         numtrptrn = q[0][1];
+         trnTmp =    q[0][2];
+         trnETA =       q[0][3];
+         trnNeeded = q[0][5];
+         trainingId = 0;
+
+         t.delete_queue_slot(typetrn, numtrptrn, trnTmp, trnETA, trnNeeded, cityId, trainingId)
+         t.delete_queue_slot(typetrn, numtrptrn, trnTmp, parseInt(trnETA)-1, trnNeeded, cityId, trainingId) //?!
+                  }
+      else
+         {
+         t.log("No more queue slots to delete.");
+         t.del_count = 0;
+         t.busy = false;
+         return;
+         }
+      setTimeout(unsafeWindow.update_seed_ajax, 250);
+      t.timer_del = setTimeout (function() {t.del_queues(cityId)}, 1500);
+      },
+
+   delete_queue_slot : function (typetrn, numtrptrn, trnTmp, trnETA, trnNeeded, cityId, trainingId)
+      {
+      var t = Tabs.popcontrol;
+      var uW = unsafeWindow;
+      var params = uW.Object.clone(uW.g_ajaxparams);
+      params.pf =0;
+      params.requestType = "CANCEL_TRAINING";
+      params.cityId = cityId;
+      params.typetrn = typetrn;
+      params.numtrptrn = numtrptrn;
+      params.trnETA = trnETA;
+      params.trnTmp = trnTmp;
+      params.trnNeeded = trnNeeded;
+
+      new AjaxRequest(uW.g_ajaxpath + "ajax/cancelTraining.php" + uW.g_ajaxsuffix,
+         {
+         method: "post",
+         parameters: params,
+         onSuccess: function (message)
+            {
+            var rslt=eval("("+message.responseText+")");
+            if (rslt.ok)
+               {
+               t.log("Deleted queue of "+ addCommas(numtrptrn) +" "+ troops[typetrn]);
+               if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
+               var k=0;
+               for(var j=0;j<Seed.queue_unt["city"+cityId].length;j++)
+                  {
+                  if(j>trainingId)
+                     {
+                     Seed.queue_unt["city"+cityId][j][2]=parseInt(rslt.dateTraining[k]["start"]);
+                     Seed.queue_unt["city"+cityId][j][3]=parseInt(rslt.dateTraining[k]["end"]);
+                     k++;
+                     }
+                  }
+               Seed.queue_unt["city"+cityId].splice(trainingId,1);
+               for(var i=1;i<5;i++)
+                  {
+                  var totalReturn=parseInt(uW.unitcost["unt"+typetrn][i])*parseInt(numtrptrn)*3600/2;
+                  Seed.resources["city"+cityId]["rec"+i][0]=parseInt(Seed.resources["city"+cityId]["rec"+i][0])+totalReturn;
+                  }
+               }
+            else
+               {
+               }
+            },
+         onFailure: function ()
+            {
+            },
+         });
+      },
+
+  toggleTourneyMode : function () { 
+	var t = Tabs.popcontrol;
+    Options.TourneyModeActive=!Options.TourneyModeActive;
+    saveOptions();
+	t.setTourneyText(true);
+  },	
+   
+  setTourneyText : function (log) {
+    if (Options.TourneyModeActive)
+	  {document.getElementById('pbtourney').value = "Tournament Mode : ON"; if (log) {Tabs.popcontrol.log("Tournament Mode turned ON");}}
+	else
+	  {document.getElementById('pbtourney').value = "Tournament Mode : OFF"; if (log) {Tabs.popcontrol.log("Tournament Mode turned OFF");}}
+  },
+  
+	togOpt : function (checkboxId, optionName, callOnChange){
 		var t = Tabs.popcontrol;
-
-		t.st_food = 50;
-		t.st_wood = 150;
-		//t.st_stone = 0;
-		t.st_ore = 10;
-		
-		var green = '#03F003';
-		var red =   '#F0303';
-
-		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
-		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-		document.getElementById('poptab_max_idle_pop').innerHTML	= t.max_idle_pop;
-		document.getElementById('poptab_cur_idle_pop').innerHTML	= t.cur_idle_pop;
-
-		t.barracks = parseInt(getCityBuilding(cityId, 13).count);
-		t.cottages = parseInt(getCityBuilding(cityId, 5).count);
-		t.slots_used = parseInt(Seed.queue_unt['city'+cityId].length);
-		t.slots_free = parseInt(t.barracks - t.slots_used);
-		document.getElementById('poptab_barracks').innerHTML = t.barracks;
-		document.getElementById('poptab_cottages').innerHTML = t.cottages;
-		document.getElementById('poptab_slots_used').innerHTML = t.slots_used;
-		document.getElementById('poptab_slots_free').innerHTML = t.slots_free;
-
-//		t.cycle_pop = (parseInt(t.barracks) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
-		t.cycle_pop = (parseInt(t.slots_free) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
-		document.getElementById('poptab_cycle_pop').innerHTML	= addCommas( t.cycle_pop / 2 );
-
-		t.cur_food = parseInt(Seed.resources['city'+cityId].rec1[0]/3600);
-		t.cur_wood = parseInt(Seed.resources['city'+cityId].rec2[0]/3600);
-		//t.cur_stone = parseInt(Seed.resources['city'+cityId].rec3[0]/3600);
-		t.cur_ore = parseInt(Seed.resources['city'+cityId].rec4[0]/3600);
-		
-		document.getElementById('poptab_cur_food').innerHTML = addCommas (t.cur_food);
-		document.getElementById('poptab_cur_wood').innerHTML = addCommas (t.cur_wood);
-		//document.getElementById('poptab_cur_stone').innerHTML = addCommas (t.cur_stone);
-		document.getElementById('poptab_cur_ore').innerHTML = addCommas (t.cur_ore);
-		
-		t.needed_food = parseInt(t.cycle_pop) * parseInt(t.st_food);
-		t.needed_wood = parseInt(t.cycle_pop) * parseInt(t.st_wood);
-		//t.needed_stone = 0;//parseInt(t.cycle_pop) * parseInt(t.st_Stone);
-		t.needed_ore = parseInt(t.cycle_pop) * parseInt(t.st_ore);
-		
-		document.getElementById('poptab_needed_food').innerHTML = addCommas (t.needed_food);
-		document.getElementById('poptab_needed_wood').innerHTML = addCommas (t.needed_wood);
-		//document.getElementById('poptab_needed_stone').innerHTML = addCommas (t.needed_stone);
-		document.getElementById('poptab_needed_ore').innerHTML = addCommas (t.needed_ore);
-		
-		document.getElementById('poptab_needed_food').style.color = (t.needed_food  > t.cur_food?'red':'green');
-		document.getElementById('poptab_cur_food').style.color = (t.needed_food  > t.cur_food?'red':'green');
-		document.getElementById('poptab_needed_wood').style.color  = (t.needed_wood  > t.cur_wood?'red':'green');
-		document.getElementById('poptab_cur_wood').style.color = (t.needed_wood  > t.cur_wood?'red':'green');
-		//document.getElementById('poptab_needed_stone').style.color = (t.needed_stone > t.cur_stone?'red':'green');
-		//document.getElementById('poptab_cur_stone').style.color = (t.needed_stone > t.cur_stone?'red':'green');
-		document.getElementById('poptab_needed_ore').style.color = (t.needed_ore  > t.cur_ore?'red':'green');
-		document.getElementById('poptab_cur_ore').style.color = (t.needed_ore  > t.cur_ore?'red':'green');
-
-		t.needed_mm = t.cycle_pop;
-		t.cur_mm = parseInt(Seed.units['city'+cityId]['unt' + t.poptab_troop_dismiss]);
-		document.getElementById('poptab_needed_mm').innerHTML = addCommas(t.needed_mm);
-		document.getElementById('poptab_cur_mm').innerHTML = addCommas(t.cur_mm);
-		
-		document.getElementById('poptab_needed_mm').style.color = (t.needed_mm  > t.cur_mm?'red':'green')
-		document.getElementById('poptab_cur_mm').style.color = (t.needed_mm  > t.cur_mm?'red':'green')
-		
-		dismissBtn_help1 = "This button is used to quickly get your city to its maximum idle population allowed by dismissing just the right amount of militiamen.";
-		dismissBtn_help2 = "This button will only light up when when your city is not at its maximum population, and then only if you have enough MM in your city to dismiss.";
-		need_to_dismiss = parseInt(t.max_idle_pop - t.cur_idle_pop);
-		dismissBtn = document.getElementById('poptab_dismiss_mm');
-		if(parseInt(need_to_dismiss) > 0 && parseInt(need_to_dismiss) <= parseInt(t.cur_mm) && !t.busy && !t.cycle_running)
-			{
-			dismissBtn.disabled = false;
-			dismissBtn.value = "Dismiss " + addCommas(need_to_dismiss) + " Troops";
-			}
-		else
-			{
-			dismissBtn.disabled = true;
-			dismissBtn.value = "Dismiss Troops";
-			}
-
-		queueBtn_help1 = "This button is used to train all the idle population into Supply Troops.";
-		queueBtn_help2 = "This button will only light up when your city is at full idle population, and then only if you have enough resources to train all those Supply Troops and at least 1 free training slot.";
-		unitId = 1;	
-		var res_ok = 0;
-		for (var i = 1; i < 5; i++)
-			{
-			var res_need = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(t.cur_idle_pop);
-			var res_have = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]);
-			if(parseInt(res_need) > parseInt(res_have))	{	res_ok++;	}
-			}
-		queueBtn = document.getElementById('poptab_queue_st');
-		if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
-			{
-			queueBtn.disabled = false;
-			queueBtn.value = "Queue " + addCommas(t.cur_idle_pop) + " Supply Troops";
-			}
-		else
-			{
-			queueBtn.disabled = true;
-			queueBtn.value = "Queue Supply Troops";
-			}
-
-		deleteBtn_help1 = "This button is used to quickly delete all those queued up Supply Troops, returning 1/2 the used population (and resources?).";
-		deleteBtn_help2 = "This button will only light up when there is at least 1 training queue slot used.";
-		//deleteBtn_help3 = "** Due to a bug, you should refresh your game before using this button! **";
-		deleteBtn_help3 = "If you have any problems with this button, refresh and try again.";
-		deletebtn = document.getElementById('poptab_del_queues'	);
-		if(Seed.queue_unt['city'+cityId].length > 0 && !t.busy && !t.cycle_running)
-			{
-			deletebtn.disabled = false;
-			deletebtn.value = " Delete " + Seed.queue_unt['city'+cityId].length + " Queues";
-			}
-		else
-			{
-			deletebtn.disabled = true;
-			deletebtn.value = "Delete All Queues";
-			}
-
-		runcycleBtn_help1 = "This button is used to automate the entire process of repeatedly dismissing Militiamen then queueing Supply Troops, and then finally delete all of those queues.";
-		runcycleBtn_help2 = "This button will only light up when your city has the required amount of resources and Militiamen";
-		//runcycleBtn_help3 = "------ This button is disabled for now. -----";
-		runcycleBtn_help3 = "If the queue slots wont delete, refresh and hit the 'Delete All Queues' button.";
-		res_ok = 0;
-		t.cycle_pop_continue = (parseInt(t.slots_free) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
-		for (var i = 1; i < 5; i++)
-			{
-			var res_need = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(t.cycle_pop_continue);
-			var res_have = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]);
-			if(parseInt(res_need) > parseInt(res_have))	{	res_ok++;	}
-			}
-		runcycleBtn = document.getElementById('poptab_run_cycle');
-		//if(parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
-		t.needed_mm_continue = t.cycle_pop_continue;
-		if(parseInt(t.needed_mm) <= parseInt(t.cur_mm) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
-			{
-			runcycleBtn.disabled = false;
-			}
-		else
-			{
-			runcycleBtn.disabled = true; 
-			}
-		
-		},
-
-	run_cycle : function (cityId)
-		{
-		// Temp disable auto train for this city & auto reassign & auto transport & auto refresh
-		// log all that
-		
-		var t = Tabs.popcontrol;
-		clearTimeout (t.timer);
-		clearTimeout (t.timer_cycle);
-		t.disable_btns();
-		if(!t.cycle_running)
-			{
-			t.log("Starting population build cycle. Population at start: " + t.cur_idle_pop);
-			t.cycle_running = true;
-			t.cycle_step = 1;
-			}
-		
-		//t.actionlog("1");
-		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
-		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-		//num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
-		if(parseInt(t.cur_idle_pop) < parseInt(t.max_idle_pop))	// Need to Dismiss MM
-			{
-			if (t.cycle_running && t.last_ran == 'train') {
-				t.dismiss_mm(cityId);
-				t.last_ran = 'dismiss';
-			} else {
-				t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 1500);
-			}
-				
-			
-			//t.actionlog("2");
-			}
-		else if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop)) // Need to queue supply troops
-			{
-			if (t.cycle_running)	{
-				t.queue_st(cityId);
-				t.last_ran = 'train';
-			}
-			//t.actionlog("3");
-			}
-		else if(parseInt(t.slots_free) == 0)	// Delete all the queues
-			{
-			//t.actionlog("4");
-			t.cycle_running = false;
-			setTimeout(unsafeWindow.update_seed_ajax, 250);
-			t.del_queues_start(t.tcp.city.id);
-			t.timer = setTimeout (t.show, 1000);
-			return;
-			}
-		else
-			{
-			t.log("Waiting...");	// Wait
-			}
-		//t.actionlog("5");
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 1500);
-		},
-
-	dismiss_mm : function (cityId)
-		{
-		var t = Tabs.popcontrol;
-		t.disable_btns();
-		
-		unitId = t.poptab_troop_dismiss;
-
-		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
-		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-		num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
-		//t.log(num);
-		
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.cid = cityId;
-		params.type = unitId;
-		params.quant = num;
-
-		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/dismissUnits.php" + unsafeWindow.g_ajaxsuffix,
-			{
-			method: "post",
-			parameters: params,
-			onSuccess: function(rslt)
-				{
-				if (rslt.ok) 
-					{
- 					//t.log("Dismissed "+ addCommas(num) +" "+ troops[unitId]);
-					t.log("Dismissed "+ addCommas(num) +" Troops");
-					Seed.units['city'+cityId]['unt'+unitId] -= num;
-					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-					//setTimeout(unsafeWindow.update_seed_ajax, 250);
-					t.busy = false;
-					t.show_city(cityId);
-					
-					}
-				else
-					{
-					//t.log("FAILED to dismiss "+ addCommas(num) +" "+ troops[unitId] + " :(");
-					t.log("FAILED to dismiss "+ addCommas(num) +" Militiamen :(");
-					t.busy = false;
-					}
-				},
-			});		
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		},
-
-	queue_st : function (cityId)
-		{
-		var t = Tabs.popcontrol;
-		t.disable_btns();
-
-		unitId = 1;
-		num = t.cur_idle_pop;
-		//num = 15;
-		
-		var time = unsafeWindow.modal_barracks_traintime(unitId, num);
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.cid = cityId;
-		params.type = unitId;
-		params.quant = num;
-		params.gambleId = 0;
-
-		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix,
-			{
-			method: "post",
-			parameters: params,
-			onSuccess: function(rslt)
-				{
-				if (rslt.ok) 
-					{
-					//t.log("Trained "+ addCommas(num) +" "+ troops[unitId]);
-					t.log("Trained "+ addCommas(num) +" Supply Troops");
-					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-					for (var i = 1; i < 5; i++)
-						{
-						var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
-						if(rslt.gamble) resourceLost = resourceLost*rslt.gamble[i];
-						unsafeWindow.seed.resources["city" + cityId]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]) - resourceLost;
-						}
-					unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
-					unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(num);
-					//unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
-					unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, rslt.ticksNeeded, null]);
-					t.busy = false;
-					t.show_city(cityId);
-					}
-				else
-					{
-					//t.log("FAILED to train "+ addCommas(num) +" "+ troops[unitId] + " :(");
-					t.log("FAILED to train "+ addCommas(num) +" Supply Troops :(");
-					t.busy = false;
-					}
-				},
-			});
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		},
-
-
-	del_queues_start : function (cityId)
-		{
-		var t = Tabs.popcontrol;
-		t.disable_btns();
-
-		t.del_count = Seed.queue_unt['city'+cityId].length;
-		t.log("Attempting to delete " + t.del_count + " Queue slots...");
-		t.del_queues(cityId);
-		},
-
- 	del_queues : function (cityId)
-		{
-		var t = Tabs.popcontrol;
-		clearTimeout (t.timer_del);
-
-		var q = Seed.queue_unt['city'+cityId];
-		var qs = q.toString();
-
-		if(q.length > 0 || t.del_count > 0)
-			{
-			t.del_count -= 1;
-			typetrn =		q[0][0];
-			numtrptrn =	q[0][1];
-			trnTmp =		q[0][2];
-			trnETA = 		q[0][3];
-			trnNeeded =	q[0][5];
-			trainingId = 0;
-
-			t.delete_queue_slot(typetrn, numtrptrn, trnTmp, trnETA, trnNeeded, cityId, trainingId)
-			t.delete_queue_slot(typetrn, numtrptrn, trnTmp, parseInt(trnETA)-1, trnNeeded, cityId, trainingId)	//?!
-						}
-		else
-			{
-			t.log("No more queue slots to delete.");
-			t.del_count = 0;
-			t.busy = false;
-			return;
-			}
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		t.timer_del = setTimeout (function() {t.del_queues(cityId)}, 1500);
-		},
-
-	delete_queue_slot : function (typetrn, numtrptrn, trnTmp, trnETA, trnNeeded, cityId, trainingId)
-		{
-		var t = Tabs.popcontrol;
-		var uW = unsafeWindow;
-		var params = uW.Object.clone(uW.g_ajaxparams);
-		params.pf =0;
-		params.requestType = "CANCEL_TRAINING";
-		params.cityId = cityId;
-		params.typetrn = typetrn;
-		params.numtrptrn = numtrptrn;
-		params.trnETA = trnETA;
-		params.trnTmp = trnTmp;
-		params.trnNeeded = trnNeeded;
-
-		new AjaxRequest(uW.g_ajaxpath + "ajax/cancelTraining.php" + uW.g_ajaxsuffix,
-			{
-			method: "post",
-			parameters: params,
-			onSuccess: function (message)
-				{
-				var rslt=eval("("+message.responseText+")");
-				if (rslt.ok)
-					{
-					t.log("Deleted queue of "+ addCommas(numtrptrn) +" "+ troops[typetrn]);
-					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-					var k=0;
-					for(var j=0;j<Seed.queue_unt["city"+cityId].length;j++)
-						{
-						if(j>trainingId)
-							{
-							Seed.queue_unt["city"+cityId][j][2]=parseInt(rslt.dateTraining[k]["start"]);
-							Seed.queue_unt["city"+cityId][j][3]=parseInt(rslt.dateTraining[k]["end"]);
-							k++;
-							}
-						}
-					Seed.queue_unt["city"+cityId].splice(trainingId,1);
-					for(var i=1;i<5;i++)
-						{
-						var totalReturn=parseInt(uW.unitcost["unt"+typetrn][i])*parseInt(numtrptrn)*3600/2;
-						Seed.resources["city"+cityId]["rec"+i][0]=parseInt(Seed.resources["city"+cityId]["rec"+i][0])+totalReturn;
-						}
-					}
-				else
-					{
-					}
-				},
-			onFailure: function ()
-				{
-				},
-			});
-		},
-
-
+		var checkbox = document.getElementById(checkboxId);
+		if (Options[optionName])
+			checkbox.checked = true;
+		checkbox.addEventListener ('change', eventHandler, false);
+		function eventHandler (){
+			Options[optionName] = this.checked;
+			saveOptions();
+			if (callOnChange)
+				callOnChange (this.checked);
+		}
+	},  
 }
 
 /****** Gifts Tab ********/
@@ -21318,7 +22196,7 @@ Tabs.gifts = {
         m+='</select> </td><td> <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available </td><td> <INPUT id=pbadgift type=checkbox '+ (GiftDB.adgift?' CHECKED':'') +'\> Scan and delete gift messages</td><td> Total sent:</td><td id=giftnumber></td></tr></table></DIV>';
 	m+='<table><TR><TD><INPUT id=resetlist type=submit value="Reset Gift List"> Reset gifting list (may take a day to re-populate)</td></tr></table></DIV>';
         m += '<DIV class=pbStat></DIV>';
-        m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.  You may update us on working scenarios <a href=http://userscripts.org/scripts/discuss/101052>here</a></DIV>';
+        m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.  You may update us on working scenarios <a href=https://userscripts.org/scripts/discuss/101052>here</a></DIV>';
         m += '<DIV class=pbStat></DIV>';
         m += '<DIV style="height:250px; max-height:250px; overflow-y:auto" id=GiftsTAB></DIV>';
         div.innerHTML = m;
@@ -21351,24 +22229,12 @@ Tabs.gifts = {
          t.saveGiftsdb();
       }, false);
       t.giftstats();
-      if(GiftDB.agift) 
+      if(GiftDB.agift)
          setTimeout(t.sendgifts,10000);
-      if(GiftDB.adgift)
-         setTimeout(function () {t.scangifts(4)},3*61*1000);
    },
    populatepeople : function () {
         var t = Tabs.gifts;
       t.curava = new Array();
-        //convert old variable
-        for(b in GiftDB.people) {
-         if(typeof GiftDB.people[b] == 'number'){
-         var x = GiftDB.people[b];
-         GiftDB.people[b] = [x,0];
-         };
-         if(!GiftDB.people[b][3])GiftDB.people[b][3] = 0;//time limited fix for older variable
-      
-      };
-        //convert old variable
               var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
       params.ctrl = 'allianceGifting\\AllianceGiftingServiceAjax';
       params.action = 'getRecipients';
@@ -21395,20 +22261,15 @@ Tabs.gifts = {
                         }
                         var name = sex+' '+rslt.recipients[i].displayName;
                         var sent=0;
-                        if(GiftDB.people[rslt.recipients[i].userId]) {
+                        if(GiftDB.people[Number(rslt.recipients[i].userId)]) {
                            sent = GiftDB.people[rslt.recipients[i].userId][1];
                            GiftDB.people[Number(rslt.recipients[i].userId)][2] = name;//annoying people change their name.  lets update.
-                        } else {
-//			   GiftDB.people[rslt.recipients[i].userId] = [];
-//			   GiftDB.people[rslt.recipients[i].userId][0] = 0;
-//                           GiftDB.people[rslt.recipients[i].userId][1] = 0;
-//                           GiftDB.people[Number(rslt.recipients[i].userId)][2] = name;
-//                           GiftDB.people[rslt.recipients[i].userId][3] = 0;
-			   GiftDB.people[rslt.recipients[i].userId] = [0,0,name,0];
-			}
+                        }else{
+							GiftDB.people[rslt.recipients[i].userId] = [0,0,name,0];
+						};;
                      m += '<tr><td></td><td>'+name+'<td/><td>Total sent: '+sent+'</td>'; 
                      m+= '<td><select class="giftstosend" id="'+rslt.recipients[i].userId+'" name="'+name+'">';
-                     m+='<option value="0">None</option>';
+						m+='<option value="0">None</option>';
                      for(g =0;g < GiftDB.giftitems.length;g++) {
                   if(GiftDB.people[Number(rslt.recipients[i].userId)] && GiftDB.people[Number(rslt.recipients[i].userId)][0] == Number(GiftDB.giftitems[g].itemId))
                      m+='<option value="'+GiftDB.giftitems[g].itemId+'" selected="selected">'+GiftDB.giftitems[g].name+'</option>';
@@ -21425,6 +22286,8 @@ Tabs.gifts = {
                      var name = GiftDB.people[h][2];
                      m += '<tr><td>Not Available: </td><td>'+name+'<td/><td>Total sent: '+GiftDB.people[h][1]+'</td>'; 
                      m+= '<td><select class="giftstosend" id="'+h+'" name="'+name+'">';
+                     
+                     
                      m+='<option value="0">None</option>';
                      for(g =0;g < GiftDB.giftitems.length;g++) {
                   if(GiftDB.people[Number(h)] && GiftDB.people[Number(h)][0] == Number(GiftDB.giftitems[g].itemId))
@@ -21442,17 +22305,17 @@ Tabs.gifts = {
                    for (c = 0; c < element_class.length; c++) {
                         if(element_class[c])
                         element_class[c].addEventListener('change', function(e){
-                  if(e.target.value != -1) {
-                  if(!GiftDB.people[Number(e.target.id)])
-                     GiftDB.people[Number(e.target.id)] = [Number(e.target.value),0];
-                     else GiftDB.people[Number(e.target.id)][0] =Number(e.target.value);
-                     GiftDB.people[Number(e.target.id)][2] = e.target.name;
-                     GiftDB.people[Number(e.target.id)][3] = 0;
-                  }else {
-                     delete GiftDB.people[Number(e.target.id)];
-                  };
-                     t.saveGiftsdb();
-                  } , false);
+						  if(e.target.value != -1) {
+						  if(!GiftDB.people[Number(e.target.id)])
+							 GiftDB.people[Number(e.target.id)] = [Number(e.target.value),0];
+							 else 
+							 GiftDB.people[Number(e.target.id)][0] =Number(e.target.value);
+							 GiftDB.people[Number(e.target.id)][2] = e.target.name;
+						  }else {
+							 delete GiftDB.people[Number(e.target.id)];
+						  };
+							 t.saveGiftsdb();
+						  } , false);
                     }
                }
             },
@@ -21474,7 +22337,7 @@ Tabs.gifts = {
          if(j.length) {
          x+=1;
          if(j.length > 2){
-            //AS per http://osric.com/chris/accidental-developer/2012/07/javascript-array-sort-random-ordering/ sort was not used, this is used instead to get true random results.
+            //AS per https://osric.com/chris/accidental-developer/2012/07/javascript-array-sort-random-ordering/ sort was not used, this is used instead to get true random results.
             var n = j.length;
             var tempArr = [];
             for ( q = 0; q < n-1; q++ )
@@ -21487,8 +22350,8 @@ Tabs.gifts = {
             } else {
                t.sendgift(ItemId,j);
          }};
-      }
-      t.populatepeople();
+   }
+   t.populatepeople();
    },
    sendgift : function (giftId, recipients) {
          var t = Tabs.gifts;
@@ -21601,6 +22464,7 @@ Tabs.gifts = {
             return;
          },
       });
+      
    },
    
    deletemsgs : function (msgs) {
@@ -21613,11 +22477,6 @@ Tabs.gifts = {
       new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
          method: "post",
          parameters: params4,
-         onSuccess: function (message) {
-            var rslt2 = eval("(" + message.responseText + ")");
-            if (rslt2.ok) {
-	    }
-	 }
       });   
    },
    
@@ -21634,7 +22493,7 @@ Tabs.gifts = {
             if (rslt2.ok) {
                var name = rslt2.messageBody.split(" ")[0]+" "+rslt2.messageBody.split(" ")[1];
                var todel = [];
-               for(var x in GiftDB.people) {
+               for(x in GiftDB.people) {
                   if(GiftDB.people[x][2] == name) {
                      GiftDB.people[x][3] += 1;
                      t.saveGiftsdb();
@@ -21651,6 +22510,232 @@ Tabs.gifts = {
    hide: function (){},
    
 }
+/***** Ascension Tab ******/
+Tabs.ascension = {
+    tabLabel: 'Ascension',
+    tabOrder: 300,
+    myDiv: null,
+    init: function (div) {
+        var t = Tabs.ascension;
+        t.myDiv = div;
+        var m = '<DIV id=pbAscensionMain></div><TABLE id=pbAscension><TR>';
+        m += '<TD></td><TD>Percent</td><TD><CENTER>Menu</center></td><TD>Current Level</td><TD>Current Cost</td><TD>'+strButton20(translate('Building Values'), 'id=pbBuildingValues') +'</td><TR>';
+        for (i = 0; i < Cities.cities.length; i++) {
+            var cityPrestige = Seed.cityData.city[Cities.cities[i].id].cityValue;
+            var cityPrestigeType = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeType;
+            var cityPrestigeLevel = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeLevel;
+            var isPrestigeCity = Seed.cityData.city[Cities.cities[i].id].isPrestigeCity;
+            //alert('city - ' + Cities.cities[i].id + ' prestige= ' + isPrestigeCity )
+            var currentGemPrice = null;
+//            var fullPrestige = 1550;
+//            var gemFullPrice = 2000;
+            var fullPrestige = [1000, 1200, 1200, 1450, 1500, 1550];
+            var gemFullPrice = [1000, 1150, 1250, 2000, 2250, 2500];
+//            var progressWidth = parseInt(((cityPrestige / fullPrestige) * 100));
+            var progressWidth = parseInt(((cityPrestige / fullPrestige[cityPrestigeLevel-1]) * 100));
+            if (progressWidth > 100) progressWidth = 100;
+            var fullBarWidth = 378;
+            m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
+            m += '<TR><TD background="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=' + fullBarWidth + ' height=25">';
+            m += '<DIV id=pbGreenBar_' + i + '></div></td><TD align=center><DIV id=pbProgPerc_' + i + '></div></td><TD><INPUT id=pbAscendBtn_' + Cities.cities[i].id + ' type=submit value="Ascend"></td><TD align=center><DIV id=pbCityPrestigeLevel_' + i + '></div></td><TD align=center><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD align=center><CENTER><DIV id=pbAscCurMight_'+i+'></div></center></td>';
+        }
+        div.innerHTML = m;
+        document.getElementById('pbBuildingValues').addEventListener('click', function(){t.paintHelp();});
+    },
+    paintHelp: function() {
+      var t = Tabs.ascension;
+      var helpText = translate("Ascension Building Values");
+         helpText += '<TABLE><TR><TD align=center>Building</td><TD align=center width=50>Lvl 1</td><TD align=center width=50>+1 Lvl</td></tr>';
+
+         helpText += '<TR><TD>Castle</td><TD><CENTER>10</center></td><TD><CENTER>+8</center></td></tr>';          
+         helpText += '<TR><TD>Tavern</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+         helpText += '<TR><TD>Knights Hall</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+         helpText += '<TR><TD>Alchemy Lab</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+         helpText += '<TR><TD>Rally Point</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+         helpText += '<TR><TD>Wall</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+         helpText += '<TR><TD>DRUID Barracks (field)</td><TD><CENTER>7</center></td><TD><CENTER>+6</center></td></tr>';
+         helpText += '<TR><TD>DRUID Apothecary (field)</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+         helpText += '<TR><TD>Embassy</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+         helpText += '<TR><TD>Market</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+         helpText += '<TR><TD>Watch Tower</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+         helpText += '<TR><TD>Spire</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+         helpText += '<TR><TD>Apothecary</td><TD><CENTER>6</center></td><TD><CENTER>+5</center></td></tr>';
+         helpText += '<TR><TD>NORMAL Barracks</td><TD><CENTER>2</center></td><TD><CENTER>+2</center></td></tr>';
+         helpText += '<TR><TD>Cottage</td><TD><CENTER>2</center></td><TD><CENTER>+2</center></td></tr>';
+         helpText += '</table><TABLE>';
+         helpText += '<TR><TR><TD>These numbers are for every added level of a building. Whether you are building it to level 2 or level 10, it will only add this amount to the total, shown under this help button. Every buildings "might" value combines to give the total. Once it reaches 1200, you are at 100% and can level up again.</td></tr></tr>';
+         helpText += '</table>';
+
+         var pop = new pbPopup ('ascensionHelp', 0, 0, 400, 400, true);
+         pop.centerMe (mainPop.getMainDiv());  
+         pop.getMainDiv().innerHTML = helpText;
+         pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot '+translate("Help")+': '+translate("Ascension")+'</b></center>';
+         pop.show (true);
+    },
+    paintTab: function () {
+        for (i = 0; i < Cities.cities.length; i++) {
+            var cityPrestige = Seed.cityData.city[Cities.cities[i].id].cityValue;
+            var cityPrestigeType = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeType;
+            var cityPrestigeLevel = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeLevel;
+            var isPrestigeCity = Seed.cityData.city[Cities.cities[i].id].isPrestigeCity;
+            //alert('city - ' + Cities.cities[i].id + ' prestige= ' + isPrestigeCity )
+            var currentGemPrice = null;
+//            var fullPrestige = 1550;
+//            var gemFullPrice = 2000;
+            var fullPrestige = [1000, 1200, 1200, 1450, 1500, 1550];
+            var gemFullPrice = [1000, 1150, 1250, 2000, 2250, 2500];
+//            var progressWidth = parseInt(((cityPrestige / fullPrestige) * 100));
+	    if (cityPrestigeLevel < 6 )
+              var progressWidth = parseInt(((cityPrestige / fullPrestige[cityPrestigeLevel]) * 100));
+	    else
+	      progressWidth = 100;
+            if (progressWidth > 100) progressWidth = 100;
+            var fullBarWidth = 378;
+            m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
+            m += '<TR><TD style="background:'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=100% height=25">';
+            if (isPrestigeCity) {
+	      if (cityPrestigeType <= 2) {
+                if (cityPrestigeLevel < 6) {
+                    //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
+                    document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
+                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/6';
+                    document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/' +fullPrestige[cityPrestigeLevel];
+                } else {
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C O M P L E T E &nbsp;&nbsp;&nbsp; (for now)</center>'
+                    document.getElementById('pbProgPerc_' + i).innerHTML = 'N/A';
+                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = 'N/A';
+                    document.getElementById('pbAscCurMight_' + i).innerHTML = 'N/A';
+                }
+	      } else {
+                if (cityPrestigeLevel < 3) {
+                    //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
+                    document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
+                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/3';
+                    document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/' +fullPrestige[cityPrestigeLevel-1];
+                } else {
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C O M P L E T E &nbsp;&nbsp;&nbsp; (for now)</center>'
+                    document.getElementById('pbProgPerc_' + i).innerHTML = 'N/A';
+                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = 'N/A';
+                    document.getElementById('pbAscCurMight_' + i).innerHTML = 'N/A';
+                }
+	      }
+              m += '<TR>';
+            } else {
+                document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C I T Y &nbsp;&nbsp;&nbsp; N O T  &nbsp;&nbsp;&nbsp; A S C E N D E D &nbsp;&nbsp;&nbsp; Y E T</center>'
+                document.getElementById('pbProgPerc_' + i).innerHTML = '<CENTER>N/A</center>';
+                document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = '<CENTER>0/3</center>';
+                document.getElementById('pbAscCurMight_' + i).innerHTML = 'N/A';
+            }
+        }
+    },
+    clickCitySelect: function (city) {
+        var t = Tabs.ascension;
+        t.selectedCity = city;
+        t.JumpCity(city);
+        unsafeWindow.cm.PrestigeManagerController.open()
+    },
+    JumpCity: function (city) {
+        var t = Tabs.ascension;
+        for (i = 0; i < Seed.cities.length; i++) {
+            if (Seed.cities[i][0] == city) var cityNum = i;
+        }
+        cityNum++;
+        var obj = document.getElementById('citysel_' + cityNum);
+        return t.ClickWin(window, obj, 'click');
+    },
+    ClickWin: function (win, obj, evtName) {
+        var evt = win.document.createEvent("MouseEvents");
+        evt.initMouseEvent(evtName, true, true, win, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        return !obj.dispatchEvent(evt);
+    },
+    getGemCost: function (cityId, callback) {
+        var t = Tabs.ascension;
+        var isPrestigeCity = Seed.cityData.city[cityId].isPrestigeCity;
+        var cityPrestigeType = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeType;
+        var cityPrestigeLevel = Seed.cityData.city[Cities.cities[i].id].prestigeInfo.prestigeLevel;
+//        if (isPrestigeCity && cityPrestigeLevel < 3) {
+//            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+//            params.cid = cityId;
+//            params.prestigeType = 1;
+//            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getPrestigeCost.php" + unsafeWindow.g_ajaxsuffix, {
+//                method: "post",
+//                parameters: params,
+//                onSuccess: function (rslt) {
+//                    if (rslt.ok) {
+//                        callback(cityId, rslt.cost, rslt.original_cost)
+//                    }
+//                }
+//            });
+//        } else {
+//            callback(cityId, null, null)
+//        }
+
+        if (isPrestigeCity) {
+          if (cityPrestigeType == 3 && cityPrestigeLevel < 3) {
+            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+            params.cid = cityId;
+            params.prestigeType = 3;
+            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getPrestigeCost.php" + unsafeWindow.g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                onSuccess: function (rslt) {
+                    if (rslt.ok) {
+                        callback(cityId, rslt.cost, rslt.original_cost)
+                    }
+                }
+            });
+	  } else if (cityPrestigeType <= 2 && cityPrestigeLevel < 6) {
+            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+            params.cid = cityId;
+            params.prestigeType = 2;
+            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getPrestigeCost.php" + unsafeWindow.g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                onSuccess: function (rslt) {
+                    if (rslt.ok) {
+                        callback(cityId, rslt.cost, rslt.original_cost)
+                    }
+                }
+            });
+	  } else {
+            callback(cityId, null, null)
+          }
+        } else {
+            callback(cityId, null, null)
+        }
+
+    },
+    show: function () {
+        var t = Tabs.ascension;
+        t.Timer = setInterval(t.paintTab, 1000)
+        for (i = 0; i < Cities.cities.length; i++) {
+            document.getElementById('pbAscendBtn_' + Cities.cities[i].id).addEventListener('click', function () {
+                var t = Tabs.ascension
+                var what = this.id.substr(12); // strip first 12 char's -> pbAscendBtn_
+                t.clickCitySelect(what);
+            });
+            var isPrestigeCity = Seed.cityData.city[Cities.cities[i].id].isPrestigeCity;
+            if (isPrestigeCity) {
+                t.getGemCost(Cities.cities[i].id, function (cid, cost, origCost) {
+                    if (cost < 0 || cost == null || origCost == null) {
+                        document.getElementById('pbGemCost_' + cid).innerHTML = '<CENTER>Max</center>';
+                    } else {
+                        document.getElementById('pbGemCost_' + cid).innerHTML = '<CENTER>' + cost + '/' + origCost + '</center>';
+                    }
+                })
+            } else {
+                document.getElementById('pbGemCost_' + Cities.cities[i].id).innerHTML = '<CENTER>Not Ascended</center>';
+            }
+        }
+    },
+    hide: function () {
+        var t = Tabs.ascension;
+        clearInterval(t.Timer)
+    },
+}
+
 
 /*********************************** Champion Tab ***********************************/
 Tabs.Champion = {
@@ -21691,7 +22776,7 @@ Tabs.Champion = {
     main +='<TD><INPUT class=pbSubtab ID=ptmrcxSubEQ type=submit value="Compare"></td>';
 //    main +='<TD><input class=pbSubtab ID=ptmrcxSubTC type=submit value="Caps"></TD>';
 //    main +='<TD><input class=pbSubtab ID=ptmrcxSubTR type=submit value="Champion"></TD></tr>';
-//    main +='<tr><TD><input class=pbSubtab ID=ptmrcxSubUN type=submit value="Uniques"></TD>';
+    main +='<TD><input class=pbSubtab ID=ptmrcxSubUN type=submit value="Uniques"></TD>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrcxSubAS type=submit value="Assign"></td>';
     main += '</tr></table><HR class=ptThin>';
     main +='<DIV id=ChampionOutput style="margin-top:10px; background-color:white; height:680px; overflow:auto;"></div>';
@@ -21701,10 +22786,10 @@ Tabs.Champion = {
     
     document.getElementById('ptmrcxSubSal').addEventListener('click', e_butSubtab, false);
     document.getElementById('ptmrcxSubUE').addEventListener('click', e_butSubtab, false);
-    document.getElementById('ptmrcxSubEQ').addEventListener('click', e_butSubtab, false);
+   document.getElementById('ptmrcxSubEQ').addEventListener('click', e_butSubtab, false);
 //   document.getElementById('ptmrcxSubTC').addEventListener('click', e_butSubtab, false);
 //   document.getElementById('ptmrcxSubTR').addEventListener('click', e_butSubtab, false);
-//   document.getElementById('ptmrcxSubUN').addEventListener('click', e_butSubtab, false); 
+   document.getElementById('ptmrcxSubUN').addEventListener('click', e_butSubtab, false); 
     document.getElementById('ptmrcxSubAS').addEventListener('click', e_butSubtab, false);
 
     changeSubtab (document.getElementById('ptmrcxSubUE'));
@@ -21741,7 +22826,7 @@ Tabs.Champion = {
          }     
       saveChampionOptions();
    },
-
+   
      initChampData : function(){
 	var t = Tabs.Champion;
 
@@ -21808,24 +22893,26 @@ Tabs.Champion = {
 	  }
 	}
    },
-/***
+
     Uniques : function () {
         var t = Tabs.Champion;
         var UniqueItems = {
             Weapon : {
-                "Wynn"                  : "http://i.imgur.com/qUxIZcn.png",
+                "Black Knights Blade"   : "http://i.imgur.com/QjAxD5J.png",
+                "Blade of Radiance"     : "http://img443.imageshack.us/img443/5593/dk9v.png",
             },
             Armor : {
-                "Valor"             : "http://i.imgur.com/fIeZMXM.png",
+                "Black Knights Armor"   : "http://i.imgur.com/hap9CtH.png",
+                "Armor of the Wild"     : "http://img819.imageshack.us/img819/5202/hs99.png",
             },
-            Helm : {
+            /* Helm : {
                 "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
             },
             Boot : {
                 "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
-            },
+            },*/
             Shield : {
-                "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
+                "Black Knights Shield"  : "http://i.imgur.com/aNhjnAn.png",
             },
         }
 
@@ -21851,8 +22938,8 @@ Tabs.Champion = {
             switch (type) {
                 case "Weapon" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Weapon[name]+'>'; break;
                 case "Armor"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Armor[name]+'>'; break;
-                case "Helm"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Helm[name]+'>'; break;
-                case "Boot"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Boot[name]+'>'; break;
+                /*case "Helm"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Helm[name]+'>'; break;
+                case "Boot"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Boot[name]+'>'; break;*/
                 case "Shield"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Shield[name]+'>'; break;
             }
         }
@@ -21865,7 +22952,6 @@ Tabs.Champion = {
         
         
     },
-***/    
 
    Assign : function (){
 	var t =Tabs.Champion;
@@ -21905,8 +22991,6 @@ Tabs.Champion = {
         params.champid = championId;
         params.cid0 = assignedCity;
         params.cid = 0;
-//unsafeWindow.seed.champion.champions[0].status = 1;
-//unsafeWindow.seed.champion.champions[0].assignedCity = 0;
         new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/assignChampion.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
             parameters: params,
@@ -21924,7 +23008,6 @@ Tabs.Champion = {
             },
         });
     },
-
 
 /***   
    Caps : function (){
@@ -21968,7 +23051,7 @@ Tabs.Champion = {
       m+='<TR><TD colspan=3><INPUT id=pbchsalvage_cityspire type=checkbox '+ (ChampionOptions.CitySpire?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in cities with Fey Spire first before other cities</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=chCityrand type=checkbox '+ (ChampionOptions.Cityrand?'CHECKED ':'') +'/>&nbsp; Deposit aetherstone in random city order (this keeps aetherstone in all / Fey Spire cities for crafing purposes)</TD></TR>';
       m+='<TR><TD colspan=3><INPUT id=pbchsalvage_unique type=checkbox '+ (ChampionOptions.SaveUnique?'CHECKED ':'') +'/>&nbsp; Save all cards marked as unique</TD></TR>';
-      m+='<TR><TD colspan=3><INPUT id=pbchheatup type=checkbox '+(ChampionOptions.heatup?'CHECKED ':'')+'/>&nbsp; Upgrade cards before salvaging to increase aetherstone and heat up modifier</TD></TR>';
+//      m+='<TR><TD colspan=3><INPUT id=pbchheatup type=checkbox '+(ChampionOptions.heatup?'CHECKED ':'')+'/>&nbsp; Upgrade cards before salvaging to increase aetherstone and heat up modifier</TD></TR>';
       m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ChampionOptions.SalvageLevel,'id=chSLevel')+'</TD></TR>';
 //      m+='<tr><td colspan=3><INPUT id=chshero type=checkbox '+ (ChampionOptions.savehero?'CHECKED ':'') +'/>&nbsp; Save all hero\'s</TD></TR></table>';
       m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
@@ -22000,8 +23083,6 @@ Tabs.Champion = {
       for (k in t.championStatEffects) {
         if(!ChampionOptions.SalvageA[k]) ChampionOptions.SalvageA[k] = {};
         if(!ChampionOptions.SalvageA[k].Min) ChampionOptions.SalvageA[k].Min = 0;//fixing a mistake, Min must be defined.  
-//	for (var l in t.EquipType)
-//          if(!ChampionOptions.SalvageA[k][l]) ChampionOptions.SalvageA[k][l] = 0;// Must be defined.  
          m += '<TR><TD><A onclick="chsetFAV('+ k +')"><DIV class=pbSalvage_fav id=chSalvageFAV'+k+'></div></td>';
 //         m += '<TD class=pbChampion><INPUT id=pbChampionItems'+k+' type=checkbox checked='+ (ChampionOptions.Salvage[k]?'CHECKED ':'') +'>'+ unsafeWindow.cm.thronestats.effects[k][1] +'</td><TD>'+ unsafeWindow.cm.thronestats.effects[k][3]+'</td><TD width="4">'+ unsafeWindow.cm.thronestats.effects[k][2]+'</td>\
          m += '<TD class=pbChampion><INPUT id=pbChampionItems'+k+' type=checkbox checked='+ (ChampionOptions.Salvage[k]?'CHECKED ':'') +'>'+ t.championStatEffects[k][1] +'</td><TD>'+ t.championStatEffects[k][3]+'</td><TD width="4">'+ t.championStatEffects[k][2]+'</td>\
@@ -22010,7 +23091,6 @@ Tabs.Champion = {
          m+='<option value="'+t.EquipType[g]+'">'+t.EquipType[g]+'</option>'
       m+='</select></td>';
          m+='<td class=pbChampionS>Min lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA[k].Min,'id='+k+'Min')+'</td></tr>';
-//         m+='<td class=pbChampionS>Min lines ' + htmlSelector({0:'Off', 1:'1 line', 2:'2 lines', 3:'3 lines', 4:'4 lines', 5:'5 lines'},ChampionOptions.SalvageA[k][l],'id='+k+'Min')+'</td></tr>';
       }  
       m+= '</table>';
 
@@ -22068,7 +23148,7 @@ Tabs.Champion = {
       document.getElementById('BlockMin').addEventListener ('change', function(){ChampionOptions.SalvageA.Block.Min = this.value;saveChampionOptions();},false);
 
       document.getElementById('pbchsalvage_unique').addEventListener ('change', function(){ChampionOptions.SaveUnique = this.checked;saveChampionOptions();},false);
-      document.getElementById('pbchheatup').addEventListener ('change', function(){ChampionOptions.heatup = this.checked;saveChampionOptions();},false);
+//      document.getElementById('pbheatup').addEventListener ('change', function(){ChampionOptions.heatup = this.checked;saveChampionOptions();},false);
 //      document.getElementById('shero').addEventListener ('change', function(){ChampionOptions.savehero = this.checked;saveChampionOptions();},false);
       document.getElementById('pbchampion_keep').addEventListener ('change', function(){ChampionOptions.Championkeep = parseInt(document.getElementById('pbchampion_keep').value);saveChampionOptions();},false);
 
@@ -22105,7 +23185,6 @@ Tabs.Champion = {
          var type = document.getElementById(idnum).value;
          if (type == 'ALL') {
          ChampionOptions.SalvageA[idnum].Min = e.target.value
-//         ChampionOptions.SalvageA[idnum].ALL = e.target.value
          } else {
          ChampionOptions.SalvageA[idnum][type] = e.target.value;
 		}
@@ -22114,7 +23193,6 @@ Tabs.Champion = {
       element_classST[k].addEventListener ('change', function(e){
          if (e.target.value == 'ALL') {
          document.getElementById(e.target.id+'Min').value=ChampionOptions.SalvageA[e.target.id].Min;
-//         document.getElementById(e.target.id+'Min').value=ChampionOptions.SalvageA[e.target.id].ALL;
          } else {
          document.getElementById(e.target.id+'Min').value=ChampionOptions.SalvageA[e.target.id][e.target.value];
 		}
@@ -22233,6 +23311,11 @@ Upgrade_Enhance :function (){
  
     if (ChampionOptions.Items.length ==0) document.getElementById('chShowStatus').innerHTML = "No items in queue!!";
     else {
+//      if(ChampionOptions.Active && ChampionOptions.ibrokeitems.length > 0) setTimeout(t.doRepair,5000);
+//      if (ChampionOptions.Active && Seed.queue_Champion.end == undefined) document.getElementById('chShowStatus').innerHTML = "Waiting for timer...";
+//      if (ChampionOptions.Active && Seed.queue_Champion.end != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+//      if (!ChampionOptions.Active && Seed.queue_Champion.end != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+//      if (!ChampionOptions.Active && Seed.queue_Champion.end == undefined) document.getElementById('chShowStatus').innerHTML = "Auto Upgrade/Enhance/Repair is OFF.";
       if (ChampionOptions.Active && t.repairEnd == undefined) document.getElementById('chShowStatus').innerHTML = "Waiting for timer...";
       if (ChampionOptions.Active && t.repairEnd != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
       if (!ChampionOptions.Active && t.repairEnd != undefined) t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
@@ -22477,8 +23560,8 @@ FillEquipCheckboxes: function(){
    for (k in unsafeWindow.kocChampionItems){
       counter++;
       if (unsafeWindow.seed.champion.equipment[k]) if (unsafeWindow.seed.champion.equipment[k]["repairing"]) {
-	   if (unsafeWindow.seed.champion.equipment[k]["eta"]>t.repairEnd) t.repairEnd=unsafeWindow.seed.champion.equipment[k]["eta"];
-	   if (unsafeWindow.seed.champion.equipment[k]["start"]>t.repairStart) t.repairStart=unsafeWindow.seed.champion.equipment[k]["start"];
+	 t.repairEnd=unsafeWindow.seed.champion.equipment[k]["eta"];
+	 t.repairStart=unsafeWindow.seed.champion.equipment[k]["start"];
       }
       if (counter > ActiveItems) break;
       z = unsafeWindow.kocChampionItems[k];
@@ -22630,8 +23713,8 @@ paintEquipInfo : function (z,what){
             p = t.championStatTiers[id][tier];
             Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
             var quality = parseInt(y["rarity"]);
-            if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + " " + t.championStatEffects[id]["1"] + '</font></td></tr>';
-            else m+='<TR><TD><FONT color=grey>' + Current + " " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+            if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
+            else m+='<TR><TD><FONT color=grey>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
       }
 //      m+='</table><table align="center"><tr><td><a onclick="chdoEquip('+z+')">Equip</a></td><td><a onclick="chpostInfo('+z+')">Post to chat</a></td><td><a onclick="chfupgenh('+z+')">Upgrade/Enhance</a></td></tr></table>';
       m+='</table><table align="center"><tr><td><a onclick="chpostInfo('+z+')">Post to chat</a></td><td><a onclick="chfupgenh('+z+')">Upgrade/Enhance</a></td></tr></table>';
@@ -22773,48 +23856,43 @@ PaintSalvageHistory : function() {
         if (!ChampionOptions.Active) return;
         t.checkUpgradeInfo();
 //	if(Seed.queue_Champion.end  > unsafeWindow.unixtime()) {
-//        if(t.repairEnd  > unsafeWindow.unixtime()) {
         if(t.repairEnd  > now) {
 		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "Waiting on repair";
-//		t.setRepairTimer = setTimeout (t.repairTimerUpdate,1000);
-		t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+		 t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
 		return;
 	} 
-//// No more repairs so reset status
+//// Repairs so reset status
 	  ChampionOptions.ibrokeitems.pop(ChampionOptions.Items["0"]["id"]);
 	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status = 1;
 	  t.repairEnd = null;
 
 //	if(Seed.queue_Champion.end == undefined) {
         if(t.repairEnd == undefined) {
-
 		//need to update for doupgradesimple and ibrokeitems.
 		if(ChampionOptions.ibrokeitems.length > 0){
                   setTimeout(t.doRepair,5000);
                   clearTimeout(t.setActionTimer);
                   t.setActionTimer = setInterval(t.doAction,10000);
-                  return;
+		return;
 		}
         	if (ChampionOptions.Items.length ==0) {
         		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "No items in queue!!";
                 	clearTimeout(t.setActionTimer);
                 	t.setActionTimer = setInterval(t.doAction,60*1000);
-                	return;
+		return;
         	}
-//for (var k in unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]])
-//logit ('k:' +k+ ' ' +unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]][k]);
 //        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken == true){
-        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status <0){
+        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status < 0){
                 	setTimeout(t.doRepair,5000);
                 	clearTimeout(t.setActionTimer);
                 	t.setActionTimer = setInterval(t.doAction,10000);
-                	return;
+		return;
         	}
         	ChampionOptions.Items["0"]["active"] = true;
         	t.PaintQueue();
 //        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken == false){
         	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status == 1){
-         		if(document.getElementById('chShowStatus'))
+         		if(document.getElementById('ShowStatus'))
                   		document.getElementById('chShowStatus').innerHTML = "Doing " + ChampionOptions.Items["0"]["action"] + "...";
             		if (ChampionOptions.Items["0"]["action"] == "Upgrade") setTimeout(t.doUpgrade,5000); 
             		if (ChampionOptions.Items["0"]["action"] == "Enhance") setTimeout(t.doEnhance,5000); 
@@ -22823,7 +23901,6 @@ PaintSalvageHistory : function() {
         	}
         
 	};
-        
   },
   
   
@@ -22915,12 +23992,12 @@ PaintSalvageHistory : function() {
                        ChampionOptions.Tries++;
                        document.getElementById('chShowStatus').innerHTML = 'Enhance failed :( <br />Item: ' + unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
                        document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
-			setTimeout(t.doRepair,5000);
+		       setTimeout(t.doRepair,5000);
                     }
 //                    unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
 //		    unsafeWindow.cm.ChampionPanelView.renderBroken(y);
 		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
-
+            
                     t.checkUpgradeInfo(false);
                       t.PaintQueue();
                     ChampionOptions.Good++;
@@ -22928,7 +24005,7 @@ PaintSalvageHistory : function() {
                 } else {
 //                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
                 	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status = -2;
-			setTimeout(t.doRepair,5000);
+			  setTimeout(t.doRepair,5000);
                     ChampionOptions.Bad++;
                     saveChampionOptions();
                 }
@@ -23004,6 +24081,7 @@ PaintSalvageHistory : function() {
                        y.level = rslt.level;
 //                       y.rarity = rslt.rarity;
 //                       y.name = y.createName();
+			y.status = 1;
                        t.addToLog(ChampionOptions.Items["0"]["id"],ChampionOptions.Items["0"]["action"],ChampionOptions.Tries,ChampionOptions.Good,ChampionOptions.Bad);
                        ChampionOptions.Tries = 0;
                        ChampionOptions.Good = 0;
@@ -23025,14 +24103,14 @@ PaintSalvageHistory : function() {
                        saveChampionOptions();
                        if(document.getElementById('chShowStatus'))
                      document.getElementById('chShowStatus').innerHTML = 'Upgrade failed :( <br />Item: ' + unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
-                  if(document.getElementById('chShowTries'))
-                     document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
-			setTimeout(t.doRepair,5000);
+                     if(document.getElementById('chShowTries'))
+                       document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
+		     setTimeout(t.doRepair,5000);
                     }
 //                    unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
 //		    unsafeWindow.cm.ChampionPanelView.renderBroken(y);
 		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
-
+                
                         t.checkUpgradeInfo(false);
                           t.PaintQueue();
                         ChampionOptions.Good++;
@@ -23040,7 +24118,7 @@ PaintSalvageHistory : function() {
                 } else {
 //                	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = true;
                 	  unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken = -3;
-			setTimeout(t.doRepair,5000);
+			  setTimeout(t.doRepair,5000);
                     ChampionOptions.Bad++;
                     saveChampionOptions();
                 }
@@ -23111,7 +24189,7 @@ PaintSalvageHistory : function() {
                        y.brokenType = "level";
                        y.status = -3;
                        y.name = y.createName();
-			setTimeout(t.doRepair,5000);
+		       setTimeout(t.doRepair,5000);
 					} else {
 						y.level = rslt.level;
 //                       y.rarity = rslt.rarity;
@@ -23186,13 +24264,12 @@ PaintSalvageHistory : function() {
 				  } else ChampionOptions.ibrokeitems.shift();
                   unsafeWindow.seed.queue_champion = {};
                   unsafeWindow.seed.queue_champion.itemId= params.eid;
-//                  Seed.queue_champion.start=unixTime();
-//                  Seed.queue_champion.end= rslt.eta;
+//                  Seed.queue_Champion.start=unixTime();
+//                  Seed.queue_Champion.end= rslt.eta;
                   t.repairStart = rslt.start;
                   t.repairEnd = rslt.eta;
-		  unsafeWindow.kocChampionItems[params.eid].status = 2;
-//		  t.setRepairTimer = setTimeout (t.repairTimerUpdate,1000);
-		  t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
+		  unsafeWindow.kocChampionItems[params.eid].status = 2; //2 for repair of enhance, 3 for repair of upgrade
+		   t.setRepairTimer = setInterval (t.repairTimerUpdate,1000);
 //                  unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
 		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
                   var x = rslt.eta - unixTime();
@@ -23207,7 +24284,6 @@ PaintSalvageHistory : function() {
 		    unsafeWindow.cm.ChampionModalView.renderFilteredItems();
 				   };
 				   //{"ok":false,"error_code":256,"msg":"Item is not broken"}  
-
                         ChampionOptions.Good++;
                         saveChampionOptions();
                    }        
@@ -23452,8 +24528,7 @@ salvageCheck : function (){
          NotFavorite = true;
             for (k in ChampionOptions.Items) {if (ChampionOptions.Items[k]["id"] == y.equipmentId) NotUpgrading = false;}
 //           if (count<=(parseInt(Seed.champion.rowNum)*5) && count>ChampionOptions.saveXitems) {
-//           if (count<=128 && count>ChampionOptions.saveXitems) {
-           if (count<=256 && count>ChampionOptions.saveXitems) {
+           if (count<=128 && count>ChampionOptions.saveXitems) {
                     //del = true;
                     level = false;
                MinReq = false;
@@ -23495,13 +24570,13 @@ salvageCheck : function (){
                     if(ChampionOptions.SingleStat) {
                         for (h in ChampionOptions.Salvage) {
                         if(ChampionOptions.Salvage[h] && ChampionOptions.SalvageA[h].Min > 0 && ChampionOptions.SalvageA[h].cur >= ChampionOptions.SalvageA[h].Min) {
-                           //logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
+                          // logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
                               MinReq = true;
                            }; 
                         if(ChampionOptions.Salvage[h] && ChampionOptions.SalvageA[h][y.type] && ChampionOptions.SalvageA[h][y.type] > 0 && ChampionOptions.SalvageA[h].cur >= ChampionOptions.SalvageA[h][y.type]) {
-                           //logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
-                              MinReq = true;
-                              //logit('saving '+y.name+' due to '+y.type+' and '+h);
+                         //  logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
+                             // MinReq = true;
+                              logit('saving '+y.name+' due to '+y.type+' and '+h);
                            }; 
                             if(ChampionOptions.SalvageA[h].cur >= ChampionOptions.Championkeep)
                             if(ChampionOptions.SalvageA[h].Min == 0)
@@ -23510,10 +24585,12 @@ salvageCheck : function (){
                                 ChampionOptions.SalvageA[h].cur = 0;};
                         }
                     }
-                    //logit('y.name '+y.name+' level '+level+' number '+number+' ChampionOptions.Championkeep '+ChampionOptions.Championkeep+' NotUpgrading '+NotUpgrading+' isEquiped '+y.isEquipped+' y.isbroken '+y.isBroken+' y.equipmentId '+y.equipmentId+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+MinReq+' is unique '+IsUnique);
+//                    [09:01:07.833] "[KOCPowerBot@mat]" "373 @ 09:01:07.833: y.name Common Sword of Lethargy +0 level true number 0 ChampionOptions.Championkeep 2 NotUpgrading true isEquiped undefined y.isbroken undefined y.equipmentId 283043 last deleted 0 NotFavorite true MinReq false is unique false"
+                 //   logit('y.name '+y.name+' level '+level+' number '+number+' ChampionOptions.Championkeep '+ChampionOptions.Championkeep+' NotUpgrading '+NotUpgrading+' isEquiped '+(y.equippedTo == 0)+' y.isbroken '+(y.status == 1)+' y.equipmentId '+y.equipmentId+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+!MinReq+' is unique '+!IsUnique);
 //                    if (!level && number < ChampionOptions.Championkeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
-                    if (!level && number < ChampionOptions.Championkeep && NotUpgrading && !y.isEquipped && y.status==1 && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
-                  //logit(y.name);
+	                  //  logit ((!level) +'&&'+ (number < ChampionOptions.Championkeep) +'&&'+ (NotUpgrading) +'&&'+ (y.equippedTo == 0) +'&&'+ (y.status == 1) +'&&'+ (t.LastDeleted != y.equipmentId) +'&&'+ NotFavorite +'&&'+ (!MinReq) +'&&'+ (!IsUnique) +'&&'+ (!IsHero));
+                    if (!level && number < ChampionOptions.Championkeep && NotUpgrading && y.equippedTo == 0 && y.status == 1 && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
+               //   logit(y.name);
                         t.SalvageArray.push(y.equipmentId);
                     }                     
             }
@@ -23811,8 +24888,8 @@ show : function (){
 //      t.Caps();
 //    else if (t.curTabName == 'TR')
 //      t.ChampionT();
-//    else if (t.curTabName == 'UN')
-//      t.Uniques();
+    else if (t.curTabName == 'UN')
+      t.Uniques();
     else if (t.curTabName == 'AS')
       t.Assign();
   }, 
@@ -23842,27 +24919,63 @@ function readChampionOptions() {
 }
 
 
+function ChatComOverlay () {
+	if(!document.getElementsByClassName('postaction')[0].getElementsByClassName('button20')[0])return;//safety
+	thebutton = document.getElementsByClassName('postaction')[0].getElementsByClassName('button20')[0];
+	thebutton.onclick=function(){OSendChat()};
+	var overlay = document.createElement("div");
+	var mod_comm_input = document.getElementById('mod_comm_input');
+  overlay.setAttribute("id","overlay");
+  overlay.setAttribute("class", "overlay");
+  mod_comm_input.hidden=true;
+  mod_comm_input.parentNode.appendChild(overlay);
+	overlay.innerHTML = '<input id="bot_comm_input" type="text" autocorrect="on" autocomplete="off"></input>';
+	var bot_comm_input = document.getElementById('bot_comm_input');
+	//thebutton.style.width="20%";
+	//thebutton.style.flot="right";
+	bot_comm_input.style.width = "75%";
+	bot_comm_input.style.float = "left";
+	//bot_comm_input.style="width:174%;float:left";
+	//bot_comm_input.size = overlay.offsetWidth-20;
+	//bot_comm_input.size = mod_comm_input.size*2.1;
+	bot_comm_input.addEventListener ('keypress', function(e) {if(e.which == 13)OSendChat();}, false);
+	var x = new CalterUwFunc("Chat.whisper",[[/mod.comm.input/ig,'bot_comm_input']]);
+	x.setEnable(true);
+};
+
+
+
+
+function OSendChat () {
+	if(Options.filter)
+   	document.getElementById('mod_comm_input').value = BtFilter(document.getElementById('bot_comm_input'));
+   else
+   	document.getElementById('mod_comm_input').value = document.getElementById('bot_comm_input').value;
+   document.getElementById('bot_comm_input').value = "";
+   unsafeWindow.Chat.sendChat();
+};
+
+
+
 //override for kabams SUPER ANNOYING word filter...   deSCRIPTion
 //The point is to not enable rude/bad words but simply curb some of the excessive filtering
-if(Options.filter)
-document.getElementById('mod_comm_input').addEventListener ('keypress', function(e) {
-   if(e.which != 13)
-   return;
-   var whisper = "";
+
+function BtFilter(e) {
+	   var whisper = "";
    var firstindex = 0;
    var enctype = 0;
    
-   if(this.value.charAt(0) == "\\") {
-      this.value = String(this.value).slice(1);
+   if(e.value.charAt(0) == "\\") {
+      e.value = String(e.value).slice(1);
       enctype = 1;
    };
    
-   if(this.value.charAt(0) == "/" || this.value.charAt(0) == "@") {
-      firstindex = this.value.indexOf(" ");
-      whisper = this.value.slice(0,firstindex)+' ';
+   if(e.value.charAt(0) == "/" || e.value.charAt(0) == "@") {
+      firstindex = e.value.indexOf(" ");
+      whisper = e.value.slice(0,firstindex)+' ';
    };
    
-   var m = this.value.substr(firstindex,this.value.length);
+   var m = e.value.substr(firstindex,e.value.length);
    
    if(enctype == 1) {
      var unicodeString = '';
@@ -23875,61 +24988,67 @@ document.getElementById('mod_comm_input').addEventListener ('keypress', function
    };
    
    if(enctype == 0) {
-      var m = this.value.substr(firstindex,this.value.length);
+      var m = e.value.substr(firstindex,e.value.length);
       var x = Filter[Options.fchar];
       m = m.replace(/Fa/g,'F'+x+'a').replace(/fA/g,'f'+x+'A').replace(/FA/g,'F'+x+'A').replace(/fa/g,'f'+x+'a');
       
       m = m.replace(/Gr/g,'G'+x+'r').replace(/gR/g,'g'+x+'R').replace(/GR/g,'G'+x+'R').replace(/gr/g,'g'+x+'r');
       
-      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'R­'+x+'I').replace(/ri/g,'r'+x+'i');
+      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÃ‚Â­'+x+'I').replace(/ri/g,'r'+x+'i');
       
       m = m.replace(/Na/g,'N'+x+'a').replace(/nA/g,'n'+x+'A').replace(/NA/g,'N'+x+'A').replace(/na/g,'n'+x+'a');
       
       m = m.replace(/885/g,'8'+x+'8'+x+'5').replace(/80085/g,'8'+x+'0'+x+'0'+x+'8'+'5');
    };
-   this.value = whisper+m;
-}, false);
+   return(whisper+m);
+
+};
+
+
+
+
+
 
 var kboxtime = 1;
 function killbox () {
-	kboxtime += 1;
-	if(!Options.KMagicBox)
-		return;
-	if (kboxtime > 50)
-		return;
-	if (Number(unsafeWindow.seed.items.i599) == 0)
-		return;
-	if(!document.getElementById('modal_mmb'))
-		setTimeout(killbox,100);
-	else {
-		unsafeWindow.Modal.hideModal();
-		//document.getElementById('modalBox1').hidden = true;
-		//document.getElementById('modalCurtain1').outerHTML= 'Modal.hideModal();';
-	};
+   kboxtime += 1;
+   if(!Options.KMagicBox)
+      return;
+   if (kboxtime > 50)
+      return;
+   if (Number(unsafeWindow.seed.items.i599) == 0)
+      return;
+   if(!document.getElementById('modal_mmb'))
+      setTimeout(killbox,100);
+   else {
+      unsafeWindow.Modal.hideModal();
+      //document.getElementById('modalBox1').hidden = true;
+      //document.getElementById('modalCurtain1').outerHTML= 'Modal.hideModal();';
+   };
 };
 
 function equippedthronestats (stat_id){
-	var current_slot = Seed.throne.activeSlot;
-	var equip_items = Seed.throne.slotEquip[current_slot];
-	var total = 0;
-	for(var k = 0; k<equip_items.length; k++){
-		var item_id = equip_items[k];
-		var item = unsafeWindow.kocThroneItems[item_id];
-		for(var i = 1; i<=item.quality; i++){
-			if(item["effects"]["slot"+i]){
-				var id = item["effects"]["slot"+i]["id"];
-				if(id == stat_id){
-					var tier = parseInt(item["effects"]["slot"+i]["tier"]);
-					var level = item["level"];
-					if (item.unique == 30286 && id == 9) var p = unsafeWindow.cm.thronestats.tiers[id][4]; else
-					  var p = unsafeWindow.cm.thronestats.tiers[id][tier];
-					var Percent = p.base + ((level * level + level) * p.growth * 0.5);
-					total += Percent;
-				}
-			}
-		}
-	}
-	return total;
+   var current_slot = Seed.throne.activeSlot;
+   var equip_items = Seed.throne.slotEquip[current_slot];
+   var total = 0;
+   for(var k = 0; k<equip_items.length; k++){
+      var item_id = equip_items[k];
+      var item = unsafeWindow.kocThroneItems[item_id];
+      for(var i = 1; i<=item.quality; i++){
+         if(item["effects"]["slot"+i]){
+            var id = item["effects"]["slot"+i]["id"];
+            if(id == stat_id){
+               var tier = parseInt(item["effects"]["slot"+i]["tier"]);
+               var level = item["level"];
+	       if (item.unique == 30286 && id == 9) var p = unsafeWindow.cm.thronestats.tiers[id][4]; else
+                 var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+               var Percent = p.base + ((level * level + level) * p.growth * 0.5);
+               total += Percent;
+            }
+         }
+      }
+   }
+   return total;
 }
 
 function scripterdebuglog (a,x) {
@@ -23943,7 +25062,7 @@ function scripterdebuglog (a,x) {
    logit('sending debug data '+data.info);
   GM_xmlhttpRequest({
     method: 'POST',
-    url: 'http://hs151.digitalweb.net/debuglog.php',
+    url: http+'baos.kocscripters.com/debuglog.php',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     },
@@ -23979,36 +25098,34 @@ function FetchTopAlliances(first,last,callback,page,prop){
     });
 }
 function fixkabamlag () {
-	var kfutime = Number(unsafeWindow.unixtime()+30);
-	for (city in Seed.queue_atkp) {
-		var kabamhashX = [];
-		if(Seed.queue_atkp[city] != "")
-		for (march in Seed.queue_atkp[city]) {
-			if(Seed.queue_atkp[city][march].marchType)
-				if(Seed.queue_atkp[city][march].botMarchStatus == undefined && Seed.queue_atkp[city][march].marchStatus == 5) {
-					if (Seed.queue_atkp[city][march].returnUnixTime < kfutime) {
+   var kfutime = Number(unsafeWindow.unixtime()+30);
+   for (city in Seed.queue_atkp) {
+      var kabamhashX = [];
+      if(Seed.queue_atkp[city] != "")
+      for (march in Seed.queue_atkp[city]) {
+         if(Seed.queue_atkp[city][march].marchType)
+            if(Seed.queue_atkp[city][march].botMarchStatus == undefined && Seed.queue_atkp[city][march].marchStatus == 5) {
+               if (Seed.queue_atkp[city][march].returnUnixTime < kfutime) {
                   logit('fixing march from '+Cities.byID[String(city).replace(/city/,'')].name+' with id '+march);
-
-//the following code will be a future option? to return all troops or forget them until updateseed? or refresh
-//						for (var i=0;i<17;i++) {
-//							if (Seed.queue_atkp[city][march]['unit'+i+'Count'] > 0)
-//							if(Seed.queue_atkp[city][march]['unit'+i+'Return'] == 0 || Seed.queue_atkp[city][march]['unit'+i+'Return'] == undefined)
-//							Seed.queue_atkp[city][march]['unit'+i+'Return'] = Seed.queue_atkp[city][march]['unit'+i+'Count'];
-//						};
-
-						Seed.queue_atkp[city][march].hasUpdated = true;
-						Seed.queue_atkp[city][march].marchStatus = 8;
-					} else kabamhashX.push(Seed.queue_atkp[city][march].knightId);
-				} else kabamhashX.push(Seed.queue_atkp[city][march].knightId);
-		}
-		for (knight in Seed.knights[city]) {
-			if(Seed.knights[city][knight].knightStatus != 1)
-				if(kabamhashX.indexOf(Seed.knights[city][knight].knightId) == -1) {
-					Seed.knights[city][knight].knightStatus = 1;
+                  //the following code will be a future option?  to return all troops or forget them until updateseed? or refresh
+                  for (var i=0;i<17;i++) {
+                     if (Seed.queue_atkp[city][march]['unit'+i+'Count'] > 0)
+                     if(Seed.queue_atkp[city][march]['unit'+i+'Return'] == 0 || Seed.queue_atkp[city][march]['unit'+i+'Return'] == undefined)
+                     Seed.queue_atkp[city][march]['unit'+i+'Return'] = Seed.queue_atkp[city][march]['unit'+i+'Count'];
+                  };
+                  Seed.queue_atkp[city][march].hasUpdated = true;
+                  Seed.queue_atkp[city][march].marchStatus = 8;
+               } else kabamhashX.push(Seed.queue_atkp[city][march].knightId);
+            } else kabamhashX.push(Seed.queue_atkp[city][march].knightId);
+      }
+      for (knight in Seed.knights[city]) {
+         if(Seed.knights[city][knight].knightStatus != 1)
+            if(kabamhashX.indexOf(Seed.knights[city][knight].knightId) == -1) {
+               Seed.knights[city][knight].knightStatus = 1;
                logit('march '+Cities.byID[String(city).replace(/city/,'')].name+' fixing knight '+Seed.knights[city][knight].knightName);
-				}
-		}
-	}
+            }
+      }
+   }
 }
 function SaveStatus () {
    //if(Tabs.transport.traderState.running)
@@ -24019,819 +25136,174 @@ function SaveStatus () {
    Options.SaveState.crest = Options.crestRunning;
    Options.SaveState.trset = Seed.throne.activeSlot;
    saveOptions();
-   
-   /***
-transport
-Tabs.transport
-t.traderState.running
-toggleTraderState
-
-
-farm
-Tabs.farm
-FarmOptions.Running
-toggleBarbState
-
-darkforest
-Tabs.Barb
-AttackOptions.Running
-toggleBarbState
-
-crest
- Tabs.Crest
-Options.crestRunning
-toggleCrestState
-
-
-
-Options.SaveState
-    * 
-    * 
-    * ***/
-   
 }
-/*
-var GESeachmin = 0;
-var GlobalEachSecond = function () {
-	var unixtime = unsafeWindow.unixtime();
-  if(GESeachmin > unixtime) {
-  	GESeachmin = Number(unixtime+60);
-  	new GESeachmin();
-  };
-  if(GlobalOptions.GESeveryhour > unixtime){
-  	GlobalOptions.GESeveryhour = Number(unixtime+60*60);
-	GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-	new GESeveryhour();
-  };
-  if(GlobalOptions.GESeveryday > unixtime){
-  	GlobalOptions.GESeveryday = Number(unixtime+24*60*60);
-	GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-	new GESeveryday();
-  };
-	
-	//start window open in other browser warning auto click
-		if(Options.WWclick) {
-			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal1');
-			if(x.length > 0) {
-				for(y = 0; y < x.length;y++) {
-					if(String(x[y].innerHTML).indexOf('You have Kingdoms of Camelot open in a newer window') > -1)
-						unsafeWindow.cm.ModalManager.close();
-				};
-			}
-		};
-	//end window open in other browser warning auto click
-};
-
-function GESeachmin () {//put functions here to execute every min
-logit('1min');
-};
-
-function GESeveryhour () {//put functions here to execute every hour
-//	if(Options.spamconfig.aspam )Tabs.Spam.Count();
-//	MAP_DELAY = Options.MAP_DELAY;
-};
-
-function GESeveryday () {//put functions here to execute every day
-//  if(GlobalOptions.pbupdate)AutoUpdater();//check for script updates
-};
-*/
-
-/*************** Timer ******************/
-var GESeachmin = 0;
-var atwomin = 0;
-function GlobalEachSecond () {
-	var unixtime = unsafeWindow.unixtime();
-  if(GESeachmin < unixtime) {
-  	GESeachmin = Number(unixtime+60);
-  	new GESeverymin(unixtime);
-  };
-};
-
-function GESeverymin (unixtime) {//put functions here to execute every min
-	if(atwomin == 0) atwomin = Number(unixtime+2*60);
-	if(atwomin < unixtime) {
-		atwomin = Number(unixtime+2*60);
-		new GESeverytwomin(unixtime);
-		  if(Options.mklag)  new fixkabamlag();
-		  if(AttackOptions.Running) new Tabs.Barb.sendreport();
-	};
-	if(Options.GESeverytenmin < unixtime) {
-	  	Options.GESeverytenmin = Number(unixtime+10*60);
-		saveOptions();
-		new GESeverytenmin(unixtime);	
-	};  
-		//start window open in other browser warning auto click//cmModalContainer guardian_generic undefined cmModal1
-		if(Options.WWclick) {
-		//for (z =1;z<5;z++) {
-			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal1');
-			if(!x)
-			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal2');
-			if(!x)
-			var x = document.getElementsByClassName('cmModalContainer guardian_generic undefined cmModal3');
-			if(x)
-				if(x.length > 0) {
-					for(y = 0; y < x.length;y++) {
-						if(String(x[y].innerHTML).indexOf("You have Kingdoms of Camelot open in a newer window. If you have multiple connections to the same world open, please use your most recent window for the best experience and close this one.") > -1){
-							unsafeWindow.cm.ModalManager.close();
-						}
-					};
-				}
-			//}
-		};
-	//end window open in other browser warning auto click
-//		new Tabs.Throne.throneHUDredraw();
-		new unsafeWindow.update_seed_ajax(true);
-};
-
-function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
-//	if(Options.detAFK)new detafk();
-//	new Tabs.Throne.rotatethrone();
-};
-
-function GESeverytenmin (unixtime) {//put functions here to execute every 10 min
-  if(Options.GESeveryhour < unixtime){
-  	Options.GESeveryhour = Number(unixtime+60*60);
-	saveOptions();
-	new GESeveryhour(unixtime);
-  };
-  if(GiftDB.adgift) new Tabs.gifts.scangifts(4);
-};
-
-function GESeveryhour (unixtime) {//put functions here to execute every hour
-  if(Options.GESeveryday < unixtime){
-  	Options.GESeveryday = Number(unixtime+24*60*60);
-	saveOptions();
-	new GESeveryday(unixtime);
-  };
-	if(Options.spamconfig.aspam )Tabs.Spam.Count();
-	MAP_DELAY = Options.MAP_DELAY;
-};
-
-function GESeveryday (unixtime) {//put functions here to execute every day
-  if(GlobalOptions.pbupdate)AutoUpdater();//check for script updates
-};
-
-/************** End Timer **************/
+var OreAlert = {
+        e_eachMinute : function (){  
+                for(i=0; i < Cities.numCities; i++) {
+                        var oreleft = Math.round(parseInt(Seed.resources["city" + Cities.cities[i].id]['rec4'][0])/3600);
+                        var msg = '';
+                        if (oreleft < 50000000) {
+                                msg += translate("My city")+' '+Cities.cities[i].name.substring(0,10) + ' (' + Cities.cities[i].x +','+ Cities.cities[i].y + ') ';
+                                msg += translate("is low on ORE: ")+addCommas(oreleft);
+                                //sendChat("/"+ Seed.player.name +' '+ msg) //Whisper
+                                sendChat ("/a " + msg);
+                        }
+                }              
+  },
+}
 
 
 function GuardianTT () {
-	var z = new CalterUwFunc("showCityTooltip",[[/showTooltip/,'a += "<div>"+g_js_strings.guardian[seed.guardian[j].type+"_fullName"]+"</div>";showTooltip']]);
+	var z = new CalterUwFunc("showCityTooltip",[[/showTooltip/,'a += "<div>"+g_js_strings.guardian[seed.guardian[j].type+"_fullName"]+"</div>";showTooltip'],
+												['g_js_strings.showPopTooltip.currpop','provincenames[\'p\'+seed.cities[j][4]] + "</div><div>" + g_js_strings.showPopTooltip.currpop']]);
    z.setEnable(true); 
 };
 
 
-/****************************  Population Control 2 Tab  ******************************/
-Tabs.popcontrol2 = {
-  tabOrder : 1050,
-  tabDisabled : false,
-  tabLabel : 'Population2',
-  myDiv : null,
-  timer : null,
-  timer_del : null,
-  timer_cycle : null,
-	del_count : 0,
-	cycle_running : false,
-	busy : false,
-	cycle_step : 0,
 
-  logtable : null,
-  logmaxEntries: 300,
-  loglast99 : [],
-  pop2tab_troop_dismiss : 1,
-  pop2tab_troop_train : 1,
-  last_ran : 'train',
+function AutoUpdater (prom) {
+	var userscripts = http+'userscripts.org/scripts/source/101052.user.js';
+	var googlecode = http+'koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
+	switch(GlobalOptions.pbupdatebeta)
+	{
+		case "0":
+		var scriptpage = userscripts;
+		break;
+		case "1":
+		var scriptpage = googlecode;
+		break;
+		default:
+		var scriptpage = userscripts;;
+		break;
+	};
+	GM_xmlhttpRequest({
+         method: 'HEAD',
+         url: scriptpage,
+         headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+         },
+         onload: function (x) {
+				var first = Number(x.responseHeaders.indexOf("Last-Modified"))+15;
+            var last = x.responseHeaders.indexOf("\n",first);
+            var lastmodified = x.responseHeaders.slice(first,last);
+            
+				if(GlobalOptions.version != Version) {//just completed our upgrade
+					GlobalOptions.version = Version;
+					GlobalOptions.scriptdate = lastmodified;
+				} else  if(GlobalOptions.scriptdate != lastmodified) {//need to do our upgrade
 
-  init : function (div)
-  	{
-		var t = Tabs.popcontrol2;
-		t.myDiv = div;
-		var selbut=0;
-		
-		var m = '<DIV class=pbStat>Population Control</div>';
 
-		m += '<table border=0 width="100%">';	
-		m += '<tr align=center>';
-		m += '<td align=left><input type=submit id=pop2help_button value="HELP!"></td>';
-		m += '<td align=center>Pick City:<span id=pop2city></span></td>';
-		m += '<td align=center>Population Gain per cycle: <span id=pop2tab_cycle_pop></span></td>';
-		m += '<td align=center> Troops to dismiss: <select id=pop2tab_troop_dismiss><option value=1>ST</option><option value=2>MM</option><option value=3>Scout</option><option value=4>Pike</option><option value=5>Sword</option><option value=6>Archer</option></select>';
-		m += '<td align=center> Troops to train: <select id=pop2tab_troop_train><option value=1>ST</option><option value=2>MM</option><option value=3>Scout</option><option value=4>Pike</option><option value=5>Sword</option></select>';
-		m += '</tr>';
-		m += '</table>';
-		
-		m += '<DIV class=pbStat>City Requirements:</div>';
-		m += '<table border="0" width="100%">';		
-		m += '<tr>';
-		m += '<td>Current Food: &nbsp<span id=pop2tab_cur_food></span></td>';
-		m += '<td>Current Wood: &nbsp<span id=pop2tab_cur_wood></span></td>';
-		m += '<td>Current Ore: &nbsp&nbsp<span id=pop2tab_cur_ore></span></td>';
-		m += '<td>Current dismissable troops: <span id=pop2tab_cur_mm></span></td>';
-		m += '</tr>';
-		m += '<tr>';
-		m += '<td>Needed Food: &nbsp<span id=pop2tab_needed_food></span></td>';
-		m += '<td>Needed Wood: &nbsp<span id=pop2tab_needed_wood></span></td>';
-		m += '<td>Needed Ore: &nbsp&nbsp<span id=pop2tab_needed_ore></span></td>';
-		m += '<td>Needed dismissable troops: <span id=pop2tab_needed_mm></span></td>';
-		m += '</tr>';
-		m += '</table>';
+            display_confirm('A new version of KOC Power Bot is available.\nDo you wish to install the latest version?',
+                // Ok
+                function(){
+                    try {
+                        location.href = scriptpage;
+                    } catch(e) {}
+                },
+                // Cancel
+                function() {
+                	try {
+                	if(lobalOptions.pbupdate) {
+                        if(confirm('Do you want to turn off auto updating for this script?')) {
+                            //GM_setValue('updated_101052', 'off');
+                            GlobalOptions.pbupdate = false;
+                            GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+                            alert('Automatic updates can be re-enabled for this script in the Options tab.');
+                        }
+                     }
+                } catch(e) {}
+             }
+            );
+            
+            
+            } else if (prom) alert('No updates available');
+            
+				GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+         },
+      });
+};
 
-		m += '<DIV class=pbStat>City Status:</div>';
-		m += '<table border="0" width="100%">';	
-		m += '<tr align=center>';
-		m += '<td>Maximum Idle Population: <span id=pop2tab_max_idle_pop></span></td>';
-		m += '<td># Slots Used: <span id=pop2tab_slots_used></span><br></td>';
-		m += '<td># of barracks: <span id=pop2tab_barracks></span></td>';
-		//m += '<td> </td>';
-		m += '</tr>';
-		m += '<tr align=center>';
-		m += '<td>Current Idle Population: <span id=pop2tab_cur_idle_pop></span></td>';
-		m += '<td># Slots Free: <span id=pop2tab_slots_free></span></td>';
-		m += '<td># of cottages: <span id=pop2tab_cottages></span></td>';
-		//m += '<td> </td>';
-		m += '</tr>';		
-		m += '</table>';
+function Sendtokofcmon (left,top,mapdata) {
+	if(Math.floor((Math.random()*1000)+1) > throttle)return;
+   var params = {};
+	params.mapdata=  btoa(RawDeflate.deflate(JSON.stringify(mapdata)));
+	params.server = getServerId();
+	params.gz = true;
+	params.tvuid = unsafeWindow.tvuid;
+	params.left = left;
+	params.top = top;
+  GM_xmlhttpRequest({
+    method: 'POST',
+    url: http+'kocscripters.com/mapdat.php',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    },
+    data: implodeUrlArgs(params),
+        onload: function (message) {
+            if(message.status != 200) throttle = 0;
+            else {
+      			var rslt = eval("(" + message.responseText + ")");
+      			//alert(inspect(rslt));
+            	if(rslt.ok)throttle = Number(rslt.throttle);
+            	if(rslt.glb) {
+            		kofcmonLeaderboard(rslt.glbperpage,rslt.glbpage,rslt.glbtype);
+            	};
+				};
+		  },
+    })
+};
 
-		m += '<DIV class=pbStat>Commands:</div>';
-		m += '<table border="0" width="100%">';	
-		m += '<tr align=center>';
-		m += '<td><input type="submit" id="pop2tab_dismiss_mm" value="Dismiss troops" disabled></td>';
-		m += '<td><input type="submit" id="pop2tab_queue_st" value="Queue Supply Troops" disabled></td>';
-		m += '<td><input type="submit" id="pop2tab_del_queues" value="Delete All Queues" disabled></td>';
-		m += '<td><input type="submit" id="pop2tab_run_cycle" value="Run cycle" disabled></td>';
-		//m += '<td><input type="submit" id="pop2tab_test" value="Test"></td>';
-		m += '</tr>';		
-		m += '</table>';
+  function kofcmonLeaderboard (perpage,page,type) {
+    var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+    params.perPage=perpage;
+    params.page=page;
+    params.type=type;
+    new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getUserLeaderboard.php" + unsafeWindow.g_ajaxsuffix, {
+      method: "post",
+      parameters: params,
+      onSuccess: function (rslt) {
+      	if(rslt.results && rslt.results.emptySet)return;
+      var kofcparams = {};
+      kofcparams.server = getServerId();
+      kofcparams.tvuid = unsafeWindow.tvuid;
+      kofcparams.leaderboard=  btoa(RawDeflate.deflate(JSON.stringify(rslt.results)));
+      kofcparams.gz = true;
+      kofcparams.perpage = params.perPage;
+		kofcparams.page =params.page;
+		kofcparams.type=params.type;
+          GM_xmlhttpRequest({
+    method: 'POST',
+    url: http+'kocscripters.com/leaderdat.php',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    },
+    data: implodeUrlArgs(kofcparams),
+    })
+      },
+    });
+  };
+
+
+function fetchPlayerInfo(uid, notify){
 	
-		m += '<DIV class=pbStat>Action Log:</div>';
-
-		m += '<DIV style="height:250px; max-height:250px; overflow-y:auto">';
-		m += '<TABLE cellpadding=0 cellspacing=0 id=pop2tab_log class=pbTabLined>';
-		m += '<TR><TD></td><TD width=95%></td>';
-		m += '</table></div>';
-
-		t.myDiv.innerHTML = m;
-
-		t.logtable = document.getElementById('pop2tab_log');  
-		var a = JSON2.parse(GM_getValue ('pop2tab_log_'+getServerId(), '[]'));
-		if (matTypeof(a) == 'array')
-			{
-			t.loglast99 = a;
-			for (var i=0; i<t.loglast99.length; i++)		t.addlogrow (t.loglast99[i].msg, t.loglast99[i].ts);
-			}
-		window.addEventListener('unload', t.onUnload, false);
-
-		t.tcp = new CdispCityPicker ('pop2cityselect', document.getElementById('pop2city'), true, null, selbut);
-		
-		document.getElementById('pop2help_button').addEventListener		('click', function(){	t.helpPop(this);							} , false);
-		document.getElementById('pop2city').addEventListener						('click', function(){	t.show_city	(t.tcp.city.id);	} , false);
-		document.getElementById('pop2tab_dismiss_mm').addEventListener	('click', function(){	t.dismiss_mm(t.tcp.city.id);	} , false);
-		document.getElementById('pop2tab_queue_st').addEventListener		('click', function(){	t.queue_st	(t.tcp.city.id);	} , false);
-		document.getElementById('pop2tab_del_queues').addEventListener	('click', function(){	t.del_queues_start(t.tcp.city.id);	} , false);
-		document.getElementById('pop2tab_run_cycle').addEventListener	('click', function(){	t.run_cycle	(t.tcp.city.id);	} , false);
-		//document.getElementById('pop2tab_test').addEventListener	('click', function(){	t.btest	();	} , false);
- 	    	document.getElementById('pop2tab_troop_dismiss').addEventListener('change', function(){t.pop2tab_troop_dismiss = document.getElementById('pop2tab_troop_dismiss').value;} , false);
- 	    	document.getElementById('pop2tab_troop_train').addEventListener('change', function(){t.pop2tab_troop_train = document.getElementById('pop2tab_troop_train').value;} , false);
-  
-  	},
-
-	disable_btns : function ()
-		{
-		var t = Tabs.popcontrol2;
-		t.busy = true;
-		document.getElementById('pop2tab_del_queues'	).disabled = true;
-		document.getElementById('pop2tab_queue_st').disabled = true;
-		document.getElementById('pop2tab_dismiss_mm').disabled = true;
-		document.getElementById('pop2tab_run_cycle').disabled = true; 
-		},
-
-	onUnload : function ()
-		{
-		var t = Tabs.popcontrol2;
-		//if (!ResetAll) GM_setValue ('log_'+getServerId(), JSON2.stringify(t.last50));
-		GM_setValue ('pop2tab_log_'+getServerId(), JSON2.stringify(t.loglast99));
-		},
-    
-	addlogrow : function (msg, ts)
-		{
-		var t = Tabs.popcontrol2;
-		if (t.logtable.rows.length >= t.maxEntries)	t.logtable.deleteRow(t.maxEntries-1);
-		var row = t.logtable.insertRow(0);
-		row.vAlign = 'top';
-		row.insertCell(0).innerHTML = ts;
-		row.insertCell(1).innerHTML = msg;
-		},
-  
-	log : function (msg)
-		{
-		var t = Tabs.popcontrol2;
-		var ts = new Date().toTimeString().substring (0,8);
-		for (postcity in Seed.cities) if (Seed.cities[postcity][0] == t.tcp.city.id) logcity = Seed.cities[postcity][1];
-		msg = logcity + ": " + msg;
-		t.addlogrow (msg, ts);
-		while (t.loglast99.length >= 99)
-		t.loglast99.shift();
-		t.loglast99.push ({msg:msg, ts:ts});
-		},
-
-  hide : function (){         // called whenever the main window is hidden, or another tab is selected
-    var t = Tabs.popcontrol2;
-    clearTimeout (t.timer);
-  },
-  
-  show : function (){         // called whenever this tab is shown
-    var t = Tabs.popcontrol2;
-    clearTimeout (t.timer);
-    t.timer = setTimeout (t.show, 2000);
-		t.show_city(t.tcp.city.id);
-  },
-
-	helpPop : function ()
-		{
-		var helpText = "";
-		
-		helpText += '<p>** This is a work in progress... If it gets stuck, refresh. By ADABman / Lurkin **';
-		helpText += 'Probably a good idea to temporarily turn off auto transport, auto reassign, and auto train, when using this.';
-		
-		helpText += '<p>POPULATION CONTROL tab will help you convert your excess/useless millitiamen ';
-		helpText += 'into massive amounts of idle population. Massive idle population is very useful ';
-		helpText += 'to have before a might tournament starts, or if you want to do a massive siege ';
-		helpText += 'build with a Merlins tutelage.';
-		helpText += '</p>';
-		
-		helpText += '<p>The CITY REQUIREMENTS area displays the amount of resouces and Militiamen ';
-		helpText += 'required for a \'full cycle\' of building massive idle population. If any of these ';
-		helpText += 'requirements are not met, they will be displayed in red.';
-		helpText += '</p>';
-		
-		helpText += '<p>The CITY STATUS area displays the maximum amount of population your cottages ';
-		helpText += 'provide, and the current amount of idle population in your city. This area also ';
-		helpText += 'shows the number of training queue slots total and in use.';
-		helpText += '</p>';
-		
-		helpText += '<p>The COMMANDS area displays the buttons that automate this process:';
-		helpText += '</p>';
-
-		helpText += '<UL>';
-		
-		helpText += 'DISMISS MM BUTTON<BR><li>' + dismissBtn_help1 + '</li>';
-		helpText += '<li>' + dismissBtn_help2 + '</li><BR>';
-		
-		helpText += 'QUEUE SUPPLY TROOP BUTTON<BR><li>' + queueBtn_help1 + '</li>';
-		helpText += '<li>' + queueBtn_help2 + '</li><BR>';
-		
-		helpText += 'DELETE QUEUE BUTTON<BR><li>' + deleteBtn_help1 + '</li>';
-		helpText += '<li>' + deleteBtn_help2 + '</li>';
-		helpText += '<li>' + deleteBtn_help3 + '</li><BR>';
-		
-		helpText += 'RUN CYCLE BUTTON<BR><li>' + runcycleBtn_help1 + '</li>';
-		helpText += '<li>' + runcycleBtn_help2 + '</li>';
-		helpText += '<li>' + runcycleBtn_help3 + '</li><BR>';
-	
-		helpText += '</UL><BR>';
-		
-		//function pbPopup (prefix, x, y, width, height, enableDrag, onClose)
-		var pop = new pbPopup ('pop2control_Help', 0, 0, 740, 600, true);
-		pop.centerMe (mainPop.getMainDiv());  
-		pop.getMainDiv().innerHTML = helpText;
-		pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot Help</b>:  Population Control</center>';
-		pop.show (true);
-		},
-
-	show_city : function (cityId)
-		{
-		var t = Tabs.popcontrol2;
-
-        	switch (parseInt(t.pop2tab_troop_train)){
-      		   case 1: 
-			t.st_food = 50;
-			t.st_wood = 150;
-			//t.st_stone = 0;
-			t.st_ore = 10;
-			break;
-      		   case 2: 
-			t.st_food = 80;
-			t.st_wood = 100;
-			//t.st_stone = 0;
-			t.st_ore = 50;
-			break;
-      		   case 3: 
-			t.st_food = 120;
-			t.st_wood = 200;
-			//t.st_stone = 0;
-			t.st_ore = 150;
-			break;
-      		   case 4: 
-			t.st_food = 150;
-			t.st_wood = 500;
-			//t.st_stone = 0;
-			t.st_ore = 100;
-			break;
-      		   case 5: 
-			t.st_food = 200;
-			t.st_wood = 150;
-			//t.st_stone = 0;
-			t.st_ore = 400;
-			break;
-		}
-	
-		var green = '#03F003';
-		var red =   '#F0303';
-
-		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
-		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-		document.getElementById('pop2tab_max_idle_pop').innerHTML	= t.max_idle_pop;
-		document.getElementById('pop2tab_cur_idle_pop').innerHTML	= t.cur_idle_pop;
-
-		t.barracks = parseInt(getCityBuilding(cityId, 13).count);
-		t.cottages = parseInt(getCityBuilding(cityId, 5).count);
-		t.slots_used = parseInt(Seed.queue_unt['city'+cityId].length);
-		t.slots_free = parseInt(t.barracks - t.slots_used);
-		document.getElementById('pop2tab_barracks').innerHTML = t.barracks;
-		document.getElementById('pop2tab_cottages').innerHTML = t.cottages;
-		document.getElementById('pop2tab_slots_used').innerHTML = t.slots_used;
-		document.getElementById('pop2tab_slots_free').innerHTML = t.slots_free;
-
-//		t.cycle_pop = (parseInt(t.barracks) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
-		t.cycle_pop = (parseInt(t.slots_free) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
-		t.cycle_pop = (parseInt(t.slots_free) * parseInt(t.max_idle_pop)) + parseInt(t.max_idle_pop);
-		document.getElementById('pop2tab_cycle_pop').innerHTML	= addCommas( t.cycle_pop / 2 );
-
-		t.cur_food = parseInt(Seed.resources['city'+cityId].rec1[0]/3600);
-		t.cur_wood = parseInt(Seed.resources['city'+cityId].rec2[0]/3600);
-		//t.cur_stone = parseInt(Seed.resources['city'+cityId].rec3[0]/3600);
-		t.cur_ore = parseInt(Seed.resources['city'+cityId].rec4[0]/3600);
-		
-		document.getElementById('pop2tab_cur_food').innerHTML = addCommas (t.cur_food);
-		document.getElementById('pop2tab_cur_wood').innerHTML = addCommas (t.cur_wood);
-		//document.getElementById('pop2tab_cur_stone').innerHTML = addCommas (t.cur_stone);
-		document.getElementById('pop2tab_cur_ore').innerHTML = addCommas (t.cur_ore);
-		
-		t.needed_food = parseInt(t.cycle_pop) * parseInt(t.st_food);
-		t.needed_wood = parseInt(t.cycle_pop) * parseInt(t.st_wood);
-		//t.needed_stone = 0;//parseInt(t.cycle_pop) * parseInt(t.st_Stone);
-		t.needed_ore = parseInt(t.cycle_pop) * parseInt(t.st_ore);
-		
-		document.getElementById('pop2tab_needed_food').innerHTML = addCommas (t.needed_food);
-		document.getElementById('pop2tab_needed_wood').innerHTML = addCommas (t.needed_wood);
-		//document.getElementById('pop2tab_needed_stone').innerHTML = addCommas (t.needed_stone);
-		document.getElementById('pop2tab_needed_ore').innerHTML = addCommas (t.needed_ore);
-		
-		document.getElementById('pop2tab_needed_food').style.color = (t.needed_food  > t.cur_food?'red':'green');
-		document.getElementById('pop2tab_cur_food').style.color = (t.needed_food  > t.cur_food?'red':'green');
-		document.getElementById('pop2tab_needed_wood').style.color  = (t.needed_wood  > t.cur_wood?'red':'green');
-		document.getElementById('pop2tab_cur_wood').style.color = (t.needed_wood  > t.cur_wood?'red':'green');
-		//document.getElementById('pop2tab_needed_stone').style.color = (t.needed_stone > t.cur_stone?'red':'green');
-		//document.getElementById('pop2tab_cur_stone').style.color = (t.needed_stone > t.cur_stone?'red':'green');
-		document.getElementById('pop2tab_needed_ore').style.color = (t.needed_ore  > t.cur_ore?'red':'green');
-		document.getElementById('pop2tab_cur_ore').style.color = (t.needed_ore  > t.cur_ore?'red':'green');
-
-		t.needed_mm = t.cycle_pop;
-//		t.needed_mm = parseInt(t.cycle_pop)-parseInt(t.max_idle_pop);
-		t.cur_mm = parseInt(Seed.units['city'+cityId]['unt' + t.pop2tab_troop_dismiss]);
-		document.getElementById('pop2tab_needed_mm').innerHTML = addCommas(t.needed_mm);
-		document.getElementById('pop2tab_cur_mm').innerHTML = addCommas(t.cur_mm);
-		
-		document.getElementById('pop2tab_needed_mm').style.color = (t.needed_mm  > t.cur_mm?'red':'green')
-		document.getElementById('pop2tab_cur_mm').style.color = (t.needed_mm  > t.cur_mm?'red':'green')
-		
-		dismissBtn_help1 = "This button is used to quickly get your city to its maximum idle population allowed by dismissing just the right amount of militiamen.";
-		dismissBtn_help2 = "This button will only light up when when your city is not at its maximum population, and then only if you have enough MM in your city to dismiss.";
-		need_to_dismiss = parseInt(t.max_idle_pop - t.cur_idle_pop);
-		dismissBtn = document.getElementById('pop2tab_dismiss_mm');
-		if(parseInt(need_to_dismiss) > 0 && parseInt(need_to_dismiss) <= parseInt(t.cur_mm) && !t.busy && !t.cycle_running)
-			{
-			dismissBtn.disabled = false;
-			dismissBtn.value = "Dismiss " + addCommas(need_to_dismiss) + " Troops";
-			}
-		else
-			{
-			dismissBtn.disabled = true;
-			dismissBtn.value = "Dismiss Troops";
-			}
-
-		queueBtn_help1 = "This button is used to train all the idle population into Supply Troops.";
-		queueBtn_help2 = "This button will only light up when your city is at full idle population, and then only if you have enough resources to train all those Supply Troops and at least 1 free training slot.";
-//		unitId = 1;	
-		unitId = t.pop2tab_troop_train;	
-		var res_ok = 0;
-		for (var i = 1; i < 5; i++)
-			{
-			var res_need = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(t.cur_idle_pop);
-			var res_have = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]);
-			if(parseInt(res_need) > parseInt(res_have))	{	res_ok++;	}
-			}
-		queueBtn = document.getElementById('pop2tab_queue_st');
-		if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
-			{
-			queueBtn.disabled = false;
-//			queueBtn.value = "Queue " + addCommas(t.cur_idle_pop) + " Supply Troops";
-			queueBtn.value = "Queue " + addCommas(t.cur_idle_pop) + " " +unsafeWindow.unitcost['unt' + t.pop2tab_troop_train][0];
-			}
-		else
-			{
-			queueBtn.disabled = true;
-//			queueBtn.value = "Queue Supply Troops";
-			queueBtn.value = "Queue " +unsafeWindow.unitcost['unt' + t.pop2tab_troop_train][0];
-			}
-
-		deleteBtn_help1 = "This button is used to quickly delete all those queued up Supply Troops, returning 1/2 the used population (and resources?).";
-		deleteBtn_help2 = "This button will only light up when there is at least 1 training queue slot used.";
-		//deleteBtn_help3 = "** Due to a bug, you should refresh your game before using this button! **";
-		deleteBtn_help3 = "If you have any problems with this button, refresh and try again.";
-		deletebtn = document.getElementById('pop2tab_del_queues'	);
-		if(Seed.queue_unt['city'+cityId].length > 0 && !t.busy && !t.cycle_running)
-			{
-			deletebtn.disabled = false;
-			deletebtn.value = " Delete " + Seed.queue_unt['city'+cityId].length + " Queues";
-			}
-		else
-			{
-			deletebtn.disabled = true;
-			deletebtn.value = "Delete All Queues";
-			}
-
-		runcycleBtn_help1 = "This button is used to automate the entire process of repeatedly dismissing Militiamen then queueing Supply Troops, and then finally delete all of those queues.";
-		runcycleBtn_help2 = "This button will only light up when your city has the required amount of resources and Militiamen";
-		//runcycleBtn_help3 = "------ This button is disabled for now. -----";
-		runcycleBtn_help3 = "If the queue slots wont delete, refresh and hit the 'Delete All Queues' button.";
-		res_ok = 0;
-//		t.cycle_pop_continue = (parseInt(t.slots_free) * parseInt(t.max_idle_pop)) + (parseInt(t.max_idle_pop) * 2);
-		t.cycle_pop_continue = (parseInt(t.slots_free) * parseInt(t.max_idle_pop)) + parseInt(t.max_idle_pop);
-		for (var i = 1; i < 5; i++)
-			{
-			var res_need = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(t.cycle_pop_continue);
-			var res_have = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]);
-			if(parseInt(res_need) > parseInt(res_have))	{	res_ok++;	}
-			}
-		runcycleBtn = document.getElementById('pop2tab_run_cycle');
-		//if(parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
-		t.needed_mm_continue = t.cycle_pop_continue;
-		if(parseInt(t.needed_mm) <= parseInt(t.cur_mm) && parseInt(res_ok)==0 && !t.busy && !t.cycle_running)
-			{
-			runcycleBtn.disabled = false;
-			}
-		else
-			{
-			runcycleBtn.disabled = true; 
-			}
-		
-		},
-
-	run_cycle : function (cityId)
-		{
-		// Temp disable auto train for this city & auto reassign & auto transport & auto refresh
-		// log all that
-		
-		var t = Tabs.popcontrol2;
-		clearTimeout (t.timer);
-		clearTimeout (t.timer_cycle);
-		t.disable_btns();
-		if(!t.cycle_running)
-			{
-			t.log("Starting population build cycle. Population at start: " + t.cur_idle_pop);
-			t.cycle_running = true;
-			t.cycle_step = 1;
-			}
-		
-		//t.actionlog("1");
-		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
-		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-		//num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
-//		if(parseInt(t.cur_idle_pop) < parseInt(t.max_idle_pop))	// Need to Dismiss MM
-		if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) < parseInt(t.max_idle_pop))	// Need to Dismiss MM
-			{
-			if (t.cycle_running && t.last_ran == 'train') {
-				t.dismiss_mm(cityId);
-				t.last_ran = 'dismiss';
-			} else {
-				t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 1500);
-			}
-				
-			
-			//t.actionlog("2");
-			}
-		else if(parseInt(t.slots_free) > 0 && parseInt(t.cur_idle_pop) >= parseInt(t.max_idle_pop)) // Need to queue supply troops
-			{
-			if (t.cycle_running)	{
-				t.queue_st(cityId);
-				t.last_ran = 'train';
-			}
-			//t.actionlog("3");
-			}
-		else if(parseInt(t.slots_free) == 0)	// Delete all the queues
-			{
-			//t.actionlog("4");
-			t.cycle_running = false;
-			setTimeout(unsafeWindow.update_seed_ajax, 250);
-//			t.del_queues_start(t.tcp.city.id);
-			t.timer = setTimeout (t.show, 1000);
-			return;
-			}
-		else
-			{
-			t.log("Waiting...");	// Wait
-			}
-		//t.actionlog("5");
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		t.timer_cycle = setTimeout (function() {t.run_cycle(cityId)}, 1500);
-		},
-
-	dismiss_mm : function (cityId)
-		{
-		var t = Tabs.popcontrol2;
-		t.disable_btns();
-		
-		unitId = t.pop2tab_troop_dismiss;
-
-		t.max_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[1])).toFixed(0);
-		t.cur_idle_pop = (parseInt(Seed.citystats['city'+cityId].pop[0])).toFixed(0);
-		num = parseInt(t.max_idle_pop) - parseInt(t.cur_idle_pop);
-		//t.log(num);
-		
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.cid = cityId;
-		params.type = unitId;
-		params.quant = num;
-
-		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/dismissUnits.php" + unsafeWindow.g_ajaxsuffix,
-			{
-			method: "post",
-			parameters: params,
-			onSuccess: function(rslt)
-				{
-				if (rslt.ok) 
-					{
- 					//t.log("Dismissed "+ addCommas(num) +" "+ troops[unitId]);
-					t.log("Dismissed "+ addCommas(num) +" Troops");
-					Seed.units['city'+cityId]['unt'+unitId] -= num;
-					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-					//setTimeout(unsafeWindow.update_seed_ajax, 250);
-					t.busy = false;
-					t.show_city(cityId);
-					
-					}
-				else
-					{
-					//t.log("FAILED to dismiss "+ addCommas(num) +" "+ troops[unitId] + " :(");
-					t.log("FAILED to dismiss "+ addCommas(num) +" Militiamen :(");
-					t.busy = false;
-					}
-				},
-			});		
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		},
-
-	queue_st : function (cityId)
-		{
-		var t = Tabs.popcontrol2;
-		t.disable_btns();
-
-//		unitId = 1;
-		unitId = t.pop2tab_troop_train;
-		num = t.cur_idle_pop;
-		//num = 15;
-		
-		var time = unsafeWindow.modal_barracks_traintime(unitId, num);
-		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-		params.cid = cityId;
-		params.type = unitId;
-		params.quant = num;
-		params.gambleId = 0;
-
-		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix,
-			{
-			method: "post",
-			parameters: params,
-			onSuccess: function(rslt)
-				{
-				if (rslt.ok) 
-					{
-					//t.log("Trained "+ addCommas(num) +" "+ troops[unitId]);
-					//t.log("Trained "+ addCommas(num) +" Supply Troops");
-					t.log("Trained "+ addCommas(num) +" " +unsafeWindow.unitcost['unt' + t.pop2tab_troop_train][0]);
-					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-					for (var i = 1; i < 5; i++)
-						{
-						var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
-						if(rslt.gamble) resourceLost = resourceLost*rslt.gamble[i];
-						unsafeWindow.seed.resources["city" + cityId]["rec" + i][0] = parseInt(unsafeWindow.seed.resources["city" + cityId]["rec" + i][0]) - resourceLost;
-						}
-					unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
-					unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * parseInt(num);
-					//unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
-					unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, rslt.ticksNeeded, null]);
-					t.busy = false;
-					t.show_city(cityId);
-					}
-				else
-					{
-					//t.log("FAILED to train "+ addCommas(num) +" "+ troops[unitId] + " :(");
-					t.log("FAILED to train "+ addCommas(num) +" Supply Troops :(");
-					t.busy = false;
-					}
-				},
-			});
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		},
+   var uW = unsafeWindow;
+   var CM = uW.cm;
+   var Seed = uW.seed;
+   var params = uW.Object.clone(uW.g_ajaxparams);
+   params.uid = uid;
+   new uW.Ajax.Request(uW.g_ajaxpath + "ajax/getUserGeneralInfo.php" + uW.g_ajaxsuffix, {
+     method: "post",
+     parameters: params,
+     onSuccess: function (rslt) {
+       notify (eval("(" + rslt.responseText + ")"));
+     },
+     onFailure: function (rslt) {
+       notify ({errorMsg:'AJAX error'});
+     },
+   });
+};
 
 
-	del_queues_start : function (cityId)
-		{
-		var t = Tabs.popcontrol2;
-		t.disable_btns();
-
-		t.del_count = Seed.queue_unt['city'+cityId].length;
-		t.log("Attempting to delete " + t.del_count + " Queue slots...");
-		t.del_queues(cityId);
-		},
-
- 	del_queues : function (cityId)
-		{
-		var t = Tabs.popcontrol2;
-		clearTimeout (t.timer_del);
-
-		var q = Seed.queue_unt['city'+cityId];
-		var qs = q.toString();
-
-		if(q.length > 0 || t.del_count > 0)
-			{
-			t.del_count -= 1;
-			typetrn =		q[0][0];
-			numtrptrn =	q[0][1];
-			trnTmp =		q[0][2];
-			trnETA = 		q[0][3];
-			trnNeeded =	q[0][5];
-			trainingId = 0;
-
-			t.delete_queue_slot(typetrn, numtrptrn, trnTmp, trnETA, trnNeeded, cityId, trainingId)
-			t.delete_queue_slot(typetrn, numtrptrn, trnTmp, parseInt(trnETA)-1, trnNeeded, cityId, trainingId)	//?!
-						}
-		else
-			{
-			t.log("No more queue slots to delete.");
-			t.del_count = 0;
-			t.busy = false;
-			return;
-			}
-		setTimeout(unsafeWindow.update_seed_ajax, 250);
-		t.timer_del = setTimeout (function() {t.del_queues(cityId)}, 1500);
-		},
-
-	delete_queue_slot : function (typetrn, numtrptrn, trnTmp, trnETA, trnNeeded, cityId, trainingId)
-		{
-		var t = Tabs.popcontrol2;
-		var uW = unsafeWindow;
-		var params = uW.Object.clone(uW.g_ajaxparams);
-		params.pf =0;
-		params.requestType = "CANCEL_TRAINING";
-		params.cityId = cityId;
-		params.typetrn = typetrn;
-		params.numtrptrn = numtrptrn;
-		params.trnETA = trnETA;
-		params.trnTmp = trnTmp;
-		params.trnNeeded = trnNeeded;
-
-		new AjaxRequest(uW.g_ajaxpath + "ajax/cancelTraining.php" + uW.g_ajaxsuffix,
-			{
-			method: "post",
-			parameters: params,
-			onSuccess: function (message)
-				{
-				var rslt=eval("("+message.responseText+")");
-				if (rslt.ok)
-					{
-					t.log("Deleted queue of "+ addCommas(numtrptrn) +" "+ troops[typetrn]);
-					if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
-					var k=0;
-					for(var j=0;j<Seed.queue_unt["city"+cityId].length;j++)
-						{
-						if(j>trainingId)
-							{
-							Seed.queue_unt["city"+cityId][j][2]=parseInt(rslt.dateTraining[k]["start"]);
-							Seed.queue_unt["city"+cityId][j][3]=parseInt(rslt.dateTraining[k]["end"]);
-							k++;
-							}
-						}
-					Seed.queue_unt["city"+cityId].splice(trainingId,1);
-					for(var i=1;i<5;i++)
-						{
-						var totalReturn=parseInt(uW.unitcost["unt"+typetrn][i])*parseInt(numtrptrn)*3600/2;
-						Seed.resources["city"+cityId]["rec"+i][0]=parseInt(Seed.resources["city"+cityId]["rec"+i][0])+totalReturn;
-						}
-					}
-				else
-					{
-					}
-				},
-			onFailure: function ()
-				{
-				},
-			});
-		},
-
-
-}
-//unsafeWindow.g_server = String(unsafeWindow.g_server+'/');//yea mr kocmon, we dont like you
 /*
  * Modifiedd from object.watch polyfill
  *
