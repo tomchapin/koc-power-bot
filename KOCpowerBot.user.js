@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140215a
+// @version        20140217a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140215a';
+var Version = '20140217a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -4890,11 +4890,13 @@ Tabs.tower = {
                if(Options.alertConfig.AFK) {
                   if(isAFK) {
 		     Tabs.Throne.doPreset(Options.SaveState.trset);
+		     if(Options.alertConfig.guardian) {
 	             for (var cityId in Cities.byID){
-                        if(Options.SaveState.guardian[cityId] && Seed.buildings["city"+ cityId].pos500[0] != Options.SaveState.guardian[cityId]) 
-			   t.changeGuardian(cityId,parseInt(Options.SaveState.guardian[cityId]));
-		        Options.alertConfig.guardautoswitch[cityId] = false;
+						if(Options.SaveState.guardian[cityId] && Seed.buildings["city"+ cityId].pos500[0] != Options.SaveState.guardian[cityId]) 
+						   t.changeGuardian(cityId,parseInt(Options.SaveState.guardian[cityId]));
+		      		  Options.alertConfig.guardautoswitch[cityId] = false;
 	             }
+	          };
 		   }
                } else {
 		  Tabs.Throne.doPreset(Options.SaveState.trset);
@@ -5017,7 +5019,7 @@ Tabs.tower = {
                if(Options.SaveState.crest)Tabs.Attack.toggleCrestState();
             };
             Options.SaveState.trset = Seed.throne.activeSlot;
-            if(Seed.buildings["city"+ m.toCityId].pos500 && Seed.buildings["city"+ m.toCityId].pos500[0] !=50) Options.SaveState.guardian[m.toCityId]=Seed.buildings["city"+ m.toCityId].pos500[0];
+            if(Options.alertConfig.guardian && Seed.buildings["city"+ m.toCityId].pos500 && Seed.buildings["city"+ m.toCityId].pos500[0] !=50) Options.SaveState.guardian[m.toCityId]=Seed.buildings["city"+ m.toCityId].pos500[0];
          };
          Options.alertConfig.RecentActivity = true;
          saveOptions();
