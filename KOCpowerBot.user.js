@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140217a
+// @version        20140221a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140217a';
+var Version = '20140221a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -8813,14 +8813,14 @@ Tabs.transport = {
             loadEffectBoost = 0.25;
         };
         var loadBoostBase = (Math.floor(unsafeWindow.cm.ThroneController.effectBonus(6)) * 0.01) + loadEffectBoost;
-               // if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
-                    //loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
-                    //bugged, wagons do not count, lets just disable it for now
-               // };
+        if (unsafeWindow.cm.unitFrontendType[unit.slice(3)] == "siege") {
+                loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
+        };
         
-                    if (unsafeWindow.cm.unitFrontendType[unit] == "horsed") {
-                        loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
-                    };
+        if (unsafeWindow.cm.unitFrontendType[unit.slice(3)] == "horsed") {
+                loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
+        };
+
         var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
         /**
         from camelotmain
