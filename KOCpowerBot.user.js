@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140221a
+// @version        20140227a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140221a';
+var Version = '20140227a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -23270,13 +23270,11 @@ Upgrade_Enhance :function (){
                 m += '<TD><INPUT id=chEnable type=submit value="Queue = ON"></td>';
           }
       m += '<TD><INPUT id=chShowHistory type=submit value="History"></td></table>';
-/***
-      m += '<table><tr><INPUT id=pbUseTokens type=checkbox '+ (ChampionOptions.UseTokens?'CHECKED ':'') +'/>&nbsp;Use Tokens/Stones when available</tr>';
-      m += '<tr><br>Will use Protection Stone/Lesser Protection stone for Enhance';
-      m += ' <INPUT id=pbUseMO type=checkbox '+ (ChampionOptions.UseMO?'CHECKED ':'') +'/> Also use Mystic Orb/Lesser Mystic Orb</tr>';
-      m += '<tr><br>Will use Lesser Lucky Token for Upgrade';
-      m += ' <INPUT id=pbUseLT type=checkbox '+ (ChampionOptions.UseLT?'CHECKED ':'') +'/> Also use Lucky Tokens</tr>';
-***/
+      m += '<table><tr><INPUT id=pbUseChTokens type=checkbox '+ (ChampionOptions.UseTokens?'CHECKED ':'') +'/>&nbsp;Use Tokens when available</tr>';
+//      m += '<tr><br>Will use Protection Stone/Lesser Protection stone for Enhance';
+//      m += ' <INPUT id=pbUseMO type=checkbox '+ (ChampionOptions.UseMO?'CHECKED ':'') +'/> Also use Mystic Orb/Lesser Mystic Orb</tr>';
+      m += '<tr><br>Will use Journeymans Token for Upgrade';
+//      m += ' <INPUT id=pbUseST type=checkbox '+ (ChampionOptions.UseST?'CHECKED ':'') +'/> Also use Smith Tokens</tr>';
       m += '</table>';
      m+= '<DIV id=pbTowrtDivF class=pbStat>ADD UPGRADE OR ENHANCE TO QUEUE</div><TABLE class=ptTab><br/>';
       m+='<TR><TD>Champion items:</td><TD><SELECT id=ChampionItems type=list></select></td>';
@@ -23305,7 +23303,7 @@ Upgrade_Enhance :function (){
     document.getElementById('chaddUpgrade').addEventListener ('click', function (){t.addToQueue(document.getElementById('ChampionItems').value,"Upgrade");},false);
 
     document.getElementById('ChampionItems').addEventListener ('change', function (){t.paintHoover();},false);
-//      document.getElementById('pbUseTokens').addEventListener('change', function(){ChampionOptions.UseTokens = document.getElementById('pbUseTokens').checked;saveChampionOptions();} , false);
+      document.getElementById('pbUseChTokens').addEventListener('change', function(){ChampionOptions.UseTokens = document.getElementById('pbUseChTokens').checked;saveChampionOptions();} , false);
 //      document.getElementById('pbUseMO').addEventListener('change', function(){ChampionOptions.UseMO = document.getElementById('pbUseMO').checked;saveChampionOptions();} , false);
 //      document.getElementById('pbUseLT').addEventListener('change', function(){ChampionOptions.UseLT = document.getElementById('pbUseLT').checked;saveChampionOptions();} , false);
       document.getElementById('chEnable').addEventListener('click', function(){t.toggleChampionState()} , false);
@@ -24041,18 +24039,18 @@ PaintSalvageHistory : function() {
         }
       Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ChampionOptions.Items["0"]["cost"]));
         var buffItem = 0;
-/***
         if(ChampionOptions.UseTokens) {
-         if(ChampionOptions.UseLT) {
-          if(parseInt(unsafeWindow.seed.items['i20006'])>0)//lucky token
-             buffItem = 20006;
+/***
+         if(ChampionOptions.UseST) {
+          if(parseInt(unsafeWindow.seed.items['i21052'])>0)//smith token
+             buffItem = 21052;
 	 }
-         if(parseInt(unsafeWindow.seed.items['i20005'])>0)//lesser lucky token
-            buffItem = 20005;
+***/
+         if(parseInt(unsafeWindow.seed.items['i21051'])>0)//journeymans token
+            buffItem = 21051;
          if(buffItem)
             unsafeWindow.cm.InventoryView.removeItemFromInventory(buffItem);
       };
-***/
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 //        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
         params.action = 5;
