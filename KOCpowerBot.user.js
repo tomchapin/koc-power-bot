@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140227a
+// @version        20140306a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140227a';
+var Version = '20140306a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -162,6 +162,8 @@ var Options = {
   DeleteMsgs2  : false,
   DeleteMsgs3  : false,
   DeleteMsgsdf  : false,
+  DeleteMsgs4  : false,
+  DeleteMsgsUID : "",
   Foodstatus   : {1:0,2:0,3:0,4:0,5:0,6:0,7:0},
   Creststatus  : {1101:0,1102:0,1103:0,1104:0,1105:0,1106:0,1107:0,1108:0,1109:0,1110:0,1111:0,1112:0,1113:0,1114:0,1115:0},
   LastReport   : 0,
@@ -12250,6 +12252,8 @@ Tabs.Options = {
         <TR><TD><INPUT id=deletesDFtoggle type=checkbox /></td><TD> '+translate("Auto delete DarkForest reports(and log items for DF report)")+'</td></tr>\
         <TR><TD><INPUT id=deletes2toggle type=checkbox /></td><TD> '+translate("Auto delete crest reports regardless of target type")+'</td></tr>\
         <TR><TD><INPUT id=deletes3toggle type=checkbox /></td><TD> '+translate("Auto delete incoming attack reports from alliances I'm friendly to")+'</td></tr>\
+        <TR><TD><INPUT id=deletes4toggle type=checkbox /></td><TD> '+translate("Auto delete incoming attack reports from the following UIDs (separated by commas)")+'</td></tr>\
+        <TR><TD>&nbsp;</td><TD><input id=pbdeleteuidreps type=text size=100 /></td></tr>\
         <TR><TD><INPUT id=advanced type=checkbox /></td><TD> '+translate("Scripters tab")+'</td></tr>\
         <TR><TD><INPUT id=MAgicBOx type=checkbox /></td><TD> '+translate("Kill merlins magic box's on startup")+'</td></tr>\
         <TR><TD><INPUT id=CFilter type=checkbox /></td><TD><select id=pbfilter>';
@@ -12335,7 +12339,9 @@ Tabs.Options = {
       t.togOpt ('deletes1toggle', 'DeleteMsgs1');
       t.togOpt ('deletes2toggle', 'DeleteMsgs2');    
       t.togOpt ('deletes3toggle', 'DeleteMsgs3');    
+      t.togOpt ('deletes4toggle', 'DeleteMsgs4');    
       t.togOpt ('deletesDFtoggle', 'DeleteMsgsdf');      
+      t.changeOpt ('pbdeleteuidreps', 'DeleteMsgsUID');
       t.togOpt ('advanced', 'ScripterTab');          
       t.togOpt ('MAgicBOx', 'KMagicBox');       
       t.togOpt ('pbColorTab', 'colorCityTabs', Tabs.tower.cityBtnColor);
@@ -18618,7 +18624,7 @@ var DeleteReports = {
     
     startdeletereports : function(){
         var t = DeleteReports;
-          if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2 || Options.DeleteMsgs3 || Options.expinc)){
+          if(!t.deleting && (Options.DeleteMsg || Options.DeleteMsgs0 || Options.DeleteMsgs1 || Options.DeleteMsgs2 || Options.DeleteMsgs3 || Options.DeleteMsgs4 || Options.expinc)){
               t.deleting = true;
               t.fetchreport(0, t.checkreports);
           }
@@ -18762,6 +18768,16 @@ var DeleteReports = {
                }
                 }
          }            
+            if (Options.DeleteMsgs4){
+                for(i in CrestData) {
+					if (Options.DeleteMsgsUID != "") {
+						// split string by commas
+						var UIDArray = Options.DeleteMsgsUID.split(","); 
+						if (UIDArray.indexOf(reports[k].side1PlayerId) != -1)
+							deletes1.push(k.substr(2));
+					}
+				}
+			}            
         }
         if(deletes1.length > 0 || deletes0.length > 0){
             t.deleteCheckedReports(deletes1, deletes0);
