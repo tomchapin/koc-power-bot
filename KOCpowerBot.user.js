@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140306a
+// @version        20140308a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140306a';
+var Version = '20140308a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -9069,7 +9069,7 @@ Tabs.transport = {
         var queueId = parseInt(queueId);
         var cityname = Cities.byID[r[queueId].city].name;
         var citynameTo, TO;
-        if (typeof r[queueId].target_city != 'undefined' || parseInt(r[queueId].target_city) > 0) citynameTo = Cities.byID[r[queueId].target_city].name;
+        if (typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0) citynameTo = Cities.byID[r[queueId].target_city].name;
         var Types = ['food', 'wood', 'stone', 'iron', 'aetherstone', 'gold'];
         if (citynameTo == null) TO = r[queueId].target_x + ',' + r[queueId].target_y;
         else TO = citynameTo;
