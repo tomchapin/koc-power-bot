@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140308a
+// @version        20140310a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140308a';
+var Version = '20140310a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -25171,7 +25171,13 @@ var OreAlert = {
 
 function GuardianTT () {
 	var z = new CalterUwFunc("showCityTooltip",[[/showTooltip/,'a += "<div>"+g_js_strings.guardian[seed.guardian[j].type+"_fullName"]+"</div>";showTooltip'],
-												['g_js_strings.showPopTooltip.currpop','provincenames[\'p\'+seed.cities[j][4]] + "</div><div>" + g_js_strings.showPopTooltip.currpop']]);
+												['g_js_strings.showPopTooltip.currpop','provincenames[\'p\'+seed.cities[j][4]] + "</div><div>" + pbcheckascension(seed.cities[j][0]) + g_js_strings.showPopTooltip.currpop']]);
+												
+	unsafeWindow.pbcheckascension = function (id) {
+		if (unsafeWindow.cm.PrestigeCityPlayerProtectionController.isActive(id)) {
+			return "<b>Ascension Protection: "+unsafeWindow.timestr(unsafeWindow.cm.PrestigeCityPlayerProtectionController.getTimeLeft(id),false)+"</b></div><div>";
+		} else return "";	
+	}
    z.setEnable(true); 
 };
 
