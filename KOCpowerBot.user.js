@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140310a
+// @version        20140314a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140310a';
+var Version = '20140314a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2340,7 +2340,7 @@ Tabs.Throne = {
   MaxRows:30,
   CompPos:0,
   CardTypes:["ALL","Attack","Defense","Life","Speed","Accuracy","Range","Load","MarchSize","MarchSpeed","CombatSkill","IntelligenceSkill","PoliticsSkill","ResourcefulnessSkill","TrainingSpeed","ConstructionSpeed","ResearchSpeed","CraftingSpeed","Upkeep","ResourceProduction","ResourceCap","Storehouse","Morale","ItemDrop"],
-  EquipType: ["ALL","advisor","banner","chair","table","trophy","window","candelabrum","hero","statue"],//case sensitive for the moment.
+  EquipType: ["ALL","advisor","banner","chair","table","trophy","window","candelabrum","hero","statue","pet"],//case sensitive for the moment.
   Faction: ["ALL","Briton","Fey","Druid"],
 
   init : function (div){
@@ -2486,6 +2486,8 @@ Tabs.Throne = {
                 "Castle Tauroc"       	: "http://i.imgur.com/OI6UP85.jpg",
                 "Effigy of Wasting"    	: "http://i.imgur.com/t8uIVP3.jpg",
             },
+            Pets : {
+            },
         }
 
         unsafeWindow.pbshowunique = showUnique;
@@ -2517,6 +2519,7 @@ Tabs.Throne = {
                 case "Trophies" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Trophies[name]+'>'; break;
                 case "Heros"    : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Heros[name]+'>'; break;
                 case "Statues"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Statues[name]+'>'; break;
+                case "Pets"     : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Pets[name]+'>'; break;
             }
         }
         
@@ -2881,6 +2884,7 @@ Compare :function (){
     var CandelCount = 0;
     var HeroCount = 0;
     var StatueCount = 0;
+    var PetCount = 0;
     var counter = 0;
     ActiveItems = parseInt(Seed.throne.rowNum)*5;
 
@@ -2897,13 +2901,14 @@ Compare :function (){
       if (z.type=="candelabrum") CandelCount++;
       if (z.type=="hero") HeroCount++;
       if (z.type=="statue") StatueCount++;
+      if (z.type=="pet") PetCount++;
    }  
 
 
     try {   
      var m = '<DIV id=pbTowrtDivF class=pbStat>Compare Throne Items</div><br><TABLE id=pbCompareStats width=100% height=0% class=pbTab>';
 
-     m+='<TD>Advisor: ' + AdvisorCount + '</td><TD>Banner: ' + BannerCount+ '</td><TD>Throne :' + ChairCount+ '</td><TD>Table: '+ TableCount+'</td><TD>Trophy: ' + TrophyCount + '</td><TD>Window: ' + WindowCount + '</td><TD>Candelabrum: ' + CandelCount + '</td><TD>Hero: ' + HeroCount + '</td><TD>Statue: ' + StatueCount + '</td></table><br>';
+     m+='<TD>Advisor: ' + AdvisorCount + '</td><TD>Banner: ' + BannerCount+ '</td><TD>Throne :' + ChairCount+ '</td><TD>Table: '+ TableCount+'</td><TD>Trophy: ' + TrophyCount + '</td><TD>Window: ' + WindowCount + '</td><TD>Candelabrum: ' + CandelCount + '</td><TD>Hero: ' + HeroCount + '</td><TD>Statue: ' + StatueCount + '</td><TD>Pet: ' + PetCount + '</td></table><br>';
 
      m+= '<DIV id=pbThroneMain class=pbStat>Compare Throne Items</div><br>';
      m+='<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=type type=list></select></td><TD>Card Family: <SELECT id=family type=list></select></td><TD>Effect: <SELECT id=effect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=keyword size=10></td></tr></table>';
@@ -3199,8 +3204,7 @@ postInfo : function (z){
 		id = y["effects"]["slot"+i]["id"];
 		tier = parseInt(y["effects"]["slot"+i]["tier"]);
 		level = y["level"];
-		if (y.unique == 30286 && id == 9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else
-		  p = unsafeWindow.cm.thronestats.tiers[id][tier];
+	  	p = unsafeWindow.cm.thronestats.tiers[id][tier]; if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
 		Current = p.base + ((level * level + level) * p.growth * 0.5);
 		m+='||'+Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"];
 	};
@@ -3237,9 +3241,7 @@ paintEquipInfo : function (z,what){
             id = y["effects"]["slot"+i]["id"];
             tier = parseInt(y["effects"]["slot"+i]["tier"]);
             level = y["level"];
-	    if (y["unique"]==30286 && id==9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else  // temporary patch
-              p = unsafeWindow.cm.thronestats.tiers[id][tier];
-              if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
+            p = unsafeWindow.cm.thronestats.tiers[id][tier];  if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
             Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
             var quality = parseInt(y["quality"]);
             if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
@@ -3867,8 +3869,7 @@ PaintSalvageHistory : function() {
                id = y["effects"]["slot"+i]["id"];
                tier = parseInt(y["effects"]["slot"+i]["tier"]);
                level = y["level"];
-	       if (y.unique == 30286 && id == 9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else
-                 p = unsafeWindow.cm.thronestats.tiers[id][tier];
+               p = unsafeWindow.cm.thronestats.tiers[id][tier]; if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
                Current = p.base + ((level * level + level) * p.growth * 0.5);
                level++;
                Next = p.base + ((level * level + level) * p.growth * 0.5);;
@@ -3903,8 +3904,7 @@ paintHoover : function (){
         id = y["effects"]["slot"+i]["id"];
         tier = parseInt(y["effects"]["slot"+i]["tier"]);
         level = y["level"];
-	if (y.unique == 30286 && id == 9) p = unsafeWindow.cm.thronestats.tiers[id][4]; else
-          p = unsafeWindow.cm.thronestats.tiers[id][tier];
+        p = unsafeWindow.cm.thronestats.tiers[id][tier]; if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
         Current = p.base + ((level * level + level) * p.growth * 0.5);
 	if (ThroneOptions.Items["0"])
           var quality = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]["quality"]);
@@ -8762,8 +8762,7 @@ Tabs.transport = {
                 if (id == StatID) {
                     var tier = parseInt(item["effects"]["slot" + i]["tier"]);
                     var level = item["level"];
-		    if (item.unique == 30286 && id == 9) var p = unsafeWindow.cm.thronestats.tiers[id][4]; else
-                      var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+                    var p = unsafeWindow.cm.thronestats.tiers[id][tier]; if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
                     var Percent = p.base + ((level * level + level) * p.growth * 0.5);
                     total += Percent;
                 }
@@ -25056,8 +25055,7 @@ function equippedthronestats (stat_id){
             if(id == stat_id){
                var tier = parseInt(item["effects"]["slot"+i]["tier"]);
                var level = item["level"];
-	       if (item.unique == 30286 && id == 9) var p = unsafeWindow.cm.thronestats.tiers[id][4]; else
-                 var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+               var p = unsafeWindow.cm.thronestats.tiers[id][tier]; if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
                var Percent = p.base + ((level * level + level) * p.growth * 0.5);
                total += Percent;
             }
