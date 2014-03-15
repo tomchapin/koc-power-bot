@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140314a
+// @version        20140315a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140314a';
+var Version = '20140315a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -273,6 +273,8 @@ var CrestOptions = {
   R1Siege      :  0,
   R1Flame      :  0,
   R1Huss       :  0,
+  R1Halb       :  0,
+  R1Onager       :  0,
   R2ST         :  0,
   R2MM         :  0,
   R2Scout      :  0,
@@ -290,6 +292,8 @@ var CrestOptions = {
   R2Siege      :  0,
   R2Flame      :  0,
   R2Huss       :  0,
+  R2Halb       :  0,
+  R2Onager       :  0,
   isWild       :  false,
 
   Paused       :  false,
@@ -334,6 +338,8 @@ var CrestData = new Array();
       this.R1Siege      =  Arr.R1Siege;
       this.R1Flame      =  Arr.R1Flame;
       this.R1Huss       =  Arr.R1Huss;
+      this.R1Halb       =  Arr.R1Halb;
+      this.R1Onager     =  Arr.R1Onager;
       this.R2ST         =  Arr.R2ST;
       this.R2MM         =  Arr.R2MM;
       this.R2Scout      =  Arr.R2Scout;
@@ -351,6 +357,8 @@ var CrestData = new Array();
       this.R2Siege      =  Arr.R2Siege;
       this.R2Flame      =  Arr.R2Flame;
       this.R2Huss       =  Arr.R2Huss;
+      this.R2Halb       =  Arr.R2Halb;
+      this.R2Onager     =  Arr.R2Onager;
       this.isWild       =  Arr.isWild;
 
 	  this.Paused       =  Arr.Paused;
@@ -2426,6 +2434,7 @@ Tabs.Throne = {
                 "Advisor of Discipline"  : "http://i.imgur.com/5Yrhp8F.png",
                 "Dagonet The Court Jester"  : "http://i.imgur.com/29bAH99.png",
                 "Minstrel"              : "http://i.imgur.com/hUIXhca.png",
+		"Percival"		: "http://i.imgur.com/ei2YRFF.png",
             },
             Thrones : {
                 "Valor"             : "http://i.imgur.com/fIeZMXM.png",
@@ -20442,8 +20451,7 @@ Tabs.Attack = {
 	rallypointlevel:null,
 	error_code: 0,
 	knt:{},
-	nTroopType: 17,
-	trooparray:{1:"ST",2:"MM",3:"Scout",4:"Pike",5:"Sword",6:"Arch",7:"LC",8:"HC",9:"SW",10:"Ball",11:"Ram",12:"Cat",13:"Blood",14:"Exec",15:"Siege",16:"Flame",17:"Huss",},
+	trooparray:{1:"ST",2:"MM",3:"Scout",4:"Pike",5:"Sword",6:"Arch",7:"LC",8:"HC",9:"SW",10:"Ball",11:"Ram",12:"Cat",13:"Blood",14:"Exec",15:"Siege",16:"Flame",17:"Huss",18:"Halb",21:"Onager",},
 	msgtimer : null,
 
 
@@ -20490,41 +20498,45 @@ Tabs.Attack = {
 
    
 		var dude = unsafeWindow.unitnamedesctranslated;
-		m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD><b>Wave 1</b>&nbsp;(initial):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R1Scout type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R1Pike type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R1Sword type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R1Arch type=text size=7 maxlength=6 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R1LC type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R1HC type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R1SW type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R1Ball type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R1Ram type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R1Cat type=text size=7 maxlength=6 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30.jpg alt='+dude.unt13[0]+'></td><TD><INPUT id=R1Blood type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_30.jpg alt='+dude.unt14[0]+'></td><TD><INPUT id=R1Exec type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_30.jpg alt='+dude.unt15[0]+'></td><TD><INPUT id=R1Siege type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_30.jpg alt='+dude.unt16[0]+'></td><TD><INPUT id=R1Flame type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_30.jpg alt='+dude.unt17[0]+'></td><TD><INPUT id=R1Huss type=text size=7 maxlength=6 value=0></td></tr>';
+		m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD><b>Wave 1</b>&nbsp;(initial):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R1Scout type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R1Pike type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R1Sword type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R1Arch type=text size=7 maxlength=7 value=0></td></tr>';
+		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R1LC type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R1HC type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R1SW type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R1Ball type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R1Ram type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R1Cat type=text size=7 maxlength=7 value=0></td></tr>';
+		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30.jpg alt='+dude.unt13[0]+'></td><TD><INPUT id=R1Blood type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_30.jpg alt='+dude.unt14[0]+'></td><TD><INPUT id=R1Exec type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_30.jpg alt='+dude.unt15[0]+'></td><TD><INPUT id=R1Siege type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_30.jpg alt='+dude.unt16[0]+'></td><TD><INPUT id=R1Flame type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_30.jpg alt='+dude.unt17[0]+'></td><TD><INPUT id=R1Huss type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_18_30.jpg alt='+dude.unt18[0]+'></td><TD><INPUT id=R1Halb type=text size=7 maxlength=7 value=0></td></tr>';
+		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_30.jpg alt='+dude.unt21[0]+'></td><TD><INPUT id=R1Onager type=text size=7 maxlength=7 value=0></td></tr>';
 		m += '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
-		m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD><b>Wave 2</b>&nbsp;(recurring):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R2Scout type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R2Pike type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R2Sword type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R2Arch type=text size=7 maxlength=6 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R2LC type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R2HC type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R2SW type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R2Ball type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R2Ram type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R2Cat type=text size=7 maxlength=6 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30.jpg alt='+dude.unt13[0]+'></td><TD><INPUT id=R2Blood type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_30.jpg alt='+dude.unt14[0]+'></td><TD><INPUT id=R2Exec type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_30.jpg alt='+dude.unt15[0]+'></td><TD><INPUT id=R2Siege type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_30.jpg alt='+dude.unt16[0]+'></td><TD><INPUT id=R2Flame type=text size=7 maxlength=6 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_30.jpg alt='+dude.unt17[0]+'></td><TD><INPUT id=R2Huss type=text size=7 maxlength=6 value=0></td>';
+		m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD><b>Wave 2</b>&nbsp;(recurring):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R2Scout type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R2Pike type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R2Sword type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R2Arch type=text size=7 maxlength=7 value=0></td></tr>';
+		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R2LC type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R2HC type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R2SW type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R2Ball type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R2Ram type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R2Cat type=text size=7 maxlength=7 value=0></td></tr>';
+		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30.jpg alt='+dude.unt13[0]+'></td><TD><INPUT id=R2Blood type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_30.jpg alt='+dude.unt14[0]+'></td><TD><INPUT id=R2Exec type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_30.jpg alt='+dude.unt15[0]+'></td><TD><INPUT id=R2Siege type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_30.jpg alt='+dude.unt16[0]+'></td><TD><INPUT id=R2Flame type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_30.jpg alt='+dude.unt17[0]+'></td><TD><INPUT id=R2Huss type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_18_30.jpg alt='+dude.unt18[0]+'></td><TD><INPUT id=R2Halb type=text size=7 maxlength=7 value=0></td></tr>';
+		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_30.jpg alt='+dude.unt21[0]+'></td><TD><INPUT id=R2Onager type=text size=7 maxlength=7 value=0></td></tr>';
 		m += '</table>';
 		m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteCrest type=submit value="Add Attack"> <INPUT id=pbimpRoute type=submit value="Bulk Add from Search Results"><br>&nbsp;</div>';
     
@@ -20617,7 +20629,8 @@ Tabs.Attack = {
 		document.getElementById('showCrestTargets').addEventListener('click', function(){t.showCrestRoute();}, false);
 		document.getElementById('DelTargets').addEventListener('click', function(){t.MassDelTargets();}, false);
 		
-		for (var i=1;i<=t.nTroopType;i++) {	
+      		for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			i = unsafeWindow.cm.UNIT_TYPES[ui];
 			t.addListeners(t.trooparray[i]);
 		}
 	},
@@ -20633,7 +20646,8 @@ Tabs.Attack = {
 
 	checkDisableRound : function(r,disabled) {
 		var t = Tabs.Attack;
-		for (var i=1;i<=t.nTroopType;i++) {	
+      		for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			i = unsafeWindow.cm.UNIT_TYPES[ui];
 			$('R'+r+t.trooparray[i]).disabled = disabled;
 			if (disabled) {
 				$('R'+r+t.trooparray[i]).value = 0;
@@ -20679,7 +20693,8 @@ Tabs.Attack = {
 
 		var troops = 0;
 		if ($('pbcrest_rnd1').checked) {
-			for (var i=1;i<=t.nTroopType;i++) {	
+      			for (var ui in unsafeWindow.cm.UNIT_TYPES){
+				i = unsafeWindow.cm.UNIT_TYPES[ui];
 				troops = troops + parseIntNan(CrestOptions["R1"+t.trooparray[i]]);
 			}
 			if (troops == 0) { alert("Please enter first wave troops"); return; }
@@ -20687,7 +20702,8 @@ Tabs.Attack = {
 
 		troops = 0;
 		if ($('pbcrest_rnd2').checked) {
-			for (var i=1;i<=t.nTroopType;i++) {	
+      			for (var ui in unsafeWindow.cm.UNIT_TYPES){
+				i = unsafeWindow.cm.UNIT_TYPES[ui];
 				troops = troops + parseIntNan(CrestOptions["R2"+t.trooparray[i]]);
 			}
 			if (troops == 0) { alert("Please enter second wave troops"); return; }
@@ -20730,7 +20746,7 @@ Tabs.Attack = {
 	showCrestRoute : function () {
 		var t = Tabs.Attack;
 		var popCrestTargets = null;
-		t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1100, 485, true, function() {clearTimeout (1000);t.popCrestTargets=null;});
+		t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1200, 485, true, function() {clearTimeout (1000);t.popCrestTargets=null;});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';     
 		t.popCrestTargets.getMainDiv().innerHTML = '</table></div>' + m;
 		t.popCrestTargets.getTopDiv().innerHTML = '<TD><CENTER><B>Attack Targets</center></td>';
@@ -20763,7 +20779,9 @@ Tabs.Attack = {
 		row.insertCell(17).innerHTML = "Siege";
 		row.insertCell(18).innerHTML = "Flame";
 		row.insertCell(19).innerHTML = "Hussar";
-		row.insertCell(20).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
+		row.insertCell(20).innerHTML = "Halberdier";
+		row.insertCell(21).innerHTML = "Onager";
+		row.insertCell(22).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
 	},
 
 	/** paintCrestTargets **/
@@ -20772,31 +20790,31 @@ Tabs.Attack = {
 
 		for(var i = 0; i < CrestData.length; i++) {
 			if (t.checkRoundExists(2,i))
-				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", CrestData[i].R2ST, CrestData[i].R2MM, CrestData[i].R2Scout, CrestData[i].R2Pike, CrestData[i].R2Sword, CrestData[i].R2Arch, CrestData[i].R2LC, CrestData[i].R2HC, CrestData[i].R2SW, CrestData[i].R2Ball, CrestData[i].R2Ram, CrestData[i].R2Cat, CrestData[i].R2Blood, CrestData[i].R2Exec, CrestData[i].R2Siege, CrestData[i].R2Flame, CrestData[i].R2Huss, " ");
+				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", CrestData[i].R2ST, CrestData[i].R2MM, CrestData[i].R2Scout, CrestData[i].R2Pike, CrestData[i].R2Sword, CrestData[i].R2Arch, CrestData[i].R2LC, CrestData[i].R2HC, CrestData[i].R2SW, CrestData[i].R2Ball, CrestData[i].R2Ram, CrestData[i].R2Cat, CrestData[i].R2Blood, CrestData[i].R2Exec, CrestData[i].R2Siege, CrestData[i].R2Flame, CrestData[i].R2Huss, CrestData[i].R2Halb, CrestData[i].R2Onager, " ");
 			else
-				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ");
+				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ");
 			if (t.checkRoundExists(1,i))
-				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", CrestData[i].R1ST, CrestData[i].R1MM, CrestData[i].R1Scout, CrestData[i].R1Pike, CrestData[i].R1Sword, CrestData[i].R1Arch, CrestData[i].R1LC, CrestData[i].R1HC, CrestData[i].R1SW, CrestData[i].R1Ball, CrestData[i].R1Ram, CrestData[i].R1Cat, CrestData[i].R1Blood, CrestData[i].R1Exec, CrestData[i].R1Siege, CrestData[i].R1Flame, CrestData[i].R1Huss, "Delete");
+				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", CrestData[i].R1ST, CrestData[i].R1MM, CrestData[i].R1Scout, CrestData[i].R1Pike, CrestData[i].R1Sword, CrestData[i].R1Arch, CrestData[i].R1LC, CrestData[i].R1HC, CrestData[i].R1SW, CrestData[i].R1Ball, CrestData[i].R1Ram, CrestData[i].R1Cat, CrestData[i].R1Blood, CrestData[i].R1Exec, CrestData[i].R1Siege, CrestData[i].R1Flame, CrestData[i].R1Huss, CrestData[i].R1Halb, CrestData[i].R1Onager, "Delete");
 			else	
-				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "Delete");
-			t._addTabCrest(i, " "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ");
+				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "Delete");
+			t._addTabCrest(i, " "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ");
 		}
 
 	},
 
 	/** Add Tab Crest **/
-	_addTabCrest : function (QueID, col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, col18, col19,col20) {
+	_addTabCrest : function (QueID, col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, col18, col19,col20,col21,col22) {
 		var t = Tabs.Attack;
 		var row = document.getElementById('pbCrestTargets').insertRow(0);
 
-		for (var i = 0; i <= 20; i++) {
-			if (i == 20 && col20 == "Delete") {
+		for (var i = 0; i <= 22; i++) {
+			if (i == 22 && col22 == "Delete") {
 				row.insertCell(i).innerHTML = "<a id=pbCrestDel_" + QueID + " value=" + i + ">Delete</a>";
 				document.getElementById('pbCrestDel_' + QueID).addEventListener('click', function(){t.cancelCrestTarget(QueID);}, false);
 			} else if (col1 == "Check" && i == 1) {
 				row.insertCell(i).innerHTML = "<center><INPUT id=pbCrestPause_"+ QueID +" type=checkbox "+(CrestData[QueID].Paused?'CHECKED':'')+"></center>";
 				document.getElementById('pbCrestPause_' + QueID).addEventListener('click', function(){t.pauseCrestTarget(this,QueID);}, false);
-			} else if (col20 == "Delete" && i == 0) {
+			} else if (col22 == "Delete" && i == 0) {
 				row.insertCell(i).innerHTML = '<b>'+(Cities.byID[col0] ? Cities.byID[col0].name : '')+'</b>';
 			} else {
 				row.insertCell(i).innerHTML = (eval("col" + i)?eval("col" + i):'0') + "&nbsp;";
@@ -21054,6 +21072,8 @@ Tabs.Attack = {
 				params.u15    = parseIntNan(CrestData[CrestDataNum].R1Siege);
 				params.u16    = parseIntNan(CrestData[CrestDataNum].R1Flame);
 				params.u17    = parseIntNan(CrestData[CrestDataNum].R1Huss);
+				params.u18    = parseIntNan(CrestData[CrestDataNum].R1Halb);
+				params.u21    = parseIntNan(CrestData[CrestDataNum].R1Onager);
                 
 				t.sendMarch(params,t.Rounds,r,retry, CrestDataNum);
 				break;
@@ -21081,6 +21101,8 @@ Tabs.Attack = {
 				params.u15    = parseIntNan(CrestData[CrestDataNum].R2Siege);
 				params.u16    = parseIntNan(CrestData[CrestDataNum].R2Flame);
 				params.u17    = parseIntNan(CrestData[CrestDataNum].R2Huss);
+				params.u18    = parseIntNan(CrestData[CrestDataNum].R2Halb);
+				params.u21    = parseIntNan(CrestData[CrestDataNum].R2Onager);
 
 				t.sendMarch(params,t.Rounds,r,retry, CrestDataNum);
 				break;
@@ -21107,7 +21129,8 @@ Tabs.Attack = {
 	checkCityTroops : function (round,CrestDataNum) {
 		var t = Tabs.Attack;
 		var result = true;
-		for (var i=1;i<=t.nTroopType;i++) {	
+      		for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			i = unsafeWindow.cm.UNIT_TYPES[ui];
 			var needed = 0;
 			for (var r=round;r<=2;r++)
 				needed = needed + parseIntNan(CrestData[CrestDataNum]["R"+r+t.trooparray[i]]);
@@ -21120,7 +21143,8 @@ Tabs.Attack = {
    	checkRoundExists : function (round,CrestDataNum) {
 		var t = Tabs.Attack;
 		var troops = 0;
-		for (var i=1;i<=t.nTroopType;i++) {	
+      		for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			i = unsafeWindow.cm.UNIT_TYPES[ui];
 			troops = troops + parseIntNan(CrestData[CrestDataNum]["R"+round+t.trooparray[i]]);
 		}
 		return (troops != 0);
@@ -21376,7 +21400,8 @@ var March = {
       //need to check that march is not oversized!
       var cids = March.getMaxSize(params.cid);
       var x = 0;
-      for (i = 1;i<17;i++) {
+      for (var ui in unsafeWindow.cm.UNIT_TYPES){
+	 i = unsafeWindow.cm.UNIT_TYPES[ui];
          var y = eval('params.u'+i);
          if (matTypeof(y)== 'number')
          x+=y;
@@ -21411,14 +21436,14 @@ var March = {
             var unitsarr = [];
             for (j in unsafeWindow.unitcost)
                unitsarr.push(0);
+            unitsarr.push(0);
+            unitsarr.push(0);
             for(i = 0; i <= unitsarr.length; i++)
-               if(params["u"+i])
+               	    if(params["u"+i])
                             unitsarr[i] = params["u"+i];
                     var resources=[0,0,0,0,0,0,0,0,0,0,0,0,0];
-
-
                     var currentcityid = params.cid;
- 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+ 		    var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
                     unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
                   
                     if (rslt.updateSeed) {
