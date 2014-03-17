@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140315a
+// @version        20140317a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140315a';
+var Version = '20140317a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -478,7 +478,9 @@ var ChampionOptions = {
     heatup:false,
     ibrokeitems:[],
     autotoggle:{1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,},
-    savehero: true,
+    savehero: false,
+    savestatue: false,
+    savepet: false,
     tabnames: {}
 };
 
@@ -2586,6 +2588,7 @@ Tabs.Throne = {
       m+='<TR><TD clospan=3>Ignore attributes visually above ' + htmlSelector({1:'none', 2:'Slot 2:Uncommon (WARNING Set keep cards to 4 or less)', 3:'Slot 3:Rare(WARNING Set keep cards to 3 or less)', 4:'Slot 4:Epic (WARNING Set keep cards to 2 or less)', 5:'Slot 5:Wonderous (WARNING Set keep cards to 1)'},ThroneOptions.SalvageLevel,'id=SLevel')+'</TD></TR>';
       m+='<tr><td colspan=3><INPUT id=shero type=checkbox '+ (ThroneOptions.savehero?'CHECKED ':'') +'/>&nbsp; Save all heroes</TD></TR>';
 		m+='<tr><td colspan=3><INPUT id=sstatue type=checkbox '+ (ThroneOptions.savestatue?'CHECKED ':'') +'/>&nbsp; Save all statues</TD></TR>';
+		m+='<tr><td colspan=3><INPUT id=spet type=checkbox '+ (ThroneOptions.savepet?'CHECKED ':'') +'/>&nbsp; Save all Pets</TD></TR>';
       m+= '</table>';
       m+='<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
       m+='<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
@@ -2703,6 +2706,7 @@ Tabs.Throne = {
       document.getElementById('pbheatup').addEventListener ('change', function(){ThroneOptions.heatup = this.checked;saveThroneOptions();},false);
       document.getElementById('shero').addEventListener ('change', function(){ThroneOptions.savehero = this.checked;saveThroneOptions();},false);
       document.getElementById('sstatue').addEventListener ('change', function(){ThroneOptions.savestatue = this.checked;saveThroneOptions();},false);
+      document.getElementById('spet').addEventListener ('change', function(){ThroneOptions.savepet = this.checked;saveThroneOptions();},false);
 
       document.getElementById('pbthrone_keep').addEventListener ('change', function(){ThroneOptions.thronekeep = parseInt(document.getElementById('pbthrone_keep').value);saveThroneOptions();},false);
 
@@ -4008,12 +4012,14 @@ salvageCheck : function (){
                IsUnique = false;
                IsHero = false;
                IsStatue = false;
+               IsPet = false;
                     if (y.quality > ThroneOptions.SalvageQuality) level=true;
                     if(y.level > 0) level = true;
                     if(ThroneOptions.SaveUnique) if(y.unique > 0) IsUnique = true;
                     if (ThroneOptions.SalvageQuality == 0) level=true;
 					     if (ThroneOptions.savehero && y.type=="hero") IsHero = true;   
-					     if (ThroneOptions.savestatue && y.type=="statue") IsStatue = true;                    
+					     if (ThroneOptions.savestatue && y.type=="statue") IsStatue = true;   
+					     if (ThroneOptions.savepet && y.type=="pet") IsPet = true;                    
                     
                     for (i=1;i<=5;i++){
                   if (ThroneOptions.Salvage_fav[y.effects["slot"+i].id]) {NotFavorite= false;};
@@ -4060,7 +4066,7 @@ salvageCheck : function (){
                         }
                     }
                     //logit('y.name '+y.name+' level '+level+' number '+number+' ThroneOptions.thronekeep '+ThroneOptions.thronekeep+' NotUpgrading '+NotUpgrading+' isEquiped '+y.isEquipped+' y.isbroken '+y.isBroken+' y.id '+y.id+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+MinReq+' is unique '+IsUnique);
-                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique && !IsHero && !IsStatue) {
+                    if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique && !IsHero && !IsStatue && !IsPet) {
                   //logit(y.name);
                         t.SalvageArray.push(y.id);
                     }                     
