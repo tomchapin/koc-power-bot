@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140317a
+// @version        20140317b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140317a';
+var Version = '20140317b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -1254,8 +1254,8 @@ Tabs.farm = {
 	m +='<TD><INPUT id=pbcompactFarms1 type=submit value="Remove NOT Farms"></td>'
 	m +='</tr>';
     m += '<TR><TD>Might:</td>';
-    m += '<TD width=50>Min.:<INPUT type=text id=FarmMinMight size=8 maxlength=8 value='+ FarmOptions.MinMight +'></td>';
-    m += '<TD>Max.:<INPUT type=text id=FarmMaxMight size=9 maxlength=9 value='+ FarmOptions.MaxMight +'></td></tr>';
+    m += '<TD width=50>Min.:<INPUT type=text id=FarmMinMight size=10 maxlength=11 value='+ FarmOptions.MinMight +'></td>';
+    m += '<TD>Max.:<INPUT type=text id=FarmMaxMight size=10 maxlength=11 value='+ FarmOptions.MaxMight +'></td></tr>';
     m += '<TR><TD>Farm if inactive for more then: </td>';
     m += '<TD><INPUT type=text id=FarmInactive size=2 value='+ FarmOptions.Inactive +'>days(checked every 23 hours).</td>';
 	m += '<TD> Farm is BAD if brought less then: ';
