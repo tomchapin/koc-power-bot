@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140317b
+// @version        20140318a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140317b';
+var Version = '20140318a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -8404,7 +8404,7 @@ Tabs.transport = {
         m += '<TD width=75px>TroopType:</td><TD width=150px><SELECT id="TransportTroop">';
         for (y in unsafeWindow.unitcost) m += '<option value="' + y + '">' + unsafeWindow.unitcost[y][0] + '</option>';
         m += '</select></td><TD width=75px>' + translate("Troops Available:") + '&nbsp;</td><TD id=TroopAmount align=left width=75px></td>';
-        m += '<TD width=75px>' + translate("Global Carry Amount:") + '&nbsp;</td><TD id=CarryAmount align=left width=75px></td>';
+        m += '<TD width=75px>' + translate("Global Carry Amount:") + '&nbsp;</td><TD id=CarryAmount align=left></td>';
         m += '<TR><TD >' + translate("Troops:") + ' </td><TD><INPUT id=TroopsToSend type=text size=6 maxlength=6 value="0">&nbsp;&nbsp;<INPUT id=MaxTroops type=submit value="Max"></td>';
         m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
         m += '<TD id=Calc colspan=3></td></tr>';
@@ -8838,6 +8838,15 @@ Tabs.transport = {
         };
 
         var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
+		var LoadSac = "";
+		if (unsafeWindow.seed.queue_sacr["city"+t.tcp.city.id]) {
+			for(var sacIndex = 0; sacIndex < unsafeWindow.seed.queue_sacr["city"+t.tcp.city.id].length; sacIndex ++ ) { 
+				if(unsafeWindow.seed.queue_sacr["city"+t.tcp.city.id][sacIndex]["unitType"] == unit.slice(3)) {
+					Load *= unsafeWindow.seed.queue_sacr["city"+t.tcp.city.id][sacIndex]["multiplier"][0];
+					LoadSac = '<span style="color:#f00;">&nbsp;&nbsp;&nbsp;Ritual Boost '+Math.round((unsafeWindow.seed.queue_sacr["city"+t.tcp.city.id][sacIndex]["multiplier"][0]-1)*100)+'%</span>';
+				}
+			}	
+		}
         /**
         from camelotmain
         var total_units = 0;
@@ -8886,7 +8895,7 @@ Tabs.transport = {
         else document.getElementById('TroopAmount')
             .innerHTML = 0;
         if (GlobalMaxLoad > 0) document.getElementById('CarryAmount')
-            .innerHTML = addCommas(GlobalMaxLoad);
+            .innerHTML = addCommas(GlobalMaxLoad) + LoadSac;
         else document.getElementById('CarryAmount')
             .innerHTML = 0;
         document.getElementById('Calc')
@@ -9427,14 +9436,17 @@ Tabs.transport = {
         if(tboost > unsafeWindow.cm.thronestats.boosts['Load'].Max) tboost = unsafeWindow.cm.thronestats.boosts['Load'].Max;
         var loadBoostBase = (Math.floor(Number(tboost)) * 0.01) +featherweight;
         
-               // if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
-               //     loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
-               // };bugged, wagons don't count as siege, lets just kill it for now
-        
+					if (unsafeWindow.cm.unitFrontendType[unit] == "siege") {
+						loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(59) * 0.01)
+					};
                     if (unsafeWindow.cm.unitFrontendType[unit] == "horsed") {
                         loadBoostBase += (unsafeWindow.cm.ThroneController.effectBonus(48) * 0.01);
                     };
-        var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
+
+		var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
+		if (unsafeWindow.seed.queue_sacr["city"+cityID]) {
+			for(var sacIndex = 0; sacIndex < unsafeWindow.seed.queue_sacr["city"+cityID].length; sacIndex ++ ) if(unsafeWindow.seed.queue_sacr["city"+cityID][sacIndex]["unitType"] == unit.slice(3)) Load *= unsafeWindow.seed.queue_sacr["city" + cityID][sacIndex]["multiplier"][0];
+		}
 
         loadBoostBase += 1;
         var LoadUnit = Math.floor(loadBoostBase*Load)-1;
@@ -9556,25 +9568,7 @@ Tabs.transport = {
         params.r5 = parseInt(carry_Astone/5);
         params.gold = carry_Gold;
         
-        switch (unit){
-      case 'unt1': params.u1 = wagons_needed;break;
-      case 'unt2': params.u2 = wagons_needed;break;
-      case 'unt3': params.u3 = wagons_needed;break;
-      case 'unt4': params.u4 = wagons_needed;break;
-      case 'unt5': params.u5 = wagons_needed;break;
-      case 'unt6': params.u6 = wagons_needed;break;
-      case 'unt7': params.u7 = wagons_needed;break;
-      case 'unt8': params.u8 = wagons_needed;break;
-      case 'unt9': params.u9 = wagons_needed;break;
-      case 'unt10': params.u10 = wagons_needed;break;
-      case 'unt11': params.u11 = wagons_needed;break;
-      case 'unt12': params.u12 = wagons_needed;break;
-      case 'unt13': params.u13 = wagons_needed;break;
-      case 'unt14': params.u14 = wagons_needed;break;
-      case 'unt15': params.u15 = wagons_needed;break;
-      case 'unt16': params.u16 = wagons_needed;break;
-      case 'unt17': params.u17 = wagons_needed;break;
-    }
+		params["u"+unit.slice(3)] = wagons_needed;
         
            if ((carry_Food + carry_Wood + carry_Stone + carry_Ore + carry_Astone + carry_Gold) > 0) {
         if(tt)
@@ -9645,7 +9639,12 @@ Tabs.transport = {
        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     var unitType = document.getElementById('TransportTroop').value;
     var LoadUnit = (parseInt(Seed.tech.tch10) * ((parseInt(unsafeWindow.unitstats[unitType]['5'])/100)*10)) + parseInt(unsafeWindow.unitstats[unitType]['5']);
-    var MaxLoad =  parseInt(Seed.units['city' + t.tcp.city.id][unitType]) * LoadUnit;
+    var Load =  parseInt(Seed.units['city' + t.tcp.city.id][unitType]);
+	if (unsafeWindow.seed.queue_sacr["city"+t.tcp.city.id]) {
+		for(var sacIndex = 0; sacIndex < unsafeWindow.seed.queue_sacr["city"+t.tcp.city.id].length; sacIndex ++ ) if(unsafeWindow.seed.queue_sacr["city"+t.tcp.city.id][sacIndex]["unitType"] == unitType.slice(3)) Load *= unsafeWindow.seed.queue_sacr["city"+t.tcp.city.id][sacIndex]["multiplier"][0];
+	}	
+    var MaxLoad = Load * LoadUnit;
+
     document.getElementById ('errorSpace').innerHTML = '';
           
     params.kid = 0;
@@ -9660,25 +9659,8 @@ Tabs.transport = {
     params.r5 = parseInt(document.getElementById ('pbtradeamountAstone').value);
     params.gold = parseInt(document.getElementById ('pbtradeamountGold').value);
         
-    switch (unitType){
-      case 'unt1': params.u1 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt2': params.u2 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt3': params.u3 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt4': params.u4 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt5': params.u5 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt6': params.u6 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt7': params.u7 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt8': params.u8 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt9': params.u9 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt10': params.u10 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt11': params.u11 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt12': params.u12 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt13': params.u13 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt14': params.u14 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt15': params.u15 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt16': params.u16 = parseInt(document.getElementById ('TroopsToSend').value);break;
-      case 'unt17': params.u17 = parseInt(document.getElementById ('TroopsToSend').value);break;
-    }
+	params["u"+unitType.slice(3)] = parseInt(document.getElementById ('TroopsToSend').value);
+
    if (tt)
    params.tt = tt;
     if ((params.r1 + params.r2 + params.r3 + params.r4 + params.r5 + params.gold) > 0) {
