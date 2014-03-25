@@ -1,6 +1,6 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140318a
+// @version        20140325a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140318a';
+var Version = '20140325a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -5380,6 +5380,22 @@ Tabs.tower = {
              + ', MM Lv'+ parseInt(Seed.tech.tch11)
              + ', AH Lv'+ parseInt(Seed.tech.tch12);
         }
+		var baseProtection =0;
+		var totalSthPrt = 0;
+		var SthPrtResearch = parseInt(Seed.tech.tch14);
+		var TRStHsBoost = equippedthronestats(89);	
+		if (TRStHsBoost == 0) TRStHsBoost = 1				
+		var researchToApply = ((SthPrtResearch / 10) + 1);
+		var TRBoostToApply = ((TRStHsBoost / 100) + 1);
+		var baseValsByLevel = {1:100000,2:200000,3:300000,4:400000,5:500000,6:600000,7:700000,8:800000,9:900000,10:1000000,11:5000000,12:50000000}
+		for (k in Seed.buildings['city' +city.id]) {
+			if (Seed.buildings['city' +city.id][k][0] == 9) {
+				baseProtection = baseValsByLevel[Seed.buildings['city' +city.id][k][1]];
+			}
+		}
+		totalSthPrt = addCommas(parseInt((baseProtection * researchToApply) * TRBoostToApply))
+		//alert(totalSthPrt);
+ 		msg += '|| StoreHouse Protected Res = ' + totalSthPrt + ' with ' + TRStHsBoost + '% TR Boost';
       }
     new t.sendalert(m); 
     }
@@ -8404,7 +8420,7 @@ Tabs.transport = {
         m += '<TD width=75px>TroopType:</td><TD width=150px><SELECT id="TransportTroop">';
         for (y in unsafeWindow.unitcost) m += '<option value="' + y + '">' + unsafeWindow.unitcost[y][0] + '</option>';
         m += '</select></td><TD width=75px>' + translate("Troops Available:") + '&nbsp;</td><TD id=TroopAmount align=left width=75px></td>';
-        m += '<TD width=75px>' + translate("Global Carry Amount:") + '&nbsp;</td><TD id=CarryAmount align=left></td>';
+        m += '<TD width=75px>' + translate("Global Carry Amount:") + '&nbsp;</td><TD id=CarryAmount align=left width=75px></td>';
         m += '<TR><TD >' + translate("Troops:") + ' </td><TD><INPUT id=TroopsToSend type=text size=6 maxlength=6 value="0">&nbsp;&nbsp;<INPUT id=MaxTroops type=submit value="Max"></td>';
         m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
         m += '<TD id=Calc colspan=3></td></tr>';
@@ -22483,7 +22499,7 @@ Tabs.gifts = {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                for(i in rslt.message){
-                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Ã‚Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!" || rslt.message[i].subject == "Yeni Hediye Alındı!" || rslt.message[i].subject == "Neues Geschenk erhalten!")){
+                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!" || rslt.message[i].subject == "Yeni Hediye Alindi!" || rslt.message[i].subject == "Neues Geschenk erhalten!")){
                      t.foundgift(i);
                   };
                };
@@ -22638,11 +22654,11 @@ Tabs.ascension = {
                     document.getElementById('pbAscCurMight_' + i).innerHTML = 'N/A';
                 }
 	      } else {
-                if (cityPrestigeLevel < 3) {
+                if (cityPrestigeLevel < 6) {
                     //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
                     document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
                     document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
-                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/3';
+                    document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/6';
                     document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/' +fullPrestige[cityPrestigeLevel-1];
                 } else {
                     document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C O M P L E T E &nbsp;&nbsp;&nbsp; (for now)</center>'
@@ -22655,7 +22671,7 @@ Tabs.ascension = {
             } else {
                 document.getElementById('pbGreenBar_' + i).innerHTML = '<CENTER><B>C I T Y &nbsp;&nbsp;&nbsp; N O T  &nbsp;&nbsp;&nbsp; A S C E N D E D &nbsp;&nbsp;&nbsp; Y E T</center>'
                 document.getElementById('pbProgPerc_' + i).innerHTML = '<CENTER>N/A</center>';
-                document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = '<CENTER>0/3</center>';
+                document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = '<CENTER>0/6</center>';
                 document.getElementById('pbAscCurMight_' + i).innerHTML = 'N/A';
             }
         }
@@ -22703,7 +22719,7 @@ Tabs.ascension = {
 //        }
 
         if (isPrestigeCity) {
-          if (cityPrestigeType == 3 && cityPrestigeLevel < 3) {
+          if (cityPrestigeType == 3 && cityPrestigeLevel < 6) {
             var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
             params.cid = cityId;
             params.prestigeType = 3;
@@ -25022,7 +25038,7 @@ function BtFilter(e) {
       
       m = m.replace(/Gr/g,'G'+x+'r').replace(/gR/g,'g'+x+'R').replace(/GR/g,'G'+x+'R').replace(/gr/g,'g'+x+'r');
       
-      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÃ‚Â­'+x+'I').replace(/ri/g,'r'+x+'i');
+      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÂ­'+x+'I').replace(/ri/g,'r'+x+'i');
       
       m = m.replace(/Na/g,'N'+x+'a').replace(/nA/g,'n'+x+'A').replace(/NA/g,'N'+x+'A').replace(/na/g,'n'+x+'a');
       
