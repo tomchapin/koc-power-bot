@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140325a
+// @version        20140327a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140325a';
+var Version = '20140327a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -965,6 +965,7 @@ function pbStartup (){
 	if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
 	afkwatcher();
 	loadchecker();
+  QuickScout();	
 }
 
 
@@ -6860,6 +6861,7 @@ Tabs.Search = {
     unsafeWindow.pbSearchLookup = t.clickedLookup;  
     unsafeWindow.pbSearchScout = t.clickedScout;
     unsafeWindow.pbExportToRaid = t.ExportToRaid;
+    unsafeWindow.ShowScoutList = t.ShowScoutList;
   },
 
   e_coordChange : function(){
@@ -7260,15 +7262,23 @@ Tabs.Search = {
         } else {
           if (t.opt.searchType == 2) { // city search
             m += '<TD align="right" >'+ t.dat[i][2].toFixed(2) +'</td>';
-            if ( t.dat[i][5])
-              m += '<TD colspan=4>* '+translate("MISTED")+' * &nbsp; &nbsp; <SPAN onclick="pbSearchScout('+ t.dat[i][0] +','+ t.dat[i][1] +');return false;"><A>'+translate("Scout")+'</a></span></td></tr>';
+            if ( t.dat[i][5] && t.dat[i][7] == 0) {
+			  if (t.dat[i][9] == "") {
+				m += '<TD colspan=4 id=pbsrch'+t.dat[i][0]+t.dat[i][1]+'>* '+translate("MISTED")+' * &nbsp; &nbsp; <SPAN onclick="quickscoutsearch('+ t.dat[i][0] +','+ t.dat[i][1] +','+t.selectedCity.id+');return false;"><A>'+translate("QuickScout")+'</a></span></td></tr>';
+			  }	
+			  else
+				m += '<TD colspan=4 id=pbsrch'+t.dat[i][0]+t.dat[i][1]+'>'+t.dat[i][9]+'</td></tr>';
+			  
+			}  
             else{
+              var linestyle = '';
+			  if (t.dat[i][5]) linestyle = 'color:#888;';
               var allStyle = '';
               if ( t.dat[i][12]=='f')
                 allStyle = 'class=pbTextFriendly';
               else if ( t.dat[i][12]=='h')
                 allStyle = 'class=pbTextHostile';
-              m += '<TD>'+ t.dat[i][9]+'</td><TD align=right>'+ t.dat[i][10] +'</td><TD><SPAN '+ allStyle +'>'+ t.dat[i][11]+'</span></td><TD>'+( t.dat[i][13]?'<SPAN class=boldDarkRed>'+translate("ONLINE")+'</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ t.dat[i][7] +')">'+translate("Lookup")+'</a></td></tr>';
+              m += '<TD style="'+linestyle+'">'+ t.dat[i][9]+'</td><TD align=right style="'+linestyle+'">'+ t.dat[i][10] +'</td><TD style="'+linestyle+'"><SPAN '+ allStyle +'>'+ t.dat[i][11]+'</span></td><TD>'+( t.dat[i][13]?'<SPAN class=boldDarkRed>'+translate("ONLINE")+'</span>':'')+'</td><TD><A onclick="pbSearchLookup('+ t.dat[i][7] +')">'+translate("Lookup")+'</a></td></tr>';
             }
             } else {
           m += '<TD align=right  valign="top">'+ t.dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ t.dat[i][4] +'</td><TD> &nbsp; '+ tileNames[ t.dat[i][3]]
@@ -7360,11 +7370,11 @@ Tabs.Search = {
         m += '<DIV class=pbStat>'+translate("Scout from")+' <span id=pbsrcScoutcity>'+city.name+'</span> <BR> '+translate("Total targets ")+coordlist.length+'</div>';
         m += '<DIV style="max-height:220px; overflow-y:auto;"><TABLE align=center cellpadding=0 cellspacing=0 class=pbTabPadNW><TR style="font-weight:bold; background-color:white"><TD width=15><input type=checkbox id=pbsrcScout_All /></td><TD>'+translate("Target Coords")+'</td></tr>';
       for(i=0; i<coordlist.length; i++){
-            m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck id="pbsrcScoutCheck_'+coordlist[i].x+'_'+coordlist[i].y+'" value="'+coordlist[i].x+'_'+coordlist[i].y+'" /></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td></tr>';
+            m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck id="pbsrcScoutCheck_'+coordlist[i].x+'_'+coordlist[i].y+'" value="'+coordlist[i].x+'_'+coordlist[i].y+'" '+(coordlist[i].chk?'CHECKED':'')+'/></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td></tr>';
       }
         m += '</table></div>';
         m += '<BR><input type=checkbox id="pbskip">Skip targets when errors occur';
-        m += '<BR><input type=checkbox id="pbsallcities">Scout from all cities';
+        m += '<BR><input type=checkbox id="pbsallcities">Scout from all cities (NOT UNDER AP!)';
         m += '<BR><CENTER>'+ strButton20(translate('Start Scout'), 'id=pbSrcStartScout') +'</center>';
         m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
     popScout.getMainDiv().innerHTML = m;
@@ -7417,9 +7427,13 @@ Tabs.Search = {
     logit('first '+Number(March.getTotalSlots(city.id))+' second: '+Number(March.getMarchSlots(city.id)));
      if (Number(Number(March.getTotalSlots(city.id))-Number(March.getMarchSlots(city.id))) <= 0){
      	if(document.getElementById('pbsallcities').checked) { 
+			var oldcityidx = Number(city.idx);
+			do {
      		var newcity = Number(city.idx)+1;
      		if(newcity > Number(Cities.numCities)-1) newcity = 0;
      		city = Cities.cities[newcity];
+			}	
+			while (!unsafeWindow.cm.PrestigeCityPlayerProtectionController.isActive(city.id) || (city.idx == oldcityidx))
      	};
         setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
         document.getElementById('pbSrcScoutResult').innerHTML += translate('Waiting for rally point to clear')+'...';
@@ -7469,15 +7483,22 @@ Tabs.Search = {
              if (notify)
               setTimeout(function(){ notify(count+1); }, 4000);
          } else {
-          if(document.getElementById('pbskip').checked) {
-             document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Moving on')+'....<BR>';
-             if (notify)
-              setTimeout(function(){ notify(count+1); }, 4000);
-          } else {
-             document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Retrying')+'....<BR>';
-             if (notify)
-              setTimeout(function(){ notify(count); }, 4000);
-        }
+			if(document.getElementById('pbskip').checked) {
+				document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Moving on')+'....<BR>';
+				if (notify)
+					setTimeout(function(){ notify(count+1); }, 4000);
+			} else {
+				if(rslt.error_code == 208) {
+					document.getElementById('pbSrcScoutResult').innerHTML += translate('Truced! Moving on')+'....<BR>';
+					if (notify)
+						setTimeout(function(){ notify(count+1); }, 4000);
+				}
+				else {
+					document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Retrying')+'....<BR>';
+					if (notify)
+						setTimeout(function(){ notify(count); }, 4000);
+				}		
+			}
           }
         },
         onFailure: function () {}
@@ -8420,7 +8441,7 @@ Tabs.transport = {
         m += '<TD width=75px>TroopType:</td><TD width=150px><SELECT id="TransportTroop">';
         for (y in unsafeWindow.unitcost) m += '<option value="' + y + '">' + unsafeWindow.unitcost[y][0] + '</option>';
         m += '</select></td><TD width=75px>' + translate("Troops Available:") + '&nbsp;</td><TD id=TroopAmount align=left width=75px></td>';
-        m += '<TD width=75px>' + translate("Global Carry Amount:") + '&nbsp;</td><TD id=CarryAmount align=left width=75px></td>';
+        m += '<TD width=75px>' + translate("Global Carry Amount:") + '&nbsp;</td><TD id=CarryAmount align=left></td>';
         m += '<TR><TD >' + translate("Troops:") + ' </td><TD><INPUT id=TroopsToSend type=text size=6 maxlength=6 value="0">&nbsp;&nbsp;<INPUT id=MaxTroops type=submit value="Max"></td>';
         m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
         m += '<TD id=Calc colspan=3></td></tr>';
@@ -25477,5 +25498,409 @@ contentEval(addWatchFunctions);
 
 // add the new functions to this script
 addWatchFunctions();
+
+/**********************************************************************************/
+
+Tabs.farmreports = {
+    tabLabel: 'Scout reports',
+    tabOrder: 999999,
+    deleting: false,
+    tabDisabled: false,
+    pageNo: 0,
+    FROptions: {
+        r1: 0,
+        r2: 0,
+        r3: 0,
+        r4: 0,
+        On: false,
+        lost: false
+    },
+    rptstimer: null,
+    delrptstimer: null,
+    lrpts: null,
+    myDiv: null,
+    tocheck: new Array(),
+    todelete: new Array(),
+    init: function(div) {
+        var t = Tabs.farmreports;
+        t.readSROpts();
+        t.myDiv = div;
+        var m = '<DIV class=pbStat>DELETE SCOUT REPORTS</div><br><div align=center>';
+        if (t.FROptions.On) {
+            m += '<INPUT id=FSrpts type=submit value="Delete = ON">';
+        } else {
+            m += '<INPUT id=FSrpts type=submit value="Delete = OFF">';
+        }
+        m += '<br>&nbsp;</div><DIV class=pbStat>OPTIONS</div><br>';
+        m += '&nbsp;&nbsp;&nbsp;DON\'T Delete Scout Reports if...';
+        m += '<br><table><tr><td>&nbsp;&nbsp;</td><td align="right"> Food is more than :&nbsp;</td><td><INPUT id=frR1 type=text value=' + t.FROptions.r1 + '></td></tr>';
+        m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Wood is more than :&nbsp;</td><td><INPUT id=frR2 type=text value=' + t.FROptions.r2 + '></td></tr>';
+        m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Stone is more than :&nbsp;</td><td><INPUT id=frR3 type=text value=' + t.FROptions.r3 + '></td></tr>';
+        m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Ore is more than :&nbsp;</td><td><INPUT id=frR4 type=text value=' + t.FROptions.r4 + '></td></tr></table>';
+        m += '&nbsp;&nbsp; (NB - Set amount to zero to disable the check for that particular resource)';
+        m += '<br><br>&nbsp;&nbsp;<input id=overwhelmed type=checkbox ' + (t.FROptions.lost ? 'CHECKED' : '') + '> Delete Scout Reports where you were Overwhelmed in Battle';
+        m += '<br>&nbsp;&nbsp;';
+        t.myDiv.innerHTML = m;
+        document.getElementById('frR1').addEventListener('change', function() {
+            t.FROptions.r1 = this.value;
+            t.saveSROpts();
+        }, false);
+        document.getElementById('frR2').addEventListener('change', function() {
+            t.FROptions.r2 = this.value;
+            t.saveSROpts();
+        }, false);
+
+        document.getElementById('frR3').addEventListener('change', function() {
+            t.FROptions.r3 = this.value;
+            t.saveSROpts();
+        }, false);
+
+        document.getElementById('frR4').addEventListener('change', function() {
+            t.FROptions.r4 = this.value;
+            t.saveSROpts();
+        }, false);
+        document.getElementById('overwhelmed').addEventListener('click', function() {
+            t.FROptions.lost = this.checked;
+            t.saveSROpts();
+        }, false);
+        document.getElementById('FSrpts').addEventListener('click', function() {
+            t.e_toggleswitch(this)
+        }, false);
+        setTimeout(t.startdeletereports, 10);
+    },
+    e_toggleswitch: function(obj) {
+        var t = Tabs.farmreports;
+        if (t.FROptions.On) {
+            obj.value = "Delete = OFF";
+            t.deleting = false;
+            t.FROptions.On = false;
+            clearInterval(t.rptstimer);
+            // clearInterval(t.delrptstimer);
+            clearInterval(t.lrpts);
+        } else {
+            obj.value = "Delete = ON";
+            t.FROptions.On = true;
+            t.startdeletereports();
+        }
+        t.saveSROpts();
+    },
+    startdeletereports: function() {
+        var t = Tabs.farmreports;
+        if (!t.deleting && t.FROptions.On) {
+            t.deleting = true;
+            t.pageNo = 0;
+            t.listreport(t.checkreports);
+            t.lrpts = setInterval(function() {
+                t.listreport(t.checkreports)
+            }, 10 * 60000);
+            t.rptstimer = setInterval(t.fetchreports, 6000)
+        }
+    },
+
+    listreport: function(callback) {
+        var t = Tabs.farmreports;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        if (t.pageNo > 1) params.pageNo = t.pageNo;
+        else t.tocheck = new Array();
+        new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function(rslt) {
+                callback(rslt);
+            },
+            onFailure: function() {
+                callback();
+            },
+        });
+    },
+
+    checkreports: function(rslt) {
+        var t = Tabs.farmreports;
+        if (!rslt.ok) {
+            t.pageNo = 0;
+            t.deleting = false;
+            return;
+        }
+        if (rslt.arReports.length < 1) {
+            t.pageNo = 0;
+            t.deleting = false;
+            return;
+        }
+        var reports = rslt.arReports;
+        var totalPages = rslt.totalPages;
+        if (rslt.totalPages > 30) var totalPages = 30;
+        for (k in reports) {
+            if (t.FROptions.On) {
+                if (reports[k].marchType == 3 && t.isMyself(reports[k].side1PlayerId)) {
+                    t.tocheck.push(k.substr(2));
+                };
+                if (reports[k].side0PlayerId == 0) {
+                    logit('side0player 0 detected');
+                };
+            }
+        };
+        if (t.pageNo < 30 && t.pageNo < totalPages) {
+            t.pageNo++;
+            setTimeout(function() {
+                t.listreport(t.checkreports)
+            }, 7000);
+        } else {
+            t.pageNo = 0;
+            t.deleting = false;
+        };
+    },
+
+    deleteCheckedReports: function() {
+        var t = Tabs.farmreports;
+        if (t.todelete.length > 0) {
+            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+            params.s0rids = '';
+            params.s1rids = t.todelete.join(",");
+            params.cityrids = '';
+            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                onSuccess: function(rslt) {},
+            });
+        };
+    },
+    deleteCheckedReport: function(rpt) {
+        var t = Tabs.farmreports;
+        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+        params.s0rids = '';
+        params.s1rids = rpt;
+        t.todelete = new Array();
+        params.cityrids = '';
+        new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
+            method: "post",
+            parameters: params,
+            onSuccess: function(rslt) {},
+        });
+    },
+    isMyself: function(userID) {
+        var t = Tabs.farmreports;
+        if (!Seed.players["u" + userID]) return false;
+        if (Seed.players["u" + userID].n == Seed.player.name) return true;
+        else return false;
+        return false;
+    },
+
+
+    fetchreports: function() {
+        var t = Tabs.farmreports;
+        if (t.tocheck.length > 0) {
+            rpId = t.tocheck.shift();
+            var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+            params.rid = rpId;
+            params.side = 1;
+            new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/fetchReport.php" + unsafeWindow.g_ajaxsuffix, {
+                method: "post",
+                parameters: params,
+                onSuccess: function(rslt) {
+                    var x = {};
+                    if (rslt.overwhelmed == true && t.FROptions.lost == true) {
+                        logit('deleting ' + rpId);
+                        t.deleteCheckedReport(rpId);
+                        return;
+                    };
+                    if (rslt.rsc) {
+                        var rsc = rslt.rsc;
+                        var topush = true;
+                        if (Number(t.FROptions.r1) > 0) {
+                            if (Number(rsc.r1) > Number(t.FROptions.r1)) {
+                                logit("food is more than " + rpId);
+                                logit(Number(rsc.r1) + ' > ' + Number(t.FROptions.r1));
+                                topush = false;
+                            };
+                        };
+
+                        if (Number(t.FROptions.r2) > 0) {
+                            if (Number(rsc.r2) > Number(t.FROptions.r2)) {
+                                logit("wood is more than " + rpId);
+                                logit(Number(rsc.r2) + ' > ' + Number(t.FROptions.r2));
+                                topush = false;
+                            };
+                        };
+                        if (Number(t.FROptions.r3) > 0) {
+                            if (Number(rsc.r3) > Number(t.FROptions.r3)) {
+                                logit("stone is more than " + rpId);
+                                logit(Number(rsc.r3) + ' > ' + Number(t.FROptions.r3));
+                                topush = false;
+                            };
+                        };
+
+                        if (Number(t.FROptions.r4) > 0) {
+                            if (Number(rsc.r4) > Number(t.FROptions.r4)) {
+                                logit("ore is more than " + rpId);
+                                logit(Number(rsc.r4) + ' > ' + Number(t.FROptions.r4));
+                                topush = false;
+                            };
+                        };
+
+                        if (topush == true) {
+                            t.deleteCheckedReport(rpId);
+                            logit('deleting ' + rpId);
+                        } else logit(' found a good one ' + rpId);
+                    };
+                },
+                onFailure: function(rslt) {
+                },
+            }, false);
+        };
+    },
+
+    saveSROpts: function() {
+        var t = Tabs.farmreports;
+        var serverID = getServerId();
+        setTimeout(function() {
+            GM_setValue('SROpts_' + Seed.player['name'] + '_' + serverID, JSON2.stringify(t.FROptions));
+        }, 0);
+    },
+    readSROpts: function() {
+        var t = Tabs.farmreports;
+        var serverID = getServerId();
+        s = GM_getValue('SROpts_' + Seed.player['name'] + '_' + serverID);
+        if (s != null) {
+            opts = JSON2.parse(s);
+            for (k in opts) {
+                if (matTypeof(opts[k]) == 'object') for (kk in opts[k])
+                t.FROptions[k][kk] = opts[k][kk];
+                else t.FROptions[k] = opts[k];
+            }
+        }
+    },
+    show: function() {
+        var t = Tabs.farmreports;
+    },
+    hide: function() {
+        var t = Tabs.farmreports;
+    },
+};
+
+/************************************* QUICK SCOUT ********************************/
+
+function QuickScout() {
+	var uW = unsafeWindow;
+	
+	// add a new option to the context menu
+	uW.cm.ContextMenuMapController.prototype.MapContextMenus.City["5"].push("qqmod");
+	var cityType = unsafeWindow.cm.CITY_STATUS.ANOTHER_PLAYER_CITY_AND_NOT_IN_YOUR_ALLIANCE;
+	uW.cm.ContextMenuMapController.prototype.MapContextMenus.City[cityType].push("qqmod");
+
+	// add actions to the menu item
+	var mod = new CalterUwFunc('cm.ContextMenuMapController.prototype.calcButtonInfo',
+	[['default:', 'case "qqmod":' +
+		' b.text = "QuickScout"; b.color = "green"; ' +
+		' b.action = function () { ' +
+		' quickscout(e); ' +
+		' }; ' +
+		' d.push(b); break; ' +
+		' default: ']]);
+
+	mod.setEnable(true);
+	
+	uW.quickscout = function(e) {
+		// send 1 scout
+	  	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.cid = uW.currentcityid;
+	    params.type = 3
+	    params.kid = 0
+	    params.xcoord = e.tile.x;
+	    params.ycoord = e.tile.y;
+	  	params.u3 = 1;
+	  	params.gold = 0;
+	  	params.r1 = 0;
+	  	params.r2 = 0;
+	  	params.r3 = 0;
+	  	params.r4 = 0;
+	  	params.r5 = 0;
+
+		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+			    method: "post",
+			    parameters: params,
+			    loading: true,
+			    onSuccess: function (rslt) {
+			        if (rslt.ok) {
+						var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+						var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
+						var ut = uW.unixtime();
+						var unitsarr = {};
+						unitsarr[3] = 1;
+						var resources = [0,0,0,0,0,0];
+						uW.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, uW.currentcityid, true, ut + rtimediff);
+						if (rslt.updateSeed) { uW.update_seed(rslt.updateSeed) }
+			        }
+					else {
+						uW.Modal.showAlert(uW.printLocalError(rslt.error_code, rslt.msg, rslt.feedback))
+					}
+			    }, 
+			    onFailure: function () {},
+		},true);
+	}
+
+	uW.quickscoutsearch = function(x,y,cid) {
+		// send 1 scout
+	  	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		if (cid==null) 
+			params.cid = uW.currentcityid; 
+		else
+			params.cid = cid; 
+	    params.type = 3
+	    params.kid = 0
+	    params.xcoord = x;
+	    params.ycoord = y;
+	  	params.u3 = 1;
+	  	params.gold = 0;
+	  	params.r1 = 0;
+	  	params.r2 = 0;
+	  	params.r3 = 0;
+	  	params.r4 = 0;
+	  	params.r5 = 0;
+
+		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/march.php" + unsafeWindow.g_ajaxsuffix, {
+			    method: "post",
+			    parameters: params,
+			    loading: true,
+			    onSuccess: function (rslt) {
+			        if (rslt.ok) {
+						var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+						var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
+						var ut = uW.unixtime();
+						var unitsarr = {};
+						unitsarr[3] = 1;
+						var resources = [0,0,0,0,0,0];
+						uW.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, uW.currentcityid, true, ut + rtimediff);
+						if (rslt.updateSeed) { uW.update_seed(rslt.updateSeed) }
+					}
+					else {
+						divid = 'pbsrch'+x+y;
+						if (!document.getElementById(divid)) return;
+						var msg = '<span style="color:#f00;">Error Code - '+rslt.error_code+'</span>&nbsp; &nbsp; <SPAN onclick="quickscoutsearch('+x+','+y+','+cid+');return false;"><A>'+translate("QuickScout")+'</a></span>';
+						if(rslt.error_code == 208) {
+							msg = '<span style="color:#888;">Truced - Cannot Scout!</span>';
+							// update search results .. find correct row
+							var t = Tabs.Search;
+							var numRows = t.mapDat.length;
+							for (i=0; i<numRows; i++){
+								if (t.mapDat[i][0] == x && t.mapDat[i][1] == y) {
+									t.mapDat[i][7] = 0;
+									t.mapDat[i][9] = msg;
+								}	
+							}
+						}
+						if(rslt.error_code == 210) {
+							msg = '<span style="color:#f00;">Rally Point Full!</span>&nbsp; &nbsp; <SPAN onclick="quickscoutsearch('+x+','+y+','+cid+');return false;"><A>'+translate("QuickScout")+'</a></span>';
+						}
+						document.getElementById(divid).innerHTML = msg;
+					}
+			    }, 
+			    onFailure: function () {},
+		},true);
+	}
+	
+};
+
+
+/*************************************** QUICKSCOUT END ***********************************/ 
 
 pbStartup ();
