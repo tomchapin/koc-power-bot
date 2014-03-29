@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140328a
+// @version        20140328b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140328a';
+var Version = '20140328b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2446,6 +2446,7 @@ Tabs.Throne = {
                 "Harmony"           : "http://i.imgur.com/XdpulbB.png",
                 "Stalwart Throne"   : "http://i.imgur.com/3pI3OZj.jpg",
                 "Throne of Fortune" : "http://i.imgur.com/ykrqzP9.jpg",
+                "Rugged Throne"     : "http://i.imgur.com/IrI7vMJ.jpg",
             },
             Banners : {
                 "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
