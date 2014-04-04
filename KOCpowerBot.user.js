@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140328b
+// @version        20140403a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140328b';
+var Version = '20140403a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2438,6 +2438,7 @@ Tabs.Throne = {
                 "Dagonet The Court Jester"  : "http://i.imgur.com/29bAH99.png",
                 "Minstrel"              : "http://i.imgur.com/hUIXhca.png",
 		"Percival"		: "http://i.imgur.com/ei2YRFF.png",
+		"Tristan"		: "http://i.imgur.com/4TeU5Zv.png",
             },
             Thrones : {
                 "Valor"             : "http://i.imgur.com/fIeZMXM.png",
