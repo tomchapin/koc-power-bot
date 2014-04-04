@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140403a
+// @version        20140404a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140403a';
+var Version = '20140404a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -7474,13 +7474,19 @@ Tabs.Search = {
          onSuccess: function (rslt) {
          rslt = eval("(" + rslt.responseText + ")");
          if (rslt.ok) {
-             var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
-             var ut = unixTime();
+            var timediff = parseInt(rslt.eta) - parseInt(rslt.initTS);
+            var ut = unixTime();
 			var unitsarr = {};
-			unitsarr[3] = 1;
+			for (var ui in unsafeWindow.cm.UNIT_TYPES){
+				i = unsafeWindow.cm.UNIT_TYPES[ui];
+				if (params["u" + i])
+					unitsarr[i] = params["u" + i];
+				else
+					unitsarr[i] = 0;
+			}		
 			var resources = [0,0,0,0,0,0];
-             var currentcityid = params.cid;
- 							var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
+            var currentcityid = params.cid;
+ 			var rtimediff=parseInt(rslt.returnTS)-parseInt(rslt.initTS); 
              unsafeWindow.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, currentcityid, true,ut+rtimediff);
              if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
              document.getElementById('pbSrcScoutResult').innerHTML += translate('Sent!')+'<BR>';
@@ -9639,6 +9645,8 @@ Tabs.transport = {
 							i = unsafeWindow.cm.UNIT_TYPES[ui];
 							if (params["u" + i])
 								unitsarr[i] = params["u" + i];
+							else
+								unitsarr[i] = 0;
 						}		
 						var resources = new Array();
 						resources[0] = params.gold;
@@ -9722,6 +9730,8 @@ Tabs.transport = {
 							i = unsafeWindow.cm.UNIT_TYPES[ui];
 							if (params["u" + i])
 								unitsarr[i] = params["u" + i];
+							else
+								unitsarr[i] = 0;
 						}		
 						var resources = new Array();
 						resources[0] = params.gold;
@@ -21468,6 +21478,8 @@ var March = {
 						i = unsafeWindow.cm.UNIT_TYPES[ui];
 						if (params["u" + i])
 							unitsarr[i] = params["u" + i];
+						else
+							unitsarr[i] = 0;
 					}		
 					var resources = new Array();
 					resources[0] = params.gold;
@@ -25832,7 +25844,13 @@ function QuickScout() {
 						var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
 						var ut = uW.unixtime();
 						var unitsarr = {};
-						unitsarr[3] = 1;
+						for (var ui in unsafeWindow.cm.UNIT_TYPES){
+							i = unsafeWindow.cm.UNIT_TYPES[ui];
+							if (params["u" + i])
+								unitsarr[i] = params["u" + i];
+							else
+								unitsarr[i] = 0;
+						}		
 						var resources = [0,0,0,0,0,0];
 						uW.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, uW.currentcityid, true, ut + rtimediff);
 						if (rslt.updateSeed) { uW.update_seed(rslt.updateSeed) }
@@ -25874,7 +25892,13 @@ function QuickScout() {
 						var rtimediff = parseInt(rslt.returnTS) - parseInt(rslt.initTS);
 						var ut = uW.unixtime();
 						var unitsarr = {};
-						unitsarr[3] = 1;
+						for (var ui in unsafeWindow.cm.UNIT_TYPES){
+							i = unsafeWindow.cm.UNIT_TYPES[ui];
+							if (params["u" + i])
+								unitsarr[i] = params["u" + i];
+							else
+								unitsarr[i] = 0;
+						}		
 						var resources = [0,0,0,0,0,0];
 						uW.attach_addoutgoingmarch(rslt.marchId, rslt.marchUnixTime, ut + timediff, params.xcoord, params.ycoord, unitsarr, params.type, params.kid, resources, rslt.tileId, rslt.tileType, rslt.tileLevel, uW.currentcityid, true, ut + rtimediff);
 						if (rslt.updateSeed) { uW.update_seed(rslt.updateSeed) }
