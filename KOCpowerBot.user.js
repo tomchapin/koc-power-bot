@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140404a
+// @version        20140404b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140404a';
+var Version = '20140404b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -11429,6 +11429,7 @@ Tabs.Barb = {
        }
       m += '<TD><INPUT id=troopselect type=submit value="Select troops"></td>';
       m += '<TD><INPUT id=Options type=submit value="Options"></td>';
+      m += '<TD><INPUT id=StopSearch type=submit value="Stop Current Search"></td>';
       m += '</tr></table></div>';
       
       m += '<DIV id=pbTraderDivD class=pbStat>FOREST STATS</div>';
@@ -11483,6 +11484,7 @@ Tabs.Barb = {
     
     document.getElementById('AttSearch').addEventListener('click', function(){t.toggleBarbState(this)} , false);
     document.getElementById('Options').addEventListener('click', t.barbOptions , false);
+    document.getElementById('StopSearch').addEventListener('click', t.callStop , false);
     document.getElementById('troopselect').addEventListener('click', t.troopOptions , false);
     var element_class = document.getElementsByClassName('pblevelopt');
     for (k=0;k<element_class.length;k++){
@@ -12121,7 +12123,7 @@ Tabs.Barb = {
     if (t.curX > t.lastX){
       t.curX = t.firstX;
       t.curY += t.opt.searchDistance;
-      if (t.curY > t.lastY){
+      if (t.curY == 999 || t.curY > t.lastY){
         t.stopSearch('Found: ' + t.mapDat.length);
         return;
       }
@@ -12142,6 +12144,12 @@ Tabs.Barb = {
       setTimeout (function(){t.MapAjax.request (left, top, t.opt.searchDistance, t.mapCallback)}, MAP_DELAY);
    }
     
+  },
+  
+  callStop: function(){
+    var t = Tabs.Barb;
+    t.curY=999;
+    t.stopSearch('Found: ' + t.mapDat.length);
   },
   
   stopSearch : function (msg){
