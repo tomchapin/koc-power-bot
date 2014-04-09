@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140409d
+// @version        20140409e
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140409d';
+var Version = '20140409e';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -7533,7 +7533,6 @@ Tabs.Search = {
         <TR><TD class=xtab align=right>'+translate("Max")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=pamaxmight size=8 value='+ Options.maxmight +'>\
         <TR><TD class=xtab align=right>Ignore alliances ranked</td><TD class=xtab><INPUT type=text id=patopra size=4 value='+ Options.toprank +'> - <INPUT type=text id=pabotra size=4 value='+ Options.botrank +'></td>\
         <TR><TD class=xtab align=right>'+translate("Coordinates only")+':</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
-
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
         FetchTopAlliances(Options.toprank,Options.botrank,function (e) {
          t.IgAlly = e;
