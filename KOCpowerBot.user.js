@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140409c
+// @version        20140409d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140409c';
+var Version = '20140409d';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -171,6 +171,7 @@ var Options = {
   MsgInterval  : 1,
   CrestMsgInterval  : 1,
 
+
   foodreport   : false,
   crestreport  : true,
   Crest1Count  : 0,                            
@@ -296,6 +297,7 @@ var CrestOptions = {
   R2Onager       :  0,
   isWild       :  false,
 
+
   Paused       :  false,
 };
 var GiftDB = {
@@ -360,6 +362,7 @@ var CrestData = new Array();
       this.R2Halb       =  Arr.R2Halb;
       this.R2Onager     =  Arr.R2Onager;
       this.isWild       =  Arr.isWild;
+
 
 	  this.Paused       =  Arr.Paused;
    };
@@ -7530,6 +7533,7 @@ Tabs.Search = {
         <TR><TD class=xtab align=right>'+translate("Max")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=pamaxmight size=8 value='+ Options.maxmight +'>\
         <TR><TD class=xtab align=right>Ignore alliances ranked</td><TD class=xtab><INPUT type=text id=patopra size=4 value='+ Options.toprank +'> - <INPUT type=text id=pabotra size=4 value='+ Options.botrank +'></td>\
         <TR><TD class=xtab align=right>'+translate("Coordinates only")+':</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
+
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
         FetchTopAlliances(Options.toprank,Options.botrank,function (e) {
          t.IgAlly = e;
@@ -7753,6 +7757,7 @@ Tabs.Search = {
         numRows = t.MAX_SHOW_WHILE_RUNNING;
         document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>'+translate('NOTE: Table only shows ')+ t.MAX_SHOW_WHILE_RUNNING +' of '+ t.dat.length +translate(' results until search is complete')+'.</font>';
       }
+
       for (i=0; i<numRows; i++){
         m += '<TR><TD><DIV onclick="pbGotoMap('+ t.dat[i][0] +','+ t.dat[i][1] +')"><A>'+ t.dat[i][0] +','+ t.dat[i][1] +'</a></div></td>';
         if (coordsOnly) {
@@ -7763,6 +7768,9 @@ Tabs.Search = {
             if ( t.dat[i][5] && t.dat[i][7] == 0) {
 			  if (t.dat[i][9] == "") {
 				m += '<TD colspan=4 id=pbsrch'+t.dat[i][0]+t.dat[i][1]+'>* '+translate("MISTED")+' * &nbsp; &nbsp; <SPAN onclick="quickscoutsearch('+ t.dat[i][0] +','+ t.dat[i][1] +','+t.selectedCity.id+');return false;"><A>'+translate("QuickScout")+'</a></span></td></tr>';
+
+
+
 			  }	
 			  else
 				m += '<TD colspan=4 id=pbsrch'+t.dat[i][0]+t.dat[i][1]+'>'+t.dat[i][9]+'</td></tr>';
@@ -7873,6 +7881,7 @@ Tabs.Search = {
         m += '</table></div>';
         m += '<BR><input type=checkbox id="pbskip">Skip targets when errors occur';
         m += '<BR><input type=checkbox id="pbsallcities">Scout from all cities (NOT UNDER AP!)';
+
         m += '<BR><CENTER>'+ strButton20(translate('Start Scout'), 'id=pbSrcStartScout') +'</center>';
         m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
     popScout.getMainDiv().innerHTML = m;
@@ -7967,10 +7976,55 @@ Tabs.Search = {
 	March.addMarch(params, function(rslt){
 		if (rslt.ok) {
 			document.getElementById('pbSrcScoutResult').innerHTML += translate('Sent!')+'<BR>';
+
+
+
+
+
+
+
+
+
+
+
+
+
 			if (notify)
 				setTimeout(function(){ notify(count+1); }, 4000);
 		}
 		else {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			if(document.getElementById('pbskip').checked) {
 				document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Moving on')+'....<BR>';
 				if (notify)
@@ -20972,6 +21026,7 @@ Tabs.Attack = {
 	msgtimer : null,
 
 
+
 	/** window display **/
 	init : function (div) {
 		var t = Tabs.Attack;
@@ -21012,6 +21067,7 @@ Tabs.Attack = {
 		m += '<TABLE class=ptTab><TR><TD>Target Co-ords:&nbsp;&nbsp;X:&nbsp;<INPUT id=pbcrestx type=text size=3 maxlength=3 value=""></td>';
 		m += '<TD>Y:&nbsp;<INPUT id=pbcresty type=text size=3 maxlength=3 value=""></td></tr>';
 		m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Target is Wilderness</td><td>(if ticked will abandon wild and reduce wave 1 MM for subsequent attacks)</td></tr></table>';
+
 
    
 		var dude = unsafeWindow.unitnamedesctranslated;
@@ -21082,6 +21138,15 @@ Tabs.Attack = {
 
 
 
+
+
+
+
+
+
+
+
+
 		$("pbcrestslots").addEventListener('change', function(e){
 			Options.CrestSlots = parseIntNan(e.target.value);
 			saveOptions();
@@ -21100,6 +21165,11 @@ Tabs.Attack = {
 
 
 
+
+
+
+
+
 		t.tcp = new CdispCityPicker ('crestcityselect', document.getElementById('crestcity'), true, t.clickCitySelect, selbut);
     
 		if (CrestOptions.CrestCity == 0) {
@@ -21110,6 +21180,9 @@ Tabs.Attack = {
 			CrestOptions.isWild = this.checked;
 		},false);
     
+
+
+
 
 
 
@@ -21134,6 +21207,7 @@ Tabs.Attack = {
 		document.getElementById('pbcresty').addEventListener('keyup', function(){ if (isNaN(document.getElementById('pbcresty').value)) document.getElementById('pbcresty').value='';}, false);
 
 		document.getElementById('pbcrest_iswild').addEventListener('click', function(){CrestOptions.isWild = this.checked;} , false);
+
 
 		document.getElementById('crestcity').addEventListener('click', function(){CrestOptions.CrestCity = t.tcp.city.id;} , false);
 		document.getElementById('Cresttoggle').addEventListener('click', function(){t.toggleCrestState(this)} , false);
@@ -21506,6 +21580,15 @@ Tabs.Attack = {
 
 
 
+
+
+
+
+
+
+
+
+
 		if (!t.checkCityTroops(r,CrestDataNum)) {
 //			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
@@ -21759,7 +21842,7 @@ var March = {
             t.sendMarch(opts.params, opts.callback);
         } else {
             t.queue.push(opts);
-			actionLog(t.getMarchType(opts.params.type)+' added to march queue. Queue now contains '+ t.getQueueLength +' marches.');
+			actionLog(t.getMarchType(opts.params.type)+' added to march queue. Queue now contains '+ t.getQueueLength() +' marches.');
 
             //setTimeout(t.loop, 2000);
         }
@@ -21770,7 +21853,7 @@ var March = {
             var opts = t.queue.shift();
 			if(opts) {
 				t.sendMarch(opts.params, opts.callback);
-				actionLog(t.getMarchType(opts.params.type)+' triggered from march queue. Queue now contains '+ t.getQueueLength +' marches.');
+				actionLog(t.getMarchType(opts.params.type)+' triggered from march queue. Queue now contains '+ t.getQueueLength() +' marches.');
 			}	
 		}
     },
@@ -26024,7 +26107,8 @@ Tabs.farmreports = {
         r3: 0,
         r4: 0,
         On: false,
-        lost: false
+        lost: false,
+        friendly: false,
     },
     rptstimer: null,
     delrptstimer: null,
@@ -26036,20 +26120,21 @@ Tabs.farmreports = {
         var t = Tabs.farmreports;
         t.readSROpts();
         t.myDiv = div;
-        var m = '<DIV class=pbStat>DELETE SCOUT REPORTS</div><br><div align=center>';
+        var m = '<DIV class=pbStat>AUTO-DELETE OWN SCOUT REPORTS</div><br><div align=center>';
         if (t.FROptions.On) {
             m += '<INPUT id=FSrpts type=submit value="Delete = ON">';
         } else {
             m += '<INPUT id=FSrpts type=submit value="Delete = OFF">';
         }
-        m += '<br>&nbsp;</div><DIV class=pbStat>OPTIONS</div><br>';
+        m += '<br>&nbsp;</div><DIV class=pbStat>DELETE OPTIONS</div><br>';
         m += '&nbsp;&nbsp;&nbsp;DON\'T Delete Scout Reports if...';
         m += '<br><table><tr><td>&nbsp;&nbsp;</td><td align="right"> Food is more than :&nbsp;</td><td><INPUT id=frR1 type=text value=' + t.FROptions.r1 + '></td></tr>';
         m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Wood is more than :&nbsp;</td><td><INPUT id=frR2 type=text value=' + t.FROptions.r2 + '></td></tr>';
         m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Stone is more than :&nbsp;</td><td><INPUT id=frR3 type=text value=' + t.FROptions.r3 + '></td></tr>';
         m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Ore is more than :&nbsp;</td><td><INPUT id=frR4 type=text value=' + t.FROptions.r4 + '></td></tr></table>';
-        m += '&nbsp;&nbsp; (NB - Set amount to zero to disable the check for that particular resource)';
-        m += '<br><br>&nbsp;&nbsp;<input id=overwhelmed type=checkbox ' + (t.FROptions.lost ? 'CHECKED' : '') + '> Delete Scout Reports where you were Overwhelmed in Battle';
+        m += '&nbsp;&nbsp; (NB - Set amount to zero to disable the check for that particular resource. If all amounts are zero nothing gets deleted)';
+        m += '<br><br>&nbsp;&nbsp;<input id=froverwhelmed type=checkbox ' + (t.FROptions.lost ? 'CHECKED' : '') + '> Delete Scout Reports where you were Overwhelmed in Battle';
+        m += '<br>&nbsp;&nbsp;<input id=frlost type=checkbox ' + (t.FROptions.friendly ? 'CHECKED' : '') + '> Delete Scout Reports of Friendly Alliances';
         m += '<br>&nbsp;&nbsp;';
         t.myDiv.innerHTML = m;
         document.getElementById('frR1').addEventListener('change', function() {
@@ -26070,11 +26155,15 @@ Tabs.farmreports = {
             t.FROptions.r4 = this.value;
             t.saveSROpts();
         }, false);
-        document.getElementById('overwhelmed').addEventListener('click', function() {
+        document.getElementById('froverwhelmed').addEventListener('click', function() {
             t.FROptions.lost = this.checked;
             t.saveSROpts();
         }, false);
-        document.getElementById('FSrpts').addEventListener('click', function() {
+        document.getElementById('frlost').addEventListener('click', function() {
+            t.FROptions.friendly = this.checked;
+            t.saveSROpts();
+        }, false);
+         document.getElementById('FSrpts').addEventListener('click', function() {
             t.e_toggleswitch(this)
         }, false);
         setTimeout(t.startdeletereports, 10);
@@ -26111,8 +26200,9 @@ Tabs.farmreports = {
     listreport: function(callback) {
         var t = Tabs.farmreports;
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        if (t.pageNo > 1) params.pageNo = t.pageNo;
+        if (t.pageNo >= 1) params.pageNo = t.pageNo;
         else t.tocheck = new Array();
+		if (params.pageNo) actionLog('Checking scout reports... page '+params.pageNo); else actionLog('Checking scout reports...');
         new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/listReports.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
             parameters: params,
@@ -26142,11 +26232,27 @@ Tabs.farmreports = {
         if (rslt.totalPages > 30) var totalPages = 30;
         for (k in reports) {
             if (t.FROptions.On) {
-                if (reports[k].marchType == 3 && t.isMyself(reports[k].side1PlayerId)) {
-                    t.tocheck.push(k.substr(2));
-                };
-                if (reports[k].side0PlayerId == 0) {
-                    logit('side0player 0 detected');
+                if (reports[k].marchType == 3) {
+					if (reports[k].side1PlayerId == unsafeWindow.tvuid) {
+						var rptdel = false;
+						if (reports[k].side0AllianceId && t.FROptions.friendly == true) {
+							for (l in unsafeWindow.seed.allianceDiplomacies.friendlyToThem) {
+								if(reports[k].side0AllianceId == unsafeWindow.seed.allianceDiplomacies.friendlyToThem[l].allianceId) {
+									logit('deleting friendly scout' + k.substr(2));
+									t.deleteCheckedReport(k.substr(2));
+									rptdel = true;
+								}	
+							}	
+							for (l in unsafeWindow.seed.allianceDiplomacies.friendly) {
+								if(reports[k].side0AllianceId == unsafeWindow.seed.allianceDiplomacies.friendly[l].allianceId) {
+									logit('deleting friendly scout ' + k.substr(2));
+									t.deleteCheckedReport(k.substr(2));
+									rptdel = true;
+								}	
+							}
+						};
+					};
+					if (rptdel == false) { t.tocheck.push(k.substr(2)); }
                 };
             }
         };
@@ -26171,7 +26277,7 @@ Tabs.farmreports = {
             new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
                 method: "post",
                 parameters: params,
-                onSuccess: function(rslt) {},
+				onSuccess: function(rslt) {if(rslt.ok){actionLog('Deleted: '+t.todelete.length+' scout reports');}},
             });
         };
     },
@@ -26185,18 +26291,9 @@ Tabs.farmreports = {
         new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/deleteCheckedReports.php" + unsafeWindow.g_ajaxsuffix, {
             method: "post",
             parameters: params,
-            onSuccess: function(rslt) {},
+            onSuccess: function(rslt) {if(rslt.ok){actionLog('Deleted: 1 scout report');}},
         });
     },
-    isMyself: function(userID) {
-        var t = Tabs.farmreports;
-        if (!Seed.players["u" + userID]) return false;
-        if (Seed.players["u" + userID].n == Seed.player.name) return true;
-        else return false;
-        return false;
-    },
-
-
     fetchreports: function() {
         var t = Tabs.farmreports;
         if (t.tocheck.length > 0) {
@@ -26210,7 +26307,7 @@ Tabs.farmreports = {
                 onSuccess: function(rslt) {
                     var x = {};
                     if (rslt.overwhelmed == true && t.FROptions.lost == true) {
-                        logit('deleting ' + rpId);
+                        logit('deleting overwhelmed report ' + rpId);
                         t.deleteCheckedReport(rpId);
                         return;
                     };
@@ -26219,39 +26316,38 @@ Tabs.farmreports = {
                         var topush = true;
                         if (Number(t.FROptions.r1) > 0) {
                             if (Number(rsc.r1) > Number(t.FROptions.r1)) {
-                                logit("food is more than " + rpId);
-                                logit(Number(rsc.r1) + ' > ' + Number(t.FROptions.r1));
+                                logit("food check passed " + rpId + " " + Number(rsc.r1) + ' > ' + Number(t.FROptions.r1));
                                 topush = false;
                             };
                         };
 
                         if (Number(t.FROptions.r2) > 0) {
                             if (Number(rsc.r2) > Number(t.FROptions.r2)) {
-                                logit("wood is more than " + rpId);
-                                logit(Number(rsc.r2) + ' > ' + Number(t.FROptions.r2));
+                                logit("wood check passed " + rpId + " " + Number(rsc.r2) + ' > ' + Number(t.FROptions.r2));
                                 topush = false;
                             };
                         };
                         if (Number(t.FROptions.r3) > 0) {
                             if (Number(rsc.r3) > Number(t.FROptions.r3)) {
-                                logit("stone is more than " + rpId);
-                                logit(Number(rsc.r3) + ' > ' + Number(t.FROptions.r3));
+                                logit("stone check passed " + rpId + " " + Number(rsc.r3) + ' > ' + Number(t.FROptions.r3));
                                 topush = false;
                             };
                         };
 
                         if (Number(t.FROptions.r4) > 0) {
                             if (Number(rsc.r4) > Number(t.FROptions.r4)) {
-                                logit("ore is more than " + rpId);
-                                logit(Number(rsc.r4) + ' > ' + Number(t.FROptions.r4));
+                                logit("ore check passed " + rpId + " " + Number(rsc.r4) + ' > ' + Number(t.FROptions.r4));
                                 topush = false;
                             };
                         };
 
+						// safety net .. if no resource options set then don't delete the report, otherwise ALL scouts would be deleted always and we'd have a load of people moaning...
+						if ((Number(t.FROptions.r1) == 0) && (Number(t.FROptions.r2) == 0) && (Number(t.FROptions.r3) == 0) && (Number(t.FROptions.r4) == 0)) topush = false;
+						
                         if (topush == true) {
                             t.deleteCheckedReport(rpId);
-                            logit('deleting ' + rpId);
-                        } else logit(' found a good one ' + rpId);
+                            logit('deleting scout ' + rpId);
+                        } 
                     };
                 },
                 onFailure: function(rslt) {
@@ -26328,6 +26424,9 @@ function QuickScout() {
 
 		March.addMarch(params, function(rslt){
 			if (!rslt.ok) {
+
+
+
 				uW.Modal.showAlert(uW.printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
 			}
 		});
@@ -26355,6 +26454,9 @@ function QuickScout() {
 
 		March.addMarch(params, function(rslt){
 			if (!rslt.ok) {
+
+
+
 				divid = 'pbsrch'+x+y;
 				if (!document.getElementById(divid)) return;
 				var msg = '<span style="color:#f00;">Error Code - '+rslt.error_code+'</span>&nbsp; &nbsp; <SPAN onclick="quickscoutsearch('+x+','+y+','+cid+');return false;"><A>'+translate("QuickScout")+'</a></span>';
@@ -26377,7 +26479,213 @@ function QuickScout() {
 			}
 		});
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*************************************** QUICKSCOUT END ***********************************/ 
 
 pbStartup ();
