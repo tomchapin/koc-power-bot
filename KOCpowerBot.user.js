@@ -2332,6 +2332,7 @@ compactFarmData3: function(){
 
 };
 
+
 /*********************************** Throne Tab ***********************************/
 Tabs.Throne = {
 	tabOrder: 590,
@@ -3275,9 +3276,9 @@ Tabs.Throne = {
 			var m = '<DIV id=compElse class=pbStat>Compare Someone Else\'s TR</div><br>';
 			m += '<TD><CENTER>Paste someone else\'s TR code in this box, and tick the checkbox to compare their Throne Room. If there is nothing in the text box, your own Throne will be compared, even if the box is ticked.<INPUT type=text value="" id=pbCompElseTR></input><INPUT type=checkbox id=compElseTr></input></center>';
 			m += '<DIV id=compElse2 class=pbStat>Send your TR Code for comparison by someone else</div><br>';
-			m += '<TD><CENTER>Click this "Get TR Code" button to generate the code to send to someone else for them to inspect your TR. Once the text box is filled, you can either copy and paste it all directly to the person you want to view, or click the "Send in Message" button after filling player name in the "Send to" box.</td></center>';
+			m += '<TD><CENTER>Click this "Get TR Code" button to generate the code to send to someone else for them to inspect your TR. Once the text box is filled, you can either copy and paste it all directly to the person you want to view, or click the "Send in Message" button after filling player name in the "Send message to" box.</td></center>';
 			m += '<TD><CENTER><INPUT type=text value="" id=displayTR readonly=true></input><INPUT id=populatebox type=submit value="Get TR Code"></input><INPUT id=clearTRArray type=submit value="Clear"></input></center>';
-			m += '<TD><CENTER><DIV id=apearMessageReceipt></div></td>';
+			m += '<TD><CENTER><DIV id=apearMessageReceipt></div><DIV id=dispResult></div></td>';
 			m += '<DIV id=pbTowrtDivF class=pbStat>Compare Throne Items</div><br><TABLE id=pbCompareStats width=100% height=0% class=pbTab>';
 			m += '<TD>Advisor: <DIV id=advisorCount></div></td><TD>Banner:<DIV id=bannerCount></div></td><TD>Throne :<DIV id=chairCount></div></td><TD>Table: <DIV id=tableCount></div></td><TD>Trophy:<DIV id=trophyCount></div></td><TD>Window: <DIV id=windowCount></div></td><TD>Candelabrum: <DIV id=candelCount></div></td><TD>Hero: <DIV id=heroCount></div></td><TD>Statue: <DIV id=statueCount></div></td><TD>Pet: <DIV id=petCount></div></td></table><br>';
 			m += '<DIV id=pbThroneMain class=pbStat>Compare Throne Items</div><br>';
@@ -3311,11 +3312,15 @@ Tabs.Throne = {
 			PetCount = 0;
 			document.getElementById('populatebox').addEventListener('click', function () {
 				document.getElementById('displayTR').value = JSON2.stringify(unsafeWindow.kocThroneItems)
-				document.getElementById('apearMessageReceipt').innerHTML = '<TD><INPUT id=pbMessageTo type=text value="Not Coded Yet" disabled=true></input><INPUT id=pbSendMessage type=submit value="Send" disabled=true></input>';
+				document.getElementById('apearMessageReceipt').innerHTML = '<TD>Send in message to- <INPUT id=pbMessageTo type=text value=""></input><INPUT id=pbSendMessage type=submit value="Send in Message"></input>';
+				document.getElementById('pbSendMessage').addEventListener('click', function () {
+					t.sendAsMessage();
+				})
 			})
 			document.getElementById('clearTRArray').addEventListener('click', function () {
 				document.getElementById('displayTR').value = "";
 				document.getElementById('apearMessageReceipt').innerHTML = "";
+				document.getElementById('dispResult').innerHTML = "";
 			})
 			var arryy = "";
 			document.getElementById('compElseTr').addEventListener('change', function () {
@@ -3432,6 +3437,37 @@ Tabs.Throne = {
 			}, false);
 		} catch (e) {
 			t.Overv.innerHTML = '<PRE>' + e.name + ' : ' + e.message + '</pre>';
+		}
+	},
+	sendAsMessage: function () {
+		var t = Tabs.Throne;
+		if (document.getElementById('displayTR').value != "" && document.getElementById('pbMessageTo').value != "") {
+			document.getElementById('dispResult').innerHTML = "Sending Message..."
+			var mess = document.getElementById('displayTR').value;
+			var recipient = document.getElementById('pbMessageTo').value;
+			var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+			params.emailTo = recipient;
+			params.subject = 'TR Code. Copy and paste ONLY the message EXACTLY into "Compare" box.';
+			params.message = mess;
+			params.requestType = "COMPOSED_MAIL";
+			new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+				method: "post",
+				parameters: params,
+				onSuccess: function (message) {
+					var rslt = eval("(" + message.responseText + ")");
+					if (rslt.ok) {
+						document.getElementById('dispResult').innerHTML = 'Message Sent OK to - ' + recipient + '...'
+					} else {
+						unsafeWindow.Modal.showAlert(unsafeWindow.g_js_strings.modal_messages_send.enterexistingname)
+						document.getElementById('dispResult').innerHTML = 'Message FAILED to - ' + recipient + '... not a valid user.'
+					}
+				},
+				onFailure: function () {
+					unsafeWindow.Modal.showAlert(g_js_strings.modal_messages_send.oopscompose)
+				}
+			})
+		} else {
+			document.getElementById('dispResult').innerHTML = "Enter a recipient first."
 		}
 	},
 	togOpt: function (checkboxId, optionName, callOnChange) {
@@ -4824,7 +4860,6 @@ Complex loop that browsers can't handle =/. replaced with multiple loops above.
 			t.Uniques();
 	},
 }
-
 /****************************  Tower Tab  ******************************/
 Tabs.tower = {
   tabOrder: 1,
