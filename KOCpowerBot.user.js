@@ -3258,11 +3258,10 @@ Tabs.Throne = {
 		var StatueCount = 0;
 		var PetCount = 0;
 		var counter = 0;
-		ActiveItems = parseInt(Seed.throne.rowNum) * 5;
 		var arr = unsafeWindow.kocThroneItems
+		var ActiveItems = 240;
 		for (k in arr) {
 			counter++;
-			//if (counter > ActiveItems) break;
 			z = arr[k];
 			if (z.type == "advisor") AdvisorCount++;
 			if (z.type == "banner") BannerCount++;
@@ -3287,7 +3286,7 @@ Tabs.Throne = {
 			m += '<DIV id=pbThroneMain class=pbStat>Compare Throne Items</div><br>';
 			m += '<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=type type=list></select></td><TD>Card Family: <SELECT id=family type=list></select></td><TD>Effect: <SELECT id=effect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=keyword size=10></td></tr></table>';
 			m += '<br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR>';
-			for (i = 1; i <= ActiveItems; i++) {
+			for (i = 1; i <= ActiveItems; i++) { //240 = total num TR rows.
 				m += '<TD><DIV id=DIV' + i + '></div></td>';
 				if (i % 3 == 0) m += '</tr><TR></tr><TR>';
 			}
@@ -3313,6 +3312,7 @@ Tabs.Throne = {
 			HeroCount = 0;
 			StatueCount = 0;
 			PetCount = 0;
+
 			document.getElementById('populatebox').addEventListener('click', function () {
 				document.getElementById('displayTR').value = JSON2.stringify(unsafeWindow.kocThroneItems)
 				document.getElementById('apearMessageReceipt').innerHTML = '<TD>Send in message to- <INPUT id=pbMessageTo type=text value=""></input><INPUT id=pbSendMessage type=submit value="Send in Message"></input>';
@@ -3331,7 +3331,6 @@ Tabs.Throne = {
 					arryy = JSON.parse(document.getElementById('pbCompElseTR').value)
 					for (k in arryy) {
 						counter++;
-						//if (counter > ActiveItems) break;
 						z = arryy[k];
 						if (z.type == "advisor") AdvisorCount++;
 						if (z.type == "banner") BannerCount++;
@@ -3350,7 +3349,6 @@ Tabs.Throne = {
 					var arr = unsafeWindow.kocThroneItems
 					for (k in arr) {
 						counter++;
-						//if (counter > ActiveItems) break;
 						z = arr[k];
 						if (z.type == "advisor") AdvisorCount++;
 						if (z.type == "banner") BannerCount++;
@@ -3624,16 +3622,15 @@ Tabs.Throne = {
 		var effectCheck = false;
 		var keywordCheck = false;
 		var TRtoCompare = unsafeWindow.kocThroneItems;
-		var ActiveItems = parseInt(Seed.throne.rowNum) * 5;
+		var ActiveItems = 240;
 		if (!mine && document.getElementById('compElseTr').checked && document.getElementById('pbCompElseTR').value != "") {
 			TRtoCompare = JSON.parse(document.getElementById('pbCompElseTR').value)
 		}
-		for (i = 1; i <= ActiveItems; i++) document.getElementById("DIV" + i).innerHTML = "";
+		for (i = 1; i <= ActiveItems; i++)if (document.getElementById("DIV" + i) != undefined) document.getElementById("DIV"+i).innerHTML = "";
 		counter = 0;
 		t.CompPos = 0;
 		for (k in TRtoCompare) {
 			counter++;
-			if (counter > ActiveItems) break;
 			z = TRtoCompare[k];
 			familyCheck = false;
 			typeCheck = false;
