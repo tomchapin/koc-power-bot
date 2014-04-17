@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140417a
+// @version        20140417b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140417a';
+var Version = '20140417b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -19706,7 +19706,7 @@ Tabs.Apothecary = {
           }
         },
       onFailure: function () {profiler.stop();}
-    });
+    },true); // noretry
   },
   
   hide : function (){
