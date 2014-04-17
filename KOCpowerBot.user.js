@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140409e
+// @version        20140417a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140409e';
+var Version = '20140417a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -123,6 +123,7 @@ var Options = {
   minmight     : 1,
   maxmight     : 99999999,
   srcdisttype  : 'square',
+  srctype      : 0,
   pbWinIsOpen  : false,
   pbWinDrag    : true,
   pbWinPos     : {},
@@ -170,7 +171,6 @@ var Options = {
   LastCrestReport   : 0,
   MsgInterval  : 1,
   CrestMsgInterval  : 1,
-
 
   foodreport   : false,
   crestreport  : true,
@@ -297,7 +297,6 @@ var CrestOptions = {
   R2Onager       :  0,
   isWild       :  false,
 
-
   Paused       :  false,
 };
 var GiftDB = {
@@ -363,7 +362,6 @@ var CrestData = new Array();
       this.R2Onager     =  Arr.R2Onager;
       this.isWild       =  Arr.isWild;
 
-
 	  this.Paused       =  Arr.Paused;
    };
 
@@ -401,6 +399,8 @@ var TrainOptions = {
   actr:     false,
   actrbase: false,
   actrset : 0,
+  rvtr  :  false,
+  rvtrset  :  0,
   AsTroops     : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   AsEnabled  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
   AsSelectMax  : {1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false},
@@ -615,21 +615,21 @@ if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
   return;
 }
 function loadchecker (init) {
-var Sresult = getServerId();
+	if (!GlobalOptions.pbWatchdog) return;
+	var Sresult = getServerId();
 	if(init) {
 		if(Sresult == '??') {
 			GM_setValue ('Loaded', 0);
-			setTimeout(function(){if(GM_getValue ('Loaded') == 0)KOCnotFound(10);},2*60*1000);
+			setTimeout(function(){if(GM_getValue ('Loaded') == 0)KOCnotFound(20);},2*60*1000);
 		} else {
 			GM_setValue (Sresult+'Loaded', 0);
-			setTimeout(function(){if(GM_getValue (Sresult+'Loaded') == 0)KOCnotFound(10);},2*60*1000);
+			setTimeout(function(){if(GM_getValue (Sresult+'Loaded') == 0)KOCnotFound(20);},2*60*1000);
 		};
-	  } else {
-	  	GM_setValue ('Loaded', 1);
-	  	GM_setValue (Sresult+'Loaded', 1);
-	  };
+	} else {
+		GM_setValue ('Loaded', 1);
+		GM_setValue (Sresult+'Loaded', 1);
+	};
 };
-
 
 var InstallChecker = setTimeout (function(){unsafeWindow.Modal.showAlert(translate('power bot installation is corrupt, please reinstall'))}, 2*60*1000);
 
@@ -7323,7 +7323,7 @@ Tabs.Search = {
     t.myDiv = div;
     
     m = '<DIV class=pbentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>'+translate("Search for")+': </td><TD width=99%>';
-    m += htmlSelector ({0:translate("Barb Camp"), 1:translate("Wilderness"), 2:translate("Cities")}, null, 'id=pasrcType');
+    m += htmlSelector ({0:translate("Barb Camp"), 1:translate("Wilderness"), 2:translate("Cities")}, Options.srctype, 'id=pasrcType');
     m += '&nbsp; &nbsp; &nbsp; <span class=pbDetLeft>'+translate("Search style")+': &nbsp;';
     m += htmlSelector({square:translate("Square"), circle:translate("Circle")}, Options.srcdisttype, 'id=pbsrcdist');
     m += '</span></td></tr><TR><TD class=pbDetLeft>'+translate("At")+': </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
@@ -7338,6 +7338,10 @@ Tabs.Search = {
     
     t.myDiv.innerHTML = m;
     var psearch = document.getElementById ("pasrcType");
+    document.getElementById('pasrcType').addEventListener ('change', function (){
+      Options.srctype = document.getElementById('pasrcType').value;
+      saveOptions();
+      }, false);
     new CdispCityPicker ('pasrchdcp', document.getElementById ('paspInXY'), true, t.citySelNotify).bindToXYboxes(document.getElementById ('pasrchX'), document.getElementById ('pasrchY'));
     document.getElementById ('provinceXY').addEventListener ('click', function() {
           if (this.value >= 1) {
@@ -7753,7 +7757,6 @@ Tabs.Search = {
         numRows = t.MAX_SHOW_WHILE_RUNNING;
         document.getElementById('pasrchSizeWarn').innerHTML = '<FONT COLOR=#600000>'+translate('NOTE: Table only shows ')+ t.MAX_SHOW_WHILE_RUNNING +' of '+ t.dat.length +translate(' results until search is complete')+'.</font>';
       }
-
       for (i=0; i<numRows; i++){
         m += '<TR><TD><DIV onclick="pbGotoMap('+ t.dat[i][0] +','+ t.dat[i][1] +')"><A>'+ t.dat[i][0] +','+ t.dat[i][1] +'</a></div></td>';
         if (coordsOnly) {
@@ -7764,9 +7767,6 @@ Tabs.Search = {
             if ( t.dat[i][5] && t.dat[i][7] == 0) {
 			  if (t.dat[i][9] == "") {
 				m += '<TD colspan=4 id=pbsrch'+t.dat[i][0]+t.dat[i][1]+'>* '+translate("MISTED")+' * &nbsp; &nbsp; <SPAN onclick="quickscoutsearch('+ t.dat[i][0] +','+ t.dat[i][1] +','+t.selectedCity.id+');return false;"><A>'+translate("QuickScout")+'</a></span></td></tr>';
-
-
-
 			  }	
 			  else
 				m += '<TD colspan=4 id=pbsrch'+t.dat[i][0]+t.dat[i][1]+'>'+t.dat[i][9]+'</td></tr>';
@@ -7877,7 +7877,6 @@ Tabs.Search = {
         m += '</table></div>';
         m += '<BR><input type=checkbox id="pbskip">Skip targets when errors occur';
         m += '<BR><input type=checkbox id="pbsallcities">Scout from all cities (NOT UNDER AP!)';
-
         m += '<BR><CENTER>'+ strButton20(translate('Start Scout'), 'id=pbSrcStartScout') +'</center>';
         m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
     popScout.getMainDiv().innerHTML = m;
@@ -7972,55 +7971,10 @@ Tabs.Search = {
 	March.addMarch(params, function(rslt){
 		if (rslt.ok) {
 			document.getElementById('pbSrcScoutResult').innerHTML += translate('Sent!')+'<BR>';
-
-
-
-
-
-
-
-
-
-
-
-
-
 			if (notify)
 				setTimeout(function(){ notify(count+1); }, 4000);
 		}
 		else {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			if(document.getElementById('pbskip').checked) {
 				document.getElementById('pbSrcScoutResult').innerHTML += translate('Failed! Moving on')+'....<BR>';
 				if (notify)
@@ -14306,98 +14260,99 @@ Tabs.AutoTrain = {
 
     for(var k=1; k<=Seed.cities.length; k++){
 		document.getElementById('threshold'+k).addEventListener('change', function(e){
-             if (isNaN(e.target.value)) e.target.value=0 ;
-            TrainOptions.Threshold[e.target['className']] = e.target.value;
-             saveTrainOptions();
-         }, false);
-         document.getElementById('SelectMax'+k).addEventListener('change', function(e){
+			if (isNaN(e.target.value)) e.target.value=0 ;
+			TrainOptions.Threshold[e.target['className']] = e.target.value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('SelectMax'+k).addEventListener('change', function(e){
 			t.AF_TU_Change(e.target['className'],document.getElementById('TroopsCity'+e.target['className']).value);
-             TrainOptions.SelectMax[e.target['className']] = e.target.checked;
-             if (!TrainOptions.SelectMax[e.target['className']]){
-                document.getElementById('max'+e.target['className']).disabled=true;
-            } else {
-                document.getElementById('max'+e.target['className']).disabled=false;
-            }
-            saveTrainOptions();
-         }, false);
-         document.getElementById('max'+k).addEventListener('change', function(e){
-              TrainOptions.Max[e.target['className']] = e.target.value;
-              saveTrainOptions();
-          }, false);
-         document.getElementById('workers'+k).addEventListener('change', function(e){
-              TrainOptions.Workers[e.target['className']] = e.target.value;
-              t.AF_TU_Change(e.target['className'],document.getElementById('TroopsCity'+e.target['className']).value);
-              TrainOptions.Max[e.target['className']] = document.getElementById('max'+e.target['className']).value;
-              saveTrainOptions();
-          }, false);
-         document.getElementById('Resource'+k).addEventListener('change', function(e){
-            TrainOptions.Resource[e.target['className']] = e.target.value;
-             saveTrainOptions();
-        }, false);
-         document.getElementById('TrainSpeed_'+k).addEventListener('change', function(e){
-            TrainOptions.Gamble[e.target['className']] = e.target.value;
-             saveTrainOptions();
-        }, false);
-         document.getElementById('TrainSpeedItem_'+k).addEventListener('change', function(e){
-            TrainOptions.Item[e.target['className']] = e.target.value;
-             saveTrainOptions();
-        }, false);
-        document.getElementById('SelectCity'+k).addEventListener('change', function(e){
-            TrainOptions.Enabled[e.target['className']] = e.target.checked;
-            saveTrainOptions();
-          }, false);
-          document.getElementById('TroopsCity'+k).addEventListener('change', function(e){
-            t.AF_TU_Change(e.target['className'],e.target.value);
-            TrainOptions.Troops[e.target['className']] = e.target.value;
-              TrainOptions.Max[e.target['className']] = document.getElementById('max'+e.target['className']).value;
-            saveTrainOptions();
-          }, false);
-          document.getElementById('KeepFood'+k).addEventListener('change', function(e){
-            if (isNaN(e.target.value)) e.target.value=0 ;
-            TrainOptions.Keep[e.target['className']]['Food'] = e.target.value;
-            saveTrainOptions();
-          }, false);
-          document.getElementById('KeepWood'+k).addEventListener('change', function(e){
-              if (isNaN(e.target.value)) e.target.value=0 ;
-            TrainOptions.Keep[e.target['className']]['Wood'] = e.target.value;
-            saveTrainOptions();
-          }, false);
-          document.getElementById('KeepStone'+k).addEventListener('change', function(e){
-            if (isNaN(e.target.value)) e.target.value=0 ;
-            TrainOptions.Keep[e.target['className']]['Stone'] = e.target.value;
-            saveTrainOptions();
-          }, false);
-          document.getElementById('KeepOre'+k).addEventListener('change', function(e){
-              if (isNaN(e.target.value)) e.target.value=0 ;
-            TrainOptions.Keep[e.target['className']]['Ore'] = e.target.value;
-            saveTrainOptions();
-          }, false);
-           if(document.getElementById('AsEnabled'+k)) {  
-        document.getElementById('AsEnabled'+k).addEventListener('change', function(e){
-            TrainOptions.AsEnabled[e.target['className']] = e.target.checked;
-            saveTrainOptions();
-          }, false);
-         document.getElementById('AsTroops'+k).addEventListener('change', function(e){
-             if (isNaN(e.target.value)) e.target.value=0 ;
-            TrainOptions.AsTroops[e.target['className']] = e.target.value;
-             saveTrainOptions();
-         }, false);
-                 document.getElementById('Asmax'+k).addEventListener('change', function(e){
-              TrainOptions.AsMax[e.target['className']] = e.target.value;
-              saveTrainOptions();
-          }, false);
-            document.getElementById('AsSelectMax'+k).addEventListener('change', function(e){
+			TrainOptions.SelectMax[e.target['className']] = e.target.checked;
+			if (!TrainOptions.SelectMax[e.target['className']]){
+				document.getElementById('max'+e.target['className']).disabled=true;
+			} else {
+				document.getElementById('max'+e.target['className']).disabled=false;
+			}
+			saveTrainOptions();
+		}, false);
+		document.getElementById('max'+k).addEventListener('change', function(e){
+			TrainOptions.Max[e.target['className']] = e.target.value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('workers'+k).addEventListener('change', function(e){
+			TrainOptions.Workers[e.target['className']] = e.target.value;
+			t.AF_TU_Change(e.target['className'],document.getElementById('TroopsCity'+e.target['className']).value);
+			TrainOptions.Max[e.target['className']] = document.getElementById('max'+e.target['className']).value;
+			TrainOptions.AsMax[e.target['className']] = document.getElementById('asmax'+e.target['className']).value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('Resource'+k).addEventListener('change', function(e){
+			TrainOptions.Resource[e.target['className']] = e.target.value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('TrainSpeed_'+k).addEventListener('change', function(e){
+			TrainOptions.Gamble[e.target['className']] = e.target.value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('TrainSpeedItem_'+k).addEventListener('change', function(e){
+			TrainOptions.Item[e.target['className']] = e.target.value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('SelectCity'+k).addEventListener('change', function(e){
+			TrainOptions.Enabled[e.target['className']] = e.target.checked;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('TroopsCity'+k).addEventListener('change', function(e){
+			t.AF_TU_Change(e.target['className'],e.target.value);
+			TrainOptions.Troops[e.target['className']] = e.target.value;
+			TrainOptions.Max[e.target['className']] = document.getElementById('max'+e.target['className']).value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('KeepFood'+k).addEventListener('change', function(e){
+			if (isNaN(e.target.value)) e.target.value=0 ;
+			TrainOptions.Keep[e.target['className']]['Food'] = e.target.value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('KeepWood'+k).addEventListener('change', function(e){
+			if (isNaN(e.target.value)) e.target.value=0 ;
+			TrainOptions.Keep[e.target['className']]['Wood'] = e.target.value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('KeepStone'+k).addEventListener('change', function(e){
+			if (isNaN(e.target.value)) e.target.value=0 ;
+			TrainOptions.Keep[e.target['className']]['Stone'] = e.target.value;
+			saveTrainOptions();
+		}, false);
+		document.getElementById('KeepOre'+k).addEventListener('change', function(e){
+			if (isNaN(e.target.value)) e.target.value=0 ;
+			TrainOptions.Keep[e.target['className']]['Ore'] = e.target.value;
+			saveTrainOptions();
+		}, false);
+		if(document.getElementById('AsEnabled'+k)) {  
+			document.getElementById('AsEnabled'+k).addEventListener('change', function(e){
+				TrainOptions.AsEnabled[e.target['className']] = e.target.checked;
+				saveTrainOptions();
+			}, false);
+			document.getElementById('AsTroops'+k).addEventListener('change', function(e){
+				if (isNaN(e.target.value)) e.target.value=0 ;
+				TrainOptions.AsTroops[e.target['className']] = e.target.value;
+				saveTrainOptions();
+			}, false);
+			document.getElementById('Asmax'+k).addEventListener('change', function(e){
+				TrainOptions.AsMax[e.target['className']] = e.target.value;
+				saveTrainOptions();
+			}, false);
+			document.getElementById('AsSelectMax'+k).addEventListener('change', function(e){
 				t.AF_TU_Change(e.target['className'],document.getElementById('TroopsCity'+e.target['className']).value);
-             TrainOptions.AsSelectMax[e.target['className']] = e.target.checked;
-             if (!TrainOptions.AsSelectMax[e.target['className']]){
-                document.getElementById('Asmax'+e.target['className']).disabled=true;
-            } else {
-                document.getElementById('Asmax'+e.target['className']).disabled=false;
-            }
-            saveTrainOptions();
-         }, false);
-      };
-    }
+				TrainOptions.AsSelectMax[e.target['className']] = e.target.checked;
+				if (!TrainOptions.AsSelectMax[e.target['className']]){
+					document.getElementById('Asmax'+e.target['className']).disabled=true;
+				} else {
+					document.getElementById('Asmax'+e.target['className']).disabled=false;
+				}
+				saveTrainOptions();
+			}, false);
+		};
+	}
   },
   
   helpPop : function (){
@@ -14455,11 +14410,9 @@ Tabs.AutoTrain = {
 			var ttmax=parseIntNan(X/Q);
         else
 			var ttmax=parseIntNan((X-(Y*Z))/Q);
-		if ((ttmax < document.getElementById("max"+numcity).value) || (parseIntNan(document.getElementById("max"+numcity).value) == 0)) {
-			document.getElementById("max"+numcity).value=ttmax;
-			TrainOptions.Max[numcity] = ttmax;
-			saveTrainOptions();
-		}	
+		document.getElementById("max"+numcity).value=ttmax;
+		TrainOptions.Max[numcity] = ttmax;
+		saveTrainOptions();
 
 		if(Seed.cityData.city[cityId].isPrestigeCity) {
 			var punit = false;
@@ -14478,11 +14431,9 @@ Tabs.AutoTrain = {
 					var asttmax = parseIntNan(X/pQ);
 				else
 					var asttmax = parseIntNan((X-(Y*Z))/pQ);
-				if ((asttmax < document.getElementById("Asmax"+numcity).value) || (parseIntNan(document.getElementById("Asmax"+numcity).value) == 0)) {
-					document.getElementById("Asmax"+numcity).value=asttmax;
-					TrainOptions.AsMax[numcity] = asttmax;
-					saveTrainOptions();
-				}	
+				document.getElementById("Asmax"+numcity).value=asttmax;
+				TrainOptions.AsMax[numcity] = asttmax;
+				saveTrainOptions();
 			}	
 		}		
 
@@ -14944,41 +14895,40 @@ var FairieKiller  = {
 
 /********** facebook watchdog: runs only in 'https://apps.facebook.com/kingdomsofcamelot/*' instance!  ******/
 function facebookWatchdog (){
-  var INTERVAL = 50000; // wait 50 seconds minute before checking DOM
-  if (!GlobalOptions.pbWatchdog)
-    return;
-  setTimeout (watchdog, INTERVAL);
+	var INTERVAL = 50000; // wait 50 seconds before checking DOM
+	if (!GlobalOptions.pbWatchdog) return;
+	setTimeout (watchdog, INTERVAL);
   
-// TODO: actionLog ?  
-  function watchdog (){
-    try {
-//      if (document.getElementById('app_content_130402594779').firstChild.firstChild.childNodes[1].firstChild.tagName!='IFRAME'){
-      if (document.getElementById('app_content_130402594779') == null){
-        logit ("KOC NOT FOUND!");
-        KOCnotFound(5*60);
-      }
-    } catch (e){
-      logit ("KOC NOT FOUND!");
-      KOCnotFound(4*60);
-    }
-  }
+	function watchdog (){
+		try {
+			if (document.getElementById('app_content_130402594779') == null){
+				logit ("KOC NOT FOUND (FB)!");
+				KOCnotFound(20);
+			}
+		} catch (e){
+			logit ("KOC NOT FOUND (FB)!");
+			KOCnotFound(20);
+		}
+	}
 }
-
 
 function kocWatchdog (){
-  var INTERVAL = 10000; // wait 30 seconds before checking DOM
-  if (!GlobalOptions.pbWatchdog)
-    return;
-  setTimeout (kwatchdog, INTERVAL);
-  function kwatchdog (){
-logit ("KOC WATCHDOG: "+ document.getElementById('mod_maparea')+" "+document.location);    
-    if (document.getElementById('mod_maparea')==null){
-      logit ("KOC not loaded");
-      KOCnotFound(20);
-    }    
-  }
+	var INTERVAL = 50000; // wait 50 seconds before checking DOM
+	if (!GlobalOptions.pbWatchdog) return;
+	setTimeout (kwatchdog, INTERVAL);
+  
+	function kwatchdog (){
+		try {
+			if (document.getElementById('mod_maparea')==null){
+				logit ("KOC NOT FOUND (KABAM)!");
+				KOCnotFound(20);
+			}
+		} catch (e){
+			logit ("KOC NOT FOUND (KABAM)!");
+			KOCnotFound(20);
+		}
+	}
 }
-
 
 function KOCnotFound(secs){
   var div;
@@ -19442,6 +19392,9 @@ Tabs.Apothecary = {
   pop2 : null,
   myDiv : null,
   timer : null,
+  rs : 0,
+  rsok : true,
+  lastrsok : true,
   
   init : function (div){    // called once, upon script startup
     var t = Tabs.Apothecary;
@@ -19454,21 +19407,28 @@ Tabs.Apothecary = {
         <td><input type="submit" id="pbapothecary_power" value="Auto Heal = ' + (ApothecaryOptions.Active ? 'ON' : 'OFF') + '" /></td>\
         <td><input type="submit" id="pbapothecary_show" value="Show" /></td></tr></table>\
         <div class="pbStat" id="pbapothecary_options">OPTIONS</div>\
-        <table><tr><td>Keep Gold: <input type="text" id="pbapothecary_gold" size="6" value="' + ApothecaryOptions.goldkeep + '" /></td>\
+        <table width="100%" height="0%" class="pbTab"><tr><td>Keep Gold: <input type="text" id="pbapothecary_gold" size="6" value="' + ApothecaryOptions.goldkeep + '" /></td>\
         <td colspan="4"><span id="pbapothecary_citysel"></span></td></tr>\
+        <tr><td colspan=2 align=left><INPUT id=pbrvTR type=checkbox '+(TrainOptions.rvtr?'CHECKED':'')+'> '+translate('Only revive when revive speed is at least')+' <INPUT id=pbrvTRset type=text size=3 maxlength=4 value="'+ TrainOptions.rvtrset +'">&nbsp;%</td><td colspan=2 align=right>Current Revive Speed:&nbsp;<span id=currrv></span>&nbsp;&nbsp;</td>\
         <tr><td>Troop type: <select id="pbapothecary_troops"><option value="0">--Select--</option>';
     for (y in unitcost)
         m += '<option value="' + y.substr(3) + '">' + unitcost[y][0] + '</option>';
     m += '</select></td>\
-        <td>Min.: <input id="pbapothecary_min" type="text" size="4" /></td>\
+		<td>Min.: <input id="pbapothecary_min" type="text" size="4" /></td>\
         <td><input type="checkbox" id="pbapothecary_maxcheck" />Max.: <input id="pbapothecary_max" type="text" size="4" disabled="disabled" /></td>\
-        <td><input type="submit" id="pbapothecary_save" value="Add" /></td></tr></table>\
+        <td><input type="submit" id="pbapothecary_save" value="Add" />&nbsp;<input type="submit" id="pbapothecary_now" value="Revive Now!" />&nbsp;<span id=pbrevivemsg style="color:#f00;">&nbsp;</span></td></tr></table>\
         <div class="pbStat">STATS</div>\
         <table width="100%" style ="font-size: 10px;"><thead><tr><th>&nbsp;</th>';
     for (i = 0; i < cities.length; i ++) {
         m += '<th>' + cities[i][1] + '</th>';
     }
     m += '<th>total</th></tr></thead>\
+		<tr><td>Gold</td>';
+    for (i = 0; i < cities.length; i ++) {
+        var cid = 'city' + cities[i][0];
+        m += '<td id="tdApoGold_' + cid + '" style="text-align: center; white-space: nowrap;">&nbsp;</td>';
+    }
+    m += '<td id=tdTotGold>&nbsp;</td></tr>\
         <tbody><tr><td>Building</td>';
     for (i = 0; i < cities.length; i ++) {
         var cid = 'city' + cities[i][0];
@@ -19499,6 +19459,16 @@ Tabs.Apothecary = {
     m += '</tbody></table>';
 
     div.innerHTML = m;
+    document.getElementById('pbrvTR').addEventListener ('change', function() {
+        TrainOptions.rvtr = this.checked;
+        saveTrainOptions();
+	}, false);
+
+	document.getElementById('pbrvTRset').addEventListener ('change', function() {
+        TrainOptions.rvtrset = this.value;
+        saveTrainOptions();
+	}, false);
+	
     setInterval(t.updateApoStats, 1 * 1000);
     $("pbapothecary_gold").addEventListener('change', function(){
         ApothecaryOptions.goldkeep = parseIntNan(this.value);
@@ -19508,6 +19478,9 @@ Tabs.Apothecary = {
     },false);
     $("pbapothecary_save").addEventListener('click', function(){
         t.e_addqueue();
+    },false);
+    $("pbapothecary_now").addEventListener('click', function(){
+        t.revive_now(t.citysel.city.idx,$("pbapothecary_troops").value,parseIntNan($("pbapothecary_min").value),parseIntNan($("pbapothecary_max").value),$("pbapothecary_maxcheck").checked);
     },false);
     $("pbapothecary_power").addEventListener('click', function(){
         t.e_toggleswitch(this);
@@ -19621,10 +19594,12 @@ Tabs.Apothecary = {
     var t = Tabs.Apothecary;
     clearTimeout(t.timer);
     if(!ApothecaryOptions.Active) return;
+	if(!t.rsok) {t.timer = setTimeout(t.loop, 10000);return;}
+	
     for (var city in ApothecaryOptions.city){
         if(!Cities.cities[city] || ApothecaryOptions.city[city].length < 1) continue;
         if(t.cities[city]) continue; //Skip if Apothecary doesn't exist
-        if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0) continue; //Skip city if queue is full
+        if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0 && Seed.queue_revive2['city'+Cities.cities[city].id].length > 0) continue; //Skip city if queue is full
         if(Seed.citystats["city" + Cities.cities[city].id].gold[0] < parseInt(ApothecaryOptions.goldkeep)) continue; //Skip if gold is less than reserve
         for(var i=0; i<ApothecaryOptions.city[city].length; i++){
             var info = ApothecaryOptions.city[city][i];
@@ -19643,6 +19618,36 @@ Tabs.Apothecary = {
         }
     }
     t.timer = setTimeout(t.loop, 10000);
+  },
+  revive_now: function(city,troop,min,max,max_sel){
+		var t = Tabs.Apothecary;
+		document.getElementById('pbrevivemsg').innerHTML = "";
+        if(t.cities[city]) {
+			document.getElementById('pbrevivemsg').innerHTML = "No Apothecary!";
+			return;
+		}
+		var cid = Cities.cities[city].id;
+		var amt = 0;
+        if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0 && Seed.queue_revive2['city'+Cities.cities[city].id].length) {
+			document.getElementById('pbrevivemsg').innerHTML = "Queue Full!";
+			return;
+		}
+        if(Seed.citystats["city" + Cities.cities[city].id].gold[0] < parseInt(ApothecaryOptions.goldkeep)) {
+			document.getElementById('pbrevivemsg').innerHTML = "Not Enough Gold!";
+			return;
+		}
+		if(Seed.woundedUnits['city'+cid]['unt'+troop] < min) {
+			document.getElementById('pbrevivemsg').innerHTML = "Not Enough Wounded!";
+			return;
+		}
+		if(Seed.woundedUnits['city'+cid]['unt'+troop] > max && max_sel){
+			amt = max;
+		} else {
+			amt = Seed.woundedUnits['city'+cid]['unt'+troop];
+		}
+		if(cid > 0 && troop > 0 && amt > 0){
+			t.do_revive(cid,troop,amt);
+		}		
   },
   
   e_toggleswitch : function(obj){
@@ -19683,11 +19688,19 @@ Tabs.Apothecary = {
             if (!rslt.initTS) {
                 rslt.initTS = unixTime() - 1;
             }
-            Seed.queue_revive["city" + currentcityid].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
+			if (Seed.queue_revive["city" + currentcityid].length == 0) {
+				recentlyEntryWasAddedQueue = Seed.queue_revive["city" + currentcityid]
+			} else {
+				recentlyEntryWasAddedQueue = Seed.queue_revive2["city" + currentcityid]
+			}
+			recentlyEntryWasAddedQueue.push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
             var cost = unsafeWindow.cm.RevivalModel.getRevivalStats(unitId, num).cost;
             Seed.citystats["city" + currentcityid].gold[0] -= parseInt(cost);
+			var savecityid = unsafeWindow.currentcityid;
+			unsafeWindow.currentcityid = currentcityid;
             unsafeWindow.update_gold();
             unsafeWindow.cm.WoundedModel.sub(unitId, num);
+	        unsafeWindow.currentcityid = savecityid;
           } else {
             
           }
@@ -19716,6 +19729,20 @@ Tabs.Apothecary = {
         for (uid in unitcost) {
             total[uid] = 0;
         }
+		t.rs = Math.floor(equippedthronestats(97));
+		document.getElementById("currrv").innerHTML = t.rs+'%';
+		t.rsok = (!TrainOptions.rvtr || (t.rs >= Number(TrainOptions.rvtrset)));
+		if (t.rsok != t.lastrsok) {
+			if (!t.rsok) {
+				unsafeWindow.jQuery('#currrv').css('color', 'red');
+			}	
+			else {	
+				unsafeWindow.jQuery('#currrv').css('color', 'black');
+			}
+		}		
+		t.lastrsok = t.rsok;
+		
+		var totGold = 0;
         for (i = 0; i < cities.length; i ++) {
             var cid = 'city' + cities[i][0];
             // building
@@ -19729,6 +19756,8 @@ Tabs.Apothecary = {
             }
             html = bname + '<br />(' + blvl.join(', ') + ')'
             document.getElementById('tdApoBuilding_' + cid).innerHTML = html;
+            document.getElementById('tdApoGold_' + cid).innerHTML = addCommas(parseInt(Seed.citystats[cid]['gold'][0]));
+			totGold = totGold + parseIntNan(Seed.citystats[cid]['gold'][0]);
             // revive queue
             var q1 = unsafeWindow.seed.queue_revive[cid];
             var u = '';
@@ -19741,6 +19770,10 @@ Tabs.Apothecary = {
                     html += '(' + timestr(parseInt(u[3]) - unsafeWindow.unixtime()) + ')';
                 } else {
                     html += '(done)';
+					if (cid != unsafeWindow.currentcityid) {
+						unsafeWindow.seed.units[cid][uid_q1] = parseInt(unsafeWindow.seed.units[cid][uid_q1]) + parseInt(u[1]);
+						unsafeWindow.seed.queue_revive[cid].splice(0,1);
+					}	
                 }
             } else {
                 html = '';
@@ -19758,6 +19791,10 @@ Tabs.Apothecary = {
                     html += '(' + timestr(parseInt(u[3]) - unsafeWindow.unixtime()) + ')';
                 } else {
                     html += '(done)';
+					if (cid != unsafeWindow.currentcityid) {
+						unsafeWindow.seed.units[cid][uid_q2] = parseInt(unsafeWindow.seed.units[cid][uid_q2]) + parseInt(u[1]);
+						unsafeWindow.seed.queue_revive2[cid].splice(0,1);
+					}	
                 }
             } else {
                 html = '';
@@ -19778,6 +19815,7 @@ Tabs.Apothecary = {
             html = addCommas(total[uid]);
             document.getElementById('tdApoWoundedUnits_total_' + uid).innerHTML = html;
         }
+		document.getElementById('tdTotGold').innerHTML = addCommas(totGold);
     }
 }
 
@@ -21022,7 +21060,6 @@ Tabs.Attack = {
 	msgtimer : null,
 
 
-
 	/** window display **/
 	init : function (div) {
 		var t = Tabs.Attack;
@@ -21063,7 +21100,6 @@ Tabs.Attack = {
 		m += '<TABLE class=ptTab><TR><TD>Target Co-ords:&nbsp;&nbsp;X:&nbsp;<INPUT id=pbcrestx type=text size=3 maxlength=3 value=""></td>';
 		m += '<TD>Y:&nbsp;<INPUT id=pbcresty type=text size=3 maxlength=3 value=""></td></tr>';
 		m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Target is Wilderness</td><td>(if ticked will abandon wild and reduce wave 1 MM for subsequent attacks)</td></tr></table>';
-
 
    
 		var dude = unsafeWindow.unitnamedesctranslated;
@@ -21133,16 +21169,6 @@ Tabs.Attack = {
 
 
 
-
-
-
-
-
-
-
-
-
-
 		$("pbcrestslots").addEventListener('change', function(e){
 			Options.CrestSlots = parseIntNan(e.target.value);
 			saveOptions();
@@ -21160,12 +21186,6 @@ Tabs.Attack = {
 
 
 
-
-
-
-
-
-
 		t.tcp = new CdispCityPicker ('crestcityselect', document.getElementById('crestcity'), true, t.clickCitySelect, selbut);
     
 		if (CrestOptions.CrestCity == 0) {
@@ -21176,10 +21196,6 @@ Tabs.Attack = {
 			CrestOptions.isWild = this.checked;
 		},false);
     
-
-
-
-
 
 
 
@@ -21203,7 +21219,6 @@ Tabs.Attack = {
 		document.getElementById('pbcresty').addEventListener('keyup', function(){ if (isNaN(document.getElementById('pbcresty').value)) document.getElementById('pbcresty').value='';}, false);
 
 		document.getElementById('pbcrest_iswild').addEventListener('click', function(){CrestOptions.isWild = this.checked;} , false);
-
 
 		document.getElementById('crestcity').addEventListener('click', function(){CrestOptions.CrestCity = t.tcp.city.id;} , false);
 		document.getElementById('Cresttoggle').addEventListener('click', function(){t.toggleCrestState(this)} , false);
@@ -21565,17 +21580,6 @@ Tabs.Attack = {
 			return;
 		};
 		
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -26420,9 +26424,6 @@ function QuickScout() {
 
 		March.addMarch(params, function(rslt){
 			if (!rslt.ok) {
-
-
-
 				uW.Modal.showAlert(uW.printLocalError(rslt.error_code, rslt.msg, rslt.feedback));
 			}
 		});
@@ -26450,9 +26451,6 @@ function QuickScout() {
 
 		March.addMarch(params, function(rslt){
 			if (!rslt.ok) {
-
-
-
 				divid = 'pbsrch'+x+y;
 				if (!document.getElementById(divid)) return;
 				var msg = '<span style="color:#f00;">Error Code - '+rslt.error_code+'</span>&nbsp; &nbsp; <SPAN onclick="quickscoutsearch('+x+','+y+','+cid+');return false;"><A>'+translate("QuickScout")+'</a></span>';
@@ -26475,212 +26473,7 @@ function QuickScout() {
 			}
 		});
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*************************************** QUICKSCOUT END ***********************************/ 
 
