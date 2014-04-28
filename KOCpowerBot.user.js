@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140428c
+// @version        20140428d
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140428c';
+var Version = '20140428d';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -871,8 +871,8 @@ function pbStartup (){
     span.pbTextHostile {color: #800}\
     .pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
     div.indent25 {padding-left:25px}\
-	.pbttabs {background:url("https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/throne/modal/set_active.png") no-repeat center center;outline:0px; margin-left:0px; margin-right:0px; width:22px; height:22px; font-family: georgia,arial,sans-serif;font-size: 12px;color:white; line-height:19px;}\
-	.pbttabsdis {background:url("https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/throne/modal/set_selected.png") no-repeat center center;outline:0px; margin-left:0px; margin-right:0px; width:22px; height:22px; font-family: georgia,arial,sans-serif;font-size: 12px;color:white; line-height:19px;}\
+	.pbttabsdis {background:url("https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/throne/modal/set_active.png") no-repeat center center;outline:0px; margin-left:0px; margin-right:0px; width:22px; height:22px; font-family: georgia,arial,sans-serif;font-size: 12px;color:white; line-height:19px;}\
+	.pbttabs {background:url("https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/throne/modal/set_selected.png") no-repeat center center;outline:0px; margin-left:0px; margin-right:0px; width:22px; height:22px; font-family: georgia,arial,sans-serif;font-size: 12px;color:white; line-height:19px;}\
 	.craftdesc:hover span.crafttip { display:block; position:absolute; background: #FFFFAA; border: 1px solid #FFAD33; padding: 0.5em 0.5em;}\
 	.craftdesc span.crafttip { display:none;}\
     .pbdivHeader       {transparent;height: 16px;border-bottom:0px solid #000000;font-weight:bold;font-size:11px;opacity:0.75;margin-left:0px;margin-right:0px;margin-top:1px;margin-bottom:0px;padding-top:4px;padding-right:10px;vertical-align:text-top;align:left;background-color:#335577;}\
