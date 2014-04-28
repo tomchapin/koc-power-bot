@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140428a
+// @version        20140428b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140428a';
+var Version = '20140428b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -14606,7 +14606,7 @@ Tabs.AutoTrain = {
 				unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
 				unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - Math.ceil(parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * MORE_WITH_LESS_FACTOR) * parseInt(num);
 				if (unitId == 16)
-					unsafeWindow.seed.items.i34001 = parseInt(unsafeWindow.seed.items.i34001) - parseInt(unsafeWindow.unitcost["unt" + unitId][11]["34001"]) * parseInt(num);
+					unsafeWindow.seed.items.i34001 = parseInt(unsafeWindow.seed.items.i34001) - (parseInt(unsafeWindow.unitcost["unt" + unitId][11]["34001"]) * parseInt(num));
 				unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null,inPrestige]);
 				setTimeout (notify, 5000);
 				for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
