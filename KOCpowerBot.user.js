@@ -1,6 +1,6 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name           KOC Power Bot
-// @version        20140428b
+// @version        20140428c
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140428b';
+var Version = '20140428c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -24324,9 +24324,11 @@ document.getElementById("ptmrcxSubUE").click()
 postInfo : function (z){
 	var t = Tabs.Champion;
 	var y = unsafeWindow.kocChampionItems[z];
+	var l = unsafeWindow.kocChampionItems[z].rarity
 	var m = ':::.|'+y.name;
-	for (i=1;i<=5;i++) {
+	for (i=1;i<=6;i++) {
 		id = y["effects"][""+i]["id"];
+		if (id == undefined)continue;
 		tier = parseInt(y["effects"][""+i]["tier"]);
 		level = y["level"];
         	p = t.championStatTiers[id][tier];
