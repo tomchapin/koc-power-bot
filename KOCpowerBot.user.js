@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140428d
+// @version        20140502a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140428d';
+var Version = '20140502a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -76,8 +76,8 @@ unsafeWindow.arthurCheck = function (a) {
 	return;
 };
 
-
-
+var Quality = ['Simple','Common','Uncommon','Rare','Epic','Wondrous'];
+var JWQuality = ["Cracked", "Flawed", "Cloudy", "Subdued", "Bright"];
 var isAFK = false;
 
 var upgradeData = {
@@ -518,6 +518,12 @@ var AttackOptions = {
   threshold          : 750000,
   ItemsFound         : {},
   ItemsFoundCr       : {},
+  ThroneItemsFound   : {},
+  ThroneItemsFoundCr : {},
+  ChampItemsFound    : {},
+  ChampItemsFoundCr  : {},
+  JewelItemsFound    : {},
+  JewelItemsFoundCr  : {},
 };
 
 var ResetAll=false;
@@ -3706,15 +3712,17 @@ Tabs.Throne = {
 	postInfo: function (z) {
 		var y = unsafeWindow.kocThroneItems[z];
 		var m = ':::.|' + y.name;
-		for (i = 1; i <= 5; i++) {
+		for (var O in y["effects"]) {
+			var i = +(O.split("slot")[1]);
 			id = y["effects"]["slot" + i]["id"];
 			tier = parseInt(y["effects"]["slot" + i]["tier"]);
 			level = y["level"];
 			p = unsafeWindow.cm.thronestats.tiers[id][tier];
-			if (!p) p = {
-				base: 0,
-				growth: 0
-			}; //solution for kabam errors where they forgot to add info.
+			while (!p && (tier > 0)) { tier--; p = unsafeWindow.cm.thronestats.tiers[id][tier]; } 
+			if (!p) continue; // can't find stats for tier
+			if (y["effects"]["slot"+i].fromJewel && (level > unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality])) {
+				level = unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality]
+			}
 			Current = p.base + ((level * level + level) * p.growth * 0.5);
 			m += '||' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"];
 		};
@@ -3762,15 +3770,17 @@ Tabs.Throne = {
 		m += '<TR><TD style="background-color:#D5C795"><FONT color=' + color + '><B>' + y.name + '</b></font></td>';
 		m += '<TD><A onclick="Savlage(' + y.id + ')"><img src="data:image/png;base64,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"/></td></tr>';
 		m += '<TR><TD style="background-color:#D5C795"><FONT color=' + color + '><B>[' + y.id + ']</b></font></td>';
-		for (i = 1; i <= 5; i++) {
+		for (var O in y["effects"]) {
+			var i = +(O.split("slot")[1]);
 			id = y["effects"]["slot" + i]["id"];
 			tier = parseInt(y["effects"]["slot" + i]["tier"]);
 			level = y["level"];
 			p = unsafeWindow.cm.thronestats.tiers[id][tier];
-			if (!p) p = {
-				base: 0,
-				growth: 0
-			}; //solution for kabam errors where they forgot to add info.
+			while (!p && (tier > 0)) { tier--; p = unsafeWindow.cm.thronestats.tiers[id][tier]; } 
+			if (!p) continue; // can't find stats for tier
+			if (y["effects"]["slot"+i].fromJewel && (level > unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality])) {
+				level = unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality]
+			}
 			Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0, 6);
 			var quality = parseInt(y["quality"]);
 			if (i <= quality) m += '<TR><TD><FONT color=black>' + Current + "% " + unsafeWindow.cm.thronestats["effects"][id]["1"] + '</font></td></tr>';
@@ -4379,15 +4389,17 @@ Tabs.Throne = {
 		var Current = 0;
 		var Next = 0;
 		m = "<TABLE width=80% height=0% align='center' class=pbTab><TR><TD><B>Current</b></td><TD><B>Next</b></td>";
-		for (i = 1; i <= 5; i++) {
+		for (var O in y["effects"]) {
+			var i = +(O.split("slot")[1]);
 			id = y["effects"]["slot" + i]["id"];
 			tier = parseInt(y["effects"]["slot" + i]["tier"]);
 			level = y["level"];
 			p = unsafeWindow.cm.thronestats.tiers[id][tier];
-			if (!p) p = {
-				base: 0,
-				growth: 0
-			}; //solution for kabam errors where they forgot to add info.
+			while (!p && (tier > 0)) { tier--; p = unsafeWindow.cm.thronestats.tiers[id][tier]; } 
+			if (!p) continue; // can't find stats for tier
+			if (y["effects"]["slot"+i].fromJewel && (level > unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality])) {
+				level = unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality]
+			}
 			Current = p.base + ((level * level + level) * p.growth * 0.5);
 			level++;
 			Next = p.base + ((level * level + level) * p.growth * 0.5);;
@@ -4416,15 +4428,17 @@ Tabs.Throne = {
 		var tier = 0;
 		var Current = 0;
 		m = "<TABLE width=80% height=0% align='center' class=pbTab>";
-		for (i = 1; i <= 5; i++) {
+		for (var O in y["effects"]) {
+			var i = +(O.split("slot")[1]);
 			id = y["effects"]["slot" + i]["id"];
 			tier = parseInt(y["effects"]["slot" + i]["tier"]);
 			level = y["level"];
 			p = unsafeWindow.cm.thronestats.tiers[id][tier];
-			if (!p) p = {
-				base: 0,
-				growth: 0
-			}; //solution for kabam errors where they forgot to add info.
+			while (!p && (tier > 0)) { tier--; p = unsafeWindow.cm.thronestats.tiers[id][tier]; } 
+			if (!p) continue; // can't find stats for tier
+			if (y["effects"]["slot"+i].fromJewel && (level > unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality])) {
+				level = unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality]
+			}
 			Current = p.base + ((level * level + level) * p.growth * 0.5);
 			if (ThroneOptions.Items["0"])
 				var quality = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items["0"]["id"]]["quality"]);
@@ -9297,13 +9311,18 @@ Tabs.transport = {
         var total = 0;
         for (var k = 0; k < equipped.length; k++) {
             var item_id = equipped[k];
-            var item = unsafeWindow.kocThroneItems[item_id];
-            for (var i = 1; i <= item.quality; i++) {
-                var id = item['effects']['slot' + i]['id'];
+            var y = unsafeWindow.kocThroneItems[item_id];
+            for (var i = 1; i <= y.quality; i++) {
+                var id = y['effects']['slot' + i]['id'];
                 if (id == StatID) {
-                    var tier = parseInt(item["effects"]["slot" + i]["tier"]);
-                    var level = item["level"];
-                    var p = unsafeWindow.cm.thronestats.tiers[id][tier]; if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
+                    var tier = parseInt(y["effects"]["slot" + i]["tier"]);
+                    var level = y["level"];
+                    var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+					while (!p && (tier > 0)) { tier--; p = unsafeWindow.cm.thronestats.tiers[id][tier]; } 
+					if (!p) continue; // can't find stats for tier
+					if (y["effects"]["slot"+i].fromJewel && (level > unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality])) {
+						level = unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality]
+					}
                     var Percent = p.base + ((level * level + level) * p.growth * 0.5);
                     total += Percent;
                 }
@@ -12413,27 +12432,58 @@ Tabs.Barb = {
     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     params.emailTo = Seed.player['name'];
     params.subject = "AutoDF Overview";
-    var message = 'AutoDF Stats:' + '%0A';
+	var message = 'AutoDF Report for '+ AttackOptions.MsgInterval +' hour(s) of DF hunting (or since last report) %0A';
     
-      message += '%0A Aetherstone Gain (for '+ AttackOptions.MsgInterval +' hour(s) of DF hunting) %0A';
-      var totaldf = 0;
-    for (q=1;q<=Seed.cities.length;q++){
-        var cityID = 'city' + Seed.cities[q-1][0];
+	message += '%0A Aetherstone Status: %0A';
+	var totaldf = 0;
+	for (q=1;q<=Seed.cities.length;q++){
+		var cityID = 'city' + Seed.cities[q-1][0];
 
-        totaldf += Number(AttackOptions.BarbsDone[q]);
-	message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks' + '%0A';        
-  	var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOptions.AetherStatus[q];
-        message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.AetherStatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec5'][0] )) + ' Gain: ';
-        message += addCommas(gain)  + '%0A';
-        total += gain;
-        AttackOptions.AetherStatus[q] = parseInt(Seed.resources[cityID]['rec5'][0] );
+		totaldf += Number(AttackOptions.BarbsDone[q]);
+		message+= Seed.cities[q-1][1] + ': ' + AttackOptions.BarbsDone[q] + ' attacks' + '%0A';        
+		var gain = parseInt(Seed.resources[cityID]['rec5'][0] ) - AttackOptions.AetherStatus[q];
+		message+= Seed.cities[q-1][1] + ': Start: ' + addCommas(AttackOptions.AetherStatus[q]) + ' End :' + addCommas(parseInt(Seed.resources[cityID]['rec5'][0] )) + ' Gain: ';
+		message += addCommas(gain)  + '%0A';
+		total += gain;
+		AttackOptions.AetherStatus[q] = parseInt(Seed.resources[cityID]['rec5'][0] );
     }
-    message += '%0A Total Aetherstone gain : '+addCommas(total)+'%0A';
-    message += '%0A Total outgoing attacks : '+addCommas(totaldf)+'%0A';
-   for (z in AttackOptions.ItemsFound){
-      message += '%0A'+unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFound[z];
-   }
-    message += '%0A'+'%0A'+ 'Excess traffic errors: ' + AttackOptions.BarbsFailedTraffic +'%0A';
+	message += '%0A Total Aetherstone gain : '+addCommas(total)+'%0A';
+	message += 'Total outgoing attacks : '+addCommas(totaldf)+'%0A';
+
+	message +='%0A';
+	message += 'Miscellaneous Items: %0A';
+	for (z in AttackOptions.ItemsFound) {
+		message += unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFound[z]+'%0A';
+	}
+
+	message +='%0A';
+	message += 'Jewel Stats: %0A';
+	var itemcount = 0;
+	for (z in AttackOptions.JewelItemsFound){
+		itemcount += AttackOptions.JewelItemsFound[z];
+		message += JWQuality[z]+' Jewel x '+AttackOptions.JewelItemsFound[z]+'%0A';
+	}
+	message +='Total Jewels Found: '+itemcount+'%0A';
+	
+	message +='%0A';
+	message += 'Throne Stats: %0A';
+	var itemcount = 0;
+	for (z in AttackOptions.ThroneItemsFound){
+		itemcount += AttackOptions.ThroneItemsFound[z].amount;
+		message += Quality[AttackOptions.ThroneItemsFound[z].quality]+' '+AttackOptions.ThroneItemsFound[z].type+' x '+AttackOptions.ThroneItemsFound[z].amount+'%0A';
+	}
+	message +='Total Throne Room Items Found: '+itemcount+'%0A';
+
+	message +='%0A';
+	message += 'Champion Stats: %0A';
+	var itemcount = 0;
+	for (z in AttackOptions.ChampItemsFound){
+		itemcount += AttackOptions.ChampItemsFound[z].amount;
+		message += Quality[AttackOptions.ChampItemsFound[z].quality]+' '+AttackOptions.ChampItemsFound[z].type+' x '+AttackOptions.ChampItemsFound[z].amount+'%0A';
+	}
+	message +='Total Champion Equipment Found: '+itemcount+'%0A';
+
+	message += '%0A Excess traffic errors: ' + AttackOptions.BarbsFailedTraffic +'%0A';
     message += 'Rallypoint errors: ' + AttackOptions.BarbsFailedRP +'%0A';
     message += 'Knight errors: ' + AttackOptions.BarbsFailedKnight +'%0A';
     message += 'Bog errors: ' + AttackOptions.BarbsFailedBog +'%0A';
@@ -12457,6 +12507,9 @@ Tabs.Barb = {
                AttackOptions.BarbsFailedVaria = 0;
                AttackOptions.BarbsTried = 0;
                AttackOptions.ItemsFound = {};
+			   AttackOptions.ThroneItemsFound = {};
+			   AttackOptions.ChampItemsFound = {};
+		       AttackOptions.JewelItemsFound = {};
                for (q=1; q<=Seed.cities.length;q++){
                   AttackOptions.BarbsDone[q] = 0;
                }
@@ -14606,7 +14659,7 @@ Tabs.AutoTrain = {
 				unsafeWindow.seed.citystats["city" + cityId].gold[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].gold[0]) - parseInt(unsafeWindow.unitcost["unt" + unitId][5]) * parseInt(num);
 				unsafeWindow.seed.citystats["city" + cityId].pop[0] = parseInt(unsafeWindow.seed.citystats["city" + cityId].pop[0]) - Math.ceil(parseInt(unsafeWindow.unitcost["unt" + unitId][6]) * MORE_WITH_LESS_FACTOR) * parseInt(num);
 				if (unitId == 16)
-					unsafeWindow.seed.items.i34001 = parseInt(unsafeWindow.seed.items.i34001) - (parseInt(unsafeWindow.unitcost["unt" + unitId][11]["34001"]) * parseInt(num));
+					unsafeWindow.seed.items.i34001 = Number(parseInt(unsafeWindow.seed.items.i34001) - (parseInt(unsafeWindow.unitcost["unt" + unitId][11]["34001"]) * parseInt(num)));
 				unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null,inPrestige]);
 				setTimeout (notify, 5000);
 				for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
@@ -19272,13 +19325,17 @@ var DeleteReports = {
             }
             }
             if (Options.DeleteMsgs2){
+				var crestrpt = false;
                 for(i in CrestData) {
                     if(reports[k].side0XCoord == CrestData[i].X && reports[k].side0YCoord == CrestData[i].Y && reports[k].marchType==4 && t.isMyself(reports[k].side1PlayerId)) {
-	       t.checkreportforitems(k.substr(2));
-                        deletes1.push(k.substr(2));
+						crestrpt = true;
+						break;
                     }
                 }
-
+				if (crestrpt) {
+					t.checkreportforitems(k.substr(2));
+					deletes1.push(k.substr(2));
+				}	
             }
             if (Options.DeleteMsgs3){
                 for(i in CrestData) {
@@ -19353,31 +19410,90 @@ var DeleteReports = {
             method: "post",
             parameters: params,
             onSuccess: function (rslt) {
-	      if (rslt.detail.winner)
-               if(rslt.detail.loot[5]) {
-                  var loot = rslt.detail.loot[5];
-               if (matTypeof(loot) == 'object')
-                  for (var z in loot) {
-		    if (rslt.detail.fght.s0.m101 || rslt.detail.fght.s0.m102 || rslt.detail.fght.s0.m103 || rslt.detail.fght.s0.m104 || rslt.detail.fght.s0.m105 || rslt.detail.fght.s0.m106 || rslt.detail.fght.s0.m107 || rslt.detail.fght.s0.m108 || rslt.detail.fght.s0.m109 || rslt.detail.fght.s0.m10 ) {
-		     if(AttackOptions.ItemsFound[z])
-		        AttackOptions.ItemsFound[z] += parseInt(loot[z]);
-		     else AttackOptions.ItemsFound[z] = parseInt(loot[z]);
-		    } else {
-		     if(AttackOptions.ItemsFoundCr[z])
-		        AttackOptions.ItemsFoundCr[z] += parseInt(loot[z]);
-		     else AttackOptions.ItemsFoundCr[z] = parseInt(loot[z]);
-		    }
-                  }
+				if (!rslt.detail.fght.s0) return;
+				if (rslt.detail.winner) {
+					var darkforest = false;
+					if (rslt.detail.fght.s0.m101 || rslt.detail.fght.s0.m102 || rslt.detail.fght.s0.m103 || rslt.detail.fght.s0.m104 || rslt.detail.fght.s0.m105 || rslt.detail.fght.s0.m106 || rslt.detail.fght.s0.m107 || rslt.detail.fght.s0.m108 || rslt.detail.fght.s0.m109 || rslt.detail.fght.s0.m10 )
+						{ darkforest = true; }
+					if(rslt.detail.loot[5]) {
+						var loot = rslt.detail.loot[5];
+						if (matTypeof(loot) == 'object') {
+							for (var z in loot) {
+								if (darkforest) {
+									if(AttackOptions.ItemsFound[z]) { AttackOptions.ItemsFound[z] += parseInt(loot[z]); }	
+									else { AttackOptions.ItemsFound[z] = parseInt(loot[z]);}
+								} else {
+									if(AttackOptions.ItemsFoundCr[z]) { AttackOptions.ItemsFoundCr[z] += parseInt(loot[z]); }
+									else { AttackOptions.ItemsFoundCr[z] = parseInt(loot[z]); }
+								}	
+							}
+						}	
+					}
+					if (rslt.detail.throneRoomDrop) {
+						var TR = rslt.detail.throneRoomDrop; 
+						var z = ""+TR.type+TR.quality;
+						if (darkforest) {
+							if(AttackOptions.ThroneItemsFound[z]) { AttackOptions.ThroneItemsFound[z].amount += 1; }	
+							else { 
+								var NewObj = {};
+								NewObj.type = TR.type;
+								NewObj.quality = TR.quality;
+								NewObj.amount = 1;
+								AttackOptions.ThroneItemsFound[z] = NewObj;
+							}
+						} else {
+							if(AttackOptions.ThroneItemsFoundCr[z]) { AttackOptions.ThroneItemsFoundCr[z].amount += 1; }	
+							else { 
+								var NewObj = {};
+								NewObj.type = TR.type;
+								NewObj.quality = TR.quality;
+								NewObj.amount = 1;
+								AttackOptions.ThroneItemsFoundCr[z] = NewObj;
+							}
+						}	
+					}
+					if (rslt.detail.equipmentDrop) {
+						var EQ = rslt.detail.equipmentDrop; 
+						var z = ""+EQ.subtype+EQ.rarity;
+						if (darkforest) {
+							if(AttackOptions.ChampItemsFound[z]) { AttackOptions.ChampItemsFound[z].amount += 1; }	
+							else { 
+								var NewObj = {};
+								NewObj.type = EQ.subtype;
+								NewObj.quality = EQ.rarity;
+								NewObj.amount = 1;
+								AttackOptions.ChampItemsFound[z] = NewObj;
+							}
+						} else {
+							if(AttackOptions.ChampItemsFoundCr[z]) { AttackOptions.ChampItemsFoundCr[z].amount += 1; }	
+							else { 
+								var NewObj = {};
+								NewObj.type = EQ.subtype;
+								NewObj.quality = EQ.rarity;
+								NewObj.amount = 1;
+								AttackOptions.ChampItemsFoundCr[z] = NewObj;
+							}
+						}	
+					}
+					if (rslt.detail.lootJewel) {
+						var item = rslt.detail.lootJewel;
+						if (matTypeof(item) == 'object') {
+							var z = item.quality;
+							if (darkforest) {
+								if(AttackOptions.JewelItemsFound[z]) { AttackOptions.JewelItemsFound[z] += parseInt(item.quantity); }	
+								else { AttackOptions.JewelItemsFound[z] = parseInt(item.quantity);}
+							} else {
+								if(AttackOptions.JewelItemsFoundCr[z]) { AttackOptions.JewelItemsFoundCr[z] += parseInt(item.quantity); }
+								else { AttackOptions.JewelItemsFoundCr[z] = parseInt(item.quantity); }
+							}	
+						}
+					}	
                   saveAttackOptions();
                };
             },
-            onFailure: function (rslt) {
-               
-            },
-         }, false);
-   
+			onFailure: function (rslt) {},
+		}, false);
    },
-    
     
 }
 
@@ -21158,16 +21274,6 @@ Tabs.Attack = {
 			Options.Crestinterval = parseIntNan(e.target.value);
 			saveOptions();
 		},false);
-    
-
-
-
-
-
-
-
-
-
 		$("pbcrestslots").addEventListener('change', function(e){
 			Options.CrestSlots = parseIntNan(e.target.value);
 			saveOptions();
@@ -21180,11 +21286,6 @@ Tabs.Attack = {
 			}
 		}
         
-
-
-
-
-
 		t.tcp = new CdispCityPicker ('crestcityselect', document.getElementById('crestcity'), true, t.clickCitySelect, selbut);
     
 		if (CrestOptions.CrestCity == 0) {
@@ -21195,9 +21296,6 @@ Tabs.Attack = {
 			CrestOptions.isWild = this.checked;
 		},false);
     
-
-
-
 		$('pbRattacks').addEventListener('click', function(){
 			Options.CrestRand = this.checked;
 			saveOptions();
@@ -21579,15 +21677,6 @@ Tabs.Attack = {
 			return;
 		};
 		
-
-
-
-
-
-
-
-
-
 		if (!t.checkCityTroops(r,CrestDataNum)) {
 //			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
@@ -21762,28 +21851,56 @@ Tabs.Attack = {
 			return;
 
 		var total = 0;
-		var message = "";
+		var message = 'Attack Report for '+ Options.CrestMsgInterval +' hours of attacking (or since last report) %0A';
+		message += 'Numbers of 1st Wave sent: '+ Options.Crest1Count +'%0A';
+		message += 'Numbers of 2nd Wave sent: '+ Options.Crest2Count +'%0A';
+		message +='%0A';
+		message += 'Miscellaneous Items: %0A';
 
 		for (crest in Options.CrestList) {Options.CrestList[crest] = 0; }
 		for (z in AttackOptions.ItemsFoundCr) {
-			message += unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFoundCr[z]+'%0A';
-			
+
 			if (!isNaN(Options.CrestList["i"+z])) // if item is a crest or seal...
 				Options.CrestList["i"+z] = AttackOptions.ItemsFoundCr[z];
+			else {
+				message += unsafeWindow.g_js_strings.commonstr.found+' '+unsafeWindow.ksoItems[z].name+' x '+AttackOptions.ItemsFoundCr[z]+'%0A';
+			}
 		}
-
-		message += '%0ACrest Stats: %0A';
-		message += 'Crests Gained (for '+ Options.CrestMsgInterval +' hour of cresting, or since last report) %0A';
-
+		message +='%0A';
+		message += 'Crest Stats: %0A';
 		for (crest in Options.CrestList) {
 			if (Options.CrestList[crest] > 0)
-				message += unsafeWindow.itemlist[crest]['name'] +': '+ Options.CrestList[crest] +'%0A';
+				message += unsafeWindow.itemlist[crest]['name'] +' x '+ Options.CrestList[crest] +'%0A';
 			total += (Options.CrestList[crest]);
 		}
-        
-		message += '%0A Total Crests gained: '+ total +'%0A';
-		message += '%0A Numbers of 1st Wave send: '+ Options.Crest1Count +'%0A';
-		message += 'Numbers of 2nd Wave send: '+ Options.Crest2Count +'%0A';
+		message += 'Total Crests Found: '+ total +'%0A';
+
+		message +='%0A';
+		message += 'Jewel Stats: %0A';
+		var itemcount = 0;
+		for (z in AttackOptions.JewelItemsFoundCr){
+			itemcount += AttackOptions.JewelItemsFoundCr[z];
+			message += JWQuality[z]+' Jewel x '+AttackOptions.JewelItemsFoundCr[z]+'%0A';
+		}
+		message +='Total Jewels Found: '+itemcount+'%0A';
+
+		message +='%0A';
+		message += 'Throne Stats: %0A';
+		var itemcount = 0;
+		for (z in AttackOptions.ThroneItemsFoundCr){
+			itemcount += AttackOptions.ThroneItemsFoundCr[z].amount;
+			message += Quality[AttackOptions.ThroneItemsFoundCr[z].quality]+' '+AttackOptions.ThroneItemsFoundCr[z].type+' x '+AttackOptions.ThroneItemsFoundCr[z].amount+'%0A';
+		}
+		message +='Total Throne Room Items Found: '+itemcount+'%0A';
+
+		message +='%0A';
+		message += 'Champion Stats: %0A';
+		var itemcount = 0;
+		for (z in AttackOptions.ChampItemsFoundCr){
+			itemcount += AttackOptions.ChampItemsFoundCr[z].amount;
+			message += Quality[AttackOptions.ChampItemsFoundCr[z].quality]+' '+AttackOptions.ChampItemsFoundCr[z].type+' x '+AttackOptions.ChampItemsFoundCr[z].amount+'%0A';
+		}
+		message +='Total Champion Equipment Found: '+itemcount+'%0A';
 
 		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 		params.emailTo = Seed.player['name'];
@@ -21801,6 +21918,9 @@ Tabs.Attack = {
 					Options.Crest2Count = 0;
 					saveOptions();
 					AttackOptions.ItemsFoundCr = {};
+					AttackOptions.ThroneItemsFoundCr = {};
+					AttackOptions.ChampItemsFoundCr = {};
+					AttackOptions.JewelItemsFoundCr = {};
 					saveAttackOptions();
 				}
 			},
@@ -24326,7 +24446,8 @@ postInfo : function (z){
 	var y = unsafeWindow.kocChampionItems[z];
 	var l = unsafeWindow.kocChampionItems[z].rarity
 	var m = ':::.|'+y.name;
-	for (i=1;i<=6;i++) {
+	for (var O in y["effects"]) {
+		var i = +(O.split("")[1]);
 		id = y["effects"][""+i]["id"];
 		if (id == undefined)continue;
 		tier = parseInt(y["effects"][""+i]["tier"]);
@@ -24365,7 +24486,8 @@ paintEquipInfo : function (z,what){
           m+='<TR><TD style="background-color:#D5C795"><FONT color='+ color +'><B>' + y.name + '</b></font></td>';
         m+= '<TD><A onclick="chSavlage('+ y.equipmentId +')"><img src="data:image/png;base64,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"/></td></tr>';
           m+='<TR><TD style="background-color:#D5C795"><FONT color='+ color +'><B>[' + y.equipmentId + ']</b></font></td>';
-        for (i=1;i<=5;i++) {
+		for (var O in y["effects"]) {
+			var i = +(O.split("")[1]);
             id = y["effects"][""+i]["id"];
             tier = parseInt(y["effects"][""+i]["tier"]);
             level = y["level"];
@@ -25057,7 +25179,8 @@ PaintSalvageHistory : function() {
           var Current=0;
           var Next=0;
           m="<TABLE width=80% height=0% align='center' class=pbTab><TR><TD><B>Current</b></td><TD><B>Next</b></td>";
-          for (i=1;i<=5;i++) {
+			for (var O in y["effects"]) {
+				var i = +(O.split("")[1]);
                id = y["effects"][""+i]["id"];
                tier = parseInt(y["effects"][""+i]["tier"]);
                level = y["level"];
@@ -25093,7 +25216,8 @@ paintHoover : function (){
     var tier=0;
     var Current=0;
     m="<TABLE width=80% height=0% align='center' class=pbTab>";
-    for (i=1;i<=5;i++) {
+	for (var O in y["effects"]) {
+		var i = +(O.split("")[1]);
         id = y["effects"][""+i]["id"];
         tier = parseInt(y["effects"][""+i]["tier"]);
         level = y["level"];
@@ -25693,14 +25817,19 @@ function equippedthronestats (stat_id){
    var total = 0;
    for(var k = 0; k<equip_items.length; k++){
       var item_id = equip_items[k];
-      var item = unsafeWindow.kocThroneItems[item_id];
-      for(var i = 1; i<=item.quality; i++){
-         if(item["effects"]["slot"+i]){
-            var id = item["effects"]["slot"+i]["id"];
+      var y = unsafeWindow.kocThroneItems[item_id];
+      for(var i = 1; i<=y.quality; i++){
+         if(y["effects"]["slot"+i]){
+            var id = y["effects"]["slot"+i]["id"];
             if(id == stat_id){
-               var tier = parseInt(item["effects"]["slot"+i]["tier"]);
-               var level = item["level"];
-               var p = unsafeWindow.cm.thronestats.tiers[id][tier]; if(!p) p = {base:0,growth:0};//solution for kabam errors where they forgot to add info.
+               var tier = parseInt(y["effects"]["slot"+i]["tier"]);
+               var level = y["level"];
+               var p = unsafeWindow.cm.thronestats.tiers[id][tier];
+				while (!p && (tier > 0)) { tier--; p = unsafeWindow.cm.thronestats.tiers[id][tier]; } 
+				if (!p) continue; // can't find stats for tier
+				if (y["effects"]["slot"+i].fromJewel && (level > unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality])) {
+					level = unsafeWindow.cm.thronestats.jewelGrowthLimit[y["effects"]["slot"+i].quality]
+				}
                var Percent = p.base + ((level * level + level) * p.growth * 0.5);
                total += Percent;
             }
