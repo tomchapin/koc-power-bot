@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140502d
+// @version        20140502e
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140502d';
+var Version = '20140502e';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -19412,7 +19412,7 @@ var DeleteReports = {
             onSuccess: function (rslt) {
 				if (rslt.detail.winner) {
 					var darkforest = false;
-					if ((rslt.detail.fght && rslt.detail.fght.s0 && (rslt.detail.fght.s0.m101 || rslt.detail.fght.s0.m102 || rslt.detail.fght.s0.m103 || rslt.detail.fght.s0.m104 || rslt.detail.fght.s0.m105 || rslt.detail.fght.s0.m106 || rslt.detail.fght.s0.m107 || rslt.detail.fght.s0.m108 || rslt.detail.fght.s0.m109 || rslt.detail.fght.s0.m10))
+					if (rslt.detail.fght && rslt.detail.fght.s0 && (rslt.detail.fght.s0.m101 || rslt.detail.fght.s0.m102 || rslt.detail.fght.s0.m103 || rslt.detail.fght.s0.m104 || rslt.detail.fght.s0.m105 || rslt.detail.fght.s0.m106 || rslt.detail.fght.s0.m107 || rslt.detail.fght.s0.m108 || rslt.detail.fght.s0.m109 || rslt.detail.fght.s0.m10))
 						{ darkforest = true; }
 					if(rslt.detail.loot[5]) {
 						var loot = rslt.detail.loot[5];
