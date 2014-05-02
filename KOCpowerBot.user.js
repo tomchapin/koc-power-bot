@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140502a
+// @version        20140502b
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140502a';
+var Version = '20140502b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -12461,7 +12461,7 @@ Tabs.Barb = {
 	var itemcount = 0;
 	for (z in AttackOptions.JewelItemsFound){
 		itemcount += AttackOptions.JewelItemsFound[z];
-		message += JWQuality[z]+' Jewel x '+AttackOptions.JewelItemsFound[z]+'%0A';
+		message += JWQuality[z-1]+' Jewel x '+AttackOptions.JewelItemsFound[z]+'%0A';
 	}
 	message +='Total Jewels Found: '+itemcount+'%0A';
 	
@@ -21880,7 +21880,7 @@ Tabs.Attack = {
 		var itemcount = 0;
 		for (z in AttackOptions.JewelItemsFoundCr){
 			itemcount += AttackOptions.JewelItemsFoundCr[z];
-			message += JWQuality[z]+' Jewel x '+AttackOptions.JewelItemsFoundCr[z]+'%0A';
+			message += JWQuality[z-1]+' Jewel x '+AttackOptions.JewelItemsFoundCr[z]+'%0A';
 		}
 		message +='Total Jewels Found: '+itemcount+'%0A';
 
