@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140504a
+// @version        20140507a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140504a';
+var Version = '20140507a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -76,7 +76,7 @@ unsafeWindow.arthurCheck = function (a) {
 	return;
 };
 
-var Quality = ['Simple','Common','Uncommon','Rare','Epic','Wondrous'];
+var Quality = ['Simple','Common','Uncommon','Rare','Epic','Wondrous','Miraculous'];
 var JWQuality = ["Cracked", "Flawed", "Cloudy", "Subdued", "Bright"];
 var isAFK = false;
 
@@ -3520,6 +3520,10 @@ Tabs.Throne = {
 		var t = Tabs.Throne;
 		var a = "";
 		var b = "";
+		var unique = false;
+		if ((typeof (unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]) == 'object') && (unsafeWindow.kocThroneItems[ThroneOptions.Items[id]["id"]].unique != 0)) {
+			unique = true;
+		}
 		switch (qualityfrom) {
 		case 0:
 			a = unsafeWindow.g_js_strings.throneRoom.simple;
@@ -3540,7 +3544,8 @@ Tabs.Throne = {
 			a = unsafeWindow.g_js_strings.throneRoom.wondrous;
 			break;
 		case 6:
-			a = unsafeWindow.g_js_strings.throneRoom.unique;
+			if (unique) { a = unsafeWindow.g_js_strings.throneRoom.unique; }
+			else {a = unsafeWindow.g_js_strings.throneRoom.miraculous; }
 			break;
 		default:
 			a = unsafeWindow.g_js_strings.throneRoom.simple;
@@ -3566,7 +3571,8 @@ Tabs.Throne = {
 			b = unsafeWindow.g_js_strings.throneRoom.wondrous;
 			break;
 		case 6:
-			b = unsafeWindow.g_js_strings.throneRoom.unique;
+			if (unique) { b = unsafeWindow.g_js_strings.throneRoom.unique; }
+			else {b = unsafeWindow.g_js_strings.throneRoom.miraculous; }
 			break;
 		default:
 			b = unsafeWindow.g_js_strings.throneRoom.simple;
@@ -3895,7 +3901,7 @@ Tabs.Throne = {
 					var newlvl = ThroneOptions.Items[k]["levelto"];
 					if (!unsafeWindow.cm.thronestats.upgrade[newlvl] && !firstRun) {
 						ThroneOptions.Items.splice(k, 1);
-						if (document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then level " + Number(newlvl - 1) + "!</font>";
+						if (document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher than level " + Number(newlvl - 1) + "!</font>";
 						return;
 					}
 				}
@@ -3903,9 +3909,9 @@ Tabs.Throne = {
 					ThroneOptions.Items[k]["qualityfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["quality"]) + countEnhance;
 					ThroneOptions.Items[k]["qualityto"] = parseInt(ThroneOptions.Items[k]["qualityfrom"]) + 1;
 					ThroneOptions.Items[k]["levelfrom"] = parseInt(unsafeWindow.kocThroneItems[ThroneOptions.Items[k]["id"]]["level"]) + countUpgrade;
-					if (ThroneOptions.Items[k]["qualityto"] > 5 && !firstRun) {
+					if (ThroneOptions.Items[k]["qualityto"] > 6 && !firstRun) {
 						ThroneOptions.Items.splice(k, 1);
-						if (document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't upgrade higher then quality 5!</font>";
+						if (document.getElementById('ShowTries')) document.getElementById('ShowTries').innerHTML = "<font color=red>You can't enhance higher than quality 6!</font>";
 						return;
 					}
 				}
