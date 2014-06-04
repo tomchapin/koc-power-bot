@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140507a
+// @version        20140604a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140507a';
+var Version = '20140604a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -193,6 +193,7 @@ var Options = {
   fchar: "Null",
   toprank:  0,
   botrank:  0,
+  showalliance:  "",
   plog:  true,
   raidbtns: false,
   transbtns: false,
@@ -967,8 +968,9 @@ function pbStartup (){
   ChatComOverlay();
   GuardianTT();
 	if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
-	afkwatcher();
-	loadchecker();
+
+  afkwatcher();
+  loadchecker();
   QuickScout();	
 }
 
@@ -7552,6 +7554,7 @@ Tabs.Search = {
         <TR><TD class=xtab align=right>'+translate("Min")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=paminmight size=8 value='+ Options.minmight +'>\
         <TR><TD class=xtab align=right>'+translate("Max")+" "+translate("might")+':</td><TD class=xtab><INPUT type=text id=pamaxmight size=8 value='+ Options.maxmight +'>\
         <TR><TD class=xtab align=right>Ignore alliances ranked</td><TD class=xtab><INPUT type=text id=patopra size=4 value='+ Options.toprank +'> - <INPUT type=text id=pabotra size=4 value='+ Options.botrank +'></td>\
+        <TR><TD class=xtab align=right>Alliance name</td><TD class=xtab><INPUT type=text id=pashowall size=12 value='+ Options.showalliance +'></td>\
         <TR><TD class=xtab align=right>'+translate("Coordinates only")+':</td><TD class=xtab><INPUT type=checkbox id=pacoordsOnly \></td></tr>\
         </table></div><BR><SPAN id=pasrchSizeWarn></span><DIV id=pbSrcExp></div>';
         FetchTopAlliances(Options.toprank,Options.botrank,function (e) {
@@ -7680,6 +7683,11 @@ Tabs.Search = {
          t.dispMapTable();
          });
         }, false);
+        document.getElementById('pashowall').addEventListener ('change', function (){
+			Options.showalliance = this.value;
+			saveOptions();
+			t.dispMapTable ();
+        }, false);
     
     }
     
@@ -7733,8 +7741,9 @@ Tabs.Search = {
       lvl = parseInt (t.mapDat[i][4]);
       type = t.mapDat[i][3];
       if (t.opt.searchType==2 && type==7 ) {
-        if((t.mapDat[i][10] >= Options.minmight && t.mapDat[i][10] <= Options.maxmight) || t.mapDat[i][5])
+        if((t.mapDat[i][10] >= Options.minmight && (t.mapDat[i][10] <= Options.maxmight || Options.maxmight==0)) || t.mapDat[i][5])
         if(t.mapDat[i][14] == false || t.IgAlly.indexOf(Number(t.mapDat[i][14])) == -1)
+        if(t.mapDat[i][14] == false || Options.showalliance == "" || Options.showalliance.toUpperCase() == t.mapDat[i][11].toUpperCase() || t.mapDat[i][5])
         if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
            (Options.mistedOnly && t.mapDat[i][5]===true) ||
            (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
@@ -7859,8 +7868,9 @@ Tabs.Search = {
             bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
      if(t.opt.searchType==2)
       if (t.mapDat[i][3] == 7){
-        if((t.mapDat[i][10] >= Options.minmight && t.mapDat[i][10] <= Options.maxmight) || t.mapDat[i][5]){
+        if((t.mapDat[i][10] >= Options.minmight && (t.mapDat[i][10] <= Options.maxmight || Options.maxmight==0)) || t.mapDat[i][5]){
         if(t.mapDat[i][14] == false || t.IgAlly.indexOf(Number(t.mapDat[i][14])) == -1)
+        if(t.mapDat[i][14] == false || Options.showalliance == "" || Options.showalliance.toUpperCase() == t.mapDat[i][11].toUpperCase() || t.mapDat[i][5])
         if((Options.hostileOnly && t.mapDat[i][12] == 'h') ||
            (Options.mistedOnly && t.mapDat[i][5]===true) ||
            (Options.friendlyOnly && t.mapDat[i][12] == 'f') ||
@@ -11840,6 +11850,8 @@ Tabs.Barb = {
       ['Tower', 15],
       ['FlameArch', 16],
       ['Hussar', 17],
+      ['Halberdier', 18],
+      ['Onager', 21],
      ],
     
   init : function (div){
@@ -11995,7 +12007,7 @@ Tabs.Barb = {
   barbOptions: function(){
        var t = Tabs.Barb;
        if(t.barboptions == null)    
-        t.barboptions = new pbPopup ('pbbarboptions', 0,0, 375,350, true);
+        t.barboptions = new pbPopup ('pbbarboptions', 0,0, 400,400, true);
        t.barboptions.centerMe (mainPop.getMainDiv());  
      t.barboptions.getTopDiv().innerHTML = '<CENTER><b>Dark Forest Options for server '+getServerId()+'</b></CENTER>';
       var y = '<DIV style="max-height:400px; overflow-y:auto;"><DIV class=pbStat>RESET FORESTS</div><TABLE width=100%>';
@@ -13303,843 +13315,586 @@ Tabs.Export = {
 }
 
 /****************************  Reassign Tab  *******************************/
-var troops = {1:'SupplyTroops',
-              2:'Militiaman',
-              3:'Scout',
-              4:'Pikeman',
-              5:'Swordsman',
-              6:'Archer',
-              7:'Cavalry',
-              8:'HeavyCavalry',
-              9:'SupplyWagon',
-              10:'Ballista',
-              11:'BatteringRam',
-              12:'Catapult',
-              13:'BloodThorn',
-              14:'Executioner',
-              15:'SiegeTower' ,
-              16:'FlameArcher' ,
-              17:'Hussar' ,
-             };  
+
+var troops = {	1:'SupplyTroops',
+				2:'Militiaman',
+				3:'Scout',
+				4:'Pikeman',
+				5:'Swordsman',
+				6:'Archer',
+				7:'Cavalry',
+				8:'HeavyCavalry',
+				9:'SupplyWagon',
+				10:'Ballista',
+				11:'BatteringRam',
+				12:'Catapult',
+				13:'BloodThorn',
+				14:'Executioner',
+				15:'SiegeTower' ,
+				16:'FlameArcher' ,
+				17:'Hussar' ,
+				18:'Halberdier' ,
+				21:'Onager' ,
+			};  
+			 
 Tabs.Reassign = {
-  tabOrder: 30,
-  tabLabel: unsafeWindow.g_js_strings.commonstr.reassign,
-  myDiv: null,
-  timer: null,
-  reassignState: [],
-  lRE: [],
-  reassignRoutes: [],
-  rallypointlevel:null,
-  count:0,
-  check:false,
+	tabOrder: 30,
+	tabLabel: unsafeWindow.g_js_strings.commonstr.reassign,
+	myDiv: null,
+	timer: null,
+	reassignState: [],
+	lRE: [],
+	reassignRoutes: [],
+	rallypointlevel:null,
+	count:0,
+	check:false,
+	processing:false,
 
-    init: function(div){
-        var t = Tabs.Reassign;
-        t.myDiv = div;
-        t.reassignState = {
-            running: false,
-        };
-        if(Options.reassgnbtns)AddSubTabLink('Reassign',t.toggleReassignState, 'ReasignToggleTab');
-        t.readReassignState();
-        t.readReassignRoutes();
-        t.e_reassignRoutes();
+	init: function(div){
+		var t = Tabs.Reassign;
+		t.myDiv = div;
+		t.reassignState = {
+			running: false,
+		};
+		if(Options.reassgnbtns) AddSubTabLink('Reassign',t.toggleReassignState, 'ReasignToggleTab');
+		t.readReassignState();
+		t.readReassignRoutes();
+		t.e_reassignRoutes();
 
-      var m = '<DIV id=pbReMainDivF class=pbStat>'+translate("AUTOMATED REASSIGN FUNCTION")+'</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
-      if (t.reassignState.running == false) {
-          m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = OFF"></td>';
-         if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #CCC">Reassign: Off</span>';
-      } else {
-          m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = ON"></td>';
-         if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #FFFF00">Reassign: On</span>';
-      }
-      m += '<TD><INPUT id=pbReassShowRoutes type=submit value="Show Routes"></td>';
-      m += '</tr></table></div>';
-      m += '<DIV id=pbReassignDivD class=pbStat>'+translate("ADD REASSIGN ROUTE")+'</div>';
+		var m = '<DIV id=pbReMainDivF class=pbStat>'+translate("AUTOMATED REASSIGN FUNCTION")+'</div><TABLE id=pbtraderfunctions width=100% height=0% class=pbTab><TR align="center">';
+		if (t.reassignState.running == false) {
+			m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = OFF"></td>';
+			if (document.getElementById('ReasignToggleTab')) document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #CCC">Reassign: Off</span>';
+		}
+		else {
+			m += '<TD><INPUT id=pbReassignState type=submit value="Reassign = ON"></td>';
+			if (document.getElementById('ReasignToggleTab')) document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #FFFF00">Reassign: On</span>';
+		}
+		m += '<TD><INPUT id=pbReassShowRoutes type=submit value="Show Routes"></td>';
+		m += '</tr></table></div>';
+		m += '<DIV id=pbReassignDivD class=pbStat>'+translate("ADD REASSIGN ROUTE")+'</div>';
 
-      m += '<TABLE id=pbaddreasignroute width=95% height=0% class=pbTab><TR align="left">';
-      m += '<TD width=20px>'+translate("From City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncity></span></div></td></tr>';
+		m += '<TABLE id=pbaddreasignroute width=95% height=0% class=pbTab><TR align="left">';
+		m += '<TD width=20px>'+translate("From City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncity></span></div></td></tr>';
 
-      m += '<TR align="left">';
-      m += '<TD width=20px>'+translate("To City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncityTo></span></div></td>';
+		m += '<TR align="left">';
+		m += '<TD width=20px>'+translate("To City:")+'</td> <TD width=310px><DIV style="margin-bottom:10px;"><span id=ptassigncityTo></span></div></td>';
       
-        m += '<TR align="left">';
-        m += '<TD colspan=4>'+translate("Check reassign every:")+' <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> '+translate("minutes")+'</td></tr>';
-        m += '<TR><TD><INPUT id=autofilloff type=checkbox unchecked=true\> '+translate("Lock troop values")+'</TR></TD></table>';
-      m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("Fill in the number of troops you want to keep in a city:")+'</div>';
-      m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
-      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-      m += '<TD>'+translate("Supply Troop")+'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Militiaman")+'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Scout")+'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Pikeman")+'</td></tr>'
-      m += '<TR><TD><INPUT id=pbSupplyTroops type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetSupplyTroops disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbMilitiaman type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetMilitiaman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbScout type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetScout disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbPikeman type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetPikeman disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
-      
-      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-      m += '<TD>'+translate("Swordsman")+'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Archer")+'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Cavalry")+'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Heavy Cavalry")+'</td></tr>'
-      m += '<TR><TD><INPUT id=pbSwordsman type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetSwordsman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbArcher type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetArcher disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbCavalry type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbHeavyCavalry type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetHeavyCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
-      
-      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-      m += '<TD>'+translate("Supply Wagon")+'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Ballista")+'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Battering Ram")+'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-      m += '<TD>'+translate("Catapult")+'</td></tr>'
-      
-      //'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30_s34.jpg
-      
-      m += '<TR><TD><INPUT id=pbSupplyWagon type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetSupplyWagon disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbBallista type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetBallista disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbBatteringRam type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetBatteringRam disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbCatapult type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
-      
-     m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
-      m += '<TD>'+translate("BloodThorn")+'</td>';
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>';
-      m += '<TD>'+translate("Executioner")+'</td>';
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>';
-      m += '<TD>'+translate("Siege Tower")+'</td>';
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>';
-      m += '<TD>'+translate("Flame Archer")+'</td></tr>';
+		m += '<TR align="left">';
+		m += '<TD colspan=4>'+translate("Check reassign every:")+' <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> '+translate("minutes")+'</td>';
+		m += '<TD><INPUT id=autofilloff type=checkbox unchecked=true\> '+translate("Lock troop values")+'</TD>';
+		m += '<TD><INPUT id=zeroisetroops type=button value=" '+translate("Zeroise troop values")+'"\></TD></TR></table>';
+		m += '<DIV style="margin-top:10px;margin-bottom:5px;">'+translate("Fill in the number of troops you want to KEEP in a city:")+'</div>';
 
-      m += '<TR><TD><INPUT id=pbBloodThorn type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetBloodThorn disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbExecutioner type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetExecutioner disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbSiegeTower type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetSiegeTower disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-      m += '<TD><INPUT id=pbFlameArcher type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetFlameArcher disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+		m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
+
+		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
+		m += '<TD>'+translate("Supply Troop")+'</td>'
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
+		m += '<TD>'+translate("Militiaman")+'</td>'
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
+		m += '<TD>'+translate("Scout")+'</td>'
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
+		m += '<TD>'+translate("Pikeman")+'</td></tr>'
+
+		m += '<TR><TD><INPUT id=pbSupplyTroops type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetSupplyTroops disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbMilitiaman type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetMilitiaman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbScout type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetScout disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbPikeman type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetPikeman disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+      
+		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
+		m += '<TD>'+translate("Swordsman")+'</td>'
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
+		m += '<TD>'+translate("Archer")+'</td>'
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
+		m += '<TD>'+translate("Cavalry")+'</td>'
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
+		m += '<TD>'+translate("Heavy Cavalry")+'</td></tr>'
+      
+		m += '<TR><TD><INPUT id=pbSwordsman type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetSwordsman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbArcher type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetArcher disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbCavalry type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbHeavyCavalry type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetHeavyCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+      
+		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
+		m += '<TD>'+translate("Supply Wagon")+'</td>'
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
+		m += '<TD>'+translate("Ballista")+'</td>'
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
+		m += '<TD>'+translate("Battering Ram")+'</td>'
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
+		m += '<TD>'+translate("Catapult")+'</td></tr>'
+      
+		m += '<TR><TD><INPUT id=pbSupplyWagon type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetSupplyWagon disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbBallista type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetBallista disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbBatteringRam type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetBatteringRam disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbCatapult type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+      
+		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
+		m += '<TD>'+translate("BloodThorn")+'</td>';
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>';
+		m += '<TD>'+translate("Executioner")+'</td>';
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>';
+		m += '<TD>'+translate("Siege Tower")+'</td>';
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>';
+		m += '<TD>'+translate("Flame Archer")+'</td></tr>';
+
+		m += '<TR><TD><INPUT id=pbBloodThorn type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetBloodThorn disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbExecutioner type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetExecutioner disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbSiegeTower type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetSiegeTower disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbFlameArcher type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetFlameArcher disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
    
-      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_50.jpg?6545?6545"></td>';
-      m += '<TD>'+translate("Hussar")+'</td></tr>';
-      m += '<TR><TD><INPUT id=pbHussar type=checkbox unchecked=true\>';
-      m += '<INPUT id=pbtargetHussar disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_50.jpg?6545?6545"></td>';
+		m += '<TD>'+translate("Hussar")+'</td>';
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_18_50.jpg?6545"></td>';
+		m += '<TD>'+translate("Halberdier")+'</td>';
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_50.jpg?6545?6545"></td>';
+		m += '<TD>'+translate("Heavy Onager")+'</td></tr>';
+	  
+		m += '<TR><TD><INPUT id=pbHussar type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetHussar disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbHalberdier type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetHalberdier disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbOnager type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetOnager disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
-      m+='</table>';
+		m+='</table>';
+      	m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteReassign type=submit value="'+translate("Add Reassign Route")+'"></div>';
       
-      m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteReassign type=submit value="'+translate("Add Route")+'"></div>';
+		t.myDiv.innerHTML = m;
       
-      t.myDiv.innerHTML = m;
-      
-      t.tcp = new CdispCityPicker ('ptreassign', document.getElementById('ptassigncity'), true, null, 0);
-      t.tcpto = new CdispCityPicker ('ptreassignTo', document.getElementById('ptassigncityTo'), true);
-      for(var k in troops){
-      document.getElementById('pbtarget'+troops[k]).value = parseInt(Seed.units['city' + t.tcp.city.id]['unt'+k]);
-      }
+		t.tcp = new CdispCityPicker ('ptreassign', document.getElementById('ptassigncity'), true, null, 0);
+		t.tcpto = new CdispCityPicker ('ptreassignTo', document.getElementById('ptassigncityTo'), true);
+		for (var k in troops){
+			document.getElementById('pbtarget'+troops[k]).value = parseInt(Seed.units['city' + t.tcp.city.id]['unt'+k]);
+		}
 
-      document.getElementById('ptassigncity').addEventListener('click', function(){
-          if(document.getElementById('autofilloff').checked == false)
-        for(var k in troops)
-        document.getElementById('pbtarget'+troops[k]).value = parseInt(Seed.units['city' + t.tcp.city.id]['unt'+k]);
-      }, false);
+		document.getElementById('ptassigncity').addEventListener('click', function(){
+			if (document.getElementById('autofilloff').checked == false)
+				for(var k in troops)
+					document.getElementById('pbtarget'+troops[k]).value = parseInt(Seed.units['city' + t.tcp.city.id]['unt'+k]);
+		}, false);
       
-      document.getElementById('pbReassignState').addEventListener('click', function(){
-          t.toggleReassignState(this);
-      }, false);
-      document.getElementById('pbSaveRouteReassign').addEventListener('click', function(){
-      t.addReassignRoute();
-      }, false);
-      document.getElementById('pbReassShowRoutes').addEventListener('click', function(){
-      t.showReassignRoutes();
-      }, false);
-      
-      document.getElementById('pbreassigninterval').addEventListener('keyup', function(){
-        if (isNaN(document.getElementById('pbreassigninterval').value)){ document.getElementById('pbreassigninterval').value=0 ;}
-        Options.reassigninterval = document.getElementById('pbreassigninterval').value;
-        saveOptions();
-      }, false);
-      
-      document.getElementById('pbtargetSupplyTroops').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetSupplyTroops').value)) document.getElementById('pbtargetSupplyTroops').value=0 ;
-      }, false);
-      document.getElementById('pbtargetMilitiaman').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetMilitiaman').value)) document.getElementById('pbtargetMilitiaman').value=0 ;
-      }, false);
-      document.getElementById('pbtargetScout').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetScout').value)) document.getElementById('pbtargetScout').value=0 ;
-      }, false);
-      document.getElementById('pbtargetPikeman').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetPikeman').value)) document.getElementById('pbtargetPikeman').value=0 ;
-      }, false);
-      document.getElementById('pbtargetSwordsman').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetSwordsman').value)) document.getElementById('pbtargetSwordsman').value=0 ;
-      }, false);
-      document.getElementById('pbtargetArcher').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetArcher').value)) document.getElementById('pbtargetArcher').value=0 ;
-      }, false);
-      document.getElementById('pbtargetCavalry').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetCavalry').value)) document.getElementById('pbtargetCavalry').value=0 ;
-      }, false);
-      document.getElementById('pbtargetHeavyCavalry').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetHeavyCavalry').value)) document.getElementById('pbtargetHeavyCavalry').value=0 ;
-      }, false);
-      document.getElementById('pbtargetSupplyWagon').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetSupplyWagon').value)) document.getElementById('pbtargetSupplyWagon').value=0 ;
-      }, false);
-      document.getElementById('pbtargetBallista').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetBallista').value)) document.getElementById('pbtargetBallista').value=0 ;
-      }, false);
-     document.getElementById('pbtargetBatteringRam').addEventListener('keyup', function(){
-         if (isNaN(document.getElementById('pbtargetBatteringRam').value)) document.getElementById('pbtargetBatteringRam').value=0 ;
-     }, false);
-     document.getElementById('pbtargetCatapult').addEventListener('keyup', function(){
-         if (isNaN(document.getElementById('pbtargetCatapult').value)) document.getElementById('pbtargetCatapult').value=0 ;
-     }, false);
-      document.getElementById('pbtargetBloodThorn').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetBloodThorn').value)) document.getElementById('pbtargetBloodThorn').value=0 ;
-      }, false);
-      document.getElementById('pbtargetExecutioner').addEventListener('keyup', function(){
-          if (isNaN(document.getElementById('pbtargetExecutioner').value)) document.getElementById('pbtargetExecutioner').value=0 ;
-      }, false);
-     document.getElementById('pbtargetSiegeTower').addEventListener('keyup', function(){
-         if (isNaN(document.getElementById('pbtargetSiegeTower').value)) document.getElementById('pbtargetSiegeTower').value=0 ;
-     }, false);
-     document.getElementById('pbtargetFlameArcher').addEventListener('keyup', function(){
-         if (isNaN(document.getElementById('pbtargetFlameArcher').value)) document.getElementById('pbtargetFlameArcher').value=0 ;
-     }, false);
-     document.getElementById('pbtargetHussar').addEventListener('keyup', function(){
-         if (isNaN(document.getElementById('pbtargetHussar').value)) document.getElementById('pbtargetHussar').value=0 ;
-     }, false);
-      
-      
-      document.getElementById('pbSupplyTroops').addEventListener('click', function(){
-          if (document.getElementById('pbSupplyTroops').checked==false) {
-              document.getElementById('pbtargetSupplyTroops').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetSupplyTroops').disabled = false;
-          }
-      },false);
-      document.getElementById('pbMilitiaman').addEventListener('click', function(){
-          if (document.getElementById('pbMilitiaman').checked==false) {
-              document.getElementById('pbtargetMilitiaman').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetMilitiaman').disabled = false;
-          }
-      },false);
-      document.getElementById('pbScout').addEventListener('click', function(){
-          if (document.getElementById('pbScout').checked==false) {
-              document.getElementById('pbtargetScout').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetScout').disabled = false;
-          }
-      },false);
-      document.getElementById('pbPikeman').addEventListener('click', function(){
-          if (document.getElementById('pbPikeman').checked==false) {
-              document.getElementById('pbtargetPikeman').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetPikeman').disabled = false;
-          }
-      },false);
-      document.getElementById('pbSwordsman').addEventListener('click', function(){
-          if (document.getElementById('pbSwordsman').checked==false) {
-              document.getElementById('pbtargetSwordsman').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetSwordsman').disabled = false;
-          }
-      },false);
-      document.getElementById('pbArcher').addEventListener('click', function(){
-          if (document.getElementById('pbArcher').checked==false) {
-              document.getElementById('pbtargetArcher').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetArcher').disabled = false;
-          }
-      },false);
-      document.getElementById('pbCavalry').addEventListener('click', function(){
-          if (document.getElementById('pbCavalry').checked==false) {
-              document.getElementById('pbtargetCavalry').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetCavalry').disabled = false;
-          }
-      },false);
-      document.getElementById('pbHeavyCavalry').addEventListener('click', function(){
-          if (document.getElementById('pbHeavyCavalry').checked==false) {
-              document.getElementById('pbtargetHeavyCavalry').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetHeavyCavalry').disabled = false;
-          }
-      },false);
-      document.getElementById('pbSupplyWagon').addEventListener('click', function(){
-          if (document.getElementById('pbSupplyWagon').checked==false) {
-              document.getElementById('pbtargetSupplyWagon').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetSupplyWagon').disabled = false;
-          }
-      },false);
-      document.getElementById('pbBallista').addEventListener('click', function(){
-          if (document.getElementById('pbBallista').checked==false) {
-              document.getElementById('pbtargetBallista').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetBallista').disabled = false;
-          }
-      },false);
-      document.getElementById('pbBatteringRam').addEventListener('click', function(){
-          if (document.getElementById('pbBatteringRam').checked==false) {
-              document.getElementById('pbtargetBatteringRam').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetBatteringRam').disabled = false;
-          }
-      },false);
-      
-      document.getElementById('pbCatapult').addEventListener('click', function(){
-          if (document.getElementById('pbCatapult').checked==false) {
-              document.getElementById('pbtargetCatapult').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetCatapult').disabled = false;
-          }
-      },false);
-      document.getElementById('pbBloodThorn').addEventListener('click', function(){
-          if (document.getElementById('pbBloodThorn').checked==false) {
-              document.getElementById('pbtargetBloodThorn').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetBloodThorn').disabled = false;
-          }
-      },false);      
-      document.getElementById('pbExecutioner').addEventListener('click', function(){
-          if (document.getElementById('pbExecutioner').checked==false) {
-              document.getElementById('pbtargetExecutioner').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetExecutioner').disabled = false;
-          }
-      },false);      
-      document.getElementById('pbSiegeTower').addEventListener('click', function(){
-          if (document.getElementById('pbSiegeTower').checked==false) {
-              document.getElementById('pbtargetSiegeTower').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetSiegeTower').disabled = false;
-          }
-      },false);
-      document.getElementById('pbFlameArcher').addEventListener('click', function(){
-          if (document.getElementById('pbFlameArcher').checked==false) {
-              document.getElementById('pbtargetFlameArcher').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetFlameArcher').disabled = false;
-          }
-      },false);
-       document.getElementById('pbHussar').addEventListener('click', function(){
-          if (document.getElementById('pbHussar').checked==false) {
-              document.getElementById('pbtargetHussar').disabled = true;
-          }
-          else {
-            document.getElementById('pbtargetHussar').disabled = false;
-          }
-      },false);
-         
-      
-      
-      
-      
-      window.addEventListener('unload', t.onUnload, false);
-    },
-    
-    getRallypoint: function(cityId){
-      var t = Tabs.Reassign;
-      for (var o in Seed.buildings[cityId]){
-        var buildingType = parseInt(Seed.buildings[cityId][o][0]);
-        var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
-        if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
-       }  
-    },
-            
-    
+		document.getElementById('pbReassignState').addEventListener('click', function(){
+			t.toggleReassignState(this);
+		}, false);
+		document.getElementById('pbSaveRouteReassign').addEventListener('click', function(){
+			t.addReassignRoute();
+		}, false);
+		document.getElementById('pbReassShowRoutes').addEventListener('click', function(){
+			t.showReassignRoutes();
+		}, false);
+		document.getElementById('zeroisetroops').addEventListener('click', function(){
+			for(var k in troops)
+				document.getElementById('pbtarget'+troops[k]).value = 0;
+		}, false);
+		document.getElementById('pbreassigninterval').addEventListener('keyup', function(){
+			if (isNaN(document.getElementById('pbreassigninterval').value)){ document.getElementById('pbreassigninterval').value=0 ;}
+			Options.reassigninterval = document.getElementById('pbreassigninterval').value;
+			saveOptions();
+		}, false);
 
-    e_reassignRoutes: function(){
-      var t = Tabs.Reassign;
-      var now = new Date();
-      if (t.reassignState.running == true)    {
-          var now = new Date().getTime()/1000.0;
-          now = now.toFixed(0);
-          var last = Options.lastreassign;
-               if ( now > (parseInt(last) + (Options.reassigninterval*60))){
-                  t.checkdoReassign();
-              }
-      }
-      setTimeout(function(){ t.e_reassignRoutes();}, Options.reassigninterval*1000);
-      
-    },
-        
-    delReassignRoutes: function() {
-        
-        var t = Tabs.Reassign;
-        
-        t.reassignRoutes= [];
-    
-    },
-    checkcoords : function (obj){
-        var t = Tabs.Reassign;
-        if(obj.id == 'pbok'){
-            t.check = true;
-            t.addReassignRoute();
-        }
-        return;            
-    },
-    addReassignRoute: function () {
-        var t = Tabs.Reassign;
-        var city = t.tcp.city.id;
-        if(t.tcpto.city == null){
-            new CdialogCancelContinue('<SPAN class=boldRed>'+translate("No destination selected!")+'</span>', null, null, mainPop.getMainDiv);
-            return;
-        }
-        if(t.tcp.city.id == t.tcpto.city.id){
-            new CdialogCancelContinue('<SPAN class=boldRed>'+translate("Can\'t reassign to same city!")+'</span>', null, null, mainPop.getMainDiv);
-            return;
-        }
-        if ((t.tcpto.city.x == 0 && t.tcpto.city.y == 0)&& !t.check)
-        {
-            new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv);
-            return;
-        }
-        t.check = false;
-        
-        var SendSupplyTroop = document.getElementById('pbSupplyTroops').checked;
-        var SendMilitiaman = document.getElementById('pbMilitiaman').checked;
-        var SendScout = document.getElementById('pbScout').checked;
-        var SendPikeman = document.getElementById('pbPikeman').checked;
-        var SendSwordsman = document.getElementById('pbSwordsman').checked;
-        var SendArchers = document.getElementById('pbArcher').checked;
-        var SendCavalry = document.getElementById('pbCavalry').checked;
-        var SendHeavyCavalry = document.getElementById('pbHeavyCavalry').checked;
-        var SendSupplyWagons = document.getElementById('pbSupplyWagon').checked;
-        var SendBallista = document.getElementById('pbBallista').checked;
-        var SendBatteringRam = document.getElementById('pbBatteringRam').checked;
-        var SendCatapult = document.getElementById('pbCatapult').checked;
-        var SendBloodThorn = document.getElementById('pbBloodThorn').checked;
-        var SendExecutioner = document.getElementById('pbExecutioner').checked;
-        var SendSiegeTower = document.getElementById('pbSiegeTower').checked;
-        var SendFlameArcher = document.getElementById('pbFlameArcher').checked;
-        var SendHussar = document.getElementById('pbHussar').checked;
-        var SupplyTroop = document.getElementById('pbtargetSupplyTroops').value;
-        var Militiaman = document.getElementById('pbtargetMilitiaman').value;
-        var Scout = document.getElementById('pbtargetScout').value;
-        var Pikeman = document.getElementById('pbtargetPikeman').value;
-        var Swordsman = document.getElementById('pbtargetSwordsman').value;
-        var Archers = document.getElementById('pbtargetArcher').value;
-        var Cavalry = document.getElementById('pbtargetCavalry').value;
-        var HeavyCavalry = document.getElementById('pbtargetHeavyCavalry').value;
-        var SupplyWagons = document.getElementById('pbtargetSupplyWagon').value;
-        var Ballista = document.getElementById('pbtargetBallista').value;
-        var BatteringRam = document.getElementById('pbtargetBatteringRam').value;
-        var Catapult = document.getElementById('pbtargetCatapult').value;
-        var BloodThorn = document.getElementById('pbtargetBloodThorn').value;
-        var Executioner = document.getElementById('pbtargetExecutioner').value;
-        var SiegeTower = document.getElementById('pbtargetSiegeTower').value;
-        var FlameArcher = document.getElementById('pbtargetFlameArcher').value;
-        var Hussar = document.getElementById('pbtargetHussar').value;
-        var target_x = t.tcpto.city.x;
-        var target_y = t.tcpto.city.y;
-        var target_city = t.tcpto.city.id;
-                
-        var lRE = t.reassignRoutes;
-            lRE.push({
-                city:                city,
-                target_x:            target_x,
-                target_y:            target_y,
-                target_city:        target_city,
-                SendSupplyTroop:    SendSupplyTroop,
-                SupplyTroop:        SupplyTroop,
-                SendMilitiaman:        SendMilitiaman,
-                Militiaman:            Militiaman,
-                SendScout:            SendScout,
-                Scout:                Scout,
-                SendPikeman:         SendPikeman,
-                Pikeman:             Pikeman,
-                SendSwordsman:        SendSwordsman,
-                Swordsman:            Swordsman,
-                SendArchers:        SendArchers,
-                Archers:            Archers,
-                SendCavalry:         SendCavalry,
-                Cavalry:             Cavalry,
-                SendHeavyCavalry:    SendHeavyCavalry,
-                HeavyCavalry:        HeavyCavalry,
-                SendSupplyWagons:    SendSupplyWagons,
-                SupplyWagons:        SupplyWagons,
-                SendBallista:         SendBallista,
-                Ballista:             Ballista,
-                SendBatteringRam:    SendBatteringRam,
-                BatteringRam:        BatteringRam,
-                SendCatapult:        SendCatapult,
-                Catapult:            Catapult,
-                SendBloodThorn:        SendBloodThorn,
-                BloodThorn:            BloodThorn,
-                SendExecutioner:        SendExecutioner,
-                Executioner:            Executioner,
-                SendSiegeTower:        SendSiegeTower,
-                SiegeTower:            SiegeTower,
-                SendFlameArcher:        SendFlameArcher,
-                FlameArcher:            FlameArcher,
-                SendHussar:        SendHussar,
-                Hussar:            Hussar,
-            });
-        document.getElementById('pbReassignDivD').style.background ='#99FF99';
-        setTimeout(function(){ (document.getElementById('pbReassignDivD').style.background =''); }, 1000);
-    },
-    showReassignRoutes: function () {
-        var t = Tabs.Reassign;
-        var popReassignRoutes = null;
-        t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
-        var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto; max-width:1100px; width:1100px; overflow-x:scroll"><TABLE align=center cellpadding=1 cellspacing=1 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
-        t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
-        t.popReassignRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Reassign routes")+'</center></td>';
-        t.paintReassignRoutes();
-        t._addTabHeader();
-        t.popReassignRoutes.show(true)    ;
-    },
-    paintReassignRoutes: function(){
-            var t = Tabs.Reassign;
-            var r = t.reassignRoutes;
-            var cityname;
-            for (var i = (r.length-1); i>=0; i--) {
-                for (var y=0; y< Seed.cities.length;y++) {
-                    if ( parseInt(Seed.cities[y][0]) == r[i].city) var cityname = Seed.cities[y][1];
-                }    
-                var queueId = i;
-                t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArchers, r[i].Archers, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagons, r[i].SupplyWagons, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower, r[i].SendFlameArcher, r[i].FlameArcher, r[i].SendHussar, r[i].Hussar);
-            }
-        },
-      
-     _addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArchers,Archers,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagons,SupplyWagons,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult,SendBloodThorn,BloodThorn,SendExecutioner,Executioner,SendSiegeTower,SiegeTower,SendFlameArcher,FlameArcher,SendHussar,Hussar){
-         var t = Tabs.Reassign;
-        var To = target_x+','+target_y;
-        for (var y=0; y< Seed.cities.length;y++) {
-            if ( parseInt(Seed.cities[y][0]) == parseInt(target_city)){
-                To = Seed.cities[y][1];
-                break;
-            }
-        }
-         var row = document.getElementById('pbRoutesQueue').insertRow(0);
-         row.vAlign = 'top';
-         row.insertCell(0).innerHTML = queueId;
-         row.insertCell(1).innerHTML = cityname;
-         row.insertCell(2).innerHTML = To;
-         row.insertCell(3).innerHTML = SendSupplyTroop;
-         row.insertCell(4).innerHTML = addCommas(SupplyTroop);
-         row.insertCell(5).innerHTML = SendMilitiaman;
-         row.insertCell(6).innerHTML = addCommas(Militiaman);
-          row.insertCell(7).innerHTML = SendScout;
-          row.insertCell(8).innerHTML = addCommas(Scout);
-          row.insertCell(9).innerHTML = SendPikeman;
-          row.insertCell(10).innerHTML = addCommas(Pikeman);
-          row.insertCell(11).innerHTML = SendSwordsman;
-          row.insertCell(12).innerHTML = addCommas(Swordsman);
-          row.insertCell(13).innerHTML = SendArchers;
-          row.insertCell(14).innerHTML = addCommas(Archers);
-          row.insertCell(15).innerHTML = SendCavalry;
-          row.insertCell(16).innerHTML = addCommas(Cavalry);
-          row.insertCell(17).innerHTML = SendHeavyCavalry;
-          row.insertCell(18).innerHTML = addCommas(HeavyCavalry);
-          row.insertCell(19).innerHTML = SendSupplyWagons;
-          row.insertCell(20).innerHTML = addCommas(SupplyWagons);
-          row.insertCell(21).innerHTML = SendBallista;
-          row.insertCell(22).innerHTML = addCommas(Ballista);
-          row.insertCell(23).innerHTML = SendBatteringRam;
-          row.insertCell(24).innerHTML = addCommas(BatteringRam);
-          row.insertCell(25).innerHTML = SendCatapult;
-          row.insertCell(26).innerHTML = addCommas(Catapult);
-          row.insertCell(27).innerHTML = SendBloodThorn;
-          row.insertCell(28).innerHTML = addCommas(BloodThorn);
-          row.insertCell(29).innerHTML = SendExecutioner;
-          row.insertCell(30).innerHTML = addCommas(Executioner);
-          row.insertCell(31).innerHTML = SendSiegeTower;
-          row.insertCell(32).innerHTML = addCommas(SiegeTower);
-          row.insertCell(33).innerHTML = SendFlameArcher;
-          row.insertCell(34).innerHTML = addCommas(FlameArcher);
-         row.insertCell(35).innerHTML = SendHussar;
-          row.insertCell(36).innerHTML = addCommas(Hussar);
-         row.insertCell(37).innerHTML = '<a class="button20" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
-          document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
-            t.cancelQueueElement(queueId);
-         }, false);
-     },
+		for (var k in troops){
+			t.addListeners(troops[k]);
+		}
      
-     _addTabHeader: function() {
-     var t = Tabs.transport;
-         var row = document.getElementById('pbRoutesQueue').insertRow(0);
-         row.vAlign = 'top';
-         row.insertCell(0).innerHTML = "ID";
-         row.insertCell(1).innerHTML = translate("From");
-         row.insertCell(2).innerHTML = translate("To");
-         row.insertCell(3).innerHTML = translate("SupplyTr");
-         row.insertCell(4).innerHTML = "";
-         row.insertCell(5).innerHTML = translate("MM");
-         row.insertCell(6).innerHTML = "";
-          row.insertCell(7).innerHTML = translate("Scouts");
-         row.insertCell(8).innerHTML = "";
-         row.insertCell(9).innerHTML = translate("Pikes");
-         row.insertCell(10).innerHTML = "";
-         row.insertCell(11).innerHTML = translate("Swords");
-         row.insertCell(12).innerHTML = "";
-         row.insertCell(13).innerHTML = translate("Archers");
-         row.insertCell(14).innerHTML = "";
-         row.insertCell(15).innerHTML = translate("Cav");
-         row.insertCell(16).innerHTML = "";
-         row.insertCell(17).innerHTML = translate("HC");
-         row.insertCell(18).innerHTML = "";
-         row.insertCell(19).innerHTML = translate("Wagons");
-         row.insertCell(20).innerHTML = "";
-         row.insertCell(21).innerHTML = translate("Ballista");
-         row.insertCell(22).innerHTML = "";
-         row.insertCell(23).innerHTML = translate("Rams");
-         row.insertCell(24).innerHTML = "";
-         row.insertCell(25).innerHTML = translate("Catapults");
-         row.insertCell(26).innerHTML = "";
-         row.insertCell(27).innerHTML = translate("BloodThorn");
-         row.insertCell(28).innerHTML = "";
-         row.insertCell(29).innerHTML = translate("Executioner");
-         row.insertCell(30).innerHTML = "";
-         row.insertCell(31).innerHTML = translate("SiegeTower");
-         row.insertCell(32).innerHTML = "";
-         row.insertCell(33).innerHTML = translate("FlameArcher");
-         row.insertCell(34).innerHTML = "";
-         row.insertCell(35).innerHTML = translate("Hussar");
-         row.insertCell(36).innerHTML = "";
-         row.insertCell(37).innerHTML = translate("Delete");
-       },   
-       
-     cancelQueueElement: function(queueId){
-         var t = Tabs.Reassign;
-         var queueId = parseInt(queueId);
-         t.reassignRoutes.splice(queueId, 1);
-         t.showReassignRoutes();
-     },
-       
-    saveReassignRoutes: function(){
-        var t = Tabs.Reassign;
-        var serverID = getServerId();
-        GM_setValue('reassignRoutes_' + serverID, JSON2.stringify(t.reassignRoutes));
-    },
-    readReassignRoutes: function(){
-        var t = Tabs.Reassign;
-        var serverID = getServerId();
-        s = GM_getValue('reassignRoutes_' + serverID);
-        if (s != null) {
-            route = JSON2.parse(s);
-            for (k in route)
-                t.reassignRoutes[k] = route[k];
-        }
-        try{
-            t.checkcitymoved();
-        } catch (e) {
-            //Do nothing
-        }
-    },
-    checkcitymoved: function(){
-        var t = Tabs.Reassign;
-        for(var i=0; i < t.reassignRoutes.length; i++){
-            logit(Cities.byID[t.reassignRoutes[i].target_city]);
-            if(t.reassignRoutes[i].target_city == 'undefined')
-                break;
-            if(t.reassignRoutes[i].target_x != Cities.byID[t.reassignRoutes[i].target_city].x)
-                t.reassignRoutes[i].target_x = Cities.byID[t.reassignRoutes[i].target_city].x;
-            if(t.reassignRoutes[i].target_y != Cities.byID[t.reassignRoutes[i].target_city].y)
-                t.reassignRoutes[i].target_y = Cities.byID[t.reassignRoutes[i].target_city].y;
-        }
-    },
-    saveReassignState: function(){
-        var t = Tabs.Reassign;
-        var serverID = getServerId();
-        GM_setValue('reassignState_' + serverID, JSON2.stringify(t.reassignState));
-    },
-    readReassignState: function(){
-        var t = Tabs.Reassign;
-        var serverID = getServerId();
-        s = GM_getValue('reassignState_' + serverID);
-        if (s != null) {
-            state = JSON2.parse(s);
-            for (k in state)
-                t.reassignState[k] = state[k];
-        }
-    },
-    toggleReassignState: function(obj){
-      obj =  document.getElementById('pbReassignState');
-      if(!obj)obj = document.getElementById('pbReassignState');
-        var t = Tabs.Reassign;
-        if (t.reassignState.running == true) {
-            t.reassignState.running = false;
-            obj.value = "Reassign = OFF";
-            if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #CCC">Reassign: Off</span>';
-            t.checkdoreassigntimeout = null;
-            t.count = 0;
-        }
-        else {
-            t.reassignState.running = true;
-            obj.value = "Reassign = ON";
-            if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #FFFF00">Reassign: On</span>';
-            t.e_reassignRoutes();
-        }
-    },
-    
-    checkdoReassign: function(){
-    var t = Tabs.Reassign;
-    t.doReassign(t.count);
-    t.count++;
-        if(t.count < t.reassignRoutes.length && t.reassignState.running){
-          t.checkdoreassigntimeout = setTimeout(function() { t.checkdoReassign();}, 5000);
-        } else {
-          var now = new Date().getTime()/1000.0;
-          now = now.toFixed(0);
-          Options.lastreassign = now;
-          saveOptions();    
-          t.count = 0;
-        }
-    },
-    
-    doReassign: function(count){
-        var t = Tabs.Reassign;
-           var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-           if(t.reassignRoutes.length==0) return;
-           var send=[];
-           var citytotal=0;
-           var totalsend=0;
-            var city = t.reassignRoutes[count]["city"];
-         var cityID = 'city' + city;
-            var xcoord = t.reassignRoutes[count]["target_x"];
-            var ycoord = t.reassignRoutes[count]["target_y"];
-        params.u1 = 0;
-        params.u2 = 0;
-        params.u3 = 0;
-        params.u4 = 0;
-        params.u5 = 0;
-        params.u6 = 0;
-        params.u7 = 0;
-        params.u8 = 0;
-        params.u9 = 0;
-        params.u10 = 0;
-        params.u11 = 0;
-        params.u12 = 0;    
-        if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity){
-         params.u13 = 0;
-         params.u14 = 0;
-         params.u15 = 0;
-      }
-	params.u16 = 0;	
-	params.u17 = 0;	
+		window.addEventListener('unload', t.onUnload, false);
+	},
 
-        if(!Cities.byID[city]) return;
-        var marching = getMarchInfo(cityID);
+	addListeners : function(Troop) {
+		var T1 = 'pbtarget'+Troop;
+		var T2 = 'pb'+Troop;
+		document.getElementById(T1).addEventListener('keyup', function(){ if (isNaN(document.getElementById(T1).value)) document.getElementById(T1).value=0; }, false);
+		document.getElementById(T2).addEventListener('click', function(){ if (document.getElementById(T2).checked==false) { document.getElementById(T1).disabled = true; } else { document.getElementById(T1).disabled = false;	} },false);
+	},
+    
+	getRallypoint: function(cityId){
+		var t = Tabs.Reassign;
+		for (var o in Seed.buildings[cityId]){
+			var buildingType = parseInt(Seed.buildings[cityId][o][0]);
+			var buildingLevel = parseInt(Seed.buildings[cityId][o][1]);
+			if (buildingType == 12) t.rallypointlevel=parseInt(buildingLevel);
+		}  
+	},
+
+	e_reassignRoutes: function(){
+		var t = Tabs.Reassign;
+		var now = new Date();
+		if (t.reassignState.running && !t.processing) {
+			var now = new Date().getTime()/1000.0;
+			now = now.toFixed(0);
+			var last = Options.lastreassign;
+			if ( now > (parseInt(last) + (Options.reassigninterval*60))){
+				actionLog('Checking for troops to reassign');
+				t.checkdoReassign();
+			}
+		}
+		setTimeout(function(){ t.e_reassignRoutes();}, 3000); // loop every 3 seconds. Actual time is controlled by Options.lastreassign and Options reassigninterval...
+    },
+        
+	delReassignRoutes: function() {
+		var t = Tabs.Reassign;
+		t.reassignRoutes= [];
+	},
+
+	checkcoords : function (obj){
+		var t = Tabs.Reassign;
+		if(obj.id == 'pbok'){
+			t.check = true;
+			t.addReassignRoute();
+		}
+		return;            
+	},
+    
+	addReassignRoute: function () {
+		var t = Tabs.Reassign;
+		if(t.tcpto.city == null){
+			new CdialogCancelContinue('<SPAN class=boldRed>'+translate("No destination selected!")+'</span>', null, null, mainPop.getMainDiv);
+			return;
+		}
+		if(t.tcp.city.id == t.tcpto.city.id){
+			new CdialogCancelContinue('<SPAN class=boldRed>'+translate("Can\'t reassign to same city!")+'</span>', null, null, mainPop.getMainDiv);
+			return;
+		}
+		if ((t.tcpto.city.x == 0 && t.tcpto.city.y == 0)&& !t.check) {
+			new CdialogConfirm ('<SPAN class=boldRed>'+translate("You are about to set a route to location 0,0!")+'</span>', t.checkcoords, unsafeWindow.modal_attack_check, mainPop.getMainDiv);
+			return;
+		}
+		t.check = false;
+        
+		var lRE = t.reassignRoutes;
+		lRE.push({
+			city:				t.tcp.city.id,
+			target_x:			t.tcpto.city.x,
+			target_y:			t.tcpto.city.y,
+			target_city:		t.tcpto.city.id,
+			SendSupplyTroop:	document.getElementById('pbSupplyTroops').checked,
+			SupplyTroop:		document.getElementById('pbtargetSupplyTroops').value,
+			SendMilitiaman:		document.getElementById('pbMilitiaman').checked,
+			Militiaman:			document.getElementById('pbtargetMilitiaman').value,
+			SendScout:			document.getElementById('pbScout').checked,
+			Scout:				document.getElementById('pbtargetScout').value,
+			SendPikeman:		document.getElementById('pbPikeman').checked,
+			Pikeman:			document.getElementById('pbtargetPikeman').value,
+			SendSwordsman:		document.getElementById('pbSwordsman').checked,
+			Swordsman:			document.getElementById('pbtargetSwordsman').value,
+			SendArchers:		document.getElementById('pbArcher').checked,
+			Archers:			document.getElementById('pbtargetArcher').value,
+			SendCavalry:		document.getElementById('pbCavalry').checked,
+			Cavalry:			document.getElementById('pbtargetCavalry').value,
+			SendHeavyCavalry:	document.getElementById('pbHeavyCavalry').checked,
+			HeavyCavalry:		document.getElementById('pbtargetHeavyCavalry').value,
+			SendSupplyWagons:	document.getElementById('pbSupplyWagon').checked,
+			SupplyWagons:		document.getElementById('pbtargetSupplyWagon').value,
+			SendBallista:		document.getElementById('pbBallista').checked,
+			Ballista:			document.getElementById('pbtargetBallista').value,
+			SendBatteringRam:	document.getElementById('pbBatteringRam').checked,
+			BatteringRam:		document.getElementById('pbtargetBatteringRam').value,
+			SendCatapult:		document.getElementById('pbCatapult').checked,
+			Catapult:			document.getElementById('pbtargetCatapult').value,
+			SendBloodThorn:		document.getElementById('pbBloodThorn').checked,
+			BloodThorn:			document.getElementById('pbtargetBloodThorn').value,
+			SendExecutioner:	document.getElementById('pbExecutioner').checked,
+			Executioner:		document.getElementById('pbtargetExecutioner').value,
+			SendSiegeTower:		document.getElementById('pbSiegeTower').checked,
+			SiegeTower:			document.getElementById('pbtargetSiegeTower').value,
+			SendFlameArcher:	document.getElementById('pbFlameArcher').checked,
+			FlameArcher:		document.getElementById('pbtargetFlameArcher').value,
+			SendHussar:			document.getElementById('pbHussar').checked,
+			Hussar:				document.getElementById('pbtargetHussar').value,
+			SendHalberdier:		document.getElementById('pbHalberdier').checked,
+			Halberdier:			document.getElementById('pbtargetHalberdier').value,
+			SendOnager:			document.getElementById('pbOnager').checked,
+			Onager:				document.getElementById('pbtargetOnager').value,
+		});
+		document.getElementById('pbReassignDivD').style.background ='#99FF99';
+		setTimeout(function(){ (document.getElementById('pbReassignDivD').style.background =''); }, 1000);
+	},
+	
+	showReassignRoutes: function () {
+		var t = Tabs.Reassign;
+		var popReassignRoutes = null;
+		t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
+		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto; max-width:1100px; width:1100px; overflow-x:scroll"><TABLE align=center cellpadding=1 cellspacing=1 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
+		t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
+		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Reassign routes")+'</center></td>';
+		t.paintReassignRoutes();
+		t._addTabHeader();
+		t.popReassignRoutes.show(true);
+	},
+    
+	paintReassignRoutes: function(){
+		var t = Tabs.Reassign;
+		var r = t.reassignRoutes;
+		var cityname;
+		for (var i = (r.length-1); i>=0; i--) {
+			for (var y=0; y< Seed.cities.length;y++) {
+				if ( parseInt(Seed.cities[y][0]) == r[i].city) var cityname = Seed.cities[y][1];
+			}    
+			var queueId = i;
+			t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArchers, r[i].Archers, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagons, r[i].SupplyWagons, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower, r[i].SendFlameArcher, r[i].FlameArcher, r[i].SendHussar, r[i].Hussar, r[i].SendHalberdier, r[i].Halberdier, r[i].SendOnager, r[i].Onager);
+		}
+	},
+     
+	_addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArchers,Archers,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagons,SupplyWagons,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult,SendBloodThorn,BloodThorn,SendExecutioner,Executioner,SendSiegeTower,SiegeTower,SendFlameArcher,FlameArcher,SendHussar,Hussar,SendHalberdier,Halberdier,SendOnager,Onager){
+		var t = Tabs.Reassign;
+		var To = target_x+','+target_y;
+		for (var y=0; y< Seed.cities.length;y++) {
+			if ( parseInt(Seed.cities[y][0]) == parseInt(target_city)){
+				To = Seed.cities[y][1];
+				break;
+			}
+		}
+		var row = document.getElementById('pbRoutesQueue').insertRow(0);
+		row.vAlign = 'top';
+		row.insertCell(0).innerHTML = queueId;
+		row.insertCell(1).innerHTML = cityname;
+		row.insertCell(2).innerHTML = To;
+		row.insertCell(3).innerHTML = '<input type=checkbox disabled '+(SendSupplyTroop ? 'CHECKED ' : '')+'><br>'+(SendSupplyTroop ?addCommas(SupplyTroop): '');
+		row.insertCell(4).innerHTML = '<input type=checkbox disabled '+(SendMilitiaman ? 'CHECKED ' : '')+'><br>'+(SendMilitiaman ?addCommas(Militiaman): '');
+		row.insertCell(5).innerHTML = '<input type=checkbox disabled '+(SendScout ? 'CHECKED ' : '')+'><br>'+(SendScout ?addCommas(Scout): '');
+		row.insertCell(6).innerHTML = '<input type=checkbox disabled '+(SendPikeman ? 'CHECKED ' : '')+'><br>'+(SendPikeman ?addCommas(Pikeman): '');
+		row.insertCell(7).innerHTML = '<input type=checkbox disabled '+(SendSwordsman ? 'CHECKED ' : '')+'><br>'+(SendSwordsman ?addCommas(Swordsman): '');
+		row.insertCell(8).innerHTML = '<input type=checkbox disabled '+(SendArchers ? 'CHECKED ' : '')+'><br>'+(SendArchers ?addCommas(Archers): '');
+		row.insertCell(9).innerHTML = '<input type=checkbox disabled '+(SendCavalry ? 'CHECKED ' : '')+'><br>'+(SendCavalry ?addCommas(Cavalry): '');
+		row.insertCell(10).innerHTML = '<input type=checkbox disabled '+(SendHeavyCavalry ? 'CHECKED ' : '')+'><br>'+(SendHeavyCavalry ?addCommas(HeavyCavalry): '');
+		row.insertCell(11).innerHTML = '<input type=checkbox disabled '+(SendSupplyWagons ? 'CHECKED ' : '')+'><br>'+(SendSupplyWagons ?addCommas(SupplyWagons): '');
+		row.insertCell(12).innerHTML = '<input type=checkbox disabled '+(SendBallista ? 'CHECKED ' : '')+'><br>'+(SendBallista ?addCommas(Ballista): '');
+		row.insertCell(13).innerHTML = '<input type=checkbox disabled '+(SendBatteringRam ? 'CHECKED ' : '')+'><br>'+(SendBatteringRam ?addCommas(BatteringRam): '');
+		row.insertCell(14).innerHTML = '<input type=checkbox disabled '+(SendCatapult ? 'CHECKED ' : '')+'><br>'+(SendCatapult ?addCommas(Catapult): '');
+		row.insertCell(15).innerHTML = '<input type=checkbox disabled '+(SendBloodThorn ? 'CHECKED ' : '')+'><br>'+(SendBloodThorn ?addCommas(BloodThorn): '');
+		row.insertCell(16).innerHTML = '<input type=checkbox disabled '+(SendExecutioner ? 'CHECKED ' : '')+'><br>'+(SendExecutioner ?addCommas(Executioner): '');
+		row.insertCell(17).innerHTML = '<input type=checkbox disabled '+(SendSiegeTower ? 'CHECKED ' : '')+'><br>'+(SendSiegeTower ?addCommas(SiegeTower): '');
+		row.insertCell(18).innerHTML = '<input type=checkbox disabled '+(SendFlameArcher ? 'CHECKED ' : '')+'><br>'+(SendFlameArcher ?addCommas(FlameArcher): '');
+		row.insertCell(19).innerHTML = '<input type=checkbox disabled '+(SendHussar ? 'CHECKED ' : '')+'><br>'+(SendHussar ?addCommas(Hussar): '');
+		row.insertCell(20).innerHTML = '<input type=checkbox disabled '+(SendHalberdier ? 'CHECKED ' : '')+'><br>'+(SendHalberdier ?addCommas(Halberdier): '');
+		row.insertCell(21).innerHTML = '<input type=checkbox disabled '+(SendOnager ? 'CHECKED ' : '')+'><br>'+(SendOnager ?addCommas(Onager): '');
+		row.insertCell(22).innerHTML = '<a class="button14" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
+		document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
+			t.cancelQueueElement(queueId);
+		}, false);
+	},
+     
+	_addTabHeader: function() {
+		var t = Tabs.transport;
+		var row = document.getElementById('pbRoutesQueue').insertRow(0);
+		row.vAlign = 'top';
+		row.insertCell(0).innerHTML = "ID";
+		row.insertCell(1).innerHTML = translate("From");
+		row.insertCell(2).innerHTML = translate("To");
+		row.insertCell(3).innerHTML = translate("Supp");
+		row.insertCell(4).innerHTML = translate("MM");
+		row.insertCell(5).innerHTML = translate("Scout");
+		row.insertCell(6).innerHTML = translate("Pike");
+		row.insertCell(7).innerHTML = translate("Sword");
+		row.insertCell(8).innerHTML = translate("Arch");
+		row.insertCell(9).innerHTML = translate("Cav");
+		row.insertCell(10).innerHTML = translate("HC");
+		row.insertCell(11).innerHTML = translate("Wags");
+		row.insertCell(12).innerHTML = translate("Balls");
+		row.insertCell(13).innerHTML = translate("Rams");
+		row.insertCell(14).innerHTML = translate("Cats");
+		row.insertCell(15).innerHTML = translate("Blood");
+		row.insertCell(16).innerHTML = translate("Exec");
+		row.insertCell(17).innerHTML = translate("Siege");
+		row.insertCell(18).innerHTML = translate("Flame");
+		row.insertCell(19).innerHTML = translate("Hussar");
+		row.insertCell(20).innerHTML = translate("Halb");
+		row.insertCell(21).innerHTML = translate("Onager");
+		row.insertCell(22).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
+	},   
+       
+	cancelQueueElement: function(queueId){
+		var t = Tabs.Reassign;
+		var queueId = parseInt(queueId);
+		t.reassignRoutes.splice(queueId, 1);
+		t.showReassignRoutes();
+	},
+       
+	saveReassignRoutes: function(){
+		var t = Tabs.Reassign;
+		var serverID = getServerId();
+		GM_setValue('reassignRoutes_' + serverID, JSON2.stringify(t.reassignRoutes));
+	},
+    
+	readReassignRoutes: function(){
+		var t = Tabs.Reassign;
+		var serverID = getServerId();
+		s = GM_getValue('reassignRoutes_' + serverID);
+		if (s != null) {
+			route = JSON2.parse(s);
+			for (k in route)
+				t.reassignRoutes[k] = route[k];
+		}
+		try{
+			t.checkcitymoved();
+		} catch (e) {
+			//Do nothing
+		}
+	},
+	
+	checkcitymoved: function(){
+		var t = Tabs.Reassign;
+		for(var i=0; i < t.reassignRoutes.length; i++){
+			logit(Cities.byID[t.reassignRoutes[i].target_city]);
+			if(t.reassignRoutes[i].target_city == 'undefined')
+				break;
+			if(t.reassignRoutes[i].target_x != Cities.byID[t.reassignRoutes[i].target_city].x)
+				t.reassignRoutes[i].target_x = Cities.byID[t.reassignRoutes[i].target_city].x;
+			if(t.reassignRoutes[i].target_y != Cities.byID[t.reassignRoutes[i].target_city].y)
+				t.reassignRoutes[i].target_y = Cities.byID[t.reassignRoutes[i].target_city].y;
+		}
+	},
+    
+	saveReassignState: function(){
+		var t = Tabs.Reassign;
+		var serverID = getServerId();
+		GM_setValue('reassignState_' + serverID, JSON2.stringify(t.reassignState));
+	},
+    
+	readReassignState: function(){
+		var t = Tabs.Reassign;
+		var serverID = getServerId();
+		s = GM_getValue('reassignState_' + serverID);
+		if (s != null) {
+			state = JSON2.parse(s);
+			for (k in state)
+				t.reassignState[k] = state[k];
+		}
+	},
+		
+	toggleReassignState: function(obj){
+		obj = document.getElementById('pbReassignState');
+		var t = Tabs.Reassign;
+		if (t.reassignState.running == true) {
+			t.reassignState.running = false;
+			obj.value = "Reassign = OFF";
+			if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #CCC">Reassign: Off</span>';
+			clearTimeout(t.checkdoreassigntimeout);
+			t.count = 0;
+		}
+		else {
+			t.reassignState.running = true;
+			t.processing = false;
+			obj.value = "Reassign = ON";
+			if(document.getElementById('ReasignToggleTab'))document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #FFFF00">Reassign: On</span>';
+			Options.lastreassign = 0; // force to go immediately if toggled on.
+			saveOptions();    
+		}
+	},
+    
+	checkdoReassign: function(){
+		var t = Tabs.Reassign;
+		t.processing = true;
+		t.doReassign(t.count);
+		t.count++;
+        if(t.count < t.reassignRoutes.length && t.reassignState.running){
+			t.checkdoreassigntimeout = setTimeout(t.checkdoReassign, 10000); // 10 secs between each reassign
+		}
+		else {
+			var now = new Date().getTime()/1000.0;
+			now = now.toFixed(0);
+			Options.lastreassign = now;
+			saveOptions();    
+			t.count = 0;
+			t.processing = false;
+		}
+	},
+    
+	doReassign: function(count){
+		var t = Tabs.Reassign;
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		if(t.reassignRoutes.length==0) return;
+		var citytotal=0;
+		var totalsend=0;
+		var city = t.reassignRoutes[count]["city"];
+		var cityID = 'city' + city;
+		var xcoord = t.reassignRoutes[count]["target_x"];
+		var ycoord = t.reassignRoutes[count]["target_y"];
+		for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			params["u"+i] = 0;
+		}	
+
+		if(!Cities.byID[city]) return;
+		var marching = getMarchInfo(cityID);
         
         var maxsend = March.getMaxSize(city);
         totalsend=0;
         
-        if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity)
-          var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","BloodThorn","Executioner","SiegeTower","FlameArcher","Hussar"];
-        else var troopsselect=["SupplyTroop","Militiaman","Scout","Pikeman","Swordsman","Archers","Cavalry","HeavyCavalry","SupplyWagons","Ballista","BatteringRam","Catapult","","","","FlameArcher","Hussar"];
-        for (k=0; k<troopsselect.length; k++) {
-            var citytroops = Seed.units[cityID]['unt'+(parseInt(k)+1)];
-            var marchtroops = marching.marchUnits[k];
+		var slots = Number(March.getEmptySlots(cityID.split("city")[1]));
+		if (parseInt(slots) <=0){ if (DEBUG_TRACE) {logit('Reassign - No free slots');} return; } // no free slots - don't bother server!
+		var troopidx = [];
+		for (var i in troops) { troopidx.push(i); }
+		for (var j=troopidx.length-1; j>=0; j--) { // reverse order
+			var i = troopidx[j];
+            var citytroops = Seed.units[cityID]['unt'+i];
+            var marchtroops = marching.marchUnits["unt"+i];
             citytotal = parseInt(citytroops) + parseInt(marchtroops);
-            //alert(citytotal + ' > ' + t.reassignRoutes[count][troopsselect[k]] + ' - ' + totalsend + ' <= ' + maxsend + ' - ' + t.reassignRoutes[count]['Send'+troopsselect[k]]);
-            //if(k== 5) GM_log(citytotal +'  ' + t.reassignRoutes[count][troopsselect[k]]);
-            if(t.reassignRoutes[count]['Send'+troopsselect[k]]==false) {continue; }
-            if(citytotal > t.reassignRoutes[count][troopsselect[k]]){
-                var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troopsselect[k]]);
+            if(t.reassignRoutes[count]['Send'+troops[i]]==false) {continue; }
+            if(citytotal > t.reassignRoutes[count][troops[i]]){
+                var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troops[i]]);
                 if (parseInt(sendtroops) > parseInt(citytroops)) sendtroops = citytroops;
                 if (parseInt(sendtroops) < 0) sendtroops = 0;
-                send[(parseInt(k)+1)] = sendtroops;
-                totalsend += send[(parseInt(k)+1)];
-                //alert(parseInt(k)+1 + ' - ' + citytotal+ ' : ' + troopsselect[k] + ' / ' + t.reassignRoutes[0][troopsselect[k]]);                
-                
+				params["u"+i] = sendtroops;
+                totalsend += sendtroops;
             }
             if(totalsend > maxsend){
-                totalsend -= send[(parseInt(k)+1)];
-                send[(parseInt(k)+1)] = parseInt(maxsend-totalsend);
-                totalsend += send[(parseInt(k)+1)];
+                totalsend -= sendtroops;
+                params["u"+i] = parseInt(maxsend-totalsend);
+                totalsend = maxsend;
+				t.count = t.count - 1; // more to send?, do this reassign route again (until RP full?)...
                 break;
             }
-           }
+		}
         for (var t=0; t< Seed.cities.length;t++) {
             if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
         }
-          params.cid= city;
+        params.cid= city;
         params.type = "5";
         params.kid=0;
         params.xcoord = xcoord;
         params.ycoord = ycoord;
-        params.u1 = send[1];
-        params.u2 = send[2];
-        params.u3 = send[3];
-        params.u4 = send[4];
-        params.u5 = send[5];
-        params.u6 = send[6];
-        params.u7 = send[7];
-        params.u8 = send[8];
-        params.u9 = send[9];
-        params.u10 = send[10];
-        params.u11 = send[11];
-        params.u12 = send[12];    
-        if(Seed.cityData.city[city] && Seed.cityData.city[city].isPrestigeCity){
-         params.u13 = send[13];
-         params.u14 = send[14];
-         params.u15 = send[15];
-	}
-	params.u16 = send[16];
-	params.u17 = send[17];
-           if (totalsend >0) {
-         March.addMarch(params, function(rslt){
-            if(rslt.ok){
-                  actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
-            } else { //onFailure
-                  actionLog('REASSIGN FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
-                  }
-          });
+		if (totalsend >0) {
+			March.addMarch(params, function(rslt){
+				if(rslt.ok){
+					actionLog('Reassign   From: ' + cityname + "   To: " + xcoord + ',' + ycoord + "    ->   Troops: " + totalsend);
+				} else { //onFailure
+					actionLog('REASSIGN FAIL :' + cityname + ' - ' + rslt.error_code + ' -  ' + rslt.msg + ' -  ' + rslt.feedback);
+                 }
+			});
         }      
     },
     
-    show: function(){
-        var t = Tabs.Reassign;
-    },
-    hide: function(){
-        var t = Tabs.Reassign;
-    },
-    onUnload: function(){
-        var t = Tabs.Reassign;
-        if (!ResetAll) t.saveReassignRoutes();
-        if (!ResetAll) t.saveReassignState();
-        
-    },
+	show: function(){
+		var t = Tabs.Reassign;
+	},
+
+	hide: function(){
+		var t = Tabs.Reassign;
+	},
+
+	onUnload: function(){
+		var t = Tabs.Reassign;
+		if (!ResetAll) t.saveReassignRoutes();
+		if (!ResetAll) t.saveReassignState();
+	},
 }
 
 /************************  AutoTrain Tab ************************/
@@ -17452,12 +17207,12 @@ var CalterFuncModifier = function (funcName, findReplace) {
 function getMarchInfo (cityID){
   var ret = {};
 
-  ret.marchUnits = [];
-  ret.returnUnits = [];
+  ret.marchUnits = {};
+  ret.returnUnits = {};
   ret.resources = [];
-  for (i=0; i<17; i++){
-    ret.marchUnits[i] = 0;
-    ret.returnUnits[i] = 0;
+  for (var i in troops){
+    ret.marchUnits["unt"+i] = 0;
+    ret.returnUnits["unt"+i] = 0;
   }
   for (i=0; i<5; i++){
     ret.resources[i] = 0;
@@ -17465,22 +17220,21 @@ function getMarchInfo (cityID){
   
   for (k in Seed.queue_atkp[cityID]){   // each march
       march = Seed.queue_atkp[cityID][k];
-      if(march.marchType != 5){
-          if (typeof (march) == 'object'){
-            for (ii=0; ii<17; ii++){
-              ret.marchUnits[ii] += parseInt (march['unit'+ (ii+1) +'Count']);
-              ret.returnUnits[ii] += parseInt (march['unit'+ (ii+1) +'Return']);
+      if (typeof (march) == 'object'){
+		if(march.marchType != 5 && march.marchStatus != 10) {
+			for (var i in troops){
+              ret.marchUnits["unt"+i] += parseInt (march['unit'+i+'Count']);
+              ret.returnUnits["unt"+i] += parseInt (march['unit'+i+'Return']);
             }
             for (ii=1; ii<5; ii++){
-              ret.resources[ii] += parseInt (march['resource'+ ii]);
+				ret.resources[ii] += parseInt (march['resource'+ ii]);
             }
-              ret.resources[0] += parseInt (march['gold']);
-          }
-      }
+			ret.resources[0] += parseInt (march['gold']);
+		}
+	  }
     }
   return ret;
 }
-
 function makeButton20 (label){
   var a = document.createElement('a');
   a.className = "button20 ptButton20";
@@ -21466,25 +21220,25 @@ Tabs.Attack = {
 		row.insertCell(0).innerHTML = "City/Target";
 		row.insertCell(1).innerHTML = "<center>&nbsp;Paused&nbsp;</center>";
 		row.insertCell(2).innerHTML = "Wave #";
-		row.insertCell(3).innerHTML = "SupTrp";
-		row.insertCell(4).innerHTML = "MM";
-		row.insertCell(5).innerHTML = "Scout";
-		row.insertCell(6).innerHTML = "Pike";
-		row.insertCell(7).innerHTML = "Sword";
-		row.insertCell(8).innerHTML = "Arch";
-		row.insertCell(9).innerHTML = "LCav";
-		row.insertCell(10).innerHTML = "HCav";
-		row.insertCell(11).innerHTML = "Wags";
-		row.insertCell(12).innerHTML = "Balls";
-		row.insertCell(13).innerHTML = "Ram";
-		row.insertCell(14).innerHTML = "Cats";
-		row.insertCell(15).innerHTML = "Blood";
-		row.insertCell(16).innerHTML = "Exec";
-		row.insertCell(17).innerHTML = "Siege";
-		row.insertCell(18).innerHTML = "Flame";
-		row.insertCell(19).innerHTML = "Hussar";
-		row.insertCell(20).innerHTML = "Halberdier";
-		row.insertCell(21).innerHTML = "Onager";
+		row.insertCell(3).innerHTML = translate("Supp");
+		row.insertCell(4).innerHTML = translate("MM");
+		row.insertCell(5).innerHTML = translate("Scout");
+		row.insertCell(6).innerHTML = translate("Pike");
+		row.insertCell(7).innerHTML = translate("Sword");
+		row.insertCell(8).innerHTML = translate("Arch");
+		row.insertCell(9).innerHTML = translate("Cav");
+		row.insertCell(10).innerHTML = translate("HC");
+		row.insertCell(11).innerHTML = translate("Wags");
+		row.insertCell(12).innerHTML = translate("Balls");
+		row.insertCell(13).innerHTML = translate("Rams");
+		row.insertCell(14).innerHTML = translate("Cats");
+		row.insertCell(15).innerHTML = translate("Blood");
+		row.insertCell(16).innerHTML = translate("Exec");
+		row.insertCell(17).innerHTML = translate("Siege");
+		row.insertCell(18).innerHTML = translate("Flame");
+		row.insertCell(19).innerHTML = translate("Hussar");
+		row.insertCell(20).innerHTML = translate("Halb");
+		row.insertCell(21).innerHTML = translate("Onager");
 		row.insertCell(22).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
 	},
 
@@ -26521,6 +26275,7 @@ function QuickScout() {
 	var uW = unsafeWindow;
 	
 	// add a new option to the context menu
+	uW.cm.ContextMenuMapController.prototype.MapContextMenus.City["5"].push("portal"); // add portal to mists
 	uW.cm.ContextMenuMapController.prototype.MapContextMenus.City["5"].push("qqmod");
 	var cityType = unsafeWindow.cm.CITY_STATUS.ANOTHER_PLAYER_CITY_AND_NOT_IN_YOUR_ALLIANCE;
 	uW.cm.ContextMenuMapController.prototype.MapContextMenus.City[cityType].push("qqmod");
