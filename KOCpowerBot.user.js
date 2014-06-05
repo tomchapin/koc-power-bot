@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140604a
+// @version        20140605a
 // @namespace      mat
 // @homepage       https://userscripts.org/scripts/show/101052
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140604a';
+var Version = '20140605a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -7964,7 +7964,7 @@ Tabs.Search = {
      		if(newcity > Number(Cities.numCities)-1) newcity = 0;
      		city = Cities.cities[newcity];
 			}	
-			while (!unsafeWindow.cm.PrestigeCityPlayerProtectionController.isActive(city.id) || (city.idx == oldcityidx))
+			while (unsafeWindow.cm.PrestigeCityPlayerProtectionController.isActive(city.id) && (city.idx != oldcityidx))
      	};
         setTimeout(function(){t.doScoutCount(list, city, total, count)}, 5000);
         document.getElementById('pbSrcScoutResult').innerHTML += translate('Waiting for rally point to clear')+'...';
