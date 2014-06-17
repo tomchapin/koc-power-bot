@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140609a
+// @version        20140617a
 // @namespace      mat
-// @homepage       https://userscripts.org/scripts/show/101052
+// @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
 // @include        *.kingdomsofcamelot.com/*platforms/kabam*
 // @include        *apps.facebook.com/kingdomsofcamelot/*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140609a';
+var Version = '20140617a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -4786,7 +4786,7 @@ Tabs.Throne = {
 		if (!document.getElementById('ThroneTRS')) return;
 		if (document.getElementById('ThroneTRS').innerHTML.indexOf('The below values are alpha and may not be accurate') != -1) return;
 		m = document.getElementById('ThroneTRS').innerHTML;
-		m += '<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via https://userscripts.org/scripts/discuss/101052</font>';
+		m += '<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via https://code.google.com/p/koc-power-bot/issues/list</font>';
 		for (i in unsafeWindow.cm.thronestats.effects) {
 			//            var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
 			var z = equippedthronestats(Number(i));
@@ -14670,17 +14670,19 @@ var RefreshEvery  = {
      var Left = parseInt(t.NextRefresh - now);
      if(Options.detAFK) {
      if ( Left < 0 && isAFK){
+		clearTimeout (t.timer);
         Left = 0;
         t.doit();
      }    	
      } else {
     if ( Left < 0){
+		clearTimeout (t.timer);
         Left = 0;
         t.doit();
      }
  
      };
-     if (Left < -1) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
+     if (Left < -1) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Waiting for AFK")+': <B>'+ timestr(Left*-1) +'</b></font></div>';
      else if ( Left < 60) text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': </font><FONT color=red><B>'+ timestr(Left) +'</b></font></div>';
      else text += '<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color=white>'+translate("Next refresh in")+': <B>'+ timestr(Left) +'</b></font></div>';
 
@@ -14764,8 +14766,10 @@ function KOCnotFound(secs){
   function countdown (){
     var secsLeft = endSecs - (new Date().getTime()/1000);
     document.getElementById('pbwdsecs').innerHTML = timestr(secsLeft);
-    if (secsLeft < 0)
+    if (secsLeft < 0) {
+	  clearTimeout (countdownTimer);
       reloadKOC();
+	}  
   }
   function cancel (){
     clearTimeout (countdownTimer);
@@ -17261,14 +17265,15 @@ function strButton20 (label, tags){
 function reloadKOC (){
   var serverId = getServerId();
   var goto = window.location.protocol+'//apps.facebook.com/kingdomsofcamelot/?s='+serverId;
-  if(document.URL.match(/standalone=1/i)){
+  if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0 || document.URL.match(/standalone=1/i)){
     goto = window.location.protocol+'//www.kabam.com/games/kingdoms-of-camelot/play?s='+serverId;
   };
-  var t = '<FORM target="_top" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ serverId +'"</form>';
-  var e = document.createElement ('div');
-  e.innerHTML = t;
-  document.body.appendChild (e);
-  setTimeout (function (){document.getElementById('xxpbButReload').click();}, 0);
+//  var t = '<FORM target="_top" rel="noreferrer" action="'+ goto +'" method=post><INPUT id=xxpbButReload type=submit value=RELOAD><INPUT type=hidden name=s value="'+ serverId +'"</form>';
+//  var e = document.createElement ('div');
+//  e.innerHTML = t;
+//  document.body.appendChild (e);
+//  setTimeout (function (){document.getElementById('xxpbButReload').click();}, 0);
+	setTimeout (function (){window.top.location = goto;}, 0);
 }
   
 function htmlSelector (valNameObj, curVal, tags){
@@ -22762,7 +22767,7 @@ Tabs.gifts = {
         m+='</select> </td><td> <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available </td><td> <INPUT id=pbadgift type=checkbox '+ (GiftDB.adgift?' CHECKED':'') +'\> Scan and delete gift messages</td><td> Total sent:</td><td id=giftnumber></td></tr></table></DIV>';
 	m+='<table><TR><TD><INPUT id=resetlist type=submit value="Reset Gift List"> Reset gifting list (may take a day to re-populate)</td></tr></table></DIV>';
         m += '<DIV class=pbStat></DIV>';
-        m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.  You may update us on working scenarios <a href=https://userscripts.org/scripts/discuss/101052>here</a></DIV>';
+        m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.  You may update us on working scenarios <a href=https://code.google.com/p/koc-power-bot/issues/list>here</a></DIV>';
         m += '<DIV class=pbStat></DIV>';
         m += '<DIV style="height:250px; max-height:250px; overflow-y:auto" id=GiftsTAB></DIV>';
         div.innerHTML = m;
@@ -23019,7 +23024,7 @@ Tabs.gifts = {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                for(i in rslt.message){
-                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!" || rslt.message[i].subject == "Yeni Hediye Alindi!" || rslt.message[i].subject == "Neues Geschenk erhalten!")){
+                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Ã‚Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!" || rslt.message[i].subject == "Yeni Hediye Alındı!" || rslt.message[i].subject == "Neues Geschenk erhalten!")){
                      t.foundgift(i);
                   };
                };
@@ -25349,7 +25354,7 @@ TTpaintstats : function () {
 	if(!document.getElementById('ChampionTRS'))return;
    if(document.getElementById('ChampionTRS').innerHTML.indexOf('The below values are alpha and may not be accurate') != -1)return;
             m= document.getElementById('ChampionTRS').innerHTML;
-         m+='<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via https://userscripts.org/scripts/discuss/101052</font>';
+         m+='<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via https://code.google.com/p/koc-power-bot/issues/list</font>';
          for(i in t.Effects) {
 //            var z = unsafeWindow.cm.ChampionController.effectBonus(Number(i));
 	    var z = equippedChampionstats(Number(i));
@@ -25560,7 +25565,7 @@ function BtFilter(e) {
       
       m = m.replace(/Gr/g,'G'+x+'r').replace(/gR/g,'g'+x+'R').replace(/GR/g,'G'+x+'R').replace(/gr/g,'g'+x+'r');
       
-      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÂ­'+x+'I').replace(/ri/g,'r'+x+'i');
+      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­'+x+'I').replace(/ri/g,'r'+x+'i');
       
       m = m.replace(/Na/g,'N'+x+'a').replace(/nA/g,'n'+x+'A').replace(/NA/g,'N'+x+'A').replace(/na/g,'n'+x+'a');
       
@@ -25738,7 +25743,7 @@ function GuardianTT () {
 
 
 function AutoUpdater (prom) {
-	var userscripts = http+'userscripts.org/scripts/source/101052.user.js';
+	var userscripts = http+'koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
 	var googlecode = http+'koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
 	switch(GlobalOptions.pbupdatebeta)
 	{
@@ -25749,7 +25754,7 @@ function AutoUpdater (prom) {
 		var scriptpage = googlecode;
 		break;
 		default:
-		var scriptpage = userscripts;;
+		var scriptpage = googlecode;
 		break;
 	};
 	GM_xmlhttpRequest({
@@ -25779,7 +25784,7 @@ function AutoUpdater (prom) {
                 // Cancel
                 function() {
                 	try {
-                	if(lobalOptions.pbupdate) {
+                	if(GlobalOptions.pbupdate) {
                         if(confirm('Do you want to turn off auto updating for this script?')) {
                             //GM_setValue('updated_101052', 'off');
                             GlobalOptions.pbupdate = false;
