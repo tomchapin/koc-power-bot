@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140617a
+// @version        20140623a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140617a';
+var Version = '20140623a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -6311,6 +6311,7 @@ Tabs.build = {
     buildTab: null,
     koc_buildslot: null,
     currentBuildMode: null,
+    newBuildMode: null,
     buildStates: [],
     loaded_bQ: [],
     lbQ: [],
@@ -6325,17 +6326,21 @@ Tabs.build = {
 	build5:false,
 	build6:false,
 	build7:false,
-
+	csok: true,
+	lastcsok: true,
+	
     init: function (div) {
         var t = Tabs.build;
         t.myDiv = div;
         t.koc_buildslot = unsafeWindow.buildslot; //save original koc function
         t.currentBuildMode = "build";
+        t.newBuildMode = "5";
         t.buildStates = {
             running: false,
             help: false,
             tr :	false,
             trset :	0,
+			maxbuildlevel: 9,
         };
         t.readBuildStates();
         for (var i = 0; i < Cities.cities.length; i++) {
@@ -6344,25 +6349,38 @@ Tabs.build = {
                 t["bQ_" + Cities.cities[i].id] = [];
             }
         }
-        var m = '<DIV id=pbBuildDivF class=pbStat>' + translate("BUILD FUNCTIONS") + '</div><TABLE id=pbbuildfunctions width=100% height=0% class=pbTab><TR>';
+        var m = '<DIV id=pbBuildDivF class=pbStat>' + translate("AUTOMATED BUILD FUNCTION") + '</div><TABLE id=pbbuildfunctions width=100% height=0% class=pbTab><TR>';
         if (t.buildStates.running == false) {
-            m += '<TD><INPUT id=pbBuildRunning type=submit value="' + translate("Auto Build = OFF") + '"></td>';
+            m += '<TD align=center><INPUT id=pbBuildRunning type=submit value="' + translate("Auto Build = OFF") + '"></td>';
         } else {
-            m += '<TD><INPUT id=pbBuildRunning type=submit value="' + translate("Auto Build = ON") + '"></td>';
+            m += '<TD align=center><INPUT id=pbBuildRunning type=submit value="' + translate("Auto Build = ON") + '"></td>';
         }
-        m += '<TD><INPUT id=pbBuildMode type=submit value="' + translate("Build Mode = OFF") + '"></td>';
-        m += '<TD>' + translate("Build Type") + ': <SELECT id="pbBuildType">\
-            <OPTION value=build>' + translate("level up") + '</option>\
-            <OPTION value=max>' + translate("level max") + '</option>\
-            <OPTION value=destruct>' + translate("destruct") + '</option>\
-            </select></td>';
-        m += '<TD><INPUT id=pbHelpRequest type=checkbox ' + (t.buildStates.help ? ' CHECKED' : '') + '\></td><TD>' + translate("Ask for help") + '?</td>';
-        m += '<td><INPUT id=pbbuildtr type=checkbox '+(t.buildStates.tr?'CHECKED':'')+'> '+translate('Only build when throne room set')+' <INPUT id=pbbuildtrset type=text size=2 maxlength=2 value="'+ t.buildStates.trset +'">  '+translate('is equiped')+'</td></table>';
+        m += '<TD align=center><INPUT id=pbBuildMode type=submit value="' + translate("Build Mode = OFF") + '">&nbsp;&nbsp;';
+        m += translate("Type") + ': <SELECT id="pbBuildType">\
+            <OPTION value=build>' + translate("Next Level") + '</option>\
+            <OPTION value=max>' + translate("Maximum Level") + '</option>\
+            <OPTION value=destruct>' + translate("Destroy") + '</option>\
+            <OPTION value=stomp>' + translate("Dragon Stomp") + '</option>\
+            </select>&nbsp;&nbsp;&nbsp;';
+        m += translate("Build") + '<SELECT id="pbNewBuildType">\
+            <OPTION value=5>' + translate("Cottages") + '</option>\
+            <OPTION value=13>' + translate("Barracks") + '</option>\
+            <OPTION value=1>' + translate("Farms") + '</option>\
+            <OPTION value=2>' + translate("Sawmills") + '</option>\
+            <OPTION value=3>' + translate("Quarries") + '</option>\
+            <OPTION value=4>' + translate("Mines") + '</option>\
+            </select>&nbsp;'+translate("on empty slots")+'</td></tr></table>';
+        m += '<DIV class=pbStat>' + translate("BUILD OPTIONS") + '</div>'
+        m += '<TABLE width=100% height=0% class=pbTab><tr><TD><INPUT id=pbHelpRequest type=checkbox ' + (t.buildStates.help ? ' CHECKED' : '') + '\>' + translate("Ask for help") + '?</td><TD align=right>'+translate("Maximum Build Level") + ': <SELECT id="pbMaxBuildLevel">\
+			<OPTION value=9 '+(t.buildStates.maxbuildlevel=='9'?'SELECTED':'')+'>' + translate("9") + '</option>\
+			<OPTION value=10 '+(t.buildStates.maxbuildlevel=='10'?'SELECTED':'')+'>' + translate("10") + '</option>\
+            <OPTION value=11 '+(t.buildStates.maxbuildlevel=='11'?'SELECTED':'')+'>' + translate("11") + '</option>\
+            <OPTION value=12 '+(t.buildStates.maxbuildlevel=='12'?'SELECTED':'')+'>' + translate("12") + '</option>\
+            </select></TD></tr>';
+        m += '<tr><td><INPUT id=pbbuildtr type=checkbox '+(t.buildStates.tr?'CHECKED':'')+'> '+translate('Only build when construction speed is at least')+' <INPUT id=pbbuildtrset type=text size=3 maxlength=4 value="'+ t.buildStates.trset +'">%</td><td align=right>Current Construction Speed:&nbsp;<span id=currcons></span>&nbsp;&nbsp;</td></tr></table>';
         m += '<DIV id=pbBuildDivF class=pbStat>' + translate("QUICK ADD") + '</div>'
-        m += '<TABLE id=pbbuildtools width=100% height=0% class=pbTab><TR>';
-        m += '<DIV id=cityBuild></div>';
-
-
+        m += '<TABLE id=pbbuildtools width=100% height=0% class=pbTab><TR><td>';
+        m += '<DIV id=cityBuild></div></td>';
 
         m += '<TD>Queue ALL<SELECT id=whichBuilding>';
          for (k in quickAddBuildings){
@@ -6371,13 +6389,11 @@ Tabs.build = {
         m += '</select>';
 
         m += ' to level &nbsp;<SELECT id=addAllTo>'
-        for (a = 2; a <= 9; a++) {
+        for (a = 2; a <= t.buildStates.maxbuildlevel; a++) {
             m += '<OPTION value=toLvl' + a + '>' + a + '</option>';
         }
         m += '</select>';
         m += '<INPUT id=doXbuildingToX type=submit value=ADD></td>';
-
-
 
         m += '</table>';
         m += '<DIV id=pbBuildDivQ class=pbStat>' + translate("BUILD QUEUES") + '</div><TABLE id=pbbuildqueues width=100% height=0% class=pbentry><TR>';
@@ -6436,11 +6452,23 @@ Tabs.build = {
         document.getElementById('pbBuildType').addEventListener('change', function () {
             t.setBuildMode(this.value);
         }, false);
+        document.getElementById('pbNewBuildType').addEventListener('change', function () {
+            t.setNewBuildMode(this.value);
+        }, false);
         document.getElementById('pbBuildRunning').addEventListener('click', function () {
             t.toggleStateRunning(this);
         }, false);
         document.getElementById('pbBuildMode').addEventListener('click', function () {
             t.toggleStateMode(this);
+        }, false);
+        document.getElementById('pbMaxBuildLevel').addEventListener('change', function () {
+            t.buildStates.maxbuildlevel = this.value;
+            t.saveBuildStates();
+			m = '';
+			for (a = 2; a <= t.buildStates.maxbuildlevel; a++) {
+				m += '<OPTION value=toLvl' + a + '>' + a + '</option>';
+			}
+			document.getElementById('addAllTo').innerHTML = m;
         }, false);
         document.getElementById('pbHelpRequest').addEventListener('change', function () {
             t.buildStates.help = (document.getElementById('pbHelpRequest').checked);
@@ -6487,6 +6515,18 @@ Tabs.build = {
             }, false);
         }
 
+		var cs = Math.floor(equippedthronestats(78));
+		document.getElementById("currcons").innerHTML = cs+'%';
+		t.csok = (!t.buildStates.tr || (cs >= Number(t.buildStates.trset)));
+		if (t.csok != t.lastcsok) {
+			if (!t.csok) {
+				unsafeWindow.jQuery('#currcons').css('color', 'red');
+			}	
+			else {	
+				unsafeWindow.jQuery('#currcons').css('color', 'black');
+			}
+		}		
+		t.lastcsok = t.csok;
 
     },
     ClickCitySelect:function(city){
@@ -6505,7 +6545,7 @@ Tabs.build = {
                 if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][1] != 0) {
                     var item = builds['city'+cityId][pos]
                 //logit(builds['city'+cityId][pos])
-                    if (item[1] < 9) {
+                    if (item[1] < toLevel) {
                         //var cityId = city.substr(4);
                         var buildingType = item[0];
                         var currentLevel = item[1];
@@ -6529,7 +6569,7 @@ Tabs.build = {
         for (pos in builds['city'+cityId]) {
             if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][0] == 5 && builds['city'+cityId][pos][1] != 0) {
                 var item = builds['city'+cityId][pos]
-                if (item[1] < 9) {
+                if (item[1] < toLevel) {
                     var buildingType = item[0];
                     var currentLevel = item[1];
                     var position = item[2];
@@ -6552,7 +6592,7 @@ Tabs.build = {
         for (pos in builds['city'+cityId]) {
             if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][0] == 13 && builds['city'+cityId][pos][1] != 0) {
                 var item = builds['city'+cityId][pos]
-                if (item[1] < 9) {
+                if (item[1] < toLevel) {
                     var buildingType = item[0];
                     var currentLevel = item[1];
                     var position = item[2];
@@ -6572,7 +6612,11 @@ Tabs.build = {
         var t = Tabs.build;
         t.currentBuildMode = type;
     },
-    doExtraTools: function (cityId, pos, buildingId, buildingType, currentLevel,toLevel) { //
+    setNewBuildMode: function (type) {
+        var t = Tabs.build;
+        t.newBuildMode = type;
+    },
+   doExtraTools: function (cityId, pos, buildingId, buildingType, currentLevel,toLevel) { //
         //logit(cityId+ ' ' +pos + ' ' + buildingId); //, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode
         var startLevel = currentLevel
         var t = Tabs.build;
@@ -6640,7 +6684,19 @@ Tabs.build = {
 					//0 = 5,9,7222643,1365086688,1365087900,0,3840,8
                     //TODO add info of remaining build time and queue infos
                 } else {
-			if(t.buildStates.tr && t.buildStates.trset != Seed.throne.activeSlot) continue;//check just before we start building.  lets the other enhancements keep working.                	
+					var cs = Math.floor(equippedthronestats(78));
+					document.getElementById("currcons").innerHTML = cs+'%';
+					t.csok = (!t.buildStates.tr || (cs >= Number(t.buildStates.trset)));
+					if (t.csok != t.lastcsok) {
+						if (!t.csok) {
+							unsafeWindow.jQuery('#currcons').css('color', 'red');
+						}	
+						else {	
+							unsafeWindow.jQuery('#currcons').css('color', 'black');
+						}
+					}		
+					t.lastcsok = t.csok;
+                    if(t.buildStates.tr && t.buildStates.trset > cs) continue;//check just before we start building.  lets the other enhancements keep working.                	
                     	if (t["bQ_" + cityId].length > 0) { // something to do?
                        	  t['build'+Cities.byID[cityId].idx] = true;
                        	  t.doOneSlowdown(cityId,itime);
@@ -6650,9 +6706,6 @@ Tabs.build = {
         }
         setTimeout(t.e_autoBuild, buildInterval); //should be at least 10
     },
-
-
-
 
     doOneSlowdown : function (cityId,itime){
         var t = Tabs.build;
@@ -6718,9 +6771,9 @@ Tabs.build = {
             var curlvl = parseIntNan(Seed.buildings['city' + currentcityid]["pos" + citpos][1]);
             var l_bid = parseInt(bQi.buildingId); //JUST FOR CHECK
             var bid = parseInt(Seed.buildings["city" + currentcityid]["pos" + citpos][3]);
-            if (curlvl > 8 && mode == 'build') {
+            if (curlvl >= t.buildStates.maxbuildlevel && mode == 'build') {
                 t.cancelQueueElement(0, currentcityid, time, false);
-                actionLog(translate("Queue item deleted: Building level equals 9 or higher!!!"));
+                actionLog(translate("Queue item deleted: Building level equals max level or higher!!!"));
                 return;
             };
             if (isNaN(curlvl)) {
@@ -6733,7 +6786,7 @@ Tabs.build = {
                 actionLog(translate("Building Type does not match!!!!"));
                 return;
             }
-            if (l_bid != bid) {
+            if (l_bid != bid && l_bid !=0) {
                 t.cancelQueueElement(0, currentcityid, time, false);
                 actionLog(translate("Building ID does not match!!!!"));
                 return;
@@ -6843,9 +6896,9 @@ Tabs.build = {
                 params.bid = "";
                 params.pos = citpos;
                 params.lv = curlvl + 1;
-                if (params.lv > 9) { //make sure that no level 10+ is built
+                if (params.lv > t.buildStates.maxbuildlevel) { //make sure that no level greater than max is built
                     t.cancelQueueElement(0, currentcityid, time, false);
-                    actionLog(translate("Queue item deleted: Tryed to build level 10+ building! Please report if this happens!!!"));
+                    actionLog(translate("Queue item deleted: Tried to build level past maximum building level!"));
                     return;
                 }
                 if (params.lv > 1) {
@@ -6853,7 +6906,10 @@ Tabs.build = {
                 }
                 params.type = bdgid;
                 params.pay_for_an_additional_queue=0;
-                params.permission=0;
+				if (params.lv > 9)
+					params.permission=1;
+				else
+                    params.permission=0;
                 new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/construct.php" + unsafeWindow.g_ajaxsuffix, {
                     method: "post",
                     parameters: params,
@@ -6955,9 +7011,17 @@ Tabs.build = {
         var t = Tabs.build;
         var cityId = t.getCurrentCityId();
         var buildingPos = c.id.split("_")[1];
-        var buildingType = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][0]);
-        var buildingLevel = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
-        var buildingId = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][3]);
+		if (!Seed.buildings['city' + cityId]["pos" + buildingPos]) {
+			// new build!
+			var buildingType = document.getElementById("pbNewBuildType").value;
+			var buildingLevel = 0;
+			var buildingId = 0;
+		}
+		else {
+			var buildingType = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][0]);
+			var buildingLevel = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][1]);
+			var buildingId = parseInt(Seed.buildings['city' + cityId]["pos" + buildingPos][3]);
+		}	
         if (DEBUG_TRACE) logit("Pos: " + buildingPos + " Type: " + buildingType + " Level: " + buildingLevel + " Id: " + buildingId);
         var buildingAttempts = 0;
         var loaded_bQ = t["bQ_" + cityId];
@@ -6987,8 +7051,8 @@ Tabs.build = {
             }
         }
         if (t.currentBuildMode == "build") {
-            if (buildingLevel >= 9) {
-                t.modalmessage(translate('Due to building requirements (DI), buildings above level 9\nshould be manualy built.'));
+            if (buildingLevel >= t.buildStates.maxbuildlevel) {
+                t.modalmessage(translate('Requested building would be beyond max allowed building level'));
                 return;
             }
             var buildingMode = "build";
@@ -7001,7 +7065,7 @@ Tabs.build = {
         }
         if (t.currentBuildMode == "max") {
             var buildingMode = "build";
-            for (var bL = buildingLevel; bL < 9; bL++) {
+            for (var bL = buildingLevel; bL < t.buildStates.maxbuildlevel; bL++) {
                 var queueId = loaded_bQ.length;
                 var result = t.calculateQueueValues(cityId, bL, buildingType, buildingMode);
                 var buildingMult = result[0];
@@ -7013,10 +7077,10 @@ Tabs.build = {
         }
         if (t.currentBuildMode == "destruct") {
             var buildingMode = "destruct";
-            if(buildingLevel > 9) {
-            	t.modalmessage(translate('Due to building requirements (DI), buildings above level 9\nshould be manualy destructed.'));
-            	return;
-            };
+//            if(buildingLevel > 9) {
+//            	t.modalmessage(translate('Due to building requirements (DI), buildings above level 9\nshould be manualy destructed.'));
+//            	return;
+//            };
             var result = t.calculateQueueValues(cityId, buildingLevel, buildingType, buildingMode);
             var buildingMult = result[0];
             var buildingTime = result[1];
@@ -7024,6 +7088,31 @@ Tabs.build = {
             t.addQueueItem(cityId, buildingPos, buildingType, buildingId, buildingTime, buildingLevel, buildingAttempts, buildingMult, buildingMode);
             t._addTab(queueId, cityId, buildingType, buildingTime, buildingLevel, buildingAttempts, buildingMode);
         }
+		if (t.currentBuildMode == "stomp") {
+			var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+			params.cityId = cityId;
+			params.buildingId = buildingId;
+			params.pos = buildingPos;
+			params.requestType = "DESTROY_BUILDING_DRAGON_STOMP_MEDAL";
+			new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/destroyBuilding.php" + unsafeWindow.g_ajaxsuffix, {
+				method: "post",
+				parameters: params,
+				onSuccess: function(rslt){
+					if (rslt.ok) {
+						unsafeWindow.seed.items.i9=Number(unsafeWindow.seed.items.i9)-1;
+						unsafeWindow.ksoItems[9].subtract();
+						delete Seed.buildings["city"+cityId]["pos"+buildingPos];
+						unsafeWindow.citysel_click(document.getElementById("citysel_"+(Cities.byID[cityId].idx+1)));
+					} else {
+						var errmsg = unsafeWindow.printLocalError(rslt.error_code || null, rslt.msg || null, rslt.feedback || null);
+						document.getElementById('pbbuildError').innerHTML = errmsg;
+					}
+				},
+				onFailure: function(){
+					document.getElementById('pbbuildError').innerHTML = translate("Connection Error while destroying building! Please try again later");
+				}
+			})
+		}
     },
     calculateQueueValues: function (cityId, buildingLevel, buildingType, buildingMode) {
         var t = Tabs.build;
@@ -14006,13 +14095,13 @@ Tabs.AutoTrain = {
         m += '<tr><TD align=right>Resources:&nbsp;</td>';
 		m += '<td colspan=4><table class=pbTab><tr>';
         m += '<TD><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png"></td>';
-        m += '<TD><INPUT class='+city+' id="KeepFood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
+        m += '<TD><INPUT class='+city+' id="KeepFood'+city+'" type=text size=11 maxlength=12 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
         m += '<TD><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png"></td>';
-        m += '<TD><INPUT class='+city+' id="KeepWood'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
+        m += '<TD><INPUT class='+city+' id="KeepWood'+city+'" type=text size=11 maxlength=12 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
         m += '<TD><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png"></td>';
-        m += '<TD><INPUT class='+city+' id="KeepStone'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
+        m += '<TD><INPUT class='+city+' id="KeepStone'+city+'" type=text size=11 maxlength=12 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
         m += '<TD><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png"></td>';
-        m += '<TD><INPUT class='+city+' id="KeepOre'+city+'" type=text size=7 maxlength=7 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
+        m += '<TD><INPUT class='+city+' id="KeepOre'+city+'" type=text size=11 maxlength=12 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
         m +='<td>&nbsp;<SELECT class='+city+' id="Resource'+city+'"><option value="true">'+translate("Keep")+'</options>';
         m += '<option value="false">'+translate("Use")+'</option>';
         m += '</select></td>';
