@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140623a
+// @version        20140625a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140623a';
+var Version = '20140625a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -6545,7 +6545,7 @@ Tabs.build = {
                 if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][1] != 0) {
                     var item = builds['city'+cityId][pos]
                 //logit(builds['city'+cityId][pos])
-                    if (item[1] < toLevel) {
+                    if (parseIntNan(item[1]) < toLevel) {
                         //var cityId = city.substr(4);
                         var buildingType = item[0];
                         var currentLevel = item[1];
@@ -6569,7 +6569,7 @@ Tabs.build = {
         for (pos in builds['city'+cityId]) {
             if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][0] == 5 && builds['city'+cityId][pos][1] != 0) {
                 var item = builds['city'+cityId][pos]
-                if (item[1] < toLevel) {
+                if (parseIntNan(item[1]) < toLevel) {
                     var buildingType = item[0];
                     var currentLevel = item[1];
                     var position = item[2];
@@ -6592,7 +6592,7 @@ Tabs.build = {
         for (pos in builds['city'+cityId]) {
             if (builds['city'+cityId][pos] != undefined && builds['city'+cityId][pos][0] == 13 && builds['city'+cityId][pos][1] != 0) {
                 var item = builds['city'+cityId][pos]
-                if (item[1] < toLevel) {
+                if (parseIntNan(item[1]) < toLevel) {
                     var buildingType = item[0];
                     var currentLevel = item[1];
                     var position = item[2];
