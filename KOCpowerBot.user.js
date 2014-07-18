@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140708a
+// @version        20140718a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -9,7 +9,6 @@
 // @include        *kabam.com/games/kingdoms-of-camelot/play*
 // @include        *facebook.com/dialog/feed*
 // @exclude 	   *sharethis*
-// @grant       GM_getValue
 // @grant       unsafeWindow
 // @grant       GM_deleteValue
 // @grant       GM_getValue
@@ -34,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140708a';
+var Version = '20140718a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2438,6 +2437,7 @@ Tabs.Throne = {
 				"Dagonet The Court Jester": "http://i.imgur.com/29bAH99.png",
 				"Minstrel": "http://i.imgur.com/hUIXhca.png",
 				"Percival": "http://i.imgur.com/ei2YRFF.png",
+				"Tristan": "http://i.imgur.com/dq6mD5M.png",
 			},
 			Thrones: {
 				"Valor": "http://i.imgur.com/fIeZMXM.png",
@@ -2446,14 +2446,15 @@ Tabs.Throne = {
 				"Harmony": "http://i.imgur.com/XdpulbB.png",
 				"Stalwart Throne": "http://i.imgur.com/3pI3OZj.jpg",
 				"Throne of Fortune": "http://i.imgur.com/ykrqzP9.jpg",
+				"Rugged Throne": "http://i.imgur.com/h3ipMz1.png",
 			},
 			Banners: {
 				"Pendragons Banner": "http://i.imgur.com/lQ1iSSD.png",
 				"Relief Banner": "http://i.imgur.com/A60lVgd.png",
 				"Champions Shroud": "http://i.imgur.com/zP3Zhhs.jpg",
 				"Banner of Magnitude": "http://i.imgur.com/IoIEG95.png",
-				"Banner Of The Cause": "http://i40.tinypic.com/o0wg42.jpg",
-				"Unyielding Banner": "http://imageshack.us/a/img138/3130/ykgb.png",
+				"Banner Of The Cause": "http://i.imgur.com/mlyQ3NV.jpg",
+				"Unyielding Banner": "http://i.imgur.com/ldWy4t6.jpg",
 				"Banner of Arms": "http://i.imgur.com/cknAh6y.png",
 			},
 			Windows: {
@@ -2464,8 +2465,8 @@ Tabs.Throne = {
 				"Window of Persistence": "http://i.imgur.com/s0IXGUo.jpg",
 				"Persevering Window": "http://i.imgur.com/HGGbe5Q.jpg",
 				"Warfarers Portal": "http://i.imgur.com/8z4wNcn.jpg",
-				"Window of Chalice": "http://i.imgur.com/ZelfCuL.png",
-				"Beacon of Rosmerta": "http://imagizer.imageshack.us/v2/800x600q90/836/y78c.png",
+				"Window of the Chalice": "http://i.imgur.com/ZelfCuL.png",
+				"Beacon of Rosmerta": "http://i.imgur.com/0z9iysQ.jpg",
 			},
 			Candles: {
 				"Merry Chandelier": "http://i.imgur.com/iBzYUh5.png",
@@ -2478,11 +2479,14 @@ Tabs.Throne = {
 				"Healers Shrine": "http://i.imgur.com/clPMfAQ.png",
 				"Skillful Table": "http://i.imgur.com/zk18k12.png",
 				"Bombardment Table": "http://i.imgur.com/o4slc5U.png",
-				"Catellans Table": "http://i.imgur.com/mQ8s7RS.gif",
+				"Castellans Table": "http://i.imgur.com/mQ8s7RS.gif",
+				"Warmongers Table": "http://i.imgur.com/7DcY81I.jpg",
+				"Hywelbanes Plaque": "http://i.imgur.com/qABdJ9T.jpg",
+				"Rejuvination Trough": "http://i.imgur.com/zH4wteH.jpg",
 			},
 			Trophies: {
 				"Courageous Trophy": "http://i.imgur.com/ODDVqwD.png",
-				"Sir Galahads Shield": "http://img268.imageshack.us/img268/5116/m9n2.jpg",
+				"Sir Galahads Shield": "http://i.imgur.com/SKoz0WJ.jpg",
 			},
 			Heros: {
 				"Guileful Ranger": "http://i.imgur.com/uQ8YSwV.jpg",
@@ -2496,8 +2500,14 @@ Tabs.Throne = {
 				"Castle Tauroc": "http://i.imgur.com/OI6UP85.jpg",
 				"Effigy of Wasting": "http://i.imgur.com/t8uIVP3.jpg",
 			},
-			Pets: {},
-			Tapestries: {},
+			Pets: {
+				"Savage Wolf": "http://i.imgur.com/x9Ho5LU.jpg",
+				"Regal Phoenix": "http://i.imgur.com/My6VcEW.jpg",
+				"Noble Stag": "http://i.imgur.com/IiCkrM7.jpg",
+			},
+			Tapestries: {
+				"Tapestry of Conquest": "http://i.imgur.com/YiZQDKK.jpg",
+			},
 		}
 		unsafeWindow.pbshowunique = showUnique;
 		m = '<table><tr><td width=400px>Uniques</td><td width=400px>Panel A</td><td width=400px>Panel B</td></tr><tr><td style="vertical-align:top">';
@@ -3329,7 +3339,6 @@ Tabs.Throne = {
 			StatueCount = 0;
 			PetCount = 0;
 			TapestryCount = 0;
-
 			document.getElementById('populatebox').addEventListener('click', function () {
 				document.getElementById('displayTR').value = JSON2.stringify(unsafeWindow.kocThroneItems)
 				document.getElementById('apearMessageReceipt').innerHTML = '<TD>Send in message to- <INPUT id=pbMessageTo type=text value=""></input><INPUT id=pbSendMessage type=submit value="Send in Message"></input>';
@@ -6292,9 +6301,10 @@ Tabs.tower = {
      more todos within the code
  */
 var quickAddBuildings = {
-   all:"All",
+   all:"Buildings",
    barracks:"Barracks",
    cottages:"Cottages",
+   empty:"Empty Slots",
 }
 var buildTabTypes = {
     type1: "Farm",
@@ -6516,6 +6526,10 @@ Tabs.build = {
             if (t.buildingSelect == 'cottages'){
                t.allCotsTo(toLevel);
             }
+            if (t.buildingSelect == 'empty'){
+				toType = document.getElementById("pbNewBuildType").value;
+				t.allSpacesTo(toType,toLevel);
+            }
             toLevel = null;
         });
         window.addEventListener('unload', t.onUnload, false);
@@ -6620,6 +6634,21 @@ Tabs.build = {
                     }
                     t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel) //
                 }
+            }
+        }
+			t.paintBuildQueue(cityId, true);
+    },
+    allSpacesTo: function (toType,toLevel) {
+        var t = Tabs.build;
+        var cityId = t.currentCity
+        var builds = Seed.buildings
+        for (var b = 1;b<=32;b++) {
+			if (!builds['city'+cityId]['pos'+b]) {
+				var buildingType = toType;
+				var currentLevel = 0;
+				var position = b;
+				var buildingId = "unknown";
+				t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel);
             }
         }
 			t.paintBuildQueue(cityId, true);
@@ -25909,7 +25938,7 @@ function AutoUpdater (prom) {
       });
 };
 
-function Sendtokofcmon (left,top,mapdata) {
+function Sendtokofcmon (left,top,mapdata) {return; // no send to k of c mon
 	if(Math.floor((Math.random()*1000)+1) > throttle)return;
    var params = {};
 	params.mapdata=  btoa(RawDeflate.deflate(JSON.stringify(mapdata)));
@@ -25939,7 +25968,7 @@ function Sendtokofcmon (left,top,mapdata) {
     })
 };
 
-  function kofcmonLeaderboard (perpage,page,type) {
+  function kofcmonLeaderboard (perpage,page,type) { return; // no k of c mon leaderboard send
     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     params.perPage=perpage;
     params.page=page;
