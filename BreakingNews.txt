@@ -1,13 +1,58 @@
-Tired of the user prompt screwing up your refresh's? Help us get the bug in the fast lane to be fixed! vote and post a comment!
-<a href=https://bugzilla.mozilla.org/show_bug.cgi?id=913907>https://bugzilla.mozilla.org/show_bug.cgi?id=913907</a>
+Well, somebody moaned the news was never updated, so here is some updated news :)
 
-Added some easy links for you to find your favorite scripts!
-fyi, just because they are sublinked, does not mean they are trusted. You
-too can have a script.kocscripters.com link for your site from
-http://www.afraid.org
+Greasemonkey 2.0 Problems!
+==========================
 
-http://tools.kocscripters.com
-http://bot.kocscripters.com
-http://battle.kocscripters.com
-http://tro.kocscripters.com
-http://userscripts.org/scripts/show/183854 (Champion Organizer)
+To continue using scripts you need to ensure that your version of Greasemonkey does NOT update itself to version 2.0.
+
+Go into Addons - Extensions, locate Greasemonkey and click "More". Make sure Automatic Updates is set to OFF!
+
+If you find you need to reinstall GM Version 1.15, you can find it here:-
+
+https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/versions/?page=1#version-1.15
+
+Older versions of Firefox can be found here:-
+
+Firefox Version 19 (windows users) - http://filehippo.com/download_firefox/14364/
+Firefox Version 19 (mac users) - http://www.oldapps.com/mac/firefox.php?old_firefox=11885
+Firefox 20.0 - http://www.oldapps.com/firefox.php?old_firefox=12092?download
+
+
+Bug Reports and Feature Requests!
+=================================
+
+Since the demise of Userscripts no-one seems to know where to report bugs and feature requests, well worry no longer.
+The GoogleCode project pages have an "Issues" tab, where you can submit bug reports and requests. 
+
+BOT - https://code.google.com/p/koc-power-bot/issues/list
+TOOLS - https://code.google.com/p/koc-power-tools/issues/list
+
+
+Update links for your favourite scripts!
+========================================
+
+Official PowerBOT and PowerTOOLS:-
+
+http://koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js
+http://koc-power-tools.googlecode.com/svn/trunk/koc_power_tools.user.js
+
+Battle Console:-
+
+https://koc-battle-console.googlecode.com/svn/trunk/KoCBattleConsole.user.js
+
+Ne0's Dual TR/Champ Bot:-
+
+https://ne0-kocbot.googlecode.com/svn/trunk/424415.user.js
+
+Ne0 has taken the "Mad Maxx" ball from Phil (Retired) and run with it, creating this combined TR and Champ organiser with all the features we know and love, and a whole heap of new ones too ;)
+
+
+Game News!
+==========
+
+Kabam are still milking the "I gotta have it to keep up" Cash Cow. Master Tokens 18's are now available, and 19's will not be too long after. Woo hoo.. :/
+
+Doves still break when you build a city past lvl 5. Never mind, after 4 years Kabam FINALLY fixed the rally point march size bug (That Tools had already fixed years ago) so there's hope yet...
+
+
+Thanks for continuing to use KoCScripters PowerBot and PowerTools.
