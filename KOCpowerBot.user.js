@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140718a
+// @version        20140722a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140718a';
+var Version = '20140722a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -165,7 +165,8 @@ var Options = {
   LastCrestReport   : 0,
   MsgInterval  : 1,
   CrestMsgInterval  : 1,
-
+  CrestMercTarget  : 999,
+  CrestMercItem : "30792",
   foodreport   : false,
   crestreport  : true,
   Crest1Count  : 0,                            
@@ -211,8 +212,8 @@ var Options = {
   GESeverytenmin:0,
   GESeveryhour:0,
   GESeveryday:0,
-  detAFK: true,
-  expinc: true,
+  detAFK: false,
+  expinc: false,
   TourneyModeActive:false,
   UseTourneyMM:false,
   CrestList    : {"i1101":0,"i1102":0,"i1103":0,"i1104":0,"i1105":0,"i1106":0,"i1107":0,"i1108":0,"i1109":0,"i1110":0,"i1111":0,"i1112":0,"i1113":0,"i1114":0,"i1115":0,"i1120":0,"i1121":0,"i1122":0},
@@ -271,6 +272,7 @@ var CrestOptions = {
   R1Huss       :  0,
   R1Halb       :  0,
   R1Onager       :  0,
+  R1Sabo       :  0,
   R2ST         :  0,
   R2MM         :  0,
   R2Scout      :  0,
@@ -290,7 +292,9 @@ var CrestOptions = {
   R2Huss       :  0,
   R2Halb       :  0,
   R2Onager       :  0,
+  R2Sabo       :  0,
   isWild       :  false,
+  isMerc       :  false,
 
   Paused       :  false,
 };
@@ -336,6 +340,7 @@ var CrestData = new Array();
       this.R1Huss       =  Arr.R1Huss;
       this.R1Halb       =  Arr.R1Halb;
       this.R1Onager     =  Arr.R1Onager;
+      this.R1Sabo       =  Arr.R1Sabo;
       this.R2ST         =  Arr.R2ST;
       this.R2MM         =  Arr.R2MM;
       this.R2Scout      =  Arr.R2Scout;
@@ -355,7 +360,9 @@ var CrestData = new Array();
       this.R2Huss       =  Arr.R2Huss;
       this.R2Halb       =  Arr.R2Halb;
       this.R2Onager     =  Arr.R2Onager;
+      this.R2Sabo       =  Arr.R2Sabo;
       this.isWild       =  Arr.isWild;
+      this.isMerc       =  Arr.isMerc;
 
 	  this.Paused       =  Arr.Paused;
    };
@@ -6312,8 +6319,11 @@ var buildTabTypes = {
     type3: "Quarry",
     type4: "Mine",
     type5: "Cottage",
+    type6: "Tavern",
     type7: "Knights Hall",
     type8: "Embassy",
+    type9: "Storehouse",
+    type10: "Market",
     type11: "Alchemy Lab",
     type12: "Rally Point",
     type13: "Barracks",
@@ -6584,7 +6594,7 @@ Tabs.build = {
                         if (item[3] != undefined) {
                             var buildingId = item[3];
                         } else {
-                            var buildingId = "unknown";
+                            var buildingId = 0;
                         }
 						if (parseInt(position) < 300 || parseInt(position) > 309) { // no dummy ascension buildings
 							t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel);
@@ -6608,7 +6618,7 @@ Tabs.build = {
                     if (item[3] != undefined) {
                         var buildingId = item[3];
                     } else {
-                        var buildingId = "unknown";
+                        var buildingId = 0;
                     }
                     t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel) //
                 }
@@ -6630,7 +6640,7 @@ Tabs.build = {
                     if (item[3] != undefined) {
                         var buildingId = item[3];
                     } else {
-                        var buildingId = "unknown";
+                        var buildingId = 0;
                     }
                     t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel) //
                 }
@@ -6647,7 +6657,7 @@ Tabs.build = {
 				var buildingType = toType;
 				var currentLevel = 0;
 				var position = b;
-				var buildingId = "unknown";
+				var buildingId = 0;
 				t.doExtraTools(cityId, position, buildingId, buildingType, currentLevel,toLevel);
             }
         }
@@ -11986,6 +11996,7 @@ Tabs.Barb = {
       ['Hussar', 17],
       ['Halberdier', 18],
       ['Onager', 21],
+      ['Saboteur', 22],
      ],
     
   init : function (div){
@@ -12865,7 +12876,7 @@ Tabs.Options = {
         <TR><TD><INPUT id=pbHideOnGoto type=checkbox /></td><TD>'+translate("Hide window when clicking on map coordinates")+'</td></tr>\
         <TR><TD><INPUT id=pbWideOpt type=checkbox '+ (GlobalOptions.pbWideScreen?'CHECKED ':'') +'/></td><TD>'+translate("Enable widescreen style:")+' '+ htmlSelector({normal:'Normal', wide:'Widescreen', ultra:'Ultra'},GlobalOptions.pbWideScreenStyle,'id=selectScreenMode') +' '+translate("(all domains, requires refresh)")+'</td></tr>\
         <TR><TD><INPUT id=pbsendmeaway type=checkbox '+ (GlobalOptions.pbNoMoreKabam?'CHECKED ':'')+'/></td><TD>'+translate("Send me away from Kabam!")+'</td></tr>\
-        <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Userscripts', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
+        <TR><TD><INPUT id=pbupdate type=checkbox '+ (GlobalOptions.pbupdate?'CHECKED ':'') +'/></td><TD>'+translate("Check updates on")+' '+ htmlSelector({0:'Greasyfork', 1:'Google Code'},GlobalOptions.pbupdatebeta,'id=pbupdatebeta') +' '+translate("(all domains)")+' &nbsp; &nbsp; <INPUT id=pbupdatenow type=submit value="'+translate("Update Now")+'" /></td></tr>\
         <TR><TD>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Change window transparency between \"0.7 - 2\" ")+'&nbsp <INPUT id=pbtogOpacity type=text size=3 /> <span style="color:#800; font-weight:bold"><sup>'+translate("*Requires Refresh")+'</sup></span></td></tr>\
         <TR><td>&nbsp;&nbsp;&nbsp;-</td><TD>'+translate("Throttle Map Requests:")+' '+ htmlSelector({1200:translate('1.2x Fast'), 4000:translate('4x Normal'), 8000:translate('8x Slow'), 15000:translate('15x Slow'), 20000:translate('20x Slow'), 30000:translate('30x Slow')},Options.MAP_DELAY,'id=pbMAP_DELAY')+'</td></tr>\
       <TR><TD><INPUT id=pblogperms type=checkbox '+ (Options.plog?'CHECKED ':'') +'/></td><TD>'+translate("Occasional logging of data to help with script development")+'</td></tr>\
@@ -13469,6 +13480,7 @@ var troops = {	1:'SupplyTroop',
 				17:'Hussar' ,
 				18:'Halberdier' ,
 				21:'Onager' ,
+				22:'Saboteur' ,
 			};  
 			 
 Tabs.Reassign = {
@@ -13600,14 +13612,18 @@ Tabs.Reassign = {
 		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_18_50.jpg?6545"></td>';
 		m += '<TD>'+translate("Halberdier")+'</td>';
 		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_50.jpg?6545?6545"></td>';
-		m += '<TD>'+translate("Heavy Onager")+'</td></tr>';
+		m += '<TD>'+translate("Heavy Onager")+'</td>';
+		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_22_50.jpg?6545?6545"></td>';
+		m += '<TD>'+translate("Saboteur")+'</td></tr>';
 	  
 		m += '<TR><TD><INPUT id=pbHussar type=checkbox unchecked=true\>';
 		m += '<INPUT id=pbtargetHussar disabled=true type=text size=10 maxlength=10 value="0"\></td>';
 		m += '<TD><INPUT id=pbHalberdier type=checkbox unchecked=true\>';
 		m += '<INPUT id=pbtargetHalberdier disabled=true type=text size=10 maxlength=10 value="0"\></td>';
 		m += '<TD><INPUT id=pbOnager type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetOnager disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+		m += '<INPUT id=pbtargetOnager disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+		m += '<TD><INPUT id=pbSaboteur type=checkbox unchecked=true\>';
+		m += '<INPUT id=pbtargetSaboteur disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
       
 		m+='</table>';
       	m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteReassign type=submit value="'+translate("Add Reassign Route")+'"></div>';
@@ -13763,6 +13779,8 @@ Tabs.Reassign = {
 			Halberdier:			document.getElementById('pbtargetHalberdier').value,
 			SendOnager:			document.getElementById('pbOnager').checked,
 			Onager:				document.getElementById('pbtargetOnager').value,
+			SendSaboteur:		document.getElementById('pbSaboteur').checked,
+			Saboteur:			document.getElementById('pbtargetSaboteur').value,
 		});
 		document.getElementById('pbReassignDivD').style.background ='#99FF99';
 		setTimeout(function(){ (document.getElementById('pbReassignDivD').style.background =''); }, 1000);
@@ -13789,11 +13807,11 @@ Tabs.Reassign = {
 				if ( parseInt(Seed.cities[y][0]) == r[i].city) var cityname = Seed.cities[y][1];
 			}    
 			var queueId = i;
-			t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArcher, r[i].Archer, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagon, r[i].SupplyWagon, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower, r[i].SendFlameArcher, r[i].FlameArcher, r[i].SendHussar, r[i].Hussar, r[i].SendHalberdier, r[i].Halberdier, r[i].SendOnager, r[i].Onager);
+			t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArcher, r[i].Archer, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagon, r[i].SupplyWagon, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower, r[i].SendFlameArcher, r[i].FlameArcher, r[i].SendHussar, r[i].Hussar, r[i].SendHalberdier, r[i].Halberdier, r[i].SendOnager, r[i].Onager, r[i].SendSaboteur, r[i].Saboteur);
 		}
 	},
      
-	_addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArcher,Archer,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagon,SupplyWagon,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult,SendBloodThorn,BloodThorn,SendExecutioner,Executioner,SendSiegeTower,SiegeTower,SendFlameArcher,FlameArcher,SendHussar,Hussar,SendHalberdier,Halberdier,SendOnager,Onager){
+	_addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArcher,Archer,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagon,SupplyWagon,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult,SendBloodThorn,BloodThorn,SendExecutioner,Executioner,SendSiegeTower,SiegeTower,SendFlameArcher,FlameArcher,SendHussar,Hussar,SendHalberdier,Halberdier,SendOnager,Onager,SendSaboteur,Saboteur){
 		var t = Tabs.Reassign;
 		var To = target_x+','+target_y;
 		for (var y=0; y< Seed.cities.length;y++) {
@@ -13804,30 +13822,30 @@ Tabs.Reassign = {
 		}
 		var row = document.getElementById('pbRoutesQueue').insertRow(0);
 		row.vAlign = 'top';
-		row.insertCell(0).innerHTML = queueId;
-		row.insertCell(1).innerHTML = cityname;
-		row.insertCell(2).innerHTML = To;
-		row.insertCell(3).innerHTML = '<input type=checkbox disabled '+(SendSupplyTroop ? 'CHECKED ' : '')+'><br>'+(SendSupplyTroop ?addCommas(SupplyTroop): '');
-		row.insertCell(4).innerHTML = '<input type=checkbox disabled '+(SendMilitiaman ? 'CHECKED ' : '')+'><br>'+(SendMilitiaman ?addCommas(Militiaman): '');
-		row.insertCell(5).innerHTML = '<input type=checkbox disabled '+(SendScout ? 'CHECKED ' : '')+'><br>'+(SendScout ?addCommas(Scout): '');
-		row.insertCell(6).innerHTML = '<input type=checkbox disabled '+(SendPikeman ? 'CHECKED ' : '')+'><br>'+(SendPikeman ?addCommas(Pikeman): '');
-		row.insertCell(7).innerHTML = '<input type=checkbox disabled '+(SendSwordsman ? 'CHECKED ' : '')+'><br>'+(SendSwordsman ?addCommas(Swordsman): '');
-		row.insertCell(8).innerHTML = '<input type=checkbox disabled '+(SendArcher ? 'CHECKED ' : '')+'><br>'+(SendArcher ?addCommas(Archer): '');
-		row.insertCell(9).innerHTML = '<input type=checkbox disabled '+(SendCavalry ? 'CHECKED ' : '')+'><br>'+(SendCavalry ?addCommas(Cavalry): '');
-		row.insertCell(10).innerHTML = '<input type=checkbox disabled '+(SendHeavyCavalry ? 'CHECKED ' : '')+'><br>'+(SendHeavyCavalry ?addCommas(HeavyCavalry): '');
-		row.insertCell(11).innerHTML = '<input type=checkbox disabled '+(SendSupplyWagon ? 'CHECKED ' : '')+'><br>'+(SendSupplyWagon ?addCommas(SupplyWagon): '');
-		row.insertCell(12).innerHTML = '<input type=checkbox disabled '+(SendBallista ? 'CHECKED ' : '')+'><br>'+(SendBallista ?addCommas(Ballista): '');
-		row.insertCell(13).innerHTML = '<input type=checkbox disabled '+(SendBatteringRam ? 'CHECKED ' : '')+'><br>'+(SendBatteringRam ?addCommas(BatteringRam): '');
-		row.insertCell(14).innerHTML = '<input type=checkbox disabled '+(SendCatapult ? 'CHECKED ' : '')+'><br>'+(SendCatapult ?addCommas(Catapult): '');
-		row.insertCell(15).innerHTML = '<input type=checkbox disabled '+(SendBloodThorn ? 'CHECKED ' : '')+'><br>'+(SendBloodThorn ?addCommas(BloodThorn): '');
-		row.insertCell(16).innerHTML = '<input type=checkbox disabled '+(SendExecutioner ? 'CHECKED ' : '')+'><br>'+(SendExecutioner ?addCommas(Executioner): '');
-		row.insertCell(17).innerHTML = '<input type=checkbox disabled '+(SendSiegeTower ? 'CHECKED ' : '')+'><br>'+(SendSiegeTower ?addCommas(SiegeTower): '');
-		row.insertCell(18).innerHTML = '<input type=checkbox disabled '+(SendFlameArcher ? 'CHECKED ' : '')+'><br>'+(SendFlameArcher ?addCommas(FlameArcher): '');
-		row.insertCell(19).innerHTML = '<input type=checkbox disabled '+(SendHussar ? 'CHECKED ' : '')+'><br>'+(SendHussar ?addCommas(Hussar): '');
-		row.insertCell(20).innerHTML = '<input type=checkbox disabled '+(SendHalberdier ? 'CHECKED ' : '')+'><br>'+(SendHalberdier ?addCommas(Halberdier): '');
-		row.insertCell(21).innerHTML = '<input type=checkbox disabled '+(SendOnager ? 'CHECKED ' : '')+'><br>'+(SendOnager ?addCommas(Onager): '');
-		row.insertCell(22).innerHTML = '<a class="button14" id="tradecancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
-		document.getElementById('tradecancel_' + queueId).addEventListener('click', function(){
+		row.insertCell(0).innerHTML = cityname;
+		row.insertCell(1).innerHTML = To;
+		row.insertCell(2).innerHTML = '<input type=checkbox disabled '+(SendSupplyTroop ? 'CHECKED ' : '')+'><br>'+(SendSupplyTroop ?addCommas(SupplyTroop): '');
+		row.insertCell(3).innerHTML = '<input type=checkbox disabled '+(SendMilitiaman ? 'CHECKED ' : '')+'><br>'+(SendMilitiaman ?addCommas(Militiaman): '');
+		row.insertCell(4).innerHTML = '<input type=checkbox disabled '+(SendScout ? 'CHECKED ' : '')+'><br>'+(SendScout ?addCommas(Scout): '');
+		row.insertCell(5).innerHTML = '<input type=checkbox disabled '+(SendPikeman ? 'CHECKED ' : '')+'><br>'+(SendPikeman ?addCommas(Pikeman): '');
+		row.insertCell(6).innerHTML = '<input type=checkbox disabled '+(SendSwordsman ? 'CHECKED ' : '')+'><br>'+(SendSwordsman ?addCommas(Swordsman): '');
+		row.insertCell(7).innerHTML = '<input type=checkbox disabled '+(SendArcher ? 'CHECKED ' : '')+'><br>'+(SendArcher ?addCommas(Archer): '');
+		row.insertCell(8).innerHTML = '<input type=checkbox disabled '+(SendCavalry ? 'CHECKED ' : '')+'><br>'+(SendCavalry ?addCommas(Cavalry): '');
+		row.insertCell(9).innerHTML = '<input type=checkbox disabled '+(SendHeavyCavalry ? 'CHECKED ' : '')+'><br>'+(SendHeavyCavalry ?addCommas(HeavyCavalry): '');
+		row.insertCell(10).innerHTML = '<input type=checkbox disabled '+(SendSupplyWagon ? 'CHECKED ' : '')+'><br>'+(SendSupplyWagon ?addCommas(SupplyWagon): '');
+		row.insertCell(11).innerHTML = '<input type=checkbox disabled '+(SendBallista ? 'CHECKED ' : '')+'><br>'+(SendBallista ?addCommas(Ballista): '');
+		row.insertCell(12).innerHTML = '<input type=checkbox disabled '+(SendBatteringRam ? 'CHECKED ' : '')+'><br>'+(SendBatteringRam ?addCommas(BatteringRam): '');
+		row.insertCell(13).innerHTML = '<input type=checkbox disabled '+(SendCatapult ? 'CHECKED ' : '')+'><br>'+(SendCatapult ?addCommas(Catapult): '');
+		row.insertCell(14).innerHTML = '<input type=checkbox disabled '+(SendBloodThorn ? 'CHECKED ' : '')+'><br>'+(SendBloodThorn ?addCommas(BloodThorn): '');
+		row.insertCell(15).innerHTML = '<input type=checkbox disabled '+(SendExecutioner ? 'CHECKED ' : '')+'><br>'+(SendExecutioner ?addCommas(Executioner): '');
+		row.insertCell(16).innerHTML = '<input type=checkbox disabled '+(SendSiegeTower ? 'CHECKED ' : '')+'><br>'+(SendSiegeTower ?addCommas(SiegeTower): '');
+		row.insertCell(17).innerHTML = '<input type=checkbox disabled '+(SendFlameArcher ? 'CHECKED ' : '')+'><br>'+(SendFlameArcher ?addCommas(FlameArcher): '');
+		row.insertCell(18).innerHTML = '<input type=checkbox disabled '+(SendHussar ? 'CHECKED ' : '')+'><br>'+(SendHussar ?addCommas(Hussar): '');
+		row.insertCell(19).innerHTML = '<input type=checkbox disabled '+(SendHalberdier ? 'CHECKED ' : '')+'><br>'+(SendHalberdier ?addCommas(Halberdier): '');
+		row.insertCell(20).innerHTML = '<input type=checkbox disabled '+(SendOnager ? 'CHECKED ' : '')+'><br>'+(SendOnager ?addCommas(Onager): '');
+		row.insertCell(21).innerHTML = '<input type=checkbox disabled '+(SendSaboteur ? 'CHECKED ' : '')+'><br>'+(SendSaboteur ?addCommas(Onager): '');
+		row.insertCell(22).innerHTML = '<a class="button14" id="reasscancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
+		document.getElementById('reasscancel_' + queueId).addEventListener('click', function(){
 			t.cancelQueueElement(queueId);
 		}, false);
 	},
@@ -13836,28 +13854,28 @@ Tabs.Reassign = {
 		var t = Tabs.transport;
 		var row = document.getElementById('pbRoutesQueue').insertRow(0);
 		row.vAlign = 'top';
-		row.insertCell(0).innerHTML = "ID";
-		row.insertCell(1).innerHTML = translate("From");
-		row.insertCell(2).innerHTML = translate("To");
-		row.insertCell(3).innerHTML = translate("Supp");
-		row.insertCell(4).innerHTML = translate("MM");
-		row.insertCell(5).innerHTML = translate("Scout");
-		row.insertCell(6).innerHTML = translate("Pike");
-		row.insertCell(7).innerHTML = translate("Sword");
-		row.insertCell(8).innerHTML = translate("Arch");
-		row.insertCell(9).innerHTML = translate("Cav");
-		row.insertCell(10).innerHTML = translate("HC");
-		row.insertCell(11).innerHTML = translate("Wags");
-		row.insertCell(12).innerHTML = translate("Balls");
-		row.insertCell(13).innerHTML = translate("Rams");
-		row.insertCell(14).innerHTML = translate("Cats");
-		row.insertCell(15).innerHTML = translate("Blood");
-		row.insertCell(16).innerHTML = translate("Exec");
-		row.insertCell(17).innerHTML = translate("Siege");
-		row.insertCell(18).innerHTML = translate("Flame");
-		row.insertCell(19).innerHTML = translate("Hussar");
-		row.insertCell(20).innerHTML = translate("Halb");
-		row.insertCell(21).innerHTML = translate("Onager");
+		row.insertCell(0).innerHTML = translate("From");
+		row.insertCell(1).innerHTML = translate("To");
+		row.insertCell(2).innerHTML = translate("Supp");
+		row.insertCell(3).innerHTML = translate("MM");
+		row.insertCell(4).innerHTML = translate("Scout");
+		row.insertCell(5).innerHTML = translate("Pike");
+		row.insertCell(6).innerHTML = translate("Sword");
+		row.insertCell(7).innerHTML = translate("Arch");
+		row.insertCell(8).innerHTML = translate("Cav");
+		row.insertCell(9).innerHTML = translate("HC");
+		row.insertCell(10).innerHTML = translate("Wags");
+		row.insertCell(11).innerHTML = translate("Balls");
+		row.insertCell(12).innerHTML = translate("Rams");
+		row.insertCell(13).innerHTML = translate("Cats");
+		row.insertCell(14).innerHTML = translate("Blood");
+		row.insertCell(15).innerHTML = translate("Exec");
+		row.insertCell(16).innerHTML = translate("Siege");
+		row.insertCell(17).innerHTML = translate("Flame");
+		row.insertCell(18).innerHTML = translate("Hussar");
+		row.insertCell(19).innerHTML = translate("Halb");
+		row.insertCell(20).innerHTML = translate("Onager");
+		row.insertCell(21).innerHTML = translate("Sabo");
 		row.insertCell(22).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
 	},   
        
@@ -13989,6 +14007,7 @@ Tabs.Reassign = {
             var marchtroops = marching.marchUnits["unt"+i];
             citytotal = parseInt(citytroops) + parseInt(marchtroops);
             if(t.reassignRoutes[count]['Send'+troops[i]]==false) {continue; }
+			if(!Seed.cityData.city[t.reassignRoutes[i].target_city].isPrestigeCity && ((i==13) || (i==14) || (i==15))) {continue; }
             if(citytotal > t.reassignRoutes[count][troops[i]]){
                 var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troops[i]]);
                 if (parseInt(sendtroops) > parseInt(citytroops)) sendtroops = citytroops;
@@ -20619,19 +20638,19 @@ Tabs.Inventory = {
 /**************************** Start Up Tab ******************************************/
 
 var buildingIDs = {
-    Farm:1,Mine:4,Quarry:3,Sawmill:2,Castle:0,Wall:19,Barracks:13,Cottage:5,RelStat:18,Stable:17,Blacksmith:15,KnightsHall:7,Workshop:16,FeySpire:20,Apothecary:21,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,WatchTower:14
+    Storehouse:9,Farm:1,Mine:4,Quarry:3,Sawmill:2,Castle:0,Wall:19,Barracks:13,Cottage:5,RelStat:18,Stable:17,Blacksmith:15,KnightsHall:7,Workshop:16,FeySpire:20,Apothecary:21,RallyPoint:12,Embassy:8,AlcLab:11,Nothing:0,WatchTower:14
     };
 var buildingTypes = {
-    type5:"Cottage",type6:"",type7:"KnightsHall",type8:"Embassy",type9:"",type10:"",type11:"AlcLab",type12:"RallyPoint",type13:"Barracks",type14:"WatchTower",type15:"Blacksmith",type16:"Workshop",type17:"Stable",type18:"RelStation",type19:"Wall",type20:"FeySpire",type21:"Apothecary",
+    type5:"Cottage",type6:"",type7:"KnightsHall",type8:"Embassy",type9:"Storehouse",type10:"",type11:"AlcLab",type12:"RallyPoint",type13:"Barracks",type14:"WatchTower",type15:"Blacksmith",type16:"Workshop",type17:"Stable",type18:"RelStation",type19:"Wall",type20:"FeySpire",type21:"Apothecary",
 };
 var cityBuildingNames = {
-    Wall:"Wall",Cottage:"Cottage",Barracks:"Barracks",Blacksmith:"Blacksmith",Stable:"Stable",Apothecary:"Apothecary",Workshop:"Workshop",FeySpire:"Fey Spire",Embassy:"Embassy",RelStation:"Relief Station",AlcLab:"Alchemy Lab",WatchTower:"Watch Tower",KnightsHall:"Knights Hall",RallyPoint:"Rally Point",
+    Storehouse:"Storehouse",Wall:"Wall",Cottage:"Cottage",Barracks:"Barracks",Blacksmith:"Blacksmith",Stable:"Stable",Apothecary:"Apothecary",Workshop:"Workshop",FeySpire:"Fey Spire",Embassy:"Embassy",RelStation:"Relief Station",AlcLab:"Alchemy Lab",WatchTower:"Watch Tower",KnightsHall:"Knights Hall",RallyPoint:"Rally Point",
     };
 var fieldBuildingNames = {
     Farm:"Farm",Mine:"Mine",Sawmill:"Mill",Quarry:"Quarry",
     };
 var layoutOptions = {
-    pos1:"Wall",pos2:"Barracks",pos3:"Cottage",pos4:"RelStation",pos5:"Barracks",pos6:"Barracks",pos7:"Barracks",pos8:"Stable",pos9:"KnightsHall",pos10:"RallyPoint",pos11:"Barracks",pos12:"Barracks",pos13:"Barracks",pos14:"Cottage",pos15:"FeySpire",pos16:"Apothecary",pos17:"Blacksmith",pos18:"Workshop",pos19:"AlcLab",pos20:"Barracks",pos21:"Barracks",pos22:"Barracks",pos23:"Embassy",pos24:"Cottage",pos25:"Barracks",pos26:"Barracks",pos27:"Barracks",pos28:"Cottage",pos29:"Cottage",pos30:"Barracks",pos31:"Barracks",pos32:"Cottage"
+    pos1:"Wall",pos2:"Barracks",pos3:"Cottage",pos4:"RelStation",pos5:"Storehouse",pos6:"Barracks",pos7:"Barracks",pos8:"Stable",pos9:"KnightsHall",pos10:"RallyPoint",pos11:"Barracks",pos12:"Barracks",pos13:"Barracks",pos14:"Cottage",pos15:"FeySpire",pos16:"Apothecary",pos17:"Blacksmith",pos18:"Workshop",pos19:"AlcLab",pos20:"Barracks",pos21:"Barracks",pos22:"Barracks",pos23:"Embassy",pos24:"Cottage",pos25:"Barracks",pos26:"Barracks",pos27:"Barracks",pos28:"Cottage",pos29:"Cottage",pos30:"Barracks",pos31:"Barracks",pos32:"Cottage"
     };
 var fieldlayoutOptions = {
     pos100:"Farm",pos101:"Sawmill",pos104:"Quarry",pos105:"Mine",pos102:"Mine",pos103:"Mine",pos106:"Mine",pos107:"Mine",pos108:"Mine",pos109:"Mine",pos110:"Mine",pos111:"Mine",pos112:"Mine",pos113:"Mine",pos114:"Mine",pos115:"Mine",pos116:"Mine",pos117:"Mine",pos118:"Mine",pos119:"Mine",pos120:"Mine",pos121:"Mine",pos122:"Mine",pos123:"Mine",pos124:"Mine",pos125:"Mine",pos126:"Mine",pos127:"Mine",pos128:"Mine",pos129:"Mine",pos130:"Mine",pos131:"Mine",pos132:"Mine",pos133:"Mine",pos134:"Mine",pos135:"Mine",pos136:"Mine",pos137:"Mine",pos138:"Mine",pos139:"Mine",pos142:"Mine"
@@ -21077,7 +21096,7 @@ Tabs.Attack = {
 	rallypointlevel:null,
 	error_code: 0,
 	knt:{},
-	trooparray:{1:"ST",2:"MM",3:"Scout",4:"Pike",5:"Sword",6:"Arch",7:"LC",8:"HC",9:"SW",10:"Ball",11:"Ram",12:"Cat",13:"Blood",14:"Exec",15:"Siege",16:"Flame",17:"Huss",18:"Halb",21:"Onager",},
+	trooparray:{1:"ST",2:"MM",3:"Scout",4:"Pike",5:"Sword",6:"Arch",7:"LC",8:"HC",9:"SW",10:"Ball",11:"Ram",12:"Cat",13:"Blood",14:"Exec",15:"Siege",16:"Flame",17:"Huss",18:"Halb",21:"Onager",22:"Saboteur",},
 	msgtimer : null,
 
 
@@ -21108,21 +21127,28 @@ Tabs.Attack = {
 		m += '<TABLE width=100% height=0% class=pbTab><TR><TD><INPUT id=pbsendreport type=checkbox '+ (Options.crestreport?' CHECKED':'') +'\> Send attack report every ';
 		m += '<INPUT id=pbsendcrestreportint value='+ Options.CrestMsgInterval +' type=text size=3 \>&nbsp;hours</td>\
 			  <TD>Keep <INPUT id=pbcrestslots value='+ Options.CrestSlots +' type=text size=3 \>&nbsp;free rally point slots</td>\
-			  <TD>Attack interval <INPUT type=text size=3 value='+Options.Crestinterval+' id=pbcrest_interval />&nbsp;seconds</td></tr>';
+			  <TD align=right>Attack interval <INPUT type=text size=3 value='+Options.Crestinterval+' id=pbcrest_interval />&nbsp;seconds&nbsp;</td></tr>';
 		m += '<tr><td><INPUT id=pbRattacks type=checkbox '+(Options.CrestRand?'CHECKED':'')+'>Randomize attack order</td>';
-		m += '<td>&nbsp;</td><td><INPUT id=DelTargets type=submit value="'+translate('Mass Delete')+': ">';
+		m += '<td colspan=2 align=right><INPUT id=DelTargets type=submit value="'+translate('Mass Delete')+': ">';
 		m += ' <select id="pbattdelcity">';
 		for (g in Cities.byID) { m +='<option value="'+Cities.byID[g].id+'">'+Cities.byID[g].name+'</option>'; };
-		m += '</select></td></tr></table>';
+		m += '</select><INPUT id=RelTargets type=submit value="'+translate('Mass Relocate To')+': ">';
+		m += ' <select id="pbattrelcity">';
+		for (g in Cities.byID) { m +='<option value="'+Cities.byID[g].id+'">'+Cities.byID[g].name+'</option>'; };
+		m += '</select>&nbsp;</td></tr></table>';
 
+		m += '<DIV class=pbStat>MERCENARY CAMP OPTIONS</div>';
+		m += '<TABLE width=100% class=ptTab><TR><TD>&nbsp;Mercenary Target Chest Id:&nbsp;&nbsp;<INPUT id=pbmercitem type=text size=5 maxlength=8 value="'+ Options.CrestMercItem +'">&nbsp;Name:&nbsp;<span id=pbmercitemname></span></td><td align=right>Chest Target&nbsp;<INPUT id=pbmerctarget value='+ Options.CrestMercTarget +' type=text size=3 \>&nbsp;&nbsp;Current Amount:&nbsp;<span id=currmerc></span>&nbsp;&nbsp;&nbsp;&nbsp;</td></td></tr></table>';
+		
 		m += '<DIV id=pbNewAttack class=pbStat>ADD NEW ATTACKS</div><TABLE id=pbcrestopt     width=100% height=0% class=pbTab><TR align="center"></table>';
 		m += '<DIV style="margin-bottom:10px;">&nbsp;Attack from City: <span id=crestcity></span></div>';
   
 		m += '<TABLE class=ptTab><TR><TD>Target Co-ords:&nbsp;&nbsp;X:&nbsp;<INPUT id=pbcrestx type=text size=3 maxlength=3 value=""></td>';
 		m += '<TD>Y:&nbsp;<INPUT id=pbcresty type=text size=3 maxlength=3 value=""></td></tr>';
-		m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Target is Wilderness</td><td>(if ticked will abandon wild and reduce wave 1 MM for subsequent attacks)</td></tr></table>';
-
+		m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Target is Wilderness</td><td>(if ticked will reduce wave 1 MM for subsequent attacks)</td></tr>';
+		m += '<TR><TD><INPUT type=checkbox id=pbcrest_ismerc /> Target is Merc. Camp&nbsp;</td><td>&nbsp;(if ticked, this attack will stop running when chest target amount reached (See above))</td></tr></table>';
    
+
 		var dude = unsafeWindow.unitnamedesctranslated;
 		m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD><b>Wave 1</b>&nbsp;(initial):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=7 value=0></td>';
 		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=7 value=0></td>';
@@ -21142,7 +21168,8 @@ Tabs.Attack = {
 		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_30.jpg alt='+dude.unt16[0]+'></td><TD><INPUT id=R1Flame type=text size=7 maxlength=7 value=0></td>';
 		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_30.jpg alt='+dude.unt17[0]+'></td><TD><INPUT id=R1Huss type=text size=7 maxlength=7 value=0></td>';
 		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_18_30.jpg alt='+dude.unt18[0]+'></td><TD><INPUT id=R1Halb type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_30.jpg alt='+dude.unt21[0]+'></td><TD><INPUT id=R1Onager type=text size=7 maxlength=7 value=0></td></tr>';
+		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_30.jpg alt='+dude.unt21[0]+'></td><TD><INPUT id=R1Onager type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_22_30.jpg alt='+dude.unt22[0]+'></td><TD><INPUT id=R1Sabo type=text size=7 maxlength=7 value=0></td></tr>';
 		m += '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
 		m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD><b>Wave 2</b>&nbsp;(recurring):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=7 value=0></td>';
 		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=7 value=0></td>';
@@ -21162,7 +21189,8 @@ Tabs.Attack = {
 		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_30.jpg alt='+dude.unt16[0]+'></td><TD><INPUT id=R2Flame type=text size=7 maxlength=7 value=0></td>';
 		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_30.jpg alt='+dude.unt17[0]+'></td><TD><INPUT id=R2Huss type=text size=7 maxlength=7 value=0></td>';
 		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_18_30.jpg alt='+dude.unt18[0]+'></td><TD><INPUT id=R2Halb type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_30.jpg alt='+dude.unt21[0]+'></td><TD><INPUT id=R2Onager type=text size=7 maxlength=7 value=0></td></tr>';
+		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_30.jpg alt='+dude.unt21[0]+'></td><TD><INPUT id=R2Onager type=text size=7 maxlength=7 value=0></td>';
+		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_22_30.jpg alt='+dude.unt22[0]+'></td><TD><INPUT id=R2Sabo type=text size=7 maxlength=7 value=0></td></tr>';
 		m += '</table>';
 		m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteCrest type=submit value="Add Attack"> <INPUT id=pbimpRoute type=submit value="Bulk Add from Search Results"><br>&nbsp;</div>';
     
@@ -21180,6 +21208,17 @@ Tabs.Attack = {
 			Options.Crestinterval = parseIntNan(e.target.value);
 			saveOptions();
 		},false);
+    
+		document.getElementById("pbmercitem").addEventListener('change', function(e){
+			Options.CrestMercItem = parseIntNan(e.target.value);
+			saveOptions();
+			t.UpdateMercTarget();
+		},false);
+		document.getElementById("pbmerctarget").addEventListener('change', function(e){
+			Options.CrestMercTarget = parseIntNan(e.target.value);
+			saveOptions();
+			t.UpdateMercTarget();
+		},false);
 		$("pbcrestslots").addEventListener('change', function(e){
 			Options.CrestSlots = parseIntNan(e.target.value);
 			saveOptions();
@@ -21192,6 +21231,8 @@ Tabs.Attack = {
 			}
 		}
         
+		t.UpdateMercTarget();
+
 		t.tcp = new CdispCityPicker ('crestcityselect', document.getElementById('crestcity'), true, t.clickCitySelect, selbut);
     
 		if (CrestOptions.CrestCity == 0) {
@@ -21202,6 +21243,10 @@ Tabs.Attack = {
 			CrestOptions.isWild = this.checked;
 		},false);
     
+		$('pbcrest_ismerc').addEventListener('click', function(){
+			CrestOptions.isMerc = this.checked;
+		},false);
+
 		$('pbRattacks').addEventListener('click', function(){
 			Options.CrestRand = this.checked;
 			saveOptions();
@@ -21222,6 +21267,7 @@ Tabs.Attack = {
 		document.getElementById('pbcresty').addEventListener('keyup', function(){ if (isNaN(document.getElementById('pbcresty').value)) document.getElementById('pbcresty').value='';}, false);
 
 		document.getElementById('pbcrest_iswild').addEventListener('click', function(){CrestOptions.isWild = this.checked;} , false);
+		document.getElementById('pbcrest_ismerc').addEventListener('click', function(){CrestOptions.isMerc = this.checked;} , false);
 
 		document.getElementById('crestcity').addEventListener('click', function(){CrestOptions.CrestCity = t.tcp.city.id;} , false);
 		document.getElementById('Cresttoggle').addEventListener('click', function(){t.toggleCrestState(this)} , false);
@@ -21233,6 +21279,7 @@ Tabs.Attack = {
 		document.getElementById('pbimpRoute').addEventListener('click', function(){t.addSearchAttacks();}, false);
 		document.getElementById('showCrestTargets').addEventListener('click', function(){t.showCrestRoute();}, false);
 		document.getElementById('DelTargets').addEventListener('click', function(){t.MassDelTargets();}, false);
+		document.getElementById('RelTargets').addEventListener('click', function(){t.MassRelTargets();}, false);
 		
       	for (var ui in unsafeWindow.cm.UNIT_TYPES){
 			i = unsafeWindow.cm.UNIT_TYPES[ui];
@@ -21242,6 +21289,20 @@ Tabs.Attack = {
 		}
 	},
 
+	UpdateMercTarget : function() {
+		if (unsafeWindow.itemlist["i"+Options.CrestMercItem]) {
+			document.getElementById("pbmercitemname").innerHTML = unsafeWindow.itemlist["i"+Options.CrestMercItem].name;
+		}
+		else {
+			document.getElementById("pbmercitemname").innerHTML = "<span style='color:#f00'>Unknown Item!</span>";
+		}
+		document.getElementById("currmerc").innerHTML = parseIntNan(Seed.items["i"+Options.CrestMercItem]);
+		if (parseIntNan(Seed.items["i"+Options.CrestMercItem]) >= parseIntNan(Options.CrestMercTarget))
+			unsafeWindow.jQuery('#currmerc').css('color', 'green');
+		else	
+			unsafeWindow.jQuery('#currmerc').css('color', 'black');
+	},
+	
 	addListeners : function(Troop) {
 		var T1 = 'R1'+Troop;
 		if (document.getElementById(T1)) {
@@ -21359,6 +21420,19 @@ Tabs.Attack = {
 		t.showCrestRoute();
 	},
 
+	MassRelTargets : function () {
+		var t = Tabs.Attack;
+		var x = document.getElementById('pbattdelcity').value;
+		var y = document.getElementById('pbattrelcity').value;
+		if (x != y) {
+			for(i = Number(CrestData.length-1); i > -1 ;i--)
+				if(CrestData[i].CrestCity == x) 
+					CrestData[i].CrestCity = y;
+			saveCrestData();
+			t.showCrestRoute();
+		}	
+	},
+
 	/** Show Crest Targets **/
 	showCrestRoute : function () {
 		var t = Tabs.Attack;
@@ -21398,7 +21472,8 @@ Tabs.Attack = {
 		row.insertCell(19).innerHTML = translate("Hussar");
 		row.insertCell(20).innerHTML = translate("Halb");
 		row.insertCell(21).innerHTML = translate("Onager");
-		row.insertCell(22).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
+		row.insertCell(22).innerHTML = translate("Sabo");
+		row.insertCell(23).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
 	},
 
 	/** paintCrestTargets **/
@@ -21407,31 +21482,31 @@ Tabs.Attack = {
 
 		for(var i = 0; i < CrestData.length; i++) {
 			if (t.checkRoundExists(2,i))
-				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", CrestData[i].R2ST, CrestData[i].R2MM, CrestData[i].R2Scout, CrestData[i].R2Pike, CrestData[i].R2Sword, CrestData[i].R2Arch, CrestData[i].R2LC, CrestData[i].R2HC, CrestData[i].R2SW, CrestData[i].R2Ball, CrestData[i].R2Ram, CrestData[i].R2Cat, CrestData[i].R2Blood, CrestData[i].R2Exec, CrestData[i].R2Siege, CrestData[i].R2Flame, CrestData[i].R2Huss, CrestData[i].R2Halb, CrestData[i].R2Onager, " ");
+				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", CrestData[i].R2ST, CrestData[i].R2MM, CrestData[i].R2Scout, CrestData[i].R2Pike, CrestData[i].R2Sword, CrestData[i].R2Arch, CrestData[i].R2LC, CrestData[i].R2HC, CrestData[i].R2SW, CrestData[i].R2Ball, CrestData[i].R2Ram, CrestData[i].R2Cat, CrestData[i].R2Blood, CrestData[i].R2Exec, CrestData[i].R2Siege, CrestData[i].R2Flame, CrestData[i].R2Huss, CrestData[i].R2Halb, CrestData[i].R2Onager, CrestData[i].R2Sabo, " ");
 			else
-				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ");
+				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ");
 			if (t.checkRoundExists(1,i))
-				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", CrestData[i].R1ST, CrestData[i].R1MM, CrestData[i].R1Scout, CrestData[i].R1Pike, CrestData[i].R1Sword, CrestData[i].R1Arch, CrestData[i].R1LC, CrestData[i].R1HC, CrestData[i].R1SW, CrestData[i].R1Ball, CrestData[i].R1Ram, CrestData[i].R1Cat, CrestData[i].R1Blood, CrestData[i].R1Exec, CrestData[i].R1Siege, CrestData[i].R1Flame, CrestData[i].R1Huss, CrestData[i].R1Halb, CrestData[i].R1Onager, "Delete");
+				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", CrestData[i].R1ST, CrestData[i].R1MM, CrestData[i].R1Scout, CrestData[i].R1Pike, CrestData[i].R1Sword, CrestData[i].R1Arch, CrestData[i].R1LC, CrestData[i].R1HC, CrestData[i].R1SW, CrestData[i].R1Ball, CrestData[i].R1Ram, CrestData[i].R1Cat, CrestData[i].R1Blood, CrestData[i].R1Exec, CrestData[i].R1Siege, CrestData[i].R1Flame, CrestData[i].R1Huss, CrestData[i].R1Halb, CrestData[i].R1Onager, CrestData[i].R1Sabo, "Delete");
 			else	
-				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "Delete");
-			t._addTabCrest(i, " "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ");
+				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "Delete");
+			t._addTabCrest(i, " "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ", " ");
 		}
 
 	},
 
 	/** Add Tab Crest **/
-	_addTabCrest : function (QueID, col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, col18, col19,col20,col21,col22) {
+	_addTabCrest : function (QueID, col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, col18, col19,col20,col21,col22,col23) {
 		var t = Tabs.Attack;
 		var row = document.getElementById('pbCrestTargets').insertRow(0);
 
-		for (var i = 0; i <= 22; i++) {
-			if (i == 22 && col22 == "Delete") {
+		for (var i = 0; i <= 23; i++) {
+			if (i == 23 && col23 == "Delete") {
 				row.insertCell(i).innerHTML = "<a id=pbCrestDel_" + QueID + " value=" + i + ">Delete</a>";
 				document.getElementById('pbCrestDel_' + QueID).addEventListener('click', function(){t.cancelCrestTarget(QueID);}, false);
 			} else if (col1 == "Check" && i == 1) {
 				row.insertCell(i).innerHTML = "<center><INPUT id=pbCrestPause_"+ QueID +" type=checkbox "+(CrestData[QueID].Paused?'CHECKED':'')+"></center>";
 				document.getElementById('pbCrestPause_' + QueID).addEventListener('click', function(){t.pauseCrestTarget(this,QueID);}, false);
-			} else if (col22 == "Delete" && i == 0) {
+			} else if (col23 == "Delete" && i == 0) {
 				row.insertCell(i).innerHTML = '<b>'+(Cities.byID[col0] ? Cities.byID[col0].name : '')+'</b>';
 			} else {
 				row.insertCell(i).innerHTML = (eval("col" + i)?eval("col" + i):'0') + "&nbsp;";
@@ -21595,6 +21670,13 @@ Tabs.Attack = {
 			return;
 		};
 		
+		t.UpdateMercTarget();
+		var CrestMercCurrent = parseIntNan(Seed.items["i"+Options.CrestMercItem]);
+		if (CrestData[CrestDataNum].isMerc && (CrestMercCurrent >= Options.CrestMercTarget)) {
+			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
+			return;
+		}
+
 		if (!t.checkCityTroops(r,CrestDataNum)) {
 //			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},Options.Crestinterval*1000);
 			t.timer = setTimeout(function(){ t.Rounds(1,retry,parseInt(CrestDataNum)+1);},2000);
@@ -21680,6 +21762,7 @@ Tabs.Attack = {
 				params.u17    = parseIntNan(CrestData[CrestDataNum].R1Huss);
 				params.u18    = parseIntNan(CrestData[CrestDataNum].R1Halb);
 				params.u21    = parseIntNan(CrestData[CrestDataNum].R1Onager);
+				params.u22    = parseIntNan(CrestData[CrestDataNum].R1Sabo);
                 
 				t.sendMarch(params,t.Rounds,r,retry, CrestDataNum);
 				break;
@@ -21709,7 +21792,7 @@ Tabs.Attack = {
 				params.u17    = parseIntNan(CrestData[CrestDataNum].R2Huss);
 				params.u18    = parseIntNan(CrestData[CrestDataNum].R2Halb);
 				params.u21    = parseIntNan(CrestData[CrestDataNum].R2Onager);
-
+				params.u22    = parseIntNan(CrestData[CrestDataNum].R2Sabo);
 				t.sendMarch(params,t.Rounds,r,retry, CrestDataNum);
 				break;
 		}
@@ -25877,7 +25960,7 @@ function GuardianTT () {
 
 
 function AutoUpdater (prom) {
-	var userscripts = http+'koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
+	var userscripts = http+'greasyfork.org/scripts/892-koc-power-bot/code/KOC Power Bot.user.js';
 	var googlecode = http+'koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
 	switch(GlobalOptions.pbupdatebeta)
 	{
