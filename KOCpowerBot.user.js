@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140722a
+// @version        20140723a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140722a';
+var Version = '20140723a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -659,7 +659,7 @@ function kocWideScreen(){
       kocFrame = parent.document.getElementById('kocIframes1');
    } catch (e){
       logit("kocWideScreen "+e);
-      kocFame = document.getElementById("kocIframes1");
+      kocFrame = document.getElementById("kocIframes1");
    }
    if (!kocFrame){
      setTimeout (setWideFb, 1000);
@@ -14007,7 +14007,7 @@ Tabs.Reassign = {
             var marchtroops = marching.marchUnits["unt"+i];
             citytotal = parseInt(citytroops) + parseInt(marchtroops);
             if(t.reassignRoutes[count]['Send'+troops[i]]==false) {continue; }
-			if(!Seed.cityData.city[t.reassignRoutes[i].target_city].isPrestigeCity && ((i==13) || (i==14) || (i==15))) {continue; }
+			if(!Seed.cityData.city[t.reassignRoutes[count].target_city].isPrestigeCity && ((i==13) || (i==14) || (i==15))) {continue; }
             if(citytotal > t.reassignRoutes[count][troops[i]]){
                 var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troops[i]]);
                 if (parseInt(sendtroops) > parseInt(citytroops)) sendtroops = citytroops;
