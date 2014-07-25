@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140723a
+// @version        20140725a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140723a';
+var Version = '20140725a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -8344,7 +8344,7 @@ Tabs.Search = {
   ExportToRaid : function (X,Y){
     var t = Tabs.Search;
     var cityId =t.selectedCity['id'];
-    var pop = new pbPopup ('pbExportRaid', 0,0, 800,300, true);
+    var pop = new pbPopup ('pbExportRaid', 0,0, 800,430, true);
     if (t.popFirst){
       pop.centerMe (mainPop.getMainDiv());  
       t.popFirst = false;
@@ -8352,44 +8352,20 @@ Tabs.Search = {
     pop.getTopDiv().innerHTML = '<CENTER><B>'+translate("Export to Raid")+'</b></center>';
     
       var m = '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
-      m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="0"></td>';
-      m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="0"></td>';
-      m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="0"></td>';
-      m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="0"></td></tr>';
-      
-      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
-      m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="0"></td>';
-      m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="0"></td>';
-      m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="0"></td>';
-      m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="0"></td></tr>';
-      
-      m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
-      m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-      m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
-      m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="0"></td>';
-      m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="0"></td>';
-      m += '<TD><INPUT id=Unit11 type=text size=6 maxlength=6 value="0"></td>';
-      m += '<TD><INPUT id=Unit12 type=text size=6 maxlength=6 value="0"></td></tr></table>';
+
+	  var rowcounter = 0;
+     	for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			
+			rowcounter++;
+			if (rowcounter > 4) {
+				m += '</tr><tr align="center">';
+				rowcounter = 1;
+			}
+			
+			m += '<td><table class=pbTab><tr><td rowspan=2><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_'+i+'_50.jpg?6545"></td><td>'+ addCommas(Seed.units['city'+cityId]['unt'+i]) +'</td></tr><tr><td><INPUT id=Unit'+i+' type=text size=6 maxlength=6 value="0"></td></tr></table></td>';
+		}
+      m += '</tr></table>';
       
       m += '<BR><CENTER>' +strButton20(translate('Help'), 'id=pbHelp')+'<SELECT id=RaidKnights type=list></select></center>';
       m+= '<BR><CENTER>'+ strButton20(translate('Raid and save'), 'id=pbRaidSave') +'</center>';
@@ -8412,18 +8388,10 @@ Tabs.Search = {
         params.queue[0].cityMarches.toXCoord = X;
         params.queue[0].cityMarches.toYCoord = Y;
         params.queue[0].cityMarches.unit0Count = 0;
-        params.queue[0].cityMarches.unit1Count = parseInt(document.getElementById ('Unit1').value);
-        params.queue[0].cityMarches.unit2Count = parseInt(document.getElementById ('Unit2').value);
-        params.queue[0].cityMarches.unit3Count = parseInt(document.getElementById ('Unit3').value);
-        params.queue[0].cityMarches.unit4Count = parseInt(document.getElementById ('Unit4').value);
-        params.queue[0].cityMarches.unit5Count = parseInt(document.getElementById ('Unit5').value);
-        params.queue[0].cityMarches.unit6Count = parseInt(document.getElementById ('Unit6').value);
-        params.queue[0].cityMarches.unit7Count = parseInt(document.getElementById ('Unit7').value);
-        params.queue[0].cityMarches.unit8Count = parseInt(document.getElementById ('Unit8').value);
-        params.queue[0].cityMarches.unit9Count = parseInt(document.getElementById ('Unit9').value);
-        params.queue[0].cityMarches.unit10Count = parseInt(document.getElementById ('Unit10').value);
-        params.queue[0].cityMarches.unit11Count = parseInt(document.getElementById ('Unit11').value);
-        params.queue[0].cityMarches.unit12Count = parseInt(document.getElementById ('Unit12').value);
+     	for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			params.queue[0]['cityMarches']['unit'+i+'Count'] = parseIntNan(document.getElementById ('Unit'+i).value);
+		}	
         
          new AjaxRequest2(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
                       method: "post",
@@ -10619,10 +10587,11 @@ cm.MARCH_TYPES = {
                           //if (destinationUnixTime > now && botMarchStatus !=3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
                           if (MarchStatus ==1) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
                           //if ((destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
-                          if (MarchStatus ==8 && (destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
-                          if (MarchStatus == 3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
+                          else if (MarchStatus ==8 && (destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
+                          else if (MarchStatus == 3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
                           //if (returnUnixTime < now  && botMarchStatus !=3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
-                          if (MarchStatus == 4 || (returnUnixTime < now  && botMarchStatus !=3)) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
+                          else if (MarchStatus == 4 || (returnUnixTime < now  && botMarchStatus !=3)) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
+						  else z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
                           
                           if (destinationUnixTime >= now) z+='<TD>'+ timestr(Seed.queue_atkp['city' + t.cityId][k]['destinationUnixTime'] - unixTime())+'</td>';
                           if (destinationUnixTime <= now) {
@@ -10704,44 +10673,20 @@ cm.MARCH_TYPES = {
           m+='<TD width=25px></td><TD>Round Trip: '+ timestr((t.save[y]['returnUnixTime'] - t.save[y]['destinationUnixTime'])*2)+ '</td></tr></table>';
 
           m += '<BR><TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-          m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
-          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
-          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
-          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
-          m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="'+ t.save[y]['unit1Count']+'"></td>';
-          m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="'+ t.save[y]['unit2Count']+'"></td>';
-          m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="'+ t.save[y]['unit3Count']+'"></td>';
-          m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="'+ t.save[y]['unit4Count']+'"></td></tr>';
-          
-          m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
-          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
-          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
-          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
-          m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="'+ t.save[y]['unit5Count']+'"></td>';
-          m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="'+ t.save[y]['unit6Count']+'"></td>';
-          m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="'+ t.save[y]['unit7Count']+'"></td>';
-          m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="'+ t.save[y]['unit8Count']+'"></td></tr>';
-          
-          m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
-          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
-          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
-          m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-          m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
-          m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="'+ t.save[y]['unit9Count']+'"></td>';
-          m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="'+ t.save[y]['unit10Count']+'"></td>';
-          m += '<TD><INPUT id=Unit11 type=text size=6 maxlength=6 value="'+ t.save[y]['unit11Count']+'"></td>';
-          m += '<TD><INPUT id=Unit12 type=text size=6 maxlength=6 value="'+ t.save[y]['unit12Count']+'"></td></tr></table>';
+
+		  var rowcounter = 0;
+		for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			
+			rowcounter++;
+			if (rowcounter > 4) {
+				m += '</tr><tr align="center">';
+				rowcounter = 1;
+			}
+				
+			m += '<td><table class=pbTab><tr><td rowspan=2><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_'+i+'_50.jpg?6545"></td><td>'+ addCommas(Seed.units['city'+cityId]['unt'+i]) +'</td></tr><tr><td><INPUT id=Unit'+i+' type=text size=6 maxlength=6 value="'+t.save[y]['unit'+i+'Count']+'"></td></tr></table></td>';
+		}
+		m += '</tr></table>';
           
           m += '<BR><CENTER><SELECT id=AddKnights type=list></select></center>';
           m+= '<BR><CENTER>'+ strButton20('Save', 'id=pbSaveRaid') +'</center>';
@@ -10755,18 +10700,10 @@ cm.MARCH_TYPES = {
                   t.save[y]['knightId'] = parseInt(document.getElementById ('AddKnights').value);
                   t.save[y]['toXCoord'] = parseInt(document.getElementById ('toXCoord').value);
                   t.save[y]['toYCoord'] = parseInt(document.getElementById ('toYCoord').value);
-                  t.save[y]['unit1Count'] = parseInt(document.getElementById ('Unit1').value);
-                  t.save[y]['unit2Count'] = parseInt(document.getElementById ('Unit2').value);
-                  t.save[y]['unit3Count'] = parseInt(document.getElementById ('Unit3').value);
-                  t.save[y]['unit4Count'] = parseInt(document.getElementById ('Unit4').value);
-                  t.save[y]['unit5Count'] = parseInt(document.getElementById ('Unit5').value);
-                  t.save[y]['unit6Count'] = parseInt(document.getElementById ('Unit6').value);
-                  t.save[y]['unit7Count'] = parseInt(document.getElementById ('Unit7').value);
-                  t.save[y]['unit8Count'] = parseInt(document.getElementById ('Unit8').value);
-                  t.save[y]['unit9Count'] = parseInt(document.getElementById ('Unit9').value);
-                  t.save[y]['unit10Count'] = parseInt(document.getElementById ('Unit10').value);
-                  t.save[y]['unit11Count'] = parseInt(document.getElementById ('Unit11').value);
-                  t.save[y]['unit12Count'] = parseInt(document.getElementById ('Unit12').value);
+					for (var ui in unsafeWindow.cm.UNIT_TYPES){
+						i = unsafeWindow.cm.UNIT_TYPES[ui];
+						t.save[y]['unit'+i+'Count'] = parseInt(document.getElementById ('Unit'+i).value);
+					}	
                   var serverID = getServerId();
                   setTimeout (function (){GM_setValue ('SavedRaids_'+serverID, JSON2.stringify(t.save));}, 0);
                   pop.show (false);
@@ -10777,7 +10714,7 @@ cm.MARCH_TYPES = {
       
   EditRaid : function (y){
         var t = Tabs.Raid;
-        var pop = new pbPopup ('pbEditRaid', 0,0, 750,350, true);
+        var pop = new pbPopup ('pbEditRaid', 0,0, 750,430, true);
         if (t.popFirst){
           pop.centerMe (mainPop.getMainDiv());  
           t.popFirst = false;
@@ -10785,52 +10722,28 @@ cm.MARCH_TYPES = {
         pop.getTopDiv().innerHTML = '<CENTER><B>Edit Raid</b></center>';
         cityId = t.rslt['queue'][y]['botMarches']['cityId'];
         
-            var m = '<BR><TABLE id=pbRaidAdd height=0% class=pbTab><TR align="center">';
-            m+='<TR></tr><TR><TD width=25px>X= <INPUT id=toXCoord type=text size=3 maxlength=3 value='+t.rslt['queue'][y]['botMarches']['toXCoord']+'></td>';
-            m+='<TD width=10px></td><TD widht=25px>Y= <INPUT id=toYCoord type=text size=3 maxlength=3 value='+ t.rslt['queue'][y]['botMarches']['toYCoord'] +'></td>';
-            m+='<TD width=25px></td><TD>Round Trip: '+ timestr((t.rslt['queue'][y]['botMarches']['returnUnixTime'] - t.rslt['queue'][y]['botMarches']['destinationUnixTime'])*2)+ '</td></tr></table>';
+		var m = '<BR><TABLE id=pbRaidAdd height=0% class=pbTab><TR align="center">';
+		m+='<TR></tr><TR><TD width=25px>X= <INPUT id=toXCoord type=text size=3 maxlength=3 value='+t.rslt['queue'][y]['botMarches']['toXCoord']+'></td>';
+		m+='<TD width=10px></td><TD widht=25px>Y= <INPUT id=toYCoord type=text size=3 maxlength=3 value='+ t.rslt['queue'][y]['botMarches']['toYCoord'] +'></td>';
+		m+='<TD width=25px></td><TD>Round Trip: '+ timestr((t.rslt['queue'][y]['botMarches']['returnUnixTime'] - t.rslt['queue'][y]['botMarches']['destinationUnixTime'])*2)+ '</td></tr></table>';
 
-            m += '<BR><TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-            m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt1']) +'</td>'
-            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt2']) +'</td>'
-            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt3']) +'</td>'
-            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt4']) +'</td></tr>'
-            m += '<TR><TD><INPUT id=Unit1 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit1Count']+'"></td>';
-            m += '<TD><INPUT id=Unit2 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit2Count']+'"></td>';
-            m += '<TD><INPUT id=Unit3 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit3Count']+'"></td>';
-            m += '<TD><INPUT id=Unit4 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit4Count']+'"></td></tr>';
+		m += '<BR><TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
+
+		var rowcounter = 0;
+		for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			
+			rowcounter++;
+			if (rowcounter > 4) {
+				m += '</tr><tr align="center">';
+				rowcounter = 1;
+			}
+				
+			m += '<td><table class=pbTab><tr><td rowspan=2><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_'+i+'_50.jpg?6545"></td><td>'+ addCommas(Seed.units['city'+cityId]['unt'+i]) +'</td></tr><tr><td><INPUT id=Unit'+i+' type=text size=6 maxlength=6 value="'+t.rslt['queue'][y]['botMarches']['unit'+i+'Count']+'"></td></tr></table></td>';
+		}
+		m += '</tr></table>';
             
-            m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt5']) +'</td>'
-            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt6']) +'</td>'
-            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt7']) +'</td>'
-            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt8']) +'</td></tr>'
-            m += '<TR><TD><INPUT id=Unit5 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit5Count']+'"></td>';
-            m += '<TD><INPUT id=Unit6 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit6Count']+'"></td>';
-            m += '<TD><INPUT id=Unit7 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit7Count']+'"></td>';
-            m += '<TD><INPUT id=Unit8 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit8Count']+'"></td></tr>';
-            
-            m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt9']) +'</td>'
-            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt10']) +'</td>'
-            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt11']) +'</td>'
-            m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-            m += '<TD>'+ addCommas(Seed.units['city'+cityId]['unt12']) +'</td></tr>'
-            m += '<TR><TD><INPUT id=Unit9 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit9Count']+'"></td>';
-            m += '<TD><INPUT id=Unit10 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit10Count']+'"></td>';
-            m += '<TD><INPUT id=Unit11 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit11Count']+'"></td>';
-            m += '<TD><INPUT id=Unit12 type=text size=6 maxlength=6 value="'+ t.rslt['queue'][y]['botMarches']['unit12Count']+'"></td></tr></table>';
-            
-            m += '<BR><CENTER><SELECT id=AddKnights type=list></select></center>';
+        m += '<BR><CENTER><SELECT id=AddKnights type=list></select></center>';
             m+= '<BR><CENTER>'+ strButton20('Save', 'id=pbRaidSave') +'</center>';
               
         pop.getMainDiv().innerHTML = m;
@@ -10851,18 +10764,10 @@ cm.MARCH_TYPES = {
             params.queue[0].cityMarches.toXCoord =  parseInt(document.getElementById ('toXCoord').value);
             params.queue[0].cityMarches.toYCoord =  parseInt(document.getElementById ('toYCoord').value);
             params.queue[0].cityMarches.unit0Count = 0; //document.getElementById ('Unit0').value;
-            params.queue[0].cityMarches.unit1Count =  parseInt(document.getElementById ('Unit1').value);
-            params.queue[0].cityMarches.unit2Count = parseInt(document.getElementById ('Unit2').value);
-            params.queue[0].cityMarches.unit3Count = parseInt(document.getElementById ('Unit3').value);
-            params.queue[0].cityMarches.unit4Count = parseInt(document.getElementById ('Unit4').value);
-            params.queue[0].cityMarches.unit5Count = parseInt(document.getElementById ('Unit5').value);
-            params.queue[0].cityMarches.unit6Count = parseInt(document.getElementById ('Unit6').value);
-            params.queue[0].cityMarches.unit7Count = parseInt(document.getElementById ('Unit7').value);
-            params.queue[0].cityMarches.unit8Count = parseInt(document.getElementById ('Unit8').value);
-            params.queue[0].cityMarches.unit9Count = parseInt(document.getElementById ('Unit9').value);
-            params.queue[0].cityMarches.unit10Count = parseInt(document.getElementById ('Unit10').value);
-            params.queue[0].cityMarches.unit11Count = parseInt(document.getElementById ('Unit11').value);
-            params.queue[0].cityMarches.unit12Count = parseInt(document.getElementById ('Unit12').value);
+			for (var ui in unsafeWindow.cm.UNIT_TYPES){
+				i = unsafeWindow.cm.UNIT_TYPES[ui];
+				params.queue[0]['cityMarches']['unit'+i+'Count'] = parseIntNan(document.getElementById ('Unit'+i).value);
+			}	
             params.queue[0].cityMarches.marchId =  t.rslt['queue'][y]['botMarches']['marchId'];
             
              new AjaxRequest2(unsafeWindow.g_ajaxpath + "ajax/_dispatch.php" + unsafeWindow.g_ajaxsuffix, {
@@ -10891,19 +10796,22 @@ cm.MARCH_TYPES = {
       for (y in t.rslt['queue']) {
           if (t.rslt['queue'][y]['botMarches'] != undefined) {
               if (t.rslt['queue'][y]['botMarches']['marchId'] == Id) {
-                      marchId = t.rslt['queue'][y]['botMarches']['marchId'];
-                      cityId = t.rslt['queue'][y]['botMarches']['cityId'];
-                      knightId = t.rslt['queue'][y]['botMarches']['knightId'];
-                      toTileLevel = t.rslt['queue'][y]['botMarches']['toTileLevel'];
-                      returnUnixTime = t.rslt['queue'][y]['botMarches']['returnUnixTime'];
-                      destinationUnixTime = t.rslt['queue'][y]['botMarches']['destinationUnixTime'];
-                      toXCoord = t.rslt['queue'][y]['botMarches']['toXCoord'];
-                      toYCoord = t.rslt['queue'][y]['botMarches']['toYCoord'];
-                      var units = {};
-                      for (i=1;i<13;i++) units[i] = t.rslt['queue'][y]['botMarches']['unit'+i+'Count'];
-              }
-          }
-      }    
+                    marchId = t.rslt['queue'][y]['botMarches']['marchId'];
+                    cityId = t.rslt['queue'][y]['botMarches']['cityId'];
+                    knightId = t.rslt['queue'][y]['botMarches']['knightId'];
+                    toTileLevel = t.rslt['queue'][y]['botMarches']['toTileLevel'];
+                    returnUnixTime = t.rslt['queue'][y]['botMarches']['returnUnixTime'];
+                    destinationUnixTime = t.rslt['queue'][y]['botMarches']['destinationUnixTime'];
+                    toXCoord = t.rslt['queue'][y]['botMarches']['toXCoord'];
+                    toYCoord = t.rslt['queue'][y]['botMarches']['toYCoord'];
+                    var units = {};
+					for (var ui in unsafeWindow.cm.UNIT_TYPES){
+						i = unsafeWindow.cm.UNIT_TYPES[ui];
+						units[i] = t.rslt['queue'][y]['botMarches']['unit'+i+'Count'];
+					}	
+				}
+			}
+		}    
       
       params.pf = 0;
       params.ctrl = 'BotManager';
@@ -10923,32 +10831,25 @@ cm.MARCH_TYPES = {
                           t.save = GM_getValue ('SavedRaids_'+serverID);
                           if (t.save == undefined) t.save =new Array();
                       else t.save = JSON2.parse (t.save);
-                      
-                          t.save.push ({
-                              marchId:        marchId,
-                              cityId:           cityId,
-                              knightId:        knightId,
-                              toTileLevel:    toTileLevel,
-                              returnUnixTime:    destinationUnixTime,
-                              returnUnixTime:    returnUnixTime,
-                              toXCoord:        toXCoord,
-                              toYCoord:        toYCoord,
-                              unit1Count:     units[1],
-                              unit2Count:     units[2],
-                              unit3Count:     units[3],
-                              unit4Count:     units[4],
-                              unit5Count:     units[5],
-                              unit6Count:     units[6],
-                              unit7Count:     units[7],
-                              unit8Count:     units[8],
-                              unit9Count:     units[9],
-                              unit10Count:     units[10],
-                              unit11Count:     units[11],
-                              unit12Count:     units[12],
-                          });
+                      var RaidObj = {};
+					  RaidObj.marchId = marchId;
+					  RaidObj.cityId = cityId;
+					  RaidObj.knightId = knightId;
+					  RaidObj.toTileLevel = toTileLevel;
+					  RaidObj.returnUnixTime = destinationUnixTime;
+					  RaidObj.returnUnixTime = returnUnixTime;
+					  RaidObj.toXCoord =  toXCoord;
+					  RaidObj.toYCoord = toYCoord;
+						for (var ui in unsafeWindow.cm.UNIT_TYPES){
+								i = unsafeWindow.cm.UNIT_TYPES[ui];
+							RaidObj['unit'+i+'Count'] = units[i];
+						}
+					  
+                          t.save.push (RaidObj);
                           var troops = Seed.units["city" + cityId];
-                      for (var u = 1; u <= 12; ++u) {
-                          var troop_number = parseInt(rslt["unit" + u + "Return"]);
+							for (var ui in unsafeWindow.cm.UNIT_TYPES){
+								u = unsafeWindow.cm.UNIT_TYPES[ui];
+							var troop_number = parseInt(rslt["unit" + u + "Return"]);
                           if (isNaN(troop_number)) {
                               troop_number = parseInt(Seed.units["city" + cityId]["unt" + u]);
                           } else troop_number = parseInt(rslt["unit" + u + "Return"]) + parseInt(Seed.units["city" + cityId]["unt" + u]);
@@ -10969,7 +10870,6 @@ cm.MARCH_TYPES = {
                       }
                                                       
                           GM_setValue ('SavedRaids_'+serverID, JSON2.stringify(t.save));
-                          t.save = null;
                       unsafeWindow.cityinfo_army();
                         setTimeout(unsafeWindow.update_seed_ajax, 250);
                         t.GetRaids(cityId);
@@ -11145,7 +11045,10 @@ cm.MARCH_TYPES = {
                     toXCoord = Seed.queue_atkp[cityID][f]['toXCoord'];
                     toYCoord = Seed.queue_atkp[cityID][f]['toYCoord'];
                     var units = {};
-                    for (i=1;i<13;i++) units[i] = Seed.queue_atkp[cityID][f]['unit'+i+'Count'];
+					for (var ui in unsafeWindow.cm.UNIT_TYPES){
+						i = unsafeWindow.cm.UNIT_TYPES[ui];
+						units[i] = Seed.queue_atkp[cityID][f]['unit'+i+'Count'];
+					}	
             }
         }
         
@@ -11167,32 +11070,25 @@ cm.MARCH_TYPES = {
                             t.save = GM_getValue ('SavedRaids_'+serverID, "[]");
                             if (t.save != undefined) t.save = JSON2.parse (t.save);
                             if (t.save == undefined) t.save =new Array();
-  
-                            t.save.push ({
-                                marchId:        marchId,
-                                cityId:           cityId,
-                                knightId:        knightId,
-                                toTileLevel:    toTileLevel,
-                                returnUnixTime:    destinationUnixTime,
-                                returnUnixTime:    returnUnixTime,
-                                toXCoord:        toXCoord,
-                                toYCoord:        toYCoord,
-                                unit1Count:     units[1],
-                                unit2Count:     units[2],
-                                unit3Count:     units[3],
-                                unit4Count:     units[4],
-                                unit5Count:     units[5],
-                                unit6Count:     units[6],
-                                unit7Count:     units[7],
-                                unit8Count:     units[8],
-                                unit9Count:     units[9],
-                                unit10Count:     units[10],
-                                unit11Count:     units[11],
-                                unit12Count:     units[12],
-                            });
+                      var RaidObj = {};
+					  RaidObj.marchId = marchId;
+					  RaidObj.cityId = cityId;
+					  RaidObj.knightId = knightId;
+					  RaidObj.toTileLevel = toTileLevel;
+					  RaidObj.returnUnixTime = destinationUnixTime;
+					  RaidObj.returnUnixTime = returnUnixTime;
+					  RaidObj.toXCoord =  toXCoord;
+					  RaidObj.toYCoord = toYCoord;
+						for (var ui in unsafeWindow.cm.UNIT_TYPES){
+								i = unsafeWindow.cm.UNIT_TYPES[ui];
+							RaidObj['unit'+i+'Count'] = units[i];
+						}
+					  
+                          t.save.push (RaidObj);
                             
                             var troops = Seed.units["city" + cityId];
-                            for (var u = 1; u <= 12; ++u) {
+							for (var ui in unsafeWindow.cm.UNIT_TYPES){
+								u = unsafeWindow.cm.UNIT_TYPES[ui];
                                 var troop_number = parseInt(rslt["unit" + u + "Return"]);
                                 if (isNaN(troop_number)) {
                                     troop_number = parseInt(Seed.units["city" + cityId]["unt" + u]);
@@ -11263,18 +11159,10 @@ cm.MARCH_TYPES = {
                 params.queue[0].cityMarches.toXCoord = t.save[y]['toXCoord'];
                 params.queue[0].cityMarches.toYCoord = t.save[y]['toYCoord'];
                 params.queue[0].cityMarches.unit0Count = 0;
-                params.queue[0].cityMarches.unit1Count = t.save[y]['unit1Count'];
-                params.queue[0].cityMarches.unit2Count = t.save[y]['unit2Count'];
-                params.queue[0].cityMarches.unit3Count = t.save[y]['unit3Count'];
-                params.queue[0].cityMarches.unit4Count = t.save[y]['unit4Count'];
-                params.queue[0].cityMarches.unit5Count = t.save[y]['unit5Count'];
-                params.queue[0].cityMarches.unit6Count = t.save[y]['unit6Count'];
-                params.queue[0].cityMarches.unit7Count = t.save[y]['unit7Count'];
-                params.queue[0].cityMarches.unit8Count = t.save[y]['unit8Count'];
-                params.queue[0].cityMarches.unit9Count = t.save[y]['unit9Count'];
-                params.queue[0].cityMarches.unit10Count = t.save[y]['unit10Count'];
-                params.queue[0].cityMarches.unit11Count = t.save[y]['unit12Count'];
-                params.queue[0].cityMarches.unit12Count = t.save[y]['unit12Count'];
+				for (var ui in unsafeWindow.cm.UNIT_TYPES){
+					i = unsafeWindow.cm.UNIT_TYPES[ui];
+					params.queue[0]['cityMarches']['unit'+i+'Count'] = t.save[y]['unit'+i+'Count'];
+				}	
             }
         }    
          
