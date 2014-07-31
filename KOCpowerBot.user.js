@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140725a
+// @version        20140731a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140725a';
+var Version = '20140731a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -509,13 +509,13 @@ var AttackOptions = {
   DeleteMsgs0        : false,
   Foodstatus         : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   AetherStatus       : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  MsgLevel            : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true},
+  MsgLevel            : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true,9:true,10:true,11:true,12:true,13:true,14:true,15:true},
   BarbsDone          : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   BarbNumber         : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
-  Levels             : {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false},8:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false}},
-  Troops             : {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
-  MinDistance        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0},
-  Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750},
+  Levels             : {1:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false,11:false,12:false,13:false,14:false,15:false},2:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false,11:false,12:false,13:false,14:false,15:false},3:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false,11:false,12:false,13:false,14:false,15:false},4:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false,11:false,12:false,13:false,14:false,15:false},5:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false,11:false,12:false,13:false,14:false,15:false},6:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false,11:false,12:false,13:false,14:false,15:false},7:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false,11:false,12:false,13:false,14:false,15:false},8:{0:false,1:false,2:false,3:false,4:false,5:false,6:false,7:false,8:false,9:false,10:false,11:false,12:false,13:false,14:false,15:false}},
+  Troops             : {1:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},2:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},3:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},4:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},5:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},6:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},7:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},8:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},9:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},10:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},11:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},12:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},13:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},14:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0},15:{1:0,2:0,3:0,4:0,5:0,6:0,7:0, 8:0,9:0, 10:0, 11:0, 12:0}},
+  MinDistance        : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0,13:0,14:0,15:0},
+  Distance              : {1:750,2:750,3:750,4:750,5:750,6:750,7:750,8:750,9:750,10:750,11:750,12:750,13:750,14:750,15:750},
   Update                : {1:[0,0],2:[0,0],3:[0,0],4:[0,0],5:[0,0],6:[0,0],7:[0,0],8:[0,0]},
   UpdateEnabled         : true,
   UpdateInterval      : 30,
@@ -11932,7 +11932,7 @@ Tabs.Barb = {
      m += '<TABLE width=95% height=0% class=ptTab><TR align="left">';
      for(i=0;i<Seed.cities.length;i++){
         m += '<TR><TD>' + Seed.cities[i][1] +'</td>';
-        for (w=1;w<=10;w++){
+        for (w=1;w<=15;w++){
            m += '<TD class=pblevelopt><INPUT id=pbcity'+i+'level'+w+' type=checkbox unchecked=true>Lvl:'+w+'</td>';
         }
      }
@@ -11950,7 +11950,7 @@ Tabs.Barb = {
      }
     
     for(i=0;i<Seed.cities.length;i++){
-        for (w=1;w<=10;w++){
+        for (w=1;w<=15;w++){
             document.getElementById('pbcity'+i+'level'+w).checked = AttackOptions.Levels[i+1][w];
         }
     }
@@ -11968,7 +11968,7 @@ Tabs.Barb = {
   saveLevelOptions : function(){
         for(i=0;i<Seed.cities.length;i++){
             AttackOptions.Levels[i+1][0]=false;
-            for (w=1;w<=10;w++){
+            for (w=1;w<=15;w++){
                 var ele = document.getElementById('pbcity'+i+'level'+w);
                 AttackOptions.Levels[i+1][w]=ele.checked;
                 if (ele.checked)                    
@@ -11989,9 +11989,12 @@ Tabs.Barb = {
      for(var i=0; i<troopDef.length; i++)
         z+='<TD>'+troopDef[i][0]+'</td>';
      z+='<TD>MIN dist</td><TD>MAX dist</td>';
-     for(i=0;i<10;i++){
+     for(i=0;i<15;i++){
+		if (!AttackOptions.MinDistance[i+1]) AttackOptions.MinDistance[i+1] = 0;
+		if (!AttackOptions.Distance[i+1]) AttackOptions.Distance[i+1] = 750;
          z += '<TR><TD>Level_'+(i+1)+': </td>';
          for(var j=0; j<troopDef.length; j++){
+			if (!AttackOptions.Troops[i+1]) AttackOptions.Troops[i+1] = {};
              z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=5 maxlength=6 value="'+(AttackOptions.Troops[i+1][j+1]?AttackOptions.Troops[i+1][j+1]:0)+'" /></td>';
          }
         z+='<TD align=left><INPUT id=Mindist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.MinDistance[i+1]+'"</td>';
@@ -12007,29 +12010,30 @@ Tabs.Barb = {
   	 var t = Tabs.Barb;
          var troopDef = t.troopDef;
   	 if(t.troopselect == null)	
-         t.troopselect = new pbPopup ('pbtroopselect', 0, 0, 650, 450, true, function(){t.saveTroops();});
+         t.troopselect = new pbPopup ('pbtroopselect', 0, 0, 980, 650, true, function(){t.saveTroops();});
   	 t.troopselect.centerMe (mainPop.getMainDiv());  
   	 var z= '<DIV id=pbTraderDivD class=pbStat>TROOP SELECTION</div><TABLE width=100%><TR>';
 	 z+='<TD></td>';
-	 for(var j=0; j<10; j++)
+	 for(var j=0; j<15; j++)
 		z+='<TD>Level '+(j+1)+'</td>';
 	 z+='</tr>';		 		
 
 	 for(i=0;i<troopDef.length;i++){
 	 	z += '<TR><TD>'+troopDef[i][0]+': </td>';
-	 	for(var j=0; j<10; j++){
+	 	for(var j=0; j<15; j++){
+			if (!AttackOptions.Troops[j+1]) AttackOptions.Troops[j+1] = {};
              z += '<TD><INPUT id="level'+j+'troop'+i+'" type=text size=5 maxlength=6 value="'+(AttackOptions.Troops[j+1][i+1]?AttackOptions.Troops[j+1][i+1]:0)+'" /></td>';
 	 	}
 	 	z+='</tr>';		 		
 	 }
 
 	 z+='<TR><TD>MIN dist</td>';		 		
-	 for(var j=0; j<10; j++){
+	 for(var j=0; j<15; j++){
 	 	z+='<TD><INPUT id=Mindist'+j+' type=text size=3 maxlength=3 value="'+AttackOptions.MinDistance[j+1]+'"</td>';
 	 }
 	 z+='</tr>';		 		
 	 z+='<TR><TD>MAX dist</td>';		 		
-	 for(var j=0; j<10; j++){
+	 for(var j=0; j<15; j++){
 	 	z+='<TD><INPUT id=dist'+j+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[j+1]+'"</td>';
 	 }
 	 z+='</tr>';		 		
@@ -12213,7 +12217,7 @@ Tabs.Barb = {
   
   saveTroops: function(){
       var t = Tabs.Barb;
-    for(i=0;i<10;i++){
+    for(i=0;i<15;i++){
            for (w=0;w<t.troopDef.length;w++){
                AttackOptions.Troops[i+1][w+1] = parseIntNan(document.getElementById('level'+i+'troop'+w).value);
            }
@@ -26124,6 +26128,7 @@ Tabs.farmreports = {
     tabDisabled: false,
     pageNo: 0,
     FROptions: {
+		gold: 0,
         r1: 0,
         r2: 0,
         r3: 0,
@@ -26150,7 +26155,8 @@ Tabs.farmreports = {
         }
         m += '<br>&nbsp;</div><DIV class=pbStat>DELETE OPTIONS</div><br>';
         m += '&nbsp;&nbsp;&nbsp;DON\'T Delete Scout Reports if...';
-        m += '<br><table><tr><td>&nbsp;&nbsp;</td><td align="right"> Food is more than :&nbsp;</td><td><INPUT id=frR1 type=text value=' + t.FROptions.r1 + '></td></tr>';
+        m += '<br><table class=pbTab><tr><td>&nbsp;&nbsp;</td><td align="right"> Gold is more than :&nbsp;</td><td><INPUT id=frGold type=text value=' + t.FROptions.gold + '></td></tr>';
+		m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right"> Food is more than :&nbsp;</td><td><INPUT id=frR1 type=text value=' + t.FROptions.r1 + '></td></tr>';
         m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Wood is more than :&nbsp;</td><td><INPUT id=frR2 type=text value=' + t.FROptions.r2 + '></td></tr>';
         m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Stone is more than :&nbsp;</td><td><INPUT id=frR3 type=text value=' + t.FROptions.r3 + '></td></tr>';
         m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Ore is more than :&nbsp;</td><td><INPUT id=frR4 type=text value=' + t.FROptions.r4 + '></td></tr></table>';
@@ -26159,6 +26165,10 @@ Tabs.farmreports = {
         m += '<br>&nbsp;&nbsp;<input id=frlost type=checkbox ' + (t.FROptions.friendly ? 'CHECKED' : '') + '> Delete Scout Reports of Friendly Alliances';
         m += '<br>&nbsp;&nbsp;';
         t.myDiv.innerHTML = m;
+        document.getElementById('frGold').addEventListener('change', function() {
+            t.FROptions.gold = this.value;
+            t.saveSROpts();
+        }, false);
         document.getElementById('frR1').addEventListener('change', function() {
             t.FROptions.r1 = this.value;
             t.saveSROpts();
@@ -26336,6 +26346,14 @@ Tabs.farmreports = {
                     if (rslt.rsc) {
                         var rsc = rslt.rsc;
                         var topush = true;
+
+                        if (Number(t.FROptions.gold) > 0) {
+                            if (Number(rsc.gold) > Number(t.FROptions.gold)) {
+                                logit("gold check passed " + rpId + " " + Number(rsc.gold) + ' > ' + Number(t.FROptions.gold));
+                                topush = false;
+                            };
+                        };
+
                         if (Number(t.FROptions.r1) > 0) {
                             if (Number(rsc.r1) > Number(t.FROptions.r1)) {
                                 logit("food check passed " + rpId + " " + Number(rsc.r1) + ' > ' + Number(t.FROptions.r1));
@@ -26364,7 +26382,7 @@ Tabs.farmreports = {
                         };
 
 						// safety net .. if no resource options set then don't delete the report, otherwise ALL scouts would be deleted always and we'd have a load of people moaning...
-						if ((Number(t.FROptions.r1) == 0) && (Number(t.FROptions.r2) == 0) && (Number(t.FROptions.r3) == 0) && (Number(t.FROptions.r4) == 0)) topush = false;
+						if ((Number(t.FROptions.gold) == 0) && (Number(t.FROptions.r1) == 0) && (Number(t.FROptions.r2) == 0) && (Number(t.FROptions.r3) == 0) && (Number(t.FROptions.r4) == 0)) topush = false;
 						
                         if (topush == true) {
                             t.deleteCheckedReport(rpId);
