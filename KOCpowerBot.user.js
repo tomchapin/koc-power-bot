@@ -18,8 +18,8 @@
 // @grant       GM_xmlhttpRequest
 // @grant       GM_log
 // @grant       GM_registerMenuCommand
-
 // @description    Automated features for Kingdoms of Camelot
+// @license			http://creativecommons.org/licenses/by-nc-sa/3.0/
 // ==/UserScript==
 
 //Fixed weird bug with koc game
