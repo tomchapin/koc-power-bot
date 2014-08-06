@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140731a
+// @version        20140806a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -18,8 +18,8 @@
 // @grant       GM_xmlhttpRequest
 // @grant       GM_log
 // @grant       GM_registerMenuCommand
-// @description    Automated features for Kingdoms of Camelot
 // @license			http://creativecommons.org/licenses/by-nc-sa/3.0/
+// @description    Automated features for Kingdoms of Camelot
 // ==/UserScript==
 
 //Fixed weird bug with koc game
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140731a';
+var Version = '20140806a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -967,8 +967,8 @@ function pbStartup (){
   killbox();
   if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
    document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'https://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>\
-<a class="navTab" onclick=" window.open(\'https://kabam.secure.force.com/PKB/pkb_contactUs?game=All&lang=en_US&l=en_US\');"><span>Kabam</span></a>\
-<a class="navTab" onclick=" window.open(\'https://www.trialpay.com/support/contactus/\');"><span>Trialpay</span></a>';
+																<a class="navTab" onclick=" window.open(\'https://kabam.secure.force.com/PKB/KbContactUsForm?language=en_US&game=Kingdoms_of_Camelot&issue=Other_Game_Issues\');"><span>Kabam</span></a>\
+																<a class="navTab" onclick=" window.open(\'https://www.trialpay.com/support/contactus/\');"><span>Trialpay</span></a>';
 
   if(Options.ThroneHUD)Tabs.Throne.ThroneHUDinit();
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
@@ -5938,7 +5938,7 @@ Tabs.tower = {
 		var baseProtection =0;
 		var totalSthPrt = 0;
 		var SthPrtResearch = parseInt(Seed.tech.tch14);
-		var TRStHsBoost = equippedthronestats(89);	
+		var TRStHsBoost = Math.min(equippedthronestats(89), 1250);
 		if (TRStHsBoost == 0) TRStHsBoost = 1				
 		var researchToApply = ((SthPrtResearch / 10) + 1);
 		var TRBoostToApply = ((TRStHsBoost / 100) + 1);
@@ -13716,6 +13716,7 @@ Tabs.Reassign = {
 		row.vAlign = 'top';
 		row.insertCell(0).innerHTML = cityname;
 		row.insertCell(1).innerHTML = To;
+
 		row.insertCell(2).innerHTML = '<input type=checkbox disabled '+(SendSupplyTroop ? 'CHECKED ' : '')+'><br>'+(SendSupplyTroop ?addCommas(SupplyTroop): '');
 		row.insertCell(3).innerHTML = '<input type=checkbox disabled '+(SendMilitiaman ? 'CHECKED ' : '')+'><br>'+(SendMilitiaman ?addCommas(Militiaman): '');
 		row.insertCell(4).innerHTML = '<input type=checkbox disabled '+(SendScout ? 'CHECKED ' : '')+'><br>'+(SendScout ?addCommas(Scout): '');
@@ -13747,6 +13748,7 @@ Tabs.Reassign = {
 		var row = document.getElementById('pbRoutesQueue').insertRow(0);
 		row.vAlign = 'top';
 		row.insertCell(0).innerHTML = translate("From");
+
 		row.insertCell(1).innerHTML = translate("To");
 		row.insertCell(2).innerHTML = translate("Supp");
 		row.insertCell(3).innerHTML = translate("MM");
