@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140826a
+// @version        20140903a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140826a';
+var Version = '20140903a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -253,46 +253,6 @@ var CrestOptions = {
   lastRoundTwo    :  0,
   X            :  0,
   Y            :  0,
-  R1ST         :  0,
-  R1MM         :  0,
-  R1Scout      :  0,
-  R1Pike    :  0,
-  R1Sword      :  0,
-  R1Arch    :  0,
-  R1LC         :  0,
-  R1HC         :  0,
-  R1SW         :  0,
-  R1Ball    :  0,
-  R1Ram        :  0,
-  R1Cat        :  0,
-  R1Blood      :  0,
-  R1Exec       :  0,
-  R1Siege      :  0,
-  R1Flame      :  0,
-  R1Huss       :  0,
-  R1Halb       :  0,
-  R1Onager       :  0,
-  R1Sabo       :  0,
-  R2ST         :  0,
-  R2MM         :  0,
-  R2Scout      :  0,
-  R2Pike    :  0,
-  R2Sword      :  0,
-  R2Arch    :  0,
-  R2LC         :  0,
-  R2HC         :  0,
-  R2SW         :  0,
-  R2Ball    :  0,
-  R2Ram        :  0,
-  R2Cat        :  0,
-  R2Blood      :  0,
-  R2Exec       :  0,
-  R2Siege      :  0,
-  R2Flame      :  0,
-  R2Huss       :  0,
-  R2Halb       :  0,
-  R2Onager       :  0,
-  R2Sabo       :  0,
   isWild       :  false,
   isMerc       :  false,
 
@@ -321,46 +281,15 @@ var CrestData = new Array();
       this.lastRoundTwo    =  0;
       this.X            =  Arr.X;
       this.Y            =  Arr.Y;
-      this.R1ST         =  Arr.R1ST;
-      this.R1MM         =  Arr.R1MM;
-      this.R1Scout      =  Arr.R1Scout;
-      this.R1Pike       =  Arr.R1Pike;
-      this.R1Sword      =  Arr.R1Sword;
-      this.R1Arch       =  Arr.R1Arch;
-      this.R1LC         =  Arr.R1LC;
-      this.R1HC         =  Arr.R1HC;
-      this.R1SW         =  Arr.R1SW;
-      this.R1Ball       =  Arr.R1Ball;
-      this.R1Ram        =  Arr.R1Ram;
-      this.R1Cat        =  Arr.R1Cat;
-      this.R1Blood      =  Arr.R1Blood;
-      this.R1Exec       =  Arr.R1Exec;
-      this.R1Siege      =  Arr.R1Siege;
-      this.R1Flame      =  Arr.R1Flame;
-      this.R1Huss       =  Arr.R1Huss;
-      this.R1Halb       =  Arr.R1Halb;
-      this.R1Onager     =  Arr.R1Onager;
-      this.R1Sabo       =  Arr.R1Sabo;
-      this.R2ST         =  Arr.R2ST;
-      this.R2MM         =  Arr.R2MM;
-      this.R2Scout      =  Arr.R2Scout;
-      this.R2Pike       =  Arr.R2Pike;
-      this.R2Sword      =  Arr.R2Sword;
-      this.R2Arch       =  Arr.R2Arch;
-      this.R2LC         =  Arr.R2LC;
-      this.R2HC         =  Arr.R2HC;
-      this.R2SW         =  Arr.R2SW;
-      this.R2Ball       =  Arr.R2Ball;
-      this.R2Ram        =  Arr.R2Ram;
-      this.R2Cat        =  Arr.R2Cat;
-      this.R2Blood      =  Arr.R2Blood;
-      this.R2Exec       =  Arr.R2Exec;
-      this.R2Siege      =  Arr.R2Siege;
-      this.R2Flame      =  Arr.R2Flame;
-      this.R2Huss       =  Arr.R2Huss;
-      this.R2Halb       =  Arr.R2Halb;
-      this.R2Onager     =  Arr.R2Onager;
-      this.R2Sabo       =  Arr.R2Sabo;
+	  
+	  for (y in unsafeWindow.unitcost) {
+		var trpname = unsafeWindow.unitcost['unt'+y.substr(3)][0].toString().replace(/\s+/g, '');
+		if (Arr["R1"+trpname])
+			this["R1"+trpname] = Arr["R1"+trpname]
+		if (Arr["R2"+trpname])
+			this["R2"+trpname] = Arr["R2"+trpname]
+	  }	
+
       this.isWild       =  Arr.isWild;
       this.isMerc       =  Arr.isMerc;
 
@@ -1020,8 +949,10 @@ function pbStartup (){
 	koc2Mail.init();  
   }
   
+	// fix leaderboard display so you can always see might leaderboard even if glory leaderboard returns no results!
+	var lbfix = new CalterUwFunc("modal_fow_leaderboard",[['e.emptySet','false'],['g.push(g_js_strings.modal_fow_leaderboard.nomatcherr)','if(e.emptySet) g.push(g_js_strings.modal_fow_leaderboard.emptyessage) else g.push(g_js_strings.modal_fow_leaderboard.nomatcherr)']]);
+	lbfix.setEnable(true);
 }
-
 
 /*************** Timer ******************/
 var GESeachmin = 0;
@@ -12071,36 +12002,20 @@ Tabs.Barb = {
   city:1,
   deleting:false,
   maplag:0,
-  troopDef : [
-      ['Supply', 1],
-      ['Miltia', 2],
-      ['Scout', 3],
-      ['Pikes', 4],
-      ['Swords', 5],
-      ['Archers', 6],
-      ['Cavalry', 7],
-      ['Heavies', 8],
-      ['Wagons', 9],
-      ['Balls', 10],
-      ['Rams', 11],
-      ['Cats', 12],
-      ['BThorn', 13],
-      ['EXec', 14],
-      ['Tower', 15],
-      ['FlameArch', 16],
-      ['Hussar', 17],
-      ['Halberdier', 18],
-      ['Onager', 21],
-      ['Saboteur', 22],
-      ['Sorcerer', 23],
-      ['Stealer', 24],
-     ],
+  troopDef : [],
     
   init : function (div){
     var t = Tabs.Barb;
     if(Options.dfbtns)AddSubTabLink(unsafeWindow.g_js_strings.commonstr.darkForest,t.toggleBarbState, 'DFToggleTab');
     t.myDiv = div;
  
+	for (y in unsafeWindow.unitcost) {
+		var trp = [];
+		trp.push(unsafeWindow.unitcost[y][0]);
+		trp.push(y.substr(3));
+		t.troopDef.push(trp); 
+	}
+	
     var m = '<DIV id=pbTowrtDivF class=pbStat>AUTOMATED FOREST FUNCTION</div><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR align="center">';
      if (AttackOptions.Running == false) {
            m += '<TD><INPUT id=AttSearch type=submit value="Attack = OFF"></td>';
@@ -12187,34 +12102,6 @@ Tabs.Barb = {
         saveAttackOptions();
    },
    
-  troopOptionsOld: function(){
-       var t = Tabs.Barb;
-      var troopDef = t.troopDef;
-       if(t.troopselect == null)    
-        t.troopselect = new pbPopup ('pbtroopselect', 0, 0, 850, 450, true, function(){t.saveTroops();});
-       t.troopselect.centerMe (mainPop.getMainDiv());  
-       var z= '<DIV id=pbTraderDivD class=pbStat>TROOP SELECTION</div><TABLE width=100%><TR>';
-     z+='<TD></td>';
-     for(var i=0; i<troopDef.length; i++)
-        z+='<TD>'+troopDef[i][0]+'</td>';
-     z+='<TD>MIN dist</td><TD>MAX dist</td>';
-     for(i=0;i<15;i++){
-		if (!AttackOptions.MinDistance[i+1]) AttackOptions.MinDistance[i+1] = 0;
-		if (!AttackOptions.Distance[i+1]) AttackOptions.Distance[i+1] = 750;
-         z += '<TR><TD>Level_'+(i+1)+': </td>';
-         for(var j=0; j<troopDef.length; j++){
-			if (!AttackOptions.Troops[i+1]) AttackOptions.Troops[i+1] = {};
-             z += '<TD><INPUT id="level'+i+'troop'+j+'" type=text size=5 maxlength=6 value="'+(AttackOptions.Troops[i+1][j+1]?AttackOptions.Troops[i+1][j+1]:0)+'" /></td>';
-         }
-        z+='<TD align=left><INPUT id=Mindist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.MinDistance[i+1]+'"</td>';
-         z+='<TD align=right><INPUT id=dist'+i+' type=text size=3 maxlength=3 value="'+AttackOptions.Distance[i+1]+'"</td>';
-         z+='</tr>';                 
-     }
-     z+='</table>';
-      t.troopselect.getMainDiv().innerHTML = z;
-      t.troopselect.show(true);
-  },
-
   troopOptions: function(){
   	 var t = Tabs.Barb;
          var troopDef = t.troopDef;
@@ -12228,7 +12115,7 @@ Tabs.Barb = {
 	 z+='</tr>';		 		
 
 	 for(i=0;i<troopDef.length;i++){
-	 	z += '<TR><TD>'+troopDef[i][0]+': </td>';
+	 	z += '<TR><TD align=center><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+troopDef[i][1]+'_30.jpg" title="'+troopDef[i][0]+'"></td>';
 	 	for(var j=0; j<15; j++){
 			if (!AttackOptions.Troops[j+1]) AttackOptions.Troops[j+1] = {};
              z += '<TD><INPUT id="level'+j+'troop'+i+'" type=text size=5 maxlength=6 value="'+(AttackOptions.Troops[j+1][i+1]?AttackOptions.Troops[j+1][i+1]:0)+'" /></td>';
@@ -12543,7 +12430,7 @@ Tabs.Barb = {
          var trps = AttackOptions.Troops[barblevel];
          var num_troops = 0;
          for (var ii=1; ii<t.troopDef.length+1; ii++) {
-            if (parseInt(trps[ii]) > Seed.units[cityID]['unt'+ii]) check = 0;
+            if (parseInt(trps[ii]) > Seed.units[cityID]['unt'+t.troopDef[ii-1][1]]) check = 0;
             num_troops += trps[ii];
          }
          if (num_troops == 0) check = 0;
@@ -12631,14 +12518,13 @@ Tabs.Barb = {
           params.xcoord = xcoord;
           params.ycoord = ycoord;
         for (ii=1; ii<parseInt(t.troopDef.length+1); ii++) {
-			if(parseInt(trps[ii]) > Seed.units['city'+cityID]['unt'+ii]){
+			if(parseInt(trps[ii]) > Seed.units['city'+cityID]['unt'+t.troopDef[ii-1][1]]){
 				document.getElementById('dferrorlog').innerHTML = '<FONT color=red>'+dtime.toLocaleString()+' '+Cities.byID[cityID].name+' dark forest failed: Not doing march, not enough units </FONT>';
 				return;
 			};
             if(parseInt(trps[ii]) > 0)
-                params['u'+ii]=trps[ii];
+                params['u'+t.troopDef[ii-1][1]]=trps[ii];
         };
-		if (parseInt(trps[ii]) > Seed.units['city'+cityID]['unt'+ii]) check = 0;
 
           AttackOptions.BarbsTried++;
           document.getElementById('pberror1').innerHTML = 'Tries:'+ AttackOptions.BarbsTried;
@@ -13562,30 +13448,6 @@ Tabs.Export = {
 
 /****************************  Reassign Tab  *******************************/
 
-var troops = {	1:'SupplyTroop',
-				2:'Militiaman',
-				3:'Scout',
-				4:'Pikeman',
-				5:'Swordsman',
-				6:'Archer',
-				7:'Cavalry',
-				8:'HeavyCavalry',
-				9:'SupplyWagon',
-				10:'Ballista',
-				11:'BatteringRam',
-				12:'Catapult',
-				13:'BloodThorn',
-				14:'Executioner',
-				15:'SiegeTower' ,
-				16:'FlameArcher' ,
-				17:'Hussar' ,
-				18:'Halberdier' ,
-				21:'Onager' ,
-				22:'Saboteur' ,
-				23:'Sorcerer' ,
-				24:'Stealer' ,
-			};  
-			 
 Tabs.Reassign = {
 	tabOrder: 30,
 	tabLabel: unsafeWindow.g_js_strings.commonstr.reassign,
@@ -13594,6 +13456,7 @@ Tabs.Reassign = {
 	reassignState: [],
 	lRE: [],
 	reassignRoutes: [],
+	troops: {},
 	rallypointlevel:null,
 	count:0,
 	check:false,
@@ -13605,6 +13468,11 @@ Tabs.Reassign = {
 		t.reassignState = {
 			running: false,
 		};
+		
+		for (y in unsafeWindow.unitcost) {
+			t.troops[y.substr(3)] = unsafeWindow.unitcost['unt'+y.substr(3)][0].toString().replace(/\s+/g, '');
+		}	
+		
 		if(Options.reassgnbtns) AddSubTabLink('Reassign',t.toggleReassignState, 'ReasignToggleTab');
 		t.readReassignState();
 		t.readReassignRoutes();
@@ -13636,123 +13504,35 @@ Tabs.Reassign = {
 		m += '<TD><INPUT id=zeroisetroops type=button value=" '+translate("Zeroise troop values")+'"\></TD>';
 		m += '</TR></table><DIV style="margin-top:10px;margin-bottom:5px;">'+translate("Fill in the number of troops you want to KEEP in a city:")+'</div>';
 
-		m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
-
-		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_50.jpg?6545"></td>';
-		m += '<TD>'+translate("Supply Troop")+'</td>'
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_50.jpg?6545"></td>'
-		m += '<TD>'+translate("Militiaman")+'</td>'
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_50.jpg?6545"></td>'
-		m += '<TD>'+translate("Scout")+'</td>'
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_50.jpg?6545"></td>'
-		m += '<TD>'+translate("Pikeman")+'</td></tr>'
-
-		m += '<TR><TD><INPUT id=pbSupplyTroop type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetSupplyTroop disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbMilitiaman type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetMilitiaman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbScout type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetScout disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbPikeman type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetPikeman disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
+		m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center"><tr>';
+	
+		var c = 0;
+		for (var k in t.troops){
+			n = '<td><table class=pbtab><tr><td rowspan=2><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_50.jpg?6545"></td>';
+			n += '<TD>'+unsafeWindow.unitcost['unt'+k][0].toString()+'</td></tr>'
+			n += '<TR><TD><INPUT id=pb'+t.troops[k]+' type=checkbox unchecked=true\>';
+			n += '<INPUT id=pbtarget'+t.troops[k]+' disabled=true type=text size=10 maxlength=10 value="0"\></td></tr></table></td>';
       
-		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_50.jpg?6545"></td>';
-		m += '<TD>'+translate("Swordsman")+'</td>'
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_50.jpg?6545"></td>'
-		m += '<TD>'+translate("Archer")+'</td>'
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_50.jpg?6545"></td>'
-		m += '<TD>'+translate("Cavalry")+'</td>'
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_50.jpg?6545"></td>'
-		m += '<TD>'+translate("Heavy Cavalry")+'</td></tr>'
-      
-		m += '<TR><TD><INPUT id=pbSwordsman type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetSwordsman disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbArcher type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetArcher disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbCavalry type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbHeavyCavalry type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetHeavyCavalry disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
-      
-		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_50.jpg?6545"></td>';
-		m += '<TD>'+translate("Supply Wagon")+'</td>'
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_50.jpg?6545"></td>'
-		m += '<TD>'+translate("Ballista")+'</td>'
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_50.jpg?6545"></td>'
-		m += '<TD>'+translate("Battering Ram")+'</td>'
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_50.jpg?6545"></td>'
-		m += '<TD>'+translate("Catapult")+'</td></tr>'
-      
-		m += '<TR><TD><INPUT id=pbSupplyWagon type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetSupplyWagon disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbBallista type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetBallista disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbBatteringRam type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetBatteringRam disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbCatapult type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetCatapult disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
-      
-		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_50.jpg?6545"></td>';
-		m += '<TD>'+translate("BloodThorn")+'</td>';
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_50.jpg?6545"></td>';
-		m += '<TD>'+translate("Executioner")+'</td>';
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_50.jpg?6545?6545"></td>';
-		m += '<TD>'+translate("Siege Tower")+'</td>';
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_50.jpg?6545?6545"></td>';
-		m += '<TD>'+translate("Flame Archer")+'</td></tr>';
-
-		m += '<TR><TD><INPUT id=pbBloodThorn type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetBloodThorn disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbExecutioner type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetExecutioner disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbSiegeTower type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetSiegeTower disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbFlameArcher type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetFlameArcher disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
-   
-		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_50.jpg?6545?6545"></td>';
-		m += '<TD>'+translate("Hussar")+'</td>';
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_18_50.jpg?6545"></td>';
-		m += '<TD>'+translate("Halberdier")+'</td>';
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_50.jpg?6545?6545"></td>';
-		m += '<TD>'+translate("Heavy Onager")+'</td>';
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_22_50.jpg?6545?6545"></td>';
-		m += '<TD>'+translate("Saboteur")+'</td></tr>';
-	  
-		m += '<TR><TD><INPUT id=pbHussar type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetHussar disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbHalberdier type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetHalberdier disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbOnager type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetOnager disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbSaboteur type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetSaboteur disabled=true type=text size=10 maxlength=10 value="0"\></td></tr>';
-      
-		m += '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_23_50.jpg?6545?6545"></td>';
-		m += '<TD>'+translate("Shield Sorcerer")+'</td>';
-		m += '<TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_24_50.jpg?6545"></td>';
-		m += '<TD>'+translate("Soul Stealer")+'</td></tr>';
-
-		m += '<TR><TD><INPUT id=pbSorcerer type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetSorcerer disabled=true type=text size=10 maxlength=10 value="0"\></td>';
-		m += '<TD><INPUT id=pbStealer type=checkbox unchecked=true\>';
-		m += '<INPUT id=pbtargetStealer disabled=true type=text size=10 maxlength=10 value="0"\></td>';
+			if (c%4==0) m+= '</tr><tr>';
+			m+=n;
+			c++;
+		}	
 		
-		m+='</table>';
+		m+='</tr></table>';
       	m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteReassign type=submit value="'+translate("Add Reassign Route")+'"></div>';
       
 		t.myDiv.innerHTML = m;
       
 		t.tcp = new CdispCityPicker ('ptreassign', document.getElementById('ptassigncity'), true, null, 0);
 		t.tcpto = new CdispCityPicker ('ptreassignTo', document.getElementById('ptassigncityTo'), true);
-		for (var k in troops){
-			document.getElementById('pbtarget'+troops[k]).value = parseIntNan(Seed.units['city' + t.tcp.city.id]['unt'+k]);
+		for (var k in t.troops){
+			document.getElementById('pbtarget'+t.troops[k]).value = parseIntNan(Seed.units['city' + t.tcp.city.id]['unt'+k]);
 		}
 
 		document.getElementById('ptassigncity').addEventListener('click', function(){
 			if (document.getElementById('autofilloff').checked == false)
-				for(var k in troops)
-					document.getElementById('pbtarget'+troops[k]).value = parseIntNan(Seed.units['city' + t.tcp.city.id]['unt'+k]);
+				for(var k in t.troops)
+					document.getElementById('pbtarget'+t.troops[k]).value = parseIntNan(Seed.units['city' + t.tcp.city.id]['unt'+k]);
 		}, false);
       
 		document.getElementById('pbReassignState').addEventListener('click', function(){
@@ -13765,13 +13545,13 @@ Tabs.Reassign = {
 			t.showReassignRoutes();
 		}, false);
 		document.getElementById('zeroisetroops').addEventListener('click', function(){
-			for(var k in troops)
-				document.getElementById('pbtarget'+troops[k]).value = 0;
+			for(var k in t.troops)
+				document.getElementById('pbtarget'+t.troops[k]).value = 0;
 		}, false);
 		document.getElementById('raselectall').addEventListener('click', function(){
-			for(var k in troops) {
-				document.getElementById('pb'+troops[k]).checked = document.getElementById('raselectall').checked;
-				document.getElementById('pbtarget'+troops[k]).disabled = (!document.getElementById('raselectall').checked);	
+			for(var k in t.troops) {
+				document.getElementById('pb'+t.troops[k]).checked = document.getElementById('raselectall').checked;
+				document.getElementById('pbtarget'+t.troops[k]).disabled = (!document.getElementById('raselectall').checked);	
 			}	
 		}, false);
 		document.getElementById('pbreassigninterval').addEventListener('keyup', function(){
@@ -13780,8 +13560,8 @@ Tabs.Reassign = {
 			saveOptions();
 		}, false);
 
-		for (var k in troops){
-			t.addListeners(troops[k]);
+		for (var k in t.troops){
+			t.addListeners(t.troops[k]);
 		}
      
 		window.addEventListener('unload', t.onUnload, false);
@@ -13849,56 +13629,19 @@ Tabs.Reassign = {
 		t.check = false;
         
 		var lRE = t.reassignRoutes;
-		lRE.push({
-			city:				t.tcp.city.id,
-			target_x:			t.tcpto.city.x,
-			target_y:			t.tcpto.city.y,
-			target_city:		t.tcpto.city.id,
-			SendSupplyTroop:	document.getElementById('pbSupplyTroop').checked,
-			SupplyTroop:		document.getElementById('pbtargetSupplyTroop').value,
-			SendMilitiaman:		document.getElementById('pbMilitiaman').checked,
-			Militiaman:			document.getElementById('pbtargetMilitiaman').value,
-			SendScout:			document.getElementById('pbScout').checked,
-			Scout:				document.getElementById('pbtargetScout').value,
-			SendPikeman:		document.getElementById('pbPikeman').checked,
-			Pikeman:			document.getElementById('pbtargetPikeman').value,
-			SendSwordsman:		document.getElementById('pbSwordsman').checked,
-			Swordsman:			document.getElementById('pbtargetSwordsman').value,
-			SendArcher:			document.getElementById('pbArcher').checked,
-			Archer:				document.getElementById('pbtargetArcher').value,
-			SendCavalry:		document.getElementById('pbCavalry').checked,
-			Cavalry:			document.getElementById('pbtargetCavalry').value,
-			SendHeavyCavalry:	document.getElementById('pbHeavyCavalry').checked,
-			HeavyCavalry:		document.getElementById('pbtargetHeavyCavalry').value,
-			SendSupplyWagon:	document.getElementById('pbSupplyWagon').checked,
-			SupplyWagon:		document.getElementById('pbtargetSupplyWagon').value,
-			SendBallista:		document.getElementById('pbBallista').checked,
-			Ballista:			document.getElementById('pbtargetBallista').value,
-			SendBatteringRam:	document.getElementById('pbBatteringRam').checked,
-			BatteringRam:		document.getElementById('pbtargetBatteringRam').value,
-			SendCatapult:		document.getElementById('pbCatapult').checked,
-			Catapult:			document.getElementById('pbtargetCatapult').value,
-			SendBloodThorn:		document.getElementById('pbBloodThorn').checked,
-			BloodThorn:			document.getElementById('pbtargetBloodThorn').value,
-			SendExecutioner:	document.getElementById('pbExecutioner').checked,
-			Executioner:		document.getElementById('pbtargetExecutioner').value,
-			SendSiegeTower:		document.getElementById('pbSiegeTower').checked,
-			SiegeTower:			document.getElementById('pbtargetSiegeTower').value,
-			SendFlameArcher:	document.getElementById('pbFlameArcher').checked,
-			FlameArcher:		document.getElementById('pbtargetFlameArcher').value,
-			SendHussar:			document.getElementById('pbHussar').checked,
-			Hussar:				document.getElementById('pbtargetHussar').value,
-			SendHalberdier:		document.getElementById('pbHalberdier').checked,
-			Halberdier:			document.getElementById('pbtargetHalberdier').value,
-			SendOnager:			document.getElementById('pbOnager').checked,
-			Onager:				document.getElementById('pbtargetOnager').value,
-			SendSaboteur:		document.getElementById('pbSaboteur').checked,
-			Saboteur:			document.getElementById('pbtargetSaboteur').value,
-			SendSorcerer:		document.getElementById('pbSorcerer').checked,
-			Sorcerer:			document.getElementById('pbtargetSorcerer').value,
-			SendStealer:		document.getElementById('pbStealer').checked,
-			Stealer:			document.getElementById('pbtargetStealer').value,
-		});
+		var obj = {};
+		obj.city = t.tcp.city.id;
+		obj.target_x = t.tcpto.city.x;
+		obj.target_y = t.tcpto.city.y;
+		obj.target_city = t.tcpto.city.id;
+		for (var k in t.troops){
+			if (document.getElementById('pb'+t.troops[k]).checked) {
+				obj["Send"+t.troops[k]] = true;
+				obj[t.troops[k]] = document.getElementById('pbtarget'+t.troops[k]).value;
+			}	
+		}
+		
+		lRE.push(obj);
 		document.getElementById('pbReassignDivD').style.background ='#99FF99';
 		setTimeout(function(){ (document.getElementById('pbReassignDivD').style.background =''); }, 1000);
 	},
@@ -13906,8 +13649,8 @@ Tabs.Reassign = {
 	showReassignRoutes: function () {
 		var t = Tabs.Reassign;
 		var popReassignRoutes = null;
-		t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 1100, 485, true, function() {clearTimeout (1000);});
-		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto; max-width:1100px; width:1100px; overflow-x:scroll"><TABLE align=center cellpadding=1 cellspacing=1 width=100% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
+		t.popReassignRoutes = new pbPopup('pbShowTrade', 0, 0, 700, 485, true, function() {clearTimeout (1000);});
+		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto; max-width:700px; width:700px; overflow-x:scroll"><TABLE align=center cellpadding=1 cellspacing=1 width=98% class="pbShowReassignRoutes" id="pbRoutesQueue">';       
 		t.popReassignRoutes.getMainDiv().innerHTML = '</table></div>' + m;
 		t.popReassignRoutes.getTopDiv().innerHTML = '<TD><CENTER><B>'+translate("Reassign routes")+'</center></td>';
 		t.paintReassignRoutes();
@@ -13924,15 +13667,15 @@ Tabs.Reassign = {
 				if ( parseInt(Seed.cities[y][0]) == r[i].city) var cityname = Seed.cities[y][1];
 			}    
 			var queueId = i;
-			t._addTab(queueId,cityname, r[i].target_x, r[i].target_y, r[i].target_city, r[i].SendSupplyTroop,r[i].SupplyTroop, r[i].SendMilitiaman, r[i].Militiaman, r[i].SendScout, r[i].Scout, r[i].SendPikeman, r[i].Pikeman, r[i].SendSwordsman, r[i].Swordsman, r[i].SendArcher, r[i].Archer, r[i].SendCavalry, r[i].Cavalry, r[i].SendHeavyCavalry, r[i].HeavyCavalry, r[i].SendSupplyWagon, r[i].SupplyWagon, r[i].SendBallista, r[i].Ballista, r[i].SendBatteringRam, r[i].BatteringRam, r[i].SendCatapult, r[i].Catapult, r[i].SendBloodThorn, r[i].BloodThorn, r[i].SendExecutioner, r[i].Executioner, r[i].SendSiegeTower, r[i].SiegeTower, r[i].SendFlameArcher, r[i].FlameArcher, r[i].SendHussar, r[i].Hussar, r[i].SendHalberdier, r[i].Halberdier, r[i].SendOnager, r[i].Onager, r[i].SendSaboteur, r[i].Saboteur, r[i].SendSorcerer, r[i].Sorcerer, r[i].SendStealer, r[i].Stealer);
+			t._addTab(queueId,cityname, r[i]);
 		}
 	},
      
-	_addTab: function(queueId,cityname,target_x,target_y,target_city,SendSupplyTroop,SupplyTroop,SendMilitiaman,Militiaman,SendScout,Scout,SendPikeman,Pikeman,SendSwordsman,Swordsman,SendArcher,Archer,SendCavalry,Cavalry,SendHeavyCavalry,HeavyCavalry,SendSupplyWagon,SupplyWagon,SendBallista,Ballista,SendBatteringRam,BatteringRam,SendCatapult,Catapult,SendBloodThorn,BloodThorn,SendExecutioner,Executioner,SendSiegeTower,SiegeTower,SendFlameArcher,FlameArcher,SendHussar,Hussar,SendHalberdier,Halberdier,SendOnager,Onager,SendSaboteur,Saboteur,SendSorcerer,Sorcerer,SendStealer,Stealer){
+	_addTab: function(queueId,cityname,Route){
 		var t = Tabs.Reassign;
-		var To = target_x+','+target_y;
+		var To = Route.target_x+','+Route.target_y;
 		for (var y=0; y< Seed.cities.length;y++) {
-			if ( parseInt(Seed.cities[y][0]) == parseInt(target_city)){
+			if ( parseInt(Seed.cities[y][0]) == parseInt(Route.target_city)){
 				To = Seed.cities[y][1];
 				break;
 			}
@@ -13942,29 +13685,17 @@ Tabs.Reassign = {
 		row.insertCell(0).innerHTML = cityname;
 		row.insertCell(1).innerHTML = To;
 
-		row.insertCell(2).innerHTML = '<input type=checkbox disabled '+(SendSupplyTroop ? 'CHECKED ' : '')+'><br>'+(SendSupplyTroop ?addCommas(SupplyTroop): '');
-		row.insertCell(3).innerHTML = '<input type=checkbox disabled '+(SendMilitiaman ? 'CHECKED ' : '')+'><br>'+(SendMilitiaman ?addCommas(Militiaman): '');
-		row.insertCell(4).innerHTML = '<input type=checkbox disabled '+(SendScout ? 'CHECKED ' : '')+'><br>'+(SendScout ?addCommas(Scout): '');
-		row.insertCell(5).innerHTML = '<input type=checkbox disabled '+(SendPikeman ? 'CHECKED ' : '')+'><br>'+(SendPikeman ?addCommas(Pikeman): '');
-		row.insertCell(6).innerHTML = '<input type=checkbox disabled '+(SendSwordsman ? 'CHECKED ' : '')+'><br>'+(SendSwordsman ?addCommas(Swordsman): '');
-		row.insertCell(7).innerHTML = '<input type=checkbox disabled '+(SendArcher ? 'CHECKED ' : '')+'><br>'+(SendArcher ?addCommas(Archer): '');
-		row.insertCell(8).innerHTML = '<input type=checkbox disabled '+(SendCavalry ? 'CHECKED ' : '')+'><br>'+(SendCavalry ?addCommas(Cavalry): '');
-		row.insertCell(9).innerHTML = '<input type=checkbox disabled '+(SendHeavyCavalry ? 'CHECKED ' : '')+'><br>'+(SendHeavyCavalry ?addCommas(HeavyCavalry): '');
-		row.insertCell(10).innerHTML = '<input type=checkbox disabled '+(SendSupplyWagon ? 'CHECKED ' : '')+'><br>'+(SendSupplyWagon ?addCommas(SupplyWagon): '');
-		row.insertCell(11).innerHTML = '<input type=checkbox disabled '+(SendBallista ? 'CHECKED ' : '')+'><br>'+(SendBallista ?addCommas(Ballista): '');
-		row.insertCell(12).innerHTML = '<input type=checkbox disabled '+(SendBatteringRam ? 'CHECKED ' : '')+'><br>'+(SendBatteringRam ?addCommas(BatteringRam): '');
-		row.insertCell(13).innerHTML = '<input type=checkbox disabled '+(SendCatapult ? 'CHECKED ' : '')+'><br>'+(SendCatapult ?addCommas(Catapult): '');
-		row.insertCell(14).innerHTML = '<input type=checkbox disabled '+(SendBloodThorn ? 'CHECKED ' : '')+'><br>'+(SendBloodThorn ?addCommas(BloodThorn): '');
-		row.insertCell(15).innerHTML = '<input type=checkbox disabled '+(SendExecutioner ? 'CHECKED ' : '')+'><br>'+(SendExecutioner ?addCommas(Executioner): '');
-		row.insertCell(16).innerHTML = '<input type=checkbox disabled '+(SendSiegeTower ? 'CHECKED ' : '')+'><br>'+(SendSiegeTower ?addCommas(SiegeTower): '');
-		row.insertCell(17).innerHTML = '<input type=checkbox disabled '+(SendFlameArcher ? 'CHECKED ' : '')+'><br>'+(SendFlameArcher ?addCommas(FlameArcher): '');
-		row.insertCell(18).innerHTML = '<input type=checkbox disabled '+(SendHussar ? 'CHECKED ' : '')+'><br>'+(SendHussar ?addCommas(Hussar): '');
-		row.insertCell(19).innerHTML = '<input type=checkbox disabled '+(SendHalberdier ? 'CHECKED ' : '')+'><br>'+(SendHalberdier ?addCommas(Halberdier): '');
-		row.insertCell(20).innerHTML = '<input type=checkbox disabled '+(SendOnager ? 'CHECKED ' : '')+'><br>'+(SendOnager ?addCommas(Onager): '');
-		row.insertCell(21).innerHTML = '<input type=checkbox disabled '+(SendSaboteur ? 'CHECKED ' : '')+'><br>'+(SendSaboteur ?addCommas(Saboteur): '');
-		row.insertCell(22).innerHTML = '<input type=checkbox disabled '+(SendSorcerer ? 'CHECKED ' : '')+'><br>'+(SendSorcerer ?addCommas(Sorcerer): '');
-		row.insertCell(23).innerHTML = '<input type=checkbox disabled '+(SendStealer ? 'CHECKED ' : '')+'><br>'+(SendStealer ?addCommas(Stealer): '');
-		row.insertCell(24).innerHTML = '<a class="button14" id="reasscancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
+		TroopString = "";
+		for (var k in t.troops){
+			if (Route["Send"+t.troops[k]]) {
+				TroopString += '<span class=xtab><img style="width:20px;height:20px;vertical-align:middle" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg" title="'+unsafeWindow.unitcost['unt'+k][0].toString()+'">&nbsp;('+addCommas(Route[t.troops[k]])+')</span> ';
+			}	
+		}	
+				
+		row.insertCell(2).innerHTML = TroopString;
+		var td=row.insertCell(3)
+		td.innerHTML = '<a class="button14" id="reasscancel_' + queueId + '"><span>'+translate("Delete")+'</span></a>';
+		td.align="right";
 		document.getElementById('reasscancel_' + queueId).addEventListener('click', function(){
 			t.cancelQueueElement(queueId);
 		}, false);
@@ -13974,32 +13705,17 @@ Tabs.Reassign = {
 		var t = Tabs.transport;
 		var row = document.getElementById('pbRoutesQueue').insertRow(0);
 		row.vAlign = 'top';
-		row.insertCell(0).innerHTML = translate("From");
-
-		row.insertCell(1).innerHTML = translate("To");
-		row.insertCell(2).innerHTML = translate("Supp");
-		row.insertCell(3).innerHTML = translate("MM");
-		row.insertCell(4).innerHTML = translate("Scout");
-		row.insertCell(5).innerHTML = translate("Pike");
-		row.insertCell(6).innerHTML = translate("Sword");
-		row.insertCell(7).innerHTML = translate("Arch");
-		row.insertCell(8).innerHTML = translate("Cav");
-		row.insertCell(9).innerHTML = translate("HC");
-		row.insertCell(10).innerHTML = translate("Wags");
-		row.insertCell(11).innerHTML = translate("Balls");
-		row.insertCell(12).innerHTML = translate("Rams");
-		row.insertCell(13).innerHTML = translate("Cats");
-		row.insertCell(14).innerHTML = translate("Blood");
-		row.insertCell(15).innerHTML = translate("Exec");
-		row.insertCell(16).innerHTML = translate("Siege");
-		row.insertCell(17).innerHTML = translate("Flame");
-		row.insertCell(18).innerHTML = translate("Hussar");
-		row.insertCell(19).innerHTML = translate("Halb");
-		row.insertCell(20).innerHTML = translate("Onager");
-		row.insertCell(21).innerHTML = translate("Sabo");
-		row.insertCell(22).innerHTML = translate("Sorcerer");
-		row.insertCell(23).innerHTML = translate("Stealer");
-		row.insertCell(24).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
+		var td = row.insertCell(0);
+		td.innerHTML = '<b>'+translate("From")+'</b>';
+		td.style.width="100px";
+		td = row.insertCell(1);
+		td.innerHTML = '<b>'+translate("To")+'</b>';
+		td.style.width="100px";
+		td = row.insertCell(2);
+		td.innerHTML = '<b>'+translate("Troops")+'</b>';
+		td = row.insertCell(3);
+		td.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
+		td.style.width="60px";
 	},   
        
 	cancelQueueElement: function(queueId){
@@ -14021,8 +13737,17 @@ Tabs.Reassign = {
 		s = GM_getValue('reassignRoutes_' + serverID);
 		if (s != null) {
 			route = JSON2.parse(s);
-			for (k in route)
+			for (k in route) {
+				// convert old nonstandard reassign data
+				if (route[k].Onager) { route[k][unsafeWindow.unitcost['unt21'][0].toString().replace(/\s+/g, '')] = route[k].Onager; delete route[k].Onager; };
+				if (route[k].SendOnager) { route[k]["Send"+unsafeWindow.unitcost['unt21'][0].toString().replace(/\s+/g, '')] = route[k].SendOnager; delete route[k].SendOnager; };
+				if (route[k].Sorcerer) { route[k][unsafeWindow.unitcost['unt23'][0].toString().replace(/\s+/g, '')] = route[k].Sorcerer; delete route[k].Sorcerer; };
+				if (route[k].SendSorcerer) { route[k]["Send"+unsafeWindow.unitcost['unt23'][0].toString().replace(/\s+/g, '')] = route[k].SendSorcerer; delete route[k].SendSorcerer; };
+				if (route[k].Stealer) { route[k][unsafeWindow.unitcost['unt24'][0].toString().replace(/\s+/g, '')] = route[k].Stealer; delete route[k].Stealer; };
+				if (route[k].SendStealer) { route[k]["Send"+unsafeWindow.unitcost['unt24'][0].toString().replace(/\s+/g, '')] = route[k].SendStealer; delete route[k].SendStealer; };
+			
 				t.reassignRoutes[k] = route[k];
+			}	
 		}
 		try{
 			t.checkcitymoved();
@@ -14034,9 +13759,8 @@ Tabs.Reassign = {
 	checkcitymoved: function(){
 		var t = Tabs.Reassign;
 		for(var i=0; i < t.reassignRoutes.length; i++){
-			logit(Cities.byID[t.reassignRoutes[i].target_city]);
-			if(t.reassignRoutes[i].target_city == 'undefined')
-				break;
+			if(t.reassignRoutes[i].target_city == 'undefined' || !Cities.byID[t.reassignRoutes[i].target_city])
+				continue;
 			if(t.reassignRoutes[i].target_x != Cities.byID[t.reassignRoutes[i].target_city].x)
 				t.reassignRoutes[i].target_x = Cities.byID[t.reassignRoutes[i].target_city].x;
 			if(t.reassignRoutes[i].target_y != Cities.byID[t.reassignRoutes[i].target_city].y)
@@ -14123,16 +13847,17 @@ Tabs.Reassign = {
 		var slots = Number(March.getEmptySlots(cityID.split("city")[1]));
 		if (parseInt(slots) <=0){ if (DEBUG_TRACE) {logit('Reassign - No free slots');} return; } // no free slots - don't bother server!
 		var troopidx = [];
-		for (var i in troops) { troopidx.push(i); }
+		for (var i in t.troops) { troopidx.push(i); }
 		for (var j=troopidx.length-1; j>=0; j--) { // reverse order
 			var i = troopidx[j];
             var citytroops = Seed.units[cityID]['unt'+i];
             var marchtroops = marching.marchUnits["unt"+i];
             citytotal = parseInt(citytroops) + parseInt(marchtroops);
-            if(t.reassignRoutes[count]['Send'+troops[i]]==false) {continue; }
+            if(!t.reassignRoutes[count]['Send'+t.troops[i]]) {continue; }
+			if (!Seed.cityData.city[t.reassignRoutes[count].target_city]) {continue; } // no target city!?! destroyed?
 			if(!Seed.cityData.city[t.reassignRoutes[count].target_city].isPrestigeCity && ((i==13) || (i==14) || (i==15))) {continue; }
-            if(citytotal > t.reassignRoutes[count][troops[i]]){
-                var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][troops[i]]);
+            if(citytotal > t.reassignRoutes[count][t.troops[i]]){
+                var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][t.troops[i]]);
                 if (parseInt(sendtroops) > parseInt(citytroops)) sendtroops = citytroops;
                 if (parseInt(sendtroops) < 0) sendtroops = 0;
 				params["u"+i] = sendtroops;
@@ -14699,19 +14424,19 @@ Tabs.AutoTrain = {
 				unsafeWindow.seed.queue_unt["city" + cityId].push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null,inPrestige]);
 				setTimeout (notify, 5000);
 				for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
-				actionLog(logcity  + ' Train ' + num + ':  ' + troops[unitId] );
+				actionLog(logcity  + ' Train ' + num + ':  ' + unsafeWindow.unitcost["unt" + unitId][0]);
 			} else {
 				for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
 				ErrCode = '('+rslt.error_code+')';
 				if (rslt.msg) ErrCode += ' ' + rslt.msg;
-				actionLog(logcity  + ' Failed to train '+num+' '+troops[unitId]+' - Code '+ErrCode);
+				actionLog(logcity  + ' Failed to train '+num+' '+unsafeWindow.unitcost["unt" + unitId][0]+' - Code '+ErrCode);
 				setTimeout (notify, 5000);
 			}
         },
 		onFailure: function () {
 			profiler.stop();
 			for (postcity in Seed.cities) if (Seed.cities[postcity][0] == params.cid) logcity = Seed.cities[postcity][1];
-			actionLog(logcity  + ' Error training '+num+' '+troops[unitId]);
+			actionLog(logcity  + ' Error training '+num+' '+unsafeWindow.unitcost["unt" + unitId][0]);
 			setTimeout (notify, 5000); 
 		}
     },true); // noretry
@@ -16878,6 +16603,49 @@ function readCrestData (){
     opts = JSON2.parse (s);
 
     for (var i = 0; i < opts.length; i++) {
+
+		if (opts[i].R1ST) { opts[i]["R1"+unsafeWindow.unitcost['unt1'][0].toString().replace(/\s+/g, '')] = opts[i].R1ST; delete opts[i].R1ST; };
+		if (opts[i].R1MM) { opts[i]["R1"+unsafeWindow.unitcost['unt2'][0].toString().replace(/\s+/g, '')] = opts[i].R1MM; delete opts[i].R1MM; };
+		// NOT SCOUT!!!!
+		if (opts[i].R1Pike) { opts[i]["R1"+unsafeWindow.unitcost['unt4'][0].toString().replace(/\s+/g, '')] = opts[i].R1Pike; delete opts[i].R1Pike; };
+		if (opts[i].R1Sword) { opts[i]["R1"+unsafeWindow.unitcost['unt5'][0].toString().replace(/\s+/g, '')] = opts[i].R1Sword; delete opts[i].R1Sword; };
+		if (opts[i].R1Arch) { opts[i]["R1"+unsafeWindow.unitcost['unt6'][0].toString().replace(/\s+/g, '')] = opts[i].R1Arch; delete opts[i].R1Arch; };
+		if (opts[i].R1LC) { opts[i]["R1"+unsafeWindow.unitcost['unt7'][0].toString().replace(/\s+/g, '')] = opts[i].R1LC; delete opts[i].R1LC; };
+		if (opts[i].R1HC) { opts[i]["R1"+unsafeWindow.unitcost['unt8'][0].toString().replace(/\s+/g, '')] = opts[i].R1HC; delete opts[i].R1HC; };
+		if (opts[i].R1SW) { opts[i]["R1"+unsafeWindow.unitcost['unt9'][0].toString().replace(/\s+/g, '')] = opts[i].R1SW; delete opts[i].R1SW; };
+		if (opts[i].R1Ball) { opts[i]["R1"+unsafeWindow.unitcost['unt10'][0].toString().replace(/\s+/g, '')] = opts[i].R1Ball; delete opts[i].R1Ball; };
+		if (opts[i].R1Ram) { opts[i]["R1"+unsafeWindow.unitcost['unt11'][0].toString().replace(/\s+/g, '')] = opts[i].R1Ram; delete opts[i].R1Ram; };
+		if (opts[i].R1Cat) { opts[i]["R1"+unsafeWindow.unitcost['unt12'][0].toString().replace(/\s+/g, '')] = opts[i].R1Cat; delete opts[i].R1Cat; };
+		if (opts[i].R1Blood) { opts[i]["R1"+unsafeWindow.unitcost['unt13'][0].toString().replace(/\s+/g, '')] = opts[i].R1Blood; delete opts[i].R1Blood; };
+		if (opts[i].R1Exec) { opts[i]["R1"+unsafeWindow.unitcost['unt14'][0].toString().replace(/\s+/g, '')] = opts[i].R1Exec; delete opts[i].R1Exec; };
+		if (opts[i].R1Siege) { opts[i]["R1"+unsafeWindow.unitcost['unt15'][0].toString().replace(/\s+/g, '')] = opts[i].R1Siege; delete opts[i].R1Siege; };
+		if (opts[i].R1Flame) { opts[i]["R1"+unsafeWindow.unitcost['unt16'][0].toString().replace(/\s+/g, '')] = opts[i].R1Flame; delete opts[i].R1Flame; };
+		if (opts[i].R1Huss) { opts[i]["R1"+unsafeWindow.unitcost['unt17'][0].toString().replace(/\s+/g, '')] = opts[i].R1Huss; delete opts[i].R1Huss; };
+		if (opts[i].R1Halb) { opts[i]["R1"+unsafeWindow.unitcost['unt18'][0].toString().replace(/\s+/g, '')] = opts[i].R1Halb; delete opts[i].R1Halb; };
+		if (opts[i].R1Onager) { opts[i]["R1"+unsafeWindow.unitcost['unt21'][0].toString().replace(/\s+/g, '')] = opts[i].R1Onager; delete opts[i].R1Onager; };
+		if (opts[i].R1Sabo) { opts[i]["R1"+unsafeWindow.unitcost['unt22'][0].toString().replace(/\s+/g, '')] = opts[i].R1Sabo; delete opts[i].R1Sabo; };
+
+		if (opts[i].R2ST) { opts[i]["R2"+unsafeWindow.unitcost['unt1'][0].toString().replace(/\s+/g, '')] = opts[i].R2ST; delete opts[i].R1ST; };
+		if (opts[i].R2MM) { opts[i]["R2"+unsafeWindow.unitcost['unt2'][0].toString().replace(/\s+/g, '')] = opts[i].R2MM; delete opts[i].R1MM; };
+		// NOT SCOUT!!!!
+		if (opts[i].R2Pike) { opts[i]["R2"+unsafeWindow.unitcost['unt4'][0].toString().replace(/\s+/g, '')] = opts[i].R2Pike; delete opts[i].R2Pike; };
+		if (opts[i].R2Sword) { opts[i]["R2"+unsafeWindow.unitcost['unt5'][0].toString().replace(/\s+/g, '')] = opts[i].R2Sword; delete opts[i].R2Sword; };
+		if (opts[i].R2Arch) { opts[i]["R2"+unsafeWindow.unitcost['unt6'][0].toString().replace(/\s+/g, '')] = opts[i].R2Arch; delete opts[i].R2Arch; };
+		if (opts[i].R2LC) { opts[i]["R2"+unsafeWindow.unitcost['unt7'][0].toString().replace(/\s+/g, '')] = opts[i].R2LC; delete opts[i].R2LC; };
+		if (opts[i].R2HC) { opts[i]["R2"+unsafeWindow.unitcost['unt8'][0].toString().replace(/\s+/g, '')] = opts[i].R2HC; delete opts[i].R2HC; };
+		if (opts[i].R2SW) { opts[i]["R2"+unsafeWindow.unitcost['unt9'][0].toString().replace(/\s+/g, '')] = opts[i].R2SW; delete opts[i].R2SW; };
+		if (opts[i].R2Ball) { opts[i]["R2"+unsafeWindow.unitcost['unt10'][0].toString().replace(/\s+/g, '')] = opts[i].R2Ball; delete opts[i].R2Ball; };
+		if (opts[i].R2Ram) { opts[i]["R2"+unsafeWindow.unitcost['unt11'][0].toString().replace(/\s+/g, '')] = opts[i].R2Ram; delete opts[i].R2Ram; };
+		if (opts[i].R2Cat) { opts[i]["R2"+unsafeWindow.unitcost['unt12'][0].toString().replace(/\s+/g, '')] = opts[i].R2Cat; delete opts[i].R2Cat; };
+		if (opts[i].R2Blood) { opts[i]["R2"+unsafeWindow.unitcost['unt13'][0].toString().replace(/\s+/g, '')] = opts[i].R2Blood; delete opts[i].R2Blood; };
+		if (opts[i].R2Exec) { opts[i]["R2"+unsafeWindow.unitcost['unt14'][0].toString().replace(/\s+/g, '')] = opts[i].R2Exec; delete opts[i].R2Exec; };
+		if (opts[i].R2Siege) { opts[i]["R2"+unsafeWindow.unitcost['unt15'][0].toString().replace(/\s+/g, '')] = opts[i].R2Siege; delete opts[i].R2Siege; };
+		if (opts[i].R2Flame) { opts[i]["R2"+unsafeWindow.unitcost['unt16'][0].toString().replace(/\s+/g, '')] = opts[i].R2Flame; delete opts[i].R2Flame; };
+		if (opts[i].R2Huss) { opts[i]["R2"+unsafeWindow.unitcost['unt17'][0].toString().replace(/\s+/g, '')] = opts[i].R2Huss; delete opts[i].R2Huss; };
+		if (opts[i].R2Halb) { opts[i]["R2"+unsafeWindow.unitcost['unt18'][0].toString().replace(/\s+/g, '')] = opts[i].R2Halb; delete opts[i].R2Halb; };
+		if (opts[i].R2Onager) { opts[i]["R2"+unsafeWindow.unitcost['unt21'][0].toString().replace(/\s+/g, '')] = opts[i].R2Onager; delete opts[i].R2Onager; };
+		if (opts[i].R2Sabo) { opts[i]["R2"+unsafeWindow.unitcost['unt22'][0].toString().replace(/\s+/g, '')] = opts[i].R2Sabo; delete opts[i].R2Sabo; };
+
         CrestData[i] = new CrestFunc(opts[i]);
     }
 
@@ -17489,7 +17257,8 @@ function getMarchInfo (cityID){
   ret.marchUnits = {};
   ret.returnUnits = {};
   ret.resources = [];
-  for (var i in troops){
+  for (var ui in unsafeWindow.cm.UNIT_TYPES){
+    i = unsafeWindow.cm.UNIT_TYPES[ui];
     ret.marchUnits["unt"+i] = 0;
     ret.returnUnits["unt"+i] = 0;
   }
@@ -17501,7 +17270,8 @@ function getMarchInfo (cityID){
       march = Seed.queue_atkp[cityID][k];
       if (typeof (march) == 'object'){
 		if(march.marchType != 5 && march.marchStatus != 10) {
-			for (var i in troops){
+			for (var ui in unsafeWindow.cm.UNIT_TYPES){
+			  i = unsafeWindow.cm.UNIT_TYPES[ui];
               ret.marchUnits["unt"+i] += parseInt (march['unit'+i+'Count']);
               ret.returnUnits["unt"+i] += parseInt (march['unit'+i+'Return']);
             }
@@ -21211,7 +20981,7 @@ Tabs.Attack = {
 	rallypointlevel:null,
 	error_code: 0,
 	knt:{},
-	trooparray:{1:"ST",2:"MM",3:"Scout",4:"Pike",5:"Sword",6:"Arch",7:"LC",8:"HC",9:"SW",10:"Ball",11:"Ram",12:"Cat",13:"Blood",14:"Exec",15:"Siege",16:"Flame",17:"Huss",18:"Halb",21:"Onager",22:"Saboteur",},
+	trooparray:{},
 	msgtimer : null,
 
 
@@ -21220,6 +20990,10 @@ Tabs.Attack = {
 		var t = Tabs.Attack;
 		Options.crestMarchError = 0;
 
+		for (y in unsafeWindow.unitcost) {
+			t.trooparray[y.substr(3)] = unsafeWindow.unitcost['unt'+y.substr(3)][0].toString().replace(/\s+/g, '');
+		}	
+		
 		t.sendCrestReport;	// check this every refresh
 		t.msgtimer = setInterval(t.sendCrestReport, 1*60*1000);  
 		t.timer = setTimeout(function(){ t.Rounds(1,0,0);}, CrestOptions.interval*1000);
@@ -21263,50 +21037,28 @@ Tabs.Attack = {
 		m += '<TR><TD><INPUT type=checkbox id=pbcrest_iswild /> Target is Wilderness</td><td>(if ticked will reduce wave 1 MM for subsequent attacks)</td></tr>';
 		m += '<TR><TD><INPUT type=checkbox id=pbcrest_ismerc /> Target is Merc. Camp&nbsp;</td><td>&nbsp;(if ticked, this attack will stop running when chest target amount reached (See above))</td></tr></table>';
    
-
 		var dude = unsafeWindow.unitnamedesctranslated;
-		m += '<TABLE class=ptTab><TR><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD><b>Wave 1</b>&nbsp;(initial):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R1ST type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R1MM type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R1Scout type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R1Pike type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R1Sword type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R1Arch type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R1LC type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R1HC type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R1SW type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R1Ball type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R1Ram type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R1Cat type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30.jpg alt='+dude.unt13[0]+'></td><TD><INPUT id=R1Blood type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_30.jpg alt='+dude.unt14[0]+'></td><TD><INPUT id=R1Exec type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_30.jpg alt='+dude.unt15[0]+'></td><TD><INPUT id=R1Siege type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_30.jpg alt='+dude.unt16[0]+'></td><TD><INPUT id=R1Flame type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_30.jpg alt='+dude.unt17[0]+'></td><TD><INPUT id=R1Huss type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_18_30.jpg alt='+dude.unt18[0]+'></td><TD><INPUT id=R1Halb type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_30.jpg alt='+dude.unt21[0]+'></td><TD><INPUT id=R1Onager type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_22_30.jpg alt='+dude.unt22[0]+'></td><TD><INPUT id=R1Sabo type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '<tr><td>&nbsp;</td><td>&nbsp;</td></tr>';
-		m += '<TR><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD><b>Wave 2</b>&nbsp;(recurring):</td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_1_30.jpg alt='+dude.unt1[0]+'></td><TD><INPUT id=R2ST type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_2_30.jpg alt='+dude.unt2[0]+'></td><TD><INPUT id=R2MM type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_3_30.jpg alt='+dude.unt3[0]+'></td><TD><INPUT id=R2Scout type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_4_30.jpg alt='+dude.unt4[0]+'></td><TD><INPUT id=R2Pike type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_5_30.jpg alt='+dude.unt5[0]+'></td><TD><INPUT id=R2Sword type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_6_30.jpg alt='+dude.unt6[0]+'></td><TD><INPUT id=R2Arch type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_7_30.jpg alt='+dude.unt7[0]+'></td><TD><INPUT id=R2LC type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_8_30.jpg alt='+dude.unt8[0]+'></td><TD><INPUT id=R2HC type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_9_30.jpg alt='+dude.unt9[0]+'></td><TD><INPUT id=R2SW type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_10_30.jpg alt='+dude.unt10[0]+'></td><TD><INPUT id=R2Ball type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_11_30.jpg alt='+dude.unt11[0]+'></td><TD><INPUT id=R2Ram type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_12_30.jpg alt='+dude.unt12[0]+'></td><TD><INPUT id=R2Cat type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_13_30.jpg alt='+dude.unt13[0]+'></td><TD><INPUT id=R2Blood type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_14_30.jpg alt='+dude.unt14[0]+'></td><TD><INPUT id=R2Exec type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_15_30.jpg alt='+dude.unt15[0]+'></td><TD><INPUT id=R2Siege type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_16_30.jpg alt='+dude.unt16[0]+'></td><TD><INPUT id=R2Flame type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_17_30.jpg alt='+dude.unt17[0]+'></td><TD><INPUT id=R2Huss type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_18_30.jpg alt='+dude.unt18[0]+'></td><TD><INPUT id=R2Halb type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '<tr><td></td><td></td><TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_21_30.jpg alt='+dude.unt21[0]+'></td><TD><INPUT id=R2Onager type=text size=7 maxlength=7 value=0></td>';
-		m += '<TD>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_22_30.jpg alt='+dude.unt22[0]+'></td><TD><INPUT id=R2Sabo type=text size=7 maxlength=7 value=0></td></tr>';
-		m += '</table>';
+		m += '<TABLE class=ptTab><TR valign=top><TD><INPUT type=checkbox id=pbcrest_rnd1 CHECKED /></td><TD><b>Wave 1</b>&nbsp;(initial):</td><td><table class=ptTab><tr>';
+
+		var c = 0;
+		for (var k in t.trooparray){
+			n = '<td>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg title="'+dude["unt"+k][0]+'"></td><TD><INPUT id=R1'+t.trooparray[k]+' type=text size=7 maxlength=7 value=0></td>';
+			if (c%6==0) m+= '</tr><tr>';
+			m+=n;
+			c++;
+		}	
+
+		m += '</tr></table></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><TR valign=top><TD><INPUT type=checkbox id=pbcrest_rnd2 CHECKED /></td><TD><b>Wave 2</b>&nbsp;(recurring):</td><td><table class=ptTab><tr>';
+
+		c = 0;
+		for (var k in t.trooparray){
+			n = '<td>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg title="'+dude["unt"+k][0]+'"></td><TD><INPUT id=R2'+t.trooparray[k]+' type=text size=7 maxlength=7 value=0></td>';
+			if (c%6==0) m+= '</tr><tr>';
+			m+=n;
+			c++;
+		}	
+		
+		m += '</tr></table></td></tr></table>';
 		m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRouteCrest type=submit value="Add Attack"> <INPUT id=pbimpRoute type=submit value="Bulk Add from Search Results"><br>&nbsp;</div>';
     
 		t.myDiv.innerHTML = m;
@@ -21552,7 +21304,7 @@ Tabs.Attack = {
 	showCrestRoute : function () {
 		var t = Tabs.Attack;
 		var popCrestTargets = null;
-		t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 1200, 485, true, function() {clearTimeout (1000);t.popCrestTargets=null;});
+		t.popCrestTargets = new pbPopup('pbShowCrestTargets', 0, 0, 700, 485, true, function() {clearTimeout (1000);t.popCrestTargets=null;});
 		var m = '<DIV style="max-height:460px; height:460px; overflow-y:auto"><TABLE align=center cellpadding=0 cellspacing=0 width=100% class="pbShowCrestTargets" id="pbCrestTargets">';     
 		t.popCrestTargets.getMainDiv().innerHTML = '</table></div>' + m;
 		t.popCrestTargets.getTopDiv().innerHTML = '<TD><CENTER><B>Attack Targets</center></td>';
@@ -21565,30 +21317,20 @@ Tabs.Attack = {
 	_addTabHeader : function () {
 		var row = document.getElementById('pbCrestTargets').insertRow(0);
 		row.vAlign = 'top';
-		row.insertCell(0).innerHTML = "City/Target";
-		row.insertCell(1).innerHTML = "<center>&nbsp;Paused&nbsp;</center>";
-		row.insertCell(2).innerHTML = "Wave #";
-		row.insertCell(3).innerHTML = translate("Supp");
-		row.insertCell(4).innerHTML = translate("MM");
-		row.insertCell(5).innerHTML = translate("Scout");
-		row.insertCell(6).innerHTML = translate("Pike");
-		row.insertCell(7).innerHTML = translate("Sword");
-		row.insertCell(8).innerHTML = translate("Arch");
-		row.insertCell(9).innerHTML = translate("Cav");
-		row.insertCell(10).innerHTML = translate("HC");
-		row.insertCell(11).innerHTML = translate("Wags");
-		row.insertCell(12).innerHTML = translate("Balls");
-		row.insertCell(13).innerHTML = translate("Rams");
-		row.insertCell(14).innerHTML = translate("Cats");
-		row.insertCell(15).innerHTML = translate("Blood");
-		row.insertCell(16).innerHTML = translate("Exec");
-		row.insertCell(17).innerHTML = translate("Siege");
-		row.insertCell(18).innerHTML = translate("Flame");
-		row.insertCell(19).innerHTML = translate("Hussar");
-		row.insertCell(20).innerHTML = translate("Halb");
-		row.insertCell(21).innerHTML = translate("Onager");
-		row.insertCell(22).innerHTML = translate("Sabo");
-		row.insertCell(23).innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
+		var td = row.insertCell(0);
+		td.innerHTML = "<b>City/Target</b>";
+		td.style.width="100px";
+		td = row.insertCell(1);
+		td.innerHTML = "<b><center>&nbsp;Paused&nbsp;</center></b>";
+		td.style.width="50px";
+		td = row.insertCell(2);
+		td.innerHTML = "<b>Wave</b>";
+		td.style.width="50px";
+		td = row.insertCell(3);
+		td.innerHTML = '<b>'+translate("Troops")+'</b>';
+		td = row.insertCell(4);
+		td.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;";
+		td.style.width="60px";
 	},
 
 	/** paintCrestTargets **/
@@ -21596,36 +21338,52 @@ Tabs.Attack = {
 		t = Tabs.Attack;
 
 		for(var i = 0; i < CrestData.length; i++) {
-			if (t.checkRoundExists(2,i))
-				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", CrestData[i].R2ST, CrestData[i].R2MM, CrestData[i].R2Scout, CrestData[i].R2Pike, CrestData[i].R2Sword, CrestData[i].R2Arch, CrestData[i].R2LC, CrestData[i].R2HC, CrestData[i].R2SW, CrestData[i].R2Ball, CrestData[i].R2Ram, CrestData[i].R2Cat, CrestData[i].R2Blood, CrestData[i].R2Exec, CrestData[i].R2Siege, CrestData[i].R2Flame, CrestData[i].R2Huss, CrestData[i].R2Halb, CrestData[i].R2Onager, CrestData[i].R2Sabo, " ");
-			else
-				t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, " ","Wave 2", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ");
-			if (t.checkRoundExists(1,i))
-				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", CrestData[i].R1ST, CrestData[i].R1MM, CrestData[i].R1Scout, CrestData[i].R1Pike, CrestData[i].R1Sword, CrestData[i].R1Arch, CrestData[i].R1LC, CrestData[i].R1HC, CrestData[i].R1SW, CrestData[i].R1Ball, CrestData[i].R1Ram, CrestData[i].R1Cat, CrestData[i].R1Blood, CrestData[i].R1Exec, CrestData[i].R1Siege, CrestData[i].R1Flame, CrestData[i].R1Huss, CrestData[i].R1Halb, CrestData[i].R1Onager, CrestData[i].R1Sabo, "Delete");
-			else	
-				t._addTabCrest(i, CrestData[i].CrestCity, "Check", "Wave 1", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "Delete");
-			t._addTabCrest(i, " "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," ", " ");
+			t._addTabCrest(i, "Attack: " + CrestData[i].X + "," + CrestData[i].Y, "Wave 2");
+			t._addTabCrest(i, CrestData[i].CrestCity, "Wave 1");
+			t._addTabCrest(i, "","");
 		}
 
 	},
 
 	/** Add Tab Crest **/
-	_addTabCrest : function (QueID, col0, col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15, col16, col17, col18, col19,col20,col21,col22,col23) {
+	_addTabCrest : function (QueID, col0, col1) {
 		var t = Tabs.Attack;
 		var row = document.getElementById('pbCrestTargets').insertRow(0);
 
-		for (var i = 0; i <= 23; i++) {
-			if (i == 23 && col23 == "Delete") {
-				row.insertCell(i).innerHTML = "<a id=pbCrestDel_" + QueID + " value=" + i + ">Delete</a>";
-				document.getElementById('pbCrestDel_' + QueID).addEventListener('click', function(){t.cancelCrestTarget(QueID);}, false);
-			} else if (col1 == "Check" && i == 1) {
-				row.insertCell(i).innerHTML = "<center><INPUT id=pbCrestPause_"+ QueID +" type=checkbox "+(CrestData[QueID].Paused?'CHECKED':'')+"></center>";
-				document.getElementById('pbCrestPause_' + QueID).addEventListener('click', function(){t.pauseCrestTarget(this,QueID);}, false);
-			} else if (col23 == "Delete" && i == 0) {
-				row.insertCell(i).innerHTML = '<b>'+(Cities.byID[col0] ? Cities.byID[col0].name : '')+'</b>';
-			} else {
-				row.insertCell(i).innerHTML = (eval("col" + i)?eval("col" + i):'0') + "&nbsp;";
-			}
+		if (col1 == "Wave 1") {
+			row.insertCell(0).innerHTML = '<b>'+(Cities.byID[col0] ? Cities.byID[col0].name : '')+'</b>';
+			row.insertCell(1).innerHTML = "<center><INPUT id=pbCrestPause_"+ QueID +" type=checkbox "+(CrestData[QueID].Paused?'CHECKED':'')+"></center>";
+			document.getElementById('pbCrestPause_' + QueID).addEventListener('click', function(){t.pauseCrestTarget(this,QueID);}, false);
+		}
+		else {
+			row.insertCell(0).innerHTML = col0;
+			row.insertCell(1).innerHTML = "&nbsp;";
+		}	
+		row.insertCell(2).innerHTML = col1;
+
+		TroopString = "";
+		if (col1 != "") {
+			for (var k in t.trooparray){
+				if (col1 == "Wave 1") {
+					if (CrestData[QueID]["R1"+t.trooparray[k]]) {
+						TroopString += '<span class=xtab><img style="width:20px;height:20px;vertical-align:middle" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg" title="'+unsafeWindow.unitcost['unt'+k][0].toString()+'">&nbsp;'+addCommas(CrestData[QueID]["R1"+t.trooparray[k]])+'</span> ';
+					}
+				}
+				else {
+					if (CrestData[QueID]["R2"+t.trooparray[k]]) {
+						TroopString += '<span class=xtab><img style="width:20px;height:20px;vertical-align:middle" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg" title="'+unsafeWindow.unitcost['unt'+k][0].toString()+'">&nbsp;'+addCommas(CrestData[QueID]["R2"+t.trooparray[k]])+'</span> ';
+					}
+				}	
+			}	
+		}	
+		row.insertCell(3).innerHTML = TroopString;
+
+		if (col1 == "Wave 1") {
+			row.insertCell(4).innerHTML = "<a id=pbCrestDel_" + QueID + " value=" + i + ">Delete</a>";
+			document.getElementById('pbCrestDel_' + QueID).addEventListener('click', function(){t.cancelCrestTarget(QueID);}, false);
+		}
+		else {
+			row.insertCell(4).innerHTML = "&nbsp;";
 		}
 	},
 
@@ -21850,34 +21608,19 @@ Tabs.Attack = {
 				params.ycoord = CrestData[CrestDataNum].Y;
 
 				if (now < (parseInt(CrestData[CrestDataNum].lastRoundOne) + 500) && CrestData[CrestDataNum].isWild) {
-					params.u2 = (parseIntNan(CrestData[CrestDataNum].R1MM) / 10);
+					params.u2 = (parseIntNan(CrestData[CrestDataNum]["R1"+t.trooparray[2]]) / 10);
 					params.u2 = params.u2.toFixed(0);
-					if (params.u2 < (parseIntNan(CrestData[CrestDataNum].R1MM) / 10))
+					if (params.u2 < (parseIntNan(CrestData[CrestDataNum]["R1"+t.trooparray[2]]) / 10))
 						params.u2++;
 					} else {
-						params.u2 = parseIntNan(CrestData[CrestDataNum].R1MM);
+						params.u2 = parseIntNan(CrestData[CrestDataNum]["R1"+t.trooparray[2]]);
 				}
                 
-				params.u1     = parseIntNan(CrestData[CrestDataNum].R1ST);
-				//params.u2     = parseIntNan(CrestData[CrestDataNum].R1MM);
-				params.u3     = parseIntNan(CrestData[CrestDataNum].R1Scout);
-				params.u4     = parseIntNan(CrestData[CrestDataNum].R1Pike);
-				params.u5     = parseIntNan(CrestData[CrestDataNum].R1Sword);
-				params.u6     = parseIntNan(CrestData[CrestDataNum].R1Arch);
-				params.u7     = parseIntNan(CrestData[CrestDataNum].R1LC);
-				params.u8     = parseIntNan(CrestData[CrestDataNum].R1HC);
-				params.u9     = parseIntNan(CrestData[CrestDataNum].R1SW);
-				params.u10    = parseIntNan(CrestData[CrestDataNum].R1Ball);
-				params.u11    = parseIntNan(CrestData[CrestDataNum].R1Ram);
-				params.u12    = parseIntNan(CrestData[CrestDataNum].R1Cat);
-				params.u13    = parseIntNan(CrestData[CrestDataNum].R1Blood);
-				params.u14    = parseIntNan(CrestData[CrestDataNum].R1Exec);
-				params.u15    = parseIntNan(CrestData[CrestDataNum].R1Siege);
-				params.u16    = parseIntNan(CrestData[CrestDataNum].R1Flame);
-				params.u17    = parseIntNan(CrestData[CrestDataNum].R1Huss);
-				params.u18    = parseIntNan(CrestData[CrestDataNum].R1Halb);
-				params.u21    = parseIntNan(CrestData[CrestDataNum].R1Onager);
-				params.u22    = parseIntNan(CrestData[CrestDataNum].R1Sabo);
+				for (var k in t.trooparray){
+					if (k !=2) {
+						params["u"+k] = parseIntNan(CrestData[CrestDataNum]["R1"+t.trooparray[k]]);
+					}
+				}	
                 
 				t.sendMarch(params,t.Rounds,r,retry, CrestDataNum);
 				break;
@@ -21888,26 +21631,11 @@ Tabs.Attack = {
 				params.kid    = kid;
 				params.xcoord = CrestData[CrestDataNum].X;
 				params.ycoord = parseIntNan(CrestData[CrestDataNum].Y);
-				params.u1     = parseIntNan(CrestData[CrestDataNum].R2ST);
-				params.u2     = parseIntNan(CrestData[CrestDataNum].R2MM);
-				params.u3     = parseIntNan(CrestData[CrestDataNum].R2Scout);
-				params.u4     = parseIntNan(CrestData[CrestDataNum].R2Pike);
-				params.u5     = parseIntNan(CrestData[CrestDataNum].R2Sword);
-				params.u6     = parseIntNan(CrestData[CrestDataNum].R2Arch);
-				params.u7     = parseIntNan(CrestData[CrestDataNum].R2LC);
-				params.u8     = parseIntNan(CrestData[CrestDataNum].R2HC);
-				params.u9     = parseIntNan(CrestData[CrestDataNum].R2SW);
-				params.u10    = parseIntNan(CrestData[CrestDataNum].R2Ball);
-				params.u11    = parseIntNan(CrestData[CrestDataNum].R2Ram);
-				params.u12    = parseIntNan(CrestData[CrestDataNum].R2Cat);
-				params.u13    = parseIntNan(CrestData[CrestDataNum].R2Blood);
-				params.u14    = parseIntNan(CrestData[CrestDataNum].R2Exec);
-				params.u15    = parseIntNan(CrestData[CrestDataNum].R2Siege);
-				params.u16    = parseIntNan(CrestData[CrestDataNum].R2Flame);
-				params.u17    = parseIntNan(CrestData[CrestDataNum].R2Huss);
-				params.u18    = parseIntNan(CrestData[CrestDataNum].R2Halb);
-				params.u21    = parseIntNan(CrestData[CrestDataNum].R2Onager);
-				params.u22    = parseIntNan(CrestData[CrestDataNum].R2Sabo);
+
+				for (var k in t.trooparray){
+					params["u"+k] = parseIntNan(CrestData[CrestDataNum]["R2"+t.trooparray[k]]);
+				}	
+
 				t.sendMarch(params,t.Rounds,r,retry, CrestDataNum);
 				break;
 		}
@@ -22058,6 +21786,7 @@ Tabs.Attack = {
 
 	show : function (){
 	},
+
 }
 
 /****** End of Cresting Tab *******/
@@ -22881,8 +22610,7 @@ Tabs.popcontrol = {
             {
             if (rslt.ok) 
                {
-               //t.log("Dismissed "+ addCommas(num) +" "+ troops[unitId]);
-               t.log("Dismissed "+ addCommas(num) +" "+ troops[unitId]);
+               t.log("Dismissed "+ addCommas(num) +" "+ unsafeWindow.unitcost[unitId][0]);
                Seed.units['city'+cityId]['unt'+unitId] -= num;
                if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                //setTimeout(unsafeWindow.update_seed_ajax, 250);
@@ -22892,8 +22620,7 @@ Tabs.popcontrol = {
                }
             else
                {
-               //t.log("FAILED to dismiss "+ addCommas(num) +" "+ troops[unitId] + " :(");
-               t.log("FAILED to dismiss "+ addCommas(num) +" "+ troops[unitId] + " :(");
+               t.log("FAILED to dismiss "+ addCommas(num) +" "+ unsafeWindow.unitcost[unitId][0] + " :(");
                t.busy = false;
                }
             },
@@ -23018,7 +22745,7 @@ Tabs.popcontrol = {
             var rslt=eval("("+message.responseText+")");
             if (rslt.ok)
                {
-               t.log("Deleted queue of "+ addCommas(numtrptrn) +" "+ troops[typetrn]);
+               t.log("Deleted queue of "+ addCommas(numtrptrn) +" "+ unsafeWindow.unitcost[typetrn][0]);
                if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                var k=0;
                for(var j=0;j<Seed.queue_unt["city"+cityId].length;j++)
@@ -23356,7 +23083,7 @@ Tabs.gifts = {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                for(i in rslt.message){
-                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Ã‚Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!" || rslt.message[i].subject == "Yeni Hediye Alındı!" || rslt.message[i].subject == "Neues Geschenk erhalten!")){
+                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Ãƒâ€šÃ‚Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!" || rslt.message[i].subject == "Yeni Hediye AlÄ±ndÄ±!" || rslt.message[i].subject == "Neues Geschenk erhalten!")){
                      t.foundgift(i);
                   };
                };
@@ -25897,7 +25624,7 @@ function BtFilter(e) {
       
       m = m.replace(/Gr/g,'G'+x+'r').replace(/gR/g,'g'+x+'R').replace(/GR/g,'G'+x+'R').replace(/gr/g,'g'+x+'r');
       
-      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­'+x+'I').replace(/ri/g,'r'+x+'i');
+      m = m.replace(/Ri/g,'R'+x+'i').replace(/rI/g,'r'+x+'I').replace(/RI/g,'RÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â­'+x+'I').replace(/ri/g,'r'+x+'i');
       
       m = m.replace(/Na/g,'N'+x+'a').replace(/nA/g,'n'+x+'A').replace(/NA/g,'N'+x+'A').replace(/na/g,'n'+x+'a');
       
