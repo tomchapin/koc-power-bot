@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140904a
+// @version        20140910a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140904a';
+var Version = '20140910a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -325,6 +325,7 @@ var TrainOptions = {
   CraftingNbFix : {3000:false,3001:false,3002:false,3003:false,3004:false,3005:false,3006:false,3007:false,3008:false,3009:false,3010:false,3011:false},
   CraftingStats : {3000:[0,0],3001:[0,0],3002:[0,0],3003:[0,0],3004:[0,0],3005:[0,0],3006:[0,0],3007:[0,0],3008:[0,0],3009:[0,0],3010:[0,0],3011:[0,0]},
   CraftingCities : {1:true,2:true,3:true,4:true,5:true,6:true,7:true,8:true},
+  CraftingPrefs : {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0},
   CraftUseMH : false,
   CraftUseGH : false,
   CraftUseKH : false,
@@ -950,7 +951,7 @@ function pbStartup (){
   }
   
 	// fix leaderboard display so you can always see might leaderboard even if glory leaderboard returns no results!
-	var lbfix = new CalterUwFunc("modal_fow_leaderboard",[['e.emptySet','false'],['g.push(g_js_strings.modal_fow_leaderboard.nomatcherr)','if(e.emptySet) g.push(g_js_strings.modal_fow_leaderboard.emptyessage) else g.push(g_js_strings.modal_fow_leaderboard.nomatcherr)']]);
+	var lbfix = new CalterUwFunc("modal_fow_leaderboard",[['e.emptySet','false']]);
 	lbfix.setEnable(true);
 }
 
@@ -11484,8 +11485,17 @@ Tabs.AutoCraft = {
 			var city = i+1;
 			str += '<td align=center><INPUT class='+city+' id=CraftCity'+city+' type=checkbox '+(TrainOptions.CraftingCities[city]?'CHECKED':'')+'></td>';
 		}
-		str += '<td>&nbsp;</td></tr>';
+		str += '<td>&nbsp;</td></tr><tr><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3004.jpg title="Preferred Recipe"></td>';
 
+		var recipes = {0:'-- Random --'};
+		for (h in t.craftinfo) {
+			recipes[h] = unsafeWindow.itemlist["i"+h].name;
+		}
+				
+		for (i = 0; i < cities.length; i ++) {
+			var city = i+1;
+			str += '<td align=center>'+htmlSelector(recipes,TrainOptions.CraftingPrefs[city],'class='+city+' id=CraftCitySelect'+city+ ' style="width:100px;font-size:9px;"')+'</td>';
+		}
 		str +='<tr style="background: #e8e8e8" align=right><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png title="Aether"></td>';
 		t.totaether = 0;
 		for(i=0; i<Cities.numCities; i++) {
@@ -11505,6 +11515,9 @@ Tabs.AutoCraft = {
 			var city = i+1;
 			document.getElementById('CraftCity'+city).addEventListener('change', function(e){
 				TrainOptions.CraftingCities[e.target['className']] = e.target.checked;
+				t.saveCraftState();	}, false);
+			document.getElementById('CraftCitySelect'+city).addEventListener('change', function(e){
+				TrainOptions.CraftingPrefs[e.target['className']] = e.target.value;
 				t.saveCraftState();	}, false);
 		}
 
@@ -11859,10 +11872,11 @@ Tabs.AutoCraft = {
 		if (parseInt(Seed.resources["city" + cityId]['rec5'][0])<t.CraftMinAether) return;  // not enough a-stone
 
 		var tableau = [];
-		for(var d in TrainOptions.CraftingNb) {
+		if (TrainOptions.CraftingPrefs[c+1] != 0) { // attempt to craft preferred recipe
+			var d = TrainOptions.CraftingPrefs[c+1];
 			if ((!TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>0)) || (TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>parseIntNan(Seed.items["i"+d])+t.checkCraftQueues(d)))) {
-				if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1]))
-					if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(t.spires[c].maxLevel))
+				if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1])) {
+					if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(t.spires[c].maxLevel)) {
 						if(t.craftinfo[d].inputItems == "") { // "base items"
 							tableau.push (d);
 						} else {
@@ -11875,8 +11889,33 @@ Tabs.AutoCraft = {
 									tableau.push (d);
 							}		
 						}
-			}
+					}
+				}	
+			}			
 		}
+
+		if (tableau.length == 0) { // preferred not available
+			for(var d in TrainOptions.CraftingNb) {
+				if ((!TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>0)) || (TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>parseIntNan(Seed.items["i"+d])+t.checkCraftQueues(d)))) {
+					if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1])) {
+						if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(t.spires[c].maxLevel)) {
+							if(t.craftinfo[d].inputItems == "") { // "base items"
+								tableau.push (d);
+							} else {
+								if (!TrainOptions.actr || (Number(cs) >= Number(TrainOptions.actrset))) { // if no craft speed restriction or enough crafting speed
+									for(var i in t.craftinfo[d].inputItems) {
+										if (parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
+											break;
+									}  
+									if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
+										tableau.push (d);
+								}		
+							}
+						}
+					}	
+				}
+			}
+		}	
 		if (tableau.length == 0) return ; // nothing to craft
 
 		t.craftLoop++;
@@ -11935,7 +11974,7 @@ Tabs.AutoCraft = {
 						// increment total craft attempts and successful craft attempts
 						TrainOptions.CraftingStats[itemId][1] = TrainOptions.CraftingStats[itemId][1] + 1;
 						TrainOptions.CraftingStats[itemId][0] = TrainOptions.CraftingStats[itemId][0] + 1;
-						if (!TrainOptions.CraftingNbFix[itemId])
+						if (!TrainOptions.CraftingNbFix[itemId] && TrainOptions.CraftingNb[itemId] > 0)
 							TrainOptions.CraftingNb[itemId] = TrainOptions.CraftingNb[itemId] -1;
 						saveTrainOptions();
 						if(!Seed.queue_craft["city"+currentcity]) { Seed.queue_craft["city"+currentcity]=[]; }
