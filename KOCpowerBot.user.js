@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140910a
+// @version        20140912a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140910a';
+var Version = '20140912a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -15503,13 +15503,14 @@ Tabs.Language = {
   tabLabel : 'Language',            // label to show in main window tabs
   myDiv : null,
   language : {needTranslation:{}},
-  link : {"https://koc-power-bot.googlecode.com/svn/trunk/translation/translation_en.js":"en"},
+  lang : {en:"en",fr:"fr"},
+  link : {"https://koc-power-bot.googlecode.com/svn/trunk/translation/translation_en.js":"en","https://koc-power-bot.googlecode.com/svn/trunk/translation/translation_fr.js":"fr"},
   
   init : function (div){    // called once, upon script startup
     var t = Tabs.Language;
     t.myDiv = div;
     var m = "<DIV class=pbStat>"+translate("Language Settings")+"</div><TABLE><TR>\
-            <TD>"+translate("Set Language")+" : "+ htmlSelector({en:"en"},Options.language,"id=pblang_type") +"</td>\
+            <TD>"+translate("Set Language")+" : "+ htmlSelector(t.lang,Options.language,"id=pblang_type") +"</td>\
             <TD><input id=pblang_update value='"+translate("Save Settings")+"' type=submit DISABLED /><span id=pblang_msg ></span></td></tr>\
             <TR><TD>"+translate("Language files download")+" : "+ htmlSelector(t.link,null,"id=pblang_link") +"</td>\
             <td><input id=pblang_download value='"+translate("Download")+"' type=submit /></td></tr>\
