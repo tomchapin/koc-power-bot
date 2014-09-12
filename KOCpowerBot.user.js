@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140912b
+// @version        20140912c
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140912b';
+var Version = '20140912c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -15541,7 +15541,6 @@ Tabs.Language = {
         document.getElementById("pblang_download").disabled = true;
         GM_xmlhttpRequest({
             method: 'GET',
-			headers: { 'Content-Type': 'text/plain; charset=ANSI', 'Accept': 'text/plain', },			
             url: document.getElementById("pblang_link").value,
             onload: function(xpr) {t.updatelanguage(xpr.responseText, document.getElementById("pblang_link").value);},
             onerror: function(xpr) {t.updatelanguage(xpr.responseText, false);}
@@ -15562,7 +15561,7 @@ Tabs.Language = {
   
   showlanguage : function(){
       var t = Tabs.Language;
-      t.poplangshow = new pbPopup('pbShowLanguage', 10, 10, 600, 500, true, function() {t.poplangshow.destroy();});
+      t.poplangshow = new pbPopup('pbShowLanguage', 10, 10, 600, 500, true, function() { saveLanguage(); t.poplangshow.destroy();});
       t.poplangshow.getTopDiv().innerHTML = '<TD><B>'+translate("Language Array:")+'</td>';
       t.poplangshow.getMainDiv().innerHTML = '<DIV style="max-height:440px;overflow-y:auto"><TABLE style="overflow-y:auto" align=center cellpadding=0 cellspacing=0 width=100% class="pbTab" id="pblang_showarray"></table></div><div id=pblang_status ></div>';
       t.paintlanguagearray();
@@ -15875,7 +15874,6 @@ function ToggleDivDisplay(h,w,div) {
 function onUnload (){
   Options.pbWinPos = mainPop.getLocation();
   if (!ResetAll) saveOptions();
-  saveLanguage();
 }
 
 function mouseMainTab (me){   // right-click on main button resets window location
