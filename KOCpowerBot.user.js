@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140912a
+// @version        20140912b
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140912a';
+var Version = '20140912b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -11496,6 +11496,7 @@ Tabs.AutoCraft = {
 			var city = i+1;
 			str += '<td align=center>'+htmlSelector(recipes,TrainOptions.CraftingPrefs[city],'class='+city+' id=CraftCitySelect'+city+ ' style="width:100px;font-size:9px;"')+'</td>';
 		}
+
 		str +='<tr style="background: #e8e8e8" align=right><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png title="Aether"></td>';
 		t.totaether = 0;
 		for(i=0; i<Cities.numCities; i++) {
@@ -15540,6 +15541,7 @@ Tabs.Language = {
         document.getElementById("pblang_download").disabled = true;
         GM_xmlhttpRequest({
             method: 'GET',
+			headers: { 'Content-Type': 'application/json; charset=ANSI', 'Accept': 'text/javascript', },			
             url: document.getElementById("pblang_link").value,
             onload: function(xpr) {t.updatelanguage(xpr.responseText, document.getElementById("pblang_link").value);},
             onerror: function(xpr) {t.updatelanguage(xpr.responseText, false);}

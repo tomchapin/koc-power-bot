@@ -13,5 +13,6 @@
 "Message Prefix":"Préfixe de message", 
 "Alert on scouting":"Alerter sur le scoutisme", 
 "Alert on wild attack":"Alerter sur l'attaque sauvage", 
-"Display defend status":"Afficher défendre le statut"
+"Display defend status":"Afficher défendre le statut",
+"Country":"Pays"
 }
