@@ -15541,7 +15541,7 @@ Tabs.Language = {
         document.getElementById("pblang_download").disabled = true;
         GM_xmlhttpRequest({
             method: 'GET',
-			headers: { 'Content-Type': 'application/json; charset=ANSI', 'Accept': 'text/javascript', },			
+			headers: { 'Content-Type': 'text/plain; charset=ANSI', 'Accept': 'text/plain', },			
             url: document.getElementById("pblang_link").value,
             onload: function(xpr) {t.updatelanguage(xpr.responseText, document.getElementById("pblang_link").value);},
             onerror: function(xpr) {t.updatelanguage(xpr.responseText, false);}
