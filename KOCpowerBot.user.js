@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140917a
+// @version        20140929a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140917a';
+var Version = '20140929a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -590,6 +590,14 @@ if (document.URL.search(/kabam.com\/games\/kingdoms-of-camelot\/play/i) >= 0){
   loadchecker(true);
   return;
 }
+function getFirefoxVersion() {
+	var ver = '',
+		i;
+	var ua = navigator.userAgent;
+	if (ua == null || (i = ua.indexOf('Firefox/')) < 0)
+		return;
+	return ua.substr(i + 8);
+}
 function loadchecker (init) {
 	if (!GlobalOptions.pbWatchdog) return;
 	var Sresult = getServerId();
@@ -604,6 +612,18 @@ function loadchecker (init) {
 	} else {
 		GM_setValue ('Loaded', 1);
 		GM_setValue (Sresult+'Loaded', 1);
+		
+		// check firefox and GM version, if dodgy, display a message bar
+		
+		var GMVersion = (typeof GM_info !== "undefined")?GM_info.version:'0'; 
+		var FFVersion = getFirefoxVersion();
+		
+		if ((FFVersion.substring(0, 2) > 30) || (GMVersion.substring(0, 1) > 1)) {
+			div = document.createElement('div');
+			var msg = 'PowerBot has detected you are running Greasemonkey version : '+GMVersion+' and Firefox version : '+FFVersion+'. This <b>may</b> cause problems with KoC scripts. <a onClick="this.parentNode.parentNode.style.display=\'none\';">[close]</a>';
+			div.innerHTML = '<DIV style="background: #fde073; text-align: center; line-height: 2.5; overflow: hidden; -webkit-box-shadow: 0 0 5px black; -moz-box-shadow: 0 0 5px black; box-shadow: 0 0 5px black;">'+msg+'</div>';
+			document.body.insertBefore (div, document.body.firstChild);
+		}	
 	};
 };
 
@@ -14052,6 +14072,7 @@ Tabs.AutoTrain = {
             if(y == "unt21") faux = 1;
             if(y == "unt22") faux = 1;
             if(y == "unt24") faux = 1;
+            if(y == "unt25") faux = 1;
             
 			if (faux==0)
 				m+='<option value="'+y.substr(3)+'">'+unsafeWindow.unitcost[y][0]+'</option>';
@@ -14835,7 +14856,8 @@ function KOCnotFound(secs){
   var endSecs = (new Date().getTime()/1000) + secs;
   
   div = document.createElement('div');
-  div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>KOC Power Bot has detected that KOC is not loaded<BR>Refreshing in <SPAN id=pbwdsecs></span><BR><INPUT id=pbwdcan type=submit value="Cancel Refresh"><BR><BR></div>';
+	var msg = 'PowerBot has detected that KOC is not loaded. Refreshing in <SPAN id=pbwdsecs>'+timestr(secs)+'</span>. <a style="color:#FFFF80;visited:#FFFF80;hover:#FFFF80;" id=pbwdcan >[cancel refresh]</a>';
+	div.innerHTML = '<DIV style="background: #a00; color:#fff; text-align: center; line-height: 2.5; overflow: hidden; -webkit-box-shadow: 0 0 5px black; -moz-box-shadow: 0 0 5px black; box-shadow: 0 0 5px black;">'+msg+'</div>';
   document.body.insertBefore (div, document.body.firstChild);
   document.getElementById('pbwdcan').addEventListener('click', cancel, false);
     countdownTimer = setInterval (countdown, 1000);
@@ -17176,6 +17198,13 @@ function display_confirm(confirm_msg,ok_function,cancel_function){
 
 //****************************
 
+function addScript(scriptText) {
+	var scr = document.createElement('script');
+	scr.innerHTML = scriptText;
+	document.body.appendChild(scr);
+	//    setTimeout ( function (){document.body.removeChild(scr);}, 500);
+}
+addScript('uwuwFunc = function (text){ eval (text);  }');
 
 var CalterUwFunc = function (funcName, findReplace) {
 
@@ -17308,7 +17337,7 @@ var CalterFuncModifier = function (funcName, findReplace) {
          this.funcNew = rt;
          if (active) {
             // apply the new function
-            unsafeWindow.uwuwuwFunc(this.funcName +' = '+ this.funcNew);
+            unsafeWindow.uwuwFunc(this.funcName +' = '+ this.funcNew);
          } else {
             // set to the original function
             var x1 = this.funcName.split('.');
@@ -22715,7 +22744,7 @@ Tabs.popcontrol = {
             {
             if (rslt.ok) 
                {
-               t.log("Dismissed "+ addCommas(num) +" "+ unsafeWindow.unitcost[unitId][0]);
+               t.log("Dismissed "+ addCommas(num) +" "+ unsafeWindow.unitcost['unt'+unitId][0]);
                Seed.units['city'+cityId]['unt'+unitId] -= num;
                if(rslt.updateSeed){unsafeWindow.update_seed(rslt.updateSeed)};
                //setTimeout(unsafeWindow.update_seed_ajax, 250);
@@ -22725,7 +22754,7 @@ Tabs.popcontrol = {
                }
             else
                {
-               t.log("FAILED to dismiss "+ addCommas(num) +" "+ unsafeWindow.unitcost[unitId][0] + " :(");
+               t.log("FAILED to dismiss "+ addCommas(num) +" "+ unsafeWindow.unitcost['unt'+unitId][0] + " :(");
                t.busy = false;
                }
             },
@@ -26551,6 +26580,7 @@ function QuickScout() {
 	for (wild in wildContext) {
 		wildContext[wild].push("qqmod");
 	}
+
 	// add actions to the menu item
 	var mod = new CalterUwFunc('cm.ContextMenuMapController.prototype.calcButtonInfo',
 	[['default:', 'case "qqmod":' +
