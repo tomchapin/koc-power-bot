@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140930a
+// @version        20140930b
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140930a';
+var Version = '20140930b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -26209,12 +26209,12 @@ function GuardianTT () {
 
 // The following code is released under public domain.
 var AutoUpdater_101052 = {
-    id: 174296,
+    id: 101052,
 	days: 1,
 	name: "KOC Power Bot",
 	version: Version,
 	beta: GlobalOptions.pbupdatebeta,
-	betaUrl: 'https://code.google.com/p/koc-battle-console/source/browse/trunk/174296.user.js',
+	betaUrl: 'https://koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js',
 	time: new Date().getTime(),
 	call: function (response, secure) {
 		GM_xmlhttpRequest({
