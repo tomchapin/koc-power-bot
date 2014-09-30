@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140929b
+// @version        20140930a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140929b';
+var Version = '20140930a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -333,6 +333,7 @@ var TrainOptions = {
   CraftUseKH : false,
   CraftUseSH : false,
   tr  :  false,
+  guard  :  false,
   trset  :  0,
   actr:     false,
   actrbase: false,
@@ -432,7 +433,7 @@ var AttackOptions = {
   MsgInterval           : 1,
   Method           : "distance",
   SendInterval       : 8,
-  MaxDistance           : 40,
+  MaxDistance           : 20,
   RallyClip          : 0,
   Running            : false,
   BarbsFailedKnight     : 0,
@@ -457,8 +458,8 @@ var AttackOptions = {
   UpdateInterval      : 30,
   stopsearch            : 1,
   knightselector        : 0,
-  barbMinKnight         : 56,
-  barbMaxKnight         : 255,
+  barbMinKnight         : 50,
+  barbMaxKnight         : 300,
   threshold          : 750000,
   ItemsFound         : {},
   ItemsFoundCr       : {},
@@ -961,7 +962,6 @@ function pbStartup (){
   setInterval(GlobalEachSecond,1000);//lets move everything under this one.
   ChatComOverlay();
   GuardianTT();
-	if(GlobalOptions.version != Version)AutoUpdater();//just completed upgrade, get variables set.
 
   afkwatcher();
   loadchecker();
@@ -1058,7 +1058,7 @@ function GESeveryhour (unixtime) {//put functions here to execute every hour
 };
 
 function GESeveryday (unixtime) {//put functions here to execute every day
-  if(GlobalOptions.pbupdate)AutoUpdater();//check for script updates
+
 };
 
 /************** End Timer **************/
@@ -2424,151 +2424,285 @@ Tabs.Throne = {
 		saveThroneOptions();
 	},
 	Uniques: function () {
+		var maxlevel = 19;
 		var t = Tabs.Throne;
-		var UniqueItems = {
-			Advisors: {
-				"Wynn": "http://i.imgur.com/qUxIZcn.png",
-				"Mordred": "http://i.imgur.com/itn5Nfn.png",
-				"Kay": "http://i.imgur.com/mD3fWtb.png",
-				"Warhorse": "http://i.imgur.com/770yicI.png",
-				"The Harbinger": "http://i.imgur.com/O2l15bY.png",
-				"Father Winter": "http://i.imgur.com/4D9wijD.png",
-				"Advisor Of Magnitude A": "http://i.imgur.com/FXg8zbK.png",
-				"Advisor of Magnitude B": "http://i.imgur.com/KbGP3QR.png",
-				"Advisor of Discipline": "http://i.imgur.com/5Yrhp8F.png",
-				"Dagonet The Court Jester": "http://i.imgur.com/29bAH99.png",
-				"Minstrel": "http://i.imgur.com/hUIXhca.png",
-				"Percival": "http://i.imgur.com/ei2YRFF.png",
-				"Tristan": "http://i.imgur.com/dq6mD5M.png",
-			},
-			Thrones: {
-				"Valor": "http://i.imgur.com/fIeZMXM.png",
-				"Hallowed Throne": "http://i.imgur.com/m8ORCW8.png",
-				"Dominance": "http://i.imgur.com/5R4RYuT.png",
-				"Harmony": "http://i.imgur.com/XdpulbB.png",
-				"Stalwart Throne": "http://i.imgur.com/3pI3OZj.jpg",
-				"Throne of Fortune": "http://i.imgur.com/ykrqzP9.jpg",
-				"Rugged Throne": "http://i.imgur.com/h3ipMz1.png",
-			},
-			Banners: {
-				"Pendragons Banner": "http://i.imgur.com/lQ1iSSD.png",
-				"Relief Banner": "http://i.imgur.com/A60lVgd.png",
-				"Champions Shroud": "http://i.imgur.com/zP3Zhhs.jpg",
-				"Banner of Magnitude": "http://i.imgur.com/IoIEG95.png",
-				"Banner Of The Cause": "http://i.imgur.com/mlyQ3NV.jpg",
-				"Unyielding Banner": "http://i.imgur.com/ldWy4t6.jpg",
-				"Banner of Arms": "http://i.imgur.com/cknAh6y.png",
-			},
-			Windows: {
-				"Window Of Shalott": "http://i.imgur.com/uJD0fOU.png",
-				"Window Of Resistance": "http://i.imgur.com/34hIEq5.png",
-				"Superbe Window Deal Du Jour Confusion": "http://i.imgur.com/biLx6Am.jpg",
-				"Window Of The Swing": "http://i.imgur.com/7JdqyiG.jpg",
-				"Window of Persistence": "http://i.imgur.com/s0IXGUo.jpg",
-				"Persevering Window": "http://i.imgur.com/HGGbe5Q.jpg",
-				"Warfarers Portal": "http://i.imgur.com/8z4wNcn.jpg",
-				"Window of the Chalice": "http://i.imgur.com/ZelfCuL.png",
-				"Beacon of Rosmerta": "http://i.imgur.com/0z9iysQ.jpg",
-			},
-			Candles: {
-				"Merry Chandelier": "http://i.imgur.com/iBzYUh5.png",
-				"Chandelier Of The Green Knight": "http://i.imgur.com/MEVEjPM.png",
-				"Maganimous Chandelier": "http://i.imgur.com/CJWVQEh.jpg",
-				"Candelabrum of Cruelty": "http://i.imgur.com/Iu2BCQ8.png",
-			},
-			Tables: {
-				"Dark Master Jack": "http://i.imgur.com/2ThozSy.png",
-				"Healers Shrine": "http://i.imgur.com/clPMfAQ.png",
-				"Skillful Table": "http://i.imgur.com/zk18k12.png",
-				"Bombardment Table": "http://i.imgur.com/o4slc5U.png",
-				"Castellans Table": "http://i.imgur.com/mQ8s7RS.gif",
-				"Warmongers Table": "http://i.imgur.com/7DcY81I.jpg",
-				"Hywelbanes Plaque": "http://i.imgur.com/qABdJ9T.jpg",
-				"Rejuvination Trough": "http://i.imgur.com/zH4wteH.jpg",
-			},
-			Trophies: {
-				"Courageous Trophy": "http://i.imgur.com/ODDVqwD.png",
-				"Sir Galahads Shield": "http://i.imgur.com/SKoz0WJ.jpg",
-			},
-			Heros: {
-				"Guileful Ranger": "http://i.imgur.com/uQ8YSwV.jpg",
-				"Grand Siegemaster": "http://i.imgur.com/YIdZF6M.jpg",
-				"Elite Guard": "http://i.imgur.com/3gRUVuo.jpg",
-				"Robin The Courageous": "http://i.imgur.com/wWxlfWv.png",
-			},
-			Statues: {
-				"Monument to Llamrei": "http://i.imgur.com/yxe5FM9.jpg",
-				"The Huntress": "http://i.imgur.com/ddzF7Q2.jpg",
-				"Castle Tauroc": "http://i.imgur.com/OI6UP85.jpg",
-				"Effigy of Wasting": "http://i.imgur.com/t8uIVP3.jpg",
-			},
-			Pets: {
-				"Savage Wolf": "http://i.imgur.com/x9Ho5LU.jpg",
-				"Regal Phoenix": "http://i.imgur.com/My6VcEW.jpg",
-				"Noble Stag": "http://i.imgur.com/IiCkrM7.jpg",
-			},
-			Tapestries: {
-				"Tapestry of Conquest": "http://i.imgur.com/YiZQDKK.jpg",
-			},
-		}
-		unsafeWindow.pbshowunique = showUnique;
-		m = '<table><tr><td width=400px>Uniques</td><td width=400px>Panel A</td><td width=400px>Panel B</td></tr><tr><td style="vertical-align:top">';
-		for (var i in UniqueItems) {
-			m += '<div class="pbdivHeader" align=left><a id=' + i + 'Hdr class=pbdivLink >' + i + '&nbsp;<img id=' + i + 'Arrow height="10" src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/down_arrow.png"></a></div>'
-			m += '<div id=' + i + ' align=left class=""><table>';
-			for (var k in UniqueItems[i]) {
-				m += '<tr><td width=15px><a onClick=\'pbshowunique("panelA", "' + k + '","' + i + '")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelB", "' + k + '","' + i + '")\'>B</a></td><td>' + k + '</td></tr>';
-			}
-			m += '</table></div>';
-		}
-		m += '</td><td id=panelA style="vertical-align:top"></td><td id=panelB style="vertical-align:top"></td></tr>';
-		m += '</table>';
+		var UniqueItems = null;
+		var trTypes = ['chair', 'advisor', 'window', 'banner', 'table', 'trophy', 'candelabrum', 'hero', 'statue', 'pet', 'tapestry']; // must be in this order
+		var itemTypes = { chair: 0, advisor: 1, window: 2, banner: 3, table: 4, trophy: 5, candelabrum: 6, hero: 7, statue: 8, pet: 9, tapestry: 10 }; // must be in this order
+		var itemLists = [];
+		var selectedCard1 = 0;
+		var selectedCard2 = 0;
+		var selectedType1 = 0;
+		var selectedType2 = 0;
+		unsafeWindow.pbrefreshuniques = function (trID,div) {GetInventory(trID,div);};
+		
+        UniqueItems = unsafeWindow.cm.WorldSettings.getSettingAsObject("TR_UNIQUE_ITEMS");
+        for (k in UniqueItems) {
+            var throne_item = UniqueItems[k];
+            if (parseInt(throne_item.Id) < 30000) delete UniqueItems[k];
+            if (parseInt(throne_item.Id) == 30262 || parseInt(throne_item.Id) == 30264 || parseInt(throne_item.Id) == 30266) { throne_item.Name = throne_item.Name + ' ('+unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(throne_item.Faction)].toLowerCase()+')';};
+            if (parseInt(throne_item.Id) == 30261 || parseInt(throne_item.Id) == 30263 || parseInt(throne_item.Id) == 30265) { throne_item.Name = throne_item.Name + ' ('+unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(throne_item.Faction)].toLowerCase()+')';};
+            if (parseInt(throne_item.Id) == 30230 || parseInt(throne_item.Id) == 30240 || parseInt(throne_item.Id) == 30250) { throne_item.Name = throne_item.Name + ' ('+unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(throne_item.Faction)].toLowerCase()+')';};
+            if (parseInt(throne_item.Id) == 30231 || parseInt(throne_item.Id) == 30241 || parseInt(throne_item.Id) == 30251) { throne_item.Name = throne_item.Name + ' ('+unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(throne_item.Faction)].toLowerCase()+')';};
+        }
+       
+        for (i in itemTypes) {
+            itemLists[i] = new Array;
+        }
+        for (k in UniqueItems) {
+            var throne_item = UniqueItems[k];
+            if (throne_item == null || !throne_item || !itemLists[trTypes[parseInt(throne_item.Type)-1]]) continue;
+            itemLists[trTypes[parseInt(throne_item.Type)-1]].push(throne_item);
+        }
+		
+        var m = '<div>';
+        m += '<DIV class=ptstat><b>Throne Room Uniques</b></div>';
+        m += '<TABLE width=100% class=pbTabBR>';
+        m += '<tr width=100% align=center><td width=50%/><td width=50%/></tr>';
+ 
+        m += '<tr><td><div style="max-width:100%;"><b>Type:&nbsp;</b><select id="bttrUniqueType1">';
+        m += '<option value="0">--ALL--</option>';
+        for (var type_index = 0; type_index < trTypes.length; ++type_index) {
+            m += '<option value="' + trTypes[type_index] + '">' + trTypes[type_index] + '</option>';
+        }
+        m += '</select></div></td>';
+
+        m += '<td><div style="max-width:100%;"><b>Type:&nbsp;</b><select id="bttrUniqueType2">';
+        m += '<option value="0">--ALL--</option>';
+        for (var type_index = 0; type_index < trTypes.length; ++type_index) {
+            m += '<option value="' + trTypes[type_index] + '">' + trTypes[type_index] + '</option>';
+        }
+        m += '</select></div></td>';
+
+        m += '<tr><td><div style="max-width:100%;"><b>Item:&nbsp;</b><select id="bttrUnique1">';
+        m += '<option value="0">--Items--</option>';
+        for (k in UniqueItems) {
+            var throne_item = UniqueItems[k];
+            if (throne_item == null || !throne_item) continue;
+            m += '<option value="' + k + '">' + throne_item.Name + ' </option>';
+        }
+        m += '</select></div></td>';
+
+        m += '<td><div style="max-width:100%;"><b>Item:&nbsp;</b><select id="bttrUnique2">';
+        m += '<option value="0">--Items--</option>';
+        for (k in UniqueItems) {
+            var throne_item = UniqueItems[k];
+            if (throne_item == null || !throne_item) continue;
+            m += '<option value="' + k + '">' + throne_item.Name + ' </option>';
+        }
+        m += '</select></div></td>';
+
+        m += '<tr><td><div style="max-width:100%;"><b>Level:&nbsp;</b><select id="bttrUniqueLevel1">';
+        m += '<option value="1" selected>1</option>';
+        for (var type_index = 2; type_index < maxlevel + 1; ++type_index) {
+            m += '<option value="' + type_index + '">' + type_index + '</option>';
+        }
+        m += '</select></div></td>';
+        m += '<td><div style="max-width:100%;"><b>Level:&nbsp;</b><select id="bttrUniqueLevel2">';
+        m += '<option value="1" selected>1</option>';
+        for (var type_index = 2; type_index < maxlevel + 1; ++type_index) {
+            m += '<option value="' + type_index + '">' + type_index + '</option>';
+        }
+        m += '</select></div></td></tr>';
+
+        m += '<tr>';
+        m += '<td id="bttrUniqueItem1" class="tdcard" style="overflow: visible;  width: auto; height: auto;"/>';
+        m += '<td id="bttrUniqueItem2" class="tdcard" style="overflow: visible;  width: auto; height: auto;"/>';
+        m += '</tr>';
+        m += '<tr>';
+        m += '<td id="bttrUniqueInv1" class="tdcard" style="overflow: visible;  width: auto; height: auto;"/>';
+        m += '<td id="bttrUniqueInv2" class="tdcard" style="overflow: visible;  width: auto; height: auto;"/>';
+        m += '</tr>';
+
+        m += '</TABLE>';
+        m += '</div>';
+
 		t.Overv.innerHTML = m;
 
-		function showUnique(panel, name, type) {
-			switch (type) {
-			case "Advisors":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Advisors[name] + '>';
-				break;
-			case "Thrones":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Thrones[name] + '>';
-				break;
-			case "Banners":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Banners[name] + '>';
-				break;
-			case "Windows":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Windows[name] + '>';
-				break;
-			case "Candles":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Candles[name] + '>';
-				break;
-			case "Tables":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Tables[name] + '>';
-				break;
-			case "Trophies":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Trophies[name] + '>';
-				break;
-			case "Heros":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Heros[name] + '>';
-				break;
-			case "Statues":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Statues[name] + '>';
-				break;
-			case "Pets":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Pets[name] + '>';
-				break;
-			case "Tapestries":
-				document.getElementById(panel).innerHTML = '<img src=' + UniqueItems.Tapestries[name] + '>';
-				break;
+        unsafeWindow.jQuery("#bttrUniqueType1").change(function () {
+            var trType = document.getElementById('bttrUniqueType1').value;
+            var trList = document.getElementById('bttrUnique1');
+            if (selectedCard1 == 0 || (selectedType1 != trType) && trType != 0) {
+                selectedCard1 = 0;
+            }
+            selectedType1 = trType;
+            unsafeWindow.jQuery("#bttrUnique1").empty();
+            var trOption = document.createElement('option');
+            trOption.text = '--Items--';
+            trOption.value = 0;
+            trList.add(trOption);
+            for (k in UniqueItems) {
+                var throne_item = UniqueItems[k];
+                if (throne_item == null || !throne_item) continue;
+                if (trTypes[parseInt(throne_item.Type)-1] == trType || trType == 0) {
+                    var trOption = document.createElement('option');
+                    trOption.text = throne_item.Name;
+                    trOption.value = k;
+                    trList.add(trOption);
+                }
+            }
+
+            if (selectedCard1 != 0) {
+                unsafeWindow.jQuery("#bttrUnique1").val(selectedCard1);
+            }
+
+        });
+
+        unsafeWindow.jQuery("#bttrUniqueType2").change(function () {
+            var trType = document.getElementById('bttrUniqueType2').value;
+            var trList = document.getElementById('bttrUnique2');
+            if (selectedCard2 == 0 || (selectedType2 != trType) && trType != 0) {
+                selectedCard2 = 0;
+            }
+            selectedType2 = trType;
+            unsafeWindow.jQuery("#bttrUnique2").empty();
+            var trOption = document.createElement('option');
+            trOption.text = '--Items--';
+            trOption.value = 0;
+            trList.add(trOption);
+            for (k in UniqueItems) {
+                var throne_item = UniqueItems[k];
+                if (throne_item == null || !throne_item) continue;
+                if (trTypes[parseInt(throne_item.Type)-1] == trType || trType == 0) {
+                    var trOption = document.createElement('option');
+                    trOption.text = throne_item.Name;
+                    trOption.value = k;
+                    trList.add(trOption);
+                }
+            }
+
+            if (selectedCard2 != 0) {
+                unsafeWindow.jQuery("#bttrUnique2").val(selectedCard2);
+            }
+        });
+
+        unsafeWindow.jQuery("#bttrUnique1").change(function () { changeUnique1(this); });
+
+        unsafeWindow.jQuery("#bttrUnique1").keyup(function (event) { changeUnique1(this); });
+
+        function changeUnique1(thisObj) {
+            var trID = unsafeWindow.jQuery(thisObj).val();
+            var trDisplay = document.getElementById('bttrUniqueItem1');
+            var trLevel = document.getElementById('bttrUniqueLevel1');
+            selectedCard1 = 0;
+            ConvertToCard(trID,trDisplay,trLevel);
+            GetInventory(trID,'bttrUniqueInv1');
+            selectedCard1 = trID;
+            selectedType1 = i;
+        }
+
+        unsafeWindow.jQuery("#bttrUnique2").change(function () { changeUnique2(this); });
+
+        unsafeWindow.jQuery("#bttrUnique2").keyup(function (event) { changeUnique2(this); });
+
+        function changeUnique2(thisObj) {
+            var trID = unsafeWindow.jQuery(thisObj).val();
+            var trDisplay = document.getElementById('bttrUniqueItem2');
+            var trLevel = document.getElementById('bttrUniqueLevel2');
+            selectedCard2 = 0;
+            ConvertToCard(trID,trDisplay,trLevel);
+            GetInventory(trID,'bttrUniqueInv2');
+            selectedCard2 = trID;
+            selectedType2 = i;
+        }
+
+        unsafeWindow.jQuery("#bttrUniqueLevel1").keyup(function (event) { changeLevel1(); });
+
+        unsafeWindow.jQuery("#bttrUniqueLevel1").change(function () { changeLevel1(); });
+
+        function changeLevel1() {
+            if (selectedCard1 != 0) {
+                var trID = selectedCard1;
+                var trDisplay = document.getElementById('bttrUniqueItem1');
+                var trLevel = document.getElementById('bttrUniqueLevel1');
+                trDisplay.innerHTML = '';
+                ConvertToCard(trID,trDisplay,trLevel);
+            }
+        }
+
+        unsafeWindow.jQuery("#bttrUniqueLevel2").keyup(function (event) { changeLevel2(); });
+
+        unsafeWindow.jQuery("#bttrUniqueLevel2").change(function () { changeLevel2(); });
+
+        function changeLevel2() {
+            if (selectedCard2 != 0) {
+                var trID = selectedCard2;
+                var trDisplay = document.getElementById('bttrUniqueItem2');
+                var trLevel = document.getElementById('bttrUniqueLevel2');
+                trDisplay.innerHTML = '';
+                ConvertToCard(trID,trDisplay,trLevel);
+            }
+        }
+
+		function ConvertToCard (trID,div,lvl) {
+			div.innerHTML = '';
+			var TRCard = {};
+			TRCard = UniqueItems[trID];
+			TRCard.id = TRCard.Id;
+			TRCard.name = TRCard.Name;
+			TRCard.faction = unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(TRCard.Faction)].toLowerCase();
+			TRCard.type = trTypes[parseInt(TRCard.Type)-1].toLowerCase();
+			TRCard.unique = TRCard.id;
+			TRCard.level = parseInt(lvl.value);
+			TRCard.quality = 6;
+			TRCard.createPrefix = function () { return ""; };
+			TRCard.createSuffix = function () { return ""; };
+			TRCard.effects = {};
+			var effects = eval(TRCard.Effects);
+			var slot = 0;
+
+			for (k in effects) {
+				slot++
+				TRCard.effects["slot"+slot] = {};
+				TRCard.effects["slot"+slot].id = effects[k].type;
+				TRCard.effects["slot"+slot].tier = effects[k].tier;
+           
+				if (slot==6) {
+					var qual = 5; // assume bright jewel
+					if (TRCard.id == 30167 || TRCard.id == 30226) {qual = 4;} // some have subdued jewels
+					TRCard.effects["slot"+slot].quality = qual; 
+					TRCard.effects["slot"+slot].fromJewel = true;
+               
+					TRCard.jewel = {};
+					TRCard.jewel.valid = true;
+					TRCard.jewel.id = TRCard.effects["slot"+slot].id;
+					TRCard.jewel.quality = qual;
+					TRCard.jewel.tier = TRCard.effects["slot"+slot].tier;
+					TRCard.jewel.fromJewel = true;
+					TRCard.jewel.gift = false;
+					TRCard.jewel.quantity = 1;
+				}   
 			}
-		}
-		for (var j in UniqueItems) {
-			(function (j) {
-				document.getElementById(j + 'Hdr').addEventListener('click', function () {
-					ToggleDivDisplay(500, 500, j);
-				}, false);
-			})(j);
-		}
+			div.innerHTML = t.DisplayCard(TRCard);
+		};
+
+		function GetInventory (trID,div) {
+			div.innerHTML = '';
+			var m = '<br><b>Throne Room</b><br>';
+			var tritem = {};
+			for (k in unsafeWindow.kocThroneItems) {
+				var throne_item = unsafeWindow.kocThroneItems[k];
+				if (throne_item.unique == trID) {
+					if (tritem[throne_item.level]) {tritem[throne_item.level]++} else {tritem[throne_item.level] = 1;}
+				}
+			}
+			var gotitem = false;
+			for (l in tritem) {
+				gotitem = true;
+				m += 'You have '+tritem[l]+' at level '+l+'<br>';
+			}
+			if (!gotitem) m += 'You have none in your throne room.<br>';
+       
+			m += '<br><b>Inventory</b><br>';
+			var inv = unsafeWindow.seed.items['i'+trID];
+			m += 'You have '+(inv?inv:'none')+' in your inventory.';
+			if ((inv?inv:0) != 0 && !gotitem) {
+				m += '<br><a onClick="cm.ItemController.use(\''+trID+'\');setTimeout(function(){pbrefreshuniques('+trID+',\''+div+'\')},2000);">Add to Throne Room</a>';
+			}
+			document.getElementById(div).innerHTML = m;
+		};
+		
+		
 	},
 	Caps: function () {
 		var t = Tabs.Throne;
@@ -4893,6 +5027,122 @@ Complex loop that browsers can't handle =/. replaced with multiple loops above.
 		***/
 		}
 	},
+	DisplayCard : function (throne_item) {
+		var t = Tabs.Throne;
+		var D = [];
+		if (throne_item == null) {
+			D.push("<div>");
+			D.push("</div>");
+			return D.join("");
+		}
+
+		D.push("<div style='overflow: hidden; position: relative; left: 0px; top: 0px;'>");
+		D.push(" <div id='throneInventoryItemTooltip'>");
+		D.push("<div class='section' style='overflow: visible;' id = 'idsection'>");
+		D.push(" <div class='title " + throne_item.createPrefix().toLowerCase() + "' style='text-transform: capitalize;'> ");
+		D.push(throne_item.name + (throne_item.unique ? " +" + throne_item.level : ""));
+		D.push(" </div> ");
+		D.push(" <div class='description'> ");
+		var uniquestyle = "";
+		if (throne_item.unique > 30000) {
+			uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/'+throne_item.faction+'_'+throne_item.type+'_unique_'+throne_item.unique + '.png"); top left no-repeat; background-size: 70px 70px;';
+			if (throne_item.unique == 30262 || throne_item.unique == 30264 || throne_item.unique == 30266) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/christmas_advisor_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
+			if (throne_item.unique == 30261 || throne_item.unique == 30263 || throne_item.unique == 30265) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/christmas_candelabrum_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
+			if (throne_item.unique == 30230 || throne_item.unique == 30240 || throne_item.unique == 30250) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/halloween_table_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
+			if (throne_item.unique == 30231 || throne_item.unique == 30241 || throne_item.unique == 30251) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/halloween_chair_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
+		}
+		D.push("<div class='portrait " + throne_item.faction + " " + throne_item.type + "' style='"+uniquestyle+"'> </div> ");
+		D.push("<ul>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.faction + ": " + throne_item.faction + "</li>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.quality + ": " + t.CardQuality(throne_item) + "</li>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.type + ": " + throne_item.type + "</li>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.level + ": " + throne_item.level + "</li>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.might + ": " + t.CardMight(throne_item) + "</li>");
+		D.push("</ul>");
+		D.push(" </div> ");
+		D.push(" <ul> ");
+
+		for (slot in throne_item.effects) {
+			try {
+				var N = throne_item.effects[slot];
+				effect = CM.thronestats.effects[N.id];
+				tier = CM.thronestats.tiers[N.id][N.tier];
+				if (!tier) tier = CM.thronestats.tiers[N.id][N.tier - 1];
+				var base = tier.base || 0;
+				var level = throne_item.level || 0;
+				var growth = tier.growth || 0;
+				if (slot == 'slot6') {  //if it has a slot 6, it automatically has a jewel
+					JewelQuality = throne_item["effects"]['slot6'].quality;
+					GrowthLimit = unsafeWindow.cm.thronestats.jewelGrowthLimit[JewelQuality];
+					if (GrowthLimit <= level) level = GrowthLimit
+				}
+				percent = +(base + ((level * level + level) * growth * 0.5));
+				var wholeNumber = false;
+				if (Math.round(parseFloat(percent)) == parseFloat(percent)) wholeNumber = true;
+				percent = (percent > 0) ? "+" + percent : +percent;
+				if (wholeNumber)
+					percent = parseFloat(percent).toFixed(0);
+				else
+					percent = parseFloat(percent).toFixed(2);
+				css = (slot % 2 === 0) ? "even" : "odd";
+				B = +(slot.split("slot")[1]);
+				percent = (percent > 0) ? "+" + percent : percent;
+				if (B <= throne_item.quality) {
+					D.push(" <li class='effect " + css + "'> " + percent + "% " + effect[1] + " </li> ");
+				} else {
+					D.push(" <li class='effect disabled " + css + "'> " + percent + "% " + effect[1] + " </li> ");
+				}
+			}
+			catch (e) { }
+		}
+		D.push(" </ul> ");
+		D.push(" </div> ");
+		D.push(" </ul> ");
+		D.push(" </div> ");
+		D.push(" </div> ");
+		return D.join("");
+	},
+	CardMight : function (throne_item) {
+		var t = Tabs.Throne;
+		var JewelBonus = 1;
+		if (throne_item.jewel && throne_item.jewel.valid) {
+			switch (throne_item.jewel.quality) {
+				case 1: JewelBonus = 1.05; break;
+				case 2: JewelBonus = 1.1; break;
+				case 3: JewelBonus = 1.15; break;
+				case 4: JewelBonus = 1.25; break;
+				case 5: JewelBonus = 1.33; break;
+				default: break;
+			}
+		}	
+		
+		var F = unsafeWindow.cm.thronestats.mightByQuality || {},
+		H = unsafeWindow.cm.thronestats.mightByLevel || {},
+		G = F[throne_item.quality] && F[throne_item.quality].Might ? +F[throne_item.quality].Might : 0,
+		E = F[throne_item.level] && F[throne_item.level].Might ? +F[throne_item.level].Might : 0;
+		return Math.round((unsafeWindow.cm.ThroneController.mightOfItemQuality(throne_item) + H[throne_item.level].Might) * JewelBonus);
+	},
+	CardQuality : function (throne_item) {
+		var t = Tabs.Throne;
+		var b = throne_item.quality,
+		a;
+		if (throne_item.unique > 0) {
+			a = unsafeWindow.g_js_strings.throneRoom.unique
+		} else {
+			switch (b) {
+				case 0: a = unsafeWindow.g_js_strings.throneRoom.simple; break;
+				case 1:	a = unsafeWindow.g_js_strings.throneRoom.common; break;
+				case 2:	a = unsafeWindow.g_js_strings.throneRoom.uncommon; break;
+				case 3: a = unsafeWindow.g_js_strings.throneRoom.rare; break;
+				case 4:	a = unsafeWindow.g_js_strings.throneRoom.epic; break;
+				case 5:	a = unsafeWindow.g_js_strings.throneRoom.wondrous; break;
+				case 6: a = unsafeWindow.g_js_strings.throneRoom.miraculous; break;
+				default: a = unsafeWindow.g_js_strings.throneRoom.simple; break;
+			}
+		}
+		return a
+	},
+
 	hide: function () {},
 	show: function () {
 		var t = Tabs.Throne;
@@ -11992,6 +12242,15 @@ Tabs.AutoCraft = {
 						// increment total craft attempts
 						TrainOptions.CraftingStats[itemId][1] = TrainOptions.CraftingStats[itemId][1] + 1;
 						saveTrainOptions();
+						for (var k in t.craftinfo[itemId].inputItems) {
+							// logit ('item: ' +k+ ': ' +t.craftinfo[itemId].inputItems[k]);
+							if (t.craftinfo[itemId].inputItems[k] > 0) {
+								if (k == t.craftinfo[itemId].consolation)
+									unsafeWindow.cm.InventoryView.removeItemFromInventory(k,(t.craftinfo[itemId].inputItems[k]-1).toFixed(0));
+								else
+									unsafeWindow.cm.InventoryView.removeItemFromInventory(k,parseInt(t.craftinfo[itemId].inputItems[k]));
+							}
+						}	
 					} else if (o.status=="success") { // craft successful
 						actionLog ('Successfully crafting '+unsafeWindow.itemlist["i"+itemId].name+' in '+Cities.cities[c].name);
 						// increment total craft attempts and successful craft attempts
@@ -12009,6 +12268,11 @@ Tabs.AutoCraft = {
 						n.categoryId=null;
 						n.recipeIndex=null;
 						unsafeWindow.seed.queue_craft["city"+currentcity].push(n);
+						for (var k in t.craftinfo[itemId].inputItems) {
+							// logit ('item: ' +k+ ': ' +t.craftinfo[itemId].inputItems[k]);
+							if (t.craftinfo[itemId].inputItems[k] > 0) 
+								unsafeWindow.cm.InventoryView.removeItemFromInventory(k,parseInt(t.craftinfo[itemId].inputItems[k]));
+						}	
 						// If this item started crafting in the city the player has open, rebuild the building tab
 						if (unsafeWindow.currentcityid == currentcity) {
 							// if the building tab is selected, rebuild it
@@ -13023,7 +13287,7 @@ Tabs.Options = {
             GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
       },false);    
       document.getElementById('pbupdatenow').addEventListener ('click', function(){
-            AutoUpdater(true);
+            AutoUpdater_101052.call(true, true);
       },false);    
       document.getElementById('pbsendmeaway').addEventListener ('click', function(){
             GlobalOptions.pbNoMoreKabam = document.getElementById('pbsendmeaway').checked;
@@ -14028,7 +14292,7 @@ Tabs.AutoTrain = {
     var m = '<DIV class=pbStat>AUTO TRAIN</div><TABLE width=100% height=0% class=pbTab><TR><TD width=200></td>';
         m += '<TD align=center><INPUT id=pbAutoTrainState type=submit value="'+translate("AutoTrain")+' = '+ (TrainOptions.Running?'ON':'OFF')+'"></td>';
         m += '<TD align=right><INPUT id=pbShowTrainHelp type=submit value='+translate("HELP")+'></td></tr></table>';
-        m += '<table width=100% height=0% class=pbTab><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> '+translate('Only train when training speed is at least')+' <INPUT id=pbatTRset type=text size=3 maxlength=4 value="'+ TrainOptions.trset +'">&nbsp;%</td><td align=right>Current Training Speed:&nbsp;<span id=currts></span>&nbsp;&nbsp;</td>';
+        m += '<table width=100% height=0% class=pbTab><tr><td align=left><INPUT id=pbatTR type=checkbox '+(TrainOptions.tr?'CHECKED':'')+'> '+translate('Only train when training speed is at least')+' <INPUT id=pbatTRset type=text size=3 maxlength=4 value="'+ TrainOptions.trset +'">&nbsp;%</td><td align=left><INPUT id=pbatGuard type=checkbox '+(TrainOptions.guard?'CHECKED':'')+'> '+translate('Only train when stone guardian active')+'</td><td align=right>Current Training Speed:&nbsp;<span id=currts></span>&nbsp;&nbsp;</td>';
         m += '</tr></table></div>';
         m += '<DIV class=pbStat>TRAINING OPTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center"><td>';
 
@@ -14172,6 +14436,11 @@ Tabs.AutoTrain = {
         saveTrainOptions();
         }, false);
 
+    document.getElementById('pbatGuard').addEventListener ('change', function() {
+        TrainOptions.guard = this.checked;
+        saveTrainOptions();
+	}, false);
+	
     document.getElementById('pbatTRset').addEventListener ('change', function() {
         TrainOptions.trset = this.value;
         saveTrainOptions();
@@ -14484,10 +14753,15 @@ Tabs.AutoTrain = {
     var trainslots = t.checktrainslots(cityId);
     var train = t.trainamt(cityId, TrainOptions['Troops'][t.city]);
     
-    if(!TrainOptions.Enabled[t.city] || TrainOptions['Troops'][t.city]==0 || !idle || !trainslots || !resources || !train){
+	var stonelevel = Seed.guardian[t.city-1].cityGuardianLevels["stone"];
+	stonelevel = stonelevel ? stonelevel : 0;
+    var guardok = (!TrainOptions.guard || (stonelevel == 0) || (Seed.guardian[t.city-1].type == "stone"));
+    
+    if(!TrainOptions.Enabled[t.city] || TrainOptions['Troops'][t.city]==0 || !idle || !trainslots || !resources || !train || !guardok){
         setTimeout(t.nextcity, 5000);
         return;
     }
+
     t.doTrain(cityId, TrainOptions['Troops'][t.city], t.amt, t.nextcity, TrainOptions.Item[t.city]);
   },
   doTrain : function (cityId, unitId, num, notify, tut){
@@ -25933,69 +26207,108 @@ function GuardianTT () {
    z.setEnable(true); 
 };
 
-
-
-function AutoUpdater (prom) {
-	var userscripts = http+'greasyfork.org/scripts/892-koc-power-bot/code/KOC Power Bot.user.js';
-	var googlecode = http+'koc-power-bot.googlecode.com/svn/trunk/KOCpowerBot.user.js';
-	switch(GlobalOptions.pbupdatebeta)
-	{
-		case "0":
-		var scriptpage = userscripts;
-		break;
-		case "1":
-		var scriptpage = googlecode;
-		break;
-		default:
-		var scriptpage = googlecode;
-		break;
-	};
-	GM_xmlhttpRequest({
-         method: 'HEAD',
-         url: scriptpage,
-         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-         },
-         onload: function (x) {
-				var first = Number(x.responseHeaders.indexOf("Last-Modified"))+15;
-            var last = x.responseHeaders.indexOf("\n",first);
-            var lastmodified = x.responseHeaders.slice(first,last);
-            
-				if(GlobalOptions.version != Version) {//just completed our upgrade
-					GlobalOptions.version = Version;
-					GlobalOptions.scriptdate = lastmodified;
-				} else  if(GlobalOptions.scriptdate != lastmodified) {//need to do our upgrade
-
-
-            display_confirm('A new version of KOC Power Bot is available.\nDo you wish to install the latest version?',
-                // Ok
-                function(){
-                    try {
-                        location.href = scriptpage;
-                    } catch(e) {}
-                },
-                // Cancel
-                function() {
-                	try {
-                	if(GlobalOptions.pbupdate) {
-                        if(confirm('Do you want to turn off auto updating for this script?')) {
-                            //GM_setValue('updated_101052', 'off');
-                            GlobalOptions.pbupdate = false;
-                            GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-                            alert('Automatic updates can be re-enabled for this script in the Options tab.');
-                        }
-                     }
-                } catch(e) {}
-             }
-            );
-            
-            
-            } else if (prom) alert('No updates available');
-            
-				GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-         },
-      });
+// The following code is released under public domain.
+var AutoUpdater_101052 = {
+    id: 174296,
+	days: 1,
+	name: "KOC Power Bot",
+	version: Version,
+	beta: GlobalOptions.pbupdatebeta,
+	betaUrl: 'https://code.google.com/p/koc-battle-console/source/browse/trunk/174296.user.js',
+	time: new Date().getTime(),
+	call: function (response, secure) {
+		GM_xmlhttpRequest({
+			method: 'GET',
+			url: this.beta ? this.betaUrl : 'http' + (secure ? 's' : '') + '://greasyfork.org/scripts/892-koc-power-bot/code/KOC Power Bot.user.js',
+			onload: function (xpr) {
+				AutoUpdater_101052.compare(xpr, response);
+			},
+			onerror: function (xpr) {
+				if (secure) AutoUpdater_101052.call(response, false);
+			}
+		});
+	},
+	enable: function () {
+		GM_registerMenuCommand("Enable " + this.name + " updates", function () {
+			GM_setValue('updated_101052', new Date().getTime() + '');
+			AutoUpdater_101052.call(true, true)
+		});
+	},
+	compareVersion: function (r_version, l_version) {
+		var r_parts = r_version.split(''),
+			l_parts = l_version.split(''),
+			r_len = r_parts.length,
+			l_len = l_parts.length,
+			r = l = 0;
+		for (var i = 0, len = (r_len > l_len ? r_len : l_len); i < len && r == l; ++i) {
+			r = +(r_parts[i] || '0');
+			l = +(l_parts[i] || '0');
+		}
+		return (r !== l) ? r > l : false;
+	},
+	compare: function (xpr, response) {
+		this.xversion = /\/\/\s*@version\s+(.+)\s*\n/i.exec(xpr.responseText);
+		this.xname = /\/\/\s*@name\s+(.+)\s*\n/i.exec(xpr.responseText);
+		if ((this.xversion) && (this.xname[1] == this.name)) {
+			this.xversion = this.xversion[1];
+			this.xname = this.xname[1];
+		} else {
+			if ((xpr.responseText.match("the page you requested doesn't exist")) || (this.xname[1] != this.name)) {
+				//GM_setValue('updated_101052', 'off');
+			}
+			return false;
+		}
+		var updated = this.compareVersion(this.xversion, this.version);
+		if (updated) {
+			display_confirm('A new version of ' + this.xname + ' is available.\nDo you wish to install the latest version?',
+				// Ok
+				function () {
+					try {
+						location.href = this.beta ? this.betaUrl : 'https://greasyfork.org/scripts/892-koc-power-bot/code/KOC Power Bot.user.js';
+					} catch (e) {}
+				},
+				// Cancel
+				function () {
+					if (AutoUpdater_101052.xversion) {
+						if (confirm('Do you want to turn off auto updating for this script?')) {
+							//GM_setValue('updated_101052', 'off');
+							GlobalOptions.ptupdate = false;
+							GM_setValue('Options_??', JSON2.stringify(GlobalOptions));
+							AutoUpdater_101052.enable();
+							alert('Automatic updates can be re-enabled for this script from the User Script Commands submenu.');
+						}
+					}
+				}
+			);
+		} else if (response) {
+			alert('No updates available for ' + this.name);
+		}
+	},
+	check: function (tf) {
+		if (!tf) {
+			this.enable();
+		} else {
+			if (+this.time > (+GM_getValue('updated_101052', 0) + 1000 * 60 * 60 * 24 * this.days)) {
+				GM_setValue('updated_101052', this.time + '');
+				this.call(false, true);
+			}
+			GM_registerMenuCommand("Check " + this.name + " for updates", function () {
+				GM_setValue('updated_101052', new Date().getTime() + '');
+				AutoUpdater_101052.call(true, true)
+			});
+		}
+	}
 };
+if (typeof (GM_xmlhttpRequest) !== 'undefined' && typeof (GM_updatingEnabled) === 'undefined') { // has an updater?
+	try {
+		if (unsafeWindow.frameElement === null) {
+			AutoUpdater_101052.check(GlobalOptions.pbupdate);
+		}
+	} catch (e) {
+		AutoUpdater_101052.check(GlobalOptions.pbupdate);
+	}
+}
+/********* End updater code *************/
 
 function Sendtokofcmon (left,top,mapdata) {return; // no send to k of c mon
 	if(Math.floor((Math.random()*1000)+1) > throttle)return;
