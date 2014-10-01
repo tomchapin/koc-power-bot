@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20140930b
+// @version        20141001a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20140930b';
+var Version = '20141001a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -7716,10 +7716,7 @@ Tabs.Search = {
   SearchList : [],
   IgAlly : [],
   dat : [],  
-  
-  init : function (div){
-    var t = Tabs.Search;
-    var Provinces = {1:{'name':"Tintagel",'x':75,'y':75},
+  Provinces : {1:{'name':"Tintagel",'x':75,'y':75},
                 2:{'name':"Cornwall",'x':225,'y':75},
                 3:{'name':"Astolat",'x':375,'y':75},
                 4:{'name':"Lyonesse",'x':525,'y':75},
@@ -7747,7 +7744,10 @@ Tabs.Search = {
                 22:{'name':"Bodmin Moor",'x':225,'y':675},
                 23:{'name':"Cellwig",'x':375,'y':675},
                 24:{'name':"Listeneise",'x':525,'y':675},
-                25:{'name':"Albion",'x':675,'y':675}};
+                25:{'name':"Albion",'x':675,'y':675}},
+  
+  init : function (div){
+    var t = Tabs.Search;
     t.selectedCity = Cities.cities[0];
     t.myDiv = div;
     
@@ -7758,14 +7758,29 @@ Tabs.Search = {
     m += '</span></td></tr><TR><TD class=pbDetLeft>'+translate("At")+': </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
       &nbsp; '+translate("Radius")+': <INPUT id=pasrcDist size=3 value=10 /> &nbsp; <SPAN id=paspInXY></span></tr>\
       <TR><TD class=pbDetLeft>Or:</td><TD>'+translate("Search entire province")+': <select id="provinceXY"><option>--'+translate("provinces")+'--</option>';
-    for (var i in Provinces)
-        m += '<option value="'+i+'">'+Provinces[i].name+'</option>';
-    m += '</select></td></tr>';
+    for (var i in t.Provinces)
+        m += '<option value="'+i+'">'+t.Provinces[i].name+'</option>';
+    m += '</select>&nbsp;No. of Pieces: '+ htmlSelector ({1:'1', 4:'4', 9:'9', 16:'16', 25:'25', 36:'36', 49:'49', 64:'64'}, 1, 'id=provinceSLICES')+'&nbsp; Your Piece: <select id="provinceSLICE"><option value=1 selected>1</option></select></td></tr>';
     m += '<TR><TD colspan=2 align=center><INPUT id=pasrcStart type=submit value="'+translate("Start Search")+'"/></td></tr>';
     m += '</table></div>\
         <DIV id="pasrcResults" style="height:400px; max-height:400px;"></div>';
     
     t.myDiv.innerHTML = m;
+	
+	unsafeWindow.jQuery("#provinceSLICES").change(function () {
+		var numslices = document.getElementById('provinceSLICES').value;
+		var yourslice = document.getElementById('provinceSLICE');
+		unsafeWindow.jQuery("#provinceSLICE").empty();
+		for (var i=1;i<=numslices;i++) {
+			var slOption = document.createElement('option');
+			slOption.text = i;
+			slOption.value = i;
+			yourslice.add(slOption);
+		}	
+		unsafeWindow.jQuery("#provinceSLICE").val(1);
+		t.setSlice();
+	});
+	
     var psearch = document.getElementById ("pasrcType");
     document.getElementById('pasrcType').addEventListener ('change', function (){
       Options.srctype = document.getElementById('pasrcType').value;
@@ -7774,11 +7789,16 @@ Tabs.Search = {
     new CdispCityPicker ('pasrchdcp', document.getElementById ('paspInXY'), true, t.citySelNotify).bindToXYboxes(document.getElementById ('pasrchX'), document.getElementById ('pasrchY'));
     document.getElementById ('provinceXY').addEventListener ('click', function() {
           if (this.value >= 1) {
-              document.getElementById ('pasrchX').value = Provinces[this.value].x;
-              document.getElementById ('pasrchY').value = Provinces[this.value].y;
+              document.getElementById ('pasrchX').value = t.Provinces[this.value].x;
+              document.getElementById ('pasrchY').value = t.Provinces[this.value].y;
               document.getElementById ('pasrcDist').value = '75';
+			  t.setSlice();
           }
         }, false);
+    document.getElementById ('provinceSLICE').addEventListener ('change', function() {
+		t.setSlice();
+        }, false);
+		
     document.getElementById('pbsrcdist').addEventListener ('change', function (){
       Options.srcdisttype = document.getElementById('pbsrcdist').value;
       saveOptions();
@@ -7798,6 +7818,42 @@ Tabs.Search = {
   e_coordChange : function(){
     document.getElementById ('provinceXY').selectedIndex = 0;
   },
+  
+	setSlice : function () {
+		var t = Tabs.Search;
+		var prov = document.getElementById ('provinceXY');
+        if (prov.value >= 1) {
+			var numslices = document.getElementById('provinceSLICES').value;
+			if (numslices == 1) {
+				document.getElementById ('pasrchX').value = t.Provinces[this.value].x;
+				document.getElementById ('pasrchY').value = t.Provinces[this.value].y;
+				document.getElementById ('pasrcDist').value = '75';
+				return;
+			}	
+			var yourslice = document.getElementById('provinceSLICE').value;
+			var distance = Math.ceil(75/Math.sqrt(numslices));
+			var originx = t.Provinces[prov.value].x-75;
+			var originy = t.Provinces[prov.value].y-75;
+			var limitx = t.Provinces[prov.value].x+75;
+			var limity = t.Provinces[prov.value].y+75;
+			var nextx = originx+distance;
+			var nexty = originy+distance;
+			for (var i=1;i<=numslices;i++) {
+				if (i == yourslice) {
+					document.getElementById ('pasrchX').value = nextx;
+					document.getElementById ('pasrchY').value = nexty;
+					document.getElementById ('pasrcDist').value = distance;
+					return;
+				}
+				nextx = nextx+(distance*2);
+				if (nextx > limitx) {
+					nextx = originx+distance;
+					nexty = nexty+(distance * 2);
+					if (nexty > limity) return; // ffs I dunno
+				}
+			}
+		}
+	},
   
   hide : function (){
   },
