@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141001a
+// @version        20141002a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141001a';
+var Version = '20141002a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -5832,6 +5832,9 @@ Tabs.tower = {
 
 	newIncoming : function (m){
 		var t = Tabs.tower;
+		if (m.marchType == null)      // bogus march (returning scouts)
+			return;
+		
 		var totTroops = 0;
 		for (k in m.unts){
 			totTroops += Number(m.unts[k]);
