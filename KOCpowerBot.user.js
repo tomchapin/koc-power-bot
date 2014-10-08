@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141008a
+// @version        20141008b
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141008a';
+var Version = '20141008b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -24014,13 +24014,17 @@ Tabs.Champion = {
 		UniqueItems["28002"] = {Id:28002,Name:"Armor of Radiance", Effects:[{type:206,tier:3},{type:203,tier:2},{type:204,tier:2},{type:2,tier:3},{type:21,tier:3}],Faction:1,Type:2};
 		UniqueItems["28003"] = {Id:28003,Name:"Shield of Radiance", Effects:[{type:205,tier:2},{type:203,tier:2},{type:3,tier:2},{type:207,tier:2},{type:209,tier:3}],Faction:1,Type:5};
 		UniqueItems["28004"] = {Id:28004,Name:"Black Knight's Blade", Effects:[{type:201,tier:6},{type:21,tier:2},{type:204,tier:2},{type:208,tier:2},{type:202,tier:3}],Faction:2,Type:1};
+		UniqueItems["28005"] = {Id:28005,Name:"Black Knight's Armor", Effects:[{type:205,tier:2},{type:202,tier:3},{type:206,tier:2},{type:1,tier:3},{type:208,tier:3}],Faction:2,Type:2};
 		UniqueItems["28006"] = {Id:28006,Name:"Black Knight's Shield", Effects:[{type:204,tier:3},{type:207,tier:2},{type:19,tier:2},{type:17,tier:3},{type:202,tier:3}],Faction:2,Type:5};
 		UniqueItems["28007"] = {Id:28007,Name:"Blade of the Wild", Effects:[{type:201,tier:5},{type:5,tier:2},{type:204,tier:2},{type:207,tier:2},{type:1,tier:3}],Faction:3,Type:1};
+		UniqueItems["28008"] = {Id:28008,Name:"Armor of the Wild", Effects:[{type:206,tier:2},{type:20,tier:2},{type:207,tier:2},{type:1,tier:3},{type:205,tier:3}],Faction:3,Type:2};
 		UniqueItems["28009"] = {Id:28009,Name:"Shield of the Wild", Effects:[{type:202,tier:2},{type:207,tier:2},{type:208,tier:2},{type:203,tier:3},{type:5,tier:3}],Faction:3,Type:5};
 		UniqueItems["28010"] = {Id:28010,Name:"Scourge Knight's Maul", Effects:[{type:201,tier:6},{type:205,tier:3},{type:204,tier:3},{type:1,tier:3},{type:5,tier:2}],Faction:2,Type:1};
 		UniqueItems["28011"] = {Id:28011,Name:"Scourge Knight's Armor", Effects:[{type:206,tier:2},{type:203,tier:3},{type:208,tier:2},{type:1,tier:3},{type:207,tier:2}],Faction:2,Type:2};
 		UniqueItems["28012"] = {Id:28012,Name:"Scourge Knight's Shield", Effects:[{type:206,tier:2},{type:205,tier:2},{type:208,tier:3},{type:21,tier:3},{type:17,tier:3}],Faction:2,Type:5};
+		UniqueItems["28013"] = {Id:28013,Name:"Black Knight's Helmet", Effects:[{type:202,tier:3},{type:208,tier:3},{type:207,tier:2},{type:1,tier:2},{type:19,tier:3}],Faction:2,Type:3};
 		UniqueItems["28014"] = {Id:28014,Name:"Helmet of Radiance", Effects:[{type:203,tier:3},{type:207,tier:3},{type:209,tier:3},{type:2,tier:2},{type:3,tier:3}],Faction:1,Type:3};
+		UniqueItems["28015"] = {Id:28015,Name:"Helmet of the Wild", Effects:[{type:205,tier:3},{type:202,tier:2},{type:209,tier:3},{type:207,tier:3},{type:4,tier:3}],Faction:3,Type:3};
 		UniqueItems["28016"] = {Id:28016,Name:"Scourge Knight's Helmet", Effects:[{type:17,tier:2},{type:208,tier:3},{type:202,tier:3},{type:206,tier:2},{type:5,tier:2}],Faction:2,Type:3};
 		UniqueItems["28017"] = {Id:28017,Name:"Noble Axe", Effects:[{type:201,tier:4},{type:22,tier:2},{type:207,tier:3},{type:3,tier:2},{type:202,tier:3}],Faction:1,Type:1};
 		UniqueItems["28018"] = {Id:28018,Name:"Noble Shield", Effects:[{type:209,tier:3},{type:22,tier:3},{type:202,tier:3},{type:7,tier:3},{type:3,tier:2}],Faction:1,Type:5};
@@ -24030,10 +24034,16 @@ Tabs.Champion = {
 		UniqueItems["28022"] = {Id:28022,Name:"Feral Shield", Effects:[{type:206,tier:3},{type:21,tier:2},{type:202,tier:2},{type:4,tier:2},{type:18,tier:3}],Faction:3,Type:5};
 		UniqueItems["28023"] = {Id:28023,Name:"Feral Armor", Effects:[{type:203,tier:2},{type:17,tier:2},{type:6,tier:3},{type:3,tier:2},{type:205,tier:2}],Faction:3,Type:2};
 		UniqueItems["28024"] = {Id:28024,Name:"Feral Helmet", Effects:[{type:206,tier:2},{type:5,tier:2},{type:20,tier:2},{type:203,tier:3},{type:6,tier:3}],Faction:3,Type:3};
+		UniqueItems["28025"] = {Id:28025,Name:"Black Knight's Greaves", Effects:[{type:202,tier:3},{type:205,tier:2},{type:208,tier:3},{type:20,tier:2},{type:18,tier:3}],Faction:2,Type:4};
+		UniqueItems["28026"] = {Id:28026,Name:"Greaves of Radiance", Effects:[{type:207,tier:2},{type:202,tier:3},{type:209,tier:2},{type:3,tier:2},{type:4,tier:2}],Faction:1,Type:4};
+		UniqueItems["28027"] = {Id:28027,Name:"Boots of the Wild", Effects:[{type:207,tier:2},{type:202,tier:3},{type:21,tier:2},{type:205,tier:2},{type:17,tier:3}],Faction:3,Type:4};
+		UniqueItems["28028"] = {Id:28028,Name:"Scourge Knight's Greaves", Effects:[{type:208,tier:2},{type:202,tier:2},{type:2,tier:2},{type:208,tier:3},{type:18,tier:2}],Faction:2,Type:4};
+		UniqueItems["28029"] = {Id:28029,Name:"Noble Boots", Effects:[{type:202,tier:2},{type:17,tier:3},{type:206,tier:3},{type:2,tier:3},{type:21,tier:2}],Faction:1,Type:4};
+		UniqueItems["28030"] = {Id:28030,Name:"Feral Boots", Effects:[{type:20,tier:2},{type:17,tier:3},{type:205,tier:2},{type:19,tier:3},{type:4,tier:3}],Faction:3,Type:4};
 		UniqueItems["28031"] = {Id:28031,Name:"Commander's Sword", Effects:[{type:201,tier:6},{type:1,tier:2},{type:207,tier:3},{type:18,tier:2},{type:208,tier:3}],Faction:1,Type:1};
+		UniqueItems["28033"] = {Id:28033,Name:"Commander's Armor", Effects:[{type:203,tier:2},{type:5,tier:2},{type:1,tier:2},{type:204,tier:3},{type:209,tier:3}],Faction:1,Type:2};
 		UniqueItems["28035"] = {Id:28035,Name:"Commander's Greaves", Effects:[{type:205,tier:2},{type:20,tier:3},{type:2,tier:2},{type:206,tier:2},{type:203,tier:3}],Faction:1,Type:4};
 		
-
 		for (var i=28001;i<29000;i++) {
 			if (!unsafeWindow.itemlist['i'+i]) break;
 			if (!UniqueItems[i]) {
@@ -24074,7 +24084,9 @@ Tabs.Champion = {
         for (k in UniqueItems) {
             var champ_item = UniqueItems[k];
             if (champ_item == null || !champ_item) continue;
-            m += '<option value="' + k + '">' + champ_item.Name + ' </option>';
+			var style = '';
+			if (champ_item.Faction == 0) style = 'style="color:#aaa;"';
+            m += '<option '+style+' value="' + k + '">' + champ_item.Name + ' </option>';
         }
         m += '</select></div></td>';
 
@@ -24083,7 +24095,9 @@ Tabs.Champion = {
         for (k in UniqueItems) {
             var champ_item = UniqueItems[k];
             if (champ_item == null || !champ_item) continue;
-            m += '<option value="' + k + '">' + champ_item.Name + ' </option>';
+			var style = '';
+			if (champ_item.Faction == 0) style = 'style="color:#aaa;"';
+            m += '<option '+style+' value="' + k + '">' + champ_item.Name + ' </option>';
         }
         m += '</select></div></td>';
 
