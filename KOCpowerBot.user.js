@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141008b
+// @version        20141009a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141008b';
+var Version = '20141009a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -332,6 +332,15 @@ var TrainOptions = {
   CraftUseGH : false,
   CraftUseKH : false,
   CraftUseSH : false,
+  ReviveUseLH : false,
+  ReviveUseEH : false,
+  ReviveUseDH : false,
+  ReviveUseRH : false,
+  ReviveUseAH : false,
+  ReviveUseMH : false,
+  ReviveUseGH : false,
+  ReviveUseKH : false,
+  ReviveUseSH : false,
   tr  :  false,
   guard  :  false,
   trset  :  0,
@@ -502,7 +511,11 @@ var HourGlassTDLabel = {
                     2: 'Time: 15 Min | Conditions: 5m & 1s+',
                     3: 'Time: 1 Hour | Conditions: 45m & 1s+',
                     4: 'Time: 2.5 Hours | Conditions: 2h & 1s+',
-                    5: 'Time: 8 Hours | Conditions: 7h & 30m & 1s+'
+                    5: 'Time: 8 Hours | Conditions: 7h & 30m & 1s+',
+                    6: 'Time: 15 Hours | Conditions: 14h & 30m & 1s+',
+                    7: 'Time: 24 Hours | Conditions: 23h & 30m & 1s+',
+                    8: 'Time: 2.5 Days | Conditions: 48h+',
+                    9: 'Time: 4 Days | Conditions: 3d & 12h+',
 };
 
 var HourGlassName = {
@@ -510,7 +523,11 @@ var HourGlassName = {
                     2: "Knight's Hourglass",
                     3: "Guinevere's Hourglass",
                     4: "Morgana's Hourglass",
-                    5: "Arthur's Hourglass"
+                    5: "Arthur's Hourglass",
+                    6: "Merlin's Hourglass",
+                    7: "Divine Hourglass",
+                    8: "Epic Hourglass",
+                    9: "Legendary Hourglass",
 };
 
 var HOURGLASSES_TIME = {
@@ -518,15 +535,23 @@ var HOURGLASSES_TIME = {
     minute15 : 900,
     hour1 : 3600,
     hour25 : 9000,
-    hour8 : 28800
+    hour8 : 28800,
+    hour15: 54000,
+    hour24: 86400,
+    day25: 216000,
+	day4: 345600,
 }
 
 var HOURGLASSES_TIME_MIN_THRESHOLD = {
-    minute1 : 30, //30 seconds and up will use 1m speedup
-    minute15 : 301, //5 minute 1 second and up will use 15m speedup
+    minute1 : 30, // 30 seconds and up will use 1m speedup
+    minute15 : 301, // 5 minutes 1 second and up will use 15m speedup
     hour1 : 2701, // 45 minutes 1 second and up will use 1hr speedup
-    hour25 : 7201, // 2 hour 1 second and up will use 2.5hr speedup
-    hour8 : 26101 // 7 hours 30 minutes 1 second and up will use 8hr speedup
+    hour25 : 7201, // 2 hours 1 second and up will use 2.5hr speedup
+    hour8 : 26101, // 7 hours 30 minutes 1 second and up will use 8hr speedup
+    hour15: 50431, // 14 hours 30 minutes 1 second and up will use 15hr speedup
+    hour24: 82831, // 23 hours 30 minutes 1 second and up will use 24hr speedup
+    day25: 172800, // 48 hours and up will use 2.5 day speedup
+	day4: 302400, // 3 days and 12 hours and up will use 4 day speedup
 }
 
 // Get element by id shortform with parent node option
@@ -19792,6 +19817,17 @@ Tabs.Apothecary = {
   rs : 0,
   rsok : true,
   lastrsok : true,
+	autodelay: 0,
+	AutoCity: 0,
+	Squire:0,
+	Knight:0,
+	Guinevere:0,
+	Morgana:0,
+	Arthur:0,
+	Merlin:0,
+	Divine:0,
+	Epic:0,
+	Legendary:0,
   
   init : function (div){    // called once, upon script startup
     var t = Tabs.Apothecary;
@@ -19799,6 +19835,10 @@ Tabs.Apothecary = {
     var cities = unsafeWindow.seed.cities;
     var unitcost = unsafeWindow.unitcost;
     var woundedUnits = unsafeWindow.seed.woundedUnits;
+	
+	unsafeWindow.speedupRevive = function (cityId,item,cid,slotNum) {t.speedupRevive(cityId,item,cid,slotNum);}
+	unsafeWindow.cancelRevive = function (cityId,slotNum) {t.cancelRevive(cityId,slotNum);}
+	
     var m = '<div class="pbStat">APOTHECARY TAB</div>\
         <table width="100%" height="0%" class="pbTab"><tr align="center">\
         <td><input type="submit" id="pbapothecary_power" value="Auto Heal = ' + (ApothecaryOptions.Active ? 'ON' : 'OFF') + '" /></td>\
@@ -19811,13 +19851,26 @@ Tabs.Apothecary = {
     for (y in unitcost)
         m += '<option value="' + y.substr(3) + '">' + unitcost[y][0] + '</option>';
     m += '</select></td>\
-		<td>Min.: <input id="pbapothecary_min" type="text" size="4" /></td>\
+		<td>Min.: <input id="pbapothecary_min" type="text" size="4" value="0"/></td>\
         <td><input type="checkbox" id="pbapothecary_maxcheck" />Max.: <input id="pbapothecary_max" type="text" size="4" disabled="disabled" /></td>\
-        <td><input type="submit" id="pbapothecary_save" value="Add" />&nbsp;<input type="submit" id="pbapothecary_now" value="Revive Now!" />&nbsp;<span id=pbrevivemsg style="color:#f00;">&nbsp;</span></td></tr></table>\
-        <div class="pbStat">STATS</div>\
+        <td><input type="submit" id="pbapothecary_save" value="Add" />&nbsp;<input type="submit" id="pbapothecary_now" value="Revive Now!" />&nbsp;<span id=pbrevivemsg style="color:#f00;">&nbsp;</span></td></tr>';
+		m += '<tr><td colspan=4>&nbsp;<b>Use Auto-Speedups:</b></td></tr>';
+		m += '<tr><td colspan=4><div align=right><table width=95%><tr>';
+		m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[1] + "'><input type=checkbox id=pbreviveSH " + (TrainOptions.ReviveUseSH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[1] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseSHLabel>" + unsafeWindow.ksoItems[1].count + "</div>)</div></td>";
+		m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[2] + "'><input type=checkbox id=pbreviveKH " + (TrainOptions.ReviveUseKH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[2] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseKHLabel>" + unsafeWindow.ksoItems[2].count + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[3] + "'><input type=checkbox id=pbreviveGH " + (TrainOptions.ReviveUseGH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[3] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseGHLabel>" + unsafeWindow.ksoItems[3].count + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[4] + "'><input type=checkbox id=pbreviveMH " + (TrainOptions.ReviveUseMH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[4] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseMHLabel>" + unsafeWindow.ksoItems[4].count + "</div>)</div></td><td align=right><INPUT id=pbReviveHelp type=submit value='HELP!'></td></tr><tr>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[5] + "'><input type=checkbox id=pbreviveAH " + (TrainOptions.ReviveUseAH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[5] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseAHLabel>" + unsafeWindow.ksoItems[5].count + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[6] + "'><input type=checkbox id=pbreviveRH " + (TrainOptions.ReviveUseRH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[6] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseRHLabel>" + unsafeWindow.ksoItems[6].count + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[7] + "'><input type=checkbox id=pbreviveDH " + (TrainOptions.ReviveUseDH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[7] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseDHLabel>" + unsafeWindow.ksoItems[7].count + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[8] + "'><input type=checkbox id=pbreviveEH " + (TrainOptions.ReviveUseEH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[8] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseEHLabel>" + unsafeWindow.ksoItems[8].count + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[9] + "'><input type=checkbox id=pbreviveLH " + (TrainOptions.ReviveUseLH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[9] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseLHLabel>" + unsafeWindow.ksoItems[10].count + "</div>)</div></td>";
+		m += '</tr></table></td></tr>';
+		
+	m += '</table><div class="pbStat">STATS</div>\
         <table width="100%" style ="font-size: 10px;"><thead><tr><th>&nbsp;</th>';
     for (i = 0; i < cities.length; i ++) {
-        m += '<th>' + cities[i][1] + '</th>';
+        m += '<th id=revivecity'+i+'>' + cities[i][1] + '</th>';
     }
     m += '<th>total</th></tr></thead>\
 		<tr><td>Gold</td>';
@@ -19832,7 +19885,7 @@ Tabs.Apothecary = {
         m += '<td id="tdApoBuilding_' + cid + '" style="text-align: center; white-space: nowrap;">&nbsp;</td>';
     }
     m += '<td>&nbsp;</td></tr>\
-        <tr><td class="pbStat" colspan="' + (cities.length + 2) + '">' + unsafeWindow.g_js_strings.revive.curintrain + '</td></tr>\
+		<tr><td class="pbStat" colspan="' + (cities.length + 2) + '">' + unsafeWindow.g_js_strings.revive.curintrain + '</td></tr>\
         <tr><td>Revive Queue 1</td>';
     for (i = 0; i < cities.length; i ++) {
         var cid = 'city' + cities[i][0];
@@ -19856,6 +19909,18 @@ Tabs.Apothecary = {
     m += '</tbody></table>';
 
     div.innerHTML = m;
+	
+	document.getElementById('pbreviveSH').addEventListener ('change', function() {TrainOptions.ReviveUseSH = this.checked;saveTrainOptions();}, false);
+	document.getElementById('pbreviveKH').addEventListener ('change', function() {TrainOptions.ReviveUseKH = this.checked;saveTrainOptions();}, false);
+	document.getElementById('pbreviveGH').addEventListener ('change', function() {TrainOptions.ReviveUseGH = this.checked;saveTrainOptions();}, false);
+	document.getElementById('pbreviveMH').addEventListener ('change', function() {TrainOptions.ReviveUseMH = this.checked;saveTrainOptions();}, false);
+	document.getElementById('pbreviveAH').addEventListener ('change', function() {TrainOptions.ReviveUseAH = this.checked;saveTrainOptions();}, false);
+	document.getElementById('pbreviveRH').addEventListener ('change', function() {TrainOptions.ReviveUseRH = this.checked;saveTrainOptions();}, false);
+	document.getElementById('pbreviveDH').addEventListener ('change', function() {TrainOptions.ReviveUseDH = this.checked;saveTrainOptions();}, false);
+	document.getElementById('pbreviveEH').addEventListener ('change', function() {TrainOptions.ReviveUseEH = this.checked;saveTrainOptions();}, false);
+	document.getElementById('pbreviveLH').addEventListener ('change', function() {TrainOptions.ReviveUseLH = this.checked;saveTrainOptions();}, false);
+	document.getElementById ('pbReviveHelp').addEventListener ('click', t.helpPop, false);
+	
     document.getElementById('pbrvTR').addEventListener ('change', function() {
         TrainOptions.rvtr = this.checked;
         saveTrainOptions();
@@ -19895,7 +19960,116 @@ Tabs.Apothecary = {
     t.citysel = new CdispCityPicker ('pbapo_sel', document.getElementById("pbapothecary_citysel"), true, null, 0, t.cities);
     t.timer = setTimeout(t.loop,5000);
   },
-  
+
+	helpPop : function (){
+		var helpText = '<br>'+translate("Using Speedups for Reviving");
+		helpText += '<p>Speedups will be used in the following order if they are selected, and the required criteria is met :-</p>';
+		helpText += '<TABLE><TR><TD><b>Item</b></td><TD><b>Time</b></td><TD><b>Criteria</b></td></tr>';
+		helpText += '<TR><TD>Legendary Hourglass</td><TD>4 days</td><TD>More than 3 days 12 hours remaining</td></tr>';
+		helpText += '<TR><TD>Epic Hourglass</td><TD>2.5 days</td><TD>More than 48 hours remaining</td></tr>';
+		helpText += '<TR><TD>Divine Hourglass</td><TD>24 hrs</td><TD>More than 23 hours 30 minutes remaining</td></tr>';
+		helpText += '<TR><TD>Merlins Hourglass</td><TD>15 hrs</td><TD>More than 14 hours 30 minutes remaining</td></tr>';
+		helpText += '<TR><TD>Arthurs Hourglass</td><TD>8 hrs</td><TD>More than 7 hours 30 minutes remaining</td></tr>';
+		helpText += '<TR><TD>Morganas Hourglass</td><TD>2.5 hrs</td><TD>More than 2 hours remaining</td></tr>';
+		helpText += '<TR><TD>Guineveres Hourglass</td><TD>1 hr</td><TD>More than 45 minutes remaining</td></tr>';
+		helpText += '<TR><TD>Knights Hourglass</td><TD>15 mins</td><TD>More than 5 minutes remaining</td></tr>';
+		helpText += '<TR><TD>Squires Hourglass</td><TD>1 min</td><TD>More than 30 seconds remaining</td></tr>';
+		helpText += '</table><br>';
+    
+		var pop = new pbPopup ('giftHelp', 0, 0, 450, 220, true);
+		pop.centerMe (mainPop.getMainDiv());  
+		pop.getMainDiv().innerHTML = helpText;
+		pop.getTopDiv().innerHTML = '<CENTER><B>Power Bot '+translate("Help")+': '+translate("Speedups")+'</b></center>';
+		pop.show (true);
+	},
+
+	speedupRevive : function (cityId,item,cid,slotNum,noretry) {
+		var t = Tabs.Apothecary;
+		t.autodelay = 5; // don't try again for 5 seconds
+		unsafeWindow.jQuery('#revivecity'+Cities.byID[cityId].idx).css('color', 'green');
+		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+		params.cid = cityId;
+		params.iid = item;
+  		params.uid = cid;
+		params.slotNum = slotNum;
+		unsafeWindow.cm.ApothecaryModel.setParam(params, true);
+  		new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/speedupTraining.php" + unsafeWindow.g_ajaxsuffix, {
+  			method: "post",
+  			parameters: params,
+  			onSuccess: function (rslt) {
+				if (rslt.ok) {
+					var reduced = unsafeWindow.cm.intelligentOrdering.getReduceTime(item);
+					Seed.items["i" + item] = parseInt(Seed.items["i" + item]) - 1;
+					unsafeWindow.ksoItems[item].subtract();
+					var qloc = 0;
+					var timered = 0;
+					var timeredarr = [60, 900, 3600, 9000, 28800, 54000, 86400, 216000, 0, 345600];
+					var queue = Seed.queue_unt;
+					if (params.slotNum == 1) {
+						queue = Seed.queue_revive
+					}
+					if (params.slotNum == 2) {
+						queue = Seed.queue_revive2
+					}
+					queue["city" + cityId][0][3] = rslt.dateTraining;
+					if (rslt.updateCityUnits) {
+						unsafeWindow.update_cityUnits(rslt.updateCityUnits)
+					}
+					if (rslt.updateWoundedCityUnits) {
+						unsafeWindow.update_woundedCityUnits(rslt.updateWoundedCityUnits)
+					}
+					timered = timeredarr[parseInt(item) - 1];
+					if (Seed.player.usedSpeedup && Seed.player.usedSpeedup == 0) {
+						Seed.player.usedSpeedup = 1;
+					}
+					if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_queue();
+				} else {
+					actionLog('Revive Speedup Failed ('+ unsafeWindow.printLocalError(rslt.error_code, rslt.msg, rslt.feedback) + ')');
+				}
+				unsafeWindow.jQuery('#revivecity'+Cities.byID[cityId].idx).css('color', 'rgb(66, 39, 20)')
+  			},
+			onFailure: function () { 
+				unsafeWindow.jQuery('#revivecity'+Cities.byID[cityId].idx).css('color', 'rgb(66, 39, 20)')
+			}
+  		},noretry);
+	},
+	
+    autoSpeedup: function (cityId,q,slot) {
+		var t = Tabs.Apothecary;
+		var now = unixTime();
+		var item = 0;
+		totTime = q[3] - now;
+		
+		if (totTime > 0) {
+            if (item==0 && totTime >= HOURGLASSES_TIME_MIN_THRESHOLD.day4 && TrainOptions.ReviveUseLH && unsafeWindow.ksoItems[10].count > 0) { item = 10; }
+            if (item==0 && totTime >= HOURGLASSES_TIME_MIN_THRESHOLD.day25 && TrainOptions.ReviveUseEH && unsafeWindow.ksoItems[8].count > 0) { item = 8; }
+            if (item==0 && totTime >= HOURGLASSES_TIME_MIN_THRESHOLD.hour24 && TrainOptions.ReviveUseDH && unsafeWindow.ksoItems[7].count > 0) { item = 7; }
+            if (item==0 && totTime >= HOURGLASSES_TIME_MIN_THRESHOLD.hour15 && TrainOptions.ReviveUseRH && unsafeWindow.ksoItems[6].count > 0) { item = 6; }
+            if (item==0 && totTime >= HOURGLASSES_TIME_MIN_THRESHOLD.hour8 && TrainOptions.ReviveUseAH && unsafeWindow.ksoItems[5].count > 0) { item = 5; }
+            if (item==0 && totTime >= HOURGLASSES_TIME_MIN_THRESHOLD.hour25 && TrainOptions.ReviveUseMH && unsafeWindow.ksoItems[4].count > 0) { item = 4; }
+            if (item==0 && totTime >= HOURGLASSES_TIME_MIN_THRESHOLD.hour1 && TrainOptions.ReviveUseGH && unsafeWindow.ksoItems[3].count > 0) { item = 3; }
+            if (item==0 && totTime >= HOURGLASSES_TIME_MIN_THRESHOLD.minute15 && TrainOptions.ReviveUseKH && unsafeWindow.ksoItems[2].count > 0) { item = 2; }
+            if (item==0 && totTime >= HOURGLASSES_TIME_MIN_THRESHOLD.minute1 && TrainOptions.ReviveUseSH && unsafeWindow.ksoItems[1].count > 0) { item = 1; }
+        }
+
+		if (item != 0) {
+			t.speedupRevive(cityId,item,q[0],slot,true);
+		}
+    },
+
+	cancelRevive : function (cityId,slotNum) {
+		var t = Tabs.Apothecary;
+		var q;
+		if (slotNum == 1)
+			q = Seed.queue_revive['city'+cityId][0];
+		if (slotNum == 2)
+			q = Seed.queue_revive2['city'+cityId][0];
+		if(q) {
+			unsafeWindow.cm.last_building_opened = 23; // force apothecary view boolean
+			unsafeWindow.removeTraining(0, cityId, q[0], q[1], q[3], q[2], q[5], false, 'rev'+slotNum)
+		}	
+	},
+	
   e_addqueue : function (){
     var t = Tabs.Apothecary;
     var city = t.citysel.city.idx;
@@ -19904,7 +20078,7 @@ Tabs.Apothecary = {
     var max = parseIntNan($("pbapothecary_max").value);
     var max_sel = $("pbapothecary_maxcheck").checked;
     try {
-        if((troopsel < 1 || min < 1) || (max_sel && max < 1) || (max_sel && (max < min)))
+        if((troopsel < 1) || (max_sel && max < 1) || (max_sel && (max < min)))
             throw "Incomplete/Invalid Input!";
         ApothecaryOptions.city[city].push({troop:troopsel,min:min,max:max,max_sel:max_sel});
         saveApothecaryOptions();
@@ -19991,12 +20165,38 @@ Tabs.Apothecary = {
     var t = Tabs.Apothecary;
     clearTimeout(t.timer);
     if(!ApothecaryOptions.Active) return;
-	if(!t.rsok) {t.timer = setTimeout(t.loop, 10000);return;}
 	
     for (var city in ApothecaryOptions.city){
-        if(!Cities.cities[city] || ApothecaryOptions.city[city].length < 1) continue;
+
+		if  (t.autodelay <= 0) { 
+			if (city == t.AutoCity) {
+				var q1;
+				if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0) {
+					q1 = Seed.queue_revive['city'+Cities.cities[city].id][0];
+					t.autoSpeedup (Cities.cities[city].id,q1,1);
+				}	
+				var q2;
+				if(Seed.queue_revive2['city'+Cities.cities[city].id].length > 0) {
+					q2 = Seed.queue_revive2['city'+Cities.cities[city].id][0];
+					t.autoSpeedup (Cities.cities[city].id,q2,2);
+				}
+				t.AutoCity++;
+				if (t.AutoCity > Number(Cities.numCities)-1) t.AutoCity = 0;
+			}	
+		}
+		
         if(t.cities[city]) continue; //Skip if Apothecary doesn't exist
-        if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0 && Seed.queue_revive2['city'+Cities.cities[city].id].length > 0) continue; //Skip city if queue is full
+		if(!t.rsok) {t.timer = setTimeout(t.loop, 5000);return;} // put this here so it still does speedups.
+        if(!Cities.cities[city] || ApothecaryOptions.city[city].length < 1) continue;
+
+		var twoqueues = false;
+		var cid = Cities.cities[city].id;
+		var twobuilds = (getCityBuilding(cid, 23).count > 1);
+		if 	(Seed.cityData.city[cid].isPrestigeCity) {
+			twoqueues = ((Seed.cityData.city[cid].prestigeInfo.blessings.indexOf(106) != -1) && twobuilds);
+		}	
+
+        if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0 && (Seed.queue_revive2['city'+Cities.cities[city].id].length > 0 || !twobuilds)) continue; //Skip city if queue is full
         if(Seed.citystats["city" + Cities.cities[city].id].gold[0] < parseInt(ApothecaryOptions.goldkeep)) continue; //Skip if gold is less than reserve
         for(var i=0; i<ApothecaryOptions.city[city].length; i++){
             var info = ApothecaryOptions.city[city][i];
@@ -20014,7 +20214,7 @@ Tabs.Apothecary = {
             }
         }
     }
-    t.timer = setTimeout(t.loop, 10000);
+    t.timer = setTimeout(t.loop, 5000);
   },
   revive_now: function(city,troop,min,max,max_sel){
 		var t = Tabs.Apothecary;
@@ -20025,7 +20225,13 @@ Tabs.Apothecary = {
 		}
 		var cid = Cities.cities[city].id;
 		var amt = 0;
-        if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0 && Seed.queue_revive2['city'+Cities.cities[city].id].length) {
+		var twoqueues = false;
+		var twobuilds = (getCityBuilding(cid, 23).count > 1);
+		if 	(Seed.cityData.city[cid].isPrestigeCity) {
+			twoqueues = ((Seed.cityData.city[cid].prestigeInfo.blessings.indexOf(106) != -1) && twobuilds);
+		}	
+
+        if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0 && (Seed.queue_revive2['city'+Cities.cities[city].id].length > 0 || !twoqueues)) {
 			document.getElementById('pbrevivemsg').innerHTML = "Queue Full!";
 			return;
 		}
@@ -20063,6 +20269,7 @@ Tabs.Apothecary = {
   
   do_revive : function(currentcityid,unitId,num,notify){
     var t = Tabs.Apothecary;
+	unsafeWindow.jQuery('#revivecity'+Cities.byID[currentcityid].idx).css('color', 'red');
     var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
     params.cid = currentcityid;
     params.type = unitId;
@@ -20070,12 +20277,10 @@ Tabs.Apothecary = {
     params.apothecary = true;
     var time = unsafeWindow.cm.RevivalModel.getRevivalStats(unitId, num).time;
 
-    var profiler = new unsafeWindow.cm.Profiler("ResponseTime", "train.php");
     new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
         method: "post",
         parameters: params,
         onSuccess: function(rslt) {
-            profiler.stop();
           if (rslt.ok) {
             for (var i = 1; i < 5; i++) {
                 var resourceLost = parseInt(unsafeWindow.unitcost["unt" + unitId][i]) * 3600 * parseInt(num);
@@ -20093,16 +20298,32 @@ Tabs.Apothecary = {
 			recentlyEntryWasAddedQueue.push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
             var cost = unsafeWindow.cm.RevivalModel.getRevivalStats(unitId, num).cost;
             Seed.citystats["city" + currentcityid].gold[0] -= parseInt(cost);
+			if (unsafeWindow.currentcityid == currentcityid) unsafeWindow.update_gold();
 			var savecityid = unsafeWindow.currentcityid;
 			unsafeWindow.currentcityid = currentcityid;
-            unsafeWindow.update_gold();
             unsafeWindow.cm.WoundedModel.sub(unitId, num);
 	        unsafeWindow.currentcityid = savecityid;
           } else {
-            
+			if (rslt.feedback) {
+				actionLog(Cities.cities[Cities.byID[currentcityid].idx].name + ' - Revive Failed ('+ unsafeWindow.printLocalError(rslt.error_code, rslt.msg, rslt.feedback) + ')');
+			}
+			else {
+				if (rslt.msg) {
+					actionLog(Cities.cities[Cities.byID[currentcityid].idx].name + ' - Revive Failed ('+ rslt.msg + ')');
+				}
+				else {
+					if (rslt.error_code) {
+						actionLog(Cities.cities[Cities.byID[currentcityid].idx].name + ' - Revive Failed ('+ rslt.error_code + ')');
+					}
+					else {
+						actionLog(Cities.cities[Cities.byID[currentcityid].idx].name + ' - Revive Failed (Reason Unknown)');
+					}
+				}	
+			}
           }
+		  unsafeWindow.jQuery('#revivecity'+Cities.byID[currentcityid].idx).css('color', 'rgb(66, 39, 20)')
         },
-      onFailure: function () {profiler.stop();}
+      onFailure: function () {unsafeWindow.jQuery('#revivecity'+Cities.byID[currentcityid].idx).css('color', 'rgb(66, 39, 20)');}
     },true); // noretry
   },
   
@@ -20123,6 +20344,31 @@ Tabs.Apothecary = {
         var woundedUnits = unsafeWindow.seed.woundedUnits;
         var total = [];
         var html = '';
+		
+		if  (t.autodelay > 0) { 
+			t.autodelay = t.autodelay - 1;
+		}
+
+		t.Squire = Seed.items.i1;
+		t.Knight = Seed.items.i2;
+		t.Guinevere = Seed.items.i3;
+		t.Morgana = Seed.items.i4;
+		t.Arthur = Seed.items.i5;
+		t.Merlin = Seed.items.i6;
+		t.Divine = Seed.items.i7;
+		t.Epic = Seed.items.i8;
+		t.Legendary = Seed.items.i10;
+
+		document.getElementById('pbrevUseSHLabel').innerHTML = t.Squire;
+		document.getElementById('pbrevUseKHLabel').innerHTML = t.Knight;
+		document.getElementById('pbrevUseGHLabel').innerHTML = t.Guinevere;
+		document.getElementById('pbrevUseMHLabel').innerHTML = t.Morgana;
+		document.getElementById('pbrevUseAHLabel').innerHTML = t.Arthur;
+		document.getElementById('pbrevUseRHLabel').innerHTML = t.Merlin;
+		document.getElementById('pbrevUseDHLabel').innerHTML = t.Divine;
+		document.getElementById('pbrevUseEHLabel').innerHTML = t.Epic;
+		document.getElementById('pbrevUseLHLabel').innerHTML = t.Legendary;
+		
         for (uid in unitcost) {
             total[uid] = 0;
         }
@@ -20165,7 +20411,48 @@ Tabs.Apothecary = {
                 html = addCommas(u[1]) + ' ' + unitcost[uid_q1][0] + '<br />';
                 if (parseInt(u[3]) > unsafeWindow.unixtime()) {
                     html += '(' + timestr(parseInt(u[3]) - unsafeWindow.unixtime()) + ')';
-                } else {
+					
+					var Speedups = '';
+					var Speedups2 = '';
+					var Speedups3 = '';
+					var SpeedupType = '"revive"';
+				
+					if (t.Squire) {
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 1, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/1.jpg" title="Squires Hourglass (1 min) ('+t.Squire+')"></a></td>';
+					}	
+					if (t.Knight) {
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 2, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/2.jpg" title="Knights Hourglass (15 mins) ('+t.Knight+')"></a></td>';
+					}	
+					if (t.Guinevere) {
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 3, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg" title="Guineveres Hourglass (60 mins) ('+t.Guinevere+')"></a></td>';
+					}	
+					if (t.Morgana) {
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 4, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/4.jpg" title="Morganas Hourglass (150 mins) ('+t.Morgana+')"></a></td>';
+					}	
+
+					if (t.Arthur) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 5, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/5.jpg" title="Arthurs Hourglass (8 hours) ('+t.Arthur+')"></a></td>';
+					}	
+					if (t.Merlin) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 6, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/6.jpg" title="Merlins Hourglass (15 hours) ('+t.Merlin+')"></a></td>';
+					}	
+					if (t.Divine) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 7, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/7.jpg" title="Divine Hourglass (24 hours) ('+t.Divine+')"></a></td>';
+					}	
+					if (t.Epic) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 8, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/8.jpg" title="Divine Hourglass (60 hours) ('+t.Epic+')"></a></td>';
+					}	
+					if (t.Legendary) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 10, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/10.jpg" title="Legendary Hourglass (96 hours) ('+t.Legendary+')"></a></td>';
+					}	
+
+					if (Speedups2 != "") Speedups += '</tr><tr>' + Speedups2 
+					if (Speedups3 != "") Speedups += '<tr></tr>' + Speedups3
+					if (Speedups != "") html += '<table align=right cellspacing=0 cellpadding=0><tr><td class=xtab>&nbsp;</td>' + Speedups + '</tr></table>';
+
+					html += '<table align=center cellspacing=0 cellpadding=0><tr><td class=xtab><a class="inlineButton button14" onClick="cancelRevive('+Cities.cities[i].id+',1)"><span>'+translate("Cancel")+'</span></a></td></tr></table>';
+						
+				} else {
                     html += '(done)';
 					if (cid != unsafeWindow.currentcityid) {
 						unsafeWindow.seed.units[cid][uid_q1] = parseInt(unsafeWindow.seed.units[cid][uid_q1]) + parseInt(u[1]);
@@ -20186,7 +20473,48 @@ Tabs.Apothecary = {
                 html = addCommas(u[1]) + ' ' + unitcost[uid_q2][0] + '<br />';
                 if (parseInt(u[3]) > unsafeWindow.unixtime()) {
                     html += '(' + timestr(parseInt(u[3]) - unsafeWindow.unixtime()) + ')';
-                } else {
+					
+					var Speedups = '';
+					var Speedups2 = '';
+					var Speedups3 = '';
+					var SpeedupType = '"revive"';
+				
+					if (t.Squire) {
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 1, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/1.jpg" title="Squires Hourglass (1 min) ('+t.Squire+')"></a></td>';
+					}	
+					if (t.Knight) {
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 2, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/2.jpg" title="Knights Hourglass (15 mins) ('+t.Knight+')"></a></td>';
+					}	
+					if (t.Guinevere) {
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 3, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg" title="Guineveres Hourglass (60 mins) ('+t.Guinevere+')"></a></td>';
+					}	
+					if (t.Morgana) {
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 4, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/4.jpg" title="Morganas Hourglass (150 mins) ('+t.Morgana+')"></a></td>';
+					}	
+					
+					if (t.Arthur) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 5, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/5.jpg" title="Arthurs Hourglass (8 hours) ('+t.Arthur+')"></a></td>';
+					}	
+					if (t.Merlin) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 6, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/6.jpg" title="Merlins Hourglass (15 hours) ('+t.Merlin+')"></a></td>';
+					}	
+					if (t.Divine) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 7, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/7.jpg" title="Divine Hourglass (24 hours) ('+t.Divine+')"></a></td>';
+					}	
+					if (t.Epic) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 8, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/8.jpg" title="Divine Hourglass (60 hours) ('+t.Epic+')"></a></td>';
+					}	
+					if (t.Legendary) {
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 10, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/10.jpg" title="Legendary Hourglass (96 hours) ('+t.Legendary+')"></a></td>';
+					}	
+
+					if (Speedups2 != "") Speedups += '</tr><tr>' + Speedups2 
+					if (Speedups3 != "") Speedups += '<tr></tr>' + Speedups3
+					if (Speedups != "") html += '<table align=right cellspacing=0 cellpadding=0><tr><td class=xtab>&nbsp;</td>' + Speedups + '</tr></table>';
+
+					html += '<table align=center cellspacing=0 cellpadding=0><tr><td class=xtab><a class="inlineButton button14" onClick="cancelRevive('+Cities.cities[i].id+',2)"><span>'+translate("Cancel")+'</span></a></td></tr></table>';
+					
+				} else {
                     html += '(done)';
 					if (cid != unsafeWindow.currentcityid) {
 						unsafeWindow.seed.units[cid][uid_q2] = parseInt(unsafeWindow.seed.units[cid][uid_q2]) + parseInt(u[1]);
@@ -24041,7 +24369,9 @@ Tabs.Champion = {
 		UniqueItems["28029"] = {Id:28029,Name:"Noble Boots", Effects:[{type:202,tier:2},{type:17,tier:3},{type:206,tier:3},{type:2,tier:3},{type:21,tier:2}],Faction:1,Type:4};
 		UniqueItems["28030"] = {Id:28030,Name:"Feral Boots", Effects:[{type:20,tier:2},{type:17,tier:3},{type:205,tier:2},{type:19,tier:3},{type:4,tier:3}],Faction:3,Type:4};
 		UniqueItems["28031"] = {Id:28031,Name:"Commander's Sword", Effects:[{type:201,tier:6},{type:1,tier:2},{type:207,tier:3},{type:18,tier:2},{type:208,tier:3}],Faction:1,Type:1};
+		UniqueItems["28032"] = {Id:28032,Name:"Commander's Shield", Effects:[{type:209,tier:3},{type:206,tier:3},{type:208,tier:3},{type:20,tier:2},{type:3,tier:3}],Faction:1,Type:5};
 		UniqueItems["28033"] = {Id:28033,Name:"Commander's Armor", Effects:[{type:203,tier:2},{type:5,tier:2},{type:1,tier:2},{type:204,tier:3},{type:209,tier:3}],Faction:1,Type:2};
+		UniqueItems["28034"] = {Id:28034,Name:"Commander's Helmet", Effects:[{type:209,tier:2},{type:208,tier:3},{type:2,tier:3},{type:18,tier:2},{type:207,tier:3}],Faction:1,Type:3};
 		UniqueItems["28035"] = {Id:28035,Name:"Commander's Greaves", Effects:[{type:205,tier:2},{type:20,tier:3},{type:2,tier:2},{type:206,tier:2},{type:203,tier:3}],Faction:1,Type:4};
 		
 		for (var i=28001;i<29000;i++) {
