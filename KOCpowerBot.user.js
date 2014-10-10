@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141009a
+// @version        20141010a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141009a';
+var Version = '20141010a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -20267,6 +20267,28 @@ Tabs.Apothecary = {
     saveApothecaryOptions();
   },
   
+	getReviveTime : function (cid, uid, num) {
+		var i = 0,
+		q = getCityBuilding(cid, 23).count;
+		try {
+			i = unsafeWindow.cm.ThroneController.hasFactionBonus()
+		} catch (m) {}
+
+		var o = (100 + unsafeWindow.cm.ThroneController.getBoundedEffect(97)) / 100;
+		var r = o * unsafeWindow.cm.WorldSettings.getSetting("APOTHECARY_TIME_FACTOR");
+		var p = unsafeWindow.unitcost["unt" + uid][7] * num / r;
+		p = p >= 5 ? p : 5;
+		if (q > 1) {
+			p = p / 1.2
+		}
+		if (i.hazBonus && i.faction === "druid") {
+			bonus = unsafeWindow.cm.ThroneController.effectBonus(96);
+			p = p - (p * (bonus / 100))
+		}
+		p = Math.ceil(p - (p * unsafeWindow.cm.BlessingSystemModel.applyBlessing(unsafeWindow.cm.BlessingSystemModel.getBlessing().PICK_ME_UP, cid)));
+		return p;
+	},
+  
   do_revive : function(currentcityid,unitId,num,notify){
     var t = Tabs.Apothecary;
 	unsafeWindow.jQuery('#revivecity'+Cities.byID[currentcityid].idx).css('color', 'red');
@@ -20275,7 +20297,7 @@ Tabs.Apothecary = {
     params.type = unitId;
     params.quant = num;
     params.apothecary = true;
-    var time = unsafeWindow.cm.RevivalModel.getRevivalStats(unitId, num).time;
+    var time = t.getReviveTime(currentcityid,unitId, num);
 
     new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/train.php" + unsafeWindow.g_ajaxsuffix, {
         method: "post",
@@ -20296,11 +20318,11 @@ Tabs.Apothecary = {
 				recentlyEntryWasAddedQueue = Seed.queue_revive2["city" + currentcityid]
 			}
 			recentlyEntryWasAddedQueue.push([unitId, num, rslt.initTS, parseInt(rslt.initTS) + time, 0, time, null]);
+			var savecityid = unsafeWindow.currentcityid;
+			unsafeWindow.currentcityid = currentcityid;
             var cost = unsafeWindow.cm.RevivalModel.getRevivalStats(unitId, num).cost;
             Seed.citystats["city" + currentcityid].gold[0] -= parseInt(cost);
 			if (unsafeWindow.currentcityid == currentcityid) unsafeWindow.update_gold();
-			var savecityid = unsafeWindow.currentcityid;
-			unsafeWindow.currentcityid = currentcityid;
             unsafeWindow.cm.WoundedModel.sub(unitId, num);
 	        unsafeWindow.currentcityid = savecityid;
           } else {
