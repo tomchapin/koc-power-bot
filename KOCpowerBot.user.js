@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141010a
+// @version        20141013a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141010a';
+var Version = '20141013a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -620,10 +620,12 @@ function getFirefoxVersion() {
 	var ver = '',
 		i;
 	var ua = navigator.userAgent;
-	if (ua == null || (i = ua.indexOf('Firefox/')) < 0)
-		return;
-	return ua.substr(i + 8);
+	if (ua== null) return 'FF00.0';
+	if (i = ua.indexOf('Firefox/') >= 0) return 'FF'+ua.substr(i + 8);
+	if (i = ua.indexOf('PaleMoon/') >= 0) return 'PM'+ua.substr(i + 9);
+	return 'FF00.0';
 }
+
 function loadchecker (init) {
 	if (!GlobalOptions.pbWatchdog) return;
 	var Sresult = getServerId();
@@ -644,9 +646,9 @@ function loadchecker (init) {
 		var GMVersion = (typeof GM_info !== "undefined")?GM_info.version:'0'; 
 		var FFVersion = getFirefoxVersion();
 		
-		if ((FFVersion.substring(0, 2) > 30) || (GMVersion.substring(0, 1) > 1)) {
+		if ((FFVersion.substring(2, 2) > 30) || (GMVersion.substring(0, 1) > 1)) {
 			div = document.createElement('div');
-			var msg = 'PowerBot has detected you are running Greasemonkey version : '+GMVersion+' and Firefox version : '+FFVersion+'. This <b>may</b> cause problems with KoC scripts. <a onClick="this.parentNode.parentNode.style.display=\'none\';">[close]</a>';
+			var msg = 'PowerBot has detected you are running Greasemonkey version : '+GMVersion+' and Firefox version : '+FFVersion.substring(2, 2)+'. This <b>may</b> cause problems with KoC scripts. <a onClick="this.parentNode.parentNode.style.display=\'none\';">[close]</a>';
 			div.innerHTML = '<DIV style="background: #fde073; text-align: center; line-height: 2.5; overflow: hidden; -webkit-box-shadow: 0 0 5px black; -moz-box-shadow: 0 0 5px black; box-shadow: 0 0 5px black;">'+msg+'</div>';
 			document.body.insertBefore (div, document.body.firstChild);
 		}	
@@ -832,9 +834,9 @@ var pbButtons = {};
 var mainPop;
 var pbStartupTimer = null;
 var pbPopUpTopClass = 'pbPopTop';
-var firefoxVersion = getFirefoxVersion();
 var TrainCity = 0;
 var CM = unsafeWindow.cm;
+var FFVersion = getFirefoxVersion();
 
 function pbStartup (){
   clearTimeout (pbStartupTimer);
@@ -6770,7 +6772,7 @@ Tabs.build = {
         }
         m += '</tr></table><SPAN class=boldRed id=pbbuildError></span>';
         t.myDiv.innerHTML = m;
-        new CdispCityPicker ('cityBuildpicker', document.getElementById('cityBuild'), true, t.ClickCitySelect, 0);
+        new CdispCityPicker ('cityBuildpicker', document.getElementById('cityBuild'), true, t.ClickCitySelect, Cities.byID[unsafeWindow.currentcityid].idx);
         setInterval(t.paintBusyDivs, 1 * 1000)
         for (var i = 0; i < Cities.cities.length; i++) {
             var cityId = Cities.cities[i].id;
@@ -9815,6 +9817,7 @@ Tabs.transport = {
     },
     updateResources: function () {
         var t = Tabs.transport;
+		if (!t.tcp) return;
         var ToCity = null;
         for (var i = 1; i <= 5; i++)
         if (i == 5) document.getElementById('TransRec' + i)
@@ -10783,7 +10786,7 @@ cm.MARCH_STATUS = {
     MARCH_STATUS_INACTIVE: 0,
     MARCH_STATUS_OUTBOUND: 1,
     MARCH_STATUS_DEFENDING: 2,
-    MARCH_STATUS_STOPPED: 3,
+    MARCH_STATUS_STOPPED: 10,
     MARCH_STATUS_RESTING: 4,
     MARCH_STATUS_UNKNOWN: 5,
     MARCH_STATUS_SITUATIONCHANGED: 7,
@@ -10879,7 +10882,7 @@ cm.MARCH_TYPES = {
                        MarchStatus = Seed.queue_atkp[cityID][b]['marchStatus'];
                        MarchType = Seed.queue_atkp[cityID][b]['marchType'];
                        botMarchStatus = Seed.queue_atkp[cityID][b]['botMarchStatus'];
-                       if (MarchType == 9 &&  MarchStatus == 3 || MarchStatus==10) t.stopcount++;
+                       if (MarchType == 9 &&  (MarchStatus == 3 || MarchStatus==10)) t.stopcount++;
                        else if (MarchType == 9) t.activecount++;
                        //alert(MarchType +'/'+  MarchStatus);
                    }
@@ -11847,7 +11850,7 @@ Tabs.AutoCraft = {
 			var city = i+1;
 			str += '<td align=center><INPUT class='+city+' id=CraftCity'+city+' type=checkbox '+(TrainOptions.CraftingCities[city]?'CHECKED':'')+'></td>';
 		}
-		str += '<td>&nbsp;</td></tr><tr><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3004.jpg title="Preferred Recipe"></td>';
+		str += '<td>&nbsp;</td></tr><tr><td align=left width=30><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3004.jpg title="Preferred Recipe"></td>';
 
 		var recipes = {0:'-- Random --'};
 		for (h in t.craftinfo) {
@@ -11859,13 +11862,13 @@ Tabs.AutoCraft = {
 			str += '<td align=center>'+htmlSelector(recipes,TrainOptions.CraftingPrefs[city],'class='+city+' id=CraftCitySelect'+city+ ' style="width:100px;font-size:9px;"')+'</td>';
 		}
 
-		str +='<tr style="background: #e8e8e8" align=right><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png title="Aether"></td>';
+		str +='<tr style="background: #e8e8e8" align=right><td align=left width=30><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png title="Aether"></td>';
 		t.totaether = 0;
 		for(i=0; i<Cities.numCities; i++) {
 			str +="<td align=center id=cityaether"+i+">"+t.getCityAether(i)+"</td>";  
 		}
 		str +="<td align=center id=totaether>"+ addCommas(t.totaether) + "</td>";  
-		str +='<tr style="background: #e8e8e8" align=right><td><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/2000.jpg title="Crafting"></td>';
+		str +='<tr style="background: #e8e8e8" align=right><td align=left width=30><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/2000.jpg title="Crafting"></td>';
 		for(i=0; i<Cities.numCities; i++) {
 			t.spires.push(getUniqueCityBuilding(Cities.cities[i].id,20));
 			str +="<td align=center id=citycraft"+i+">"+ t.getCityCrafting(i) + "</td>";  
@@ -15156,15 +15159,7 @@ var RefreshEvery  = {
 var FairieKiller  = {
   saveFunc : null,
   init : function (tf){
-
-
-
-
-
-
-
-
-    if (firefoxVersion.substring(0,4) == '4.0b')  // bug in firefox 4.0b10 causes syntax error with: "var func = eval ('function (){}');"
+    if (FFVersion.substring(2,4) == '4.0b')  // bug in firefox 4.0b10 causes syntax error with: "var func = eval ('function (){}');"
       return;
     FairieKiller.saveFunc = unsafeWindow.Modal.showModalUEP;
     FairieKiller.setEnable (tf);
@@ -17766,11 +17761,12 @@ function getMarchInfo (cityID){
   for (k in Seed.queue_atkp[cityID]){   // each march
       march = Seed.queue_atkp[cityID][k];
       if (typeof (march) == 'object'){
-		if(march.marchType != 5 && march.marchStatus != 10) {
+			if (march.marchType == 9 && (march.marchStatus == 3 || march.marchStatus == 4 || march.marchStatus == 10)) continue; // don't count troops in stopped or resting raids..
+	  
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			  i = unsafeWindow.cm.UNIT_TYPES[ui];
-              ret.marchUnits["unt"+i] += parseInt (march['unit'+i+'Count']);
-              ret.returnUnits["unt"+i] += parseInt (march['unit'+i+'Return']);
+				i = unsafeWindow.cm.UNIT_TYPES[ui];
+				ret.marchUnits["unt"+i] += parseIntNan (march['unit'+i+'Count']);
+				ret.returnUnits["unt"+i] += parseIntNan (march['unit'+i+'Return']);
             }
             for (ii=1; ii<5; ii++){
 				ret.resources[ii] += parseInt (march['resource'+ ii]);
@@ -17778,7 +17774,6 @@ function getMarchInfo (cityID){
 			ret.resources[0] += parseInt (march['gold']);
 		}
 	  }
-    }
   return ret;
 }
 
@@ -18025,15 +18020,6 @@ function isNaNCommas (n){
   n = n.split(',');
   n = n.join('');
   return isNaN(n);
-}
-
-
-function getFirefoxVersion (){
-  var ver='', i;
-  var ua = navigator.userAgent;  
-  if (ua==null || (i = ua.indexOf('Firefox/'))<0)
-    return;
-  return ua.substr(i+8);
 }
 
 var WinManager = {
@@ -19873,26 +19859,26 @@ Tabs.Apothecary = {
         m += '<th id=revivecity'+i+'>' + cities[i][1] + '</th>';
     }
     m += '<th>total</th></tr></thead>\
-		<tr><td>Gold</td>';
+		<tr><td align=left width=30>Gold</td>';
     for (i = 0; i < cities.length; i ++) {
         var cid = 'city' + cities[i][0];
         m += '<td id="tdApoGold_' + cid + '" style="text-align: center; white-space: nowrap;">&nbsp;</td>';
     }
     m += '<td id=tdTotGold>&nbsp;</td></tr>\
-        <tbody><tr><td>Building</td>';
+        <tbody><tr><td align=left width=30>Building</td>';
     for (i = 0; i < cities.length; i ++) {
         var cid = 'city' + cities[i][0];
         m += '<td id="tdApoBuilding_' + cid + '" style="text-align: center; white-space: nowrap;">&nbsp;</td>';
     }
     m += '<td>&nbsp;</td></tr>\
 		<tr><td class="pbStat" colspan="' + (cities.length + 2) + '">' + unsafeWindow.g_js_strings.revive.curintrain + '</td></tr>\
-        <tr><td>Revive Queue 1</td>';
+        <tr><td>Queue 1</td>';
     for (i = 0; i < cities.length; i ++) {
         var cid = 'city' + cities[i][0];
         m += '<td id="tdApoRevQueue1_' + cid + '" style="text-align: right; white-space: nowrap;">&nbsp;</td>';
     }
     m += '<td>&nbsp;</td></tr>\
-        <tr><td>Revive Queue 2</td>';
+        <tr><td>Queue 2</td>';
     for (i = 0; i < cities.length; i ++) {
         var cid = 'city' + cities[i][0];
         m += '<td id="tdApoRevQueue2_' + cid + '" style="text-align: right; white-space: nowrap;">&nbsp;</td>';
@@ -19931,7 +19917,7 @@ Tabs.Apothecary = {
         saveTrainOptions();
 	}, false);
 	
-    setInterval(t.updateApoStats, 1 * 1000);
+    setInterval(t.updateApoStats, 2 * 1000); // 2 seconds
     $("pbapothecary_gold").addEventListener('change', function(){
         ApothecaryOptions.goldkeep = parseIntNan(this.value);
     },false);
@@ -20191,12 +20177,11 @@ Tabs.Apothecary = {
 
 		var twoqueues = false;
 		var cid = Cities.cities[city].id;
-		var twobuilds = (getCityBuilding(cid, 23).count > 1);
 		if 	(Seed.cityData.city[cid].isPrestigeCity) {
-			twoqueues = ((Seed.cityData.city[cid].prestigeInfo.blessings.indexOf(106) != -1) && twobuilds);
+			twoqueues = (Seed.cityData.city[cid].prestigeInfo.blessings.indexOf(106) != -1);
 		}	
 
-        if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0 && (Seed.queue_revive2['city'+Cities.cities[city].id].length > 0 || !twobuilds)) continue; //Skip city if queue is full
+        if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0 && (Seed.queue_revive2['city'+Cities.cities[city].id].length > 0 || !twoqueues)) continue; //Skip city if queue is full
         if(Seed.citystats["city" + Cities.cities[city].id].gold[0] < parseInt(ApothecaryOptions.goldkeep)) continue; //Skip if gold is less than reserve
         for(var i=0; i<ApothecaryOptions.city[city].length; i++){
             var info = ApothecaryOptions.city[city][i];
@@ -20226,9 +20211,8 @@ Tabs.Apothecary = {
 		var cid = Cities.cities[city].id;
 		var amt = 0;
 		var twoqueues = false;
-		var twobuilds = (getCityBuilding(cid, 23).count > 1);
 		if 	(Seed.cityData.city[cid].isPrestigeCity) {
-			twoqueues = ((Seed.cityData.city[cid].prestigeInfo.blessings.indexOf(106) != -1) && twobuilds);
+			twoqueues = (Seed.cityData.city[cid].prestigeInfo.blessings.indexOf(106) != -1);
 		}	
 
         if(Seed.queue_revive['city'+Cities.cities[city].id].length > 0 && (Seed.queue_revive2['city'+Cities.cities[city].id].length > 0 || !twoqueues)) {
@@ -20419,7 +20403,10 @@ Tabs.Apothecary = {
                     blvl.push('Lv.' + buildings[cid][bpos][1]);
                 }
             }
-            html = bname + '<br />(' + blvl.join(', ') + ')'
+			if (blvl.join(', ')=='') html = '<SPAN class=boldRed><B>No<br>Apothecary</b></span>'
+            else html = bname + '<br />(' + blvl.join(', ') + ')'
+			if (Seed.cityData.city[cities[i][0]].prestigeInfo.blessings.indexOf(106) != -1)
+				html += '<br>'+unsafeWindow.g_js_strings.blessingSystem.blessing_name_106;
             document.getElementById('tdApoBuilding_' + cid).innerHTML = html;
             document.getElementById('tdApoGold_' + cid).innerHTML = addCommas(parseInt(Seed.citystats[cid]['gold'][0]));
 			totGold = totGold + parseIntNan(Seed.citystats[cid]['gold'][0]);
@@ -21630,6 +21617,7 @@ Tabs.startup = {
 
     paintCityGrid:function(cityDiv){
         var t = Tabs.startup;
+		if (!t.city) return;
         t.myDiv = cityDiv;
         t.where = "City";
         var counter = 0;
