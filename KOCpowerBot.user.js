@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141013a
+// @version        20141014a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141013a';
+var Version = '20141014a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -621,8 +621,10 @@ function getFirefoxVersion() {
 		i;
 	var ua = navigator.userAgent;
 	if (ua== null) return 'FF00.0';
-	if (i = ua.indexOf('Firefox/') >= 0) return 'FF'+ua.substr(i + 8);
-	if (i = ua.indexOf('PaleMoon/') >= 0) return 'PM'+ua.substr(i + 9);
+	i = ua.indexOf('Firefox/');
+	if (i >= 0) return 'FF'+ua.substr(i + 8);
+	i = ua.indexOf('PaleMoon/');
+	if (i >= 0) return 'PM'+ua.substr(i + 9);
 	return 'FF00.0';
 }
 
