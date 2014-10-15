@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141014a
+// @version        20141015a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141014a';
+var Version = '20141015a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -20407,8 +20407,11 @@ Tabs.Apothecary = {
             }
 			if (blvl.join(', ')=='') html = '<SPAN class=boldRed><B>No<br>Apothecary</b></span>'
             else html = bname + '<br />(' + blvl.join(', ') + ')'
-			if (Seed.cityData.city[cities[i][0]].prestigeInfo.blessings.indexOf(106) != -1)
-				html += '<br>'+unsafeWindow.g_js_strings.blessingSystem.blessing_name_106;
+			if (Seed.cityData.city[cities[i][0]].isPrestigeCity) {
+				if (Seed.cityData.city[cities[i][0]].prestigeInfo.blessings.indexOf(106) != -1) {
+					html += '<br>'+unsafeWindow.g_js_strings.blessingSystem.blessing_name_106;
+				}
+			}		
             document.getElementById('tdApoBuilding_' + cid).innerHTML = html;
             document.getElementById('tdApoGold_' + cid).innerHTML = addCommas(parseInt(Seed.citystats[cid]['gold'][0]));
 			totGold = totGold + parseIntNan(Seed.citystats[cid]['gold'][0]);
