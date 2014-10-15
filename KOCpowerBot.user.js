@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141016a
+// @version        20141017a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141016a';
+var Version = '20141017a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -9282,7 +9282,7 @@ if(GlobalOptions.Baos) {
     var t = Tabs.Scripter;
   },  
 }
-if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return;  var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID); if (s != null) { GM_DeleteValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);} };
+if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return;  var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID); if (s != null) { GM_deleteValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);} };
 
 /*********************************** Test TAB ***********************************/
 Tabs.Test = {
