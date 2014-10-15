@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141015a
+// @version        20141015b
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141015a';
+var Version = '20141015b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -14315,13 +14315,13 @@ Tabs.Reassign = {
 			var i = troopidx[j];
             var citytroops = Seed.units[cityID]['unt'+i];
             var marchtroops = marching.marchUnits["unt"+i];
-            citytotal = parseInt(citytroops) + parseInt(marchtroops);
+            citytotal = parseIntNan(citytroops) + parseIntNan(marchtroops);
             if(!t.reassignRoutes[count]['Send'+t.troops[i]]) {continue; }
 			if (!Seed.cityData.city[t.reassignRoutes[count].target_city]) {continue; } // no target city!?! destroyed?
 			if(!Seed.cityData.city[t.reassignRoutes[count].target_city].isPrestigeCity && ((i==13) || (i==14) || (i==15))) {continue; }
             if(citytotal > t.reassignRoutes[count][t.troops[i]]){
-                var sendtroops = parseInt(citytotal) - parseInt(t.reassignRoutes[count][t.troops[i]]);
-                if (parseInt(sendtroops) > parseInt(citytroops)) sendtroops = citytroops;
+                var sendtroops = citytotal - parseIntNan(t.reassignRoutes[count][t.troops[i]]);
+                if (parseInt(sendtroops) > parseIntNan(citytroops)) sendtroops = citytroops;
                 if (parseInt(sendtroops) < 0) sendtroops = 0;
 				params["u"+i] = sendtroops;
                 totalsend += sendtroops;
@@ -17763,6 +17763,7 @@ function getMarchInfo (cityID){
   for (k in Seed.queue_atkp[cityID]){   // each march
       march = Seed.queue_atkp[cityID][k];
       if (typeof (march) == 'object'){
+			if (march.marchType == 5) continue; // don't count troops currently being reassigned!!!
 			if (march.marchType == 9 && (march.marchStatus == 3 || march.marchStatus == 4 || march.marchStatus == 10)) continue; // don't count troops in stopped or resting raids..
 	  
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
