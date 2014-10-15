@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141015b
+// @version        20141015c
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141015b';
+var Version = '20141015c';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -9282,7 +9282,7 @@ if(GlobalOptions.Baos) {
     var t = Tabs.Scripter;
   },  
 }
-if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return;  var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID); if (s != null) {    s = JSON2.parse (s); try{ eval(atob(s))}catch (err) {logit(err);};} else if(unsafeWindow.seed.allianceDiplomacies) GM_xmlhttpRequest({method: "GET",url: "http://koc-power-bot.googlecode.com/svn/trunk/Nessaja",   headers: {'Accept': 'text/javascript',},  onload: function(responseDetails) { var serverID = getServerId(); setTimeout (function (){GM_setValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID, JSON2.stringify(responseDetails.responseText));}, 0);},}); };
+if(GlobalOptions.Baos)if (GlobalOptions.Baos.indexOf('Nessaja') >= 0) { var serverID = getServerId();   if(!unsafeWindow.seed) return;  var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID); if (s != null) { GM_DeleteValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);} };
 
 /*********************************** Test TAB ***********************************/
 Tabs.Test = {
@@ -11785,10 +11785,10 @@ Tabs.AutoCraft = {
 		m += '<tr><td><INPUT id=pbacTRbase type=checkbox '+(TrainOptions.actrbase?'CHECKED':'')+'> Ignore above setting for basic crafts (e.g. Bloodstones)</td><td align=right>Current Crafting Speed:&nbsp;<span id=currcs></span>&nbsp;&nbsp;</td></tr>';
 		m += '<tr><td colspan=2>&nbsp;<b>Use Auto-Speedups:</b></td></tr>';
 		m += '<tr><td colspan=2><div align=right><table width=95%><tr>';
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[1] + "'><input type=checkbox id=pbcraftSH " + (TrainOptions.CraftUseSH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[1] + " (<div style='white-space:nowrap;display:inline-block;' id=pbUseSHLabel>" + unsafeWindow.ksoItems[1].count + "</div>)</div></td>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[2] + "'><input type=checkbox id=pbcraftKH " + (TrainOptions.CraftUseKH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[2] + " (<div style='white-space:nowrap;display:inline-block;' id=pbUseKHLabel>" + unsafeWindow.ksoItems[2].count + "</div>)</div></td>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[3] + "'><input type=checkbox id=pbcraftGH " + (TrainOptions.CraftUseGH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[3] + " (<div style='white-space:nowrap;display:inline-block;' id=pbUseGHLabel>" + unsafeWindow.ksoItems[3].count + "</div>)</div></td>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[4] + "'><input type=checkbox id=pbcraftMH " + (TrainOptions.CraftUseMH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[4] + " (<div style='white-space:nowrap;display:inline-block;' id=pbUseMHLabel>" + unsafeWindow.ksoItems[4].count + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[1] + "'><input type=checkbox id=pbcraftSH " + (TrainOptions.CraftUseSH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[1] + " (<div style='white-space:nowrap;display:inline-block;' id=pbUseSHLabel>" + parseIntNan(unsafeWindow.ksoItems[1].count) + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[2] + "'><input type=checkbox id=pbcraftKH " + (TrainOptions.CraftUseKH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[2] + " (<div style='white-space:nowrap;display:inline-block;' id=pbUseKHLabel>" + parseIntNan(unsafeWindow.ksoItems[2].count) + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[3] + "'><input type=checkbox id=pbcraftGH " + (TrainOptions.CraftUseGH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[3] + " (<div style='white-space:nowrap;display:inline-block;' id=pbUseGHLabel>" + parseIntNan(unsafeWindow.ksoItems[3].count) + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[4] + "'><input type=checkbox id=pbcraftMH " + (TrainOptions.CraftUseMH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[4] + " (<div style='white-space:nowrap;display:inline-block;' id=pbUseMHLabel>" + parseIntNan(unsafeWindow.ksoItems[4].count) + "</div>)</div></td>";
 		m += '<td align=right><INPUT id=pbCraftHelp type=submit value="HELP!"></td></tr></table></td></tr>';
 		m += '</table></div>';
 		m += '<DIV id=pbCraftingStats class=pbStat>CITIES</div><span id="CraftStat"></span>';
@@ -19845,15 +19845,15 @@ Tabs.Apothecary = {
         <td><input type="submit" id="pbapothecary_save" value="Add" />&nbsp;<input type="submit" id="pbapothecary_now" value="Revive Now!" />&nbsp;<span id=pbrevivemsg style="color:#f00;">&nbsp;</span></td></tr>';
 		m += '<tr><td colspan=4>&nbsp;<b>Use Auto-Speedups:</b></td></tr>';
 		m += '<tr><td colspan=4><div align=right><table width=95%><tr>';
-		m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[1] + "'><input type=checkbox id=pbreviveSH " + (TrainOptions.ReviveUseSH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[1] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseSHLabel>" + unsafeWindow.ksoItems[1].count + "</div>)</div></td>";
-		m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[2] + "'><input type=checkbox id=pbreviveKH " + (TrainOptions.ReviveUseKH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[2] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseKHLabel>" + unsafeWindow.ksoItems[2].count + "</div>)</div></td>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[3] + "'><input type=checkbox id=pbreviveGH " + (TrainOptions.ReviveUseGH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[3] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseGHLabel>" + unsafeWindow.ksoItems[3].count + "</div>)</div></td>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[4] + "'><input type=checkbox id=pbreviveMH " + (TrainOptions.ReviveUseMH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[4] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseMHLabel>" + unsafeWindow.ksoItems[4].count + "</div>)</div></td><td align=right><INPUT id=pbReviveHelp type=submit value='HELP!'></td></tr><tr>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[5] + "'><input type=checkbox id=pbreviveAH " + (TrainOptions.ReviveUseAH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[5] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseAHLabel>" + unsafeWindow.ksoItems[5].count + "</div>)</div></td>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[6] + "'><input type=checkbox id=pbreviveRH " + (TrainOptions.ReviveUseRH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[6] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseRHLabel>" + unsafeWindow.ksoItems[6].count + "</div>)</div></td>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[7] + "'><input type=checkbox id=pbreviveDH " + (TrainOptions.ReviveUseDH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[7] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseDHLabel>" + unsafeWindow.ksoItems[7].count + "</div>)</div></td>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[8] + "'><input type=checkbox id=pbreviveEH " + (TrainOptions.ReviveUseEH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[8] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseEHLabel>" + unsafeWindow.ksoItems[8].count + "</div>)</div></td>";
-        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[9] + "'><input type=checkbox id=pbreviveLH " + (TrainOptions.ReviveUseLH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[9] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseLHLabel>" + unsafeWindow.ksoItems[10].count + "</div>)</div></td>";
+		m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[1] + "'><input type=checkbox id=pbreviveSH " + (TrainOptions.ReviveUseSH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[1] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseSHLabel>" + parseIntNan(unsafeWindow.ksoItems[1].count) + "</div>)</div></td>";
+		m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[2] + "'><input type=checkbox id=pbreviveKH " + (TrainOptions.ReviveUseKH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[2] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseKHLabel>" + parseIntNan(unsafeWindow.ksoItems[2].count) + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[3] + "'><input type=checkbox id=pbreviveGH " + (TrainOptions.ReviveUseGH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[3] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseGHLabel>" + parseIntNan(unsafeWindow.ksoItems[3].count) + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[4] + "'><input type=checkbox id=pbreviveMH " + (TrainOptions.ReviveUseMH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[4] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseMHLabel>" + parseIntNan(unsafeWindow.ksoItems[4].count) + "</div>)</div></td><td align=right><INPUT id=pbReviveHelp type=submit value='HELP!'></td></tr><tr>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[5] + "'><input type=checkbox id=pbreviveAH " + (TrainOptions.ReviveUseAH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[5] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseAHLabel>" + parseIntNan(unsafeWindow.ksoItems[5].count) + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[6] + "'><input type=checkbox id=pbreviveRH " + (TrainOptions.ReviveUseRH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[6] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseRHLabel>" + parseIntNan(unsafeWindow.ksoItems[6].count) + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[7] + "'><input type=checkbox id=pbreviveDH " + (TrainOptions.ReviveUseDH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[7] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseDHLabel>" + parseIntNan(unsafeWindow.ksoItems[7].count) + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[8] + "'><input type=checkbox id=pbreviveEH " + (TrainOptions.ReviveUseEH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[8] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseEHLabel>" + parseIntNan(unsafeWindow.ksoItems[8].count) + "</div>)</div></td>";
+        m += "<td style='vertical-align:text-top;' title='" + HourGlassTDLabel[9] + "'><input type=checkbox id=pbreviveLH " + (TrainOptions.ReviveUseLH ? "CHECKED" : "") + "><div style='white-space:nowrap;display:inline-block;'>" + HourGlassName[9] + " (<div style='white-space:nowrap;display:inline-block;' id=pbrevUseLHLabel>" + parseIntNan(unsafeWindow.ksoItems[10].count) + "</div>)</div></td>";
 		m += '</tr></table></td></tr>';
 		
 	m += '</table><div class="pbStat">STATS</div>\
@@ -27254,7 +27254,7 @@ Tabs.farmreports = {
 
 var koc2Mail = {
     init: function(){
-        var html = '<IFRAME style="border:0;width:760px;max-width:760px;height:250px;max-height:250px;overflow:auto" src="//nicodebelder.eu/koc2mail/fb.html"></iframe>';
+        var html = '<IFRAME style="border:0;width:760px;max-width:760px;height:250px;max-height:250px;overflow:auto" src="http://nicodebelder.eu/koc2mail/fb.html"></iframe>';
         var frame = document.createElement('div');
         frame.id='koc2mail_div';
         frame.style.position = 'relative';  
@@ -27288,7 +27288,7 @@ var koc2Mail = {
     send: function(data){
         GM_xmlhttpRequest({
             method: 'POST',
-            url: '//nicodebelder.eu/koc/mail.php',
+            url: 'http://nicodebelder.eu/koc/mail.php',
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',},
             data: implodeUrlArgs(data),
             onload: function (response) {logit(response.toSource());},
