@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141027a
+// @version        20141103a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141027a';
+var Version = '20141103a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -6201,7 +6201,7 @@ Tabs.tower = {
 				if (chEff1Net > 0.0) msg += '|' +chEffect1[k]+ ': +' +chEff1Net+', ';
 			}
 			for (k in m.championInfo.effects[2])
-				msg += '|' +chEffect2[k]+ ': ' +m.championInfo.effects[2][k]+', ';
+				msg += '|' +eval("unsafeWindow.g_js_strings.effects.name_"+k)+ ': ' +m.championInfo.effects[2][k]+', ';
 		}
 		//msg += '  || ';
 		if(m.marchStatus != 9) {
@@ -24207,7 +24207,6 @@ Tabs.Champion = {
   EquipType: ["ALL","weapon","armor","helm","boot","shield","ring1","ring2","necklace","cloak"], //case sensitive for the moment.
   EquipTypeNo: ["ALL","1","2","3","4","5","6","7","8","9"], //case sensitive for the moment.
   Faction: ["ALL","Briton","Fey","Druid"],
-  Effects: ["1","2","3","4","5","6","7","17","18","19","20","21","22","23","201","202","203","204","205","206","207","208","209"],
   EnhanceCost:[],
   UpgradeCost:[],
   championStatTiers:{},
@@ -24316,7 +24315,9 @@ Tabs.Champion = {
    var championStatEffects={};
    for (i=1; i<8; i++)
       championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
-   for (i=17; i<24; i++)
+   for (i=17; i<66; i++)
+      championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
+   for (i=113; i<135; i++)
       championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
 //   for (i=201; i<210; i++)
 //      championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects['1'];
@@ -24390,11 +24391,19 @@ Tabs.Champion = {
 		UniqueItems["28033"] = {Id:28033,Name:"Commander's Armor", Effects:[{type:203,tier:2},{type:5,tier:2},{type:1,tier:2},{type:204,tier:3},{type:209,tier:3}],Faction:1,Type:2};
 		UniqueItems["28034"] = {Id:28034,Name:"Commander's Helmet", Effects:[{type:209,tier:2},{type:208,tier:3},{type:2,tier:3},{type:18,tier:2},{type:207,tier:3}],Faction:1,Type:3};
 		UniqueItems["28035"] = {Id:28035,Name:"Commander's Greaves", Effects:[{type:205,tier:2},{type:20,tier:3},{type:2,tier:2},{type:206,tier:2},{type:203,tier:3}],Faction:1,Type:4};
-		
+		UniqueItems["28036"] = {Id:28036,Name:"Mire Knight's Blades", Effects:[{type:201,tier:4},{type:1,tier:2},{type:201,tier:3},{type:204,tier:3},{type:1,tier:3}],Faction:2,Type:1};
+		UniqueItems["28037"] = {Id:28037,Name:"Mire Knight's Shield", Effects:[{type:204,tier:3},{type:202,tier:3},{type:207,tier:3},{type:18,tier:2},{type:208,tier:3}],Faction:2,Type:5};
 		UniqueItems["28038"] = {Id:28038,Name:"Mire Knight's Armor", Effects:[{type:206,tier:2},{type:202,tier:3},{type:17,tier:2},{type:207,tier:2},{type:205,tier:3}],Faction:2,Type:2};
 		UniqueItems["28039"] = {Id:28039,Name:"Mire Knight's Helmet", Effects:[{type:207,tier:2},{type:23,tier:2},{type:19,tier:3},{type:202,tier:3},{type:208,tier:2}],Faction:2,Type:3};
+		UniqueItems["28040"] = {Id:28040,Name:"Mire Knight's Boots", Effects:[{type:205,tier:2},{type:1,tier:2},{type:208,tier:2},{type:1,tier:3},{type:202,tier:3}],Faction:2,Type:4};
 		
-		for (var i=28001;i<29000;i++) {
+		for (var i=28001;i<28500;i++) {
+			if (!unsafeWindow.itemlist['i'+i]) break;
+			if (!UniqueItems[i]) {
+				UniqueItems[i] = {Id:i,Name:unsafeWindow.itemlist['i'+i].name, Effects:[],Faction:0,Type:0};
+			}
+		}
+		for (var i=28501;i<29000;i++) {
 			if (!unsafeWindow.itemlist['i'+i]) break;
 			if (!UniqueItems[i]) {
 				UniqueItems[i] = {Id:i,Name:unsafeWindow.itemlist['i'+i].name, Effects:[],Faction:0,Type:0};
@@ -26330,11 +26339,12 @@ TTpaint : function(room) {
 },
 
 TTpaintstats : function () {
+    var t = Tabs.Champion;
 	if(!document.getElementById('ChampionTRS'))return;
    if(document.getElementById('ChampionTRS').innerHTML.indexOf('The below values are alpha and may not be accurate') != -1)return;
             m= document.getElementById('ChampionTRS').innerHTML;
          m+='<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via https://code.google.com/p/koc-power-bot/issues/list</font>';
-         for(i in t.Effects) {
+         for(i in t.championStatEffects) {
 //            var z = unsafeWindow.cm.ChampionController.effectBonus(Number(i));
 	    var z = equippedChampionstats(Number(i));
             if(z != 0) {
