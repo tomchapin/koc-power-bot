@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141104b
+// @version        20141105a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141104b';
+var Version = '20141105a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -7110,6 +7110,19 @@ Tabs.build = {
                 }
                 document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = buildTabTypes['type' + Seed.queue_con["city" + cityId][0][0]] + ' Lvl ' + Seed.queue_con["city" + cityId][0][1];
                 document.getElementById('divTimeLeftCity_' + cityId).innerHTML = timestr(timeLeft);
+				if (qcon.length > 1) {
+					if (parseInt(qcon[1][4]) > now) {
+						timeLeft = Seed.queue_con["city" + cityId][1][4] - now
+						if (Seed.queue_con["city" + cityId][1][1] == 0) {
+                    document.getElementById('divBuildingCity_' + cityId).innerHTML += '&nbsp;Destructing...';
+                } else {
+                    document.getElementById('divBuildingCity_' + cityId).innerHTML += '&nbsp;Building...';
+                }
+                document.getElementById('divCurrentBuildCity_' + cityId).innerHTML += '&nbsp;'+buildTabTypes['type' + Seed.queue_con["city" + cityId][1][0]] + ' Lvl ' + Seed.queue_con["city" + cityId][1][1];
+                document.getElementById('divTimeLeftCity_' + cityId).innerHTML = '&nbsp;'+timestr(timeLeft);
+					
+					}
+				}
             } else {
                 document.getElementById('divBuildingCity_' + cityId).innerHTML = '';
                 document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = '';
@@ -7136,9 +7149,22 @@ Tabs.build = {
         //  var citpos = 6; //FOR DEBUG
 			var qcon = Seed.queue_con["city" + bQi.cityId];
 				if (matTypeof(qcon) == 'array' && qcon.length > 0) {
-					logit('construct something going on in '+Cities.byID[currentcityid].name+' so not building');
+			if (unsafeWindow.cm.QueueModel.hasFreeQueue() && t.buildStates.bothqueues) {
+				if (qcon.length > 1) {
+					logit('both queues in use in '+Cities.byID[currentcityid].name+' so not building');
 					return;
-				};
+				}
+				// if next item in queue is currently being built, move to the end of the queue and loop round again.
+				if (qcon[0][7] == citpos) {
+					t.requeueQueueElement(bQi);
+					return;
+				}
+			}	
+			else {
+				logit('construct something going on in '+Cities.byID[currentcityid].name+' so not building');
+				return;
+			}
+		};
         if ((Seed.buildings['city' + currentcityid]["pos" + citpos] == undefined)) bypasscheck = true;
         if (!bypasscheck) {
         	//logit("con "+Seed.buildings['city' + currentcityid]["pos" + citpos]);
