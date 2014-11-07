@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141105a
+// @version        20141107a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141105a';
+var Version = '20141107a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -6624,6 +6624,7 @@ var buildTabTypes = {
     type11: "Alchemy Lab",
     type12: "Rally Point",
     type13: "Barracks",
+    type14: "Watch Tower",
     type15: "Blacksmith",
     type16: "Workshop",
     type17: "Stable",
@@ -6749,14 +6750,6 @@ Tabs.build = {
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
             m += '<TD colspan=2><CENTER><DIV id=divBuildingCity_' + Cities.cities[i].id + '></div></center></td>';
-        }
-        m += '</tr><TR>';
-        for (var i = 0; i < Cities.cities.length; i++) {
-            m += '<TD colspan=2><CENTER><DIV id=divCurrentBuildCity_' + Cities.cities[i].id + '></div></center></td>';
-        }
-        m += '</tr><TR>';
-        for (var i = 0; i < Cities.cities.length; i++) {
-            m += '<TD colspan=2><CENTER><DIV id=divTimeLeftCity_' + Cities.cities[i].id + '></div></center></td>';
         }
         m += '</tr><TR>';
         for (var i = 0; i < Cities.cities.length; i++) {
@@ -6996,22 +6989,22 @@ Tabs.build = {
     },
 
     e_autoBuild: function () {
-        var t = Tabs.build;
-        var buildInterval = 5000+t.UASlowDown; // 2 seconds between checks by default
-        document.getElementById('pbbuildError').innerHTML = '';
+		var t = Tabs.build;
+		var buildInterval = 5000+t.UASlowDown; // 2 seconds between checks by default
+		document.getElementById('pbbuildError').innerHTML = '';
       
-        if (t.buildStates.running == true) {
-            var now = unixTime()-5;//lets give some error room
-            //logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
-	    var itime = 1000;
-            for (var i = 0; i < Cities.cities.length; i++) {
-                var cityId = Cities.cities[i].id;
-	      	if(t["bQ_" + cityId][0])
-		  itime += 2000;
-                var isBusy = false;
-                var qcon = Seed.queue_con["city" + cityId];
-             	if(t['build'+Cities.byID[cityId].idx] == true) continue;//so we don't get overloaded with slowed down requests
-                if (qcon.length > 0) {
+		if (t.buildStates.running == true) {
+			var now = unixTime()-5;//lets give some error room
+			//logit ('Seed.queue_con: (now='+ now +')\n'+ inspect (Seed.queue_con, 3));
+			var itime = 1000;
+			for (var i = 0; i < Cities.cities.length; i++) {
+				var cityId = Cities.cities[i].id;
+			if(t["bQ_" + cityId][0])
+				itime += 2000;
+			var isBusy = false;
+			var qcon = Seed.queue_con["city" + cityId];
+			if(t['build'+Cities.byID[cityId].idx] == true) continue;//so we don't get overloaded with slowed down requests
+			if (qcon.length > 0) {
 				/***
 				string) 0 = buildingtype
 				(number) 1 = buildinglevel
@@ -7025,64 +7018,67 @@ Tabs.build = {
 				if (parseInt(qcon[0][4]) > now) {
 					isBusy = true;
 					// try second queue
-					if (unsafeWindow.cm.QueueModel.hasFreeQueue() && t.buildStates.bothqueues && qcon.length > 1) {
+					if (unsafeWindow.cm.QueueModel.hasFreeQueue() && t.buildStates.bothqueues) {
 						isBusy = false;
-						if (parseInt(qcon[1][4]) > now) {
-							isBusy = true;
+						if (qcon.length > 1) {
+							if (parseInt(qcon[1][4]) > now) 
+								isBusy = true;
 						}
 						else {
-							if(qcon[1][1] == 0) {//if it is destruct
-								delete Seed.buildings["city" + cityId]['pos'+qcon[1][7]];
-							} else {
-								Seed.buildings["city" + cityId]['pos'+qcon[1][7]] = [qcon[1][0],qcon[1][1],qcon[1][7],qcon[1][2]];// first make sure the building is correct
-								logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
-							};
-							qcon.pop(); // remove expired build from queue
-							unsafeWindow.modal_build_show_state();
-							if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+							if(qcon[1]) {
+								if(qcon[1][1] == 0) {//if it is destruct
+									delete Seed.buildings["city" + cityId]['pos'+qcon[1][7]];
+								} else {
+									Seed.buildings["city" + cityId]['pos'+qcon[1][7]] = [qcon[1][0],qcon[1][1],qcon[1][7],qcon[1][2]];// first make sure the building is correct
+									logit('construct '+Cities.byID[cityId].name+' removing '+qcon[1][4]+' > '+now);
+								};
+								qcon.pop(); // remove expired build from queue
+								unsafeWindow.modal_build_show_state();
+								if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+							}	
 						}
 					}
 				}
-                  else {
-                  	if(qcon[0][1] == 0) {//if it is destruct
-                  		delete Seed.buildings["city" + cityId]['pos'+qcon[0][7]];
-               	   	} else {
-				Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
-				logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
-			};
-			qcon.shift(); // remove expired build from queue
-			unsafeWindow.modal_build_show_state();
-			if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
-		  };
-                }
-                //logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
-                if (isBusy) {
-					//logit('construct '+Cities.byID[cityId].name+' is busy');
-					//0 = 5,9,7222643,1365086688,1365087900,0,3840,8
-                    //TODO add info of remaining build time and queue infos
-                } else {
-					var cs = Math.floor(equippedthronestats(78));
-					document.getElementById("currcons").innerHTML = cs+'%';
-					t.csok = (!t.buildStates.tr || (cs >= Number(t.buildStates.trset)));
-					if (t.csok != t.lastcsok) {
-						if (!t.csok) {
-							unsafeWindow.jQuery('#currcons').css('color', 'red');
-						}	
-						else {	
-							unsafeWindow.jQuery('#currcons').css('color', 'black');
-						}
-					}		
-					t.lastcsok = t.csok;
-                    if(t.buildStates.tr && t.buildStates.trset > cs) continue;//check just before we start building.  lets the other enhancements keep working.                	
-                    	if (t["bQ_" + cityId].length > 0) { // something to do?
-                       	  t['build'+Cities.byID[cityId].idx] = true;
-                       	  t.doOneSlowdown(cityId,itime);
-                    	}
-                }
-            }
-        }
-        setTimeout(t.e_autoBuild, buildInterval); //should be at least 10
-    },
+				else {
+					if(qcon[0][1] == 0) {//if it is destruct
+						delete Seed.buildings["city" + cityId]['pos'+qcon[0][7]];
+					} else {
+						Seed.buildings["city" + cityId]['pos'+qcon[0][7]] = [qcon[0][0],qcon[0][1],qcon[0][7],qcon[0][2]];// first make sure the building is correct
+						logit('construct '+Cities.byID[cityId].name+' removing '+qcon[0][4]+' > '+now);
+					};
+					qcon.shift(); // remove expired build from queue
+					unsafeWindow.modal_build_show_state();
+					if (cityId == unsafeWindow.currentcityid) unsafeWindow.update_bdg();
+				};
+			}
+			//logit ('City #'+ (i+1) + ' : busy='+ isBusy);               
+			if (isBusy) {
+				//logit('construct '+Cities.byID[cityId].name+' is busy');
+				//0 = 5,9,7222643,1365086688,1365087900,0,3840,8
+				//TODO add info of remaining build time and queue infos
+			} else {
+				var cs = Math.floor(equippedthronestats(78));
+				document.getElementById("currcons").innerHTML = cs+'%';
+				t.csok = (!t.buildStates.tr || (cs >= Number(t.buildStates.trset)));
+				if (t.csok != t.lastcsok) {
+					if (!t.csok) {
+						unsafeWindow.jQuery('#currcons').css('color', 'red');
+					}	
+					else {	
+						unsafeWindow.jQuery('#currcons').css('color', 'black');
+					}
+				}		
+				t.lastcsok = t.csok;
+				if(t.buildStates.tr && t.buildStates.trset > cs) continue;//check just before we start building.  lets the other enhancements keep working.                	
+					if (t["bQ_" + cityId].length > 0) { // something to do?
+						t['build'+Cities.byID[cityId].idx] = true;
+						t.doOneSlowdown(cityId,itime);
+					}
+				}
+			}
+		}
+		setTimeout(t.e_autoBuild, buildInterval); //should be at least 10
+	},
 
     doOneSlowdown : function (cityId,itime){
         var t = Tabs.build;
@@ -7108,33 +7104,31 @@ Tabs.build = {
                 } else {
                     document.getElementById('divBuildingCity_' + cityId).innerHTML = 'Building...';
                 }
-                document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = buildTabTypes['type' + Seed.queue_con["city" + cityId][0][0]] + ' Lvl ' + Seed.queue_con["city" + cityId][0][1];
-                document.getElementById('divTimeLeftCity_' + cityId).innerHTML = timestr(timeLeft);
+                document.getElementById('divBuildingCity_' + cityId).innerHTML += '<br>'+buildTabTypes['type' + Seed.queue_con["city" + cityId][0][0]] + ' Lvl ' + Seed.queue_con["city" + cityId][0][1];
+                document.getElementById('divBuildingCity_' + cityId).innerHTML += '<br>'+timestr(timeLeft);
 				if (qcon.length > 1) {
 					if (parseInt(qcon[1][4]) > now) {
 						timeLeft = Seed.queue_con["city" + cityId][1][4] - now
 						if (Seed.queue_con["city" + cityId][1][1] == 0) {
-                    document.getElementById('divBuildingCity_' + cityId).innerHTML += '&nbsp;Destructing...';
-                } else {
-                    document.getElementById('divBuildingCity_' + cityId).innerHTML += '&nbsp;Building...';
-                }
-                document.getElementById('divCurrentBuildCity_' + cityId).innerHTML += '&nbsp;'+buildTabTypes['type' + Seed.queue_con["city" + cityId][1][0]] + ' Lvl ' + Seed.queue_con["city" + cityId][1][1];
-                document.getElementById('divTimeLeftCity_' + cityId).innerHTML = '&nbsp;'+timestr(timeLeft);
-					
+							document.getElementById('divBuildingCity_' + cityId).innerHTML += '<br>Destructing...';
+						} else {
+							document.getElementById('divBuildingCity_' + cityId).innerHTML += '<br>Building...';
+						}
+						document.getElementById('divBuildingCity_' + cityId).innerHTML += '<br>'+buildTabTypes['type' + Seed.queue_con["city" + cityId][1][0]] + ' Lvl ' + Seed.queue_con["city" + cityId][1][1];
+						document.getElementById('divBuildingCity_' + cityId).innerHTML += '<br>'+timestr(timeLeft);
 					}
 				}
             } else {
                 document.getElementById('divBuildingCity_' + cityId).innerHTML = '';
-                document.getElementById('divCurrentBuildCity_' + cityId).innerHTML = '';
-                document.getElementById('divTimeLeftCity_' + cityId).innerHTML = '';
             }
         }
     },
     doOne: function (cityId) {
         var t = Tabs.build;
-	if(!t["bQ_" + cityId][0])return;
-	var bQi = t["bQ_" + cityId][0]; //take first queue item to build
-	if(!bQi)return;
+		if(!t["bQ_" + cityId][0])return;
+		var bQi = t["bQ_" + cityId][0]; //take first queue item to build
+		if(!bQi)return;
+		var additionalqueue = 0;
         var currentcityid = parseInt(bQi.cityId);
         t['build'+Cities.byID[currentcityid].idx] = false;
         var cityName = t.getCityNameById(currentcityid);
@@ -7147,8 +7141,9 @@ Tabs.build = {
         //  var mode = "build"; //FOR DEBUG
         var citpos = parseInt(bQi.buildingPos);
         //  var citpos = 6; //FOR DEBUG
-			var qcon = Seed.queue_con["city" + bQi.cityId];
-				if (matTypeof(qcon) == 'array' && qcon.length > 0) {
+		var qcon = Seed.queue_con["city" + bQi.cityId];
+		if (matTypeof(qcon) == 'array' && qcon.length > 0) {
+			additionalqueue = 0;
 			if (unsafeWindow.cm.QueueModel.hasFreeQueue() && t.buildStates.bothqueues) {
 				if (qcon.length > 1) {
 					logit('both queues in use in '+Cities.byID[currentcityid].name+' so not building');
@@ -7159,6 +7154,7 @@ Tabs.build = {
 					t.requeueQueueElement(bQi);
 					return;
 				}
+				additionalqueue = 1;
 			}	
 			else {
 				logit('construct something going on in '+Cities.byID[currentcityid].name+' so not building');
@@ -7225,7 +7221,7 @@ Tabs.build = {
                 params.bid = bid;
             }
             params.type = bdgid;
-                params.pay_for_an_additional_queue=0;
+                params.pay_for_an_additional_queue=additionalqueue;
                 params.permission=0;
             new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/destruct.php" + unsafeWindow.g_ajaxsuffix, {
                 method: "post",
@@ -7308,7 +7304,7 @@ Tabs.build = {
                     params.bid = bid;
                 }
                 params.type = bdgid;
-                params.pay_for_an_additional_queue=0;
+                params.pay_for_an_additional_queue=additionalqueue;
 				if (params.lv > 9)
 					params.permission=1;
 				else
