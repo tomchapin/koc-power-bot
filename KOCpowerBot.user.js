@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141107a
+// @version        20141111a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141107a';
+var Version = '20141111a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -405,6 +405,7 @@ var ThroneOptions = {
     savestatue: false,
     savepet: false,
     savetapestry: false,
+    savepillar: false,
     tabnames: {}
 };
 
@@ -2389,7 +2390,7 @@ Tabs.Throne = {
 	MaxRows: 30,
 	CompPos: 0,
 	CardTypes: ["ALL", "Attack", "Defense", "Life", "Speed", "Accuracy", "Range", "Load", "MarchSize", "MarchSpeed", "CombatSkill", "IntelligenceSkill", "PoliticsSkill", "ResourcefulnessSkill", "TrainingSpeed", "ConstructionSpeed", "ResearchSpeed", "CraftingSpeed", "Upkeep", "ResourceProduction", "ResourceCap", "Storehouse", "Morale", "ItemDrop"],
-	EquipType: ["ALL", "advisor", "banner", "chair", "table", "trophy", "window", "candelabrum", "hero", "statue", "pet", "tapestry"], //case sensitive for the moment.
+	EquipType: ["ALL", "advisor", "banner", "chair", "table", "trophy", "window", "candelabrum", "hero", "statue", "pet", "tapestry", "pillar"], //case sensitive for the moment.
 	Faction: ["ALL", "Briton", "Fey", "Druid"],
 	init: function (div) {
 		var t = Tabs.Throne;
@@ -2457,8 +2458,8 @@ Tabs.Throne = {
 		var maxlevel = 19;
 		var t = Tabs.Throne;
 		var UniqueItems = null;
-		var trTypes = ['chair', 'advisor', 'window', 'banner', 'table', 'trophy', 'candelabrum', 'hero', 'statue', 'pet', 'tapestry']; // must be in this order
-		var itemTypes = { chair: 0, advisor: 1, window: 2, banner: 3, table: 4, trophy: 5, candelabrum: 6, hero: 7, statue: 8, pet: 9, tapestry: 10 }; // must be in this order
+		var trTypes = ['chair', 'advisor', 'window', 'banner', 'table', 'trophy', 'candelabrum', 'hero', 'statue', 'pet', 'tapestry', 'pillar']; // must be in this order
+		var itemTypes = { chair: 0, advisor: 1, window: 2, banner: 3, table: 4, trophy: 5, candelabrum: 6, hero: 7, statue: 8, pet: 9, tapestry: 10, pillar: 11 }; // must be in this order
 		var itemLists = [];
 		var selectedCard1 = 0;
 		var selectedCard2 = 0;
@@ -2790,6 +2791,7 @@ Tabs.Throne = {
 			m += '<tr><td colspan=3><INPUT id=sstatue type=checkbox ' + (ThroneOptions.savestatue ? 'CHECKED ' : '') + '/>&nbsp; Save all statues</TD></TR>';
 			m += '<tr><td colspan=3><INPUT id=spet type=checkbox ' + (ThroneOptions.savepet ? 'CHECKED ' : '') + '/>&nbsp; Save all Pets</TD></TR>';
 			m += '<tr><td colspan=3><INPUT id=stapestry type=checkbox ' + (ThroneOptions.savetapestry ? 'CHECKED ' : '') + '/>&nbsp; Save all Tapestries</TD></TR>';
+			m += '<tr><td colspan=3><INPUT id=spillar type=checkbox ' + (ThroneOptions.savepillar ? 'CHECKED ' : '') + '/>&nbsp; Save all Pillars</TD></TR>';
 			m += '</table>';
 			m += '<TR><TD><FONT color=red>Min number of lines will override your "Keep cards" and "ignore attributes" setting, keeping cards with lesser/larger min requirement</font></td></TR>';
 			m += '<br><br><TR><TD><FONT color=red>Check boxes for items you want to <b>KEEP</b> by attribute.</font></td></TR>';
@@ -3236,6 +3238,10 @@ Tabs.Throne = {
 				ThroneOptions.savetapestry = this.checked;
 				saveThroneOptions();
 			}, false);
+			document.getElementById('spillar').addEventListener('change', function () {
+				ThroneOptions.savepillar = this.checked;
+				saveThroneOptions();
+			}, false);
 			document.getElementById('pbthrone_keep').addEventListener('change', function () {
 				ThroneOptions.thronekeep = parseInt(document.getElementById('pbthrone_keep').value);
 				saveThroneOptions();
@@ -3447,6 +3453,7 @@ Tabs.Throne = {
 		var StatueCount = 0;
 		var PetCount = 0;
 		var TapestryCount = 0;
+		var PillarCount = 0;
 		var counter = 0;
 		var arr = unsafeWindow.kocThroneItems
 		var ActiveItems = 240;
@@ -3464,6 +3471,7 @@ Tabs.Throne = {
 			if (z.type == "statue") StatueCount++;
 			if (z.type == "pet") PetCount++;
 			if (z.type == "tapestry") TapestryCount++;
+			if (z.type == "pillar") PillarCount++;
 		}
 		try {
 			var m = '<DIV id=compElse class=pbStat>Compare Someone Else\'s TR</div><br>';
@@ -3473,7 +3481,7 @@ Tabs.Throne = {
 			m += '<TD><CENTER><INPUT type=text value="" id=displayTR readonly=true></input><INPUT id=populatebox type=submit value="Get TR Code"></input><INPUT id=clearTRArray type=submit value="Clear"></input></center>';
 			m += '<TD><CENTER><DIV id=apearMessageReceipt></div><DIV id=dispResult></div></td>';
 			m += '<DIV id=pbTowrtDivF class=pbStat>Compare Throne Items</div><br><TABLE id=pbCompareStats width=100% height=0% class=pbTab>';
-			m += '<TD>Advisor: <DIV id=advisorCount></div></td><TD>Banner:<DIV id=bannerCount></div></td><TD>Throne :<DIV id=chairCount></div></td><TD>Table: <DIV id=tableCount></div></td><TD>Trophy:<DIV id=trophyCount></div></td><TD>Window: <DIV id=windowCount></div></td><TD>Candelabrum: <DIV id=candelCount></div></td><TD>Hero: <DIV id=heroCount></div></td><TD>Statue: <DIV id=statueCount></div></td><TD>Pet: <DIV id=petCount></div></td><TD>Tapestry: <DIV id=tapestryCount></div></td></table><br>';
+			m += '<TD>Advisor: <DIV id=advisorCount></div></td><TD>Banner:<DIV id=bannerCount></div></td><TD>Throne :<DIV id=chairCount></div></td><TD>Table: <DIV id=tableCount></div></td><TD>Trophy:<DIV id=trophyCount></div></td><TD>Window: <DIV id=windowCount></div></td><TD>Candelabrum: <DIV id=candelCount></div></td><TD>Hero: <DIV id=heroCount></div></td><TD>Statue: <DIV id=statueCount></div></td><TD>Pet: <DIV id=petCount></div></td><TD>Tapestry: <DIV id=tapestryCount></div></td><TD>Pillar: <DIV id=pillarCount></div></td></table><br>';
 			m += '<DIV id=pbThroneMain class=pbStat>Compare Throne Items</div><br>';
 			m += '<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=type type=list></select></td><TD>Card Family: <SELECT id=family type=list></select></td><TD>Effect: <SELECT id=effect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=keyword size=10></td></tr></table>';
 			m += '<br><TABLE id=pbbarbingfunctions width=100% height=0% class=pbTab><TR>';
@@ -3494,6 +3502,7 @@ Tabs.Throne = {
 			document.getElementById('statueCount').innerHTML = StatueCount
 			document.getElementById('petCount').innerHTML = PetCount
 			document.getElementById('tapestryCount').innerHTML = TapestryCount
+			document.getElementById('pillarCount').innerHTML = PillarCount
 			AdvisorCount = 0;
 			BannerCount = 0;
 			TableCount = 0;
@@ -3505,6 +3514,7 @@ Tabs.Throne = {
 			StatueCount = 0;
 			PetCount = 0;
 			TapestryCount = 0;
+			PillarCount = 0;
 			document.getElementById('populatebox').addEventListener('click', function () {
 				document.getElementById('displayTR').value = JSON2.stringify(unsafeWindow.kocThroneItems)
 				document.getElementById('apearMessageReceipt').innerHTML = '<TD>Send in message to- <INPUT id=pbMessageTo type=text value=""></input><INPUT id=pbSendMessage type=submit value="Send in Message"></input>';
@@ -3554,6 +3564,7 @@ Tabs.Throne = {
 						if (z.type == "statue") StatueCount++;
 						if (z.type == "pet") PetCount++;
 						if (z.type == "tapestry") TapestryCount++;
+						if (z.type == "pillar") PillarCount++;
 					}
 					t.FillEquipCheckboxes(true)
 				}
@@ -3568,6 +3579,7 @@ Tabs.Throne = {
 				document.getElementById('statueCount').innerHTML = StatueCount
 				document.getElementById('petCount').innerHTML = PetCount
 				document.getElementById('tapestryCount').innerHTML = TapestryCount
+				document.getElementById('pillarCount').innerHTML = PillarCount
 				AdvisorCount = 0;
 				BannerCount = 0;
 				TableCount = 0;
@@ -3579,6 +3591,7 @@ Tabs.Throne = {
 				StatueCount = 0;
 				PetCount = 0;
 				TapestryCount = 0;
+				PillarCount = 0;
 			})
 			document.getElementById("type").options.length = 0;
 			for (k in t.EquipType) {
@@ -4740,6 +4753,7 @@ Tabs.Throne = {
 					IsStatue = false;
 					IsPet = false;
 					IsTapestry = false;
+					IsPillar = false;
 					if (y.quality > ThroneOptions.SalvageQuality) level = true;
 					if (y.level > 0) level = true;
 					if (ThroneOptions.SaveUnique)
@@ -4749,6 +4763,7 @@ Tabs.Throne = {
 					if (ThroneOptions.savestatue && y.type == "statue") IsStatue = true;
 					if (ThroneOptions.savepet && y.type == "pet") IsPet = true;
 					if (ThroneOptions.savetapestry && y.type == "tapestry") IsTapestry = true;
+					if (ThroneOptions.savepillar && y.type == "pillar") IsPillar = true;
 					for (i = 1; i <= 5; i++) {
 						if (ThroneOptions.Salvage_fav[y.effects["slot" + i].id]) {
 							NotFavorite = false;
@@ -4796,7 +4811,7 @@ Tabs.Throne = {
 						}
 					}
 					//logit('y.name '+y.name+' level '+level+' number '+number+' ThroneOptions.thronekeep '+ThroneOptions.thronekeep+' NotUpgrading '+NotUpgrading+' isEquiped '+y.isEquipped+' y.isbroken '+y.isBroken+' y.id '+y.id+' last deleted '+t.LastDeleted+' NotFavorite '+NotFavorite+' MinReq '+MinReq+' is unique '+IsUnique);
-					if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique && !IsHero && !IsStatue && !IsPet && !IsTapestry) {
+					if (!level && number < ThroneOptions.thronekeep && NotUpgrading && !y.isEquipped && !y.isBroken && t.LastDeleted != y.id && NotFavorite && !MinReq && !IsUnique && !IsHero && !IsStatue && !IsPet && !IsTapestry && !IsPillar) {
 						//logit(y.name);
 						t.SalvageArray.push(y.id);
 					}
