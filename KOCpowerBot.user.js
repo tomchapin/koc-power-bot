@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141111a
+// @version        20141125a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141111a';
+var Version = '20141125a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -719,9 +719,12 @@ function facebookInstance (){
    }
    iFrame.style.width = '100%';
 
-   while ( (iFrame=iFrame.parentNode) != null)
-     if (iFrame.tagName=='DIV')
-      iFrame.style.width = '100%';
+	while ( (iFrame=iFrame.parentNode) != null) {
+		if (iFrame.tagName=='DIV') {
+			iFrame.style.width = '100%';
+			iFrame.style.maxWidth = '100%';
+		}  
+	}	
    document.getElementById('globalContainer').style.left = '0px';
     try{    
       document.getElementById('rightCol').parentNode.removeChild(document.getElementById('rightCol'));
@@ -5111,11 +5114,14 @@ Complex loop that browsers can't handle =/. replaced with multiple loops above.
 			try {
 				var N = throne_item.effects[slot];
 				effect = CM.thronestats.effects[N.id];
-				tier = CM.thronestats.tiers[N.id][N.tier];
-				if (!tier) tier = CM.thronestats.tiers[N.id][N.tier - 1];
-				var base = tier.base || 0;
+				tier = parseInt(N.tier);
+				p = CM.thronestats.tiers[N.id][tier];
+				while (!p && (tier > 0)) { tier--; p = CM.thronestats.tiers[N.id][tier]; } 
+				if (!p) continue; // can't find stats for tier
+				
+				var base = p.base || 0;
 				var level = throne_item.level || 0;
-				var growth = tier.growth || 0;
+				var growth = p.growth || 0;
 				if (slot == 'slot6') {  //if it has a slot 6, it automatically has a jewel
 					JewelQuality = throne_item["effects"]['slot6'].quality;
 					GrowthLimit = unsafeWindow.cm.thronestats.jewelGrowthLimit[JewelQuality];
@@ -24793,11 +24799,15 @@ Tabs.Champion = {
 				try {
 					var N = champ_item.effects[slot];
 					effect = eval("unsafeWindow.g_js_strings.effects.name_"+N.id);
-					tier = t.championStatTiers[N.id][N.tier];
-					if (!tier) tier = t.championStatTiers[N.id][N.tier-1];
-					var base = tier.base || 0;
+
+					tier = parseInt(N.tier);
+					p = t.championStatTiers[N.id][tier];
+					while (!p && (tier > 0)) { tier--; p = t.championStatTiers[N.id][tier]; } 
+					if (!p) continue; // can't find stats for tier
+				
+					var base = p.base || 0;
 					var level = champ_item.level || 0;
-					var growth = tier.growth || 0;
+					var growth = p.growth || 0;
 					percent = +(base + ((level * level + level) * growth * 0.5));
 					var wholeNumber = false;
 					if (Math.round(parseFloat(percent)) == parseFloat(percent)) wholeNumber = true;
@@ -25479,6 +25489,8 @@ postInfo : function (z){
 		tier = parseInt(y["effects"][""+i]["tier"]);
 		level = y["level"];
 		p = t.championStatTiers[id][tier];
+		while (!p && (tier > 0)) { tier--; p = t.championStatTiers[id][tier]; } 
+		if (!p) continue; // can't find stats for tier
 		Current = p.base + ((level * level + level) * p.growth * 0.5);
 		m+='||'+Current + "% " + t.championStatEffects[id]["1"];
 	};
@@ -25516,8 +25528,9 @@ paintEquipInfo : function (z,what){
             id = y["effects"][""+i]["id"];
             tier = parseInt(y["effects"][""+i]["tier"]);
             level = y["level"];
-//            p = unsafeWindow.cm.Championstats.tiers[id][tier];
             p = t.championStatTiers[id][tier];
+			while (!p && (tier > 0)) { tier--; p = t.championStatTiers[id][tier]; } 
+			if (!p) continue; // can't find stats for tier
             Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
             var quality = parseInt(y["rarity"]);
             if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
@@ -26103,8 +26116,9 @@ PaintSalvageHistory : function() {
                id = y["effects"][""+i]["id"];
                tier = parseInt(y["effects"][""+i]["tier"]);
                level = y["level"];
-//               p = unsafeWindow.cm.thronestats.tiers[id][tier];
                p = t.championStatTiers[id][tier];
+				while (!p && (tier > 0)) { tier--; p = t.championStatTiers[id][tier]; } 
+				if (!p) continue; // can't find stats for tier
                Current = p.base + ((level * level + level) * p.growth * 0.5);
                level++;
                Next = p.base + ((level * level + level) * p.growth * 0.5);;
@@ -26139,9 +26153,9 @@ paintHoover : function (){
         id = y["effects"][""+i]["id"];
         tier = parseInt(y["effects"][""+i]["tier"]);
         level = y["level"];
-//        p = unsafeWindow.cm.thronestats.tiers[id][tier];
         p = t.championStatTiers[id][tier];
-//logit('id:' +id+ ' tier:' +tier+ ' p.base:' +p.base+ ' p.growth:' +p.growth);
+		while (!p && (tier > 0)) { tier--; p = t.championStatTiers[id][tier]; } 
+		if (!p) continue; // can't find stats for tier
         Current = p.base + ((level * level + level) * p.growth * 0.5);
 	if (ChampionOptions.Items["0"])
           var quality = parseInt(unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]]["rarity"]);
