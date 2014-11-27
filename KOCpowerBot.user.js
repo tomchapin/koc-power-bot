@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141125a
+// @version        20141127a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141125a';
+var Version = '20141127a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -735,8 +735,8 @@ function facebookInstance (){
     var e = document.getElementById('mainContainer');
    if(e){
       if (GlobalOptions.pbWideScreenStyle=="normal") e.parentNode.style.minWidth = '100%';
-      if (GlobalOptions.pbWideScreenStyle=="wide") e.parentNode.style.width = '1520px';
-      if (GlobalOptions.pbWideScreenStyle=="ultra") e.parentNode.style.width = '1900px';
+      if (GlobalOptions.pbWideScreenStyle=="wide") e.parentNode.style.minWidth = '1520px';
+      if (GlobalOptions.pbWideScreenStyle=="ultra") e.parentNode.style.minWidth = '1900px';
       for(i=0; i<e.childNodes.length; i++){
          if(e.childNodes[i].id == 'contentCol'){
             e.childNodes[i].style.margin = '0px';
