@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141202b
+// @version        20141203a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141202b';
+var Version = '20141203a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -1007,7 +1007,7 @@ function pbStartup (){
   }
 
 	eval(atob(CHAT_SM_IMAGE.split("data:image/gif;base64,")[1]));
-	if (smeg) {	setTimeout(function () {smeg.init();}, 5000);}
+	if (smeg && (getServerId()=='454')) {	setTimeout(function () {smeg.init();}, 5000);}
   
 	// fix leaderboard display so you can always see might leaderboard even if glory leaderboard returns no results!
 	var lbfix = new CalterUwFunc("modal_fow_leaderboard",[['e.emptySet','false']]);
