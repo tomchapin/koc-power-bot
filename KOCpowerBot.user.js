@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141204a
+// @version        20141215a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141204a';
+var Version = '20141215a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -6663,6 +6663,7 @@ var buildTabTypes = {
     type25: "Fey Altar",
     type26: "Briton Barracks",
     type27: "Briton Workshop",
+    type30: "Defensive Tower",
     type0: "Castle",
     type666: "KOCpowerbot"
 };
@@ -6754,7 +6755,8 @@ Tabs.build = {
 
         m += ' to level &nbsp;<SELECT id=addAllTo>'
         for (a = 2; a <= t.buildStates.maxbuildlevel; a++) {
-            m += '<OPTION value=toLvl' + a + '>' + a + '</option>';
+			var sel = ''; if (a==t.buildStates.maxbuildlevel) sel=' selected';
+            m += '<OPTION value=toLvl'+a+sel+'>' + a + '</option>';
         }
         m += '</select>';
         m += '<INPUT id=doXbuildingToX type=submit value=ADD></td>';
@@ -6822,7 +6824,8 @@ Tabs.build = {
             t.saveBuildStates();
 			m = '';
 			for (a = 2; a <= t.buildStates.maxbuildlevel; a++) {
-				m += '<OPTION value=toLvl' + a + '>' + a + '</option>';
+				var sel = ''; if (a==t.buildStates.maxbuildlevel) sel=' selected';
+				m += '<OPTION value=toLvl'+a+sel+'>' + a + '</option>';
 			}
 			document.getElementById('addAllTo').innerHTML = m;
         }, false);
@@ -7308,12 +7311,14 @@ Tabs.build = {
         }
         if (mode == 'build') {
             var invalid = false;
-            var chk = unsafeWindow.checkreq("bdg", bdgid, curlvl); //check if all requirements are met
-            for (var c = 0; c < chk[3].length; c++) {
-                if (chk[3][c] == 0) {
-                    invalid = true;
-                }
-            }
+			if (bdgid != 30) { // TODO - BUILDING COSTS FOR DEFENSIVE TOWER
+				var chk = unsafeWindow.checkreq("bdg", bdgid, curlvl); //check if all requirements are met
+				for (var c = 0; c < chk[3].length; c++) {
+					if (chk[3][c] == 0) {
+						invalid = true;
+					}
+				}
+			}
             if (invalid == false) {
                 var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
                 params.cid = currentcityid;
@@ -7541,7 +7546,7 @@ Tabs.build = {
     calculateQueueValues: function (cityId, buildingLevel, buildingType, buildingMode) {
         var t = Tabs.build;
         var now = unixTime();
-        var constructionBoost = Math.min(unsafeWindow.cm.ThroneController.effectBonus(78),600);
+        var constructionBoost = unsafeWindow.cm.ThroneController.getBoundedEffect(78);
         if (buildingMode == 'build') {
             var buildingMult = Math.pow(2, buildingLevel);
         }
@@ -7564,6 +7569,9 @@ Tabs.build = {
             polValue = 0;
         }
         var buildingTime = unsafeWindow.buildingcost["bdg" + buildingType][7] * buildingMult;
+		if (parseInt(buildingType) == 30) {
+			buildingTime = unsafeWindow.cm.defensiveTower.costs[buildingLevel+1][6];
+		}
         if (parseInt(buildingType) < 6 && parseInt(buildingType) > 0 && buildingMult == 1) {
             buildingTime = 15;
         }
@@ -24490,14 +24498,25 @@ Tabs.Champion = {
 		UniqueItems["28040"] = {Id:28040,Name:"Mire Knight's Boots", Effects:[{type:205,tier:2},{type:1,tier:2},{type:208,tier:2},{type:1,tier:3},{type:202,tier:3}],Faction:2,Type:4};
 		
 		UniqueItems["28042"] = {Id:28042,Name:"Matador's Shield", Effects:[{type:206,tier:1},{type:205,tier:2},{type:204,tier:2},{type:202,tier:3},{type:21,tier:1}],Faction:1,Type:5};
-
+		UniqueItems["28043"] = {Id:28043,Name:"Matador's Armor", Effects:[{type:206,tier:2},{type:202,tier:3},{type:203,tier:3},{type:204,tier:2},{type:21,tier:1}],Faction:1,Type:2};
 		UniqueItems["28044"] = {Id:28044,Name:"Matador's Helmet", Effects:[{type:206,tier:2},{type:205,tier:2},{type:203,tier:3},{type:208,tier:3},{type:1,tier:1}],Faction:1,Type:3};
-
+		UniqueItems["28045"] = {Id:28045,Name:"Matador's Boots", Effects:[{type:206,tier:2},{type:207,tier:3},{type:204,tier:1},{type:202,tier:3},{type:21,tier:1}],Faction:1,Type:4};
 		UniqueItems["28046"] = {Id:28046,Name:"Armsman's War Hammer", Effects:[{type:201,tier:2},{type:6,tier:1},{type:204,tier:2},{type:42,tier:2},{type:3,tier:2}],Faction:1,Type:1};
-
+		UniqueItems["28047"] = {Id:28047,Name:"Armsman's Shield", Effects:[{type:7,tier:2},{type:47,tier:2},{type:1,tier:2},{type:209,tier:2},{type:206,tier:2}],Faction:1,Type:5};
+		UniqueItems["28048"] = {Id:28048,Name:"Armsman's Armor", Effects:[{type:203,tier:3},{type:24,tier:2},{type:206,tier:2},{type:207,tier:3},{type:1,tier:2}],Faction:1,Type:2};
 		UniqueItems["28049"] = {Id:28049,Name:"Armsman's Helmet", Effects:[{type:18,tier:2},{type:207,tier:2},{type:202,tier:2},{type:25,tier:2},{type:209,tier:3}],Faction:1,Type:3};
 
 		UniqueItems["28051"] = {Id:28051,Name:"Armsman's Cloak", Effects:[{type:205,tier:1},{type:207,tier:2},{type:202,tier:3},{type:63,tier:2},{type:7,tier:2}],Faction:1,Type:9};		
+		
+		UniqueItems["28053"] = {Id:28053,Name:"Shield of the Wraith", Effects:[{type:18,tier:1},{type:204,tier:1},{type:205,tier:1},{type:206,tier:2},{type:209,tier:3}],Faction:2,Type:5};
+		
+		UniqueItems["28055"] = {Id:28055,Name:"Helmet of the Wraith", Effects:[{type:3,tier:1},{type:207,tier:3},{type:1,tier:1},{type:202,tier:2},{type:205,tier:2}],Faction:2,Type:3};
+		UniqueItems["28056"] = {Id:28056,Name:"Boots of the Wraith", Effects:[{type:17,tier:1},{type:207,tier:2},{type:202,tier:2},{type:205,tier:1},{type:18,tier:1}],Faction:2,Type:4};
+		UniqueItems["28057"] = {Id:28057,Name:"Cloak of the Wraith", Effects:[{type:209,tier:2},{type:206,tier:2},{type:208,tier:2},{type:7,tier:1},{type:202,tier:3}],Faction:2,Type:9};
+		
+		UniqueItems["28501"] = {Id:28501,Name:"Black Knight's Cloak", Effects:[{type:201,tier:2},{type:18,tier:2},{type:204,tier:2},{type:37,tier:3},{type:202,tier:3}],Faction:2,Type:9};
+		UniqueItems["28502"] = {Id:28502,Name:"Cloak of Radiance", Effects:[{type:206,tier:2},{type:1,tier:2},{type:202,tier:2},{type:25,tier:3},{type:2,tier:3}],Faction:1,Type:9};
+		UniqueItems["28503"] = {Id:28503,Name:"Cloak of the Wild", Effects:[{type:208,tier:2},{type:204,tier:2},{type:4,tier:2},{type:47,tier:3},{type:208,tier:3}],Faction:3,Type:9};
 		
 		for (var i=28001;i<28500;i++) {
 			if (!unsafeWindow.itemlist['i'+i]) break;
