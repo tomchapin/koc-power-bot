@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141215a
+// @version        20141216a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141215a';
+var Version = '20141216a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -228,6 +228,7 @@ var Options = {
   UseTourneySW:false,
   UseTourneyAR:false,
   CustomPublish : {},
+  LastSearch: {},
 };
 //unsafeWindow.pt_Options=Options;
 
@@ -7864,17 +7865,17 @@ Tabs.Search = {
     t.selectedCity = Cities.cities[0];
     t.myDiv = div;
     
-    m = '<DIV class=pbentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>'+translate("Search for")+': </td><TD width=99%>';
+    m = '<DIV class=pbentry><TABLE width=100% class=pbTab><TR><TD class=pbDetLeft>'+translate("Search for")+': </td><TD>';
     m += htmlSelector ({0:translate("Barb Camp"), 1:translate("Wilderness"), 2:translate("Cities")}, Options.srctype, 'id=pasrcType');
     m += '&nbsp; &nbsp; &nbsp; <span class=pbDetLeft>'+translate("Search style")+': &nbsp;';
     m += htmlSelector({square:translate("Square"), circle:translate("Circle")}, Options.srcdisttype, 'id=pbsrcdist');
-    m += '</span></td></tr><TR><TD class=pbDetLeft>'+translate("At")+': </td><TD class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
+    m += '</span></td><td align=right id=pbsavedsearch>&nbsp;</td></tr><TR><TD class=pbDetLeft>'+translate("At")+': </td><TD colspan=2 class=xtab>X=<INPUT id=pasrchX type=text\> &nbsp;Y=<INPUT id=pasrchY type=text\>\
       &nbsp; '+translate("Radius")+': <INPUT id=pasrcDist size=3 value=10 /> &nbsp; <SPAN id=paspInXY></span></tr>\
-      <TR><TD class=pbDetLeft>Or:</td><TD>'+translate("Search entire province")+': <select id="provinceXY"><option>--'+translate("provinces")+'--</option>';
+      <TR><TD class=pbDetLeft>Or:</td><TD colspan=2>'+translate("Search entire province")+': <select id="provinceXY"><option>--'+translate("provinces")+'--</option>';
     for (var i in t.Provinces)
         m += '<option value="'+i+'">'+t.Provinces[i].name+'</option>';
     m += '</select>&nbsp;No. of Pieces: '+ htmlSelector ({1:'1', 4:'4', 9:'9', 16:'16', 25:'25', 36:'36', 49:'49', 64:'64'}, 1, 'id=provinceSLICES')+'&nbsp; Your Piece: <select id="provinceSLICE"><option value=1 selected>1</option></select></td></tr>';
-    m += '<TR><TD colspan=2 align=center><INPUT id=pasrcStart type=submit value="'+translate("Start Search")+'"/></td></tr>';
+    m += '<TR><TD colspan=3 align=center><INPUT id=pasrcStart type=submit value="'+translate("Start Search")+'"/></td></tr>';
     m += '</table></div>\
         <DIV id="pasrcResults" style="height:400px; max-height:400px;"></div>';
     
@@ -7893,6 +7894,10 @@ Tabs.Search = {
 		unsafeWindow.jQuery("#provinceSLICE").val(1);
 		t.setSlice();
 	});
+	
+	if (Options.LastSearch.mapDat != []) {
+		t.displaylastsearch();
+	}
 	
     var psearch = document.getElementById ("pasrcType");
     document.getElementById('pasrcType').addEventListener ('change', function (){
@@ -7928,6 +7933,41 @@ Tabs.Search = {
     unsafeWindow.ShowScoutList = t.ShowScoutList;
   },
 
+  clearlastsearch : function () {
+	var t = Tabs.Search;
+  	document.getElementById('pbsavedsearch').innerHTML = "";
+	Options.LastSearch = {};
+	saveOptions();
+  },
+  showlastsearch : function () {
+	var t = Tabs.Search;
+	if (t.searchRunning){
+		t.stopSearch (translate('SEARCH CANCELLED!'));
+	}	
+	
+    document.getElementById ('pasrcType').value = Options.LastSearch.opt.searchType;
+    document.getElementById ('pasrchX').value = Options.LastSearch.opt.startX;
+    document.getElementById ('pasrchY').value = Options.LastSearch.opt.startY;
+    document.getElementById ('pasrcDist').value = Options.LastSearch.opt.maxDistance;
+    document.getElementById ('pbsrcdist').value = Options.LastSearch.opt.searchShape;
+		
+	t.mapDat = Options.LastSearch.mapDat.slice();	
+    t.opt.searchType = Options.LastSearch.opt.searchType;
+    t.opt.startX = parseInt(Options.LastSearch.opt.startX);
+    t.opt.startY = parseInt(Options.LastSearch.opt.startY);
+    t.opt.maxDistance = parseInt(Options.LastSearch.opt.maxDistance);
+    t.opt.searchShape = Options.LastSearch.opt.searchShape;
+	t.setupresultspanel();
+	t.dispMapTable();	
+  },
+  displaylastsearch : function () {
+	var t = Tabs.Search;
+	n = translate("Previous Search")+' ('+unsafeWindow.formatDate(new Date(Options.LastSearch.time * 1000), "NNN dd, HH:mm")+')&nbsp;<INPUT id=pbshowlastsearch type=submit value="Show"/>&nbsp;<INPUT id=pbclearlastsearch type=submit value="'+translate("Clear")+'"/>';
+	document.getElementById('pbsavedsearch').innerHTML = n;
+	document.getElementById('pbclearlastsearch').addEventListener('click', t.clearlastsearch, false);
+	document.getElementById('pbshowlastsearch').addEventListener('click', t.showlastsearch, false);
+  },
+  
   e_coordChange : function(){
     document.getElementById ('provinceXY').selectedIndex = 0;
   },
@@ -8067,8 +8107,34 @@ Tabs.Search = {
       return;
     }
 
+	t.clearlastsearch();
+	Options.LastSearch.opt = t.opt;
+	Options.LastSearch.time = unixTime();
+	Options.LastSearch.mapDat = [];
+	saveOptions();
+	
     t.searchRunning = true;
     document.getElementById ('pasrcStart').value = translate('Stop Search');
+
+	t.setupresultspanel();
+	
+    t.mapDat = [];
+    t.firstX =  t.opt.startX - t.opt.maxDistance;
+    t.lastX = t.opt.startX + t.opt.maxDistance;
+    t.firstY =  t.opt.startY - t.opt.maxDistance;
+    t.lastY = t.opt.startY + t.opt.maxDistance;
+    t.tilesSearched = 0;
+    t.tilesFound = 0;
+    t.curX = t.firstX;
+    t.curY = t.firstY;
+    var xxx = t.MapAjax.normalize(t.curX);
+    var yyy = t.MapAjax.normalize(t.curY);
+    document.getElementById ('pastatStatus').innerHTML = translate('Searching at ')+ xxx +','+ yyy;
+    t.MapAjax.request (xxx, yyy, t.opt.searchDistance, t.eventgetplayeronline);
+  },
+
+  setupresultspanel : function () {
+    var t = Tabs.Search;
     m = '<DIV class=pbStat><TABLE width=100% cellspacing=0><TR><TD class=xtab width=125><DIV id=pastatSearched></div></td>\
         <TD class=xtab align=center><SPAN style="white-space:normal" id=pastatStatus></span></td>\
         <TD class=xtab align=right width=125><DIV id=pastatFound></div></td></tr></table></div>\
@@ -8269,20 +8335,6 @@ Tabs.Search = {
     }
     
     document.getElementById('pbAhideShow').addEventListener ('click', t.hideShowClicked, false);
-    
-    t.mapDat = [];
-    t.firstX =  t.opt.startX - t.opt.maxDistance;
-    t.lastX = t.opt.startX + t.opt.maxDistance;
-    t.firstY =  t.opt.startY - t.opt.maxDistance;
-    t.lastY = t.opt.startY + t.opt.maxDistance;
-    t.tilesSearched = 0;
-    t.tilesFound = 0;
-    t.curX = t.firstX;
-    t.curY = t.firstY;
-    var xxx = t.MapAjax.normalize(t.curX);
-    var yyy = t.MapAjax.normalize(t.curY);
-    document.getElementById ('pastatStatus').innerHTML = translate('Searching at ')+ xxx +','+ yyy;
-    t.MapAjax.request (xxx, yyy, t.opt.searchDistance, t.eventgetplayeronline);
   },
 
   hideShowClicked : function (){
@@ -8313,6 +8365,10 @@ Tabs.Search = {
       return a[2] - b[2];
     }
     
+	Options.LastSearch.mapDat = t.mapDat.slice();
+	saveOptions();
+	t.displaylastsearch();
+	
     t.dat = [];
     for (i=0; i<t.mapDat.length; i++){  
       lvl = parseInt (t.mapDat[i][4]);
@@ -8440,7 +8496,7 @@ Tabs.Search = {
     for (i=0; i<t.mapDat.length; i++){
    if(t.opt.searchType==1)
       if (t.mapDat[i][3] == Options.wildType || Options.wildType==0)
-      if (t.mapDat[i][4]>=Options.srcMinLevel && t.mapDat[i][4]<=Options.srcMaxLevel)
+      if (parseInt(t.mapDat[i][4])>=Options.srcMinLevel && parseInt(t.mapDat[i][4])<=Options.srcMaxLevel)
       if ((Options.unownedOnly && t.mapDat[i][5] == false) || (!Options.unownedOnly))
             bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
      if(t.opt.searchType==2)
@@ -8481,7 +8537,7 @@ Tabs.Search = {
             m += '<TR style="background-color:white"><TD><input type=checkbox name=pbsrcScoutCheck id="pbsrcScoutCheck_'+coordlist[i].x+'_'+coordlist[i].y+'" value="'+coordlist[i].x+'_'+coordlist[i].y+'" '+(coordlist[i].chk?'CHECKED':'')+'/></td><TD>'+coordLink(coordlist[i].x,coordlist[i].y)+'</td></tr>';
       }
         m += '</table></div>';
-        m += '<BR><input type=checkbox id="pbskip">Skip targets when errors occur';
+		m += '<BR><input type=checkbox id="pbskip">Skip targets when errors occur<br><input type=checkbox id="pbattack">Send scouts on ATTACK!';
         m += '<BR><input type=checkbox id="pbsallcities">Scout from all cities (NOT UNDER AP!)';
         m += '<BR><CENTER>'+ strButton20(translate('Start Scout'), 'id=pbSrcStartScout') +'</center>';
         m += '<CENTER><DIV style="width:70%; max-height:75px; overflow-y:auto;" id=pbSrcScoutResult></DIV></center>';
@@ -8564,6 +8620,11 @@ Tabs.Search = {
     params.cid = city.id;
     params.kid = 0;
     params.type = 3;
+	if (document.getElementById('pbattack').checked){
+		Tabs.Barb.getAtkKnight('city'+city.id)
+		params.kid=Tabs.Barb.knt[0].ID;
+		params.type = 4;
+    }
     params.xcoord = x;
     params.ycoord = y;
     params.u3 = Options.srcScoutAmt;
