@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141216a
+// @version        20141219a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141216a';
+var Version = '20141219a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -10231,7 +10231,7 @@ Tabs.transport = {
             var cityname = (Cities.byID[r[queueId].city] ? Cities.byID[r[queueId].city].name : "null");
             var citynameTo = null,
                 TO, status, unit;
-            if (typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0) citynameTo = Cities.byID[r[queueId].target_city].name;
+            if (typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0) citynameTo = (Cities.byID[r[queueId].target_city] ? Cities.byID[r[queueId].target_city].name : "null");
             if (citynameTo == null) TO = r[i].target_x + ',' + r[i].target_y;
             else TO = citynameTo;
             if (r[i].route_state) status = '<FONT color=green>' + translate("Enabled") + '</font>';
@@ -10265,9 +10265,9 @@ Tabs.transport = {
         var t = Tabs.transport;
         var r = t.tradeRoutes;
         var queueId = parseInt(queueId);
-        var cityname = Cities.byID[r[queueId].city].name;
+        var cityname = (Cities.byID[r[queueId].city] ? Cities.byID[r[queueId].city].name : "null");
         var citynameTo, TO;
-        if (typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0) citynameTo = Cities.byID[r[queueId].target_city].name;
+        if (typeof r[queueId].target_city != 'undefined' && parseInt(r[queueId].target_city) > 0) citynameTo = (Cities.byID[r[queueId].target_city] ? Cities.byID[r[queueId].target_city].name : "null");
         var Types = ['food', 'wood', 'stone', 'iron', 'aetherstone', 'gold'];
         if (citynameTo == null) TO = r[queueId].target_x + ',' + r[queueId].target_y;
         else TO = citynameTo;
@@ -10493,7 +10493,7 @@ Tabs.transport = {
 			var ycoord = Cities.byID[revcity].y;
 		}
 		if(!Cities.byID[city]) return;
-
+        if (t.tradeRoutes[count]["target_city"] && (parseIntNan(t.tradeRoutes[count]["target_city"]) != 0) && !Cities.byID[t.tradeRoutes[count]["target_city"]]) return;
 		if (rev) { // only allow one reverse transport at a time
 			if (t.tradeRoutes[count]["rev_eta"]) {
 				if (parseInt(t.tradeRoutes[count]["rev_eta"]) > unsafeWindow.unixtime()) return;
@@ -22989,6 +22989,7 @@ var March = {
             loading: true,
             onSuccess: function (transport) {
                 t.profiler.stop();
+				CM.MarchModal.setBackedOff(false);
                 --t.currentrequests;
                 var rslt = eval("(" + transport.responseText + ")");
                  if (rslt.updateSeed) {
@@ -23023,6 +23024,7 @@ var March = {
                         callback(rslt);
                 } else {
                     if (rslt.user_action == "backOffWaitTime") {
+						CM.MarchModal.setBackedOff(true);
                         logit('backoffwaittime '+rslt.wait_time);
                         if(rslt.tt)
                             params.tt = rslt.tt;
@@ -24062,7 +24064,7 @@ Tabs.gifts = {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                for(i in rslt.message){
-                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject == "New Gift Received!" || rslt.message[i].subject == "Ãƒâ€šÃ‚Â¡Nuevo regalo recibido!" || rslt.message[i].subject == "Nuovo Regalo ricevuto!" || rslt.message[i].subject == "Yeni Hediye AlÄ±ndÄ±!" || rslt.message[i].subject == "Neues Geschenk erhalten!")){
+                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject.indexOf('Yeni Hediye Alındı') >= 0 || rslt.message[i].subject.indexOf('Neues Geschenk erhalten') >= 0 || rslt.message[i].subject.indexOf('Nouveaux Cadeaux re�us') >= 0 || rslt.message[i].subject.indexOf('Nuevo regalo recibido') >= 0 || rslt.message[i].subject.indexOf('Nuovo Regalo ricevuto') >= 0 || rslt.message[i].subject.indexOf('New Gift Received') >= 0)){
                      t.foundgift(i);
                   };
                };
@@ -24557,7 +24559,7 @@ Tabs.Champion = {
 		UniqueItems["28038"] = {Id:28038,Name:"Mire Knight's Armor", Effects:[{type:206,tier:2},{type:202,tier:3},{type:17,tier:2},{type:207,tier:2},{type:205,tier:3}],Faction:2,Type:2};
 		UniqueItems["28039"] = {Id:28039,Name:"Mire Knight's Helmet", Effects:[{type:207,tier:2},{type:23,tier:2},{type:19,tier:3},{type:202,tier:3},{type:208,tier:2}],Faction:2,Type:3};
 		UniqueItems["28040"] = {Id:28040,Name:"Mire Knight's Boots", Effects:[{type:205,tier:2},{type:1,tier:2},{type:208,tier:2},{type:1,tier:3},{type:202,tier:3}],Faction:2,Type:4};
-		
+		UniqueItems["28041"] = {Id:28041,Name:"Matador's Whip", Effects:[{type:201,tier:5},{type:204,tier:2},{type:205,tier:1},{type:208,tier:3},{type:1,tier:1}],Faction:1,Type:1};		
 		UniqueItems["28042"] = {Id:28042,Name:"Matador's Shield", Effects:[{type:206,tier:1},{type:205,tier:2},{type:204,tier:2},{type:202,tier:3},{type:21,tier:1}],Faction:1,Type:5};
 		UniqueItems["28043"] = {Id:28043,Name:"Matador's Armor", Effects:[{type:206,tier:2},{type:202,tier:3},{type:203,tier:3},{type:204,tier:2},{type:21,tier:1}],Faction:1,Type:2};
 		UniqueItems["28044"] = {Id:28044,Name:"Matador's Helmet", Effects:[{type:206,tier:2},{type:205,tier:2},{type:203,tier:3},{type:208,tier:3},{type:1,tier:1}],Faction:1,Type:3};
