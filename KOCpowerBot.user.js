@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141223b
+// @version        20141224a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141223b';
+var Version = '20141224a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -20002,8 +20002,8 @@ Tabs.Apothecary = {
         <tr><td colspan=2 align=left><INPUT id=pbrvTR type=checkbox '+(TrainOptions.rvtr?'CHECKED':'')+'> '+translate('Only revive when revive speed is at least')+' <INPUT id=pbrvTRset type=text size=3 maxlength=4 value="'+ TrainOptions.rvtrset +'">&nbsp;%</td><td colspan=2 align=right>Current Revive Speed:&nbsp;<span id=currrv></span>&nbsp;&nbsp;</td>\
         <tr><td>Troop type: <select id="pbapothecary_troops"><option value="0">--Select--</option>';
 	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-		i = unsafeWindow.cm.UNIT_TYPES[ui];
-        m += '<option value="' + i + '">' + unitcost['unt'+i][0] + '</option>';
+		y = unsafeWindow.cm.UNIT_TYPES[ui];
+        m += '<option value="' + y + '">' + unitcost['unt'+y][0] + '</option>';
 	}	
     m += '</select></td>\
 		<td>Min.: <input id="pbapothecary_min" type="text" size="4" value="0"/></td>\
@@ -20055,8 +20055,8 @@ Tabs.Apothecary = {
     m += '<td>&nbsp;</td></tr>\
         <tr><td class="pbStat" colspan="' + (cities.length + 2) + '">' + unsafeWindow.g_js_strings.revive.wounded + '</td></tr>';
 	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-		i = unsafeWindow.cm.UNIT_TYPES[ui];
-		var uid = 'unt'+i;
+		y = unsafeWindow.cm.UNIT_TYPES[ui];
+		var uid = 'unt'+y;
         m += '<tr><td style="white-space: nowrap;">' + unitcost[uid][0] + '</td>';
         for (cid in woundedUnits) {
             m += '<td id="tdApoWoundedUnits_' + cid + '_' + uid + '" style="text-align: right;">&nbsp;</td>';
@@ -20547,8 +20547,8 @@ Tabs.Apothecary = {
 		document.getElementById('pbrevUseLHLabel').innerHTML = t.Legendary;
 		
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
-            total['unt'+i] = 0;
+			y = unsafeWindow.cm.UNIT_TYPES[ui];
+            total['unt'+y] = 0;
         }
 		t.rs = Math.floor(equippedthronestats(97));
 		document.getElementById("currrv").innerHTML = t.rs+'%';
@@ -20711,8 +20711,8 @@ Tabs.Apothecary = {
             document.getElementById('tdApoRevQueue2_' + cid).innerHTML = html;
             // wounded units
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				i = unsafeWindow.cm.UNIT_TYPES[ui];
-                var uid = 'unt'+i;
+				y = unsafeWindow.cm.UNIT_TYPES[ui];
+                var uid = 'unt'+y;
 				total[uid] += woundedUnits[cid][uid];
 				                html = addCommas(woundedUnits[cid][uid]);
                 document.getElementById('tdApoWoundedUnits_' + cid + '_' + uid).innerHTML = html;
@@ -20723,8 +20723,8 @@ Tabs.Apothecary = {
         }
         // total
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
-			var uid = 'unt'+i;
+			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var uid = 'unt'+y;
             html = addCommas(total[uid]);
             document.getElementById('tdApoWoundedUnits_total_' + uid).innerHTML = html;
         }
@@ -20755,17 +20755,17 @@ Tabs.Combat = {
         t.myDiv = div;
         var m = '<table><TR><TD colspan=2><b>Attacking</b>&nbsp;&nbsp;<INPUT id=pbcombat_1 type=submit value=Research></td><TD colspan=2><b>Defending</b>&nbsp;&nbsp;<INPUT id=pbcombat_0 type=submit value=Research></td></TR>';
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
-            var name = unsafeWindow.unitcost['unt'+i][0];
-            m+='<tr><td>'+name+' :</td><td><input type=text id="pbcombata_unt'+i+'" /></td><td>'+name+' :</td><td><input type=text id="pbcombatd_unt'+i+'" /></td></tr>';
+			y = unsafeWindow.cm.UNIT_TYPES[ui];
+            var name = unsafeWindow.unitcost['unt'+y][0];
+            m+='<tr><td>'+name+' :</td><td><input type=text id="pbcombata_unt'+y+'" /></td><td>'+name+' :</td><td><input type=text id="pbcombatd_unt'+y+'" /></td></tr>';
         }
         m+='</table><DIV id=pbcombat_rslt></div>';
         t.myDiv.innerHTML = m;
         
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
 			i = unsafeWindow.cm.UNIT_TYPES[ui];
-            document.getElementById('pbcombata_unt'+i).addEventListener('change', t.e_calculate, false);
-            document.getElementById('pbcombatd_unt'+i).addEventListener('change', t.e_calculate, false);
+            document.getElementById('pbcombata_unt'+y).addEventListener('change', t.e_calculate, false);
+            document.getElementById('pbcombatd_unt'+y).addEventListener('change', t.e_calculate, false);
         }
         document.getElementById('pbcombat_1').addEventListener('click', function() t.e_research(1),false);
         document.getElementById('pbcombat_0').addEventListener('click', function() t.e_research(0),false);
@@ -20828,8 +20828,8 @@ Tabs.Combat = {
         for(var k in CombatOptions.ratio[0]){
             var attack = parseFloat(t.c_attack(k,0));
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				i = unsafeWindow.cm.UNIT_TYPES[ui];
-				var tr = 'unt'+i;
+				y = unsafeWindow.cm.UNIT_TYPES[ui];
+				var tr = 'unt'+y;
                 var defense = parseFloat(t.c_defense(tr,1));
                 var life = parseFloat(t.c_life(tr,1));
                 var ratio = ((life+defense)/attack);
@@ -20839,8 +20839,8 @@ Tabs.Combat = {
         for(var k in CombatOptions.ratio[1]){
             var attack = parseFloat(t.c_attack(k,1));
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				i = unsafeWindow.cm.UNIT_TYPES[ui];
-				var tr = 'unt'+i;
+				y = unsafeWindow.cm.UNIT_TYPES[ui];
+				var tr = 'unt'+y;
                 var defense = parseFloat(t.c_defense(tr,0));
                 var life = parseFloat(t.c_life(tr,0));
                 var ratio = ((life+defense)/attack);
@@ -20859,8 +20859,8 @@ Tabs.Combat = {
         t.speed[0] = 0;
         t.speed[1] = 0;
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
-			var tr = 'unt'+i;
+			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var tr = 'unt'+y;
 			var name = unsafeWindow.unitcost[tr][0];
             t.troops[0][tr] = parseIntNan(document.getElementById('pbcombatd_'+tr).value);
             t.troops[1][tr] = parseIntNan(document.getElementById('pbcombata_'+tr).value);
@@ -20883,8 +20883,8 @@ Tabs.Combat = {
             t.range[2] = t.range[0];
         }
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
-			var tr = 'unt'+i;
+			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var tr = 'unt'+y;
             if(t.troops[0][tr]>0)
                 t.distance[0][tr] = parseInt(t.range[2]/((t.speed[1]/t.speed[0])+1));
             else
@@ -21126,8 +21126,8 @@ Tabs.Combat = {
         var t = Tabs.Combat;
         var m = '<div class=pbStat>Results</div><table><TR><TD colspan=3><b>Attacking</b></td><TD colspan=3><b>Defending</b></td><TD>Rounds :'+t.round+'</td></TR>';
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
-			var tr = 'unt'+i;
+			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var tr = 'unt'+y;
             var name = unsafeWindow.unitcost[tr][0];
             m+='<tr><td>'+name+' :</td><td>'+ t.troops[1][tr] +'</td><td><span class=boldRed>'+ t.lost[1][tr] +'</span></td><td>'+name+' :</td><td>'+ t.troops[0][tr] +'</td><td><span class=boldRed>'+ t.lost[0][tr] +'</span></td></tr>';
         }
@@ -21992,8 +21992,8 @@ Tabs.Attack = {
 		Options.crestMarchError = 0;
 
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
-			t.trooparray[i] = unsafeWindow.unitcost['unt'+i][0].toString().replace(/\s+/g, '');
+			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			t.trooparray[y] = unsafeWindow.unitcost['unt'+y][0].toString().replace(/\s+/g, '');
 		}	
 		
 		t.sendCrestReport;	// check this every refresh
@@ -22669,12 +22669,12 @@ Tabs.Attack = {
 		var t = Tabs.Attack;
 		var result = true;
       	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
-			if (t.trooparray[i]) {
+			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			if (t.trooparray[y]) {
 				var needed = 0;
 				for (var r=round;r<=2;r++)
 					needed = needed + parseIntNan(CrestData[CrestDataNum]["R"+r+t.trooparray[i]]);
-				result = (result && (parseIntNan(Seed.units[cityID]['unt'+i]) >= needed));
+				result = (result && (parseIntNan(Seed.units[cityID]['unt'+y]) >= needed));
 				if (!result) {return result;}
 			}	
 		}
