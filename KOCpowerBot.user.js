@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141223a
+// @version        20141223b
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141223a';
+var Version = '20141223b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -14564,9 +14564,9 @@ Tabs.AutoTrain = {
         m+='<TD><B>'+ Seed.cities[i][1] +'</b></td>';
         m+='<TD width=150px><SELECT class='+city+' id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			y = unsafeWindow.cm.UNIT_TYPES[ui];
 			var faux = 0;
-			var uc = unsafeWindow.unitcost['unt'+i];
+			var uc = unsafeWindow.unitcost['unt'+y];
             if (matTypeof(uc[8]) == 'object'){
 				for (k in uc[8]){
 					var b = getCityBuilding (Seed.cities[i][0], k.substr(1));
@@ -14585,18 +14585,18 @@ Tabs.AutoTrain = {
 				}
 			}
 
-            if(i == "13") faux = 1;
-            if(i == "14") faux = 1;
-            if(i == "15") faux = 1;
-            if(i == "17") faux = 1;
-            if(i == "18") faux = 1;
-            if(i == "21") faux = 1;
-            if(i == "22") faux = 1;
-            if(i == "24") faux = 1;
-            if(i == "25") faux = 1;
+            if(y == "13") faux = 1;
+            if(y == "14") faux = 1;
+            if(y == "15") faux = 1;
+            if(y == "17") faux = 1;
+            if(y == "18") faux = 1;
+            if(y == "21") faux = 1;
+            if(y == "22") faux = 1;
+            if(y == "24") faux = 1;
+            if(y == "25") faux = 1;
             
 			if (faux==0)
-				m+='<option value="'+i+'">'+unsafeWindow.unitcost['unt'+i][0]+'</option>';
+				m+='<option value="'+y+'">'+unsafeWindow.unitcost['unt'+y][0]+'</option>';
 		}
 		
         m+='</select></td>';
