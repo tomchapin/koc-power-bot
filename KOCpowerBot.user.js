@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141224a
+// @version        20141225a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141224a';
+var Version = '20141225a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -288,8 +288,8 @@ var CrestData = new Array();
       this.Y            =  Arr.Y;
 	  
       for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
-		var trpname = unsafeWindow.unitcost['unt'+i][0].toString().replace(/\s+/g, '');
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
+		var trpname = unsafeWindow.unitcost['unt'+y][0].toString().replace(/\s+/g, '');
 		if (Arr["R1"+trpname])
 			this["R1"+trpname] = Arr["R1"+trpname]
 		if (Arr["R2"+trpname])
@@ -9634,13 +9634,11 @@ Tabs.transport = {
         m += '<DIV style="text-align:center; margin-top:15px"><INPUT id=pbSaveRoute type=submit value="' + translate("Add Route") + '"><INPUT id=pbManualSend type=submit value="' + translate("Manual Transport") + '"></div>';
         m += '<DIV id=errorSpace></div>'
         t.myDiv.innerHTML = m;
-        document.getElementById('TransportTroop')
-            .value = 'unt9';
+        document.getElementById('TransportTroop').value = 'unt9';
         t.tcp = new CdispCityPicker('pttrader', document.getElementById('ptrescity'), true, t.updateResources, 0);
         t.tcpto = new CdispCityPicker('pttraderTo', document.getElementById('ptcityTo'), true, t.clickCitySelect);
         t.tcpto.bindToXYboxes(document.getElementById('ptcityX'), document.getElementById('ptcityY'));
-        document.getElementById('TransportTroop')
-            .addEventListener('change', function () {
+        document.getElementById('TransportTroop').addEventListener('change', function () {
             t.updateTroops();
         }, false);
         document.getElementById('pbTraderState')
@@ -10282,7 +10280,8 @@ Tabs.transport = {
         n += '<TD width=150px>' + translate("Troop Type:") + '<SELECT id="pbbTransportTroop">';
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
 			i = unsafeWindow.cm.UNIT_TYPES[ui];
-			n += '<option value="' + y + '">' + unsafeWindow.unitcost['unt'+i][0] + '</option>';
+			var y = 'unt'+i;
+			n += '<option value="' + y + '">' + unsafeWindow.unitcost[y][0] + '</option>';
 		}
         n += '</select></td></table><BR><TABLE  id=editRoutes class=pbTab>';
         for (var i = 0; i < Types.length; i++) {
