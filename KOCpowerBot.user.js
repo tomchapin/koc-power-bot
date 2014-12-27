@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20141225a
+// @version        20141226a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20141225a';
+var Version = '20141226a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -8850,7 +8850,7 @@ Tabs.Search = {
 
 	  var rowcounter = 0;
      	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			
 			rowcounter++;
 			if (rowcounter > 4) {
@@ -8884,7 +8884,7 @@ Tabs.Search = {
         params.queue[0].cityMarches.toYCoord = Y;
         params.queue[0].cityMarches.unit0Count = 0;
      	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			params.queue[0]['cityMarches']['unit'+i+'Count'] = parseIntNan(document.getElementById ('Unit'+i).value);
 		}	
         
@@ -9573,7 +9573,7 @@ Tabs.transport = {
         m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="left">';
         m += '<TD width=75px>TroopType:</td><TD width=150px><SELECT id="TransportTroop">';
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			var y = 'unt'+i;
 			m += '<option value="'+y+'">' + unsafeWindow.unitcost[y][0] + '</option>';
 		}
@@ -10279,7 +10279,7 @@ Tabs.transport = {
         n += '<TD><INPUT id=TradeStatus type=checkbox>&nbsp;Enable Route</td>';
         n += '<TD width=150px>' + translate("Troop Type:") + '<SELECT id="pbbTransportTroop">';
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			var y = 'unt'+i;
 			n += '<option value="' + y + '">' + unsafeWindow.unitcost[y][0] + '</option>';
 		}
@@ -11185,7 +11185,7 @@ cm.MARCH_TYPES = {
 
 		  var rowcounter = 0;
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			
 			rowcounter++;
 			if (rowcounter > 4) {
@@ -11210,7 +11210,7 @@ cm.MARCH_TYPES = {
                   t.save[y]['toXCoord'] = parseInt(document.getElementById ('toXCoord').value);
                   t.save[y]['toYCoord'] = parseInt(document.getElementById ('toYCoord').value);
 					for (var ui in unsafeWindow.cm.UNIT_TYPES){
-						i = unsafeWindow.cm.UNIT_TYPES[ui];
+						var i = unsafeWindow.cm.UNIT_TYPES[ui];
 						t.save[y]['unit'+i+'Count'] = parseInt(document.getElementById ('Unit'+i).value);
 					}	
                   var serverID = getServerId();
@@ -11240,7 +11240,7 @@ cm.MARCH_TYPES = {
 
 		var rowcounter = 0;
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			
 			rowcounter++;
 			if (rowcounter > 4) {
@@ -11274,7 +11274,7 @@ cm.MARCH_TYPES = {
             params.queue[0].cityMarches.toYCoord =  parseInt(document.getElementById ('toYCoord').value);
             params.queue[0].cityMarches.unit0Count = 0; //document.getElementById ('Unit0').value;
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				i = unsafeWindow.cm.UNIT_TYPES[ui];
+				var i = unsafeWindow.cm.UNIT_TYPES[ui];
 				params.queue[0]['cityMarches']['unit'+i+'Count'] = parseIntNan(document.getElementById ('Unit'+i).value);
 			}	
             params.queue[0].cityMarches.marchId =  t.rslt['queue'][y]['botMarches']['marchId'];
@@ -11315,7 +11315,7 @@ cm.MARCH_TYPES = {
                     toYCoord = t.rslt['queue'][y]['botMarches']['toYCoord'];
                     var units = {};
 					for (var ui in unsafeWindow.cm.UNIT_TYPES){
-						i = unsafeWindow.cm.UNIT_TYPES[ui];
+						var i = unsafeWindow.cm.UNIT_TYPES[ui];
 						units[i] = t.rslt['queue'][y]['botMarches']['unit'+i+'Count'];
 					}	
 				}
@@ -11350,14 +11350,14 @@ cm.MARCH_TYPES = {
 					  RaidObj.toXCoord =  toXCoord;
 					  RaidObj.toYCoord = toYCoord;
 						for (var ui in unsafeWindow.cm.UNIT_TYPES){
-								i = unsafeWindow.cm.UNIT_TYPES[ui];
+								var i = unsafeWindow.cm.UNIT_TYPES[ui];
 							RaidObj['unit'+i+'Count'] = units[i];
 						}
 					  
                           t.save.push (RaidObj);
                           var troops = Seed.units["city" + cityId];
 							for (var ui in unsafeWindow.cm.UNIT_TYPES){
-								u = unsafeWindow.cm.UNIT_TYPES[ui];
+								var u = unsafeWindow.cm.UNIT_TYPES[ui];
 							var troop_number = parseInt(rslt["unit" + u + "Return"]);
                           if (isNaN(troop_number)) {
                               troop_number = parseInt(Seed.units["city" + cityId]["unt" + u]);
@@ -11555,7 +11555,7 @@ cm.MARCH_TYPES = {
                     toYCoord = Seed.queue_atkp[cityID][f]['toYCoord'];
                     var units = {};
 					for (var ui in unsafeWindow.cm.UNIT_TYPES){
-						i = unsafeWindow.cm.UNIT_TYPES[ui];
+						var i = unsafeWindow.cm.UNIT_TYPES[ui];
 						units[i] = Seed.queue_atkp[cityID][f]['unit'+i+'Count'];
 					}	
             }
@@ -11589,7 +11589,7 @@ cm.MARCH_TYPES = {
 					  RaidObj.toXCoord =  toXCoord;
 					  RaidObj.toYCoord = toYCoord;
 						for (var ui in unsafeWindow.cm.UNIT_TYPES){
-								i = unsafeWindow.cm.UNIT_TYPES[ui];
+								var i = unsafeWindow.cm.UNIT_TYPES[ui];
 							RaidObj['unit'+i+'Count'] = units[i];
 						}
 					  
@@ -11597,7 +11597,7 @@ cm.MARCH_TYPES = {
                             
                             var troops = Seed.units["city" + cityId];
 							for (var ui in unsafeWindow.cm.UNIT_TYPES){
-								u = unsafeWindow.cm.UNIT_TYPES[ui];
+								var u = unsafeWindow.cm.UNIT_TYPES[ui];
                                 var troop_number = parseInt(rslt["unit" + u + "Return"]);
                                 if (isNaN(troop_number)) {
                                     troop_number = parseInt(Seed.units["city" + cityId]["unt" + u]);
@@ -11669,7 +11669,7 @@ cm.MARCH_TYPES = {
                 params.queue[0].cityMarches.toYCoord = t.save[y]['toYCoord'];
                 params.queue[0].cityMarches.unit0Count = 0;
 				for (var ui in unsafeWindow.cm.UNIT_TYPES){
-					i = unsafeWindow.cm.UNIT_TYPES[ui];
+					var i = unsafeWindow.cm.UNIT_TYPES[ui];
 					params.queue[0]['cityMarches']['unit'+i+'Count'] = t.save[y]['unit'+i+'Count'];
 				}	
             }
@@ -12581,7 +12581,7 @@ Tabs.Barb = {
     t.myDiv = div;
  
 	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-		i = unsafeWindow.cm.UNIT_TYPES[ui];
+		var i = unsafeWindow.cm.UNIT_TYPES[ui];
 		var trp = [];
 		trp.push(unsafeWindow.unitcost['unt'+i][0]);
 		trp.push(i);
@@ -14093,7 +14093,7 @@ Tabs.Reassign = {
 		};
 		
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			t.troops[i] = unsafeWindow.unitcost['unt'+i][0].toString().replace(/\s+/g, '');
 		}	
 		
@@ -14458,7 +14458,7 @@ Tabs.Reassign = {
 		var xcoord = t.reassignRoutes[count]["target_x"];
 		var ycoord = t.reassignRoutes[count]["target_y"];
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			params["u"+i] = 0;
 		}	
 
@@ -14563,7 +14563,7 @@ Tabs.AutoTrain = {
         m+='<TD><B>'+ Seed.cities[i][1] +'</b></td>';
         m+='<TD width=150px><SELECT class='+city+' id="TroopsCity'+city+'"><option value="Select">--Select--</options>';
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
 			var faux = 0;
 			var uc = unsafeWindow.unitcost['unt'+y];
             if (matTypeof(uc[8]) == 'object'){
@@ -16863,7 +16863,7 @@ function AjaxRequest (url, opts){
    if(url == 'ajax/march.php')
 
    for (var ui in unsafeWindow.cm.UNIT_TYPES){
-		i = unsafeWindow.cm.UNIT_TYPES[ui];
+		var i = unsafeWindow.cm.UNIT_TYPES[ui];
 		if(opts.parameters['u'+i] == undefined || opts.parameters['u'+i] == 0)
 		delete opts.parameters['u'+i];
    };
@@ -17915,7 +17915,7 @@ function getMarchInfo (cityID){
   ret.returnUnits = {};
   ret.resources = [];
   for (var ui in unsafeWindow.cm.UNIT_TYPES){
-    i = unsafeWindow.cm.UNIT_TYPES[ui];
+    var i = unsafeWindow.cm.UNIT_TYPES[ui];
     ret.marchUnits["unt"+i] = 0;
     ret.returnUnits["unt"+i] = 0;
   }
@@ -17930,7 +17930,7 @@ function getMarchInfo (cityID){
 			if (march.marchType == 9 && (march.marchStatus == 3 || march.marchStatus == 4 || march.marchStatus == 10)) continue; // don't count troops in stopped or resting raids..
 	  
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				i = unsafeWindow.cm.UNIT_TYPES[ui];
+				var i = unsafeWindow.cm.UNIT_TYPES[ui];
 				ret.marchUnits["unt"+i] += parseIntNan (march['unit'+i+'Count']);
 				ret.returnUnits["unt"+i] += parseIntNan (march['unit'+i+'Return']);
             }
@@ -20001,7 +20001,7 @@ Tabs.Apothecary = {
         <tr><td colspan=2 align=left><INPUT id=pbrvTR type=checkbox '+(TrainOptions.rvtr?'CHECKED':'')+'> '+translate('Only revive when revive speed is at least')+' <INPUT id=pbrvTRset type=text size=3 maxlength=4 value="'+ TrainOptions.rvtrset +'">&nbsp;%</td><td colspan=2 align=right>Current Revive Speed:&nbsp;<span id=currrv></span>&nbsp;&nbsp;</td>\
         <tr><td>Troop type: <select id="pbapothecary_troops"><option value="0">--Select--</option>';
 	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-		y = unsafeWindow.cm.UNIT_TYPES[ui];
+		var y = unsafeWindow.cm.UNIT_TYPES[ui];
         m += '<option value="' + y + '">' + unitcost['unt'+y][0] + '</option>';
 	}	
     m += '</select></td>\
@@ -20054,7 +20054,7 @@ Tabs.Apothecary = {
     m += '<td>&nbsp;</td></tr>\
         <tr><td class="pbStat" colspan="' + (cities.length + 2) + '">' + unsafeWindow.g_js_strings.revive.wounded + '</td></tr>';
 	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-		y = unsafeWindow.cm.UNIT_TYPES[ui];
+		var y = unsafeWindow.cm.UNIT_TYPES[ui];
 		var uid = 'unt'+y;
         m += '<tr><td style="white-space: nowrap;">' + unitcost[uid][0] + '</td>';
         for (cid in woundedUnits) {
@@ -20546,7 +20546,7 @@ Tabs.Apothecary = {
 		document.getElementById('pbrevUseLHLabel').innerHTML = t.Legendary;
 		
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
             total['unt'+y] = 0;
         }
 		t.rs = Math.floor(equippedthronestats(97));
@@ -20710,7 +20710,7 @@ Tabs.Apothecary = {
             document.getElementById('tdApoRevQueue2_' + cid).innerHTML = html;
             // wounded units
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				y = unsafeWindow.cm.UNIT_TYPES[ui];
+				var y = unsafeWindow.cm.UNIT_TYPES[ui];
                 var uid = 'unt'+y;
 				total[uid] += woundedUnits[cid][uid];
 				                html = addCommas(woundedUnits[cid][uid]);
@@ -20722,7 +20722,7 @@ Tabs.Apothecary = {
         }
         // total
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
 			var uid = 'unt'+y;
             html = addCommas(total[uid]);
             document.getElementById('tdApoWoundedUnits_total_' + uid).innerHTML = html;
@@ -20754,7 +20754,7 @@ Tabs.Combat = {
         t.myDiv = div;
         var m = '<table><TR><TD colspan=2><b>Attacking</b>&nbsp;&nbsp;<INPUT id=pbcombat_1 type=submit value=Research></td><TD colspan=2><b>Defending</b>&nbsp;&nbsp;<INPUT id=pbcombat_0 type=submit value=Research></td></TR>';
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
             var name = unsafeWindow.unitcost['unt'+y][0];
             m+='<tr><td>'+name+' :</td><td><input type=text id="pbcombata_unt'+y+'" /></td><td>'+name+' :</td><td><input type=text id="pbcombatd_unt'+y+'" /></td></tr>';
         }
@@ -20762,7 +20762,7 @@ Tabs.Combat = {
         t.myDiv.innerHTML = m;
         
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
             document.getElementById('pbcombata_unt'+y).addEventListener('change', t.e_calculate, false);
             document.getElementById('pbcombatd_unt'+y).addEventListener('change', t.e_calculate, false);
         }
@@ -20827,7 +20827,7 @@ Tabs.Combat = {
         for(var k in CombatOptions.ratio[0]){
             var attack = parseFloat(t.c_attack(k,0));
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				y = unsafeWindow.cm.UNIT_TYPES[ui];
+				var y = unsafeWindow.cm.UNIT_TYPES[ui];
 				var tr = 'unt'+y;
                 var defense = parseFloat(t.c_defense(tr,1));
                 var life = parseFloat(t.c_life(tr,1));
@@ -20838,7 +20838,7 @@ Tabs.Combat = {
         for(var k in CombatOptions.ratio[1]){
             var attack = parseFloat(t.c_attack(k,1));
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				y = unsafeWindow.cm.UNIT_TYPES[ui];
+				var y = unsafeWindow.cm.UNIT_TYPES[ui];
 				var tr = 'unt'+y;
                 var defense = parseFloat(t.c_defense(tr,0));
                 var life = parseFloat(t.c_life(tr,0));
@@ -20858,7 +20858,7 @@ Tabs.Combat = {
         t.speed[0] = 0;
         t.speed[1] = 0;
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
 			var tr = 'unt'+y;
 			var name = unsafeWindow.unitcost[tr][0];
             t.troops[0][tr] = parseIntNan(document.getElementById('pbcombatd_'+tr).value);
@@ -20882,7 +20882,7 @@ Tabs.Combat = {
             t.range[2] = t.range[0];
         }
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
 			var tr = 'unt'+y;
             if(t.troops[0][tr]>0)
                 t.distance[0][tr] = parseInt(t.range[2]/((t.speed[1]/t.speed[0])+1));
@@ -21125,7 +21125,7 @@ Tabs.Combat = {
         var t = Tabs.Combat;
         var m = '<div class=pbStat>Results</div><table><TR><TD colspan=3><b>Attacking</b></td><TD colspan=3><b>Defending</b></td><TD>Rounds :'+t.round+'</td></TR>';
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
 			var tr = 'unt'+y;
             var name = unsafeWindow.unitcost[tr][0];
             m+='<tr><td>'+name+' :</td><td>'+ t.troops[1][tr] +'</td><td><span class=boldRed>'+ t.lost[1][tr] +'</span></td><td>'+name+' :</td><td>'+ t.troops[0][tr] +'</td><td><span class=boldRed>'+ t.lost[0][tr] +'</span></td></tr>';
@@ -21991,7 +21991,7 @@ Tabs.Attack = {
 		Options.crestMarchError = 0;
 
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
 			t.trooparray[y] = unsafeWindow.unitcost['unt'+y][0].toString().replace(/\s+/g, '');
 		}	
 		
@@ -22154,7 +22154,7 @@ Tabs.Attack = {
 		document.getElementById('RelTargets').addEventListener('click', function(){t.MassRelTargets();}, false);
 		
       	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			if (t.trooparray[i]) {
 				t.addListeners(t.trooparray[i]);
 			}	
@@ -22191,7 +22191,7 @@ Tabs.Attack = {
 	checkDisableRound : function(r,disabled) {
 		var t = Tabs.Attack;
       	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			if (t.trooparray[i]) {
 				$('R'+r+t.trooparray[i]).disabled = disabled;
 				if (disabled) {
@@ -22240,7 +22240,7 @@ Tabs.Attack = {
 		var troops = 0;
 		if ($('pbcrest_rnd1').checked) {
       		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				i = unsafeWindow.cm.UNIT_TYPES[ui];
+				var i = unsafeWindow.cm.UNIT_TYPES[ui];
 				if (t.trooparray[i]) {
 					troops = troops + parseIntNan(CrestOptions["R1"+t.trooparray[i]]);
 				}
@@ -22251,7 +22251,7 @@ Tabs.Attack = {
 		troops = 0;
 		if ($('pbcrest_rnd2').checked) {
       		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-				i = unsafeWindow.cm.UNIT_TYPES[ui];
+				var i = unsafeWindow.cm.UNIT_TYPES[ui];
 				if (t.trooparray[i]) {
 					troops = troops + parseIntNan(CrestOptions["R2"+t.trooparray[i]]);
 				}	
@@ -22668,11 +22668,11 @@ Tabs.Attack = {
 		var t = Tabs.Attack;
 		var result = true;
       	for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			y = unsafeWindow.cm.UNIT_TYPES[ui];
+			var y = unsafeWindow.cm.UNIT_TYPES[ui];
 			if (t.trooparray[y]) {
 				var needed = 0;
 				for (var r=round;r<=2;r++)
-					needed = needed + parseIntNan(CrestData[CrestDataNum]["R"+r+t.trooparray[i]]);
+					needed = needed + parseIntNan(CrestData[CrestDataNum]["R"+r+t.trooparray[y]]);
 				result = (result && (parseIntNan(Seed.units[cityID]['unt'+y]) >= needed));
 				if (!result) {return result;}
 			}	
@@ -22684,7 +22684,7 @@ Tabs.Attack = {
 		var t = Tabs.Attack;
 		var troops = 0;
    		for (var ui in unsafeWindow.cm.UNIT_TYPES){
-			i = unsafeWindow.cm.UNIT_TYPES[ui];
+			var i = unsafeWindow.cm.UNIT_TYPES[ui];
 			if (t.trooparray[i]) {
 				troops = troops + parseIntNan(CrestData[CrestDataNum]["R"+round+t.trooparray[i]]);
 			}	
@@ -22997,7 +22997,7 @@ var March = {
       var cids = March.getMaxSize(params.cid);
       var x = 0;
       for (var ui in unsafeWindow.cm.UNIT_TYPES){
-	 i = unsafeWindow.cm.UNIT_TYPES[ui];
+	 var i = unsafeWindow.cm.UNIT_TYPES[ui];
          var y = eval('params.u'+i);
          if (matTypeof(y)== 'number')
          x+=y;
@@ -23032,7 +23032,7 @@ var March = {
                     var ut = unsafeWindow.unixtime();
 					var unitsarr = {};
 					for (var ui in unsafeWindow.cm.UNIT_TYPES){
-						i = unsafeWindow.cm.UNIT_TYPES[ui];
+						var i = unsafeWindow.cm.UNIT_TYPES[ui];
 						if (params["u" + i])
 							unitsarr[i] = params["u" + i];
 						else
