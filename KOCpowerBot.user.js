@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150108a
+// @version        20150109a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150108a';
+var Version = '20150109a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -21196,6 +21196,7 @@ Tabs.Inventory = {
    resources: [],
    chest: [],
    court: [],
+   jewels: [],
    type: null,
    queue:[],
    isBusy:false,
@@ -21214,7 +21215,8 @@ Tabs.Inventory = {
                <input type=submit id=pbinventory_combat value='Combat' />\
                <input type=submit id=pbinventory_resources value='Resources' />\
                <input type=submit id=pbinventory_chest value='Chest' />\
-               <input type=submit id=pbinventory_court value='Court' /></td>\
+               <input type=submit id=pbinventory_court value='Court' />\
+               <input type=submit id=pbinventory_jewels value='Jewels' /></td>\
             <TD width=50% align=center ><input type=submit id=pbinventory_start value='Start' /></td>\
                </tr>\
             <TD><span id='pbinventory_cityselect'></span></td>\
@@ -21226,13 +21228,14 @@ Tabs.Inventory = {
       t.myDiv.innerHTML = m;
       t.sort_Items();
       
-      t.city = new CdispCityPicker ('pbinventory_city', document.getElementById('pbinventory_cityselect'), true, null);
+      t.city = new CdispCityPicker ('pbinventory_city', document.getElementById('pbinventory_cityselect'), true, null, Cities.byID[unsafeWindow.currentcityid].idx);
       
       $("pbinventory_general").addEventListener('click', t.display_general, false);
       $("pbinventory_combat").addEventListener('click', t.display_combat, false);
       $("pbinventory_resources").addEventListener('click', t.display_resources, false);
       $("pbinventory_chest").addEventListener('click', t.display_chest, false);
       $("pbinventory_court").addEventListener('click', t.display_court, false);
+      $("pbinventory_jewels").addEventListener('click', t.display_jewels, false);
       $("pbinventory_start").addEventListener('click', t.start, false);
       
       $("pbinventory_general").click();
@@ -21262,6 +21265,9 @@ Tabs.Inventory = {
             if(item.category == 6){
                t.court.push(item);
             }
+            if(item.category == 7){
+               t.jewels.push(item);
+            }
             
          }
       }
@@ -21279,7 +21285,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_general' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='"+t.getItemImageURL(item.id)+"' /> "+item.name.substr(0,20)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_general_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -21304,22 +21310,29 @@ Tabs.Inventory = {
    display_combat : function (){
       var t = Tabs.Inventory;
       t.type = "combat";
+      var mightarray={1510:2250,1511:7500,1512:11250,1513:15000,1514:3300,1515:11000,1516:16500,1517:22000,1518:3750,1519:12500,1520:18750,1521:25000,1522:2250,1523:7500,1524:11250,1525:15000,1498:2250,1499:7500,1500:11250,1501:1500,1502:3000,1503:10000,1504:15000,1505:20000,1361:3750,1422:100,1423:150,1410:500,1444:300,1478:1950,1479:6500,1480:9750,1481:13000,1482:2250,1483:7500,1484:11250,1485:15000,1487:6500,1488:9750,1489:13000,1490:2250,1491:7500,1492:11250,1493:15000,1494:7500,1495:11250,1496:15000,1497:2250,1331:2000,1469:900,1473:750,1477:50000,1340:450,1454:525,1330:400,1350:600,1475:1500,1411:2000,1412:10,1440:300,1468:675,1476:10000,1455:1350,1370:700,1381:3000,1471:100,1390:900,1474:1000,1465:1350,1351:3000,1445:400,1452:175,1461:90,1506:3300,1507:11000,1508:16500,1509:22000,1371:3500,1391:4500,1427:150,1443:200,1311:1000,1401:1800,1341:2250,1321:2000,};
       var div = document.getElementById("pbinventory");
       var count = 0;
+	  var totalmight = 0;
       var m = "<TABLE>";
-      m += "<TR><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='10px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='20px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td></tr><TR>";
+      m += "<TR><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD align=right>Might</td><TD width='10px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD align=right>Might</td></tr><TR>";
       for (var k in t.combat){
          var item = t.combat[k];
          if(!item.name) continue;
-         m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
+		 var might = 0;
+		 if (mightarray[item.id])
+			might = mightarray[item.id] * item.count;	
+         m += (count%2 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_combat' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='"+t.getItemImageURL(item.id)+"' /> "+item.name.substr(0,25)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_combat_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
-         m += (count%3 == 2)?"</tr>":"";
+         m += "<TD align=right>"+((might!=0)?addCommas(might):'')+"</td>";
+         m += (count%2 == 1)?"</tr>":"";
          count++;
+		 totalmight = totalmight+might;
       }
-      m += "</table>";
+      m += "<tr><td colspan=11><b>Total Troop Might:&nbsp;"+addCommas(totalmight)+"</b></td></tr></table>";
       div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
       
       var nodes = document.getElementsByClassName("pbinv_"+t.type);
@@ -21347,7 +21360,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_resources' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='"+t.getItemImageURL(item.id)+"' /> "+item.name.substr(0,20)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_resources_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -21381,7 +21394,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_chest' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='"+t.getItemImageURL(item.id)+"' /> "+item.name.substr(0,20)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_chest_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -21415,7 +21428,7 @@ Tabs.Inventory = {
          if(!item.name) continue;
          m += (count%3 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
          m += "<TD><input type=checkbox class='pbinv_court' data-ft='"+JSON.stringify(item)+"' /></td>";
-         m += "<TD><img width='20px' height='20px' src=''+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+item.id+".jpg' /> "+item.name.substr(0,15)+"</td>";
+         m += "<TD><img width='20px' height='20px' src='"+t.getItemImageURL(item.id)+"' /> "+item.name.substr(0,20)+"</td>";
          m += "<TD><input type=text size=2 id='pb_inv_court_"+item.id+"' /></td>";
          m += "<TD>"+item.count+"</td>";
          m += (count%3 == 2)?"</tr>":"";
@@ -21437,6 +21450,71 @@ Tabs.Inventory = {
          }
       }
    },
+   display_jewels : function (){
+      var t = Tabs.Inventory;
+      t.type = "jewel";
+      var div = document.getElementById("pbinventory");
+      var count = 0;
+      var m = "<TABLE>";
+      m += "<TR><TD></td><TD>Name</td><TD>Use</td><TD>Count</td><TD width='10px'>&nbsp;</td><TD></td><TD>Name</td><TD>Use</td><TD>Count</td></tr><TR>";
+      for (var k in t.jewels){
+         var item = t.jewels[k];
+         if(!item.name) continue;
+         m += (count%2 == 0)?"<TR>":"<TD width='10px'>&nbsp;</td>";
+         m += "<TD><input type=checkbox class='pbinv_jewel' data-ft='"+JSON.stringify(item)+"' /></td>";
+         m += "<TD><img width='20px' height='20px' src='"+t.getItemImageURL(item.id)+"' /> "+item.name.substr(0,40)+"</td>";
+         m += "<TD><input type=text size=2 id='pb_inv_jewel_"+item.id+"' /></td>";
+         m += "<TD>"+item.count+"</td>";
+         m += (count%2 == 1)?"</tr>":"";
+         count++;
+      }
+      m += "</table>";
+      div.innerHTML = (count!=0)?m:"<CENTER>No useable items in this category</CENTER>";
+      
+      var nodes = document.getElementsByClassName("pbinv_"+t.type);
+      if(nodes.length > 0){
+         for(var i=0; i<nodes.length; i++){
+            nodes[i].addEventListener('click', function(e){
+               var item = JSON.parse(e.target.getAttribute("data-ft"));
+               if(e.target.checked)
+                  $("pb_inv_"+t.type+"_"+item.id).value = $("pbinventory_useall").checked?item.count:1;
+               else
+                  $("pb_inv_"+t.type+"_"+item.id).value = '';
+            },false);
+         }
+      }
+   },
+   
+	getItemImageURL : function (id) {
+		var s = "";
+		if (id == 999) {
+			s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/dailyRewards/question_mark.jpg"
+		} else {
+			if (unsafeWindow.cm.MASTERS_TOKEN_LEVELS[id]) {
+				s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/masters_token_bg.png"
+			} else {
+				if (unsafeWindow.cm.ItemController.isJewelId(id)) {
+					var jewel = unsafeWindow.cm.ItemController.isJewelId(id);
+					s = unsafeWindow.cm.ThronePanelView.getJewelIcon(jewel.quality, unsafeWindow.cm.ThroneController.jewelType(jewel));
+				} else {
+					if (unsafeWindow.cm.ItemController.isMysteryId(id)) {
+						s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/30303.jpg"
+					} else {
+						if ((id >= 11001) && (id <= 11010)) {
+							s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/bossBattleChest_victor.jpg"
+						} else {
+							if ((id >= 11021) && (id <= 11030)) {
+								s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/bossBattleChest_milestone.jpg"
+							} else {
+								s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/" + id + ".jpg"
+							}
+						}
+					}
+				}
+			}
+		}
+		return s
+	},
    
    e_total : function (){
       var t = Tabs.Inventory;
