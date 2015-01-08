@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150107a
+// @version        20150108a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150107a';
+var Version = '20150108a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -12953,8 +12953,8 @@ Tabs.Barb = {
           }
         if (myarray){
             if(AttackOptions.Method == 'distance') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['dist'];b = b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
-            if(AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a > b ? -1 : 1);});
-            if(AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return a == b ? 0 : (a < b ? -1 : 1);});
+			if(AttackOptions.Method == 'level') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return parseInt(a) == parseInt(b) ? 0 : (parseInt(a) > parseInt(b) ? -1 : 1);});
+            if(AttackOptions.Method == 'lowlevel') t.barbArray[i] = myarray.sort(function sortBarbs(a,b) {a = a['level']+a['dist'];b = b['level']+b['dist'];return parseInt(a) == parseInt(b) ? 0 : (parseInt(a) < parseInt(b) ? -1 : 1);});
               GM_setValue('DF_' + unsafeWindow.tvuid + '_city_' + i + '_' + getServerId(), JSON2.stringify(t.barbArray[i]));
           }
         AttackOptions.Update[i][1] = 0;
