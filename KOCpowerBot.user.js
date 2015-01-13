@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150109a
+// @version        20150113a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150109a';
+var Version = '20150113a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -24725,7 +24725,7 @@ Tabs.Champion = {
 		UniqueItems["28049"] = {Id:28049,Name:"Armsman's Helmet", Effects:[{type:18,tier:2},{type:207,tier:2},{type:202,tier:2},{type:25,tier:2},{type:209,tier:3}],Faction:1,Type:3};
 
 		UniqueItems["28051"] = {Id:28051,Name:"Armsman's Cloak", Effects:[{type:205,tier:1},{type:207,tier:2},{type:202,tier:3},{type:63,tier:2},{type:7,tier:2}],Faction:1,Type:9};		
-		
+		UniqueItems["28052"] = {Id:28052,Name:"Sickle of the Wraith", Effects:[{type:201,tier:5},{type:17,tier:1},{type:202,tier:2},{type:204,tier:3},{type:207,tier:3}],Faction:2,Type:1};		
 		UniqueItems["28053"] = {Id:28053,Name:"Shield of the Wraith", Effects:[{type:18,tier:1},{type:204,tier:1},{type:205,tier:1},{type:206,tier:2},{type:209,tier:3}],Faction:2,Type:5};
 		
 		UniqueItems["28055"] = {Id:28055,Name:"Helmet of the Wraith", Effects:[{type:3,tier:1},{type:207,tier:3},{type:1,tier:1},{type:202,tier:2},{type:205,tier:2}],Faction:2,Type:3};
@@ -24735,6 +24735,10 @@ Tabs.Champion = {
 		UniqueItems["28501"] = {Id:28501,Name:"Black Knight's Cloak", Effects:[{type:201,tier:2},{type:18,tier:2},{type:204,tier:2},{type:37,tier:3},{type:202,tier:3}],Faction:2,Type:9};
 		UniqueItems["28502"] = {Id:28502,Name:"Cloak of Radiance", Effects:[{type:206,tier:2},{type:1,tier:2},{type:202,tier:2},{type:25,tier:3},{type:2,tier:3}],Faction:1,Type:9};
 		UniqueItems["28503"] = {Id:28503,Name:"Cloak of the Wild", Effects:[{type:208,tier:2},{type:204,tier:2},{type:4,tier:2},{type:47,tier:3},{type:208,tier:3}],Faction:3,Type:9};
+		UniqueItems["28504"] = {Id:28504,Name:"Scourge Knight's Cloak", Effects:[{type:204,tier:2},{type:21,tier:2},{type:1,tier:2},{type:56,tier:3},{type:207,tier:3}],Faction:2,Type:9};
+
+		UniqueItems["28507"] = {Id:28507,Name:"Commander's Cloak", Effects:[{type:207,tier:2},{type:209,tier:2},{type:202,tier:3},{type:30,tier:3},{type:2,tier:3}],Faction:1,Type:9};
+		UniqueItems["28508"] = {Id:28508,Name:"Mire Knight's Cloak", Effects:[{type:202,tier:2},{type:4,tier:2},{type:202,tier:3},{type:61,tier:3},{type:1,tier:3}],Faction:2,Type:9};
 		
 		for (var i=28001;i<28500;i++) {
 			if (!unsafeWindow.itemlist['i'+i]) break;
