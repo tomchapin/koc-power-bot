@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150123a
+// @version        20150130a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150123a';
+var Version = '20150130a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -132,7 +132,7 @@ var Options = {
   pbWideMap    : false,
   pbFoodAlert  : false,
   pbFoodAlertInt  : 1,
-  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,emailapp:0,alertTRtoff:false,AFK:true,lastatkarr:[],guardian:false,guardautoswitch:{},lastarrtime:[],towercitytext:{}},
+  alertConfig  : {aChat:false, aPrefix:'** I\'m being attacked! **', scouting:false, wilds:false, defend:true, minTroops:10000, spamLimit:10, lastAttack:0, barbautoswitch:false, raidautoswitch: {}, alertTR:false, alertTRset:1, alertTR2:false, alertTRsetwaittime:60,RecentActivity:false,email:false,emailapp:0,alertTRtoff:false,AFK:true,lastatkarr:[],guardian:false,guardautoswitch:{},lastarrtime:[],towercitytext:{},towercityactive:{}, whisper:true, whisperTroops:500000},
   alertSound   : {enabled:false, soundUrl:DEFAULT_ALERT_SOUND_URL, repeat:true, playLength:20, repeatDelay:0.5, volume:100, alarmActive:false, expireTime:0},
   spamconfig   : {aspam:false, spamvert:'Join my Alliance!!', spammins:'30', atime:2 , spamstate:'a'},
   giftDomains  : {valid:false, list:{}},
@@ -149,6 +149,7 @@ var Options = {
   DeleteRequest: false,
   DeletegAl    : false,
   DeleteFood   : false,
+  DeleteFoodUsers : "",
   MapShowExtra : false,
   MapShowLevel : false,
   RaidRunning  : false,
@@ -169,6 +170,7 @@ var Options = {
   CrestMsgInterval  : 1,
   CrestMercTarget  : 999,
   CrestMercItem : "30792",
+  RemoveDeleteTab : false,
   foodreport   : false,
   crestreport  : true,
   crestemail   : false,
@@ -802,6 +804,12 @@ function kabamStandAlone (){
    sendmeaway();
   }
 
+function CheckRemoveAlert() {
+ 	var x = document.getElementsByClassName('kofcalert');
+ 	if(x.length > 0) for(var y = 0; y < x.length;y++) if(String(x[y].innerHTML).indexOf('atk march no row change') > -1) {Modal.hideModal(true); logit('Removed "atk march no row change" dialog'); }
+	setTimeout(CheckRemoveAlert, 2000);
+}  
+  
 function HandlePublishPopup() {
    if(GlobalOptions.autoPublishGamePopups || GlobalOptions.autoCancelGamePopups){
    // Check the app id (we only want to handle the popup for kingdoms of camelot)
@@ -993,6 +1001,8 @@ function pbStartup (){
   WideScreen.useWideMap (Options.pbWideMap);
   setInterval (DrawLevelIcons,1250);
   killbox();
+  CheckRemoveAlert();
+  
   if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
    document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'https://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>\
 																<a class="navTab" onclick=" window.open(\'https://kabam.secure.force.com/PKB/KbContactUsForm?language=en_US&game=Kingdoms_of_Camelot&issue=Other_Game_Issues\');"><span>Kabam</span></a>\
@@ -5395,20 +5405,34 @@ Tabs.tower = {
 			t.updatemarchfunc.setEnable(true);
 		};
 		t.myDiv = div;
-		if (GM_getValue ('towerMarches_'+getServerId()) != null)
-			GM_deleteValue ('towerMarches_'+getServerId());   // remove deprecated data if it exists
- 
-		var m = '<DIV class=pbStat>TOWER ALERTS</div><TABLE class=pbTab><TR align=center>';
+
+		if (Options.alertConfig.emailapp != 1) { // no more BAOS emailer :(
+			Options.alertConfig.emailapp = 1;
+			saveOptions();
+		}
+		Options.celltext.atext = false // no more mobile alerts :(
+		saveOptions();
+		
+	
+		var m = '<DIV class=pbStat>TOWER ALERTS</div><TABLE class=pbTab><TR align=center><td>&nbsp;</td>';
 
 		for (var i=0; i<Cities.cities.length; i++)
 			m += '<TD width=95><SPAN id=pbtacity_'+ i +'>' + Cities.cities[i].name + '</span></td>';
-			m += '</tr><TR align=center>';
-			for (var cityId in Cities.byID)
-				m += '<TD><INPUT type=submit id=pbtabut_'+ cityId +' value=""></td>';
-			m += '</tr><TR align=center>';
-			for (var cityId in Cities.byID)
-				m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
-			m += '</tr><TR align=center><td colspan='+Cities.cities.length+'>City-specific chat alert text :-</td></tr><TR align=center>';
+		m += '</tr><TR align=center><td>&nbsp;</td>';
+		for (var cityId in Cities.byID)
+			m += '<TD><INPUT type=submit id=pbtabut_'+ cityId +' value=""></td>';
+		m += '</tr><TR align=center><td>&nbsp;</td>';
+		for (var cityId in Cities.byID)
+			m += '<TD><CENTER><INPUT id=pbattackqueue_' + cityId + ' type=submit value="A 0 | S 0"></center></td>';
+		m += '</tr><TR align=center><td>Alert?</td>';
+		for (var cityId in Cities.byID) {
+			if (!Options.alertConfig.towercityactive.hasOwnProperty(cityId)) { // default to on
+				Options.alertConfig.towercityactive[cityId] = true;
+				saveOptions();
+			}
+			m+= '<TD><CENTER><INPUT id=toweractive_'+cityId+' name='+cityId+' type=checkbox '+(Options.alertConfig.towercityactive[cityId]?'CHECKED ':'')+'"></CENTER></TD>';
+		};
+		m += '</tr><TR align=center><td>City<br>Text</td>';
 			for (var cityId in Cities.byID) {
 				m+= '<TD><CENTER><INPUT id=towertext_'+cityId+' type=text style="width: 80px;" name='+cityId+' value="'+(Options.alertConfig.towercitytext[cityId]?Options.alertConfig.towercitytext[cityId]:"")+'"></CENTER></TD>';
 			};
@@ -5416,13 +5440,14 @@ Tabs.tower = {
 			m += '<BR><DIV class=pbStat>'+translate("SETUP")+'</div><TABLE class=pbTab>';
 			m += '<TR><td align=center>&nbsp;</td><TD align=left><b>'+translate("Minimum number of troops to trigger tower options")+':&nbsp;<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \></b>&nbsp;<span style="color:#800; font-weight:bold"><sup>*Controls All Tower Options</sup></span></td></tr>';
 			m += '<TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
+				<TR><td align=center>&nbsp;</td><TD><INPUT id=pbalertWhisper type=checkbox '+ (Options.alertConfig.whisper?'CHECKED ':'') +'/>&nbsp;'+translate("Whisper yourself instead, if less than")+'&nbsp;<INPUT id=pbwhisperTroops type=text size=7 value="'+ Options.alertConfig.whisperTroops +'" \> incoming troops.</td></tr>\
 					<TR><TD>&nbsp;</td><TD><TABLE cellpadding=0 cellspacing=0>\
 					<TR><TD colspan=6>'+translate("Message Prefix")+':&nbsp;<INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td><tr>\
 					<TR><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td><TD>'+translate("Alert on scouting")+'&nbsp;&nbsp;</td>\
 					<TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td><TD>'+translate("Alert on wild attack")+'&nbsp;&nbsp;</td>\
 					<TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td><TD>'+translate("Display defend status")+'&nbsp;&nbsp;</td>\
 					</table></td></tr>';
-			m += '<TR><TD><INPUT id=pbalertemail type=checkbox '+ (Options.alertConfig.email?'CHECKED ':'') +'/></td><TD>'+translate("Email on incoming attack")+':&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email App: <input id=pbKoctomail type=radio name=pbemailapp '+((Options.alertConfig.emailapp==1)?'CHECKED':'')+'>Koc2Mail (Moshimo)&nbsp;<span style="color:#800; font-weight:bold"><sup>*Requires refresh</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id=pbKocalert type=radio name=pbemailapp '+((Options.alertConfig.emailapp==0)?'CHECKED':'')+'>KocAlert (Baos)&nbsp;<INPUT id=pbathemail type=submit value='+translate("Authenticate")+' ></td></tr>';
+		m += '<TR><TD><INPUT id=pbalertemail type=checkbox '+ (Options.alertConfig.email?'CHECKED ':'') +'/></td><TD>'+translate("Email on incoming attack")+'</td></tr>';
 			m += '</table>';
 			m += '<BR><DIV class=pbStat>'+translate("Actions")+'</div><TABLE class=pbTab>\
 					<TR><TD><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><td>'+translate("Stop raids on impending")+'</td></tr>\
@@ -5433,7 +5458,7 @@ Tabs.tower = {
 					<TR><TD><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Revert TR, Guardian, and Marches back after: ")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>';
 			
 			m += '</table>';
-			m += '<BR><DIV class=pbStat>'+translate("Text Messaging Options")+'</div><TABLE class=pbTab>\
+		m += '<div style="display:none"><BR><DIV class=pbStat>'+translate("Text Messaging Options")+'</div><TABLE class=pbTab>\
 					<tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
 					<td align=left>'+translate("Text message incoming attack to")+': <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
 					&nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
@@ -5468,10 +5493,9 @@ Tabs.tower = {
 					m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
 				}
 			}
-
 			m += '</select> <FONT COLOR=RED>REQUIRED </FONT> PIN:<INPUT id=pbcellpin type=text size=6 maxlength=5 value="'+ (GlobalOptions.cellpin?GlobalOptions.cellpin:'') +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <INPUT id=pbgetpin type=submit value="'+translate("GET PIN CODE")+'" ></td></tr>';
 			m += '<tr><td align=left><INPUT id=pbcellextended type=checkbox '+ (Options.celltext.extended?'CHECKED ':'') +'/></td>\
-					<td align=left>'+translate("Send troop info in text")+'<span style="color:#800; font-weight:bold"><sup>*'+translate("Multiple text messages per attack. Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td></table>';
+			<td align=left>'+translate("Send troop info in text")+'<span style="color:#800; font-weight:bold"><sup>*'+translate("Multiple text messages per attack. Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td></table></div>';
 					
 			m += '<BR><DIV class=pbStat>'+translate("Sound Alert Options")+'</div><TABLE class=pbTab>\
 					<TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
@@ -5484,14 +5508,12 @@ Tabs.tower = {
 					</table></div></td></tr>\
 					</table><BR>';
 			t.myDiv.innerHTML = m;
-
 //   		t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y');
 			t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n');
 			//t.mss.swfDebug = function (m){ logit ('SWF: '+ m)};
 			t.mss.swfPlayComplete = t.e_soundFinished;
 			t.mss.swfLoadComplete = t.e_soundFileLoaded;
 			unsafeWindow.matSimpleSound01 = t.mss;   // let swf find it
-
 			t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
 			t.volSlider.setChangeListener(t.e_volChanged);
 			document.getElementById('pbcellpin').addEventListener ('change', function(){
@@ -5499,7 +5521,7 @@ Tabs.tower = {
 				GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
 			},false);  
 			document.getElementById('pbPlayNow').addEventListener ('click', function (){t.playSound(false)}, false);
-			document.getElementById('pbathemail').addEventListener ('click', t.e_authenticate, false);
+//			document.getElementById('pbathemail').addEventListener ('click', t.e_authenticate, false);
 			document.getElementById('pbSoundStop').addEventListener ('click', t.stopSoundAlerts, false);
 			document.getElementById('pbSoundRepeat').addEventListener ('change', function (e){Options.alertSound.repeat = e.target.checked}, false);
 			document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
@@ -5509,18 +5531,19 @@ Tabs.tower = {
 			document.getElementById('pbcellextended').addEventListener ('change', function (e){Options.celltext.extended = e.target.checked;}, false);
 			document.getElementById('pbSoundStop').disabled = true;
 			document.getElementById('pbalertemail').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbKoctomail').addEventListener('change', function () {
-				if (document.getElementById('pbKoctomail').checked) { Options.alertConfig.emailapp=1; saveOptions(); }
-			}, false);
-			document.getElementById('pbKocalert').addEventListener('change', function () {
-				if (document.getElementById('pbKocalert').checked) { Options.alertConfig.emailapp=0; saveOptions(); }
-			}, false);
+/*		document.getElementById('pbKoctomail').addEventListener('change', function () {
+			if (document.getElementById('pbKoctomail').checked) { Options.alertConfig.emailapp=1; saveOptions(); }
+		}, false);
+		document.getElementById('pbKocalert').addEventListener('change', function () {
+			if (document.getElementById('pbKocalert').checked) { Options.alertConfig.emailapp=0; saveOptions(); }
+		}, false);*/
 			document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
 			document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
 			document.getElementById('pbalertScout').addEventListener ('change', t.e_alertOptChanged, false);
 			document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
 			document.getElementById('pbalertDefend').addEventListener ('change', t.e_alertOptChanged, false);
 			document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbwhisperTroops').addEventListener ('change', t.e_alertOptChanged, false);
 			document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
 			document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
 			document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
@@ -5545,9 +5568,8 @@ Tabs.tower = {
 				Options.alertSound.soundUrl = DEFAULT_ALERT_SOUND_URL;
 				t.loadUrl (DEFAULT_ALERT_SOUND_URL);
 			}, false);
-
 			for (var cityId in Cities.byID){
-				//m+= '<TD><CENTER><INPUT id=towertext_'+cityId+' type=text size=10 value='+(Options.alertConfig.towercitytext[cityId]?Options.alertConfig.towercitytext[cityId]:"")+'></CENTER></TD>';
+				document.getElementById ('toweractive_'+ cityId).addEventListener('click',function(e){Options.alertConfig.towercityactive[e.target.name] = e.target.checked;saveOptions();},false);
 				document.getElementById ('towertext_'+ cityId).addEventListener('change',function(e){Options.alertConfig.towercitytext[e.target.name] = e.target.value;saveOptions();},false);
     	
 				var but = document.getElementById ('pbtabut_'+ cityId);
@@ -5698,6 +5720,7 @@ Tabs.tower = {
 		var t = Tabs.tower;
 		Options.alertConfig.email = document.getElementById('pbalertemail').checked;
 		Options.alertConfig.aChat = document.getElementById('pbalertEnable').checked;
+		Options.alertConfig.whisper = document.getElementById('pbalertWhisper').checked;
 		Options.alertConfig.aPrefix=document.getElementById('pbalertPrefix').value;      
 		Options.alertConfig.scouting=document.getElementById('pbalertScout').checked;      
 		Options.alertConfig.wilds=document.getElementById('pbalertWild').checked;
@@ -5715,11 +5738,15 @@ Tabs.tower = {
 		var mt = parseInt(document.getElementById('pbalertTroops').value);
 		if (mt<1 || mt>1500000){
 			document.getElementById('pbalertTroops').value = Options.alertConfig.minTroops;
-			document.getElementById('pbalerterr').innerHTML = '<font color=#600000><B>'+translate("INVALID")+'</b></font>';
-			setTimeout (function (){document.getElementById('pbalerterr').innerHTML =''}, 2000);
 			return;
 		}
 		Options.alertConfig.minTroops = mt;
+		var wt = parseInt(document.getElementById('pbwhisperTroops').value);
+		if (wt<1 || wt>1500000){
+			document.getElementById('pbwhisperTroops').value = Options.alertConfig.whisperTroops;
+			return;
+		}
+		Options.alertConfig.whisperTroops = wt;
 		saveOptions();
 	},
   
@@ -5920,6 +5947,9 @@ Tabs.tower = {
 			totTroops += Number(m.unts[k]);
 		}
 		if (totTroops < Options.alertConfig.minTroops){
+			return;
+		}
+		if (!Options.alertConfig.towercityactive[m.toCityId]) {
 			return;
 		}
 		t.postToChat (m);
@@ -6300,30 +6330,40 @@ Tabs.tower = {
 			}
 			new t.sendalert(m); 
 		}
-		if (Options.alertConfig.aChat)
-			sendChat ("/a "+  msg);                          // Alliance chat
-		if(Options.alertConfig.email) {
-			if (Options.alertConfig.emailapp == 1) {
-				koc2Mail.towerToMail(email);
+		var totTroops = 0;
+		for (k in m.unts){
+			totTroops += Number(m.unts[k]);
+		}
+		if (Options.alertConfig.aChat) {
+			if (Options.alertConfig.whisper && totTroops < Options.alertConfig.whisperTroops) {
+				sendChat("/" + Seed.player.name + ' ' + msg); // whisper
 			}
 			else {
+				sendChat ("/a "+  msg); // Alliance chat
+			}	
+		}		
+		if(Options.alertConfig.email) {
+//			if (Options.alertConfig.emailapp == 1) {
+				koc2Mail.towerToMail(email);
+//			}
+//			else {
 //				var x = window.open();
 //				var y = http+"baos.kocscripters.com/kocalert/index.php?PING=1";
 //				x.location=y;
-				setTimeout(function(){
-					var data = {};
-					data.Subject ='kocalert '+getServerId()+' ';
-					if(m.marchStatus == 9) data.Subject += attackrecalled;
-					data.Subject += scoutingat+' '+target;
-					data.Message = msg.replace(eval('/'+fchar+'/g'),'');
-					GM_xmlhttpRequest({
-						method: 'POST',
-						url: http+'baos.kocscripters.com/kocalert/index.php',
-						headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', },
-						data: implodeUrlArgs(data),
-					});//x.close();
-				},10000);
-			}	
+//				setTimeout(function(){
+//					var data = {};
+//					data.Subject ='kocalert '+getServerId()+' ';
+//					if(m.marchStatus == 9) data.Subject += attackrecalled;
+//					data.Subject += scoutingat+' '+target;
+//					data.Message = msg.replace(eval('/'+fchar+'/g'),'');
+//					GM_xmlhttpRequest({
+//						method: 'POST',
+//						url: http+'baos.kocscripters.com/kocalert/index.php',
+//						headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', },
+//						data: implodeUrlArgs(data),
+//					});//x.close();
+//				},10000);
+//			}	
 		};
 	},
 
@@ -11032,19 +11072,19 @@ cm.MARCH_TYPES = {
     setInterval(t.lookup, 2500);
     setInterval(t.sendreport, 1*60*1000);
   
-   if(Options.raidbtns) {
-      AddSubTabLink('Raids: S', t.StopAllRaids, 'pbraidtab');
+   if(Options.raidbtns) {AddSubTabLink('Raids: S', t.StopAllRaids, 'pbraidtab');
       AddSubTabLink('R', t.ResumeAllRaids, 'pbraidtabRes');
-      AddSubTabLink('D', t.DeleteAllRaids, 'pbraidtabDel');
+      if (!Options.RemoveDeleteTab) AddSubTabLink('D', t.DeleteAllRaids, 'pbraidtabDel');
 	  document.getElementById('pbraidtabRes').style.marginLeft = '0px';
-	  document.getElementById('pbraidtabDel').style.marginLeft = '0px';
+	  if (!Options.RemoveDeleteTab) document.getElementById('pbraidtabDel').style.marginLeft = '0px';
 	  document.getElementById('pbraidtab').title = 'Click to Stop Active Raids';
 	  document.getElementById('pbraidtabRes').title = 'Click to Resume Stopped Raids';
-	  document.getElementById('pbraidtabDel').title = 'Click to Delete Stopped Raids';
+	  if (!Options.RemoveDeleteTab) document.getElementById('pbraidtabDel').title = 'Click to Delete Stopped Raids';
    };
     
     var m = '<DIV class=pbStat>RAID FUNCTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
         m += '<TD><INPUT id=pbRaidStart type=submit value="Auto Reset = '+ (Options.RaidRunning?'ON':'OFF') +'" ></td>';
+        m += '<TD><INPUT id=pbDeleteTab type=checkbox '+ (Options.RemoveDeleteTab?'CHECKED':'') +'\> Remove Delete Tab ';
         m += '<TD><INPUT id=pbsendraidreport type=checkbox '+ (Options.foodreport?'CHECKED':'') +'\> Send raid report every ';
         m += '<INPUT id=pbsendreportint value='+ Options.MsgInterval +' type=text size=3 \> hours </td>';
         m += '</tr></table></div>';
@@ -11058,6 +11098,10 @@ cm.MARCH_TYPES = {
     
     t.from = new CdispCityPicker ('ptRaidpicker', document.getElementById('ptRaidCity'), true, t.clickCitySelect, 0);
     document.getElementById('pbRaidStart').addEventListener('click', t.toggleRaidState, false);
+    document.getElementById('pbDeleteTab').addEventListener('change', function(){
+        Options.RemoveDeleteTab = document.getElementById('pbDeleteTab').checked;
+        saveOptions();
+    }, false);
     document.getElementById('pbsendraidreport').addEventListener('change', function(){
         Options.foodreport = document.getElementById('pbsendraidreport').checked;
         saveOptions();
@@ -13547,7 +13591,7 @@ Tabs.Options = {
         m += '<TR><TD colspan=2><BR><B>'+translate("Extra Features")+':</b></td></tr>\
         <TR><TD><INPUT id=HelReq type=checkbox /></td><TD>'+translate("Help alliance build/research posts")+'</td></tr>\
         <TR><TD><INPUT id=DelReq type=checkbox /></td><TD>'+translate("Hide alliance requests in chat")+'</td></tr>\
-        <TR><TD><INPUT id=DelFood type=checkbox /></td><TD>'+translate("Hide alliance food alerts in chat")+'</td></tr>\
+        <TR><TD><INPUT id=DelFood type=checkbox /></td><TD>'+translate("Hide alliance food alerts in chat from user names")+'&nbsp;<input id=pbDelFoodUsers type=text size=40 />&nbsp;(leave blank for all users)</td></tr>\
         <TR><TD><INPUT id=DelAC type=checkbox /></td><TD>'+translate("Hide alliance chat from global chat")+'</td></tr>\
         <TR><TD><INPUT id=PubReq type=checkbox '+ (GlobalOptions.autoPublishGamePopups?'CHECKED ':'') +'/></td><TD>'+translate("Auto publish Facebook posts for")+' '+ htmlSelector(PublishLists,GlobalOptions.autoPublishPrivacySetting,'id=selectprivacymode') +' '+translate("(For all domains)")+'&nbsp;&nbsp;<a id=RefreshPublishList>Refresh User Lists</a>&nbsp;&nbsp;<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
         <TR><TD><INPUT id=cancelReq type=checkbox '+ (GlobalOptions.autoCancelGamePopups?'CHECKED ':'') + '/></td><TD>'+translate("Auto cancel Facebook posts")+'<span style="color:#800; font-weight:bold"><sup>'+translate("*Only select ONE of these")+'</sup></span></td>\
@@ -13652,6 +13696,7 @@ Tabs.Options = {
       t.togOpt ('deletes4toggle', 'DeleteMsgs4');    
       t.togOpt ('deletesDFtoggle', 'DeleteMsgsdf');      
       t.changeOpt ('pbdeleteuidreps', 'DeleteMsgsUID');
+      t.changeOpt ('pbDelFoodUsers', 'DeleteFoodUsers');
       t.togOpt ('advanced', 'ScripterTab');          
       t.togOpt ('MAgicBOx', 'KMagicBox');       
       t.togOpt ('pbColorTab', 'colorCityTabs', Tabs.tower.cityBtnColor);
@@ -17693,13 +17738,21 @@ var ChatPane = {
                     }
                 }
 					if(Options.DeleteFood){
+					var NameArray = [];
+					if (Options.DeleteFoodUsers.trim() != "")
+						NameArray = Options.DeleteFoodUsers.trim().toUpperCase().split(",");
+					var postAuthor = document.evaluate('.//*[@class="nm"]', thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+					if(postAuthor.snapshotItem(0)){
+						var postAuthorName = postAuthor.snapshotItem(0).innerHTML;
+						if(postAuthorName != DisplayName && ((NameArray.indexOf(postAuthorName.split(" ")[1].toUpperCase()) != -1) || NameArray.length==0)){
 						if (thisPost.innerHTML.match(myregexp6)) {
 							thisPost.parentNode.removeChild(thisPost);
+							}
 						}
-					}
-            }    
-        }    
-    }
+					}    
+				}    
+			}
+		}
 		
 		if(Options.DeleteRequest || Options.DeleteFood || Options.DeletegAl) {
 			var gchatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", GlobalChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
@@ -17710,7 +17763,8 @@ var ChatPane = {
 						var myregexp1 = /\> says to the alliance\:\<\/b\>/i;
 						if (gthisPost.innerHTML.match(myregexp1))
 							gthisPost.parentNode.removeChild(gthisPost);
-					} else {
+					}
+					else {
 						if (Options.DeleteRequest) {
 							var helpAllianceLinks=document.evaluate(".//a[contains(@onclick,'claimAllianceChatHelp')]", gthisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
 							if(helpAllianceLinks){
@@ -17725,14 +17779,24 @@ var ChatPane = {
 							}
 						}
 						if(Options.DeleteFood){
-							if (thisPost.innerHTML.match(myregexp6)) {
-								thisPost.parentNode.removeChild(thisPost);
+							var NameArray = [];
+							if (Options.DeleteFoodUsers.trim() != "")
+								NameArray = Options.DeleteFoodUsers.trim().toUpperCase().split(",");
+							var postAuthor = document.evaluate('.//*[@class="nm"]', thisPost, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
+							if(postAuthor.snapshotItem(0)){
+								var postAuthorName = postAuthor.snapshotItem(0).innerHTML;
+								if(postAuthorName != DisplayName && ((NameArray.indexOf(postAuthorName.split(" ")[1].toUpperCase()) != -1) || NameArray.length==0)){
+									if (thisPost.innerHTML.match(myregexp6)) {
+										thisPost.parentNode.removeChild(thisPost);
+									}	
+								}		
 							}
 						}	
 					}
 				}
 			}
 		}
+	}	
 	},
 
 }
