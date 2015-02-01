@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150130a
+// @version        20150201a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150130a';
+var Version = '20150201a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -5543,7 +5543,8 @@ Tabs.tower = {
 			document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
 			document.getElementById('pbalertDefend').addEventListener ('change', t.e_alertOptChanged, false);
 			document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
-		document.getElementById('pbwhisperTroops').addEventListener ('change', t.e_alertOptChanged, false);
+			document.getElementById('pbalertWhisper').addEventListener ('change', t.e_alertOptChanged, false);
+			document.getElementById('pbwhisperTroops').addEventListener ('change', t.e_alertOptChanged, false);
 			document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
 			document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
 			document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
