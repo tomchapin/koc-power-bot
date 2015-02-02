@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150201a
+// @version        20150202a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150201a';
+var Version = '20150202a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -1019,7 +1019,7 @@ function pbStartup (){
   
 	if (smeg) { setTimeout(function () {smeg.init();}, 5000);}
   
-	if ((Options.alertConfig.emailapp == 1) || AttackOptions.EmailEnabled || Options.crestemail) {
+	if (Options.alertConfig.email || AttackOptions.EmailEnabled || Options.crestemail) {
 		unsafeWindow.koc2Mail = koc2Mail;
 		koc2Mail.init();  
 	}
@@ -24850,13 +24850,13 @@ Tabs.Champion = {
 		UniqueItems["28508"] = {Id:28508,Name:"Mire Knight's Cloak", Effects:[{type:202,tier:2},{type:4,tier:2},{type:202,tier:3},{type:61,tier:3},{type:1,tier:3}],Faction:2,Type:9};
 		
 		for (var i=28001;i<28500;i++) {
-			if (!unsafeWindow.itemlist['i'+i]) break;
+			if (!unsafeWindow.itemlist['i'+i]) continue;
 			if (!UniqueItems[i]) {
 				UniqueItems[i] = {Id:i,Name:unsafeWindow.itemlist['i'+i].name, Effects:[],Faction:0,Type:0};
 			}
 		}
 		for (var i=28501;i<29000;i++) {
-			if (!unsafeWindow.itemlist['i'+i]) break;
+			if (!unsafeWindow.itemlist['i'+i]) continue;
 			if (!UniqueItems[i]) {
 				UniqueItems[i] = {Id:i,Name:unsafeWindow.itemlist['i'+i].name, Effects:[],Faction:0,Type:0};
 			}
