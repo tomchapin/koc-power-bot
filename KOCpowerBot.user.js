@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150212a
+// @version        20150219a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150212a';
+var Version = '20150219a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -693,6 +693,9 @@ function kocWideScreen(){
      return;
    }
    kocFrame.style.width = '100%';
+   if (GlobalOptions.pbWideScreenStyle=="normal") kocFrame.style.width = '100%';
+   if (GlobalOptions.pbWideScreenStyle=="wide") kocFrame.style.width = '1520px';
+   if (GlobalOptions.pbWideScreenStyle=="ultra") kocFrame.style.width = '1900px';
    var style = document.createElement('style')
    style.innerHTML = 'body {margin:0; width:100%; !important;}';
    kocFrame.parentNode.appendChild(style);
@@ -776,10 +779,15 @@ function kabamStandAlone (){
      setTimeout (setWide, 1000);
      return;
    }
-   iFrames.style.width = '100%';
-   while ( (iFrames=iFrames.parentNode) != null && iFrames.tagName !== "BODY")
-     //if (iFrames.tagName=='DIV')
-      iFrames.style.width = '100%';
+
+   if (GlobalOptions.pbWideScreenStyle=="normal") iFrames.style.width = '100%';
+   if (GlobalOptions.pbWideScreenStyle=="wide") iFrames.style.width = '1520px';
+   if (GlobalOptions.pbWideScreenStyle=="ultra") iFrames.style.width = '1900px';
+   while ( (iFrames=iFrames.parentNode) != null && iFrames.tagName !== "BODY") {
+     if (GlobalOptions.pbWideScreenStyle=="normal") iFrames.style.width = '100%';
+     if (GlobalOptions.pbWideScreenStyle=="wide") iFrames.style.width = '1520px';
+     if (GlobalOptions.pbWideScreenStyle=="ultra") iFrames.style.width = '1900px';
+   }
 
    try{    
       document.getElementById('promo-sidebar').parentNode.removeChild(document.getElementById('promo-sidebar'));
@@ -24627,11 +24635,11 @@ Tabs.Champion = {
   SalvageArray:[],
   SalvageRunning:false,
   LastDeleted:0,
-  MaxItems:128,
+  MaxItems:unsafeWindow.cm.WorldSettings.getSettingAsNumber("CE_INVENTORY_HARDLIMIT"),
   CompPos:0,
-  imgUniqueTypes : ["weapon","chestArmor","helmet","feet","shield","ring1","ring2","necklace","cloak"], // must be in this order
+  imgUniqueTypes : ["weapon","chestArmor","helmet","feet","shield","ring1","ring2","pendant","cloak"], // must be in this order
   CardTypes:["ALL","Attack","Defense","Life","Speed","Range","Load","Accuracy","Damage","Bonus Damage","Armor","Strength","Dexterity","Health","Hit","Crit","Block"],
-  EquipType: ["ALL","weapon","armor","helm","boot","shield","ring1","ring2","necklace","cloak"], //case sensitive for the moment.
+  EquipType: ["ALL","weapon","armor","helm","boot","shield","ring1","ring2","pendant","cloak"], //case sensitive for the moment.
   EquipTypeNo: ["ALL","1","2","3","4","5","6","7","8","9"], //case sensitive for the moment.
   Faction: ["ALL","Briton","Fey","Druid"],
   EnhanceCost:[],
@@ -24771,8 +24779,8 @@ Tabs.Champion = {
 		var maxlevel = 14;
 		var t = Tabs.Champion;
 		var UniqueItems = null;
-		var chTypes = ["weapon","armor","helm","boots","shield","ring1","ring2","necklace","cloak"]; // must be in this order
-		var itemTypes = { weapon: 0, armor: 1, helm: 2, boots: 3, shield: 4, ring1: 5, ring2: 6, necklace: 7, cloak: 8 }; // must be in this order
+		var chTypes = ["weapon","armor","helm","boots","shield","ring1","ring2","pendant","cloak"]; // must be in this order
+		var itemTypes = { weapon: 0, armor: 1, helm: 2, boots: 3, shield: 4, ring1: 5, ring2: 6, pendant: 7, cloak: 8 }; // must be in this order
 		var itemLists = [];
 		var selectedCard1 = 0;
 		var selectedCard2 = 0;
@@ -25610,9 +25618,13 @@ Compare :function (){
     var HelmCount = 0;
     var BootCount = 0;
     var ShieldCount = 0;
+    var Ring1Count = 0;
+    var Ring2Count = 0;
+    var PendantCount = 0;
+    var CloakCount = 0;
     var counter = 0;
 //    ActiveItems = parseInt(Seed.champion.rowNum)*5;
-    ActiveItems = 128;
+    ActiveItems = unsafeWindow.cm.WorldSettings.getSettingAsNumber("CE_INVENTORY_HARDLIMIT");
 
     for (k in unsafeWindow.kocChampionItems){
       counter++;
@@ -25624,13 +25636,16 @@ Compare :function (){
       if (z.type=="3") HelmCount++;
       if (z.type=="4") BootCount++;
       if (z.type=="5") ShieldCount++;
+      if (z.type=="6") Ring1Count++;
+      if (z.type=="7") Ring2Count++;
+      if (z.type=="8") PendantCount++;
+      if (z.type=="9") CloakCount++;
    }  
-
 
     try {   
      var m = '<DIV id=pbTowrtDivF class=pbStat>Compare Champion Items</div><br><TABLE id=pbCompareStats width=100% height=0% class=pbTab>';
 
-     m+='<TD>Weapon: ' + WeaponCount + '</td><TD>Armor: ' + ArmorCount+ '</td><TD>Helm: ' + HelmCount+ '</td><TD>Boot: ' + BootCount+ '</td><TD>Shield :' + ShieldCount+ '</td></table><br>';
+     m+='<TD>Weapon: ' + WeaponCount + '</td><TD>Armor: ' + ArmorCount+ '</td><TD>Helm: ' + HelmCount+ '</td><TD>Boot: ' + BootCount+ '</td><TD>Shield :' + ShieldCount+ '</td><TD>Ring 1 :' + Ring1Count+ '</td><TD>Ring 2 :' + Ring2Count+ '</td><TD>Pendant :' + PendantCount+ '</td><TD>Cloak :' + CloakCount+ '</td></table><br>';
 
      m+= '<DIV id=pbChampionMain class=pbStat>Compare Champion Items</div><br>';
      m+='<TABLE id=pbCompareStats width=100% height=0% class=pbTab><TD>Card Type: <SELECT id=chtype type=list></select></td><TD>Card Family: <SELECT id=chfamily type=list></select></td><TD>Effect: <SELECT id=cheffect type=list></select></td></tr><TR><TD>Keyword: <INPUT type=text id=chkeyword size=10></td></tr></table>';
@@ -25821,7 +25836,7 @@ FillEquipCheckboxes: function(){
    var effectCheck=false;
    var keywordCheck=false;  
 //   ActiveItems = parseInt(Seed.champion.rowNum)*5;
-   ActiveItems = 128;
+   ActiveItems = unsafeWindow.cm.WorldSettings.getSettingAsNumber("CE_INVENTORY_HARDLIMIT");
    for(i=1;i<=ActiveItems;i++) document.getElementById("DIV"+i).innerHTML="";
    counter = 0;
    t.CompPos=0;
