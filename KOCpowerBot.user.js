@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150219a
+// @version        20150302a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150219a';
+var Version = '20150302a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -780,11 +780,11 @@ function kabamStandAlone (){
      return;
    }
 
-   if (GlobalOptions.pbWideScreenStyle=="normal") iFrames.style.width = '100%';
+   iFrames.style.width = '100%';
    if (GlobalOptions.pbWideScreenStyle=="wide") iFrames.style.width = '1520px';
    if (GlobalOptions.pbWideScreenStyle=="ultra") iFrames.style.width = '1900px';
    while ( (iFrames=iFrames.parentNode) != null && iFrames.tagName !== "BODY") {
-     if (GlobalOptions.pbWideScreenStyle=="normal") iFrames.style.width = '100%';
+     iFrames.style.width = '100%';
      if (GlobalOptions.pbWideScreenStyle=="wide") iFrames.style.width = '1520px';
      if (GlobalOptions.pbWideScreenStyle=="ultra") iFrames.style.width = '1900px';
    }
@@ -1085,7 +1085,7 @@ function GESeverymin (unixtime) {//put functions here to execute every min
 };
 
 function GESeverytwomin (unixtime) {//put functions here to execute every 2 min
-	if(Options.detAFK)new detafk();
+	new detafk();
 	new Tabs.Throne.rotatethrone();
 	new DeleteReports.startdeletereports();
 };
@@ -1138,9 +1138,8 @@ function detafk () {
 		isAFK = true;
 	} 
 	else {
-		if(isAFK)Tabs.Whisper.postWhisper();
-			isAFK = false;
-			afkb = afk;
+		isAFK = false;
+		afkb = afk;
 	}
 };
 
@@ -5087,7 +5086,7 @@ Tabs.Throne = {
 	},
 	rotatethrone: function () {
 		var t = Tabs.Throne;
-		if (isAFK && !Options.alertConfig.RecentActivity) {
+		if (isAFK && Options.detAFK && !Options.alertConfig.RecentActivity) {
 			var activeSlot = Number(Seed.throne.activeSlot);
 			var foundone = false;
 			for (k = activeSlot + 1; k <= Number(Seed.throne.slotNum); k++) {
@@ -5840,7 +5839,7 @@ Tabs.tower = {
 						};
 						if (Options.SaveState.trset != Seed.throne.activeSlot)
 							if(Options.alertConfig.AFK) {
-								if(isAFK) {
+								if(isAFK && Options.detAFK) {
 									Tabs.Throne.doPreset(Options.SaveState.trset);
 									if(Options.alertConfig.guardian) {
 										for (var cityId in Cities.byID){
@@ -5986,13 +5985,13 @@ Tabs.tower = {
 			if (Options.alertConfig.alertTRset != currentset){
 				var preset = Options.alertConfig.alertTRset
 				if(Options.alertConfig.AFK) {
-					if(isAFK)Tabs.Throne.doPreset(preset);
+					if(isAFK && Options.detAFK)Tabs.Throne.doPreset(preset);
 				}else Tabs.Throne.doPreset(preset);
 			}
 		}
 		if (Options.alertConfig.guardian){
 			if(Options.alertConfig.AFK) {
-				if(isAFK) if(Seed.buildings["city"+ m.toCityId].pos500 ) t.changeGuardian(m.toCityId,50);
+				if(isAFK && Options.detAFK) if(Seed.buildings["city"+ m.toCityId].pos500 ) t.changeGuardian(m.toCityId,50);
 			} else if(Seed.buildings["city"+ m.toCityId].pos500 ) t.changeGuardian(m.toCityId,50);
 		}
 	},
@@ -15427,7 +15426,7 @@ var RefreshEvery  = {
      var text = '';
      var Left = parseInt(t.NextRefresh - now);
      if(Options.detAFK) {
-     if ( Left < 0 && isAFK){
+     if ( Left < 0 && isAFK && Options.detAFK){
 		clearTimeout (t.timer);
         Left = 0;
         t.doit();
@@ -15591,104 +15590,286 @@ var WideScreen = {
   },
 }
 
-/*******************  Whisper Tab ****************/
-
+/*********************************** Whisper Tab ***********************************/
 
 Tabs.Whisper = {
-   tabOrder: 199999,
-   tabDisabled : false,
-   tabLabel : 'Whisper',
-   myDiv : null,
-   LoggedWhispers : [],
-   catchwhispers : null,
-   
-   init : function (div) {
-      var t = Tabs.Whisper;      
-		unsafeWindow.whisperlog = t.whisperlog;
-		t.whisperlog();
-      t.myDiv = div;
-      var m = '<DIV class=pbStat>Logged whispers while afk</div><br>';
-		m += '<table><tr><td><INPUT id=pbpostwh type=submit value="Show logged whispers" \></td><td><INPUT id=pbdelwh type=submit value="Delete Logged Whispers" \></td></tr></table>';      
-      div.innerHTML = m;
-      
-      document.getElementById('pbpostwh').addEventListener ('click', function() {t.postWhisper()}, false);
-      
-      document.getElementById('pbdelwh').addEventListener ('click', function() {t.eraseWhisper()} , false);
-      
-   },
-   
-   saveWhisper : function (){
-      var t = Tabs.Whisper;
-  		var serverID = getServerId();
-   	setTimeout (function (){GM_setValue ('Whisper_' + Seed.player['name'] + '_' +serverID, JSON2.stringify(t.LoggedWhispers));}, 0);
-	},
-   
-   readWhisper : function (){
-      var t = Tabs.Whisper;
- 	   var serverID = getServerId();
- 		s = GM_getValue ('Whisper_'+Seed.player['name']+'_'+serverID, '[]');
-  		if (s != null){
-    		opts = JSON2.parse (s);
-    		for (k in opts){
-      		if (matTypeof(opts[k]) == 'object')
-        			for (kk in opts[k])
-         			t.LoggedWhispers[k][kk] = opts[k][kk];
-      		else
-        			t.LoggedWhispers[k] = opts[k];
-    		}
-  		}
-	},
-   
-   postWhisper : function () {
-      var t = Tabs.Whisper;
-		var mod_comm_list2 = document.getElementById('mod_comm_list2');
-		var mod_comm_list1 = document.getElementById('mod_comm_list1')
-		for(k = 0;k<t.LoggedWhispers.length;k++) {
-      	var chatwrap1 = document.createElement("div");
-            chatwrap1.className = "chatwrap clearfix direct";
-            chatwrap1.innerHTML = t.LoggedWhispers[k];		
-       	var chatwrap2 = document.createElement("div");
-            chatwrap2.className = "chatwrap clearfix direct";
-            chatwrap2.innerHTML = t.LoggedWhispers[k];
-			mod_comm_list2.insertBefore(chatwrap2,mod_comm_list2.firstChild);
-			mod_comm_list1.insertBefore(chatwrap1,mod_comm_list1.firstChild);
-		};
-	},
+	tabOrder: 1170,
+	tabDisabled : false,
+	tabLabel : 'Whisper',
+	mydiv : null,
+	LoggedWhispers : [],
+	catchwhispers : null,
+	MaxLogEntries : 100,
+	NameFilter : '',
 	
-   eraseWhisper : function() {
-      var t = Tabs.Whisper;
+	Options : {
+		LogWhenAFK : false,
+		UnRead : false,
+	},
+   
+	init : function (div) {
+		var t = Tabs.Whisper;      
+		t.mydiv = div;
+
+		function uWExportFunction (uwfunc,func) {
+			if (typeof exportFunction == 'function') { exportFunction(func,unsafeWindow,{defineAs:uwfunc}); }
+			else { eval('unsafeWindow.'+uwfunc+ ' = '+func); }
+		};
+		
+		uWExportFunction('whisperlog', t.whisperlog);
+		uWExportFunction ('whDeleteLog', function (entry) {Tabs.Whisper.DeleteLog(entry);});
+		uWExportFunction ('whPostLog', function (entry) {Tabs.Whisper.PostLog(entry);});
+		uWExportFunction ('whToggleKeep', function (entry) {Tabs.Whisper.ToggleKeep(entry);});
+		uWExportFunction ('whStartKeyTimer', function (elem,notify,entry) {Tabs.Whisper.StartKeyTimer(elem,notify,entry);});
+		uWExportFunction ('whFilterLog', function () {Tabs.Whisper.FilterLog();});
+		uWExportFunction ('whClearNameFilter', function () {Tabs.Whisper.ClearNameFilter();});
+
+		if (!Options.WhisperOptions) {
+			Options.WhisperOptions = t.Options;
+		}
+		else {
+			for (var y in t.Options) {
+				if (!Options.WhisperOptions.hasOwnProperty(y)) {
+					Options.WhisperOptions[y] = t.Options[y];
+				}	
+			}
+		}
+		
+		t.readWhisper();
+		t.catchwhispers = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap.innerHTML);if']]);
+   		t.catchwhispers.setEnable(true);
+		t.SetButton();
+	},
+   
+	saveWhisper : function (){
+		var t = Tabs.Whisper;
+		var serverID = getServerId();
+		GM_setValue ('Whisper_'+serverID+'_'+unsafeWindow.tvuid, JSON2.stringify(t.LoggedWhispers));
+	},
+   
+	readWhisper : function (){
+		var t = Tabs.Whisper;
+		var serverID = getServerId();
+ 		s = JSON2.parse(GM_getValue ('Whisper_'+serverID+'_'+unsafeWindow.tvuid, '[]'));
+		if (matTypeof(s) == 'array') { t.LoggedWhispers = s; }
+	},
+   
+	ClearLog : function() {
+		var t = Tabs.Whisper;
 		t.LoggedWhispers = [];
-		t.saveWhisper();
+		setTimeout(function () {t.saveWhisper ();},0); // get around GM_SetValue unsafeWindow error
+		t.PaintLog();
 	},
 	
 	whisperlog : function(innerHTML) {
-   	var t = Tabs.Whisper;
-		if(!innerHTML) {
-			t.readWhisper();
-     		t.catchwhispers = new CalterUwFunc ('Chat.getChat', [[/linkComment\)\;if/,'linkComment\)\;if(i==3)whisperlog(chatwrap.innerHTML);if']]);
-     		t.catchwhispers.setEnable(true);
-		} else {
+		var t = Tabs.Whisper;
+		var ts = unixTime();
+		var okeep = false;
+
+		if(isAFK || !Options.WhisperOptions.LogWhenAFK) {
+			var n = t.LoggedWhispers.length;
+			while (n--) {
+				if (JSON2.stringify(innerHTML) == JSON2.stringify(t.LoggedWhispers[n].innerHTML)) {
+					return; // no duplicate adding
+				}	
+			}
+				while (t.LoggedWhispers.length >= t.MaxLogEntries) {
+				//make space in the log.. find the earliest entry where keep = false
+				var spliced = false;
+				for (l in t.LoggedWhispers) {
+					if (!t.LoggedWhispers[l].keep) {
+						t.LoggedWhispers.splice(l,1);
+						spliced = true;
+						break;
+					}
+				}
+				//no space, because keep is set on all entries. Log it!
+				if (!spliced) {
+					logit('No space in Whisper Log!');
+					return;
+				}
+			}  
+				var a = innerHTML;
+			var m = /div class=\"info\">.*<\/div>/im.exec(a);
+			var suid = /viewProfile\(this,([0-9]+),false/i.exec(m[0]);
+			if (!suid) suid = unsafeWindow.tvuid;
+			else suid = suid[1];
+		
+			var sname = /Chat\.whisper\(\&quot\;(.*)\&/im.exec(a);
+			if (!sname)	sname = "";
+			else sname = sname[1];
+				var stext = /div class=\"tx\">(.*)\<\/div\>/im.exec(a);
+			if (!stext)	stext = "";
+			else stext = stext[1].split("</div>")[0];
+			
+			t.LoggedWhispers.push({ts:ts, uid:suid, name:sname, msg:stext, innerHTML:a, keep:okeep});
+			setTimeout(function () {t.saveWhisper ();},0); // get around GM_SetValue unsafeWindow error
+			
 			if(isAFK) {
-				t.LoggedWhispers.push(innerHTML);
-				t.saveWhisper();
-				//logit(inspect(chatwrap));
-			};
+				Options.WhisperOptions.UnRead = true;
+				saveOptions();
+				t.SetButton();
+			}
+			t.PaintLog();
 		};
-  },	
+	},	
+
+	SetButton : function () {
+		var t = Tabs.Whisper;
+		var elem = document.getElementById("pbtcWhisper");
+		
+		if (Options.WhisperOptions.UnRead) {
+			elem.setAttribute("style","color:#f00");
+		}
+		else {
+			elem.setAttribute("style","color:#fff");
+		}
+	},
 	
-   
-  hide : function (){
-    var t = Tabs.Whisper;
-  },
+	PaintLog : function () {
+		var t = Tabs.Whisper;
 
-  show : function (){
-    var t = Tabs.Whisper;
-  },  
+		if (tabManager.currentTab.name != 'Whisper' || !Options.pbWinIsOpen){ return; }
+
+		Options.WhisperOptions.UnRead = false;
+		setTimeout(function () {saveOptions ();},0); // get around GM_SetValue unsafeWindow error
+		t.SetButton();
+		
+		var z = '';
+		var r = 0;
+		var logshow = false;
+		var logfiltered = false;
+	
+		var bclass = "blue14";
+		var btext  = "Clear Log";
+  
+		var z = '<div align="center"><TABLE cellSpacing=0 width=98% height=0%><tr><td class="xtab">Filter by Name/Uid: <INPUT class="btInput" id="whNameFilter" size=16 style="width: 115px" type=text value="'+t.NameFilter+'" onkeyup="btStartKeyTimer(this,whFilterLog)" onchange="whFilterLog()" />&nbsp;<a class="inlineButton btButton brown8" onclick="whClearNameFilter()"><span>Clear</span></a></td><td class="xtab">&nbsp;</td></td><td class="xtab" align=right>('+t.LoggedWhispers.length+'/'+t.MaxLogEntries+')</td></tr></table>';
+		z += '<TABLE cellSpacing=0 width=98% height=0%><tr><td class="xtabHD" style="width:100px"><b>Date/Time</b></td><td style="width:115px" class="xtabHD"><b>Name</b></td><td class="xtabHD"><b>Message</b></td><td class="xtabHD" align="center" style="width:30px"><b>Keep</b></td><td class="xtabHD" align="right" style="width: 110px"><a id=whClearLog class="inlineButton btButton '+bclass+'"><span>'+btext+'</span></a></td></tr></table>';
+		z += '<div style="max-height:330px; overflow-y:scroll" align="center"><TABLE id=whLogTable cellSpacing=0 width=98% height=0%>';
+
+		var n = t.LoggedWhispers.length;
+		while (n--) {
+			var a = t.LoggedWhispers[n];
+			
+			logfiltered = true;
+			if ((t.NameFilter != "") && (a.name.toUpperCase().search(t.NameFilter.toUpperCase()) < 0) && (a.uid.search(t.NameFilter) < 0)) continue;
+
+			logshow = true;
+			r=r+1;
+			rowClass = 'evenRow';		
+			var rem = (r % 2);
+			if (rem == 1) rowClass = 'oddRow';		
+
+			z += '<tr class="'+rowClass+'">';
+			z += '<TD style="width:100px" class=xtab>'+unsafeWindow.formatDate(new Date(a.ts * 1000), "NNN dd, HH:mm")+'</td>';
+			z += '<TD style="width:115px" class=xtab>'+a.name+'</td>';
+			z += '<TD class=xtabBR>'+a.msg+'</td>';
+			z += '<TD style="width:30px" class=xtab align=center><INPUT id="whKeep'+n+'" type=checkbox '+(a.keep?'CHECKED':'')+' onclick="whToggleKeep('+n+')" /></td>';
+			z += '<TD class=xtab align=right style="width: 100px"><a id="whPostLog'+n+'" class="inlineButton btButton brown8" onclick="whPostLog('+ n +')"><span>Post</span></a>&nbsp;<a id="whDeleteLog'+n+'" class="inlineButton btButton brown8" onclick="whDeleteLog('+n+')"><span>Del</span></a></td>';
+			z += '</tr>';
+		}
+  
+		if (!logshow) {
+			if (!logfiltered)
+				z += '<tr><td colspan=2 class=xtab><div align="center"><br><br>No logged whispers</div></td></tr>';
+			else
+				z += '<tr><td colspan=2 class=xtab><div align="center"><br><br>No logged whispers matching search parameters</div></td></tr>';
+		}
+
+		z += '</table></div><br>';
+
+		document.getElementById('ptWhisperLog').innerHTML = z;
+
+		document.getElementById('whClearLog').addEventListener ('click', function() {t.ClearLog();}, false);
+	},
+
+	ToggleKeep : function (entry) {
+		var t = Tabs.Whisper;
+		t.LoggedWhispers[entry].keep = !t.LoggedWhispers[entry].keep;
+		setTimeout(function () {t.saveWhisper ();},0); // get around GM_SetValue unsafeWindow error
+	},
+
+	PostLog : function (entry) {
+		var t = Tabs.Whisper;
+
+		var mod_comm_list2 = document.getElementById('mod_comm_list2');
+		var mod_comm_list1 = document.getElementById('mod_comm_list1')
+
+		var chatwrap1 = document.createElement("div");
+		chatwrap1.className = "chatwrap clearfix direct";
+		chatwrap1.innerHTML = t.LoggedWhispers[entry].innerHTML;		
+		var chatwrap2 = document.createElement("div");
+		chatwrap2.className = "chatwrap clearfix direct";
+		chatwrap2.innerHTML = t.LoggedWhispers[entry].innerHTML;		
+
+		mod_comm_list2.insertBefore(chatwrap2,mod_comm_list2.firstChild);
+		mod_comm_list1.insertBefore(chatwrap1,mod_comm_list1.firstChild);
+	},
+
+	DeleteLog : function (entry) {
+		var t = Tabs.Whisper;
+		t.LoggedWhispers.splice(entry,1);
+		setTimeout(function () {t.saveWhisper ();},0); // get around GM_SetValue unsafeWindow error
+		t.PaintLog();
+	},
+
+	StartKeyTimer : function (elem,notify,entry) {
+		var t = Tabs.Whisper;
+		if (t.KeyTimer) { clearTimeout(t.KeyTimer); }
+		t.KeyTimer = setTimeout( function () {notify(elem,entry);},1000);
+	},
+
+	FilterLog : function () {
+		var t = Tabs.Whisper;
+		if (t.KeyTimer) { clearTimeout(t.KeyTimer); }
+		t.NameFilter = document.getElementById('whNameFilter').value;
+		t.PaintLog();	
+	},
+
+	ClearNameFilter : function () {
+		var t = Tabs.Whisper;
+		if (t.KeyTimer) { clearTimeout(t.KeyTimer); }
+		document.getElementById('whNameFilter').value = "";
+		t.FilterLog();	
+	},
+	
+	hide : function (){
+		var t = Tabs.Whisper;
+	},
+
+	show : function (){
+		var t = Tabs.Whisper;
+		var m = '<DIV class=pbStat align=center>RECEIVED WHISPER LOG</div>';
+		m += '<table class=xtab><TR><TD><INPUT id=whLogAFK type=checkbox ' + (Options.WhisperOptions.LogWhenAFK ? 'CHECKED ' : '') + '/></td><TD class=xtab>Only log when AFK</td></tr></table>';
+		m += '<div id=ptWhisperLog>&nbsp;</div><br>';      
+		t.mydiv.innerHTML = m;
+		
+		t.ToggleOption('whLogAFK','LogWhenAFK');	
+	
+		t.PaintLog();
+	},  
+
+	ToggleOption : function (checkboxId, optionName, callOnChange) {
+		var t = Tabs.Whisper;
+		var checkbox = document.getElementById(checkboxId);
+		if (Options.WhisperOptions[optionName])
+			checkbox.checked = true;
+		checkbox.addEventListener ('change', new eventHandler(checkboxId, optionName, callOnChange).handler, false);
+
+		function eventHandler (checkboxId, optionName, callOnChange) {
+			this.handler = handler;
+			var optName = optionName;
+			var callback = callOnChange;
+			function handler(event){
+				Options.WhisperOptions[optionName] = this.checked;
+				saveOptions();
+				if (callback != null)
+				callback (this.checked);
+			}
+		}	
+	},
+	
 }
-
-/*******************  End Whisper ****************/
-
-
 
 /*******************  Chat tab ****************/
 Tabs.Chat = {
@@ -17306,9 +17487,11 @@ function readOptions (){
   if (s != null){
     opts = JSON2.parse (s);
     for (k in opts){
-      if (matTypeof(opts[k]) == 'object')
+      if (matTypeof(opts[k]) == 'object') {
+		if (!Options[k]) Options[k] = {};
         for (kk in opts[k])
           Options[k][kk] = opts[k][kk];
+	  }	  
       else
         Options[k] = opts[k];
     }
@@ -24847,6 +25030,13 @@ Tabs.Champion = {
 		UniqueItems["28055"] = {Id:28055,Name:"Helmet of the Wraith", Effects:[{type:3,tier:1},{type:207,tier:3},{type:1,tier:1},{type:202,tier:2},{type:205,tier:2}],Faction:2,Type:3};
 		UniqueItems["28056"] = {Id:28056,Name:"Boots of the Wraith", Effects:[{type:17,tier:1},{type:207,tier:2},{type:202,tier:2},{type:205,tier:1},{type:18,tier:1}],Faction:2,Type:4};
 		UniqueItems["28057"] = {Id:28057,Name:"Cloak of the Wraith", Effects:[{type:209,tier:2},{type:206,tier:2},{type:208,tier:2},{type:7,tier:1},{type:202,tier:3}],Faction:2,Type:9};
+		
+		UniqueItems["28100"] = {Id:28100,Name:"Sapper's Axe", Effects:[{type:201,tier:5},{type:202,tier:3},{type:63,tier:1},{type:133,tier:2},{type:204,tier:2}],Faction:1,Type:1};
+		UniqueItems["28101"] = {Id:28101,Name:"Sapper's Shield", Effects:[{type:206,tier:3},{type:61,tier:2},{type:203,tier:2},{type:24,tier:3},{type:209,tier:2}],Faction:1,Type:5};
+		UniqueItems["28102"] = {Id:28102,Name:"Sapper's Armor ", Effects:[{type:203,tier:3},{type:126,tier:2},{type:25,tier:2},{type:209,tier:3},{type:205,tier:2}],Faction:1,Type:2};
+		UniqueItems["28103"] = {Id:28103,Name:"Sapper's Helmet", Effects:[{type:203,tier:2},{type:128,tier:3},{type:208,tier:2},{type:25,tier:2},{type:207,tier:2}],Faction:1,Type:3};
+		UniqueItems["28104"] = {Id:28104,Name:"Sapper's Boots", Effects:[{type:205,tier:2},{type:62,tier:2},{type:27,tier:3},{type:207,tier:2},{type:206,tier:2}],Faction:1,Type:4};
+		UniqueItems["28105"] = {Id:28105,Name:"Sapper's Cloak", Effects:[{type:207,tier:2},{type:209,tier:2},{type:63,tier:2},{type:133,tier:3},{type:206,tier:2}],Faction:1,Type:9};		
 		
 		UniqueItems["28501"] = {Id:28501,Name:"Black Knight's Cloak", Effects:[{type:201,tier:2},{type:18,tier:2},{type:204,tier:2},{type:37,tier:3},{type:202,tier:3}],Faction:2,Type:9};
 		UniqueItems["28502"] = {Id:28502,Name:"Cloak of Radiance", Effects:[{type:206,tier:2},{type:1,tier:2},{type:202,tier:2},{type:25,tier:3},{type:2,tier:3}],Faction:1,Type:9};
