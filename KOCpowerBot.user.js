@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150302a
+// @version        20150304a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150302a';
+var Version = '20150304a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -145,6 +145,7 @@ var Options = {
   lasttransport: 0,
   reassigninterval: 60,
   lastreassign : 0,
+  ReassignKnights : false,
   HelpRequest  : true,
   DeleteRequest: false,
   DeletegAl    : false,
@@ -8104,14 +8105,11 @@ Tabs.Search = {
   citySelNotify : function (city){
     var t = Tabs.Search;
     t.selectedCity = city;
-    t.JumpCity(city.id);
+    t.JumpCity(city.idx);
   },
   
-  JumpCity:function(city) {
+  JumpCity:function(cityNum) {
     var t = Tabs.Search;
-    for (i=0;i<Seed.cities.length;i++) {
-        if (Seed.cities[i][0]==city) var cityNum=i;
-    }
     cityNum++;
     var obj = document.getElementById('citysel_'+cityNum);
       return t.ClickWin(window,obj,'click');
@@ -14212,6 +14210,7 @@ Tabs.Reassign = {
 	count:0,
 	check:false,
 	processing:false,
+	knt:{},
 
 	init: function(div){
 		var t = Tabs.Reassign;
@@ -14240,6 +14239,7 @@ Tabs.Reassign = {
 			if (document.getElementById('ReasignToggleTab')) document.getElementById('ReasignToggleTab').innerHTML = '<span style="color: #FFFF00">Reassign: On</span>';
 		}
 		m += '<TD>'+translate("Check reassign every:")+' <INPUT id=pbreassigninterval type=text size=2 value="'+Options.reassigninterval+'"\> '+translate("minutes")+'</td>';
+		m += '<TD>'+translate("Reassign with Knights")+'? <INPUT id=pbreassignknights type=checkbox '+(Options.ReassignKnights?'CHECKED':'')+'></td>';
 		m += '<TD><INPUT id=pbReassShowRoutes type=submit value="Show Routes"></td>';
 		m += '</tr></table></div>';
 		m += '<DIV id=pbReassignDivD class=pbStat>'+translate("ADD REASSIGN ROUTE")+'</div>';
@@ -14309,6 +14309,10 @@ Tabs.Reassign = {
 		document.getElementById('pbreassigninterval').addEventListener('keyup', function(){
 			if (isNaN(document.getElementById('pbreassigninterval').value)){ document.getElementById('pbreassigninterval').value=0 ;}
 			Options.reassigninterval = document.getElementById('pbreassigninterval').value;
+			saveOptions();
+		}, false);
+		document.getElementById('pbreassignknights').addEventListener('click', function(){
+			Options.ReassignKnights = document.getElementById('pbreassignknights').checked;
 			saveOptions();
 		}, false);
 
@@ -14558,6 +14562,21 @@ Tabs.Reassign = {
 		}
 	},
     
+	getAtkKnight : function (cityID) {
+		var t = Tabs.Reassign;
+		t.knt = new Array();
+		for (k in Seed.knights[cityID]){
+			if (Seed.knights[cityID][k]["knightStatus"] == 1 && Seed.leaders[cityID]["resourcefulnessKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["politicsKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["combatKnightId"] != Seed.knights[cityID][k]["knightId"] && Seed.leaders[cityID]["intelligenceKnightId"] != Seed.knights[cityID][k]["knightId"]){
+				t.knt.push ({
+					Name:   Seed.knights[cityID][k]["knightName"],
+					Combat:    parseInt(Seed.knights[cityID][k]["combat"]),
+					ID:        Seed.knights[cityID][k]["knightId"],
+				});
+			}
+		}
+		t.knt = t.knt.sort(function sort(a,b) {a = parseInt(a['Combat']);b = parseInt(b['Combat']);return a == b ? 0 : (a < b ? -1 : 1);}); // reverse combat order to avoid possible conflicts with other stuff
+	},
+    
 	checkdoReassign: function(){
 		var t = Tabs.Reassign;
 		t.processing = true;
@@ -14624,12 +14643,19 @@ Tabs.Reassign = {
                 break;
             }
 		}
-        for (var t=0; t< Seed.cities.length;t++) {
-            if ( parseInt(Seed.cities[t][0]) == city) var cityname = Seed.cities[t][1];
+        for (var c=0; t< Seed.cities.length;c++) {
+            if ( parseInt(Seed.cities[c][0]) == city) var cityname = Seed.cities[c][1];
         }
+		
+        params.kid=0;
+		if (Options.ReassignKnights) {
+			t.getAtkKnight(cityID);
+			if  (t.knt.toSource()!= "[]") {
+				params.kid = t.knt[0].ID;
+			}
+		}	
         params.cid= city;
         params.type = "5";
-        params.kid=0;
         params.xcoord = xcoord;
         params.ycoord = ycoord;
 		if (totalsend >0) {
@@ -24699,14 +24725,11 @@ Tabs.ascension = {
     clickCitySelect: function (city) {
         var t = Tabs.ascension;
         t.selectedCity = city;
-        t.JumpCity(city);
+        t.JumpCity(Cities.byID[city].idx);
         unsafeWindow.cm.PrestigeManagerController.open()
     },
-    JumpCity: function (city) {
+    JumpCity: function (cityNum) {
         var t = Tabs.ascension;
-        for (i = 0; i < Seed.cities.length; i++) {
-            if (Seed.cities[i][0] == city) var cityNum = i;
-        }
         cityNum++;
         var obj = document.getElementById('citysel_' + cityNum);
         return t.ClickWin(window, obj, 'click');
@@ -27642,6 +27665,7 @@ Tabs.farmreports = {
         On: false,
         lost: false,
         friendly: false,
+        hostile: false,
     },
     rptstimer: null,
     delrptstimer: null,
@@ -27667,8 +27691,9 @@ Tabs.farmreports = {
         m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Stone is more than :&nbsp;</td><td><INPUT id=frR3 type=text value=' + t.FROptions.r3 + '></td></tr>';
         m += '<tr><td>&nbsp;&nbsp;<b>OR</b></td><td align="right">Ore is more than :&nbsp;</td><td><INPUT id=frR4 type=text value=' + t.FROptions.r4 + '></td></tr></table>';
         m += '&nbsp;&nbsp; (NB - Set amount to zero to disable the check for that particular resource. If all amounts are zero nothing gets deleted)';
-        m += '<br><br>&nbsp;&nbsp;<input id=froverwhelmed type=checkbox ' + (t.FROptions.lost ? 'CHECKED' : '') + '> Delete Scout Reports where you were Overwhelmed in Battle';
-        m += '<br>&nbsp;&nbsp;<input id=frlost type=checkbox ' + (t.FROptions.friendly ? 'CHECKED' : '') + '> Delete Scout Reports of Friendly Alliances';
+        m += '<br><br>&nbsp;&nbsp;<input id=frlost type=checkbox ' + (t.FROptions.lost ? 'CHECKED' : '') + '>Delete Scout Reports where you were Overwhelmed in Battle';
+        m += '<br>&nbsp;&nbsp;<input id=frfriendly type=checkbox ' + (t.FROptions.friendly ? 'CHECKED' : '') + '>ALWAYS Delete Scout Reports of Friendly Alliances';
+        m += '<br>&nbsp;&nbsp;<input id=frhostile type=checkbox ' + (t.FROptions.hostile ? 'CHECKED' : '') + '>NEVER Delete Scout Reports of Hostile Alliances';
         m += '<br>&nbsp;&nbsp;';
         t.myDiv.innerHTML = m;
         document.getElementById('frGold').addEventListener('change', function() {
@@ -27693,12 +27718,16 @@ Tabs.farmreports = {
             t.FROptions.r4 = this.value;
             t.saveSROpts();
         }, false);
-        document.getElementById('froverwhelmed').addEventListener('click', function() {
+        document.getElementById('frlost').addEventListener('click', function() {
             t.FROptions.lost = this.checked;
             t.saveSROpts();
         }, false);
-        document.getElementById('frlost').addEventListener('click', function() {
+        document.getElementById('frfriendly').addEventListener('click', function() {
             t.FROptions.friendly = this.checked;
+            t.saveSROpts();
+        }, false);
+        document.getElementById('frhostile').addEventListener('click', function() {
+            t.FROptions.hostile = this.checked;
             t.saveSROpts();
         }, false);
          document.getElementById('FSrpts').addEventListener('click', function() {
@@ -27776,18 +27805,26 @@ Tabs.farmreports = {
 						if (reports[k].side0AllianceId && t.FROptions.friendly == true) {
 							for (l in unsafeWindow.seed.allianceDiplomacies.friendlyToThem) {
 								if(reports[k].side0AllianceId == unsafeWindow.seed.allianceDiplomacies.friendlyToThem[l].allianceId) {
-									logit('deleting friendly scout' + k.substr(2));
+									actionLog('deleting friendly scout' + k.substr(2));
 									t.deleteCheckedReport(k.substr(2));
 									rptdel = true;
 								}	
 							}	
 							for (l in unsafeWindow.seed.allianceDiplomacies.friendly) {
 								if(reports[k].side0AllianceId == unsafeWindow.seed.allianceDiplomacies.friendly[l].allianceId) {
-									logit('deleting friendly scout ' + k.substr(2));
+									actionLog('deleting friendly scout ' + k.substr(2));
 									t.deleteCheckedReport(k.substr(2));
 									rptdel = true;
 								}	
 							}
+						};
+						if (reports[k].side0AllianceId && t.FROptions.hostile == true) {
+							for (l in unsafeWindow.seed.allianceDiplomacies.hostile) {
+								if(reports[k].side0AllianceId == unsafeWindow.seed.allianceDiplomacies.hostile[l].allianceId) {
+									logit('not deleting hostile scout ' + k.substr(2));
+									rptdel = true; // use this flag to pretend we have already deleted report, so don't check!!!!
+								}	
+							}	
 						};
 					};
 					if (rptdel == false) { t.tocheck.push(k.substr(2)); }
@@ -27845,7 +27882,7 @@ Tabs.farmreports = {
                 onSuccess: function(rslt) {
                     var x = {};
                     if (rslt.overwhelmed == true && t.FROptions.lost == true) {
-                        logit('deleting overwhelmed report ' + rpId);
+                        actionLog('deleting overwhelmed report ' + rpId);
                         t.deleteCheckedReport(rpId);
                         return;
                     };
@@ -27892,7 +27929,7 @@ Tabs.farmreports = {
 						
                         if (topush == true) {
                             t.deleteCheckedReport(rpId);
-                            logit('deleting scout ' + rpId);
+                            actionLog('deleting scout ' + rpId);
                         } 
                     };
                 },
