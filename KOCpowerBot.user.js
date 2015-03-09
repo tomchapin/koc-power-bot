@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150309a
+// @version        20150309b
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150309a';
+var Version = '20150309b';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -15754,10 +15754,10 @@ Tabs.Whisper = {
 			if (!suid) suid = unsafeWindow.tvuid;
 			else suid = suid[1];
 		
-			var sname = /Chat\.whisper\(\&quot\;(.*)\&quot\;/im.exec(a);
+			var sname = /Chat\.whisper\(\&quot\;(.*)\&quot\;\)\;/im.exec(a);
 			if (!sname)	sname = "";
 			else sname = sname[1];
-			
+		
 			var stext = /div class=\"tx\">(.*)\<\/div\>/im.exec(a);
 			if (!stext)	stext = "";
 			else stext = '<span>'+stext[1].split("</div>")[0]+'</span>';
