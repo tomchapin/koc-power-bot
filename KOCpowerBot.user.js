@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150304a
+// @version        20150309a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150304a';
+var Version = '20150309a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2409,6 +2409,34 @@ compactFarmData3: function(){
 
 
 /*********************************** Throne Tab ***********************************/
+
+function DeleteLastMessage() {
+	var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+	params.requestType = 'GET_MESSAGE_HEADERS_FOR_USER_INBOX';
+	params.boxType = 'outbox';
+	params.pageNo = 1;
+	new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+		method: "post",
+		parameters: params,
+		onSuccess: function (rslt) {
+			if (rslt.ok) {
+				if (rslt.mostRecentMessageId) {
+					var params2 = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
+					params2.requestType = 'ACTION_ON_MESSAGES';
+					params2.boxType = 'outbox';
+					params2.selectedAction = 'delete';
+					params2.selectedMessageIds = rslt.mostRecentMessageId;
+					new MyAjaxRequest(unsafeWindow.g_ajaxpath + "ajax/getEmail.php" + unsafeWindow.g_ajaxsuffix, {
+						method: "post",
+						parameters: params2,
+						onSuccess: function (rslt2) {},
+					},true);
+				}	
+			}
+		},
+	},true);
+};
+
 Tabs.Throne = {
 	tabOrder: 590,
 	tabLabel: unsafeWindow.g_js_strings.throneRoom.chair,
@@ -3700,6 +3728,7 @@ Tabs.Throne = {
 			onSuccess: function (message) {
 				var rslt = eval("(" + message.responseText + ")");
 				if (rslt.ok) {
+					DeleteLastMessage();
 					if (mess.substring(32000) == '') {
 						document.getElementById('dispResult').innerHTML = 'Message Sent OK to - ' + recipient + '...'
 					}	
@@ -11963,6 +11992,7 @@ cm.MARCH_TYPES = {
         onSuccess: function (message) {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
+				DeleteLastMessage();
             } else {
             }
         },
@@ -13338,6 +13368,8 @@ Tabs.Barb = {
         onSuccess: function (message) {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
+				DeleteLastMessage();
+			
                // Reset stats
                AttackOptions.LastReport = now;
                AttackOptions.BarbsFailedTraffic = 0;
@@ -15715,18 +15747,20 @@ Tabs.Whisper = {
 					return;
 				}
 			}  
-				var a = innerHTML;
+
+			var a = innerHTML;
 			var m = /div class=\"info\">.*<\/div>/im.exec(a);
-			var suid = /viewProfile\(this,([0-9]+),false/i.exec(m[0]);
+			var suid = /viewProfile\(this,([0-9]+),false\)/i.exec(m[0]);
 			if (!suid) suid = unsafeWindow.tvuid;
 			else suid = suid[1];
 		
-			var sname = /Chat\.whisper\(\&quot\;(.*)\&/im.exec(a);
+			var sname = /Chat\.whisper\(\&quot\;(.*)\&quot\;/im.exec(a);
 			if (!sname)	sname = "";
 			else sname = sname[1];
-				var stext = /div class=\"tx\">(.*)\<\/div\>/im.exec(a);
+			
+			var stext = /div class=\"tx\">(.*)\<\/div\>/im.exec(a);
 			if (!stext)	stext = "";
-			else stext = stext[1].split("</div>")[0];
+			else stext = '<span>'+stext[1].split("</div>")[0]+'</span>';
 			
 			t.LoggedWhispers.push({ts:ts, uid:suid, name:sname, msg:stext, innerHTML:a, keep:okeep});
 			setTimeout(function () {t.saveWhisper ();},0); // get around GM_SetValue unsafeWindow error
@@ -15736,7 +15770,9 @@ Tabs.Whisper = {
 				saveOptions();
 				t.SetButton();
 			}
-			t.PaintLog();
+			if (tabManager.currentTab.name == 'Whisper' && Options.pbWinIsOpen) { 
+				t.PaintLog();
+			}	
 		};
 	},	
 
@@ -15754,8 +15790,6 @@ Tabs.Whisper = {
 	
 	PaintLog : function () {
 		var t = Tabs.Whisper;
-
-		if (tabManager.currentTab.name != 'Whisper' || !Options.pbWinIsOpen){ return; }
 
 		Options.WhisperOptions.UnRead = false;
 		setTimeout(function () {saveOptions ();},0); // get around GM_SetValue unsafeWindow error
@@ -16284,6 +16318,7 @@ latestChats : [],
 				onSuccess: function (message) {
 					var rslt = eval("(" + message.responseText + ")");
 					if (rslt.ok) {
+						DeleteLastMessage();
 							GM_log('Message sent to record remote TR change request');
 					}
 				},
@@ -23222,6 +23257,8 @@ Tabs.Attack = {
 			onSuccess: function (message) {
 				var rslt = eval("(" + message.responseText + ")");
 				if (rslt.ok) {
+					DeleteLastMessage();
+				
 					Options.Crest1Count = 0;
 					Options.Crest2Count = 0;
 					saveOptions();
