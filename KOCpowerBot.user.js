@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150309b
+// @version        20150313a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150309b';
+var Version = '20150313a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -12526,28 +12526,7 @@ Tabs.AutoCraft = {
 		var tableau = [];
 		if (TrainOptions.CraftingPrefs[c+1] != 0) { // attempt to craft preferred recipe
 			var d = TrainOptions.CraftingPrefs[c+1];
-			if ((!TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>0)) || (TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>parseIntNan(Seed.items["i"+d])+t.checkCraftQueues(d)))) {
-				if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1])) {
-					if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(t.spires[c].maxLevel)) {
-						if(t.craftinfo[d].inputItems == "") { // "base items"
-							tableau.push (d);
-						} else {
-							if (!TrainOptions.actr || (Number(cs) >= Number(TrainOptions.actrset))) { // if no craft speed restriction or enough crafting speed
-								for(var i in t.craftinfo[d].inputItems) {
-									if (parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
-										break;
-								}  
-								if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
-									tableau.push (d);
-							}		
-						}
-					}
-				}	
-			}			
-		}
-
-		if (tableau.length == 0) { // preferred not available
-			for(var d in TrainOptions.CraftingNb) {
+			if (t.craftinfo[d]) { // recipe may have been taken away!
 				if ((!TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>0)) || (TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>parseIntNan(Seed.items["i"+d])+t.checkCraftQueues(d)))) {
 					if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1])) {
 						if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(t.spires[c].maxLevel)) {
@@ -12566,6 +12545,31 @@ Tabs.AutoCraft = {
 						}
 					}	
 				}
+			}	
+		}
+
+		if (tableau.length == 0) { // preferred not available
+			for(var d in TrainOptions.CraftingNb) {
+				if (t.craftinfo[d]) { // recipe might have been taken away!
+					if ((!TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>0)) || (TrainOptions.CraftingNbFix[d] && (parseInt(TrainOptions.CraftingNb[d])>parseIntNan(Seed.items["i"+d])+t.checkCraftQueues(d)))) {
+						if(parseInt(Seed.resources["city" + cityId]['rec5'][0]) >= parseInt(t.craftinfo[d].astone[1])) {
+							if(parseInt(t.craftinfo[d].requirements.building) <= parseInt(t.spires[c].maxLevel)) {
+								if(t.craftinfo[d].inputItems == "") { // "base items"
+									tableau.push (d);
+								} else {
+									if (!TrainOptions.actr || (Number(cs) >= Number(TrainOptions.actrset))) { // if no craft speed restriction or enough crafting speed
+										for(var i in t.craftinfo[d].inputItems) {
+											if (parseInt(unsafeWindow.seed.items["i"+i]) < parseInt(t.craftinfo[d].inputItems[i]))
+												break;
+										}  
+										if(parseInt(unsafeWindow.seed.items["i"+i]) >= parseInt(t.craftinfo[d].inputItems[i]))
+											tableau.push (d);
+									}		
+								}
+							}
+						}	
+					}
+				}	
 			}
 		}	
 		if (tableau.length == 0) return ; // nothing to craft
