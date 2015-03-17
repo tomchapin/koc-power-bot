@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150313a
+// @version        20150317a
 // @namespace      mat
 // @homepage       https://code.google.com/p/koc-power-bot/
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150313a';
+var Version = '20150317a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -54,8 +54,8 @@ var throttle = 10;
 var MAP_DELAY = 4000;
 var MAP_SFIELD = 20;
 var MAP_DELAY_WATCH = Number(0);
-var DEFAULT_ALERT_SOUND_URL = http+'koc-power-bot.googlecode.com/svn/trunk/RedAlert.mp3';
-var SWF_PLAYER_URL = http+'koc-power-bot.googlecode.com/svn/trunk/alarmplayer.swf';
+var DEFAULT_ALERT_SOUND_URL = http+'www.nicodebelder.eu/koc/aio/RedAlert.mp3';
+var SWF_PLAYER_URL = http+'www.nicodebelder.eu/koc/aio/alarmplayer.swf';
 
 var URL_CASTLE_BUT = "data:image/png;base64,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";
 var URL_CASTLE_BUT_SEL = "data:image/png;base64,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";
@@ -5075,7 +5075,7 @@ Tabs.Throne = {
 		if (!document.getElementById('ThroneTRS')) return;
 		if (document.getElementById('ThroneTRS').innerHTML.indexOf('The below values are alpha and may not be accurate') != -1) return;
 		m = document.getElementById('ThroneTRS').innerHTML;
-		m += '<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via https://code.google.com/p/koc-power-bot/issues/list</font>';
+		m += '<br><table><font color=red>The below values are alpha and may not be accurate</font>';
 		for (i in unsafeWindow.cm.thronestats.effects) {
 			//            var z = unsafeWindow.cm.ThroneController.effectBonus(Number(i));
 			var z = equippedthronestats(Number(i));
@@ -9431,7 +9431,7 @@ Tabs.News = {
    div.innerHTML = '<DIV class=pbStat>Breaking News!</div><br>';
       GM_xmlhttpRequest({
          method: 'GET',
-         url: http+'koc-power-bot.googlecode.com/svn/trunk/BreakingNews.txt',
+         url: http+'www.nicodebelder.eu/koc/BreakingNews.txt',
          headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
          },
@@ -16470,7 +16470,7 @@ Tabs.Language = {
   myDiv : null,
   language : {needTranslation:{}},
   lang : {en:"en",fr:"fr"},
-  link : {"https://koc-power-bot.googlecode.com/svn/trunk/translation/translation_en.js":"en","https://koc-power-bot.googlecode.com/svn/trunk/translation/translation_fr.js":"fr"},
+  link : {"http://www.nicodebelder.eu/koc/translation/translation_en.js":"en","http://www.nicodebelder.eu/koc/translation/translation_fr.js":"fr"},
   
   init : function (div){    // called once, upon script startup
     var t = Tabs.Language;
@@ -22300,10 +22300,10 @@ Tabs.startup = {
         t.where = "City";
         var counter = 0;
    	var AscCityInd = Seed.cityData.city[t.city.city.id].isPrestigeCity;
-        var cityGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/CityTileIDs.jpg">';
-   	var asccityGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/AscCityTileIDs.jpg">';
-	var asccityfeyGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/AscCityFeyTileIDs.jpg">';
-	var asccitybritGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/AscCityBritonTileIDs.jpg">';
+        var cityGrid = '<img src="'+http+'www.nicodebelder.eu/koc/images/CityTileIDs.jpg">';
+   	var asccityGrid = '<img src="'+http+'www.nicodebelder.eu/koc/images/AscCityTileIDs.jpg">';
+	var asccityfeyGrid = '<img src="'+http+'www.nicodebelder.eu/koc/images/AscCityFeyTileIDs.jpg">';
+	var asccitybritGrid = '<img src="'+http+'www.nicodebelder.eu/koc/images/AscCityBritonTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
 	if(AscCityInd == true) {
 		varAscCityType=Seed.cityData.city[t.city.city.id].prestigeInfo.prestigeType;
@@ -22413,7 +22413,7 @@ Tabs.startup = {
         var counter = 0;
         var fields = 13;
         var max = t.getCastleLevel();
-        var fieldGrid = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/FieldsTileIDs.jpg">';
+        var fieldGrid = '<img src="'+http+'www.nicodebelder.eu/koc/images/trunk/FieldsTileIDs.jpg">';
         document.getElementById('gridPicture').innerHTML = "";
         document.getElementById('gridPicture').innerHTML = fieldGrid;
         var mess='<TABLE id=pbLayoutBoxes width=100% height=0%><INPUT id=showFieldDefaults type=submit value="Load Defaults"><INPUT id=setFieldDefaults type=submit value="Set Defaults">';
@@ -24329,7 +24329,7 @@ Tabs.gifts = {
         m+='</select> </td><td> <INPUT id=pbaugift type=checkbox '+ (GiftDB.agift?' CHECKED':'') +'\>Auto gift when available </td><td> <INPUT id=pbadgift type=checkbox '+ (GiftDB.adgift?' CHECKED':'') +'\> Scan and delete gift messages</td><td> Total sent:</td><td id=giftnumber></td></tr></table></DIV>';
 	m+='<table><TR><TD><INPUT id=resetlist type=submit value="Reset Gift List"> Reset gifting list (may take a day to re-populate)</td></tr></table></DIV>';
         m += '<DIV class=pbStat></DIV>';
-        m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.  You may update us on working scenarios <a href=https://code.google.com/p/koc-power-bot/issues/list>here</a></DIV>';
+        m+= '<DIV>For reasons unknown the server picks and chooses the recipients.  You will find the counter is an accurate representation of who kabam says they sent the gifts to.  I invite you to try theories, gift combinations and see if you can get the numbers higher.  each type of gift sent is a separate request to the server.</DIV>';
         m += '<DIV class=pbStat></DIV>';
         m += '<DIV style="height:250px; max-height:250px; overflow-y:auto" id=GiftsTAB></DIV>';
         div.innerHTML = m;
@@ -24669,7 +24669,7 @@ Tabs.ascension = {
             if (progressWidth > 100) progressWidth = 100;
             var fullBarWidth = 378;
             m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
-            m += '<TR><TD background="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=' + fullBarWidth + ' height=25">';
+            m += '<TR><TD background="'+http+'www.nicodebelder.eu/koc/images/progress_brown_bar.png" width=' + fullBarWidth + ' height=25">';
             m += '<DIV id=pbGreenBar_' + i + '></div></td><TD align=center><DIV id=pbProgPerc_' + i + '></div></td><TD><INPUT id=pbAscendBtn_' + Cities.cities[i].id + ' type=submit value="Ascend"></td><TD align=center><DIV id=pbCityPrestigeLevel_' + i + '></div></td><TD align=center><DIV id=pbGemCost_' + Cities.cities[i].id + '></div></td><TD align=center><CENTER><DIV id=pbAscCurMight_'+i+'></div></center></td>';
         }
         div.innerHTML = m;
@@ -24725,12 +24725,12 @@ Tabs.ascension = {
             if (progressWidth > 100) progressWidth = 100;
             var fullBarWidth = 378;
             m += '<TR><TD>City ' + Cities.cities[i].name + ' - </td>';
-            m += '<TR><TD style="background:'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_brown_bar.png" width=100% height=25">';
+            m += '<TR><TD style="background:'+http+'www.nicodebelder.eu/koc/images/progress_brown_bar.png" width=100% height=25">';
             if (isPrestigeCity) {
 	      if (cityPrestigeType <= 2) {
                 if (cityPrestigeLevel < 6) {
                     //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
-                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="'+http+'www.nicodebelder.eu/koc/images/progress_green_bar.png" width=' + progressWidth + '% height=25>'
                     document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
                     document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/6';
                     document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/' +fullPrestige[cityPrestigeLevel];
@@ -24743,7 +24743,7 @@ Tabs.ascension = {
 	      } else {
                 if (cityPrestigeLevel < 6) {
                     //logit(cityPrestigeLevel + ' ' + isPrestigeCity)
-                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="'+http+'koc-power-bot.googlecode.com/svn/trunk/progress_green_bar.png" width=' + progressWidth + '% height=25>'
+                    document.getElementById('pbGreenBar_' + i).innerHTML = '<img src="'+http+'www.nicodebelder.eu/koc/images/progress_green_bar.png" width=' + progressWidth + '% height=25>'
                     document.getElementById('pbProgPerc_' + i).innerHTML = progressWidth + '%';
                     document.getElementById('pbCityPrestigeLevel_' + i).innerHTML = cityPrestigeLevel + '/6';
                     document.getElementById('pbAscCurMight_'+i).innerHTML = cityPrestige + '/' +fullPrestige[cityPrestigeLevel-1];
@@ -25023,7 +25023,7 @@ Tabs.Champion = {
    },
    
 	Uniques: function () {
-		var maxlevel = 14;
+		var maxlevel = unsafeWindow.cm.CHAMPION.MAX_LEVELS;
 		var t = Tabs.Champion;
 		var UniqueItems = null;
 		var chTypes = ["weapon","armor","helm","boots","shield","ring1","ring2","pendant","cloak"]; // must be in this order
@@ -25101,6 +25101,12 @@ Tabs.Champion = {
 		UniqueItems["28103"] = {Id:28103,Name:"Sapper's Helmet", Effects:[{type:203,tier:2},{type:128,tier:3},{type:208,tier:2},{type:25,tier:2},{type:207,tier:2}],Faction:1,Type:3};
 		UniqueItems["28104"] = {Id:28104,Name:"Sapper's Boots", Effects:[{type:205,tier:2},{type:62,tier:2},{type:27,tier:3},{type:207,tier:2},{type:206,tier:2}],Faction:1,Type:4};
 		UniqueItems["28105"] = {Id:28105,Name:"Sapper's Cloak", Effects:[{type:207,tier:2},{type:209,tier:2},{type:63,tier:2},{type:133,tier:3},{type:206,tier:2}],Faction:1,Type:9};		
+		UniqueItems["28106"] = {Id:28106,Name:"Skirmisher's Lash", Effects:[{type:201,tier:5},{type:207,tier:2},{type:42,tier:3},{type:131,tier:2},{type:208,tier:2}],Faction:3,Type:1};
+		UniqueItems["28107"] = {Id:28107,Name:"Skirmisher's Shield", Effects:[{type:202,tier:2},{type:39,tier:3},{type:204,tier:2},{type:44,tier:2},{type:209,tier:2}],Faction:3,Type:5};
+		UniqueItems["28108"] = {Id:28108,Name:"Skirmisher's Armor ", Effects:[{type:203,tier:2},{type:40,tier:2},{type:45,tier:2},{type:206,tier:2},{type:209,tier:2}],Faction:3,Type:2};
+		UniqueItems["28109"] = {Id:28109,Name:"Skirmisher's Helmet", Effects:[{type:206,tier:2},{type:41,tier:3},{type:207,tier:3},{type:45,tier:2},{type:209,tier:3}],Faction:3,Type:3};
+		UniqueItems["28110"] = {Id:28110,Name:"Skirmisher's Boots", Effects:[{type:205,tier:1},{type:130,tier:3},{type:47,tier:2},{type:204,tier:2},{type:208,tier:3}],Faction:3,Type:4};
+		UniqueItems["28111"] = {Id:28111,Name:"Skirmisher's Cloak", Effects:[{type:205,tier:1},{type:202,tier:2},{type:42,tier:2},{type:131,tier:3},{type:209,tier:2}],Faction:3,Type:9};
 		
 		UniqueItems["28501"] = {Id:28501,Name:"Black Knight's Cloak", Effects:[{type:201,tier:2},{type:18,tier:2},{type:204,tier:2},{type:37,tier:3},{type:202,tier:3}],Faction:2,Type:9};
 		UniqueItems["28502"] = {Id:28502,Name:"Cloak of Radiance", Effects:[{type:206,tier:2},{type:1,tier:2},{type:202,tier:2},{type:25,tier:3},{type:2,tier:3}],Faction:1,Type:9};
@@ -27072,7 +27078,7 @@ TTpaintstats : function () {
 	if(!document.getElementById('ChampionTRS'))return;
    if(document.getElementById('ChampionTRS').innerHTML.indexOf('The below values are alpha and may not be accurate') != -1)return;
             m= document.getElementById('ChampionTRS').innerHTML;
-         m+='<br><table><font color=red>The below values are alpha and may not be accurate<br> please inform of inaccuracies via https://code.google.com/p/koc-power-bot/issues/list</font>';
+         m+='<br><table><font color=red>The below values are alpha and may not be accurate</font>';
          for(i in t.championStatEffects) {
 //            var z = unsafeWindow.cm.ChampionController.effectBonus(Number(i));
 	    var z = equippedChampionstats(Number(i));
