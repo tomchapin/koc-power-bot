@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150317a
+// @version        20150320a
 // @namespace      mat
-// @homepage       https://code.google.com/p/koc-power-bot/
+// @homepage       https://greasyfork.org/en/scripts/892-koc-power-bot
 // @include        *.kingdomsofcamelot.com/*main_src.php*
 // @include        *.kingdomsofcamelot.com/*platforms/kabam*
 // @include        *apps.facebook.com/kingdomsofcamelot/*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150317a';
+var Version = '20150320a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -2524,6 +2524,7 @@ Tabs.Throne = {
 		var UniqueItems = null;
 		var trTypes = ['chair', 'advisor', 'window', 'banner', 'table', 'trophy', 'candelabrum', 'hero', 'statue', 'pet', 'tapestry', 'pillar']; // must be in this order
 		var itemTypes = { chair: 0, advisor: 1, window: 2, banner: 3, table: 4, trophy: 5, candelabrum: 6, hero: 7, statue: 8, pet: 9, tapestry: 10, pillar: 11 }; // must be in this order
+		var itemFactions = { druid:3, fey:2, briton:1 };
 		var itemLists = [];
 		var selectedCard1 = 0;
 		var selectedCard2 = 0;
@@ -2534,7 +2535,7 @@ Tabs.Throne = {
         UniqueItems = unsafeWindow.cm.WorldSettings.getSettingAsObject("TR_UNIQUE_ITEMS");
         for (k in UniqueItems) {
             var throne_item = UniqueItems[k];
-            if (parseInt(throne_item.Id) < 30000) delete UniqueItems[k];
+            if (parseInt(throne_item.Id) < 29000) delete UniqueItems[k];
             if (parseInt(throne_item.Id) == 30262 || parseInt(throne_item.Id) == 30264 || parseInt(throne_item.Id) == 30266) { throne_item.Name = throne_item.Name + ' ('+unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(throne_item.Faction)].toLowerCase()+')';};
             if (parseInt(throne_item.Id) == 30261 || parseInt(throne_item.Id) == 30263 || parseInt(throne_item.Id) == 30265) { throne_item.Name = throne_item.Name + ' ('+unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(throne_item.Faction)].toLowerCase()+')';};
             if (parseInt(throne_item.Id) == 30230 || parseInt(throne_item.Id) == 30240 || parseInt(throne_item.Id) == 30250) { throne_item.Name = throne_item.Name + ' ('+unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(throne_item.Faction)].toLowerCase()+')';};
@@ -2574,7 +2575,9 @@ Tabs.Throne = {
         for (k in UniqueItems) {
             var throne_item = UniqueItems[k];
             if (throne_item == null || !throne_item) continue;
-            m += '<option value="' + k + '">' + throne_item.Name + ' </option>';
+			var style = '';
+			if (throne_item.Faction == 0) style = 'style="color:#aaa;"';
+            m += '<option '+style+' value="' + k + '">' + throne_item.Name + ' </option>';
         }
         m += '</select></div></td>';
 
@@ -2583,7 +2586,9 @@ Tabs.Throne = {
         for (k in UniqueItems) {
             var throne_item = UniqueItems[k];
             if (throne_item == null || !throne_item) continue;
-            m += '<option value="' + k + '">' + throne_item.Name + ' </option>';
+			var style = '';
+			if (throne_item.Faction == 0) style = 'style="color:#aaa;"';
+            m += '<option '+style+' value="' + k + '">' + throne_item.Name + ' </option>';
         }
         m += '</select></div></td>';
 
@@ -2735,8 +2740,15 @@ Tabs.Throne = {
 			TRCard = UniqueItems[trID];
 			TRCard.id = TRCard.Id;
 			TRCard.name = TRCard.Name;
-			TRCard.faction = unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(TRCard.Faction)].toLowerCase();
-			TRCard.type = trTypes[parseInt(TRCard.Type)-1].toLowerCase();
+			if (TRCard.Faction != 0) {
+				TRCard.faction = unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(TRCard.Faction)].toLowerCase();
+				TRCard.type = trTypes[parseInt(TRCard.Type)-1].toLowerCase();
+			}
+			else {
+				TRCard.faction = 'unknown';
+				TRCard.type = 'unknown';
+				TRCard.unknown = true;
+			}
 			TRCard.unique = TRCard.id;
 			TRCard.level = parseInt(lvl.value);
 			TRCard.quality = 6;
@@ -2788,6 +2800,11 @@ Tabs.Throne = {
 				m += 'You have '+tritem[l]+' at level '+l+'<br>';
 			}
 			if (!gotitem) m += 'You have none in your throne room.<br>';
+			else {
+				if (UniqueItems[trID].Faction == 0) {
+					m += '<a id=pbgenstats>Generate Stats</a><br>';
+				}
+			}	
        
 			m += '<br><b>Inventory</b><br>';
 			var inv = unsafeWindow.seed.items['i'+trID];
@@ -2796,6 +2813,27 @@ Tabs.Throne = {
 				m += '<br><a onClick="cm.ItemController.use(\''+trID+'\');setTimeout(function(){pbrefreshuniques('+trID+',\''+div+'\')},2000);">Add to Throne Room</a>';
 			}
 			document.getElementById(div).innerHTML = m;
+			if (document.getElementById('pbgenstats')) {
+				document.getElementById('pbgenstats').addEventListener('click',function () { window.prompt("Copy to clipboard: Ctrl+C", GenerateStats(trID)); } , false); 
+			}	
+			
+			function GenerateStats(trID) {
+				for (k in unsafeWindow.kocThroneItems) {
+					var throne_item = unsafeWindow.kocThroneItems[k];
+					if (throne_item.unique == trID) {
+						var Results = 'UniqueItems["'+trID+'"] = {Id:'+trID+',Name:"'+throne_item.name+'", Effects:[';
+						var firsteffect = true;
+						for (e in throne_item.effects) {
+							if (!firsteffect) Results += ',';
+							Results += '{type:'+throne_item.effects[e].id+',tier:'+throne_item.effects[e].tier+'}';
+							firsteffect = false;
+						}
+						Results += '],Faction:'+(itemFactions[throne_item.faction])+',Type:'+(itemTypes[throne_item.type]+1)+'};';
+						break;
+					}
+				}
+				return Results;
+			}
 		};
 		
 		
@@ -5168,7 +5206,7 @@ Complex loop that browsers can't handle =/. replaced with multiple loops above.
 		D.push(" </div> ");
 		D.push(" <div class='description'> ");
 		var uniquestyle = "";
-		if (throne_item.unique > 30000) {
+		if (throne_item.unique > 29000) {
 			uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/'+throne_item.faction+'_'+throne_item.type+'_unique_'+throne_item.unique + '.png"); top left no-repeat; background-size: 70px 70px;';
 			if (throne_item.unique == 30262 || throne_item.unique == 30264 || throne_item.unique == 30266) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/christmas_advisor_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
 			if (throne_item.unique == 30261 || throne_item.unique == 30263 || throne_item.unique == 30265) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/christmas_candelabrum_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
@@ -5186,42 +5224,48 @@ Complex loop that browsers can't handle =/. replaced with multiple loops above.
 		D.push(" </div> ");
 		D.push(" <ul> ");
 
-		for (slot in throne_item.effects) {
-			try {
-				var N = throne_item.effects[slot];
-				effect = CM.thronestats.effects[N.id];
-				tier = parseInt(N.tier);
-				p = CM.thronestats.tiers[N.id][tier];
-				while (!p && (tier > 0)) { tier--; p = CM.thronestats.tiers[N.id][tier]; } 
-				if (!p) continue; // can't find stats for tier
-				
-				var base = p.base || 0;
-				var level = throne_item.level || 0;
-				var growth = p.growth || 0;
-				if (slot == 'slot6') {  //if it has a slot 6, it automatically has a jewel
-					JewelQuality = throne_item["effects"]['slot6'].quality;
-					GrowthLimit = unsafeWindow.cm.thronestats.jewelGrowthLimit[JewelQuality];
-					if (GrowthLimit <= level) level = GrowthLimit
-				}
-				percent = +(base + ((level * level + level) * growth * 0.5));
-				var wholeNumber = false;
-				if (Math.round(parseFloat(percent)) == parseFloat(percent)) wholeNumber = true;
-				percent = (percent > 0) ? "+" + percent : +percent;
-				if (wholeNumber)
-					percent = parseFloat(percent).toFixed(0);
-				else
-					percent = parseFloat(percent).toFixed(2);
-				css = (slot % 2 === 0) ? "even" : "odd";
-				B = +(slot.split("slot")[1]);
-				percent = (percent > 0) ? "+" + percent : percent;
-				if (B <= throne_item.quality) {
-					D.push(" <li class='effect " + css + "'> " + percent + "% " + effect[1] + " </li> ");
-				} else {
-					D.push(" <li class='effect disabled " + css + "'> " + percent + "% " + effect[1] + " </li> ");
-				}
-			}
-			catch (e) { }
+		if (throne_item.unknown) {
+			D.push(" <li class='effect'><center>Unknown</center></li> ");
+			D.push(" <li class='effect'><div style='font-size:10px;'><center>If you have one in your Throne Room please click the 'Generate Stats' link below and send the results to the script developer.</center></div></li>");
 		}
+		else {
+			for (slot in throne_item.effects) {
+				try {
+					var N = throne_item.effects[slot];
+					effect = CM.thronestats.effects[N.id];
+					tier = parseInt(N.tier);
+					p = CM.thronestats.tiers[N.id][tier];
+					while (!p && (tier > 0)) { tier--; p = CM.thronestats.tiers[N.id][tier]; } 
+					if (!p) continue; // can't find stats for tier
+					
+					var base = p.base || 0;
+					var level = throne_item.level || 0;
+					var growth = p.growth || 0;
+					if (slot == 'slot6') {  //if it has a slot 6, it automatically has a jewel
+						JewelQuality = throne_item["effects"]['slot6'].quality;
+						GrowthLimit = unsafeWindow.cm.thronestats.jewelGrowthLimit[JewelQuality];
+						if (GrowthLimit <= level) level = GrowthLimit
+					}
+					percent = +(base + ((level * level + level) * growth * 0.5));
+					var wholeNumber = false;
+					if (Math.round(parseFloat(percent)) == parseFloat(percent)) wholeNumber = true;
+					percent = (percent > 0) ? "+" + percent : +percent;
+					if (wholeNumber)
+						percent = parseFloat(percent).toFixed(0);
+					else
+						percent = parseFloat(percent).toFixed(2);
+					css = (slot % 2 === 0) ? "even" : "odd";
+					B = +(slot.split("slot")[1]);
+					percent = (percent > 0) ? "+" + percent : percent;
+					if (B <= throne_item.quality) {
+						D.push(" <li class='effect " + css + "'> " + percent + "% " + effect[1] + " </li> ");
+					} else {
+						D.push(" <li class='effect disabled " + css + "'> " + percent + "% " + effect[1] + " </li> ");
+					}
+				}
+				catch (e) { }
+			}
+		}	
 		D.push(" </ul> ");
 		D.push(" </div> ");
 		D.push(" </ul> ");
@@ -15761,6 +15805,7 @@ Tabs.Whisper = {
 			var sname = /Chat\.whisper\(\&quot\;(.*)\&quot\;\)\;/im.exec(a);
 			if (!sname)	sname = "";
 			else sname = sname[1];
+			if (sname.indexOf(")")>1) sname = sname.substr(0,sname.indexOf(")"));		
 		
 			var stext = /div class=\"tx\">(.*)\<\/div\>/im.exec(a);
 			if (!stext)	stext = "";
