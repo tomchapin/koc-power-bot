@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150320a
+// @version        20150325a
 // @namespace      mat
 // @homepage       https://greasyfork.org/en/scripts/892-koc-power-bot
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150320a';
+var Version = '20150325a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -107,6 +107,9 @@ var Options = {
   srcMaxLevel  : 7,
   wildType     : 1,
   unownedOnly  : true,
+  ownedOnly    : true,
+  mistedWildOnly   : true,
+  srcWildAll       : true,  
   mistedOnly   : true,
   hostileOnly  : false,  
   friendlyOnly : false,  
@@ -8325,7 +8328,10 @@ Tabs.Search = {
       // m+= '<TR><TD class=xtab align=right>Mountain:</td><TD class=xtab><INPUT name=pbfil id=pafilMount type=CHECKBOX '+ (Options.MountOnly?' CHECKED':'') +'\><td></tr>';
       // m+= '<TR><TD class=xtab align=right>Plain:</td><TD class=xtab><INPUT name=pbfil id=pafilPlain type=CHECKBOX '+ (Options.PlainOnly?' CHECKED':'') +'\><td></tr>';
       // m+= '<TR><TD class=xtab align=right>All:</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcAll?' CHECKED':'') +'\><td></tr>';
-      m += '</select></td></tr><TR><TD class=xtab align=right>'+translate("Unowned Only")+':</td><TD class=xtab><INPUT id=pafilUnowned type=CHECKBOX '+ (Options.unownedOnly?' CHECKED':'') +'\><td></tr>';
+      m += '</select></td></tr><TR><TD class=xtab align=right>'+translate("Unowned")+':</td><TD class=xtab><INPUT name=pbfil id=pafilUnowned type=CHECKBOX '+ (Options.unownedOnly?' CHECKED':'') +'\><td></tr>';
+      m+= '<TR><TD class=xtab align=right>'+translate("Misted")+':</td><TD class=xtab><INPUT name=pbfil id=pafilMisted type=CHECKBOX '+ (Options.mistedWildOnly?' CHECKED':'') +'\><td></tr>';
+      m+= '<TR><TD class=xtab align=right>'+translate("Owned")+':</td><TD class=xtab><INPUT name=pbfil id=pafilOwned type=CHECKBOX '+ (Options.ownedOnly?' CHECKED':'') +'\><td></tr>';
+      m+= '<TR><TD class=xtab align=right>'+translate("All")+':</td><TD class=xtab><INPUT name=pbfil id=pafilAll type=CHECKBOX '+ (Options.srcWildAll?' CHECKED':'') +'\><td></tr>';
     }
    if (t.opt.searchType == 1 || t.opt.searchType == 0) {
         m+= '<TR><TD class=xtab align=right>Sort By:</td><TD class=xtab><SELECT id=pafilSortBy>\
@@ -8385,6 +8391,36 @@ Tabs.Search = {
         }, false);
       document.getElementById('pafilUnowned').addEventListener ('change', function (){
         Options.unownedOnly = (document.getElementById('pafilUnowned').checked);
+        if(!Options.unownedOnly){
+            document.getElementById('pafilAll').checked = false;
+            Options.srcWildAll = Options.unownedOnly;
+        }
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+        document.getElementById('pafilMisted').addEventListener ('change', function (){
+        Options.mistedWildOnly = (document.getElementById('pafilMisted').checked);
+        if(!Options.mistedWildOnly){
+            document.getElementById('pafilAll').checked = false;
+            Options.srcWildAll = Options.mistedWildOnly;
+        }
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+        document.getElementById('pafilOwned').addEventListener ('change', function (){
+        Options.ownedOnly = (document.getElementById('pafilOwned').checked);
+        if(!Options.ownedOnly){
+            document.getElementById('pafilAll').checked = false;
+            Options.srcWildAll = Options.ownedOnly;
+        }
+        saveOptions();
+        t.dispMapTable ();
+        }, false);
+        document.getElementById('pafilAll').addEventListener ('change', function (){
+        Options.srcWildAll = (document.getElementById('pafilAll').checked);
+        for(i in document.getElementsByName('pbfil'))
+            document.getElementsByName('pbfil')[i].checked = Options.srcWildAll;
+        Options.unownedOnly=Options.mistedWildOnly=Options.ownedOnly=Options.srcWildAll;
         saveOptions();
         t.dispMapTable ();
         }, false);
@@ -8538,7 +8574,10 @@ Tabs.Search = {
         if (t.opt.searchType==0 || Options.wildType==0
         ||  (Options.wildType==1 && (type==1 || type==2))
         ||  (Options.wildType == type)){
-          if (!Options.unownedOnly || t.mapDat[i][5]===false)
+          if (t.opt.searchType==0 || (Options.unownedOnly && t.mapDat[i][5]===false && t.mapDat[i][9]===false) ||
+             (Options.ownedOnly && t.mapDat[i][5]===true) ||
+			 (Options.mistedWildOnly && t.mapDat[i][9]===true) ||
+             (Options.srcWildAll))
            t.dat.push (t.mapDat[i]);
         }
        }
@@ -8558,7 +8597,12 @@ Tabs.Search = {
       if (t.opt.searchType == 2) {
              m = '<TABLE id=pasrcOutTab class=pbSrchResults cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Loc")+'</td><TD align=right>'+translate("Dist")+'</td><TD>'+translate("Player")+'</td><TD align=right>'+translate("Might")+'</td><TD>'+translate("Alliance")+'</td><TD>'+translate("Online")+'</td><TD></td></tr>';
         } else {
-            m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Location")+'</td><TD style="padding-left: 10px">'+translate("Distance")+'</td><TD style="padding-left: 10px;">'+translate("Lvl")+'</td><TD width=100px> &nbsp; '+translate("Type")+'</td><TD></td><TD>'+translate("Export to Raid")+'</td></tr>';
+			if (t.opt.searchType == 0) {
+				m = '<TABLE id=pasrcOutTab class=pbSrchResults cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Loc")+'</td><TD align=right>'+translate("Dist")+'</td><TD>'+translate("Player")+'</td><TD align=right>'+translate("Might")+'</td><TD>'+translate("Alliance")+'</td><TD>'+translate("Online")+'</td><TD></td></tr>';
+			}
+			else {
+				m = '<TABLE id=pasrcOutTab cellpadding=0 cellspacing=0><TR style="font-weight: bold"><TD>'+translate("Location")+'</td><TD style="padding-left: 10px">'+translate("Distance")+'</td><TD style="padding-left: 10px;">'+translate("Lvl")+'</td><TD width=100px> &nbsp; '+translate("Type")+'</td><TD>'+translate("Status")+'</td></tr>';
+			}		
         }
     }
       var numRows = t.dat.length;
@@ -8593,7 +8637,7 @@ Tabs.Search = {
             }
             } else {
           m += '<TD align=right  valign="top">'+ t.dat[i][2].toFixed(2) +' &nbsp; </td><TD align=right>'+ t.dat[i][4] +'</td><TD> &nbsp; '+ tileNames[ t.dat[i][3]]
-            +'</td><TD  valign="top">'+ ( t.dat[i][5]?( t.dat[i][6]!=0?' <A onclick="pbSearchLookup('+ t.dat[i][6]+')">'+translate("OWNED")+'</a>':'<A onclick="pbSearchScout('+ t.dat[i][0] +','+ t.dat[i][1] +');return false;">'+translate("MISTED")+'</a>'):'') +'</td>';
+            +'</td><TD  valign="top">'+ ( t.dat[i][5]?' <A onclick="pbSearchLookup('+ t.dat[i][6]+')">'+translate("OWNED")+'</a>':( t.dat[i][9]?'<A onclick="pbSearchScout('+ t.dat[i][0] +','+ t.dat[i][1] +');return false;">'+translate("MISTED")+'</a>':'')) +'</td>';
           if (t.opt.searchType == 0) m+= '<TD align=center  valign="top"><A onclick="pbExportToRaid('+ t.dat[i][0]+','+ t.dat[i][1] +')">'+translate("Export")+'</a></td>';
           m+='</tr>';
             }
@@ -8655,7 +8699,10 @@ Tabs.Search = {
    if(t.opt.searchType==1)
       if (t.mapDat[i][3] == Options.wildType || Options.wildType==0)
       if (parseInt(t.mapDat[i][4])>=Options.srcMinLevel && parseInt(t.mapDat[i][4])<=Options.srcMaxLevel)
-      if ((Options.unownedOnly && t.mapDat[i][5] == false) || (!Options.unownedOnly))
+      if ((Options.unownedOnly && t.mapDat[i][5]===false && t.mapDat[i][9]===false) ||
+         (Options.ownedOnly && t.mapDat[i][5]===true) ||
+         (Options.mistedWildOnly && t.mapDat[i][9]===true) ||
+         (Options.srcWildAll))
             bulkScout.push({x:t.mapDat[i][0], y:t.mapDat[i][1], dist:t.mapDat[i][2]});
      if(t.opt.searchType==2)
       if (t.mapDat[i][3] == 7){
@@ -8927,8 +8974,8 @@ Tabs.Search = {
 // TODO: save memory, remove city name ?               
           t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isMisted, map[k].tileCityId, map[k].tileUserId, map[k].cityName, nameU, mightU, aU, aD, uList.data[map[k].tileUserId]?1:0,aID]);
         } else {
-          isOwned = map[k].tileUserId>0 || map[k].misted;
-          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned, (map[k].tileUserId>0? map[k].tileUserId : 0), uList.data[map[k].tileUserId]?1:0,aID]);
+          isOwned = map[k].tileUserId>0;
+          t.mapDat.push ([map[k].xCoord, map[k].yCoord, dist, type, map[k].tileLevel, isOwned, (map[k].tileUserId>0? map[k].tileUserId : 0), uList.data[map[k].tileUserId]?1:0,aID,map[k].misted]);
         }
         ++t.tilesFound;
       }
