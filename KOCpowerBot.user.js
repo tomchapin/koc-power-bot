@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           KOC Power Bot
-// @version        20150325a
+// @version        20150330a
 // @namespace      mat
 // @homepage       https://greasyfork.org/en/scripts/892-koc-power-bot
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -33,7 +33,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150325a';
+var Version = '20150330a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -792,7 +792,7 @@ function kabamStandAlone (){
      if (GlobalOptions.pbWideScreenStyle=="wide") iFrames.style.width = '1520px';
      if (GlobalOptions.pbWideScreenStyle=="ultra") iFrames.style.width = '1900px';
    }
-
+	  
    try{    
       document.getElementById('promo-sidebar').parentNode.removeChild(document.getElementById('promo-sidebar'));
     } catch (e){
@@ -870,6 +870,7 @@ var pbPopUpTopClass = 'pbPopTop';
 var TrainCity = 0;
 var CM = unsafeWindow.cm;
 var FFVersion = getFirefoxVersion();
+var IMGURL = unsafeWindow.stimgUrl+"img/";
 
 function pbStartup (){
   clearTimeout (pbStartupTimer);
@@ -933,8 +934,8 @@ function pbStartup (){
     span.pbTextHostile {color: #800}\
     .pbButCancel {background-color:#a00; font-weight:bold; color:#fff}\
     div.indent25 {padding-left:25px}\
-	.pbttabsdis {background:url("https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/throne/modal/set_active.png") no-repeat center center;outline:0px; margin-left:0px; margin-right:0px; width:22px; height:22px; font-family: georgia,arial,sans-serif;font-size: 12px;color:white; line-height:19px;}\
-	.pbttabs {background:url("https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/throne/modal/set_selected.png") no-repeat center center;outline:0px; margin-left:0px; margin-right:0px; width:22px; height:22px; font-family: georgia,arial,sans-serif;font-size: 12px;color:white; line-height:19px;}\
+	.pbttabsdis {background:url("'+IMGURL+'throne/modal/set_active.png") no-repeat center center;outline:0px; margin-left:0px; margin-right:0px; width:22px; height:22px; font-family: georgia,arial,sans-serif;font-size: 12px;color:white; line-height:19px;}\
+	.pbttabs {background:url("'+IMGURL+'throne/modal/set_selected.png") no-repeat center center;outline:0px; margin-left:0px; margin-right:0px; width:22px; height:22px; font-family: georgia,arial,sans-serif;font-size: 12px;color:white; line-height:19px;}\
 	.craftdesc:hover span.crafttip { display:block; position:absolute; background: #FFFFAA; border: 1px solid #FFAD33; padding: 0.5em 0.5em;}\
 	.craftdesc span.crafttip { display:none;}\
     .pbdivHeader       {transparent;height: 16px;border-bottom:0px solid #000000;font-weight:bold;font-size:11px;opacity:0.75;margin-left:0px;margin-right:0px;margin-top:1px;margin-bottom:0px;padding-top:4px;padding-right:10px;vertical-align:text-top;align:left;background-color:#335577;}\
@@ -1015,8 +1016,8 @@ function pbStartup (){
   killbox();
   CheckRemoveAlert();
   
-  if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
-   document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'https://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>\
+	if(Options.amain) setTimeout(function (){unsafeWindow.citysel_click(document.getElementById('citysel_'+Number(Number(Options.smain)+1)))},1000);
+	document.getElementById('main_engagement_tabs').innerHTML+= '<a class="navTab" onclick=" window.open(\'https://community.kabam.com/forums/forumdisplay.php?4-Kingdoms-of-Camelot\');"><span>Forum</span></a>\
 																<a class="navTab" onclick=" window.open(\'https://kabam.secure.force.com/PKB/KbContactUsForm?language=en_US&game=Kingdoms_of_Camelot&issue=Other_Game_Issues\');"><span>Kabam</span></a>\
 																<a class="navTab" onclick=" window.open(\'https://www.trialpay.com/support/contactus/\');"><span>Trialpay</span></a>';
 
@@ -1028,7 +1029,7 @@ function pbStartup (){
   afkwatcher();
   loadchecker();
   QuickScout();	
-  
+
 	if (smeg) { setTimeout(function () {smeg.init();}, 5000);}
   
 	if (Options.alertConfig.email || AttackOptions.EmailEnabled || Options.crestemail) {
@@ -1353,41 +1354,41 @@ Tabs.farm = {
      }
     m+='</tr></table>';
     
-    var icon_link = 'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/';
+    var icon_link = 'units/';
 	var dude = unsafeWindow.unitnamedesctranslated;
      m += '<DIV id=pbTraderDivD class=pbStat>FARMING TROOPS</div>';
      m += '<TABLE id=pbaddreasignroute width=100% height=0% class=pbTab><TR align="center">';
-        m += '<TR><TD rowspan="2"><img src='+http+icon_link+'unit_1_50.jpg alt='+dude.unt1[0]+'></td>';
+        m += '<TR><TD rowspan="2"><img src='+IMGURL+icon_link+'unit_1_50.jpg alt='+dude.unt1[0]+'></td>';
         m += '<TD>Supply Troop</td>'
-        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_2_50.jpg alt='+dude.unt2[0]+'></td>'
+        m += '<TD rowspan="2"><img src='+IMGURL+icon_link+'unit_2_50.jpg alt='+dude.unt2[0]+'></td>'
         m += '<TD>Militiaman</td>'
-        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_3_50.jpg alt='+dude.unt3[0]+'></td>'
+        m += '<TD rowspan="2"><img src='+IMGURL+icon_link+'unit_3_50.jpg alt='+dude.unt3[0]+'></td>'
         m += '<TD>Scout</td>'
-        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_4_50.jpg alt='+dude.unt4[0]+'></td>'
+        m += '<TD rowspan="2"><img src='+IMGURL+icon_link+'unit_4_50.jpg alt='+dude.unt4[0]+'></td>'
         m += '<TD>Pikeman</td></tr>'
         m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop1  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[1] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop2  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[2] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop3  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[3] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop4  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[4] +'\></td></tr>';
-        m += '<TR><TD rowspan="2"><img src='+http+icon_link+'unit_5_50.jpg alt='+dude.unt5[0]+'></td>';
+        m += '<TR><TD rowspan="2"><img src='+IMGURL+icon_link+'unit_5_50.jpg alt='+dude.unt5[0]+'></td>';
         m += '<TD>Swordsman</td>'
-        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_6_50.jpg alt='+dude.unt6[0]+'></td>'
+        m += '<TD rowspan="2"><img src='+IMGURL+icon_link+'unit_6_50.jpg alt='+dude.unt6[0]+'></td>'
         m += '<TD>Archer</td>'
-        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_7_50.jpg alt='+dude.unt7[0]+'></td>'
+        m += '<TD rowspan="2"><img src='+IMGURL+icon_link+'unit_7_50.jpg alt='+dude.unt7[0]+'></td>'
         m += '<TD>Cavalry</td>'
-        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_8_50.jpg alt='+dude.unt8[0]+'></td>'
+        m += '<TD rowspan="2"><img src='+IMGURL+icon_link+'unit_8_50.jpg alt='+dude.unt8[0]+'></td>'
         m += '<TD>Heavy Cavalry</td></tr>'
         m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop5  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[5] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop6  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[6] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop7  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[7] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop8  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[8] +'\></td></tr>';
-        m += '<TR><TD rowspan="2"><img src='+http+icon_link+'unit_9_50.jpg alt='+dude.unt9[0]+'></td>';
+        m += '<TR><TD rowspan="2"><img src='+IMGURL+icon_link+'unit_9_50.jpg alt='+dude.unt9[0]+'></td>';
         m += '<TD>Supply Wagon</td>'
-        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_10_50.jpg alt='+dude.unt10[0]+'></td>'
+        m += '<TD rowspan="2"><img src='+IMGURL+icon_link+'unit_10_50.jpg alt='+dude.unt10[0]+'></td>'
         m += '<TD>Ballista</td>'
-        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_11_50.jpg alt='+dude.unt11[0]+'></td>'
+        m += '<TD rowspan="2"><img src='+IMGURL+icon_link+'unit_11_50.jpg alt='+dude.unt11[0]+'></td>'
         m += '<TD>Battering Ram</td>'
-        m += '<TD rowspan="2"><img src='+http+icon_link+'unit_12_50.jpg alt='+dude.unt12[0]+'></td>'
+        m += '<TD rowspan="2"><img src='+IMGURL+icon_link+'unit_12_50.jpg alt='+dude.unt12[0]+'></td>'
         m += '<TD>Catapult</td></tr>'
         m += '<TR><TD  class=pbTroopOpt><INPUT id=FarmTroop9  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[9] +'\></td>';
         m += '<TD  class=pbTroopOpt><INPUT id=FarmTroop10  type=text size=10 maxlength=10 value='+ FarmOptions.Troops[10] +'\></td>';
@@ -2544,7 +2545,7 @@ Tabs.Throne = {
             if (parseInt(throne_item.Id) == 30230 || parseInt(throne_item.Id) == 30240 || parseInt(throne_item.Id) == 30250) { throne_item.Name = throne_item.Name + ' ('+unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(throne_item.Faction)].toLowerCase()+')';};
             if (parseInt(throne_item.Id) == 30231 || parseInt(throne_item.Id) == 30241 || parseInt(throne_item.Id) == 30251) { throne_item.Name = throne_item.Name + ' ('+unsafeWindow.g_js_strings.commonstr[unsafeWindow.cm.CHAMPION.getFactionClasses(throne_item.Faction)].toLowerCase()+')';};
         }
-       
+		
         for (i in itemTypes) {
             itemLists[i] = new Array;
         }
@@ -4077,9 +4078,9 @@ Tabs.Throne = {
 		var id = 0;
 		var tier = 0;
 		var Current = 0;
-		var icon = '' + http + 'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_' + y.type + '_normal_1_' + y.quality + '.png';
+		var icon = IMGURL+'throne/icons/30/' + y.faction + '/' + y.faction + '_' + y.type + '_normal_1_' + y.quality + '.png';
 		if (y["unique"] > 0)
-			var icon = '' + http + 'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/throne/icons/30/' + y.faction + '/' + y.faction + '_' + y.type + '_unique_normal_' + y.unique + '.png';
+			var icon = IMGURL+'throne/icons/30/' + y.faction + '/' + y.faction + '_' + y.type + '_unique_normal_' + y.unique + '.png';
 		if (y.isEquipped) m = '<TABLE width=80% height=0% align="center" class=ThroneEQ  ondblclick="postInfo(' + z + ')" style="background: transparent url(' + icon + ') bottom right no-repeat; background-color:#FFFFE3;">';
 		else m = '<TABLE width=80% height=0% align="center" class=Throne ondblclick="postInfo(' + z + ')" style="background: transparent url(' + icon + ') bottom right no-repeat; background-color:#FFFFE3;">';
 		switch (parseInt(y["quality"])) {
@@ -5210,11 +5211,11 @@ Complex loop that browsers can't handle =/. replaced with multiple loops above.
 		D.push(" <div class='description'> ");
 		var uniquestyle = "";
 		if (throne_item.unique > 29000) {
-			uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/'+throne_item.faction+'_'+throne_item.type+'_unique_'+throne_item.unique + '.png"); top left no-repeat; background-size: 70px 70px;';
-			if (throne_item.unique == 30262 || throne_item.unique == 30264 || throne_item.unique == 30266) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/christmas_advisor_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
-			if (throne_item.unique == 30261 || throne_item.unique == 30263 || throne_item.unique == 30265) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/christmas_candelabrum_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
-			if (throne_item.unique == 30230 || throne_item.unique == 30240 || throne_item.unique == 30250) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/halloween_table_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
-			if (throne_item.unique == 30231 || throne_item.unique == 30241 || throne_item.unique == 30251) { uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/throne/icons/70/halloween_chair_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
+			uniquestyle = 'background:transparent url("'+IMGURL+'throne/icons/70/'+throne_item.faction+'_'+throne_item.type+'_unique_'+throne_item.unique + '.png"); top left no-repeat; background-size: 70px 70px;';
+			if (throne_item.unique == 30262 || throne_item.unique == 30264 || throne_item.unique == 30266) { uniquestyle = 'background:transparent url("'+IMGURL+'throne/icons/70/christmas_advisor_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
+			if (throne_item.unique == 30261 || throne_item.unique == 30263 || throne_item.unique == 30265) { uniquestyle = 'background:transparent url("'+IMGURL+'throne/icons/70/christmas_candelabrum_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
+			if (throne_item.unique == 30230 || throne_item.unique == 30240 || throne_item.unique == 30250) { uniquestyle = 'background:transparent url("'+IMGURL+'throne/icons/70/halloween_table_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
+			if (throne_item.unique == 30231 || throne_item.unique == 30241 || throne_item.unique == 30251) { uniquestyle = 'background:transparent url("'+IMGURL+'throne/icons/70/halloween_chair_normal_1.png"); top left no-repeat; background-size: 70px 70px;';};
 		}
 		D.push("<div class='portrait " + throne_item.faction + " " + throne_item.type + "' style='"+uniquestyle+"'> </div> ");
 		D.push("<ul>");
@@ -5517,158 +5518,158 @@ Tabs.tower = {
 			m+= '<TD><CENTER><INPUT id=toweractive_'+cityId+' name='+cityId+' type=checkbox '+(Options.alertConfig.towercityactive[cityId]?'CHECKED ':'')+'"></CENTER></TD>';
 		};
 		m += '</tr><TR align=center><td>City<br>Text</td>';
-			for (var cityId in Cities.byID) {
-				m+= '<TD><CENTER><INPUT id=towertext_'+cityId+' type=text style="width: 80px;" name='+cityId+' value="'+(Options.alertConfig.towercitytext[cityId]?Options.alertConfig.towercitytext[cityId]:"")+'"></CENTER></TD>';
-			};
-			m += '</tr></table><BR><DIV><CENTER><INPUT id=pboldattacks type=submit value="'+unsafeWindow.g_js_strings.commonstr.post+' '+unsafeWindow.g_js_strings.ImpendingAttacks.incoming+' '+unsafeWindow.g_js_strings.commonstr.totx+' '+unsafeWindow.g_js_strings.commonstr.chat+'"/>&nbsp;<INPUT id=pbSoundStop type=submit value="'+translate("Stop Sound Alert")+'">&nbsp;<INPUT type=submit value="'+translate("Play Sound Alert Now")+'" id=pbPlayNow></center></div><DIV id=pbSwfPlayer></div>';
-			m += '<BR><DIV class=pbStat>'+translate("SETUP")+'</div><TABLE class=pbTab>';
-			m += '<TR><td align=center>&nbsp;</td><TD align=left><b>'+translate("Minimum number of troops to trigger tower options")+':&nbsp;<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \></b>&nbsp;<span style="color:#800; font-weight:bold"><sup>*Controls All Tower Options</sup></span></td></tr>';
-			m += '<TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
+		for (var cityId in Cities.byID) {
+			m+= '<TD><CENTER><INPUT id=towertext_'+cityId+' type=text style="width: 80px;" name='+cityId+' value="'+(Options.alertConfig.towercitytext[cityId]?Options.alertConfig.towercitytext[cityId]:"")+'"></CENTER></TD>';
+		};
+		m += '</tr></table><BR><DIV><CENTER><INPUT id=pboldattacks type=submit value="'+unsafeWindow.g_js_strings.commonstr.post+' '+unsafeWindow.g_js_strings.ImpendingAttacks.incoming+' '+unsafeWindow.g_js_strings.commonstr.totx+' '+unsafeWindow.g_js_strings.commonstr.chat+'"/>&nbsp;<INPUT id=pbSoundStop type=submit value="'+translate("Stop Sound Alert")+'">&nbsp;<INPUT type=submit value="'+translate("Play Sound Alert Now")+'" id=pbPlayNow></center></div><DIV id=pbSwfPlayer></div>';
+		m += '<BR><DIV class=pbStat>'+translate("SETUP")+'</div><TABLE class=pbTab>';
+		m += '<TR><td align=center>&nbsp;</td><TD align=left><b>'+translate("Minimum number of troops to trigger tower options")+':&nbsp;<INPUT id=pbalertTroops type=text size=7 value="'+ Options.alertConfig.minTroops +'" \></b>&nbsp;<span style="color:#800; font-weight:bold"><sup>*Controls All Tower Options</sup></span></td></tr>';
+		m += '<TR><TD><INPUT id=pbalertEnable type=checkbox '+ (Options.alertConfig.aChat?'CHECKED ':'') +'/></td><TD>'+translate("Automatically post incoming attacks to alliance chat")+'.</td></tr>\
 				<TR><td align=center>&nbsp;</td><TD><INPUT id=pbalertWhisper type=checkbox '+ (Options.alertConfig.whisper?'CHECKED ':'') +'/>&nbsp;'+translate("Whisper yourself instead, if less than")+'&nbsp;<INPUT id=pbwhisperTroops type=text size=7 value="'+ Options.alertConfig.whisperTroops +'" \> incoming troops.</td></tr>\
-					<TR><TD>&nbsp;</td><TD><TABLE cellpadding=0 cellspacing=0>\
-					<TR><TD colspan=6>'+translate("Message Prefix")+':&nbsp;<INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td><tr>\
-					<TR><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td><TD>'+translate("Alert on scouting")+'&nbsp;&nbsp;</td>\
-					<TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td><TD>'+translate("Alert on wild attack")+'&nbsp;&nbsp;</td>\
-					<TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td><TD>'+translate("Display defend status")+'&nbsp;&nbsp;</td>\
-					</table></td></tr>';
+				<TR><TD>&nbsp;</td><TD><TABLE cellpadding=0 cellspacing=0>\
+				<TR><TD colspan=6>'+translate("Message Prefix")+':&nbsp;<INPUT id=pbalertPrefix type=text size=60 maxlength=120 value="'+ Options.alertConfig.aPrefix +'" \></td><tr>\
+				<TR><TD><INPUT id=pbalertScout type=checkbox '+ (Options.alertConfig.scouting?'CHECKED ':'') +'/></td><TD>'+translate("Alert on scouting")+'&nbsp;&nbsp;</td>\
+				<TD><INPUT id=pbalertWild type=checkbox '+ (Options.alertConfig.wilds?'CHECKED ':'') +'/></td><TD>'+translate("Alert on wild attack")+'&nbsp;&nbsp;</td>\
+				<TD><INPUT id=pbalertDefend type=checkbox '+ (Options.alertConfig.defend?'CHECKED ':'') +'/></td><TD>'+translate("Display defend status")+'&nbsp;&nbsp;</td>\
+				</table></td></tr>';
 		m += '<TR><TD><INPUT id=pbalertemail type=checkbox '+ (Options.alertConfig.email?'CHECKED ':'') +'/></td><TD>'+translate("Email on incoming attack")+'</td></tr>';
-			m += '</table>';
-			m += '<BR><DIV class=pbStat>'+translate("Actions")+'</div><TABLE class=pbTab>\
-					<TR><TD><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><td>'+translate("Stop raids on impending")+'</td></tr>\
-					<TR><TD><INPUT id=pbalerttoff type=checkbox '+ (Options.alertConfig.alertTRtoff?'CHECKED ':'') +'/></td><td>'+translate("Stop auto outgoing marches on impending")+'</td></tr>\
-					<TR><TD><INPUT id=pbalertTRAFK type=checkbox '+ (Options.alertConfig.AFK?'CHECKED ':'') +'/></td><td>Only do the following when AFK... (untick this to always do these actions on impending)</td></tr>\
-					<TR><TD>&nbsp;</td><TD><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/>&nbsp;'+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=2 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending")+'</td></tr>\
-					<TR><TD>&nbsp;</td><TD><INPUT id=pbalertguard type=checkbox '+ (Options.alertConfig.guardian?'CHECKED ':'') +'/>&nbsp;'+translate("Toggle to wood guardian on impending")+'</td></tr>\
-					<TR><TD><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Revert TR, Guardian, and Marches back after: ")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>';
-			
-			m += '</table>';
+		m += '</table>';
+		m += '<BR><DIV class=pbStat>'+translate("Actions")+'</div><TABLE class=pbTab>\
+				<TR><TD><INPUT id=pbalertraid type=checkbox '+ (Options.alertConfig.raid?'CHECKED':'') +'/></td><td>'+translate("Stop raids on impending")+'</td></tr>\
+				<TR><TD><INPUT id=pbalerttoff type=checkbox '+ (Options.alertConfig.alertTRtoff?'CHECKED ':'') +'/></td><td>'+translate("Stop auto outgoing marches on impending")+'</td></tr>\
+				<TR><TD><INPUT id=pbalertTRAFK type=checkbox '+ (Options.alertConfig.AFK?'CHECKED ':'') +'/></td><td>Only do the following when AFK... (untick this to always do these actions on impending)</td></tr>\
+				<TR><TD>&nbsp;</td><TD><INPUT id=pbalertTR type=checkbox '+ (Options.alertConfig.alertTR?'CHECKED ':'') +'/>&nbsp;'+translate("Toggle to TR set ")+' <INPUT id=pbalertTRset type=text size=2 maxlength=2 value="'+ Options.alertConfig.alertTRset +'"> '+translate("on impending")+'</td></tr>\
+				<TR><TD>&nbsp;</td><TD><INPUT id=pbalertguard type=checkbox '+ (Options.alertConfig.guardian?'CHECKED ':'') +'/>&nbsp;'+translate("Toggle to wood guardian on impending")+'</td></tr>\
+				<TR><TD><INPUT id=pbalertTR2 type=checkbox '+ (Options.alertConfig.alertTR2?'CHECKED ':'') +'/></td><TD> '+translate("Revert TR, Guardian, and Marches back after: ")+' <INPUT id=pbalertTRsetmin type=text size=3 maxlength=3 value="'+ Options.alertConfig.alertTRsetwaittime +'"> '+translate("minutes without incoming attack")+'</td></tr>';
+		
+		m += '</table>';
 		m += '<div style="display:none"><BR><DIV class=pbStat>'+translate("Text Messaging Options")+'</div><TABLE class=pbTab>\
-					<tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
-					<td align=left>'+translate("Text message incoming attack to")+': <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-					&nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
-					&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold"><sup>*'+translate("Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>\
-					<TD align=left>'+translate("Country")+': <select id="pbfrmcountry">';
-			for (var i in t.Providers) {
-				var ret=m.indexOf(t.Providers[i].country);
-				if (ret==-1) {
-					if(t.Providers[Options.celltext.provider]){
-						if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
-							m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
-						} else {
-							m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
-						}
+				<tr><td align=left><INPUT id=pbcellenable type=checkbox '+ (Options.celltext.atext?'CHECKED ':'') +'/></td>\
+				<td align=left>'+translate("Text message incoming attack to")+': <INPUT id=pbnum1 type=text size=4 maxlength=4 value="'+ Options.celltext.num1 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
+				&nbsp;<INPUT id=pbnum2 type=text size=3 maxlength=3 value="'+ Options.celltext.num2 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\>\
+				&nbsp;<INPUT id=pbnum3 type=text size=4 maxlength=4 value="'+ Options.celltext.num3 +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <span style="color:#800; font-weight:bold"><sup>*'+translate("Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td>\
+				<TD align=left>'+translate("Country")+': <select id="pbfrmcountry">';
+		for (var i in t.Providers) {
+			var ret=m.indexOf(t.Providers[i].country);
+			if (ret==-1) {
+				if(t.Providers[Options.celltext.provider]){
+					if (t.Providers[i].country==t.Providers[Options.celltext.provider].country) {
+						m += '<option value="'+t.Providers[i].country+'" selected="selected">'+t.Providers[i].country+'</option>'; // Load Previous Provider Selection
 					} else {
 						m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
 					}
-				}
-			}
-    
-			m += '</select>\
-			<select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--'+translate("Provider")+'--</option>';
-			for (var i in t.Providers) {
-				if(t.Providers[Options.celltext.provider]){
-					if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
-						if(Options.celltext.provider == i)
-							m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
-						else {
-							m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
-						}
 				} else {
-					m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+					m += '<option value="'+t.Providers[i].country+'">'+t.Providers[i].country+'</option>';
 				}
 			}
-			m += '</select> <FONT COLOR=RED>REQUIRED </FONT> PIN:<INPUT id=pbcellpin type=text size=6 maxlength=5 value="'+ (GlobalOptions.cellpin?GlobalOptions.cellpin:'') +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <INPUT id=pbgetpin type=submit value="'+translate("GET PIN CODE")+'" ></td></tr>';
-			m += '<tr><td align=left><INPUT id=pbcellextended type=checkbox '+ (Options.celltext.extended?'CHECKED ':'') +'/></td>\
+		}
+   
+		m += '</select>\
+			<select id="pbfrmprovider" '+(Options.celltext.provider==0?'DISABLED':'')+'><option value=0 >--'+translate("Provider")+'--</option>';
+		for (var i in t.Providers) {
+			if(t.Providers[Options.celltext.provider]){
+				if(t.Providers[i].country == t.Providers[Options.celltext.provider].country)
+					if(Options.celltext.provider == i)
+						m += '<option value="'+i+'" selected="selected">'+t.Providers[i].provider+'</option>'; // Load Previous Provider Selection
+					else {
+						m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+					}
+			} else {
+				m += '<option value="'+i+'">'+t.Providers[i].provider+'</option>';
+			}
+		}
+		m += '</select> <FONT COLOR=RED>REQUIRED </FONT> PIN:<INPUT id=pbcellpin type=text size=6 maxlength=5 value="'+ (GlobalOptions.cellpin?GlobalOptions.cellpin:'') +'"  '+(Options.celltext.provider==0?'DISABLED':'')+'\> <INPUT id=pbgetpin type=submit value="'+translate("GET PIN CODE")+'" ></td></tr>';
+		m += '<tr><td align=left><INPUT id=pbcellextended type=checkbox '+ (Options.celltext.extended?'CHECKED ':'') +'/></td>\
 			<td align=left>'+translate("Send troop info in text")+'<span style="color:#800; font-weight:bold"><sup>*'+translate("Multiple text messages per attack. Standard text messaging rates apply")+'</sup></span></td></tr><tr><td></td></table></div>';
-					
-			m += '<BR><DIV class=pbStat>'+translate("Sound Alert Options")+'</div><TABLE class=pbTab>\
-					<TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
-					<TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
-					<TR><TD align=right>'+translate("Sound file")+': &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=40 maxlength=1000 value="'+ Options.alertSound.soundUrl +'" \>\
-					&nbsp; </td><TD><INPUT id=pbSoundLoad type=submit value='+translate("Load")+' ><INPUT id=pbSoundDefault type=submit value='+translate("Default")+' ></td></tr>\
-					<TR><TD align=right>'+translate("Volume")+': &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td><TD align=center><SPAN id=pbLoadStat>xx</span></td></tr>\
-					<TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> '+translate("Repeat every")+' <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> '+translate("minutes")+'</td></tr>\
-					<TR><TD></td><TD>Play for <INPUT id=pbSoundLength type=text size=3 maxlength=5 value="'+ Options.alertSound.playLength +'"> '+translate("seconds")+'</td></tr>\
-					</table></div></td></tr>\
-					</table><BR>';
-			t.myDiv.innerHTML = m;
+				
+		m += '<BR><DIV class=pbStat>'+translate("Sound Alert Options")+'</div><TABLE class=pbTab>\
+				<TR><TD><INPUT id=pbSoundEnable type=checkbox '+ (Options.alertSound.enabled?'CHECKED ':'') +'/></td><TD>'+translate("Play sound on incoming attack/scout")+'</td></tr>\
+				<TR><TD></td><TD><DIV id=pbLoadingSwf>'+translate("Loading SWF player")+'</div><DIV style="display:none" id=pbSoundOpts><TABLE cellpadding=0 cellspacing=0>\
+				<TR><TD align=right>'+translate("Sound file")+': &nbsp; </td><TD><INPUT id=pbsoundFile type=text size=40 maxlength=1000 value="'+ Options.alertSound.soundUrl +'" \>\
+				&nbsp; </td><TD><INPUT id=pbSoundLoad type=submit value='+translate("Load")+' ><INPUT id=pbSoundDefault type=submit value='+translate("Default")+' ></td></tr>\
+				<TR><TD align=right>'+translate("Volume")+': &nbsp; </td><TD><TABLE cellpadding=0 cellspacing=0 class=pbTab><TR valign=middle><TD><SPAN id=pbVolSlider></span></td><TD width=15></td><TD align=right id=pbVolOut>0</td></td></table></td><TD align=center><SPAN id=pbLoadStat>xx</span></td></tr>\
+				<TR><TD align=right><INPUT id=pbSoundRepeat type=checkbox '+ (Options.alertSound.repeat?'CHECKED ':'') +'/></td><TD> '+translate("Repeat every")+' <INPUT id=pbSoundEvery type=text size=2 maxlength=5 value="'+ Options.alertSound.repeatDelay +'"> '+translate("minutes")+'</td></tr>\
+				<TR><TD></td><TD>Play for <INPUT id=pbSoundLength type=text size=3 maxlength=5 value="'+ Options.alertSound.playLength +'"> '+translate("seconds")+'</td></tr>\
+				</table></div></td></tr>\
+				</table><BR>';
+		t.myDiv.innerHTML = m;
 //   		t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:36, width:340}, t.e_swfLoaded, 'debug=y');
-			t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n');
-			//t.mss.swfDebug = function (m){ logit ('SWF: '+ m)};
-			t.mss.swfPlayComplete = t.e_soundFinished;
-			t.mss.swfLoadComplete = t.e_soundFileLoaded;
-			unsafeWindow.matSimpleSound01 = t.mss;   // let swf find it
-			t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
-			t.volSlider.setChangeListener(t.e_volChanged);
-			document.getElementById('pbcellpin').addEventListener ('change', function(){
-				GlobalOptions.cellpin = this.value;
-				GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
-			},false);  
-			document.getElementById('pbPlayNow').addEventListener ('click', function (){t.playSound(false)}, false);
-//			document.getElementById('pbathemail').addEventListener ('click', t.e_authenticate, false);
-			document.getElementById('pbSoundStop').addEventListener ('click', t.stopSoundAlerts, false);
-			document.getElementById('pbSoundRepeat').addEventListener ('change', function (e){Options.alertSound.repeat = e.target.checked}, false);
-			document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
-			document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
-			document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
-			document.getElementById('pbcellenable').addEventListener ('change', function (e){Options.celltext.atext = e.target.checked;}, false);
-			document.getElementById('pbcellextended').addEventListener ('change', function (e){Options.celltext.extended = e.target.checked;}, false);
-			document.getElementById('pbSoundStop').disabled = true;
-			document.getElementById('pbalertemail').addEventListener ('change', t.e_alertOptChanged, false);
+		t.mss = new CmatSimpleSound(SWF_PLAYER_URL, null, {height:0, width:0}, t.e_swfLoaded, 'debug=n');
+		//t.mss.swfDebug = function (m){ logit ('SWF: '+ m)};
+		t.mss.swfPlayComplete = t.e_soundFinished;
+		t.mss.swfLoadComplete = t.e_soundFileLoaded;
+		unsafeWindow.matSimpleSound01 = t.mss;   // let swf find it
+		t.volSlider = new SliderBar (document.getElementById('pbVolSlider'), 200, 21, 0);
+		t.volSlider.setChangeListener(t.e_volChanged);
+		document.getElementById('pbcellpin').addEventListener ('change', function(){
+			GlobalOptions.cellpin = this.value;
+			GM_setValue ('Options_??', JSON2.stringify(GlobalOptions));
+		},false);  
+		document.getElementById('pbPlayNow').addEventListener ('click', function (){t.playSound(false)}, false);
+//		document.getElementById('pbathemail').addEventListener ('click', t.e_authenticate, false);
+		document.getElementById('pbSoundStop').addEventListener ('click', t.stopSoundAlerts, false);
+		document.getElementById('pbSoundRepeat').addEventListener ('change', function (e){Options.alertSound.repeat = e.target.checked}, false);
+		document.getElementById('pbSoundEvery').addEventListener ('change', function (e){Options.alertSound.repeatDelay = e.target.value}, false);
+		document.getElementById('pbSoundLength').addEventListener ('change', function (e){Options.alertSound.playLength = e.target.value}, false);
+		document.getElementById('pbSoundEnable').addEventListener ('change', function (e){Options.alertSound.enabled = e.target.checked}, false);
+		document.getElementById('pbcellenable').addEventListener ('change', function (e){Options.celltext.atext = e.target.checked;}, false);
+		document.getElementById('pbcellextended').addEventListener ('change', function (e){Options.celltext.extended = e.target.checked;}, false);
+		document.getElementById('pbSoundStop').disabled = true;
+		document.getElementById('pbalertemail').addEventListener ('change', t.e_alertOptChanged, false);
 /*		document.getElementById('pbKoctomail').addEventListener('change', function () {
 			if (document.getElementById('pbKoctomail').checked) { Options.alertConfig.emailapp=1; saveOptions(); }
 		}, false);
 		document.getElementById('pbKocalert').addEventListener('change', function () {
 			if (document.getElementById('pbKocalert').checked) { Options.alertConfig.emailapp=0; saveOptions(); }
 		}, false);*/
-			document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertScout').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertDefend').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertWhisper').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbwhisperTroops').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
-			document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
-			document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
-			document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
-			document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
-			document.getElementById('pbalertraid').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertTR').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertTRset').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertguard').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertTR2').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalerttoff').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertTRsetmin').addEventListener ('change', t.e_alertOptChanged, false);
-			document.getElementById('pbalertTRAFK').addEventListener ('click', t.e_alertOptChanged, false);
-			document.getElementById('pboldattacks').addEventListener ('click', t.oldIncoming, false);
-			document.getElementById('pbgetpin').addEventListener ('click', t.getpinauth, false);
-			document.getElementById('pbsoundFile').addEventListener ('change', function (){
-				Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
-				t.loadUrl (Options.alertSound.soundUrl);
-			}, false);
-			document.getElementById('pbSoundDefault').addEventListener ('click', function (){
-			document.getElementById('pbsoundFile').value = DEFAULT_ALERT_SOUND_URL;
-				Options.alertSound.soundUrl = DEFAULT_ALERT_SOUND_URL;
-				t.loadUrl (DEFAULT_ALERT_SOUND_URL);
-			}, false);
-			for (var cityId in Cities.byID){
-				document.getElementById ('toweractive_'+ cityId).addEventListener('click',function(e){Options.alertConfig.towercityactive[e.target.name] = e.target.checked;saveOptions();},false);
-				document.getElementById ('towertext_'+ cityId).addEventListener('change',function(e){Options.alertConfig.towercitytext[e.target.name] = e.target.value;saveOptions();},false);
-    	
-				var but = document.getElementById ('pbtabut_'+ cityId);
-				addListener (but, cityId);
-				t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
-				t.displayDefMode (cityId);
-				var btnNameT = 'pbattackqueue_' + cityId;
-				addTowerEventListener(cityId, btnNameT);
-			}
-			function addListener (but, i){
-				but.addEventListener ('click', function (){t.butToggleDefMode(i)}, false);
-			}
-			function addTowerEventListener(cityId, name){
-				document.getElementById(name).addEventListener('click', function(){
+		document.getElementById('pbalertEnable').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertPrefix').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertScout').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertWild').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertDefend').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertTroops').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertWhisper').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbwhisperTroops').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbfrmcountry').addEventListener ('change', t.setCountry, false);
+		document.getElementById('pbfrmprovider').addEventListener ('change', t.setProvider, false);
+		document.getElementById('pbnum1').addEventListener ('change', t.phonenum, false);
+		document.getElementById('pbnum2').addEventListener ('change', t.phonenum, false);
+		document.getElementById('pbnum3').addEventListener ('change', t.phonenum, false);
+		document.getElementById('pbalertraid').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertTR').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertTRset').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertguard').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertTR2').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalerttoff').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertTRsetmin').addEventListener ('change', t.e_alertOptChanged, false);
+		document.getElementById('pbalertTRAFK').addEventListener ('click', t.e_alertOptChanged, false);
+		document.getElementById('pboldattacks').addEventListener ('click', t.oldIncoming, false);
+		document.getElementById('pbgetpin').addEventListener ('click', t.getpinauth, false);
+		document.getElementById('pbsoundFile').addEventListener ('change', function (){
+			Options.alertSound.soundUrl = document.getElementById('pbsoundFile').value;
+			t.loadUrl (Options.alertSound.soundUrl);
+		}, false);
+		document.getElementById('pbSoundDefault').addEventListener ('click', function (){
+		document.getElementById('pbsoundFile').value = DEFAULT_ALERT_SOUND_URL;
+			Options.alertSound.soundUrl = DEFAULT_ALERT_SOUND_URL;
+			t.loadUrl (DEFAULT_ALERT_SOUND_URL);
+		}, false);
+		for (var cityId in Cities.byID){
+			document.getElementById ('toweractive_'+ cityId).addEventListener('click',function(e){Options.alertConfig.towercityactive[e.target.name] = e.target.checked;saveOptions();},false);
+			document.getElementById ('towertext_'+ cityId).addEventListener('change',function(e){Options.alertConfig.towercitytext[e.target.name] = e.target.value;saveOptions();},false);
+   	
+			var but = document.getElementById ('pbtabut_'+ cityId);
+			addListener (but, cityId);
+			t.defMode[cityId] =  parseInt(Seed.citystats["city" + cityId].gate);
+			t.displayDefMode (cityId);
+			var btnNameT = 'pbattackqueue_' + cityId;
+			addTowerEventListener(cityId, btnNameT);
+		}
+		function addListener (but, i){
+			but.addEventListener ('click', function (){t.butToggleDefMode(i)}, false);
+		}
+		function addTowerEventListener(cityId, name){
+			document.getElementById(name).addEventListener('click', function(){
 				t.showTowerIncoming(cityId);
 			}, false);
 		}    
@@ -6352,7 +6353,7 @@ Tabs.tower = {
 			var uid = parseInt(k.substr (1));
 			var UNTCOUNT = String(String(m.unts[k]).split("")).replace(/,/g,fchar)// forced on, sucks that some people will get the funny A, but it's better than missing values of 80085 incoming troops
 			msg += '|'+UNTCOUNT +' '+ unsafeWindow.unitcost['unt'+uid][0] +', ';
-			email += '<BR><img src="https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/units/unit_'+k.slice(1)+'_30.jpg?6545"> '+m.unts[k]+ ' '+ unsafeWindow.unitcost['unt'+uid][0];
+			email += '<BR><img src="'+IMGURL+'units/unit_'+k.slice(1)+'_30.jpg?6545"> '+m.unts[k]+ ' '+ unsafeWindow.unitcost['unt'+uid][0];
 		}
 		if(m.reportId) {
 			setTimeout(function(){delete Seed.queue_atkinc['m'+m.reportId]},15000);//cleanup for fake tower attack
@@ -6702,11 +6703,11 @@ Tabs.tower = {
 						s3 += '<TABLE cellspacing=0 width=100%><TR>';
                         
 						if (t.towerMarches[k].atkType == 'attacked') {
-							s3 += '<TD rowspan=2 width=5%><B><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_4_30.jpg?6545"></b></td>';
+							s3 += '<TD rowspan=2 width=5%><B><img src="'+IMGURL+'units/unit_4_30.jpg?6545"></b></td>';
 						}
 						else
 							if (t.towerMarches[k].atkType == 'scouted') {
-								s3 += '<TD rowspan=2 width=5%><B><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_3_30.jpg?6545"></b></td>';
+								s3 += '<TD rowspan=2 width=5%><B><img src="'+IMGURL+'units/unit_3_30.jpg?6545"></b></td>';
 							}
 						s3 += '<TD width=15%><B>'+translate("Location")+'</b></td>';
 						s3 += '<TD width=15%><B>'+translate("Name")+'</b></td>';
@@ -7862,9 +7863,9 @@ Tabs.build = {
         row.vAlign = 'top';
         row.insertCell(0).innerHTML = queueId;
         if (buildingMode == "destruct") {
-            row.insertCell(1).innerHTML = '<img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/bonus_att.png">';
+            row.insertCell(1).innerHTML = '<img src="'+IMGURL+'bonus_att.png">';
         } else {
-            row.insertCell(1).innerHTML = '<img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/bonus_prod.png">';
+            row.insertCell(1).innerHTML = '<img src="'+IMGURL+'bonus_prod.png">';
         }
         row.insertCell(2).innerHTML = unsafeWindow.buildingcost['bdg' + buildingType][0];
         row.insertCell(3).innerHTML = timestr(buildingTime);
@@ -8524,7 +8525,7 @@ Tabs.Search = {
     
     document.getElementById('pbAhideShow').addEventListener ('click', t.hideShowClicked, false);
   },
-
+  
   hideShowClicked : function (){
     var div = document.getElementById('padivOutOpts');
     if (div.style.display == 'none'){
@@ -8578,7 +8579,7 @@ Tabs.Search = {
              (Options.ownedOnly && t.mapDat[i][5]===true) ||
 			 (Options.mistedWildOnly && t.mapDat[i][9]===true) ||
              (Options.srcWildAll))
-           t.dat.push (t.mapDat[i]);
+				t.dat.push (t.mapDat[i]);
         }
        }
       }
@@ -9062,7 +9063,7 @@ Tabs.Search = {
 				rowcounter = 1;
 			}
 			
-			m += '<td><table class=pbTab><tr><td rowspan=2><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_'+i+'_50.jpg?6545"></td><td>'+ addCommas(Seed.units['city'+cityId]['unt'+i]) +'</td></tr><tr><td><INPUT id=Unit'+i+' type=text size=6 maxlength=6 value="0"></td></tr></table></td>';
+			m += '<td><table class=pbTab><tr><td rowspan=2><img src="'+IMGURL+'units/unit_'+i+'_50.jpg?6545"></td><td>'+ addCommas(Seed.units['city'+cityId]['unt'+i]) +'</td></tr><tr><td><INPUT id=Unit'+i+' type=text size=6 maxlength=6 value="0"></td></tr></table></td>';
 		}
       m += '</tr></table>';
       
@@ -9788,7 +9789,7 @@ Tabs.transport = {
         m += '<TD width=50px><INPUT id=FillInMax type=submit value="<----"></td>';
         m += '<TD id=Calc colspan=3></td></tr>';
         m += '<TABLE id=pbaddtraderoute height=0% class=pbTab><TR align="center">';
-        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png" alt="Food"></td>';
+        m += '<TD width=5%><img src="'+IMGURL+'food_30.png" alt="Food"></td>';
         m += '<TD id=TransRec1 align=right width=110px></td>';
         m += '<TD id=HaveRec1 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipFood type=checkbox unchecked=true\></td>';
@@ -9796,7 +9797,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountFood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxFood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png" alt="Wood"></td>';
+        m += '<TD width=5%><img src="'+IMGURL+'wood_30.png" alt="Wood"></td>';
         m += '<TD id=TransRec2 align=right width=110px></td>';
         m += '<TD id=HaveRec2 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipWood type=checkbox unchecked=true\></td>';
@@ -9804,7 +9805,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountWood type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxWood type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png" alt="Stone"></td>';
+        m += '<TD width=5%><img src="'+IMGURL+'stone_30.png" alt="Stone"></td>';
         m += '<TD id=TransRec3 align=right width=110px></td>';
         m += '<TD id=HaveRec3 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipStone type=checkbox unchecked=true\></td>';
@@ -9812,7 +9813,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountStone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxStone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png" alt="Iron"></td>';
+        m += '<TD width=5%><img src="'+IMGURL+'iron_30.png" alt="Iron"></td>';
         m += '<TD id=TransRec4 align=right width=110px></td>';
         m += '<TD id=HaveRec4 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipOre type=checkbox unchecked=true\></td>';
@@ -9820,7 +9821,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountOre type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxOre type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png" alt="Aether"></td>';
+        m += '<TD width=5%><img src="'+IMGURL+'aetherstone_30.png" alt="Aether"></td>';
         m += '<TD id=TransRec5 align=right width=110px></td>';
         m += '<TD id=HaveRec5 align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipAstone type=checkbox unchecked=true\></td>';
@@ -9828,7 +9829,7 @@ Tabs.transport = {
         m += '<TD width=100px>' + translate("Trade:") + ' <INPUT id=pbtradeamountAstone type=text size=11 maxlength=20 value="0"\></td>';
         m += '<TD width=50px><INPUT id=MaxAstone type=submit value="Max"></td></tr>';
         m += '<TR align="center">';
-        m += '<TD width=5%><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/gold_30.png" alt="Gold"></td>';
+        m += '<TD width=5%><img src="'+IMGURL+'gold_30.png" alt="Gold"></td>';
         m += '<TD id=TransGold align=right width=110px></td>';
         m += '<TD id=HaveGold align=right width=110px></td>';
         m += '<TD width=55px align=right><INPUT id=pbshipGold type=checkbox unchecked=true\></td>';
@@ -10452,12 +10453,12 @@ Tabs.transport = {
             m += '<TR><TD width=20px>' + (i + 1) + '</td><TD width=175px>' + translate("From:") + '&nbsp;&nbsp;' + cityname + '</TD><TD width=175px>' + translate("To:") + '&nbsp;&nbsp;' + TO + '</td><TD width=175px>' + status + '</td>';
             m += '<TD width=60px><A onclick="traceEdit(' + queueId + ')">' + translate("Edit") + '</a></td><TD width=60px><A onclick="traceDelete(' + queueId + ')">Delete</a></td></tr>';
             m += '<TR><TD></td><TD>Troops:&nbsp;&nbsp;' + unsafeWindow.unitcost[unit][0] + '</td></tr>';
-            if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png" alt="Food"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Food) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Food) + '</td>';
-            if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png" alt="Wood"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Wood) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Wood) + '</td>';
-            if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png" alt="Stone"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Stone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Stone) + '</td>';
-            if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png" alt="Iron"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Ore) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Ore) + '</td>';
-            if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png" alt="Aether"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Astone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Astone) + '</td>';
-            if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/gold_30.png" alt="Gold"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Gold) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Gold) + '</td>';
+            if (r[i].ship_Food) m += '<TR><TD></td><TD align=center><img src="'+IMGURL+'food_30.png" alt="Food"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Food) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Food) + '</td>';
+            if (r[i].ship_Wood) m += '<TR><TD></td><TD align=center><img src="'+IMGURL+'wood_30.png" alt="Wood"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Wood) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Wood) + '</td>';
+            if (r[i].ship_Stone) m += '<TR><TD></td><TD align=center><img src="'+IMGURL+'stone_30.png" alt="Stone"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Stone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Stone) + '</td>';
+            if (r[i].ship_Ore) m += '<TR><TD></td><TD align=center><img src="'+IMGURL+'iron_30.png" alt="Iron"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Ore) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Ore) + '</td>';
+            if (r[i].ship_Astone) m += '<TR><TD></td><TD align=center><img src="'+IMGURL+'aetherstone_30.png" alt="Aether"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Astone) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Astone) + '</td>';
+            if (r[i].ship_Gold) m += '<TR><TD></td><TD align=center><img src="'+IMGURL+'gold_30.png" alt="Gold"></td><TD>' + translate("Target:") + ' ' + addCommas(r[i].target_Gold) + '</td><TD>' + translate("Trade:") + ' ' + addCommas(r[i].trade_Gold) + '</td>';
         }
         m += '</table>';
         document.getElementById('pbRoutesQueue')
@@ -10493,7 +10494,7 @@ Tabs.transport = {
         n += '</select></td></table><BR><TABLE  id=editRoutes class=pbTab>';
         for (var i = 0; i < Types.length; i++) {
             var icon = Types[i];
-            n += '<TR><TD width=50px align=center><img alt="' + icon + '" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/' + icon + '_30.png"></td>';
+            n += '<TR><TD width=50px align=center><img alt="' + icon + '" src="'+IMGURL+icon + '_30.png"></td>';
             n += '<TD width=50px align=center><INPUT id=pbbship' + icon + ' type=checkbox></td>';
             n += '<TD width=125px>' + translate("Keep:") + ' <INPUT id=pbbtargetamount' + icon + ' type=text size=11 maxlength=11 value="0"></td>';
             n += '<TD width=125px>' + translate("Trade:") + ' <INPUT id=pbbtradeamount' + icon + ' type=text size=11 maxlength=11 value="0"\></td></tr>';
@@ -10619,8 +10620,8 @@ Tabs.transport = {
         var t = Tabs.transport;
         for (var i = 0; i < t.tradeRoutes.length; i++) {
             if (typeof t.tradeRoutes[i].target_city == 'undefined' || parseIntNan(t.tradeRoutes[i].target_city) == 0 || Cities.byID[t.tradeRoutes[i].target_city] == 'undefined') continue;
-            if (t.tradeRoutes[i].target_x != Cities.byID[t.tradeRoutes[i].target_city].x) t.tradeRoutes[i].target_x = Cities.byID[t.tradeRoutes[i].target_city].x;
-            if (t.tradeRoutes[i].target_y != Cities.byID[t.tradeRoutes[i].target_city].y) t.tradeRoutes[i].target_y = Cities.byID[t.tradeRoutes[i].target_city].y;
+			if (t.tradeRoutes[i].target_x != Cities.byID[t.tradeRoutes[i].target_city].x) t.tradeRoutes[i].target_x = Cities.byID[t.tradeRoutes[i].target_city].x;
+			if (t.tradeRoutes[i].target_y != Cities.byID[t.tradeRoutes[i].target_city].y) t.tradeRoutes[i].target_y = Cities.byID[t.tradeRoutes[i].target_city].y;
         }
     },
     saveTraderState: function () {
@@ -11206,7 +11207,7 @@ cm.MARCH_TYPES = {
 	  document.getElementById('pbraidtab').title = 'Click to Stop Active Raids';
 	  document.getElementById('pbraidtabRes').title = 'Click to Resume Stopped Raids';
 	  if (!Options.RemoveDeleteTab) document.getElementById('pbraidtabDel').title = 'Click to Delete Stopped Raids';
-   };
+	};
     
     var m = '<DIV class=pbStat>RAID FUNCTIONS</div><TABLE width=100% height=0% class=pbTab><TR align="center">';
         m += '<TD><INPUT id=pbRaidStart type=submit value="Auto Reset = '+ (Options.RaidRunning?'ON':'OFF') +'" ></td>';
@@ -11315,14 +11316,11 @@ cm.MARCH_TYPES = {
                           now = unixTime();
                           //z+='<TR><TD>('+ botMarchStatus +'/'+ MarchStatus +')</td>';
                           z+='<TR>';
-                          //if (destinationUnixTime > now && botMarchStatus !=3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
-                          if (MarchStatus ==1) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/attacking.jpg></td>';
-                          //if ((destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
-                          else if (MarchStatus ==8 && (destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/returning.jpg></td>';
-                          else if (MarchStatus == 3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
-                          //if (returnUnixTime < now  && botMarchStatus !=3) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
-                          else if (MarchStatus == 4 || (returnUnixTime < now  && botMarchStatus !=3)) z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_resting.png></td>';
-						  else z+='<TD align=center><img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/autoAttack/raid_stopped_desat.png></td>';
+                          if (MarchStatus ==1) z+='<TD align=center><img src='+IMGURL+'attacking.jpg></td>';
+                          else if (MarchStatus ==8 && (destinationUnixTime - now) <= 0 && botMarchStatus !=3 && returnUnixTime > now) z+='<TD align=center><img src='+IMGURL+'returning.jpg></td>';
+                          else if (MarchStatus == 3) z+='<TD align=center><img src='+IMGURL+'autoAttack/raid_stopped_desat.png></td>';
+                          else if (MarchStatus == 4 || (returnUnixTime < now  && botMarchStatus !=3)) z+='<TD align=center><img src='+IMGURL+'autoAttack/raid_resting.png></td>';
+						  else z+='<TD align=center><img src='+IMGURL+'autoAttack/raid_stopped_desat.png></td>';
                           
                           if (destinationUnixTime >= now) z+='<TD>'+ timestr(Seed.queue_atkp['city' + t.cityId][k]['destinationUnixTime'] - unixTime())+'</td>';
                           if (destinationUnixTime <= now) {
@@ -11415,7 +11413,7 @@ cm.MARCH_TYPES = {
 				rowcounter = 1;
 			}
 				
-			m += '<td><table class=pbTab><tr><td rowspan=2><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_'+i+'_50.jpg?6545"></td><td>'+ addCommas(Seed.units['city'+cityId]['unt'+i]) +'</td></tr><tr><td><INPUT id=Unit'+i+' type=text size=6 maxlength=6 value="'+t.save[y]['unit'+i+'Count']+'"></td></tr></table></td>';
+			m += '<td><table class=pbTab><tr><td rowspan=2><img src="'+IMGURL+'units/unit_'+i+'_50.jpg?6545"></td><td>'+ addCommas(Seed.units['city'+cityId]['unt'+i]) +'</td></tr><tr><td><INPUT id=Unit'+i+' type=text size=6 maxlength=6 value="'+t.save[y]['unit'+i+'Count']+'"></td></tr></table></td>';
 		}
 		m += '</tr></table>';
           
@@ -11470,7 +11468,7 @@ cm.MARCH_TYPES = {
 				rowcounter = 1;
 			}
 				
-			m += '<td><table class=pbTab><tr><td rowspan=2><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/units/unit_'+i+'_50.jpg?6545"></td><td>'+ addCommas(Seed.units['city'+cityId]['unt'+i]) +'</td></tr><tr><td><INPUT id=Unit'+i+' type=text size=6 maxlength=6 value="'+t.rslt['queue'][y]['botMarches']['unit'+i+'Count']+'"></td></tr></table></td>';
+			m += '<td><table class=pbTab><tr><td rowspan=2><img src="'+IMGURL+'units/unit_'+i+'_50.jpg?6545"></td><td>'+ addCommas(Seed.units['city'+cityId]['unt'+i]) +'</td></tr><tr><td><INPUT id=Unit'+i+' type=text size=6 maxlength=6 value="'+t.rslt['queue'][y]['botMarches']['unit'+i+'Count']+'"></td></tr></table></td>';
 		}
 		m += '</tr></table>';
             
@@ -11918,19 +11916,6 @@ cm.MARCH_TYPES = {
                                     setTimeout (function (){GM_setValue ('SavedRaids_'+unsafeWindow.tvuid+'_'+serverID, JSON2.stringify(t.save));}, 0);
                                     t.paint();
                          } else {
-                              /* var pop = new pbPopup ('pbEditRaid', 0,0, 750,250, true);
-                                 if (t.popFirst){
-                                   pop.centerMe (mainPop.getMainDiv());  
-                                   t.popFirst = false;
-                                 }
-                                 pop.getTopDiv().innerHTML = '<CENTER><B>ERROR</b></center>';
-                                 var m= '<TABLE id=pbRaidAdd width=100% height=0% class=pbTab><TR align="center">';
-                               m +=  '<TR><TD rowspan="2"><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/merlin_img.jpg"></td>';
-                               m+='<TD style="align;left; max-width:200px; text-wrap:normal;word-wrap:break-word"><B>'+ rslt.msg+'</b></td>';
-                                 m+='<TD><CENTER>'+ strButton20('OK', 'id=pbOK') +'</center></td></tr>';
-                                 pop.getMainDiv().innerHTML = m;
-                               document.getElementById('pbOK').addEventListener ('click', function(){pop.show (false)},false);
-                                 pop.show (true);*/
                                  alert('Error: '+ rslt.msg);      
                          }
                      },
@@ -12188,7 +12173,7 @@ Tabs.AutoCraft = {
 			var craftingstr = "";
 			var crafting = t.checkCraftQueues(h);
 			if (crafting != 0) craftingstr = " ("+crafting+")";
-			m += "<td align=center><img src='"+http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></td><td align=center class=craftdesc id=craftdes"+h+" >"+unsafeWindow.itemlist["i"+h].name+"</td><td align=center><span id='Craft_inv_"+h+"' class=boldGreen>"+parseIntNan(Seed.items["i"+h])+craftingstr+"</span></td>";
+			m += "<td align=center><img src='"+IMGURL+"items/70/"+ h + ".jpg' width=25></td><td align=center class=craftdesc id=craftdes"+h+" >"+unsafeWindow.itemlist["i"+h].name+"</td><td align=center><span id='Craft_inv_"+h+"' class=boldGreen>"+parseIntNan(Seed.items["i"+h])+craftingstr+"</span></td>";
 			m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td><td><INPUT id='Craft_nbfix_"+h+"' type=checkbox "+(TrainOptions.CraftingNbFix[h]?'CHECKED':'')+"></td><td id='Craft_stats_"+h+"'>"+t.getCraftPercent(TrainOptions.CraftingStats[h])+"</td>";
 			if ((count+1)%2 == 0) m += "</tr><tr>";
 			count++;
@@ -12207,7 +12192,7 @@ Tabs.AutoCraft = {
 			var craftingstr = "";
 			var crafting = t.checkCraftQueues(h);
 			if (crafting != 0) craftingstr = " ("+crafting+")";
-			m += "<td align=center><img src='"+http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/"+ h + ".jpg' width=25></td><td align=center class=craftdesc id=craftdes"+h+" >"+unsafeWindow.itemlist["i"+h].name+"</td><td align=center><span id='Craft_inv_"+h+"' class=boldGreen>"+parseIntNan(Seed.items["i"+h])+craftingstr+"</span></td>";
+			m += "<td align=center><img src='"+IMGURL+"items/70/"+ h + ".jpg' width=25></td><td align=center class=craftdesc id=craftdes"+h+" >"+unsafeWindow.itemlist["i"+h].name+"</td><td align=center><span id='Craft_inv_"+h+"' class=boldGreen>"+parseIntNan(Seed.items["i"+h])+craftingstr+"</span></td>";
 			m += "<td><input type=text size=4 id='Craft_nb_"+h+"' value='"+ parseIntNan(TrainOptions.CraftingNb[h]) +"'></td><td><INPUT id='Craft_nbfix_"+h+"' type=checkbox "+(TrainOptions.CraftingNbFix[h]?'CHECKED':'')+"></td><td id='Craft_stats_"+h+"'>"+t.getCraftPercent(TrainOptions.CraftingStats[h])+"</td>";
 			if ((count+1)%2 == 0) m += "</tr><tr>";
 			count++;
@@ -12227,7 +12212,7 @@ Tabs.AutoCraft = {
 			var city = i+1;
 			str += '<td align=center><INPUT class='+city+' id=CraftCity'+city+' type=checkbox '+(TrainOptions.CraftingCities[city]?'CHECKED':'')+'></td>';
 		}
-		str += '<td>&nbsp;</td></tr><tr><td align=left width=30><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3004.jpg title="Preferred Recipe"></td>';
+		str += '<td>&nbsp;</td></tr><tr><td align=left width=30><img height=18 src='+IMGURL+'items/70/3004.jpg title="Preferred Recipe"></td>';
 
 		var recipes = {0:'-- Random --'};
 		for (h in t.craftinfo) {
@@ -12239,13 +12224,13 @@ Tabs.AutoCraft = {
 			str += '<td align=center>'+htmlSelector(recipes,TrainOptions.CraftingPrefs[city],'class='+city+' id=CraftCitySelect'+city+ ' style="width:100px;font-size:9px;"')+'</td>';
 		}
 
-		str +='<tr style="background: #e8e8e8" align=right><td align=left width=30><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/aetherstone_30.png title="Aether"></td>';
+		str +='<tr style="background: #e8e8e8" align=right><td align=left width=30><img height=18 src='+IMGURL+'aetherstone_30.png title="Aether"></td>';
 		t.totaether = 0;
 		for(i=0; i<Cities.numCities; i++) {
 			str +="<td align=center id=cityaether"+i+">"+t.getCityAether(i)+"</td>";  
 		}
 		str +="<td align=center id=totaether>"+ addCommas(t.totaether) + "</td>";  
-		str +='<tr style="background: #e8e8e8" align=right><td align=left width=30><img height=18 src='+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/2000.jpg title="Crafting"></td>';
+		str +='<tr style="background: #e8e8e8" align=right><td align=left width=30><img height=18 src='+IMGURL+'items/70/2000.jpg title="Crafting"></td>';
 		for(i=0; i<Cities.numCities; i++) {
 			t.spires.push(getUniqueCityBuilding(Cities.cities[i].id,20));
 			str +="<td align=center id=citycraft"+i+">"+ t.getCityCrafting(i) + "</td>";  
@@ -12365,16 +12350,16 @@ Tabs.AutoCraft = {
 				var SpeedupType = '"craft"';
 				
 				if (t.Squire) {
-					Speedups += '<td class=xtab><a onClick="speedupCraft('+Cities.cities[i].id+', 1, '+q.craftingId+')"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/1.jpg" title="Squires Hourglass (1 min) ('+t.Squire+')"></a></td>';
+					Speedups += '<td class=xtab><a onClick="speedupCraft('+Cities.cities[i].id+', 1, '+q.craftingId+')"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/1.jpg" title="Squires Hourglass (1 min) ('+t.Squire+')"></a></td>';
 				}	
 				if (t.Knight) {
-					Speedups += '<td class=xtab><a onClick="speedupCraft('+Cities.cities[i].id+', 2, '+q.craftingId+')"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/2.jpg" title="Knights Hourglass (15 mins) ('+t.Knight+')"></a></td>';
+					Speedups += '<td class=xtab><a onClick="speedupCraft('+Cities.cities[i].id+', 2, '+q.craftingId+')"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/2.jpg" title="Knights Hourglass (15 mins) ('+t.Knight+')"></a></td>';
 				}	
 				if (t.Guinevere) {
-					Speedups += '<td class=xtab><a onClick="speedupCraft('+Cities.cities[i].id+', 3, '+q.craftingId+')"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg" title="Guineveres Hourglass (60 mins) ('+t.Guinevere+')"></a></td>';
+					Speedups += '<td class=xtab><a onClick="speedupCraft('+Cities.cities[i].id+', 3, '+q.craftingId+')"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/3.jpg" title="Guineveres Hourglass (60 mins) ('+t.Guinevere+')"></a></td>';
 				}	
 				if (t.Morgana) {
-					Speedups += '<td class=xtab><a onClick="speedupCraft('+Cities.cities[i].id+', 4, '+q.craftingId+')"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/4.jpg" title="Morganas Hourglass (150 mins) ('+t.Morgana+')"></a></td>';
+					Speedups += '<td class=xtab><a onClick="speedupCraft('+Cities.cities[i].id+', 4, '+q.craftingId+')"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/4.jpg" title="Morganas Hourglass (150 mins) ('+t.Morgana+')"></a></td>';
 				}	
 				if (Speedups != "") Speedups = "<table align=center cellspacing=0 cellpadding=0><tr>" + Speedups + "</tr></table>";
 			
@@ -12916,7 +12901,7 @@ Tabs.Barb = {
 	 z+='</tr>';		 		
 
 	 for(i=0;i<troopDef.length;i++){
-	 	z += '<TR><TD align=center><img src="https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+troopDef[i][1]+'_30.jpg" title="'+troopDef[i][0]+'"></td>';
+	 	z += '<TR><TD align=center><img src="'+IMGURL+'units/unit_'+troopDef[i][1]+'_30.jpg" title="'+troopDef[i][0]+'"></td>';
 	 	for(var j=0; j<15; j++){
 			if (!AttackOptions.Troops[j+1]) AttackOptions.Troops[j+1] = {};
              z += '<TD><INPUT id="level'+j+'troop'+i+'" type=text size=5 maxlength=6 value="'+(AttackOptions.Troops[j+1][i+1]?AttackOptions.Troops[j+1][i+1]:0)+'" /></td>';
@@ -14387,7 +14372,7 @@ Tabs.Reassign = {
 	
 		var c = 0;
 		for (var k in t.troops){
-			n = '<td><table class=pbtab><tr><td rowspan=2><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_50.jpg?6545"></td>';
+			n = '<td><table class=pbtab><tr><td rowspan=2><img src="'+IMGURL+'units/unit_'+k+'_50.jpg?6545"></td>';
 			n += '<TD>'+unsafeWindow.unitcost['unt'+k][0].toString()+'</td></tr>'
 			n += '<TR><TD><INPUT id=pb'+t.troops[k]+' type=checkbox unchecked=true\>';
 			n += '<INPUT id=pbtarget'+t.troops[k]+' disabled=true type=text size=10 maxlength=10 value="0"\></td></tr></table></td>';
@@ -14571,7 +14556,7 @@ Tabs.Reassign = {
 		TroopString = "";
 		for (var k in t.troops){
 			if (Route["Send"+t.troops[k]]) {
-				TroopString += '<span class=xtab><img style="width:20px;height:20px;vertical-align:middle" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg" title="'+unsafeWindow.unitcost['unt'+k][0].toString()+'">&nbsp;('+addCommas(Route[t.troops[k]])+')</span> ';
+				TroopString += '<span class=xtab><img style="width:20px;height:20px;vertical-align:middle" src="'+IMGURL+'units/unit_'+k+'_30.jpg" title="'+unsafeWindow.unitcost['unt'+k][0].toString()+'">&nbsp;('+addCommas(Route[t.troops[k]])+')</span> ';
 			}	
 		}	
 				
@@ -14688,7 +14673,7 @@ Tabs.Reassign = {
 			saveOptions();    
 		}
 	},
-    
+
 	getAtkKnight : function (cityID) {
 		var t = Tabs.Reassign;
 		t.knt = new Array();
@@ -14721,7 +14706,7 @@ Tabs.Reassign = {
 			t.processing = false;
 		}
 	},
-    
+
 	doReassign: function(count){
 		var t = Tabs.Reassign;
 		var params = unsafeWindow.Object.clone(unsafeWindow.g_ajaxparams);
@@ -14875,7 +14860,7 @@ Tabs.AutoTrain = {
             if(y == "22") faux = 1;
             if(y == "24") faux = 1;
             if(y == "25") faux = 1;
-            
+
 			if (faux==0)
 				m+='<option value="'+y+'">'+unsafeWindow.unitcost['unt'+y][0]+'</option>';
 		}
@@ -14906,13 +14891,13 @@ Tabs.AutoTrain = {
 		}; 
         m += '<tr><TD align=right>Resources:&nbsp;</td>';
 		m += '<td colspan=4><table class=pbTab><tr>';
-        m += '<TD><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/food_30.png"></td>';
+        m += '<TD><img src="'+IMGURL+'food_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepFood'+city+'" type=text size=11 maxlength=12 value="'+ TrainOptions.Keep[city]['Food']+'"\></td>';
-        m += '<TD><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/wood_30.png"></td>';
+        m += '<TD><img src="'+IMGURL+'wood_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepWood'+city+'" type=text size=11 maxlength=12 value="'+ TrainOptions.Keep[city]['Wood']+'"\></td>';
-        m += '<TD><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/stone_30.png"></td>';
+        m += '<TD><img src="'+IMGURL+'stone_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepStone'+city+'" type=text size=11 maxlength=12 value="'+ TrainOptions.Keep[city]['Stone']+'"\></td>';
-        m += '<TD><img src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/iron_30.png"></td>';
+        m += '<TD><img src="'+IMGURL+'iron_30.png"></td>';
         m += '<TD><INPUT class='+city+' id="KeepOre'+city+'" type=text size=11 maxlength=12 value="'+ TrainOptions.Keep[city]['Ore']+'"\></td>';
         m +='<td>&nbsp;<SELECT class='+city+' id="Resource'+city+'"><option value="true">'+translate("Keep")+'</options>';
         m += '<option value="false">'+translate("Use")+'</option>';
@@ -15857,7 +15842,7 @@ Tabs.Whisper = {
 			var stext = /div class=\"tx\">(.*)\<\/div\>/im.exec(a);
 			if (!stext)	stext = "";
 			else stext = '<span>'+stext[1].split("</div>")[0]+'</span>';
-			
+		
 			t.LoggedWhispers.push({ts:ts, uid:suid, name:sname, msg:stext, innerHTML:a, keep:okeep});
 			setTimeout(function () {t.saveWhisper ();},0); // get around GM_SetValue unsafeWindow error
 			
@@ -16415,7 +16400,7 @@ latestChats : [],
 					var rslt = eval("(" + message.responseText + ")");
 					if (rslt.ok) {
 						DeleteLastMessage();
-							GM_log('Message sent to record remote TR change request');
+						GM_log('Message sent to record remote TR change request');
 					}
 				},
 				onFailure: function () {
@@ -16918,13 +16903,13 @@ function ToggleDivDisplay(h,w,div) {
     if (dc) {
         if (dc.indexOf('pbdivHide') >= 0) {
             unsafeWindow.jQuery('#'+div).attr('class','');
-            unsafeWindow.jQuery('#'+div+'Arrow').attr('src','https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/down_arrow.png');
+            unsafeWindow.jQuery('#'+div+'Arrow').attr('src',IMGURL+'autoAttack/down_arrow.png');
         }
     }
     else
     {
         unsafeWindow.jQuery('#'+div).attr('class','pbdivHide');
-        unsafeWindow.jQuery('#'+div+'Arrow').attr('src','https://kabam1-a.akamaihd.net/kingdomsofcamelot/fb/e2/src/img/autoAttack/across_arrow.png');
+        unsafeWindow.jQuery('#'+div+'Arrow').attr('src',IMGURL+'autoAttack/across_arrow.png');
     }
 }
 
@@ -18033,12 +18018,12 @@ var ChatPane = {
     var AllianceChatBox=document.getElementById('mod_comm_list2');
     var GlobalChatBox=document.getElementById('mod_comm_list1');
     
-		var myregexp1 = /You are # [0-9]+ of [0-9]+ to help/i;
-		var myregexp2 = /\'s Kingdom does not need help\./i;
-		var myregexp3 = /\'s project has already been completed\./i;
-		var myregexp4 = /\'s project has received the maximum amount of help\./i;
-		var myregexp5 = /You already helped with (.*?)\'s project\./i;
-		var myregexp6 = /is low on food. Remaining:/i;
+	var myregexp1 = /You are # [0-9]+ of [0-9]+ to help/i;
+	var myregexp2 = /\'s Kingdom does not need help\./i;
+	var myregexp3 = /\'s project has already been completed\./i;
+	var myregexp4 = /\'s project has received the maximum amount of help\./i;
+	var myregexp5 = /You already helped with (.*?)\'s project\./i;
+	var myregexp6 = /is low on food. Remaining:/i;
     
     if(AllianceChatBox){
         var chatPosts = document.evaluate(".//div[contains(@class,'chatwrap')]", AllianceChatBox, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );
@@ -18086,7 +18071,7 @@ var ChatPane = {
                         thisPost.parentNode.removeChild(thisPost);
                     }
                 }
-					if(Options.DeleteFood){
+				if(Options.DeleteFood){
 					var NameArray = [];
 					if (Options.DeleteFoodUsers.trim() != "")
 						NameArray = Options.DeleteFoodUsers.trim().toUpperCase().split(",");
@@ -18094,13 +18079,13 @@ var ChatPane = {
 					if(postAuthor.snapshotItem(0)){
 						var postAuthorName = postAuthor.snapshotItem(0).innerHTML;
 						if(postAuthorName != DisplayName && ((NameArray.indexOf(postAuthorName.split(" ")[1].toUpperCase()) != -1) || NameArray.length==0)){
-						if (thisPost.innerHTML.match(myregexp6)) {
-							thisPost.parentNode.removeChild(thisPost);
-							}
-						}
-					}    
-				}    
-			}
+							if (thisPost.innerHTML.match(myregexp6)) {
+								thisPost.parentNode.removeChild(thisPost);
+							}	
+						}		
+					}
+				}
+			}    
 		}
 		
 		if(Options.DeleteRequest || Options.DeleteFood || Options.DeletegAl) {
@@ -21103,32 +21088,32 @@ Tabs.Apothecary = {
 					var SpeedupType = '"revive"';
 				
 					if (t.Squire) {
-						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 1, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/1.jpg" title="Squires Hourglass (1 min) ('+t.Squire+')"></a></td>';
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 1, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/1.jpg" title="Squires Hourglass (1 min) ('+t.Squire+')"></a></td>';
 					}	
 					if (t.Knight) {
-						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 2, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/2.jpg" title="Knights Hourglass (15 mins) ('+t.Knight+')"></a></td>';
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 2, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/2.jpg" title="Knights Hourglass (15 mins) ('+t.Knight+')"></a></td>';
 					}	
 					if (t.Guinevere) {
-						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 3, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg" title="Guineveres Hourglass (60 mins) ('+t.Guinevere+')"></a></td>';
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 3, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/3.jpg" title="Guineveres Hourglass (60 mins) ('+t.Guinevere+')"></a></td>';
 					}	
 					if (t.Morgana) {
-						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 4, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/4.jpg" title="Morganas Hourglass (150 mins) ('+t.Morgana+')"></a></td>';
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 4, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/4.jpg" title="Morganas Hourglass (150 mins) ('+t.Morgana+')"></a></td>';
 					}	
 
 					if (t.Arthur) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 5, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/5.jpg" title="Arthurs Hourglass (8 hours) ('+t.Arthur+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 5, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/5.jpg" title="Arthurs Hourglass (8 hours) ('+t.Arthur+')"></a></td>';
 					}	
 					if (t.Merlin) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 6, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/6.jpg" title="Merlins Hourglass (15 hours) ('+t.Merlin+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 6, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/6.jpg" title="Merlins Hourglass (15 hours) ('+t.Merlin+')"></a></td>';
 					}	
 					if (t.Divine) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 7, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/7.jpg" title="Divine Hourglass (24 hours) ('+t.Divine+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 7, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/7.jpg" title="Divine Hourglass (24 hours) ('+t.Divine+')"></a></td>';
 					}	
 					if (t.Epic) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 8, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/8.jpg" title="Divine Hourglass (60 hours) ('+t.Epic+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 8, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/8.jpg" title="Divine Hourglass (60 hours) ('+t.Epic+')"></a></td>';
 					}	
 					if (t.Legendary) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 10, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/10.jpg" title="Legendary Hourglass (96 hours) ('+t.Legendary+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 10, '+u[0]+',1)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/10.jpg" title="Legendary Hourglass (96 hours) ('+t.Legendary+')"></a></td>';
 					}	
 
 					if (Speedups2 != "") Speedups += '</tr><tr>' + Speedups2 
@@ -21165,32 +21150,32 @@ Tabs.Apothecary = {
 					var SpeedupType = '"revive"';
 				
 					if (t.Squire) {
-						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 1, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/1.jpg" title="Squires Hourglass (1 min) ('+t.Squire+')"></a></td>';
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 1, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/1.jpg" title="Squires Hourglass (1 min) ('+t.Squire+')"></a></td>';
 					}	
 					if (t.Knight) {
-						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 2, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/2.jpg" title="Knights Hourglass (15 mins) ('+t.Knight+')"></a></td>';
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 2, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/2.jpg" title="Knights Hourglass (15 mins) ('+t.Knight+')"></a></td>';
 					}	
 					if (t.Guinevere) {
-						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 3, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/3.jpg" title="Guineveres Hourglass (60 mins) ('+t.Guinevere+')"></a></td>';
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 3, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/3.jpg" title="Guineveres Hourglass (60 mins) ('+t.Guinevere+')"></a></td>';
 					}	
 					if (t.Morgana) {
-						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 4, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/4.jpg" title="Morganas Hourglass (150 mins) ('+t.Morgana+')"></a></td>';
+						Speedups += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 4, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/4.jpg" title="Morganas Hourglass (150 mins) ('+t.Morgana+')"></a></td>';
 					}	
 					
 					if (t.Arthur) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 5, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/5.jpg" title="Arthurs Hourglass (8 hours) ('+t.Arthur+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 5, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/5.jpg" title="Arthurs Hourglass (8 hours) ('+t.Arthur+')"></a></td>';
 					}	
 					if (t.Merlin) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 6, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/6.jpg" title="Merlins Hourglass (15 hours) ('+t.Merlin+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 6, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/6.jpg" title="Merlins Hourglass (15 hours) ('+t.Merlin+')"></a></td>';
 					}	
 					if (t.Divine) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 7, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/7.jpg" title="Divine Hourglass (24 hours) ('+t.Divine+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 7, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/7.jpg" title="Divine Hourglass (24 hours) ('+t.Divine+')"></a></td>';
 					}	
 					if (t.Epic) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 8, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/8.jpg" title="Divine Hourglass (60 hours) ('+t.Epic+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 8, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/8.jpg" title="Divine Hourglass (60 hours) ('+t.Epic+')"></a></td>';
 					}	
 					if (t.Legendary) {
-						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 10, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/items/70/10.jpg" title="Legendary Hourglass (96 hours) ('+t.Legendary+')"></a></td>';
+						Speedups2 += '<td class=xtab><a onClick="speedupRevive('+Cities.cities[i].id+', 10, '+u[0]+',2)"><img height=18 style="opacity:0.8;vertical-align:text-top;" src="'+IMGURL+'items/70/10.jpg" title="Legendary Hourglass (96 hours) ('+t.Legendary+')"></a></td>';
 					}	
 
 					if (Speedups2 != "") Speedups += '</tr><tr>' + Speedups2 
@@ -21214,8 +21199,8 @@ Tabs.Apothecary = {
 			for (var ui in unsafeWindow.cm.UNIT_TYPES){
 				var y = unsafeWindow.cm.UNIT_TYPES[ui];
                 var uid = 'unt'+y;
-				total[uid] += woundedUnits[cid][uid];
-				                html = addCommas(woundedUnits[cid][uid]);
+                total[uid] += woundedUnits[cid][uid];
+                html = addCommas(woundedUnits[cid][uid]);
                 document.getElementById('tdApoWoundedUnits_' + cid + '_' + uid).innerHTML = html;
                 if (uid == uid_q1 || uid == uid_q2) {
                     document.getElementById('tdApoWoundedUnits_' + cid + '_' + uid).style.color = '#006600';
@@ -21362,7 +21347,7 @@ Tabs.Combat = {
 		for (var ui in unsafeWindow.cm.UNIT_TYPES){
 			var y = unsafeWindow.cm.UNIT_TYPES[ui];
 			var tr = 'unt'+y;
-			var name = unsafeWindow.unitcost[tr][0];
+            var name = unsafeWindow.unitcost[tr][0];
             t.troops[0][tr] = parseIntNan(document.getElementById('pbcombatd_'+tr).value);
             t.troops[1][tr] = parseIntNan(document.getElementById('pbcombata_'+tr).value);
             t.total[0] += t.troops[0][tr];
@@ -21945,25 +21930,25 @@ Tabs.Inventory = {
 	getItemImageURL : function (id) {
 		var s = "";
 		if (id == 999) {
-			s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/dailyRewards/question_mark.jpg"
+			s = IMGURL+"dailyRewards/question_mark.jpg"
 		} else {
 			if (unsafeWindow.cm.MASTERS_TOKEN_LEVELS[id]) {
-				s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/masters_token_bg.png"
+				s = IMGURL+"items/70/masters_token_bg.png"
 			} else {
 				if (unsafeWindow.cm.ItemController.isJewelId(id)) {
 					var jewel = unsafeWindow.cm.ItemController.isJewelId(id);
 					s = unsafeWindow.cm.ThronePanelView.getJewelIcon(jewel.quality, unsafeWindow.cm.ThroneController.jewelType(jewel));
 				} else {
 					if (unsafeWindow.cm.ItemController.isMysteryId(id)) {
-						s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/30303.jpg"
+						s = IMGURL+"items/70/30303.jpg"
 					} else {
 						if ((id >= 11001) && (id <= 11010)) {
-							s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/bossBattleChest_victor.jpg"
+							s = IMGURL+"items/70/bossBattleChest_victor.jpg"
 						} else {
 							if ((id >= 11021) && (id <= 11030)) {
-								s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/bossBattleChest_milestone.jpg"
+								s = IMGURL+"items/70/bossBattleChest_milestone.jpg"
 							} else {
-								s = http+"kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/items/70/" + id + ".jpg"
+								s = IMGURL+"items/70/" + id + ".jpg"
 							}
 						}
 					}
@@ -22623,7 +22608,7 @@ Tabs.Attack = {
 
 		var c = 0;
 		for (var k in t.trooparray){
-			n = '<td>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg title="'+dude["unt"+k][0]+'"></td><TD><INPUT id=R1'+t.trooparray[k]+' type=text size=7 maxlength=7 value=0></td>';
+			n = '<td>&nbsp;&nbsp;<img src='+IMGURL+'units/unit_'+k+'_30.jpg title="'+dude["unt"+k][0]+'"></td><TD><INPUT id=R1'+t.trooparray[k]+' type=text size=7 maxlength=7 value=0></td>';
 			if (c%6==0) m+= '</tr><tr>';
 			m+=n;
 			c++;
@@ -22633,7 +22618,7 @@ Tabs.Attack = {
 
 		c = 0;
 		for (var k in t.trooparray){
-			n = '<td>&nbsp;&nbsp;<img src='+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg title="'+dude["unt"+k][0]+'"></td><TD><INPUT id=R2'+t.trooparray[k]+' type=text size=7 maxlength=7 value=0></td>';
+			n = '<td>&nbsp;&nbsp;<img src='+IMGURL+'units/unit_'+k+'_30.jpg title="'+dude["unt"+k][0]+'"></td><TD><INPUT id=R2'+t.trooparray[k]+' type=text size=7 maxlength=7 value=0></td>';
 			if (c%6==0) m+= '</tr><tr>';
 			m+=n;
 			c++;
@@ -22951,12 +22936,12 @@ Tabs.Attack = {
 			for (var k in t.trooparray){
 				if (col1 == "Wave 1") {
 					if (CrestData[QueID]["R1"+t.trooparray[k]]) {
-						TroopString += '<span class=xtab><img style="width:20px;height:20px;vertical-align:middle" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg" title="'+unsafeWindow.unitcost['unt'+k][0].toString()+'">&nbsp;'+addCommas(CrestData[QueID]["R1"+t.trooparray[k]])+'</span> ';
+						TroopString += '<span class=xtab><img style="width:20px;height:20px;vertical-align:middle" src="'+IMGURL+'units/unit_'+k+'_30.jpg" title="'+unsafeWindow.unitcost['unt'+k][0].toString()+'">&nbsp;'+addCommas(CrestData[QueID]["R1"+t.trooparray[k]])+'</span> ';
 					}
 				}
 				else {
 					if (CrestData[QueID]["R2"+t.trooparray[k]]) {
-						TroopString += '<span class=xtab><img style="width:20px;height:20px;vertical-align:middle" src="'+http+'kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/units/unit_'+k+'_30.jpg" title="'+unsafeWindow.unitcost['unt'+k][0].toString()+'">&nbsp;'+addCommas(CrestData[QueID]["R2"+t.trooparray[k]])+'</span> ';
+						TroopString += '<span class=xtab><img style="width:20px;height:20px;vertical-align:middle" src="'+IMGURL+'units/unit_'+k+'_30.jpg" title="'+unsafeWindow.unitcost['unt'+k][0].toString()+'">&nbsp;'+addCommas(CrestData[QueID]["R2"+t.trooparray[k]])+'</span> ';
 					}
 				}	
 			}	
@@ -23008,8 +22993,8 @@ Tabs.Attack = {
 		var t = Tabs.Attack;
 		March.addMarch(p, function(rslt){
 			if(rslt.ok){
-					var now = new Date().getTime()/1000.0;
-					now = now.toFixed(0);
+				var now = new Date().getTime()/1000.0;
+				now = now.toFixed(0);
 				if(r==1){
 					Options.Crest1Count++;
 					r = 2;
@@ -24678,7 +24663,7 @@ Tabs.gifts = {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                for(i in rslt.message){
-                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject.indexOf('Yeni Hediye AlÄ±ndÄ±') >= 0 || rslt.message[i].subject.indexOf('Neues Geschenk erhalten') >= 0 || rslt.message[i].subject.indexOf('Nouveaux Cadeaux reçus') >= 0 || rslt.message[i].subject.indexOf('Nuevo regalo recibido') >= 0 || rslt.message[i].subject.indexOf('Nuovo Regalo ricevuto') >= 0 || rslt.message[i].subject.indexOf('New Gift Received') >= 0)){
+                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject.indexOf('Yeni Hediye Alındı') >= 0 || rslt.message[i].subject.indexOf('Neues Geschenk erhalten') >= 0 || rslt.message[i].subject.indexOf('Nouveaux Cadeaux re�us') >= 0 || rslt.message[i].subject.indexOf('Nuevo regalo recibido') >= 0 || rslt.message[i].subject.indexOf('Nuovo Regalo ricevuto') >= 0 || rslt.message[i].subject.indexOf('New Gift Received') >= 0)){
                      t.foundgift(i);
                   };
                };
@@ -25186,7 +25171,7 @@ Tabs.Champion = {
 		UniqueItems["28055"] = {Id:28055,Name:"Helmet of the Wraith", Effects:[{type:3,tier:1},{type:207,tier:3},{type:1,tier:1},{type:202,tier:2},{type:205,tier:2}],Faction:2,Type:3};
 		UniqueItems["28056"] = {Id:28056,Name:"Boots of the Wraith", Effects:[{type:17,tier:1},{type:207,tier:2},{type:202,tier:2},{type:205,tier:1},{type:18,tier:1}],Faction:2,Type:4};
 		UniqueItems["28057"] = {Id:28057,Name:"Cloak of the Wraith", Effects:[{type:209,tier:2},{type:206,tier:2},{type:208,tier:2},{type:7,tier:1},{type:202,tier:3}],Faction:2,Type:9};
-		
+
 		UniqueItems["28100"] = {Id:28100,Name:"Sapper's Axe", Effects:[{type:201,tier:5},{type:202,tier:3},{type:63,tier:1},{type:133,tier:2},{type:204,tier:2}],Faction:1,Type:1};
 		UniqueItems["28101"] = {Id:28101,Name:"Sapper's Shield", Effects:[{type:206,tier:3},{type:61,tier:2},{type:203,tier:2},{type:24,tier:3},{type:209,tier:2}],Faction:1,Type:5};
 		UniqueItems["28102"] = {Id:28102,Name:"Sapper's Armor ", Effects:[{type:203,tier:3},{type:126,tier:2},{type:25,tier:2},{type:209,tier:3},{type:205,tier:2}],Faction:1,Type:2};
@@ -25208,6 +25193,8 @@ Tabs.Champion = {
 		UniqueItems["28506"] = {Id:28506,Name:"Feral Cloak", Effects:[{type:202,tier:2},{type:4,tier:2},{type:206,tier:3},{type:42,tier:3},{type:1,tier:3}],Faction:3,Type:9};
 		UniqueItems["28507"] = {Id:28507,Name:"Commander's Cloak", Effects:[{type:207,tier:2},{type:209,tier:2},{type:202,tier:3},{type:30,tier:3},{type:2,tier:3}],Faction:1,Type:9};
 		UniqueItems["28508"] = {Id:28508,Name:"Mire Knight's Cloak", Effects:[{type:202,tier:2},{type:4,tier:2},{type:202,tier:3},{type:61,tier:3},{type:1,tier:3}],Faction:2,Type:9};
+
+		UniqueItems["28602"] = {Id:28602,Name:"Scourge Knight's Necklace", Effects:[{type:208,tier:2},{type:58,tier:2},{type:207,tier:3},{type:5,tier:2},{type:208,tier:3}],Faction:2,Type:8};		
 		
 		for (var i=28001;i<28500;i++) {
 			if (!unsafeWindow.itemlist['i'+i]) continue;
@@ -25520,7 +25507,7 @@ Tabs.Champion = {
 		D.push(" <div class='description'> ");
 		var uniquestyle = "";
 		if (champ_item.unique != 0) {
-			uniquestyle = 'background:transparent url("https://kabam1-a.akamaihd.net/silooneofcamelot/fb/e2/src/img/champion_hall/unique_'+t.imgUniqueTypes[champ_item.Type-1]+'_'+champ_item.faction+'_70x70_'+champ_item.unique + '.png"); top left no-repeat; background-size: 70px 70px;';
+			uniquestyle = 'background:transparent url("'+IMGURL+'champion_hall/unique_'+t.imgUniqueTypes[champ_item.Type-1]+'_'+champ_item.faction+'_70x70_'+champ_item.unique + '.png"); top left no-repeat; background-size: 70px 70px;';
 		}
 		D.push("<div class='portrait " + champ_item.faction + " " + champ_item.type + "' style='"+uniquestyle+"'> </div> ");
 		D.push("<ul>");
@@ -26257,9 +26244,9 @@ paintEquipInfo : function (z,what){
         var id =0;
         var tier=0;
         var Current=0;
-        var icon = ''+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/champion_hall/' +unsafeWindow.cm.CHAMPION.getRarityClasses(y.rarity) + '_' +unsafeWindow.cm.CHAMPION.getEquipmentClasses(y.type)+ '_' +unsafeWindow.cm.CHAMPION.getFactionClasses(y.faction) +'_30x30.png';
+        var icon = ''+IMGURL+'champion_hall/' +unsafeWindow.cm.CHAMPION.getRarityClasses(y.rarity) + '_' +unsafeWindow.cm.CHAMPION.getEquipmentClasses(y.type)+ '_' +unsafeWindow.cm.CHAMPION.getFactionClasses(y.faction) +'_30x30.png';
 	if (y["rarity"]>5)
-          var icon = ''+http+'kabam1-a.akamaihd.net/silooneofcamelot//fb/e2/src/img/champion_hall/' + 'unique' + '_' +unsafeWindow.cm.CHAMPION.getEquipmentClasses(y.type)+ '_' +unsafeWindow.cm.CHAMPION.getFactionClasses(y.faction) +'_30x30.png';
+          var icon = ''+IMGURL+'champion_hall/' + 'unique' + '_' +unsafeWindow.cm.CHAMPION.getEquipmentClasses(y.type)+ '_' +unsafeWindow.cm.CHAMPION.getFactionClasses(y.faction) +'_30x30.png';
         if (y.equippedTo > 0)m='<TABLE width=80% height=0% align="center" class=ChampionEQ  ondblclick="chpostInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         else m='<TABLE width=80% height=0% align="center" class=Champion ondblclick="chpostInfo('+z+')" style="background: transparent url('+icon +') bottom right no-repeat; background-color:#FFFFE3;">';
         switch(parseInt(y["rarity"])){
