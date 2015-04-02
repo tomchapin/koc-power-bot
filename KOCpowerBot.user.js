@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name           KOC Power Bot
 // @version        20150402a
 // @namespace      mat
@@ -24656,7 +24656,7 @@ Tabs.gifts = {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                for(i in rslt.message){
-                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject.indexOf('Yeni Hediye Alındı') >= 0 || rslt.message[i].subject.indexOf('Neues Geschenk erhalten') >= 0 || rslt.message[i].subject.indexOf('Nouveaux Cadeaux re�us') >= 0 || rslt.message[i].subject.indexOf('Nuevo regalo recibido') >= 0 || rslt.message[i].subject.indexOf('Nuovo Regalo ricevuto') >= 0 || rslt.message[i].subject.indexOf('New Gift Received') >= 0)){
+                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject.indexOf('Yeni Hediye AlÄ±ndÄ±') >= 0 || rslt.message[i].subject.indexOf('Neues Geschenk erhalten') >= 0 || rslt.message[i].subject.indexOf('Nouveaux Cadeaux reçus') >= 0 || rslt.message[i].subject.indexOf('Nuevo regalo recibido') >= 0 || rslt.message[i].subject.indexOf('Nuovo Regalo ricevuto') >= 0 || rslt.message[i].subject.indexOf('New Gift Received') >= 0)){
                      t.foundgift(i);
                   };
                };
