@@ -1,4 +1,4 @@
-#KoC Power Bot
+#KoC Power Bot (for Kingdoms of Camelot)
 
 This script is designed for use in conjunction with KoC Power Tools (https://github.com/tomchapin/koc-power-tools) and provides many useful automated functions for the Kingdoms of Camelot Facebook game! 
 
