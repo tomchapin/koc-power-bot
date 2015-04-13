@@ -14,9 +14,6 @@ This project is no longer hosted on Userscripts.org (which shut down), and is no
 
 You can download the latest release of the script here: https://github.com/tomchapin/koc-power-bot/raw/master/KOCpowerBot.user.js
 
-*KOC Power Bot* is currently offered as a beta release. If you currently use KOC Power Tools, you should upgrade to the latest version of it, too
-
-
 ##Additional Information
 
 We are looking for contributors. If you are interested just leave us a message :-)
