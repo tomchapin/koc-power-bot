@@ -7,10 +7,7 @@ This script is designed for use in conjunction with KoC Power Tools (https://git
 ----
 ##NEWS
 
-We created a new userscripts.org account for publishing ongoing updates to KoC Power Bot. A number of us will be sharing access to this account, so updates at the new location are not limited to just one person. This new account on userscripts.org is called "kocscripters", and the new KoC Power Bot page can be found [http://userscripts.org/scripts/show/101052 here].
-
-Feel free to use the forums at userscripts to discuss KOC Power BOT, but issues (bug reports, enhancement requests) should be made [http://code.google.com/p/koc-power-bot/issues/list HERE] on the Google Code site, so they can be properly tracked.
-
+This project is no longer hosted on Userscripts.org (which shut down), and is no longer actively maintained on Google Code (which will be shutting down soon). The project has officially moved to Github and will live here for the forseeable future, so please update your bookmarks accordingly.
 
 ----
 ##Download
