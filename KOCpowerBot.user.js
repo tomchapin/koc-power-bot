@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name           KOC Power Bot
-// @version        20150930a
+// @version        20151012a
 // @namespace      mat
 // @homepage       https://greasyfork.org/en/scripts/892-koc-power-bot
 // @include        *.kingdomsofcamelot.com/*main_src.php*
@@ -34,7 +34,7 @@ if(window.self.location != window.top.location){
    }
 }
 
-var Version = '20150930a';
+var Version = '20151012a';
 
 var http =  window.location.protocol+"\/\/";
 
@@ -1234,8 +1234,6 @@ function pbStartup (){
   loadchecker();
   QuickScout();	
 
-	if (smeg) { setTimeout(function () {smeg.init();}, 5000);}
-  
 	if (Options.alertConfig.email || AttackOptions.EmailEnabled || Options.crestemail) {
 		unsafeWindow.koc2Mail = koc2Mail;
 		koc2Mail.init();  
@@ -25071,7 +25069,7 @@ Tabs.gifts = {
             var rslt = eval("(" + message.responseText + ")");
             if (rslt.ok) {
                for(i in rslt.message){
-                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject.indexOf('Yeni Hediye AlÄ±ndÄ±') >= 0 || rslt.message[i].subject.indexOf('Neues Geschenk erhalten') >= 0 || rslt.message[i].subject.indexOf('Nouveaux Cadeaux reçus') >= 0 || rslt.message[i].subject.indexOf('Nuevo regalo recibido') >= 0 || rslt.message[i].subject.indexOf('Nuovo Regalo ricevuto') >= 0 || rslt.message[i].subject.indexOf('New Gift Received') >= 0)){
+                  if(rslt.message[i].fromUserId == "0" && (rslt.message[i].subject.indexOf('Yeni Hediye AlÃ„Â±ndÃ„Â±') >= 0 || rslt.message[i].subject.indexOf('Neues Geschenk erhalten') >= 0 || rslt.message[i].subject.indexOf('Nouveaux Cadeaux reÃ§us') >= 0 || rslt.message[i].subject.indexOf('Nuevo regalo recibido') >= 0 || rslt.message[i].subject.indexOf('Nuovo Regalo ricevuto') >= 0 || rslt.message[i].subject.indexOf('New Gift Received') >= 0)){
                      t.foundgift(i);
                   };
                };
@@ -25369,9 +25367,9 @@ Tabs.Champion = {
   LastDeleted:0,
   MaxItems:unsafeWindow.cm.WorldSettings.getSettingAsNumber("CE_INVENTORY_HARDLIMIT"),
   CompPos:0,
-  imgUniqueTypes : ["weapon","chestArmor","helmet","feet","shield","ring1","ring2","pendant","cloak"], // must be in this order
+  imgUniqueTypes : ["weapon","chestArmor","helmet","feet","shield","ring","ring","pendant","cloak"], // must be in this order
   CardTypes:["ALL","Attack","Defense","Life","Speed","Range","Load","Accuracy","Damage","Bonus Damage","Armor","Strength","Dexterity","Health","Hit","Crit","Block"],
-  EquipType: ["ALL","weapon","armor","helm","boot","shield","ring1","ring2","pendant","cloak"], //case sensitive for the moment.
+  EquipType: ["ALL","weapon","armor","helm","boot","shield","ring","ring","pendant","cloak"], //case sensitive for the moment.
   EquipTypeNo: ["ALL","1","2","3","4","5","6","7","8","9"], //case sensitive for the moment.
   Faction: ["ALL","Briton","Fey","Druid"],
   EnhanceCost:[],
@@ -25430,6 +25428,7 @@ Tabs.Champion = {
      saveSalvageOptions : function(){
 	var t = Tabs.Champion;
          for (k in t.championStatEffects) {
+			if (k>=300) continue;
             var ele = document.getElementById('pbChampionItems'+k);
             //var ele2 = document.getElementById(k+'Min');
             ChampionOptions.Salvage[k]=ele.checked;
@@ -25486,8 +25485,8 @@ Tabs.Champion = {
       championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
    for (i=113; i<135; i++)
       championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects[''+i];
-//   for (i=201; i<210; i++)
-//      championStatEffects[''+i]=unsafeWindow.cm.thronestats.effects['1'];
+   for (i=300; i<303; i++)
+      championStatEffects[''+i]={1:eval('unsafeWindow.g_js_strings.effects.name_'+i),2:[eval('unsafeWindow.g_js_strings.effects.name_'+i)],3:"Combat"};
    championStatEffects['201']={1:"Damage",2:["Damage"],3:"Combat"};
    championStatEffects['202']={1:"Bonus Damage",2:["Bonus Damage"],3:"Combat"};
    championStatEffects['203']={1:"Armor",2:["Armor"],3:"Combat"};
@@ -25511,7 +25510,7 @@ Tabs.Champion = {
 		var maxlevel = unsafeWindow.cm.CHAMPION.MAX_LEVELS;
 		var t = Tabs.Champion;
 		var UniqueItems = null;
-		var chTypes = ["weapon","armor","helm","boots","shield","ring1","ring2","pendant","cloak"]; // must be in this order
+		var chTypes = ["weapon","armor","helm","boots","shield","ring","ring","pendant","cloak"]; // must be in this order
 		var itemTypes = { weapon: 0, armor: 1, helm: 2, boots: 3, shield: 4, ring1: 5, ring2: 6, pendant: 7, cloak: 8 }; // must be in this order
 		var itemLists = [];
 		var selectedCard1 = 0;
@@ -25610,6 +25609,8 @@ Tabs.Champion = {
 		UniqueItems["28605"] = {Id:28605,Name:" Commander's Pendant", Effects:[{type:209,tier:1},{type:51,tier:2},{type:208,tier:2},{type:18,tier:2},{type:209,tier:2}],Faction:1,Type:8};
 		UniqueItems["28606"] = {Id:28606,Name:"Armsman's Necklace", Effects:[{type:202,tier:2},{type:61,tier:2},{type:47,tier:2},{type:42,tier:2},{type:208,tier:2}],Faction:1,Type:8};
 		
+		UniqueItems["28611"] = {Id:28611,Name:"Black Knight's Ring", Effects:[{type:300,tier:1},{type:202,tier:1},{type:206,tier:1},{type:207,tier:1},{type:208,tier:1}],Faction:2,Type:6};
+			
 		for (var i=28001;i<28500;i++) {
 			if (!unsafeWindow.itemlist['i'+i]) continue;
 			if (!UniqueItems[i]) {
@@ -25953,6 +25954,9 @@ Tabs.Champion = {
 					var level = champ_item.level || 0;
 					var growth = p.growth || 0;
 					percent = +(base + ((level * level + level) * growth * 0.5));
+					if (N.id>=300) {
+						percent = +(base + (level * growth));
+					}
 					var wholeNumber = false;
 					if (Math.round(parseFloat(percent)) == parseFloat(percent)) wholeNumber = true;
 					percent = (percent > 0) ? percent : +percent;
@@ -26112,6 +26116,7 @@ Tabs.Champion = {
         
       m+='<TABLE width=80% class=pbTab>';
       for (k in t.championStatEffects) {
+		if (k>=300) continue;
         if(!ChampionOptions.SalvageA[k]) ChampionOptions.SalvageA[k] = {};
         if(!ChampionOptions.SalvageA[k].Min) ChampionOptions.SalvageA[k].Min = 0;//fixing a mistake, Min must be defined.  
          m += '<TR><TD><A onclick="chsetFAV('+ k +')"><DIV class=pbSalvage_fav id=chSalvageFAV'+k+'></div></td>';
@@ -26190,17 +26195,20 @@ Tabs.Champion = {
 
       //if (ChampionOptions.Salvage[1] != undefined){
         for (k in t.championStatEffects){
+			if (k>=300) continue;
             document.getElementById('pbChampionItems'+k).checked = ChampionOptions.Salvage[k];
          }
      //}
      if (ChampionOptions.Salvage_fav[1] == undefined){
          for (k in t.championStatEffects){
-            ChampionOptions.Salvage_fav[k] = false;
+            if (k>=300) continue;
+			ChampionOptions.Salvage_fav[k] = false;
          }
      } 
 
      if (ChampionOptions.Salvage_fav[1] != undefined) {
          for (k in t.championStatEffects){
+	 		if (k>=300) continue;
             if (ChampionOptions.Salvage_fav[k]) document.getElementById('chSalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA6lJREFUeNq0VdtLFFEc/mZmXfO2FnaxC8XGhmFZRjeCgiDqJXoIeqkoCIQICnos7Km/oKinQAgCX3qIHoIg6ClQhMguCJa6XrKsLTPNdtu5nL7fnDPuaqv71GG+OTNzzvl+999Y6vVq/DMswubN4VxBfAqAnLoMhVYE6jo2OBk4XPcVsP0Llhox+CXIraLnGZJMqwOwcSf85iOOr8F5rKH0wEK5YYebIqhotvWz4CsFeGhH9XJg514KsM5gGk3IFWuylACfZIFTgJLZ1kJ+k+AndiNvHcemJiDPb3aVA9e6hozS+8oKkMuytM9Dv9vaiiwxoUTjdlTWkhwaTdtl/RxmkMJsWX7GIMt7lkH0hAx65oUg9HcLcRKpZpIrfUIUsCsd+Pl2jPsXylvwiaw/ldbYjfxvb6SWB6n9LcRrJAZci8A9zTvEsnOM0VE8XJdaSoClHqzbB6VO0T1JxiwZpqJigkoK1tYDyS20RmnApG+MGElTse8I01XHuo/nxrkvTYVeYKXTiRNjvqUeb/yN76hCXQJIEKtW6tAIoa/mk4cqGUInipm8cH1ykinNoExNA/EcuZyLOD58L8YMmUBdLInGzZowDFygyZSBMKqi2pirl7kNFMQ0TtDihhVMjgG6nNaEqrrWEbj+KD72ac2zSqoW+GOyxjWx8Qyid1mTPbJXzsh7QO3GBmX9Ck4NPzEC7DRxCPlgAMPvqAl7g2treGUQCuMsteSRfHxE3i/idPpuIYukePL2KHGIB/rw7pU5WKT9YsibefIHyUeFpw3nB+/NT9PCgQniMNO1F0NjBZeUg9RH/4jPsxfQ9qHj3zrw5mmVoT9v4PM344Yy5OKaAbolh0e49P5+6Ur2rELGyMixkflR08P8NSzIJBk1zJzMVGqJZsfm5psm54eBa0F1AqEQz8TCMwi/mYr2jBL1DVL5zbi5NV5aQHjQEOTD1tyMBHPZVYX+VBED1lLTtWx6Ncs0sazJHsvR/4hs0FTaRW6RvTmakacA6f3yPc7DDexF75m+/TOyQ1pjFfbtZ5ugGbN/tPukBmzVwvvb0j+cyAKbFR1zalFdTeI6lj5/hz3dLP9fz7lvD7GBuI3uniz63wCNtKqqkhbSO/FY6yIuijIi/IMlUc8DPovmZQ/wOdPL78eII8RLYpK4SmyBG3Sgq9vHcD+QWi9uTC3yyzStR6OLeIrBoV7OZ4ldxLMFewTsmmgjtmE224mJL2k+d5Ru10rhfw4b/3n8FWAAwna8wfz7wJUAAAAASUVORK5CYII="/>';
                else document.getElementById('chSalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAADAFBMVEX////4+Pj7+/v39/f5+fn6+vr29vby8vL09PTz8/P+/v78/Pzd3d3Nzc3v7++tra3r6+v9/f3n5+fs7Ozt7e24uLjQ0NDx8fHV1dXo6OjJycnl5eXc3NyoqKje3t7Hx8fS0tK+vr66urrZ2dnw8PDMzMzq6urFxcW5ubnk5OTj4+Pi4uLR0dGwsLDBwcG1tbXb29vLy8vu7u7Dw8P19fXKysrY2Ni3t7ekpKSrq6u0tLTh4eHm5ubW1tanp6eenp7p6emsrKyurq7a2trCwsLPz8/AwMC9vb28vLzf39+zs7PT09PX19f///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUISnwAAABI0lEQVR4nG2Rh26DMBCGzzmwCXuHBLL33t1tujfv/zqFhjhRyydZ8t0n6+6XIeZEXXIsYuA3R+1sc8UWQC3lCLcGQJY5okIBoM3+CT15AIDaH7Exb0kqICxLB+FMvtof9kqEPcXe9VPg1+QY5r2sJ8tyJgt65TuGxzIqaduyFMWyUqcIrK7F0BzYlAgFjkBIyb80Y6Bv5zeUiKf9F2OcboWv8+GGiBmIumaM9usKM+8ehQzKGsbwkEPwIiQZaHrhMWBfJYg0ARHd1knylk2o9AsltG+dCFcqJrDkSOibXMjNFWP6aLJcOIyxoMGFXmGdUDM+B9WZ6rLonYvF89ifTrsl8cyrrtXA4KK8qz7UnbQiwdXdRZMLRavbh/+RGuvj8Fx+AKn1YdcNFlXFAAAAAElFTkSuQmCC" />';
          }
@@ -26243,6 +26251,7 @@ setSalvageFAV :function (what){
     if (ChampionOptions.Salvage_fav[what]) ChampionOptions.Salvage_fav[what] = false;
       else  ChampionOptions.Salvage_fav[what] = true;
     for (k in t.championStatEffects){
+			if (k>=300) continue;
             if (ChampionOptions.Salvage_fav[k]) document.getElementById('chSalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA6lJREFUeNq0VdtLFFEc/mZmXfO2FnaxC8XGhmFZRjeCgiDqJXoIeqkoCIQICnos7Km/oKinQAgCX3qIHoIg6ClQhMguCJa6XrKsLTPNdtu5nL7fnDPuaqv71GG+OTNzzvl+999Y6vVq/DMswubN4VxBfAqAnLoMhVYE6jo2OBk4XPcVsP0Llhox+CXIraLnGZJMqwOwcSf85iOOr8F5rKH0wEK5YYebIqhotvWz4CsFeGhH9XJg514KsM5gGk3IFWuylACfZIFTgJLZ1kJ+k+AndiNvHcemJiDPb3aVA9e6hozS+8oKkMuytM9Dv9vaiiwxoUTjdlTWkhwaTdtl/RxmkMJsWX7GIMt7lkH0hAx65oUg9HcLcRKpZpIrfUIUsCsd+Pl2jPsXylvwiaw/ldbYjfxvb6SWB6n9LcRrJAZci8A9zTvEsnOM0VE8XJdaSoClHqzbB6VO0T1JxiwZpqJigkoK1tYDyS20RmnApG+MGElTse8I01XHuo/nxrkvTYVeYKXTiRNjvqUeb/yN76hCXQJIEKtW6tAIoa/mk4cqGUInipm8cH1ykinNoExNA/EcuZyLOD58L8YMmUBdLInGzZowDFygyZSBMKqi2pirl7kNFMQ0TtDihhVMjgG6nNaEqrrWEbj+KD72ac2zSqoW+GOyxjWx8Qyid1mTPbJXzsh7QO3GBmX9Ck4NPzEC7DRxCPlgAMPvqAl7g2treGUQCuMsteSRfHxE3i/idPpuIYukePL2KHGIB/rw7pU5WKT9YsibefIHyUeFpw3nB+/NT9PCgQniMNO1F0NjBZeUg9RH/4jPsxfQ9qHj3zrw5mmVoT9v4PM344Yy5OKaAbolh0e49P5+6Ur2rELGyMixkflR08P8NSzIJBk1zJzMVGqJZsfm5psm54eBa0F1AqEQz8TCMwi/mYr2jBL1DVL5zbi5NV5aQHjQEOTD1tyMBHPZVYX+VBED1lLTtWx6Ncs0sazJHsvR/4hs0FTaRW6RvTmakacA6f3yPc7DDexF75m+/TOyQ1pjFfbtZ5ugGbN/tPukBmzVwvvb0j+cyAKbFR1zalFdTeI6lj5/hz3dLP9fz7lvD7GBuI3uniz63wCNtKqqkhbSO/FY6yIuijIi/IMlUc8DPovmZQ/wOdPL78eII8RLYpK4SmyBG3Sgq9vHcD+QWi9uTC3yyzStR6OLeIrBoV7OZ4ldxLMFewTsmmgjtmE224mJL2k+d5Ru10rhfw4b/3n8FWAAwna8wfz7wJUAAAAASUVORK5CYII="/>';
                else document.getElementById('chSalvageFAV'+k).innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAADAFBMVEX////4+Pj7+/v39/f5+fn6+vr29vby8vL09PTz8/P+/v78/Pzd3d3Nzc3v7++tra3r6+v9/f3n5+fs7Ozt7e24uLjQ0NDx8fHV1dXo6OjJycnl5eXc3NyoqKje3t7Hx8fS0tK+vr66urrZ2dnw8PDMzMzq6urFxcW5ubnk5OTj4+Pi4uLR0dGwsLDBwcG1tbXb29vLy8vu7u7Dw8P19fXKysrY2Ni3t7ekpKSrq6u0tLTh4eHm5ubW1tanp6eenp7p6emsrKyurq7a2trCwsLPz8/AwMC9vb28vLzf39+zs7PT09PX19f///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUISnwAAABI0lEQVR4nG2Rh26DMBCGzzmwCXuHBLL33t1tujfv/zqFhjhRyydZ8t0n6+6XIeZEXXIsYuA3R+1sc8UWQC3lCLcGQJY5okIBoM3+CT15AIDaH7Exb0kqICxLB+FMvtof9kqEPcXe9VPg1+QY5r2sJ8tyJgt65TuGxzIqaduyFMWyUqcIrK7F0BzYlAgFjkBIyb80Y6Bv5zeUiKf9F2OcboWv8+GGiBmIumaM9usKM+8ehQzKGsbwkEPwIiQZaHrhMWBfJYg0ARHd1knylk2o9AsltG+dCFcqJrDkSOibXMjNFWP6aLJcOIyxoMGFXmGdUDM+B9WZ6rLonYvF89ifTrsl8cyrrtXA4KK8qz7UnbQiwdXdRZMLRavbh/+RGuvj8Fx+AKn1YdcNFlXFAAAAAElFTkSuQmCC" />';
    }
@@ -26444,6 +26453,7 @@ Compare :function (){
    o.value = "ALL";
    document.getElementById("cheffect").options.add(o);
    for (k in t.championStatEffects){
+    	if (k>=300) continue;
       var y = t.championStatEffects[k][1];
       if (typeof(y) == "string") {
          var o = document.createElement("option");       
@@ -26643,6 +26653,7 @@ postInfo : function (z){
 		while (!p && (tier > 0)) { tier--; p = t.championStatTiers[id][tier]; } 
 		if (!p) continue; // can't find stats for tier
 		Current = p.base + ((level * level + level) * p.growth * 0.5);
+		if (id>=300) Current = p.base + (level * p.growth);
 		m+='||'+Current + "% " + t.championStatEffects[id]["1"];
 	};
 	sendChat ("/a "+  m);
@@ -26683,6 +26694,7 @@ paintEquipInfo : function (z,what){
 			while (!p && (tier > 0)) { tier--; p = t.championStatTiers[id][tier]; } 
 			if (!p) continue; // can't find stats for tier
             Current = String(p.base + ((level * level + level) * p.growth * 0.5)).slice(0,6);
+			if (id>=300) Current = String(p.base + (level * p.growth)).slice(0,6);
             var quality = parseInt(y["rarity"]);
             if (i<=quality) m+='<TR><TD><FONT color=black>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
             else m+='<TR><TD><FONT color=grey>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td></tr>';
@@ -27271,8 +27283,10 @@ PaintSalvageHistory : function() {
 				while (!p && (tier > 0)) { tier--; p = t.championStatTiers[id][tier]; } 
 				if (!p) continue; // can't find stats for tier
                Current = p.base + ((level * level + level) * p.growth * 0.5);
+			   if (id>=300) Current = p.base + (level * p.growth);
                level++;
-               Next = p.base + ((level * level + level) * p.growth * 0.5);;
+               Next = p.base + ((level * level + level) * p.growth * 0.5);
+			   if (id>=300) Next = p.base + (level * p.growth);
                var quality = parseInt(unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]]["rarity"]);
                if (ChampionOptions.Items["0"]["action"] == "Enhance") {
                        if (i<=quality) m+='<TR><TD><FONT color=green>' + Current + "% " + t.championStatEffects[id]["1"] + '</font></td>';
@@ -27308,6 +27322,7 @@ paintHoover : function (){
 		while (!p && (tier > 0)) { tier--; p = t.championStatTiers[id][tier]; } 
 		if (!p) continue; // can't find stats for tier
         Current = p.base + ((level * level + level) * p.growth * 0.5);
+		if (id>=300) Current = p.base + (level * p.growth);
 	if (ChampionOptions.Items["0"])
           var quality = parseInt(unsafeWindow.kocChampionItems[ChampionOptions.Items["0"]["id"]]["rarity"]);
 	else var quality = 0;
